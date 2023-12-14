@@ -1,0 +1,102 @@
+# GitHub action that
+# - Increment package version revision (0.1.2 => major.minor.revision)
+# - Builds an NPM package
+# - Publishes it to NPM
+# - Commits the build to the "build" branch
+# - Call release workflow
+# Runs
+# - on each commit to main with a new version
+# - manually in the "actions" tab of the repository
+
+name: NPM Publish
+run-name: Publishing NPM package
+on: workflow_dispatch
+
+jobs:
+  build_package:
+    name: Build NPM package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: action/checkout@v4
+        with:
+          ref: "main"
+
+      - name: Setup Bun
+        id: bun_setup
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Check bun
+        id: bun_check
+        run: |
+          which bun
+          bun --version
+
+      - name: Setup node
+        id: node_setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Check node
+        id: node_check
+        run: |
+          which node
+          node --version
+          which npm
+          npm --version
+
+      - name: Setup jq
+        id: jq_setup
+        uses: dcarbone/install-jq-action@v2.1.0
+
+      - name: Check jq
+        id: jq_check
+        run: |
+          which jq
+          jq --version
+
+      - name: Setup git
+        id: git_setup
+        env:
+          CI_COMMIT_AUTHOR: CI
+          CI_COMMIT_EMAIL: ci@users.noreply.github.com
+        run: |
+          git config --global user.email "${{ env.CI_COMMIT_EMAIL }}"
+          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+
+      - name: Increment revision
+        id: increment_revision
+        run: |
+          bun run incrementRevision
+          
+          version=$(echo $(<./package.json) | jq ".version")
+          echo "version=$version" >> $GITHUB_VERSION
+
+      - name: Build package
+        id: package_build
+        run: bun run build
+
+      - name: Publish package
+        id: package_publish
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: Git commit & push `main`
+        id: git_push_main
+        run: |
+          message="build: ${{ steps.increment_revision.outputs.version }}"
+          git add .
+          git commit -m "$message"
+          git push
+
+  trigger_release:
+    name: "Trigger release"
+    needs: build_package
+    uses: "./.github/workflows/release.yml"
+    secrets: inherit

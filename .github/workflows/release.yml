@@ -1,0 +1,67 @@
+# GitHub action that
+# - Creates a new release
+# When
+# - a new package version is published
+# - ran manually
+
+name: Release create
+run-name: Creating release
+on:
+  workflow_dispatch: null
+  workflow_call:
+    secrets: inherit
+
+jobs:
+  create_release:
+    name: "Create release"
+    if: needs.update_tokens.outputs.changes == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup jq
+        id: jq_setup
+        uses: dcarbone/install-jq-action@v2.1.0
+
+      - name: Check jq
+        id: jq_check
+        run: |
+          which jq
+          jq --version
+
+      - name: Setup zip
+        id: zip_setup
+        uses: montudor/action-zip@v1.0.0
+
+      - name: Check zip
+        id: zip_check
+        run: |
+          which zip
+          zip --version
+
+      - name: Get release version
+        id: release_version
+        run: |
+          version=$(echo $(<./package.json) | jq ".version")
+          echo "version=$version" >> $GITHUB_VERSION
+
+      - name: Bundle lib files
+        id: release_bundle
+        run: |
+          release_file="release-${{ steps.release_version.outputs.version }}.zip"
+          echo "release_file=$release_file" >> $GITHUB_OUTPUT
+          zip -qq -r "$release_file" lib
+
+      - name: Create release
+        id: release_create
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ needs.update_tokens.outputs.version }}
+          name: "Release v${{ steps.release_version.outputs.version }}"
+          body: "Release v${{ steps.release_version.outputs.version }}"
+          draft: false
+          prerelease: false
+          files: |
+            ${{ steps.release_bundle.outputs.release_file }}
