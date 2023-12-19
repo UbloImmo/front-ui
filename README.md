@@ -1,4 +1,4 @@
-# @ubloimmo/front-lib-boilerplate
+# @ubloimmo/front-ui
 
 Template repository to create Internal library and private NPM package.
 

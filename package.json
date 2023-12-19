@@ -1,6 +1,6 @@
 {
-  "name": "@ubloimmo/<REPLACE ME>",
-  "description": "<REPLACE ME>",
+  "name": "@ubloimmo/front-ui",
+  "description": "Colors, themes, typography, common components for use in frontend applications",
   "private": false,
   "version": "0.0.1",
   "module": "src/index.ts",
@@ -9,11 +9,11 @@
     "lib"
   ],
   "license": "MIT",
-  "author": "name <email>",
-  "homepage": "https://github.com/UbloImmo/<REPLACE ME>",
+  "author": "Jean-Nicolas Veigel <art.jnveigel@gmail.com>",
+  "homepage": "https://github.com/UbloImmo/front-ui",
   "repository": {
     "type": "git",
-    "url": "https://github.com/UbloImmo/<REPLACE ME>"
+    "url": "https://github.com/UbloImmo/front-ui"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.58.0",
@@ -35,5 +35,8 @@
     "build": "<REPLACE ME>",
     "incrementRevision": "bun src/scripts/incrementRevision.ts"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@ubloimmo/front-tokens": "^0.0.3"
+  }
 }

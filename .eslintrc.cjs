@@ -33,7 +33,7 @@ module.exports = {
       },
     ],
   },
-  plugins: ["react", "react-hooks", "@typescript-eslint", "local-rules"],
+  plugins: ["react", "react-hooks", "@typescript-eslint"],
   ignorePatterns: ["**/dist/*.js"],
   rules: {
     // generic
