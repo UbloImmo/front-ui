@@ -37,6 +37,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@ubloimmo/front-tokens": "^0.0.3"
+    "@ubloimmo/front-tokens": "^0.0.3",
+    "@ubloimmo/front-util": "0.0.2",
+    "styled-components": "^6.1.8"
   }
 }
