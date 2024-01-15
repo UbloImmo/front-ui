@@ -72,12 +72,6 @@ export type HexColor =
   | HexColorAlpha
   | HexColorShorthandAlpha;
 
-export type HexColorCollection = {
-  shorthand: HexColorShorthand;
-  opaque: HexColorOpaque;
-  alpha: HexColorAlpha;
-};
-
 export type ColorCollection = {
   rgbaStr: RgbaColorStr;
   rgbaArr: RgbaColorArr;
