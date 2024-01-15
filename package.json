@@ -33,7 +33,11 @@
   },
   "scripts": {
     "build": "<REPLACE ME>",
-    "incrementRevision": "bun src/scripts/incrementRevision.ts"
+    "incrementRevision": "bun src/scripts/incrementRevision.ts",
+    "test:types": "tsc --noEmit",
+    "test:types:watch": "tsc --noEmit --watch",
+    "test:lint": "eslint . --cache --cache-location .cache/eslint",
+    "test:unit": "bun test"
   },
   "type": "module",
   "dependencies": {
