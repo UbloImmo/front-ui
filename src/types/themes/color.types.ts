@@ -26,8 +26,64 @@ export type RgbaColorObj = {
   a: number;
 };
 
-export type RgbaColorCollection = {
-  str: RgbaColorStr;
-  arr: RgbaColorArr;
-  obj: RgbaColorObj;
+const hexComponents = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+] as const;
+
+export type HexComponent = Enum<typeof hexComponents>;
+
+export type HexComponentDouble = `${HexComponent}${HexComponent}`;
+
+export type HexColorShorthand =
+  `#${HexComponent}${HexComponent}${HexComponent}`;
+
+export type HexColorShorthandAlpha =
+  `#${HexComponent}${HexComponent}${HexComponent}${HexComponent}`;
+
+export type HexColorOpaque =
+  `#${HexComponentDouble}${HexComponentDouble}${HexComponentDouble}`;
+
+export type HexColorAlpha =
+  `#${HexComponentDouble}${HexComponentDouble}${HexComponentDouble}${HexComponentDouble}`;
+
+export type HexColor =
+  | HexColorShorthand
+  | HexColorOpaque
+  | HexColorAlpha
+  | HexColorShorthandAlpha;
+
+export type HexColorCollection = {
+  shorthand: HexColorShorthand;
+  opaque: HexColorOpaque;
+  alpha: HexColorAlpha;
+};
+
+export type ColorCollection = {
+  rgbaStr: RgbaColorStr;
+  rgbaArr: RgbaColorArr;
+  rgbaObj: RgbaColorObj;
+  hexShort: HexColorShorthand;
+  hexShortAlpha: HexColorShorthandAlpha;
+  hexOpaque: HexColorOpaque;
+  hexAlpha: HexColorAlpha;
 };

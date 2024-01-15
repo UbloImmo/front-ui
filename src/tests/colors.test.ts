@@ -1,48 +1,96 @@
-import { RgbaColorCollection } from "@/types/themes/color.types";
-import { describe, expect, test } from "bun:test";
-import { rgbaColorConverter } from "@/utils/color.utils";
+import {
+  ColorCollection,
+  HexColor,
+  HexColorAlpha,
+  HexColorOpaque,
+  HexColorShorthand,
+  HexColorShorthandAlpha,
+} from "@/types/themes/color.types";
+import { describe, expect, it } from "bun:test";
+import { hexColorConverter, rgbaColorConverter } from "@/utils/color.utils";
 
-const redColor: RgbaColorCollection = {
-  str: "rgba(255, 0, 0, 1)",
-  arr: [255, 0, 0, 1],
-  obj: { r: 255, g: 0, b: 0, a: 1 },
+const redColor: ColorCollection = {
+  rgbaStr: "rgba(255, 0, 0, 1)",
+  rgbaArr: [255, 0, 0, 1],
+  rgbaObj: { r: 255, g: 0, b: 0, a: 1 },
+  hexShort: "#F00" as HexColorShorthand,
+  hexShortAlpha: "#F00F" as HexColorShorthandAlpha,
+  hexOpaque: "#FF0000" as HexColorOpaque,
+  hexAlpha: "#FF0000FF" as HexColorAlpha,
 };
 
-const greenColor: RgbaColorCollection = {
-  str: "rgba(0, 255, 0, 1)",
-  arr: [0, 255, 0, 1],
-  obj: { r: 0, g: 255, b: 0, a: 1 },
+const greenColor: ColorCollection = {
+  rgbaStr: "rgba(0, 255, 0, 1)",
+  rgbaArr: [0, 255, 0, 1],
+  rgbaObj: { r: 0, g: 255, b: 0, a: 1 },
+  hexShort: "#0F0" as HexColorShorthand,
+  hexShortAlpha: "#0F0F" as HexColorShorthandAlpha,
+  hexOpaque: "#00FF00" as HexColorOpaque,
+  hexAlpha: "#00FF00FF" as HexColorAlpha,
 };
 
-const blueColor: RgbaColorCollection = {
-  str: "rgba(0, 0, 255, 1)",
-  arr: [0, 0, 255, 1],
-  obj: { r: 0, g: 0, b: 255, a: 1 },
+const blueColor: Partial<ColorCollection> = {
+  rgbaStr: "rgba(0, 0, 255, 1)",
+  rgbaArr: [0, 0, 255, 1],
+  rgbaObj: { r: 0, g: 0, b: 255, a: 1 },
+  hexShort: "#00F" as HexColorShorthand,
+  hexShortAlpha: "#00FF" as HexColorShorthandAlpha,
+  hexOpaque: "#0000FF" as HexColorOpaque,
+  hexAlpha: "#0000FFFF" as HexColorAlpha,
 };
 
 const testColorConversion = <
-  TInput extends keyof RgbaColorCollection,
-  TOutput extends keyof RgbaColorCollection
+  TInput extends keyof ColorCollection,
+  TOutput extends keyof ColorCollection
 >(
   input: TInput,
   output: TOutput,
-  converter: (
-    input: RgbaColorCollection[TInput]
-  ) => RgbaColorCollection[TOutput]
+  converter: (input: ColorCollection[TInput]) => ColorCollection[TOutput]
 ) => {
-  if (input === output) return;
-  test(`convert ${input} to ${output}`, () => {
+  it(`should convert ${input} to ${output}`, () => {
     expect(converter(redColor[input])).toEqual(redColor[output]);
     expect(converter(greenColor[input])).toEqual(greenColor[output]);
     expect(converter(blueColor[input])).toEqual(blueColor[output]);
   });
 };
 
+const testHexColorConversion = <TOutput extends keyof ColorCollection>(
+  output: TOutput,
+  converter: (input: HexColor) => ColorCollection[TOutput]
+) => {
+  testColorConversion("hexShort", output, converter);
+  testColorConversion("hexShortAlpha", output, converter);
+  testColorConversion("hexOpaque", output, converter);
+  testColorConversion("hexAlpha", output, converter);
+};
+
 describe("color conversion", () => {
-  testColorConversion("str", "arr", rgbaColorConverter.strToArr);
-  testColorConversion("str", "obj", rgbaColorConverter.strToObj);
-  testColorConversion("arr", "str", rgbaColorConverter.arrToStr);
-  testColorConversion("arr", "obj", rgbaColorConverter.arrToObj);
-  testColorConversion("obj", "str", rgbaColorConverter.objToStr);
-  testColorConversion("obj", "arr", rgbaColorConverter.objToArr);
+  describe("from RGBA", () => {
+    describe("to RGBA", () => {
+      testColorConversion("rgbaStr", "rgbaArr", rgbaColorConverter.strToArr);
+      testColorConversion("rgbaStr", "rgbaObj", rgbaColorConverter.strToObj);
+      testColorConversion("rgbaArr", "rgbaStr", rgbaColorConverter.arrToStr);
+      testColorConversion("rgbaArr", "rgbaObj", rgbaColorConverter.arrToObj);
+      testColorConversion("rgbaObj", "rgbaStr", rgbaColorConverter.objToStr);
+      testColorConversion("rgbaObj", "rgbaArr", rgbaColorConverter.objToArr);
+    });
+
+    describe("to Hex", () => {
+      testColorConversion("rgbaStr", "hexAlpha", rgbaColorConverter.strToHex);
+      testColorConversion("rgbaArr", "hexAlpha", rgbaColorConverter.arrToHex);
+      testColorConversion("rgbaObj", "hexAlpha", rgbaColorConverter.objToHex);
+    });
+  });
+
+  describe("from Hex", () => {
+    describe("to Hex", () => {
+      testHexColorConversion("hexAlpha", hexColorConverter.normalize);
+    });
+
+    describe("to RGBA", () => {
+      testHexColorConversion("rgbaStr", hexColorConverter.hexToRgbaStr);
+      testHexColorConversion("rgbaArr", hexColorConverter.hexToRgbaArr);
+      testHexColorConversion("rgbaObj", hexColorConverter.hexToRgbaObj);
+    });
+  });
 });
