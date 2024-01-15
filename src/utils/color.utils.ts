@@ -78,6 +78,15 @@ const rgbaColorObjToArr = (colorObj: RgbaColorObj): RgbaColorArr => {
   return [r, g, b, a];
 };
 
+/**
+ * Converts a hexadecimal color shorthand (#RGB) or shorthand alpha (#RGBA)
+ * to a hexadecimal color with alpha (#RRGGBBAA).
+ *
+ * @remarks If no alpha information is provided, defaults to FF (100% opacity)
+ *
+ * @param {HexColorShorthand | HexColorShorthandAlpha} hexColorShorthand - The hexadecimal color shorthand or shorthand alpha to be converted.
+ * @return {HexColorAlpha} The hexadecimal color with alpha.
+ */
 const hexColorShorthandToHexColorAlpha = (
   hexColorShorthand: HexColorShorthand | HexColorShorthandAlpha
 ): HexColorAlpha => {
@@ -96,37 +105,78 @@ const hexColorShorthandToHexColorAlpha = (
   ].join("") as HexColorAlpha;
 };
 
+/**
+ * Converts a hexadecimal component (2 characters) to an RGB component (0-255).
+ *
+ * @param {HexComponentDouble} hexComponent - The hexadecimal component to convert.
+ * @return {number} The converted RGB component.
+ */
 const hexComponentDoubleToRgbComponent = (
   hexComponent: HexComponentDouble
 ): number => {
   return parseInt(hexComponent, 16);
 };
 
+/**
+ * Converts a hexadecimal alpha component (00-FF) to an RGB alpha component (0-1f).
+ *
+ * @param {HexComponentDouble} hexComponent - The hexadecimal alpha component to convert.
+ * @return {number} The converted RGB alpha component.
+ */
 const hexAlphaComponentToRgbAlphaComponent = (
   hexComponent: HexComponentDouble
 ): number => {
   return parseInt(hexComponent, 16) / 255;
 };
 
+/**
+ * Checks if the given hex color is in the format of a hex color with an alpha value (#RRGGBBAA).
+ *
+ * @param {HexColor} hexColor - The hex color to check.
+ * @return {boolean} Returns true if the hex color has an alpha value, false otherwise.
+ */
 const isHexColorAlpha = (hexColor: HexColor): hexColor is HexColorAlpha => {
   return hexColor.length === 9;
 };
 
+/**
+ * Checks if a hex color string is in shorthand format (#RGB).
+ *
+ * @param {HexColor} hexColor - The hex color string to check.
+ * @return {boolean} Returns true if the hex color is in shorthand format, false otherwise.
+ */
 const isHexColorShorthand = (
   hexColor: HexColor
 ): hexColor is HexColorShorthand => {
   return hexColor.length === 4;
 };
 
+/**
+ * Determines if the given hex color is in shorthand alpha format (#RGBA).
+ *
+ * @param {HexColor} hexColor - The hex color to check.
+ * @return {boolean} Returns true if the hex color is in shorthand alpha format, false otherwise.
+ */
 const isHexColorShorthandAlpha = (
   hexColor: HexColor
 ): hexColor is HexColorShorthandAlpha => {
   return hexColor.length === 5;
 };
 
+/**
+ * Converts any hex color format (#RGB, #RGBA, #RRGGBB, #RRGGBBAA)
+ * to a hex color with alpha channel (#RRGGBBAA).
+ *
+ * @param {HexColor} hexColor - The hex color to convert.
+ * @throws {Error} when an unsupported hex color is provided.
+ * @return {HexColorAlpha} The hex color with alpha channel.
+ */
 const hexColorToHexColorAlpha = (hexColor: HexColor): HexColorAlpha => {
   const supportedHexColorLengths = [4, 5, 7, 9];
-  if (!supportedHexColorLengths.includes(hexColor.length)) {
+  if (
+    !supportedHexColorLengths.includes(hexColor.length) ||
+    typeof hexColor !== "string"
+  ) {
     throw new Error("Unsupported hex color provided");
   }
   if (isHexColorAlpha(hexColor)) {
@@ -138,6 +188,12 @@ const hexColorToHexColorAlpha = (hexColor: HexColor): HexColorAlpha => {
   return `${hexColor}FF` as HexColorAlpha;
 };
 
+/**
+ * Converts an RGB component (0-255) to a double hex component (00-FF).
+ *
+ * @param {number} rgbComponent - The RGB component to convert.
+ * @return {HexComponentDouble} - The double hex component.
+ */
 const rgbComponentToHexComponentDouble = (
   rgbComponent: number
 ): HexComponentDouble => {
@@ -147,6 +203,12 @@ const rgbComponentToHexComponentDouble = (
   ).toUpperCase() as HexComponentDouble;
 };
 
+/**
+ * Converts the alpha component of an RGB color (0-1) to a hexadecimal alpha component (00-FF).
+ *
+ * @param {number} alphaComponent - The alpha component of the RGB color (0-1).
+ * @return {HexComponentDouble} The hexadecimal alpha component (00-FF).
+ */
 const rgbAlphaComponentToHexAlphaComponent = (
   alphaComponent: number
 ): HexComponentDouble => {
@@ -156,6 +218,13 @@ const rgbAlphaComponentToHexAlphaComponent = (
   ).toUpperCase() as HexComponentDouble;
 };
 
+/**
+ * Converts a hexadecimal color string (#RGB, #RGBA, #RRGGBB, #RRGGBBAA)
+ * to an RGBA color array ( [R, G, B, A] ).
+ *
+ * @param {HexColor} hexColor - The hexadecimal color string to convert.
+ * @return {RgbaColorArr} - The resulting RGBA color array.
+ */
 const hexColorToRgbaColorArr = (hexColor: HexColor): RgbaColorArr => {
   const hexColorAlpha = hexColorToHexColorAlpha(hexColor);
   const componentIndices = [1, 3, 5, 7].map((index) => [index, index + 2]);
@@ -175,14 +244,32 @@ const hexColorToRgbaColorArr = (hexColor: HexColor): RgbaColorArr => {
   return [r, g, b, a] as RgbaColorArr;
 };
 
+/**
+ * Converts a hexadecimal color string to an RGBA color string.
+ *
+ * @param {HexColor} hexColor - The hexadecimal color code to convert.
+ * @return {RgbaColorStr} The RGBA color string representation of the given hexadecimal color code.
+ */
 const hexColorToRgbaColorStr = (hexColor: HexColor): RgbaColorStr => {
   return rgbaColorArrToStr(hexColorToRgbaColorArr(hexColor));
 };
 
+/**
+ * Converts a hexadecimal color string to an RGBA color object.
+ *
+ * @param {HexColor} hexColor - The hexadecimal color code to convert.
+ * @return {RgbaColorObj} - The RGBA color object.
+ */
 const hexColorToRgbaColorObj = (hexColor: HexColor): RgbaColorObj => {
   return rgbaColorArrToObj(hexColorToRgbaColorArr(hexColor));
 };
 
+/**
+ * Converts an RGBA color array to a hexadecimal color with alpha (#RRGGBBAA).
+ *
+ * @param {RgbaColorArr} rgbaColorArr - The RGBA color array to be converted.
+ * @return {HexColorAlpha} The hexadecimal color with alpha.
+ */
 const rgbaColorArrToHex = (rgbaColorArr: RgbaColorArr): HexColorAlpha => {
   const [r, g, b, a] = rgbaColorArr;
   const hexColorStr = [r, g, b]
@@ -192,14 +279,29 @@ const rgbaColorArrToHex = (rgbaColorArr: RgbaColorArr): HexColorAlpha => {
   return `#${hexColorStr}${hexAlphaStr}` as HexColorAlpha;
 };
 
+/**
+ * Converts an RGBA color string to a hex color with alpha value (#RRGGBBAA).
+ *
+ * @param {RgbaColorStr} rgbaColorStr - The RGBA color string to convert.
+ * @return {HexColorAlpha} The hex color with alpha value.
+ */
 const rgbaColorStrToHex = (rgbaColorStr: RgbaColorStr): HexColorAlpha => {
   return rgbaColorArrToHex(rgbaColorStrToArr(rgbaColorStr));
 };
 
+/**
+ * Converts an RGBA color object to a hexadecimal color with alpha channel (#RRGGBBAA).
+ *
+ * @param {RgbaColorObj} rgbaColorObj - The RGBA color object to be converted.
+ * @return {HexColorAlpha} The hexadecimal color with alpha channel.
+ */
 const rgbaColorObjToHex = (rgbaColorObj: RgbaColorObj): HexColorAlpha => {
   return rgbaColorArrToHex(rgbaColorObjToArr(rgbaColorObj));
 };
 
+/**
+ * Use when you want to convert from a hex color to something else.
+ */
 export const hexColorConverter = {
   hexToRgbaStr: hexColorToRgbaColorStr,
   hexToRgbaArr: hexColorToRgbaColorArr,
@@ -207,6 +309,9 @@ export const hexColorConverter = {
   normalize: hexColorToHexColorAlpha,
 } as const;
 
+/**
+ * Use when you want to convert from an RGBA color to something else.
+ */
 export const rgbaColorConverter = {
   strToArr: rgbaColorStrToArr,
   strToObj: rgbaColorStrToObj,
