@@ -5,9 +5,9 @@ import {
   HexColorOpaque,
   HexColorShorthand,
   HexColorShorthandAlpha,
-} from "@/types/themes/color.types";
+} from "../types/themes/color.types";
 import { describe, expect, it } from "bun:test";
-import { hexColorConverter, rgbaColorConverter } from "@/utils/color.utils";
+import { hexColorConverter, rgbaColorConverter } from "../utils/color.utils";
 
 const redColor: ColorCollection = {
   rgbaStr: "rgba(255, 0, 0, 1)",

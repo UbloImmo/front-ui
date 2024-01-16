@@ -20,29 +20,40 @@ const hexComponents = [
   "D",
   "E",
   "F",
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
+  // removed to decrease union complexity
+  // "a",
+  // "b",
+  // "c",
+  // "d",
+  // "e",
+  // "f",
 ] as const;
+
+export const hexRegex =
+  /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{8})$/;
 
 export type HexComponent = Enum<typeof hexComponents> | `${number}`;
 
+/**
+ * #RRGGBB
+ */
 export type HexComponentDouble = `${HexComponent}${HexComponent}`;
 
 export type HexColorShorthand =
   `#${HexComponent}${HexComponent}${HexComponent}`;
 
 export type HexColorShorthandAlpha =
-  `#${HexComponent}${HexComponent}${HexComponent}${HexComponent}`;
+  `#${HexComponentDouble}${HexComponentDouble}`;
 
-export type HexColorOpaque =
-  `#${HexComponentDouble}${HexComponentDouble}${HexComponentDouble}`;
+/**
+ * #RRGGBB
+ */
+export type HexColorOpaque = `#${string}`;
 
-export type HexColorAlpha =
-  `#${HexComponentDouble}${HexComponentDouble}${HexComponentDouble}${HexComponentDouble}`;
+/**
+ * #RRGGBBAA
+ */
+export type HexColorAlpha = `#${string}`;
 
 export type HexColor =
   | HexColorShorthand

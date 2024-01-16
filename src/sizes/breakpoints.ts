@@ -14,4 +14,4 @@ export const breakpointsPx = transformObject<
   keyof typeof breakpoints,
   number,
   string
->(breakpoints, (value) => `${value}px`) as const;
+>(breakpoints, (value) => `${value}px`);

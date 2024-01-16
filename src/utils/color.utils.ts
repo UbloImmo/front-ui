@@ -1,9 +1,11 @@
 import {
   HexColor,
   HexColorAlpha,
+  HexColorOpaque,
   HexColorShorthand,
   HexColorShorthandAlpha,
   HexComponentDouble,
+  hexRegex,
   RgbaColorArr,
   RgbaColorObj,
   RgbaColorStr,
@@ -78,6 +80,18 @@ const rgbaColorObjToArr = (colorObj: RgbaColorObj): RgbaColorArr => {
   return [r, g, b, a];
 };
 
+export const isValidHexStr = (rootStr: unknown): rootStr is HexColor => {
+  const supportedHexColorLengths = [4, 5, 7, 9];
+  if (
+    typeof rootStr !== "string" ||
+    !supportedHexColorLengths.includes(rootStr.length) ||
+    rootStr[0] !== "#"
+  ) {
+    return false;
+  }
+  return hexRegex.test(rootStr);
+};
+
 /**
  * Converts a hexadecimal color shorthand (#RGB) or shorthand alpha (#RGBA)
  * to a hexadecimal color with alpha (#RRGGBBAA).
@@ -135,8 +149,8 @@ const hexAlphaComponentToRgbAlphaComponent = (
  * @param {HexColor} hexColor - The hex color to check.
  * @return {boolean} Returns true if the hex color has an alpha value, false otherwise.
  */
-const isHexColorAlpha = (hexColor: HexColor): hexColor is HexColorAlpha => {
-  return hexColor.length === 9;
+const isHexColorAlpha = (hexColor: unknown): hexColor is HexColorAlpha => {
+  return isValidHexStr(hexColor) && hexColor.length === 9;
 };
 
 /**
@@ -146,9 +160,9 @@ const isHexColorAlpha = (hexColor: HexColor): hexColor is HexColorAlpha => {
  * @return {boolean} Returns true if the hex color is in shorthand format, false otherwise.
  */
 const isHexColorShorthand = (
-  hexColor: HexColor
+  hexColor: unknown
 ): hexColor is HexColorShorthand => {
-  return hexColor.length === 4;
+  return isValidHexStr(hexColor) && hexColor.length === 4;
 };
 
 /**
@@ -158,9 +172,9 @@ const isHexColorShorthand = (
  * @return {boolean} Returns true if the hex color is in shorthand alpha format, false otherwise.
  */
 const isHexColorShorthandAlpha = (
-  hexColor: HexColor
+  hexColor: unknown
 ): hexColor is HexColorShorthandAlpha => {
-  return hexColor.length === 5;
+  return isValidHexStr(hexColor) && hexColor.length === 5;
 };
 
 /**
@@ -172,11 +186,7 @@ const isHexColorShorthandAlpha = (
  * @return {HexColorAlpha} The hex color with alpha channel.
  */
 const hexColorToHexColorAlpha = (hexColor: HexColor): HexColorAlpha => {
-  const supportedHexColorLengths = [4, 5, 7, 9];
-  if (
-    !supportedHexColorLengths.includes(hexColor.length) ||
-    typeof hexColor !== "string"
-  ) {
+  if (!isValidHexStr(hexColor)) {
     throw new Error("Unsupported hex color provided");
   }
   if (isHexColorAlpha(hexColor)) {
@@ -227,21 +237,39 @@ const rgbAlphaComponentToHexAlphaComponent = (
  */
 const hexColorToRgbaColorArr = (hexColor: HexColor): RgbaColorArr => {
   const hexColorAlpha = hexColorToHexColorAlpha(hexColor);
-  const componentIndices = [1, 3, 5, 7].map((index) => [index, index + 2]);
+  const componentIndices: [number, number][] = [1, 3, 5, 7].map((index) => [
+    index,
+    index + 2,
+  ]);
+
+  /**
+   * Extracts `HexComponentDouble` by slicing the `hexColorAlpha` string
+   * from the specified `indices` and converting it to uppercase.
+   *
+   * @remarks cast is necessary to at least get a bit of type safety while dealing with limited TS type complexity
+   *
+   * @param {Array<number>} indices - The starting and ending indices of the slice.
+   * @return {HexComponentDouble} - The sliced component in uppercase.
+   */
+  const sliceHexColor = (indices: [number, number]): HexComponentDouble => {
+    return hexColorAlpha
+      .slice(indices[0], indices[1])
+      .toUpperCase() as HexComponentDouble;
+  };
 
   const r = hexComponentDoubleToRgbComponent(
-    hexColorAlpha.slice(...componentIndices[0])
+    sliceHexColor(componentIndices[0])
   );
   const g = hexComponentDoubleToRgbComponent(
-    hexColorAlpha.slice(...componentIndices[1])
+    sliceHexColor(componentIndices[1])
   );
   const b = hexComponentDoubleToRgbComponent(
-    hexColorAlpha.slice(...componentIndices[2])
+    sliceHexColor(componentIndices[2])
   );
   const a = hexAlphaComponentToRgbAlphaComponent(
-    hexColorAlpha.slice(...componentIndices[3])
+    sliceHexColor(componentIndices[3])
   );
-  return [r, g, b, a] as RgbaColorArr;
+  return [r, g, b, a];
 };
 
 /**
