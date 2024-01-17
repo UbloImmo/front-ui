@@ -33,12 +33,16 @@
   },
   "scripts": {
     "build": "<REPLACE ME>",
-    "incrementRevision": "bun src/scripts/incrementRevision.ts"
+    "incrementRevision": "bun src/scripts/incrementRevision.ts",
+    "test:types": "tsc --noEmit",
+    "test:types:watch": "tsc --noEmit --watch",
+    "test:lint": "eslint . --cache --cache-location .cache/eslint",
+    "test:unit": "bun test"
   },
   "type": "module",
   "dependencies": {
     "@ubloimmo/front-tokens": "^0.0.3",
-    "@ubloimmo/front-util": "0.0.2",
+    "@ubloimmo/front-util": "0.0.5",
     "styled-components": "^6.1.8"
   }
 }

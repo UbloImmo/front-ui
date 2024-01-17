@@ -71,11 +71,7 @@ jobs:
 
       - name: Increment revision
         id: increment_revision
-        run: |
-          bun run incrementRevision
-          
-          version=$(echo $(<./package.json) | jq ".version")
-          echo "version=$version" >> $GITHUB_VERSION
+        run: npm version patch
 
       - name: Build package
         id: package_build
