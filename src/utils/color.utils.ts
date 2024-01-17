@@ -1,7 +1,6 @@
 import {
   HexColor,
   HexColorAlpha,
-  HexColorOpaque,
   HexColorShorthand,
   HexColorShorthandAlpha,
   HexComponentDouble,
@@ -80,6 +79,12 @@ const rgbaColorObjToArr = (colorObj: RgbaColorObj): RgbaColorArr => {
   return [r, g, b, a];
 };
 
+/**
+ * Predicate that checks if the given string is a valid hexadecimal color string.
+ *
+ * @param {unknown} rootStr - The string to be checked.
+ * @return {boolean} Returns true if the string is a valid hexadecimal color string, false otherwise.
+ */
 export const isValidHexStr = (rootStr: unknown): rootStr is HexColor => {
   const supportedHexColorLengths = [4, 5, 7, 9];
   if (
