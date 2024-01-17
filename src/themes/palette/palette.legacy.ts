@@ -7,7 +7,7 @@ import {
   LegacyPalette,
   LegacyShadows,
 } from "@/types/themes/palette/palette.legacy.types";
-import { TokenValueGroup } from "@/types/token.types";
+import { TokenValueGroup, Token } from "@/types/token.types";
 import { transformObject } from "@ubloimmo/front-util";
 
 /**
@@ -56,7 +56,8 @@ const colorTokenToLegacyPaletteColor = <
  * @see colorTokenToLegacyPaletteColor
  */
 const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
-  const { state, ublo, background, gray, black, white } = colors;
+  const { error, warning, pending, success, ublo, gray } = colors;
+  const legacyStateTokens = { error, warning, pending, success, info: ublo };
   return {
     primary: colorTokenToLegacyPaletteColor<LegacyFullPalette>(ublo, [
       ["main", "base"],
@@ -64,7 +65,7 @@ const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
       "light",
     ]),
     ...transformObject(
-      state,
+      legacyStateTokens,
       (token): LegacyFullPalette =>
         colorTokenToLegacyPaletteColor<LegacyFullPalette>(token, [
           ["main", "base"],
@@ -73,23 +74,26 @@ const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
         ])
     ),
     background: colorTokenToLegacyPaletteColor<LegacyLightAndDarkPalette>(
-      background,
-      ["light", "dark"]
+      gray,
+      [
+        ["100", "dark"],
+        ["50", "light"],
+      ]
     ),
     white: {
-      base: white.value,
+      base: "rgba(255,255,255,1)",
     },
-    black: colorTokenToLegacyPaletteColor<LegacyEmphasisPalette>(black, [
-      "inactive",
-      "disabled",
-      ["medium", "mediumEmphasis"],
-      ["black", "highEmphasis"],
+    black: colorTokenToLegacyPaletteColor<LegacyEmphasisPalette>(gray, [
+      ["700", "inactive"],
+      ["600", "disabled"],
+      ["800", "mediumEmphasis"],
+      ["900", "highEmphasis"],
     ]),
     gray: colorTokenToLegacyPaletteColor<LegacyDegreesPalette>(gray, [
-      ["50", "_50"],
-      ["100", "_100"],
-      ["200", "_200"],
-      ["300", "_300"],
+      ["100", "_50"],
+      ["200", "_100"],
+      ["300", "_200"],
+      ["400", "_300"],
     ]),
   };
 };
@@ -120,17 +124,26 @@ type MissingLegacyShadows = Omit<
  * @return {string} The value of the effect token shadow.
  */
 const extractEffectTokenShadow = (effectKey: keyof typeof effects): string => {
-  return effects[effectKey].value;
+  if (!effects[effectKey]) return "";
+  // TODO: remove this cast once effects have been exported from Design Tokens figma file
+  return (effects[effectKey] as Token)?.value ?? "";
 };
 
 /**
  * Hard-coded shadows that are in use in legacy palette but have no match in exported tokens
  */
+// TODO: Remove missing shadows once there are more exported effects
 const missingLegacyShadows: MissingLegacyShadows = {
+  high: "0 0 1px rgba(12, 26, 75, 0.33), 0 0.75rem 1.875rem rgba(37, 34, 117, 0.08)",
   card: "0px 1px 2px rgba(50, 50, 71, 0.08), 0px 0px 1px rgba(50, 50, 71, 0.2)",
-  topDivider: "inset 0px 0.5px 0px #e5e5e5",
   color:
     "0px 0px 1px rgba(12, 26, 75, 0.33), 0px 30px 40px rgba(109, 95, 254, 0.08)",
+  input: "0px 0px 1px 0px #32324733, 0px 1px 2px 0px #32324714",
+  button:
+    "0px 1px 2px rgba(50, 50, 71, 0.08), 0px 0px 1px rgba(50, 50, 71, 0.2)",
+  flat: "0px 0px 1px rgba(12, 26, 75, 0.33)",
+  bottomDivider: "inset 0px -0.5px 0px #e5e5e5",
+  topDivider: "inset 0px 0.5px 0px #e5e5e5",
   carousselCard:
     "0px 30px 40px 0px rgba(109, 95, 254, 0.08), 0px 0px 1px 0px rgba(12, 26, 75, 0.33)",
 };
@@ -161,8 +174,8 @@ const effectTokensToLegacyShadows = (): Omit<
  */
 const buildLegacyShadows = (): LegacyShadows => {
   return {
-    ...effectTokensToLegacyShadows(),
     ...missingLegacyShadows,
+    ...effectTokensToLegacyShadows(),
   };
 };
 
@@ -176,7 +189,8 @@ export const buildLegacyPalette = (): LegacyPalette => {
   return {
     ...colorTokensToLegacyColorPalette(),
     shadows: buildLegacyShadows(),
-  };
+    // cast to LegacyPalette since TSC does not understand this spread operator
+  } as LegacyPalette;
 };
 
 export const legacyPalette = buildLegacyPalette();
