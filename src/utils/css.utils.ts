@@ -2,12 +2,36 @@ import type { CssPx, CssRem } from "@/types";
 
 const REM_FACTOR = 16 as const;
 
+/**
+ * Converts a number value to a value in pixels.
+ *
+ * @param {number} px - the value in numbers to be converted to css pixels
+ * @return {CssPx} the converted value in css pixels
+ */
 export const cssPx = (px: number): CssPx => `${px}px`;
 
+/**
+ * Converts a number value to a value in rems.
+ *
+ * @param {number} rem - the value in numbers to be converted to css rems
+ * @return {CssRem} the converted value in css rems
+ */
 export const cssRem = (rem: number): CssRem => `${rem}rem`;
 
+/**
+ * Converts a value in number pixels to a value in number rems.
+ *
+ * @param {number} px - the value in number pixels to be converted to number rems
+ * @return {number} the converted value in numbers rems
+ */
 export const pxToRem = (px: number): number => px / REM_FACTOR;
 
+/**
+ * Converts a value in number rems to a value in number pixels.
+ *
+ * @param {number} rem - the value in number rems to be converted to number pixels
+ * @return {number} the converted value in numbers pixels
+ */
 export const remToPx = (rem: number) => rem * REM_FACTOR;
 
 /**
