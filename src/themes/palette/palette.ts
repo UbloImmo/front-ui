@@ -94,8 +94,9 @@ const STATIC_COLOR_KEYS: (keyof typeof colors)[] = [
 const buildClientColorPalette = (): ClientColorPalette => {
   // filter out static color keys
   const clientColorKeys = objectKeys(colors).filter(
-    (colorKey) => !STATIC_COLOR_KEYS.includes(colorKey)
-  ) as ClientColorPaletteKey[];
+    (colorKey): colorKey is ClientColorPaletteKey =>
+      !STATIC_COLOR_KEYS.includes(colorKey)
+  );
   // match client color keys to their tokens
   const clientColorTokens = objectFromEntries(
     arrayFilter(
@@ -133,7 +134,7 @@ const buildClientColorPalette = (): ClientColorPalette => {
           return [key, updatedTokenGroup];
         }
       ),
-      ([_key, tokenGroup]) => !isNull(tokenGroup)
+      (item) => !isNull(item[1])
     ) as [
       ClientColorPaletteKey,
       Record<DefaultPaletteShadeKey, Token<"COLOR">>
