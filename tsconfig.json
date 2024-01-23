@@ -8,6 +8,7 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "composite": true,
+    "verbatimModuleSyntax": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,
     "skipLibCheck": false,
