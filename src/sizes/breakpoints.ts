@@ -1,3 +1,4 @@
+import { cssPx } from "@/utils";
 import { transformObject } from "@ubloimmo/front-util";
 
 export const breakpoints = {
@@ -10,7 +11,4 @@ export const breakpoints = {
   XXL: 1536,
 } as const;
 
-export const breakpointsPx = transformObject(
-  breakpoints,
-  (value): `${number}px` => `${value}px`
-);
+export const breakpointsPx = transformObject(breakpoints, cssPx);
