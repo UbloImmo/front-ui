@@ -6,7 +6,11 @@ import {
   defaultPaletteColorShadeKeys,
   LegacyShadows,
 } from "../types";
-import { buildLegacyColorPalette, buildColorPalette } from "../themes/palette";
+import {
+  buildLegacyColorPalette,
+  buildColorPalette,
+  extractEffectTokenShadow,
+} from "../themes";
 
 const LEGACY_PALETTE_KEYS: (keyof LegacyPalette)[] = [
   "shadows",
@@ -48,6 +52,11 @@ describe("palette", () => {
       it("should not throw during build process", () => {
         expect(buildLegacyColorPalette).not.toThrow();
         legacyPalette = buildLegacyColorPalette();
+      });
+      it("should extract palette shadows from front-tokens", () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore extractEffectTokenShadow() is correctly typed to we have to disable TS for it to throw
+        expect(extractEffectTokenShadow("high")).toBeString();
       });
       it("should return a legacy palette object", () => {
         expect(legacyPalette).toBeDefined();
