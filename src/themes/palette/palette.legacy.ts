@@ -8,7 +8,7 @@ import {
   LegacyShadows,
 } from "@/types/themes/palette/palette.legacy.types";
 import { TokenValueGroup, Token } from "@/types/token.types";
-import { transformObject } from "@ubloimmo/front-util";
+import { objectKeys, transformObject } from "@ubloimmo/front-util";
 
 /**
  * Generates a legacy palette color from a color token group.
@@ -123,7 +123,9 @@ type MissingLegacyShadows = Omit<
  * @param {keyof typeof effects} effectKey - The key of the effect in the effects object.
  * @return {string} The value of the effect token shadow.
  */
-const extractEffectTokenShadow = (effectKey: keyof typeof effects): string => {
+export const extractEffectTokenShadow = (
+  effectKey: keyof typeof effects
+): string => {
   if (!effects[effectKey]) return "";
   // TODO: remove this cast once effects have been exported from Design Tokens figma file
   return (effects[effectKey] as Token)?.value ?? "";
@@ -158,12 +160,10 @@ const effectTokensToLegacyShadows = (): Omit<
   keyof MissingLegacyShadows
 > => {
   return Object.fromEntries(
-    (Object.keys(effects) as (keyof typeof effects)[]).map(
-      (effectKey): [keyof LegacyShadows, string] => [
-        effectTokenToLegacyShadowKeyMap[effectKey],
-        extractEffectTokenShadow(effectKey),
-      ]
-    )
+    objectKeys(effects).map((effectKey): [keyof LegacyShadows, string] => [
+      effectTokenToLegacyShadowKeyMap[effectKey],
+      extractEffectTokenShadow(effectKey),
+    ])
   ) as Record<keyof LegacyShadows, string>;
 };
 
