@@ -8,7 +8,7 @@ import {
   LegacyShadows,
 } from "@/types/themes/palette/palette.legacy.types";
 import { TokenValueGroup, Token } from "@/types/token.types";
-import { transformObject } from "@ubloimmo/front-util";
+import { objectKeys, transformObject } from "@ubloimmo/front-util";
 
 /**
  * Generates a legacy palette color from a color token group.
@@ -40,10 +40,10 @@ const colorTokenToLegacyPaletteColor = <
       ([extractKey, mapToKey]: [
         keyof TColorTokenGroup,
         keyof TReturnPalette
-      ]): [keyof TReturnPalette, string] => [
-        mapToKey,
-        colorTokenGroup[extractKey].value,
-      ]
+      ]): [keyof TReturnPalette, string] => {
+        const token = colorTokenGroup[extractKey];
+        return [mapToKey, token.value];
+      }
     )
   ) as Record<keyof TReturnPalette, string> as TReturnPalette;
 };
@@ -56,11 +56,11 @@ const colorTokenToLegacyPaletteColor = <
  * @see colorTokenToLegacyPaletteColor
  */
 const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
-  const { error, warning, pending, success, ublo, gray } = colors;
-  const legacyStateTokens = { error, warning, pending, success, info: ublo };
+  const { error, warning, pending, success, primary, gray } = colors;
+  const legacyStateTokens = { error, warning, pending, success, info: primary };
   return {
-    primary: colorTokenToLegacyPaletteColor<LegacyFullPalette>(ublo, [
-      ["main", "base"],
+    primary: colorTokenToLegacyPaletteColor<LegacyFullPalette>(primary, [
+      "base",
       "dark",
       "light",
     ]),
@@ -68,7 +68,7 @@ const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
       legacyStateTokens,
       (token): LegacyFullPalette =>
         colorTokenToLegacyPaletteColor<LegacyFullPalette>(token, [
-          ["main", "base"],
+          "base",
           "dark",
           "light",
         ])
@@ -123,7 +123,9 @@ type MissingLegacyShadows = Omit<
  * @param {keyof typeof effects} effectKey - The key of the effect in the effects object.
  * @return {string} The value of the effect token shadow.
  */
-const extractEffectTokenShadow = (effectKey: keyof typeof effects): string => {
+export const extractEffectTokenShadow = (
+  effectKey: keyof typeof effects
+): string => {
   if (!effects[effectKey]) return "";
   // TODO: remove this cast once effects have been exported from Design Tokens figma file
   return (effects[effectKey] as Token)?.value ?? "";
@@ -158,12 +160,10 @@ const effectTokensToLegacyShadows = (): Omit<
   keyof MissingLegacyShadows
 > => {
   return Object.fromEntries(
-    (Object.keys(effects) as (keyof typeof effects)[]).map(
-      (effectKey): [keyof LegacyShadows, string] => [
-        effectTokenToLegacyShadowKeyMap[effectKey],
-        extractEffectTokenShadow(effectKey),
-      ]
-    )
+    objectKeys(effects).map((effectKey): [keyof LegacyShadows, string] => [
+      effectTokenToLegacyShadowKeyMap[effectKey],
+      extractEffectTokenShadow(effectKey),
+    ])
   ) as Record<keyof LegacyShadows, string>;
 };
 
@@ -185,7 +185,7 @@ const buildLegacyShadows = (): LegacyShadows => {
  *
  * @return {LegacyPalette} The legacy palette object.
  */
-export const buildLegacyPalette = (): LegacyPalette => {
+export const buildLegacyColorPalette = (): LegacyPalette => {
   return {
     ...colorTokensToLegacyColorPalette(),
     shadows: buildLegacyShadows(),
@@ -193,4 +193,4 @@ export const buildLegacyPalette = (): LegacyPalette => {
   } as LegacyPalette;
 };
 
-export const legacyPalette = buildLegacyPalette();
+export const legacyColorPalette = buildLegacyColorPalette();

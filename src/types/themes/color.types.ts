@@ -70,3 +70,5 @@ export type ColorCollection = {
   hexOpaque: HexColorOpaque;
   hexAlpha: HexColorAlpha;
 };
+
+export type AnyColor = HexColor | RgbaColorStr | RgbaColorArr | RgbaColorObj;

@@ -8,7 +8,10 @@ import {
   RgbaColorArr,
   RgbaColorObj,
   RgbaColorStr,
-} from "@/types/themes/color.types";
+  AnyColor,
+} from "../types";
+import { isString, isObject, isArray } from "@ubloimmo/front-util";
+import { lerp } from "./number.utils";
 
 /**
  * Converts an RGBA color string to an RGBA color array.
@@ -190,7 +193,7 @@ const isHexColorShorthandAlpha = (
  * @throws {Error} when an unsupported hex color is provided.
  * @return {HexColorAlpha} The hex color with alpha channel.
  */
-const hexColorToHexColorAlpha = (hexColor: HexColor): HexColorAlpha => {
+export const hexColorToHexColorAlpha = (hexColor: HexColor): HexColorAlpha => {
   if (!isValidHexStr(hexColor)) {
     throw new Error("Unsupported hex color provided");
   }
@@ -330,6 +333,51 @@ const rgbaColorStrToHex = (rgbaColorStr: RgbaColorStr): HexColorAlpha => {
  */
 const rgbaColorObjToHex = (rgbaColorObj: RgbaColorObj): HexColorAlpha => {
   return rgbaColorArrToHex(rgbaColorObjToArr(rgbaColorObj));
+};
+
+/**
+ * Converts any color format to an RGBA color array.
+ *
+ * @param {AnyColor} anyColor - the color to be converted
+ * @return {RgbaColorArr} the RGBA color array
+ */
+const anyColorToRgbaColorArr = (anyColor: AnyColor): RgbaColorArr => {
+  if (isValidHexStr(anyColor)) {
+    return hexColorToRgbaColorArr(anyColor);
+  }
+  if (isObject(anyColor) && !isArray(anyColor)) {
+    return rgbaColorObjToArr(anyColor);
+  }
+  if (isString(anyColor)) {
+    return rgbaColorStrToArr(anyColor);
+  }
+  return anyColor;
+};
+
+/**
+ * Blends two colors using a specified factor.
+ *
+ * @param {AnyColor} colorA - the first color to blend
+ * @param {AnyColor} colorB - the second color to blend
+ * @param {number} [factor=0.5] - the blending factor
+ * @return {RgbaColorStr} the blended color in RGBA string format
+ */
+export const blendColors = (
+  colorA: AnyColor,
+  colorB: AnyColor,
+  factor = 0.5
+): RgbaColorStr => {
+  const arrA = anyColorToRgbaColorArr(colorA);
+  const arrB = anyColorToRgbaColorArr(colorB);
+
+  const blended = arrA.map((channel, index) => {
+    const lerped = lerp(channel, arrB[index], factor);
+    // do not round alpha channel
+    if (index === 3) return lerped;
+    return Math.round(lerped);
+  }) as RgbaColorArr;
+
+  return rgbaColorArrToStr(blended);
 };
 
 /**

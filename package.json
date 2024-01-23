@@ -39,12 +39,13 @@
     "test:types:watch": "tsc --noEmit --watch",
     "test:lint": "eslint . --cache --cache-location .cache/eslint",
     "test:unit": "bun test",
-    "test:unit:coverage": "bun test --coverage"
+    "test:unit:coverage": "bun test --coverage",
+    "test:unit:watch": "bun test --coverage --watch"
   },
   "type": "module",
   "dependencies": {
     "@ubloimmo/front-tokens": "0.1.1",
-    "@ubloimmo/front-util": "0.0.6",
+    "@ubloimmo/front-util": "0.0.7",
     "styled-components": "^6.1.8"
   },
   "jest": {
