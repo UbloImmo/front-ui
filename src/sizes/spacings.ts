@@ -68,9 +68,9 @@ export const defaultSpacingMapConfig = {
  *
  * @remarks Always adds a 0.5 scale to the spacing map
  *
- * @param {number} minFactor - the minimum factor for spacing map
- * @param {number} maxFactor - the maximum factor for spacing map
- * @param {number} mediumFactor - the medium factor for spacing map
+ * @param {number} minFactor - the minimum factor for spacing map - defaults to {@link defaultSpacingMapConfig.minFactor}
+ * @param {number} maxFactor - the maximum factor for spacing map - defaults to {@link defaultSpacingMapConfig.maxFactor}
+ * @param {number} mediumFactor - the medium factor for spacing map - defaults to {@link defaultSpacingMapConfig.mediumFactor}
  * @return {Spacings} the constructed spacing map
  */
 export const buildSpacingMap = (
