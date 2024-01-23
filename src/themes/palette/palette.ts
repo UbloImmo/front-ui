@@ -20,7 +20,7 @@ import {
   isNull,
   Nullable,
 } from "@ubloimmo/front-util";
-import { rgbaColorConverter } from "@/utils/color.utils";
+import { rgbaColorConverter, blendColors } from "@/utils/color.utils";
 import { RgbaColorArr } from "@/types/themes/color.types";
 
 /**
@@ -111,13 +111,23 @@ const buildClientColorPalette = (): ClientColorPalette => {
           ] as unknown as (typeof colors)[ClientColorPaletteKey] & {
             main?: Token<"COLOR">;
           };
-          // add missing medium color token (duplicate dark)
           // TODO: remove this step once client color design file is updated
           if (!clientColorTokenGroup?.main) return [key, null];
+          // blend between dark and main to generate medium
+          const mediumColor = blendColors(
+            clientColorTokenGroup.main.value,
+            clientColorTokenGroup.dark.value,
+            0.5
+          );
+          const mediumToken: Token<"COLOR"> = {
+            name: "medium",
+            type: "COLOR",
+            value: mediumColor,
+          };
           const updatedTokenGroup = {
             dark: clientColorTokenGroup.dark,
             light: clientColorTokenGroup.light,
-            medium: clientColorTokenGroup.dark,
+            medium: mediumToken,
             base: clientColorTokenGroup.main,
           };
           return [key, updatedTokenGroup];
@@ -150,10 +160,18 @@ const buildDynamicColorPalette = (
   };
 };
 
-export const buildColorPalette = (): ColorPalette => {
+/**
+ * Builds a color palette for the specified client.
+ *
+ * @param {ClientColorPaletteKey} forClient - the key for the client color palette
+ * @return {ColorPalette} the color palette for the specified client
+ */
+export const buildColorPalette = (
+  forClient: ClientColorPaletteKey = "ublo"
+): ColorPalette => {
   return {
+    ...buildDynamicColorPalette(forClient),
     ...buildStaticColorPalette(),
-    ...buildDynamicColorPalette(),
   };
 };
 

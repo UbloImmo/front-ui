@@ -64,6 +64,7 @@ describe("palette", () => {
       it("should not throw during build process", () => {
         expect(buildColorPalette).not.toThrow();
         nextPalette = buildColorPalette();
+        console.log(nextPalette);
       });
       it("should return a palette object", () => {
         expect(nextPalette).toBeDefined();

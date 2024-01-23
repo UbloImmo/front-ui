@@ -8,12 +8,13 @@ import {
 } from "../types/themes/color.types";
 import { describe, expect, it } from "bun:test";
 import {
+  blendColors,
   hexColorConverter,
   isValidHexStr,
   rgbaColorConverter,
 } from "../utils/color.utils";
 
-const redColor: ColorCollection = {
+const red: ColorCollection = {
   rgbaStr: "rgba(255, 0, 0, 1)",
   rgbaArr: [255, 0, 0, 1],
   rgbaObj: { r: 255, g: 0, b: 0, a: 1 },
@@ -21,9 +22,9 @@ const redColor: ColorCollection = {
   hexShortAlpha: "#F00F" as HexColorShorthandAlpha,
   hexOpaque: "#FF0000" as HexColorOpaque,
   hexAlpha: "#FF0000FF" as HexColorAlpha,
-};
+} as const;
 
-const greenColor: ColorCollection = {
+const green: ColorCollection = {
   rgbaStr: "rgba(0, 255, 0, 1)",
   rgbaArr: [0, 255, 0, 1],
   rgbaObj: { r: 0, g: 255, b: 0, a: 1 },
@@ -31,9 +32,9 @@ const greenColor: ColorCollection = {
   hexShortAlpha: "#0F0F" as HexColorShorthandAlpha,
   hexOpaque: "#00FF00" as HexColorOpaque,
   hexAlpha: "#00FF00FF" as HexColorAlpha,
-};
+} as const;
 
-const blueColor: ColorCollection = {
+const blue: ColorCollection = {
   rgbaStr: "rgba(0, 0, 255, 1)",
   rgbaArr: [0, 0, 255, 1],
   rgbaObj: { r: 0, g: 0, b: 255, a: 1 },
@@ -41,7 +42,34 @@ const blueColor: ColorCollection = {
   hexShortAlpha: "#00FF" as HexColorShorthandAlpha,
   hexOpaque: "#0000FF" as HexColorOpaque,
   hexAlpha: "#0000FFFF" as HexColorAlpha,
-};
+} as const;
+
+const colorCollections = {
+  red,
+  green,
+  blue,
+} as const;
+
+const redAndGreen = "rgba(128, 128, 0, 1)" as const;
+const redAndBlue = "rgba(128, 0, 128, 1)" as const;
+const greenAndBlue = "rgba(0, 128, 128, 1)" as const;
+const colorBlends = {
+  red: {
+    red: red.rgbaStr,
+    green: redAndGreen,
+    blue: redAndBlue,
+  },
+  green: {
+    red: redAndGreen,
+    green: green.rgbaStr,
+    blue: greenAndBlue,
+  },
+  blue: {
+    red: redAndBlue,
+    green: greenAndBlue,
+    blue: blue.rgbaStr,
+  },
+} as const;
 
 const testColorConversion = <
   TInput extends keyof ColorCollection,
@@ -52,9 +80,9 @@ const testColorConversion = <
   converter: (input: ColorCollection[TInput]) => ColorCollection[TOutput]
 ) => {
   it(`should convert ${input} to ${output}`, () => {
-    expect(converter(redColor[input])).toEqual(redColor[output]);
-    expect(converter(greenColor[input])).toEqual(greenColor[output]);
-    expect(converter(blueColor[input])).toEqual(blueColor[output]);
+    expect(converter(red[input])).toEqual(red[output]);
+    expect(converter(green[input])).toEqual(green[output]);
+    expect(converter(blue[input])).toEqual(blue[output]);
   });
 };
 
@@ -88,13 +116,13 @@ describe("color conversion", () => {
 
   describe("isValidHex", () => {
     it("should return true for a valid hex string", () => {
-      expect(isValidHexStr(redColor.hexAlpha)).toBeTrue();
-      expect(isValidHexStr(redColor.hexShort)).toBeTrue();
-      expect(isValidHexStr(redColor.hexOpaque)).toBeTrue();
-      expect(isValidHexStr(redColor.hexShortAlpha)).toBeTrue();
+      expect(isValidHexStr(red.hexAlpha)).toBeTrue();
+      expect(isValidHexStr(red.hexShort)).toBeTrue();
+      expect(isValidHexStr(red.hexOpaque)).toBeTrue();
+      expect(isValidHexStr(red.hexShortAlpha)).toBeTrue();
     });
     it("should return false for an invalid hex string", () => {
-      expect(isValidHexStr(redColor.rgbaStr)).toBeFalse();
+      expect(isValidHexStr(red.rgbaStr)).toBeFalse();
       expect(isValidHexStr("hello world")).toBeFalse();
       expect(isValidHexStr("25FA15")).toBeFalse();
     });
@@ -110,5 +138,30 @@ describe("color conversion", () => {
       testHexColorConversion("rgbaArr", hexColorConverter.hexToRgbaArr);
       testHexColorConversion("rgbaObj", hexColorConverter.hexToRgbaObj);
     });
+  });
+});
+
+const testColorBlend = (
+  colorA: "red" | "green" | "blue",
+  colorB: "red" | "green" | "blue"
+) => {
+  const source = colorCollections[colorA].rgbaStr;
+  const target = colorCollections[colorB].rgbaStr;
+  const targetBlend = colorBlends[colorA][colorB];
+  expect(blendColors(source, target, 0.5)).toEqual(targetBlend);
+  expect(blendColors(target, source, 0.5)).toEqual(targetBlend);
+};
+
+describe("color blending", () => {
+  it("should blend properly between two colors", () => {
+    testColorBlend("red", "red");
+    testColorBlend("red", "green");
+    testColorBlend("red", "blue");
+    testColorBlend("green", "green");
+    testColorBlend("green", "red");
+    testColorBlend("green", "blue");
+    testColorBlend("blue", "blue");
+    testColorBlend("blue", "red");
+    testColorBlend("blue", "green");
   });
 });
