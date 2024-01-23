@@ -46,8 +46,27 @@ const buildSpacingLabel = (
   return `${prefix}_${suffix}`;
 };
 
+export const defaultSpacingMapConfig = {
+  /**
+   * Minimum factor for the generated spacing map.
+   * Affects number of generated spacing keys and values
+   */
+  minFactor: 1, // 1*4 = 4px = 0.25rem
+  /**
+   * Maximum factor for the generated spacing map.
+   * Affects number of generated spacing keys and values
+   */
+  maxFactor: 16, // 16*4 = 64px = 4rem
+  /**
+   * Represent the factor for which the medium label should be used
+   */
+  mediumFactor: 4, // 4*4 = 16px = 1rem
+} as const;
+
 /**
  * Builds a spacing map based on the provided minimum, maximum, and medium factors.
+ *
+ * @remarks Always adds a 0.5 scale to the spacing map
  *
  * @param {number} minFactor - the minimum factor for spacing map
  * @param {number} maxFactor - the maximum factor for spacing map
@@ -55,9 +74,9 @@ const buildSpacingLabel = (
  * @return {Spacings} the constructed spacing map
  */
 export const buildSpacingMap = (
-  minFactor = 1,
-  maxFactor = 16,
-  mediumFactor = 4
+  minFactor = defaultSpacingMapConfig.minFactor,
+  maxFactor = defaultSpacingMapConfig.maxFactor,
+  mediumFactor = defaultSpacingMapConfig.mediumFactor
 ): Spacings => {
   // construct factors array based on min / max factors
   // add +1 to offset added 0.5 scale

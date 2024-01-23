@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { buildSpacingMap } from "../sizes";
+import { buildSpacingMap, defaultSpacingMapConfig } from "../sizes";
 import { cssRem } from "../utils";
 import type { Spacings } from "../types";
 
@@ -8,7 +8,8 @@ describe("spacings", () => {
   it("should create a spacing map", () => {
     expect(buildSpacingMap).toBeDefined();
     expect(buildSpacingMap).not.toThrow();
-    spacings = buildSpacingMap();
+    const { minFactor, maxFactor, mediumFactor } = defaultSpacingMapConfig;
+    spacings = buildSpacingMap(minFactor, maxFactor, mediumFactor);
   });
   it("should be offset by 16px by default", () => {
     expect(spacings.xxx_small).toEqual(cssRem(0.125));
