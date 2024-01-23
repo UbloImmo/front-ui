@@ -29,9 +29,6 @@ const hexComponents = [
   // "f",
 ] as const;
 
-export const hexRegex =
-  /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{8})$/;
-
 export type HexComponent = Enum<typeof hexComponents> | `${number}`;
 
 /**

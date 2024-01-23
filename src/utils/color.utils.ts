@@ -1,10 +1,9 @@
-import {
+import type {
   HexColor,
   HexColorAlpha,
   HexColorShorthand,
   HexColorShorthandAlpha,
   HexComponentDouble,
-  hexRegex,
   RgbaColorArr,
   RgbaColorObj,
   RgbaColorStr,
@@ -12,6 +11,9 @@ import {
 } from "../types";
 import { isString, isObject, isArray } from "@ubloimmo/front-util";
 import { lerp } from "./number.utils";
+
+export const hexRegex =
+  /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{8})$/;
 
 /**
  * Converts an RGBA color string to an RGBA color array.
