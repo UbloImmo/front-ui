@@ -10,8 +10,7 @@ export const breakpoints = {
   XXL: 1536,
 } as const;
 
-export const breakpointsPx = transformObject<
-  keyof typeof breakpoints,
-  number,
-  string
->(breakpoints, (value) => `${value}px`);
+export const breakpointsPx = transformObject(
+  breakpoints,
+  (value) => `${value}px`
+);

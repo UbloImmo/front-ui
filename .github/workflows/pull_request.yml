@@ -1,0 +1,63 @@
+name: Pull request
+run-name: Checking pull-request
+on: pull_request
+
+concurrency:
+  group: ci-pr-front-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  check_pr:
+    name: Check PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Bun
+        id: bun_setup
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Check bun
+        id: bun_check
+        run: |
+          which bun
+          bun --version
+
+      - name: Setup node
+        id: node_setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Check node
+        id: node_check
+        run: |
+          which node
+          node --version
+          which npm
+          npm --version
+
+      - name: ESLint Cache
+        uses: actions/cache@v3
+        id: eslint-cache
+        with:
+          path: front/.cache/eslint
+          key: ${{ runner.os }}-eslint
+
+      - name: Install dependencies (bun)
+        id: bun_install
+        run: bun install
+
+      - name: Code analysis (ESLint) and style-guide analysis (Prettier)
+        run: bun test:lint
+
+      - name: Typings Analysis (Typescript)
+        run: bun test:types
+
+      - name: Unit tests
+        run: bun test:unit:coverage
