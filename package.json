@@ -39,7 +39,8 @@
     "test:types:watch": "tsc --noEmit --watch",
     "test:lint": "eslint . --cache --cache-location .cache/eslint",
     "test:unit": "bun test",
-    "test:unit:coverage": "bun test --coverage"
+    "test:unit:coverage": "bun test --coverage",
+    "test:unit:watch": "bun test --coverage --watch"
   },
   "type": "module",
   "dependencies": {
