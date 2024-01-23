@@ -1,3 +1,5 @@
+import { RgbaColorStr } from "@/types/themes/color.types";
+
 export const tokenTypes = [
   "TEXT",
   "COLOR",
@@ -15,7 +17,7 @@ export type Token<TType extends TokenType = TokenType> = {
     style: Partial<CSSStyleDeclaration>;
     rules: string;
   };
-  value: string;
+  value: TType extends "COLOR" ? RgbaColorStr : string;
 };
 
 export type TokenValues = {

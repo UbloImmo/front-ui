@@ -40,10 +40,10 @@ const colorTokenToLegacyPaletteColor = <
       ([extractKey, mapToKey]: [
         keyof TColorTokenGroup,
         keyof TReturnPalette
-      ]): [keyof TReturnPalette, string] => [
-        mapToKey,
-        colorTokenGroup[extractKey].value,
-      ]
+      ]): [keyof TReturnPalette, string] => {
+        const token = colorTokenGroup[extractKey];
+        return [mapToKey, token.value];
+      }
     )
   ) as Record<keyof TReturnPalette, string> as TReturnPalette;
 };
@@ -56,11 +56,11 @@ const colorTokenToLegacyPaletteColor = <
  * @see colorTokenToLegacyPaletteColor
  */
 const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
-  const { error, warning, pending, success, ublo, gray } = colors;
-  const legacyStateTokens = { error, warning, pending, success, info: ublo };
+  const { error, warning, pending, success, primary, gray } = colors;
+  const legacyStateTokens = { error, warning, pending, success, info: primary };
   return {
-    primary: colorTokenToLegacyPaletteColor<LegacyFullPalette>(ublo, [
-      ["main", "base"],
+    primary: colorTokenToLegacyPaletteColor<LegacyFullPalette>(primary, [
+      "base",
       "dark",
       "light",
     ]),
@@ -68,7 +68,7 @@ const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
       legacyStateTokens,
       (token): LegacyFullPalette =>
         colorTokenToLegacyPaletteColor<LegacyFullPalette>(token, [
-          ["main", "base"],
+          "base",
           "dark",
           "light",
         ])
@@ -185,7 +185,7 @@ const buildLegacyShadows = (): LegacyShadows => {
  *
  * @return {LegacyPalette} The legacy palette object.
  */
-export const buildLegacyPalette = (): LegacyPalette => {
+export const buildLegacyColorPalette = (): LegacyPalette => {
   return {
     ...colorTokensToLegacyColorPalette(),
     shadows: buildLegacyShadows(),
@@ -193,4 +193,4 @@ export const buildLegacyPalette = (): LegacyPalette => {
   } as LegacyPalette;
 };
 
-export const legacyPalette = buildLegacyPalette();
+export const legacyColorPalette = buildLegacyColorPalette();

@@ -12,5 +12,5 @@ export const breakpoints = {
 
 export const breakpointsPx = transformObject(
   breakpoints,
-  (value) => `${value}px`
+  (value): `${number}px` => `${value}px`
 );
