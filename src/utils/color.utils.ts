@@ -193,7 +193,7 @@ const isHexColorShorthandAlpha = (
  * @throws {Error} when an unsupported hex color is provided.
  * @return {HexColorAlpha} The hex color with alpha channel.
  */
-const hexColorToHexColorAlpha = (hexColor: HexColor): HexColorAlpha => {
+export const hexColorToHexColorAlpha = (hexColor: HexColor): HexColorAlpha => {
   if (!isValidHexStr(hexColor)) {
     throw new Error("Unsupported hex color provided");
   }

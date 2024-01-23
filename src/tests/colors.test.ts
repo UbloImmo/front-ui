@@ -5,6 +5,7 @@ import {
   HexColorOpaque,
   HexColorShorthand,
   HexColorShorthandAlpha,
+  RgbaColorStr,
 } from "../types/themes/color.types";
 import { describe, expect, it } from "bun:test";
 import {
@@ -13,6 +14,9 @@ import {
   isValidHexStr,
   rgbaColorConverter,
 } from "../utils/color.utils";
+import { objectEntries } from "@ubloimmo/front-util";
+
+type PrimaryColor = "red" | "green" | "blue";
 
 const red: ColorCollection = {
   rgbaStr: "rgba(255, 0, 0, 1)",
@@ -50,10 +54,10 @@ const colorCollections = {
   blue,
 } as const;
 
-const redAndGreen = "rgba(128, 128, 0, 1)" as const;
-const redAndBlue = "rgba(128, 0, 128, 1)" as const;
-const greenAndBlue = "rgba(0, 128, 128, 1)" as const;
-const colorBlends = {
+const redAndGreen: RgbaColorStr = "rgba(128, 128, 0, 1)" as const;
+const redAndBlue: RgbaColorStr = "rgba(128, 0, 128, 1)" as const;
+const greenAndBlue: RgbaColorStr = "rgba(0, 128, 128, 1)" as const;
+const colorBlends: Record<PrimaryColor, Record<PrimaryColor, RgbaColorStr>> = {
   red: {
     red: red.rgbaStr,
     green: redAndGreen,
@@ -130,6 +134,11 @@ describe("color conversion", () => {
 
   describe("from Hex", () => {
     describe("to Hex", () => {
+      it("should throw for an invalid hex string", () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore normalize() is correctly typed to we have to disable TS for it to throw
+        expect(() => hexColorConverter.normalize("hello world")).toThrow();
+      });
       testHexColorConversion("hexAlpha", hexColorConverter.normalize);
     });
 
@@ -141,27 +150,36 @@ describe("color conversion", () => {
   });
 });
 
-const testColorBlend = (
-  colorA: "red" | "green" | "blue",
-  colorB: "red" | "green" | "blue"
-) => {
-  const source = colorCollections[colorA].rgbaStr;
-  const target = colorCollections[colorB].rgbaStr;
-  const targetBlend = colorBlends[colorA][colorB];
-  expect(blendColors(source, target, 0.5)).toEqual(targetBlend);
-  expect(blendColors(target, source, 0.5)).toEqual(targetBlend);
+/**
+ * Test color blending between two specified colors and all color format combinations.
+ *
+ * @param {"red" | "green" | "blue"} colorA - the first color to blend
+ * @param {"red" | "green" | "blue"} colorB - the second color to blend
+ * @return {void}
+ */
+const testColorBlend = (colorA: PrimaryColor, colorB: PrimaryColor) => {
+  const sources = objectEntries(colorCollections[colorA]);
+  const targets = objectEntries(colorCollections[colorB]);
+
+  sources.forEach(([sourceKey, source]) => {
+    targets.forEach(([targetKey, target]) => {
+      it(`should blend between ${sourceKey} and ${targetKey}`, () => {
+        const targetBlend = colorBlends[colorA][colorB];
+        expect(blendColors(source, target, 0.5)).toEqual(targetBlend);
+        expect(blendColors(target, source, 0.5)).toEqual(targetBlend);
+      });
+    });
+  });
 };
 
 describe("color blending", () => {
-  it("should blend properly between two colors", () => {
-    testColorBlend("red", "red");
-    testColorBlend("red", "green");
-    testColorBlend("red", "blue");
-    testColorBlend("green", "green");
-    testColorBlend("green", "red");
-    testColorBlend("green", "blue");
-    testColorBlend("blue", "blue");
-    testColorBlend("blue", "red");
-    testColorBlend("blue", "green");
-  });
+  testColorBlend("red", "red");
+  testColorBlend("red", "green");
+  testColorBlend("red", "blue");
+  testColorBlend("green", "green");
+  testColorBlend("green", "red");
+  testColorBlend("green", "blue");
+  testColorBlend("blue", "blue");
+  testColorBlend("blue", "red");
+  testColorBlend("blue", "green");
 });
