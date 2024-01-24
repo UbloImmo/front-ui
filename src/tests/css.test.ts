@@ -4,6 +4,8 @@ import {
   cssPxToCssRem,
   cssRem,
   cssRemToCssPx,
+  cssVar,
+  cssVarName,
   isCssPx,
   isCssRem,
   pxToRem,
@@ -66,6 +68,22 @@ describe("css", () => {
     testLengthConversion("rem", "px", remToPx);
     testLengthConversion("cssPx", "cssRem", cssPxToCssRem);
     testLengthConversion("cssRem", "cssPx", cssRemToCssPx);
+  });
+
+  describe("variables", () => {
+    it("should create a css variable name", () => {
+      expect(cssVarName).toBeFunction();
+      expect(cssVarName).not.toThrow();
+      expect(cssVarName("foo")).toEqual("--foo");
+    });
+
+    it("should create a css variable rule", () => {
+      expect(cssVar).toBeFunction();
+      expect(cssVar).not.toThrow();
+      expect(cssVar("foo", lengths.cssRem.float)).toEqual(
+        `--foo: ${lengths.cssRem.float};`
+      );
+    });
   });
 
   describe("predicates", () => {
