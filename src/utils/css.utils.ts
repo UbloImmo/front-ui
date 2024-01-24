@@ -1,4 +1,5 @@
 import type { CssPx, CssRem } from "@/types";
+import { isString } from "@ubloimmo/front-util";
 
 const REM_FACTOR = 16 as const;
 
@@ -69,3 +70,17 @@ export const cssPxToCssRem = (cssPx: CssPx): CssRem =>
  */
 export const cssRemToCssPx = (cssRem: CssRem): CssPx =>
   cssPx(remToPx(extractRem(cssRem)));
+
+export const isCssPx = (value: unknown): value is CssPx => {
+  if (!isString(value) || !value.includes("px") || isNaN(parseFloat(value))) {
+    return false;
+  }
+  return true;
+};
+
+export const isCssRem = (value: unknown): value is CssRem => {
+  if (!isString(value) || !value.includes("rem") || isNaN(parseFloat(value))) {
+    return false;
+  }
+  return true;
+};

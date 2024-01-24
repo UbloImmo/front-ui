@@ -11,6 +11,7 @@ import {
   buildColorPalette,
   extractEffectTokenShadow,
 } from "../themes";
+import { effects, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
 
 const LEGACY_PALETTE_KEYS: (keyof LegacyPalette)[] = [
   "shadows",
@@ -49,6 +50,12 @@ describe("palette", () => {
   describe("legacy", () => {
     let legacyPalette: LegacyPalette;
     describe("build process", () => {
+      it("should have access to exported tokens", () => {
+        expect(effects).toBeDefined();
+        expect(colors).toBeDefined();
+        expect(effects).toBeObject();
+        expect(colors).toBeObject();
+      });
       it("should not throw during build process", () => {
         expect(buildLegacyColorPalette).not.toThrow();
         legacyPalette = buildLegacyColorPalette();
