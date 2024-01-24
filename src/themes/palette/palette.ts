@@ -3,7 +3,7 @@ import {
   ClientColorPalette,
   ClientColorPaletteKey,
   ColorPalette,
-  DefaultPaletteShadeKey,
+  DefaultPaletteColorShadeKey,
   DynamicColorPalette,
   GrayscalePaletteColorShadeKey,
   PaletteColorShade,
@@ -66,7 +66,7 @@ const buildStaticColorPalette = (): StaticColorPalette => {
   return {
     ...transformObject(
       statusShades,
-      colorTokenGroupToPaletteColorShaded<DefaultPaletteShadeKey[]>
+      colorTokenGroupToPaletteColorShaded<DefaultPaletteColorShadeKey[]>
     ),
     gray: colorTokenGroupToPaletteColorShaded<GrayscalePaletteColorShadeKey[]>(
       gray
@@ -105,7 +105,7 @@ const buildClientColorPalette = (): ClientColorPalette => {
           key
         ): [
           ClientColorPaletteKey,
-          Nullable<Record<DefaultPaletteShadeKey, Token<"COLOR">>>
+          Nullable<Record<DefaultPaletteColorShadeKey, Token<"COLOR">>>
         ] => {
           const clientColorTokenGroup = colors[
             key
@@ -137,12 +137,12 @@ const buildClientColorPalette = (): ClientColorPalette => {
       (item) => !isNull(item[1])
     ) as [
       ClientColorPaletteKey,
-      Record<DefaultPaletteShadeKey, Token<"COLOR">>
+      Record<DefaultPaletteColorShadeKey, Token<"COLOR">>
     ][]
   );
   return transformObject(
     clientColorTokens,
-    colorTokenGroupToPaletteColorShaded<DefaultPaletteShadeKey[]>
+    colorTokenGroupToPaletteColorShaded<DefaultPaletteColorShadeKey[]>
   );
 };
 
