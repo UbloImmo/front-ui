@@ -4,6 +4,8 @@ import {
   cssPxToCssRem,
   cssRem,
   cssRemToCssPx,
+  isCssPx,
+  isCssRem,
   pxToRem,
   remToPx,
 } from "../utils";
@@ -56,11 +58,43 @@ const testLengthConversion = <
   });
 };
 
-describe("css unit conversion", () => {
-  testLengthConversion("px", "cssPx", cssPx);
-  testLengthConversion("rem", "cssRem", cssRem);
-  testLengthConversion("px", "rem", pxToRem);
-  testLengthConversion("rem", "px", remToPx);
-  testLengthConversion("cssPx", "cssRem", cssPxToCssRem);
-  testLengthConversion("cssRem", "cssPx", cssRemToCssPx);
+describe("css", () => {
+  describe("unit conversion", () => {
+    testLengthConversion("px", "cssPx", cssPx);
+    testLengthConversion("rem", "cssRem", cssRem);
+    testLengthConversion("px", "rem", pxToRem);
+    testLengthConversion("rem", "px", remToPx);
+    testLengthConversion("cssPx", "cssRem", cssPxToCssRem);
+    testLengthConversion("cssRem", "cssPx", cssRemToCssPx);
+  });
+
+  describe("predicates", () => {
+    it("should identify css pixels", () => {
+      expect(isCssPx).toBeFunction();
+      expect(isCssPx).not.toThrow();
+      expect(isCssPx(lengths.cssPx.int)).toBeTrue();
+      expect(isCssPx(lengths.cssPx.float)).toBeTrue();
+      expect(isCssPx(lengths.cssPx.negative)).toBeTrue();
+      expect(isCssPx(lengths.cssRem.int)).toBeFalse();
+      expect(isCssPx(lengths.cssRem.float)).toBeFalse();
+      expect(isCssPx(lengths.cssRem.negative)).toBeFalse();
+      expect(isCssPx(lengths.px.int)).toBeFalse();
+      expect(isCssPx(lengths.px.float)).toBeFalse();
+      expect(isCssPx(lengths.px.negative)).toBeFalse();
+    });
+
+    it("should identify css rems", () => {
+      expect(isCssRem).toBeFunction();
+      expect(isCssRem).not.toThrow();
+      expect(isCssRem(lengths.cssPx.int)).toBeFalse();
+      expect(isCssRem(lengths.cssPx.float)).toBeFalse();
+      expect(isCssRem(lengths.cssPx.negative)).toBeFalse();
+      expect(isCssRem(lengths.cssRem.int)).toBeTrue();
+      expect(isCssRem(lengths.cssRem.float)).toBeTrue();
+      expect(isCssRem(lengths.cssRem.negative)).toBeTrue();
+      expect(isCssRem(lengths.px.int)).toBeFalse();
+      expect(isCssRem(lengths.px.float)).toBeFalse();
+      expect(isCssRem(lengths.px.negative)).toBeFalse();
+    });
+  });
 });

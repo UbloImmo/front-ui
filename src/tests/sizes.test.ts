@@ -1,28 +1,30 @@
 import { describe, expect, it } from "bun:test";
 import { buildSpacingMap, defaultSpacingMapConfig } from "../sizes";
-import { cssRem } from "../utils";
+import { isCssRem } from "../utils";
 import type { Spacings } from "../types";
+import { objectValues, objectKeys } from "@ubloimmo/front-util";
 
 describe("spacings", () => {
   let spacings: Spacings;
   it("should create a spacing map", () => {
     expect(buildSpacingMap).toBeDefined();
     expect(buildSpacingMap).not.toThrow();
-    const { minFactor, maxFactor, mediumFactor } = defaultSpacingMapConfig;
-    spacings = buildSpacingMap(minFactor, maxFactor, mediumFactor);
+    spacings = buildSpacingMap(defaultSpacingMapConfig.maxScale);
+    expect(spacings).not.toBeEmptyObject();
   });
-  it("should be offset by 16px by default", () => {
-    expect(spacings.xxx_small).toEqual(cssRem(0.125));
-    expect(spacings.xx_small).toEqual(cssRem(0.25));
-    expect(spacings.x_small).toEqual(cssRem(0.5));
-    expect(spacings.small).toEqual(cssRem(0.75));
-    expect(spacings.medium).toEqual(cssRem(1));
-    expect(spacings.large).toEqual(cssRem(1.25));
-    expect(spacings.x_large).toEqual(cssRem(1.5));
-    expect(spacings.xx_large).toEqual(cssRem(1.75));
-    expect(spacings.xxx_large).toEqual(cssRem(2));
-    expect(spacings.xxxx_large).toEqual(cssRem(2.25));
-    expect(spacings.xxxxx_large).toEqual(cssRem(2.5));
-    expect(spacings.xxxxxx_large).toEqual(cssRem(2.75));
+  it("should contain all scales", () => {
+    expect(Object.keys(spacings).length - 1).toEqual(
+      defaultSpacingMapConfig.maxScale
+    );
+  });
+  it("should only contain css rem values", () => {
+    objectValues(spacings).forEach((value) => {
+      expect(isCssRem(value)).toBeTrue();
+    });
+  });
+  it("should contain scales declared with the 's' prefix", () => {
+    objectKeys(spacings).forEach((key) => {
+      expect(key.startsWith("s")).toBeTrue();
+    });
   });
 });
