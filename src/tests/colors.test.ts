@@ -48,7 +48,7 @@ const blue: ColorCollection = {
   hexAlpha: "#0000FFFF" as HexColorAlpha,
 } as const;
 
-const colorCollections = {
+export const colorCollections = {
   red,
   green,
   blue,

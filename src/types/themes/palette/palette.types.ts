@@ -10,7 +10,9 @@ export const defaultPaletteColorShadeKeys = [
   "light",
 ] as const;
 
-export type DefaultPaletteShadeKey = Enum<typeof defaultPaletteColorShadeKeys>;
+export type DefaultPaletteColorShadeKey = Enum<
+  typeof defaultPaletteColorShadeKeys
+>;
 
 export const grayscalePaletteColorShadeKeys = [
   "900",
@@ -36,7 +38,7 @@ export type PaletteColorShade = {
 };
 
 export type AnyPaletteColorShadeKeys =
-  | DefaultPaletteShadeKey[]
+  | DefaultPaletteColorShadeKey[]
   | GrayscalePaletteColorShadeKey[];
 
 export type PaletteColorShaded<TShadeKey extends AnyPaletteColorShadeKeys> = {
@@ -44,10 +46,10 @@ export type PaletteColorShaded<TShadeKey extends AnyPaletteColorShadeKeys> = {
 };
 
 export type StaticColorPalette = {
-  success: PaletteColorShaded<DefaultPaletteShadeKey[]>;
-  error: PaletteColorShaded<DefaultPaletteShadeKey[]>;
-  warning: PaletteColorShaded<DefaultPaletteShadeKey[]>;
-  pending: PaletteColorShaded<DefaultPaletteShadeKey[]>;
+  success: PaletteColorShaded<DefaultPaletteColorShadeKey[]>;
+  error: PaletteColorShaded<DefaultPaletteColorShadeKey[]>;
+  warning: PaletteColorShaded<DefaultPaletteColorShadeKey[]>;
+  pending: PaletteColorShaded<DefaultPaletteColorShadeKey[]>;
   gray: PaletteColorShaded<GrayscalePaletteColorShadeKey[]>;
 };
 
@@ -57,11 +59,13 @@ export type ClientColorPaletteKey = Exclude<
 >;
 
 export type ClientColorPalette = {
-  [TKey in ClientColorPaletteKey]: PaletteColorShaded<DefaultPaletteShadeKey[]>;
+  [TKey in ClientColorPaletteKey]: PaletteColorShaded<
+    DefaultPaletteColorShadeKey[]
+  >;
 };
 
 export type DynamicColorPalette = {
-  primary: PaletteColorShaded<DefaultPaletteShadeKey[]>;
+  primary: PaletteColorShaded<DefaultPaletteColorShadeKey[]>;
 };
 
 export interface ColorPalette extends StaticColorPalette, DynamicColorPalette {}

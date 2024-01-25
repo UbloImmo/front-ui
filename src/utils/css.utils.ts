@@ -1,4 +1,4 @@
-import type { CssPx, CssRem } from "@/types";
+import type { CssPx, CssRem, CssVarName, CssVar } from "@/types";
 import { isString } from "@ubloimmo/front-util";
 
 const REM_FACTOR = 16 as const;
@@ -71,6 +71,12 @@ export const cssPxToCssRem = (cssPx: CssPx): CssRem =>
 export const cssRemToCssPx = (cssRem: CssRem): CssPx =>
   cssPx(remToPx(extractRem(cssRem)));
 
+/**
+ * Predicate that checks if the given value is a CSS pixel value.
+ *
+ * @param {unknown} value - The value to be checked.
+ * @return {boolean} Whether the value is a CSS pixel value.
+ */
 export const isCssPx = (value: unknown): value is CssPx => {
   if (!isString(value) || !value.includes("px") || isNaN(parseFloat(value))) {
     return false;
@@ -78,9 +84,36 @@ export const isCssPx = (value: unknown): value is CssPx => {
   return true;
 };
 
+/**
+ * Predicate that checks if the input value is a CSS rem value.
+ *
+ * @param {unknown} value - the value to be checked
+ * @return {boolean} true if the input value is a CSS rem value, false otherwise
+ */
 export const isCssRem = (value: unknown): value is CssRem => {
   if (!isString(value) || !value.includes("rem") || isNaN(parseFloat(value))) {
     return false;
   }
   return true;
 };
+
+/**
+ * Generates a CSS variable name by prefixing the input name with '--'.
+ *
+ * @param {string} name - The input name for the CSS variable
+ * @return {CssVarName} The generated CSS variable name
+ */
+export const cssVarName = (name: string): CssVarName => `--${name}`;
+
+/**
+ * Returns a CSS variable declaration with the provided name and value.
+ *
+ * @template {string} TValue - the type of the Css variable's value
+ * @param {string} name - the name of the CSS variable
+ * @param {TValue} value - the value of the CSS variable
+ * @return {CssVar<TValue>} the CSS variable declaration
+ */
+export const cssVar = <TValue extends string = string>(
+  name: string,
+  value: TValue
+): CssVar<TValue> => `${cssVarName(name)}: ${value};`;
