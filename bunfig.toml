@@ -2,3 +2,4 @@
 
 # always enable coverage
 coverage = true
+preload = "./.happydom.ts"
