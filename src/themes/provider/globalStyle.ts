@@ -6,11 +6,11 @@ import type {
   CssRem,
   RgbaColorStr,
   Spacings,
-} from "@/types";
+} from "../../types";
 import { createGlobalStyle, css } from "styled-components";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
-import { buildSpacingMap } from "@/sizes";
-import { cssVar } from "@/utils";
+import { buildSpacingMap } from "../../sizes";
+import { cssVar } from "../../utils";
 
 const { warn } = Logger();
 

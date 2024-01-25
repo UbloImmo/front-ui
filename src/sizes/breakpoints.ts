@@ -1,4 +1,4 @@
-import { cssPx } from "@/utils";
+import { cssPx } from "../utils";
 import { transformObject } from "@ubloimmo/front-util";
 
 export const breakpoints = {

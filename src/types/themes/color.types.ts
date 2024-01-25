@@ -1,4 +1,4 @@
-import { Enum } from "@/types/global/global.types";
+import { Enum } from "../";
 
 export type RgbaColorStr =
   | `rgba(${number}, ${number}, ${number}, ${number})`

@@ -19,9 +19,6 @@
     "baseUrl": "./",
     "allowJs": false,
     "strict": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "types": [
       "bun-types" // add Bun global
     ],

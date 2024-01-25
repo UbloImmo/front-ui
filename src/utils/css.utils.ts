@@ -1,4 +1,4 @@
-import type { CssPx, CssRem, CssVarName, CssVar } from "@/types";
+import type { CssPx, CssRem, CssVarName, CssVar } from "../types";
 import { isString } from "@ubloimmo/front-util";
 
 const REM_FACTOR = 16 as const;
