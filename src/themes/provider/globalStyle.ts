@@ -92,6 +92,13 @@ export const buildGlobalStyle = (theme: Theme) => {
   `;
 };
 
+/**
+ * Global style component that parses the `styled-components` {@link Theme},
+ * transforms it into global CSS variables and injects them into the document.
+ *
+ * @param {Theme} theme - The theme object
+ * @return {null}
+ */
 export const GlobalStyle = createGlobalStyle`
   ${({ theme }: { theme: Theme }) => buildGlobalStyle(theme)}
 `;

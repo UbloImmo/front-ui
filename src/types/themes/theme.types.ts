@@ -3,6 +3,8 @@ import { ColorPalette, LegacyPalette } from ".";
 /**
  * Styled-components theme
  *
+ * Includes all properties of {@link ColorPalette} and keeps {@link LegacyPalette} under the `palette` key.
+ *
  * @extends {@link ColorPalette}
  */
 export interface Theme extends ColorPalette {
