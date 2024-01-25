@@ -19,6 +19,7 @@ import {
   arrayFilter,
   isNull,
   Nullable,
+  isArray,
 } from "@ubloimmo/front-util";
 import { rgbaColorConverter, blendColors } from "@/utils/color.utils";
 import { RgbaColorArr } from "@/types/themes/color.types";
@@ -29,10 +30,12 @@ import { RgbaColorArr } from "@/types/themes/color.types";
  * @param {number} a - The opacity value to be applied to the RGBA color.
  * @return {string} The RGBA color with the specified opacity.
  */
-const shadeOpacityFactory =
-  ([r, g, b]: RgbaColorArr) =>
-  (a: number) =>
-    rgbaColorConverter.arrToStr([r, g, b, a]);
+export const shadeOpacityFactory = (rgbaColorArr: RgbaColorArr) => {
+  if (!rgbaColorArr || !isArray(rgbaColorArr))
+    throw new Error("Invalid color provided");
+  const [r, g, b] = rgbaColorArr;
+  return (a: number) => rgbaColorConverter.arrToStr([r, g, b, a]);
+};
 
 /**
  * Transforms a color token group into a shaded palette color.

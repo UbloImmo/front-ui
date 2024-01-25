@@ -8,9 +8,11 @@ import type {
   Spacings,
 } from "@/types";
 import { createGlobalStyle, css } from "styled-components";
-import { objectEntries } from "@ubloimmo/front-util";
+import { objectEntries, Logger } from "@ubloimmo/front-util";
 import { buildSpacingMap } from "@/sizes";
 import { cssVar } from "@/utils";
+
+const { warn } = Logger();
 
 /**
  * Generates CSS variables for the given palette color and its shades.
@@ -20,7 +22,9 @@ import { cssVar } from "@/utils";
  * @param {PaletteColorShaded<TShadeKeys>} shadedColors - the shaded palette color
  * @return {CssVar<RgbaColorStr>[]} an array of CSS variables for the palette color shades
  */
-const paletteColorToCssVars = <TShadeKeys extends AnyPaletteColorShadeKeys>(
+export const paletteColorToCssVars = <
+  TShadeKeys extends AnyPaletteColorShadeKeys
+>(
   colorName: string,
   shadedColors: PaletteColorShaded<TShadeKeys>
 ): CssVar<RgbaColorStr>[] => {
@@ -38,7 +42,7 @@ const paletteColorToCssVars = <TShadeKeys extends AnyPaletteColorShadeKeys>(
  * @param {Spacings} spacings - the spacings object
  * @return {CssVar<CssRem>[]} an array of CSS variables in rem units
  */
-const spacingsToCssVars = (spacings: Spacings): CssVar<CssRem>[] => {
+export const spacingsToCssVars = (spacings: Spacings): CssVar<CssRem>[] => {
   return objectEntries(spacings).map(([spacingName, value]) => {
     const varName = `s-${spacingName.slice(1)}`;
     return cssVar(varName, value);
@@ -52,7 +56,21 @@ const spacingsToCssVars = (spacings: Spacings): CssVar<CssRem>[] => {
  * @param {Theme} theme - The theme object
  * @return {string} The CSS for the global style
  */
-const buildGlobalStyle = (theme: Theme) => {
+export const buildGlobalStyle = (theme: Theme) => {
+  // generate css vars from spacings
+  const spacingsCssVars = spacingsToCssVars(buildSpacingMap()).join("\n");
+  // only return spacing css variables if theme is missing
+  if (!theme) {
+    warn(
+      "Missing theme. Generating spacing css variables only.",
+      "GlobalStyle"
+    );
+    return css`
+      :root {
+        ${spacingsCssVars}
+      }
+    `;
+  }
   // filter legacy palette out
   const { palette: _, ...palette } = theme;
   // generate css vars from non-legacy palette
@@ -64,8 +82,7 @@ const buildGlobalStyle = (theme: Theme) => {
       )
     )
     .join("\n");
-  // generate css vars from spacings
-  const spacingsCssVars = spacingsToCssVars(buildSpacingMap()).join("\n");
+
   // declare them in as global css variables
   return css`
     :root {
