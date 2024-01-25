@@ -1,5 +1,10 @@
-[test]
+# react import setup
+jsx = "react"
+jsxFragment = "Fragment"
+jsxImportSource = "react"
 
+[test]
 # always enable coverage
 coverage = true
+# load happydom package to ensure @testing-library/react compatibility
 preload = "./.happydom.ts"
