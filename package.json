@@ -4,9 +4,9 @@
   "private": false,
   "version": "0.0.1",
   "module": "src/index.ts",
-  "main": "lib/index.ts",
+  "main": "src/index.ts",
   "files": [
-    "lib"
+    "src"
   ],
   "license": "MIT",
   "author": "Jean-Nicolas Veigel <art.jnveigel@gmail.com>",
@@ -37,7 +37,6 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "build": "<REPLACE ME>",
     "incrementRevision": "bun src/scripts/incrementRevision.ts",
     "test:types": "tsc --noEmit",
     "test:types:watch": "tsc --noEmit --watch",
@@ -49,7 +48,7 @@
   "type": "module",
   "dependencies": {
     "@ubloimmo/front-tokens": "0.1.1",
-    "@ubloimmo/front-util": "0.0.7",
+    "@ubloimmo/front-util": "0.0.8",
     "react": "^18.2.0",
     "styled-components": "^6.1.8"
   },
