@@ -47,7 +47,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@ubloimmo/front-tokens": "0.1.1",
+    "@fontsource-variable/open-sans": "^5.0.23",
+    "@ubloimmo/front-tokens": "0.1.2",
     "@ubloimmo/front-util": "0.0.8",
     "react": "^18.2.0",
     "styled-components": "^6.1.8"
