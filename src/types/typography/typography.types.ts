@@ -1,0 +1,48 @@
+import { texts } from "@ubloimmo/front-tokens";
+import { ColorPalette, Enum } from "..";
+
+export type TypographyColor = {
+  [ColorKey in keyof ColorPalette & string]: {
+    [ShadeKey in keyof ColorPalette[ColorKey] &
+      string]: `${ColorKey}-${ShadeKey}`;
+  }[keyof ColorPalette[ColorKey] & string];
+}[keyof ColorPalette & string];
+
+export type TypographyTokens = typeof texts;
+
+export type TypographyCategory = keyof TypographyTokens & string;
+
+export type TypographySize<TCategory extends TypographyCategory> =
+  keyof TypographyTokens[TCategory] & string;
+
+export type TextSize = TypographySize<"text">;
+
+export type HeadingSize = TypographySize<"heading">;
+
+const typographyWeights = ["regular", "semiBold", "bold"] as const;
+
+export type TypographyWeight = Enum<typeof typographyWeights>;
+
+export type TypographyToken =
+  TypographyTokens["text"][TextSize][TypographyWeight];
+
+export type TypographyProps = {
+  color?: TypographyColor;
+  italic?: boolean;
+  underline?: boolean;
+  overline?: boolean;
+  lineThrough?: boolean;
+  weight: TypographyWeight;
+};
+
+export interface TextProps extends TypographyProps {
+  size?: TextSize;
+}
+
+export interface HeadingProps extends TypographyProps {
+  size?: HeadingSize;
+}
+
+export type AnyTypographyProps = TypographyProps & {
+  size?: HeadingProps["size"] | TextProps["size"];
+};
