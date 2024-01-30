@@ -6,8 +6,9 @@ import {
   LegacyLightAndDarkPalette,
   LegacyPalette,
   LegacyShadows,
-} from "@/types/themes/palette/palette.legacy.types";
-import { TokenValueGroup, Token } from "@/types/token.types";
+  TokenValueGroup,
+  Token,
+} from "../../types";
 import { objectKeys, transformObject } from "@ubloimmo/front-util";
 
 /**

@@ -1,4 +1,4 @@
-import type { CssPx, CssRem, CssVarName, CssVar } from "@/types";
+import type { CssPx, CssRem, CssVarName, CssVar, CssVarUsage } from "../types";
 import { isString } from "@ubloimmo/front-util";
 
 const REM_FACTOR = 16 as const;
@@ -117,3 +117,12 @@ export const cssVar = <TValue extends string = string>(
   name: string,
   value: TValue
 ): CssVar<TValue> => `${cssVarName(name)}: ${value};`;
+
+/**
+ * Returns a CSS variable usage with the provided name.
+ *
+ * @param {string} name - the name of the CSS variable
+ * @return {CssVarUsage} the usage of the CSS variable
+ */
+export const cssVarUsage = (name: string): CssVarUsage =>
+  `var(${cssVarName(name)})`;

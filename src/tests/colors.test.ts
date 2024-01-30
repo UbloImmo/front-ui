@@ -6,14 +6,14 @@ import type {
   HexColorShorthand,
   HexColorShorthandAlpha,
   RgbaColorStr,
-} from "../types/themes/color.types";
-import { describe, expect, it } from "bun:test";
+} from "../types";
 import {
   blendColors,
   hexColorConverter,
   isValidHexStr,
   rgbaColorConverter,
-} from "../utils/color.utils";
+} from "../utils/";
+import { describe, expect, it } from "bun:test";
 import { objectEntries } from "@ubloimmo/front-util";
 
 type PrimaryColor = "red" | "green" | "blue";

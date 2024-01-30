@@ -1,3 +1,4 @@
+import { mobileFontSize } from "./../../typography/typography.styles";
 import type {
   Theme,
   PaletteColorShaded,
@@ -6,11 +7,16 @@ import type {
   CssRem,
   RgbaColorStr,
   Spacings,
-} from "@/types";
+} from "../../types";
 import { createGlobalStyle, css } from "styled-components";
+import "@fontsource-variable/open-sans";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
-import { buildSpacingMap } from "@/sizes";
-import { cssVar } from "@/utils";
+import { breakpointsPx, buildSpacingMap } from "../../sizes";
+import { cssVar } from "../../utils";
+import { linkFontFace } from "../../typography/typography.font";
+import "@fontsource-variable/open-sans/index.css";
+import { texts } from "@ubloimmo/front-tokens";
+import { BreakpointLabel } from "src/types/themes/sizes/breakpoints.types";
 
 const { warn } = Logger();
 
@@ -50,6 +56,74 @@ export const spacingsToCssVars = (spacings: Spacings): CssVar<CssRem>[] => {
 };
 
 /**
+ * Generates CSS variables for mobile & desktop text sizes based on the generate text tokens.
+ *
+ * @return {{ desktop: CssVar<CssRem>[], mobile: CssVar<CssRem>[] }} Array of CSS variables for text sizes for desktop and mobile views
+ */
+export const textSizesToCssVars = (): {
+  desktop: CssVar<CssRem>[];
+  mobile: CssVar<CssRem>[];
+} => {
+  const allTextSizes = { ...texts.text, ...texts.heading };
+  const vars = objectEntries(allTextSizes).map(([size, weights]) => {
+    const { fontSize } = weights.regular.css.style;
+
+    return {
+      desktop: cssVar(`text-${size}`, fontSize),
+      mobile: cssVar(`text-${size}`, mobileFontSize(fontSize)),
+    };
+  });
+  return {
+    desktop: vars.map(({ desktop }) => desktop),
+    mobile: vars.map(({ mobile }) => mobile),
+  };
+};
+
+/**
+ * Joins a collection of CSS variables into a single string.
+ *
+ * @param {CssVar<string>[][]} cssVarCollection - The collection of CSS variables to join.
+ * @return {string} The joined string of CSS variables.
+ */
+const joinCssVarCollection = (cssVarCollection: CssVar<string>[][]): string => {
+  return cssVarCollection.map((cssVars) => cssVars.join("\n")).join("\n");
+};
+
+/**
+ * Declares global styles using root CSS variables and optional media query overrides.
+ *
+ * @param {CssVar<string>[][]} defaults - array of arrays of default CSS variables
+ * @param {[BreakpointLabel, CssVar<string>[][]][]} mediaQueries - optional array of breakpoint labels and CSS variables for media queries
+ * @return {string} the combined CSS for global styles
+ */
+const declareGlobalStyle = (
+  defaults: CssVar<string>[][],
+  mediaQueries?: [BreakpointLabel, CssVar<string>[][]][]
+) => {
+  const defaultCssVarStr = joinCssVarCollection(defaults);
+
+  const mediaQueriesStr = (mediaQueries ?? []).map(
+    ([breakpointLabel, vars]) => {
+      const mediaQueryCssVarStr = joinCssVarCollection(vars);
+      return css`
+        @media only screen and (max-width: ${breakpointsPx[breakpointLabel]}) {
+          :root {
+            ${mediaQueryCssVarStr}
+          }
+        }
+      `;
+    }
+  );
+  return css`
+    ${linkFontFace()}
+    :root {
+      ${defaultCssVarStr}
+    }
+    ${mediaQueriesStr}
+  `;
+};
+
+/**
  * Builds the global css style for the theme.
  * Declares css variables for theme colors and spacings
  *
@@ -58,38 +132,36 @@ export const spacingsToCssVars = (spacings: Spacings): CssVar<CssRem>[] => {
  */
 export const buildGlobalStyle = (theme: Theme) => {
   // generate css vars from spacings
-  const spacingsCssVars = spacingsToCssVars(buildSpacingMap()).join("\n");
+  const spacingsCssVars = spacingsToCssVars(buildSpacingMap());
+  const { mobile: textMobileCssVars, desktop: textDesktopCssVars } =
+    textSizesToCssVars();
   // only return spacing css variables if theme is missing
   if (!theme) {
     warn(
       "Missing theme. Generating spacing css variables only.",
       "GlobalStyle"
     );
-    return css`
-      :root {
-        ${spacingsCssVars}
-      }
-    `;
+    return declareGlobalStyle(
+      [spacingsCssVars, textDesktopCssVars],
+      [["SM", [textMobileCssVars]]]
+    );
   }
   // filter legacy palette out
   const { palette: _, ...palette } = theme;
   // generate css vars from non-legacy palette
-  const paletteCssVars = objectEntries(palette)
-    .flatMap(([colorName, shadedColor]) =>
+  const paletteCssVars = objectEntries(palette).flatMap(
+    ([colorName, shadedColor]) =>
       paletteColorToCssVars(
         colorName,
         shadedColor as PaletteColorShaded<AnyPaletteColorShadeKeys>
       )
-    )
-    .join("\n");
+  );
 
   // declare them in as global css variables
-  return css`
-    :root {
-      ${paletteCssVars}
-      ${spacingsCssVars}
-    }
-  `;
+  return declareGlobalStyle(
+    [spacingsCssVars, paletteCssVars, textDesktopCssVars],
+    [["SM", [textMobileCssVars]]]
+  );
 };
 
 /**

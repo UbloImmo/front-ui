@@ -1,7 +1,11 @@
-import { cssPx } from "@/utils";
+import {
+  Breakpoints,
+  BreakpointsPx,
+} from "src/types/themes/sizes/breakpoints.types";
+import { cssPx } from "../utils";
 import { transformObject } from "@ubloimmo/front-util";
 
-export const breakpoints = {
+export const breakpoints: Breakpoints = {
   XXS: 320,
   XS: 420,
   SM: 640,
@@ -11,4 +15,4 @@ export const breakpoints = {
   XXL: 1536,
 } as const;
 
-export const breakpointsPx = transformObject(breakpoints, cssPx);
+export const breakpointsPx: BreakpointsPx = transformObject(breakpoints, cssPx);

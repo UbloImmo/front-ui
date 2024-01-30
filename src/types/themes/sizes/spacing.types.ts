@@ -1,4 +1,4 @@
-import type { CssRem } from "../global";
+import type { CssRem } from "../../global";
 
 export type SpacingLabel = `s${number}`;
 

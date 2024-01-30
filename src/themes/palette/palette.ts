@@ -9,8 +9,9 @@ import {
   PaletteColorShade,
   PaletteColorShaded,
   StaticColorPalette,
-} from "@/types/themes/palette/palette.types";
-import { Token } from "@/types/token.types";
+  Token,
+  RgbaColorArr,
+} from "../../types";
 import { colors } from "@ubloimmo/front-tokens";
 import {
   transformObject,
@@ -21,8 +22,7 @@ import {
   Nullable,
   isArray,
 } from "@ubloimmo/front-util";
-import { rgbaColorConverter, blendColors } from "@/utils/color.utils";
-import { RgbaColorArr } from "@/types/themes/color.types";
+import { rgbaColorConverter, blendColors } from "../../utils";
 
 /**
  * Creates a function that takes an opacity value and returns the RGBA color with the specified opacity.
