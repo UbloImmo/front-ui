@@ -1,0 +1,181 @@
+import { describe, expect, it } from "bun:test";
+import {
+  buildTypographyStyle,
+  buildTypographyWeightMap,
+  defaultTypographyProps,
+  linkFontFace,
+  mobileFontSize,
+  sanitizeTypographyProps,
+  typographyFontFace,
+  typographyTextDecoration,
+} from "../typography";
+import { testLenghts } from "./css.test";
+import { cssRem } from "../utils";
+import { TypographyProps } from "../types";
+
+describe("typography", () => {
+  describe("font", () => {
+    it("should assign font", () => {
+      expect(typographyFontFace).toBeDefined();
+      expect(typographyFontFace).toBeFunction();
+      expect(() => typographyFontFace()).not.toThrow();
+      expect(typographyFontFace()).toBeObject();
+    });
+
+    it("should link font face", () => {
+      expect(linkFontFace).toBeDefined();
+      expect(linkFontFace).toBeFunction();
+      expect(() => linkFontFace()).not.toThrow();
+      expect(linkFontFace()).toBeObject();
+    });
+  });
+
+  describe("styles", () => {
+    it("should build weight map", () => {
+      expect(buildTypographyWeightMap).toBeDefined();
+      expect(buildTypographyWeightMap).toBeFunction();
+      expect(() => buildTypographyWeightMap()).not.toThrow();
+      expect(buildTypographyWeightMap()).toBeObject();
+      expect(buildTypographyWeightMap()).not.toBeEmptyObject();
+      expect(buildTypographyWeightMap()).toContainKeys([
+        "bold",
+        "semiBold",
+        "regular",
+      ]);
+    });
+
+    it("should format text decorations", () => {
+      const underlineProps: Pick<
+        TypographyProps,
+        "underline" | "overline" | "lineThrough"
+      > = { underline: true };
+      const lineThroughProps: Pick<
+        TypographyProps,
+        "underline" | "overline" | "lineThrough"
+      > = { lineThrough: true };
+      const noProps: Pick<
+        TypographyProps,
+        "underline" | "overline" | "lineThrough"
+      > = {};
+      const allProps: Pick<
+        TypographyProps,
+        "underline" | "overline" | "lineThrough"
+      > = {
+        underline: true,
+        lineThrough: false,
+        overline: true,
+      };
+      expect(typographyTextDecoration).toBeDefined();
+      expect(typographyTextDecoration).toBeFunction();
+      expect(() => typographyTextDecoration(noProps)).not.toThrow();
+      expect(typographyTextDecoration(noProps)).toBeString();
+      expect(typographyTextDecoration(noProps)).toBe("none");
+      expect(typographyTextDecoration(underlineProps)).toInclude("underline");
+      expect(typographyTextDecoration(lineThroughProps)).toInclude(
+        "line-through"
+      );
+      expect(typographyTextDecoration(allProps)).toInclude(
+        "underline overline"
+      );
+    });
+
+    it("should scale font sizes for mobile", () => {
+      expect(mobileFontSize).toBeDefined();
+      expect(mobileFontSize).toBeFunction();
+      expect(() => mobileFontSize("10rem")).not.toThrow();
+      expect(mobileFontSize("10rem")).toBeString();
+      expect(mobileFontSize(testLenghts.cssRem.int)).toBe(
+        cssRem(testLenghts.rem.int + 0.125)
+      );
+    });
+
+    describe("props sanitization", () => {
+      const defaultProps = { ...defaultTypographyProps, size: "m" };
+
+      it("should be a function", () => {
+        expect(sanitizeTypographyProps).toBeDefined();
+        expect(sanitizeTypographyProps).toBeFunction();
+      });
+
+      it("should assign default missing props", () => {
+        const noProps = {};
+        expect(() =>
+          sanitizeTypographyProps(defaultProps, noProps)
+        ).not.toThrow();
+        expect(sanitizeTypographyProps(defaultProps, noProps)).toBeObject();
+        expect(
+          sanitizeTypographyProps(defaultProps, noProps)
+        ).not.toBeEmptyObject();
+        expect(sanitizeTypographyProps(defaultProps, noProps)).toContainKeys([
+          "size",
+          "weight",
+          "color",
+          "italic",
+          "underline",
+          "overline",
+          "lineThrough",
+        ]);
+        expect(sanitizeTypographyProps(defaultProps, noProps)).toEqual(
+          defaultProps
+        );
+      });
+
+      it("sould correct invalid size", () => {
+        const invalidSizeProps = {
+          ...defaultProps,
+          size: "invalid size",
+        };
+        expect(sanitizeTypographyProps(defaultProps, invalidSizeProps)).toEqual(
+          defaultProps
+        );
+      });
+
+      it("should correct invalid weight", () => {
+        const invalidWeightProps = {
+          ...defaultProps,
+          weight: "invalid weight",
+        };
+        expect(
+          sanitizeTypographyProps(defaultProps, invalidWeightProps)
+        ).toEqual(defaultProps);
+      });
+
+      it("should accept valid props", () => {
+        const validProps = {
+          size: "h1",
+          color: "primary-base",
+          italic: true,
+          underline: true,
+          overline: true,
+          lineThrough: true,
+          weight: "semiBold",
+        };
+        expect(sanitizeTypographyProps(defaultProps, validProps)).toEqual(
+          validProps
+        );
+      });
+    });
+  });
+
+  describe("style build", () => {
+    it("should build style for text component", () => {
+      const defaultProps = { ...defaultTypographyProps, size: "m" };
+      const validProps = {
+        size: "m",
+        color: "primary-base",
+        italic: true,
+        underline: true,
+        overline: true,
+        lineThrough: true,
+      };
+      expect(buildTypographyStyle).toBeDefined();
+      expect(buildTypographyStyle).toBeFunction();
+      expect(() => buildTypographyStyle(defaultProps)).not.toThrow();
+      expect(buildTypographyStyle(defaultProps)).toBeFunction();
+      expect(() =>
+        buildTypographyStyle(defaultProps)(validProps)
+      ).not.toThrow();
+      expect(buildTypographyStyle(defaultProps)(validProps)).toBeObject();
+    });
+  });
+});
