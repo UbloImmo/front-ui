@@ -1,10 +1,12 @@
 import type { CssRem, SpacingLabel, Spacings } from "../types";
 import { cssRem, pxToRem } from "../utils/";
-import { isString, objectFromEntries } from "@ubloimmo/front-util";
+import { isString, isUndefined, objectFromEntries } from "@ubloimmo/front-util";
 
-export const unitPx = 4 as const;
+export const UNIT_PX = 4 as const;
 
-const scaleUnitByFactor = (factor: number, unit = unitPx) => unit * factor;
+const SPACING_PREFIX = "s" as const;
+
+const scaleUnitByFactor = (factor: number, unit = UNIT_PX) => unit * factor;
 
 export const defaultSpacingMapConfig = {
   /**
@@ -26,11 +28,14 @@ export const buildSpacingMap = (
   // construct factors array based on min / max factors
   // add +1 to offset added 0.5 scale
   const scalesArr = Array(maxScale)
-    .fill(unitPx)
+    .fill(UNIT_PX)
     .map((_, factor): number => factor + 1);
   const scales = objectFromEntries(
     scalesArr.map((scale): [SpacingLabel, CssRem] => {
-      return [`s${scale}`, cssRem(pxToRem(scaleUnitByFactor(scale)))];
+      return [
+        `${SPACING_PREFIX}${scale}`,
+        cssRem(pxToRem(scaleUnitByFactor(scale))),
+      ];
     })
   );
   return {
@@ -39,8 +44,6 @@ export const buildSpacingMap = (
   };
 };
 
-export const spacings = buildSpacingMap();
-
 /**
  * Checks if the given value is a {@link SpacingLabel} by validating its format and scale.
  *
@@ -48,9 +51,10 @@ export const spacings = buildSpacingMap();
  * @return {boolean} true if the value is a {@link SpacingLabel}, false otherwise
  */
 export const isSpacingLabel = (value: unknown): value is SpacingLabel => {
-  if (!isString(value) || !value.startsWith("s")) return false;
+  if (!isString(value) || !value.startsWith(SPACING_PREFIX)) return false;
 
-  const scaleStr = value.split("s")[1];
+  const scaleStr = value.split(SPACING_PREFIX)[1];
+  if (isUndefined(scaleStr)) return false;
   const scale = parseInt(scaleStr);
 
   if (isNaN(scale)) return false;
