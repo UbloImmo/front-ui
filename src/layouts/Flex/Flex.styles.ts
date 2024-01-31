@@ -1,0 +1,72 @@
+import {
+  FlexAlignment,
+  FlexDirection,
+  FlexLayoutDefaultProps,
+  FlexLayoutProps,
+  FlexWrap,
+} from "./Flex.types";
+import { cssLengthUsage, mergeDefaultProps } from "../../utils";
+import { StyleFunction, css } from "styled-components";
+
+/**
+ * A function that returns the flex alignment class based on the given alignment.
+ *
+ * @param {FlexAlignment} alignment - the alignment to determine the flex class for
+ * @return {string} the flex alignment class
+ */
+const flexAlignment = (alignment: FlexAlignment): string => {
+  if (alignment === "end" || alignment === "stretch") {
+    return `flex-${alignment}`;
+  }
+  return alignment;
+};
+
+/**
+ * Returns the flex direction with optional reverse order.
+ *
+ * @param {FlexDirection} direction - the primary flex direction
+ * @param {boolean} reverse - whether to apply reverse order
+ * @return {string} the flex direction with optional reverse order
+ */
+const flexDirection = (direction: FlexDirection, reverse: boolean): string => {
+  if (reverse) {
+    return [direction, "reverse"].join("-");
+  }
+  return direction;
+};
+
+/**
+ * A function that determines the flex wrap value based on the input.
+ *
+ * @param {FlexWrap} wrap - the type of flex wrap
+ * @return {string} the corresponding flex wrap value
+ */
+const flexWrap = (wrap: FlexWrap): string => {
+  if (!wrap) return "nowrap";
+  if (wrap === "reverse") return "wrap-reverse";
+  return "wrap";
+};
+
+/**
+ * Builds the `FlexLayout` style declaration based on the provided default props and props.
+ *
+ * @param {FlexLayoutDefaultProps} defaultProps - the default props for the flex layout
+ * @return {StyleFunction<FlexLayoutProps>} a style function for flex layout props
+ */
+export const buildFlexLayoutStyle =
+  (defaultProps: FlexLayoutDefaultProps): StyleFunction<FlexLayoutProps> =>
+  (props) => {
+    const { direction, gap, justify, align, wrap, reverse } = mergeDefaultProps(
+      defaultProps,
+      props
+    );
+
+    return css`
+      display: flex;
+      flex-direction: ${flexDirection(direction, reverse)};
+      gap: ${cssLengthUsage(gap)};
+      align-items: ${flexAlignment(align)};
+      justify-content: ${flexAlignment(justify)};
+      flex-wrap: ${flexWrap(wrap)};
+    `;
+  };
