@@ -64,8 +64,7 @@ describe("global style", () => {
       expect(rendered).toBeObject();
     });
   });
-});
-
-afterAll(() => {
-  cleanup();
+  afterAll(() => {
+    cleanup();
+  });
 });
