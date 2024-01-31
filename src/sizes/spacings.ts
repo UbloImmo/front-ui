@@ -1,6 +1,6 @@
 import type { CssRem, SpacingLabel, Spacings } from "../types";
 import { cssRem, pxToRem } from "../utils/";
-import { objectFromEntries } from "@ubloimmo/front-util";
+import { isString, objectFromEntries } from "@ubloimmo/front-util";
 
 export const unitPx = 4 as const;
 
@@ -40,3 +40,20 @@ export const buildSpacingMap = (
 };
 
 export const spacings = buildSpacingMap();
+
+/**
+ * Checks if the given value is a {@link SpacingLabel} by validating its format and scale.
+ *
+ * @param {unknown} value - the value to be checked
+ * @return {boolean} true if the value is a {@link SpacingLabel}, false otherwise
+ */
+export const isSpacingLabel = (value: unknown): value is SpacingLabel => {
+  if (!isString(value) || !value.startsWith("s")) return false;
+
+  const scaleStr = value.split("s")[1];
+  const scale = parseInt(scaleStr);
+
+  if (isNaN(scale)) return false;
+
+  return true;
+};
