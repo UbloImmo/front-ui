@@ -1,4 +1,4 @@
-import type { Theme } from "../types";
+import type { ClientColorPaletteKey, Theme } from "../types";
 import { buildColorPalette, buildLegacyColorPalette } from "./palette";
 
 /**
@@ -7,9 +7,11 @@ import { buildColorPalette, buildLegacyColorPalette } from "./palette";
  *
  * @return {Theme} The constructed theme object.
  */
-export const buildTheme = (): Theme => {
+export const buildTheme = (
+  forClient: ClientColorPaletteKey = "ublo"
+): Theme => {
   return {
     palette: buildLegacyColorPalette(),
-    ...buildColorPalette(),
+    ...buildColorPalette(forClient),
   };
 };
