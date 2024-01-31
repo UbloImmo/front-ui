@@ -1,4 +1,4 @@
-import { describe, it, expect, test } from "bun:test";
+import { describe, it, expect } from "bun:test";
 import {
   cssFr,
   cssLengthUsage,
