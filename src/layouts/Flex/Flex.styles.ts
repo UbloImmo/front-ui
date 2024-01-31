@@ -56,13 +56,13 @@ const flexWrap = (wrap: FlexWrap): string => {
 export const buildFlexLayoutStyle =
   (defaultProps: FlexLayoutDefaultProps): StyleFunction<FlexLayoutProps> =>
   (props) => {
-    const { direction, gap, justify, align, wrap, reverse } = mergeDefaultProps(
-      defaultProps,
-      props
-    );
+    const { direction, gap, justify, align, wrap, reverse, inline } =
+      mergeDefaultProps(defaultProps, props);
+
+    const display = inline ? "inline-flex" : "flex";
 
     return css`
-      display: flex;
+      display: ${display};
       flex-direction: ${flexDirection(direction, reverse)};
       gap: ${cssLengthUsage(gap)};
       align-items: ${flexAlignment(align)};

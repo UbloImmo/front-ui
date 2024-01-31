@@ -55,14 +55,13 @@ const gridTemplate = (template: GridTemplate) => {
 export const buildGridLayoutStyle =
   (defaultProps: GridLayoutDefaultProps): StyleFunction<GridLayoutProps> =>
   (props) => {
-    const { flow, gap, justify, align, columns, rows } = mergeDefaultProps(
-      defaultProps,
-      props
-    );
+    const { flow, gap, justify, align, columns, rows, inline } =
+      mergeDefaultProps(defaultProps, props);
     const { row, column } = gridGap(gap);
+    const display = inline ? "inline-grid" : "grid";
 
     return css`
-      display: grid;
+      display: ${display};
       grid-template-rows: ${gridTemplate(rows)};
       grid-template-columns: ${gridTemplate(columns)};
       grid-auto-flow: ${flow};

@@ -13,6 +13,7 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   align: "start",
   wrap: false,
   reverse: false,
+  inline: false,
 } as const;
 
 /**

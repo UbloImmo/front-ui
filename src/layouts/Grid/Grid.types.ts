@@ -24,6 +24,7 @@ export type GridLayoutProps = {
   align?: GridAlignment;
   columns?: GridTemplate;
   rows?: GridTemplate;
+  inline?: boolean;
 };
 
 export type GridLayoutDefaultProps = Required<GridLayoutProps>;

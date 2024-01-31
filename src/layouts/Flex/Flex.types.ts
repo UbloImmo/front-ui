@@ -28,6 +28,7 @@ export type FlexLayoutProps = {
   align?: FlexAlignment;
   wrap?: FlexWrap;
   reverse?: boolean;
+  inline?: boolean;
 };
 
 export type FlexLayoutDefaultProps = Required<FlexLayoutProps>;
