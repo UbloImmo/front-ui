@@ -16,8 +16,8 @@ describe("theme provider", () => {
     );
     expect(getByText("Test")).toBeDefined();
   });
-});
 
-afterEach(() => {
-  cleanup();
+  afterEach(() => {
+    cleanup();
+  });
 });

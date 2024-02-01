@@ -1,17 +1,19 @@
 import { describe, expect, it } from "bun:test";
-import {
-  buildTypographyStyle,
-  buildTypographyWeightMap,
-  defaultTypographyProps,
-  linkFontFace,
-  mobileFontSize,
-  sanitizeTypographyProps,
-  typographyFontFace,
-  typographyTextDecoration,
-} from "../typography";
 import { testLenghts } from "./css.test";
+import type { TypographyProps } from "../types";
+import {
+  typographyFontFace,
+  linkFontFace,
+} from "../typography/typography.font";
+import {
+  buildTypographyWeightMap,
+  typographyTextDecoration,
+  mobileFontSize,
+  defaultTypographyProps,
+  sanitizeTypographyProps,
+  buildTypographyStyle,
+} from "../typography/typography.styles";
 import { cssRem } from "../utils";
-import { TypographyProps } from "../types";
 
 describe("typography", () => {
   describe("font", () => {

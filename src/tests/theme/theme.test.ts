@@ -1,7 +1,7 @@
 import { describe, it, expect } from "bun:test";
+import type { Theme } from "../../types";
 import { buildTheme } from "../../themes";
-import { Theme } from "../../types";
-import { testColorPalette, testLegacyPalette } from "./palette.test";
+import { testLegacyPalette, testColorPalette } from "./palette.test";
 
 describe("theme", () => {
   let theme: Theme;

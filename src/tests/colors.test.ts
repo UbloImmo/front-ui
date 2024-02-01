@@ -7,14 +7,14 @@ import type {
   HexColorShorthandAlpha,
   RgbaColorStr,
 } from "../types";
+import { describe, expect, it } from "bun:test";
+import { objectEntries } from "@ubloimmo/front-util";
 import {
   blendColors,
   hexColorConverter,
   isValidHexStr,
   rgbaColorConverter,
-} from "../utils/";
-import { describe, expect, it } from "bun:test";
-import { objectEntries } from "@ubloimmo/front-util";
+} from "../utils/color.utils";
 
 type PrimaryColor = "red" | "green" | "blue";
 

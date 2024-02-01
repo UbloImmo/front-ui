@@ -1,14 +1,14 @@
 import { describe, it, expect, afterAll } from "bun:test";
 import { render, cleanup } from "@testing-library/react";
 import React from "react";
+import { buildSpacingMap } from "../../../sizes";
 import {
-  buildGlobalStyle,
-  buildTheme,
-  paletteColorToCssVars,
   spacingsToCssVars,
+  paletteColorToCssVars,
+  buildTheme,
+  buildGlobalStyle,
   GlobalStyle,
 } from "../../../themes";
-import { buildSpacingMap } from "../../../sizes";
 
 describe("global style", () => {
   describe("build process", () => {
@@ -64,8 +64,7 @@ describe("global style", () => {
       expect(rendered).toBeObject();
     });
   });
-});
-
-afterAll(() => {
-  cleanup();
+  afterAll(() => {
+    cleanup();
+  });
 });

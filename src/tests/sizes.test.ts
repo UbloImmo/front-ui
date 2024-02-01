@@ -1,11 +1,12 @@
 import { describe, expect, it } from "bun:test";
-import { buildSpacingMap, defaultSpacingMapConfig } from "../sizes";
-import { isCssRem } from "../utils";
 import type { Spacings } from "../types";
 import { objectValues, objectKeys } from "@ubloimmo/front-util";
+import { buildSpacingMap, defaultSpacingMapConfig } from "../sizes";
+import { isCssRem } from "../utils";
 
 describe("spacings", () => {
   let spacings: Spacings;
+
   it("should create a spacing map", () => {
     expect(buildSpacingMap).toBeDefined();
     expect(buildSpacingMap).not.toThrow();

@@ -1,19 +1,17 @@
 import { describe, expect, it } from "bun:test";
+import type { LegacyPalette, ColorPalette, LegacyShadows } from "../../types";
 import {
-  LegacyPalette,
-  ColorPalette,
   grayscalePaletteColorShadeKeys,
   defaultPaletteColorShadeKeys,
-  LegacyShadows,
 } from "../../types";
+import { effects, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { colorCollections } from "../colors.test";
 import {
   buildLegacyColorPalette,
   buildColorPalette,
-  extractEffectTokenShadow,
   shadeOpacityFactory,
+  extractEffectTokenShadow,
 } from "../../themes";
-import { effects, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
-import { colorCollections } from "../colors.test";
 
 const LEGACY_PALETTE_KEYS: (keyof LegacyPalette)[] = [
   "shadows",

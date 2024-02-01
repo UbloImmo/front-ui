@@ -1,21 +1,29 @@
 import { describe, it, expect } from "bun:test";
+import type {
+  GenericFn,
+  NullishPrimitives,
+  Predicate,
+} from "@ubloimmo/front-util";
+import { objectKeys } from "@ubloimmo/front-util";
+import type { CssFr, CssLength, CssPx, CssRem } from "../types";
 import {
   cssPx,
-  cssPxToCssRem,
   cssRem,
+  cssFr,
+  pxToRem,
+  remToPx,
+  cssPxToCssRem,
   cssRemToCssPx,
-  cssVar,
   cssVarName,
+  cssVar,
   cssVarUsage,
   isCssPx,
   isCssRem,
-  pxToRem,
-  remToPx,
+  isCssFr,
+  cssLengthUsage,
 } from "../utils";
-import { GenericFn, objectKeys } from "@ubloimmo/front-util";
-import { CssPx, CssRem } from "../types";
 
-type LengthUnitCollection<TUnit extends number | CssRem | CssPx> = {
+type LengthUnitCollection<TUnit extends CssLength> = {
   int: TUnit;
   float: TUnit;
   negative: TUnit;
@@ -26,6 +34,8 @@ type LengthCollection = {
   cssPx: LengthUnitCollection<CssPx>;
   rem: LengthUnitCollection<number>;
   cssRem: LengthUnitCollection<CssRem>;
+  fr: LengthUnitCollection<number>;
+  cssFr: LengthUnitCollection<CssFr>;
 };
 
 type LengthUnitKey = keyof LengthCollection;
@@ -35,6 +45,8 @@ export const testLenghts: LengthCollection = {
   cssPx: { int: "12px", float: "128.4px", negative: "-24px" },
   rem: { int: 0.75, float: 8.025, negative: -1.5 },
   cssRem: { int: "0.75rem", float: "8.025rem", negative: "-1.5rem" },
+  fr: { int: 12, float: 128.4, negative: -24 },
+  cssFr: { int: "12fr", float: "128.4fr", negative: "-24fr" },
 } as const;
 
 const testLengthConversion = <
@@ -61,10 +73,34 @@ const testLengthConversion = <
   });
 };
 
+const testLengthPredicate = <
+  TPredicateType extends NullishPrimitives,
+  TInput extends LengthUnitKey
+>(
+  input: TInput,
+  predicate: Predicate<TPredicateType>
+) => {
+  it(`should identify a ${input}`, () => {
+    expect(predicate).toBeDefined();
+    expect(predicate).toBeFunction();
+    expect(predicate).not.toThrow();
+    objectKeys(testLenghts).forEach((key) => {
+      const inputKeys = objectKeys(testLenghts[key]);
+      const shouldReturnTrue = key === input;
+
+      inputKeys.forEach((inputKey) => {
+        expect(() => predicate(testLenghts[key][inputKey])).not.toThrow();
+        expect(predicate(testLenghts[key][inputKey])).toEqual(shouldReturnTrue);
+      });
+    });
+  });
+};
+
 describe("css", () => {
   describe("unit conversion", () => {
     testLengthConversion("px", "cssPx", cssPx);
     testLengthConversion("rem", "cssRem", cssRem);
+    testLengthConversion("fr", "cssFr", cssFr);
     testLengthConversion("px", "rem", pxToRem);
     testLengthConversion("rem", "px", remToPx);
     testLengthConversion("cssPx", "cssRem", cssPxToCssRem);
@@ -94,32 +130,22 @@ describe("css", () => {
   });
 
   describe("predicates", () => {
-    it("should identify css pixels", () => {
-      expect(isCssPx).toBeFunction();
-      expect(isCssPx).not.toThrow();
-      expect(isCssPx(testLenghts.cssPx.int)).toBeTrue();
-      expect(isCssPx(testLenghts.cssPx.float)).toBeTrue();
-      expect(isCssPx(testLenghts.cssPx.negative)).toBeTrue();
-      expect(isCssPx(testLenghts.cssRem.int)).toBeFalse();
-      expect(isCssPx(testLenghts.cssRem.float)).toBeFalse();
-      expect(isCssPx(testLenghts.cssRem.negative)).toBeFalse();
-      expect(isCssPx(testLenghts.px.int)).toBeFalse();
-      expect(isCssPx(testLenghts.px.float)).toBeFalse();
-      expect(isCssPx(testLenghts.px.negative)).toBeFalse();
-    });
+    testLengthPredicate<CssPx, "cssPx">("cssPx", isCssPx);
+    testLengthPredicate<CssRem, "cssRem">("cssRem", isCssRem);
+    testLengthPredicate<CssFr, "cssFr">("cssFr", isCssFr);
+  });
 
-    it("should identify css rems", () => {
-      expect(isCssRem).toBeFunction();
-      expect(isCssRem).not.toThrow();
-      expect(isCssRem(testLenghts.cssPx.int)).toBeFalse();
-      expect(isCssRem(testLenghts.cssPx.float)).toBeFalse();
-      expect(isCssRem(testLenghts.cssPx.negative)).toBeFalse();
-      expect(isCssRem(testLenghts.cssRem.int)).toBeTrue();
-      expect(isCssRem(testLenghts.cssRem.float)).toBeTrue();
-      expect(isCssRem(testLenghts.cssRem.negative)).toBeTrue();
-      expect(isCssRem(testLenghts.px.int)).toBeFalse();
-      expect(isCssRem(testLenghts.px.float)).toBeFalse();
-      expect(isCssRem(testLenghts.px.negative)).toBeFalse();
+  describe("length usage", () => {
+    it("should format a css length to its usage string", () => {
+      expect(cssLengthUsage).toBeDefined();
+      expect(cssLengthUsage).toBeFunction();
+      expect(cssLengthUsage(testLenghts.rem.float)).toEqual(
+        testLenghts.cssRem.float
+      );
+      expect(cssLengthUsage(testLenghts.cssRem.float)).toEqual(
+        testLenghts.cssRem.float
+      );
+      expect(cssLengthUsage("s1")).toEqual(cssVarUsage("s1"));
     });
   });
 });

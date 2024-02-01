@@ -1,5 +1,16 @@
-import type { CssPx, CssRem, CssVarName, CssVar, CssVarUsage } from "../types";
-import { isString } from "@ubloimmo/front-util";
+import {
+  type CssPx,
+  type CssRem,
+  type CssVarName,
+  type CssVar,
+  type CssVarUsage,
+  type CssLength,
+  type CssLengthUsage,
+  type CssFr,
+  type SpacingLabel,
+  SPACING_PREFIX,
+} from "../types";
+import { isNumber, isString, isUndefined } from "@ubloimmo/front-util";
 
 const REM_FACTOR = 16 as const;
 
@@ -126,3 +137,68 @@ export const cssVar = <TValue extends string = string>(
  */
 export const cssVarUsage = (name: string): CssVarUsage =>
   `var(${cssVarName(name)})`;
+
+/**
+ * Returns a {@link CssFr} string with the given number.
+ *
+ * @param {number} fr - The number to be concatenated with 'fr'.
+ * @return {CssFr} The string with the concatenated number and 'fr' unit.
+ */
+export const cssFr = (fr: number): CssFr => {
+  return `${fr}fr`;
+};
+
+/**
+ * Type guard to check if the input value is of type {@link CssFr}.
+ *
+ * @param {unknown} value - The value to be checked
+ * @return {boolean} Whether the input value is of type CssFr
+ */
+export const isCssFr = (value: unknown): value is CssFr => {
+  if (!isString(value) || !value.includes("fr")) {
+    return false;
+  }
+  const frValue = parseFloat(value.split("fr")[0]);
+  if (isNaN(frValue)) return false;
+
+  return true;
+};
+
+/**
+ * Checks if the given value is a {@link SpacingLabel} by validating its format and scale.
+ *
+ * @param {unknown} value - the value to be checked
+ * @return {boolean} true if the value is a {@link SpacingLabel}, false otherwise
+ */
+export const isSpacingLabel = (value: unknown): value is SpacingLabel => {
+  if (!isString(value) || !value.startsWith(SPACING_PREFIX)) return false;
+
+  const scaleStr = value.split(SPACING_PREFIX)[1];
+  if (isUndefined(scaleStr)) return false;
+  const scale = parseInt(scaleStr);
+
+  if (isNaN(scale)) return false;
+
+  return true;
+};
+
+/**
+ * Parses an input {@link CssLength} into its corresponding {@link CssLengthUsage}.
+ *
+ * @remarks number values are converted to rem values, spacings labels are converted to their corresponding {@link CssVarUsage}
+ *
+ * @param {CssLength} gap - the flex gap value to be processed
+ * @return {CssLengthUsage} the processed CSS value
+ */
+export const cssLengthUsage = (gap: CssLength): CssLengthUsage => {
+  if (isNumber(gap)) {
+    return cssRem(gap);
+  }
+  if (isCssPx(gap) || isCssRem(gap)) {
+    return gap;
+  }
+  if (isSpacingLabel(gap)) {
+    return cssVarUsage(gap);
+  }
+  return gap;
+};

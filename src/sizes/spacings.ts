@@ -1,10 +1,14 @@
-import type { CssRem, SpacingLabel, Spacings } from "../types";
-import { cssRem, pxToRem } from "../utils/";
+import {
+  SPACING_PREFIX,
+  UNIT_PX,
+  type CssRem,
+  type SpacingLabel,
+  type Spacings,
+} from "../types";
+import { cssRem, pxToRem } from "../utils/css.utils";
 import { objectFromEntries } from "@ubloimmo/front-util";
 
-export const unitPx = 4 as const;
-
-const scaleUnitByFactor = (factor: number, unit = unitPx) => unit * factor;
+const scaleUnitByFactor = (factor: number, unit = UNIT_PX) => unit * factor;
 
 export const defaultSpacingMapConfig = {
   /**
@@ -26,11 +30,14 @@ export const buildSpacingMap = (
   // construct factors array based on min / max factors
   // add +1 to offset added 0.5 scale
   const scalesArr = Array(maxScale)
-    .fill(unitPx)
+    .fill(UNIT_PX)
     .map((_, factor): number => factor + 1);
   const scales = objectFromEntries(
     scalesArr.map((scale): [SpacingLabel, CssRem] => {
-      return [`s${scale}`, cssRem(pxToRem(scaleUnitByFactor(scale)))];
+      return [
+        `${SPACING_PREFIX}${scale}`,
+        cssRem(pxToRem(scaleUnitByFactor(scale))),
+      ];
     })
   );
   return {
@@ -38,5 +45,3 @@ export const buildSpacingMap = (
     ...scales,
   };
 };
-
-export const spacings = buildSpacingMap();
