@@ -117,10 +117,10 @@ const buildClientColorPalette = (): ClientColorPalette => {
           };
           // TODO: remove this step once client color design file is updated
           if (!clientColorTokenGroup?.main) return [key, null];
-          // blend between dark and main to generate medium
+          // blend between light and main to generate medium
           const mediumColor = blendColors(
             clientColorTokenGroup.main.value,
-            clientColorTokenGroup.dark.value,
+            clientColorTokenGroup.light.value,
             0.5
           );
           const mediumToken: Token<"COLOR"> = {
@@ -130,9 +130,9 @@ const buildClientColorPalette = (): ClientColorPalette => {
           };
           const updatedTokenGroup = {
             dark: clientColorTokenGroup.dark,
-            light: clientColorTokenGroup.light,
-            medium: mediumToken,
             base: clientColorTokenGroup.main,
+            medium: mediumToken,
+            light: clientColorTokenGroup.light,
           };
           return [key, updatedTokenGroup];
         }
