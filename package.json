@@ -52,7 +52,6 @@
   "type": "module",
   "dependencies": {
     "@fontsource-variable/open-sans": "^5.0.23",
-    "@typescript/eslint/typescript-estree": "@typescript/eslint/typescript-estree",
     "@ubloimmo/front-tokens": "0.1.2",
     "@ubloimmo/front-util": "0.0.8",
     "react": "^18.2.0",
