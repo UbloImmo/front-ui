@@ -1,10 +1,12 @@
-import type { CssRem, SpacingLabel, Spacings } from "../types";
+import {
+  SPACING_PREFIX,
+  UNIT_PX,
+  type CssRem,
+  type SpacingLabel,
+  type Spacings,
+} from "../types";
 import { cssRem, pxToRem } from "../utils/css.utils";
-import { isString, isUndefined, objectFromEntries } from "@ubloimmo/front-util";
-
-export const UNIT_PX = 4 as const;
-
-const SPACING_PREFIX = "s" as const;
+import { objectFromEntries } from "@ubloimmo/front-util";
 
 const scaleUnitByFactor = (factor: number, unit = UNIT_PX) => unit * factor;
 
@@ -42,22 +44,4 @@ export const buildSpacingMap = (
     s05: cssRem(pxToRem(scaleUnitByFactor(0.5))),
     ...scales,
   };
-};
-
-/**
- * Checks if the given value is a {@link SpacingLabel} by validating its format and scale.
- *
- * @param {unknown} value - the value to be checked
- * @return {boolean} true if the value is a {@link SpacingLabel}, false otherwise
- */
-export const isSpacingLabel = (value: unknown): value is SpacingLabel => {
-  if (!isString(value) || !value.startsWith(SPACING_PREFIX)) return false;
-
-  const scaleStr = value.split(SPACING_PREFIX)[1];
-  if (isUndefined(scaleStr)) return false;
-  const scale = parseInt(scaleStr);
-
-  if (isNaN(scale)) return false;
-
-  return true;
 };

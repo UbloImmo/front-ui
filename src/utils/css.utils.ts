@@ -1,15 +1,16 @@
-import { isSpacingLabel } from "../sizes";
-import type {
-  CssPx,
-  CssRem,
-  CssVarName,
-  CssVar,
-  CssVarUsage,
-  CssLength,
-  CssLengthUsage,
-  CssFr,
+import {
+  type CssPx,
+  type CssRem,
+  type CssVarName,
+  type CssVar,
+  type CssVarUsage,
+  type CssLength,
+  type CssLengthUsage,
+  type CssFr,
+  type SpacingLabel,
+  SPACING_PREFIX,
 } from "../types";
-import { isNumber, isString } from "@ubloimmo/front-util";
+import { isNumber, isString, isUndefined } from "@ubloimmo/front-util";
 
 const REM_FACTOR = 16 as const;
 
@@ -159,6 +160,24 @@ export const isCssFr = (value: unknown): value is CssFr => {
   }
   const frValue = parseFloat(value.split("fr")[0]);
   if (isNaN(frValue)) return false;
+
+  return true;
+};
+
+/**
+ * Checks if the given value is a {@link SpacingLabel} by validating its format and scale.
+ *
+ * @param {unknown} value - the value to be checked
+ * @return {boolean} true if the value is a {@link SpacingLabel}, false otherwise
+ */
+export const isSpacingLabel = (value: unknown): value is SpacingLabel => {
+  if (!isString(value) || !value.startsWith(SPACING_PREFIX)) return false;
+
+  const scaleStr = value.split(SPACING_PREFIX)[1];
+  if (isUndefined(scaleStr)) return false;
+  const scale = parseInt(scaleStr);
+
+  if (isNaN(scale)) return false;
 
   return true;
 };
