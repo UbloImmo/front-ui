@@ -1,2 +1,2 @@
 export * from "./Flex.layout";
-export * from "./Flex.types";
+export type * from "./Flex.types";
