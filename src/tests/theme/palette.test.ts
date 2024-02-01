@@ -6,6 +6,12 @@ import {
 } from "../../types";
 import { effects, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
 import { colorCollections } from "../colors.test";
+import {
+  buildLegacyColorPalette,
+  buildColorPalette,
+  shadeOpacityFactory,
+  extractEffectTokenShadow,
+} from "../../themes";
 
 const LEGACY_PALETTE_KEYS: (keyof LegacyPalette)[] = [
   "shadows",
@@ -73,14 +79,7 @@ export const testColorPalette = (colorPalette: ColorPalette) => {
   expect(colorPalette.primary).toContainKeys(defaultPaletteColorShadeKeys);
 };
 
-describe("palette", async () => {
-  const {
-    buildLegacyColorPalette,
-    buildColorPalette,
-    extractEffectTokenShadow,
-    shadeOpacityFactory,
-  } = await import("../../themes");
-
+describe("palette", () => {
   describe("legacy", () => {
     let legacyPalette: LegacyPalette;
     describe("build process", () => {

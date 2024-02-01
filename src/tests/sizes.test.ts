@@ -1,11 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import type { Spacings } from "../types";
 import { objectValues, objectKeys } from "@ubloimmo/front-util";
+import { buildSpacingMap, defaultSpacingMapConfig } from "../sizes";
+import { isCssRem } from "../utils";
 
 describe("spacings", async () => {
-  const { buildSpacingMap, defaultSpacingMapConfig } = await import("../sizes");
-  const { isCssRem } = await import("../utils/css.utils");
-
   let spacings: Spacings;
 
   it("should create a spacing map", () => {

@@ -1,20 +1,21 @@
 import { describe, expect, it } from "bun:test";
 import { testLenghts } from "./css.test";
 import type { TypographyProps } from "../types";
+import {
+  typographyFontFace,
+  linkFontFace,
+} from "../typography/typography.font";
+import {
+  buildTypographyWeightMap,
+  typographyTextDecoration,
+  mobileFontSize,
+  defaultTypographyProps,
+  sanitizeTypographyProps,
+  buildTypographyStyle,
+} from "../typography/typography.styles";
+import { cssRem } from "../utils";
 
-describe("typography", async () => {
-  const {
-    buildTypographyStyle,
-    buildTypographyWeightMap,
-    defaultTypographyProps,
-    linkFontFace,
-    mobileFontSize,
-    sanitizeTypographyProps,
-    typographyFontFace,
-    typographyTextDecoration,
-  } = await import("../typography");
-  const { cssRem } = await import("../utils/css.utils");
-
+describe("typography", () => {
   describe("font", () => {
     it("should assign font", () => {
       expect(typographyFontFace).toBeDefined();

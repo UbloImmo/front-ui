@@ -1,5 +1,6 @@
 import type { Nullable } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
+import { mergeDefaultProps } from "../utils/props.utils";
 
 type TestProps = {
   a?: string;
@@ -15,9 +16,7 @@ const defaultProps: TestDefaultProps = {
   c: 3,
 };
 
-describe("prop utils", async () => {
-  const { mergeDefaultProps } = await import("../utils/props.utils");
-
+describe("prop utils", () => {
   describe("mergeDefaultProps", () => {
     it("should be a function", () => {
       expect(mergeDefaultProps).toBeDefined();

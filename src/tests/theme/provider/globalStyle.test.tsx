@@ -1,17 +1,16 @@
 import { describe, it, expect, afterAll } from "bun:test";
 import { render, cleanup } from "@testing-library/react";
 import React from "react";
+import { buildSpacingMap } from "../../../sizes";
+import {
+  spacingsToCssVars,
+  paletteColorToCssVars,
+  buildTheme,
+  buildGlobalStyle,
+  GlobalStyle,
+} from "../../../themes";
 
-describe("global style", async () => {
-  const {
-    buildGlobalStyle,
-    buildTheme,
-    paletteColorToCssVars,
-    spacingsToCssVars,
-    GlobalStyle,
-  } = await import("../../../themes");
-  const { buildSpacingMap } = await import("../../../sizes");
-
+describe("global style", () => {
   describe("build process", () => {
     it("should convert spacings to CSS variables", () => {
       expect(spacingsToCssVars).toBeDefined();

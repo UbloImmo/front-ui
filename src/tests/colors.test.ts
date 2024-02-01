@@ -9,6 +9,12 @@ import type {
 } from "../types";
 import { describe, expect, it } from "bun:test";
 import { objectEntries } from "@ubloimmo/front-util";
+import {
+  blendColors,
+  hexColorConverter,
+  isValidHexStr,
+  rgbaColorConverter,
+} from "../utils/color.utils";
 
 type PrimaryColor = "red" | "green" | "blue";
 
@@ -94,11 +100,7 @@ const testHexColorConversion = <TOutput extends keyof ColorCollection>(
   testColorConversion("hexAlpha", output, converter);
 };
 
-describe("color conversion", async () => {
-  const { hexColorConverter, isValidHexStr, rgbaColorConverter } = await import(
-    "../utils/"
-  );
-
+describe("color conversion", () => {
   describe("from RGBA", () => {
     describe("to RGBA", () => {
       testColorConversion("rgbaStr", "rgbaArr", rgbaColorConverter.strToArr);
@@ -148,31 +150,29 @@ describe("color conversion", async () => {
   });
 });
 
-describe("color blending", async () => {
-  const { blendColors } = await import("../utils/");
+/**
+ * Test color blending between two specified colors and all color format combinations.
+ *
+ * @param {"red" | "green" | "blue"} colorA - the first color to blend
+ * @param {"red" | "green" | "blue"} colorB - the second color to blend
+ * @return {void}
+ */
+const testColorBlend = (colorA: PrimaryColor, colorB: PrimaryColor) => {
+  const sources = objectEntries(colorCollections[colorA]);
+  const targets = objectEntries(colorCollections[colorB]);
 
-  /**
-   * Test color blending between two specified colors and all color format combinations.
-   *
-   * @param {"red" | "green" | "blue"} colorA - the first color to blend
-   * @param {"red" | "green" | "blue"} colorB - the second color to blend
-   * @return {void}
-   */
-  const testColorBlend = (colorA: PrimaryColor, colorB: PrimaryColor) => {
-    const sources = objectEntries(colorCollections[colorA]);
-    const targets = objectEntries(colorCollections[colorB]);
-
-    sources.forEach(([sourceKey, source]) => {
-      targets.forEach(([targetKey, target]) => {
-        it(`should blend between ${sourceKey} and ${targetKey}`, () => {
-          const targetBlend = colorBlends[colorA][colorB];
-          expect(blendColors(source, target, 0.5)).toEqual(targetBlend);
-          expect(blendColors(target, source, 0.5)).toEqual(targetBlend);
-        });
+  sources.forEach(([sourceKey, source]) => {
+    targets.forEach(([targetKey, target]) => {
+      it(`should blend between ${sourceKey} and ${targetKey}`, () => {
+        const targetBlend = colorBlends[colorA][colorB];
+        expect(blendColors(source, target, 0.5)).toEqual(targetBlend);
+        expect(blendColors(target, source, 0.5)).toEqual(targetBlend);
       });
     });
-  };
+  });
+};
 
+describe("color blending", () => {
   testColorBlend("red", "red");
   testColorBlend("red", "green");
   testColorBlend("red", "blue");

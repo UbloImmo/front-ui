@@ -6,6 +6,22 @@ import type {
 } from "@ubloimmo/front-util";
 import { objectKeys } from "@ubloimmo/front-util";
 import type { CssFr, CssLength, CssPx, CssRem } from "../types";
+import {
+  cssPx,
+  cssRem,
+  cssFr,
+  pxToRem,
+  remToPx,
+  cssPxToCssRem,
+  cssRemToCssPx,
+  cssVarName,
+  cssVar,
+  cssVarUsage,
+  isCssPx,
+  isCssRem,
+  isCssFr,
+  cssLengthUsage,
+} from "../utils";
 
 type LengthUnitCollection<TUnit extends CssLength> = {
   int: TUnit;
@@ -80,24 +96,7 @@ const testLengthPredicate = <
   });
 };
 
-describe("css", async () => {
-  const {
-    cssFr,
-    cssLengthUsage,
-    cssPx,
-    cssPxToCssRem,
-    cssRem,
-    cssRemToCssPx,
-    cssVar,
-    cssVarName,
-    cssVarUsage,
-    isCssFr,
-    isCssPx,
-    isCssRem,
-    pxToRem,
-    remToPx,
-  } = await import("../utils/css.utils");
-
+describe("css", () => {
   describe("unit conversion", () => {
     testLengthConversion("px", "cssPx", cssPx);
     testLengthConversion("rem", "cssRem", cssRem);
