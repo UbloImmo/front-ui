@@ -1,9 +1,12 @@
 import { describe, it, expect } from "bun:test";
-import { buildTheme } from "../../themes";
-import { Theme } from "../../types";
-import { testColorPalette, testLegacyPalette } from "./palette.test";
+import type { Theme } from "../../types";
 
-describe("theme", () => {
+describe("theme", async () => {
+  const { buildTheme } = await import("../../themes");
+  const { testColorPalette, testLegacyPalette } = await import(
+    "./palette.test"
+  );
+
   let theme: Theme;
   describe("build process", () => {
     it("should build the theme object", () => {

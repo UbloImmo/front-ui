@@ -1,17 +1,9 @@
 import { describe, expect, it } from "bun:test";
+import type { LegacyPalette, ColorPalette, LegacyShadows } from "../../types";
 import {
-  LegacyPalette,
-  ColorPalette,
   grayscalePaletteColorShadeKeys,
   defaultPaletteColorShadeKeys,
-  LegacyShadows,
 } from "../../types";
-import {
-  buildLegacyColorPalette,
-  buildColorPalette,
-  extractEffectTokenShadow,
-  shadeOpacityFactory,
-} from "../../themes";
 import { effects, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
 import { colorCollections } from "../colors.test";
 
@@ -81,7 +73,14 @@ export const testColorPalette = (colorPalette: ColorPalette) => {
   expect(colorPalette.primary).toContainKeys(defaultPaletteColorShadeKeys);
 };
 
-describe("palette", () => {
+describe("palette", async () => {
+  const {
+    buildLegacyColorPalette,
+    buildColorPalette,
+    extractEffectTokenShadow,
+    shadeOpacityFactory,
+  } = await import("../../themes");
+
   describe("legacy", () => {
     let legacyPalette: LegacyPalette;
     describe("build process", () => {

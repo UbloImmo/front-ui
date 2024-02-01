@@ -1,4 +1,4 @@
-import { Nullable } from "@ubloimmo/front-util";
+import type { Nullable } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
 
 type TestProps = {

@@ -1,9 +1,10 @@
 import React from "react";
 import { render, cleanup } from "@testing-library/react";
 import { describe, it, expect, afterEach } from "bun:test";
-import { ThemeProvider } from "../../../themes";
 
-describe("theme provider", () => {
+describe("theme provider", async () => {
+  const { ThemeProvider } = await import("../../../themes");
+
   it("should be a react component", () => {
     expect(ThemeProvider).toBeDefined();
     expect(ThemeProvider).toBeFunction();

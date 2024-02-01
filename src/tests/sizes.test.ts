@@ -1,17 +1,17 @@
 import { describe, expect, it } from "bun:test";
-import { buildSpacingMap, defaultSpacingMapConfig } from "../sizes";
-import { isCssRem } from "../utils";
 import type { Spacings } from "../types";
 import { objectValues, objectKeys } from "@ubloimmo/front-util";
 
-const buildMap = buildSpacingMap;
+describe("spacings", async () => {
+  const { buildSpacingMap, defaultSpacingMapConfig } = await import("../sizes");
+  const { isCssRem } = await import("../utils/css.utils");
 
-describe("spacings", () => {
   let spacings: Spacings;
+
   it("should create a spacing map", () => {
-    expect(buildMap).toBeDefined();
-    expect(buildMap).not.toThrow();
-    spacings = buildMap(defaultSpacingMapConfig.maxScale);
+    expect(buildSpacingMap).toBeDefined();
+    expect(buildSpacingMap).not.toThrow();
+    spacings = buildSpacingMap(defaultSpacingMapConfig.maxScale);
     expect(spacings).not.toBeEmptyObject();
   });
   it("should contain all scales", () => {

@@ -1,27 +1,11 @@
 import { describe, it, expect } from "bun:test";
-import {
-  cssFr,
-  cssLengthUsage,
-  cssPx,
-  cssPxToCssRem,
-  cssRem,
-  cssRemToCssPx,
-  cssVar,
-  cssVarName,
-  cssVarUsage,
-  isCssFr,
-  isCssPx,
-  isCssRem,
-  pxToRem,
-  remToPx,
-} from "../utils";
-import {
+import type {
   GenericFn,
   NullishPrimitives,
   Predicate,
-  objectKeys,
 } from "@ubloimmo/front-util";
-import { CssFr, CssLength, CssPx, CssRem } from "../types";
+import { objectKeys } from "@ubloimmo/front-util";
+import type { CssFr, CssLength, CssPx, CssRem } from "../types";
 
 type LengthUnitCollection<TUnit extends CssLength> = {
   int: TUnit;
@@ -96,7 +80,24 @@ const testLengthPredicate = <
   });
 };
 
-describe("css", () => {
+describe("css", async () => {
+  const {
+    cssFr,
+    cssLengthUsage,
+    cssPx,
+    cssPxToCssRem,
+    cssRem,
+    cssRemToCssPx,
+    cssVar,
+    cssVarName,
+    cssVarUsage,
+    isCssFr,
+    isCssPx,
+    isCssRem,
+    pxToRem,
+    remToPx,
+  } = await import("../utils/css.utils");
+
   describe("unit conversion", () => {
     testLengthConversion("px", "cssPx", cssPx);
     testLengthConversion("rem", "cssRem", cssRem);
