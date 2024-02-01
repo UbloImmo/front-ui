@@ -1,5 +1,5 @@
 import type { CssRem, SpacingLabel, Spacings } from "../types";
-import { cssRem, pxToRem } from "../utils/";
+import { cssRem, pxToRem } from "../utils/css.utils";
 import { isString, isUndefined, objectFromEntries } from "@ubloimmo/front-util";
 
 export const UNIT_PX = 4 as const;
