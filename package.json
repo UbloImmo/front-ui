@@ -56,8 +56,10 @@
     "@fontsource-variable/open-sans": "^5.0.23",
     "@ubloimmo/front-tokens": "0.1.2",
     "@ubloimmo/front-util": "0.0.8",
+    "bootstrap-icons": "^1.11.3",
     "husky": "^9.0.10",
     "react": "^18.2.0",
+    "react-bootstrap-icons": "^1.10.3",
     "styled-components": "^6.1.8"
   },
   "jest": {
