@@ -4,7 +4,7 @@ import { objectValues, objectKeys } from "@ubloimmo/front-util";
 import { buildSpacingMap, defaultSpacingMapConfig } from "../sizes";
 import { isCssRem } from "../utils";
 
-describe("spacings", async () => {
+describe("spacings", () => {
   let spacings: Spacings;
 
   it("should create a spacing map", () => {
