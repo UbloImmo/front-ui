@@ -31,6 +31,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-storybook": "^0.6.15",
     "jest": "^29.7.0",
+    "madge": "^6.1.0",
     "prettier": "^2.8.7"
   },
   "peerDependencies": {
@@ -43,11 +44,15 @@
     "test:lint": "eslint . --cache --cache-location .cache/eslint",
     "test:unit": "bun test",
     "test:unit:coverage": "bun test --coverage",
-    "test:unit:watch": "bun test --coverage --watch"
+    "test:unit:watch": "bun test --coverage --watch",
+    "test:deps": "bun madge src --extensions js,jsx,ts,tsx",
+    "test:deps:circular": "bun madge src --extensions js,jsx,ts,tsx --circular",
+    "test:all": "bun test:lint && bun test:types && bun test:deps:circular && bun test:unit"
   },
   "type": "module",
   "dependencies": {
     "@fontsource-variable/open-sans": "^5.0.23",
+    "@typescript/eslint/typescript-estree": "@typescript/eslint/typescript-estree",
     "@ubloimmo/front-tokens": "0.1.2",
     "@ubloimmo/front-util": "0.0.8",
     "react": "^18.2.0",
