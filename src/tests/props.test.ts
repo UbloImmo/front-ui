@@ -1,6 +1,6 @@
 import { Nullable } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
-import { mergeDefaultProps } from "../utils";
+import { mergeDefaultProps } from "../utils/props.utils";
 
 type TestProps = {
   a?: string;
