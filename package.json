@@ -47,18 +47,24 @@
     "test:unit:watch": "bun test --coverage --watch",
     "test:deps": "bun madge src --extensions js,jsx,ts,tsx",
     "test:deps:circular": "bun madge src --extensions js,jsx,ts,tsx --circular",
-    "test:all": "bun test:lint && bun test:types && bun test:deps:circular && bun test:unit"
+    "test:all": "bun test:lint && bun test:types && bun test:deps:circular && bun test:unit",
+    "prepare": "husky",
+    "pre-commit": "bun test:all"
   },
   "type": "module",
   "dependencies": {
     "@fontsource-variable/open-sans": "^5.0.23",
     "@ubloimmo/front-tokens": "0.1.2",
     "@ubloimmo/front-util": "0.0.8",
+    "husky": "^9.0.10",
     "react": "^18.2.0",
     "styled-components": "^6.1.8"
   },
   "jest": {
     "collectCoverage": true,
-    "coverageReporters": ["json", "html"]
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
   }
 }
