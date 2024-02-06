@@ -1,12 +1,10 @@
-import { GenericFn } from "@ubloimmo/front-util";
+import { GenericFn, isString } from "@ubloimmo/front-util";
 
 const UPPERCASE = /[\p{Lu}]/u;
 const LOWERCASE = /[\p{Ll}]/u;
 const LEADING_CAPITAL = /^[\p{Lu}](?![\p{Lu}])/gu;
 const IDENTIFIER = /([\p{Alpha}\p{N}_]|$)/u;
 const SEPARATORS = /[_.\- ]+/;
-const NUMBER_IN_PARENTHESIS = /\(([0-9]+)\)/g;
-const KEBAB_CASE_REPLACE = /[A-Z]+(?![a-z])|[A-Z]/g;
 
 const LEADING_SEPARATORS = new RegExp("^" + SEPARATORS.source);
 const SEPARATORS_AND_IDENTIFIER = new RegExp(
@@ -179,7 +177,7 @@ const postProcess = (
 
  Correctly handles Unicode strings.
 
- @param {string} input - The string to convert to camel case.
+ @param {string | readonly string[]} input - The string to convert to camel case.
  @param {Options} options - {@link Options}
 
  @example
@@ -289,45 +287,13 @@ export function camelCase(
 }
 
 /**
- * Replaces specific characters in a string with their corresponding replacements.
- *
- * @param {string} str - The input string to be sanitized.
- * @return {string} The sanitized string.
- */
-export const sanitize = (str: string): string =>
-  str
-    .replaceAll("é", "e")
-    .replaceAll("è", "e")
-    .replaceAll("ê", "e")
-    .replaceAll("É", "E")
-    .replaceAll("È", "E")
-    .replaceAll("Ê", "E")
-    .replaceAll("à", "a")
-    .replaceAll("ç", "c")
-    .replaceAll(NUMBER_IN_PARENTHESIS, "");
-
-/**
- * Converts a given string to a camel case format after sanitizing it.
- *
- * @param {string} str - The string to be converted to camel case after sanitization.
- * @return {string} The resulting string in camel case format.
- */
-export const saneCamel = (str: string) => sanitize(camelCase(str));
-
-/**
- * Replaces uppercase letters with hyphens and lowercase letters,
- * excluding the first letter if it is uppercase.
+ * Capitalizes the first letter of a string.
  *
  * @param {string} str - The input string.
- * @return {string} The kebabized string.
+ * @return {string} The capitalized string.
  */
-export const kebabize = (str: string) =>
-  str.replace(
-    KEBAB_CASE_REPLACE,
-    (match, ofs) => (ofs ? "-" : "") + match.toLowerCase()
-  );
-
-export const capitalize = (str: string) => {
+export const capitalize = (str: string): string => {
+  if (!isString(str)) throw new Error("Expected a string");
   if (str.length === 0) return "";
 
   return str.charAt(0).toUpperCase() + str.slice(1);
