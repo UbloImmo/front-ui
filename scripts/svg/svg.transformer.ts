@@ -262,6 +262,12 @@ ${componentDeclarationTemplate(name, componentName, tsxReturn, type)}
   };
 };
 
+/**
+ * Parses the given SVG string and returns the root SVG node and its children.
+ *
+ * @param {string} svgStr - the SVG string to be parsed
+ * @return {SvgRootNode} the root SVG node parsed from the given string
+ */
 const parseSvgStr = (svgStr: string): SvgRootNode => {
   logger.log("parsing svg string...", LOGGER_NAME);
   const node: SvgRootNode = parser.parse(svgStr);
@@ -271,7 +277,15 @@ const parseSvgStr = (svgStr: string): SvgRootNode => {
 
 const BOOTSTRAP_ICONS_DIR = "./node_modules/bootstrap-icons/icons";
 
-const getBootstrapIconFiles = async (): Promise<BootstrapIconFile[]> => {
+/**
+ * Retrieves and processes the Bootstrap SVG icon files while deduplicating custom icon names.
+ *
+ * @param {string[]} customIconNames - An array of custom icon names to be used for de-duplication.
+ * @return {Promise<BootstrapIconFile[]>} A promise that resolves to an array of BootstrapIconFile objects representing the retrieved SVG icons.
+ */
+const getBootstrapIconFiles = async (
+  customIconNames: string[]
+): Promise<BootstrapIconFile[]> => {
   logger.info(
     `fetching bootstrap svg icons list from ${BOOTSTRAP_ICONS_DIR}...`,
     LOGGER_NAME
@@ -289,7 +303,11 @@ const getBootstrapIconFiles = async (): Promise<BootstrapIconFile[]> => {
   const iconFiles = await Promise.all(
     svgFilesNames.map(async (svgFileName) => {
       const filePath = `${BOOTSTRAP_ICONS_DIR}/${svgFileName}`;
-      const iconName = svgFileName.replace(".svg", "");
+      let iconName = svgFileName.replace(".svg", "");
+      // de-deduplicate between bootstrap and custom icons
+      if (customIconNames.includes(iconName)) {
+        iconName = `${iconName}-bootstrap`;
+      }
       const file = Bun.file(filePath);
       const fileContents = await file.text();
       const type: IconFileType = "bootstrap";
@@ -306,20 +324,36 @@ const getBootstrapIconFiles = async (): Promise<BootstrapIconFile[]> => {
   return iconFiles;
 };
 
-const generateBootstrapIconFiles = async (): Promise<
-  NormalizedIconFileDeclaration[]
-> => {
+/**
+ * Generates bootstrap icon files based on the given custom icon names.
+ *
+ * @param {string[]} customIconNames - an array of custom icon names
+ * @return {Promise<NormalizedIconFileDeclaration[]>} a promise that resolves to an array of normalized icon file declarations
+ */
+const generateBootstrapIconFiles = async (
+  customIconNames: string[]
+): Promise<NormalizedIconFileDeclaration[]> => {
   logger.info("generate bootstrap icons", LOGGER_NAME);
-  const bootstrapIconFiles = await getBootstrapIconFiles();
+  const bootstrapIconFiles = await getBootstrapIconFiles(customIconNames);
   return bootstrapIconFiles.map((iconFile) => {
     return iconFileDeclaration(iconFile);
   });
 };
 
+/**
+ * Retrieves an array of custom icon files.
+ *
+ * @return {CustomIconFile[]} an array of custom icon files
+ */
 const getCustomIconFiles = (): CustomIconFile[] => {
   return [...icons];
 };
 
+/**
+ * Generates an array of normalized icon file declarations based on the custom icon files.
+ *
+ * @return {NormalizedIconFileDeclaration[]} an array of normalized custom icon file declarations
+ */
 const generateCustomIconFiles = (): NormalizedIconFileDeclaration[] => {
   const customIconFiles = getCustomIconFiles();
   return customIconFiles.map((iconFile) => {
@@ -327,10 +361,16 @@ const generateCustomIconFiles = (): NormalizedIconFileDeclaration[] => {
   });
 };
 
+/**
+ * Asynchronously transforms SVGs, generating custom and Bootstrap icons and logging the process.
+ *
+ * @return {Promise<{ bootstrapIcons: any, customIcons: any }>} An object containing the generated Bootstrap and custom icons.
+ */
 export const transformSvgs = async () => {
   logger.info("transforming bootstrap and custom icons", LOGGER_NAME);
-  const bootstrapIcons = await generateBootstrapIconFiles();
   const customIcons = generateCustomIconFiles();
+  const customIconNames = customIcons.map(({ name }) => name);
+  const bootstrapIcons = await generateBootstrapIconFiles(customIconNames);
   logger.info(
     `transformed ${bootstrapIcons.length + customIcons.length} total icons`,
     LOGGER_NAME
