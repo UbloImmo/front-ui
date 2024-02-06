@@ -18,7 +18,7 @@
   "devDependencies": {
     "@happy-dom/global-registrator": "^13.3.1",
     "@testing-library/react": "^14.1.2",
-    "@types/bun": "^1.0.3",
+    "@types/bun": "latest",
     "@types/react": "^18.2.48",
     "@types/svg-parser": "^2.0.6",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
