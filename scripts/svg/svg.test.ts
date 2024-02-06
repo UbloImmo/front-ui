@@ -24,5 +24,13 @@ describe("svg to tsx conversion", () => {
       expect(exportSvgFiles).toBeDefined();
       expect(exportSvgFiles).toBeFunction();
     });
+
+    it("should not throw", () => {
+      const runExporterDryRun = async () => {
+        const { bootstrapIcons, customIcons } = await transformSvgs();
+        await exportSvgFiles(bootstrapIcons, customIcons, true);
+      };
+      expect(runExporterDryRun).not.toThrow();
+    });
   });
 });
