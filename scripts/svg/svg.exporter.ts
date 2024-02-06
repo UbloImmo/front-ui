@@ -31,7 +31,7 @@ const writeMultipleFiles = async (files: FileDescription[], dryRun = false) => {
 };
 
 const iconFileName = (componentName: string) => {
-  return `${componentName}.icon.tsx`;
+  return `${componentName}.icon`;
 };
 
 const generateLocalIconIndex = (
@@ -58,7 +58,7 @@ export const exportGeneratedSvgFiles = async (
   dryRun = false
 ) => {
   const files: FileDescription[] = iconFiles.map((iconFile) => {
-    const path = `${rootDirPath}/${iconFileName(iconFile.componentName)}`;
+    const path = `${rootDirPath}/${iconFileName(iconFile.componentName)}.tsx`;
     return {
       path,
       contents: iconFile.tsx,
@@ -92,18 +92,18 @@ const generateRootIconIndex = (rootDirPath: string): FileDescription => {
 const generateCommonTypesDefs = (rootDirPath: string): FileDescription => {
   const contents = `import type { CssLength, PaletteColor } from "../../../types";
 
-  export type CommonIconProps = {
-    color: PaletteColor;
-    size?: CssLength;
-  };
-  
-  export type CommonIconDefaultProps = Required<CommonIconProps>;
-  
-  export const commonIconDefaulProps: CommonIconDefaultProps = {
-    color: "primary-base",
-    size: "1rem",
-  } as const;
-  `;
+export type CommonIconProps = {
+  color: PaletteColor;
+  size?: CssLength;
+};
+
+export type CommonIconDefaultProps = Required<CommonIconProps>;
+
+export const commonIconDefaulProps: CommonIconDefaultProps = {
+  color: "primary-base",
+  size: "1rem",
+} as const;
+`;
 
   const path = `${rootDirPath}/common.types.ts`;
 
@@ -116,13 +116,10 @@ export const exportSvgFiles = async (
   bootstrapIcons: NormalizedIconFileDeclaration[],
   customIcons: NormalizedIconFileDeclaration[]
 ) => {
-  await exportGeneratedSvgFiles(bootstrapIcons, BOOTSTRAP_ICONS_DIR_PATH);
+  await exportGeneratedSvgFiles(bootstrapIcons, BOOTSTRAP_ICONS_DIR_PATH, true);
   await exportGeneratedSvgFiles(customIcons, CUSTOM_ICONS_DIR_PATH);
-  await writeMultipleFiles(
-    [
-      generateRootIconIndex(ROOT_DIR_PATH),
-      generateCommonTypesDefs(ROOT_DIR_PATH),
-    ],
-    true
-  );
+  await writeMultipleFiles([
+    generateRootIconIndex(ROOT_DIR_PATH),
+    generateCommonTypesDefs(ROOT_DIR_PATH),
+  ]);
 };
