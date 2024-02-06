@@ -1,0 +1,36 @@
+import { useMemo } from "react";
+import { CommonIconDefaultProps, commonIconDefaulProps } from "../common.types";
+import {
+  cssLengthUsage,
+  cssVarUsage,
+  mergeDefaultProps,
+} from "../../../../utils";
+/**
+ * React component generated from bootstrap icon: `person-workspace`.
+ * Auto-generated before NPM release
+ *
+ * @params {CommonIconDefaultProps} props - the icon's size and color
+ * @returns {JSX.Element} - the icon
+ */
+export const PersonWorkspace = (props: CommonIconDefaultProps) => {
+  const { color, size } = useMemo(() => {
+    const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
+    return {
+      color: cssVarUsage(mergedProps.color),
+      size: cssLengthUsage(mergedProps.size),
+    };
+  }, [props]);
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill={color}
+      viewBox="0 0 16 16"
+    >
+      <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+      <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z" />
+    </svg>
+  );
+};

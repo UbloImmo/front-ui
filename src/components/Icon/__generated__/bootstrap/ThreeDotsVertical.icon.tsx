@@ -1,0 +1,35 @@
+import { useMemo } from "react";
+import { CommonIconDefaultProps, commonIconDefaulProps } from "../common.types";
+import {
+  cssLengthUsage,
+  cssVarUsage,
+  mergeDefaultProps,
+} from "../../../../utils";
+/**
+ * React component generated from bootstrap icon: `three-dots-vertical`.
+ * Auto-generated before NPM release
+ *
+ * @params {CommonIconDefaultProps} props - the icon's size and color
+ * @returns {JSX.Element} - the icon
+ */
+export const ThreeDotsVertical = (props: CommonIconDefaultProps) => {
+  const { color, size } = useMemo(() => {
+    const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
+    return {
+      color: cssVarUsage(mergedProps.color),
+      size: cssLengthUsage(mergedProps.size),
+    };
+  }, [props]);
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill={color}
+      viewBox="0 0 16 16"
+    >
+      <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+    </svg>
+  );
+};
