@@ -76,13 +76,6 @@ const tagIndentation = (indentation: number): string =>
 
 /**
  * Factory function for creating SVG tag markup with properties and children.
- *
- * @param {string} tagName - the name of the SVG tag
- * @param {number} [indentation = 0] - the level of indentation for the tag
- * @param {number} [printWidth = 80] - the maximum width for printing the tag
- * @param {Record<string, string | number>} properties - the properties of the SVG tag
- * @param {Primitives} children - the children of the SVG tag
- * @return {string} the constructed SVG tag
  */
 const svgTagFactory =
   (tagName: string, indentation = 0, printWidth = 80) =>
@@ -117,9 +110,10 @@ const svgTagFactory =
       .map((mapping) => `${tagIndentation(indentation + 1)}${mapping}`)
       .join("\n")}${leftTagMultilineSuffix}`;
 
-    const overflows = leftTagOneLine.length <= printWidth;
+    const overflows =
+      leftTagOneLine.length >= printWidth && propMappings.length > 1;
 
-    const leftTag = overflows ? leftTagOneLine : leftTagMultiline;
+    const leftTag = overflows ? leftTagMultiline : leftTagOneLine;
 
     const rightTag = hasChildren ? `</${tagName}>` : "";
 
@@ -167,7 +161,14 @@ const svgElementNodeToTsx = (
   return tsxTag;
 };
 
-const svgNodeToTsx = (node: SvgNode, indentation = 0) => {
+/**
+ * Convert a given SVG node to a TSX element string.
+ *
+ * @param {SvgNode} node - The SVG node to be converted
+ * @param {number} indentation - The level of indentation for the TSX element
+ * @return {string} - The converted tsx element string
+ */
+const svgNodeToTsx = (node: SvgNode, indentation = 0): string => {
   if (node.type === "text") {
     return svgTextNodeToTsx(node);
   }
@@ -191,7 +192,7 @@ const svgRootNodeToTsx = (node: SvgRootNode) => {
  * @param {string} componentName - description of parameter
  * @param {string} render - description of parameter
  * @param {IconFileType} type - description of parameter
- * @return {strng} - the icon component string
+ * @return {string} - the icon component string
  */
 const componentDeclarationTemplate = (
   name: string,
