@@ -35,13 +35,13 @@ export const buildSpacingMap = (
   const scales = objectFromEntries(
     scalesArr.map((scale): [SpacingLabel, CssRem] => {
       return [
-        `${SPACING_PREFIX}${scale}`,
+        `${SPACING_PREFIX}-${scale}`,
         cssRem(pxToRem(scaleUnitByFactor(scale))),
       ];
     })
   );
   return {
-    s05: cssRem(pxToRem(scaleUnitByFactor(0.5))),
+    "s-05": cssRem(pxToRem(scaleUnitByFactor(0.5))),
     ...scales,
   };
 };
