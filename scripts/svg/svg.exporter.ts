@@ -39,10 +39,12 @@ const generateLocalIconIndex = (
   rootDirPath: string
 ): FileDescription => {
   const contents = [
-    ...files.map(({ componentName }) => {
-      const name = iconFileName(componentName);
-      return `export { ${componentName} } from "./${name}";`;
-    }),
+    ...files
+      .sort((a, b) => a.componentName.localeCompare(b.componentName))
+      .map(({ componentName }) => {
+        const name = iconFileName(componentName);
+        return `export { ${componentName} } from "./${name}";`;
+      }),
     "",
   ].join("\n");
   const path = `${rootDirPath}/index.ts`;
