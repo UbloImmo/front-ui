@@ -134,7 +134,7 @@ const generateCommonTypesDefs = (rootDirPath: string): FileDescription => {
   const contents = `import type { CssLength, PaletteColor } from "../../../types";
 
 export type CommonIconProps = {
-  color: PaletteColor;
+  color?: PaletteColor;
   size?: CssLength;
 };
 
