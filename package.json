@@ -51,7 +51,8 @@
     "test:deps:circular": "bun madge src --extensions js,jsx,ts,tsx --circular",
     "test:all": "bun test:lint && bun test:types && bun test:deps:circular && bun test:unit",
     "prepare": "husky",
-    "pre-commit": "bun test:all",
+    "pre-push": "bun test:all",
+    "pre-commit": "bun test:unit",
     "svg:icons:bootstrap": "bun scripts/svg/svg.transformer.ts"
   },
   "type": "module",
