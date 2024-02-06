@@ -1,22 +1,11 @@
-import * as bootstrapIcons from "react-bootstrap-icons";
-import {
-  CssFr,
-  CssLength,
-  Enum,
-  PaletteColor,
-  SpacingLabel,
-} from "../../types";
-import type { Icon as BIcon } from "react-bootstrap-icons";
+import { PaletteColor, CssLength, CssFr, SpacingLabel } from "../../types";
+import { GenericFn } from "@ubloimmo/front-util";
+import * as GeneratedIcons from "./__generated__";
+import { CommonIconProps } from "./__generated__/common.types";
 
-export type BootstrapIcon = BIcon;
+export type IconName = keyof typeof GeneratedIcons;
 
-export type BootstrapIconName = keyof typeof bootstrapIcons;
-
-export const customIconNames: string[] = [] as const;
-
-export type CustomIconName = Enum<typeof customIconNames>;
-
-export type IconName = BootstrapIconName | CustomIconName;
+export type GeneratedIcon = GenericFn<[CommonIconProps], JSX.Element>;
 
 export type IconProps = {
   size?: Exclude<CssLength, CssFr | SpacingLabel>;

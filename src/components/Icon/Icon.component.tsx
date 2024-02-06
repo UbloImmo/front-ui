@@ -1,15 +1,8 @@
-import {
-  CustomIconName,
-  DefaultIconProps,
-  IconName,
-  IconProps,
-  customIconNames,
-  BootstrapIcon,
-} from "./Icon.types";
+import { DefaultIconProps, GeneratedIcon, IconProps } from "./Icon.types";
 import { Nullable } from "@ubloimmo/front-util";
-import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "../../utils";
+import { mergeDefaultProps } from "../../utils";
 import { useMemo } from "react";
-import * as bootstrapIcons from "react-bootstrap-icons";
+import * as generatedIcons from "./__generated__";
 
 const defaultIconProps: DefaultIconProps = {
   size: "1rem",
@@ -17,31 +10,16 @@ const defaultIconProps: DefaultIconProps = {
   name: "Circle",
 };
 
-const isCustomIconName = (name: IconName): name is CustomIconName => {
-  return customIconNames.includes(name);
-};
-
 export const Icon = (props: IconProps) => {
-  const mergedProps = useMemo(
+  const { name } = useMemo(
     () => mergeDefaultProps(defaultIconProps, props),
     [props]
   );
-  const { size, color } = useMemo(
-    () => ({
-      size: cssLengthUsage(mergedProps.size),
-      color: cssVarUsage(mergedProps.color),
-    }),
-    [mergedProps]
+  const IconComponent = useMemo<Nullable<GeneratedIcon>>(
+    () => generatedIcons[name] ?? null,
+    [name]
   );
 
-  const IconComponent = useMemo<Nullable<BootstrapIcon>>(() => {
-    if (isCustomIconName(mergedProps.name)) {
-      // TODO: implement support for custom icons
-      return null;
-    }
-    return bootstrapIcons[mergedProps.name];
-  }, [mergedProps]);
-
   if (!IconComponent) return null;
-  return <IconComponent size={size} color={color} />;
+  return <IconComponent size={props.size} color={props.color} />;
 };
