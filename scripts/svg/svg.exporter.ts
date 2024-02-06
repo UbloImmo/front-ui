@@ -116,8 +116,8 @@ export const exportSvgFiles = async (
   bootstrapIcons: NormalizedIconFileDeclaration[],
   customIcons: NormalizedIconFileDeclaration[]
 ) => {
-  await exportGeneratedSvgFiles(bootstrapIcons, BOOTSTRAP_ICONS_DIR_PATH, true);
-  await exportGeneratedSvgFiles(customIcons, CUSTOM_ICONS_DIR_PATH, true);
+  await exportGeneratedSvgFiles(bootstrapIcons, BOOTSTRAP_ICONS_DIR_PATH);
+  await exportGeneratedSvgFiles(customIcons, CUSTOM_ICONS_DIR_PATH);
   await writeMultipleFiles(
     [
       generateRootIconIndex(ROOT_DIR_PATH),
