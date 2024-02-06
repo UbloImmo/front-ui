@@ -53,7 +53,7 @@
     "prepare": "husky",
     "pre-push": "bun test:all",
     "pre-commit": "bun test:unit",
-    "svg:icons:bootstrap": "bun scripts/svg/svg.transformer.ts"
+    "icons:generate": "bun scripts/svg/index.ts"
   },
   "type": "module",
   "dependencies": {
