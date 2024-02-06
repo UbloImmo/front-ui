@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CommonIconDefaultProps, commonIconDefaulProps } from "../common.types";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 import {
   cssLengthUsage,
   cssVarUsage,
@@ -9,10 +9,10 @@ import {
  * React component generated from bootstrap icon: `toggles2`.
  * Auto-generated before NPM release
  *
- * @params {CommonIconDefaultProps} props - the icon's size and color
+ * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const Toggles2 = (props: CommonIconDefaultProps) => {
+export const Toggles2 = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {

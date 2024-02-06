@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CommonIconDefaultProps, commonIconDefaulProps } from "../common.types";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 import {
   cssLengthUsage,
   cssVarUsage,
@@ -9,10 +9,10 @@ import {
  * React component generated from bootstrap icon: `threads-fill`.
  * Auto-generated before NPM release
  *
- * @params {CommonIconDefaultProps} props - the icon's size and color
+ * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const ThreadsFill = (props: CommonIconDefaultProps) => {
+export const ThreadsFill = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {

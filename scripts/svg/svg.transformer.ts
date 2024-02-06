@@ -214,10 +214,10 @@ const componentDeclarationTemplate = (
  * React component generated from ${type} icon: \`${name}\`.
  * Auto-generated before NPM release
  *
- * @params {CommonIconDefaultProps} props - the icon's size and color
+ * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const ${componentName} = (props: CommonIconDefaultProps) => {
+export const ${componentName} = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {
@@ -246,7 +246,7 @@ const iconFileDeclaration = (
     ? "bootstrap"
     : "custom";
   const importTemplate = `import { useMemo } from "react";
-import { CommonIconDefaultProps, commonIconDefaulProps } from "../common.types";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 import {
   cssLengthUsage,
   cssVarUsage,

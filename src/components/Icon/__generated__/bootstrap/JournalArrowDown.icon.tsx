@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CommonIconDefaultProps, commonIconDefaulProps } from "../common.types";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 import {
   cssLengthUsage,
   cssVarUsage,
@@ -9,10 +9,10 @@ import {
  * React component generated from bootstrap icon: `journal-arrow-down`.
  * Auto-generated before NPM release
  *
- * @params {CommonIconDefaultProps} props - the icon's size and color
+ * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const JournalArrowDown = (props: CommonIconDefaultProps) => {
+export const JournalArrowDown = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CommonIconDefaultProps, commonIconDefaulProps } from "../common.types";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 import {
   cssLengthUsage,
   cssVarUsage,
@@ -9,10 +9,10 @@ import {
  * React component generated from bootstrap icon: `arrow-90deg-right`.
  * Auto-generated before NPM release
  *
- * @params {CommonIconDefaultProps} props - the icon's size and color
+ * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const Arrow90DegRight = (props: CommonIconDefaultProps) => {
+export const Arrow90DegRight = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {

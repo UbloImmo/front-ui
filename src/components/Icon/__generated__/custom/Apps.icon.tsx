@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CommonIconDefaultProps, commonIconDefaulProps } from "../common.types";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 import {
   cssLengthUsage,
   cssVarUsage,
@@ -9,10 +9,10 @@ import {
  * React component generated from custom icon: `apps`.
  * Auto-generated before NPM release
  *
- * @params {CommonIconDefaultProps} props - the icon's size and color
+ * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const Apps = (props: CommonIconDefaultProps) => {
+export const Apps = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {
@@ -29,7 +29,7 @@ export const Apps = (props: CommonIconDefaultProps) => {
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clipPath="url(#clip0_222_1000)">
+      <g clipPath="url(#clip0_222_1000)" >
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -44,7 +44,7 @@ export const Apps = (props: CommonIconDefaultProps) => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_222_1000">
+        <clipPath id="clip0_222_1000" >
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>
