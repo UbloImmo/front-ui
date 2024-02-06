@@ -6,13 +6,13 @@ import {
   mergeDefaultProps,
 } from "../../../../utils";
 /**
- * React component generated from bootstrap icon: `infinity`.
+ * React component generated from bootstrap icon: `infinity-bootstrap`.
  * Auto-generated before NPM release
  *
  * @params {CommonIconDefaultProps} props - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const Infinity = (props: CommonIconDefaultProps) => {
+export const InfinityBootstrap = (props: CommonIconDefaultProps) => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {

@@ -1233,7 +1233,7 @@ export { InboxesFill } from "./InboxesFill.icon";
 export { InboxFill } from "./InboxFill.icon";
 export { Incognito } from "./Incognito.icon";
 export { Indent } from "./Indent.icon";
-export { Infinity } from "./Infinity.icon";
+export { InfinityBootstrap } from "./InfinityBootstrap.icon";
 export { Info } from "./Info.icon";
 export { InfoCircle } from "./InfoCircle.icon";
 export { InfoCircleFill } from "./InfoCircleFill.icon";

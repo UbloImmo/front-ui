@@ -26,6 +26,18 @@ import { icons } from "@ubloimmo/front-tokens/lib/icons";
 const LOGGER_NAME = "svg transform";
 const COLOR_PROPERTIES = ["fill", "stroke", "color", "background-color"];
 
+const JS_GLOBALS = [
+  "infinity",
+  "const",
+  "let",
+  "var",
+  "function",
+  "if",
+  "else",
+  "try",
+  "catch",
+];
+
 const logger = Logger({
   mode: "simple",
   hideLogs: true,
@@ -305,7 +317,8 @@ const getBootstrapIconFiles = async (
       const filePath = `${BOOTSTRAP_ICONS_DIR}/${svgFileName}`;
       let iconName = svgFileName.replace(".svg", "");
       // de-deduplicate between bootstrap and custom icons
-      if (customIconNames.includes(iconName)) {
+      // and watch out for global properties
+      if (customIconNames.includes(iconName) || JS_GLOBALS.includes(iconName)) {
         iconName = `${iconName}-bootstrap`;
       }
       const file = Bun.file(filePath);
