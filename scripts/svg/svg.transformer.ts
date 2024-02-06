@@ -2,6 +2,7 @@ import {
   Logger,
   Primitives,
   isString,
+  isNumber,
   objectEntries,
   objectFromEntries,
 } from "@ubloimmo/front-util";
@@ -97,11 +98,7 @@ const svgTagFactory =
 
     const leftTagOneLineSuffix = hasChildren ? ">" : "/>";
     const leftTagOneLine = `${leftTagPrefix}${
-      hasProps
-        ? ` ${propsOneLine}${
-            propsOneLine.charAt(propsOneLine.length - 1) === "}" ? " " : ""
-          }`
-        : ""
+      hasProps ? ` ${propsOneLine} ` : ""
     }${leftTagOneLineSuffix}`;
 
     const leftTagMultilineSuffix = hasChildren
@@ -180,9 +177,9 @@ const svgNodeToTsx = (node: SvgNode, indentation = 0): string => {
  * Converts a SVG root node to TSX format.
  *
  * @param {SvgRootNode} node - the SVG root node to be converted
- * @return {type} the TSX representation of the SVG root node
+ * @return {string} the TSX representation of the SVG root node
  */
-const svgRootNodeToTsx = (node: SvgRootNode) => {
+const svgRootNodeToTsx = (node: SvgRootNode): string => {
   return svgNodeToTsx(node.children[0], 2);
 };
 
@@ -246,7 +243,11 @@ import {
 
   const tsxReturn = svgRootNodeToTsx(parseSvgStr(svg));
 
-  const componentName = capitalize(camelCase(name));
+  let componentName = capitalize(camelCase(name));
+  const firstChar = parseInt(componentName.charAt(0));
+  if (isNumber(firstChar) && !isNaN(firstChar)) {
+    componentName = `_${componentName}`;
+  }
 
   const tsx = `${importTemplate}
 ${componentDeclarationTemplate(name, componentName, tsxReturn, type)}
