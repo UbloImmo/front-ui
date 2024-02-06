@@ -29,7 +29,7 @@ export const Apps = (props: CommonIconProps): JSX.Element => {
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clipPath="url(#clip0_222_1000)" >
+      <g clipPath="url(#clip0_222_1000)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -44,7 +44,7 @@ export const Apps = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_222_1000" >
+        <clipPath id="clip0_222_1000">
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>

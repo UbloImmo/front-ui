@@ -12,7 +12,9 @@ import {
  * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const LayoutTextSidebarReverse = (props: CommonIconProps): JSX.Element => {
+export const LayoutTextSidebarReverse = (
+  props: CommonIconProps
+): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {
