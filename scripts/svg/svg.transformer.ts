@@ -22,12 +22,13 @@ import { camelCase, capitalize } from "src/utils/string.utils";
 import { isBootstrapIconFile } from "./svg.utils";
 import { icons } from "@ubloimmo/front-tokens/lib/icons";
 
+const LOGGER_NAME = "svg transform";
+const COLOR_PROPERTIES = ["fill", "stroke", "color", "background-color"];
+
 const logger = Logger({
   mode: "simple",
+  hideLogs: true,
 });
-const LOGGER_NAME = "svg transform";
-
-const COLOR_PROPERTIES = ["fill", "stroke", "color", "background-color"];
 
 /**
  * Generate an array of strings representing the properties of an SVG tag.
@@ -126,7 +127,7 @@ const svgTagFactory =
  * @param {SvgTextNode} node - The SVG text node to be converted
  * @return {string} The TypeScript JSX string representation of the SVG text node
  */
-const svgTextNodeToTsx = (node: SvgTextNode): string => {
+export const svgTextNodeToTsx = (node: SvgTextNode): string => {
   logger.log(`encountered text node: ${node.value}`, LOGGER_NAME);
   return String(node.value);
 };
@@ -326,9 +327,13 @@ const generateCustomIconFiles = (): NormalizedIconFileDeclaration[] => {
 };
 
 export const transformSvgs = async () => {
-  logger.info("begin", LOGGER_NAME);
+  logger.info("transforming bootstrap and custom icons", LOGGER_NAME);
   const bootstrapIcons = await generateBootstrapIconFiles();
   const customIcons = generateCustomIconFiles();
+  logger.info(
+    `transformed ${bootstrapIcons.length + customIcons.length} total icons`,
+    LOGGER_NAME
+  );
   return {
     bootstrapIcons,
     customIcons,

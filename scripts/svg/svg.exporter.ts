@@ -114,12 +114,20 @@ export const commonIconDefaulProps: CommonIconDefaultProps = {
 };
 export const exportSvgFiles = async (
   bootstrapIcons: NormalizedIconFileDeclaration[],
-  customIcons: NormalizedIconFileDeclaration[]
+  customIcons: NormalizedIconFileDeclaration[],
+  dryRun = false
 ) => {
-  await exportGeneratedSvgFiles(bootstrapIcons, BOOTSTRAP_ICONS_DIR_PATH);
-  await exportGeneratedSvgFiles(customIcons, CUSTOM_ICONS_DIR_PATH);
-  await writeMultipleFiles([
-    generateRootIconIndex(ROOT_DIR_PATH),
-    generateCommonTypesDefs(ROOT_DIR_PATH),
-  ]);
+  await exportGeneratedSvgFiles(
+    bootstrapIcons,
+    BOOTSTRAP_ICONS_DIR_PATH,
+    dryRun
+  );
+  await exportGeneratedSvgFiles(customIcons, CUSTOM_ICONS_DIR_PATH, dryRun);
+  await writeMultipleFiles(
+    [
+      generateRootIconIndex(ROOT_DIR_PATH),
+      generateCommonTypesDefs(ROOT_DIR_PATH),
+    ],
+    dryRun
+  );
 };
