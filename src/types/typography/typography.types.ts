@@ -1,12 +1,5 @@
 import { texts } from "@ubloimmo/front-tokens";
-import { ColorPalette, Enum } from "..";
-
-export type TypographyColor = {
-  [ColorKey in keyof ColorPalette & string]: {
-    [ShadeKey in keyof ColorPalette[ColorKey] &
-      string]: `${ColorKey}-${ShadeKey}`;
-  }[keyof ColorPalette[ColorKey] & string];
-}[keyof ColorPalette & string];
+import { Enum, PaletteColor } from "..";
 
 export type TypographyTokens = typeof texts;
 
@@ -27,7 +20,7 @@ export type TypographyToken =
   TypographyTokens["text"][TextSize][TypographyWeight];
 
 export type TypographyProps = {
-  color?: TypographyColor;
+  color?: PaletteColor;
   italic?: boolean;
   underline?: boolean;
   overline?: boolean;

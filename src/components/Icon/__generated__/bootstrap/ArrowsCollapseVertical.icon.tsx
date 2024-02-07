@@ -1,0 +1,35 @@
+import { useMemo } from "react";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
+import {
+  cssLengthUsage,
+  cssVarUsage,
+  mergeDefaultProps,
+} from "../../../../utils";
+/**
+ * React component generated from bootstrap icon: `arrows-collapse-vertical`.
+ * Auto-generated before NPM release
+ *
+ * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
+ * @returns {JSX.Element} - the icon
+ */
+export const ArrowsCollapseVertical = (props: CommonIconProps): JSX.Element => {
+  const { color, size } = useMemo(() => {
+    const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
+    return {
+      color: cssVarUsage(mergedProps.color),
+      size: cssLengthUsage(mergedProps.size),
+    };
+  }, [props]);
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill={color}
+      viewBox="0 0 16 16"
+    >
+      <path d="M8 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M0 8a.5.5 0 0 1 .5-.5h3.793L3.146 6.354a.5.5 0 1 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8.5H.5A.5.5 0 0 1 0 8m11.707.5 1.147 1.146a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708.708L11.707 7.5H15.5a.5.5 0 0 1 0 1z" />
+    </svg>
+  );
+};

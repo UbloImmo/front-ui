@@ -1,0 +1,35 @@
+import { useMemo } from "react";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
+import {
+  cssLengthUsage,
+  cssVarUsage,
+  mergeDefaultProps,
+} from "../../../../utils";
+/**
+ * React component generated from bootstrap icon: `file-earmark-plus-fill`.
+ * Auto-generated before NPM release
+ *
+ * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
+ * @returns {JSX.Element} - the icon
+ */
+export const FileEarmarkPlusFill = (props: CommonIconProps): JSX.Element => {
+  const { color, size } = useMemo(() => {
+    const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
+    return {
+      color: cssVarUsage(mergedProps.color),
+      size: cssLengthUsage(mergedProps.size),
+    };
+  }, [props]);
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill={color}
+      viewBox="0 0 16 16"
+    >
+      <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0" />
+    </svg>
+  );
+};

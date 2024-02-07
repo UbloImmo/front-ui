@@ -1,0 +1,35 @@
+import { useMemo } from "react";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
+import {
+  cssLengthUsage,
+  cssVarUsage,
+  mergeDefaultProps,
+} from "../../../../utils";
+/**
+ * React component generated from bootstrap icon: `image-alt`.
+ * Auto-generated before NPM release
+ *
+ * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
+ * @returns {JSX.Element} - the icon
+ */
+export const ImageAlt = (props: CommonIconProps): JSX.Element => {
+  const { color, size } = useMemo(() => {
+    const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
+    return {
+      color: cssVarUsage(mergedProps.color),
+      size: cssLengthUsage(mergedProps.size),
+    };
+  }, [props]);
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill={color}
+      viewBox="0 0 16 16"
+    >
+      <path d="M7 2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0m4.225 4.053a.5.5 0 0 0-.577.093l-3.71 4.71-2.66-2.772a.5.5 0 0 0-.63.062L.002 13v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4.5z" />
+    </svg>
+  );
+};

@@ -103,11 +103,7 @@ const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
  * Maps exported effect token keys to {@link LegacyShadows} keys.
  */
 const effectTokenToLegacyShadowKeyMap = {
-  bottomDivider: "bottomDivider",
-  upfront: "high",
-  input: "input",
-  clickable: "button",
-  flat: "flat",
+  button: "button",
 } as const;
 
 /**
@@ -115,7 +111,7 @@ const effectTokenToLegacyShadowKeyMap = {
  */
 type MissingLegacyShadows = Omit<
   LegacyShadows,
-  (typeof effectTokenToLegacyShadowKeyMap)[keyof typeof effects]
+  (typeof effectTokenToLegacyShadowKeyMap)[keyof typeof effects.shadow]
 >;
 
 /**
@@ -125,11 +121,11 @@ type MissingLegacyShadows = Omit<
  * @return {string} The value of the effect token shadow.
  */
 export const extractEffectTokenShadow = (
-  effectKey: keyof typeof effects
+  effectKey: keyof typeof effects.shadow
 ): string => {
-  if (!effects[effectKey]) return "";
+  if (!effects.shadow[effectKey]) return "";
   // TODO: remove this cast once effects have been exported from Design Tokens figma file
-  return (effects[effectKey] as Token)?.value ?? "";
+  return (effects.shadow[effectKey] as Token)?.value ?? "";
 };
 
 /**
@@ -142,14 +138,12 @@ const missingLegacyShadows: MissingLegacyShadows = {
   color:
     "0px 0px 1px rgba(12, 26, 75, 0.33), 0px 30px 40px rgba(109, 95, 254, 0.08)",
   input: "0px 0px 1px 0px #32324733, 0px 1px 2px 0px #32324714",
-  button:
-    "0px 1px 2px rgba(50, 50, 71, 0.08), 0px 0px 1px rgba(50, 50, 71, 0.2)",
   flat: "0px 0px 1px rgba(12, 26, 75, 0.33)",
   bottomDivider: "inset 0px -0.5px 0px #e5e5e5",
   topDivider: "inset 0px 0.5px 0px #e5e5e5",
   carousselCard:
     "0px 30px 40px 0px rgba(109, 95, 254, 0.08), 0px 0px 1px 0px rgba(12, 26, 75, 0.33)",
-};
+} as const;
 
 /**
  * Converts effect tokens to a subset of {@link LegacyShadows}.
@@ -161,10 +155,12 @@ const effectTokensToLegacyShadows = (): Omit<
   keyof MissingLegacyShadows
 > => {
   return Object.fromEntries(
-    objectKeys(effects).map((effectKey): [keyof LegacyShadows, string] => [
-      effectTokenToLegacyShadowKeyMap[effectKey],
-      extractEffectTokenShadow(effectKey),
-    ])
+    objectKeys(effects.shadow).map(
+      (effectKey): [keyof LegacyShadows, string] => [
+        effectTokenToLegacyShadowKeyMap[effectKey],
+        extractEffectTokenShadow(effectKey),
+      ]
+    )
   ) as Record<keyof LegacyShadows, string>;
 };
 
