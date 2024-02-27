@@ -130,6 +130,7 @@ export const buildTypographyStyle = (
     const fontSize = `text-${size}`;
     const fontWeight = typographyWeightMap[weight];
     const fontStyle = italic ?? defaults.italic ? "italic" : "normal";
+    const fontItalic = `"ital" ${italic ?? defaults.italic ? 1 : 0}`;
     const textDecoration = typographyTextDecoration({
       lineThrough,
       underline,
@@ -139,6 +140,7 @@ export const buildTypographyStyle = (
       ${typographyFontFace()}
       font-size: ${cssVarUsage(fontSize)};
       font-style: ${fontStyle};
+      font-variation-settings: ${fontItalic};
       font-weight: ${fontWeight};
       color: ${cssVarUsage(color)};
       letter-spacing: ${letterSpacing};
