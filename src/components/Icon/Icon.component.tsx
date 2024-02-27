@@ -22,7 +22,7 @@ const defaultIconProps: DefaultIconProps = {
  * @return {JSX.Element | null} The rendered icon component or null if the icon component is not found.
  */
 export const Icon = (props: IconProps) => {
-  const { name } = useMemo(
+  const { name, color, size } = useMemo(
     () => mergeDefaultProps(defaultIconProps, props),
     [props]
   );
@@ -32,5 +32,5 @@ export const Icon = (props: IconProps) => {
   );
 
   if (!IconComponent) return null;
-  return <IconComponent size={props.size} color={props.color} />;
+  return <IconComponent size={size} color={color} />;
 };
