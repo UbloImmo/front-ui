@@ -155,7 +155,7 @@ const effectTokensToLegacyShadows = (): Omit<
   keyof MissingLegacyShadows
 > => {
   return Object.fromEntries(
-    objectKeys(effects.shadow).map(
+    objectKeys(effects?.shadow ?? {}).map(
       (effectKey): [keyof LegacyShadows, string] => [
         effectTokenToLegacyShadowKeyMap[effectKey],
         extractEffectTokenShadow(effectKey),
