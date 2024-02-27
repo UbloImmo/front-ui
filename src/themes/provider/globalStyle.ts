@@ -50,8 +50,7 @@ export const paletteColorToCssVars = <
  */
 export const spacingsToCssVars = (spacings: Spacings): CssVar<CssRem>[] => {
   return objectEntries(spacings).map(([spacingName, value]) => {
-    const varName = `s-${spacingName.slice(1)}`;
-    return cssVar(varName, value);
+    return cssVar(spacingName, value);
   });
 };
 
@@ -146,8 +145,8 @@ export const buildGlobalStyle = (theme: Theme) => {
       [["SM", [textMobileCssVars]]]
     );
   }
-  // filter legacy palette out
-  const { palette: _, ...palette } = theme;
+  // filter legacy palette and organization out
+  const { palette: _, organization: __, ...palette } = theme;
   // generate css vars from non-legacy palette
   const paletteCssVars = objectEntries(palette).flatMap(
     ([colorName, shadedColor]) =>
