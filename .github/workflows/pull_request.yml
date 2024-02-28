@@ -59,5 +59,8 @@ jobs:
       - name: Typings Analysis (Typescript)
         run: bun test:types
 
+      - name: Circular dependencies
+        run: bun test:deps:circular
+
       - name: Unit tests
         run: bun test:unit:coverage
