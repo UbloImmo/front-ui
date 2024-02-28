@@ -1,9 +1,4 @@
-import type {
-  Nullish,
-  AsyncFn,
-  Nullable,
-  DeepNullish,
-} from "@ubloimmo/front-util";
+import type { Nullish, Nullable, DeepNullish } from "@ubloimmo/front-util";
 import type { HexColorOpaque } from ".";
 
 export type OrganizationAssets = {
@@ -56,4 +51,6 @@ export type EmptyThemeOverride = {
 
 export type ThemeOverrideReponse = ThemeOverride | EmptyThemeOverride;
 
-export type GetThemeOverridesFn = AsyncFn<[], Nullable<ThemeOverride>>;
+export type GetThemeOverridesFn = (
+  fakeFetchFn?: typeof fetch
+) => Promise<Nullable<ThemeOverride>>;
