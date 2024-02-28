@@ -10,7 +10,7 @@ import { themeOverridePaletteToColorPaletteShaded } from "./provider/theme.overr
 /**
  * Organization data for ublo's staging & local environments
  */
-const defaultOrganizationData: OrganizationData = {
+export const defaultOrganizationData: OrganizationData = {
   assets: {
     favicon: {
       x16: "https://firebasestorage.googleapis.com/v0/b/ideta-prod.appspot.com/o/bots%2F-MzKMeZK8HFmIKcLO_tO%2Fmedia%2Fimages%2F-bulle-ideta.png-1680183752345?alt=media&token=4e48ab92-6b01-4288-b39b-f539f1c52ccc",
@@ -42,7 +42,7 @@ export const buildTheme = (
     ...buildColorPalette(),
   };
   // return default theme if no overrides
-  if (!themeOverrides) return theme;
+  if (!themeOverrides || !themeOverrides.organization.palette) return theme;
   // overwrite organization, primary and legacy primary with fetched values
   const { palette, ...organization } = themeOverrides.organization;
   return {
