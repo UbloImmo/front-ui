@@ -1,4 +1,4 @@
-import { ColorPalette, LegacyPalette } from ".";
+import { ColorPalette, LegacyPalette, OrganizationData } from ".";
 
 /**
  * Styled-components theme
@@ -13,4 +13,5 @@ export interface Theme extends ColorPalette {
    * @deprecated;
    */
   palette: LegacyPalette;
+  organization: OrganizationData;
 }

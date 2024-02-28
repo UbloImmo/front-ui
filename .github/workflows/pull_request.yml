@@ -54,10 +54,17 @@ jobs:
         run: bun install
 
       - name: Code analysis (ESLint) and style-guide analysis (Prettier)
+        id: test_lint
         run: bun test:lint
 
       - name: Typings Analysis (Typescript)
+        id: test_types
         run: bun test:types
 
+      - name: Circular dependencies
+        id: test_deps
+        run: bun test:deps:circular
+
       - name: Unit tests
+        id: test_unit
         run: bun test:unit:coverage

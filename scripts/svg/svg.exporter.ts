@@ -10,19 +10,18 @@ const logger = Logger();
 /**
  * Writes data to a file at the specified path.
  *
- * @param {string} path - The path of the file to write to.
- * @param {string} data - The data to write to the file.
+ * @param {FileDescription} file - The description of the file to write
+ * @param {string} file.path - The path of the file to write to.
+ * @param {string} file.data - The data to write to the file.
+ * @param [dryRun = false] - Whether to not do anytg
  * @return {Promise<void>} A promise that resolves when the data has been written to the file.
  */
 const writeFile = async (
   { path, contents }: FileDescription,
   dryRun = false
 ) => {
-  logger[dryRun ? "info" : "debug"](
-    `${dryRun ? "DRY RUN: " : ""}${path}`,
-    "write file"
-  );
   if (dryRun) return;
+  logger.debug(`${path}`, "write file");
   await Bun.write(path, contents);
 };
 
@@ -30,7 +29,7 @@ const writeFile = async (
  * Writes multiple files asynchronously.
  *
  * @param {FileDescription[]} files - array of file descriptions
- * @param {boolean} dryRun - flag indicating whether to perform a dry run
+ * @param [dryRun = false] - flag indicating whether to perform a dry run
  * @return {Promise<void>} a Promise that resolves when all files are written
  */
 const writeMultipleFiles = async (files: FileDescription[], dryRun = false) => {
@@ -79,7 +78,7 @@ const generateLocalIconIndex = (
  *
  * @param {NormalizedIconFileDeclaration[]} iconFiles - The array of normalized icon file declarations
  * @param {string} rootDirPath - The root directory path where the SVG files will be exported
- * @param {boolean} [dryRun=false] - A flag indicating whether this is a dry run or not
+ * @param [dryRun=false] - A flag indicating whether this is a dry run or not
  */
 export const exportGeneratedSvgFiles = async (
   iconFiles: NormalizedIconFileDeclaration[],
@@ -159,14 +158,14 @@ export const commonIconDefaulProps: CommonIconDefaultProps = {
  *
  * @param {NormalizedIconFileDeclaration[]} bootstrapIcons - The array of normalized icon file declarations for Bootstrap icons.
  * @param {NormalizedIconFileDeclaration[]} customIcons - The array of normalized icon file declarations for custom icons.
- * @param {boolean} dryRun - Flag indicating whether the function should run in dry run mode.
+ * @param [dryRun = false] - Flag indicating whether the function should run in dry run mode.
  * @return {Promise<void>} A promise that resolves when all SVG files are exported.
  */
 export const exportSvgFiles = async (
   bootstrapIcons: NormalizedIconFileDeclaration[],
   customIcons: NormalizedIconFileDeclaration[],
   dryRun = false
-) => {
+): Promise<void> => {
   await exportGeneratedSvgFiles(
     bootstrapIcons,
     BOOTSTRAP_ICONS_DIR_PATH,

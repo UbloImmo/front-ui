@@ -21,6 +21,7 @@ import {
   isCssRem,
   isCssFr,
   cssLengthUsage,
+  REM_FACTOR,
 } from "../utils";
 
 type LengthUnitCollection<TUnit extends CssLength> = {
@@ -97,6 +98,12 @@ const testLengthPredicate = <
 };
 
 describe("css", () => {
+  describe("constants", () => {
+    it("rem", () => {
+      expect(REM_FACTOR).toBeNumber();
+      expect(REM_FACTOR).toBe(16);
+    });
+  });
   describe("unit conversion", () => {
     testLengthConversion("px", "cssPx", cssPx);
     testLengthConversion("rem", "cssRem", cssRem);
@@ -145,7 +152,7 @@ describe("css", () => {
       expect(cssLengthUsage(testLenghts.cssRem.float)).toEqual(
         testLenghts.cssRem.float
       );
-      expect(cssLengthUsage("s1")).toEqual(cssVarUsage("s1"));
+      expect(cssLengthUsage("s-1")).toEqual(cssVarUsage("s-1"));
     });
   });
 });
