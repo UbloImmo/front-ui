@@ -12,7 +12,7 @@ import {
 } from "../types";
 import { isNumber, isString, isUndefined } from "@ubloimmo/front-util";
 
-const REM_FACTOR = 16 as const;
+export const REM_FACTOR = 16 as const;
 
 /**
  * Converts a number value to a value in pixels.
@@ -44,7 +44,7 @@ export const pxToRem = (px: number): number => px / REM_FACTOR;
  * @param {number} rem - the value in number rems to be converted to number pixels
  * @return {number} the converted value in numbers pixels
  */
-export const remToPx = (rem: number) => rem * REM_FACTOR;
+export const remToPx = (rem: number): number => rem * REM_FACTOR;
 
 /**
  * Extracts the numerical value from a CSS length value in pixels.

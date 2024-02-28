@@ -7,8 +7,10 @@ import {
   paletteColorToCssVars,
   buildTheme,
   buildGlobalStyle,
+  textSizesToCssVars,
   GlobalStyle,
 } from "../../../themes";
+import { objectValues } from "@ubloimmo/front-util";
 
 describe("global style", () => {
   describe("build process", () => {
@@ -38,6 +40,20 @@ describe("global style", () => {
       });
     });
 
+    it("should convert text styles to CSS variables", () => {
+      expect(textSizesToCssVars).toBeDefined();
+      expect(textSizesToCssVars).toBeFunction();
+      expect(() => textSizesToCssVars()).not.toThrow();
+      const textCssVars = textSizesToCssVars();
+      expect(textCssVars).toBeObject();
+      expect(textCssVars).toContainKeys(["desktop", "mobile"]);
+      objectValues(textCssVars).forEach((cssVars) =>
+        cssVars.forEach((cssVar) => {
+          expect(cssVar).toBeString();
+        })
+      );
+    });
+
     it("should work even when the theme is missing", () => {
       expect(buildGlobalStyle).toBeDefined();
       expect(buildGlobalStyle).toBeFunction();
@@ -60,6 +76,7 @@ describe("global style", () => {
   describe("jsx element", () => {
     it("should render the global", () => {
       expect(GlobalStyle).toBeDefined();
+      expect(GlobalStyle).toBeObject();
       const rendered = render(<GlobalStyle theme={buildTheme()} />);
       expect(rendered).toBeObject();
     });

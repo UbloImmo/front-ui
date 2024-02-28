@@ -6,7 +6,7 @@ import {
   defaultOrganizationData,
 } from "../../themes";
 import { testLegacyPalette, testColorPalette } from "./palette.test";
-import { fakeFetchFactory } from "../../utils";
+import { fakeFetchFactory } from "@ubloimmo/front-util";
 
 const fakeFetchNull = await fakeFetchFactory(() => ({
   organization: {
@@ -31,7 +31,7 @@ describe("theme", () => {
     it("should be a function", () => {
       expect(getThemeOverrides).toBeDefined();
       expect(getThemeOverrides).toBeFunction();
-      expect(async () => await getThemeOverrides(undefined)).not.toThrow();
+      expect(async () => await getThemeOverrides(fakeFetchNull)).not.toThrow();
     });
 
     it("should return null in localhost", async () => {
