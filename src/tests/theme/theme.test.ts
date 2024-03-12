@@ -6,7 +6,7 @@ import {
   defaultOrganizationData,
 } from "../../themes";
 import { testLegacyPalette, testColorPalette } from "./palette.test";
-import { fakeFetchFactory } from "@ubloimmo/front-util";
+import { fakeFetchFactory } from "@ubloimmo/front-util/";
 
 const fakeFetchNull = await fakeFetchFactory(() => ({
   organization: {

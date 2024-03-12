@@ -151,6 +151,7 @@ describe("typography", () => {
           overline: true,
           lineThrough: true,
           weight: "semiBold",
+          $important: false,
         };
         expect(sanitizeTypographyProps(defaultProps, validProps)).toEqual(
           validProps

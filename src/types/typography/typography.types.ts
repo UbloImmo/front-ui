@@ -25,7 +25,8 @@ export type TypographyProps = {
   underline?: boolean;
   overline?: boolean;
   lineThrough?: boolean;
-  weight: TypographyWeight;
+  weight?: TypographyWeight;
+  $important?: boolean;
 };
 
 export interface TextProps extends TypographyProps {

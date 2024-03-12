@@ -1,0 +1,18 @@
+import { Meta, Canvas, Description } from "@storybook/blocks";
+import * as IconStories from "./Icon.stories.tsx";
+import {Icon} from "./Icon.component.tsx";
+
+<Meta of={IconStories} />
+
+# Icon
+
+<Description of={Icon}/>
+
+
+<Canvas of={IconStories.Default} />
+
+## Customizing color
+
+You can use any exported color from the theme provider
+
+<Canvas of={IconStories.AllColors} />
