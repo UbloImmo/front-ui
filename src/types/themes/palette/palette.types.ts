@@ -69,6 +69,8 @@ export type DynamicColorPalette = {
 
 export interface ColorPalette extends StaticColorPalette, DynamicColorPalette {}
 
+export type Color = keyof StaticColorPalette | keyof DynamicColorPalette;
+
 export type PaletteColor = {
   [ColorKey in keyof ColorPalette & string]: {
     [ShadeKey in keyof ColorPalette[ColorKey] &

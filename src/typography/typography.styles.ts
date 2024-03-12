@@ -38,7 +38,7 @@ export const typographyTextDecoration = ({
   underline,
   overline,
   lineThrough,
-}: Pick<TypographyProps, "underline" | "overline" | "lineThrough">) => {
+}: Pick<TypographyProps, "underline" | "overline" | "lineThrough">): string => {
   if (!underline && !overline && !lineThrough) {
     return "none";
   }
@@ -102,6 +102,7 @@ export const sanitizeTypographyProps = (
     underline: props.underline ?? defaults.underline,
     overline: props.overline ?? defaults.overline,
     lineThrough: props.lineThrough ?? defaults.lineThrough,
+    $important: props.$important ?? false,
   };
 };
 
@@ -117,8 +118,16 @@ export const buildTypographyStyle = (
   const allSizes = { ...texts.text, ...texts.heading };
 
   return (props) => {
-    const { size, weight, color, italic, underline, overline, lineThrough } =
-      sanitizeTypographyProps(defaults, props);
+    const {
+      size,
+      weight,
+      color,
+      italic,
+      underline,
+      overline,
+      lineThrough,
+      $important,
+    } = sanitizeTypographyProps(defaults, props);
     const {
       letterSpacing,
       lineHeight,
@@ -136,20 +145,21 @@ export const buildTypographyStyle = (
       underline,
       overline,
     });
+    const important = $important ? "!important" : "";
     return css`
       ${typographyFontFace()}
-      font-size: ${cssVarUsage(fontSize)};
-      font-style: ${fontStyle};
-      font-variation-settings: ${fontItalic};
-      font-weight: ${fontWeight};
-      color: ${cssVarUsage(color)};
-      letter-spacing: ${letterSpacing};
-      text-indent: ${textIndent};
-      line-height: ${lineHeight};
-      text-align: ${textAlign};
-      text-overflow: ${textOverflow};
-      font-feature-settings: ${fontFeatureSettings};
-      text-decoration: ${textDecoration};
+      font-size: ${cssVarUsage(fontSize)} ${important};
+      font-style: ${fontStyle} ${important};
+      font-variation-settings: ${fontItalic} ${important};
+      font-weight: ${fontWeight} ${important};
+      color: ${cssVarUsage(color)} ${important};
+      letter-spacing: ${letterSpacing} ${important};
+      text-indent: ${textIndent} ${important};
+      line-height: ${lineHeight} ${important};
+      text-align: ${textAlign} ${important};
+      text-overflow: ${textOverflow} ${important};
+      font-feature-settings: ${fontFeatureSettings} ${important};
+      text-decoration: ${textDecoration} ${important};
     `;
   };
 };
@@ -161,4 +171,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   underline: false,
   overline: false,
   lineThrough: false,
+  $important: false,
 } as const;
