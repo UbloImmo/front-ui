@@ -14,6 +14,17 @@ import { FlexLayout } from "../../src/layouts";
 import { Heading, Text } from "../../src/components";
 import { Pre } from "./Typography";
 
+/**
+ * React component for displaying theme color shades and swatches.
+ * Intended for use within Storybook MDX documentation files.
+ *
+ * @param {Object} props - The props for the component.
+ * @param {keyof Theme & keyof CPalette} props.colorKey - The color key to display shades for.
+ * @param {string} [props.title] - Optional title for the component.
+ * @param {boolean} [props.initShowOpacity] - Optional flag to initially show opacity in the color shades.
+ * @param {ReactNode} [props.children] - Optional React nodes to be displayed within the component.
+ * @return {JSX.Element} The JSX element representing the theme color shades component.
+ */
 export const ThemeColorShades = ({
   colorKey,
   title,
@@ -87,6 +98,17 @@ export const ThemeColorShades = ({
   );
 };
 
+/**
+ * Generates a code preview based on the provided color and color key.
+ * Intended for use within Storybook MDX documentation files.
+ *
+ * @param {Object} props - Object containing color, colorKey, lightShade, and darkShade
+ * @param {PaletteColorShaded<DefaultPaletteColorShadeKey[]> | PaletteColorShaded<GrayscalePaletteColorShadeKey[]>} props.color - The color to generate the code preview for
+ * @param {string} props.colorKey - The key for the color in the code preview
+ * @param {PaletteColor} [props.darkShade] - The dark shade for the code preview background
+ * @param {PaletteColor} [props.lightShade] - The light shade for the code preview foreground
+ * @return {JSX.Element} The code preview component
+ */
 const ThemeColorCodePreview = ({
   color,
   colorKey,

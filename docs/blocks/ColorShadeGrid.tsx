@@ -4,12 +4,19 @@ import type {
   PaletteColorShaded,
   RgbaColorStr,
 } from "../../src/types";
-import React, { useMemo, useReducer } from "react";
+import { useMemo, useReducer } from "react";
 import { objectEntries } from "@ubloimmo/front-util";
 import { Text } from "../../src/components";
 import { rgbaColorConverter } from "../../src/utils";
 import styled from "styled-components";
 
+/**
+ * Renders a color shade grid based on the provided color and color name.
+ * Intended for use within Storybook MDX documentation files.
+ *
+ * @param {{ color: PaletteColorShaded<DefaultPaletteColorShadeKey[]> | PaletteColorShaded<GrayscalePaletteColorShadeKey[]>, colorName: string, initShowOpacity?: boolean }} param - Object containing color, colorName, and optional initShowOpacity
+ * @return {JSX.Element} The rendered color shade grid component
+ */
 export const ColorShadeGrid = ({
   color,
   colorName,
@@ -99,6 +106,16 @@ export const ColorShadeGrid = ({
   );
 };
 
+/**
+ * Renders a color shade swatch with the given color, opacity, x, and y coordinates.
+ * Intended for use within Storybook MDX documentation files.
+ *
+ * @param {RgbaColorStr} color - the RGBA color string
+ * @param {string} [opacity] - optional opacity value
+ * @param {number} x - the x-coordinate
+ * @param {number} y - the y-coordinate
+ * @return {JSX.Element} the rendered color shade swatch component
+ */
 const ColorShadeSwatch = ({
   color,
   opacity,

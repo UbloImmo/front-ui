@@ -7,6 +7,14 @@ import {
 import styled from "styled-components";
 import { cssVarUsage } from "../../src/utils";
 
+/**
+ * Renders a heading component with the specified children and props.
+ * Intended for use within Storybook MDX documentation files.
+ *
+ * @param {ReactNode} children - The content to be rendered inside the heading.
+ * @param {Omit<HeadingProps, "$important">} props - The props to be passed to the heading component.
+ * @return {ReactNode} The rendered heading component.
+ */
 export const Heading = ({
   children,
   ...props
@@ -18,6 +26,13 @@ export const Heading = ({
   );
 };
 
+/**
+ * Create a Text component with given children and props.
+ * Intended for use within Storybook MDX documentation files.
+ *
+ * @param {Omit<TextProps, "$important"> & { children: ReactNode }} children - The children to be rendered within the Text component.
+ * @return {ReactNode} The rendered Text component.
+ */
 export const Text = ({
   children,
   ...props
