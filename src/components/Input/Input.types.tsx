@@ -1,19 +1,18 @@
 import { DetailedHTMLProps, InputHTMLAttributes, useCallback } from "react";
 import { Enum, VoidFn } from "../../types";
-import {
+import type {
   GenericFn,
   NonNullish,
   Nullable,
   Optional,
-  isFunction,
-  isNull,
-  isString,
 } from "@ubloimmo/front-util";
+import { isString, isFunction } from "@ubloimmo/front-util";
+import { mergeDefaultProps } from "src";
 
 type CommonInputProps = {
   error?: boolean;
-  errorMessage?: string;
-  assistiveText?: string;
+  errorMessage?: Nullable<string>;
+  assistiveText?: Nullable<string>;
   disabled?: boolean;
   placeholder?: string;
 };
@@ -47,16 +46,6 @@ type InputProps<TType extends InputType> = CommonInputProps & {
 
 type DefaultInputProps<TType extends InputType> = Required<InputProps<TType>>;
 
-type LabeledInputProps<TType extends InputType> = InputProps<TType> & {
-  label: string;
-  required?: boolean;
-};
-
-const defaultTextProps: DefaultInputProps<"text"> = {
-  value: "string",
-  onChange: (value) => console.log(value),
-};
-
 const useInputOnChange = <TType extends InputType>(
   condition: GenericFn<[NativeInputValue], boolean>,
   valueTransformer: GenericFn<[NativeInputValue], Nullable<InputValue<TType>>>,
@@ -76,21 +65,35 @@ const useInputOnChange = <TType extends InputType>(
   return callback;
 };
 
-const TextInput = ({
-  value,
-  placeholder,
-  ...props
-}: InputProps<"text"> = defaultTextProps) => {
-  const onChange = useInputOnChange<"text">(
+const defaultCommonInputProps: Required<CommonInputProps> = {
+  assistiveText: null,
+  error: false,
+  errorMessage: null,
+  disabled: false,
+  placeholder: "",
+};
+
+const defaultTextProps: DefaultInputProps<"text"> = {
+  ...defaultCommonInputProps,
+  value: "string",
+  onChange: (_value) => {},
+};
+
+export const TextInput = (props: InputProps<"text"> = defaultTextProps) => {
+  const { value, placeholder, onChange } = mergeDefaultProps(
+    defaultTextProps,
+    props
+  );
+  const onChangeCallback = useInputOnChange<"text">(
     (nativeValue) => isString(nativeValue),
     (nativeValue) => (nativeValue.length === 0 ? null : nativeValue),
-    props.onChange
+    onChange
   );
   return (
     <input
       value={value}
       type="text"
-      onChange={onChange}
+      onChange={onChangeCallback}
       placeholder={placeholder}
     />
   );
