@@ -1,6 +1,11 @@
 import { DefaultIconProps, GeneratedIcon, IconProps } from "./Icon.types";
 import { Nullable } from "@ubloimmo/front-util";
-import { mergeDefaultProps } from "../../utils";
+import {
+  cssVarName,
+  isSpacingLabel,
+  isCssRem,
+  mergeDefaultProps,
+} from "../../utils";
 import { useMemo } from "react";
 import * as generatedIcons from "./__generated__";
 
@@ -26,11 +31,22 @@ export const Icon = (props: IconProps) => {
     () => mergeDefaultProps(defaultIconProps, props),
     [props]
   );
+
   const IconComponent = useMemo<Nullable<GeneratedIcon>>(
     () => generatedIcons[name] ?? null,
     [name]
   );
 
+  const parsedSize = useMemo(() => {
+    if (isSpacingLabel(size)) {
+      const propValue = getComputedStyle(
+        document.documentElement
+      ).getPropertyValue(cssVarName(size));
+      if (isCssRem(propValue)) return propValue;
+    }
+    return size;
+  }, [size]);
+
   if (!IconComponent) return null;
-  return <IconComponent size={size} color={color} />;
+  return <IconComponent size={parsedSize} color={color} />;
 };

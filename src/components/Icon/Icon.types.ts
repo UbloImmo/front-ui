@@ -1,4 +1,4 @@
-import { PaletteColor, CssLength, CssFr, SpacingLabel } from "../../types";
+import { PaletteColor, CssLength, CssFr } from "../../types";
 import { GenericFn } from "@ubloimmo/front-util";
 import * as GeneratedIcons from "./__generated__";
 import { CommonIconProps } from "./__generated__/common.types";
@@ -8,7 +8,7 @@ export type IconName = keyof typeof GeneratedIcons;
 export type GeneratedIcon = GenericFn<[CommonIconProps], JSX.Element>;
 
 export type IconProps = {
-  size?: Exclude<CssLength, CssFr | SpacingLabel>;
+  size?: Exclude<CssLength, CssFr>;
   color?: PaletteColor;
   name: IconName;
 };

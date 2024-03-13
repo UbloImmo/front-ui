@@ -7,6 +7,15 @@ import { FlexRowLayout } from "../../layouts";
 const meta = {
   title: "Components/Icon",
   component: Icon,
+  decorators: [
+    (Story) => {
+      return (
+        <FlexRowLayout gap="s-4" align="center" justify="start" wrap>
+          <Story />
+        </FlexRowLayout>
+      );
+    },
+  ],
 } satisfies Meta<typeof Icon>;
 
 export default meta;
@@ -16,15 +25,6 @@ export const Default: Story = {
   args: {
     name: "Subtract",
   },
-  decorators: [
-    (Story) => {
-      return (
-        <FlexRowLayout gap="1rem">
-          <Story />
-        </FlexRowLayout>
-      );
-    },
-  ],
 };
 
 export const AllColors = (props: Partial<IconProps>) => {
