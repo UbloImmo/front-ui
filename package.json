@@ -1,7 +1,6 @@
 {
   "name": "@ubloimmo/front-ui",
   "description": "Colors, themes, typography, common components for use in frontend applications",
-  "private": false,
   "version": "0.0.1",
   "module": "src/index.ts",
   "main": "src/index.ts",
@@ -45,10 +44,12 @@
     "react-dom": "^18.2.0",
     "storybook": "^7.6.17",
     "svg-parser": "^2.0.4",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vite": "^5.1.6"
   },
   "peerDependencies": {
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vite": "^5.1.6"
   },
   "scripts": {
     "incrementRevision": "bun src/scripts/incrementRevision.ts",
