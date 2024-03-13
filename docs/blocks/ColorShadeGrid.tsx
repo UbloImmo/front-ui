@@ -27,7 +27,7 @@ export const ColorShadeGrid = ({
     | PaletteColorShaded<GrayscalePaletteColorShadeKey[]>;
   colorName: string;
   initShowOpacity?: boolean;
-}) => {
+}): JSX.Element => {
   const [showOpacity, toggleShowOpacity] = useReducer(
     (state) => !state,
     initShowOpacity ?? false

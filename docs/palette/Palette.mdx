@@ -5,9 +5,7 @@ import {ThemeColorShades, Heading, Text, Pre} from "../blocks";
 
 <Heading weight="bold">Color palette</Heading>
 
-
 <Text>Colors have several shades and can broadly be separated into `dynamic` and `static` colors</Text>
-
 
 <Heading size="h2" weight="semiBold">Dynamic colors</Heading>
 <Text>The primary color defaults to Ublo's color palette and is overriden according to the current user's organization's palette.</Text>
@@ -16,15 +14,13 @@ import {ThemeColorShades, Heading, Text, Pre} from "../blocks";
   <Text size="s" color="gray-600">The primary color defaults to Ublo's color palette and is overriden according to the current user's organization's palette.</Text>
 </ThemeColorShades>
 
-
 <Heading size="h2" weight="semiBold">Static colors</Heading>
 
 <Text>Static colors are true to their name and do not change across client organizations.</Text>
 
 <Text>These include grayscale color shades as well as out status colors.</Text>
 
-
-<ThemeColorShades colorKey="gray" title="Gray scale">
+<ThemeColorShades colorKey="gray" title="Gray scale" initShowOpacity>
   <Text size="s" color="gray-600">Neutral tones used to display text, backgrounds, separators, shadows and various UI elements.</Text>
   <Text size="s" color="gray-600">Fun fact: This paragraph uses the shade `gray-600`!</Text>
 </ThemeColorShades>
@@ -55,15 +51,16 @@ import {ThemeColorShades, Heading, Text, Pre} from "../blocks";
 <Text>The library generates and exports its colors directly inside the global `theme` object.</Text>
 <Text>Each **color** is represented as an `object` that contains several **shades**</Text>
 <Text>Each **shade** contains both `rgba` and `hex` properties and an `opacity()` method to allow for further customization</Text>
+
 ```json
 {
-    "[color]": {
-        "[shade]": {
-            "hex": "#fff",
-            "rgba": "rgba(255, 255, 255, 1)",
-            "opacity": "[Function(number)]"
-        }
+  "[color]": {
+    "[shade]": {
+      "hex": "#fff",
+      "rgba": "rgba(255, 255, 255, 1)",
+      "opacity": "[Function(number)]"
     }
+  }
 }
 ```
 
@@ -71,6 +68,7 @@ import {ThemeColorShades, Heading, Text, Pre} from "../blocks";
 <Text>Colors and shades can be used through various ways.</Text>
 
 <Heading size="h3" weight="semiBold">Inside a React component</Heading>
+
 ```tsx
 // import the `useTheme` hook as usual
 import { useTheme } from "styled-components";
@@ -86,13 +84,11 @@ const MyComponent = () => {
     // use primary.base at 50% opacity for the background...
     background: opacity(0.5),
     // ...and at 100% opacity for the text
-    color: rgba
-  }
+    color: rgba,
+  };
 
-  return (
-    <div style={style}>Test</div>
-  )
-}
+  return <div style={style}>Test</div>;
+};
 ```
 
 <Heading size="h3" weight="semiBold">Inside a regular CSS declaration</Heading>
