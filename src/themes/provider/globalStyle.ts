@@ -8,6 +8,7 @@ import type {
   RgbaColorStr,
   Spacings,
 } from "../../types";
+import { effectsToCssVars } from "../palette";
 import { createGlobalStyle, css } from "styled-components";
 import "@fontsource-variable/open-sans";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
@@ -156,9 +157,11 @@ export const buildGlobalStyle = (theme: Theme) => {
       )
   );
 
+  const effectCssVars = effectsToCssVars(paletteCssVars);
+
   // declare them in as global css variables
   return declareGlobalStyle(
-    [spacingsCssVars, paletteCssVars, textDesktopCssVars],
+    [spacingsCssVars, paletteCssVars, textDesktopCssVars, effectCssVars],
     [["SM", [textMobileCssVars]]]
   );
 };
