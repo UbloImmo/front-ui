@@ -1,100 +1,82 @@
-import { DetailedHTMLProps, InputHTMLAttributes, useCallback } from "react";
-import { Enum, VoidFn } from "../../types";
-import type {
-  GenericFn,
-  NonNullish,
-  Nullable,
-  Optional,
-} from "@ubloimmo/front-util";
-import { isString, isFunction } from "@ubloimmo/front-util";
-import { mergeDefaultProps } from "src";
+import { Enum } from "../../types";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
-type CommonInputProps = {
+/**
+ * Common props shared by all Input components
+ */
+export type CommonInputProps = {
+  /**
+   * Whether to display an error state (red border)
+   */
   error?: boolean;
-  errorMessage?: Nullable<string>;
-  assistiveText?: Nullable<string>;
+  /**
+   * Whether the input is disabled (grayed out and read-only)
+   */
   disabled?: boolean;
+  /**
+   * The text to display when the input has no value
+   */
   placeholder?: string;
 };
 
+export type DefaultCommonInputProps = Required<CommonInputProps>;
+
 const inputTypes = ["text", "password", "number"] as const;
 
-type InputType = Enum<typeof inputTypes>;
+/**
+ * Custom Input types
+ * Used to determine the shape of {@link InputValue},
+ * {@link InputOnChangeFn} and {@link InputProps}
+ */
+export type InputType = Enum<typeof inputTypes>;
 
-type NativeInputProps = Required<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
->;
-
-type NativeInputValue = Parameters<
-  NonNullish<NativeInputProps["onChange"]>
->[0]["target"]["value"];
-
-type InputValue<TType extends InputType> = TType extends "text" | "password"
+/**
+ * The value returned and taken by an input component.
+ * Varies based on the component's {@link InputType}.
+ *
+ * @template {InputType} TType - The input's type
+ *
+ * @see {@link InputOnChangeFn}, {@link InputProps}
+ */
+export type InputValue<TType extends InputType> = TType extends
+  | "text"
+  | "password"
   ? string
   : TType extends "number"
   ? number
   : never;
 
-type InputOnChangeFn<TType extends InputType> = VoidFn<
+/**
+ * An input components `onChange` callback function.
+ * Its only argument is the input's new value,
+ * which type depends on the input's {@link InputType}.
+ *
+ * @template {InputType} TType - The input's type
+ * @param {Nullable<InputValue<TType>>} value - The input's updated value. Either {@link InputValue<TType>} or null
+ */
+export type InputOnChangeFn<TType extends InputType> = VoidFn<
   [Nullable<InputValue<TType>>]
 >;
 
-type InputProps<TType extends InputType> = CommonInputProps & {
-  value: InputValue<TType>;
+/**
+ * @extends {CommonInputProps}
+ * Genric props used by all Input components.
+ * `value` & `onChange` type signatures depend on the input's {@link InputType}
+ * @template {InputType} TType - The input's type
+ *
+ * @see {@link InputValue}, {@link InputOnChangeFn}
+ */
+export type InputProps<TType extends InputType> = CommonInputProps & {
+  /**
+   * The input's value, defaults to null
+   */
+  value?: Nullable<InputValue<TType>>;
+  /**
+   * The input's onChange callback
+   */
   onChange?: InputOnChangeFn<TType>;
 };
 
-type DefaultInputProps<TType extends InputType> = Required<InputProps<TType>>;
-
-const useInputOnChange = <TType extends InputType>(
-  condition: GenericFn<[NativeInputValue], boolean>,
-  valueTransformer: GenericFn<[NativeInputValue], Nullable<InputValue<TType>>>,
-  onChange?: Optional<InputOnChangeFn<TType>>
-) => {
-  const callback = useCallback<NativeInputProps["onChange"]>(
-    (e) => {
-      if (
-        condition(e.target.value) &&
-        isFunction<InputOnChangeFn<TType>>(onChange)
-      ) {
-        onChange(valueTransformer(e.target.value));
-      }
-    },
-    [onChange, condition, valueTransformer]
-  );
-  return callback;
-};
-
-const defaultCommonInputProps: Required<CommonInputProps> = {
-  assistiveText: null,
-  error: false,
-  errorMessage: null,
-  disabled: false,
-  placeholder: "",
-};
-
-const defaultTextProps: DefaultInputProps<"text"> = {
-  ...defaultCommonInputProps,
-  value: "string",
-  onChange: (_value) => {},
-};
-
-export const TextInput = (props: InputProps<"text"> = defaultTextProps) => {
-  const { value, placeholder, onChange } = mergeDefaultProps(
-    defaultTextProps,
-    props
-  );
-  const onChangeCallback = useInputOnChange<"text">(
-    (nativeValue) => isString(nativeValue),
-    (nativeValue) => (nativeValue.length === 0 ? null : nativeValue),
-    onChange
-  );
-  return (
-    <input
-      value={value}
-      type="text"
-      onChange={onChangeCallback}
-      placeholder={placeholder}
-    />
-  );
-};
+export type DefaultInputProps<TType extends InputType> = Required<
+  InputProps<TType>
+>;
