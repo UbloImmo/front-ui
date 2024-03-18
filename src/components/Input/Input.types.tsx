@@ -57,6 +57,7 @@ export type InputValue<TType extends InputType> = TType extends
 export type InputOnChangeFn<TType extends InputType> = VoidFn<
   [Nullable<InputValue<TType>>]
 >;
+
 /**
  * @extends {CommonInputProps}
  * Genric props used by all Input components.
