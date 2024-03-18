@@ -71,9 +71,13 @@ export interface ColorPalette extends StaticColorPalette, DynamicColorPalette {}
 
 export type Color = keyof StaticColorPalette | keyof DynamicColorPalette;
 
+export type ColorKey = keyof ColorPalette & string;
+
+export type ShadeKey<TColorKey extends ColorKey> =
+  keyof ColorPalette[TColorKey] & string;
+
 export type PaletteColor = {
-  [ColorKey in keyof ColorPalette & string]: {
-    [ShadeKey in keyof ColorPalette[ColorKey] &
-      string]: `${ColorKey}-${ShadeKey}`;
-  }[keyof ColorPalette[ColorKey] & string];
-}[keyof ColorPalette & string];
+  [TColorKey in ColorKey]: {
+    [TShadeKey in ShadeKey<TColorKey>]: `${TColorKey}-${TShadeKey}`;
+  }[ShadeKey<TColorKey>];
+}[ColorKey];

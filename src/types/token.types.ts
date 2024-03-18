@@ -13,17 +13,21 @@ export type TokenType = (typeof tokenTypes)[number];
 export type Token<TType extends TokenType = TokenType> = {
   name: string;
   type: TType;
+  value: TType extends "COLOR" ? RgbaColorStr : string;
   css?: {
     style: Partial<CSSStyleDeclaration>;
     rules: string;
   };
-  value: TType extends "COLOR" ? RgbaColorStr : string;
 };
 
-export type TokenValues = {
-  [k: string]: Token | TokenValues;
+export type TokenValues<TType extends TokenType = TokenType> = {
+  [k: string]: Token<TType> | TokenValues<TType>;
 };
 
-export type TokenValueGroup = {
-  [k: string]: Token;
+export type TokenValueGroup<TType extends TokenType = TokenType> = {
+  [k: string]: Token<TType>;
+};
+
+export type ParsedEffect = Omit<Token<"EFFECT">, "css"> & {
+  color?: RgbaColorStr;
 };

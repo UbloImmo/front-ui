@@ -15,6 +15,9 @@ import { lerp } from "./number.utils";
 export const hexRegex =
   /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{8})$/;
 
+export const rgbaRegex =
+  /rgba\((0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s*(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s*(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s*(0|0?\.\d+|1(\.0+)?)\)/;
+
 /**
  * Converts an RGBA color string to an RGBA color array.
  *
@@ -26,7 +29,7 @@ const rgbaColorStrToArr = (colorStr: RgbaColorStr): RgbaColorArr => {
     .split("rgba(")[1]
     .split(")")[0]
     .split(",")
-    .map((numberStr) => parseInt(numberStr.trim()));
+    .map((numberStr) => parseFloat(numberStr.trim()));
   return rgbaValues as RgbaColorArr;
 };
 
@@ -100,6 +103,10 @@ export const isValidHexStr = (rootStr: unknown): rootStr is HexColor => {
     return false;
   }
   return hexRegex.test(rootStr);
+};
+
+export const isValidRgbaStr = (rootStr: unknown): rootStr is RgbaColorStr => {
+  return isString(rootStr) && rgbaRegex.test(rootStr);
 };
 
 /**

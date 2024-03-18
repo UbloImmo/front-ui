@@ -104,6 +104,8 @@ const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
  */
 const effectTokenToLegacyShadowKeyMap = {
   button: "button",
+  card: "card",
+  input: "input",
 } as const;
 
 /**
@@ -134,10 +136,8 @@ export const extractEffectTokenShadow = (
 // TODO: Remove missing shadows once there are more exported effects
 const missingLegacyShadows: MissingLegacyShadows = {
   high: "0 0 1px rgba(12, 26, 75, 0.33), 0 0.75rem 1.875rem rgba(37, 34, 117, 0.08)",
-  card: "0px 1px 2px rgba(50, 50, 71, 0.08), 0px 0px 1px rgba(50, 50, 71, 0.2)",
   color:
     "0px 0px 1px rgba(12, 26, 75, 0.33), 0px 30px 40px rgba(109, 95, 254, 0.08)",
-  input: "0px 0px 1px 0px #32324733, 0px 1px 2px 0px #32324714",
   flat: "0px 0px 1px rgba(12, 26, 75, 0.33)",
   bottomDivider: "inset 0px -0.5px 0px #e5e5e5",
   topDivider: "inset 0px 0.5px 0px #e5e5e5",
