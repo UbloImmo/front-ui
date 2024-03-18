@@ -1,9 +1,5 @@
-import type {
-  Nullable,
-  OrganizationData,
-  Theme,
-  ThemeOverride,
-} from "../types";
+import type { OrganizationData, Theme, ThemeOverride } from "../types";
+import type { Nullable } from "@ubloimmo/front-util";
 import { buildColorPalette, buildLegacyColorPalette } from "./palette";
 import { themeOverridePaletteToColorPaletteShaded } from "./provider/theme.overrides";
 
