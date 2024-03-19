@@ -1,0 +1,22 @@
+# Project
+.env*
+.vscode
+
+# Node
+node_modules
+
+# npm / yarn
+npm-*.log
+yarn-*.log
+
+# Lint
+eslint-local-rules
+.eslint*
+.prettier*
+
+# Tests
+**/*.test.*
+
+# Cache
+.cache
+dist
