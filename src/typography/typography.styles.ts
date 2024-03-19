@@ -26,7 +26,7 @@ export const buildTypographyWeightMap = (): Record<
   return transformObject(texts.text.m, (token) => token.css.style.fontWeight);
 };
 
-const typographyWeightMap = buildTypographyWeightMap();
+export const typographyWeightMap = buildTypographyWeightMap();
 
 /**
  * Returns the CSS text decoration string based on the provided options.
