@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { StyleProps, StylePropName } from "../types";
 import {
   isUndefined,
@@ -64,4 +65,10 @@ export const fromStyleProps = <TProps extends Record<string, unknown>>(
     (value) => value,
     (key): keyof TProps & string => (key[0] === "$" ? key.slice(1) : key)
   ) as unknown as TProps;
+};
+
+export const useStyleProps = <TProps extends Record<string, unknown>>(
+  props: TProps
+): StyleProps<TProps> => {
+  return useMemo(() => toStyleProps(props), [props]);
 };
