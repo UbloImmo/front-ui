@@ -5,6 +5,7 @@ import type {
   TokenType,
   ParsedEffect,
   RgbaColorStr,
+  RgbaColorArr,
   CssVar,
   CssVarName,
   CssVarUsage,
@@ -16,7 +17,12 @@ import {
   cssVarUsage,
   rgbaRegex,
   rgbaColorConverter,
+  isSameColor,
 } from "../../utils";
+
+const substitutionRegex = /\$\$(rgba\([\d,.\s]+\))\$\$/g;
+const defaultPrimaryName = "primary-default" as const;
+const primaryName = "primary" as const;
 
 /**
  * Predicate function to check if the input value is a Token of a specific type.
@@ -42,23 +48,34 @@ const isToken = <TType extends TokenType>(
  * @param {string} [parentName] - The optional parent name to use
  * @return {ParsedEffect} The parsed effect object
  */
-const effectTokenToEffect = (
+const parseEffectToken = (
   token: Token<"EFFECT">,
   parentName?: string
 ): ParsedEffect => {
-  const name = parentName ?? token.name;
+  const name = (parentName ?? token.name).replaceAll("/", "-");
   const basicToken = { ...token, name };
+  // reset regex before & after checking
+  rgbaRegex.lastIndex = 0;
+  const matches = token.value.match(rgbaRegex);
+  rgbaRegex.lastIndex = 0;
+  if (!matches || matches.length === 0) return basicToken;
 
-  const matches = rgbaRegex.exec(token.value);
-  if (!matches) return basicToken;
-
-  const color = matches[0];
-  if (!isValidRgbaStr(color)) return basicToken;
+  const value = token.value.replaceAll(rgbaRegex, (match) => {
+    if (!isValidRgbaStr(match)) {
+      return match;
+    }
+    const normalized = rgbaColorConverter.arrToStr(
+      rgbaColorConverter.strToArr(match)
+    );
+    return `$$${normalized}$$`;
+  });
+  // reset regex
+  rgbaRegex.lastIndex = 0;
 
   return {
-    name: name,
-    value: token.value,
-    color: color,
+    name,
+    value,
+    originalValue: token.value,
     type: token.type,
   };
 };
@@ -68,27 +85,19 @@ const effectTokenToEffect = (
  *
  * @param {TokenValues<"EFFECT"> | Token<"EFFECT">} tokenOrGroup - The token or group of tokens to convert to ParsedEffect objects.
  * @param {string} parentName - (Optional) The parent name to use for grouping effects.
- * @param {string} directParentName - (Optional) The direct parent name for avoiding repetitions.
  * @return {ParsedEffect[]} An array of ParsedEffect objects generated from the token or group.
  */
 const effectTokenOrGroupToEffect = (
   tokenOrGroup: TokenValues<"EFFECT"> | Token<"EFFECT">,
-  parentName?: string,
-  directParentName?: string
+  parentName?: string
 ): ParsedEffect[] => {
   if (isToken(tokenOrGroup)) {
-    return [effectTokenToEffect(tokenOrGroup, parentName)];
+    return [parseEffectToken(tokenOrGroup, parentName)];
   }
   // collapse token groups into an array
   return objectEntries(tokenOrGroup).flatMap(([key, item]) => {
-    // avoid repetititions in name if key and direct parent are the same
-    // e.g. collapse `shadow-input-default-default` to `shadow-input-default`
-    const name = parentName
-      ? directParentName === key
-        ? parentName
-        : `${parentName}-${key}`
-      : key;
-    return effectTokenOrGroupToEffect(item, name, key);
+    const name = parentName ? `${parentName}-${key}` : key;
+    return effectTokenOrGroupToEffect(item, name);
   });
 };
 
@@ -101,33 +110,46 @@ const effectTokenOrGroupToEffect = (
  * @return {CssVar<string> | CssVar<`${string}${CssVarUsage}`>} - The generated CSS variable.
  */
 const parsedEffectToCssVar = (
-  { value, name, color }: ParsedEffect,
-  colorVarsSplit: [CssVarName, RgbaColorStr][]
+  { value, name, originalValue }: ParsedEffect,
+  colorVarsSplit: [CssVarName, RgbaColorArr][]
 ): CssVar<string> | CssVar<`${string}${CssVarUsage}`> => {
-  const basicEffectCssVar = cssVar(name, value);
   // return regular css var if no effect color parsed
-  if (!color) {
-    return basicEffectCssVar;
+  if (!originalValue) {
+    return cssVar(name, value);
   }
-
-  // format color accordingly to remove figma token artifacts
-  const correctedColor = rgbaColorConverter.arrToStr(
-    rgbaColorConverter.strToArr(color)
+  // reset regex beforechecking
+  substitutionRegex.lastIndex = 0;
+  // replace colors with variables or revert changes in string value
+  const parsedValue = value.replaceAll(
+    substitutionRegex,
+    (_match, colorStr: string) => {
+      // abort if captured group is not a valid rgba string
+      if (!isValidRgbaStr(colorStr)) {
+        // return string without substitution flags
+        return colorStr;
+      }
+      // check if effect color is included in color vars
+      const matchingColorVar = colorVarsSplit.find(([_name, rgba]) => {
+        return isSameColor(rgba, colorStr);
+      });
+      // retrun original rgba color if not found
+      if (!matchingColorVar) return colorStr;
+      const matchingVarName = matchingColorVar[0];
+      // if color is default primary, replace it with primary equivalent
+      if (matchingVarName.includes(defaultPrimaryName)) {
+        return cssVarUsage(
+          matchingVarName.replace(defaultPrimaryName, primaryName)
+        );
+      }
+      // format matching color var name as css var usage
+      // and use them as replacement
+      return cssVarUsage(matchingColorVar[0].substring(2));
+    }
   );
-
-  // check if effect color is included in color vars
-  const matchingColorVar = colorVarsSplit.find(
-    ([_name, rgba]) => rgba === correctedColor
-  );
-  if (!matchingColorVar) {
-    return basicEffectCssVar;
-  }
-  // format matching color var name as css var usage
-  const matchingVarName = cssVarUsage(matchingColorVar[0].substring(2));
-
-  // replace color
-  const replacedValue = value.replace(color, matchingVarName);
-  return cssVar(name, replacedValue);
+  // reset regex after checking
+  substitutionRegex.lastIndex = 0;
+  // format as css var
+  return cssVar(name, parsedValue);
 };
 
 /**
@@ -143,13 +165,18 @@ export const effectsToCssVars = (
   const parsedEffects = effectTokenOrGroupToEffect(effects);
   // sanitize color vars
   // TODO: used flattened list without color vars formatting
-  const colorVarsSplit = colorVars.map(
-    (colorVar) =>
-      colorVar.split(":").map((part) => part.trim().replaceAll(";", "")) as [
-        CssVarName,
-        RgbaColorStr
-      ]
-  );
+  const colorVarsSplit = colorVars
+    .map(
+      (colorVar) =>
+        colorVar.split(":").map((part) => part.trim().replaceAll(";", "")) as [
+          CssVarName,
+          RgbaColorStr
+        ]
+    )
+    .map(([name, rgbaStr]): [CssVarName, RgbaColorArr] => [
+      name,
+      rgbaColorConverter.strToArr(rgbaStr),
+    ]);
   return parsedEffects.map((parsedEffect) =>
     parsedEffectToCssVar(parsedEffect, colorVarsSplit)
   );

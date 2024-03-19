@@ -35,10 +35,20 @@ export const paletteColorToCssVars = <
   colorName: string,
   shadedColors: PaletteColorShaded<TShadeKeys>
 ): CssVar<RgbaColorStr>[] => {
-  return objectEntries(shadedColors).map(
-    ([shadeName, { rgba }]): CssVar<RgbaColorStr> => {
+  return objectEntries(shadedColors).flatMap(
+    ([shadeName, { rgba, opacity }]): CssVar<RgbaColorStr>[] => {
       const varName = `${colorName.toLowerCase()}-${shadeName.toLowerCase()}`;
-      return cssVar(varName, rgba);
+      // create variables for major opacities (0 - 0.95)
+      const opacityVars = Array(20)
+        .fill(0)
+        .map((_, index) => {
+          const opacityCoeff = (index * 5) / 100;
+          const opacityName = `${varName}-${String(
+            opacityCoeff.toFixed(2)
+          ).replaceAll("0.", "")}`;
+          return cssVar(opacityName, opacity(opacityCoeff));
+        });
+      return [cssVar(varName, rgba), ...opacityVars];
     }
   );
 };
@@ -89,6 +99,14 @@ const joinCssVarCollection = (cssVarCollection: CssVar<string>[][]): string => {
   return cssVarCollection.map((cssVars) => cssVars.join("\n")).join("\n");
 };
 
+const cssReset = () => css`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+`;
+
 /**
  * Declares global styles using root CSS variables and optional media query overrides.
  *
@@ -116,6 +134,7 @@ const declareGlobalStyle = (
   );
   return css`
     ${linkFontFace()}
+    ${cssReset()}
     :root {
       ${defaultCssVarStr}
     }

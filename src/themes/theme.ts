@@ -32,10 +32,12 @@ export const defaultOrganizationData: OrganizationData = {
 export const buildTheme = (
   themeOverrides: Nullable<ThemeOverride> = null
 ): Theme => {
+  const colorPalette = buildColorPalette();
   const theme: Theme = {
     organization: defaultOrganizationData,
     palette: buildLegacyColorPalette(),
-    ...buildColorPalette(),
+    ...colorPalette,
+    "primary-default": colorPalette.primary,
   };
   // return default theme if no overrides
   if (!themeOverrides || !themeOverrides.organization.palette) return theme;

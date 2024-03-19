@@ -29,5 +29,5 @@ export type TokenValueGroup<TType extends TokenType = TokenType> = {
 };
 
 export type ParsedEffect = Omit<Token<"EFFECT">, "css"> & {
-  color?: RgbaColorStr;
+  originalValue?: string;
 };
