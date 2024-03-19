@@ -106,7 +106,7 @@ const svgTagFactory =
 
     const testId = indentation > 0 ? "" : ' data-testid="icon" ';
     // construct left tag;
-    const leftTagPrefix = `${spaces}<${tagName}}${testId}`;
+    const leftTagPrefix = `${spaces}<${tagName}${testId}`;
 
     const propsOneLine = propMappings.join(" ");
 
