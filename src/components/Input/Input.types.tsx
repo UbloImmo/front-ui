@@ -1,4 +1,4 @@
-import { Enum } from "../../types";
+import { Enum, type StyleProps } from "../../types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 /**
@@ -80,3 +80,5 @@ export type InputProps<TType extends InputType> = CommonInputProps & {
 export type DefaultInputProps<TType extends InputType> = Required<
   InputProps<TType>
 >;
+
+export type CommonInputStyleProps = StyleProps<DefaultCommonInputProps>;

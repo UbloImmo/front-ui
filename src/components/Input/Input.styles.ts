@@ -1,8 +1,8 @@
-import { css } from "styled-components";
-import type { DefaultCommonInputProps, InputType } from "./Input.types";
+import type { CommonInputStyleProps } from "./Input.types";
 import { typographyWeightMap } from "../../typography";
+import { css } from "styled-components";
 
-const commonInputStyles = ({ error }: DefaultCommonInputProps) => css`
+export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   max-height: var(--s-10);
   min-width: 0;
   padding: var(--s-2);
@@ -12,16 +12,16 @@ const commonInputStyles = ({ error }: DefaultCommonInputProps) => css`
   background: #fff;
   font-size: var(--text-m);
   font-weight: ${typographyWeightMap.regular};
-  --control-color: ${error ? "error-dark" : "gray-600"};
-  color: var(--${error ? "error-dark" : "gray-800"});
-  box-shadow: var(--shadow-input-${error ? "error" : "default"}-default);
+  --control-color: ${$error ? "error-dark" : "gray-600"};
+  color: var(--${$error ? "error-dark" : "gray-800"});
+  box-shadow: var(--shadow-input-${$error ? "error" : "default"}-default);
 
   &:focus:not(:disabled) {
     outline: none;
     border: none;
-    --control-color: ${error ? "error-base" : "primary-base"};
+    --control-color: ${$error ? "error-base" : "primary-base"};
     color: var(--gray-800);
-    box-shadow: var(--shadow-input-${error ? "error" : "default"}-focus);
+    box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
   }
 
   &::placeholder {
@@ -39,11 +39,3 @@ const commonInputStyles = ({ error }: DefaultCommonInputProps) => css`
     color: var(--gray-300);
   }
 `;
-
-export const buildInputStyles =
-  <TType extends InputType>(type: TType) =>
-  (props: DefaultCommonInputProps) => {
-    return css`
-      ${commonInputStyles(props)}
-    `;
-  };

@@ -1,8 +1,15 @@
 import type { GenericFn, Nullable, Optional } from "@ubloimmo/front-util";
-import type { InputType, InputValue, InputOnChangeFn } from "./Input.types";
+import type {
+  InputType,
+  InputValue,
+  InputOnChangeFn,
+  DefaultCommonInputProps,
+  CommonInputStyleProps,
+} from "./Input.types";
 import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
 import { isFunction, isNull } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
+import { toStyleProps } from "../../utils";
 
 /**
  * All props exposed by a native input
@@ -94,4 +101,13 @@ export const useInputValue = <TType extends InputType>(
     }
     return value;
   }, [value, valueTransformer]);
+};
+
+export const useInputStyles = (
+  mergedProps: DefaultCommonInputProps
+): CommonInputStyleProps => {
+  return useMemo(() => {
+    const { error, disabled, placeholder } = mergedProps;
+    return toStyleProps({ error, disabled, placeholder });
+  }, [mergedProps]);
 };
