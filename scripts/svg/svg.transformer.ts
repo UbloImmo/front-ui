@@ -71,6 +71,14 @@ const svgTagProperties = (
     })
   );
 
+  if (isRoot) {
+    // add test id on svg tag
+    properties = {
+      ...properties,
+      "data-testid": '"icon"',
+    };
+  }
+
   // remove class property
   const { class: _, ...propertiesWithoutClass } = properties;
 
@@ -104,9 +112,8 @@ const svgTagFactory =
     const propMappings = svgTagProperties(properties, tagName === "svg");
     const hasProps = propMappings.length > 0;
 
-    const testId = indentation > 0 ? "" : ' data-testid="icon" ';
     // construct left tag;
-    const leftTagPrefix = `${spaces}<${tagName}${testId}`;
+    const leftTagPrefix = `${spaces}<${tagName}`;
 
     const propsOneLine = propMappings.join(" ");
 
