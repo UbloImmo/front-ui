@@ -4,8 +4,6 @@ jsxFragment = "Fragment"
 jsxImportSource = "react"
 
 [test]
-# always enable coverage
-# coverage = true
 # test coverage thresholds
 coverageThreshold = { lines = 0.98, functions = 0.9 }
 # load happydom package to ensure @testing-library/react compatibility
