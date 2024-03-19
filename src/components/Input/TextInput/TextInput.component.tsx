@@ -1,5 +1,5 @@
 import type {
-  DefaultCommonInputProps,
+  CommonInputStyleProps,
   DefaultInputProps,
   InputProps,
   InputValue,
@@ -7,9 +7,13 @@ import type {
 import { isString } from "@ubloimmo/front-util";
 import { mergeDefaultProps } from "../../../utils";
 import { defaultCommonInputProps } from "../Input.common";
-import { useInputOnChange, useInputValue } from "../Input.utils";
+import {
+  useInputOnChange,
+  useInputStyles,
+  useInputValue,
+} from "../Input.utils";
 import styled from "styled-components";
-import { buildInputStyles } from "../Input.styles";
+import { commonInputStyles } from "../Input.styles";
 
 const defaultTextProps: DefaultInputProps<"text"> = {
   ...defaultCommonInputProps,
@@ -32,18 +36,19 @@ export const TextInput = (props: InputProps<"text">) => {
     mergedProps.onChange
   );
   const nativeValue = useInputValue(mergedProps.value);
+  const inputStyles = useInputStyles(mergedProps);
   return (
     <StyledTextInput
       value={nativeValue}
       type="text"
       onChange={onChangeCallback}
       placeholder={mergedProps.placeholder}
-      error={mergedProps.error}
       disabled={mergedProps.disabled}
+      {...inputStyles}
     />
   );
 };
 
-const StyledTextInput = styled.input<DefaultCommonInputProps>`
-  ${buildInputStyles("text")}
+const StyledTextInput = styled.input<CommonInputStyleProps>`
+  ${commonInputStyles}
 `;

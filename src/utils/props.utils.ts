@@ -1,6 +1,8 @@
+import type { StyleProps, StylePropName } from "../types";
 import {
   isUndefined,
   objectEntries,
+  transformObject,
   objectFromEntries,
 } from "@ubloimmo/front-util";
 
@@ -24,4 +26,42 @@ export const mergeDefaultProps = <
       isUndefined(props[key]) ? value : props[key],
     ])
   ) as TDefaultProps;
+};
+
+/**
+ * Generate style props based on the input props object
+ * by adding the dollar sign prefix to the keys.
+ *
+ * @remarks Inverse of {@link fromStyleProps}
+ *
+ * @param {TProps} props - The input props object.
+ * @return {StyleProps<TProps>} The generated style props.
+ */
+export const toStyleProps = <TProps extends Record<string, unknown>>(
+  props: TProps
+): StyleProps<TProps> => {
+  return transformObject(
+    props,
+    (value) => value,
+    (key): StylePropName<typeof key> => `$${key}`
+  ) as unknown as StyleProps<TProps>;
+};
+
+/**
+ * Transforms the input objectby removing the dollar sign prefix from keys
+ * and keeping the same values.
+ *
+ * @remarks Inverse of {@link toStyleProps}
+ *
+ * @param {StyleProps<TProps>} props - The input object with style properties.
+ * @return {TProps} The transformed object with updated keys.
+ */
+export const fromStyleProps = <TProps extends Record<string, unknown>>(
+  props: StyleProps<TProps>
+): TProps => {
+  return transformObject(
+    props,
+    (value) => value,
+    (key): keyof TProps & string => (key[0] === "$" ? key.slice(1) : key)
+  ) as unknown as TProps;
 };
