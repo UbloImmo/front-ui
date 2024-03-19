@@ -1,0 +1,48 @@
+name: "Build to DO"
+description: "Push a specific app to DO"
+inputs:
+  repo-name:
+    description: "Name of the repo"
+    required: true
+  context-path:
+    description: "Path to Docker context"
+    required: true
+  docker-file:
+    description: "Subpath to the Dockerfile"
+    required: false
+    default: "Dockerfile"
+  do-access-token:
+    description: "DO access token"
+    required: true
+  build-args:
+    description: "Args to pass to Docker"
+    required: false
+  cache-size:
+    description: "Cache size (min|max)"
+    required: false
+    default: "max"
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install DigitalOcean Controller
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{inputs.do-access-token}}
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Authenticate with DigitalOcean Container Registry
+      run: doctl registry login --expiry-seconds 600
+      shell: bash
+    - name: Build and Push to DigitalOcean Container Registry
+      uses: docker/build-push-action@v4
+      with:
+        context: ${{inputs.context-path}}
+        file: ${{inputs.context-path}}/${{inputs.docker-file}}
+        push: true
+        cache-from: type=registry,ref=registry.digitalocean.com/ublo/${{inputs.repo-name}}:buildcache
+        cache-to: type=registry,ref=registry.digitalocean.com/ublo/${{inputs.repo-name}}:buildcache,mode=${{inputs.cache-size}}
+        tags: |
+          registry.digitalocean.com/ublo/${{inputs.repo-name}}:latest
+        build-args: ${{inputs.build-args}}
