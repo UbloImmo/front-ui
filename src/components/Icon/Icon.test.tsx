@@ -23,7 +23,7 @@ describe("Icon", () => {
     expect(getByTestId("icon")).toBeDefined();
   });
 
-  it("should render with a warning when missing its `name` prop", () => {
+  it("should warn when missing its `name` prop", () => {
     // mock global console object to list to calls
     global.console.warn = mock(global.console.warn);
     const { getByTestId } = render(
@@ -35,6 +35,38 @@ describe("Icon", () => {
     );
     expect(global.console.warn).toHaveBeenCalled();
     expect(getByTestId("icon")).toBeDefined();
+  });
+
+  it("should warn when provided with an unsupported size", () => {
+    // mock global console object to list to calls
+    global.console.warn = mock(global.console.warn);
+    const { getAllByTestId } = render(
+      <ThemeProvider>
+        <Icon name="Circle" size="s-112353513153" />
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore Need to ignore in order to test missing prop */}
+        <Icon name="Circle" size="s-2s" />
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore Need to ignore in order to test missing prop */}
+        <Icon name="Circle" size="unsupported" />
+      </ThemeProvider>
+    );
+    expect(global.console.warn).toHaveBeenCalled();
+    expect(getAllByTestId("icon")).toBeArrayOfSize(3);
+  });
+
+  it("should return null if provided with an unknown icon name", () => {
+    // mock global console object to list to calls
+    global.console.warn = mock(global.console.warn);
+    const { getByTestId } = render(
+      <ThemeProvider>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore Need to ignore in order to test missing prop */}
+        <Icon name="UNSUPPORTED ICON" />
+      </ThemeProvider>
+    );
+    expect(() => getByTestId("icon")).toThrow();
+    expect(global.console.warn).toHaveBeenCalled();
   });
 
   it("should render any generated icon", () => {

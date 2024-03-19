@@ -1,21 +1,24 @@
 import { DefaultIconProps, GeneratedIcon, IconProps } from "./Icon.types";
-import { Nullable, isNumber } from "@ubloimmo/front-util";
+import { Nullable, isNumber, Logger } from "@ubloimmo/front-util";
 import {
   cssVarName,
   isSpacingLabel,
   isCssRem,
   mergeDefaultProps,
   cssRem,
+  isCssLenthUsage,
 } from "../../utils";
 import { useMemo } from "react";
 import * as generatedIcons from "./__generated__";
-import { UNIT_PX } from "../../types";
+import { UNIT_PX, type SpacingLabel } from "../../types";
 
 export const defaultIconProps: DefaultIconProps = {
   size: "s-4",
   color: "primary-base",
   name: "Circle",
 };
+
+const { warn } = Logger();
 
 /**
  * Renders the appropriate icon component based on the provided props.
@@ -29,7 +32,7 @@ export const defaultIconProps: DefaultIconProps = {
  * @return {JSX.Element | null} The rendered icon component or null if the icon component is not found.
  */
 export const Icon = (props: IconProps) => {
-  if (!props.name) console.warn("Missing name prop for `Icon` component.");
+  if (!props.name) warn("Missing name prop", "Icon");
   const { name, color, size } = useMemo(
     () => mergeDefaultProps(defaultIconProps, props),
     [props]
@@ -40,20 +43,25 @@ export const Icon = (props: IconProps) => {
     [name]
   );
 
+  // sanitize size before passing it as svg width & height
   const parsedSize = useMemo(() => {
-    // TODO: handle first render if css not loaded
+    if (!isCssLenthUsage(size)) {
+      warn(`unsupported size (${size}) provided`, "Icon");
+      return cssRem(1);
+    }
     if (isSpacingLabel(size)) {
       const propValue = getComputedStyle(
         document.documentElement
       ).getPropertyValue(cssVarName(size));
       // use rem is available
       if (isCssRem(propValue)) return propValue;
-      // compute rem when variables have not yet loaded
-      if (size === "s-05") return cssRem(0.125);
-      const sizeMultiplier = parseInt(size.split("s-")[1]);
+      if (size === ("s-05" as SpacingLabel))
+        // compute rem when variables have not yet loaded
+        return cssRem(0.125);
+      const sizeMultiplier = Number(size.split("s-")[1]);
       // default to 1 if not computable
       if (!isNumber(sizeMultiplier)) {
-        console.warn("unsupported spacing provided to `Icon` component");
+        warn(`unsupported size (${size}) provided`, "Icon");
         return cssRem(1);
       }
       return cssRem(sizeMultiplier / UNIT_PX);
@@ -61,6 +69,9 @@ export const Icon = (props: IconProps) => {
     return size;
   }, [size]);
 
-  if (!IconComponent) return null;
+  if (!IconComponent) {
+    warn(`No icon component found for name "${name}"`, "Icon");
+    return null;
+  }
   return <IconComponent size={parsedSize} color={color} />;
 };
