@@ -1,15 +1,15 @@
-import {
-  type CssPx,
-  type CssRem,
-  type CssVarName,
-  type CssVar,
-  type CssVarUsage,
-  type CssLength,
-  type CssLengthUsage,
-  type CssFr,
-  type SpacingLabel,
-  SPACING_PREFIX,
+import type {
+  CssPx,
+  CssRem,
+  CssVarName,
+  CssVar,
+  CssVarUsage,
+  CssLength,
+  CssLengthUsage,
+  CssFr,
+  SpacingLabel,
 } from "../types";
+import { SPACING_PREFIX } from "../types";
 import { isNumber, isString, isUndefined } from "@ubloimmo/front-util";
 
 export const REM_FACTOR = 16 as const;
@@ -201,4 +201,20 @@ export const cssLengthUsage = (gap: CssLength): CssLengthUsage => {
     return cssVarUsage(gap);
   }
   return gap;
+};
+
+/**
+ * Checks if the value is a valid {@link CssLengthUsage}
+ * by checking if it is a number, a CSS pixel value, a CSS rem value, or a SpacingLabel
+ *
+ * @param {unknown} value - the value to check
+ * @return {boolean} true if the value is a CssLengthUsage, false otherwise
+ */
+export const isCssLenthUsage = (value: unknown): value is CssLengthUsage => {
+  return (
+    isNumber(value) ||
+    isCssPx(value) ||
+    isCssRem(value) ||
+    isSpacingLabel(value)
+  );
 };
