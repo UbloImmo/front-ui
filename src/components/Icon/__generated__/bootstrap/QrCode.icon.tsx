@@ -28,6 +28,7 @@ export const QrCode = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <path d="M2 2h2v2H2z" />
       <path d="M6 0v6H0V0zM5 1H1v4h4zM4 12H2v2h2z" />

@@ -28,6 +28,7 @@ export const MeasuringTapeFill = (props: CommonIconProps): JSX.Element => {
       viewBox="0 0 16 16"
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
+      data-testid="icon"
     >
       <path
         d="M7 10C8.10457 10 9 9.10457 9 8C9 6.89543 8.10457 6 7 6C5.89543 6 5 6.89543 5 8C5 9.10457 5.89543 10 7 10Z"

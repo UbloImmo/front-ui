@@ -28,6 +28,7 @@ export const MusicNoteList = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2" />
       <path fillRule="evenodd" d="M12 3v10h-1V3z" />

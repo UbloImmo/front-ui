@@ -3,7 +3,7 @@ export { AppsFill } from "./AppsFill.icon";
 export { BuildingBlocks } from "./BuildingBlocks.icon";
 export { BuildingBlocksFill } from "./BuildingBlocksFill.icon";
 export { CatRobot } from "./CatRobot.icon";
-export { DeleteIcon } from "./DeleteIcon.icon";
+export { Delete } from "./Delete.icon";
 export { Fire } from "./Fire.icon";
 export { FireFill } from "./FireFill.icon";
 export { MeasuringTape } from "./MeasuringTape.icon";

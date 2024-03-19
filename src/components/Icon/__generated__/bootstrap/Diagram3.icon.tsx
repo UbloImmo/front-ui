@@ -28,6 +28,7 @@ export const Diagram3 = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <path
         fillRule="evenodd"

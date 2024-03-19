@@ -28,6 +28,7 @@ export const CircleFill = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <circle cx="8" cy="8" r="8" />
     </svg>
