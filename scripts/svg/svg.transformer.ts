@@ -103,8 +103,10 @@ const svgTagFactory =
     const childrenUsage = hasChildren ? `\n${children}\n${spaces}` : "";
     const propMappings = svgTagProperties(properties, tagName === "svg");
     const hasProps = propMappings.length > 0;
+
+    const testId = indentation > 0 ? "" : ' data-testid="icon" ';
     // construct left tag;
-    const leftTagPrefix = `${spaces}<${tagName}`;
+    const leftTagPrefix = `${spaces}<${tagName}}${testId}`;
 
     const propsOneLine = propMappings.join(" ");
 
