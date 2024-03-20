@@ -110,8 +110,10 @@ const testUseInputStyles = () => {
   );
 };
 
-describe("Input utils", () => {
-  testUseInputOnChange();
-  testUseInputValue();
-  testUseInputStyles();
+describe("Input", () => {
+  describe("utils", () => {
+    testUseInputOnChange();
+    testUseInputValue();
+    testUseInputStyles();
+  });
 });

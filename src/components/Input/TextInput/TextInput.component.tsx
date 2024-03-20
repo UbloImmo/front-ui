@@ -1,21 +1,14 @@
-import type {
-  CommonInputStyleProps,
-  DefaultInputProps,
-  InputProps,
-  InputValue,
-} from "../Input.types";
+import type { DefaultInputProps, InputProps, InputValue } from "../Input.types";
 import {
   useInputOnChange,
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
-import { defaultCommonInputProps } from "../Input.common";
-import { mergeDefaultProps } from "../../../utils";
+import { StyledInput, defaultCommonInputProps } from "../Input.common";
+import { useMergedProps } from "../../../utils";
 import { isString } from "@ubloimmo/front-util";
-import styled from "styled-components";
-import { commonInputStyles } from "../Input.styles";
 
-const defaultTextProps: DefaultInputProps<"text"> = {
+export const defaultTextInputProps: DefaultInputProps<"text"> = {
   ...defaultCommonInputProps,
   value: null,
   onChange: (_value) => {},
@@ -27,8 +20,8 @@ const defaultTextProps: DefaultInputProps<"text"> = {
  * @param {InputProps<"text">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
-export const TextInput = (props: InputProps<"text">) => {
-  const mergedProps = mergeDefaultProps(defaultTextProps, props);
+export const TextInput = (props: InputProps<"text">): JSX.Element => {
+  const mergedProps = useMergedProps(defaultTextInputProps, props);
   const onChange = useInputOnChange<"text">(
     (nativeValue): nativeValue is InputValue<"text"> => isString(nativeValue),
     (nativeValue) =>
@@ -38,7 +31,8 @@ export const TextInput = (props: InputProps<"text">) => {
   const value = useInputValue(mergedProps.value);
   const inputStyles = useInputStyles(mergedProps);
   return (
-    <StyledTextInput
+    <StyledInput
+      data-testid="input-text"
       value={value}
       type="text"
       onChange={onChange}
@@ -48,7 +42,3 @@ export const TextInput = (props: InputProps<"text">) => {
     />
   );
 };
-
-const StyledTextInput = styled.input<CommonInputStyleProps>`
-  ${commonInputStyles}
-`;

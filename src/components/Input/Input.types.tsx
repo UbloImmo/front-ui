@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import type { Enum, StyleProps, Email } from "../../types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
@@ -26,7 +27,7 @@ export type DefaultCommonInputProps = Required<CommonInputProps>;
  *
  * **Sensitive**
  */
-const inputTypes = ["text", "number", "password", "email"] as const;
+export const inputTypes = ["text", "number", "password", "email"] as const;
 
 /**
  * Custom Input types
@@ -89,3 +90,15 @@ export type DefaultInputProps<TType extends InputType> = Required<
 >;
 
 export type CommonInputStyleProps = StyleProps<DefaultCommonInputProps>;
+
+export type GenericInputProps<TType extends InputType> = {
+  type: TType;
+} & InputProps<TType>;
+
+export type DefaultGenericInputProps<TType extends InputType> = Required<
+  GenericInputProps<TType>
+>;
+
+export type TypedInputComponentMap = {
+  [TType in InputType]: Nullable<FC<InputProps<TType>>>;
+};
