@@ -1,13 +1,19 @@
 import type { FC } from "react";
 import { describe, it, expect, afterEach } from "bun:test";
 import { render, cleanup, renderHook } from "@testing-library/react";
-import {
-  isArray,
-  type GenericFn,
-  type VoidFn,
-  isFunction,
-} from "@ubloimmo/front-util";
+import type { GenericFn, VoidFn, Optional } from "@ubloimmo/front-util";
+import { isFunction } from "@ubloimmo/front-util";
 
+/**
+ * Generates a test case to verify the rendering behavior of a component.
+ *
+ * @template {Record<string, unknown>} TProps - The props for the component.
+ *
+ * @param {string} testId - The test ID used to locate the rendered component.
+ * @param {FC<TProps>} Component - The component to be rendered.
+ * @param {TProps} props - The props to be passed to the component.
+ * @param {boolean} [rendersNull] - Indicates whether the component is expected to render null or an element. Defaults to false.
+ */
 export const testComponentRender = <TProps extends Record<string, unknown>>(
   testId: string,
   Component: FC<TProps>,
@@ -27,12 +33,23 @@ export const testComponentRender = <TProps extends Record<string, unknown>>(
   });
 };
 
+/**
+ * Generates a test factory for a component.
+ *
+ * @template {Record<string, unknown>} TProps - The props for the component.
+ *
+ * @param {string} componentName - The name of the component.
+ * @param {string} testId - The test ID for the component.
+ * @param {FC<TProps>} Component - The component to be tested.
+ * @param {Required<TProps>} defaultProps - The default props for the component.
+ * @return {VoidFn<[TProps, Optional<boolean>]>} A function that tests the component with given props.
+ */
 export const componentTestFactory = <TProps extends Record<string, unknown>>(
   componentName: string,
   testId: string,
   Component: FC<TProps>,
   defaultProps: Required<TProps>
-) => {
+): VoidFn<[TProps, Optional<boolean>]> => {
   describe(componentName, () => {
     it(`should be a component`, () => {
       expect(Component).toBeDefined();
@@ -105,15 +122,8 @@ export const testHookFactory = <
             : "no params";
         const testlabel = `${testName} with params ${paramsStr}"`;
         it(testlabel, () => {
-          let hookReturn: THookReturn;
-          if (isArray(params)) {
-            const { result } = renderHook(() => hook(...params));
-            hookReturn = result.current;
-          } else {
-            const { result } = renderHook(() => hook());
-            hookReturn = result.current;
-          }
-          tests(hookReturn);
+          const { result } = renderHook(() => hook(...(params ?? [])));
+          tests(result.current);
         });
       });
     };
