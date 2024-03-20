@@ -1,12 +1,13 @@
+import type { StyleProps } from "../types";
 import { objectValues, type Nullable, objectKeys } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
+import { renderHook } from "@testing-library/react";
 import {
   mergeDefaultProps,
   toStyleProps,
   fromStyleProps,
   useStyleProps,
 } from "../utils/props.utils";
-import type { StyleProps } from "../types";
 
 type TestProps = {
   a?: string;
@@ -106,7 +107,15 @@ describe("prop utils", () => {
       expect(useStyleProps).toBeDefined();
       expect(useStyleProps).toBeFunction();
       // throws outside of react
+    });
+
+    it("should throw outside of react", () => {
       expect(() => useStyleProps({})).toThrow();
+    });
+
+    it("should be a valid react hook", () => {
+      const { result } = renderHook(() => useStyleProps(defaultProps));
+      expect(result.current).toEqual(styleProps);
     });
   });
 });

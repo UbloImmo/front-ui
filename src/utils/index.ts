@@ -4,3 +4,4 @@ export * from "./css.utils";
 export * from "./props.utils.ts";
 export * from "./string.utils.ts";
 export * from "./test.utils.ts";
+export * from "./log.utils.ts";
