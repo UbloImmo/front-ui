@@ -155,7 +155,7 @@ const buildClientColorPalette = (): ClientColorPalette => {
  * @param {ClientColorPaletteKey} forClient - the key of the client color palette
  * @return {DynamicColorPalette} the dynamic color palette for the specified client
  */
-const buildDynamicColorPalette = (
+export const buildDynamicColorPalette = (
   forClient: ClientColorPaletteKey = "ublo"
 ): DynamicColorPalette => {
   const clientColorPalette = buildClientColorPalette();

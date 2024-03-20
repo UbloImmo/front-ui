@@ -12,12 +12,12 @@ import type {
 } from "../../types";
 import { effects } from "@ubloimmo/front-tokens/lib/tokens.values";
 import {
-  isValidRgbaStr,
   cssVar,
   cssVarUsage,
   rgbaRegex,
   rgbaColorConverter,
   isSameColor,
+  parseCssVar,
 } from "../../utils";
 
 const substitutionRegex = /\$\$(rgba\([\d,.\s]+\))\$\$/g;
@@ -48,7 +48,7 @@ const isToken = <TType extends TokenType>(
  * @param {string} [parentName] - The optional parent name to use
  * @return {ParsedEffect} The parsed effect object
  */
-const parseEffectToken = (
+export const parseEffectToken = (
   token: Token<"EFFECT">,
   parentName?: string
 ): ParsedEffect => {
@@ -60,12 +60,9 @@ const parseEffectToken = (
   rgbaRegex.lastIndex = 0;
   if (!matches || matches.length === 0) return basicToken;
 
-  const value = token.value.replaceAll(rgbaRegex, (match) => {
-    if (!isValidRgbaStr(match)) {
-      return match;
-    }
+  const value = token.value.replaceAll(rgbaRegex, (match: string) => {
     const normalized = rgbaColorConverter.arrToStr(
-      rgbaColorConverter.strToArr(match)
+      rgbaColorConverter.strToArr(match as RgbaColorStr)
     );
     return `$$${normalized}$$`;
   });
@@ -109,9 +106,9 @@ const effectTokenOrGroupToEffect = (
  * @param {Array<[CssVarName, RgbaColorStr]>} colorVarsSplit - An array of color variables and their corresponding RGBA color strings.
  * @return {CssVar<string> | CssVar<`${string}${CssVarUsage}`>} - The generated CSS variable.
  */
-const parsedEffectToCssVar = (
+export const parsedEffectToCssVar = (
   { value, name, originalValue }: ParsedEffect,
-  colorVarsSplit: [CssVarName, RgbaColorArr][]
+  colorVarsSplit: [CssVarName, RgbaColorArr][] = []
 ): CssVar<string> | CssVar<`${string}${CssVarUsage}`> => {
   // return regular css var if no effect color parsed
   if (!originalValue) {
@@ -122,12 +119,7 @@ const parsedEffectToCssVar = (
   // replace colors with variables or revert changes in string value
   const parsedValue = value.replaceAll(
     substitutionRegex,
-    (_match, colorStr: string) => {
-      // abort if captured group is not a valid rgba string
-      if (!isValidRgbaStr(colorStr)) {
-        // return string without substitution flags
-        return colorStr;
-      }
+    (_match, colorStr: RgbaColorStr) => {
       // check if effect color is included in color vars
       const matchingColorVar = colorVarsSplit.find(([_name, rgba]) => {
         return isSameColor(rgba, colorStr);
@@ -166,16 +158,10 @@ export const effectsToCssVars = (
   // sanitize color vars
   // TODO: used flattened list without color vars formatting
   const colorVarsSplit = colorVars
-    .map(
-      (colorVar) =>
-        colorVar.split(":").map((part) => part.trim().replaceAll(";", "")) as [
-          CssVarName,
-          RgbaColorStr
-        ]
-    )
-    .map(([name, rgbaStr]): [CssVarName, RgbaColorArr] => [
+    .map(parseCssVar<RgbaColorStr>)
+    .map(({ name, value }): [CssVarName, RgbaColorArr] => [
       name,
-      rgbaColorConverter.strToArr(rgbaStr),
+      rgbaColorConverter.strToArr(value),
     ]);
   return parsedEffects.map((parsedEffect) =>
     parsedEffectToCssVar(parsedEffect, colorVarsSplit)
