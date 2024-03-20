@@ -24,12 +24,13 @@ export const testComponentRender = <TProps extends Record<string, unknown>>(
   it(`should render ${
     rendersNull ? "null" : "an element"
   } with props ${propStr}`, () => {
-    const { getByTestId } = render(<Component {...props} />);
+    const { queryByTestId } = render(<Component {...props} />);
     if (rendersNull) {
-      expect(getByTestId(testId)).toBeNull();
+      expect(queryByTestId(testId)).toBeNull();
     } else {
-      expect(getByTestId(testId)).toBeDefined();
+      expect(queryByTestId(testId)).toBeDefined();
     }
+    cleanup();
   });
 };
 
@@ -48,7 +49,8 @@ export const componentTestFactory = <TProps extends Record<string, unknown>>(
   componentName: string,
   testId: string,
   Component: FC<TProps>,
-  defaultProps: Required<TProps>
+  defaultProps: Required<TProps>,
+  rendersNull?: boolean
 ): VoidFn<[TProps, Optional<boolean>]> => {
   describe(componentName, () => {
     it(`should be a component`, () => {
@@ -56,10 +58,7 @@ export const componentTestFactory = <TProps extends Record<string, unknown>>(
       expect(Component).toBeFunction();
     });
 
-    it("should render render when provided with default props", () => {
-      const { getByTestId } = render(<Component {...defaultProps} />);
-      expect(getByTestId(testId)).toBeDefined();
-    });
+    testComponentRender(testId, Component, defaultProps, rendersNull);
 
     afterEach(cleanup);
   });

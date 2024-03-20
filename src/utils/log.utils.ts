@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Logger, transformObject } from "@ubloimmo/front-util";
 import type { LoggerFn, LoggerConfig } from "@ubloimmo/front-util";
+import { capitalize } from ".";
 
 /**
  * Generates a logger for the specified component.
@@ -14,10 +15,10 @@ export const useLogger = (componentName: string, config?: LoggerConfig) => {
     return fns;
   }, [config]);
   return useMemo(() => {
+    const prefix = `[Component:${capitalize(componentName)}]`;
     return transformObject(
       logFns,
-      (logFn: LoggerFn) => (message: unknown) =>
-        logFn(message, componentName.toUpperCase())
+      (logFn: LoggerFn) => (message: unknown) => logFn(message, prefix)
     );
   }, [logFns, componentName]);
 };
