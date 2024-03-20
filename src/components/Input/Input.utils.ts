@@ -46,7 +46,7 @@ type InputOnChangeConditionFn = GenericFn<[NativeInputValue], boolean>;
  * A hook to handle native inputs' onChange events and transform their value if needed.
  *
  * @template {InputType} TType
- * @param {InputOnChangeConditionFn} condition - function to check the input value condition
+ * @param {InputOnChangeConditionFn} condition - function that dictates whether to trigger the onChange event
  * @param {InputOnChangeValueTransformerFn<TType>} valueTransformer - function to transform the input value
  * @param {Optional<InputOnChangeFn<TType>>} onChange - optional callback function for onChange event
  * @return {VoidFn<NativeInputProps["onChange"]>} the generated callback function for input onChange event, to be used as the native input's onChange prop
@@ -103,6 +103,12 @@ export const useInputValue = <TType extends InputType>(
   }, [value, valueTransformer]);
 };
 
+/**
+ * Generates the input style props based on the merged input properties.
+ *
+ * @param {DefaultCommonInputProps} mergedProps - The merged input properties
+ * @return {CommonInputStyleProps} The style props for the input
+ */
 export const useInputStyles = (
   mergedProps: DefaultCommonInputProps
 ): CommonInputStyleProps => {
