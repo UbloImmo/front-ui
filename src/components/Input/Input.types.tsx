@@ -1,4 +1,4 @@
-import { Enum, type StyleProps } from "../../types";
+import type { Enum, StyleProps, Email } from "../../types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 /**
@@ -21,7 +21,12 @@ export type CommonInputProps = {
 
 export type DefaultCommonInputProps = Required<CommonInputProps>;
 
-const inputTypes = ["text", "password", "number"] as const;
+/**
+ * Array that controls the available input types
+ *
+ * **Sensitive**
+ */
+const inputTypes = ["text", "number", "password", "email"] as const;
 
 /**
  * Custom Input types
@@ -44,6 +49,8 @@ export type InputValue<TType extends InputType> = TType extends
   ? string
   : TType extends "number"
   ? number
+  : TType extends "email"
+  ? Email
   : never;
 
 /**
