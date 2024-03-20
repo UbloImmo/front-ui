@@ -3,8 +3,6 @@ import { describe, it, beforeEach, expect, afterEach } from "bun:test";
 import { StaticIcon } from "./StaticIcon.component";
 import { cleanup, render, screen } from "@testing-library/react";
 import { StaticIconProps } from "./StaticIcon.types";
-// import type { PaletteColor } from "../../types";
-// import { cssVarUsage } from "../../utils";
 
 describe("StaticIcon Component", () => {
   const mockProps: StaticIconProps = {
