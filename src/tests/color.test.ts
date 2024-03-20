@@ -23,7 +23,7 @@ import {
   isValidRgbaStr,
   rgbaColorConverter,
 } from "../utils/color.utils";
-import { testPrimitives } from "../utils";
+import { testPrimitives } from "./test.data";
 
 type PrimaryColor = "red" | "green" | "blue";
 

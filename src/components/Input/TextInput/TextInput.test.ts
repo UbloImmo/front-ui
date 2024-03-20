@@ -1,9 +1,13 @@
-import { describe, it, expect } from "bun:test";
-import { TextInput } from "./TextInput.component";
+import { TextInput, defaultTextInputProps } from "./TextInput.component";
+import { componentTestFactory } from "../../../utils";
 
-describe("Input/TextInput", () => {
-  it("should be a component", () => {
-    expect(TextInput).toBeDefined();
-    expect(TextInput).toBeFunction();
-  });
+const testTextInput = componentTestFactory(
+  "Input/TextInput",
+  "input-text",
+  TextInput,
+  defaultTextInputProps
+);
+
+testTextInput({
+  value: "test",
 });

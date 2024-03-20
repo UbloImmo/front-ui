@@ -5,6 +5,7 @@ import {
   objectEntries,
   transformObject,
   objectFromEntries,
+  isFunction,
 } from "@ubloimmo/front-util";
 
 /**
@@ -20,13 +21,40 @@ export const mergeDefaultProps = <
 >(
   defaultProps: TDefaultProps,
   props: TProps = {} as TProps
-) => {
+): TDefaultProps => {
   return objectFromEntries(
     objectEntries(defaultProps).map(([key, value]) => [
       key,
       isUndefined(props[key]) ? value : props[key],
     ])
   ) as TDefaultProps;
+};
+
+/**
+ * Hook that merges the provided default props with the given props,
+ * using {@link mergeDefaultProps}.
+ *
+ * @param {TDefaultProps} defaultProps - the default properties to be merged
+ * @param {TProps} [props = {}] - the properties to merge with the default props
+ * @return {TDefaultProps} the merged default props with the given props
+ */
+export const useMergedProps = <
+  TDefaultProps extends Record<string, unknown>,
+  TProps extends Partial<TDefaultProps>
+>(
+  defaultProps: TDefaultProps | (() => TDefaultProps),
+  props: TProps = {} as TProps
+): TDefaultProps => {
+  return useMemo<TDefaultProps>(
+    () =>
+      mergeDefaultProps(
+        isFunction<() => TDefaultProps>(defaultProps)
+          ? defaultProps()
+          : defaultProps,
+        props
+      ),
+    [defaultProps, props]
+  );
 };
 
 /**

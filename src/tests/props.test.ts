@@ -7,6 +7,7 @@ import {
   toStyleProps,
   fromStyleProps,
   useStyleProps,
+  useMergedProps,
 } from "../utils/props.utils";
 
 type TestProps = {
@@ -53,6 +54,22 @@ describe("prop utils", () => {
         "c",
       ]);
       expect(mergeDefaultProps(defaultProps, {})).toEqual(defaultProps);
+    });
+
+    describe("useMergedProps", () => {
+      it("should be a function", () => {
+        expect(useMergedProps).toBeDefined();
+        expect(useMergedProps).toBeFunction();
+      });
+
+      it("should throw outside of react", () => {
+        expect(() => useMergedProps(defaultProps, {})).toThrow();
+      });
+
+      it("should be a valid react hook", () => {
+        const { result } = renderHook(() => useMergedProps(defaultProps, {}));
+        expect(result.current).toEqual(defaultProps);
+      });
     });
   });
 

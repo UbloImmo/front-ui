@@ -1,7 +1,8 @@
 import { describe, it, expect } from "bun:test";
 import { renderHook } from "@testing-library/react";
-import { testPrimitives, useLogger } from "../utils";
+import { useLogger } from "../utils";
 import { objectValues } from "@ubloimmo/front-util";
+import { testPrimitives } from "./test.data";
 
 describe("useLogger", () => {
   it("should be a valid react hook", () => {
