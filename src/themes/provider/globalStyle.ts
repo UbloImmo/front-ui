@@ -9,7 +9,7 @@ import type {
   Spacings,
 } from "../../types";
 import { effectsToCssVars } from "../palette";
-import { createGlobalStyle, css } from "styled-components";
+import { createGlobalStyle, css, type RuleSet } from "styled-components";
 import "@fontsource-variable/open-sans";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
 import { breakpointsPx, buildSpacingMap } from "../../sizes";
@@ -95,11 +95,18 @@ export const textSizesToCssVars = (): {
  * @param {CssVar<string>[][]} cssVarCollection - The collection of CSS variables to join.
  * @return {string} The joined string of CSS variables.
  */
-const joinCssVarCollection = (cssVarCollection: CssVar<string>[][]): string => {
+export const joinCssVarCollection = (
+  cssVarCollection: CssVar<string>[][]
+): string => {
   return cssVarCollection.map((cssVars) => cssVars.join("\n")).join("\n");
 };
 
-const cssReset = () => css`
+/**
+ * Generates a CSS reset style.
+ *
+ * @return {RuleSet} The generated CSS reset style.
+ */
+export const cssReset = (): RuleSet => css`
   * {
     margin: 0;
     padding: 0;
@@ -112,12 +119,12 @@ const cssReset = () => css`
  *
  * @param {CssVar<string>[][]} defaults - array of arrays of default CSS variables
  * @param {[BreakpointLabel, CssVar<string>[][]][]} mediaQueries - optional array of breakpoint labels and CSS variables for media queries
- * @return {string} the combined CSS for global styles
+ * @return {RuleSet} the combined CSS for global styles
  */
-const declareGlobalStyle = (
+export const declareGlobalStyle = (
   defaults: CssVar<string>[][],
   mediaQueries?: [BreakpointLabel, CssVar<string>[][]][]
-) => {
+): RuleSet => {
   const defaultCssVarStr = joinCssVarCollection(defaults);
 
   const mediaQueriesStr = (mediaQueries ?? []).map(

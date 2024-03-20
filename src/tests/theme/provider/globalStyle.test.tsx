@@ -9,6 +9,9 @@ import {
   buildGlobalStyle,
   textSizesToCssVars,
   GlobalStyle,
+  cssReset,
+  declareGlobalStyle,
+  joinCssVarCollection,
 } from "../../../themes";
 import { objectValues } from "@ubloimmo/front-util";
 
@@ -25,6 +28,13 @@ describe("global style", () => {
         expect(cssVar).toBeString();
         expect(cssVar).toInclude("s");
       });
+    });
+
+    it("should join a collection of CSS variables into a single string", () => {
+      expect(joinCssVarCollection).toBeDefined();
+      expect(joinCssVarCollection).toBeFunction();
+      expect(() => joinCssVarCollection([])).not.toThrow();
+      expect(joinCssVarCollection([[], []])).toBeString();
     });
 
     it("should convert shaded palette colors to CSS variables", () => {
@@ -70,6 +80,19 @@ describe("global style", () => {
       expect(buildGlobalStyle).toBeFunction();
       expect(() => buildGlobalStyle(buildTheme())).not.toThrow();
       expect(buildGlobalStyle(buildTheme())).toBeObject();
+    });
+
+    it("should declare the global style css", () => {
+      expect(declareGlobalStyle).toBeDefined();
+      expect(declareGlobalStyle).toBeFunction();
+      expect(declareGlobalStyle([], [])).toBeObject();
+    });
+
+    it("should include a css reset", () => {
+      expect(cssReset).toBeDefined();
+      expect(cssReset).toBeFunction();
+      expect(cssReset).not.toThrow();
+      expect(cssReset()).toBeObject();
     });
   });
 
