@@ -67,4 +67,4 @@ jobs:
 
       - name: Unit tests
         id: test_unit
-        run: bun test:unit:coverage
+        run: bun test:unit
