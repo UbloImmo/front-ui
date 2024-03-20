@@ -9,7 +9,7 @@ import {
 import { useMemo } from "react";
 import * as generatedIcons from "./__generated__";
 
-const defaultIconProps: DefaultIconProps = {
+export const defaultIconProps: DefaultIconProps = {
   size: "1rem",
   color: "primary-base",
   name: "Circle",
@@ -38,6 +38,7 @@ export const Icon = (props: IconProps) => {
   );
 
   const parsedSize = useMemo(() => {
+    // TODO: handle first render if css not loaded
     if (isSpacingLabel(size)) {
       const propValue = getComputedStyle(
         document.documentElement
