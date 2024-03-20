@@ -4,14 +4,14 @@ import type {
   InputProps,
   InputValue,
 } from "../Input.types";
-import { isString } from "@ubloimmo/front-util";
-import { mergeDefaultProps } from "../../../utils";
-import { defaultCommonInputProps } from "../Input.common";
 import {
   useInputOnChange,
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
+import { defaultCommonInputProps } from "../Input.common";
+import { mergeDefaultProps } from "../../../utils";
+import { isString } from "@ubloimmo/front-util";
 import styled from "styled-components";
 import { commonInputStyles } from "../Input.styles";
 
@@ -29,19 +29,19 @@ const defaultTextProps: DefaultInputProps<"text"> = {
  */
 export const TextInput = (props: InputProps<"text">) => {
   const mergedProps = mergeDefaultProps(defaultTextProps, props);
-  const onChangeCallback = useInputOnChange<"text">(
+  const onChange = useInputOnChange<"text">(
     (nativeValue): nativeValue is InputValue<"text"> => isString(nativeValue),
     (nativeValue) =>
       isString(nativeValue) && nativeValue.length > 0 ? nativeValue : null,
     mergedProps.onChange
   );
-  const nativeValue = useInputValue(mergedProps.value);
+  const value = useInputValue(mergedProps.value);
   const inputStyles = useInputStyles(mergedProps);
   return (
     <StyledTextInput
-      value={nativeValue}
+      value={value}
       type="text"
-      onChange={onChangeCallback}
+      onChange={onChange}
       placeholder={mergedProps.placeholder}
       disabled={mergedProps.disabled}
       {...inputStyles}
