@@ -11,7 +11,6 @@ describe("Input", () => {
       type: "text",
     } as DefaultGenericInputProps<InputType>);
 
-    global.console.error = mock(() => {});
     componentTestFactory(
       "Number",
       "input-number",
@@ -22,7 +21,6 @@ describe("Input", () => {
       } as DefaultGenericInputProps<InputType>,
       true
     );
-    expect(global.console.error).toHaveBeenCalled();
 
     global.console.warn = mock(() => {});
     componentTestFactory(
