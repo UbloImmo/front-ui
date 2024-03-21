@@ -23,7 +23,6 @@ export const DocsContainer = ({
     isString(themeClient) && clientSlugs.includes(themeClient)
       ? themeClient
       : "ublo";
-  console.log(storyContext, themeClient, client);
   return (
     <StorybookThemeProvider theme={{ client }}>
       <SBDocsContainer context={context} theme={theme}>
