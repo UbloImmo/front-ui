@@ -18,9 +18,12 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
-  async viteFinal(config) {
+  async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");
-
+    if ( configType === 'PRODUCTION' ) {
+      config.base = '/design-system'
+      config.publicDir =  '/design-system'
+    }
     return mergeConfig(config, {
       build: {
         rollupOptions: {
@@ -28,6 +31,16 @@ const config: StorybookConfig = {
         },
       },
     });
+  },
+  managerHead: (head, { configType }) => {
+    if (configType === 'PRODUCTION') {
+      return (`
+        ${head}
+        <base href="/design-system/">
+      `);
+    }
+
+    return head;
   },
 };
 export default config;
