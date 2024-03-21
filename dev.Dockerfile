@@ -1,9 +1,9 @@
 
-FROM node:18 AS builder
+FROM node:latest AS builder
 WORKDIR /app
 COPY . .
-RUN yarn install --frozen-lockfile
-RUN yarn run build-storybook
+RUN npm install -g bun && bun install --frozen-lockfile
+RUN bun run build-storybook
 
 FROM nginx:alpine
 COPY --from=build /app/storybook-static /usr/share/nginx/html/design-system
