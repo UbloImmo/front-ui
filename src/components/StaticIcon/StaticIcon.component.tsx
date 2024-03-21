@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Icon, IconProps } from "../Icon";
 import { DefaultStaticIconProps, StaticIconProps } from "./StaticIcon.types";
 import { useMemo } from "react";
-import { PaletteColor } from "../../types";
+import { PaletteColor, StyleProps } from "../../types";
 import { defaultIconProps } from "../Icon/Icon.component";
-import { mergeDefaultProps } from "../../utils";
+import { mergeDefaultProps, useStyleProps } from "../../utils";
 import {
   staticIconSizeToIconSizeMap,
   staticIconStyle,
@@ -30,6 +30,7 @@ export const StaticIcon = (props: StaticIconProps) => {
   );
 
   const { color, size, name } = mergedProps;
+  const styledProps = useStyleProps(mergedProps);
   const iconProps = useMemo<Pick<IconProps, "color" | "size">>(() => {
     const iconSize = staticIconSizeToIconSizeMap[size];
     const iconColor: PaletteColor =
@@ -42,13 +43,13 @@ export const StaticIcon = (props: StaticIconProps) => {
   }, [color, size]);
 
   return (
-    <StaticIconContainer data-testid="static-icon" {...mergedProps}>
+    <StaticIconContainer data-testid="static-icon" {...styledProps}>
       <Icon name={name} {...iconProps}></Icon>
     </StaticIconContainer>
   );
 };
 
-const StaticIconContainer = styled.div<DefaultStaticIconProps>`
+const StaticIconContainer = styled.div<StyleProps<DefaultStaticIconProps>>`
   display: flex;
   align-items: center;
   justify-content: center;

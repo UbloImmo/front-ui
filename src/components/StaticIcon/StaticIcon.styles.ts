@@ -4,7 +4,8 @@ import type {
   StaticIconContainerStyle,
 } from "./StaticIcon.types";
 import { css } from "styled-components";
-import type { ValueMap, CssRem } from "../../types";
+import type { ValueMap, CssRem, StyleProps } from "../../types";
+import { fromStyleProps } from "../../utils";
 
 export const staticIconSizeToContainerStyleMap: ValueMap<
   StaticIconSize,
@@ -35,11 +36,8 @@ export const staticIconSizeToIconSizeMap: ValueMap<StaticIconSize, CssRem> = {
   l: "1.75rem",
 };
 
-export const staticIconStyle = ({
-  color,
-  stroke,
-  size,
-}: DefaultStaticIconProps) => {
+export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
+  const { size, color, stroke } = fromStyleProps(props);
   const { padding, borderRadius } = staticIconSizeToContainerStyleMap[size];
 
   const borderColorShade = color === "gray" ? "300" : "medium";
