@@ -18,5 +18,16 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
+  async viteFinal(config) {
+    const { mergeConfig } = await import("vite");
+
+    return mergeConfig(config, {
+      build: {
+        rollupOptions: {
+          external: ["bun:test", "*.test.ts", "*.test.tsx"],
+        },
+      },
+    });
+  },
 };
 export default config;
