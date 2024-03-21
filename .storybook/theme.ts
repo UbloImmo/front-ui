@@ -48,7 +48,7 @@ export default create({
   barTextColor: t.gray[600].rgba,
   barSelectedColor: t.primary.medium.rgba,
   barBg: t.gray[50].rgba,
-  barHoverColor: t.primary.light.rgba,
+  barHoverColor: t.primary.medium.rgba,
 
   // Input Colors
   inputBg: t.gray[50].rgba,
