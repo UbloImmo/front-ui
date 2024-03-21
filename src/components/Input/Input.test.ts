@@ -5,7 +5,7 @@ import {
   type DefaultGenericInputProps,
   type InputType,
 } from ".";
-import { componentTestFactory } from "../../utils";
+import { componentTestFactory } from "../../tests";
 
 describe("Input", () => {
   describe("Generic Input", () => {

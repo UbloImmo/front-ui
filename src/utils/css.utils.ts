@@ -223,7 +223,7 @@ export const isCssLenthUsage = (value: unknown): value is CssLengthUsage => {
  * Parses a CSS variable into its name and value.
  *
  * @param {CssVar<string>} variable - the CSS variable to parse
- * @return {{ name: string; value: string }} the name and value of the CSS variable
+ * @return {{ name: CssVarName; value: string }} the name and value of the CSS variable
  */
 export const parseCssVar = <TValue extends string>(
   variable: CssVar<TValue>

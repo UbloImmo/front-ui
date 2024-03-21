@@ -1,5 +1,5 @@
 import { describe, expect, mock } from "bun:test";
-import { testHookFactory } from "src";
+import { testHookFactory } from "../../tests";
 import {
   InputType,
   useInputOnChange,

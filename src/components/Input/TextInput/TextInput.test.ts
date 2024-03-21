@@ -1,5 +1,5 @@
 import { TextInput, defaultTextInputProps } from "./TextInput.component";
-import { componentTestFactory } from "../../../utils";
+import { componentTestFactory } from "../../../tests";
 import { describe } from "bun:test";
 
 describe("Input", () => {
