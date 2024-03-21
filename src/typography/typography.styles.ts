@@ -9,7 +9,7 @@ import {
   TextSize,
   HeadingSize,
   CssRem,
-} from "src";
+} from "../types";
 import { typographyFontFace } from "./typography.font";
 import { objectKeys, transformObject } from "@ubloimmo/front-util";
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";

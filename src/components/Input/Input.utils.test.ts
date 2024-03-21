@@ -1,14 +1,9 @@
-import { describe, expect, mock } from "bun:test";
-import { testHookFactory } from "../../tests";
-import {
-  InputType,
-  useInputOnChange,
-  type InputValue,
-  useInputValue,
-  useInputStyles,
-} from ".";
+import type { InputType, InputValue } from "./Input.types";
 import type { Nullable, Optional } from "@ubloimmo/front-util";
 import type { ChangeEvent } from "react";
+import { describe, expect, mock } from "bun:test";
+import { testHookFactory } from "../../tests";
+import { useInputOnChange, useInputValue, useInputStyles } from ".";
 
 const mockOnChange = mock((_value: Nullable<InputValue<InputType>>) => {});
 

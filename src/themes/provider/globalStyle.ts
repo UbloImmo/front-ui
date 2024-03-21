@@ -10,7 +10,6 @@ import type {
 } from "../../types";
 import { effectsToCssVars } from "../palette";
 import { createGlobalStyle, css, type RuleSet } from "styled-components";
-import "@fontsource-variable/open-sans";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
 import { breakpointsPx, buildSpacingMap } from "../../sizes";
 import { cssVar } from "../../utils";

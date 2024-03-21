@@ -1,10 +1,7 @@
+import type { DefaultGenericInputProps, InputType } from "./Input.types";
 import { describe, expect, mock } from "bun:test";
-import {
-  Input,
-  defaultTextInputProps,
-  type DefaultGenericInputProps,
-  type InputType,
-} from ".";
+import { Input } from "./Input.component";
+import { defaultTextInputProps } from "./TextInput";
 import { componentTestFactory } from "../../tests";
 
 describe("Input", () => {

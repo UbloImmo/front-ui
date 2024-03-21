@@ -6,7 +6,8 @@ import {
   objectEntries,
   objectFromEntries,
 } from "@ubloimmo/front-util";
-import parser, {
+import {
+  parse as parseSvg,
   RootNode as SvgRootNode,
   Node as SvgNode,
   TextNode as SvgTextNode,
@@ -291,7 +292,7 @@ ${componentDeclarationTemplate(name, componentName, tsxReturn, type)}
  */
 const parseSvgStr = (svgStr: string): SvgRootNode => {
   logger.log("parsing svg string...", LOGGER_NAME);
-  const node: SvgRootNode = parser.parse(svgStr);
+  const node: SvgRootNode = parseSvg(svgStr);
   logger.log("parsed svg string", LOGGER_NAME);
   return node;
 };
