@@ -102,3 +102,7 @@ export type DefaultGenericInputProps<TType extends InputType> = Required<
 export type TypedInputComponentMap = {
   [TType in InputType]: Nullable<FC<InputProps<TType>>>;
 };
+
+export type InputControlStyleProps = CommonInputStyleProps & {
+  onClick?: VoidFn;
+};

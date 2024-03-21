@@ -43,7 +43,7 @@ export const testComponentRender = <TProps extends Record<string, unknown>>(
  * @param {string} testId - The test ID for the component.
  * @param {FC<TProps>} Component - The component to be tested.
  * @param {Required<TProps>} defaultProps - The default props for the component.
- * @return {VoidFn<[TProps, Optional<boolean>]>} A function that tests the component with given props.
+ * @return {VoidFn<[TProps, Optional<boolean>, Optional<string>]>} A function that tests the component with given props.
  */
 export const componentTestFactory = <TProps extends Record<string, unknown>>(
   componentName: string,
@@ -62,9 +62,14 @@ export const componentTestFactory = <TProps extends Record<string, unknown>>(
 
     afterEach(cleanup);
   });
-  return (props: TProps, rendersNull?: boolean) => {
+  return (props: TProps, rendersNull?: boolean, nestedTestId?: string) => {
     describe(componentName, () => {
-      testComponentRender(testId, Component, props, rendersNull);
+      testComponentRender(
+        nestedTestId ?? testId,
+        Component,
+        props,
+        rendersNull
+      );
       afterEach(cleanup);
     });
   };
@@ -108,8 +113,10 @@ export const testHookFactory = <
     }
   });
 
-  return (...params: THookParams): VoidFn<[string, VoidFn<[THookReturn]>]> =>
-    (testName: string, tests: VoidFn<[THookReturn]>) => {
+  return (
+      ...params: THookParams
+    ): VoidFn<[string, VoidFn<[THookReturn, THookParams]>]> =>
+    (testName: string, tests: VoidFn<[THookReturn, THookParams]>) => {
       describe(hookName, () => {
         const paramsStr =
           params && params.length > 0
@@ -122,7 +129,7 @@ export const testHookFactory = <
         const testlabel = `${testName} with params ${paramsStr}"`;
         it(testlabel, () => {
           const { result } = renderHook(() => hook(...(params ?? [])));
-          tests(result.current);
+          tests(result.current, params ?? []);
         });
       });
     };
