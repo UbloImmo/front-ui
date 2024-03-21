@@ -90,16 +90,25 @@ const STATIC_COLOR_KEYS: (keyof typeof colors)[] = [
 ];
 
 /**
+ * Retrieves the client slugs from the color tokens.
+ *
+ * @return {ClientColorPaletteKey[]} An array of client color palette keys.
+ */
+export const getClientSlugs = (): ClientColorPaletteKey[] => {
+  return objectKeys(colors).filter(
+    (colorKey): colorKey is ClientColorPaletteKey =>
+      !STATIC_COLOR_KEYS.includes(colorKey)
+  );
+};
+
+/**
  * Builds the client color palette based on the provided colors object.
  *
  * @return {ClientColorPalette} The client color palette object.
  */
 const buildClientColorPalette = (): ClientColorPalette => {
   // filter out static color keys
-  const clientColorKeys = objectKeys(colors).filter(
-    (colorKey): colorKey is ClientColorPaletteKey =>
-      !STATIC_COLOR_KEYS.includes(colorKey)
-  );
+  const clientColorKeys = getClientSlugs();
   // match client color keys to their tokens
   const clientColorTokens = objectFromEntries(
     arrayFilter(

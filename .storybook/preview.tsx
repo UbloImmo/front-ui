@@ -1,28 +1,6 @@
-import React from "react";
 import type { Preview } from "@storybook/react";
-import { DocsContainer } from "@storybook/blocks";
-import { ThemeProvider } from "../src/themes/provider";
-
-const decorators: Preview["decorators"] = [
-  (Story) => {
-    return (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    );
-  },
-];
-
-const Container = ({
-  children,
-  ...props
-}: Parameters<typeof DocsContainer>[0]) => {
-  return (
-    <ThemeProvider>
-      <DocsContainer {...props}>{children}</DocsContainer>
-    </ThemeProvider>
-  );
-};
+import { StoryDecorator } from "../docs/blocks/StoryDecorator";
+import { DocsContainer } from "../docs/blocks/DocsContainer";
 
 const preview: Preview = {
   parameters: {
@@ -35,10 +13,10 @@ const preview: Preview = {
       expanded: true,
     },
     docs: {
-      container: Container,
+      container: DocsContainer,
     },
   },
-  decorators,
+  decorators: StoryDecorator,
 };
 
 export default preview;
