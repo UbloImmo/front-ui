@@ -20,3 +20,5 @@ eslint-local-rules
 # Cache
 .cache
 dist
+.husky
+.github
