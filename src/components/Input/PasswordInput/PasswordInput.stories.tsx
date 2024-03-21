@@ -1,0 +1,36 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { PasswordInput } from "./PasswordInput.component";
+
+const meta = {
+  title: "Components/Input/PasswordInput",
+  component: PasswordInput,
+  tags: ["autodocs"],
+  argTypes: {
+    visible: {
+      control: "boolean",
+      description: "Whether the password is visible at first.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: false },
+      },
+    },
+    allowChangeVisibility: {
+      description:
+        "Whether to allow the user to change the password visibility",
+      control: "boolean",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: true },
+      },
+    },
+  },
+} satisfies Meta<typeof PasswordInput>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    placeholder: "Password",
+  },
+};

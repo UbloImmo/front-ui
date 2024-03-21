@@ -9,12 +9,13 @@ import type {
 } from "./Input.types";
 import { inputTypes } from "./Input.types";
 import { TextInput } from "./TextInput/TextInput.component";
+import { PasswordInput } from "./PasswordInput/PasswordInput.component";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const inputComponentMap: TypedInputComponentMap = {
   text: TextInput,
   number: null,
-  password: null,
+  password: PasswordInput,
   email: null,
 };
 

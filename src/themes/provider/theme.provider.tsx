@@ -1,4 +1,8 @@
-import type { GetThemeOverridesFn, ThemeOverride } from "../../types";
+import type {
+  ClientColorPaletteKey,
+  GetThemeOverridesFn,
+  ThemeOverride,
+} from "../../types";
 import type { Nullable } from "@ubloimmo/front-util";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { ReactNode, useMemo, useState, useEffect } from "react";
@@ -9,6 +13,7 @@ import { isNullish } from "@ubloimmo/front-util";
 type ThemeProviderProps = {
   children: ReactNode;
   getOverridesFn?: GetThemeOverridesFn;
+  _forClient?: ClientColorPaletteKey;
 };
 
 /**
@@ -20,6 +25,7 @@ type ThemeProviderProps = {
 export const ThemeProvider = ({
   children,
   getOverridesFn,
+  _forClient = "ublo",
 }: ThemeProviderProps): JSX.Element => {
   const [overrides, setOverrides] = useState<Nullable<ThemeOverride>>();
 
@@ -37,7 +43,10 @@ export const ThemeProvider = ({
     fetchOverrides();
   }, [getOverridesFn]);
 
-  const theme = useMemo(() => buildTheme(overrides), [overrides]);
+  const theme = useMemo(
+    () => buildTheme(overrides, _forClient),
+    [overrides, _forClient]
+  );
 
   return (
     <StyledThemeProvider theme={theme}>

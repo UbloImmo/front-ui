@@ -1,9 +1,18 @@
-import type { InputType, InputValue } from "./Input.types";
+import type {
+  DefaultCommonInputProps,
+  InputType,
+  InputValue,
+} from "./Input.types";
 import type { Nullable, Optional } from "@ubloimmo/front-util";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, MutableRefObject } from "react";
 import { describe, expect, mock } from "bun:test";
 import { testHookFactory } from "../../tests";
-import { useInputOnChange, useInputValue, useInputStyles } from ".";
+import {
+  useInputOnChange,
+  useInputValue,
+  useInputStyles,
+  useInputControlCallback,
+} from ".";
 
 const mockOnChange = mock((_value: Nullable<InputValue<InputType>>) => {});
 
@@ -77,13 +86,19 @@ const testUseInputValue = () => {
   );
 };
 
+const inputProps: DefaultCommonInputProps = {
+  error: true,
+  disabled: true,
+  placeholder: "test",
+};
+
 const testUseInputStyles = () => {
   type Hook = typeof useInputStyles;
   const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
     "useInputStyles",
     useInputStyles,
     {
-      params: [{ error: true, disabled: true, placeholder: "test" }],
+      params: [inputProps],
       tests: [
         {
           name: "should return an object",
@@ -105,10 +120,59 @@ const testUseInputStyles = () => {
   );
 };
 
+const testUseInputControlCallback = () => {
+  type Hook = typeof useInputControlCallback;
+  const fakeNoInputRef: MutableRefObject<Nullable<HTMLInputElement>> = {
+    current: null,
+  };
+  const fakeInputRef: MutableRefObject<Nullable<HTMLInputElement>> = {
+    current: {
+      focus: mock(() => {}),
+    } as unknown as HTMLInputElement,
+  };
+
+  const callback = mock(() => {});
+
+  const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
+    "useInputControlCallback",
+    useInputControlCallback,
+    {
+      params: [fakeNoInputRef, inputProps, callback],
+      tests: [
+        {
+          name: "should return a function",
+          test: (result) => expect(result).toBeFunction(),
+        },
+      ],
+    }
+  );
+
+  testHook(
+    fakeNoInputRef,
+    inputProps,
+    callback
+  )("should call callback when called", (result, [_, __, cb]) => {
+    result();
+    cb();
+    expect(callback).toHaveBeenCalled();
+  });
+
+  testHook(
+    fakeInputRef,
+    inputProps,
+    callback
+  )("should focus input", (result, [_, __, cb]) => {
+    result();
+    cb();
+    expect(cb).toHaveBeenCalled();
+  });
+};
+
 describe("Input", () => {
   describe("utils", () => {
     testUseInputOnChange();
     testUseInputValue();
     testUseInputStyles();
+    testUseInputControlCallback();
   });
 });
