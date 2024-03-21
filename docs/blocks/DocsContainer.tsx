@@ -1,7 +1,8 @@
-import { DocsContainer as SBDocsContainer } from "@storybook/blocks";
-import { StorybookThemeProvider } from "./StoryDecorator";
 import type { ClientColorPaletteKey } from "../../src/types";
-import type { Optional } from "@ubloimmo/front-util";
+import { DocsContainer as SBDocsContainer } from "@storybook/blocks";
+import { isString, type Optional } from "@ubloimmo/front-util";
+import { StorybookThemeProvider } from "./StoryDecorator";
+import { getClientSlugs } from "../../src/themes";
 
 type DocsContainerProps = Parameters<typeof SBDocsContainer>[0];
 
@@ -17,7 +18,12 @@ export const DocsContainer = ({
   const storyContext = context as any;
   const themeClient: Optional<ClientColorPaletteKey> =
     storyContext?.store?.globals?.globals?.theme;
-  const client: ClientColorPaletteKey = themeClient ?? "ublo";
+  const clientSlugs = getClientSlugs();
+  const client: ClientColorPaletteKey =
+    isString(themeClient) && clientSlugs.includes(themeClient)
+      ? themeClient
+      : "ublo";
+  console.log(storyContext, themeClient, client);
   return (
     <StorybookThemeProvider theme={{ client }}>
       <SBDocsContainer context={context} theme={theme}>
