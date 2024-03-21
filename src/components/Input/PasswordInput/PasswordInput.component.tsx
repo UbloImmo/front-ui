@@ -47,6 +47,7 @@ export const PasswordInput = (props: PasswordInputProps): JSX.Element => {
     setIsPasswordVisible(mergedProps.visible);
   }, [mergedProps.visible]);
 
+  // TODO: focus input on click
   const toggleVisibility = useCallback(() => {
     if (!mergedProps.allowChangeVisibility) return;
     const newVisibility = mergedProps.disabled ? false : !isPasswordVisible;
