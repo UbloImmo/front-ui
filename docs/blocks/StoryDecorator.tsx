@@ -17,16 +17,21 @@ export const StorybookThemeProvider = ({
   children: ReactNode;
 }) => <ThemeProvider _forClient={theme.client}>{children}</ThemeProvider>;
 
+const getStoryThemes = () => {
+  const storyThemes = objectFromEntries(
+    getClientSlugs()
+      .sort()
+      .map((slug) => [slug, { client: slug }])
+  );
+  return storyThemes;
+};
+
 /**
  * Wraps each story with a dynamic Theme provider
  */
 export const StoryDecorator: Preview["decorators"] = [
   withThemeFromJSXProvider<ReactRenderer>({
-    themes: objectFromEntries(
-      getClientSlugs()
-        .sort()
-        .map((slug) => [slug, { client: slug }])
-    ),
+    themes: getStoryThemes(),
     defaultTheme: "ublo",
     Provider: StorybookThemeProvider,
   }),
