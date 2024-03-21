@@ -1,10 +1,12 @@
-import styled from "styled-components";
-import {
+import type { StyleProps } from "../../types";
+import type {
   FlexDirectionLayoutProps,
   FlexLayoutDefaultProps,
   FlexLayoutProps,
 } from "./Flex.types";
 import { buildFlexLayoutStyle } from "./Flex.styles";
+import { useStyleProps } from "../../utils";
+import styled from "styled-components";
 
 const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   direction: "row",
@@ -14,6 +16,7 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   wrap: false,
   reverse: false,
   inline: false,
+  children: null,
 } as const;
 
 /**
@@ -22,9 +25,10 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
  * @param {FlexLayoutProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */
-export const FlexLayout = styled.div<FlexLayoutProps>`
-  ${buildFlexLayoutStyle(defaultFlexLayoutProps)}
-`;
+export const FlexLayout = (props: FlexLayoutProps) => {
+  const innerProps = useStyleProps(props);
+  return <FlexLayoutInner {...innerProps}>{props.children}</FlexLayoutInner>;
+};
 
 /**
  * A {@link FlexLayout} variant with fixed `row` direction
@@ -32,14 +36,9 @@ export const FlexLayout = styled.div<FlexLayoutProps>`
  * @param {FlexDirectionLayoutProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */
-export const FlexRowLayout = styled.div<FlexDirectionLayoutProps>`
-  ${buildFlexLayoutStyle(defaultFlexLayoutProps)}
-`;
-
-const defaultFlexColumnLayoutProps: FlexLayoutDefaultProps = {
-  ...defaultFlexLayoutProps,
-  direction: "column",
-} as const;
+export const FlexRowLayout = (props: FlexDirectionLayoutProps) => {
+  return <FlexLayout direction="row" {...props} />;
+};
 
 /**
  * A {@link FlexLayout} variant with fixed `column` direction
@@ -47,6 +46,10 @@ const defaultFlexColumnLayoutProps: FlexLayoutDefaultProps = {
  * @param {FlexDirectionLayoutProps} [props = defaultFlexColumnLayoutProps] - optional props.
  * @return {JSX.Element} The styled flex wrapper
  */
-export const FlexColumnLayout = styled.div<FlexDirectionLayoutProps>`
-  ${buildFlexLayoutStyle(defaultFlexColumnLayoutProps)}
+export const FlexColumnLayout = (props: FlexDirectionLayoutProps) => {
+  return <FlexLayout direction="column" {...props} />;
+};
+
+export const FlexLayoutInner = styled.div<StyleProps<FlexLayoutProps>>`
+  ${buildFlexLayoutStyle(defaultFlexLayoutProps)}
 `;

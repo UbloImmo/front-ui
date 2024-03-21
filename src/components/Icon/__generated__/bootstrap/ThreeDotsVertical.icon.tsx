@@ -28,6 +28,7 @@ export const ThreeDotsVertical = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
     </svg>

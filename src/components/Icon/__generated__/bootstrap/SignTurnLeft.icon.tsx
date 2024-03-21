@@ -28,6 +28,7 @@ export const SignTurnLeft = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <path d="M11 8.5A2.5 2.5 0 0 0 8.5 6H7V4.534a.25.25 0 0 0-.41-.192L4.23 6.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 7 8.466V7h1.5A1.5 1.5 0 0 1 10 8.5V11h1z" />
       <path

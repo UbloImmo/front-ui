@@ -9,8 +9,7 @@ import type {
   Spacings,
 } from "../../types";
 import { effectsToCssVars } from "../palette";
-import { createGlobalStyle, css } from "styled-components";
-import "@fontsource-variable/open-sans";
+import { createGlobalStyle, css, type RuleSet } from "styled-components";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
 import { breakpointsPx, buildSpacingMap } from "../../sizes";
 import { cssVar } from "../../utils";
@@ -35,10 +34,20 @@ export const paletteColorToCssVars = <
   colorName: string,
   shadedColors: PaletteColorShaded<TShadeKeys>
 ): CssVar<RgbaColorStr>[] => {
-  return objectEntries(shadedColors).map(
-    ([shadeName, { rgba }]): CssVar<RgbaColorStr> => {
+  return objectEntries(shadedColors).flatMap(
+    ([shadeName, { rgba, opacity }]): CssVar<RgbaColorStr>[] => {
       const varName = `${colorName.toLowerCase()}-${shadeName.toLowerCase()}`;
-      return cssVar(varName, rgba);
+      // create variables for major opacities (0 - 0.95)
+      const opacityVars = Array(20)
+        .fill(0)
+        .map((_, index) => {
+          const opacityCoeff = (index * 5) / 100;
+          const opacityName = `${varName}-${String(
+            opacityCoeff.toFixed(2)
+          ).replaceAll("0.", "")}`;
+          return cssVar(opacityName, opacity(opacityCoeff));
+        });
+      return [cssVar(varName, rgba), ...opacityVars];
     }
   );
 };
@@ -85,21 +94,36 @@ export const textSizesToCssVars = (): {
  * @param {CssVar<string>[][]} cssVarCollection - The collection of CSS variables to join.
  * @return {string} The joined string of CSS variables.
  */
-const joinCssVarCollection = (cssVarCollection: CssVar<string>[][]): string => {
+export const joinCssVarCollection = (
+  cssVarCollection: CssVar<string>[][]
+): string => {
   return cssVarCollection.map((cssVars) => cssVars.join("\n")).join("\n");
 };
+
+/**
+ * Generates a CSS reset style.
+ *
+ * @return {RuleSet} The generated CSS reset style.
+ */
+export const cssReset = (): RuleSet => css`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+`;
 
 /**
  * Declares global styles using root CSS variables and optional media query overrides.
  *
  * @param {CssVar<string>[][]} defaults - array of arrays of default CSS variables
  * @param {[BreakpointLabel, CssVar<string>[][]][]} mediaQueries - optional array of breakpoint labels and CSS variables for media queries
- * @return {string} the combined CSS for global styles
+ * @return {RuleSet} the combined CSS for global styles
  */
-const declareGlobalStyle = (
+export const declareGlobalStyle = (
   defaults: CssVar<string>[][],
   mediaQueries?: [BreakpointLabel, CssVar<string>[][]][]
-) => {
+): RuleSet => {
   const defaultCssVarStr = joinCssVarCollection(defaults);
 
   const mediaQueriesStr = (mediaQueries ?? []).map(
@@ -116,6 +140,7 @@ const declareGlobalStyle = (
   );
   return css`
     ${linkFontFace()}
+    ${cssReset()}
     :root {
       ${defaultCssVarStr}
     }

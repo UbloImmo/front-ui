@@ -28,6 +28,7 @@ export const BorderInner = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <path d="M.969 0H0v.969h.5V1h.469V.969H1V.5H.969zm.937 1h.938V0h-.938zm1.875 0h.938V0H3.78v1zm1.875 0h.938V0h-.938z" />
       <path d="M8.5 7.5H16v1H8.5V16h-1V8.5H0v-1h7.5V0h1z" />

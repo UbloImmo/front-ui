@@ -9,7 +9,7 @@ import {
   TextSize,
   HeadingSize,
   CssRem,
-} from "src";
+} from "../types";
 import { typographyFontFace } from "./typography.font";
 import { objectKeys, transformObject } from "@ubloimmo/front-util";
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
@@ -26,7 +26,7 @@ export const buildTypographyWeightMap = (): Record<
   return transformObject(texts.text.m, (token) => token.css.style.fontWeight);
 };
 
-const typographyWeightMap = buildTypographyWeightMap();
+export const typographyWeightMap = buildTypographyWeightMap();
 
 /**
  * Returns the CSS text decoration string based on the provided options.

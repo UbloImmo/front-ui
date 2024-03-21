@@ -28,6 +28,7 @@ export const Apps = (props: CommonIconProps): JSX.Element => {
       viewBox="0 0 16 16"
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
+      data-testid="icon"
     >
       <g clipPath="url(#clip0_222_1000)">
         <path

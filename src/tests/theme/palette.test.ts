@@ -1,17 +1,29 @@
 import { describe, expect, it } from "bun:test";
-import type { LegacyPalette, ColorPalette, LegacyShadows } from "../../types";
+import type {
+  LegacyPalette,
+  ColorPalette,
+  LegacyShadows,
+  RgbaColorStr,
+  RgbaColorArr,
+  CssVarName,
+} from "../../types";
 import {
   grayscalePaletteColorShadeKeys,
   defaultPaletteColorShadeKeys,
 } from "../../types";
 import { effects, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
-import { colorCollections } from "../colors.test";
+import { colorCollections } from "../color.test";
 import {
   buildLegacyColorPalette,
   buildColorPalette,
   shadeOpacityFactory,
   extractEffectTokenShadow,
+  parseEffectToken,
+  parsedEffectToCssVar,
+  paletteColorToCssVars,
+  buildTheme,
 } from "../../themes";
+import { parseCssVar, rgbaColorConverter } from "../../utils";
 
 const LEGACY_PALETTE_KEYS: (keyof LegacyPalette)[] = [
   "shadows",
@@ -133,6 +145,58 @@ describe("palette", () => {
         expect(redOpacityFn(0.5)).toBeString();
         expect(redOpacityFn(0.5)).toEqual("rgba(255, 0, 0, 0.5)");
       });
+    });
+  });
+
+  describe("effects", () => {
+    describe("parsing", () => {
+      it("should parse an effect token", () => {
+        expect(parseEffectToken).toBeFunction();
+        expect(() => parseEffectToken(effects.shadow.card)).not.toThrow();
+        expect(parseEffectToken(effects.shadow.card)).toContainKey(
+          "originalValue"
+        );
+        expect(
+          parseEffectToken({ ...effects.shadow.card, value: "blur(45px)" })
+        ).not.toContainKey("originalValue");
+      });
+    });
+  });
+
+  describe("converting to css var", () => {
+    const { primary } = buildTheme();
+    const cssVars = [
+      ...paletteColorToCssVars("primary-default", primary),
+      ...paletteColorToCssVars("primary", primary),
+    ];
+    const cssVarsSplit = cssVars
+      .map(parseCssVar<RgbaColorStr>)
+      .map(({ name, value }): [CssVarName, RgbaColorArr] => [
+        name,
+        rgbaColorConverter.strToArr(value),
+      ]);
+    const parsedEffect = parseEffectToken(effects.shadow.card);
+    const parsedEffectWithoutColor = parseEffectToken({
+      ...effects.shadow.card,
+      value: "blur(45px)",
+    });
+    const parsedEffectWithPrimaryDefault = parseEffectToken(
+      effects.shadow.input.default.focus
+    );
+    it("should not throw", () => {
+      expect(parsedEffectToCssVar).toBeDefined();
+      expect(parsedEffectToCssVar).toBeFunction();
+      expect(() => parsedEffectToCssVar(parsedEffect)).not.toThrow();
+    });
+
+    it("should return a css var", () => {
+      expect(parsedEffectToCssVar(parsedEffect, cssVarsSplit)).toBeString();
+      expect(
+        parsedEffectToCssVar(parsedEffectWithoutColor, cssVarsSplit)
+      ).toBeString();
+      expect(
+        parsedEffectToCssVar(parsedEffectWithPrimaryDefault, cssVarsSplit)
+      ).toBeString();
     });
   });
 });

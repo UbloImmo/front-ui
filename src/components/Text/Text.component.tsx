@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { TextProps } from "src";
+import { TextProps } from "../../types";
 import {
   buildTypographyStyle,
   defaultTypographyProps,

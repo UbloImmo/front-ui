@@ -1,4 +1,4 @@
-import { CssPx, Enum } from "src";
+import { CssPx, Enum } from "../../";
 
 export const breakpointLabels = [
   "XXS",

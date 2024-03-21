@@ -1,4 +1,5 @@
 import { CssFr, CssLength, Enum } from "../../types";
+import type { ReactNode } from "react";
 
 const flexAlignments = [
   "center",
@@ -29,6 +30,7 @@ export type FlexLayoutProps = {
   wrap?: FlexWrap;
   reverse?: boolean;
   inline?: boolean;
+  children?: ReactNode;
 };
 
 export type FlexLayoutDefaultProps = Required<FlexLayoutProps>;

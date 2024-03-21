@@ -1,9 +1,5 @@
-import type {
-  Nullable,
-  OrganizationData,
-  Theme,
-  ThemeOverride,
-} from "../types";
+import type { OrganizationData, Theme, ThemeOverride } from "../types";
+import type { Nullable } from "@ubloimmo/front-util";
 import { buildColorPalette, buildLegacyColorPalette } from "./palette";
 import { themeOverridePaletteToColorPaletteShaded } from "./provider/theme.overrides";
 
@@ -36,10 +32,12 @@ export const defaultOrganizationData: OrganizationData = {
 export const buildTheme = (
   themeOverrides: Nullable<ThemeOverride> = null
 ): Theme => {
+  const colorPalette = buildColorPalette();
   const theme: Theme = {
     organization: defaultOrganizationData,
     palette: buildLegacyColorPalette(),
-    ...buildColorPalette(),
+    ...colorPalette,
+    "primary-default": colorPalette.primary,
   };
   // return default theme if no overrides
   if (!themeOverrides || !themeOverrides.organization.palette) return theme;

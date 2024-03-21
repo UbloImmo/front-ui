@@ -1,6 +1,14 @@
-import type { Nullable } from "@ubloimmo/front-util";
+import type { StyleProps } from "../types";
+import { objectValues, type Nullable, objectKeys } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
-import { mergeDefaultProps } from "../utils/props.utils";
+import { renderHook } from "@testing-library/react";
+import {
+  mergeDefaultProps,
+  toStyleProps,
+  fromStyleProps,
+  useStyleProps,
+  useMergedProps,
+} from "../utils/props.utils";
 
 type TestProps = {
   a?: string;
@@ -14,6 +22,12 @@ const defaultProps: TestDefaultProps = {
   a: "a",
   b: "b",
   c: 3,
+};
+
+const styleProps: StyleProps<TestDefaultProps> = {
+  $a: "a",
+  $b: "b",
+  $c: 3,
 };
 
 describe("prop utils", () => {
@@ -40,6 +54,85 @@ describe("prop utils", () => {
         "c",
       ]);
       expect(mergeDefaultProps(defaultProps, {})).toEqual(defaultProps);
+    });
+
+    describe("useMergedProps", () => {
+      it("should be a function", () => {
+        expect(useMergedProps).toBeDefined();
+        expect(useMergedProps).toBeFunction();
+      });
+
+      it("should throw outside of react", () => {
+        expect(() => useMergedProps(defaultProps, {})).toThrow();
+      });
+
+      it("should be a valid react hook", () => {
+        const { result } = renderHook(() => useMergedProps(defaultProps, {}));
+        expect(result.current).toEqual(defaultProps);
+      });
+    });
+  });
+
+  describe("toStyleProps", () => {
+    it("should be a function", () => {
+      expect(toStyleProps).toBeDefined();
+      expect(toStyleProps).toBeFunction();
+      expect(() => toStyleProps(defaultProps)).not.toThrow();
+    });
+
+    it("should correctly convert prop keys ", () => {
+      expect(toStyleProps(defaultProps)).toContainKeys(objectKeys(styleProps));
+    });
+
+    it("should preserve prop values ", () => {
+      expect(objectValues(toStyleProps(defaultProps))).toEqual(
+        objectValues(styleProps)
+      );
+    });
+
+    it("should preserve the props' shape", () => {
+      expect(toStyleProps(defaultProps)).toStrictEqual(styleProps);
+    });
+  });
+
+  describe("fromStyleProps", () => {
+    it("should be a function", () => {
+      expect(fromStyleProps).toBeDefined();
+      expect(fromStyleProps).toBeFunction();
+      expect(() => fromStyleProps(defaultProps)).not.toThrow();
+    });
+
+    it("should correctly convert prop keys ", () => {
+      expect(fromStyleProps(styleProps)).toContainKeys(
+        objectKeys(defaultProps)
+      );
+    });
+
+    it("should preserve prop values ", () => {
+      expect(objectValues(fromStyleProps(styleProps))).toEqual(
+        objectValues(defaultProps)
+      );
+    });
+
+    it("should preserve the props' shape", () => {
+      expect(fromStyleProps(styleProps)).toStrictEqual(defaultProps);
+    });
+  });
+
+  describe("useStyleProps", () => {
+    it("should be a function", () => {
+      expect(useStyleProps).toBeDefined();
+      expect(useStyleProps).toBeFunction();
+      // throws outside of react
+    });
+
+    it("should throw outside of react", () => {
+      expect(() => useStyleProps({})).toThrow();
+    });
+
+    it("should be a valid react hook", () => {
+      const { result } = renderHook(() => useStyleProps(defaultProps));
+      expect(result.current).toEqual(styleProps);
     });
   });
 });

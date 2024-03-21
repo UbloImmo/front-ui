@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Icon } from "./Icon.component";
 import { IconProps } from "./Icon.types";
-import { ColorPalette, PaletteColor } from "src";
+import { ColorPalette, PaletteColor } from "../../types";
 import { FlexRowLayout } from "../../layouts";
 
 const meta = {

@@ -28,6 +28,7 @@ export const FilterRight = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5m0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5m0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5" />
     </svg>

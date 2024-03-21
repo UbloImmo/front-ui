@@ -1,4 +1,10 @@
-import { ColorPalette, LegacyPalette, OrganizationData } from ".";
+import type {
+  ColorPalette,
+  LegacyPalette,
+  OrganizationData,
+  PaletteColorShaded,
+  DefaultPaletteColorShadeKey,
+} from ".";
 
 /**
  * Styled-components theme
@@ -14,4 +20,5 @@ export interface Theme extends ColorPalette {
    */
   palette: LegacyPalette;
   organization: OrganizationData;
+  "primary-default": PaletteColorShaded<DefaultPaletteColorShadeKey[]>;
 }

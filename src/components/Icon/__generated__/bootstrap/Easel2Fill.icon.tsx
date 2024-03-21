@@ -28,6 +28,7 @@ export const Easel2Fill = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <path d="M8.447.276a.5.5 0 0 0-.894 0L7.19 1H2.5A1.5 1.5 0 0 0 1 2.5V10h14V2.5A1.5 1.5 0 0 0 13.5 1H8.809z" />
       <path

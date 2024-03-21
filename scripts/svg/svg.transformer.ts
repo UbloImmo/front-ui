@@ -6,7 +6,8 @@ import {
   objectEntries,
   objectFromEntries,
 } from "@ubloimmo/front-util";
-import parser, {
+import {
+  parse as parseSvg,
   RootNode as SvgRootNode,
   Node as SvgNode,
   TextNode as SvgTextNode,
@@ -71,6 +72,14 @@ const svgTagProperties = (
     })
   );
 
+  if (isRoot) {
+    // add test id on svg tag
+    properties = {
+      ...properties,
+      "data-testid": '"icon"',
+    };
+  }
+
   // remove class property
   const { class: _, ...propertiesWithoutClass } = properties;
 
@@ -103,6 +112,7 @@ const svgTagFactory =
     const childrenUsage = hasChildren ? `\n${children}\n${spaces}` : "";
     const propMappings = svgTagProperties(properties, tagName === "svg");
     const hasProps = propMappings.length > 0;
+
     // construct left tag;
     const leftTagPrefix = `${spaces}<${tagName}`;
 
@@ -282,7 +292,7 @@ ${componentDeclarationTemplate(name, componentName, tsxReturn, type)}
  */
 const parseSvgStr = (svgStr: string): SvgRootNode => {
   logger.log("parsing svg string...", LOGGER_NAME);
-  const node: SvgRootNode = parser.parse(svgStr);
+  const node: SvgRootNode = parseSvg(svgStr);
   logger.log("parsed svg string", LOGGER_NAME);
   return node;
 };

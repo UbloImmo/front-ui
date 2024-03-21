@@ -1,0 +1,28 @@
+import { describe, it, expect } from "bun:test";
+import { renderHook } from "@testing-library/react";
+import { useLogger } from "../utils";
+import { objectValues } from "@ubloimmo/front-util";
+import { testPrimitives } from "./test.data";
+
+describe("useLogger", () => {
+  it("should be a valid react hook", () => {
+    expect(useLogger).toBeDefined();
+    expect(useLogger).toBeFunction();
+  });
+  it("should render without errors", () => {
+    const { result } = renderHook(() => useLogger("test"));
+    expect(result.current).toBeObject();
+  });
+  it("should return safe logging functions", () => {
+    const { result } = renderHook(() => useLogger("test"));
+    expect(result.current).not.toBeEmptyObject();
+    expect(result.current).toContainKeys(["error", "warn", "info", "debug"]);
+    objectValues(result.current).forEach((logFn) => {
+      expect(logFn).toBeFunction();
+      expect(logFn).not.toThrow();
+      objectValues(testPrimitives).forEach((primitive) => {
+        expect(() => logFn(primitive)).not.toThrow();
+      });
+    });
+  });
+});

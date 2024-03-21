@@ -16,7 +16,7 @@ export const hexRegex =
   /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{8})$/;
 
 export const rgbaRegex =
-  /rgba\((0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s*(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s*(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s*(0|0?\.\d+|1(\.0+)?)\)/;
+  /rgba\((0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s*(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s*(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s*(0|0?\.\d+|1(\.0+)?)\)/g;
 
 /**
  * Converts an RGBA color string to an RGBA color array.
@@ -106,7 +106,13 @@ export const isValidHexStr = (rootStr: unknown): rootStr is HexColor => {
 };
 
 export const isValidRgbaStr = (rootStr: unknown): rootStr is RgbaColorStr => {
-  return isString(rootStr) && rgbaRegex.test(rootStr);
+  if (!isString(rootStr)) return false;
+  // reset regex before checking
+  rgbaRegex.lastIndex = 0;
+  const passesRegex = rgbaRegex.test(rootStr);
+  // reset regex after testing
+  rgbaRegex.lastIndex = 0;
+  return passesRegex;
 };
 
 /**
@@ -413,3 +419,35 @@ export const rgbaColorConverter = {
   objToArr: rgbaColorObjToArr,
   objToHex: rgbaColorObjToHex,
 } as const;
+
+/**
+ * Checks if two colors are the same.
+ *
+ * @param {AnyColor} colorA - the first color to compare
+ * @param {AnyColor} colorB - the second color to compare
+ * @return {boolean} true if the colors are the same
+ *
+ * @see isSameShade to compare colors excluding their alpha channel
+ *
+ */
+export const isSameColor = (colorA: AnyColor, colorB: AnyColor): boolean => {
+  // normalize colors to rga arrays
+  const aArr = anyColorToRgbaColorArr(colorA);
+  const bArr = anyColorToRgbaColorArr(colorB);
+  return aArr.every((channel, index) => channel === bArr[index]);
+};
+
+/**
+ * Check if two colors are the same, ignoring alpha channel.
+ *
+ * @param {AnyColor} colorA - the first color to compare
+ * @param {AnyColor} colorB - the second color to compare
+ * @return {boolean} true if the colors have the same shade, false otherwise
+ *
+ * @see isSameColor to compare colors including their alpha channel
+ */
+export const isSameShade = (colorA: AnyColor, colorB: AnyColor) => {
+  const aArr = anyColorToRgbaColorArr(colorA);
+  const bArr = anyColorToRgbaColorArr(colorB);
+  return aArr.slice(0, 2).every((channel, index) => channel === bArr[index]);
+};

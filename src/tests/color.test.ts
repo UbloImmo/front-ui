@@ -1,4 +1,5 @@
 import type {
+  AnyColor,
   ColorCollection,
   HexColor,
   HexColorAlpha,
@@ -8,13 +9,21 @@ import type {
   RgbaColorStr,
 } from "../types";
 import { describe, expect, it } from "bun:test";
-import { objectEntries } from "@ubloimmo/front-util";
+import {
+  objectEntries,
+  type GenericFn,
+  objectValues,
+} from "@ubloimmo/front-util";
 import {
   blendColors,
   hexColorConverter,
+  isSameColor,
+  isSameShade,
   isValidHexStr,
+  isValidRgbaStr,
   rgbaColorConverter,
 } from "../utils/color.utils";
+import { testPrimitives } from "./test.data";
 
 type PrimaryColor = "red" | "green" | "blue";
 
@@ -118,20 +127,6 @@ describe("color conversion", () => {
     });
   });
 
-  describe("isValidHex", () => {
-    it("should return true for a valid hex string", () => {
-      expect(isValidHexStr(red.hexAlpha)).toBeTrue();
-      expect(isValidHexStr(red.hexShort)).toBeTrue();
-      expect(isValidHexStr(red.hexOpaque)).toBeTrue();
-      expect(isValidHexStr(red.hexShortAlpha)).toBeTrue();
-    });
-    it("should return false for an invalid hex string", () => {
-      expect(isValidHexStr(red.rgbaStr)).toBeFalse();
-      expect(isValidHexStr("hello world")).toBeFalse();
-      expect(isValidHexStr("25FA15")).toBeFalse();
-    });
-  });
-
   describe("from Hex", () => {
     describe("to Hex", () => {
       it("should throw for an invalid hex string", () => {
@@ -146,6 +141,58 @@ describe("color conversion", () => {
       testHexColorConversion("rgbaStr", hexColorConverter.hexToRgbaStr);
       testHexColorConversion("rgbaArr", hexColorConverter.hexToRgbaArr);
       testHexColorConversion("rgbaObj", hexColorConverter.hexToRgbaObj);
+    });
+  });
+});
+
+describe("color predicates", () => {
+  describe("isValidHexStr", () => {
+    it("should not throw", () => {
+      expect(isValidHexStr).toBeFunction();
+      expect(isValidHexStr).not.toThrow();
+    });
+
+    it("should return true for a valid hex string", () => {
+      expect(isValidHexStr(red.hexAlpha)).toBeTrue();
+      expect(isValidHexStr(red.hexShort)).toBeTrue();
+      expect(isValidHexStr(red.hexOpaque)).toBeTrue();
+      expect(isValidHexStr(red.hexShortAlpha)).toBeTrue();
+    });
+
+    it("should return false for an invalid hex string", () => {
+      expect(isValidHexStr(red.rgbaStr)).toBeFalse();
+      expect(isValidHexStr("hello world")).toBeFalse();
+      expect(isValidHexStr("25FA15")).toBeFalse();
+    });
+
+    it("should return false for anything else", () => {
+      objectValues(testPrimitives).forEach((primitive) => {
+        expect(isValidHexStr(primitive)).toBeFalse();
+      });
+    });
+  });
+
+  describe("isValidRgbaStr", () => {
+    it("should return true for a valid rgba string", () => {
+      expect(isValidRgbaStr(red.rgbaStr)).toBeTrue();
+      expect(isValidRgbaStr(green.rgbaStr)).toBeTrue();
+      expect(isValidRgbaStr(blue.rgbaStr)).toBeTrue();
+      expect(isValidRgbaStr("rgba(0,0,0,0.12678)")).toBeTrue();
+    });
+
+    it("should return false for an invalid rgba string", () => {
+      expect(isValidRgbaStr("rgb(0, 0, 0, 0.12678)")).toBeFalse();
+      expect(isValidRgbaStr("rgba(-1, 0, 0, 0.12678)")).toBeFalse();
+      expect(isValidRgbaStr("rgba(256, 0, 0, 0.12678)")).toBeFalse();
+      expect(isValidRgbaStr("rgba(255, 0, 0)")).toBeFalse();
+      expect(isValidRgbaStr("rgb(255, 0, 0)")).toBeFalse();
+      expect(isValidRgbaStr("rgb(255, 0, 0, 0.45)")).toBeFalse();
+    });
+
+    it("should return false for anything else", () => {
+      objectValues(testPrimitives).forEach((primitive) => {
+        expect(isValidRgbaStr(primitive)).toBeFalse();
+      });
     });
   });
 });
@@ -182,4 +229,48 @@ describe("color blending", () => {
   testColorBlend("blue", "blue");
   testColorBlend("blue", "red");
   testColorBlend("blue", "green");
+});
+
+const testColorComparison = (
+  colorA: PrimaryColor,
+  colorB: PrimaryColor,
+  comparator: GenericFn<[AnyColor, AnyColor], boolean>,
+  expected: boolean
+) => {
+  const sources = objectEntries(colorCollections[colorA]);
+  const targets = objectEntries(colorCollections[colorB]);
+
+  sources.forEach(([sourceKey, source]) => {
+    targets.forEach(([targetKey, target]) => {
+      it(`should compare ${sourceKey} and ${targetKey}`, () => {
+        expect(comparator(source, target)).toBe(expected);
+        expect(comparator(target, source)).toBe(expected);
+      });
+    });
+  });
+};
+
+describe("color comparison", () => {
+  describe("isSameColor", () => {
+    testColorComparison("red", "red", isSameColor, true);
+    testColorComparison("red", "green", isSameColor, false);
+    testColorComparison("red", "blue", isSameColor, false);
+    testColorComparison("green", "green", isSameColor, true);
+    testColorComparison("green", "red", isSameColor, false);
+    testColorComparison("green", "blue", isSameColor, false);
+    testColorComparison("blue", "blue", isSameColor, true);
+    testColorComparison("blue", "red", isSameColor, false);
+    testColorComparison("blue", "green", isSameColor, false);
+  });
+  describe("isSameShade", () => {
+    testColorComparison("red", "red", isSameShade, true);
+    testColorComparison("red", "green", isSameShade, false);
+    testColorComparison("red", "blue", isSameShade, false);
+    testColorComparison("green", "green", isSameShade, true);
+    testColorComparison("green", "red", isSameShade, false);
+    testColorComparison("green", "blue", isSameShade, false);
+    testColorComparison("blue", "blue", isSameShade, true);
+    testColorComparison("blue", "red", isSameShade, false);
+    testColorComparison("blue", "green", isSameShade, false);
+  });
 });

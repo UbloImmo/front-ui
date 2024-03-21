@@ -1,11 +1,12 @@
-import {
+import type {
   FlexAlignment,
   FlexDirection,
   FlexLayoutDefaultProps,
   FlexLayoutProps,
   FlexWrap,
 } from "./Flex.types";
-import { cssLengthUsage, mergeDefaultProps } from "../../utils";
+import type { StyleProps } from "../../types";
+import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "../../utils";
 import { StyleFunction, css } from "styled-components";
 
 /**
@@ -54,10 +55,15 @@ const flexWrap = (wrap: FlexWrap): string => {
  * @return {StyleFunction<FlexLayoutProps>} a style function for flex layout props
  */
 export const buildFlexLayoutStyle =
-  (defaultProps: FlexLayoutDefaultProps): StyleFunction<FlexLayoutProps> =>
+  (
+    defaultProps: FlexLayoutDefaultProps
+  ): StyleFunction<StyleProps<FlexLayoutProps>> =>
   (props) => {
     const { direction, gap, justify, align, wrap, reverse, inline } =
-      mergeDefaultProps(defaultProps, props);
+      mergeDefaultProps(
+        defaultProps,
+        fromStyleProps(props as StyleProps<FlexLayoutProps>)
+      );
 
     const display = inline ? "inline-flex" : "flex";
 

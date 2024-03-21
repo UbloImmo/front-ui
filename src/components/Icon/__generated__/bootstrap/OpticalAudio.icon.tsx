@@ -28,6 +28,7 @@ export const OpticalAudio = (props: CommonIconProps): JSX.Element => {
       height={size}
       fill={color}
       viewBox="0 0 16 16"
+      data-testid="icon"
     >
       <path d="M8 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
       <path d="M4.5 9a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0M8 6.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5" />

@@ -1,16 +1,12 @@
 import { DefaultIconProps, GeneratedIcon, IconProps } from "./Icon.types";
-import { Nullable } from "@ubloimmo/front-util";
-import {
-  cssVarName,
-  isSpacingLabel,
-  isCssRem,
-  mergeDefaultProps,
-} from "../../utils";
+import type { Nullable } from "@ubloimmo/front-util";
+import { mergeDefaultProps, useLogger } from "../../utils";
 import { useMemo } from "react";
 import * as generatedIcons from "./__generated__";
+import { useIconSize } from "./Icon.utils";
 
 export const defaultIconProps: DefaultIconProps = {
-  size: "1rem",
+  size: "s-4",
   color: "primary-base",
   name: "Circle",
 };
@@ -27,6 +23,9 @@ export const defaultIconProps: DefaultIconProps = {
  * @return {JSX.Element | null} The rendered icon component or null if the icon component is not found.
  */
 export const Icon = (props: IconProps) => {
+  const { warn } = useLogger("Icon");
+
+  if (!props.name) warn("Missing name prop");
   const { name, color, size } = useMemo(
     () => mergeDefaultProps(defaultIconProps, props),
     [props]
@@ -37,17 +36,12 @@ export const Icon = (props: IconProps) => {
     [name]
   );
 
-  const parsedSize = useMemo(() => {
-    // TODO: handle first render if css not loaded
-    if (isSpacingLabel(size)) {
-      const propValue = getComputedStyle(
-        document.documentElement
-      ).getPropertyValue(cssVarName(size));
-      if (isCssRem(propValue)) return propValue;
-    }
-    return size;
-  }, [size]);
+  // sanitize size before passing it as svg width & height
+  const parsedSize = useIconSize(size, warn);
 
-  if (!IconComponent) return null;
+  if (!IconComponent) {
+    warn(`No icon component found for name "${name}"`);
+    return null;
+  }
   return <IconComponent size={parsedSize} color={color} />;
 };

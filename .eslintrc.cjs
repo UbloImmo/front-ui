@@ -6,6 +6,8 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
@@ -32,8 +34,12 @@ module.exports = {
         linkAttribute: "to",
       },
     ],
+    "import/resolver": {
+      typescript: true,
+      node: true,
+    },
   },
-  plugins: ["react", "react-hooks", "@typescript-eslint"],
+  plugins: ["react", "react-hooks", "@typescript-eslint", "import"],
   ignorePatterns: ["**/dist/*.js"],
   rules: {
     // generic
@@ -61,5 +67,28 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/ban-ts-comment": "warn",
+    "import/no-restricted-paths": [
+      "error",
+      {
+        zones: [
+          {
+            target: "*/**",
+            from: "src/index.ts",
+            message:
+              "Do not import from `src`, import from relative path instead.",
+          },
+        ],
+      },
+    ],
+    "import/no-unresolved": [
+      "error",
+      {
+        ignore: ["bun:test"],
+      },
+    ],
+    "import/default": "off",
+    "import/no-named-as-default": "off",
+    "import/namespace": ["off", { allowComputed: true }],
+    "import/no-namespace": "off",
   },
 };

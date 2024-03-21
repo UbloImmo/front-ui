@@ -11,7 +11,7 @@ import {
   GridTemplate,
 } from "./Grid.types";
 import { cssLengthUsage, mergeDefaultProps } from "../../utils";
-import { CssLengthUsage } from "src";
+import { CssLengthUsage } from "../../types";
 import { StyleFunction, css } from "styled-components";
 
 /**

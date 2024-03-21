@@ -1,8 +1,9 @@
+import type { GetThemeOverridesFn, ThemeOverride } from "../../types";
+import type { Nullable } from "@ubloimmo/front-util";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { ReactNode, useMemo, useState, useEffect } from "react";
 import { buildTheme } from "../theme";
 import { GlobalStyle } from "./globalStyle";
-import type { GetThemeOverridesFn, Nullable, ThemeOverride } from "../../types";
 import { isNullish } from "@ubloimmo/front-util";
 
 type ThemeProviderProps = {

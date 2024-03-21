@@ -9,7 +9,6 @@ const config: StorybookConfig = {
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
   ],
   framework: {
@@ -18,6 +17,17 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: "tag",
+  },
+  async viteFinal(config) {
+    const { mergeConfig } = await import("vite");
+
+    return mergeConfig(config, {
+      build: {
+        rollupOptions: {
+          external: ["bun:test", "*.test.ts", "*.test.tsx"],
+        },
+      },
+    });
   },
 };
 export default config;

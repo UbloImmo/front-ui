@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { testLenghts } from "./css.test";
-import type { TypographyProps } from "../types";
+import type { AnyTypographyProps, TextProps, TypographyProps } from "../types";
 import {
   typographyFontFace,
   linkFontFace,
@@ -92,7 +92,10 @@ describe("typography", () => {
     });
 
     describe("props sanitization", () => {
-      const defaultProps = { ...defaultTypographyProps, size: "m" };
+      const defaultProps: Required<AnyTypographyProps> = {
+        ...defaultTypographyProps,
+        size: "m",
+      };
 
       it("should be a function", () => {
         expect(sanitizeTypographyProps).toBeDefined();
@@ -127,6 +130,8 @@ describe("typography", () => {
           ...defaultProps,
           size: "invalid size",
         };
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore Need to ingore to test invalid size
         expect(sanitizeTypographyProps(defaultProps, invalidSizeProps)).toEqual(
           defaultProps
         );
@@ -138,12 +143,14 @@ describe("typography", () => {
           weight: "invalid weight",
         };
         expect(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore Need to ingore to test invalid weight
           sanitizeTypographyProps(defaultProps, invalidWeightProps)
         ).toEqual(defaultProps);
       });
 
       it("should accept valid props", () => {
-        const validProps = {
+        const validProps: Required<AnyTypographyProps> = {
           size: "h1",
           color: "primary-base",
           italic: true,
@@ -162,8 +169,11 @@ describe("typography", () => {
 
   describe("style build", () => {
     it("should build style for text component", () => {
-      const defaultProps = { ...defaultTypographyProps, size: "m" };
-      const validProps = {
+      const defaultProps: Required<AnyTypographyProps> = {
+        ...defaultTypographyProps,
+        size: "m",
+      };
+      const validProps: TextProps = {
         size: "m",
         color: "primary-base",
         italic: true,
@@ -176,8 +186,12 @@ describe("typography", () => {
       expect(() => buildTypographyStyle(defaultProps)).not.toThrow();
       expect(buildTypographyStyle(defaultProps)).toBeFunction();
       expect(() =>
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore Don't want to mock styled-components execution context
         buildTypographyStyle(defaultProps)(validProps)
       ).not.toThrow();
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore Don't want to mock styled-components execution context
       expect(buildTypographyStyle(defaultProps)(validProps)).toBeObject();
     });
   });
