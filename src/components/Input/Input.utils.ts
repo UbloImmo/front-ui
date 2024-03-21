@@ -1,4 +1,9 @@
-import type { GenericFn, Nullable, Optional } from "@ubloimmo/front-util";
+import type {
+  GenericFn,
+  Nullable,
+  Optional,
+  VoidFn,
+} from "@ubloimmo/front-util";
 import type {
   InputType,
   InputValue,
@@ -6,7 +11,11 @@ import type {
   DefaultCommonInputProps,
   CommonInputStyleProps,
 } from "./Input.types";
-import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
+import type {
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+  MutableRefObject,
+} from "react";
 import { isFunction, isNull } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 import { toStyleProps } from "../../utils";
@@ -116,4 +125,27 @@ export const useInputStyles = (
     const { error, disabled, placeholder } = mergedProps;
     return toStyleProps({ error, disabled, placeholder });
   }, [mergedProps]);
+};
+
+/**
+ * Returns a memoized callback function that focuses the input element and calls the provided callback function.
+ *
+ * @param {MutableRefObject<Nullable<HTMLInputElement>>} inputRef - The reference to the input element.
+ * @param {DefaultCommonInputProps} mergedProps - The merged props object containing the disabled property.
+ * @param {VoidFn} callback - The callback function to be called.
+ * @return {VoidFn} The memoized callback function.
+ */
+export const useInputControlCallback = (
+  inputRef: MutableRefObject<Nullable<HTMLInputElement>>,
+  mergedProps: DefaultCommonInputProps,
+  callback: VoidFn
+) => {
+  return useCallback(() => {
+    // abort if disabled
+    if (mergedProps.disabled) return;
+    // focus input on click,
+    if (inputRef.current) inputRef.current.focus();
+    // call callback
+    callback();
+  }, [inputRef, mergedProps, callback]);
 };

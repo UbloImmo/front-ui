@@ -1,4 +1,7 @@
-import type { CommonInputStyleProps } from "./Input.types";
+import type {
+  CommonInputStyleProps,
+  InputControlStyleProps,
+} from "./Input.types";
 import { typographyWeightMap } from "../../typography";
 import { css } from "styled-components";
 
@@ -20,7 +23,8 @@ export const commonInputContainerStyles = ({
 
 export const commonInputControlStyles = ({
   $disabled,
-}: CommonInputStyleProps) => css`
+  onClick,
+}: InputControlStyleProps) => css`
   border: none;
   padding: 0;
   background: none;
@@ -35,7 +39,8 @@ export const commonInputControlStyles = ({
   svg {
     fill: var(--control-color);
   }
-  cursor: ${$disabled ? "not-allowed" : "pointer"};
+  pointer-events: ${!onClick ? "none" : "auto"};
+  cursor: ${!onClick ? "default" : $disabled ? "not-allowed" : "pointer"};
 `;
 
 export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
@@ -50,12 +55,14 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   font-weight: ${typographyWeightMap.regular};
   color: var(--${$error ? "error-dark" : "gray-800"});
   box-shadow: var(--shadow-input-${$error ? "error" : "default"}-default);
+  outline-offset: -2px;
+  outline-width: 3px;
+  outline: none;
 
   &:focus:not(:disabled) {
-    outline: none;
-    border: none;
     color: var(--gray-800);
     box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
+    outline: 1px solid var(--${$error ? "error" : "primary"}-base-25);
   }
 
   &:hover:not(:disabled) {
@@ -69,7 +76,7 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   &:disabled {
     background: var(--gray-50);
     color: var(--gray-600);
-    box-shadow: var(--shadow-input-disabled);
+    box-shadow: var(--shadow-input ${$error ? "error-default" : "disabled"});
   }
 
   &:disabled::placeholder {

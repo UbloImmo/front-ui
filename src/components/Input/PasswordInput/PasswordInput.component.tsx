@@ -4,20 +4,21 @@ import type {
   PasswordInputProps,
   PasswordVisibility,
 } from "./PasswordInput.types";
-import { isString } from "@ubloimmo/front-util";
+import { isString, type Nullable } from "@ubloimmo/front-util";
 import { useMergedProps } from "../../../utils";
 import {
   useInputOnChange,
   useInputValue,
   useInputStyles,
+  useInputControlCallback,
 } from "../Input.utils";
 import {
   defaultCommonInputProps,
   StyledInput,
   StyledInputContainer,
-  SyledInputControl,
+  StyledInputControl,
 } from "../Input.common";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon } from "../../Icon";
 
 export const defaultPasswordInputProps: DefaultPasswordInputProps = {
@@ -36,6 +37,7 @@ export const defaultPasswordInputProps: DefaultPasswordInputProps = {
  * @return {JSX.Element} The rendered text input component.
  */
 export const PasswordInput = (props: PasswordInputProps): JSX.Element => {
+  const inputRef = useRef<Nullable<HTMLInputElement>>(null);
   const mergedProps = useMergedProps(defaultPasswordInputProps, props);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(
@@ -47,16 +49,17 @@ export const PasswordInput = (props: PasswordInputProps): JSX.Element => {
     setIsPasswordVisible(mergedProps.visible);
   }, [mergedProps.visible]);
 
-  // TODO: focus input on click
-  const toggleVisibility = useCallback(() => {
-    if (!mergedProps.allowChangeVisibility) return;
-    const newVisibility = mergedProps.disabled ? false : !isPasswordVisible;
-    if (newVisibility !== isPasswordVisible) {
-      setIsPasswordVisible(newVisibility);
+  const toggleVisibility = useInputControlCallback(
+    inputRef,
+    mergedProps,
+    () => {
+      if (!mergedProps.allowChangeVisibility) return;
+      const inverseVis = !isPasswordVisible;
+      setIsPasswordVisible(inverseVis);
       if (mergedProps.onVisibilityChange)
-        mergedProps.onVisibilityChange(newVisibility);
+        mergedProps.onVisibilityChange(inverseVis);
     }
-  }, [mergedProps, isPasswordVisible]);
+  );
 
   const visibility = useMemo<PasswordVisibility>(() => {
     const visible = isPasswordVisible && !mergedProps.disabled;
@@ -89,7 +92,7 @@ export const PasswordInput = (props: PasswordInputProps): JSX.Element => {
   return (
     <StyledInputContainer {...inputStyles}>
       <StyledInput
-        data-testid="input-text"
+        data-testid="input-password"
         value={value}
         type={visibility.inputType}
         onChange={onChange}
@@ -97,9 +100,10 @@ export const PasswordInput = (props: PasswordInputProps): JSX.Element => {
         disabled={mergedProps.disabled}
         aria-roledescription="Champs de saisie mot de passe"
         role="textbox"
+        ref={inputRef}
         {...inputStyles}
       ></StyledInput>
-      <SyledInputControl
+      <StyledInputControl
         {...inputStyles}
         data-testid="input-control"
         onClick={toggleVisibility}
@@ -109,7 +113,7 @@ export const PasswordInput = (props: PasswordInputProps): JSX.Element => {
         aria-roledescription="Bouton de visibilité du mot de passe"
       >
         <Icon name={visibility.controlIcon} />
-      </SyledInputControl>
+      </StyledInputControl>
     </StyledInputContainer>
   );
 };

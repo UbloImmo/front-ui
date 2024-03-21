@@ -1,6 +1,15 @@
-import type { OrganizationData, Theme, ThemeOverride } from "../types";
+import type {
+  ClientColorPaletteKey,
+  OrganizationData,
+  Theme,
+  ThemeOverride,
+} from "../types";
 import type { Nullable } from "@ubloimmo/front-util";
-import { buildColorPalette, buildLegacyColorPalette } from "./palette";
+import {
+  buildColorPalette,
+  buildDynamicColorPalette,
+  buildLegacyColorPalette,
+} from "./palette";
 import { themeOverridePaletteToColorPaletteShaded } from "./provider/theme.overrides";
 
 /**
@@ -27,17 +36,20 @@ export const defaultOrganizationData: OrganizationData = {
  * to be used in {@link import("../themes/provider/theme.provider").ThemeProvider}
  *
  * @param {Nullable<ThemeOverride>} [themeOverrides = null] - Values to override the default theme
+ * @param {ClientColorPaletteKey} [forClient] - Client name to build primary default color
  * @return {Theme} The constructed theme object.
  */
 export const buildTheme = (
-  themeOverrides: Nullable<ThemeOverride> = null
+  themeOverrides: Nullable<ThemeOverride> = null,
+  forClient?: ClientColorPaletteKey
 ): Theme => {
-  const colorPalette = buildColorPalette();
+  const colorPalette = buildColorPalette(forClient);
+  const defaultColorPalette = buildDynamicColorPalette("ublo");
   const theme: Theme = {
     organization: defaultOrganizationData,
     palette: buildLegacyColorPalette(),
     ...colorPalette,
-    "primary-default": colorPalette.primary,
+    "primary-default": defaultColorPalette.primary,
   };
   // return default theme if no overrides
   if (!themeOverrides || !themeOverrides.organization.palette) return theme;

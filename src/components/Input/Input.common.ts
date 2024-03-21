@@ -1,6 +1,7 @@
 import type {
   CommonInputStyleProps,
   DefaultCommonInputProps,
+  InputControlStyleProps,
 } from "./Input.types.ts";
 import {
   commonInputContainerStyles,
@@ -38,6 +39,6 @@ export const StyledInputContainer = styled.div<CommonInputStyleProps>`
  * Useful when creating stateful inputs with controls,
  * wrapping Icons
  */
-export const SyledInputControl = styled.button<CommonInputStyleProps>`
+export const StyledInputControl = styled.div<InputControlStyleProps>`
   ${commonInputControlStyles}
 `;

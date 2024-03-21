@@ -13,7 +13,8 @@ export type PasswordInputProps = InputProps<"password"> & {
    */
   visible?: boolean;
   /**
-   * Whether to allow the user to change the visibility
+   * Whether to allow the user to change the password visibility
+   * Defauls to `true`.
    */
   allowChangeVisibility?: boolean;
   /**

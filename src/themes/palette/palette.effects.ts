@@ -129,9 +129,10 @@ export const parsedEffectToCssVar = (
       const matchingVarName = matchingColorVar[0];
       // if color is default primary, replace it with primary equivalent
       if (matchingVarName.includes(defaultPrimaryName)) {
-        return cssVarUsage(
-          matchingVarName.replace(defaultPrimaryName, primaryName)
-        );
+        const newVarName = matchingVarName
+          .replace(defaultPrimaryName, primaryName)
+          .slice(2);
+        return cssVarUsage(newVarName);
       }
       // format matching color var name as css var usage
       // and use them as replacement
