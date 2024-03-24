@@ -1,13 +1,14 @@
 import type {
   FlexAlignment,
   FlexDirection,
+  FlexFill,
   FlexLayoutDefaultProps,
   FlexLayoutProps,
   FlexWrap,
 } from "./Flex.types";
 import type { StyleProps } from "../../types";
 import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "../../utils";
-import { StyleFunction, css } from "styled-components";
+import { StyleFunction, css, type RuleSet } from "styled-components";
 
 /**
  * A function that returns the flex alignment class based on the given alignment.
@@ -49,6 +50,29 @@ const flexWrap = (wrap: FlexWrap): string => {
 };
 
 /**
+ * Generates a RuleSet based on the provided FlexFill value.
+ *
+ * @param {FlexFill} fill - The value determining how to fill the flex.
+ * @return {RuleSet} The generated RuleSet based on the FlexFill value.
+ */
+const flexFill = (fill: FlexFill): RuleSet => {
+  const xFill = css`
+    width: 100%;
+  `;
+  const yFill = css`
+    height: 100%;
+  `;
+  if (fill === true)
+    return css`
+      ${xFill}
+      ${yFill}
+    `;
+  if (fill === "row") return xFill;
+  if (fill === "column") return yFill;
+  return css``;
+};
+
+/**
  * Builds the `FlexLayout` style declaration based on the provided default props and props.
  *
  * @param {FlexLayoutDefaultProps} defaultProps - the default props for the flex layout
@@ -59,14 +83,19 @@ export const buildFlexLayoutStyle =
     defaultProps: FlexLayoutDefaultProps
   ): StyleFunction<StyleProps<FlexLayoutProps>> =>
   (props) => {
-    const { direction, gap, justify, align, wrap, reverse, inline } =
+    const { direction, gap, justify, align, wrap, reverse, inline, fill } =
       mergeDefaultProps(
         defaultProps,
         fromStyleProps(props as StyleProps<FlexLayoutProps>)
       );
 
     const display = inline ? "inline-flex" : "flex";
-
+    const xFill = css`
+      width: 100%;
+    `;
+    const yFill = css`
+      height: 100%;
+    `;
     return css`
       display: ${display};
       flex-direction: ${flexDirection(direction, reverse)};
@@ -74,5 +103,6 @@ export const buildFlexLayoutStyle =
       align-items: ${flexAlignment(align)};
       justify-content: ${flexAlignment(justify)};
       flex-wrap: ${flexWrap(wrap)};
+      ${flexFill(fill)}
     `;
   };

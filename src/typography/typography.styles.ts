@@ -1,6 +1,6 @@
 import { cssRem, cssVarUsage, extractRem } from "./../utils/css.utils";
 import { css, StyleFunction } from "styled-components";
-import {
+import type {
   HeadingProps,
   TextProps,
   TypographyProps,
@@ -9,10 +9,12 @@ import {
   TextSize,
   HeadingSize,
   CssRem,
+  StyleProps,
 } from "../types";
 import { typographyFontFace } from "./typography.font";
 import { objectKeys, transformObject } from "@ubloimmo/front-util";
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { fromStyleProps } from "../utils";
 
 /**
  * Builds a typography weight map based on the generated text styles.
@@ -102,7 +104,8 @@ export const sanitizeTypographyProps = (
     underline: props.underline ?? defaults.underline,
     overline: props.overline ?? defaults.overline,
     lineThrough: props.lineThrough ?? defaults.lineThrough,
-    $important: props.$important ?? false,
+    children: props.children ?? null,
+    important: props.important ?? false,
   };
 };
 
@@ -114,7 +117,7 @@ export const sanitizeTypographyProps = (
  */
 export const buildTypographyStyle = (
   defaults: Required<AnyTypographyProps>
-): StyleFunction<TextProps | HeadingProps> => {
+): StyleFunction<StyleProps<TextProps | HeadingProps>> => {
   const allSizes = { ...texts.text, ...texts.heading };
 
   return (props) => {
@@ -126,8 +129,8 @@ export const buildTypographyStyle = (
       underline,
       overline,
       lineThrough,
-      $important,
-    } = sanitizeTypographyProps(defaults, props);
+      important: $important,
+    } = sanitizeTypographyProps(defaults, fromStyleProps(props));
     const {
       letterSpacing,
       lineHeight,
@@ -137,7 +140,7 @@ export const buildTypographyStyle = (
       fontFeatureSettings,
     } = allSizes[size][weight].css.style;
     const fontSize = `text-${size}`;
-    const fontWeight = typographyWeightMap[weight];
+    const fontWeight = cssVarUsage(`text-weight-${weight.toLowerCase()}`);
     const fontStyle = italic ?? defaults.italic ? "italic" : "normal";
     const fontItalic = `"ital" ${italic ?? defaults.italic ? 1 : 0}`;
     const textDecoration = typographyTextDecoration({
@@ -171,5 +174,6 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   underline: false,
   overline: false,
   lineThrough: false,
-  $important: false,
+  important: false,
+  children: null,
 } as const;

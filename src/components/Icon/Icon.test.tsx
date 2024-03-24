@@ -83,12 +83,19 @@ describe("Icon", () => {
     });
 
     it("should return a rem size if when provided with a valid spacing label", () => {
-      expect();
       const { result, rerender } = renderHook((size?: IconProps["size"]) =>
         useIconSize(size, console.warn)
       );
       rerender("s-40");
       expect(result.current).toBe("10rem");
+    });
+
+    it("should convert pixels to rems", () => {
+      const { result, rerender } = renderHook((size?: IconProps["size"]) =>
+        useIconSize(size, console.warn)
+      );
+      rerender("32px");
+      expect(result.current).toBe("2rem");
     });
   });
 

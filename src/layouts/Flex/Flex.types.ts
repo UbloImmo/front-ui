@@ -22,6 +22,8 @@ export type FlexWrap = boolean | "reverse";
 
 export type FlexGap = Exclude<CssLength, CssFr>;
 
+export type FlexFill = boolean | FlexDirection;
+
 export type FlexLayoutProps = {
   direction?: FlexDirection;
   gap?: CssLength;
@@ -30,6 +32,7 @@ export type FlexLayoutProps = {
   wrap?: FlexWrap;
   reverse?: boolean;
   inline?: boolean;
+  fill?: FlexFill;
   children?: ReactNode;
 };
 

@@ -1,4 +1,7 @@
-import { mobileFontSize } from "./../../typography/typography.styles";
+import {
+  mobileFontSize,
+  typographyWeightMap,
+} from "./../../typography/typography.styles";
 import type {
   Theme,
   PaletteColorShaded,
@@ -72,6 +75,7 @@ export const spacingsToCssVars = (spacings: Spacings): CssVar<CssRem>[] => {
 export const textSizesToCssVars = (): {
   desktop: CssVar<CssRem>[];
   mobile: CssVar<CssRem>[];
+  weights: CssVar<`${number}`>[];
 } => {
   const allTextSizes = { ...texts.text, ...texts.heading };
   const vars = objectEntries(allTextSizes).map(([size, weights]) => {
@@ -82,9 +86,16 @@ export const textSizesToCssVars = (): {
       mobile: cssVar(`text-${size}`, mobileFontSize(fontSize)),
     };
   });
+  const weights = objectEntries(typographyWeightMap).map(([name, value]) =>
+    cssVar<`${number}`>(
+      `text-weight-${name.toLowerCase()}`,
+      String(value) as `${number}`
+    )
+  );
   return {
     desktop: vars.map(({ desktop }) => desktop),
     mobile: vars.map(({ mobile }) => mobile),
+    weights,
   };
 };
 
@@ -158,8 +169,11 @@ export const declareGlobalStyle = (
 export const buildGlobalStyle = (theme: Theme) => {
   // generate css vars from spacings
   const spacingsCssVars = spacingsToCssVars(buildSpacingMap());
-  const { mobile: textMobileCssVars, desktop: textDesktopCssVars } =
-    textSizesToCssVars();
+  const {
+    mobile: textMobileCssVars,
+    desktop: textDesktopCssVars,
+    weights: weightCssVars,
+  } = textSizesToCssVars();
   // only return spacing css variables if theme is missing
   if (!theme) {
     warn(
@@ -167,7 +181,7 @@ export const buildGlobalStyle = (theme: Theme) => {
       "GlobalStyle"
     );
     return declareGlobalStyle(
-      [spacingsCssVars, textDesktopCssVars],
+      [spacingsCssVars, textDesktopCssVars, weightCssVars],
       [["SM", [textMobileCssVars]]]
     );
   }
@@ -186,7 +200,13 @@ export const buildGlobalStyle = (theme: Theme) => {
 
   // declare them in as global css variables
   return declareGlobalStyle(
-    [spacingsCssVars, paletteCssVars, textDesktopCssVars, effectCssVars],
+    [
+      spacingsCssVars,
+      paletteCssVars,
+      textDesktopCssVars,
+      effectCssVars,
+      weightCssVars,
+    ],
     [["SM", [textMobileCssVars]]]
   );
 };
