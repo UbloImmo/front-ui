@@ -1,7 +1,11 @@
+import type { StaticIconProps, StaticIconSize } from "./StaticIcon.types";
+import type { ColorPalette } from "../../types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { StaticIcon } from "./StaticIcon.component";
 import { FlexRowLayout } from "../../layouts";
+import { useMemo } from "react";
+import { ComponentVariants } from "../../../docs/blocks";
 
 const meta: Meta<typeof StaticIcon> = {
   title: "Components/StaticIcon",
@@ -19,10 +23,62 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    name: "Square",
-    stroke: true,
-    color: "primary",
-    size: "s",
-  },
+  args: StaticIcon.defaultProps,
+};
+
+export const Colors = (props: Partial<StaticIconProps>) => {
+  const colors: (keyof ColorPalette)[] = [
+    "primary",
+    "success",
+    "pending",
+    "warning",
+    "error",
+    "gray",
+  ];
+  const defaultProps = useMemo(() => {
+    return {
+      ...StaticIcon.defaultProps,
+      ...props,
+    };
+  }, [props]);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={colors}
+      for="color"
+      of={StaticIcon}
+      align="center"
+    />
+  );
+};
+Colors.args = {
+  name: "Square",
+  size: "s",
+  stroke: true,
+};
+
+export const Sizes = (props: Partial<StaticIconProps>) => {
+  const sizes: StaticIconSize[] = ["xs", "s", "m", "l"];
+  const defaultProps = useMemo(() => {
+    return {
+      ...StaticIcon.defaultProps,
+      ...props,
+    };
+  }, [props]);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={sizes}
+      for="size"
+      of={StaticIcon}
+      align="center"
+    />
+  );
+};
+Colors.args = {
+  name: "Square",
+  size: "s",
+  stroke: true,
 };

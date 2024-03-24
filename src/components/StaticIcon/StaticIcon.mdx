@@ -1,5 +1,5 @@
 import { Meta, ArgsTable, ArgTypes } from "@storybook/blocks";
-import { ComponentInfo, Canvas, IconSearch } from "../../../docs/blocks"
+import { ComponentInfo, Canvas } from "../../../docs/blocks"
 import { Content } from "../../../docs/containers"
 import * as StaticIconStories from "./StaticIcon.stories.tsx";
 import {StaticIcon} from "./StaticIcon.component.tsx";
@@ -10,6 +10,26 @@ import {StaticIcon} from "./StaticIcon.component.tsx";
 
 <Content>
 
-TODO
+## Colors
+
+StaticIcon takes **raw** colors _(e.g. `primary`)_ and **not** shaded colors _(e.g. `primary-light`)_ as its `color` property.
+
+The resulting Icon's and background colors are computed based on this property.
+
+<Canvas of={StaticIconStories.Colors} />
+
+## Sizing
+
+StaticIcons adapt their container's padding and border radius based on their `size` property.
+
+Below are all the valid sizes for this component.
+
+<Canvas of={StaticIconStories.Sizes} />
+
+## Icons
+
+Through its `name` property, StaticIcon accepts any valid Icon name, and passes it directly to the underlying Icon component.
+
+Please refer to [the Icon component's documentation](?path=/docs/components-icon--docs) for a complete list.
 
 </Content>

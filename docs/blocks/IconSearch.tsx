@@ -66,7 +66,7 @@ export const IconSearch = () => {
             variants={results}
             for="name"
             of={Icon}
-            gap="2rem"
+            gap="1.88rem"
           />
         </List>
       </ListWrapper>

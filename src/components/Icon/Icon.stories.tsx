@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Icon } from "./Icon.component";
 import type { IconProps } from "./Icon.types";
 import type { ColorPalette, PaletteColor, SpacingLabel } from "../../types";
+import { Icon } from "./Icon.component";
 import { FlexRowLayout } from "../../layouts";
 import { useMemo } from "react";
 import * as BootstrapIcons from "./__generated__/bootstrap";
@@ -27,9 +27,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    name: "Subtract",
-  },
+  args: Icon.defaultProps,
 };
 
 export const Colors = (props: Partial<IconProps>) => {
@@ -61,6 +59,7 @@ export const Colors = (props: Partial<IconProps>) => {
       variants={colorShades}
       for="color"
       of={Icon}
+      align="center"
     />
   );
 };

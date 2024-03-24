@@ -47,8 +47,6 @@ export const ComponentVariants = <
     );
   }, [props]);
 
-  console.log("runs");
-
   const Component = useMemo(() => {
     return props.of;
   }, [props.of]);
