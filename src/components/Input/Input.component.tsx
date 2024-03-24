@@ -21,7 +21,7 @@ const inputComponentMap: TypedInputComponentMap = {
 };
 
 /**
- * Renders a specific input component based on the provided type prop.
+ * Renders a specific input component based on the provided `type` prop.
  *
  * @param {GenericInputProps<TType>} props - The generic input props.
  * @returns {Nullable<JSX.Element>}
