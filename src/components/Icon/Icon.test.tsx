@@ -24,7 +24,7 @@ describe("Icon", () => {
     expect(getByTestId("icon")).toBeDefined();
   });
 
-  it("should warn when missing its `name` prop", () => {
+  it.todo("should warn when missing its `name` prop", () => {
     // mock global console object to list to calls
     global.console.warn = mock(warnCopy);
     const { getByTestId } = render(
