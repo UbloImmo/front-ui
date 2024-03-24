@@ -22,7 +22,7 @@ export const defaultEmailInputProps: DefaultInputProps<"email"> = {
 };
 
 /**
- * Renders a text input component.
+ * Renders an email input component. Does some rudimentary format validation on the input value.
  *
  * @param {InputProps<"email">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
