@@ -95,8 +95,26 @@ export const fromStyleProps = <TProps extends Record<string, unknown>>(
   ) as unknown as TProps;
 };
 
+/**
+ * Returns a memoized object of style props based on the provided props object.
+ *
+ * @template {Record<string, unknown>} TProps - The type of the props object.
+ * @param {TProps} props - The props object used to generate the style props.
+ * @returns {StyleProps<TProps>} - The memoized object of style props.
+ */
 export const useStyleProps = <TProps extends Record<string, unknown>>(
   props: TProps
 ): StyleProps<TProps> => {
   return useMemo(() => toStyleProps(props), [props]);
+};
+
+/**
+ * Returns a memoized, static version of the input data.
+ *
+ * @param {TData} data - The input data to be memoized.
+ * @return {TData} The memoized version of the input data.
+ */
+export const useStatic = <TData>(data: TData) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return useMemo(() => data, []);
 };
