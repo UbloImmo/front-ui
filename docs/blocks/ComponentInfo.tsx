@@ -92,8 +92,8 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
   }, [props, name]);
 
   const usageStr = useMemo(() => {
-    return `import { ${name} } from "@ubloimmo/front-ui";`;
-  }, [name]);
+    return `import { ${title} } from "@ubloimmo/front-ui";`;
+  }, [title]);
 
   const description = useMemo(() => {
     return (
