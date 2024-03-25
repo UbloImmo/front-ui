@@ -16,11 +16,19 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@docs/*": ["docs/*"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"],
+      "@components/*": ["src/components/*"],
+    },
     "allowJs": false,
     "strict": true,
     "types": [
       "bun-types" // add Bun global
     ]
   },
-  "exclude": ["node_modules", "./src/tests"]
+  "include": ["src", "docs"],
+  "exclude": ["node_modules", "src/tests"]
 }
