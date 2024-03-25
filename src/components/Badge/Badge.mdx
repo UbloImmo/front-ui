@@ -1,0 +1,20 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "../../../docs/blocks";
+import { Content } from "../../../docs/containers";
+import * as BadgeStories from "./Badge.stories.tsx";
+import { Badge } from "./Badge.component.tsx";
+
+<Meta of={BadgeStories} />
+
+<ComponentInfo version="0.0.1" of={BadgeStories} />
+
+<Content>
+
+## Colors
+
+<Canvas of={BadgeStories.Colors} />
+
+## Shades
+
+<Canvas of={BadgeStories.Shades} />
+</Content>
