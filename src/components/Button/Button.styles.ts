@@ -171,6 +171,7 @@ const buttonColorStyles = ({
 const commonButtonStyles = ({
   iconPlacement,
   label,
+  color,
 }: DefaultButtonProps): RuleSet => css`
   padding: var(--s-3) var(--s-${label ? 4 : 3});
   height: var(--s-10);
@@ -187,7 +188,7 @@ const commonButtonStyles = ({
   gap: var(--s-2);
   border-width: 1px;
   border-style: solid;
-  box-shadow: var(--shadow-button);
+  box-shadow: ${color === "clear" ? "none" : "var(--shadow-button)"};
   transition: color 300ms ease-out 0s, background-color 300ms ease-out 0s,
     border-color 300ms ease-out 0s;
 
