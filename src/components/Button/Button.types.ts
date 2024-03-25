@@ -53,7 +53,7 @@ export type ButtonProps = {
    *
    * @default false
    *
-   * @todo not implemented yet
+   * @todo _not implemented yet, needs global Loader component_
    */
   loading?: boolean;
   /**
