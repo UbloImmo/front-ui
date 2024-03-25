@@ -19,14 +19,17 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
+  core: {
+    builder: "@storybook/builder-vite",
+  },
   docs: {
     autodocs: "tag",
   },
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");
-    if ( configType === 'PRODUCTION' ) {
-      config.base = '/design-system'
-      config.publicDir =  '/design-system'
+    if (configType === "PRODUCTION") {
+      config.base = "/design-system";
+      config.publicDir = "/design-system";
     }
     return mergeConfig(config, {
       build: {
@@ -37,11 +40,11 @@ const config: StorybookConfig = {
     });
   },
   managerHead: (head, { configType }) => {
-    if (configType === 'PRODUCTION') {
-      return (`
+    if (configType === "PRODUCTION") {
+      return `
         ${head}
         <base href="/design-system/">
-      `);
+      `;
     }
 
     return head;
