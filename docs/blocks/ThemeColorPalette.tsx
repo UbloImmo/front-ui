@@ -59,7 +59,7 @@ export const ThemeColorShades = ({
           <Heading important size="h4" weight="semiBold">
             {title ?? colorKey}
           </Heading>
-          <Pre background={lightShade} foreground={darkShade}>
+          <Pre $background={lightShade} $foreground={darkShade} $padded={false}>
             theme.{colorKey}
           </Pre>
         </BlockSection>
@@ -134,8 +134,15 @@ const ThemeColorCodePreview = ({
     };
   }, [color, colorKey]);
   return (
-    <Pre foreground={lightShade} background={darkShade} padded>
-      {JSON.stringify(codePreview, null, 2)}
+    <Pre
+      className="prismjs"
+      $foreground={darkShade}
+      $background={lightShade}
+      $padded
+    >
+      <code className="language-json">
+        {JSON.stringify(codePreview, null, 2)}
+      </code>
     </Pre>
   );
 };

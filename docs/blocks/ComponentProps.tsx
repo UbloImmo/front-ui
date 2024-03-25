@@ -110,7 +110,7 @@ const ComponentPropRow = ({
       <TableCell>
         <Text
           size="s"
-          weight="bold"
+          weight={todo ? "regular" : "bold"}
           color={todo ? "gray-400" : "primary-dark"}
           important
           lineThrough={todo}
@@ -158,7 +158,12 @@ const Table = styled.table`
   overflow-x: auto !important;
 `;
 
-const TableBody = styled.tbody``;
+const TableBody = styled.tbody`
+  tr:hover td {
+    background: var(--primary-light-50);
+    transition-duration: 150ms;
+  }
+`;
 
 const TableRow = styled.tr`
   background: none !important;
@@ -181,13 +186,14 @@ const TableHeaderCell = styled.th`
 `;
 
 const TableCell = styled.td`
-  background: #fff !important;
+  background: #fff;
   border-radius: var(--s-1);
   border: none !important;
   padding: var(--s-2) !important;
   display: table-cell;
   width: max-content;
   vertical-align: top;
+  transition: background 300ms ease-out 0s;
 
   span:has(*) {
     margin: 0 !important;

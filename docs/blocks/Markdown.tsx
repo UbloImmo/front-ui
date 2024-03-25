@@ -1,7 +1,7 @@
 import { Markdown as SBMarkdown } from "@storybook/blocks";
 import type { StyleProps } from "@types";
 import styled from "styled-components";
-import { headingOfSize, textOfSize } from "./Typography";
+import { headingOfSize, textOfSize, Em, Strong } from "./Typography";
 import { useMemo } from "react";
 
 type MarkdownProps = {
@@ -18,6 +18,8 @@ export const markdownOverrides = {
   h6: headingOfSize("h4", "regular"),
   span: textOfSize("m", "regular"),
   p: textOfSize("m", "regular"),
+  em: Em,
+  strong: Strong,
 };
 
 /**
