@@ -35,11 +35,13 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
     props
   );
   const styledProps = useStyleProps(mergedProps);
-  const { label, icon, disabled, title, role } = mergedProps;
 
   const onClick = useCallback(() => {
+    if (mergedProps.disabled) return;
     mergedProps.onClick();
   }, [mergedProps]);
+
+  const { label, icon, disabled, title, role } = mergedProps;
 
   const ariaTitle = useMemo(() => {
     return title ?? label;

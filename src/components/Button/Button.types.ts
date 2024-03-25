@@ -1,6 +1,6 @@
 import type { Enum, PaletteColor } from "@types";
 import type { IconName } from "..";
-import type { VoidFn } from "@ubloimmo/front-util";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { AriaRole } from "react";
 
 export const buttonColors = [
@@ -32,30 +32,11 @@ type CommonButtonProps = {
   onClick?: VoidFn;
 };
 
-type LabelOnlyButtonProps = {
-  label: string;
-  icon?: null;
-  iconPlacement?: null;
-};
-
-type LabelAndIconButtonProps = {
-  label: string;
-  icon: IconName;
+export type ButtonProps = CommonButtonProps & {
+  label?: Nullable<string>;
+  icon?: Nullable<IconName>;
   iconPlacement?: ButtonIconPlacement;
 };
-
-type IconOnlyButtonProps = {
-  label?: null;
-  icon: IconName;
-  iconPlacement?: ButtonIconPlacement;
-};
-
-type SpecificButtonProps =
-  | LabelOnlyButtonProps
-  | LabelAndIconButtonProps
-  | IconOnlyButtonProps;
-
-export type ButtonProps = CommonButtonProps & SpecificButtonProps;
 
 export type DefaultButtonProps = Required<ButtonProps>;
 
