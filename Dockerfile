@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY package.json package.json
 COPY bun.lockb bun.lockb
-RUN curl -fsSL https://bun.sh/install | bash 
+RUN npm install -g bun && bun install --frozen-lockfile
 RUN bun install --frozen-lockfile
 COPY . .
 RUN bun run build-storybook
