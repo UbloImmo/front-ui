@@ -160,4 +160,12 @@ const TableCell = styled.td`
   display: table-cell;
   width: max-content;
   vertical-align: top;
+
+  span:has(*) {
+    margin: 0 !important;
+  }
+  // normalize stacked margins
+  span:not(:has(*:not(code))) {
+    margin: var(--s-1) 0 !important;
+  }
 `;
