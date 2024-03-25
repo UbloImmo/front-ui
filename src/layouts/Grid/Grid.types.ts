@@ -1,4 +1,5 @@
 import { CssLength, Enum } from "../../types";
+import type { ReactNode } from "react";
 
 const gridFlows = ["row", "column"] as const;
 
@@ -15,7 +16,7 @@ export type GridGap =
       column: CssLength;
     };
 
-export type GridTemplate = CssLength[] | number | "unset";
+export type GridTemplate = (CssLength | "auto")[] | number | "unset";
 
 export type GridLayoutProps = {
   flow?: GridFlow;
@@ -25,6 +26,7 @@ export type GridLayoutProps = {
   columns?: GridTemplate;
   rows?: GridTemplate;
   inline?: boolean;
+  children?: ReactNode;
 };
 
 export type GridLayoutDefaultProps = Required<GridLayoutProps>;

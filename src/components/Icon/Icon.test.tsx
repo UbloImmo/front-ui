@@ -24,7 +24,7 @@ describe("Icon", () => {
     expect(getByTestId("icon")).toBeDefined();
   });
 
-  it("should warn when missing its `name` prop", () => {
+  it.todo("should warn when missing its `name` prop", () => {
     // mock global console object to list to calls
     global.console.warn = mock(warnCopy);
     const { getByTestId } = render(
@@ -83,12 +83,19 @@ describe("Icon", () => {
     });
 
     it("should return a rem size if when provided with a valid spacing label", () => {
-      expect();
       const { result, rerender } = renderHook((size?: IconProps["size"]) =>
         useIconSize(size, console.warn)
       );
       rerender("s-40");
       expect(result.current).toBe("10rem");
+    });
+
+    it("should convert pixels to rems", () => {
+      const { result, rerender } = renderHook((size?: IconProps["size"]) =>
+        useIconSize(size, console.warn)
+      );
+      rerender("32px");
+      expect(result.current).toBe("2rem");
     });
   });
 

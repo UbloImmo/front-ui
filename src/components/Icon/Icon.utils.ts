@@ -8,6 +8,8 @@ import {
   isCssRem,
   cssRem,
   isCssLenthUsage,
+  isCssPx,
+  cssPxToCssRem,
 } from "../../utils";
 import { isInt } from "@ubloimmo/front-util";
 import { useMemo } from "react";
@@ -17,12 +19,12 @@ import { useMemo } from "react";
  *
  * @param {IconProps["size"]} size - the icon's size prop
  * @param {VoidFn<[unknown]>} warn - logger warn method
- * @returns {CssPx | CssRem} - The parsed icon's size;
+ * @returns {CssRem} - The parsed icon's size;
  */
 const parseIconSize = (
   size: IconProps["size"],
   warn: VoidFn<[unknown]>
-): CssPx | CssRem => {
+): CssRem => {
   if (!isCssLenthUsage(size)) {
     warn(`unsupported size (${size}) provided`);
     return cssRem(1);
@@ -43,6 +45,9 @@ const parseIconSize = (
       return cssRem(1);
     }
     return cssRem(sizeMultiplier / UNIT_PX);
+  }
+  if (isCssPx(size)) {
+    return cssPxToCssRem(size);
   }
   return size;
 };

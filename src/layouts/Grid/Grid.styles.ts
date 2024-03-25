@@ -10,8 +10,8 @@ import {
   GridLayoutProps,
   GridTemplate,
 } from "./Grid.types";
-import { cssLengthUsage, mergeDefaultProps } from "../../utils";
-import { CssLengthUsage } from "../../types";
+import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "../../utils";
+import { CssLengthUsage, type StyleProps } from "../../types";
 import { StyleFunction, css } from "styled-components";
 
 /**
@@ -41,7 +41,9 @@ const gridTemplate = (template: GridTemplate) => {
     return `repeat(${template}, 1fr)`;
   }
   if (isArray(template)) {
-    return template.map(cssLengthUsage).join(" ");
+    return template
+      .map((item) => (item === "auto" ? item : cssLengthUsage(item)))
+      .join(" ");
   }
   return template;
 };
@@ -53,10 +55,12 @@ const gridTemplate = (template: GridTemplate) => {
  * @return {StyleFunction<GridLayoutProps>} a function that returns the grid layout style
  */
 export const buildGridLayoutStyle =
-  (defaultProps: GridLayoutDefaultProps): StyleFunction<GridLayoutProps> =>
-  (props) => {
+  (
+    defaultProps: GridLayoutDefaultProps
+  ): StyleFunction<StyleProps<GridLayoutProps>> =>
+  (props: StyleProps<GridLayoutProps>) => {
     const { flow, gap, justify, align, columns, rows, inline } =
-      mergeDefaultProps(defaultProps, props);
+      mergeDefaultProps(defaultProps, fromStyleProps(props));
     const { row, column } = gridGap(gap);
     const display = inline ? "inline-grid" : "grid";
 

@@ -22,7 +22,7 @@ export const defaultIconProps: DefaultIconProps = {
  * @param {IconProps} props - The props for the icon component.
  * @return {JSX.Element | null} The rendered icon component or null if the icon component is not found.
  */
-export const Icon = (props: IconProps) => {
+const Icon = (props: IconProps) => {
   const { warn } = useLogger("Icon");
 
   if (!props.name) warn("Missing name prop");
@@ -45,3 +45,7 @@ export const Icon = (props: IconProps) => {
   }
   return <IconComponent size={parsedSize} color={color} />;
 };
+
+Icon.defaultProps = defaultIconProps;
+
+export { Icon };

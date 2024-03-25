@@ -1,8 +1,6 @@
-import { HeadingProps } from "../../types/typography";
-import {
-  buildTypographyStyle,
-  defaultTypographyProps,
-} from "../../typography/typography.styles";
+import type { HeadingProps, StyleProps } from "../../types";
+import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
+import { useStyleProps } from "../../utils";
 import styled from "styled-components";
 
 const defaultHeadingProps: Required<HeadingProps> = {
@@ -16,7 +14,12 @@ const defaultHeadingProps: Required<HeadingProps> = {
  * @param {HeadingProps} props - Heading component props
  * @return {JSX.Element} - The styled heading component
  */
-export const Heading = styled.span<HeadingProps>`
+export const Heading = (props: HeadingProps) => {
+  const innerProps = useStyleProps(props);
+  return <HeadingInner {...innerProps}>{props.children}</HeadingInner>;
+};
+
+const HeadingInner = styled.span<StyleProps<HeadingProps>>`
   display: block;
   ${buildTypographyStyle(defaultHeadingProps)}
 `;

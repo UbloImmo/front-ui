@@ -76,14 +76,14 @@ export const ColorShadeGrid = ({
       </GridItem>
       {shades.map(({ name }, index) => (
         <GridItem key={name} $x={index + 2} $y={1} $justify="center">
-          <Text color="gray-600" $important size="s">
+          <Text color="gray-600" important size="s">
             {name}
           </Text>
         </GridItem>
       ))}
       {shades[0].shades.map(({ name }, index) => (
         <GridItem key={name} $x={1} $y={index + 2} $justify="end">
-          <Text color="gray-600" $important size="xs">
+          <Text color="gray-600" important size="xs">
             {name}
           </Text>
         </GridItem>
@@ -130,11 +130,11 @@ const ColorShadeSwatch = ({
   const hex = rgbaColorConverter.strToHex(color);
   return (
     <ShadeContainer $background={color} $x={x} $y={y}>
-      <Text weight="semiBold" size="xs" color="gray-500" $important>
+      <Text weight="semiBold" size="xs" color="gray-500" important>
         {hex}
       </Text>
       {opacity && (
-        <Text size="xs" color="gray-500" $important>
+        <Text size="xs" color="gray-500" important>
           {opacity}
         </Text>
       )}

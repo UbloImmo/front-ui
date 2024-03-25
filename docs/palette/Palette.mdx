@@ -1,32 +1,40 @@
 import { Meta, ColorPalette, ColorItem } from "@storybook/blocks";
-import {ThemeColorShades, Heading, Text, Pre} from "../blocks";
+import { ThemeColorShades, Heading, Text, Pre, HeaderInfo } from "../blocks";
+import { Content, Header } from "../containers";
 
-<Meta title="Docs/Color Palette"/>
+<Meta title="Color Palette"/>
 
-<Heading weight="bold">Color palette</Heading>
+<Header title="Color Palette" parent="Design system">
+  <HeaderInfo title="Color Palette" parent="Design system">
+    <Text>Colors have several shades and can broadly be separated into `dynamic` and `static` colors</Text>
+  </HeaderInfo>
+</Header>
 
-<Text>Colors have several shades and can broadly be separated into `dynamic` and `static` colors</Text>
+<Content>
 
-<Heading size="h2" weight="semiBold">Dynamic colors</Heading>
-<Text>The primary color defaults to Ublo's color palette and is overriden according to the current user's organization's palette.</Text>
+## Dynamic colors
+
+The primary color defaults to Ublo's color palette and is overriden
+according to the current user's organization's palette.
 
 <ThemeColorShades colorKey="primary" title="Primary color">
   <Text size="s" color="gray-600">The primary color defaults to Ublo's color palette and is overriden according to the current user's organization's palette.</Text>
 </ThemeColorShades>
 
-<Heading size="h2" weight="semiBold">Static colors</Heading>
+## Static colors
 
-<Text>Static colors are true to their name and do not change across client organizations.</Text>
+Static colors are true to their name and do not change across client organizations.
 
-<Text>These include grayscale color shades as well as out status colors.</Text>
+These include grayscale color shades as well as out status colors.
 
 <ThemeColorShades colorKey="gray" title="Gray scale" initShowOpacity>
   <Text size="s" color="gray-600">Neutral tones used to display text, backgrounds, separators, shadows and various UI elements.</Text>
   <Text size="s" color="gray-600">Fun fact: This paragraph uses the shade `gray-600`!</Text>
 </ThemeColorShades>
 
-<Heading size="h3" weight="semiBold">Status colors</Heading>
-<Text>Status colors are used throughout our product to convey feedback to the user.</Text>
+### Status colors
+
+Status colors are used throughout our product to convey feedback to the user.
 
 <ThemeColorShades colorKey="success" title="Success">
   <Text size="s" color="gray-600">Shown when something is valid and successfull.</Text>
@@ -47,10 +55,11 @@ import {ThemeColorShades, Heading, Text, Pre} from "../blocks";
   <br/>such as during form validation. Also shows up as a badge color for certain states within the product</Text>
 </ThemeColorShades>
 
-<Heading weight="semiBold" size="h2">Structure</Heading>
-<Text>The library generates and exports its colors directly inside the global `theme` object.</Text>
-<Text>Each **color** is represented as an `object` that contains several **shades**</Text>
-<Text>Each **shade** contains both `rgba` and `hex` properties and an `opacity()` method to allow for further customization</Text>
+## Structure
+The library generates and exports its colors directly inside the global `theme` object.
+
+- Each **color** is represented as an `object` that contains several **shades**
+- Each **shade** contains both `rgba` and `hex` properties and an `opacity()` method to allow for further customization
 
 ```json
 {
@@ -64,10 +73,11 @@ import {ThemeColorShades, Heading, Text, Pre} from "../blocks";
 }
 ```
 
-<Heading size="h2" weight="semiBold">Using colors</Heading>
-<Text>Colors and shades can be used through various ways.</Text>
+## Usage
 
-<Heading size="h3" weight="semiBold">Inside a React component</Heading>
+Colors and shades can be used through various ways.
+
+### Inside a React component
 
 ```tsx
 // import the `useTheme` hook as usual
@@ -91,9 +101,11 @@ const MyComponent = () => {
 };
 ```
 
-<Heading size="h3" weight="semiBold">Inside a regular CSS declaration</Heading>
-<Text>Colors are made available as regular CSS variables globally, under the name `[color]-[shade]`</Text>
-<Text color="primary-base" weight="bold">This is also valid inside `styled-components` rulesets</Text>
+### Inside a regular CSS declaration
+
+Colors are made available as regular CSS variables globally, under the name `[color]-[shade]`
+
+This is also valid inside `styled-components` rulesets.
 
 ```css
 .badge.success {
@@ -111,3 +123,5 @@ const MyComponent = () => {
   color: var(--gray-600);
 }
 ```
+
+</Content>

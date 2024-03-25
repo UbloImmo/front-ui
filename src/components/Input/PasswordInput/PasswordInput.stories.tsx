@@ -4,7 +4,6 @@ import { PasswordInput } from "./PasswordInput.component";
 const meta = {
   title: "Components/Input/PasswordInput",
   component: PasswordInput,
-  tags: ["autodocs"],
   argTypes: {
     visible: {
       control: "boolean",

@@ -3,6 +3,7 @@ import { DocsContainer as SBDocsContainer } from "@storybook/blocks";
 import { isString, type Optional } from "@ubloimmo/front-util";
 import { StorybookThemeProvider } from "./StoryDecorator";
 import { getClientSlugs } from "../../src/themes";
+import styled from "styled-components";
 
 type DocsContainerProps = Parameters<typeof SBDocsContainer>[0];
 
@@ -25,9 +26,23 @@ export const DocsContainer = ({
       : "ublo";
   return (
     <StorybookThemeProvider theme={{ client }}>
-      <SBDocsContainer context={context} theme={theme}>
-        {children}
-      </SBDocsContainer>
+      <StyleReset>
+        <SBDocsContainer context={context} theme={theme}>
+          {children}
+        </SBDocsContainer>
+      </StyleReset>
     </StorybookThemeProvider>
   );
 };
+
+const StyleReset = styled.div`
+  background: red !important;
+  .sbdocs-wrapper {
+    padding: 0;
+    /* background: red !important; */
+  }
+
+  .sbdocs-content {
+    max-width: unset;
+  }
+`;

@@ -16,6 +16,7 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   wrap: false,
   reverse: false,
   inline: false,
+  fill: false,
   children: null,
 } as const;
 

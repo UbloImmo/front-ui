@@ -1,18 +1,37 @@
-import { Meta, Canvas, Description } from "@storybook/blocks";
+import { Meta, Description } from "@storybook/blocks";
+import { ComponentInfo, Canvas, IconSearch } from "../../../docs/blocks"
+import { Content } from "../../../docs/containers"
 import * as IconStories from "./Icon.stories.tsx";
 import {Icon} from "./Icon.component.tsx";
 
 <Meta of={IconStories} />
 
-# Icon
+<ComponentInfo version="0.0.1" of={IconStories} />
 
-<Description of={Icon}/>
+<Content>
+
+## Customizing colors
+
+Icons can take any standard theme color as their `color` property. Here are a couple examples.
+
+<Canvas of={IconStories.Colors} />
+
+## Sizing
+
+Icons can take any CSS lenghts as their `size` property, as well as spacing labels (`s-4`, `s-5`, etc...).
+
+All sizes get converted to css `rem` values before being passed to the underlying `SVG` element.
+
+<Canvas of={IconStories.Sizes}/>
+
+## Available icons
+
+Icons are selected usique the `name` property. Each name corresponds to a unique Icon defined in one of two collections:
+ - Bootstrap icons (approx. 2.1k icons)
+ - Custom icons (currently 18 icons)
+
+<IconSearch/>
+
+</Content>
 
 
-<Canvas of={IconStories.Default} />
-
-## Customizing color
-
-You can use any exported color from the theme provider
-
-<Canvas of={IconStories.AllColors} />

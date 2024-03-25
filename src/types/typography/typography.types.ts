@@ -1,5 +1,6 @@
 import { texts } from "@ubloimmo/front-tokens";
-import { Enum, PaletteColor } from "..";
+import type { Enum, PaletteColor } from "../";
+import type { ReactNode } from "react";
 
 export type TypographyTokens = typeof texts;
 
@@ -26,16 +27,17 @@ export type TypographyProps = {
   overline?: boolean;
   lineThrough?: boolean;
   weight?: TypographyWeight;
-  $important?: boolean;
+  important?: boolean;
+  children?: ReactNode;
 };
 
-export interface TextProps extends TypographyProps {
+export type TextProps = TypographyProps & {
   size?: TextSize;
-}
+};
 
-export interface HeadingProps extends TypographyProps {
+export type HeadingProps = TypographyProps & {
   size?: HeadingSize;
-}
+};
 
 export type AnyTypographyProps = TypographyProps & {
   size?: HeadingProps["size"] | TextProps["size"];

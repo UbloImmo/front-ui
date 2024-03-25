@@ -4,7 +4,8 @@ WORKDIR /usr/src/app
 
 COPY package.json package.json
 COPY bun.lockb bun.lockb
-RUN npm install -g bun && bun install --frozen-lockfile
+RUN npm install -g bun
+RUN bun install --frozen-lockfile
 COPY . .
 RUN bun run build-storybook
 

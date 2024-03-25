@@ -18,12 +18,12 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
 };
 
 /**
- * Renders a static icon based on the provided props.
+ * An icon that is wrapped in a container of the same color, a shade lighter.
  *
  * @param {StaticIconProps} props - The props for the static icon.
  * @return {JSX.Element} The static icon component.
  */
-export const StaticIcon = (props: StaticIconProps) => {
+const StaticIcon = (props: StaticIconProps) => {
   const mergedProps = useMemo(
     () => mergeDefaultProps(defaultStaticIconProps, props),
     [props]
@@ -48,6 +48,10 @@ export const StaticIcon = (props: StaticIconProps) => {
     </StaticIconContainer>
   );
 };
+
+StaticIcon.defaultProps = defaultStaticIconProps;
+
+export { StaticIcon };
 
 const StaticIconContainer = styled.div<StyleProps<DefaultStaticIconProps>>`
   display: flex;
