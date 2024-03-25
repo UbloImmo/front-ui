@@ -217,11 +217,12 @@ const commonButtonStyles = ({
   &:disabled:hover {
     cursor: not-allowed;
     opacity: 0.33;
+    box-shadow: none;
   }
 
   @media screen and (max-width: ${breakpointsPx.SM}) {
     gap: var(--s-3);
-    padding: var(--s-4) var(--s-${label ? 6 : 4});
+    padding: var(--s-5) var(--s-${label ? 6 : 5});
     height: var(--s-14);
     border-radius: var(--s-7);
     min-height: var(--s-14);
