@@ -1,9 +1,8 @@
 import type { ReactNode } from "react";
-import { Text, HeaderInfo, Canvas } from ".";
+import { Text, HeaderInfo, Canvas, Markdown } from ".";
 import { Header } from "../containers";
 import { GridLayout } from "../../src/layouts";
 import { useMemo } from "react";
-import { Markdown } from "@storybook/blocks";
 import styled from "styled-components";
 import type { ComponentStory } from "@docs/docs.types";
 import { parseJsDoc } from "@docs/docs.utils";

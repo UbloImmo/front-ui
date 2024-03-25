@@ -1,7 +1,7 @@
 import type { ComponentStory, DocgenPropDef } from "@docs/docs.types";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
 import { Text } from "@components";
-import { Markdown } from "@storybook/blocks";
+import { Markdown } from ".";
 import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import { formatPropInfo } from "@docs/docs.utils";
@@ -107,7 +107,7 @@ const ComponentPropRow = ({
       </TableCell>
       <TableCell>
         <Text size="s" color={textColor} important>
-          <Markdown>{description}</Markdown>
+          <Markdown inherit>{description}</Markdown>
         </Text>
       </TableCell>
     </TableRow>
@@ -160,10 +160,4 @@ const TableCell = styled.td`
   display: table-cell;
   width: max-content;
   vertical-align: top;
-
-  code,
-  p {
-    font-size: inherit !important;
-    color: inherit !important;
-  }
 `;
