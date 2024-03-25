@@ -24,6 +24,11 @@ export const Canvas = (props: CanvasProps) => {
 const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
   --padding: var(--s-8);
 
+  & > div {
+    margin-top: var(--s-6);
+    margin-bottom: var(--s-8);
+  }
+
   ${({ $inHeader }) =>
     $inHeader &&
     css`
