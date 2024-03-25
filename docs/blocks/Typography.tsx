@@ -87,9 +87,11 @@ export const textOfSize =
 
 const HeadingMargin = styled.span<{ $size?: HeadingProps["size"] }>`
   & > * {
-    margin: var(--s-4) 0 !important;
+    margin-top: var(
+      --s-${({ $size }) => ($size === "h4" ? "4" : $size === "h3" ? "8" : $size === "h2" ? "10" : "16")}
+    ) !important;
     margin-bottom: var(
-      --s-${({ $size }) => ($size === "h4" ? "3" : $size === "h3" ? "4" : $size === "h2" ? "6" : "8")}
+      --s-${({ $size }) => ($size === "h4" ? "2" : $size === "h3" ? "4" : $size === "h2" ? "6" : "8")}
     ) !important;
   }
 `;
