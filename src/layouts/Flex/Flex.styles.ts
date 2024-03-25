@@ -90,12 +90,6 @@ export const buildFlexLayoutStyle =
       );
 
     const display = inline ? "inline-flex" : "flex";
-    const xFill = css`
-      width: 100%;
-    `;
-    const yFill = css`
-      height: 100%;
-    `;
     return css`
       display: ${display};
       flex-direction: ${flexDirection(direction, reverse)};
