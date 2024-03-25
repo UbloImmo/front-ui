@@ -1,0 +1,45 @@
+import { Meta, Description } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "../../../docs/blocks"
+import { Content } from "../../../docs/containers"
+import * as ButtonStories from "./Button.stories.tsx";
+import {Button} from "./Button.component.tsx";
+
+<Meta of={ButtonStories} />
+
+<ComponentInfo version="0.0.1" of={ButtonStories} />
+
+<Content>
+
+## Labels & Icons
+
+Buttons need at least a `label` and / or `icon` property to render.
+If both are missing, you'll get a warning and **nothing will be rendered**.
+
+The `icon` property is directly passed to the underlying [Icon](?path=/docs/components-icon--docs) component.
+All show variants display the `CircleFill` icon.
+
+<Canvas of={ButtonStories.Icons}/>
+
+## Styling
+
+A Button can be colored by passing it a `color` property.
+
+This dictates the color palette it'll be displaying while in its default, hover and disabled states.
+
+### Primary buttons
+
+<Canvas of={ButtonStories.PrimaryColors}/>
+
+### Secondary buttons
+
+Passing it the `secondary` property will further style it according to its color.
+
+<Canvas of={ButtonStories.SecondaryColors}/>
+
+## Responsive behavior
+
+Buttons automatically display their mobile variant when the viewport is smaller than the `SM` breakpoint.
+
+**Try it out !**
+
+</Content>
