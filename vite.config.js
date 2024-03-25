@@ -7,9 +7,7 @@ export default {
       external: ["bun:test", "*.test.ts", "*.test.tsx"],
     },
   },
-  plugins: [
-    tsConfigPaths()
-  ],
+  plugins: [tsConfigPaths()],
   resolve: {
     alias: {
       "@/*": "/src/*",
