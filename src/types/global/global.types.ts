@@ -18,3 +18,18 @@ export type Enum<T extends string[] | readonly string[]> = T[number];
 export type ValueMap<TKeys extends string, TValue> = {
   [TKey in TKeys]: TValue;
 };
+
+/**
+ * An object that must contain at least one or more keys and values in TChoices
+ *
+ * @template {Record<string, unknown>} TChoices - The object's values
+ * @template {keyof TChoices} TKeys - The object's keys
+ */
+export type RequireAtLeastOne<
+  TChoices extends Record<string, unknown>,
+  TKeys extends keyof TChoices = keyof TChoices
+> = Pick<TChoices, Exclude<keyof TChoices, TKeys>> &
+  {
+    [K in TKeys]-?: Required<Pick<TChoices, K>> &
+      Partial<Pick<TChoices, Exclude<TKeys, K>>>;
+  }[TKeys];

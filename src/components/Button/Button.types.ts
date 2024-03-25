@@ -1,4 +1,4 @@
-import type { Enum, PaletteColor } from "@types";
+import type { Enum, PaletteColor, RequireAtLeastOne } from "@types";
 import type { IconName } from "..";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { AriaRole } from "react";
@@ -95,7 +95,20 @@ export type ButtonProps = {
    * @default "left"
    */
   iconPlacement?: ButtonIconPlacement;
-};
+} & RequireAtLeastOne<{
+  /**
+   * The label of the button.
+   *
+   * @default "Button"
+   */
+  label: Nullable<string>;
+  /**
+   * The name of the icon to display in the button.
+   *
+   * @default undefined
+   */
+  icon: Nullable<IconName>;
+}>;
 
 export type DefaultButtonProps = Required<ButtonProps>;
 
