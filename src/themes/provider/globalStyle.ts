@@ -1,7 +1,3 @@
-import {
-  mobileFontSize,
-  typographyWeightMap,
-} from "./../../typography/typography.styles";
 import type {
   Theme,
   PaletteColorShaded,
@@ -11,15 +7,19 @@ import type {
   RgbaColorStr,
   Spacings,
 } from "../../types";
+import {
+  mobileFontSize,
+  typographyWeightMap,
+} from "./../../typography/typography.styles";
+import type { BreakpointLabel } from "src/types/themes/sizes/breakpoints.types";
 import { effectsToCssVars } from "../palette";
 import { createGlobalStyle, css, type RuleSet } from "styled-components";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
 import { breakpointsPx, buildSpacingMap } from "../../sizes";
 import { cssVar } from "../../utils";
 import { linkFontFace } from "../../typography/typography.font";
-import "@fontsource-variable/open-sans/index.css";
 import { texts } from "@ubloimmo/front-tokens";
-import { BreakpointLabel } from "src/types/themes/sizes/breakpoints.types";
+import "@fontsource-variable/open-sans/index.css";
 
 const { warn } = Logger();
 
