@@ -6,6 +6,7 @@ import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import { formatPropInfo } from "@docs/docs.utils";
 import styled from "styled-components";
+import { useStatic } from "@utils";
 
 type ComponentPropsBlockProps<TComponentProps extends Record<string, unknown>> =
   {
@@ -16,10 +17,16 @@ type ComponentPropInfo = DocgenPropDef<NullishPrimitives> & {
   name: string;
 };
 
-const tableColumns = ["name", "type", "required", "default", "description"];
+/**
+ * Generates a table of component props from a storybook story and renders them as a table.
+ * Extracts relevant information from jsdoc comments.
+ *
+ * @param {ComponentPropsBlockProps<TComponentProps>} props - the component props block props
+ * @return {JSX.Element} the table of component props
+ */
 const ComponentPropsBlock = <TComponentProps extends Record<string, unknown>>(
   props: ComponentPropsBlockProps<TComponentProps>
-) => {
+): JSX.Element => {
   const propList = useMemo(() => {
     return objectEntries(props.of.default.component.__docgenInfo.props)
       .map(
@@ -34,7 +41,7 @@ const ComponentPropsBlock = <TComponentProps extends Record<string, unknown>>(
 
   return (
     <Table>
-      <ComponentPropsTableHeader columns={tableColumns} />
+      <ComponentPropsTableHeader />
       <TableBody>
         {propList.map((prop, index) => (
           <ComponentPropRow
@@ -49,7 +56,20 @@ const ComponentPropsBlock = <TComponentProps extends Record<string, unknown>>(
 
 export { ComponentPropsBlock as ComponentProps };
 
-const ComponentPropsTableHeader = ({ columns }: { columns: string[] }) => {
+/**
+ * Render the table header in {@link ComponentPropsBlock}
+ *
+ * @return {JSX.Element} Table header component
+ */
+const ComponentPropsTableHeader = (): JSX.Element => {
+  const columns = useStatic([
+    "name",
+    "type",
+    "required",
+    "default",
+    "description",
+  ]);
+
   return (
     <TableHeader>
       <TableRow>
@@ -65,11 +85,19 @@ const ComponentPropsTableHeader = ({ columns }: { columns: string[] }) => {
   );
 };
 
+type ComponentPropRowProps = {
+  componentProp: ComponentPropInfo;
+};
+
+/**
+ * Renders a table row from a component's prop's computed info.
+ *
+ * @param {ComponentPropRowProps} props - The row's own props.
+ * @return {JSX.Element} The rendered table row.
+ */
 const ComponentPropRow = ({
   componentProp,
-}: {
-  componentProp: ComponentPropInfo;
-}) => {
+}: ComponentPropRowProps): JSX.Element => {
   const { defaultValue, description, todo, type, required, name } =
     useMemo(() => {
       return formatPropInfo(componentProp);

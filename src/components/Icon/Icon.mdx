@@ -1,22 +1,28 @@
 import { Meta, Description } from "@storybook/blocks";
-import { ComponentInfo, Canvas, IconSearch } from "../../../docs/blocks"
+import { ComponentInfo, ComponentProps, Canvas, IconSearch } from "../../../docs/blocks"
 import { Content } from "../../../docs/containers"
 import * as IconStories from "./Icon.stories.tsx";
 import {Icon} from "./Icon.component.tsx";
 
 <Meta of={IconStories} />
 
-<ComponentInfo version="0.0.1" of={IconStories} />
+<ComponentInfo of={IconStories} />
 
 <Content>
 
-## Customizing colors
+## Properties
+
+<ComponentProps of={IconStories} />
+
+## Usage
+
+### Customizing colors
 
 Icons can take any standard theme color as their `color` property. Here are a couple examples.
 
 <Canvas of={IconStories.Colors} />
 
-## Sizing
+### Sizing
 
 Icons can take any CSS lenghts as their `size` property, as well as spacing labels (`s-4`, `s-5`, etc...).
 
