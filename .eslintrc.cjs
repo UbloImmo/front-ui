@@ -101,5 +101,6 @@ module.exports = {
     "import/no-named-as-default": "off",
     "import/namespace": ["off", { allowComputed: true }],
     "import/no-namespace": "off",
+    "import/no-named-as-default-member": "off",
   },
 };
