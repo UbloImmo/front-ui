@@ -122,7 +122,7 @@ export const testHookFactory = <
           params && params.length > 0
             ? params
                 .map((param) =>
-                  isFunction(param) ? "[Function]" : JSON.stringify(param)
+                  isFunction(param) ? "() => {}" : JSON.stringify(param)
                 )
                 .join(", ")
             : "no params";
