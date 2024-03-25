@@ -81,12 +81,16 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
         rows="unset"
         align="start"
       >
-        <Text size="s" weight="semiBold" color="gray-500">
-          Version
-        </Text>
-        <Text size="s" color="gray-800">
-          <code>{version}</code>
-        </Text>
+        {version && (
+          <>
+            <Text size="s" weight="semiBold" color="gray-500">
+              Version
+            </Text>
+            <Text size="s" color="gray-800">
+              <code>{version}</code>
+            </Text>
+          </>
+        )}
         <Text size="s" weight="semiBold" color="gray-500">
           Usage
         </Text>
