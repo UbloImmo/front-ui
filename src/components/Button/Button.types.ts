@@ -21,20 +21,79 @@ const buttonIconPlacements = ["left", "right"] as const;
 
 export type ButtonIconPlacement = Enum<typeof buttonIconPlacements>;
 
-type CommonButtonProps = {
+export type ButtonProps = {
+  /**
+   * The type of the button. Either `button` or `submit`.
+   * Useful for form submissions.
+   *
+   * @default "button"
+   */
   type?: ButtonType;
+  /**
+   * The color of the button.
+   * Either `primary`, `red`, `black`, `white`, or `clear`.
+   *
+   * @default "primary"
+   */
   color?: ButtonColor;
+  /**
+   * Whether the button is secondary or not.
+   *
+   * @default false
+   */
   secondary?: boolean;
+  /**
+   * Whether the button is disabled or not.
+   *
+   * @default false
+   */
   disabled?: boolean;
+  /**
+   * Whether to display a loading spinner or not.
+   *
+   * @default false
+   *
+   * @todo not implemented yet
+   */
   loading?: boolean;
+  /**
+   * The accessible title of the button.
+   * Visible when hovering and read by screen readers.
+   *
+   * Defaults to the `label`'s value if not provided.
+   */
   title?: string;
+  /**
+   * The ARIA role of the button.
+   *
+   * @default button
+   */
   role?: AriaRole;
+  /**
+   * The callback function to be called when the button is clicked and not disabled.
+   *
+   * @default undefined
+   */
   onClick?: VoidFn;
-};
-
-export type ButtonProps = CommonButtonProps & {
+  /**
+   * The label of the button.
+   *
+   * @default "Button"
+   */
   label?: Nullable<string>;
+  /**
+   * The name of the icon to display in the button.
+   *
+   * @default undefined
+   */
   icon?: Nullable<IconName>;
+  /**
+   * Where to display the button's icon in relation to its label.
+   *
+   * Has no effect if only `icon` and no `label` is provided.
+   *
+   * @default "left"
+   */
   iconPlacement?: ButtonIconPlacement;
 };
 

@@ -125,7 +125,7 @@ export const SecondaryColors = (props: ButtonProps) => {
 export const Icons = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultMockProps,
-    props
+    { ...props, icon: "CircleFill" }
   );
 
   return (

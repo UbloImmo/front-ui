@@ -12,9 +12,9 @@ const defaultButtonProps: DefaultButtonProps = {
   type: "button",
   color: "primary",
   label: "Button",
-  title: "A button",
+  title: "",
   role: "button",
-  icon: "CircleFill",
+  icon: null,
   iconPlacement: "left",
   secondary: false,
   disabled: false,
@@ -24,6 +24,8 @@ const defaultButtonProps: DefaultButtonProps = {
 
 /**
  * A simple, clickable, responsive & accessible button.
+ *
+ * @version 0.0.1
  *
  * @param {ButtonProps} props - the button's props
  * @returns {Nullable<JSX.Element>} the rendered button
@@ -44,7 +46,7 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
   const { label, icon, disabled, title, role } = mergedProps;
 
   const ariaTitle = useMemo(() => {
-    return title ?? label;
+    return title && title.length > 0 ? title : label ?? undefined;
   }, [title, label]);
 
   const ariaRole = useMemo(() => {
