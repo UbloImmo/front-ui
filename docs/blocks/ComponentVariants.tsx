@@ -4,18 +4,55 @@ import { FlexRowLayout } from "../../src/layouts";
 import { Text } from "../../src/components";
 import { useMemo } from "react";
 import styled from "styled-components";
+import { isObject, isString } from "@ubloimmo/front-util";
 
 type ComponentVariantsConfig<
   TComponentProps extends Record<string, unknown>,
   TPropKey extends keyof TComponentProps
 > = {
+  /**
+   * The key of the prop to vary upon.
+   * **Required**
+   */
   for: TPropKey;
+  /**
+   * The component to render the variants for.
+   * **Required**
+   */
   of: FC<TComponentProps>;
+  /**
+   * The default values for the component's props.
+   * **Required**
+   */
   defaults: TComponentProps;
-  variants: TComponentProps[TPropKey][];
+  /**
+   * List of possible values for the component's prop.
+   * **Required**
+   */
+  variants:
+    | TComponentProps[TPropKey][]
+    | { value: TComponentProps[TPropKey]; label: string }[];
+  /**
+   * Dictates the gap between the variants.
+   * Defaults to `2rem`.
+   */
   gap?: FlexGap;
+  /**
+   * Dictates the vertical alignment of the variants.
+   * Defaults to `start`.
+   */
   align?: FlexAlignment;
-  showLabels?: boolean;
+  /**
+   * By how much to scale a selected variant on hover.
+   * Defaults to `1.5`.
+   */
+  scaling?: number;
+  /**
+   * Whether to include the prop's name in the labels while hovering.
+   * Defaults to `false`.
+   * @remarks This will be ignored if the `variants` contain their own labels
+   */
+  propLabels?: boolean;
 };
 
 type PropVariant<TComponentProps extends Record<string, unknown>> =
@@ -38,13 +75,29 @@ export const ComponentVariants = <
   props: ComponentVariantsConfig<TComponentProps, TPropKey>
 ): JSX.Element => {
   const propVariants = useMemo<PropVariant<TComponentProps>[]>(() => {
-    return props.variants.map(
-      (variant): PropVariant<TComponentProps> => ({
+    return props.variants.map((variant): PropVariant<TComponentProps> => {
+      const isCompound =
+        isObject(variant) &&
+        "value" in variant &&
+        "label" in variant &&
+        isString(variant.value) &&
+        typeof variant.value === typeof props.defaults[props.for];
+      if (isCompound)
+        return {
+          ...props.defaults,
+          [props.for]: variant.value,
+          __propVariantLabel: variant.label,
+        };
+      let label = JSON.stringify(variant).replace(/"/g, "");
+      if (props.propLabels) {
+        label = `${props.for}:${label}`;
+      }
+      return {
         ...props.defaults,
         [props.for]: variant,
-        __propVariantLabel: JSON.stringify(variant).replace(/"/g, ""),
-      })
-    );
+        __propVariantLabel: label,
+      };
+    });
   }, [props]);
 
   const Component = useMemo(() => {
@@ -53,7 +106,10 @@ export const ComponentVariants = <
   return (
     <FlexRowLayout gap={props.gap ?? "s-8"} align={props.align ?? "start"} wrap>
       {propVariants.map((variantProps, index) => (
-        <ComponentWrapper key={`${variantProps.__propVariantLabel}-${index}`}>
+        <ComponentWrapper
+          key={`${variantProps.__propVariantLabel}-${index}`}
+          $scaling={props.scaling}
+        >
           <div className="component-container">
             <Component {...variantProps} />
           </div>
@@ -68,7 +124,7 @@ export const ComponentVariants = <
   );
 };
 
-const ComponentWrapper = styled.article`
+const ComponentWrapper = styled.article<{ $scaling?: number }>`
   position: relative;
   transform-origin: center;
 
@@ -80,7 +136,7 @@ const ComponentWrapper = styled.article`
 
   &:hover {
     .component-container {
-      transform: scale(1.5);
+      transform: scale(${({ $scaling }) => $scaling ?? 1.5});
       z-index: 3;
     }
 

@@ -24,6 +24,15 @@ export const Canvas = (props: CanvasProps) => {
 const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
   --padding: var(--s-8);
 
+  ${({ $inHeader }) =>
+    $inHeader &&
+    css`
+      & > div {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    `}
+
   & > .sbdocs-preview {
     box-shadow: none;
     background: ${({ $inHeader }) => ($inHeader ? "#fff" : "var(--gray-50)")};
