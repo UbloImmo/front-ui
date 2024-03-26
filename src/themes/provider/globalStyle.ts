@@ -21,8 +21,6 @@ import { linkFontFace } from "../../typography/typography.font";
 import { texts } from "@ubloimmo/front-tokens";
 import "@fontsource-variable/open-sans/index.css";
 
-const { warn } = Logger();
-
 /**
  * Generates CSS variables for the given palette color and its shades.
  *
@@ -176,7 +174,7 @@ export const buildGlobalStyle = (theme: Theme) => {
   } = textSizesToCssVars();
   // only return spacing css variables if theme is missing
   if (!theme) {
-    warn(
+    Logger().warn(
       "Missing theme. Generating spacing css variables only.",
       "GlobalStyle"
     );
