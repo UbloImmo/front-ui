@@ -72,9 +72,9 @@ export type ButtonProps = {
   /**
    * The callback function to be called when the button is clicked and not disabled.
    *
-   * @default undefined
+   * @default null
    */
-  onClick?: VoidFn;
+  onClick?: Nullable<VoidFn>;
   /**
    * The label of the button.
    *

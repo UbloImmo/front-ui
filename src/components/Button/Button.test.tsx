@@ -1,42 +1,50 @@
-import { describe, it, expect, mock, afterEach } from "bun:test";
-import { componentTestFactory } from "@/tests";
-import { render, cleanup } from "@testing-library/react";
+import { describe, expect, mock } from "bun:test";
+import { testComponentFactory } from "@/tests";
 import { Button } from "./Button.component";
+import { ButtonProps } from ".";
 
 describe("Button", () => {
-  const testButton = componentTestFactory(
-    "Button",
-    "button",
-    Button,
-    Button.defaultProps
-  );
+  const testButton = testComponentFactory<ButtonProps>("Button", Button, {
+    props: Button.defaultProps,
+    tests: [
+      {
+        name: "should render",
+        test: ({ queryByTestId }) => {
+          expect(queryByTestId("button")).toBeDefined();
+        },
+      },
+    ],
+  });
   const onClick = mock(() => {});
+  global.console.warn = mock(() => {});
 
-  testButton({ label: null, icon: null }, true);
+  testButton({ label: null, icon: null })(
+    "should not render",
+    ({ queryByTestId }) => {
+      expect(queryByTestId("button")).toBeNull();
+      expect(global.console.warn).toHaveBeenCalled();
+    }
+  );
 
-  describe("onClick", () => {
-    it("should be called when clicked", () => {
-      const { queryByTestId } = render(
-        <Button label="test" onClick={onClick} />
-      );
+  testButton({ label: "test", onClick })(
+    "should trigger onClick",
+    ({ queryByTestId }) => {
+      onClick.mockReset();
       const button = queryByTestId("button");
       expect(button).toBeDefined();
       button?.click();
       expect(onClick).toHaveBeenCalled();
-    });
+    }
+  );
 
-    it("should not be called when disabled", () => {
-      const { queryByTestId } = render(
-        <Button label="test" onClick={onClick} disabled />
-      );
+  testButton({ label: "test", onClick, disabled: true })(
+    "should not trigger onClick",
+    ({ queryByTestId }) => {
+      onClick.mockReset();
       const button = queryByTestId("button");
       expect(button).toBeDefined();
       button?.click();
       expect(onClick).not.toHaveBeenCalled();
-    });
-    afterEach(() => {
-      onClick.mockReset();
-      cleanup();
-    });
-  });
+    }
+  );
 });

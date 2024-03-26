@@ -9,6 +9,7 @@ import { isFunction } from "@ubloimmo/front-util";
  *
  * @template {Record<string, unknown>} TProps - The props for the component.
  *
+ *
  * @param {string} testId - The test ID used to locate the rendered component.
  * @param {FC<TProps>} Component - The component to be rendered.
  * @param {TProps} props - The props to be passed to the component.
@@ -35,6 +36,8 @@ export const testComponentRender = <TProps extends Record<string, unknown>>(
 };
 
 /**
+ * @deprecated use {@link testComponentFactory}
+ *
  * Generates a test factory for a component.
  *
  * @template {Record<string, unknown>} TProps - The props for the component.
@@ -77,6 +80,8 @@ export const componentTestFactory = <TProps extends Record<string, unknown>>(
 
 /**
  *
+ * Generates a test factory for a hook.
+ *
  * @template {unknown[]} THookParams - the parameters of the hook
  * @template {unknown} THookReturn - the return type of the hook
  * @template {GenericFn<THookParams, THookReturn>} THook - the hook itself
@@ -108,6 +113,7 @@ export const testHookFactory = <
       staticTests.tests.forEach(({ name, test }) =>
         it(name, () => {
           test(result.current);
+          cleanup();
         })
       );
     }
@@ -130,6 +136,68 @@ export const testHookFactory = <
         it(testlabel, () => {
           const { result } = renderHook(() => hook(...(params ?? [])));
           tests(result.current, params ?? []);
+          cleanup();
+        });
+      });
+    };
+};
+
+type RenderResult = ReturnType<typeof render>;
+
+/**
+ * Generates a test factory for a component.
+ *
+ * @template {Record<string, unknown>} TProps - the props of the component
+ *
+ * @param {string} componentName - the name of the component
+ * @param {FC<TProps>} Component - the component to test
+ * @param {{props: TProps; tests: {name: string; test: VoidFn<[RenderResult]>}[]}} [staticTests] - optional static tests object containing props and tests
+ * @return {Function} a meta function used to test the component further
+ */
+export const testComponentFactory = <TProps extends Record<string, unknown>>(
+  componentName: string,
+  Component: FC<TProps>,
+  staticTests?: {
+    props: TProps;
+    tests: { name: string; test: VoidFn<[RenderResult]> }[];
+  }
+) => {
+  describe(componentName, () => {
+    it("should be a function", () => {
+      expect(Component).toBeDefined();
+      expect(Component).toBeFunction();
+    });
+    it("should not throw when no props are provided", () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore needed to check unintended behavior with no props
+      expect(() => render(<Component />)).not.toThrow();
+      cleanup();
+    });
+    it("should throw if ran outside react", () => {
+      expect(Component).toThrow();
+    });
+    if (staticTests && staticTests.tests && staticTests.props) {
+      const renderResult = render(<Component {...staticTests.props} />);
+      staticTests.tests.forEach(({ name, test }) =>
+        it(name, () => {
+          test(renderResult);
+          cleanup();
+        })
+      );
+    }
+  });
+
+  return (
+      testProps: TProps
+    ): VoidFn<[string, VoidFn<[RenderResult, TProps]>]> =>
+    (testName: string, tests: VoidFn<[RenderResult, TProps]>) => {
+      describe(componentName, () => {
+        const paramsStr = JSON.stringify(testProps);
+        const testlabel = `${testName} with params ${paramsStr}"`;
+        it(testlabel, () => {
+          const renderResult = render(<Component {...testProps} />);
+          tests(renderResult, testProps);
+          cleanup();
         });
       });
     };

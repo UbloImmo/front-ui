@@ -6,7 +6,7 @@ import { Icon } from "../Icon";
 import { Text } from "../Text";
 import { useCallback, useMemo } from "react";
 import styled from "styled-components";
-import type { Nullable } from "@ubloimmo/front-util";
+import { isNull, type Nullable } from "@ubloimmo/front-util";
 
 const defaultButtonProps: DefaultButtonProps = {
   type: "button",
@@ -19,7 +19,7 @@ const defaultButtonProps: DefaultButtonProps = {
   secondary: false,
   disabled: false,
   loading: false,
-  onClick: () => {},
+  onClick: null,
 };
 
 /**
@@ -39,7 +39,7 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
   const styledProps = useStyleProps(mergedProps);
 
   const onClick = useCallback(() => {
-    if (mergedProps.disabled) return;
+    if (mergedProps.disabled || isNull(mergedProps.onClick)) return;
     mergedProps.onClick();
   }, [mergedProps]);
 
