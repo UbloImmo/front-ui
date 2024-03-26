@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { describe, it, expect } from "bun:test";
 import { render, cleanup, renderHook } from "@testing-library/react";
 import type { GenericFn, VoidFn, MaybeAsyncFn } from "@ubloimmo/front-util";
-import { isFunction, transformObject } from "@ubloimmo/front-util";
+import { isFunction, isObject, transformObject } from "@ubloimmo/front-util";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 
 /**
@@ -90,7 +90,7 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
   }
 ) => {
   describe(componentName, () => {
-    it("should be a function", () => {
+    it.if(!isObject(Component))("should be a function", () => {
       expect(Component).toBeDefined();
       expect(Component).toBeFunction();
     });
@@ -100,7 +100,7 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
       expect(() => render(<Component />)).not.toThrow();
       cleanup();
     });
-    it("should throw if ran outside react", () => {
+    it.if(!isObject(Component))("should throw if ran outside react", () => {
       expect(Component).toThrow();
       cleanup();
     });

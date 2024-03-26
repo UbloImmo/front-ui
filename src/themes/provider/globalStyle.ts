@@ -162,9 +162,9 @@ export const declareGlobalStyle = (
  * Declares css variables for theme colors and spacings
  *
  * @param {Theme} theme - The theme object
- * @return {string} The CSS for the global style
+ * @return {RuleSet} The CSS for the global style
  */
-export const buildGlobalStyle = (theme: Theme) => {
+export const buildGlobalStyle = (theme: Theme): RuleSet => {
   // generate css vars from spacings
   const spacingsCssVars = spacingsToCssVars(buildSpacingMap());
   const {
