@@ -29,7 +29,7 @@ export const grayBadgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
   },
 };
 
-export const badgeStyle = (props: StyleProps<DefaultBadgeProps>) => {
+export const backgroundShade = (props: StyleProps<DefaultBadgeProps>) => {
   const { color, shade } = fromStyleProps(props);
   const { backgroundColor } =
     color === "gray"
