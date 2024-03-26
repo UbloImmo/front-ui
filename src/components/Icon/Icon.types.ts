@@ -30,6 +30,7 @@ export type IconProps = {
   /**
    * The name of the icon to render.
    *
+   * @required
    * @type {IconName}
    * @default "Circle"
    */

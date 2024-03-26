@@ -43,7 +43,12 @@ const Badge = (props: BadgeProps) => {
   return (
     <BadgeContainer data-testid="badge" {...styledProps}>
       {icon && (
-        <Icon data-testid="badge-icon" color={iconColorStyle} name={icon} />
+        <Icon
+          data-testid="badge-icon"
+          color={iconColorStyle}
+          name={icon}
+          size="s-3"
+        />
       )}
       <Text size="s" color={textColorStyle}>
         {label}

@@ -50,6 +50,7 @@ export const parseJsDoc = (jsDoc: string): ParsedJsDoc => {
   const rawType = pruneDecorator("@type") ?? "";
   const prunedType = /{(.+)}/.exec(rawType);
   const type = prunedType ? prunedType[1] ?? null : null;
+  const required = !!lines.find((line) => line.includes("@required"));
   return {
     description,
     defaultValue,
@@ -57,6 +58,7 @@ export const parseJsDoc = (jsDoc: string): ParsedJsDoc => {
     reason,
     version,
     type,
+    required,
   };
 };
 
@@ -222,8 +224,9 @@ export const formatPropInfo = ({
   const type =
     parsedDescription.type ??
     formatPropType({ tsType: tsType ?? { name: "unknown" }, defaultValue });
-  const required = req ? "Yes" : "No";
-  const name = req ? rawName : `${rawName}?`;
+  const isRequired = parsedDescription.required || req;
+  const required = isRequired ? "Yes" : "No";
+  const name = isRequired ? rawName : `${rawName}?`;
   return {
     ...parsedDescription,
     type,

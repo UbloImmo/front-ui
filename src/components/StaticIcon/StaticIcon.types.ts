@@ -31,6 +31,7 @@ export type StaticIconProps = {
    *
    * Gets passed down to the `Icon` component
    *
+   * @required
    * @type {IconName}
    * @default undefined
    */
