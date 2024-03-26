@@ -224,13 +224,14 @@ export const formatPropInfo = ({
   const type =
     parsedDescription.type ??
     formatPropType({ tsType: tsType ?? { name: "unknown" }, defaultValue });
-  const isRequired = parsedDescription.required || req;
-  const required = isRequired ? "Yes" : "No";
-  const name = isRequired ? rawName : `${rawName}?`;
+  const required = parsedDescription.required || req;
+  const requiredStr = required ? "Yes" : "No";
+  const name = required ? rawName : `${rawName}?`;
   return {
     ...parsedDescription,
     type,
     required,
+    requiredStr,
     name,
   };
 };

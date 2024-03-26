@@ -1,12 +1,17 @@
-import type { ComponentStory, DocgenPropDef } from "@docs/docs.types";
+import type {
+  ComponentStory,
+  DocgenPropDef,
+  ParsedPropInfo,
+} from "@docs/docs.types";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
 import { Text } from "@components";
 import { Markdown } from ".";
 import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import { formatPropInfo } from "@docs/docs.utils";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useStatic } from "@utils";
+import type { StyleProps } from "@types";
 
 type ComponentPropsBlockProps<TComponentProps extends Record<string, unknown>> =
   {
@@ -36,18 +41,28 @@ const ComponentPropsBlock = <TComponentProps extends Record<string, unknown>>(
             name,
           } as ComponentPropInfo)
       )
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .map(formatPropInfo)
+      .sort(
+        (
+          { name: aName, todo: aTodo, required: aRequired },
+          { name: bName, todo: bTodo, required: bRequired }
+        ) => {
+          if (aTodo === bTodo && aRequired === bRequired)
+            return aName.localeCompare(bName);
+          if (aTodo && !bTodo) return 1;
+          if (!aTodo && bTodo) return -1;
+          if (aRequired && !bRequired) return -1;
+          return 0;
+        }
+      );
   }, [props.of.default.component]);
 
   return (
     <Table>
       <ComponentPropsTableHeader />
       <TableBody>
-        {propList.map((prop, index) => (
-          <ComponentPropRow
-            componentProp={prop}
-            key={`${prop.name}-${index}`}
-          />
+        {propList.map((propInfo, index) => (
+          <ComponentPropRow {...propInfo} key={`${propInfo.name}-${index}`} />
         ))}
       </TableBody>
     </Table>
@@ -85,38 +100,34 @@ const ComponentPropsTableHeader = (): JSX.Element => {
   );
 };
 
-type ComponentPropRowProps = {
-  componentProp: ComponentPropInfo;
-};
-
 /**
  * Renders a table row from a component's prop's computed info.
  *
- * @param {ComponentPropRowProps} props - The row's own props.
+ * @param {ParsedPropInfo} props - The row's own props.
  * @return {JSX.Element} The rendered table row.
  */
 const ComponentPropRow = ({
-  componentProp,
-}: ComponentPropRowProps): JSX.Element => {
-  console.log(componentProp);
-  const { defaultValue, description, todo, type, required, name } =
-    useMemo(() => {
-      return formatPropInfo(componentProp);
-    }, [componentProp]);
-
+  defaultValue,
+  description,
+  todo,
+  type,
+  requiredStr,
+  required,
+  name,
+}: ParsedPropInfo): JSX.Element => {
   const textColor = useMemo(() => (todo ? "gray-500" : "gray-800"), [todo]);
 
   return (
-    <TableRow>
+    <TableRow $todo={todo} $required={required}>
       <TableCell>
         <Text
-          size="s"
-          weight={todo ? "regular" : "bold"}
-          color={todo ? "gray-400" : "primary-dark"}
+          size="m"
+          weight={todo ? "regular" : required ? "bold" : "semiBold"}
+          color={todo ? "gray-400" : required ? "primary-base" : "primary-dark"}
           important
           lineThrough={todo}
         >
-          <code>{name}</code>
+          {name}
         </Text>
       </TableCell>
       <TableCell>
@@ -126,7 +137,7 @@ const ComponentPropRow = ({
       </TableCell>
       <TableCell>
         <Text size="s" color={textColor} important>
-          <code>{required}</code>
+          <code>{requiredStr}</code>
         </Text>
       </TableCell>
       <TableCell>
@@ -159,14 +170,43 @@ const Table = styled.table`
   overflow-x: auto !important;
 `;
 
-const TableBody = styled.tbody`
-  tr:hover td {
+const TableBody = styled.tbody``;
+
+const TableRow = styled.tr<
+  Partial<StyleProps<Pick<ParsedPropInfo, "todo" | "required">>>
+>`
+  :hover td {
     background: var(--primary-light-50);
     transition-duration: 150ms;
-  }
-`;
 
-const TableRow = styled.tr`
+    &:first-child {
+      background: var(--primary-light);
+    }
+  }
+  ${({ $todo, $required }) => css`
+    & > td {
+      opacity: ${$todo ? 0.5 : 1};
+      background: ${$todo
+        ? "none"
+        : $required
+        ? "#fff"
+        : "rgba(255, 255, 255, 0.55ss)"};
+    }
+  `}
+
+  ${({ $todo }) =>
+    !$todo &&
+    css`
+      &:hover td {
+        background: var(--primary-light-50);
+        transition-duration: 150ms;
+
+        &:first-child {
+          background: var(--primary-light);
+        }
+      }
+    `}
+
   background: none !important;
 `;
 const TableHeader = styled.thead`
@@ -187,7 +227,7 @@ const TableHeaderCell = styled.th`
 `;
 
 const TableCell = styled.td`
-  background: #fff;
+  background: rgba(255, 255, 255, 0.5);
   border-radius: var(--s-1);
   border: none !important;
   padding: var(--s-2) !important;

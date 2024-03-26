@@ -59,8 +59,8 @@ export type ParsedJsDocDescription = Omit<ParsedJsDoc, "defaultValue"> & {
   defaultValue: string;
 };
 
-export type ParsedPropInfo = Omit<ParsedJsDocDescription, "required"> & {
+export type ParsedPropInfo = ParsedJsDocDescription & {
   type: string;
-  required: "Yes" | "No";
+  requiredStr: "Yes" | "No";
   name: string;
 };
