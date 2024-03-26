@@ -1,16 +1,6 @@
 import type { Optional, VoidFn } from "@ubloimmo/front-util";
-import type { SpacingLabel, CssPx, CssRem, FixedCssLength } from "../../types";
-import { UNIT_PX } from "../../types";
-import {
-  cssVarName,
-  isSpacingLabel,
-  isCssRem,
-  cssRem,
-  isCssLengthUsage,
-  isCssPx,
-  cssPxToCssRem,
-} from "../../utils";
-import { isInt, isNumber } from "@ubloimmo/front-util";
+import type { CssPx, CssRem, FixedCssLength } from "../../types";
+import { cssRem, isCssLengthUsage } from "../../utils";
 import { useMemo } from "react";
 import { parseFixedLength } from "@/sizes/size.utils";
 

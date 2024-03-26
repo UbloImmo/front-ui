@@ -1,10 +1,10 @@
 import { describe, it, expect, afterEach, mock } from "bun:test";
-import { render, renderHook, cleanup } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import { Icon } from "./Icon.component";
 import * as generated from "./__generated__";
 import { ThemeProvider } from "../../themes";
-import { objectKeys, type VoidFn } from "@ubloimmo/front-util";
-import type { IconName, IconProps } from ".";
+import { objectKeys } from "@ubloimmo/front-util";
+import type { IconName } from ".";
 import { useIconSize } from "./Icon.utils";
 import { testHookFactory } from "@/tests";
 import { isCssRem } from "@utils";
