@@ -1,88 +1,9 @@
 import type { FC } from "react";
-import { describe, it, expect, afterEach } from "bun:test";
+import { describe, it, expect } from "bun:test";
 import { render, cleanup, renderHook } from "@testing-library/react";
-import type {
-  GenericFn,
-  VoidFn,
-  Optional,
-  MaybeAsyncFn,
-} from "@ubloimmo/front-util";
+import type { GenericFn, VoidFn, MaybeAsyncFn } from "@ubloimmo/front-util";
 import { isFunction, transformObject } from "@ubloimmo/front-util";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
-
-/**
- * Generates a test case to verify the rendering behavior of a component.
- *
- * @template {Record<string, unknown>} TProps - The props for the component.
- *
- *
- * @param {string} testId - The test ID used to locate the rendered component.
- * @param {FC<TProps>} Component - The component to be rendered.
- * @param {TProps} props - The props to be passed to the component.
- * @param {boolean} [rendersNull] - Indicates whether the component is expected to render null or an element. Defaults to false.
- */
-export const testComponentRender = <TProps extends Record<string, unknown>>(
-  testId: string,
-  Component: FC<TProps>,
-  props: TProps,
-  rendersNull?: boolean
-) => {
-  const propStr = JSON.stringify(props);
-  it(`should render ${
-    rendersNull ? "null" : "an element"
-  } with props ${propStr}`, () => {
-    const { queryByTestId } = render(<Component {...props} />);
-    if (rendersNull) {
-      expect(queryByTestId(testId)).toBeNull();
-    } else {
-      expect(queryByTestId(testId)).toBeDefined();
-    }
-    cleanup();
-  });
-};
-
-/**
- * @deprecated use {@link testComponentFactory}
- *
- * Generates a test factory for a component.
- *
- * @template {Record<string, unknown>} TProps - The props for the component.
- *
- * @param {string} componentName - The name of the component.
- * @param {string} testId - The test ID for the component.
- * @param {FC<TProps>} Component - The component to be tested.
- * @param {Required<TProps>} defaultProps - The default props for the component.
- * @return {VoidFn<[TProps, Optional<boolean>, Optional<string>]>} A function that tests the component with given props.
- */
-export const componentTestFactory = <TProps extends Record<string, unknown>>(
-  componentName: string,
-  testId: string,
-  Component: FC<TProps>,
-  defaultProps: Required<TProps>,
-  rendersNull?: boolean
-): VoidFn<[TProps, Optional<boolean>]> => {
-  describe(componentName, () => {
-    it(`should be a component`, () => {
-      expect(Component).toBeDefined();
-      expect(Component).toBeFunction();
-    });
-
-    testComponentRender(testId, Component, defaultProps, rendersNull);
-
-    afterEach(cleanup);
-  });
-  return (props: TProps, rendersNull?: boolean, nestedTestId?: string) => {
-    describe(componentName, () => {
-      testComponentRender(
-        nestedTestId ?? testId,
-        Component,
-        props,
-        rendersNull
-      );
-      afterEach(cleanup);
-    });
-  };
-};
 
 /**
  *

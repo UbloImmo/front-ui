@@ -1,15 +1,51 @@
-import { describe, it, expect } from "bun:test";
-import { componentTestFactory, testPrimitives } from "src/tests";
-import { EmailInput, defaultEmailInputProps } from "./EmailInput.component";
+import { describe, it, expect, mock } from "bun:test";
+import { testComponentFactory, testPrimitives } from "@/tests";
+import { EmailInput } from "./EmailInput.component";
 import { isEmailString } from "./EmailInput.utils";
-import { objectValues } from "@ubloimmo/front-util";
+import { objectValues, type Nullable } from "@ubloimmo/front-util";
+import type { InputProps } from "..";
+import type { Email } from "@types";
 
-describe("Email Input", () => {
-  componentTestFactory(
+const testId = "input-email";
+
+describe("Input", () => {
+  const testEmailInput = testComponentFactory<InputProps<"email">>(
     "EmailInput",
-    "input-email",
     EmailInput,
-    defaultEmailInputProps
+    {
+      props: EmailInput.defaultProps,
+      tests: [
+        {
+          name: "should render",
+          test: ({ queryByTestId }) => {
+            expect(queryByTestId(testId)).toBeDefined();
+          },
+        },
+      ],
+    }
+  );
+
+  testEmailInput({
+    value: "example@mail.fr",
+  })("should hold a given value", ({ queryByTestId }) => {
+    const input = queryByTestId(testId) as HTMLInputElement;
+    expect(input).toBeDefined();
+    expect(input.value).toBe("example@mail.fr");
+  });
+
+  const onChange = mock((_value: Nullable<Email>) => {});
+
+  testEmailInput({
+    onChange,
+  })(
+    "should trigger onChange",
+    async ({ queryByTestId }, { click, keyboard }) => {
+      onChange.mockReset();
+      const input = queryByTestId(testId) as HTMLInputElement;
+      await click(input);
+      await keyboard("test");
+      expect(onChange).toHaveBeenCalled();
+    }
   );
 
   describe("isEmailString", () => {

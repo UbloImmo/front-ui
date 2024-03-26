@@ -2,7 +2,6 @@ import { describe, expect, mock } from "bun:test";
 import { testComponentFactory } from "@/tests";
 import { PasswordInput } from ".";
 import type { PasswordInputProps } from "./PasswordInput.types";
-import { fireEvent } from "@testing-library/react";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const testId = "input-password";
@@ -31,6 +30,7 @@ describe("Input", () => {
     expect(input).toBeDefined();
     expect(input.value).toBe("test");
   });
+
   const onChange = mock((_value: Nullable<string>) => {});
 
   testPasswordInput({
@@ -42,7 +42,6 @@ describe("Input", () => {
       const input = queryByTestId(testId) as HTMLInputElement;
       await click(input);
       await keyboard("test");
-      fireEvent.change(input, { target: { value: "test" } });
       expect(onChange).toHaveBeenCalled();
     }
   );

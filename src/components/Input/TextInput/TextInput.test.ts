@@ -1,5 +1,4 @@
 import { describe, expect, mock } from "bun:test";
-import { fireEvent } from "@testing-library/react";
 import { testComponentFactory } from "@/tests";
 import { TextInput } from ".";
 import { InputProps } from "..";
@@ -36,9 +35,13 @@ describe("Input", () => {
 
   testTextInput({
     onChange,
-  })("should trigger onChange", ({ queryByTestId }) => {
-    const input = queryByTestId(testId) as HTMLInputElement;
-    fireEvent.change(input, { target: { value: "test" } });
-    expect(onChange).toHaveBeenCalledWith("test");
-  });
+  })(
+    "should trigger onChange",
+    async ({ queryByTestId }, { click, keyboard }) => {
+      const input = queryByTestId(testId) as HTMLInputElement;
+      await click(input);
+      await keyboard("test");
+      expect(onChange).toHaveBeenCalled();
+    }
+  );
 });

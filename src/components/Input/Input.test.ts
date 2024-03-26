@@ -1,36 +1,58 @@
-import type { DefaultGenericInputProps, InputType } from "./Input.types";
-import { describe } from "bun:test";
+import type { GenericInputProps, InputType } from "./Input.types";
+import { describe, expect, mock } from "bun:test";
 import { Input } from "./Input.component";
-import { defaultTextInputProps } from "./TextInput";
-import { componentTestFactory } from "../../tests";
+import { testComponentFactory } from "@/tests";
 
 describe("Input", () => {
-  describe("Generic Input", () => {
-    componentTestFactory("Text", "input-text", Input, {
-      ...defaultTextInputProps,
-      type: "text",
-    } as DefaultGenericInputProps<InputType>);
+  const testGenericInput = testComponentFactory<GenericInputProps<InputType>>(
+    "Generic",
+    Input
+  );
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore needed to check unintended behavior with no props
+  testGenericInput({})(
+    "should render an a text input when no props",
+    ({ queryByTestId }) => {
+      expect(queryByTestId("input-text")).toBeDefined();
+    }
+  );
+  testGenericInput({ type: "text" })(
+    "should render an text input",
+    ({ queryByTestId }) => {
+      expect(queryByTestId("input-text")).toBeDefined();
+    }
+  );
+  testGenericInput({ type: "email" })(
+    "should render an email input",
+    ({ queryByTestId }) => {
+      expect(queryByTestId("input-email")).toBeDefined();
+    }
+  );
+  testGenericInput({ type: "password" })(
+    "should render an passwordf input",
+    ({ queryByTestId }) => {
+      expect(queryByTestId("input-password")).toBeDefined();
+    }
+  );
 
-    componentTestFactory(
-      "Number",
-      "input-number",
-      Input,
-      {
-        ...defaultTextInputProps,
-        type: "number",
-      } as DefaultGenericInputProps<InputType>,
-      true
-    );
+  global.console.warn = mock(() => {});
+  global.console.error = mock(() => {});
 
-    componentTestFactory(
-      "No Type",
-      "input-text",
-      Input,
-      {} as DefaultGenericInputProps<InputType>
-    );
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore needed to check unintended behavior with wrong props
+  testGenericInput({ type: "UNSUPPORTED" })(
+    "should warn and render a text input",
+    ({ queryByTestId }) => {
+      expect(queryByTestId("input-text")).toBeDefined();
+      expect(global.console.warn).toHaveBeenCalled();
+    }
+  );
 
-    componentTestFactory("Unknown Type", "input-text", Input, {
-      type: "UNSUPPORTED",
-    } as unknown as DefaultGenericInputProps<InputType>);
-  });
+  testGenericInput({ type: "number" })(
+    "should error and not render a missing number input",
+    ({ queryByTestId }) => {
+      expect(queryByTestId("input-text")).toBeNull();
+      expect(global.console.error).toHaveBeenCalled();
+    }
+  );
 });

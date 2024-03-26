@@ -15,10 +15,10 @@ import { isString } from "@ubloimmo/front-util";
 import { isEmailString } from "./EmailInput.utils";
 import { Icon } from "../../Icon/Icon.component";
 
-export const defaultEmailInputProps: DefaultInputProps<"email"> = {
+const defaultEmailInputProps: DefaultInputProps<"email"> = {
   ...defaultCommonInputProps,
   value: null,
-  onChange: (_value) => {},
+  onChange: null,
 };
 
 /**
@@ -27,7 +27,7 @@ export const defaultEmailInputProps: DefaultInputProps<"email"> = {
  * @param {InputProps<"email">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
-export const EmailInput = (props: InputProps<"email">): JSX.Element => {
+const EmailInput = (props: InputProps<"email">): JSX.Element => {
   const mergedProps = useMergedProps(defaultEmailInputProps, props);
   const onChange = useInputOnChange<"email">(
     (nativeValue) => isString(nativeValue),
@@ -54,3 +54,7 @@ export const EmailInput = (props: InputProps<"email">): JSX.Element => {
     </StyledInputContainer>
   );
 };
+
+EmailInput.defaultProps = defaultEmailInputProps;
+
+export { EmailInput };
