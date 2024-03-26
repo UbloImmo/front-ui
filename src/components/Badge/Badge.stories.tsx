@@ -6,6 +6,8 @@ import { BadgeProps, BadgeShade } from "./Badge.types";
 import { ComponentVariants } from "../../../docs/blocks";
 import { useMemo } from "react";
 import { ColorPalette } from "../../types";
+import { Nullable } from "@ubloimmo/front-util";
+import { IconName } from "..";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
@@ -81,4 +83,29 @@ Shades.args = {
   label: "label",
   color: "primary",
   icon: "Square",
+};
+
+export const Icon = (props: Partial<BadgeProps>) => {
+  const icons: Nullable<IconName>[] = ["Square", null];
+  const defaultProps = useMemo(() => {
+    return {
+      ...Badge.defaultProps,
+      ...props,
+    };
+  }, [props]);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={icons}
+      for="icon"
+      of={Badge}
+      align="center"
+    />
+  );
+};
+Icon.args = {
+  label: "label",
+  color: "primary",
+  shade: "light",
 };
