@@ -1,7 +1,7 @@
 import type {
   GenericFn,
   Nullable,
-  Optional,
+  Nullish,
   VoidFn,
 } from "@ubloimmo/front-util";
 import type {
@@ -63,7 +63,7 @@ type InputOnChangeConditionFn = GenericFn<[NativeInputValue], boolean>;
 export const useInputOnChange = <TType extends InputType>(
   condition: InputOnChangeConditionFn,
   valueTransformer: InputOnChangeValueTransformerFn<TType>,
-  onChange?: Optional<InputOnChangeFn<TType>>
+  onChange?: Nullish<InputOnChangeFn<TType>>
 ) => {
   return useCallback<NativeInputProps["onChange"]>(
     (e) => {

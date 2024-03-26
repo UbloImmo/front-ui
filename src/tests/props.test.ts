@@ -1,5 +1,6 @@
 import type { StyleProps } from "../types";
-import { objectValues, type Nullable, objectKeys } from "@ubloimmo/front-util";
+import type { Nullable } from "@ubloimmo/front-util";
+import { objectValues, objectKeys, objectEntries } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
 import { renderHook } from "@testing-library/react";
 import {
@@ -8,7 +9,10 @@ import {
   fromStyleProps,
   useStyleProps,
   useMergedProps,
+  useStatic,
 } from "../utils/props.utils";
+import { testHookFactory } from "./test.utils";
+import { testPrimitives } from "./test.data";
 
 type TestProps = {
   a?: string;
@@ -133,6 +137,15 @@ describe("prop utils", () => {
     it("should be a valid react hook", () => {
       const { result } = renderHook(() => useStyleProps(defaultProps));
       expect(result.current).toEqual(styleProps);
+    });
+  });
+
+  describe("useStatic", () => {
+    const testHook = testHookFactory("useStatic", useStatic);
+    objectEntries(testPrimitives).forEach(([key, value]) => {
+      testHook(value)(`should return ${key}`, (result) => {
+        expect(result).toBe(value);
+      });
     });
   });
 });

@@ -1,4 +1,4 @@
-import type { VoidFn } from "@ubloimmo/front-util";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { IconName } from "../../Icon";
 import type { InputProps } from "../Input.types";
 import type { HTMLInputTypeAttribute } from "react";
@@ -20,7 +20,7 @@ export type PasswordInputProps = InputProps<"password"> & {
   /**
    * Optional callback function called when the password visibility changes
    */
-  onVisibilityChange?: VoidFn<[boolean]>;
+  onVisibilityChange?: Nullable<VoidFn<[boolean]>>;
 };
 
 export type DefaultPasswordInputProps = Required<PasswordInputProps>;

@@ -82,7 +82,7 @@ export type InputProps<TType extends InputType> = CommonInputProps & {
   /**
    * The input's onChange callback
    */
-  onChange?: InputOnChangeFn<TType>;
+  onChange?: Nullable<InputOnChangeFn<TType>>;
 };
 
 export type DefaultInputProps<TType extends InputType> = Required<

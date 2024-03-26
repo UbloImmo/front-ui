@@ -1,6 +1,4 @@
-import { describe, it, expect, afterAll } from "bun:test";
-import { render, cleanup } from "@testing-library/react";
-import React from "react";
+import { describe, it, expect } from "bun:test";
 import { buildSpacingMap } from "../../../sizes";
 import {
   spacingsToCssVars,
@@ -14,6 +12,7 @@ import {
   joinCssVarCollection,
 } from "../../../themes";
 import { objectValues } from "@ubloimmo/front-util";
+import { testComponentFactory } from "../../test.utils";
 
 describe("global style", () => {
   describe("build process", () => {
@@ -97,14 +96,6 @@ describe("global style", () => {
   });
 
   describe("jsx element", () => {
-    it("should render the global", () => {
-      expect(GlobalStyle).toBeDefined();
-      expect(GlobalStyle).toBeObject();
-      const rendered = render(<GlobalStyle theme={buildTheme()} />);
-      expect(rendered).toBeObject();
-    });
-  });
-  afterAll(() => {
-    cleanup();
+    testComponentFactory("GlobalStyle", GlobalStyle);
   });
 });

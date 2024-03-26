@@ -1,55 +1,17 @@
-import type { FC, ReactNode } from "react";
-import { Text, HeaderInfo, Canvas } from ".";
+import type { ReactNode } from "react";
+import { Text, HeaderInfo, Canvas, Markdown } from ".";
 import { Header } from "../containers";
 import { GridLayout } from "../../src/layouts";
 import { useMemo } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
-import { Markdown } from "@storybook/blocks";
 import styled from "styled-components";
-
-type DocgenPropDef<TPropName extends string, TPropType> = {
-  name: TPropName;
-  required: boolean;
-  description?: string;
-  defaultValue?: TPropType;
-  value?: TPropType;
-  type: {
-    name: string;
-    value: unknown;
-  };
-};
-
-type DocgenProps<TComponentProps extends Record<string, unknown>> = {
-  [TPropKey in keyof TComponentProps & string]: DocgenPropDef<
-    TPropKey,
-    TComponentProps[TPropKey]
-  >;
-};
-
-type DocgenInfo<TComponentProps extends Record<string, unknown>> = {
-  description?: string;
-  displayName: string;
-  props: DocgenProps<TComponentProps>;
-};
-
-type ComputedComponentMeta<TComponentProps extends Record<string, unknown>> =
-  Meta<FC<TComponentProps>> & {
-    component: {
-      __docgenInfo: DocgenInfo<TComponentProps>;
-      name: string;
-    };
-  };
-
-type ComponentStory<TComponentProps extends Record<string, unknown>> = {
-  default: ComputedComponentMeta<TComponentProps>;
-  Default: StoryObj<Meta<FC<TComponentProps>>>;
-};
+import type { ComponentStory } from "@docs/docs.types";
+import { parseJsDoc } from "@docs/docs.utils";
 
 type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
   name: string;
   title?: string;
   children?: ReactNode;
-  version: string;
+  version?: string;
   description?: string;
   links?: {
     code: string;
@@ -95,10 +57,15 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
     return `import { ${title} } from "@ubloimmo/front-ui";`;
   }, [title]);
 
-  const description = useMemo(() => {
-    return (
-      props.description ?? props.of.default.component.__docgenInfo.description
-    );
+  const { description, version } = useMemo(() => {
+    const jsdoc =
+      props.description ?? props.of.default.component.__docgenInfo.description;
+    if (!jsdoc) return { description: null, version: props.version ?? null };
+    const { description, version } = parseJsDoc(jsdoc);
+    return {
+      description,
+      version: props.version ?? version,
+    };
   }, [props]);
 
   return (
@@ -114,12 +81,16 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
         rows="unset"
         align="start"
       >
-        <Text size="s" weight="semiBold" color="gray-500">
-          Version
-        </Text>
-        <Text size="s" color="gray-800">
-          <code>{props.version}</code>
-        </Text>
+        {version && (
+          <>
+            <Text size="s" weight="semiBold" color="gray-500">
+              Version
+            </Text>
+            <Text size="s" color="gray-800">
+              <code>{version}</code>
+            </Text>
+          </>
+        )}
         <Text size="s" weight="semiBold" color="gray-500">
           Usage
         </Text>

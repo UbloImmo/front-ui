@@ -1,7 +1,3 @@
-import {
-  mobileFontSize,
-  typographyWeightMap,
-} from "./../../typography/typography.styles";
 import type {
   Theme,
   PaletteColorShaded,
@@ -11,17 +7,19 @@ import type {
   RgbaColorStr,
   Spacings,
 } from "../../types";
+import {
+  mobileFontSize,
+  typographyWeightMap,
+} from "./../../typography/typography.styles";
+import type { BreakpointLabel } from "src/types/themes/sizes/breakpoints.types";
 import { effectsToCssVars } from "../palette";
 import { createGlobalStyle, css, type RuleSet } from "styled-components";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
 import { breakpointsPx, buildSpacingMap } from "../../sizes";
 import { cssVar } from "../../utils";
 import { linkFontFace } from "../../typography/typography.font";
-import "@fontsource-variable/open-sans/index.css";
 import { texts } from "@ubloimmo/front-tokens";
-import { BreakpointLabel } from "src/types/themes/sizes/breakpoints.types";
-
-const { warn } = Logger();
+import "@fontsource-variable/open-sans/index.css";
 
 /**
  * Generates CSS variables for the given palette color and its shades.
@@ -164,9 +162,9 @@ export const declareGlobalStyle = (
  * Declares css variables for theme colors and spacings
  *
  * @param {Theme} theme - The theme object
- * @return {string} The CSS for the global style
+ * @return {RuleSet} The CSS for the global style
  */
-export const buildGlobalStyle = (theme: Theme) => {
+export const buildGlobalStyle = (theme: Theme): RuleSet => {
   // generate css vars from spacings
   const spacingsCssVars = spacingsToCssVars(buildSpacingMap());
   const {
@@ -176,7 +174,7 @@ export const buildGlobalStyle = (theme: Theme) => {
   } = textSizesToCssVars();
   // only return spacing css variables if theme is missing
   if (!theme) {
-    warn(
+    Logger().warn(
       "Missing theme. Generating spacing css variables only.",
       "GlobalStyle"
     );

@@ -19,6 +19,8 @@ export const defaultIconProps: DefaultIconProps = {
  * found, it is rendered with the provided size and color props. If the icon
  * component is not found, null is returned.
  *
+ * @version 0.0.1
+ *
  * @param {IconProps} props - The props for the icon component.
  * @return {JSX.Element | null} The rendered icon component or null if the icon component is not found.
  */

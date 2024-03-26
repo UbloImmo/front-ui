@@ -1,5 +1,10 @@
 import type { ReactNode } from "react";
-import type { HeadingProps, PaletteColor, TextProps } from "../../src/types";
+import {
+  StyleProps,
+  type HeadingProps,
+  type PaletteColor,
+  type TextProps,
+} from "../../src/types";
 import {
   Heading as HeadingComponent,
   Text as TextComponent,
@@ -20,11 +25,11 @@ export const Heading = ({
   ...props
 }: Omit<HeadingProps, "important"> & { children: ReactNode }) => {
   return (
-    <HeadingMargin $size={props.size}>
+    <HeadingOverrides $size={props.size}>
       <HeadingComponent {...props} important>
         {children}
       </HeadingComponent>
-    </HeadingMargin>
+    </HeadingOverrides>
   );
 };
 
@@ -60,11 +65,11 @@ export const Text = ({
   ...props
 }: Omit<TextProps, "important"> & { children: ReactNode }) => {
   return (
-    <TextMargin $size={props.size}>
+    <TextOverrides $size={props.size}>
       <TextComponent {...props} important>
         {children}
       </TextComponent>
-    </TextMargin>
+    </TextOverrides>
   );
 };
 
@@ -85,34 +90,67 @@ export const textOfSize =
       </Text>
     );
 
-const HeadingMargin = styled.span<{ $size?: HeadingProps["size"] }>`
+const HeadingOverrides = styled.span<{ $size?: HeadingProps["size"] }>`
   & > * {
-    margin: var(--s-4) 0 !important;
+    margin-top: var(
+      --s-${({ $size }) => ($size === "h4" ? "4" : $size === "h3" ? "8" : $size === "h2" ? "10" : "16")}
+    ) !important;
     margin-bottom: var(
-      --s-${({ $size }) => ($size === "h4" ? "3" : $size === "h3" ? "4" : $size === "h2" ? "6" : "8")}
+      --s-${({ $size }) => ($size === "h4" ? "2" : $size === "h3" ? "4" : $size === "h2" ? "6" : "8")}
     ) !important;
   }
 `;
 
-const TextMargin = styled.span<{ $size?: TextProps["size"] }>`
+const TextOverrides = styled.span<{
+  $size?: TextProps["size"];
+}>`
   & > * {
     margin-bottom: var(
       --s-${({ $size }) => ($size === "xs" ? "05" : $size === "s" ? "1" : "2")}
     ) !important;
-    display: block;
+  }
+  display: block !important;
+
+  &:has(span),
+  & {
+    display: block !important;
+  }
+
+  & > span:has(em),
+  & > span:has(strong) {
+    display: inline !important;
   }
 `;
 
-export const Pre = styled.pre<{
-  background?: PaletteColor;
-  foreground?: PaletteColor;
-  padded?: boolean;
-}>`
-  padding: ${({ padded }) => cssVarUsage(padded ? "s-3" : "s-1")} !important;
-  background: ${({ background }) =>
-    background ? cssVarUsage(background) : "white"} !important;
-  color: ${({ foreground }) =>
-    cssVarUsage(foreground ?? "gray-900")} !important;
+export const Pre = styled.pre<
+  StyleProps<{
+    background?: PaletteColor;
+    foreground?: PaletteColor;
+    padded?: boolean;
+  }>
+>`
+  padding: ${({ $padded }) => cssVarUsage($padded ? "s-3" : "s-1")} !important;
+  background: ${({ $background }) =>
+    $background ? cssVarUsage($background) : "gray-50"} !important;
+  color: ${({ $foreground }) =>
+    cssVarUsage($foreground ?? "gray-900")} !important;
   font-size: var(--text-s) !important;
   border-radius: var(--s-1) !important;
+`;
+
+export const Em = styled.em`
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  font-style: italic !important;
+  font-synthesis: style;
+  font-variation-settings: ital 1 !important;
+`;
+
+export const Strong = styled.strong`
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: var(--text-weight-semiBold) !important;
+  font-style: inherit !important;
+  font-variation-settings: inherit !important;
 `;

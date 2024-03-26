@@ -15,12 +15,19 @@
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
+    "paths": {
+      "@types": ["src/types"],
+      "@utils": ["src/utils"],
+      "@components": ["src/components"],
+      "@docs/*": ["docs/*"],
+      "@/*": ["src/*"],
+    },
     "allowJs": false,
     "strict": true,
     "types": [
       "bun-types" // add Bun global
     ]
   },
-  "exclude": ["node_modules", "./src/tests"]
+  "exclude": ["node_modules", "src/tests"]
 }

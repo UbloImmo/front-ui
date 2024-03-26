@@ -11,7 +11,7 @@ import { isString } from "@ubloimmo/front-util";
 export const defaultTextInputProps: DefaultInputProps<"text"> = {
   ...defaultCommonInputProps,
   value: null,
-  onChange: (_value) => {},
+  onChange: null,
 };
 
 /**
@@ -20,7 +20,7 @@ export const defaultTextInputProps: DefaultInputProps<"text"> = {
  * @param {InputProps<"text">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
-export const TextInput = (props: InputProps<"text">): JSX.Element => {
+const TextInput = (props: InputProps<"text">): JSX.Element => {
   const mergedProps = useMergedProps(defaultTextInputProps, props);
   const onChange = useInputOnChange<"text">(
     (nativeValue): nativeValue is InputValue<"text"> => isString(nativeValue),
@@ -42,3 +42,7 @@ export const TextInput = (props: InputProps<"text">): JSX.Element => {
     />
   );
 };
+
+TextInput.defaultProps = defaultTextInputProps;
+
+export { TextInput };

@@ -34,7 +34,18 @@ module.exports = {
         linkAttribute: "to",
       },
     ],
+    "import/code-modules": ["bun:test"],
     "import/resolver": {
+      alias: {
+        map: [
+          ["@components", "src/components"],
+          ["@utils", "src/utils"],
+          ["@types", "src/types"],
+          ["@docs", "docs"],
+          ["@", "src"],
+        ],
+        extensions: [".ts", "tsx", ".js", ".jsx", ".json", ".mdx"],
+      },
       typescript: true,
       node: true,
     },
@@ -90,5 +101,6 @@ module.exports = {
     "import/no-named-as-default": "off",
     "import/namespace": ["off", { allowComputed: true }],
     "import/no-namespace": "off",
+    "import/no-named-as-default-member": "off",
   },
 };

@@ -24,11 +24,13 @@
     "@storybook/addon-themes": "^8.0.4",
     "@storybook/addon-viewport": "^8.0.4",
     "@storybook/blocks": "^8.0.4",
+    "@storybook/builder-vite": "^8.0.4",
     "@storybook/icons": "^1.2.9",
     "@storybook/react": "^8.0.4",
     "@storybook/react-vite": "^8.0.4",
     "@storybook/test": "^8.0.4",
     "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/bun": "latest",
     "@types/react": "^18.2.48",
     "@types/svg-parser": "^2.0.6",
@@ -37,6 +39,7 @@
     "bun-types": "latest",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-local-rules": "^1.1.0",
@@ -52,7 +55,8 @@
     "storybook": "^8.0.4",
     "svg-parser": "^2.0.4",
     "typescript": "^5.3.3",
-    "vite": "^5.1.6"
+    "vite": "^5.1.6",
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "peerDependencies": {
     "typescript": "^5.3.3",
