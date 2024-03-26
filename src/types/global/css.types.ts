@@ -37,6 +37,11 @@ export type CssFr = `${number}fr`;
 export type CssLength = SpacingLabel | CssRem | CssPx | CssFr | number;
 
 /**
+  Absolute CSS lenghts declarations
+*/
+export type FixedCssLength = Exclude<CssLength, CssFr>;
+
+/**
  * Any supported CSS length usage
  *
  * Can be any of the following:

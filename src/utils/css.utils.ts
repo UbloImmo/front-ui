@@ -210,7 +210,7 @@ export const cssLengthUsage = (gap: CssLength): CssLengthUsage => {
  * @param {unknown} value - the value to check
  * @return {boolean} true if the value is a CssLengthUsage, false otherwise
  */
-export const isCssLenthUsage = (value: unknown): value is CssLengthUsage => {
+export const isCssLengthUsage = (value: unknown): value is CssLengthUsage => {
   return (
     isNumber(value) ||
     isCssPx(value) ||
