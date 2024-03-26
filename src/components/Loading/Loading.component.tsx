@@ -5,7 +5,7 @@ import * as LoadingAnimations from "./animations";
 import { Nullable } from "@ubloimmo/front-util";
 
 const defaultLoadingProps: DefaultLoadingProps = {
-  size: "s-4",
+  size: "s-8",
   color: "primary-base",
   animation: "BouncingBalls",
 };

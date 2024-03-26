@@ -14,7 +14,7 @@ export type LoadingProps = {
    * The size of the loading animation and its container
    * Wether it affects height of width is determined by the animation itself
    *
-   * @default "bouncingBalls"
+   * @default "s-8"
    */
   size?: FixedCssLength;
   /**

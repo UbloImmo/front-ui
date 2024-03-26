@@ -1,5 +1,5 @@
 import { LoadingAnimationProps } from "../../Loading.types";
-import { bouncingBallsStyle } from "./BouncingBalls.style";
+import { bouncingBallsStyle } from "./BouncingBalls.styles";
 import { cssVarUsage } from "@utils";
 import { parseFixedLength } from "@/sizes/size.utils";
 import { useMemo } from "react";
