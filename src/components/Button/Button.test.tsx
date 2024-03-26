@@ -28,22 +28,20 @@ describe("Button", () => {
 
   testButton({ label: "test", onClick })(
     "should trigger onClick",
-    ({ queryByTestId }) => {
+    async ({ queryByTestId }, { click }) => {
       onClick.mockReset();
-      const button = queryByTestId("button");
-      expect(button).toBeDefined();
-      button?.click();
+      const button = queryByTestId("button") as HTMLButtonElement;
+      await click(button);
       expect(onClick).toHaveBeenCalled();
     }
   );
 
   testButton({ label: "test", onClick, disabled: true })(
     "should not trigger onClick",
-    ({ queryByTestId }) => {
+    async ({ queryByTestId }, { click }) => {
       onClick.mockReset();
-      const button = queryByTestId("button");
-      expect(button).toBeDefined();
-      button?.click();
+      const button = queryByTestId("button") as HTMLButtonElement;
+      await click(button);
       expect(onClick).not.toHaveBeenCalled();
     }
   );

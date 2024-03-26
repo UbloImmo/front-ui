@@ -4,7 +4,7 @@ import type {
   PasswordInputProps,
   PasswordVisibility,
 } from "./PasswordInput.types";
-import { isString, type Nullable } from "@ubloimmo/front-util";
+import { isNull, isString, type Nullable } from "@ubloimmo/front-util";
 import { useMergedProps } from "../../../utils";
 import {
   useInputOnChange,
@@ -21,11 +21,11 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon } from "../../Icon";
 
-export const defaultPasswordInputProps: DefaultPasswordInputProps = {
+const defaultPasswordInputProps: DefaultPasswordInputProps = {
   ...defaultCommonInputProps,
   value: null,
-  onChange: (_value) => {},
-  onVisibilityChange: (_visible) => {},
+  onChange: null,
+  onVisibilityChange: null,
   allowChangeVisibility: true,
   visible: false,
 };
@@ -36,7 +36,7 @@ export const defaultPasswordInputProps: DefaultPasswordInputProps = {
  * @param {PasswordInputProps} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
-export const PasswordInput = (props: PasswordInputProps): JSX.Element => {
+const PasswordInput = (props: PasswordInputProps): JSX.Element => {
   const inputRef = useRef<Nullable<HTMLInputElement>>(null);
   const mergedProps = useMergedProps(defaultPasswordInputProps, props);
 
@@ -56,8 +56,8 @@ export const PasswordInput = (props: PasswordInputProps): JSX.Element => {
       if (!mergedProps.allowChangeVisibility) return;
       const inverseVis = !isPasswordVisible;
       setIsPasswordVisible(inverseVis);
-      if (mergedProps.onVisibilityChange)
-        mergedProps.onVisibilityChange(inverseVis);
+      if (isNull(mergedProps.onVisibilityChange)) return;
+      mergedProps.onVisibilityChange(inverseVis);
     }
   );
 
@@ -117,3 +117,7 @@ export const PasswordInput = (props: PasswordInputProps): JSX.Element => {
     </StyledInputContainer>
   );
 };
+
+PasswordInput.defaultProps = defaultPasswordInputProps;
+
+export { PasswordInput };

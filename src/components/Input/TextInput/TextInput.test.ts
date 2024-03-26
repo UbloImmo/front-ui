@@ -5,6 +5,8 @@ import { TextInput } from ".";
 import { InputProps } from "..";
 import type { Nullable } from "@ubloimmo/front-util";
 
+const testId = "input-text";
+
 describe("Input", () => {
   const testTextInput = testComponentFactory<InputProps<"text">>(
     "TextInput",
@@ -15,7 +17,7 @@ describe("Input", () => {
         {
           name: "should render",
           test: ({ queryByTestId }) => {
-            expect(queryByTestId("input-text")).toBeDefined();
+            expect(queryByTestId(testId)).toBeDefined();
           },
         },
       ],
@@ -27,7 +29,7 @@ describe("Input", () => {
   testTextInput({
     value: "test",
   })("should hold a given value", ({ queryByTestId }) => {
-    const input = queryByTestId("input-text") as HTMLInputElement;
+    const input = queryByTestId(testId) as HTMLInputElement;
     expect(input).toBeDefined();
     expect(input.value).toBe("test");
   });
@@ -35,7 +37,7 @@ describe("Input", () => {
   testTextInput({
     onChange,
   })("should trigger onChange", ({ queryByTestId }) => {
-    const input = queryByTestId("input-text") as HTMLInputElement;
+    const input = queryByTestId(testId) as HTMLInputElement;
     fireEvent.change(input, { target: { value: "test" } });
     expect(onChange).toHaveBeenCalledWith("test");
   });

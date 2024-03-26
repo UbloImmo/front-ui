@@ -43,7 +43,7 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
     mergedProps.onClick();
   }, [mergedProps]);
 
-  const { label, icon, disabled, title, role } = mergedProps;
+  const { label, icon, disabled, title, role, type } = mergedProps;
 
   const ariaTitle = useMemo(() => {
     return title && title.length > 0 ? title : label ?? undefined;
@@ -63,6 +63,7 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
   return (
     <StyledButton
       {...styledProps}
+      type={type}
       data-testid="button"
       onClick={onClick}
       disabled={disabled}

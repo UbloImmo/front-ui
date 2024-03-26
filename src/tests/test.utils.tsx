@@ -1,8 +1,14 @@
 import type { FC } from "react";
 import { describe, it, expect, afterEach } from "bun:test";
 import { render, cleanup, renderHook } from "@testing-library/react";
-import type { GenericFn, VoidFn, Optional } from "@ubloimmo/front-util";
+import type {
+  GenericFn,
+  VoidFn,
+  Optional,
+  MaybeAsyncFn,
+} from "@ubloimmo/front-util";
 import { isFunction, transformObject } from "@ubloimmo/front-util";
+import userEvent, { type UserEvent } from "@testing-library/user-event";
 
 /**
  * Generates a test case to verify the rendering behavior of a component.
@@ -175,6 +181,7 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
     });
     it("should throw if ran outside react", () => {
       expect(Component).toThrow();
+      cleanup();
     });
     if (staticTests && staticTests.tests && staticTests.props) {
       const renderResult = render(<Component {...staticTests.props} />);
@@ -189,8 +196,11 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
 
   return (
       testProps: TProps
-    ): VoidFn<[string, VoidFn<[RenderResult, TProps]>]> =>
-    (testName: string, tests: VoidFn<[RenderResult, TProps]>) => {
+    ): VoidFn<[string, MaybeAsyncFn<[RenderResult, UserEvent, TProps]>]> =>
+    (
+      testName: string,
+      tests: MaybeAsyncFn<[RenderResult, UserEvent, TProps]>
+    ) => {
       describe(componentName, () => {
         const paramsStr = JSON.stringify(
           transformObject(testProps, (value) =>
@@ -198,11 +208,14 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
           )
         );
         const testlabel = `${testName} with params ${paramsStr}"`;
-        it(testlabel, () => {
+        it(testlabel, async () => {
+          cleanup();
+          const user = userEvent.setup();
           const renderResult = render(<Component {...testProps} />);
-          tests(renderResult, testProps);
+          await tests(renderResult, user, testProps);
           cleanup();
         });
+        cleanup();
       });
     };
 };
