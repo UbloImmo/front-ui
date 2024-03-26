@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { describe, it, expect, afterEach } from "bun:test";
 import { render, cleanup, renderHook } from "@testing-library/react";
 import type { GenericFn, VoidFn, Optional } from "@ubloimmo/front-util";
-import { isFunction } from "@ubloimmo/front-util";
+import { isFunction, transformObject } from "@ubloimmo/front-util";
 
 /**
  * Generates a test case to verify the rendering behavior of a component.
@@ -192,7 +192,11 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
     ): VoidFn<[string, VoidFn<[RenderResult, TProps]>]> =>
     (testName: string, tests: VoidFn<[RenderResult, TProps]>) => {
       describe(componentName, () => {
-        const paramsStr = JSON.stringify(testProps);
+        const paramsStr = JSON.stringify(
+          transformObject(testProps, (value) =>
+            isFunction(value) ? "() => {}" : value
+          )
+        );
         const testlabel = `${testName} with params ${paramsStr}"`;
         it(testlabel, () => {
           const renderResult = render(<Component {...testProps} />);
