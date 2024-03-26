@@ -1,7 +1,17 @@
-import { describe } from "bun:test";
-import { componentTestFactory } from "src/tests";
-import { Badge, defaultBadgeProps } from "./Badge.component";
+import { describe, expect } from "bun:test";
+import { testComponentFactory } from "src/tests";
+import { Badge } from "./Badge.component";
 
 describe("Badge", () => {
-  componentTestFactory("Badge", "badge", Badge, defaultBadgeProps);
+  testComponentFactory("Badge", Badge, {
+    props: Badge.defaultProps,
+    tests: [
+      {
+        name: "should render",
+        test: ({ queryByTestId }) => {
+          expect(queryByTestId("badge")).toBeDefined();
+        },
+      },
+    ],
+  });
 });
