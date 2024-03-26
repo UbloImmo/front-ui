@@ -1,0 +1,34 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "../../../docs/blocks";
+import { Content } from "../../../docs/containers";
+import * as BadgeStories from "./Badge.stories.tsx";
+import { Badge } from "./Badge.component.tsx";
+
+<Meta of={BadgeStories} />
+
+<ComponentInfo version="0.0.1" of={BadgeStories} />
+
+<Content>
+
+## Colors
+
+Badge takes **raw** colors _(e.g. `primary`)_ and **not** shaded colors _(e.g. `primary-light`)_ as its `color` property.
+
+The resulting Badge's background, text and icon colors are computed based on this property.
+
+<Canvas of={BadgeStories.Colors} />
+
+## Shades
+
+Badge adapt their container's background color, text color and icon color based on their `shade` property.
+
+<Canvas of={BadgeStories.Shades} />
+
+## Icons
+
+Through its `icon` property, Badge accepts any valid Icon name, and passes it directly to the underlying Icon component.
+Rendering `icon` property in the Badge is optionnal
+
+<Canvas of={BadgeStories.Icon} />
+
+</Content>
