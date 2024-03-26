@@ -1,7 +1,7 @@
 import { FixedCssLength, PaletteColor } from "@types";
 import * as LoadingAnimations from "./animations";
 
-type LoadingAnimation = keyof typeof LoadingAnimations;
+export type LoadingAnimation = keyof typeof LoadingAnimations;
 
 export type LoadingProps = {
   /**
@@ -18,8 +18,8 @@ export type LoadingProps = {
    */
   size?: FixedCssLength;
   /**
-   * The dominant color of the laading animation
-   * Wether it affects height of width is determined by the animation itself
+   * The dominant color of the loading animation.
+   * Some animations might have fixed colors and not take this into account
    *
    * @default "primary-base"
    */

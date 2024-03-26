@@ -18,6 +18,7 @@ export const bouncingBallsStyle = css`
   background: none;
   border: none;
   cursor: progress;
+  transition: fill 300ms ease-out 0s;
 
   g {
     transform: translateY(-20%);
