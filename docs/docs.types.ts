@@ -51,6 +51,7 @@ export type ParsedJsDoc = {
   todo: boolean;
   reason: Nullable<string>;
   version: Nullable<string>;
+  type: Nullable<string>;
 };
 
 export type ParsedJsDocDescription = Exclude<ParsedJsDoc, "defaultValue"> & {

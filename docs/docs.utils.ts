@@ -10,7 +10,7 @@ import type {
   ParsedJsDocDescription,
   ParsedPropInfo,
 } from "./docs.types";
-import { capitalize } from "@utils";
+import { capitalize, isColorKey, isPaletteColor } from "@utils";
 import { SPACING_PREFIX } from "@types";
 
 /**
@@ -47,12 +47,16 @@ export const parseJsDoc = (jsDoc: string): ParsedJsDoc => {
   const reason = pruneDecorator("@todo");
   const description = removeJsDocDecorators(jsDoc);
   const version = pruneDecorator("@version");
+  const rawType = pruneDecorator("@type") ?? "";
+  const prunedType = /{(.+)}/.exec(rawType);
+  const type = prunedType ? prunedType[1] ?? null : null;
   return {
     description,
     defaultValue,
     todo,
     reason,
     version,
+    type,
   };
 };
 
@@ -95,18 +99,37 @@ const formatPropType = ({
       SPACING_PREFIX
     );
   }
+  const toUnion = (typeStr: string) =>
+    typeStr.includes("|")
+      ? typeStr.split("|").map((member) => member.trim())
+      : [typeStr.trim()];
 
-  // format insersections
-  formatIntersection: {
-    const toUnion = (typeStr: string) =>
-      typeStr.includes("|")
-        ? typeStr.split("|").map((member) => member.trim())
-        : [typeStr.trim()];
+  if (
+    tsType.name === "intersection" &&
+    isArray(tsType?.elements) &&
+    isString(tsType.raw)
+  ) {
+    const rawElements = tsType.raw.split("&").map((item) => item.trim());
+    const elementTypes = tsType.elements
+      .map((element) => ({
+        ...element,
+        name:
+          // add missing type info that is present in raw
+          rawElements.find((rawElement) => rawElement.includes(element.name)) ??
+          element.name,
+      }))
+      // format each element
+      .map((elementType) => formatPropType({ tsType: elementType }));
 
+    return elementTypes.join(" & ");
+  }
+
+  // format exculdes
+  formatExclude: {
     if (tsType.name === "Exclude" && isArray(tsType?.elements)) {
       const [base, intersection] = tsType.elements;
       if (!base) {
-        break formatIntersection;
+        break formatExclude;
       }
       if (!intersection) {
         return formatPropType({ tsType: base });
@@ -131,9 +154,22 @@ const formatPropType = ({
       });
     }
   }
-  // format callbacks
-  if (tsType.name === "unknown" && defaultValue?.value === "() => {}") {
-    return "Function";
+
+  // handle unpopulated known types
+  if (tsType.name === "unknown") {
+    // format callbacks
+    if (defaultValue?.value === "() => {}") {
+      return "Function";
+    }
+
+    // format colors if not populated
+    if (isColorKey(defaultValue?.value.replaceAll('"', ""))) {
+      return "ColorKey";
+    }
+
+    if (isPaletteColor(defaultValue?.value.replaceAll('"', ""))) {
+      return "PaletteColor";
+    }
   }
 
   return output;
@@ -155,7 +191,7 @@ const parsePropDescription = ({
   const parsed = parseJsDoc(desc ?? "");
   let description = parsed.description ?? desc ?? "—";
   if (parsed.todo) {
-    description += "\n\n**TODO**";
+    description += "\n\n_**`TODO`**_";
   }
   if (parsed.reason) {
     description += ` ${parsed.reason}`;
@@ -182,14 +218,16 @@ export const formatPropInfo = ({
   description,
   name: rawName,
 }: DocgenPropDef<NullishPrimitives> & { name: string }): ParsedPropInfo => {
-  const type = formatPropType({ tsType, defaultValue });
   const parsedDescription = parsePropDescription({ description, defaultValue });
+  const type =
+    parsedDescription.type ??
+    formatPropType({ tsType: tsType ?? { name: "unknown" }, defaultValue });
   const required = req ? "Yes" : "No";
   const name = req ? rawName : `${rawName}?`;
   return {
+    ...parsedDescription,
     type,
     required,
     name,
-    ...parsedDescription,
   };
 };

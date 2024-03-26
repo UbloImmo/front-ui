@@ -16,18 +16,21 @@ export type IconProps = {
    *
    * Gets automatically converted to `CssRem`.
    *
+   * @type {FixedCssLength}
    * @default "s-4"
    */
   size?: FixedCssLength;
   /**
    * The shaded color of the icon.
    *
+   * @type {PaletteColor}
    * @default "primary-base"
    */
   color?: PaletteColor;
   /**
    * The name of the icon to render.
    *
+   * @type {IconName}
    * @default "Circle"
    */
   name: IconName;

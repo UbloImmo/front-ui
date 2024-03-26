@@ -7,6 +7,7 @@ export type LoadingProps = {
   /**
    * The name of the animation to play
    *
+   * @type {LoadingAnimation}
    * @default "bouncingBalls"
    */
   animation?: LoadingAnimation;
@@ -14,14 +15,16 @@ export type LoadingProps = {
    * The size of the loading animation and its container
    * Wether it affects height of width is determined by the animation itself
    *
-   * @default "s-8"
+   * @type {FixedCssLength}
+   * @default "s-4"
    */
   size?: FixedCssLength;
   /**
    * The dominant color of the loading animation.
    * Some animations might have fixed colors and not take this into account
    *
-   * @default "primary-base"
+   * @type {PaletteColor}
+   * @default "primary-light"
    */
   color?: PaletteColor;
 };

@@ -1,5 +1,5 @@
 import { ColorKey, SpacingLabel, Enum } from "../../types";
-import { IconProps } from "../Icon/Icon.types";
+import { IconName } from "../Icon/Icon.types";
 
 const staticIconSizes = ["xs", "s", "m", "l"] as const;
 export type StaticIconSize = Enum<typeof staticIconSizes>;
@@ -8,6 +8,7 @@ export type StaticIconProps = {
   /**
    * The color of the staticIcon
    *
+   * @type {ColorKey}
    * @default "primary"
    */
   color?: ColorKey;
@@ -15,6 +16,7 @@ export type StaticIconProps = {
    * The size of the Icon.
    * Influences the padding and border radius of the wrapper as well
    *
+   * @type {StaticIconSize}
    * @default "s"
    */
   size?: StaticIconSize;
@@ -29,9 +31,10 @@ export type StaticIconProps = {
    *
    * Gets passed down to the `Icon` component
    *
+   * @type {IconName}
    * @default undefined
    */
-  name: IconProps["name"];
+  name: IconName;
 };
 
 export type DefaultStaticIconProps = Required<StaticIconProps>;

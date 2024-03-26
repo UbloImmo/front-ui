@@ -98,6 +98,7 @@ type ComponentPropRowProps = {
 const ComponentPropRow = ({
   componentProp,
 }: ComponentPropRowProps): JSX.Element => {
+  console.log(componentProp);
   const { defaultValue, description, todo, type, required, name } =
     useMemo(() => {
       return formatPropInfo(componentProp);
@@ -135,7 +136,7 @@ const ComponentPropRow = ({
       </TableCell>
       <TableCell>
         <Text size="s" color={textColor} important>
-          <Markdown inherit>{description}</Markdown>
+          <Markdown>{description}</Markdown>
         </Text>
       </TableCell>
     </TableRow>
