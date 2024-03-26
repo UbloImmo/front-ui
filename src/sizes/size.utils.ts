@@ -10,6 +10,13 @@ import {
   cssPxToCssRem,
 } from "@utils";
 
+/**
+ * Parses a fixed CSS length and returns a CssRem value.
+ *
+ * @param {FixedCssLength} length - The length to be parsed.
+ * @param {VoidFn<[unknown]>} [warn] - An optional warning function.
+ * @return {CssRem} The parsed CssRem value.
+ */
 export const parseFixedLength = (
   length: FixedCssLength,
   warn?: VoidFn<[unknown]>
