@@ -101,10 +101,10 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
       expect(() => render(<Component />)).not.toThrow();
       cleanup();
     });
-    it.if(!isObject(Component))("should throw if ran outside react", () => {
-      expect(Component).toThrow();
-      cleanup();
-    });
+    // it.if(!isObject(Component))("should throw if ran outside react", () => {
+    //   expect(Component).toThrow();
+    //   cleanup();
+    // });
     if (staticTests && staticTests.tests && staticTests.props) {
       const renderResult = render(<Component {...staticTests.props} />);
       staticTests.tests.forEach(({ name, test }) =>

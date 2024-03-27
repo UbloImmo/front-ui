@@ -1,0 +1,34 @@
+import { Meta, Description } from "@storybook/blocks";
+import { ComponentInfo, Canvas, ComponentProps } from "../../../docs/blocks";
+import { Content } from "../../../docs/containers";
+import * as FlexStories from "./Flex.stories.tsx";
+
+<Meta of={FlexStories} />
+
+<ComponentInfo version="0.0.1" of={FlexStories} />
+
+<Content>
+
+## Properties
+
+<ComponentProps of={FlexStories} />
+
+## Usage
+
+`<FlexLayout>` renders by default with direction property as `row`, justify and align properties as `start`.
+Its properties are based on the CSS rules for flexboxes (`wrap`, `align`, `reverse`, etc.).
+
+### Row
+
+`<FlexRowLayout>` can also be used to render a flex layout with a `row` direction. In the example below, `justify` is set to **space-between**
+
+<Canvas of={FlexStories.Row} />
+
+### Column
+
+`<FlexColumnLayout>` can also be used to render a flex layout with a `column` direction.
+
+<Canvas of={FlexStories.Column} />
+
+</Content>
+import { Default } from "./Flex.stories"
