@@ -192,6 +192,10 @@ const ShadeContainer = styled.div.attrs<{
     transition: all 150ms ease-out 0s;
   }
 
+  & > span > code {
+    background: none !important;
+  }
+
   &:hover {
     border-radius: var(--s-3);
     transform: scale(1.2);
