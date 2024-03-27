@@ -17,6 +17,8 @@ import {
 import {
   blendColors,
   hexColorConverter,
+  isColorKey,
+  isPaletteColor,
   isSameColor,
   isSameShade,
   isValidHexStr,
@@ -192,6 +194,74 @@ describe("color predicates", () => {
     it("should return false for anything else", () => {
       objectValues(testPrimitives).forEach((primitive) => {
         expect(isValidRgbaStr(primitive)).toBeFalse();
+      });
+    });
+  });
+
+  describe("isColorKey", () => {
+    it("should not throw", () => {
+      expect(isColorKey).toBeFunction();
+      expect(isColorKey).not.toThrow();
+    });
+
+    it("should return true for a valid color key", () => {
+      ["success", "error", "warning", "pending", "gray", "primary"].forEach(
+        (colorKey) => {
+          expect(isColorKey(colorKey)).toBeTrue();
+        }
+      );
+    });
+
+    it("should return false for an invalid color key", () => {
+      ["success", "error", "warning", "pending", "gray", "primary"]
+        .map((key, index) => `${key}${index}`)
+        .forEach((colorKey) => {
+          expect(isColorKey(colorKey)).toBeFalse();
+        });
+    });
+
+    it("should return false for anything else", () => {
+      objectValues(testPrimitives).forEach((primitive) => {
+        expect(isColorKey(primitive)).toBeFalse();
+      });
+    });
+  });
+
+  describe("isPaletteColor", () => {
+    it("should not throw", () => {
+      expect(isPaletteColor).toBeFunction();
+      expect(isPaletteColor).not.toThrow();
+    });
+
+    it("should return true for a valid color key", () => {
+      [
+        "success-light",
+        "error-dark",
+        "warning-base",
+        "pending-medium",
+        "gray-700",
+        "primary-base",
+      ].forEach((colorKey) => {
+        expect(isPaletteColor(colorKey)).toBeTrue();
+      });
+    });
+
+    it("should return false for an invalid color key", () => {
+      [
+        "success-lightt",
+        "error",
+        "warning-",
+        "pending-Medium",
+        "gray-704",
+        "primary-500",
+      ].forEach((colorKey) => {
+        expect(isPaletteColor(colorKey)).toBeFalse();
+      });
+    });
+
+    it("should return false for anything else", () => {
+      objectValues(testPrimitives).forEach((primitive) => {
+        expect(isColorKey(primitive)).toBeFalse();
       });
     });
   });
