@@ -27,6 +27,7 @@ const config: StorybookConfig = {
     autodocs: "tag",
   },
   async viteFinal(config, { configType }) {
+    console.log(config);
     const { mergeConfig } = await import("vite");
     if (configType === "PRODUCTION") {
       config.base = "/design-system";
@@ -36,17 +37,19 @@ const config: StorybookConfig = {
       ...config,
       optimizeDeps: {
         ...(config.optimizeDeps ?? {}),
-        include:
-          configType === "DEVELOPMENT" ? [] : config.optimizeDeps?.include,
+        entries:
+          configType === "DEVELOPMENT" ? [] : config.optimizeDeps?.entries,
       },
     };
-    return mergeConfig(baseConfig, {
+    const merged = mergeConfig(baseConfig, {
       build: {
         rollupOptions: {
           external: ["bun:test", "*.test.ts", "*.test.tsx"],
         },
       },
     });
+    console.log(merged);
+    return merged;
   },
   managerHead: (head, { configType }) => {
     if (configType === "PRODUCTION") {
