@@ -152,7 +152,7 @@ export const Em = styled.em`
 export const Strong = styled.strong`
   color: inherit !important;
   font-size: inherit !important;
-  font-weight: var(--text-weight-semiBold) !important;
+  font-weight: var(--text-weight-semibold) !important;
   font-style: inherit !important;
   font-variation-settings: inherit !important;
 `;

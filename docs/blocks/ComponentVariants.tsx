@@ -60,6 +60,11 @@ type ComponentVariantsConfig<
    */
   align?: FlexAlignment;
   /**
+   * Dictates the horizontal alignment of the variants.
+   * @default "start".
+   */
+  justify?: FlexAlignment;
+  /**
    * Dictates the flex direction of the variants
    * @default "row"
    */
@@ -146,7 +151,8 @@ export const ComponentVariants = <
       <FlexLayout
         direction={props.direction ?? "row"}
         gap={props.gap ?? "s-8"}
-        align={props.align ?? "start"}
+        align={props.align}
+        justify={props.justify}
         wrap
       >
         {children}
@@ -217,7 +223,7 @@ const ComponentWrapper = styled.article<{ $scaling?: number; $grid?: boolean }>`
 
   &:hover {
     .component-container {
-      transform: scale(${({ $scaling }) => $scaling ?? 1.5});
+      transform: scale(${({ $scaling }) => $scaling ?? 1.2});
       z-index: 3;
     }
 

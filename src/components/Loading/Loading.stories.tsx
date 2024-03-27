@@ -8,7 +8,7 @@ import type { LoadingAnimation, LoadingProps } from "./Loading.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/Loading",
+  title: "Components/Loading/Stories",
   component: Loading,
   args: Loading.defaultProps,
 } satisfies Meta<typeof Loading>;

@@ -1,15 +1,16 @@
 import { useMemo } from "react";
 
 import { StaticIcon } from "./StaticIcon.component";
-import { ComponentVariants } from "@docs/blocks";
 import { FlexRowLayout } from "../../layouts";
+
+import { ComponentVariants } from "@docs/blocks";
 
 import type { StaticIconProps, StaticIconSize } from "./StaticIcon.types";
 import type { ColorPalette } from "../../types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof StaticIcon> = {
-  title: "Components/StaticIcon",
+  title: "Components/StaticIcon/Stories",
   component: StaticIcon,
   decorators: [
     (Story) => (
@@ -56,7 +57,6 @@ export const Colors = (props: Partial<StaticIconProps>) => {
 Colors.args = {
   name: "Square",
   size: "s",
-  stroke: true,
 };
 
 export const Sizes = (props: Partial<StaticIconProps>) => {
@@ -78,8 +78,31 @@ export const Sizes = (props: Partial<StaticIconProps>) => {
     />
   );
 };
-Colors.args = {
+Sizes.args = {
   name: "Square",
   size: "s",
-  stroke: true,
+};
+
+export const Stroke = (props: Partial<StaticIconProps>) => {
+  const defaultProps = useMemo(() => {
+    return {
+      ...StaticIcon.defaultProps,
+      ...props,
+    };
+  }, [props]);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={[false, true]}
+      for="stroke"
+      propLabels
+      of={StaticIcon}
+      align="center"
+    />
+  );
+};
+Stroke.args = {
+  name: "Square",
+  size: "s",
 };

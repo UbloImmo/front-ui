@@ -4,9 +4,10 @@ import { useMemo } from "react";
 import { Badge } from "./Badge.component";
 import { BadgeProps, BadgeShade } from "./Badge.types";
 import { IconName } from "..";
-import { ComponentVariants } from "@docs/blocks";
 import { FlexRowLayout } from "../../layouts";
 import { ColorPalette } from "../../types";
+
+import { ComponentVariants } from "@docs/blocks";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -58,7 +59,6 @@ export const Colors = (props: Partial<BadgeProps>) => {
 Colors.args = {
   label: "label",
   shade: "light",
-  icon: "Square",
 };
 
 export const Shades = (props: Partial<BadgeProps>) => {
@@ -83,11 +83,10 @@ export const Shades = (props: Partial<BadgeProps>) => {
 Shades.args = {
   label: "label",
   color: "primary",
-  icon: "Square",
 };
 
 export const Icon = (props: Partial<BadgeProps>) => {
-  const icons: Nullable<IconName>[] = ["Square", null];
+  const icons: Nullable<IconName>[] = [props.icon ?? "Square", null];
   const defaultProps = useMemo(() => {
     return {
       ...Badge.defaultProps,
@@ -109,5 +108,4 @@ export const Icon = (props: Partial<BadgeProps>) => {
 Icon.args = {
   label: "label",
   color: "primary",
-  shade: "light",
 };
