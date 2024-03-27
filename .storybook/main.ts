@@ -41,7 +41,14 @@ const config: StorybookConfig = {
           configType === "DEVELOPMENT" ? [] : config.optimizeDeps?.entries,
       },
     };
-    console.log(baseConfig.resolve);
+
+    const alias = {
+      "@docs": path.resolve(path.dirname(__dirname), "docs"),
+      "@types": path.resolve(path.dirname(__dirname), "src", "types"),
+      "@utils": path.resolve(path.dirname(__dirname), "src", "utils"),
+      "@components": path.resolve(path.dirname(__dirname), "src", "components"),
+      "@": path.resolve(path.dirname(__dirname), "src"),
+    };
     return mergeConfig(baseConfig, {
       build: {
         rollupOptions: {
@@ -49,17 +56,7 @@ const config: StorybookConfig = {
         },
       },
       resolve: {
-        alias: {
-          "@docs": path.resolve(path.dirname(__dirname), "docs"),
-          "@types": path.resolve(path.dirname(__dirname), "src", "types"),
-          "@utils": path.resolve(path.dirname(__dirname), "src", "utils"),
-          "@components": path.resolve(
-            path.dirname(__dirname),
-            "src",
-            "components"
-          ),
-          "@": path.resolve(path.dirname(__dirname), "src"),
-        },
+        alias,
       },
     });
   },
