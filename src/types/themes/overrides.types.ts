@@ -1,5 +1,5 @@
-import type { Nullish, Nullable, DeepNullish } from "@ubloimmo/front-util";
 import type { HexColorOpaque } from ".";
+import type { Nullish, Nullable, DeepNullish } from "@ubloimmo/front-util";
 
 export type OrganizationAssets = {
   logo: string;
