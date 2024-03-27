@@ -1,8 +1,8 @@
 import { Meta, Description } from "@storybook/blocks";
-import { ComponentInfo, ComponentProps, Canvas } from "../../../docs/blocks"
-import { Content } from "../../../docs/containers"
+import { ComponentInfo, ComponentProps, Canvas } from "../../../docs/blocks";
+import { Content } from "../../../docs/containers";
+import { Button } from "./Button.component.tsx";
 import * as ButtonStories from "./Button.stories.tsx";
-import {Button} from "./Button.component.tsx";
 
 <Meta of={ButtonStories} />
 
@@ -34,13 +34,20 @@ This dictates the color palette it'll be displaying while in its default, hover 
 
 #### Primary buttons
 
-<Canvas of={ButtonStories.PrimaryColors}/>
+<Canvas of={ButtonStories.PrimaryColors} />
 
 #### Secondary buttons
 
 Passing it the `secondary` property will further style it according to its color.
 
-<Canvas of={ButtonStories.SecondaryColors}/>
+<Canvas of={ButtonStories.SecondaryColors} />
+
+### Loading state
+
+A Button will display a loading animation when passed a `loading` property.
+Buttons in a loading state will not trigger their `onClick` event listeners to prevent users rage-clicking and triggering the same callback mutliple times.
+
+<Canvas of={ButtonStories.Loading} />
 
 ## Responsive behavior
 

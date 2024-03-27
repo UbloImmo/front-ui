@@ -54,9 +54,9 @@ export type ButtonProps = {
   /**
    * Whether to display a loading spinner or not.
    *
-   * @default false
+   * Setting this to `true` will also prevent any `onClick` events from being triggered.
    *
-   * @todo _not implemented yet, needs global Loading component_
+   * @default false
    */
   loading?: boolean;
   /**
@@ -83,6 +83,7 @@ export type ButtonProps = {
   /**
    * The label of the button.
    *
+   * @required
    * @type {string | null}
    * @default "Button"
    */
@@ -106,6 +107,7 @@ export type ButtonProps = {
   /**
    * The label of the button.
    *
+   * @required
    * @type {string | null}
    * @default "Button"
    */

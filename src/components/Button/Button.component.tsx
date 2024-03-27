@@ -2,8 +2,12 @@ import { isNull, type Nullable } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
-import { buildButtonStyles } from "./Button.styles";
+import {
+  buildButtonStyles,
+  buildButtonLoadingContainerStyles,
+} from "./Button.styles";
 import { Icon } from "../Icon";
+import { Loading } from "../Loading/Loading.component";
 import { Text } from "../Text";
 
 import { useLogger, useMergedProps, useStyleProps } from "@utils";
@@ -42,7 +46,12 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
   const styledProps = useStyleProps(mergedProps);
 
   const onClick = useCallback(() => {
-    if (mergedProps.disabled || isNull(mergedProps.onClick)) return;
+    if (
+      mergedProps.disabled ||
+      mergedProps.loading ||
+      isNull(mergedProps.onClick)
+    )
+      return;
     mergedProps.onClick();
   }, [mergedProps]);
 
@@ -56,7 +65,7 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
     return role ?? "button";
   }, [role]);
 
-  if (!icon && !label) {
+  if ((!icon && !label) || (!icon && label?.length === 0)) {
     warn(
       "Button must have at least a label and / or an icon. Both are missing"
     );
@@ -76,11 +85,14 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
       role={ariaRole}
     >
       {icon && <Icon name={icon} size="1rem" />}
-      {label && (
+      {label && label.length > 0 && (
         <Text size="m" weight="semiBold">
           {label}
         </Text>
       )}
+      <StyledButtonLoadingContainer {...styledProps}>
+        <Loading animation="BouncingBalls" size="s-3" />
+      </StyledButtonLoadingContainer>
     </StyledButton>
   );
 };
@@ -91,4 +103,8 @@ export { Button };
 
 const StyledButton = styled.button<StyleProps<DefaultButtonProps>>`
   ${buildButtonStyles}
+`;
+
+const StyledButtonLoadingContainer = styled.div<StyleProps<DefaultButtonProps>>`
+  ${buildButtonLoadingContainerStyles}
 `;

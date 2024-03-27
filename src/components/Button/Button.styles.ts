@@ -111,10 +111,10 @@ const buttonStyleMap: ValueMap<ButtonColor, ButtonStyle> = {
   red: colorButtonStyle("error"),
 };
 
-const buttonColorStyles = ({
+const computeButtonColor = ({
   color,
   secondary,
-}: DefaultButtonProps): RuleSet => {
+}: Pick<DefaultButtonProps, "color" | "secondary">) => {
   const rawButtonColors =
     buttonStyleMap[color][secondary ? "secondary" : "primary"];
 
@@ -135,11 +135,15 @@ const buttonColorStyles = ({
     ])
   );
 
-  const getColor = (key: keyof ButtonStyleColors, hovering?: boolean) => {
+  return (key: keyof ButtonStyleColors, hovering?: boolean) => {
     const color = defaultColors[key] ?? "transparent";
     if (hovering) return hoverColors[key] ?? color;
     return color;
   };
+};
+
+const buttonColorStyles = (props: DefaultButtonProps): RuleSet => {
+  const getColor = computeButtonColor(props);
 
   return css`
     background-color: ${getColor("background")};
@@ -194,11 +198,11 @@ const commonButtonStyles = ({
   transition: color 300ms ease-out 0s, background-color 300ms ease-out 0s,
     border-color 300ms ease-out 0s;
 
-  span {
+  & > span {
     transition: color 300ms ease-out 0s;
   }
 
-  svg {
+  & > svg[data-testid="icon"] {
     transition: fill 300ms ease-out 0s;
   }
 
@@ -232,6 +236,30 @@ const commonButtonStyles = ({
   }
 `;
 
+const buttonLoadingStyles = ({
+  loading,
+  color,
+  secondary,
+}: DefaultButtonProps): RuleSet => {
+  const contentOpacity = loading ? 0 : 1;
+  const getColor = computeButtonColor({ color, secondary });
+  return css`
+    position: relative;
+
+    & > span,
+    & > svg[data-testid="icon"] {
+      transition: opacity 150ms ease-in-out 0s;
+      opacity: ${contentOpacity};
+    }
+
+    ${loading &&
+    css`
+      cursor: progress;
+      background: ${getColor("background", true)};
+    `}
+  `;
+};
+
 export const buildButtonStyles = (
   styledProps: StyleProps<DefaultButtonProps>
 ): RuleSet => {
@@ -240,5 +268,24 @@ export const buildButtonStyles = (
   return css`
     ${commonButtonStyles(props)}
     ${buttonColorStyles(props)}
+    ${buttonLoadingStyles(props)}
+  `;
+};
+
+export const buildButtonLoadingContainerStyles = ({
+  $loading,
+}: StyleProps<Pick<DefaultButtonProps, "loading">>): RuleSet => {
+  const loaderOpacity = $loading ? 1 : 0;
+  const transitionDelay = $loading ? 150 : 0;
+  const pointerEvents = $loading ? "all" : "none";
+  return css`
+    position: absolute;
+    inset: 0;
+    opacity: ${loaderOpacity};
+    transition: opacity 150ms ease-out ${transitionDelay}ms;
+    pointer-events: ${pointerEvents};
+    display: flex;
+    align-items: center;
+    justify-content: center;
   `;
 };
