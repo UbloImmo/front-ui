@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useTheme } from "styled-components";
 
-import { FlexColumnLayout, FlexRowLayout, GridLayout } from "@/layouts";
+import { FlexColumnLayout, GridLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
 import { useMergedProps } from "@utils";
 
@@ -17,7 +17,7 @@ import type {
 } from "@types";
 import type { GenericFn } from "@ubloimmo/front-util";
 
-const lorem = "The lazy fox jumps over the brown dog.";
+const lorem = "The brown fox jumps over the lazy dog.";
 
 const meta = {
   component: Text,
@@ -82,7 +82,9 @@ export const Weights = (props: TextProps) => {
       of={TextSizeRenderer}
       align="start"
       gap={1}
+      columns="auto"
       scaling={1}
+      propLabels
     />
   );
 };
@@ -101,8 +103,10 @@ export const Italic = (props: TextProps) => {
       for="italic"
       of={TextSizeRenderer}
       align="start"
+      columns={3}
       gap={1}
       scaling={1}
+      propLabels
     />
   );
 };
@@ -113,10 +117,10 @@ Italic.args = {
 export const Decorations = (props: TextProps) => {
   const mergedProps = useMergedProps(Text.defaultProps, props);
   return (
-    <FlexRowLayout gap={1} wrap>
+    <GridLayout columns={["1fr", "1fr", "1fr"]}>
       <ComponentVariants
         defaults={mergedProps}
-        variants={booleans}
+        variants={[true]}
         for="underline"
         of={TextSizeRenderer}
         align="start"
@@ -144,7 +148,7 @@ export const Decorations = (props: TextProps) => {
         scaling={1}
         propLabels
       />
-    </FlexRowLayout>
+    </GridLayout>
   );
 };
 Decorations.args = {
@@ -156,7 +160,7 @@ const TextColorRenderer = (color: ColorKey) => (props: Required<TextProps>) => {
   const colorShades = useMemo<PaletteColor[]>(() => {
     const shades =
       color === "gray"
-        ? Object.keys(theme.gray).reverse()
+        ? Object.keys(theme.gray).reverse().slice(3, 7)
         : ["dark", "base", "medium", "light"];
     return shades.map((shade) => `${color}-${shade}` as PaletteColor);
   }, [theme]);
