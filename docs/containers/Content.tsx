@@ -25,5 +25,5 @@ export const Content = ({ children }: ContentProps) => {
 const ContentContainer = styled.main`
   padding: var(--s-4);
   width: 100%;
-  max-width: 75rem;
+  max-width: 70rem;
 `;

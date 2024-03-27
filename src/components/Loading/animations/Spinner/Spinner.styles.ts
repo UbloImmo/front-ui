@@ -1,5 +1,6 @@
 import { css, keyframes, type StyleFunction } from "styled-components";
 
+import { parseFixedLength } from "@/sizes/size.utils";
 import { cssVarUsage } from "@utils";
 
 import type { LoadingAnimationProps } from "../../Loading.types";
@@ -20,13 +21,14 @@ export const spinnerStyle: StyleFunction<StyleProps<LoadingAnimationProps>> = ({
   $size,
   $color,
 }) => {
+  const size = parseFixedLength($size);
   return css`
-    width: ${$size};
-    min-width: ${$size};
-    max-width: ${$size};
-    height: ${$size};
-    min-height: ${$size};
-    max-height: ${$size};
+    width: ${size};
+    min-width: ${size};
+    max-width: ${size};
+    height: ${size};
+    min-height: ${size};
+    max-height: ${size};
     display: inline-block;
     position: relative;
     background: none;
