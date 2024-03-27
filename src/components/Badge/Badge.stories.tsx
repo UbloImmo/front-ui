@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { Badge } from "./Badge.component";
 import { BadgeProps, BadgeShade } from "./Badge.types";
 import { IconName } from "..";
-import { ComponentVariants } from "../../../docs/blocks";
+import { ComponentVariants } from "@docs/blocks";
 import { FlexRowLayout } from "../../layouts";
 import { ColorPalette } from "../../types";
 

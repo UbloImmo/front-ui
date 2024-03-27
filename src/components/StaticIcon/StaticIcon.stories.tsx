@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import { StaticIcon } from "./StaticIcon.component";
-import { ComponentVariants } from "../../../docs/blocks";
+import { ComponentVariants } from "@docs/blocks";
 import { FlexRowLayout } from "../../layouts";
 
 import type { StaticIconProps, StaticIconSize } from "./StaticIcon.types";

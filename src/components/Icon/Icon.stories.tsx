@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import * as BootstrapIcons from "./__generated__/bootstrap";
 import * as CustomIcons from "./__generated__/custom";
 import { Icon } from "./Icon.component";
-import { ComponentVariants } from "../../../docs/blocks";
+import { ComponentVariants } from "@docs/blocks";
 import { FlexRowLayout } from "../../layouts";
 
 import type { IconProps } from "./Icon.types";
