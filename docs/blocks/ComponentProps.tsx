@@ -119,8 +119,7 @@ const ComponentPropRow = ({
   required,
   name,
 }: ParsedPropInfo): JSX.Element => {
-  const textColor = useMemo(() => (todo ? "gray-500" : "gray-800"), [todo]);
-
+  const textColor = useMemo(() => (todo ? "gray-400" : "gray-800"), [todo]);
   return (
     <TableRow $todo={todo} $required={required}>
       <TableCell>
@@ -140,7 +139,12 @@ const ComponentPropRow = ({
         </Text>
       </TableCell>
       <TableCell>
-        <Text size="s" color={textColor} important>
+        <Text
+          size="s"
+          color={todo || !required ? "gray-400" : "gray-800"}
+          weight={required ? "semiBold" : "regular"}
+          important
+        >
           <code>{requiredStr}</code>
         </Text>
       </TableCell>
@@ -179,35 +183,29 @@ const TableBody = styled.tbody``;
 const TableRow = styled.tr<
   Partial<StyleProps<Pick<ParsedPropInfo, "todo" | "required">>>
 >`
-  :hover td {
-    background: var(--primary-light-50);
-    transition-duration: 150ms;
-
-    &:first-child {
-      background: var(--primary-light);
-    }
-  }
-  ${({ $todo, $required }) => css`
-    & > td {
-      opacity: ${$todo ? 0.5 : 1};
-      background: ${$todo
-        ? "none"
-        : $required
-        ? "#fff"
-        : "rgba(255, 255, 255, 0.55ss)"};
-    }
-  `}
-
   ${({ $todo }) =>
-    !$todo &&
-    css`
-      &:hover td {
-        background: var(--primary-light-50);
-        transition-duration: 150ms;
+    $todo
+      ? css`
+          & > td {
+            opacity: 0.5;
+            background: none;
+          }
+        `
+      : css`
+          &:hover td {
+            background: var(--primary-light-50);
+            transition-duration: 150ms;
 
-        &:first-child {
-          background: var(--primary-light);
-        }
+            &:first-child {
+              background: var(--primary-light);
+            }
+          }
+        `}
+  ${({ $required }) =>
+    $required &&
+    css`
+      & > td {
+        background: #fff;
       }
     `}
 
@@ -246,5 +244,14 @@ const TableCell = styled.td`
   // normalize stacked margins
   span:not(:has(*:not(code))) {
     margin: var(--s-1) 0 !important;
+  }
+
+  // center required
+  &:nth-child(3) {
+    text-align: center;
+  }
+
+  &:last-child {
+    min-width: 16rem;
   }
 `;
