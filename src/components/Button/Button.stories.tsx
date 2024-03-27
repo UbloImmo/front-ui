@@ -160,3 +160,57 @@ export const Icons = (props: ButtonProps) => {
     </FlexRowLayout>
   );
 };
+
+const buttonLabels = [
+  "",
+  "Ok",
+  "Save",
+  "Confirm",
+  "This is a needlessly long label",
+];
+export const Loading = (props: ButtonProps) => {
+  const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
+    defaultMockProps,
+    props
+  );
+
+  const { loaded, loading } = useMemo(() => {
+    const buildVariants = (loading?: boolean) => ({
+      variants: buttonLabels.map((label) => ({
+        value: label,
+        label: `loading:${loading}`,
+      })),
+      defaults: { ...defaultProps, loading },
+    });
+
+    return {
+      loaded: buildVariants(false),
+      loading: buildVariants(true),
+    };
+  }, []);
+
+  return (
+    <>
+      <ComponentVariants
+        defaults={loaded.defaults}
+        variants={loaded.variants}
+        for="label"
+        of={Button}
+        scaling={1}
+        propLabels
+      />
+      <ComponentVariants
+        defaults={loading.defaults}
+        variants={loading.variants}
+        for="label"
+        of={Button}
+        scaling={1}
+        propLabels
+      />
+    </>
+  );
+};
+Loading.args = {
+  icon: "ArrowRight",
+  iconPlacement: "right",
+};

@@ -11,7 +11,6 @@ const cssAnim = (range: number, offset = 0) => keyframes`
 
 const RANGE = 40;
 const OFFSET = 0;
-const OFFSET_LAST = 7;
 
 export const bouncingBallsStyle = css`
   display: block;
@@ -43,12 +42,6 @@ export const bouncingBallsStyle = css`
     }
     &:nth-child(3) {
       animation-delay: 300ms;
-    }
-    &:nth-child(4) {
-      transform: translateY(${OFFSET_LAST}%);
-      animation-name: ${cssAnim(RANGE - OFFSET_LAST, OFFSET_LAST)};
-      animation-play-state: running;
-      animation-delay: 450ms;
     }
   }
 `;

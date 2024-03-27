@@ -48,4 +48,14 @@ describe("Button", () => {
       expect(onClick).not.toHaveBeenCalled();
     }
   );
+
+  testButton({ label: "test", onClick, loading: true })(
+    "should not trigger onClick",
+    async ({ queryByTestId }, { click }) => {
+      onClick.mockReset();
+      const button = queryByTestId("button") as HTMLButtonElement;
+      await click(button);
+      expect(onClick).not.toHaveBeenCalled();
+    }
+  );
 });
