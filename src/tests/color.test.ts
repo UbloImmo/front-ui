@@ -1,3 +1,9 @@
+import {
+  objectEntries,
+  objectValues,
+  type GenericFn,
+} from "@ubloimmo/front-util";
+import { describe, expect, it } from "bun:test";
 import type {
   AnyColor,
   ColorCollection,
@@ -8,12 +14,6 @@ import type {
   HexColorShorthandAlpha,
   RgbaColorStr,
 } from "../types";
-import { describe, expect, it } from "bun:test";
-import {
-  objectEntries,
-  type GenericFn,
-  objectValues,
-} from "@ubloimmo/front-util";
 import {
   blendColors,
   hexColorConverter,

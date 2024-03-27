@@ -1,17 +1,17 @@
+import { isArray, isObject, isString } from "@ubloimmo/front-util";
 import type {
+  AnyColor,
+  ColorKey,
   HexColor,
   HexColorAlpha,
   HexColorShorthand,
   HexColorShorthandAlpha,
   HexComponentDouble,
+  PaletteColor,
   RgbaColorArr,
   RgbaColorObj,
   RgbaColorStr,
-  AnyColor,
-  PaletteColor,
-  ColorKey,
 } from "../types";
-import { isString, isObject, isArray } from "@ubloimmo/front-util";
 import { lerp } from "./number.utils";
 
 export const hexRegex =
