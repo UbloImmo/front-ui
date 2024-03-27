@@ -1,4 +1,7 @@
 import { isArray, isObject, isString } from "@ubloimmo/front-util";
+
+import { lerp } from "./number.utils";
+
 import type {
   AnyColor,
   ColorKey,
@@ -12,7 +15,6 @@ import type {
   RgbaColorObj,
   RgbaColorStr,
 } from "../types";
-import { lerp } from "./number.utils";
 
 export const hexRegex =
   /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{8})$/;

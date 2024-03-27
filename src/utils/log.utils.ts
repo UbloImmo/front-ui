@@ -1,7 +1,9 @@
-import { useMemo } from "react";
 import { Logger, transformObject } from "@ubloimmo/front-util";
-import type { LoggerFn, LoggerConfig } from "@ubloimmo/front-util";
+import { useMemo } from "react";
+
 import { capitalize } from ".";
+
+import type { LoggerFn, LoggerConfig } from "@ubloimmo/front-util";
 
 /**
  * Generates a logger for the specified component.

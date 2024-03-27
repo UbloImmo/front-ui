@@ -110,7 +110,8 @@ module.exports = {
           "external",
           ["parent", "sibling"],
           "internal",
-          "object",
+          "index",
+          ["object", "unknown"],
           "type",
         ],
         pathGroups: [
