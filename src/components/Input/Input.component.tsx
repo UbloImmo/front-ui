@@ -1,17 +1,17 @@
-import { useMemo } from "react";
+import type { Nullable } from "@ubloimmo/front-util";
 import type { FC } from "react";
+import { useMemo } from "react";
 import { useLogger } from "../../utils";
+import { EmailInput } from "./EmailInput/EmailInput.component";
 import type {
   GenericInputProps,
-  InputType,
   InputProps,
+  InputType,
   TypedInputComponentMap,
 } from "./Input.types";
 import { inputTypes } from "./Input.types";
-import { TextInput } from "./TextInput/TextInput.component";
-import { EmailInput } from "./EmailInput/EmailInput.component";
 import { PasswordInput } from "./PasswordInput/PasswordInput.component";
-import type { Nullable } from "@ubloimmo/front-util";
+import { TextInput } from "./TextInput/TextInput.component";
 
 const inputComponentMap: TypedInputComponentMap = {
   text: TextInput,

@@ -1,7 +1,7 @@
 import type { Enum, PaletteColor, RequireAtLeastOne } from "@types";
-import type { IconName } from "..";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { AriaRole } from "react";
+import type { IconName } from "..";
 
 export const buttonColors = [
   "primary",

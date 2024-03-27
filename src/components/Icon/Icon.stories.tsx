@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { IconProps } from "./Icon.types";
+import { objectKeys } from "@ubloimmo/front-util";
+import { useMemo } from "react";
+import { ComponentVariants } from "../../../docs/blocks";
+import { FlexRowLayout } from "../../layouts";
 import type { ColorPalette, PaletteColor, SpacingLabel } from "../../types";
 import { Icon } from "./Icon.component";
-import { FlexRowLayout } from "../../layouts";
-import { useMemo } from "react";
+import type { IconProps } from "./Icon.types";
 import * as BootstrapIcons from "./__generated__/bootstrap";
 import * as CustomIcons from "./__generated__/custom";
-import { objectKeys } from "@ubloimmo/front-util";
-import { ComponentVariants } from "../../../docs/blocks";
 
 const meta = {
   title: "Components/Icon",

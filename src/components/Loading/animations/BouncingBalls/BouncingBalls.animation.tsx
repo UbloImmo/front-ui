@@ -1,9 +1,9 @@
-import { LoadingAnimationProps } from "../../Loading.types";
-import { bouncingBallsStyle } from "./BouncingBalls.styles";
-import { cssVarUsage } from "@utils";
 import { parseFixedLength } from "@/sizes/size.utils";
+import { cssVarUsage } from "@utils";
 import { useMemo } from "react";
 import styled from "styled-components";
+import { LoadingAnimationProps } from "../../Loading.types";
+import { bouncingBallsStyle } from "./BouncingBalls.styles";
 
 export const BouncingBalls = (props: LoadingAnimationProps) => {
   const innerProps = useMemo(() => {

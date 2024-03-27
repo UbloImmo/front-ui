@@ -1,18 +1,18 @@
+import type { Nullable, Optional } from "@ubloimmo/front-util";
+import { describe, expect, mock } from "bun:test";
+import type { ChangeEvent, MutableRefObject } from "react";
+import {
+  useInputControlCallback,
+  useInputOnChange,
+  useInputStyles,
+  useInputValue,
+} from ".";
+import { testHookFactory } from "../../tests";
 import type {
   DefaultCommonInputProps,
   InputType,
   InputValue,
 } from "./Input.types";
-import type { Nullable, Optional } from "@ubloimmo/front-util";
-import type { ChangeEvent, MutableRefObject } from "react";
-import { describe, expect, mock } from "bun:test";
-import { testHookFactory } from "../../tests";
-import {
-  useInputOnChange,
-  useInputValue,
-  useInputStyles,
-  useInputControlCallback,
-} from ".";
 
 const mockOnChange = mock((_value: Nullable<InputValue<InputType>>) => {});
 

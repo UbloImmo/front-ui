@@ -1,6 +1,6 @@
-import type { FC } from "react";
-import type { Enum, StyleProps, Email } from "../../types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { FC } from "react";
+import type { Email, Enum, StyleProps } from "../../types";
 
 /**
  * Common props shared by all Input components

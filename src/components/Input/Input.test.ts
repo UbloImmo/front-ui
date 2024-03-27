@@ -1,7 +1,7 @@
-import type { GenericInputProps, InputType } from "./Input.types";
+import { testComponentFactory } from "@/tests";
 import { describe, expect, mock } from "bun:test";
 import { Input } from "./Input.component";
-import { testComponentFactory } from "@/tests";
+import type { GenericInputProps, InputType } from "./Input.types";
 
 describe("Input", () => {
   const testGenericInput = testComponentFactory<GenericInputProps<InputType>>(

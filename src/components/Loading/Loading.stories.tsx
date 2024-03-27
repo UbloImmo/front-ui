@@ -1,9 +1,9 @@
-import type { LoadingAnimation, LoadingProps } from "./Loading.types";
-import type { Meta, StoryObj } from "@storybook/react";
-import { Loading } from "./Loading.component";
-import { useMergedProps } from "@utils";
 import { ComponentVariants } from "@docs/blocks";
+import type { Meta, StoryObj } from "@storybook/react";
 import { SpacingLabel, type PaletteColor } from "@types";
+import { useMergedProps } from "@utils";
+import { Loading } from "./Loading.component";
+import type { LoadingAnimation, LoadingProps } from "./Loading.types";
 
 const meta = {
   title: "Components/Loading",

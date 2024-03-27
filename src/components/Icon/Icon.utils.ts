@@ -1,8 +1,8 @@
+import { parseFixedLength } from "@/sizes/size.utils";
 import type { Optional, VoidFn } from "@ubloimmo/front-util";
+import { useMemo } from "react";
 import type { CssPx, CssRem, FixedCssLength } from "../../types";
 import { cssRem, isCssLengthUsage } from "../../utils";
-import { useMemo } from "react";
-import { parseFixedLength } from "@/sizes/size.utils";
 
 /**
  * Parses an icon's size prop into either a pixel or rem.

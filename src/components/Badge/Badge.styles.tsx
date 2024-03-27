@@ -1,7 +1,7 @@
 import { css } from "styled-components";
 import { StyleProps, ValueMap } from "../../types";
-import { BadgeShade, BadgeShadeStyle, DefaultBadgeProps } from "./Badge.types";
 import { fromStyleProps } from "../../utils";
+import { BadgeShade, BadgeShadeStyle, DefaultBadgeProps } from "./Badge.types";
 
 export const badgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
   light: {
