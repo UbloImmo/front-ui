@@ -102,5 +102,40 @@ module.exports = {
     "import/namespace": ["off", { allowComputed: true }],
     "import/no-namespace": "off",
     "import/no-named-as-default-member": "off",
+    "import/order": [
+      "warn",
+      {
+        groups: [
+          "builtin",
+          "external",
+          ["parent", "sibling"],
+          "internal",
+          "object",
+          "type",
+        ],
+        pathGroups: [
+          {
+            pattern: "@utils/**",
+            group: "internal",
+          },
+          {
+            pattern: "@types/**",
+            group: "type",
+          },
+          {
+            pattern: "@components",
+            group: "internal",
+            position: "after",
+          },
+        ],
+        "newlines-between": "always",
+        alphabetize: {
+          order: "asc",
+          orderImportKind: "asc",
+          caseInsensitive: true,
+        },
+        warnOnUnassignedImports: true,
+      },
+    ],
   },
 };
