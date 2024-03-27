@@ -25,7 +25,11 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
  */
 export const GridLayout = (props: GridLayoutProps) => {
   const innerProps = useStyleProps(props);
-  return <GridLayoutInner {...innerProps}>{props.children}</GridLayoutInner>;
+  return (
+    <GridLayoutInner data-testid="grid" {...innerProps}>
+      {props.children}
+    </GridLayoutInner>
+  );
 };
 
 const GridLayoutInner = styled.div<StyleProps<GridLayoutProps>>`
