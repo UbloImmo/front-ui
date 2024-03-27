@@ -1,13 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
+
+import { Badge } from "./Badge.component";
+import { BadgeProps, BadgeShade } from "./Badge.types";
 import { IconName } from "..";
 import { ComponentVariants } from "../../../docs/blocks";
 import { FlexRowLayout } from "../../layouts";
 import { ColorPalette } from "../../types";
-import { Badge } from "./Badge.component";
-import { BadgeProps, BadgeShade } from "./Badge.types";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",

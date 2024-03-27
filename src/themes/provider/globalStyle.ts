@@ -1,3 +1,17 @@
+import "@fontsource-variable/open-sans/index.css";
+import { texts } from "@ubloimmo/front-tokens";
+import { objectEntries, Logger } from "@ubloimmo/front-util";
+import { createGlobalStyle, css, type RuleSet } from "styled-components";
+
+import {
+  mobileFontSize,
+  typographyWeightMap,
+} from "./../../typography/typography.styles";
+import { breakpointsPx, buildSpacingMap } from "../../sizes";
+import { linkFontFace } from "../../typography/typography.font";
+import { cssVar } from "../../utils";
+import { effectsToCssVars } from "../palette";
+
 import type {
   Theme,
   PaletteColorShaded,
@@ -7,19 +21,7 @@ import type {
   RgbaColorStr,
   Spacings,
 } from "../../types";
-import {
-  mobileFontSize,
-  typographyWeightMap,
-} from "./../../typography/typography.styles";
 import type { BreakpointLabel } from "src/types/themes/sizes/breakpoints.types";
-import { effectsToCssVars } from "../palette";
-import { createGlobalStyle, css, type RuleSet } from "styled-components";
-import { objectEntries, Logger } from "@ubloimmo/front-util";
-import { breakpointsPx, buildSpacingMap } from "../../sizes";
-import { cssVar } from "../../utils";
-import { linkFontFace } from "../../typography/typography.font";
-import { texts } from "@ubloimmo/front-tokens";
-import "@fontsource-variable/open-sans/index.css";
 
 /**
  * Generates CSS variables for the given palette color and its shades.

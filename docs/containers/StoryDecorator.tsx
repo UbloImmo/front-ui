@@ -1,9 +1,11 @@
-import type { ReactNode } from "react";
-import type { ClientColorPaletteKey } from "../../src/types";
-import { getClientSlugs, ThemeProvider } from "../../src/themes";
-import { ReactRenderer, type Preview } from "@storybook/react";
 import { withThemeFromJSXProvider } from "@storybook/addon-themes";
+import { ReactRenderer, type Preview } from "@storybook/react";
 import { objectFromEntries } from "@ubloimmo/front-util";
+
+import { getClientSlugs, ThemeProvider } from "../../src/themes";
+
+import type { ClientColorPaletteKey } from "../../src/types";
+import type { ReactNode } from "react";
 
 /**
  * Bridges the gap between the client slug coming from `@storybook/addon-themes`

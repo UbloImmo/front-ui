@@ -1,10 +1,13 @@
-import { testComponentFactory, testPrimitives } from "@/tests";
-import type { Email } from "@types";
 import { objectValues, type Nullable } from "@ubloimmo/front-util";
 import { describe, expect, it, mock } from "bun:test";
-import type { InputProps } from "..";
+
 import { EmailInput } from "./EmailInput.component";
 import { isEmailString } from "./EmailInput.utils";
+
+import { testComponentFactory, testPrimitives } from "@/tests";
+
+import type { InputProps } from "..";
+import type { Email } from "@types";
 
 const testId = "input-email";
 

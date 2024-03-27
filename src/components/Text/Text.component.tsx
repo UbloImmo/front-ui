@@ -1,7 +1,9 @@
 import { styled } from "styled-components";
-import type { StyleProps, TextProps } from "../../types";
+
 import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
 import { useStyleProps } from "../../utils";
+
+import type { StyleProps, TextProps } from "../../types";
 
 const defaultTextProps: Required<TextProps> = {
   ...defaultTypographyProps,

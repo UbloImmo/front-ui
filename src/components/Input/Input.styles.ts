@@ -1,5 +1,7 @@
 import { css } from "styled-components";
+
 import { typographyWeightMap } from "../../typography";
+
 import type {
   CommonInputStyleProps,
   InputControlStyleProps,

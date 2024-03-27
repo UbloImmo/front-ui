@@ -1,10 +1,12 @@
-import type { FlexAlignment, FlexGap } from "../../src/layouts";
-import type { FC } from "react";
-import { FlexRowLayout } from "../../src/layouts";
-import { Text } from "../../src/components";
+import { isObject, isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled from "styled-components";
-import { isObject, isString } from "@ubloimmo/front-util";
+
+import { Text } from "../../src/components";
+import { FlexRowLayout } from "../../src/layouts";
+
+import type { FlexAlignment, FlexGap } from "../../src/layouts";
+import type { FC } from "react";
 
 type ComponentVariantsConfig<
   TComponentProps extends Record<string, unknown>,

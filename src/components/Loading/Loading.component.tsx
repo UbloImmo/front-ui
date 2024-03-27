@@ -1,8 +1,10 @@
 import { Nullable } from "@ubloimmo/front-util";
-import { useLogger, useMergedProps } from "@utils";
 import { useMemo } from "react";
-import { DefaultLoadingProps, LoadingProps } from "./Loading.types";
+
 import * as LoadingAnimations from "./animations";
+import { DefaultLoadingProps, LoadingProps } from "./Loading.types";
+
+import { useLogger, useMergedProps } from "@utils";
 
 const defaultLoadingProps: DefaultLoadingProps = {
   size: "s-4",

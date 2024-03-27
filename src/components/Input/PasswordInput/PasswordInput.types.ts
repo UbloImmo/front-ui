@@ -1,7 +1,7 @@
-import type { Nullable, VoidFn } from "@ubloimmo/front-util";
-import type { HTMLInputTypeAttribute } from "react";
 import type { IconName } from "../../Icon";
 import type { InputProps } from "../Input.types";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { HTMLInputTypeAttribute } from "react";
 
 /**
  * Props used by the `PasswordInput` component.

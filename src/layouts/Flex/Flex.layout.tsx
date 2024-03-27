@@ -1,12 +1,14 @@
-import type { StyleProps } from "../../types";
+import styled from "styled-components";
+
+import { buildFlexLayoutStyle } from "./Flex.styles";
+import { useStyleProps } from "../../utils";
+
 import type {
   FlexDirectionLayoutProps,
   FlexLayoutDefaultProps,
   FlexLayoutProps,
 } from "./Flex.types";
-import { buildFlexLayoutStyle } from "./Flex.styles";
-import { useStyleProps } from "../../utils";
-import styled from "styled-components";
+import type { StyleProps } from "../../types";
 
 const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   direction: "row",

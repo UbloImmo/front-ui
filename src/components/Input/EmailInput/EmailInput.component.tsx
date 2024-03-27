@@ -1,4 +1,6 @@
 import { isString } from "@ubloimmo/front-util";
+
+import { isEmailString } from "./EmailInput.utils";
 import { useMergedProps } from "../../../utils";
 import { Icon } from "../../Icon/Icon.component";
 import {
@@ -7,13 +9,13 @@ import {
   StyledInputControl,
   defaultCommonInputProps,
 } from "../Input.common";
-import type { DefaultInputProps, InputProps } from "../Input.types";
 import {
   useInputOnChange,
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
-import { isEmailString } from "./EmailInput.utils";
+
+import type { DefaultInputProps, InputProps } from "../Input.types";
 
 const defaultEmailInputProps: DefaultInputProps<"email"> = {
   ...defaultCommonInputProps,

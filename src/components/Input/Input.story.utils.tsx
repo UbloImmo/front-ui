@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { FlexColumnLayout } from "../../layouts";
 
 export const InputStoryContainer = styled(FlexColumnLayout)`

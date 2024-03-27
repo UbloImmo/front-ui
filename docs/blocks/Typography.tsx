@@ -1,16 +1,18 @@
-import type { ReactNode } from "react";
+import styled from "styled-components";
+
+import {
+  Heading as HeadingComponent,
+  Text as TextComponent,
+} from "../../src/components";
 import {
   StyleProps,
   type HeadingProps,
   type PaletteColor,
   type TextProps,
 } from "../../src/types";
-import {
-  Heading as HeadingComponent,
-  Text as TextComponent,
-} from "../../src/components";
-import styled from "styled-components";
 import { cssVarUsage } from "../../src/utils";
+
+import type { ReactNode } from "react";
 
 /**
  * Renders a heading component with the specified children and props.

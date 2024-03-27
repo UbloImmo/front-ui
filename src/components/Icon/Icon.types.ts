@@ -1,7 +1,8 @@
 import { GenericFn } from "@ubloimmo/front-util";
-import { FixedCssLength, PaletteColor } from "../../types";
+
 import * as GeneratedIcons from "./__generated__";
 import { CommonIconProps } from "./__generated__/common.types";
+import { FixedCssLength, PaletteColor } from "../../types";
 
 const IconName = GeneratedIcons;
 

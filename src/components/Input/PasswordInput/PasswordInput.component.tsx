@@ -1,5 +1,6 @@
 import { isNull, isString, type Nullable } from "@ubloimmo/front-util";
 import { useEffect, useMemo, useRef, useState } from "react";
+
 import { useMergedProps } from "../../../utils";
 import { Icon } from "../../Icon";
 import {
@@ -8,18 +9,19 @@ import {
   StyledInputControl,
   defaultCommonInputProps,
 } from "../Input.common";
-import type { InputValue } from "../Input.types";
 import {
   useInputControlCallback,
   useInputOnChange,
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
+
 import type {
   DefaultPasswordInputProps,
   PasswordInputProps,
   PasswordVisibility,
 } from "./PasswordInput.types";
+import type { InputValue } from "../Input.types";
 
 const defaultPasswordInputProps: DefaultPasswordInputProps = {
   ...defaultCommonInputProps,

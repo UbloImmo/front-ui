@@ -1,3 +1,5 @@
+import { objectFromEntries } from "@ubloimmo/front-util";
+
 import {
   SPACING_PREFIX,
   UNIT_PX,
@@ -6,7 +8,6 @@ import {
   type Spacings,
 } from "../types";
 import { cssRem, pxToRem } from "../utils/css.utils";
-import { objectFromEntries } from "@ubloimmo/front-util";
 
 const scaleUnitByFactor = (factor: number, unit = UNIT_PX) => unit * factor;
 

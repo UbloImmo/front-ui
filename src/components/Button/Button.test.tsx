@@ -1,7 +1,10 @@
-import { testComponentFactory } from "@/tests";
 import { describe, expect, mock } from "bun:test";
-import { ButtonProps } from ".";
+
 import { Button } from "./Button.component";
+
+import { testComponentFactory } from "@/tests";
+
+import { ButtonProps } from ".";
 
 describe("Button", () => {
   const testButton = testComponentFactory<ButtonProps>("Button", Button, {

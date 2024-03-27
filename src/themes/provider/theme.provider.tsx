@@ -1,14 +1,16 @@
+import { isNullish } from "@ubloimmo/front-util";
+import { ReactNode, useMemo, useState, useEffect } from "react";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
+
+import { GlobalStyle } from "./globalStyle";
+import { buildTheme } from "../theme";
+
 import type {
   ClientColorPaletteKey,
   GetThemeOverridesFn,
   ThemeOverride,
 } from "../../types";
 import type { Nullable } from "@ubloimmo/front-util";
-import { ThemeProvider as StyledThemeProvider } from "styled-components";
-import { ReactNode, useMemo, useState, useEffect } from "react";
-import { buildTheme } from "../theme";
-import { GlobalStyle } from "./globalStyle";
-import { isNullish } from "@ubloimmo/front-util";
 
 type ThemeProviderProps = {
   children: ReactNode;

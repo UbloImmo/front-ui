@@ -1,11 +1,13 @@
-import { SPACING_PREFIX } from "@types";
 import {
   isArray,
   isString,
   type Nullable,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
+
+import { SPACING_PREFIX } from "@types";
 import { capitalize, isColorKey, isPaletteColor } from "@utils";
+
 import type {
   DocgenPropDef,
   ParsedJsDoc,

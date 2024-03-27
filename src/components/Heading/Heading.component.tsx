@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import type { HeadingProps, StyleProps } from "../../types";
+
 import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
 import { useStyleProps } from "../../utils";
+
+import type { HeadingProps, StyleProps } from "../../types";
 
 const defaultHeadingProps: Required<HeadingProps> = {
   ...defaultTypographyProps,

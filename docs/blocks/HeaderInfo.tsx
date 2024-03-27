@@ -1,7 +1,8 @@
-import type { ReactNode } from "react";
-import { Text } from "../blocks";
-import { FlexColumnLayout } from "../../src/layouts";
 import { Heading } from "../../src/components";
+import { FlexColumnLayout } from "../../src/layouts";
+import { Text } from "../blocks";
+
+import type { ReactNode } from "react";
 
 type HeaderInfoProps = {
   children?: ReactNode;

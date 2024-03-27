@@ -1,8 +1,11 @@
-import type { StyleProps } from "@types";
-import { useStyleProps } from "@utils";
 import styled from "styled-components";
-import type { LoadingAnimationProps } from "../../Loading.types";
+
 import { spinnerStyle } from "./Spinner.styles";
+
+import { useStyleProps } from "@utils";
+
+import type { LoadingAnimationProps } from "../../Loading.types";
+import type { StyleProps } from "@types";
 
 /**
  * Renders a Spinner loading animation

@@ -1,11 +1,15 @@
-import type { ReactNode } from "react";
-import { Text, HeaderInfo, Canvas, Markdown } from ".";
-import { Header } from "../containers";
-import { GridLayout } from "../../src/layouts";
 import { useMemo } from "react";
 import styled from "styled-components";
-import type { ComponentStory } from "@docs/docs.types";
+
+import { GridLayout } from "../../src/layouts";
+import { Header } from "../containers";
+
 import { parseJsDoc } from "@docs/docs.utils";
+
+import { Text, HeaderInfo, Canvas, Markdown } from ".";
+
+import type { ComponentStory } from "@docs/docs.types";
+import type { ReactNode } from "react";
 
 type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
   name: string;

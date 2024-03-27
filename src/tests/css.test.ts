@@ -1,11 +1,6 @@
-import { describe, it, expect } from "bun:test";
-import type {
-  GenericFn,
-  NullishPrimitives,
-  Predicate,
-} from "@ubloimmo/front-util";
 import { objectKeys } from "@ubloimmo/front-util";
-import type { CssFr, CssLength, CssPx, CssRem } from "../types";
+import { describe, it, expect } from "bun:test";
+
 import {
   cssPx,
   cssRem,
@@ -23,6 +18,13 @@ import {
   cssLengthUsage,
   REM_FACTOR,
 } from "../utils";
+
+import type { CssFr, CssLength, CssPx, CssRem } from "../types";
+import type {
+  GenericFn,
+  NullishPrimitives,
+  Predicate,
+} from "@ubloimmo/front-util";
 
 type LengthUnitCollection<TUnit extends CssLength> = {
   int: TUnit;

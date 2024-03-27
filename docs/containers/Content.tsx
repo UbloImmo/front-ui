@@ -1,6 +1,8 @@
-import type { ReactNode } from "react";
-import { FlexColumnLayout } from "../../src/layouts";
 import styled from "styled-components";
+
+import { FlexColumnLayout } from "../../src/layouts";
+
+import type { ReactNode } from "react";
 
 type ContentProps = {
   children: ReactNode;

@@ -1,14 +1,15 @@
 import { useMemo } from "react";
 import styled from "styled-components";
-import { PaletteColor, StyleProps } from "../../types";
-import { mergeDefaultProps, useStyleProps } from "../../utils";
-import { Icon, IconProps } from "../Icon";
-import { defaultIconProps } from "../Icon/Icon.component";
+
 import {
   staticIconSizeToIconSizeMap,
   staticIconStyle,
 } from "./StaticIcon.styles";
 import { DefaultStaticIconProps, StaticIconProps } from "./StaticIcon.types";
+import { PaletteColor, StyleProps } from "../../types";
+import { mergeDefaultProps, useStyleProps } from "../../utils";
+import { Icon, IconProps } from "../Icon";
+import { defaultIconProps } from "../Icon/Icon.component";
 
 const defaultStaticIconProps: DefaultStaticIconProps = {
   color: "primary",

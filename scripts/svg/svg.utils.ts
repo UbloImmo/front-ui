@@ -1,4 +1,5 @@
 import { isObject, isString } from "@ubloimmo/front-util";
+
 import { BootstrapIconFile, CustomIconFile } from "./svg.types";
 
 /**
