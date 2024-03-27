@@ -162,6 +162,7 @@ describe("typography", () => {
           weight: "semiBold",
           important: false,
           children: null,
+          ellipsis: false,
         };
         expect(sanitizeTypographyProps(defaultProps, validProps)).toEqual(
           validProps

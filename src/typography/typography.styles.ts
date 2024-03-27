@@ -108,6 +108,7 @@ export const sanitizeTypographyProps = (
     lineThrough: props.lineThrough ?? defaults.lineThrough,
     children: props.children ?? null,
     important: props.important ?? false,
+    ellipsis: props.ellipsis ?? false,
   };
 };
 
@@ -132,13 +133,14 @@ export const buildTypographyStyle = (
       overline,
       lineThrough,
       important: $important,
+      ellipsis,
     } = sanitizeTypographyProps(defaults, fromStyleProps(props));
     const {
       letterSpacing,
       lineHeight,
       textAlign,
       textIndent,
-      textOverflow,
+      textOverflow: $textOverflow,
       fontFeatureSettings,
     } = allSizes[size][weight].css.style;
     const fontSize = `text-${size}`;
@@ -151,6 +153,7 @@ export const buildTypographyStyle = (
       overline,
     });
     const important = $important ? "!important" : "";
+    const textOverflow = ellipsis ? "ellipsis" : $textOverflow;
     return css`
       ${typographyFontFace()}
       font-size: ${cssVarUsage(fontSize)} ${important};
@@ -165,6 +168,12 @@ export const buildTypographyStyle = (
       text-overflow: ${textOverflow} ${important};
       font-feature-settings: ${fontFeatureSettings} ${important};
       text-decoration: ${textDecoration} ${important};
+      ${ellipsis &&
+      css`
+        overflow-x: hidden ${important};
+        white-space: nowrap ${important};
+        max-width: 100% ${important};
+      `}
     `;
   };
 };
@@ -177,5 +186,6 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   overline: false,
   lineThrough: false,
   important: false,
+  ellipsis: false,
   children: null,
 } as const;

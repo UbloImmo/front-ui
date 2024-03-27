@@ -11,12 +11,13 @@ const defaultTextProps: Required<TextProps> = {
 };
 
 /**
- * Renders a text component
+ * Renders its children in accordance with global typography styles.
  *
  * @version 0.0.1
  * @param {TextProps} props - Text component props
+ * @returns {JSX.Element}
  */
-const Text = (props: TextProps) => {
+const Text = (props: TextProps): JSX.Element => {
   const innerProps = useStyleProps(props);
   return (
     <TextInner data-testid="text" {...innerProps}>
