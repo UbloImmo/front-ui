@@ -1,9 +1,11 @@
+import { css } from "styled-components";
+
+import { typographyWeightMap } from "../../typography";
+
 import type {
   CommonInputStyleProps,
   InputControlStyleProps,
 } from "./Input.types";
-import { typographyWeightMap } from "../../typography";
-import { css } from "styled-components";
 
 export const commonInputContainerStyles = ({
   $error,

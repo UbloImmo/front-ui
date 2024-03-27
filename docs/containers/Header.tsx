@@ -1,7 +1,10 @@
-import type { ReactNode } from "react";
-import { FlexColumnLayout } from "../../src/layouts";
 import styled from "styled-components";
+
+import { FlexColumnLayout } from "../../src/layouts";
+
 import { Content } from ".";
+
+import type { ReactNode } from "react";
 
 type HeaderProps = {
   children?: ReactNode;

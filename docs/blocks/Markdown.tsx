@@ -1,8 +1,10 @@
 import { Markdown as SBMarkdown } from "@storybook/blocks";
-import type { StyleProps } from "@types";
-import styled, { css } from "styled-components";
-import { headingOfSize, textOfSize, Em, Strong } from "./Typography";
 import { useMemo } from "react";
+import styled, { css } from "styled-components";
+
+import { Em, Strong, headingOfSize, textOfSize } from "./Typography";
+
+import type { StyleProps } from "@types";
 
 type MarkdownProps = {
   children?: string;

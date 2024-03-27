@@ -1,12 +1,14 @@
-import type { DefaultInputProps, InputProps, InputValue } from "../Input.types";
+import { isString } from "@ubloimmo/front-util";
+
+import { useMergedProps } from "../../../utils";
+import { StyledInput, defaultCommonInputProps } from "../Input.common";
 import {
   useInputOnChange,
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
-import { StyledInput, defaultCommonInputProps } from "../Input.common";
-import { useMergedProps } from "../../../utils";
-import { isString } from "@ubloimmo/front-util";
+
+import type { DefaultInputProps, InputProps, InputValue } from "../Input.types";
 
 export const defaultTextInputProps: DefaultInputProps<"text"> = {
   ...defaultCommonInputProps,

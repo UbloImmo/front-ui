@@ -1,5 +1,6 @@
-import { FileDescription, NormalizedIconFileDeclaration } from "./svg.types";
 import { Logger } from "@ubloimmo/front-util";
+
+import { FileDescription, NormalizedIconFileDeclaration } from "./svg.types";
 const ROOT_DIR_PATH = "./src/components/Icon/__generated__";
 
 const BOOTSTRAP_ICONS_DIR_PATH = `${ROOT_DIR_PATH}/bootstrap`;

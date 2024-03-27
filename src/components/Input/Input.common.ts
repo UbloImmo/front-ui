@@ -1,14 +1,16 @@
-import type {
-  CommonInputStyleProps,
-  DefaultCommonInputProps,
-  InputControlStyleProps,
-} from "./Input.types.ts";
+import styled from "styled-components";
+
 import {
   commonInputContainerStyles,
   commonInputControlStyles,
   commonInputStyles,
 } from "./Input.styles.ts";
-import styled from "styled-components";
+
+import type {
+  CommonInputStyleProps,
+  DefaultCommonInputProps,
+  InputControlStyleProps,
+} from "./Input.types.ts";
 
 export const defaultCommonInputProps: DefaultCommonInputProps = {
   error: false,

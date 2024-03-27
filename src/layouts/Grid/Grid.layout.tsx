@@ -1,8 +1,10 @@
-import type { StyleProps } from "../../types";
-import type { GridLayoutDefaultProps, GridLayoutProps } from "./Grid.types";
+import styled from "styled-components";
+
 import { buildGridLayoutStyle } from "./Grid.styles";
 import { useStyleProps } from "../../utils";
-import styled from "styled-components";
+
+import type { GridLayoutDefaultProps, GridLayoutProps } from "./Grid.types";
+import type { StyleProps } from "../../types";
 
 const defaultGridLayoutProps: GridLayoutDefaultProps = {
   flow: "row",

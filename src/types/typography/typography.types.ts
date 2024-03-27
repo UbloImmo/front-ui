@@ -1,4 +1,5 @@
 import { texts } from "@ubloimmo/front-tokens";
+
 import type { Enum, PaletteColor } from "../";
 import type { ReactNode } from "react";
 

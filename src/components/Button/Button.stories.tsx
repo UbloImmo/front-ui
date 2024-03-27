@@ -1,15 +1,18 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "./Button.component";
 import { fn } from "@storybook/test";
-import {
-  type DefaultButtonProps,
-  type ButtonProps,
-  buttonColors,
-} from "./Button.types";
-import { useMergedProps } from "@utils";
-import { ComponentVariants } from "@docs/blocks";
 import { useMemo } from "react";
+
+import { Button } from "./Button.component";
+import {
+  buttonColors,
+  type ButtonProps,
+  type DefaultButtonProps,
+} from "./Button.types";
+
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts";
+import { ComponentVariants } from "@docs/blocks";
+import { useMergedProps } from "@utils";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 const defaultMockProps = {
   ...Button.defaultProps,

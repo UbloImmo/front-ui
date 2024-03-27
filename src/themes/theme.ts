@@ -1,3 +1,10 @@
+import {
+  buildColorPalette,
+  buildDynamicColorPalette,
+  buildLegacyColorPalette,
+} from "./palette";
+import { themeOverridePaletteToColorPaletteShaded } from "./provider/theme.overrides";
+
 import type {
   ClientColorPaletteKey,
   OrganizationData,
@@ -5,12 +12,6 @@ import type {
   ThemeOverride,
 } from "../types";
 import type { Nullable } from "@ubloimmo/front-util";
-import {
-  buildColorPalette,
-  buildDynamicColorPalette,
-  buildLegacyColorPalette,
-} from "./palette";
-import { themeOverridePaletteToColorPaletteShaded } from "./provider/theme.overrides";
 
 /**
  * Organization data for ublo's staging & local environments

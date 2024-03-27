@@ -1,6 +1,7 @@
-import { GenericFn } from "@ubloimmo/front-util";
-import { HexColorAlpha, RgbaColorStr, Enum } from "../../";
 import { colors } from "@ubloimmo/front-tokens";
+import { GenericFn } from "@ubloimmo/front-util";
+
+import { HexColorAlpha, RgbaColorStr, Enum } from "../../";
 
 export const defaultPaletteColorShadeKeys = [
   "dark",

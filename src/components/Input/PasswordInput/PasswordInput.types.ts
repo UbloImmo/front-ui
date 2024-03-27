@@ -1,6 +1,6 @@
-import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { IconName } from "../../Icon";
 import type { InputProps } from "../Input.types";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { HTMLInputTypeAttribute } from "react";
 
 /**

@@ -1,7 +1,8 @@
-import React from "react";
-import { describe, it, beforeEach, expect, afterEach } from "bun:test";
-import { StaticIcon } from "./StaticIcon.component";
 import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it } from "bun:test";
+import React from "react";
+
+import { StaticIcon } from "./StaticIcon.component";
 import { StaticIconProps } from "./StaticIcon.types";
 
 describe("StaticIcon Component", () => {

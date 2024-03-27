@@ -1,19 +1,11 @@
-import type {
-  AnyColor,
-  ColorCollection,
-  HexColor,
-  HexColorAlpha,
-  HexColorOpaque,
-  HexColorShorthand,
-  HexColorShorthandAlpha,
-  RgbaColorStr,
-} from "../types";
-import { describe, expect, it } from "bun:test";
 import {
   objectEntries,
-  type GenericFn,
   objectValues,
+  type GenericFn,
 } from "@ubloimmo/front-util";
+import { describe, expect, it } from "bun:test";
+
+import { testPrimitives } from "./test.data";
 import {
   blendColors,
   hexColorConverter,
@@ -25,7 +17,17 @@ import {
   isValidRgbaStr,
   rgbaColorConverter,
 } from "../utils/color.utils";
-import { testPrimitives } from "./test.data";
+
+import type {
+  AnyColor,
+  ColorCollection,
+  HexColor,
+  HexColorAlpha,
+  HexColorOpaque,
+  HexColorShorthand,
+  HexColorShorthandAlpha,
+  RgbaColorStr,
+} from "../types";
 
 type PrimaryColor = "red" | "green" | "blue";
 

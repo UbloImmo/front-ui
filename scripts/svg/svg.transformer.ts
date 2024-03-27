@@ -1,3 +1,6 @@
+import { readdir } from "node:fs/promises";
+
+import { icons } from "@ubloimmo/front-tokens/lib/icons";
 import {
   Logger,
   Primitives,
@@ -13,16 +16,16 @@ import {
   TextNode as SvgTextNode,
   ElementNode as SvgElementNode,
 } from "svg-parser";
-import { readdir } from "node:fs/promises";
+
 import {
   BootstrapIconFile,
   CustomIconFile,
   IconFileType,
   NormalizedIconFileDeclaration,
 } from "./svg.types";
-import { camelCase, capitalize } from "src/utils/string.utils";
 import { isBootstrapIconFile } from "./svg.utils";
-import { icons } from "@ubloimmo/front-tokens/lib/icons";
+
+import { camelCase, capitalize } from "src/utils/string.utils";
 
 const LOGGER_NAME = "svg transform";
 const COLOR_PROPERTIES = ["fill", "stroke", "color", "background-color"];

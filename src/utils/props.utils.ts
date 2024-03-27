@@ -1,12 +1,13 @@
-import { useMemo } from "react";
-import type { StyleProps, StylePropName } from "../types";
 import {
+  isFunction,
   isUndefined,
   objectEntries,
-  transformObject,
   objectFromEntries,
-  isFunction,
+  transformObject,
 } from "@ubloimmo/front-util";
+import { useMemo } from "react";
+
+import type { StylePropName, StyleProps } from "@/types";
 
 /**
  * Merges the provided default props with the given props, prioritizing the props values when available.

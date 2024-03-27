@@ -1,4 +1,5 @@
 import { isString } from "@ubloimmo/front-util";
+
 import { Email } from "../../../types";
 
 // example.subdomain@domain.sub.com

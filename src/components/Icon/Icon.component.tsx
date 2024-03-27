@@ -1,9 +1,11 @@
-import { DefaultIconProps, GeneratedIcon, IconProps } from "./Icon.types";
-import type { Nullable } from "@ubloimmo/front-util";
-import { mergeDefaultProps, useLogger } from "../../utils";
 import { useMemo } from "react";
+
 import * as generatedIcons from "./__generated__";
+import { DefaultIconProps, GeneratedIcon, IconProps } from "./Icon.types";
 import { useIconSize } from "./Icon.utils";
+import { mergeDefaultProps, useLogger } from "../../utils";
+
+import type { Nullable } from "@ubloimmo/front-util";
 
 export const defaultIconProps: DefaultIconProps = {
   size: "s-4",

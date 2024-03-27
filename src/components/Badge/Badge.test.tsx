@@ -1,6 +1,8 @@
 import { expect } from "bun:test";
-import { testComponentFactory } from "src/tests";
+
 import { Badge } from "./Badge.component";
+
+import { testComponentFactory } from "src/tests";
 
 testComponentFactory("Badge", Badge, {
   props: Badge.defaultProps,

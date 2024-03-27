@@ -1,7 +1,11 @@
 import { describe, expect, mock } from "bun:test";
-import { testComponentFactory } from "@/tests";
-import { TextInput } from ".";
+
 import { InputProps } from "..";
+
+import { testComponentFactory } from "@/tests";
+
+import { TextInput } from ".";
+
 import type { Nullable } from "@ubloimmo/front-util";
 
 const testId = "input-text";

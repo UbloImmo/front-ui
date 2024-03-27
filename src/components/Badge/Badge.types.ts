@@ -1,4 +1,5 @@
 import { Nullable } from "@ubloimmo/front-util";
+
 import {
   ColorKey,
   DefaultPaletteColorShadeKey,

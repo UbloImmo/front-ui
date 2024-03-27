@@ -1,4 +1,6 @@
 import { colors, effects } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { objectKeys, transformObject } from "@ubloimmo/front-util";
+
 import {
   LegacyDegreesPalette,
   LegacyEmphasisPalette,
@@ -9,7 +11,6 @@ import {
   TokenValueGroup,
   Token,
 } from "../../types";
-import { objectKeys, transformObject } from "@ubloimmo/front-util";
 
 /**
  * Generates a legacy palette color from a color token group.

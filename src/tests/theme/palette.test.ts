@@ -1,18 +1,6 @@
-import { describe, expect, it } from "bun:test";
-import type {
-  LegacyPalette,
-  ColorPalette,
-  LegacyShadows,
-  RgbaColorStr,
-  RgbaColorArr,
-  CssVarName,
-} from "../../types";
-import {
-  grayscalePaletteColorShadeKeys,
-  defaultPaletteColorShadeKeys,
-} from "../../types";
 import { effects, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
-import { colorCollections } from "../color.test";
+import { describe, expect, it } from "bun:test";
+
 import {
   buildLegacyColorPalette,
   buildColorPalette,
@@ -23,7 +11,21 @@ import {
   paletteColorToCssVars,
   buildTheme,
 } from "../../themes";
+import {
+  grayscalePaletteColorShadeKeys,
+  defaultPaletteColorShadeKeys,
+} from "../../types";
 import { parseCssVar, rgbaColorConverter } from "../../utils";
+import { colorCollections } from "../color.test";
+
+import type {
+  LegacyPalette,
+  ColorPalette,
+  LegacyShadows,
+  RgbaColorStr,
+  RgbaColorArr,
+  CssVarName,
+} from "../../types";
 
 const LEGACY_PALETTE_KEYS: (keyof LegacyPalette)[] = [
   "shadows",

@@ -1,15 +1,16 @@
+import { useMemo } from "react";
 import styled from "styled-components";
-import { Icon } from "../Icon/Icon.component";
-import { Text } from "../Text/Text.component";
+
 import {
   backgroundShade,
   badgeShadeStyleMap,
   grayBadgeShadeStyleMap,
 } from "./Badge.styles";
 import { BadgeProps, DefaultBadgeProps } from "./Badge.types";
-import { useMergedProps, useStyleProps } from "../../utils";
 import { PaletteColor, StyleProps } from "../../types";
-import { useMemo } from "react";
+import { useMergedProps, useStyleProps } from "../../utils";
+import { Icon } from "../Icon/Icon.component";
+import { Text } from "../Text/Text.component";
 
 export const defaultBadgeProps: DefaultBadgeProps = {
   label: "label",

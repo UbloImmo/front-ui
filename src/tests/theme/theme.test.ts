@@ -1,12 +1,14 @@
+import { fakeFetchFactory } from "@ubloimmo/front-util/";
 import { describe, it, expect, mock } from "bun:test";
-import type { Theme } from "../../types";
+
+import { testLegacyPalette, testColorPalette } from "./palette.test";
 import {
   buildTheme,
   getThemeOverrides,
   defaultOrganizationData,
 } from "../../themes";
-import { testLegacyPalette, testColorPalette } from "./palette.test";
-import { fakeFetchFactory } from "@ubloimmo/front-util/";
+
+import type { Theme } from "../../types";
 
 const fakeFetchNull = await fakeFetchFactory(() => ({
   organization: {

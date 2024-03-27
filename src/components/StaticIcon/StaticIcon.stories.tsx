@@ -1,11 +1,12 @@
+import { useMemo } from "react";
+
+import { StaticIcon } from "./StaticIcon.component";
+import { ComponentVariants } from "../../../docs/blocks";
+import { FlexRowLayout } from "../../layouts";
+
 import type { StaticIconProps, StaticIconSize } from "./StaticIcon.types";
 import type { ColorPalette } from "../../types";
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { StaticIcon } from "./StaticIcon.component";
-import { FlexRowLayout } from "../../layouts";
-import { useMemo } from "react";
-import { ComponentVariants } from "../../../docs/blocks";
 
 const meta: Meta<typeof StaticIcon> = {
   title: "Components/StaticIcon",

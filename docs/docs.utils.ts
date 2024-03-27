@@ -4,14 +4,16 @@ import {
   type Nullable,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
+
+import { SPACING_PREFIX } from "@types";
+import { capitalize, isColorKey, isPaletteColor } from "@utils";
+
 import type {
   DocgenPropDef,
   ParsedJsDoc,
   ParsedJsDocDescription,
   ParsedPropInfo,
 } from "./docs.types";
-import { capitalize, isColorKey, isPaletteColor } from "@utils";
-import { SPACING_PREFIX } from "@types";
 
 /**
  * Removes decorators from a jsdoc string

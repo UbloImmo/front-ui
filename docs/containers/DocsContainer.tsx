@@ -1,9 +1,11 @@
-import type { ClientColorPaletteKey } from "../../src/types";
 import { DocsContainer as SBDocsContainer } from "@storybook/blocks";
 import { isString, type Optional } from "@ubloimmo/front-util";
+import styled from "styled-components";
+
 import { StorybookThemeProvider } from "./StoryDecorator";
 import { getClientSlugs } from "../../src/themes";
-import styled from "styled-components";
+
+import type { ClientColorPaletteKey } from "../../src/types";
 
 type DocsContainerProps = Parameters<typeof SBDocsContainer>[0];
 

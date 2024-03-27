@@ -1,5 +1,6 @@
-import { FixedCssLength, PaletteColor } from "@types";
 import * as LoadingAnimations from "./animations";
+
+import { FixedCssLength, PaletteColor } from "@types";
 
 export type LoadingAnimation = keyof typeof LoadingAnimations;
 

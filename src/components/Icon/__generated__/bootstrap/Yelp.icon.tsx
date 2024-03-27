@@ -1,10 +1,11 @@
 import { useMemo } from "react";
-import { CommonIconProps, commonIconDefaulProps } from "../common.types";
+
 import {
   cssLengthUsage,
   cssVarUsage,
   mergeDefaultProps,
 } from "../../../../utils";
+import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 /**
  * React component generated from bootstrap icon: `yelp`.
  * Auto-generated before NPM release

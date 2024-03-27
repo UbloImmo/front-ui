@@ -1,4 +1,4 @@
-import { ColorKey, SpacingLabel, Enum } from "../../types";
+import { ColorKey, Enum, SpacingLabel } from "../../types";
 import { IconName } from "../Icon/Icon.types";
 
 const staticIconSizes = ["xs", "s", "m", "l"] as const;

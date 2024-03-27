@@ -1,8 +1,9 @@
-import type { StyleProps } from "../types";
-import type { Nullable } from "@ubloimmo/front-util";
+import { renderHook } from "@testing-library/react";
 import { objectValues, objectKeys, objectEntries } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
-import { renderHook } from "@testing-library/react";
+
+import { testPrimitives } from "./test.data";
+import { testHookFactory } from "./test.utils";
 import {
   mergeDefaultProps,
   toStyleProps,
@@ -11,8 +12,9 @@ import {
   useMergedProps,
   useStatic,
 } from "../utils/props.utils";
-import { testHookFactory } from "./test.utils";
-import { testPrimitives } from "./test.data";
+
+import type { StyleProps } from "../types";
+import type { Nullable } from "@ubloimmo/front-util";
 
 type TestProps = {
   a?: string;

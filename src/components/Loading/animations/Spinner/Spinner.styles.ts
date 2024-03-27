@@ -1,7 +1,9 @@
-import type { StyleProps } from "@types";
 import { css, keyframes, type StyleFunction } from "styled-components";
-import type { LoadingAnimationProps } from "../../Loading.types";
+
 import { cssVarUsage } from "@utils";
+
+import type { LoadingAnimationProps } from "../../Loading.types";
+import type { StyleProps } from "@types";
 
 const cssAnim = keyframes`
   from {

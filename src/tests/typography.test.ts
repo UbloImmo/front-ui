@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
+
 import { testLenghts } from "./css.test";
-import type { AnyTypographyProps, TextProps, TypographyProps } from "../types";
 import {
   typographyFontFace,
   linkFontFace,
@@ -14,6 +14,8 @@ import {
   buildTypographyStyle,
 } from "../typography/typography.styles";
 import { cssRem } from "../utils";
+
+import type { AnyTypographyProps, TextProps, TypographyProps } from "../types";
 
 describe("typography", () => {
   describe("font", () => {

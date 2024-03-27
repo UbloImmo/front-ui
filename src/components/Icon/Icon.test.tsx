@@ -1,13 +1,16 @@
-import { describe, it, expect, afterEach, mock } from "bun:test";
-import { render, cleanup } from "@testing-library/react";
-import { Icon } from "./Icon.component";
-import * as generated from "./__generated__";
-import { ThemeProvider } from "../../themes";
+import { cleanup, render } from "@testing-library/react";
 import { objectKeys } from "@ubloimmo/front-util";
-import type { IconName } from ".";
+import { afterEach, describe, expect, it, mock } from "bun:test";
+
+import * as generated from "./__generated__";
+import { Icon } from "./Icon.component";
 import { useIconSize } from "./Icon.utils";
+import { ThemeProvider } from "../../themes";
+
 import { testHookFactory } from "@/tests";
 import { isCssRem } from "@utils";
+
+import type { IconName } from ".";
 
 const warnCopy = global.console.warn;
 

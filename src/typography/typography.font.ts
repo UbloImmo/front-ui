@@ -1,5 +1,6 @@
-import type { RuleSet } from "styled-components";
 import { css } from "styled-components";
+
+import type { RuleSet } from "styled-components";
 
 const fontFamily = {
   sans: `"Open Sans Variable", "Helvetica", "Inter", "Arial", "Calibri",

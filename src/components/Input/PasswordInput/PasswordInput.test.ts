@@ -1,6 +1,9 @@
 import { describe, expect, mock } from "bun:test";
+
 import { testComponentFactory } from "@/tests";
+
 import { PasswordInput } from ".";
+
 import type { PasswordInputProps } from "./PasswordInput.types";
 import type { Nullable } from "@ubloimmo/front-util";
 

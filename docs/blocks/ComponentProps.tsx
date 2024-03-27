@@ -1,17 +1,21 @@
+import { objectEntries } from "@ubloimmo/front-util";
+import { useMemo } from "react";
+import styled, { css } from "styled-components";
+
+import { formatPropInfo } from "@docs/docs.utils";
+import { useStatic } from "@utils";
+
+import { Text } from "@components";
+
+import { Markdown } from ".";
+
 import type {
   ComponentStory,
   DocgenPropDef,
   ParsedPropInfo,
 } from "@docs/docs.types";
-import type { NullishPrimitives } from "@ubloimmo/front-util";
-import { Text } from "@components";
-import { Markdown } from ".";
-import { objectEntries } from "@ubloimmo/front-util";
-import { useMemo } from "react";
-import { formatPropInfo } from "@docs/docs.utils";
-import styled, { css } from "styled-components";
-import { useStatic } from "@utils";
 import type { StyleProps } from "@types";
+import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 type ComponentPropsBlockProps<TComponentProps extends Record<string, unknown>> =
   {

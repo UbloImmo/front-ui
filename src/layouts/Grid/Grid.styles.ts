@@ -4,15 +4,16 @@ import {
   isObject,
   transformObject,
 } from "@ubloimmo/front-util";
+import { StyleFunction, css } from "styled-components";
+
 import {
   GridGap,
   GridLayoutDefaultProps,
   GridLayoutProps,
   GridTemplate,
 } from "./Grid.types";
-import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "../../utils";
 import { CssLengthUsage, type StyleProps } from "../../types";
-import { StyleFunction, css } from "styled-components";
+import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "../../utils";
 
 /**
  * Splits the common gap into row and columm with same values

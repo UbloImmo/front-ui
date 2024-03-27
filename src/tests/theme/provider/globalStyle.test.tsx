@@ -1,4 +1,6 @@
+import { objectValues } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
+
 import { buildSpacingMap } from "../../../sizes";
 import {
   spacingsToCssVars,
@@ -11,7 +13,6 @@ import {
   declareGlobalStyle,
   joinCssVarCollection,
 } from "../../../themes";
-import { objectValues } from "@ubloimmo/front-util";
 import { testComponentFactory } from "../../test.utils";
 
 describe("global style", () => {

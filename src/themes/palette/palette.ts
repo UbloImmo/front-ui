@@ -1,3 +1,14 @@
+import { colors } from "@ubloimmo/front-tokens";
+import {
+  transformObject,
+  objectKeys,
+  objectFromEntries,
+  arrayFilter,
+  isNull,
+  Nullable,
+  isArray,
+} from "@ubloimmo/front-util";
+
 import {
   AnyPaletteColorShadeKeys,
   ClientColorPalette,
@@ -12,16 +23,6 @@ import {
   Token,
   RgbaColorArr,
 } from "../../types";
-import { colors } from "@ubloimmo/front-tokens";
-import {
-  transformObject,
-  objectKeys,
-  objectFromEntries,
-  arrayFilter,
-  isNull,
-  Nullable,
-  isArray,
-} from "@ubloimmo/front-util";
 import { rgbaColorConverter, blendColors } from "../../utils";
 
 /**

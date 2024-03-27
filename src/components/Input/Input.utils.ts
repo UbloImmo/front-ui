@@ -1,3 +1,15 @@
+import { isFunction, isNull } from "@ubloimmo/front-util";
+import { useCallback, useMemo } from "react";
+
+import { toStyleProps } from "../../utils";
+
+import type {
+  CommonInputStyleProps,
+  DefaultCommonInputProps,
+  InputOnChangeFn,
+  InputType,
+  InputValue,
+} from "./Input.types";
 import type {
   GenericFn,
   Nullable,
@@ -5,20 +17,10 @@ import type {
   VoidFn,
 } from "@ubloimmo/front-util";
 import type {
-  InputType,
-  InputValue,
-  InputOnChangeFn,
-  DefaultCommonInputProps,
-  CommonInputStyleProps,
-} from "./Input.types";
-import type {
   DetailedHTMLProps,
   InputHTMLAttributes,
   MutableRefObject,
 } from "react";
-import { isFunction, isNull } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
-import { toStyleProps } from "../../utils";
 
 /**
  * All props exposed by a native input

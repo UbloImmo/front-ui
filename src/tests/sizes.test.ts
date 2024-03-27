@@ -1,8 +1,10 @@
-import { describe, expect, it } from "bun:test";
-import type { Spacings } from "../types";
 import { objectValues, objectKeys } from "@ubloimmo/front-util";
+import { describe, expect, it } from "bun:test";
+
 import { buildSpacingMap, defaultSpacingMapConfig } from "../sizes";
 import { isCssRem } from "../utils";
+
+import type { Spacings } from "../types";
 
 describe("spacings", () => {
   let spacings: Spacings;

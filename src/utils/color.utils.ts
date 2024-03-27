@@ -1,18 +1,20 @@
+import { isArray, isObject, isString } from "@ubloimmo/front-util";
+
+import { lerp } from "./number.utils";
+
 import type {
+  AnyColor,
+  ColorKey,
   HexColor,
   HexColorAlpha,
   HexColorShorthand,
   HexColorShorthandAlpha,
   HexComponentDouble,
+  PaletteColor,
   RgbaColorArr,
   RgbaColorObj,
   RgbaColorStr,
-  AnyColor,
-  PaletteColor,
-  ColorKey,
 } from "../types";
-import { isString, isObject, isArray } from "@ubloimmo/front-util";
-import { lerp } from "./number.utils";
 
 export const hexRegex =
   /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{8})$/;

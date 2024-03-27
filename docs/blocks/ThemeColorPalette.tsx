@@ -1,3 +1,12 @@
+import { transformObject } from "@ubloimmo/front-util";
+import React, { useMemo, useReducer, type ReactNode } from "react";
+import styled, { useTheme } from "styled-components";
+
+import { ColorShadeGrid } from "./ColorShadeGrid";
+import { Pre } from "./Typography";
+import { Heading, Text } from "../../src/components";
+import { FlexLayout } from "../../src/layouts";
+
 import type {
   ColorPalette as CPalette,
   DefaultPaletteColorShadeKey,
@@ -6,13 +15,6 @@ import type {
   PaletteColorShaded,
   PaletteColor,
 } from "../../src/types";
-import React, { useMemo, useReducer, type ReactNode } from "react";
-import styled, { useTheme } from "styled-components";
-import { ColorShadeGrid } from "./ColorShadeGrid";
-import { transformObject } from "@ubloimmo/front-util";
-import { FlexLayout } from "../../src/layouts";
-import { Heading, Text } from "../../src/components";
-import { Pre } from "./Typography";
 
 /**
  * React component for displaying theme color shades and swatches.

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "bun:test";
-import { svgTextNodeToTsx, transformSvgs } from "./svg.transformer";
+
 import { exportSvgFiles } from "./svg.exporter";
+import { svgTextNodeToTsx, transformSvgs } from "./svg.transformer";
 
 describe("svg to tsx conversion", () => {
   describe("transformer", () => {

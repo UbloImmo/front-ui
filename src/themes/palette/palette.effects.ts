@@ -1,4 +1,15 @@
+import { effects } from "@ubloimmo/front-tokens/lib/tokens.values";
 import { isObject, objectEntries } from "@ubloimmo/front-util";
+
+import {
+  cssVar,
+  cssVarUsage,
+  rgbaRegex,
+  rgbaColorConverter,
+  isSameColor,
+  parseCssVar,
+} from "../../utils";
+
 import type {
   Token,
   TokenValues,
@@ -10,15 +21,6 @@ import type {
   CssVarName,
   CssVarUsage,
 } from "../../types";
-import { effects } from "@ubloimmo/front-tokens/lib/tokens.values";
-import {
-  cssVar,
-  cssVarUsage,
-  rgbaRegex,
-  rgbaColorConverter,
-  isSameColor,
-  parseCssVar,
-} from "../../utils";
 
 const substitutionRegex = /\$\$(rgba\([\d,.\s]+\))\$\$/g;
 const defaultPrimaryName = "primary-default" as const;
