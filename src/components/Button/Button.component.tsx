@@ -7,13 +7,13 @@ import {
   buildButtonLoadingContainerStyles,
 } from "./Button.styles";
 import { Icon } from "../Icon";
+import { Loading } from "../Loading/Loading.component";
 import { Text } from "../Text";
 
 import { useLogger, useMergedProps, useStyleProps } from "@utils";
 
 import type { ButtonProps, DefaultButtonProps } from "./Button.types";
 import type { StyleProps } from "@types";
-import { Loading } from "../Loading/Loading.component";
 
 const defaultButtonProps: DefaultButtonProps = {
   type: "button",

@@ -238,7 +238,6 @@ const commonButtonStyles = ({
 
 const buttonLoadingStyles = ({
   loading,
-  disabled,
   color,
   secondary,
 }: DefaultButtonProps): RuleSet => {

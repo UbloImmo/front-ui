@@ -187,7 +187,7 @@ export const Loading = (props: ButtonProps) => {
       loaded: buildVariants(false),
       loading: buildVariants(true),
     };
-  }, []);
+  }, [defaultProps]);
 
   return (
     <>
