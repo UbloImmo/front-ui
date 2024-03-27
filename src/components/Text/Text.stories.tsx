@@ -21,7 +21,7 @@ const lorem = "The brown fox jumps over the lazy dog.";
 
 const meta = {
   component: Text,
-  title: "Components/Text",
+  title: "Components/Text/Stories",
 } satisfies Meta<typeof Text>;
 
 export default meta;

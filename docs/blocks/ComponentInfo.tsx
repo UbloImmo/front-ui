@@ -14,6 +14,7 @@ import type { ReactNode } from "react";
 type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
   name: string;
   title?: string;
+  parent?: string;
   children?: ReactNode;
   version?: string;
   description?: string;
@@ -38,14 +39,22 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
   }, [props]);
 
   const { title, parent } = useMemo<{ title: string; parent?: string }>(() => {
-    const rawTitle = props.title ?? props.of.default.title;
+    let rawTitle = props.title ?? props.of.default.title;
+
     if (!rawTitle)
       return {
         title: name,
       };
+
+    // remove "Stories" from the title if present
+    if (rawTitle && rawTitle.endsWith("/Stories")) {
+      rawTitle = rawTitle.slice(0, -8);
+    }
     const [title, ...rest] = rawTitle.split("/").reverse();
     const parent =
-      Array.isArray(rest) && rest.length > 0 ? rest.reverse().join("/") : "";
+      props.parent ?? (Array.isArray(rest) && rest.length > 0)
+        ? rest.reverse().join("/")
+        : "";
     if (parent.length === 0)
       return {
         title,
