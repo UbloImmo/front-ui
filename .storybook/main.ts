@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import type { InlineConfig } from "vite";
 
 const config: StorybookConfig = {
   stories: [
@@ -31,7 +32,15 @@ const config: StorybookConfig = {
       config.base = "/design-system";
       config.publicDir = "/design-system";
     }
-    return mergeConfig(config, {
+    const baseConfig: InlineConfig = {
+      ...config,
+      optimizeDeps: {
+        ...(config.optimizeDeps ?? {}),
+        include:
+          configType === "DEVELOPMENT" ? [] : config.optimizeDeps?.include,
+      },
+    };
+    return mergeConfig(baseConfig, {
       build: {
         rollupOptions: {
           external: ["bun:test", "*.test.ts", "*.test.tsx"],
