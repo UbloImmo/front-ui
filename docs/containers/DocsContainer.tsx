@@ -3,11 +3,11 @@ import { isString, type Optional } from "@ubloimmo/front-util";
 import styled from "styled-components";
 
 import { StorybookThemeProvider } from "./StoryDecorator";
-import { getClientSlugs } from "../../src/themes";
 
+import { getClientSlugs } from "@/themes";
 import { typographyFontFace } from "@/typography";
 
-import type { ClientColorPaletteKey } from "../../src/types";
+import type { ClientColorPaletteKey } from "@types";
 
 type DocsContainerProps = Parameters<typeof SBDocsContainer>[0];
 

@@ -11,12 +11,13 @@ import {
   paletteColorToCssVars,
   buildTheme,
 } from "../../themes";
+import { colorCollections } from "../color.test";
+
 import {
   grayscalePaletteColorShadeKeys,
   defaultPaletteColorShadeKeys,
-} from "../../types";
-import { parseCssVar, rgbaColorConverter } from "../../utils";
-import { colorCollections } from "../color.test";
+} from "@types";
+import { parseCssVar, rgbaColorConverter } from "@utils";
 
 import type {
   LegacyPalette,
@@ -25,7 +26,7 @@ import type {
   RgbaColorStr,
   RgbaColorArr,
   CssVarName,
-} from "../../types";
+} from "@types";
 
 const LEGACY_PALETTE_KEYS: (keyof LegacyPalette)[] = [
   "shadows",

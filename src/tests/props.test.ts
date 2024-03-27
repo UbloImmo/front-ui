@@ -4,6 +4,7 @@ import { describe, it, expect } from "bun:test";
 
 import { testPrimitives } from "./test.data";
 import { testHookFactory } from "./test.utils";
+
 import {
   mergeDefaultProps,
   toStyleProps,
@@ -11,9 +12,9 @@ import {
   useStyleProps,
   useMergedProps,
   useStatic,
-} from "../utils/props.utils";
+} from "@utils";
 
-import type { StyleProps } from "../types";
+import type { StyleProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 type TestProps = {

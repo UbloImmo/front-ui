@@ -1,13 +1,13 @@
 import { css } from "styled-components";
 
-import { fromStyleProps } from "../../utils";
+import { fromStyleProps } from "@utils";
 
 import type {
   DefaultStaticIconProps,
   StaticIconContainerStyle,
   StaticIconSize,
 } from "./StaticIcon.types";
-import type { CssRem, StyleProps, ValueMap } from "../../types";
+import type { CssRem, StyleProps, ValueMap } from "@types";
 
 export const staticIconSizeToContainerStyleMap: ValueMap<
   StaticIconSize,

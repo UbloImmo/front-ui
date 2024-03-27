@@ -7,10 +7,11 @@ import {
   grayBadgeShadeStyleMap,
 } from "./Badge.styles";
 import { BadgeProps, DefaultBadgeProps } from "./Badge.types";
-import { PaletteColor, StyleProps } from "../../types";
-import { useMergedProps, useStyleProps } from "../../utils";
 import { Icon } from "../Icon/Icon.component";
 import { Text } from "../Text/Text.component";
+
+import { PaletteColor, StyleProps } from "@types";
+import { useMergedProps, useStyleProps } from "@utils";
 
 export const defaultBadgeProps: DefaultBadgeProps = {
   label: "label",

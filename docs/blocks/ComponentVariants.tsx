@@ -2,8 +2,9 @@ import { isNumber, isObject, isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled, { css } from "styled-components";
 
-import { Text } from "../../src/components";
-import { FlexLayout, GridLayout } from "../../src/layouts";
+import { FlexLayout, GridLayout } from "@/layouts";
+
+import { Text } from "@components";
 
 import type {
   FlexAlignment,
@@ -12,7 +13,7 @@ import type {
   FlexLayoutProps,
   GridAlignment,
   GridLayoutProps,
-} from "../../src/layouts";
+} from "@/layouts";
 import type { FC } from "react";
 
 type ComponentVariantsConfig<

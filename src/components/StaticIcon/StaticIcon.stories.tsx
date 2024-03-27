@@ -6,8 +6,8 @@ import { FlexRowLayout } from "../../layouts";
 import { ComponentVariants } from "@docs/blocks";
 
 import type { StaticIconProps, StaticIconSize } from "./StaticIcon.types";
-import type { ColorPalette } from "../../types";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { ColorPalette } from "@types";
 
 const meta: Meta<typeof StaticIcon> = {
   title: "Components/StaticIcon/Stories",

@@ -2,15 +2,16 @@ import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo, useReducer } from "react";
 import styled from "styled-components";
 
-import { Text } from "../../src/components";
-import { rgbaColorConverter } from "../../src/utils";
+import { rgbaColorConverter } from "@utils";
+
+import { Text } from "@components";
 
 import type {
   DefaultPaletteColorShadeKey,
   GrayscalePaletteColorShadeKey,
   PaletteColorShaded,
   RgbaColorStr,
-} from "../../src/types";
+} from "@types";
 
 /**
  * Renders a color shade grid based on the provided color and color name.

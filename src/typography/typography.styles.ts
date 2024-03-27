@@ -2,9 +2,9 @@ import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
 import { objectKeys, transformObject } from "@ubloimmo/front-util";
 import { css, StyleFunction } from "styled-components";
 
-import { cssRem, cssVarUsage, extractRem } from "./../utils/css.utils";
 import { typographyFontFace } from "./typography.font";
-import { fromStyleProps } from "../utils";
+
+import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "@utils";
 
 import type {
   HeadingProps,
@@ -16,7 +16,7 @@ import type {
   HeadingSize,
   CssRem,
   StyleProps,
-} from "../types";
+} from "@types";
 
 /**
  * Builds a typography weight map based on the generated text styles.

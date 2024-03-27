@@ -1,6 +1,8 @@
-import { Heading } from "../../src/components";
-import { FlexColumnLayout } from "../../src/layouts";
 import { Text } from "../blocks";
+
+import { FlexColumnLayout } from "@/layouts";
+
+import { Heading } from "@components";
 
 import type { ReactNode } from "react";
 

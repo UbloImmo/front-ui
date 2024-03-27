@@ -1,6 +1,6 @@
 import { isString } from "@ubloimmo/front-util";
 
-import { Email } from "../../../types";
+import { Email } from "@types";
 
 // example.subdomain@domain.sub.com
 const emailRegex = /[\w.\d]+@[\w.\d]+\.[\w.\d]+/;

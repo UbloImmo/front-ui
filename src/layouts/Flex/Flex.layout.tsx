@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 import { buildFlexLayoutStyle } from "./Flex.styles";
-import { useStyleProps } from "../../utils";
+
+import { useStyleProps } from "@utils";
 
 import type {
   FlexDirectionLayoutProps,

@@ -1,7 +1,6 @@
 import { isNull, isString, type Nullable } from "@ubloimmo/front-util";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { useMergedProps } from "../../../utils";
 import { Icon } from "../../Icon";
 import {
   StyledInput,
@@ -15,6 +14,8 @@ import {
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
+
+import { useMergedProps } from "@utils";
 
 import type {
   DefaultPasswordInputProps,

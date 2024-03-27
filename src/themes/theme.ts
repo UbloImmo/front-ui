@@ -10,7 +10,7 @@ import type {
   OrganizationData,
   Theme,
   ThemeOverride,
-} from "../types";
+} from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 /**

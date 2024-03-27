@@ -25,7 +25,7 @@ import {
 } from "./svg.types";
 import { isBootstrapIconFile } from "./svg.utils";
 
-import { camelCase, capitalize } from "src/utils/string.utils";
+import { camelCase, capitalize } from "@/utils/string.utils";
 
 const LOGGER_NAME = "svg transform";
 const COLOR_PROPERTIES = ["fill", "stroke", "color", "background-color"];

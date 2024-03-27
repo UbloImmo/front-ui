@@ -5,9 +5,9 @@ import { Badge } from "./Badge.component";
 import { BadgeProps, BadgeShade } from "./Badge.types";
 import { IconName } from "..";
 import { FlexRowLayout } from "../../layouts";
-import { ColorPalette } from "../../types";
 
 import { ComponentVariants } from "@docs/blocks";
+import { ColorPalette } from "@types";
 
 import type { Meta, StoryObj } from "@storybook/react";
 

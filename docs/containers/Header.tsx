@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { FlexColumnLayout } from "../../src/layouts";
+import { FlexColumnLayout } from "@/layouts";
 
 import { Content } from ".";
 

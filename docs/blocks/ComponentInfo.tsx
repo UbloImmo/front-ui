@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 
-import { GridLayout } from "../../src/layouts";
 import { Header } from "../containers";
 
+import { GridLayout } from "@/layouts";
 import { parseJsDoc } from "@docs/docs.utils";
 
 import { Text, HeaderInfo, Canvas, Markdown } from ".";

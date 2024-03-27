@@ -1,7 +1,7 @@
 import { objectValues } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
 
-import { camelCase, capitalize } from "../utils";
+import { camelCase, capitalize } from "@utils";
 
 const testStrings = {
   default: "this is a test string A 7897",

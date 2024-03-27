@@ -13,9 +13,10 @@ import {
   sanitizeTypographyProps,
   buildTypographyStyle,
 } from "../typography/typography.styles";
-import { cssRem } from "../utils";
 
-import type { AnyTypographyProps, TextProps, TypographyProps } from "../types";
+import { cssRem } from "@utils";
+
+import type { AnyTypographyProps, TextProps, TypographyProps } from "@types";
 
 describe("typography", () => {
   describe("font", () => {

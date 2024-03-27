@@ -3,14 +3,14 @@ import styled from "styled-components";
 import {
   Heading as HeadingComponent,
   Text as TextComponent,
-} from "../../src/components";
+} from "@/components";
+import { cssVarUsage } from "@/utils";
 import {
   StyleProps,
   type HeadingProps,
   type PaletteColor,
   type TextProps,
-} from "../../src/types";
-import { cssVarUsage } from "../../src/utils";
+} from "@types";
 
 import type { ReactNode } from "react";
 

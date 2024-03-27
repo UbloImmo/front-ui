@@ -1,12 +1,13 @@
 import { Nullable } from "@ubloimmo/front-util";
 
+import { IconName } from "../Icon/Icon.types";
+
 import {
   ColorKey,
   DefaultPaletteColorShadeKey,
   Enum,
   GrayscalePaletteColorShadeKey,
-} from "../../types";
-import { IconName } from "../Icon/Icon.types";
+} from "@types";
 
 const badgeShades = ["light", "dark"] as const;
 export type BadgeShade = Enum<typeof badgeShades>;

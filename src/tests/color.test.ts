@@ -6,6 +6,7 @@ import {
 import { describe, expect, it } from "bun:test";
 
 import { testPrimitives } from "./test.data";
+
 import {
   blendColors,
   hexColorConverter,
@@ -16,7 +17,7 @@ import {
   isValidHexStr,
   isValidRgbaStr,
   rgbaColorConverter,
-} from "../utils/color.utils";
+} from "@utils";
 
 import type {
   AnyColor,
@@ -27,7 +28,7 @@ import type {
   HexColorShorthand,
   HexColorShorthandAlpha,
   RgbaColorStr,
-} from "../types";
+} from "@types";
 
 type PrimaryColor = "red" | "green" | "blue";
 

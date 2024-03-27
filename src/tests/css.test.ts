@@ -17,9 +17,9 @@ import {
   isCssFr,
   cssLengthUsage,
   REM_FACTOR,
-} from "../utils";
+} from "@utils";
 
-import type { CssFr, CssLength, CssPx, CssRem } from "../types";
+import type { CssFr, CssLength, CssPx, CssRem } from "@types";
 import type {
   GenericFn,
   NullishPrimitives,

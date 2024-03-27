@@ -22,8 +22,8 @@ import {
   StaticColorPalette,
   Token,
   RgbaColorArr,
-} from "../../types";
-import { rgbaColorConverter, blendColors } from "../../utils";
+} from "@types";
+import { rgbaColorConverter, blendColors } from "@utils";
 
 /**
  * Creates a function that takes an opacity value and returns the RGBA color with the specified opacity.

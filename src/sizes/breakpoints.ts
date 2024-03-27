@@ -1,11 +1,7 @@
 import { transformObject } from "@ubloimmo/front-util";
 
-import { cssPx } from "../utils/css.utils";
-
-import {
-  Breakpoints,
-  BreakpointsPx,
-} from "src/types/themes/sizes/breakpoints.types";
+import { Breakpoints, BreakpointsPx } from "@types";
+import { cssPx } from "@utils";
 
 export const breakpoints: Breakpoints = {
   XXS: 320,
