@@ -27,7 +27,7 @@ export type FlexFill = boolean | FlexDirection;
 
 export type FlexLayoutProps = {
   /**
-   * the direction of items
+   * the direction of items (default: `row`)
    *
    * @type {FlexDirection}
    * @default "row"
@@ -48,14 +48,14 @@ export type FlexLayoutProps = {
    */
   justify?: FlexAlignment;
   /**
-   * the vertical alignment
+   * the vertical alignment (default: `start`)
    *
    * @default "start"
    * @type {FlexAlignment}
    */
   align?: FlexAlignment;
   /**
-   * wrap items
+   * activate wrapping of items
    *
    * @default false
    * @type {FlexWrap}
@@ -69,7 +69,7 @@ export type FlexLayoutProps = {
    */
   reverse?: boolean;
   /**
-   * display as inline-flex
+   * to display as `inline-flex` (default: `flex`)
    *
    * @default false
    * @type {boolean}
@@ -83,7 +83,7 @@ export type FlexLayoutProps = {
    */
   fill?: FlexFill;
   /**
-   * the children to render
+   * the child elements to render
    *
    * @default null
    * @type {ReactNode}
