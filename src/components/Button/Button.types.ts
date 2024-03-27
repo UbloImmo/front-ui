@@ -83,6 +83,7 @@ export type ButtonProps = {
   /**
    * The label of the button.
    *
+   * @required
    * @type {string | null}
    * @default "Button"
    */
