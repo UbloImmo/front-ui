@@ -12,7 +12,7 @@ import type {
   CssVarName,
   CssVarUsage,
   SpacingLabel,
-} from "../types";
+} from "@/types";
 
 export const REM_FACTOR = 16 as const;
 
