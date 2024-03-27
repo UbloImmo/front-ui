@@ -111,11 +111,11 @@ const TextOverrides = styled.span<{
       --s-${({ $size }) => ($size === "xs" ? "05" : $size === "s" ? "1" : "2")}
     ) !important;
   }
-  display: block !important;
+  display: inline-block !important;
 
   &:has(span),
   & {
-    display: block !important;
+    display: inline-block !important;
   }
 
   & > span:has(em),
