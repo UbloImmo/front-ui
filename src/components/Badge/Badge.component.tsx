@@ -14,7 +14,7 @@ import { Text } from "../Text/Text.component";
 
 export const defaultBadgeProps: DefaultBadgeProps = {
   label: "label",
-  icon: "Square",
+  icon: null,
   color: "primary",
   shade: "light",
 };

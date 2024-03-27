@@ -10,8 +10,8 @@ import { ColorPalette } from "../../types";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof Badge> = {
-  title: "Components/Badge",
+const meta = {
+  title: "Components/Badge/Stories",
   component: Badge,
   decorators: [
     (Story) => (
@@ -102,6 +102,7 @@ export const Icon = (props: Partial<BadgeProps>) => {
       for="icon"
       of={Badge}
       align="center"
+      propLabels
     />
   );
 };
