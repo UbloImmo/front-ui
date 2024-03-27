@@ -28,6 +28,17 @@ describe("FlexLayout", () => {
     expect(flexStyle.justifyContent).toBe("space-between");
   });
 
+  testFlexInitial({
+    direction: "column",
+    reverse: true,
+    justify: "stretch",
+  })("should pass props correctly", ({ queryByTestId }) => {
+    const flexLayout = queryByTestId("flex") as HTMLElement;
+    const flexStyle = flexLayout && window.getComputedStyle(flexLayout);
+    expect(flexStyle.flexDirection).toBe("column-reverse");
+    expect(flexStyle.justifyContent).toBe("flex-stretch");
+  });
+
   const testFlexRow = testComponentFactory<FlexDirectionLayoutProps>(
     "FlexRow",
     FlexRowLayout

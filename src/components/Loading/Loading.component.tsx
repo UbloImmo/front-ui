@@ -31,10 +31,6 @@ const Loading = (props: LoadingProps): Nullable<JSX.Element> => {
 
   const Animation = useMemo(() => {
     const DefaultAnimation = LoadingAnimations[defaultAnimationName];
-    if (!animation) {
-      warn(`No animation provided. Defaulting to ${defaultAnimationName}`);
-      return DefaultAnimation;
-    }
     if (!(animation in LoadingAnimations)) {
       warn(
         `Unknown animation ${animation}. Defaulting to ${defaultAnimationName}`
