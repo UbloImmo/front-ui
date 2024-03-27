@@ -1,0 +1,90 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas, ComponentProps, Markdown, Text, Heading } from "../../../docs/blocks"
+import { Content } from "../../../docs/containers"
+import * as TextStories from "./Text.stories.tsx";
+import { GridLayout } from "../../layouts";
+
+<Meta of={TextStories} />
+
+<ComponentInfo of={TextStories}s />
+
+<Content>
+
+## Usage
+
+### Font size
+
+You can use one of the 3 preset sizes according to your needs.
+
+If no size is provided, defaults to `m`
+
+<Canvas of={TextStories.Sizes} />
+
+<GridLayout columns={3} gap={2}>
+
+<div>
+<Heading size="h4" weight="bold">M (16px)</Heading>
+<Text>Our default font size.</Text> 
+
+<Text size="s" color="gray-700">Used in body text, buttons, inputs and mostly everywhere
+we need to clearly convey primary information to our users.</Text>
+</div>
+
+<div>
+<Heading size="h4" weight="bold">S (14px)</Heading>
+<Text>Our smaller font size.</Text> 
+
+<Text size="s" color="gray-700">Used in captions, labels and for displaying secondary information.
+This is what you are reading right now.</Text>
+</div>
+
+<div>
+<Heading size="h4" weight="bold">XS (12px)</Heading>
+<Text>Our smallest font size.</Text> 
+
+<Text size="s" color="gray-700">Used for conveying contextual tertiary information,
+such as in assistive texts and error messages under text inputs.</Text>
+</div>
+
+</GridLayout>
+
+### Font weight
+
+Control your text's weight with the `weight` property. Defaults to `regular`.
+
+<Canvas of={TextStories.Weights} />
+
+### Italics
+
+If you need to render italic text (for some obscure reason), set this component's `italic` property to `true`.
+
+It defaults to `false`, obviously.
+
+<Canvas of={TextStories.Italic} />
+
+### Decorations
+
+Need to spice up your text ?
+Slap an <Text underline>underline</Text>, <Text overline>overline</Text> or a <Text lineThrough>line through</Text> it.
+
+Each decoration maps to its own property (`underline`, `overline`, `lineThrough` respectively).
+
+Set some - or all - of them to `true` to see the result.
+Defaults to `false`.
+
+<Canvas of={TextStories.Decorations} />
+
+### Colors
+
+Colorize a text block's color by passing it any valid color variable.
+
+See our [Color Palette](?path=/docs/color-palette--docs)'s documentation for an exhaustive list of usable values.
+
+<Canvas of={TextStories.Colors} />
+
+
+## Properties
+
+
+</Content>
+
