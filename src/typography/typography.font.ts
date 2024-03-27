@@ -39,7 +39,7 @@ export const codeFontFace = (): RuleSet => {
 export const linkFontFace = (): RuleSet => {
   return css`
     * {
-      font-synthesis: none;
+      font-synthesis: style;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;

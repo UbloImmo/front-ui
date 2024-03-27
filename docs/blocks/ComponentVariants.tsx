@@ -3,9 +3,9 @@ import { useMemo } from "react";
 import styled from "styled-components";
 
 import { Text } from "../../src/components";
-import { FlexRowLayout } from "../../src/layouts";
+import { FlexLayout } from "../../src/layouts";
 
-import type { FlexAlignment, FlexGap } from "../../src/layouts";
+import type { FlexAlignment, FlexDirection, FlexGap } from "../../src/layouts";
 import type { FC } from "react";
 
 type ComponentVariantsConfig<
@@ -14,45 +14,50 @@ type ComponentVariantsConfig<
 > = {
   /**
    * The key of the prop to vary upon.
-   * **Required**
+   * @required
    */
   for: TPropKey;
   /**
    * The component to render the variants for.
-   * **Required**
+   * @required
    */
   of: FC<TComponentProps>;
   /**
    * The default values for the component's props.
-   * **Required**
+   * @required
    */
   defaults: TComponentProps;
   /**
    * List of possible values for the component's prop.
-   * **Required**
+   * @required
    */
   variants:
     | TComponentProps[TPropKey][]
     | { value: TComponentProps[TPropKey]; label: string }[];
   /**
    * Dictates the gap between the variants.
-   * Defaults to `2rem`.
+   * @default "2rem".
    */
   gap?: FlexGap;
   /**
    * Dictates the vertical alignment of the variants.
-   * Defaults to `start`.
+   * @default "start".
    */
   align?: FlexAlignment;
   /**
+   * Dictates the flex direction of the variants
+   * @default "row"
+   */
+  direction?: FlexDirection;
+  /**
    * By how much to scale a selected variant on hover.
-   * Defaults to `1.5`.
+   * @default 1.5
    */
   scaling?: number;
   /**
    * Whether to include the prop's name in the labels while hovering.
-   * Defaults to `false`.
    * @remarks This will be ignored if the `variants` contain their own labels
+   * @default false
    */
   propLabels?: boolean;
 };
@@ -82,7 +87,7 @@ export const ComponentVariants = <
         isObject(variant) &&
         "value" in variant &&
         "label" in variant &&
-        isString(variant.value) &&
+        isString(variant.label) &&
         typeof variant.value === typeof props.defaults[props.for];
       if (isCompound)
         return {
@@ -106,7 +111,12 @@ export const ComponentVariants = <
     return props.of;
   }, [props.of]);
   return (
-    <FlexRowLayout gap={props.gap ?? "s-8"} align={props.align ?? "start"} wrap>
+    <FlexLayout
+      direction={props.direction ?? "row"}
+      gap={props.gap ?? "s-8"}
+      align={props.align ?? "start"}
+      wrap
+    >
       {propVariants.map((variantProps, index) => (
         <ComponentWrapper
           key={`${variantProps.__propVariantLabel}-${index}`}
@@ -122,7 +132,7 @@ export const ComponentVariants = <
           </ComponentLabelContainer>
         </ComponentWrapper>
       ))}
-    </FlexRowLayout>
+    </FlexLayout>
   );
 };
 
