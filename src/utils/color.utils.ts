@@ -8,6 +8,8 @@ import type {
   RgbaColorObj,
   RgbaColorStr,
   AnyColor,
+  PaletteColor,
+  ColorKey,
 } from "../types";
 import { isString, isObject, isArray } from "@ubloimmo/front-util";
 import { lerp } from "./number.utils";
@@ -450,4 +452,45 @@ export const isSameShade = (colorA: AnyColor, colorB: AnyColor) => {
   const aArr = anyColorToRgbaColorArr(colorA);
   const bArr = anyColorToRgbaColorArr(colorB);
   return aArr.slice(0, 2).every((channel, index) => channel === bArr[index]);
+};
+
+/**
+ * Check if the value is a valid {@link ColorKey};
+ *
+ * @param {unknown} value - the value to be checked
+ * @return {boolean} true if the value is a valid color key, false otherwise
+ */
+export const isColorKey = (value: unknown): value is ColorKey => {
+  if (!isString(value)) return false;
+  return ["success", "error", "warning", "pending", "gray", "primary"].includes(
+    value as ColorKey
+  );
+};
+
+/**
+ * Checks if the given value is a valid {@link PaletteColor}.
+ *
+ * @param {unknown} value - The value to check.
+ * @return {value is PaletteColor} Returns true if the value is a PaletteColor, false otherwise.
+ */
+export const isPaletteColor = (value: unknown): value is PaletteColor => {
+  if (!isString(value)) return false;
+  const [color, shade] = value.split("-");
+  if (!color || !shade) return false;
+  if (!isColorKey(color)) return false;
+  if (color === "gray") {
+    return [
+      "50",
+      "100",
+      "200",
+      "300",
+      "400",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+    ].includes(shade);
+  }
+  return ["light", "dark", "medium", "base"].includes(shade);
 };

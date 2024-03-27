@@ -1,18 +1,8 @@
-import type { IconProps } from "./Icon.types";
-import type { VoidFn } from "@ubloimmo/front-util";
-import type { SpacingLabel, CssPx, CssRem } from "../../types";
-import { UNIT_PX } from "../../types";
-import {
-  cssVarName,
-  isSpacingLabel,
-  isCssRem,
-  cssRem,
-  isCssLenthUsage,
-  isCssPx,
-  cssPxToCssRem,
-} from "../../utils";
-import { isInt } from "@ubloimmo/front-util";
+import type { Optional, VoidFn } from "@ubloimmo/front-util";
+import type { CssPx, CssRem, FixedCssLength } from "../../types";
+import { cssRem, isCssLengthUsage } from "../../utils";
 import { useMemo } from "react";
+import { parseFixedLength } from "@/sizes/size.utils";
 
 /**
  * Parses an icon's size prop into either a pixel or rem.
@@ -22,34 +12,15 @@ import { useMemo } from "react";
  * @returns {CssRem} - The parsed icon's size;
  */
 const parseIconSize = (
-  size: IconProps["size"],
+  size: Optional<FixedCssLength>,
   warn: VoidFn<[unknown]>
 ): CssRem => {
-  if (!isCssLenthUsage(size)) {
+  if (!isCssLengthUsage(size)) {
     warn(`unsupported size (${size}) provided`);
     return cssRem(1);
   }
-  if (isSpacingLabel(size)) {
-    const propValue = getComputedStyle(
-      document.documentElement
-    ).getPropertyValue(cssVarName(size));
-    // use rem is available
-    if (isCssRem(propValue)) return propValue;
-    if (size === ("s-05" as SpacingLabel))
-      // compute rem when variables have not yet loaded
-      return cssRem(0.125);
-    const sizeMultiplier = Number(size.split("s-")[1]);
-    // default to 1 if not computable
-    if (!isInt(sizeMultiplier)) {
-      warn(`unsupported size (${size}) provided`);
-      return cssRem(1);
-    }
-    return cssRem(sizeMultiplier / UNIT_PX);
-  }
-  if (isCssPx(size)) {
-    return cssPxToCssRem(size);
-  }
-  return size;
+
+  return parseFixedLength(size, warn);
 };
 
 /**
@@ -60,7 +31,7 @@ const parseIconSize = (
  * @returns {CssPx | CssRem} - The parsed icon's size;
  */
 export const useIconSize = (
-  size: IconProps["size"],
+  size: Optional<FixedCssLength>,
   warn: VoidFn<[unknown]>
 ): CssPx | CssRem => {
   return useMemo(() => {

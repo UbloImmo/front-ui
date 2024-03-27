@@ -41,10 +41,14 @@ export const backgroundShade = (props: StyleProps<DefaultBadgeProps>) => {
   return css`
     border: 1px solid var(--${color}-${borderColorShade});
     background-color: var(--${color}-${backgroundColor});
-    padding: var(--s-1) var(--s-3);
+    padding: 0 var(--s-3);
     border-radius: var(--s-4);
     gap: var(--s-1);
     display: flex;
     align-items: center;
+    height: var(--s-5);
+    max-height: var(--s-5);
+    min-height: var(--s-5);
+    user-select: none;
   `;
 };

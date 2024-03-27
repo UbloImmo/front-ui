@@ -1,0 +1,158 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas, Markdown, HeaderInfo, Text } from "../../../../docs/blocks"
+import { Content, Header } from "../../../../docs/containers"
+import * as LoadingStories from "../Loading.stories.tsx";
+
+<Meta title="Components/Loading/Contributing"/>
+
+<Header>
+  <HeaderInfo title="Contributing" parent="Components/Loading">
+    <Markdown>So you want to register a new loading animation ?</Markdown>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Writing a new animation
+
+This component is extensible, and can easily render more animations. Its types are dynamic and flexible
+
+### Structure
+
+Additional animations can be created by creating a new directory and component under `src/components/Loading/animations`.
+
+The new directory must comply with the following structure.
+
+```
+[Anim] 
+├── [Anim].animation.tsx
+├── [Anim].styles.ts
+└── index.ts
+```
+
+_Please replace `[Anim]` with any name of your choosing._
+
+### Contents
+
+#### `[Anim].animation.ts`
+
+Only exports a single React component, named `[Anim]`, that takes `LoadingAnimationProps` and renders your animation.
+**Your animation component should have the same name as your animation's directory.** This is crucial for the dynamic types to work.
+
+The animation itself can be any HTML Element, though SVGs are recommended. **Regardless, it must contain the `data-testid="loading-indicator"` attribute.**
+
+
+##### Example
+
+```tsx
+// [Anim]/[Anim].animation.ts
+
+// type imports
+import type { LoadingAnimationProps } from "../../Loading.types";
+import type { StyleProps } from "@types";
+// general utils
+import { useStyleProps } from "@utils";
+// animation styles
+import { animStyle } from "./Anim.styles";
+// libraries
+import styled from "styled-components";
+
+/**
+ * Renders an [Anim] loading animation
+ *
+ * @param {LoadingAnimationProps} props - the loading animation props.
+ * @return {JSX.Element} the rendered spinner component
+ */
+export const Anim = (props: LoadingAnimationProps): JSX.Element => {
+  // convert to styled component props
+  const styleProps = useStyleProps(props);
+  // The returned element & structure is up to you
+  return <Renderer {...styleProps} data-testid="loading-indicator" />;
+};
+
+// Styled component svg element
+const Renderer = styled.svg<StyleProps<LoadingAnimationProps>>`
+  ${animStyle}
+`;
+```
+
+#### `[Anim].styles.ts`
+
+Contains the CSS styles and keyframes needed for your animation to display properly.
+
+Usually exports a function of type `StyleFunction<StyleProps<LoadingAnimationProps>>`.
+
+##### Example
+
+```tsx
+// [Anim]/[Anim].styles.ts
+
+// type imports
+import type { StyleProps } from "@types";
+import type { LoadingAnimationProps } from "../../Loading.types";
+import type { StyleFunction } from "styled-components";
+// libraries
+import { css, keyframes } from "styled-components";
+
+const cssAnim = keyframes`
+  from {
+    transform: scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+`;
+
+export const animStyle: StyleFunction<StyleProps<LoadingAnimationProps>> = ({
+  $size, // parsed size (CssRem) provided by the parent `Loading` component
+  $color, // shaded color (PaletteColor) provided by the parent `Loading` component
+}) => {
+  // Style rour renderer however you want
+  return css`
+    animation: ${cssAnim} 1800ms ease-in-out infinite running;
+  `;
+};
+```
+
+#### `index.ts`
+
+Your `index.ts` file should then only need to contain the following
+
+```tsx
+// [Anim]/index.ts
+
+export * from "./Anim.animation"
+```
+
+## Registering a new animation.
+
+### Linking
+
+Your animation is now ready to be linked to `Loading` component to be rendered.
+
+To do so, edit the `src/components/Loading/animations/index.ts` file
+and add a new export pointing to your freshly made animation's directory.
+
+```tsx
+// animations/index.ts
+
+// existing exports
+export * from "./BouncingBalls";
+export * from "./Spinner";
+// a new export
+export * from "./Anim"
+```
+
+**That's it!**
+
+### Trying it out
+
+You've made it all the way here ? **Congrats !**
+
+Your new animation's name should now be valid when passed as `Loading`'s `animation` prop.
+
+To try your new animation, head over to this component's [Default story](?path=/story/components-loading--default) and type your new animation's in the controls.
+
+</Content>

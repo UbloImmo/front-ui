@@ -51,14 +51,16 @@ export type ParsedJsDoc = {
   todo: boolean;
   reason: Nullable<string>;
   version: Nullable<string>;
+  type: Nullable<string>;
+  required: boolean;
 };
 
-export type ParsedJsDocDescription = Exclude<ParsedJsDoc, "defaultValue"> & {
+export type ParsedJsDocDescription = Omit<ParsedJsDoc, "defaultValue"> & {
   defaultValue: string;
 };
 
 export type ParsedPropInfo = ParsedJsDocDescription & {
   type: string;
-  required: "Yes" | "No";
+  requiredStr: "Yes" | "No";
   name: string;
 };

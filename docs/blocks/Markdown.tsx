@@ -1,12 +1,12 @@
 import { Markdown as SBMarkdown } from "@storybook/blocks";
 import type { StyleProps } from "@types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { headingOfSize, textOfSize, Em, Strong } from "./Typography";
 import { useMemo } from "react";
 
 type MarkdownProps = {
   children?: string;
-  inherit?: boolean;
+  inline?: boolean;
 };
 
 export const markdownOverrides = {
@@ -28,10 +28,10 @@ export const markdownOverrides = {
  *
  * @param {MarkdownProps} props - The props for the Markdown component.
  * @param {ReactNode} props.children - The content to be rendered as Markdown.
- * @param {boolean} props.inherit - Whether to inherit styles from the parent component.
+ * @param {boolean} props.inline - Whether to force contents to display inline.
  * @return {JSX.Element} The rendered Markdown component.
  */
-export const Markdown = ({ children, inherit }: MarkdownProps) => {
+export const Markdown = ({ children, inline }: MarkdownProps) => {
   const options = useMemo(
     () => ({
       overrides: markdownOverrides,
@@ -39,16 +39,32 @@ export const Markdown = ({ children, inherit }: MarkdownProps) => {
     []
   );
   return (
-    <MarkdownStyle $inherit={inherit}>
+    <MarkdownStyle $inline={inline}>
       <SBMarkdown options={options}>{children ?? ""}</SBMarkdown>
     </MarkdownStyle>
   );
 };
 
-const MarkdownStyle = styled.div<StyleProps<Pick<MarkdownProps, "inherit">>>`
+const MarkdownStyle = styled.div<StyleProps<Pick<MarkdownProps, "inline">>>`
   & * {
     color: inherit !important;
     font-size: inherit !important;
     line-height: inherit !important;
   }
+
+  span {
+    color: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  ${({ $inline }) =>
+    $inline &&
+    css`
+      display: inline !important;
+
+      span {
+        display: inline !important;
+      }
+    `}
 `;

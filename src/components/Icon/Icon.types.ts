@@ -1,4 +1,4 @@
-import { PaletteColor, CssLength, CssFr } from "../../types";
+import { PaletteColor, FixedCssLength } from "../../types";
 import { GenericFn } from "@ubloimmo/front-util";
 import * as GeneratedIcons from "./__generated__";
 import { CommonIconProps } from "./__generated__/common.types";
@@ -16,18 +16,22 @@ export type IconProps = {
    *
    * Gets automatically converted to `CssRem`.
    *
+   * @type {FixedCssLength}
    * @default "s-4"
    */
-  size?: Exclude<CssLength, CssFr>;
+  size?: FixedCssLength;
   /**
    * The shaded color of the icon.
    *
+   * @type {PaletteColor}
    * @default "primary-base"
    */
   color?: PaletteColor;
   /**
    * The name of the icon to render.
    *
+   * @required
+   * @type {IconName}
    * @default "Circle"
    */
   name: IconName;

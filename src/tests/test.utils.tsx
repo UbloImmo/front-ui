@@ -79,7 +79,7 @@ type RenderResult = ReturnType<typeof render>;
  * @param {string} componentName - the name of the component
  * @param {FC<TProps>} Component - the component to test
  * @param {{props: TProps; tests: {name: string; test: VoidFn<[RenderResult]>}[]}} [staticTests] - optional static tests object containing props and tests
- * @return {Function} a meta function used to test the component further
+ * @return a meta function used to test the component further
  */
 export const testComponentFactory = <TProps extends Record<string, unknown>>(
   componentName: string,

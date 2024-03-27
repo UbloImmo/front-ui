@@ -26,13 +26,16 @@ export type ButtonProps = {
    * The type of the button. Either `button` or `submit`.
    * Useful for form submissions.
    *
+   * @type {ButtonType}
    * @default "button"
    */
   type?: ButtonType;
   /**
    * The color of the button.
+   *
    * Either `primary`, `red`, `black`, `white`, or `clear`.
    *
+   * @type {ButtonColor}
    * @default "primary"
    */
   color?: ButtonColor;
@@ -53,7 +56,7 @@ export type ButtonProps = {
    *
    * @default false
    *
-   * @todo _not implemented yet, needs global Loader component_
+   * @todo _not implemented yet, needs global Loading component_
    */
   loading?: boolean;
   /**
@@ -66,24 +69,28 @@ export type ButtonProps = {
   /**
    * The ARIA role of the button.
    *
-   * @default button
+   * @type {AriaRole}
+   * @default "button"
    */
   role?: AriaRole;
   /**
    * The callback function to be called when the button is clicked and not disabled.
    *
+   * @type {VoidFn | null}
    * @default null
    */
   onClick?: Nullable<VoidFn>;
   /**
    * The label of the button.
    *
+   * @type {string | null}
    * @default "Button"
    */
   label?: Nullable<string>;
   /**
    * The name of the icon to display in the button.
    *
+   * @type {IconName | null}
    * @default undefined
    */
   icon?: Nullable<IconName>;
@@ -99,12 +106,14 @@ export type ButtonProps = {
   /**
    * The label of the button.
    *
+   * @type {string | null}
    * @default "Button"
    */
   label: Nullable<string>;
   /**
    * The name of the icon to display in the button.
    *
+   * @type {IconName | null}
    * @default undefined
    */
   icon: Nullable<IconName>;

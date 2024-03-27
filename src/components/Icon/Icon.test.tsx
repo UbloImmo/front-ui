@@ -1,13 +1,97 @@
 import { describe, it, expect, afterEach, mock } from "bun:test";
-import { render, renderHook, cleanup } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import { Icon } from "./Icon.component";
 import * as generated from "./__generated__";
 import { ThemeProvider } from "../../themes";
-import { objectKeys, type VoidFn } from "@ubloimmo/front-util";
-import type { IconName, IconProps } from ".";
+import { objectKeys } from "@ubloimmo/front-util";
+import type { IconName } from ".";
 import { useIconSize } from "./Icon.utils";
+import { testHookFactory } from "@/tests";
+import { isCssRem } from "@utils";
 
 const warnCopy = global.console.warn;
+
+const testUseIconSize = () => {
+  type Hook = typeof useIconSize;
+  const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
+    "useIconSize",
+    useIconSize
+  );
+
+  const warn = mock((_: unknown) => {});
+
+  testHook("2rem", warn)("should return initial rem", (size) => {
+    expect(warn).not.toHaveBeenCalled();
+    expect(size).toBeString();
+    expect(size).toBe("2rem");
+    expect(isCssRem(size)).toBeTrue();
+    warn.mockReset();
+  });
+
+  testHook(1234, warn)("should convert numbers to rem", (size) => {
+    expect(warn).not.toHaveBeenCalled();
+    expect(size).toBeString();
+    expect(isCssRem(size)).toBeTrue();
+    expect(size).toBe("1234rem");
+    warn.mockReset();
+  });
+
+  testHook("24px", warn)("should convert px to rem", (size) => {
+    expect(warn).not.toHaveBeenCalled();
+    expect(size).toBeString();
+    expect(isCssRem(size)).toBeTrue();
+    expect(size).toBe("1.5rem");
+    warn.mockReset();
+  });
+
+  testHook("s-40", warn)("should convert spacings to rem", (size) => {
+    expect(warn).not.toHaveBeenCalled();
+    expect(size).toBeString();
+    expect(isCssRem(size)).toBeTrue();
+    expect(size).toBe("10rem");
+    warn.mockReset();
+  });
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore Need to ignore in order to test missing prop
+  testHook("s-1", undefined)("should run even with no warn fn", (size) => {
+    expect(size).toBeString();
+    expect(isCssRem(size)).toBeTrue();
+    expect(size).toBe("0.25rem");
+  });
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore Need to ignore in order to test missing prop
+  testHook("s-5.6", warn)("should floor decimal spacing labels", (size) => {
+    expect(warn).toHaveBeenCalled();
+    expect(size).toBeString();
+    expect(isCssRem(size)).toBeTrue();
+    expect(size).toBe("1.25rem"); // s-5 = 20px = 1.25rem
+    warn.mockReset();
+  });
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore Need to ignore in order to test missing prop
+  testHook("s-5s", warn)(
+    "should return 1rem for an invalid spacing label",
+    (size) => {
+      expect(warn).toHaveBeenCalled();
+      expect(size).toBeString();
+      expect(isCssRem(size)).toBeTrue();
+      expect(size).toBe("1rem"); // s-5 = 20px = 1.25rem
+      warn.mockReset();
+    }
+  );
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore Need to ignore in order to test missing prop
+  testHook(undefined, warn)("should return 1rem by default", (size) => {
+    expect(warn).toHaveBeenCalled();
+    expect(size).toBeString();
+    expect(isCssRem(size)).toBeTrue();
+    expect(size).toBe("1rem");
+    warn.mockReset();
+  });
+};
 
 describe("Icon", () => {
   it("should be a component", () => {
@@ -51,54 +135,6 @@ describe("Icon", () => {
     expect(getAllByTestId("icon")).toBeArrayOfSize(3);
   });
 
-  describe("useIconSize", () => {
-    it("should be a function", () => {
-      expect(useIconSize).toBeDefined();
-      expect(useIconSize).toBeFunction();
-    });
-
-    it("should be a valid react hook", () => {
-      const { result } = renderHook(() =>
-        useIconSize(undefined, global.console.warn)
-      );
-      expect(result.current).toBeString();
-    });
-
-    it("should warn & return 1rem warn when provided with an invalid size", () => {
-      const warnFn = mock((_: unknown) => {});
-      const { result, rerender } = renderHook(
-        (props: { size?: IconProps["size"]; warn?: VoidFn<[unknown]> } = {}) =>
-          useIconSize(props?.size, props?.warn ?? warnFn)
-      );
-      expect(result.current).toBe("1rem");
-      expect(warnFn).toHaveBeenCalledTimes(1);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore Need to ignore in order to test missing prop
-      rerender({ size: "s-2s", warn: warnFn });
-      expect(result.current).toBe("1rem");
-      expect(warnFn).toHaveBeenCalledTimes(2);
-      rerender({ size: "s-1.5", warn: warnFn });
-      expect(result.current).toBe("1rem");
-      expect(warnFn).toHaveBeenCalledTimes(3);
-    });
-
-    it("should return a rem size if when provided with a valid spacing label", () => {
-      const { result, rerender } = renderHook((size?: IconProps["size"]) =>
-        useIconSize(size, console.warn)
-      );
-      rerender("s-40");
-      expect(result.current).toBe("10rem");
-    });
-
-    it("should convert pixels to rems", () => {
-      const { result, rerender } = renderHook((size?: IconProps["size"]) =>
-        useIconSize(size, console.warn)
-      );
-      rerender("32px");
-      expect(result.current).toBe("2rem");
-    });
-  });
-
   it("should return null if provided with an unknown icon name", () => {
     // mock global console object to list to calls
     global.console.warn = mock(warnCopy);
@@ -124,6 +160,8 @@ describe("Icon", () => {
       cleanup();
     });
   });
+
+  testUseIconSize();
 
   afterEach(() => {
     cleanup();
