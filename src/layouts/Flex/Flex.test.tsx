@@ -1,4 +1,7 @@
 import { describe, expect } from "bun:test";
+
+import { testComponentFactory } from "@/tests";
+
 import {
   FlexLayout,
   FlexRowLayout,
@@ -6,7 +9,6 @@ import {
   FlexColumnLayout,
   FlexDirectionLayoutProps,
 } from ".";
-import { testComponentFactory } from "@/tests";
 
 describe("FlexLayout", () => {
   const testFlexInitial = testComponentFactory<FlexLayoutProps>(

@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { FlexLayout } from "./Flex.layout";
 import styled from "styled-components";
+
+import { FlexLayout } from "./Flex.layout";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
   component: FlexLayout,
