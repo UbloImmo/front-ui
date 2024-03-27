@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import path from "path";
 import type { InlineConfig } from "vite";
 
 const config: StorybookConfig = {
@@ -40,10 +41,24 @@ const config: StorybookConfig = {
           configType === "DEVELOPMENT" ? [] : config.optimizeDeps?.entries,
       },
     };
+    console.log(baseConfig.resolve);
     return mergeConfig(baseConfig, {
       build: {
         rollupOptions: {
           external: ["bun:test", "*.test.ts", "*.test.tsx"],
+        },
+      },
+      resolve: {
+        alias: {
+          "@docs": path.resolve(path.dirname(__dirname), "docs"),
+          "@types": path.resolve(path.dirname(__dirname), "src", "types"),
+          "@utils": path.resolve(path.dirname(__dirname), "src", "utils"),
+          "@components": path.resolve(
+            path.dirname(__dirname),
+            "src",
+            "components"
+          ),
+          "@": path.resolve(path.dirname(__dirname), "src"),
         },
       },
     });
