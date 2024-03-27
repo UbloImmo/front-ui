@@ -6,8 +6,8 @@ import {
   type CssRem,
   type SpacingLabel,
   type Spacings,
-} from "../types";
-import { cssRem, pxToRem } from "../utils/css.utils";
+} from "@types";
+import { cssRem, pxToRem } from "@utils";
 
 const scaleUnitByFactor = (factor: number, unit = UNIT_PX) => unit * factor;
 

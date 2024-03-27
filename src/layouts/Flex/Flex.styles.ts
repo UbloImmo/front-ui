@@ -1,6 +1,6 @@
 import { StyleFunction, css, type RuleSet } from "styled-components";
 
-import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "../../utils";
+import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "@utils";
 
 import type {
   FlexAlignment,
@@ -10,7 +10,7 @@ import type {
   FlexLayoutProps,
   FlexWrap,
 } from "./Flex.types";
-import type { StyleProps } from "../../types";
+import type { StyleProps } from "@types";
 
 /**
  * A function that returns the flex alignment class based on the given alignment.

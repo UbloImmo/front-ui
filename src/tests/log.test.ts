@@ -3,7 +3,8 @@ import { objectValues } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
 
 import { testPrimitives } from "./test.data";
-import { useLogger } from "../utils";
+
+import { useLogger } from "@utils";
 
 describe("useLogger", () => {
   it("should be a valid react hook", () => {

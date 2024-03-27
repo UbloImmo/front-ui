@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { FlexColumnLayout } from "../../src/layouts";
+import { FlexColumnLayout } from "@/layouts";
 
 import { Content } from ".";
 
@@ -31,6 +31,5 @@ export const Header = ({ children }: HeaderProps) => {
 const Container = styled.header`
   padding: var(--s-8) 0;
   background: var(--gray-50);
-  margin-bottom: var(--s-8);
   box-shadow: var(--shadow-card);
 `;

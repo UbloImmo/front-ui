@@ -8,7 +8,7 @@ import {
   rgbaColorConverter,
   isSameColor,
   parseCssVar,
-} from "../../utils";
+} from "@utils";
 
 import type {
   Token,
@@ -20,7 +20,7 @@ import type {
   CssVar,
   CssVarName,
   CssVarUsage,
-} from "../../types";
+} from "@types";
 
 const substitutionRegex = /\$\$(rgba\([\d,.\s]+\))\$\$/g;
 const defaultPrimaryName = "primary-default" as const;

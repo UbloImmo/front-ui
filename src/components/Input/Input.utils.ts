@@ -1,7 +1,7 @@
 import { isFunction, isNull } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 
-import { toStyleProps } from "../../utils";
+import { toStyleProps } from "@utils";
 
 import type {
   CommonInputStyleProps,

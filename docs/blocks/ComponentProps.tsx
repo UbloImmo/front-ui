@@ -81,13 +81,7 @@ export { ComponentPropsBlock as ComponentProps };
  * @return {JSX.Element} Table header component
  */
 const ComponentPropsTableHeader = (): JSX.Element => {
-  const columns = useStatic([
-    "name",
-    "type",
-    "required",
-    "default",
-    "description",
-  ]);
+  const columns = useStatic(["name", "type", "default", "description"]);
 
   return (
     <TableHeader>
@@ -115,7 +109,6 @@ const ComponentPropRow = ({
   description,
   todo,
   type,
-  requiredStr,
   required,
   name,
 }: ParsedPropInfo): JSX.Element => {
@@ -134,27 +127,17 @@ const ComponentPropRow = ({
         </Text>
       </TableCell>
       <TableCell>
-        <Text size="s" color={textColor} important>
+        <Text size="m" color={textColor} important>
           <code>{type}</code>
         </Text>
       </TableCell>
       <TableCell>
-        <Text
-          size="s"
-          color={todo || !required ? "gray-400" : "gray-800"}
-          weight={required ? "semiBold" : "regular"}
-          important
-        >
-          <code>{requiredStr}</code>
-        </Text>
-      </TableCell>
-      <TableCell>
-        <Text size="s" color={textColor} important>
+        <Text size="m" color={textColor} important>
           <code>{defaultValue}</code>
         </Text>
       </TableCell>
       <TableCell>
-        <Text size="s" color={textColor} important>
+        <Text size="m" color={textColor} important>
           <Markdown>{description}</Markdown>
         </Text>
       </TableCell>
@@ -244,11 +227,6 @@ const TableCell = styled.td`
   // normalize stacked margins
   span:not(:has(*:not(code))) {
     margin: var(--s-1) 0 !important;
-  }
-
-  // center required
-  &:nth-child(3) {
-    text-align: center;
   }
 
   &:last-child {

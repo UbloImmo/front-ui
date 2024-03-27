@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { FlexColumnLayout } from "../../src/layouts";
+import { FlexColumnLayout } from "@/layouts";
 
 import type { ReactNode } from "react";
 
@@ -24,6 +24,7 @@ export const Content = ({ children }: ContentProps) => {
 
 const ContentContainer = styled.main`
   padding: var(--s-4);
+  padding-bottom: 6rem;
   width: 100%;
-  max-width: 1000px;
+  max-width: 70rem;
 `;

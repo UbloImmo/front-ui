@@ -20,7 +20,7 @@ const defaultMockProps = {
 };
 
 const meta = {
-  title: "Components/Button",
+  title: "Components/Button/Stories",
   component: Button,
   decorators: [
     (Story) => (

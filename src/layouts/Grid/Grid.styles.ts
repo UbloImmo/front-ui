@@ -12,8 +12,9 @@ import {
   GridLayoutProps,
   GridTemplate,
 } from "./Grid.types";
-import { CssLengthUsage, type StyleProps } from "../../types";
-import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "../../utils";
+
+import { CssLengthUsage, type StyleProps } from "@types";
+import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "@utils";
 
 /**
  * Splits the common gap into row and columm with same values

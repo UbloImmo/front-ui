@@ -1,18 +1,14 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas, ComponentProps } from "../../../docs/blocks"
-import { Content } from "../../../docs/containers"
-import * as StaticIconStories from "./StaticIcon.stories.tsx";
-import {StaticIcon} from "./StaticIcon.component.tsx";
+import { ComponentInfo, Canvas } from "@docs/blocks"
+import { Content } from "@docs/containers"
+import * as StaticIconStories from "../StaticIcon.stories.tsx";
+import {StaticIcon} from "../StaticIcon.component.tsx";
 
-<Meta of={StaticIconStories} />
+<Meta title="Components/StaticIcon/Usage" />
 
 <ComponentInfo of={StaticIconStories} />
 
 <Content>
-
-## Properties
-
-<ComponentProps of={StaticIconStories} />
 
 ## Usage
 
@@ -32,10 +28,20 @@ Below are all the valid sizes for this component.
 
 <Canvas of={StaticIconStories.Sizes} />
 
+### Stroke
+
+StaticIcons can display a thin stroke if provided with a `stroke` property.
+Defaults to `false`
+
+> Useful when you need just that bit more contrast.
+
+<Canvas of={StaticIconStories.Stroke} />
+
+
 ### Icons
 
 Through its `name` property, StaticIcon accepts any valid Icon name, and passes it directly to the underlying Icon component.
 
-Please refer to [the Icon component's documentation](?path=/docs/components-icon--docs) for a complete list.
+Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list.
 
 </Content>

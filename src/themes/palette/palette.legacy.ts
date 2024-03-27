@@ -10,7 +10,7 @@ import {
   LegacyShadows,
   TokenValueGroup,
   Token,
-} from "../../types";
+} from "@types";
 
 /**
  * Generates a legacy palette color from a color token group.

@@ -29,5 +29,5 @@
       "bun-types" // add Bun global
     ]
   },
-  "exclude": ["node_modules", "src/tests"]
+  "exclude": ["node_modules"]
 }

@@ -1,4 +1,4 @@
-import { CssLength, Enum } from "../../types";
+import { CssLength, Enum } from "@types";
 
 import type { ReactNode } from "react";
 

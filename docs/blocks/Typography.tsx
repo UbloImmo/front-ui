@@ -3,14 +3,14 @@ import styled from "styled-components";
 import {
   Heading as HeadingComponent,
   Text as TextComponent,
-} from "../../src/components";
+} from "@/components";
+import { cssVarUsage } from "@/utils";
 import {
   StyleProps,
   type HeadingProps,
   type PaletteColor,
   type TextProps,
-} from "../../src/types";
-import { cssVarUsage } from "../../src/utils";
+} from "@types";
 
 import type { ReactNode } from "react";
 
@@ -111,11 +111,11 @@ const TextOverrides = styled.span<{
       --s-${({ $size }) => ($size === "xs" ? "05" : $size === "s" ? "1" : "2")}
     ) !important;
   }
-  display: block !important;
+  display: inline-block !important;
 
   &:has(span),
   & {
-    display: block !important;
+    display: inline-block !important;
   }
 
   & > span:has(em),
@@ -152,7 +152,7 @@ export const Em = styled.em`
 export const Strong = styled.strong`
   color: inherit !important;
   font-size: inherit !important;
-  font-weight: var(--text-weight-semiBold) !important;
+  font-weight: var(--text-weight-semibold) !important;
   font-style: inherit !important;
   font-variation-settings: inherit !important;
 `;

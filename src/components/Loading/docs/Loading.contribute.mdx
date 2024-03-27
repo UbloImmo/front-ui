@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas, Markdown, HeaderInfo, Text } from "../../../../docs/blocks"
-import { Content, Header } from "../../../../docs/containers"
+import { ComponentInfo, Markdown, HeaderInfo } from "@docs/blocks"
+import { Content, Header } from "@docs/containers"
 import * as LoadingStories from "../Loading.stories.tsx";
 
 <Meta title="Components/Loading/Contributing"/>
@@ -19,9 +19,9 @@ This component is extensible, and can easily render more animations. Its types a
 
 ### Structure
 
-Additional animations can be created by creating a new directory and component under `src/components/Loading/animations`.
+Additional animations can be created by creating a new directory under `src/components/Loading/animations`.
 
-The new directory must comply with the following structure.
+It must comply with the following structure.
 
 ```
 [Anim] 
@@ -30,16 +30,20 @@ The new directory must comply with the following structure.
 └── index.ts
 ```
 
-_Please replace `[Anim]` with any name of your choosing._
+> Please replace `[Anim]` with any name of your choosing.
 
 ### Contents
 
 #### `[Anim].animation.ts`
 
-Only exports a single React component, named `[Anim]`, that takes `LoadingAnimationProps` and renders your animation.
-**Your animation component should have the same name as your animation's directory.** This is crucial for the dynamic types to work.
+Defines a single React component, named `[Anim]`, that takes `LoadingAnimationProps` and renders your animation.
 
-The animation itself can be any HTML Element, though SVGs are recommended. **Regardless, it must contain the `data-testid="loading-indicator"` attribute.**
+The animation itself can be any HTML Element, though SVGs are recommended.
+Make sure to include the `data-testid="loading-indicator"` attribute in your markup.
+
+> This file should **only** export your animation component.
+>
+> This is crucial for the dynamic types to work.
 
 
 ##### Example

@@ -1,4 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import path from "path";
+import type { InlineConfig } from "vite";
 
 const config: StorybookConfig = {
   stories: [
@@ -31,11 +33,30 @@ const config: StorybookConfig = {
       config.base = "/design-system";
       config.publicDir = "/design-system";
     }
-    return mergeConfig(config, {
+    const baseConfig: InlineConfig = {
+      ...config,
+      optimizeDeps: {
+        ...(config.optimizeDeps ?? {}),
+        entries:
+          configType === "DEVELOPMENT" ? [] : config.optimizeDeps?.entries,
+      },
+    };
+
+    const alias = {
+      "@docs": path.resolve(path.dirname(__dirname), "docs"),
+      "@types": path.resolve(path.dirname(__dirname), "src", "types"),
+      "@utils": path.resolve(path.dirname(__dirname), "src", "utils"),
+      "@components": path.resolve(path.dirname(__dirname), "src", "components"),
+      "@": path.resolve(path.dirname(__dirname), "src"),
+    };
+    return mergeConfig(baseConfig, {
       build: {
         rollupOptions: {
           external: ["bun:test", "*.test.ts", "*.test.tsx"],
         },
+      },
+      resolve: {
+        alias,
       },
     });
   },

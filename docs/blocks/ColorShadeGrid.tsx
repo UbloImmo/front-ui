@@ -2,15 +2,16 @@ import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo, useReducer } from "react";
 import styled from "styled-components";
 
-import { Text } from "../../src/components";
-import { rgbaColorConverter } from "../../src/utils";
+import { rgbaColorConverter } from "@utils";
+
+import { Text } from "@components";
 
 import type {
   DefaultPaletteColorShadeKey,
   GrayscalePaletteColorShadeKey,
   PaletteColorShaded,
   RgbaColorStr,
-} from "../../src/types";
+} from "@types";
 
 /**
  * Renders a color shade grid based on the provided color and color name.
@@ -57,11 +58,11 @@ export const ColorShadeGrid = ({
           ? Array(10)
               .fill(0)
               .map((_, index) => ({
-                name: `${(index + 1) * 10}%`,
+                name: `${(index + 1) * 10}`,
                 color: opacity((index + 1) / 10),
               }))
               .reverse()
-          : [{ name: "100%", color: rgba }],
+          : [{ name: "100", color: rgba }],
       }));
 
     return shades;
@@ -96,6 +97,7 @@ export const ColorShadeGrid = ({
           return (
             <ColorShadeSwatch
               key={name}
+              colorName={name}
               color={color}
               opacity={opacityName}
               x={shadeIndex + 2}
@@ -108,14 +110,19 @@ export const ColorShadeGrid = ({
   );
 };
 
+type ColorShadeSwatchProps = {
+  color: RgbaColorStr;
+  opacity?: string;
+  x: number;
+  y: number;
+  colorName: string;
+};
+
 /**
  * Renders a color shade swatch with the given color, opacity, x, and y coordinates.
  * Intended for use within Storybook MDX documentation files.
  *
- * @param {RgbaColorStr} color - the RGBA color string
- * @param {string} [opacity] - optional opacity value
- * @param {number} x - the x-coordinate
- * @param {number} y - the y-coordinate
+ * @param {ColorShadeSwatchProps} - Object containing color, colorName, opacity, x, and y
  * @return {JSX.Element} the rendered color shade swatch component
  */
 const ColorShadeSwatch = ({
@@ -123,21 +130,18 @@ const ColorShadeSwatch = ({
   opacity,
   x,
   y,
-}: {
-  color: RgbaColorStr;
-  opacity?: string;
-  x: number;
-  y: number;
-}) => {
+  colorName,
+}: ColorShadeSwatchProps) => {
   const hex = rgbaColorConverter.strToHex(color);
+
   return (
     <ShadeContainer $background={color} $x={x} $y={y}>
-      <Text weight="semiBold" size="xs" color="gray-500" important>
-        {hex}
+      <Text weight="semiBold" size="s" color="gray-500" important>
+        {colorName}
       </Text>
       {opacity && (
         <Text size="xs" color="gray-500" important>
-          {opacity}
+          <code>{hex}</code>
         </Text>
       )}
     </ShadeContainer>
@@ -187,6 +191,10 @@ const ShadeContainer = styled.div.attrs<{
     filter: blur(var(--s-2));
     opacity: 0;
     transition: all 150ms ease-out 0s;
+  }
+
+  & > span > code {
+    background: none !important;
   }
 
   &:hover {

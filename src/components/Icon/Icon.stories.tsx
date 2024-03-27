@@ -4,15 +4,16 @@ import { useMemo } from "react";
 import * as BootstrapIcons from "./__generated__/bootstrap";
 import * as CustomIcons from "./__generated__/custom";
 import { Icon } from "./Icon.component";
-import { ComponentVariants } from "../../../docs/blocks";
 import { FlexRowLayout } from "../../layouts";
 
+import { ComponentVariants } from "@docs/blocks";
+
 import type { IconProps } from "./Icon.types";
-import type { ColorPalette, PaletteColor, SpacingLabel } from "../../types";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { ColorPalette, PaletteColor, SpacingLabel } from "@types";
 
 const meta = {
-  title: "Components/Icon",
+  title: "Components/Icon/Stories",
   component: Icon,
   decorators: [
     (Story) => {

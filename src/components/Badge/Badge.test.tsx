@@ -2,7 +2,7 @@ import { expect } from "bun:test";
 
 import { Badge } from "./Badge.component";
 
-import { testComponentFactory } from "src/tests";
+import { testComponentFactory } from "@/tests";
 
 testComponentFactory("Badge", Badge, {
   props: Badge.defaultProps,

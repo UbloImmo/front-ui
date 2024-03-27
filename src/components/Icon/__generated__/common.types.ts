@@ -1,4 +1,4 @@
-import type { CssLength, PaletteColor } from "../../../types";
+import type { CssLength, PaletteColor } from "@types";
 
 export type CommonIconProps = {
   color?: PaletteColor;

@@ -9,8 +9,9 @@ import {
 } from "./../../typography/typography.styles";
 import { breakpointsPx, buildSpacingMap } from "../../sizes";
 import { linkFontFace } from "../../typography/typography.font";
-import { cssVar } from "../../utils";
 import { effectsToCssVars } from "../palette";
+
+import { cssVar } from "@utils";
 
 import type {
   Theme,
@@ -19,9 +20,9 @@ import type {
   CssVar,
   CssRem,
   RgbaColorStr,
+  BreakpointLabel,
   Spacings,
-} from "../../types";
-import type { BreakpointLabel } from "src/types/themes/sizes/breakpoints.types";
+} from "@types";
 
 /**
  * Generates CSS variables for the given palette color and its shades.
@@ -124,7 +125,7 @@ export const cssReset = (): RuleSet => css`
   }
 `;
 
-/**
+/***
  * Declares global styles using root CSS variables and optional media query overrides.
  *
  * @param {CssVar<string>[][]} defaults - array of arrays of default CSS variables

@@ -1,11 +1,8 @@
 import { Nullable, transformObject } from "@ubloimmo/front-util";
 
-import {
-  blendColors,
-  hexColorConverter,
-  rgbaColorConverter,
-} from "../../utils";
 import { shadeOpacityFactory } from "../palette";
+
+import { blendColors, hexColorConverter, rgbaColorConverter } from "@utils";
 
 import type {
   DefaultPaletteColorShadeKey,
@@ -15,7 +12,7 @@ import type {
   ThemeOverrideReponse,
   ThemeOverride,
   ThemeOverridePalette,
-} from "../../types";
+} from "@types";
 
 export const DEFAULT_UBLO_API_URL = "https://ublo.ublo.org/api";
 

@@ -1,21 +1,15 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas, ComponentProps, Markdown } from "../../../../docs/blocks"
-import { Content } from "../../../../docs/containers"
+import { ComponentInfo, Canvas, Markdown } from "@docs/blocks"
+import { Content } from "@docs/containers"
 import * as LoadingStories from "./../Loading.stories.tsx";
-import {Loading} from "../Loading.component.tsx";
 import * as LoadingAnimations from "../animations";
 import { objectKeys } from "@ubloimmo/front-util";
 
-<Meta of={LoadingStories} />
+<Meta title="Components/Loading/Usage" />
 
 <ComponentInfo of={LoadingStories} />
 
-
 <Content>
-
-## Properties
-
-<ComponentProps of={LoadingStories} />
 
 ## Usage
 
@@ -32,7 +26,7 @@ It defaults to `BouncingBalls`, but can be overriden by providing an `LoadingAni
 Loading's `size` property takes any fixed CSS length (rems, pixels or spacing labels) and passed it down to the selected animation.
 If no size is provided, it defaults to `s-4` (1rem).
 
-_It's up to the specific animation's implementation to decide whether `size` affects it height, width, or both._
+> It's up to the specific animation's implementation to decide whether `size` affects it height, width, or both.
 
 <Canvas of={LoadingStories.Sizes}/>
 
@@ -41,7 +35,7 @@ _It's up to the specific animation's implementation to decide whether `size` aff
 Loading takes any valid `PaletteColor` as its `color` property before passing it down to the selected animation.
 If no color is provided, it defaults to `primary-light`.
 
-_Some animations might not take this property into account._
+> Some animations might not take this property into account.
 
 <Canvas of={LoadingStories.Colors}/>
 

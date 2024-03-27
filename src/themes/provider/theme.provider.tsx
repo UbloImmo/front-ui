@@ -9,7 +9,7 @@ import type {
   ClientColorPaletteKey,
   GetThemeOverridesFn,
   ThemeOverride,
-} from "../../types";
+} from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 type ThemeProviderProps = {

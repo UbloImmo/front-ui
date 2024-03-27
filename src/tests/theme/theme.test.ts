@@ -8,7 +8,7 @@ import {
   defaultOrganizationData,
 } from "../../themes";
 
-import type { Theme } from "../../types";
+import type { Theme } from "@types";
 
 const fakeFetchNull = await fakeFetchFactory(() => ({
   organization: {

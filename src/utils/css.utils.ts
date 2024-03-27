@@ -1,6 +1,6 @@
 import { isNumber, isString, isUndefined } from "@ubloimmo/front-util";
 
-import { SPACING_PREFIX } from "../types";
+import { SPACING_PREFIX } from "@types";
 
 import type {
   CssFr,
@@ -12,7 +12,7 @@ import type {
   CssVarName,
   CssVarUsage,
   SpacingLabel,
-} from "@/types";
+} from "@types";
 
 export const REM_FACTOR = 16 as const;
 

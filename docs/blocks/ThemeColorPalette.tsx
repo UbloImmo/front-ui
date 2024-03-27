@@ -4,8 +4,9 @@ import styled, { useTheme } from "styled-components";
 
 import { ColorShadeGrid } from "./ColorShadeGrid";
 import { Pre } from "./Typography";
-import { Heading, Text } from "../../src/components";
-import { FlexLayout } from "../../src/layouts";
+
+import { Heading, Text } from "@/components";
+import { FlexLayout } from "@/layouts";
 
 import type {
   ColorPalette as CPalette,
@@ -14,7 +15,7 @@ import type {
   Theme,
   PaletteColorShaded,
   PaletteColor,
-} from "../../src/types";
+} from "@types";
 
 /**
  * React component for displaying theme color shades and swatches.

@@ -79,7 +79,8 @@
     "pre-push": "bun test:all",
     "pre-commit": "bun test:unit",
     "icons:generate": "bun scripts/svg/index.ts",
-    "storybook": "storybook dev -p 6007 --debug",
+    "storybook": "storybook dev -p 6007 --debug --no-open",
+    "storybook:open": "storybook dev -p 6007 --debug",
     "build-storybook": "storybook build"
   },
   "type": "module",

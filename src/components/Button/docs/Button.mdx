@@ -1,18 +1,13 @@
 import { Meta, Description } from "@storybook/blocks";
-import { ComponentInfo, ComponentProps, Canvas } from "../../../docs/blocks";
-import { Content } from "../../../docs/containers";
-import { Button } from "./Button.component.tsx";
-import * as ButtonStories from "./Button.stories.tsx";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as ButtonStories from "../Button.stories.tsx";
 
-<Meta of={ButtonStories} />
+<Meta title="Components/Button/Usage" />
 
 <ComponentInfo of={ButtonStories} />
 
 <Content>
-
-## Properties
-
-<ComponentProps of={ButtonStories} />
 
 ## Usage
 
@@ -22,7 +17,9 @@ Buttons need at least a `label` and / or `icon` property to render.
 If both are missing, you'll get a warning and **nothing will be rendered**.
 
 The `icon` property is directly passed to the underlying [Icon](?path=/docs/components-icon--docs) component.
-All show variants display the `CircleFill` icon.
+Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list.
+
+All shown variants display the `CircleFill` icon.
 
 <Canvas of={ButtonStories.Icons}/>
 

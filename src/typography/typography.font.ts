@@ -12,22 +12,28 @@ const fontFamily = {
 /**
  * Defines the font family for typography.
  *
+ * @param {boolean} [important] - Whether to add !important
+ *
  * @return {RuleSet} The defined font family for typography.
  */
-export const typographyFontFace = (): RuleSet => {
+export const typographyFontFace = (important?: boolean): RuleSet => {
+  const $important = important ? " !important" : "";
   return css`
-    font-family: ${fontFamily.sans};
+    font-family: ${fontFamily.sans}${$important};
   `;
 };
 
 /**
  * Defines the font family for code typography.
  *
+ * @param {boolean} [important] - Whether to add !important
+ *
  * @return {RuleSet} The defined font family for code typography.
  */
-export const codeFontFace = (): RuleSet => {
+export const codeFontFace = (important?: boolean): RuleSet => {
+  const $important = important ? " !important" : "";
   return css`
-    font-family: ${fontFamily.code};
+    font-family: ${fontFamily.code}${$important};
   `;
 };
 
@@ -39,7 +45,7 @@ export const codeFontFace = (): RuleSet => {
 export const linkFontFace = (): RuleSet => {
   return css`
     * {
-      font-synthesis: none;
+      font-synthesis: style;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;

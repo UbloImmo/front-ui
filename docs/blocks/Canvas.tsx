@@ -1,9 +1,9 @@
 import { Canvas as SBCanvas } from "@storybook/blocks";
 import styled, { css } from "styled-components";
 
-import { useStyleProps } from "../../src/utils";
+import { useStyleProps } from "@utils";
 
-import type { StyleProps } from "../../src/types";
+import type { StyleProps } from "@types";
 
 type SBCanvasProps = Parameters<typeof SBCanvas>[0];
 

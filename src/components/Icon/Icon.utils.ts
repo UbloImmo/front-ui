@@ -1,10 +1,9 @@
 import { useMemo } from "react";
 
-import { cssRem, isCssLengthUsage } from "../../utils";
-
 import { parseFixedLength } from "@/sizes/size.utils";
+import { cssRem, isCssLengthUsage } from "@utils";
 
-import type { CssPx, CssRem, FixedCssLength } from "../../types";
+import type { CssPx, CssRem, FixedCssLength } from "@types";
 import type { Optional, VoidFn } from "@ubloimmo/front-util";
 
 /**

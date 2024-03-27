@@ -3,9 +3,10 @@ import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
 import { ComponentVariants } from "./ComponentVariants";
-import { Icon, TextInput } from "../../src/components";
-import * as BootstrapIcons from "../../src/components/Icon/__generated__/bootstrap";
-import * as CustomIcons from "../../src/components/Icon/__generated__/custom";
+
+import { Icon, TextInput } from "@/components";
+import * as BootstrapIcons from "@/components/Icon/__generated__/bootstrap";
+import * as CustomIcons from "@/components/Icon/__generated__/custom";
 
 import type { Nullable } from "@ubloimmo/front-util";
 
@@ -67,8 +68,9 @@ export const IconSearch = () => {
             defaults={{ ...Icon.defaultProps, size: "s-8" }}
             variants={results}
             for="name"
+            justify="space-around"
             of={Icon}
-            gap="1.88rem"
+            gap={1}
           />
         </List>
       </ListWrapper>
@@ -79,6 +81,7 @@ export const IconSearch = () => {
 const ListContainer = styled.div`
   position: relative;
   border-radius: var(--s-2);
+  padding-top: var(--s-10);
 `;
 
 const ListWrapper = styled.div`

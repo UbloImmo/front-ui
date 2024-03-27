@@ -4,7 +4,8 @@ import { EmailInput } from "./EmailInput/EmailInput.component";
 import { inputTypes } from "./Input.types";
 import { PasswordInput } from "./PasswordInput/PasswordInput.component";
 import { TextInput } from "./TextInput/TextInput.component";
-import { useLogger } from "../../utils";
+
+import { useLogger } from "@utils";
 
 import type {
   GenericInputProps,

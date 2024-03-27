@@ -1,11 +1,19 @@
-import { isObject, isString } from "@ubloimmo/front-util";
+import { isNumber, isObject, isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { Text } from "../../src/components";
-import { FlexRowLayout } from "../../src/layouts";
+import { FlexLayout, GridLayout } from "@/layouts";
 
-import type { FlexAlignment, FlexGap } from "../../src/layouts";
+import { Text } from "@components";
+
+import type {
+  FlexAlignment,
+  FlexDirection,
+  FlexGap,
+  FlexLayoutProps,
+  GridAlignment,
+  GridLayoutProps,
+} from "@/layouts";
 import type { FC } from "react";
 
 type ComponentVariantsConfig<
@@ -14,45 +22,63 @@ type ComponentVariantsConfig<
 > = {
   /**
    * The key of the prop to vary upon.
-   * **Required**
+   * @required
    */
   for: TPropKey;
   /**
    * The component to render the variants for.
-   * **Required**
+   * @required
    */
   of: FC<TComponentProps>;
   /**
    * The default values for the component's props.
-   * **Required**
+   * @required
    */
   defaults: TComponentProps;
   /**
    * List of possible values for the component's prop.
-   * **Required**
+   * @required
    */
   variants:
     | TComponentProps[TPropKey][]
     | { value: TComponentProps[TPropKey]; label: string }[];
   /**
    * Dictates the gap between the variants.
-   * Defaults to `2rem`.
+   * @default "2rem".
    */
   gap?: FlexGap;
   /**
+   * Setting this property wraps all variants in a {@link GridLayout}.
+   * Provided a number for a fixed number of columns, `auto` creates 1 column per variant.
+   *
+   * @type {number | "auto"}
+   * @default undefined
+   */
+  columns?: number | "auto";
+  /**
    * Dictates the vertical alignment of the variants.
-   * Defaults to `start`.
+   * @default "start".
    */
   align?: FlexAlignment;
   /**
+   * Dictates the horizontal alignment of the variants.
+   * @default "start".
+   */
+  justify?: FlexAlignment;
+  /**
+   * Dictates the flex direction of the variants
+   * @default "row"
+   */
+  direction?: FlexDirection;
+  /**
    * By how much to scale a selected variant on hover.
-   * Defaults to `1.5`.
+   * @default 1.5
    */
   scaling?: number;
   /**
    * Whether to include the prop's name in the labels while hovering.
-   * Defaults to `false`.
    * @remarks This will be ignored if the `variants` contain their own labels
+   * @default false
    */
   propLabels?: boolean;
 };
@@ -82,7 +108,7 @@ export const ComponentVariants = <
         isObject(variant) &&
         "value" in variant &&
         "label" in variant &&
-        isString(variant.value) &&
+        isString(variant.label) &&
         typeof variant.value === typeof props.defaults[props.for];
       if (isCompound)
         return {
@@ -105,40 +131,100 @@ export const ComponentVariants = <
   const Component = useMemo(() => {
     return props.of;
   }, [props.of]);
+
+  const Wrapper = useMemo(() => {
+    if (props.columns) {
+      const columns = Array(
+        isNumber(props.columns) ? props.columns : props.variants.length
+      ).fill("1fr");
+      const align =
+        props.align &&
+        ["start", "center", "end"].includes(props.align as GridAlignment)
+          ? (props.align as GridAlignment)
+          : "start";
+      return ({ children }: GridLayoutProps) => (
+        <GridLayout align={align} gap={props.gap} columns={columns}>
+          {children}
+        </GridLayout>
+      );
+    }
+    return ({ children }: FlexLayoutProps) => (
+      <FlexLayout
+        direction={props.direction ?? "row"}
+        gap={props.gap ?? "s-8"}
+        align={props.align}
+        justify={props.justify}
+        wrap
+      >
+        {children}
+      </FlexLayout>
+    );
+  }, [props]);
+
+  const isGrid = useMemo(() => !!props.columns, [props.columns]);
   return (
-    <FlexRowLayout gap={props.gap ?? "s-8"} align={props.align ?? "start"} wrap>
-      {propVariants.map((variantProps, index) => (
-        <ComponentWrapper
-          key={`${variantProps.__propVariantLabel}-${index}`}
-          $scaling={props.scaling}
-        >
-          <div className="component-container">
-            <Component {...variantProps} />
-          </div>
-          <ComponentLabelContainer className="prop-variant-label">
-            <Text size="xs" color="gray-600" weight="semiBold">
-              <code>{variantProps.__propVariantLabel}</code>
-            </Text>
-          </ComponentLabelContainer>
-        </ComponentWrapper>
-      ))}
-    </FlexRowLayout>
+    <Container $grid={isGrid}>
+      <Wrapper>
+        {propVariants.map((variantProps, index) => (
+          <ComponentWrapper
+            key={`${variantProps.__propVariantLabel}-${index}`}
+            $scaling={props.scaling}
+            $grid={isGrid}
+          >
+            <div className="component-container">
+              <Component {...variantProps} />
+            </div>
+            <ComponentLabelContainer className="prop-variant-label">
+              <Text size="xs" color="gray-600" weight="semiBold">
+                <code>{variantProps.__propVariantLabel}</code>
+              </Text>
+            </ComponentLabelContainer>
+          </ComponentWrapper>
+        ))}
+      </Wrapper>
+    </Container>
   );
 };
 
-const ComponentWrapper = styled.article<{ $scaling?: number }>`
+const Container = styled.div<{ $grid?: boolean }>`
+  ${({ $grid }) =>
+    $grid &&
+    css`
+      width: 100%;
+    `}
+
+  *[data-testid="grid"] > &,
+  *[data-testid="grid"] > & > div > article {
+    width: 100%;
+  }
+
+  & > div {
+    width: 100%;
+  }
+`;
+
+const ComponentWrapper = styled.article<{ $scaling?: number; $grid?: boolean }>`
   position: relative;
   transform-origin: center;
+  background: var(--primary-light-0);
+  transition: background 150ms ease-out 0s;
+  padding: var(--s-2);
+  border-radius: var(--s-2);
+
+  *[data-testid="grid"] > & {
+    width: 100%;
+  }
 
   .component-container {
     max-height: max-content;
     min-height: max-content;
+    transform-origin: center;
     transition: transform 150ms ease-out 0s;
   }
 
   &:hover {
     .component-container {
-      transform: scale(${({ $scaling }) => $scaling ?? 1.5});
+      transform: scale(${({ $scaling }) => $scaling ?? 1.2});
       z-index: 3;
     }
 
@@ -147,21 +233,22 @@ const ComponentWrapper = styled.article<{ $scaling?: number }>`
       opacity: 1;
       filter: blur(0);
     }
+    background: var(--primary-light-30);
   }
 `;
 
 const ComponentLabelContainer = styled.div`
   position: absolute;
   top: calc(100% + var(--s-1));
-  justify-content: center;
-  display: flex;
-  opacity: 0;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  opacity: 0;
   pointer-events: none;
   border-radius: var(--s-4);
   filter: blur(var(--s-2));
-  background: var(--gray-50-80);
+  background: var(--primary-light-30);
   padding: var(--s-05) var(--s-2);
   z-index: 2;
   transition: opacity 150ms ease-out 0s, filter 150ms ease-out 0s;

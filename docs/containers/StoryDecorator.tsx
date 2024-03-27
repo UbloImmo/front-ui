@@ -2,9 +2,9 @@ import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { ReactRenderer, type Preview } from "@storybook/react";
 import { objectFromEntries } from "@ubloimmo/front-util";
 
-import { getClientSlugs, ThemeProvider } from "../../src/themes";
+import { getClientSlugs, ThemeProvider } from "@/themes";
 
-import type { ClientColorPaletteKey } from "../../src/types";
+import type { ClientColorPaletteKey } from "@types";
 import type { ReactNode } from "react";
 
 /**
