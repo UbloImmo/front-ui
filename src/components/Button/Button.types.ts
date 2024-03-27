@@ -56,7 +56,7 @@ export type ButtonProps = {
    *
    * @default false
    *
-   * @todo _not implemented yet, needs global Loader component_
+   * @todo _not implemented yet, needs global Loading component_
    */
   loading?: boolean;
   /**
@@ -70,7 +70,7 @@ export type ButtonProps = {
    * The ARIA role of the button.
    *
    * @type {AriaRole}
-   * @default button
+   * @default "button"
    */
   role?: AriaRole;
   /**

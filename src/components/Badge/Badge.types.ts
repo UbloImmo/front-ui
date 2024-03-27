@@ -28,7 +28,7 @@ export type BadgeProps = {
   /**
    * The dominant color of the Badge
    *
-   * @type {ColoKey}
+   * @type {ColorKey}
    * @default "primary"
    */
   color?: ColorKey;

@@ -8,7 +8,7 @@ export type LoadingProps = {
    * The name of the animation to play
    *
    * @type {LoadingAnimation}
-   * @default "bouncingBalls"
+   * @default "BouncingBalls"
    */
   animation?: LoadingAnimation;
   /**

@@ -38,14 +38,21 @@ export const codeFontFace = (): RuleSet => {
 export const linkFontFace = (): RuleSet => {
   return css`
     * {
-      ${typographyFontFace()};
       font-synthesis: none;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    code {
+    *:not(pre, code) {
+      ${typographyFontFace()};
+    }
+
+    code,
+    pre,
+    pre *,
+    pre div,
+    pre span {
       ${codeFontFace()};
       font-size: inherit;
       letter-spacing: 0;

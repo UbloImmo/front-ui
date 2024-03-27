@@ -20,11 +20,14 @@ export const defaultBadgeProps: DefaultBadgeProps = {
 /**
  * Renders a Badge component, with an optionnal Icon and a required Text.
  * Badge shades are based on two sets of colors, light and dark, depending on the shade prop.
+ *
+ * @version 0.0.1
+ *
  * @param {BadgeProps} props - the props for the Badge component
  * @return {JSX.Element} the Badge component
  */
 
-const Badge = (props: BadgeProps) => {
+const Badge = (props: BadgeProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultBadgeProps, props);
   const { color, shade, label, icon } = mergedProps;
   const styledProps = useStyleProps(mergedProps);
