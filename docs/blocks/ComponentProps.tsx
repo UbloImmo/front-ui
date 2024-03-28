@@ -229,6 +229,12 @@ const TableCell = styled.td`
     margin: var(--s-1) 0 !important;
   }
 
+  &:nth-child(3) code {
+    background: none;
+    border: none;
+    white-space: nowrap;
+  }
+
   &:last-child {
     min-width: 16rem;
   }

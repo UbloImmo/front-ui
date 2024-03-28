@@ -4,6 +4,8 @@ import { testComponentFactory } from "@/tests";
 
 import { Text } from ".";
 
+import type { TextSize } from "@types";
+
 const testId = "text";
 const testContent = "text content";
 
@@ -23,3 +25,17 @@ testText({ children: testContent })(
     expect(content).toBeDefined();
   }
 );
+
+const sizes: TextSize[] = ["m", "s", "xs"];
+
+sizes.forEach((size) => {
+  testText({ size, children: testContent })(
+    `should render a ${size} text`,
+    ({ queryByTestId, queryByText }) => {
+      const heading = queryByTestId(testId);
+      expect(heading).toBeDefined();
+      const content = queryByText(testContent);
+      expect(content).toBeDefined();
+    }
+  );
+});

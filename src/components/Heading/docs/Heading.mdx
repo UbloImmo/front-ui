@@ -1,0 +1,93 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas, Markdown, Text, Heading } from "@docs/blocks"
+import { Content } from "@docs/containers"
+import * as HeadingStories from "../Heading.stories.tsx";
+import { GridLayout } from "../../../layouts";
+
+<Meta title="Components/Heading/Usage" />
+
+<ComponentInfo of={HeadingStories} />
+
+<Content>
+
+## Usage
+
+### Font size
+
+You can use one of the 4 preset sizes according to your needs.
+<br/>
+If no size is provided, defaults to `h1`.
+
+<Canvas of={HeadingStories.Sizes} />
+
+<GridLayout columns={2} gap={2}>
+
+<div>
+<Heading size="h4" weight="bold">H4 (48px)</Heading>
+<Text>Our largest heading size.</Text>
+<br/>
+<Text size="s" color="gray-700">Useful for hero sections. Rarely used in our product.</Text>
+</div>
+
+<div>
+<Heading size="h4" weight="bold">H2 (31.68px)</Heading>
+<Text>Our second largest size.</Text>
+<br/>
+<Text size="s" color="gray-700">Mostly used in use as page titles in our product.</Text>
+</div>
+
+<div>
+<Heading size="h4" weight="bold">H3 (23.68px)</Heading>
+<Text>Our most versatile size.</Text>
+<br/>
+<Text size="s" color="gray-700">Useful for clearly labeling sections inside a page.</Text>
+</div>
+
+<div>
+<Heading size="h4" weight="bold">H4 (19.68px)</Heading>
+<Text>Our most smallest size.</Text> 
+<br/>
+<Text size="s" color="gray-700">Used in page sections and side panels to label element groups.</Text>
+</div>
+
+</GridLayout>
+
+### Font weight
+
+Control your heading's weight with the `weight` property. Defaults to `regular`.
+
+<Canvas of={HeadingStories.Weights} />
+
+### Italics
+
+If you need to render italic headings (for some obscure reason), set this component's `italic` property to `true`.
+<br/>
+It defaults to `false`, obviously.
+
+<Canvas of={HeadingStories.Italic} />
+
+### Decorations
+
+Headings should be impactful.
+<br/>
+If you feel your heading lacks in that regards, slap an <Text underline>underline</Text>, <Text overline>overline</Text> or a <Text lineThrough>line through</Text> it.
+Each decoration maps to its own property (`underline`, `overline`, `lineThrough` respectively).
+Set some - or all - of them to `true` to see the result.
+<br/>
+Defaults to `false`.
+
+<Canvas of={HeadingStories.Decorations} />
+
+### Colors
+
+Headings inherit color support from our typography stack, though there should rarely be a need for a colored heading.
+Still, below are some of the colors you could provide to a Heading.
+<br/>
+Defaults to `gray-900`.
+
+
+<Canvas of={HeadingStories.Colors} />
+
+> See our [Color Palette](?path=/docs/color-palette--docs)'s documentation for an exhaustive list of usable values.
+
+</Content>

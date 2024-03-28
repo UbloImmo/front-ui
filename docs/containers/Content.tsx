@@ -16,8 +16,12 @@ type ContentProps = {
  */
 export const Content = ({ children }: ContentProps) => {
   return (
-    <FlexColumnLayout align="center" justify="start">
-      <ContentContainer>{children}</ContentContainer>
+    <FlexColumnLayout
+      align="center"
+      justify="start"
+      data-layout="docs-content-container"
+    >
+      <ContentContainer data-layout="docs-content">{children}</ContentContainer>
     </FlexColumnLayout>
   );
 };
