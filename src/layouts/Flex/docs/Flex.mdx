@@ -1,0 +1,39 @@
+import { Meta, Description } from "@storybook/blocks";
+import { ComponentInfo, Canvas, ComponentProps } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as FlexStories from "../Flex.stories.tsx";
+
+<Meta title="Layouts/Flex/Usage" />
+
+<ComponentInfo of={FlexStories} />
+
+<Content>
+
+## Usage
+
+`FlexLayout` renders a flexbox with default direction property `row`, justify and align properties `start`.
+
+### Direction
+
+The direction of the items rendered in `FlexLayout` can be set with the `direction` property. If no `direction` is provided, defaults to `row`.
+
+- `direction: column` for a vertical direction
+- `direction: row` for a horizontal direction
+
+> You can alsp use `<FlexRowLayout>` to render a Flex Layout with a default `row` direction, same with `<FlexColumnLayout>` for default `column` direction.
+
+<Canvas of={FlexStories.Direction} />
+
+### Gap
+
+`FlexLayout` default `gap` property is `0`. To add horizontal and vertical spacing between flex items, you can use **numbers** or **CSS length values** (_rem_, _px_, _fr_, etc).
+
+<Canvas of={FlexStories.Gap} />
+
+### justify
+
+Default main axis alignment's property of `FlexLayout` is `justify: start`. The other available values are : `center`, `end`, `space-around`, `space-between`, `space-evenly`, `stretch` and `baseline`.
+
+<Canvas of={FlexStories.Justify} />
+
+</Content>
