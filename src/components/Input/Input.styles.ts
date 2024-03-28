@@ -21,28 +21,64 @@ export const commonInputContainerStyles = ({
   &:has(input:disabled) {
     --control-color: var(--gray-400);
   }
+
+  &:hover input:not(:disabled) {
+    box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
+  }
 `;
 
-export const commonInputControlStyles = ({
-  $disabled,
-  onClick,
-}: InputControlStyleProps) => css`
+const commonInputControlStyles = () => css`
   border: none;
   padding: 0;
   background: none;
-  position: absolute;
   right: var(--s-2);
-  // center vertically;
-  top: 50%;
-  transform: translateY(-50%);
-  height: var(--s-4);
-  width: var(--s-4);
-  width: max-content;
+
   svg {
     fill: var(--control-color);
   }
+`;
+
+export const inputControlGroupStyles = () => css`
+  ${commonInputControlStyles}
+  position: absolute;
+  top: var(--s-2);
+  bottom: var(--s-2);
+  transform: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const inputControlStyles = ({
+  onClick,
+  ...props
+}: InputControlStyleProps) => css`
+  ${commonInputControlStyles}
+  position: absolute;
+  height: var(--s-4); // center vertically;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--s-4);
+  min-width: max-content;
   pointer-events: ${!onClick ? "none" : "auto"};
-  cursor: ${!onClick ? "default" : $disabled ? "not-allowed" : "pointer"};
+  cursor: ${!onClick ? "default" : props.$disabled ? "not-allowed" : "pointer"};
+`;
+
+export const inputGroupedControlStyles = ({
+  onClick,
+  ...props
+}: InputControlStyleProps) => css`
+  ${commonInputControlStyles}
+  width: var(--s-4);
+  height: max-content;
+  flex: 1;
+  min-width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: ${!onClick ? "none" : "auto"};
+  cursor: ${!onClick ? "default" : props.$disabled ? "not-allowed" : "pointer"};
 `;
 
 export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`

@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 import {
   commonInputContainerStyles,
-  commonInputControlStyles,
+  inputControlStyles,
   commonInputStyles,
+  inputControlGroupStyles,
+  inputGroupedControlStyles,
 } from "./Input.styles.ts";
 
 import type {
@@ -43,5 +45,18 @@ export const StyledInputContainer = styled.div<CommonInputStyleProps>`
  * wrapping Icons
  */
 export const StyledInputControl = styled.div<InputControlStyleProps>`
-  ${commonInputControlStyles}
+  ${inputControlStyles}
+`;
+
+/**
+ * Input control group container styled with {@link inputControlGroupStyles}.
+ *
+ * Useful when creating stateful inputs with multiple controls,
+ */
+export const StyledInputControlGroup = styled.div`
+  ${inputControlGroupStyles}
+`;
+
+export const StyledInputGroupedControl = styled.div<InputControlStyleProps>`
+  ${inputGroupedControlStyles}
 `;
