@@ -2,6 +2,10 @@ import { useMemo } from "react";
 
 import { FlexColumnLayout, GridLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
+import {
+  componentPropTemplate,
+  componentSourceFactory,
+} from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import { Heading } from ".";
@@ -13,10 +17,6 @@ import type {
   PaletteColor,
   TypographyWeight,
 } from "@types";
-import {
-  componentPropTemplate,
-  componentSourceFactory,
-} from "@docs/docs.utils";
 
 const lorem = "The brown fox jumps over the lazy dog.";
 
