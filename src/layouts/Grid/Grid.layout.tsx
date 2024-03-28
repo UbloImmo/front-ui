@@ -19,15 +19,17 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
 } as const;
 
 /**
- * A grid wrapper layout
+ * A grid wrapper layout with default `row` flow and 12 columns
+ *
+ * @version 0.0.1
  *
  * @param {GridLayoutProps} [props = defaultGridLayoutProps] - optional props
  * @return {JSX.Element} The styled grid wrapper
  */
-export const GridLayout = (props: GridLayoutProps) => {
+export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const innerProps = useStyleProps(props);
   return (
-    <GridLayoutInner data-testid="grid" {...innerProps}>
+    <GridLayoutInner {...innerProps} data-testid="grid">
       {props.children}
     </GridLayoutInner>
   );
@@ -36,3 +38,5 @@ export const GridLayout = (props: GridLayoutProps) => {
 const GridLayoutInner = styled.div<StyleProps<GridLayoutProps>>`
   ${buildGridLayoutStyle(defaultGridLayoutProps)}
 `;
+
+GridLayout.defaultProps = defaultGridLayoutProps;
