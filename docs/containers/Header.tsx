@@ -18,7 +18,7 @@ type HeaderProps = {
  */
 export const Header = ({ children }: HeaderProps) => {
   return (
-    <Container>
+    <Container data-testid="docs-header">
       <Content>
         <FlexColumnLayout gap="s-8" align="start" justify="start">
           {children}
@@ -32,4 +32,8 @@ const Container = styled.header`
   padding: var(--s-8) 0;
   background: var(--gray-50);
   box-shadow: var(--shadow-card);
+
+  & [data-layout="docs-content"] {
+    padding-bottom: var(--s-4);
+  }
 `;
