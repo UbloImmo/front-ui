@@ -119,7 +119,7 @@ const NumberInput = (props: NumberInputProps): JSX.Element => {
           role="button"
           aria-roledescription="Bouton d'augmentation, permet d'augmenter la valeur"
         >
-          <Icon name="CaretUpFill" size="s-3" />
+          <Icon name="ChevronUp" size="s-3" />
         </StyledInputGroupedControl>
         <StyledInputGroupedControl
           {...inputStyles}
@@ -130,7 +130,7 @@ const NumberInput = (props: NumberInputProps): JSX.Element => {
           role="button"
           aria-roledescription="Bouton de diminution, permet de diminuter la valeur"
         >
-          <Icon name="CaretDownFill" size="s-3" />
+          <Icon name="ChevronDown" size="s-3" />
         </StyledInputGroupedControl>
       </StyledInputControlGroup>
     </StyledInputContainer>
