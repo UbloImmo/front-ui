@@ -9,16 +9,20 @@ import type { HTMLInputTypeAttribute } from "react";
 export type PasswordInputProps = InputProps<"password"> & {
   /**
    * Whether the password is visible at first.
-   * Defaults to `false`.
+   *
+   * @default false
    */
   visible?: boolean;
   /**
    * Whether to allow the user to change the password visibility
-   * Defauls to `true`.
+   *
+   * @default true
    */
   allowChangeVisibility?: boolean;
   /**
    * Optional callback function called when the password visibility changes
+   *
+   * @type {VoidFn<[boolean]>}
    */
   onVisibilityChange?: Nullable<VoidFn<[boolean]>>;
 };

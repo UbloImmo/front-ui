@@ -3,7 +3,7 @@ import { EmailInput } from "./EmailInput.component";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/Input/EmailInput",
+  title: "Components/Input/EmailInput/Stories",
   component: EmailInput,
 } satisfies Meta<typeof EmailInput>;
 

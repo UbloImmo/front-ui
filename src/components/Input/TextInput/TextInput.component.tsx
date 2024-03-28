@@ -20,6 +20,8 @@ export const defaultTextInputProps: DefaultInputProps<"text"> = {
 /**
  * Renders a text input component.
  *
+ * @version 0.0.1
+ *
  * @param {InputProps<"text">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
