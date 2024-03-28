@@ -19,7 +19,11 @@ const defaultHeadingProps: Required<HeadingProps> = {
  */
 export const Heading = (props: HeadingProps) => {
   const innerProps = useStyleProps(props);
-  return <HeadingInner {...innerProps}>{props.children}</HeadingInner>;
+  return (
+    <HeadingInner {...innerProps} data-testid="heading">
+      {props.children}
+    </HeadingInner>
+  );
 };
 
 const HeadingInner = styled.span<StyleProps<HeadingProps>>`
