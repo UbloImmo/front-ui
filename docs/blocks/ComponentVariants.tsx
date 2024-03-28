@@ -253,8 +253,10 @@ const ComponentLabelContainer = styled.div`
   z-index: 2;
   transition: opacity 150ms ease-out 0s, filter 150ms ease-out 0s;
 
-  code {
+  & > span > code {
     white-space: nowrap;
     font-size: var(--text-xs);
+    background: none !important;
+    border: none !important;
   }
 `;
