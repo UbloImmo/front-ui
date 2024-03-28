@@ -113,7 +113,7 @@ const NumberInput = (props: NumberInputProps): JSX.Element => {
         <StyledInputGroupedControl
           {...inputStyles}
           onClick={incrementValue}
-          data-testid="input-control"
+          data-testid="input-control-increment"
           aria-label={controlLabels.increment}
           title={controlLabels.increment}
           role="button"
@@ -124,7 +124,7 @@ const NumberInput = (props: NumberInputProps): JSX.Element => {
         <StyledInputGroupedControl
           {...inputStyles}
           onClick={decrementValue}
-          data-testid="input-control"
+          data-testid="input-control-decrement"
           aria-label={controlLabels.decrement}
           title={controlLabels.decrement}
           role="button"
