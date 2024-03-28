@@ -5,7 +5,8 @@ import { Icon } from "../../Icon";
 import {
   StyledInput,
   StyledInputContainer,
-  StyledInputControl,
+  StyledInputControlGroup,
+  StyledInputGroupedControl,
   defaultCommonInputProps,
 } from "../Input.common";
 import {
@@ -109,17 +110,19 @@ const PasswordInput = (props: PasswordInputProps): JSX.Element => {
         ref={inputRef}
         {...inputStyles}
       ></StyledInput>
-      <StyledInputControl
-        {...inputStyles}
-        data-testid="input-control"
-        onClick={toggleVisibility}
-        title={visibility.controlTitle}
-        aria-label={visibility.controlTitle}
-        role="button"
-        aria-roledescription="Bouton de visibilité du mot de passe"
-      >
-        <Icon name={visibility.controlIcon} />
-      </StyledInputControl>
+      <StyledInputControlGroup>
+        <StyledInputGroupedControl
+          {...inputStyles}
+          data-testid="input-control"
+          onClick={toggleVisibility}
+          title={visibility.controlTitle}
+          aria-label={visibility.controlTitle}
+          role="button"
+          aria-roledescription="Bouton de visibilité du mot de passe"
+        >
+          <Icon name={visibility.controlIcon} />
+        </StyledInputGroupedControl>
+      </StyledInputControlGroup>
     </StyledInputContainer>
   );
 };
