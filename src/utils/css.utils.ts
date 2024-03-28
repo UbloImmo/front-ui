@@ -1,6 +1,6 @@
 import { isNumber, isString, isUndefined } from "@ubloimmo/front-util";
 
-import { SPACING_PREFIX } from "@types";
+import { SPACING_PREFIX } from "../types";
 
 import type {
   CssFr,

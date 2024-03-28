@@ -3,8 +3,7 @@ import { objectKeys, transformObject } from "@ubloimmo/front-util";
 import { css, StyleFunction } from "styled-components";
 
 import { typographyFontFace } from "./typography.font";
-
-import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "@utils";
+import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "../utils";
 
 import type {
   HeadingProps,

@@ -9,6 +9,8 @@ import {
   isArray,
 } from "@ubloimmo/front-util";
 
+import { rgbaColorConverter, blendColors } from "../../utils";
+
 import {
   AnyPaletteColorShadeKeys,
   ClientColorPalette,
@@ -23,7 +25,6 @@ import {
   Token,
   RgbaColorArr,
 } from "@types";
-import { rgbaColorConverter, blendColors } from "@utils";
 
 /**
  * Creates a function that takes an opacity value and returns the RGBA color with the specified opacity.
