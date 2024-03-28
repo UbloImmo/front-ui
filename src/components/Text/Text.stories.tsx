@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { useTheme } from "styled-components";
 
 import { FlexColumnLayout, GridLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
@@ -16,6 +15,7 @@ import type {
   TypographyWeight,
 } from "@types";
 import type { GenericFn } from "@ubloimmo/front-util";
+import { componentPropTemplate, componentSource } from "@docs/docs.utils";
 
 const lorem = "The brown fox jumps over the lazy dog.";
 
@@ -24,6 +24,9 @@ const meta = {
   title: "Components/Text/Stories",
   args: {
     children: lorem,
+  },
+  parameters: {
+    docs: componentSource("Text"),
   },
 } satisfies Meta<typeof Text>;
 
@@ -51,6 +54,12 @@ export const Sizes = (props: TextProps) => {
   );
 };
 Sizes.args = {};
+Sizes.parameters = {
+  docs: componentSource<TextProps>(
+    "Text",
+    componentPropTemplate("size", sizes)
+  ),
+};
 
 const TextSizeRenderer = (props: TextProps) => {
   const sizeProps = useMemo<TextProps[]>(() => {
@@ -86,6 +95,12 @@ export const Weights = (props: TextProps) => {
   );
 };
 Weights.args = {};
+Weights.parameters = {
+  docs: componentSource<TextProps>(
+    "Text",
+    componentPropTemplate("weight", weights)
+  ),
+};
 
 const booleans = [false, true];
 
@@ -106,6 +121,12 @@ export const Italic = (props: TextProps) => {
   );
 };
 Italic.args = {};
+Italic.parameters = {
+  docs: componentSource<TextProps>(
+    "Text",
+    componentPropTemplate("italic", booleans)
+  ),
+};
 
 export const Decorations = (props: TextProps) => {
   const mergedProps = useMergedProps(Text.defaultProps, props);
@@ -145,16 +166,32 @@ export const Decorations = (props: TextProps) => {
   );
 };
 Decorations.args = {};
+Decorations.parameters = {
+  docs: componentSource<TextProps>("Text", [
+    {
+      underline: true,
+    },
+    {
+      overline: true,
+    },
+    {
+      lineThrough: true,
+    },
+  ]),
+};
+
+const colorToShades = (color: ColorKey): PaletteColor[] => {
+  const grayShades = ["700", "600", "500", "400"];
+  const colorShades = ["dark", "base", "medium", "light"];
+  const shades = color === "gray" ? grayShades : colorShades;
+  return shades.map((shade) => `${color}-${shade}` as PaletteColor);
+};
 
 const TextColorRenderer = (color: ColorKey) => (props: Required<TextProps>) => {
-  const theme = useTheme();
-  const colorShades = useMemo<PaletteColor[]>(() => {
-    const shades =
-      color === "gray"
-        ? Object.keys(theme.gray).reverse().slice(3, 7)
-        : ["dark", "base", "medium", "light"];
-    return shades.map((shade) => `${color}-${shade}` as PaletteColor);
-  }, [theme]);
+  const colorShades = useMemo<PaletteColor[]>(
+    () => colorToShades(color),
+    [color]
+  );
 
   return (
     <ComponentVariants
@@ -171,18 +208,18 @@ const TextColorRenderer = (color: ColorKey) => (props: Required<TextProps>) => {
   );
 };
 
+const colors: ColorKey[] = [
+  "primary",
+  "success",
+  "pending",
+  "warning",
+  "error",
+  "gray",
+];
 export const Colors = (props: TextProps) => {
   const mergedProps = useMergedProps(Text.defaultProps, props);
 
   const renderers = useMemo(() => {
-    const colors: ColorKey[] = [
-      "primary",
-      "success",
-      "pending",
-      "warning",
-      "error",
-      "gray",
-    ];
     return colors.map(
       (color): [ColorKey, GenericFn<[Required<TextProps>], JSX.Element>] => [
         color,
@@ -200,3 +237,9 @@ export const Colors = (props: TextProps) => {
   );
 };
 Colors.args = {};
+Colors.parameters = {
+  docs: componentSource<TextProps>(
+    "Text",
+    componentPropTemplate("color", colors.flatMap(colorToShades))
+  ),
+};
