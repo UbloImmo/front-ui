@@ -124,8 +124,8 @@ export const useInputStyles = (
   mergedProps: DefaultCommonInputProps
 ): CommonInputStyleProps => {
   return useMemo(() => {
-    const { error, disabled, placeholder } = mergedProps;
-    return toStyleProps({ error, disabled, placeholder });
+    const { error, disabled, placeholder, required } = mergedProps;
+    return toStyleProps({ error, disabled, placeholder, required });
   }, [mergedProps]);
 };
 

@@ -103,6 +103,7 @@ const PasswordInput = (props: PasswordInputProps): JSX.Element => {
         onChange={onChange}
         placeholder={mergedProps.placeholder}
         disabled={mergedProps.disabled}
+        required={mergedProps.required}
         aria-roledescription="Champs de saisie mot de passe"
         role="textbox"
         ref={inputRef}

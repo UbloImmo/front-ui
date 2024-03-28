@@ -9,9 +9,9 @@ import {
 
 import { useMergedProps } from "@utils";
 
-import type { DefaultInputProps, InputProps, InputValue } from "../Input.types";
+import type { DefaultInputProps, InputProps } from "../Input.types";
 
-export const defaultTextInputProps: DefaultInputProps<"text"> = {
+const defaultTextInputProps: DefaultInputProps<"text"> = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
@@ -28,7 +28,7 @@ export const defaultTextInputProps: DefaultInputProps<"text"> = {
 const TextInput = (props: InputProps<"text">): JSX.Element => {
   const mergedProps = useMergedProps(defaultTextInputProps, props);
   const onChange = useInputOnChange<"text">(
-    (nativeValue): nativeValue is InputValue<"text"> => isString(nativeValue),
+    (nativeValue) => isString(nativeValue),
     (nativeValue) =>
       isString(nativeValue) && nativeValue.length > 0 ? nativeValue : null,
     mergedProps.onChange
@@ -42,6 +42,7 @@ const TextInput = (props: InputProps<"text">): JSX.Element => {
       type="text"
       onChange={onChange}
       placeholder={mergedProps.placeholder}
+      required={mergedProps.required}
       disabled={mergedProps.disabled}
       {...inputStyles}
     />

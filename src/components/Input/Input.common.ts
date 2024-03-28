@@ -15,6 +15,7 @@ import type {
 export const defaultCommonInputProps: DefaultCommonInputProps = {
   error: false,
   disabled: false,
+  required: false,
   placeholder: "",
 } as const;
 

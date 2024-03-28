@@ -19,6 +19,12 @@ export type CommonInputProps = {
    */
   disabled?: boolean;
   /**
+   * Whether the input is required. Useful for native form validation.
+   *
+   * @default false
+   */
+  required?: boolean;
+  /**
    * The text to display when the input has no value
    *
    * @default ""
