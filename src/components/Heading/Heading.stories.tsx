@@ -13,14 +13,27 @@ import type {
   PaletteColor,
   TypographyWeight,
 } from "@types";
+import {
+  componentPropTemplate,
+  componentSourceFactory,
+} from "@docs/docs.utils";
 
 const lorem = "The brown fox jumps over the lazy dog.";
+
+const componentSource = componentSourceFactory<HeadingProps>(
+  "Heading",
+  { children: lorem },
+  Heading.defaultProps
+);
 
 const meta = {
   component: Heading,
   title: "Components/Heading/Stories",
   args: {
     children: lorem,
+  },
+  parameters: {
+    docs: componentSource(),
   },
 } satisfies Meta<typeof Heading>;
 
@@ -48,6 +61,9 @@ export const Sizes = (props: HeadingProps) => {
   );
 };
 Sizes.args = {};
+Sizes.parameters = {
+  docs: componentSource(componentPropTemplate("size", sizes)),
+};
 
 const HeadingSizeRenderer = (props: HeadingProps) => {
   const sizeProps = useMemo<HeadingProps[]>(() => {
@@ -83,9 +99,11 @@ export const Weights = (props: HeadingProps) => {
   );
 };
 Weights.args = {};
+Weights.parameters = {
+  docs: componentSource(componentPropTemplate("weight", weights)),
+};
 
 const booleans = [false, true];
-
 export const Italic = (props: HeadingProps) => {
   const mergedProps = useMergedProps(Heading.defaultProps, props);
   return (
@@ -103,6 +121,9 @@ export const Italic = (props: HeadingProps) => {
   );
 };
 Italic.args = {};
+Italic.parameters = {
+  docs: componentSource(componentPropTemplate("italic", booleans)),
+};
 
 export const Decorations = (props: HeadingProps) => {
   const mergedProps = useMergedProps(Heading.defaultProps, props);
@@ -142,6 +163,19 @@ export const Decorations = (props: HeadingProps) => {
   );
 };
 Decorations.args = {};
+Decorations.parameters = {
+  docs: componentSource([
+    {
+      underline: true,
+    },
+    {
+      overline: true,
+    },
+    {
+      lineThrough: true,
+    },
+  ]),
+};
 
 const colors: PaletteColor[] = [
   "gray-800",
@@ -151,7 +185,7 @@ const colors: PaletteColor[] = [
   "warning-dark",
   "error-dark",
 ];
-export const Colors = (props: HeadingProps) => {
+export const Colors: Story = (props: HeadingProps) => {
   const mergedProps = useMergedProps(Heading.defaultProps, props);
 
   return (
@@ -169,3 +203,6 @@ export const Colors = (props: HeadingProps) => {
   );
 };
 Colors.args = {};
+Colors.parameters = {
+  docs: componentSource(componentPropTemplate("color", colors)),
+};
