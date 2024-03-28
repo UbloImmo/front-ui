@@ -4,12 +4,19 @@ import {
   objectEntries,
   type Nullable,
   type NullishPrimitives,
-  type Primitives,
   isBoolean,
+  objectFromEntries,
+  isNullish,
+  type Primitives,
 } from "@ubloimmo/front-util";
 
 import { SPACING_PREFIX } from "@types";
-import { capitalize, isColorKey, isPaletteColor } from "@utils";
+import {
+  capitalize,
+  isColorKey,
+  isPaletteColor,
+  mergeDefaultProps,
+} from "@utils";
 
 import type {
   DocgenPropDef,
@@ -242,6 +249,84 @@ export const formatPropInfo = ({
 };
 
 /**
+ * Generate an array of strings representing the properties of an SVG tag.
+ *
+ * @param {Record<string, string | number>} properties - optional properties for the SVG tag
+ * @param {boolean} isRoot - optional flag indicating if the SVG tag is the root tag
+ * @return {string[]} array of strings representing the properties of the SVG tag
+ */
+const tagProperties = (properties?: Record<string, unknown>): string[] => {
+  if (!properties) return [];
+  const formattedProps = objectEntries(properties)
+    .map(([key, value]) => {
+      const output = (
+        formattedValue: Nullable<string>
+      ): [string, unknown, Nullable<string>] => [key, value, formattedValue];
+      if (isBoolean(value)) {
+        return output(null);
+      }
+      if (isString(value)) {
+        return output(`"${value}"`);
+      }
+      return output(`{${value}}`);
+    })
+    .filter(([_, value]) => !(isBoolean(value) && !value));
+
+  return formattedProps.map(([key, _value, formattedValue]): string => {
+    if (!formattedValue) return key;
+    return `${key}=${formattedValue}`;
+  });
+};
+
+/**
+ * Function to generate indentation string based on the provided indentation level.
+ *
+ * @param {number} indentation - The level of indentation to generate the string for
+ * @return {string} The generated indentation string
+ */
+const tagIndentation = (indentation: number): string =>
+  Array(indentation).fill("  ").join("");
+
+/**
+ * Factory function for creating TSX tag markup with properties and children.
+ *
+ * Transformed from svg icon generatio script
+ */
+const tagFactory =
+  (tagName: string, indentation = 0, printWidth = 80) =>
+  (properties?: Record<string, unknown>, children: Primitives = ""): string => {
+    const spaces = tagIndentation(indentation);
+    const childrenStr = String(children);
+    const hasChildren = childrenStr.length > 0;
+    const childrenUsage = hasChildren
+      ? `\n${tagIndentation(indentation + 1)}${children}\n${spaces}`
+      : "";
+    const propMappings = tagProperties(properties);
+    const hasProps = propMappings.length > 0;
+    const leftTagPrefix = `${spaces}<${tagName}`;
+    const propsOneLine = propMappings.join(" ");
+    const leftTagOneLineSuffix = hasChildren ? ">" : "/>";
+    const leftTagOneLine = `${leftTagPrefix}${
+      hasProps ? ` ${propsOneLine} ` : ""
+    }${leftTagOneLineSuffix}`;
+    const leftTagMultilineSuffix = hasChildren
+      ? `\n${spaces}>`
+      : `\n${spaces}/>`;
+    const leftTagMultiline = `${leftTagPrefix}\n${propMappings
+      .map((mapping) => `${tagIndentation(indentation + 1)}${mapping}`)
+      .join("\n")}${leftTagMultilineSuffix}`;
+
+    const overflows =
+      leftTagOneLine.length >= printWidth && propMappings.length > 1;
+
+    const leftTag = overflows ? leftTagMultiline : leftTagOneLine;
+
+    const rightTag = hasChildren ? `</${tagName}>` : "";
+
+    return `${leftTag}${childrenUsage}${rightTag}`;
+  };
+
+/**
  * Generates the source string for a component with specified properties.
  *
  * @param {string} componentName - The name of the component.
@@ -256,28 +341,25 @@ export const componentSourceString = (
   defaultProps?: Record<string, unknown>,
   printWidth = 80
 ) => {
-  const properties = objectEntries(componentProperties)
-    .filter(([name, value]) => {
+  const { children, ...restProps } = componentProperties;
+
+  const properties = objectFromEntries(
+    objectEntries(restProps).filter(([name, value]) => {
       if (!defaultProps) return true;
       if (!(name in defaultProps)) return false;
       return value !== defaultProps[name];
     })
-    .map(([propertyName, propertyValue]) => {
-      if (isBoolean(propertyValue)) {
-        if (!propertyValue) return "";
-        return propertyName;
-      }
-      const value = isString(propertyValue)
-        ? `"${propertyValue}"`
-        : `{${propertyValue}}`;
-      return `${propertyName}=${value}`;
-    });
-  const propertiesStrInline = properties.join(" ");
-  const propertiesStr =
-    propertiesStrInline.length > printWidth
-      ? [...properties, "\n"].join("\n")
-      : ` ${propertiesStrInline} `;
-  return `<${componentName}${propertiesStr}/>`;
+  );
+
+  console.log(properties, componentProperties);
+
+  const tagChildren = isNullish(children)
+    ? undefined
+    : isString(children)
+    ? children
+    : `{${children}}`;
+
+  return tagFactory(componentName, 0, printWidth)(properties, tagChildren);
 };
 
 /**
@@ -356,5 +438,32 @@ export const componentSource = <
         printWidth
       ),
     },
+  };
+};
+
+export const componentSourceFactory = <
+  TComponentProps extends Record<string, unknown> = Record<
+    string,
+    NullishPrimitives
+  >,
+  TDefaultComponentProps extends Required<TComponentProps> = Required<TComponentProps>
+>(
+  componentName: string,
+  fixedProps: TComponentProps = {} as TComponentProps,
+  defaultProps?: TDefaultComponentProps,
+  printWidth = 80
+) => {
+  return (propList: TComponentProps[] = [{} as TComponentProps]) => {
+    const mergedPropList = propList.map((props) => ({
+      ...fixedProps,
+      ...props,
+    }));
+    console.log(fixedProps, propList, mergedPropList);
+    return componentSource<TComponentProps>(
+      componentName,
+      mergedPropList,
+      defaultProps,
+      printWidth
+    );
   };
 };
