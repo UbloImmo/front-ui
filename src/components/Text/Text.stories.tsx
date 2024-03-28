@@ -2,6 +2,10 @@ import { useMemo } from "react";
 
 import { FlexColumnLayout, GridLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
+import {
+  componentPropTemplate,
+  componentSourceFactory,
+} from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import { Text } from ".";
@@ -15,10 +19,6 @@ import type {
   TypographyWeight,
 } from "@types";
 import type { GenericFn } from "@ubloimmo/front-util";
-import {
-  componentPropTemplate,
-  componentSourceFactory,
-} from "@docs/docs.utils";
 
 const lorem = "The brown fox jumps over the lazy dog.";
 const componentSource = componentSourceFactory<TextProps>(
@@ -187,10 +187,7 @@ const colorToShades = (color: ColorKey): PaletteColor[] => {
 };
 
 const TextColorRenderer = (color: ColorKey) => (props: Required<TextProps>) => {
-  const colorShades = useMemo<PaletteColor[]>(
-    () => colorToShades(color),
-    [color]
-  );
+  const colorShades = useMemo<PaletteColor[]>(() => colorToShades(color), []);
 
   return (
     <ComponentVariants

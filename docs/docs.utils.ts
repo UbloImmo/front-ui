@@ -11,12 +11,7 @@ import {
 } from "@ubloimmo/front-util";
 
 import { SPACING_PREFIX } from "@types";
-import {
-  capitalize,
-  isColorKey,
-  isPaletteColor,
-  mergeDefaultProps,
-} from "@utils";
+import { capitalize, isColorKey, isPaletteColor } from "@utils";
 
 import type {
   DocgenPropDef,
@@ -351,8 +346,6 @@ export const componentSourceString = (
     })
   );
 
-  console.log(properties, componentProperties);
-
   const tagChildren = isNullish(children)
     ? undefined
     : isString(children)
@@ -458,7 +451,6 @@ export const componentSourceFactory = <
       ...fixedProps,
       ...props,
     }));
-    console.log(fixedProps, propList, mergedPropList);
     return componentSource<TComponentProps>(
       componentName,
       mergedPropList,
