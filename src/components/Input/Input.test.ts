@@ -14,13 +14,13 @@ describe("Input", () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore needed to check unintended behavior with no props
   testGenericInput({})(
-    "should render an a text input when no props",
+    "should render a text input when no props",
     ({ queryByTestId }) => {
       expect(queryByTestId("input-text")).toBeDefined();
     }
   );
   testGenericInput({ type: "text" })(
-    "should render an text input",
+    "should render a text input",
     ({ queryByTestId }) => {
       expect(queryByTestId("input-text")).toBeDefined();
     }
@@ -32,9 +32,15 @@ describe("Input", () => {
     }
   );
   testGenericInput({ type: "password" })(
-    "should render an passwordf input",
+    "should render a password input",
     ({ queryByTestId }) => {
       expect(queryByTestId("input-password")).toBeDefined();
+    }
+  );
+  testGenericInput({ type: "number" })(
+    "should render a number input",
+    ({ queryByTestId }) => {
+      expect(queryByTestId("input-number")).toBeDefined();
     }
   );
 
@@ -48,14 +54,6 @@ describe("Input", () => {
     ({ queryByTestId }) => {
       expect(queryByTestId("input-text")).toBeDefined();
       expect(global.console.warn).toHaveBeenCalled();
-    }
-  );
-
-  testGenericInput({ type: "number" })(
-    "should error and not render a missing number input",
-    ({ queryByTestId }) => {
-      expect(queryByTestId("input-text")).toBeNull();
-      expect(global.console.error).toHaveBeenCalled();
     }
   );
 });

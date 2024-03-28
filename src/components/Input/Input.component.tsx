@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import { EmailInput } from "./EmailInput/EmailInput.component";
 import { inputTypes } from "./Input.types";
+import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput/PasswordInput.component";
 import { TextInput } from "./TextInput/TextInput.component";
 
@@ -18,7 +19,7 @@ import type { FC } from "react";
 
 const inputComponentMap: TypedInputComponentMap = {
   text: TextInput,
-  number: null,
+  number: NumberInput,
   password: PasswordInput,
   email: EmailInput,
 };
