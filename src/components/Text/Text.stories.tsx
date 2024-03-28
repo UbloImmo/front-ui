@@ -15,9 +15,17 @@ import type {
   TypographyWeight,
 } from "@types";
 import type { GenericFn } from "@ubloimmo/front-util";
-import { componentPropTemplate, componentSource } from "@docs/docs.utils";
+import {
+  componentPropTemplate,
+  componentSourceFactory,
+} from "@docs/docs.utils";
 
 const lorem = "The brown fox jumps over the lazy dog.";
+const componentSource = componentSourceFactory<TextProps>(
+  "Text",
+  { children: lorem },
+  Text.defaultProps
+);
 
 const meta = {
   component: Text,
@@ -26,7 +34,7 @@ const meta = {
     children: lorem,
   },
   parameters: {
-    docs: componentSource("Text"),
+    docs: componentSource(),
   },
 } satisfies Meta<typeof Text>;
 
@@ -55,10 +63,7 @@ export const Sizes = (props: TextProps) => {
 };
 Sizes.args = {};
 Sizes.parameters = {
-  docs: componentSource<TextProps>(
-    "Text",
-    componentPropTemplate("size", sizes)
-  ),
+  docs: componentSource(componentPropTemplate("size", sizes)),
 };
 
 const TextSizeRenderer = (props: TextProps) => {
@@ -96,10 +101,7 @@ export const Weights = (props: TextProps) => {
 };
 Weights.args = {};
 Weights.parameters = {
-  docs: componentSource<TextProps>(
-    "Text",
-    componentPropTemplate("weight", weights)
-  ),
+  docs: componentSource(componentPropTemplate("weight", weights)),
 };
 
 const booleans = [false, true];
@@ -122,10 +124,7 @@ export const Italic = (props: TextProps) => {
 };
 Italic.args = {};
 Italic.parameters = {
-  docs: componentSource<TextProps>(
-    "Text",
-    componentPropTemplate("italic", booleans)
-  ),
+  docs: componentSource(componentPropTemplate("italic", booleans)),
 };
 
 export const Decorations = (props: TextProps) => {
@@ -167,7 +166,7 @@ export const Decorations = (props: TextProps) => {
 };
 Decorations.args = {};
 Decorations.parameters = {
-  docs: componentSource<TextProps>("Text", [
+  docs: componentSource([
     {
       underline: true,
     },
@@ -238,8 +237,7 @@ export const Colors = (props: TextProps) => {
 };
 Colors.args = {};
 Colors.parameters = {
-  docs: componentSource<TextProps>(
-    "Text",
+  docs: componentSource(
     componentPropTemplate("color", colors.flatMap(colorToShades))
   ),
 };
