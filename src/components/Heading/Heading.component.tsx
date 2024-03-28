@@ -17,7 +17,7 @@ const defaultHeadingProps: Required<HeadingProps> = {
  * @param {HeadingProps} props - Heading component props
  * @return {JSX.Element} - The styled heading component
  */
-export const Heading = (props: HeadingProps) => {
+const Heading = (props: HeadingProps) => {
   const innerProps = useStyleProps(props);
   return (
     <HeadingInner {...innerProps} data-testid="heading">
@@ -25,6 +25,10 @@ export const Heading = (props: HeadingProps) => {
     </HeadingInner>
   );
 };
+
+Heading.defaultProps = defaultHeadingProps;
+
+export { Heading };
 
 const HeadingInner = styled.span<StyleProps<HeadingProps>>`
   display: block;

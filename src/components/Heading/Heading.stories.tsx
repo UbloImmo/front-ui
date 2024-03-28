@@ -1,48 +1,45 @@
 import { useMemo } from "react";
-import { useTheme } from "styled-components";
 
 import { FlexColumnLayout, GridLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
 import { useMergedProps } from "@utils";
 
-import { Text } from ".";
+import { Heading } from ".";
 
 import type { Meta, StoryObj } from "@storybook/react";
 import type {
-  ColorKey,
+  HeadingProps,
+  HeadingSize,
   PaletteColor,
-  TextProps,
-  TextSize,
   TypographyWeight,
 } from "@types";
-import type { GenericFn } from "@ubloimmo/front-util";
 
 const lorem = "The brown fox jumps over the lazy dog.";
 
 const meta = {
-  component: Text,
-  title: "Components/Text/Stories",
+  component: Heading,
+  title: "Components/Heading/Stories",
   args: {
     children: lorem,
   },
-} satisfies Meta<typeof Text>;
+} satisfies Meta<typeof Heading>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-const sizes: TextSize[] = ["m", "s", "xs"];
+const sizes: HeadingSize[] = ["h1", "h2", "h3", "h4"];
 
-export const Sizes = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
+export const Sizes = (props: HeadingProps) => {
+  const mergedProps = useMergedProps(Heading.defaultProps, props);
 
   return (
     <ComponentVariants
       defaults={mergedProps}
       variants={sizes}
       for="size"
-      of={Text}
+      of={Heading}
       align="start"
       direction="column"
       gap={1}
@@ -52,31 +49,31 @@ export const Sizes = (props: TextProps) => {
 };
 Sizes.args = {};
 
-const TextSizeRenderer = (props: TextProps) => {
-  const sizeProps = useMemo<TextProps[]>(() => {
+const HeadingSizeRenderer = (props: HeadingProps) => {
+  const sizeProps = useMemo<HeadingProps[]>(() => {
     return sizes.map((size) => ({ ...props, size }));
   }, [props]);
 
   return (
     <FlexColumnLayout gap={1}>
       {sizeProps.map((props) => (
-        <Text {...props} key={props.size}>
+        <Heading {...props} key={props.size}>
           {props.children}
-        </Text>
+        </Heading>
       ))}
     </FlexColumnLayout>
   );
 };
 
 const weights: TypographyWeight[] = ["regular", "semiBold", "bold"] as const;
-export const Weights = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
+export const Weights = (props: HeadingProps) => {
+  const mergedProps = useMergedProps(Heading.defaultProps, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
       variants={weights}
       for="weight"
-      of={TextSizeRenderer}
+      of={HeadingSizeRenderer}
       align="start"
       gap={1}
       columns="auto"
@@ -89,14 +86,14 @@ Weights.args = {};
 
 const booleans = [false, true];
 
-export const Italic = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
+export const Italic = (props: HeadingProps) => {
+  const mergedProps = useMergedProps(Heading.defaultProps, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
       variants={booleans}
       for="italic"
-      of={TextSizeRenderer}
+      of={HeadingSizeRenderer}
       align="start"
       columns={2}
       gap={1}
@@ -107,15 +104,15 @@ export const Italic = (props: TextProps) => {
 };
 Italic.args = {};
 
-export const Decorations = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
+export const Decorations = (props: HeadingProps) => {
+  const mergedProps = useMergedProps(Heading.defaultProps, props);
   return (
-    <GridLayout columns={["1fr", "1fr", "1fr"]}>
+    <GridLayout columns={["1fr"]}>
       <ComponentVariants
         defaults={mergedProps}
         variants={[true]}
         for="underline"
-        of={TextSizeRenderer}
+        of={HeadingSizeRenderer}
         align="start"
         gap={1}
         scaling={1}
@@ -125,7 +122,7 @@ export const Decorations = (props: TextProps) => {
         defaults={mergedProps}
         variants={[true]}
         for="overline"
-        of={TextSizeRenderer}
+        of={HeadingSizeRenderer}
         align="start"
         gap={1}
         scaling={1}
@@ -135,7 +132,7 @@ export const Decorations = (props: TextProps) => {
         defaults={mergedProps}
         variants={[true]}
         for="lineThrough"
-        of={TextSizeRenderer}
+        of={HeadingSizeRenderer}
         align="start"
         gap={1}
         scaling={1}
@@ -146,57 +143,29 @@ export const Decorations = (props: TextProps) => {
 };
 Decorations.args = {};
 
-const TextColorRenderer = (color: ColorKey) => (props: Required<TextProps>) => {
-  const theme = useTheme();
-  const colorShades = useMemo<PaletteColor[]>(() => {
-    const shades =
-      color === "gray"
-        ? Object.keys(theme.gray).reverse().slice(3, 7)
-        : ["dark", "base", "medium", "light"];
-    return shades.map((shade) => `${color}-${shade}` as PaletteColor);
-  }, [theme]);
+const colors: PaletteColor[] = [
+  "gray-800",
+  "primary-dark",
+  "success-dark",
+  "pending-dark",
+  "warning-dark",
+  "error-dark",
+];
+export const Colors = (props: HeadingProps) => {
+  const mergedProps = useMergedProps(Heading.defaultProps, props);
 
   return (
     <ComponentVariants
-      defaults={props}
-      variants={colorShades}
+      defaults={mergedProps}
+      variants={colors}
       for="color"
-      of={Text}
-      direction="column"
+      of={HeadingSizeRenderer}
       align="start"
+      columns={2}
       gap={1}
       scaling={1}
       propLabels
     />
-  );
-};
-
-export const Colors = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
-
-  const renderers = useMemo(() => {
-    const colors: ColorKey[] = [
-      "primary",
-      "success",
-      "pending",
-      "warning",
-      "error",
-      "gray",
-    ];
-    return colors.map(
-      (color): [ColorKey, GenericFn<[Required<TextProps>], JSX.Element>] => [
-        color,
-        TextColorRenderer(color),
-      ]
-    );
-  }, []);
-
-  return (
-    <GridLayout gap={1} columns={["1fr", "1fr", "1fr"]}>
-      {renderers.map(([color, Renderer]) => (
-        <Renderer key={color} {...mergedProps} />
-      ))}
-    </GridLayout>
   );
 };
 Colors.args = {};
