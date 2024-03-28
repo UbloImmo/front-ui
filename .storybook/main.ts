@@ -1,6 +1,11 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 import path from "path";
-import type { InlineConfig } from "vite";
+import {
+  loadConfigFromFile,
+  mergeConfig,
+  type InlineConfig,
+  type ConfigEnv,
+} from "vite";
 
 const config: StorybookConfig = {
   stories: [
@@ -28,27 +33,31 @@ const config: StorybookConfig = {
     autodocs: "tag",
   },
   async viteFinal(config, { configType }) {
-    const { mergeConfig } = await import("vite");
-    if (configType === "PRODUCTION") {
+    const isProd = configType === "PRODUCTION";
+    if (isProd) {
       config.base = "/design-system";
       config.publicDir = "/design-system";
     }
-    const baseConfig: InlineConfig = {
-      ...config,
+    const baseConfig = mergeConfig(config, {
       optimizeDeps: {
         ...(config.optimizeDeps ?? {}),
-        entries:
-          configType === "DEVELOPMENT" ? [] : config.optimizeDeps?.entries,
+        entries: isProd ? config.optimizeDeps?.entries : [],
       },
-    };
+    });
 
-    const alias = {
-      "@docs": path.resolve(path.dirname(__dirname), "docs"),
-      "@types": path.resolve(path.dirname(__dirname), "src", "types"),
-      "@utils": path.resolve(path.dirname(__dirname), "src", "utils"),
-      "@components": path.resolve(path.dirname(__dirname), "src", "components"),
-      "@": path.resolve(path.dirname(__dirname), "src"),
-    };
+    const alias = isProd
+      ? config.resolve?.alias
+      : {
+          "@docs": path.resolve(path.dirname(__dirname), "docs"),
+          "@types": path.resolve(path.dirname(__dirname), "src", "types"),
+          "@utils": path.resolve(path.dirname(__dirname), "src", "utils"),
+          "@components": path.resolve(
+            path.dirname(__dirname),
+            "src",
+            "components"
+          ),
+          "@": path.resolve(path.dirname(__dirname), "src"),
+        };
     return mergeConfig(baseConfig, {
       build: {
         rollupOptions: {

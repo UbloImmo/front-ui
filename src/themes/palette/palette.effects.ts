@@ -8,7 +8,7 @@ import {
   rgbaColorConverter,
   isSameColor,
   parseCssVar,
-} from "@utils";
+} from "../../utils";
 
 import type {
   Token,

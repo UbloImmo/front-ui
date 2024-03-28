@@ -9,9 +9,8 @@ import {
 } from "./../../typography/typography.styles";
 import { breakpointsPx, buildSpacingMap } from "../../sizes";
 import { linkFontFace } from "../../typography/typography.font";
+import { cssVar } from "../../utils";
 import { effectsToCssVars } from "../palette";
-
-import { cssVar } from "@utils";
 
 import type {
   Theme,
