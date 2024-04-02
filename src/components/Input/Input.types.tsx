@@ -8,14 +8,26 @@ import type { FC } from "react";
 export type CommonInputProps = {
   /**
    * Whether to display an error state (red border)
+   *
+   * @default false
    */
   error?: boolean;
   /**
    * Whether the input is disabled (grayed out and read-only)
+   *
+   * @default false
    */
   disabled?: boolean;
   /**
+   * Whether the input is required. Useful for native form validation.
+   *
+   * @default false
+   */
+  required?: boolean;
+  /**
    * The text to display when the input has no value
+   *
+   * @default ""
    */
   placeholder?: string;
 };
@@ -76,11 +88,20 @@ export type InputOnChangeFn<TType extends InputType> = VoidFn<
  */
 export type InputProps<TType extends InputType> = CommonInputProps & {
   /**
-   * The input's value, defaults to null
+   * The input's value or null if empty
+   *
+   * @default null
+   *
+   * @type {InputValue | null}
+   *
    */
   value?: Nullable<InputValue<TType>>;
   /**
-   * The input's onChange callback
+   * The input's onChange callback. Optional.
+   *
+   * @default null
+   *
+   * @type {InputOnChangeFn | null}
    */
   onChange?: Nullable<InputOnChangeFn<TType>>;
 };
@@ -92,6 +113,13 @@ export type DefaultInputProps<TType extends InputType> = Required<
 export type CommonInputStyleProps = StyleProps<DefaultCommonInputProps>;
 
 export type GenericInputProps<TType extends InputType> = {
+  /**
+   * The input's type
+   *
+   * @type {InputType}
+   * @required
+   * @default undefined
+   */
   type: TType;
 } & InputProps<TType>;
 

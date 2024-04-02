@@ -92,6 +92,7 @@ const testUseInputValue = () => {
 const inputProps: DefaultCommonInputProps = {
   error: true,
   disabled: true,
+  required: true,
   placeholder: "test",
 };
 
@@ -111,16 +112,19 @@ const testUseInputStyles = () => {
     }
   );
 
-  testHook({ error: true, disabled: true, placeholder: "test" })(
-    "should transform input style props",
-    (styles) => {
-      expect(styles).toEqual({
-        $error: true,
-        $disabled: true,
-        $placeholder: "test",
-      });
-    }
-  );
+  testHook({
+    error: true,
+    disabled: true,
+    required: true,
+    placeholder: "test",
+  })("should transform input style props", (styles) => {
+    expect(styles).toEqual({
+      $error: true,
+      $disabled: true,
+      $required: true,
+      $placeholder: "test",
+    });
+  });
 };
 
 const testUseInputControlCallback = () => {

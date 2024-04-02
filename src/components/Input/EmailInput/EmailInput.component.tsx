@@ -47,6 +47,7 @@ const EmailInput = (props: InputProps<"email">): JSX.Element => {
         value={value}
         type="email"
         onChange={onChange}
+        required={mergedProps.required}
         placeholder={mergedProps.placeholder}
         disabled={mergedProps.disabled}
         {...inputStyles}

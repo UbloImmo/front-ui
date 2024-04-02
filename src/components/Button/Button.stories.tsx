@@ -10,6 +10,7 @@ import {
 
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
+import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -18,6 +19,12 @@ const defaultMockProps = {
   ...Button.defaultProps,
   onClick: fn(),
 };
+
+const componentSource = componentSourceFactory<ButtonProps>(
+  "Button",
+  { label: "Button" },
+  defaultMockProps
+);
 
 const meta = {
   title: "Components/Button/Stories",
@@ -29,7 +36,10 @@ const meta = {
       </FlexColumnLayout>
     ),
   ],
-  args: defaultMockProps,
+  parameters: {
+    docs: componentSource(),
+  },
+  args: { ...defaultMockProps, label: "Button" },
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -81,6 +91,13 @@ export const PrimaryColors = (props: ButtonProps) => {
     </>
   );
 };
+PrimaryColors.parameters = {
+  docs: componentSource(
+    [false, true].flatMap((disabled) =>
+      buttonColors.map((color) => ({ color, disabled, label: "Button" }))
+    )
+  ),
+};
 
 export const SecondaryColors = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
@@ -124,6 +141,18 @@ export const SecondaryColors = (props: ButtonProps) => {
     </>
   );
 };
+SecondaryColors.parameters = {
+  docs: componentSource(
+    [false, true].flatMap((disabled) =>
+      buttonColors.map((color) => ({
+        color,
+        disabled,
+        label: "Button",
+        secondary: true,
+      }))
+    )
+  ),
+};
 
 export const Icons = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
@@ -159,6 +188,14 @@ export const Icons = (props: ButtonProps) => {
       />
     </FlexRowLayout>
   );
+};
+Icons.parameters = {
+  docs: componentSource([
+    { label: "Button" },
+    { label: "Button", icon: "CircleFill" },
+    { icon: "CircleFill", label: undefined },
+    { label: "Button", icon: "CircleFill", iconPlacement: "right" },
+  ]),
 };
 
 const buttonLabels = [
@@ -210,7 +247,18 @@ export const Loading = (props: ButtonProps) => {
     </>
   );
 };
+
 Loading.args = {
   icon: "ArrowRight",
   iconPlacement: "right",
+} as Partial<ButtonProps>;
+const baseLoadingProps = buttonLabels.map((label) => ({
+  label,
+  ...Loading.args,
+}));
+Loading.parameters = {
+  docs: componentSource([
+    ...baseLoadingProps,
+    ...baseLoadingProps.map((props) => ({ ...props, loading: true })),
+  ]),
 };

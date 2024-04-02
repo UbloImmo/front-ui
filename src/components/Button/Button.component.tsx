@@ -18,7 +18,7 @@ import type { StyleProps } from "@types";
 const defaultButtonProps: DefaultButtonProps = {
   type: "button",
   color: "primary",
-  label: "Button",
+  label: "label",
   title: "",
   role: "button",
   icon: null,

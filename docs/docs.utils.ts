@@ -8,6 +8,7 @@ import {
   objectFromEntries,
   isNullish,
   type Primitives,
+  isUndefined,
 } from "@ubloimmo/front-util";
 
 import { SPACING_PREFIX } from "@types";
@@ -265,7 +266,9 @@ const tagProperties = (properties?: Record<string, unknown>): string[] => {
       }
       return output(`{${value}}`);
     })
-    .filter(([_, value]) => !(isBoolean(value) && !value));
+    .filter(
+      ([_, value]) => !(isBoolean(value) && !value) && !isUndefined(value)
+    );
 
   return formattedProps.map(([key, _value, formattedValue]): string => {
     if (!formattedValue) return key;
@@ -407,7 +410,7 @@ export const componentPropTemplate = <
  * @param {Record<string, unknown>[]} [propList=[]] - The list of properties for the component.
  * @param {Record<string, unknown>} [defaultProps] - The default properties for the component.
  * @param {number} [printWidth=80] - The width of the printed code.
- * @return {object} Thestorybook source parameter
+ * @return {{ source: { language: string; code: string } }} The storybook source parameter
  */
 export const componentSource = <
   TComponentProps extends Record<string, unknown> = Record<
@@ -420,7 +423,7 @@ export const componentSource = <
   propList: TComponentProps[] = [{} as TComponentProps],
   defaultProps?: TDefaultComponentProps,
   printWidth = 80
-) => {
+): { source: { language: string; code: string } } => {
   return {
     source: {
       language: "tsx",

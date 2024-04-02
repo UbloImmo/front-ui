@@ -3,7 +3,7 @@ import { PasswordInput } from "./PasswordInput.component";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/Input/PasswordInput",
+  title: "Components/Input/PasswordInput/Stories",
   component: PasswordInput,
   argTypes: {
     visible: {

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import { EmailInput } from "./EmailInput/EmailInput.component";
 import { inputTypes } from "./Input.types";
+import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput/PasswordInput.component";
 import { TextInput } from "./TextInput/TextInput.component";
 
@@ -18,13 +19,15 @@ import type { FC } from "react";
 
 const inputComponentMap: TypedInputComponentMap = {
   text: TextInput,
-  number: null,
+  number: NumberInput,
   password: PasswordInput,
   email: EmailInput,
 };
 
 /**
  * Renders a specific input component based on the provided `type` prop.
+ *
+ * @version 0.0.1
  *
  * @param {GenericInputProps<TType>} props - The generic input props.
  * @returns {Nullable<JSX.Element>}

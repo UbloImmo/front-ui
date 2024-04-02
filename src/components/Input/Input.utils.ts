@@ -32,7 +32,7 @@ type NativeInputProps = Required<
 /**
  * The value returned by a {@link NativeInputProps} `onChange` callback
  */
-type NativeInputValue = number | string | undefined;
+export type NativeInputValue = number | string | undefined;
 
 /**
  * Callback function used by the {@link useInputOnChange} hook
@@ -124,8 +124,8 @@ export const useInputStyles = (
   mergedProps: DefaultCommonInputProps
 ): CommonInputStyleProps => {
   return useMemo(() => {
-    const { error, disabled, placeholder } = mergedProps;
-    return toStyleProps({ error, disabled, placeholder });
+    const { error, disabled, placeholder, required } = mergedProps;
+    return toStyleProps({ error, disabled, placeholder, required });
   }, [mergedProps]);
 };
 

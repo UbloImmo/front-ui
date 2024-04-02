@@ -5,7 +5,8 @@ import { Icon } from "../../Icon";
 import {
   StyledInput,
   StyledInputContainer,
-  StyledInputControl,
+  StyledInputControlGroup,
+  StyledInputGroupedControl,
   defaultCommonInputProps,
 } from "../Input.common";
 import {
@@ -35,6 +36,8 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
 
 /**
  * Renders a password input component that allows for password visibility toggle.
+ *
+ * @version 0.0.1
  *
  * @param {PasswordInputProps} props - The input props.
  * @return {JSX.Element} The rendered text input component.
@@ -101,22 +104,25 @@ const PasswordInput = (props: PasswordInputProps): JSX.Element => {
         onChange={onChange}
         placeholder={mergedProps.placeholder}
         disabled={mergedProps.disabled}
+        required={mergedProps.required}
         aria-roledescription="Champs de saisie mot de passe"
         role="textbox"
         ref={inputRef}
         {...inputStyles}
       ></StyledInput>
-      <StyledInputControl
-        {...inputStyles}
-        data-testid="input-control"
-        onClick={toggleVisibility}
-        title={visibility.controlTitle}
-        aria-label={visibility.controlTitle}
-        role="button"
-        aria-roledescription="Bouton de visibilité du mot de passe"
-      >
-        <Icon name={visibility.controlIcon} />
-      </StyledInputControl>
+      <StyledInputControlGroup>
+        <StyledInputGroupedControl
+          {...inputStyles}
+          data-testid="input-control"
+          onClick={toggleVisibility}
+          title={visibility.controlTitle}
+          aria-label={visibility.controlTitle}
+          role="button"
+          aria-roledescription="Bouton de visibilité du mot de passe"
+        >
+          <Icon name={visibility.controlIcon} />
+        </StyledInputGroupedControl>
+      </StyledInputControlGroup>
     </StyledInputContainer>
   );
 };
