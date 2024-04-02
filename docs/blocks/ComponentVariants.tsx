@@ -9,6 +9,7 @@ import { Text } from "@components";
 import type {
   FlexAlignment,
   FlexDirection,
+  FlexFill,
   FlexGap,
   FlexLayoutProps,
   GridAlignment,
@@ -81,6 +82,11 @@ type ComponentVariantsConfig<
    * @default false
    */
   propLabels?: boolean;
+  /**
+   * Whether to fill the horizontal or vertical space.
+   * @default false
+   */
+  fill?: FlexFill;
 };
 
 type PropVariant<TComponentProps extends Record<string, unknown>> =
@@ -154,6 +160,7 @@ export const ComponentVariants = <
         gap={props.gap ?? "s-8"}
         align={props.align}
         justify={props.justify}
+        fill={props.fill ?? false}
         wrap
       >
         {children}
@@ -170,6 +177,7 @@ export const ComponentVariants = <
             key={`${variantProps.__propVariantLabel}-${index}`}
             $scaling={props.scaling}
             $grid={isGrid}
+            $fill={props.fill}
           >
             <div className="component-container">
               <Component {...variantProps} />
@@ -203,13 +211,19 @@ const Container = styled.div<{ $grid?: boolean }>`
   }
 `;
 
-const ComponentWrapper = styled.article<{ $scaling?: number; $grid?: boolean }>`
+const ComponentWrapper = styled.article<{
+  $scaling?: number;
+  $grid?: boolean;
+  $fill?: FlexFill;
+}>`
   position: relative;
   transform-origin: center;
   background: var(--primary-light-0);
   transition: background 150ms ease-out 0s;
   padding: var(--s-2);
   border-radius: var(--s-2);
+  width: ${({ $fill }) => ($fill === "row" ? "100%" : "auto")};
+  height: ${({ $fill }) => ($fill === "column" ? "100%" : "auto")};
 
   *[data-testid="grid"] > & {
     width: 100%;

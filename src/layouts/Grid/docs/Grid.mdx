@@ -1,0 +1,67 @@
+import { Meta } from "@storybook/blocks";
+import * as GridStories from "../Grid.stories";
+import { ComponentInfo, ComponentProps, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+
+<Meta title="Layouts/Grid/Usage" />
+
+<ComponentInfo of={GridStories} />
+
+<Content>
+
+## Usage
+
+`GridLayout` render a grid with the specified number of columns and rows given in the props.
+
+<Canvas of={GridStories.Default} />
+
+### Spacing
+
+Spacing elements in `GridLayout` is similar to `FlexLayout`, with the `gap` property, set to `1rem` by default.
+Both numbers & CSS length values (_rem_, _px_, _fr_, etc) are accepted.
+
+<Canvas of={GridStories.Gap} />
+
+---
+
+### Setting Rows & Columns
+
+`GridLayout` default number of column is **12**, as it allows you to divide the given area into half, thirds, fourths, sixths.
+And rows default property value is `unset`.
+
+Set the number of displayed _columns_ or _rows_ displayed using the `columns` and `rows` property.
+Here's the accepted values:
+
+- `Numbers`: This defines the exact number of columns. For example, 2 creates two columns.
+- `unset`: Removes any previously set column/row definitions.
+- `Array of CSS lengths`: Define the width of each column relative to the available space (e.g., `['100px', '1fr', '30%']`).
+
+#### Columns
+
+<Canvas of={GridStories.Columns} />
+
+#### Rows
+
+<Canvas of={GridStories.Rows} />
+
+### Flow
+
+`GridLayout` default arrangement of elements is in rows (`flow: row`). You can optionally change the orientation to columns (`flow: row`) to make it vertical.
+
+<Canvas of={GridStories.Flow} />
+
+---
+
+### Control element placement with `grid-row` and `grid-column`
+
+CSS rules `grid-row` & `grid-column` let you precisely control where child elements are positioned within `GridLayout`, allowing elements to span multiple rows or columns, creating a flexible layout.
+
+In the example below (a 12 column **GridLayout**) :
+
+- All grid items have a default value of `grid-column: span 4`, so they both occupy at least a third (4columns) of the grid's width.
+- the first grid item child uses the CSS rule `grid-row: span 2`. This makes the element occupy two rows vertically, overlapping the second row of the grid.
+- The last grid item child rule has been overwritten to `grid-column: span 8` to occupy 2 thirds (8 columns) of the width horizontally.
+
+<Canvas of={GridStories.Spans} />
+
+</Content>
