@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { FlexLayout } from "./Flex.layout";
 
+import { arrayOf } from "@/utils/array.utils";
 import { ComponentVariants } from "@docs/blocks";
 
 import { FlexAlignment, FlexDirection, FlexGap, FlexLayoutProps } from ".";
@@ -25,7 +26,7 @@ const FlexItem = styled.div`
   box-shadow: var(--shadow-button);
 `;
 
-const flexItems = Array.from({ length: 3 }, (_, index) => (
+const flexItems = arrayOf(3, (index) => (
   <FlexItem key={index} className="flex-item-story" />
 ));
 
@@ -37,8 +38,8 @@ export const Default: Story = {
   },
 };
 
+const directions: FlexDirection[] = ["row", "column"];
 export const Direction = (props: Partial<FlexLayoutProps>) => {
-  const directions: FlexDirection[] = ["row", "column"];
   const defaultProps = useMemo(() => {
     return {
       ...FlexLayout.defaultProps,
@@ -65,8 +66,9 @@ Direction.args = {
   align: "center",
 };
 
+const gaps: FlexGap[] = ["s-1", "24px", "3rem", 5];
+
 export const Gap = (props: Partial<FlexLayoutProps>) => {
-  const gaps: FlexGap[] = ["s-1", "24px", "3rem", 5];
   const defaultProps = useMemo(() => {
     return {
       ...FlexLayout.defaultProps,
@@ -86,16 +88,18 @@ export const Gap = (props: Partial<FlexLayoutProps>) => {
     />
   );
 };
+
 Gap.args = { children: flexItems, justify: "center" };
 
+const justify: FlexAlignment[] = [
+  "start",
+  "center",
+  "space-between",
+  "end",
+  "space-evenly",
+];
+
 export const Justify = (props: Partial<FlexLayoutProps>) => {
-  const justify: FlexAlignment[] = [
-    "start",
-    "center",
-    "space-between",
-    "end",
-    "space-evenly",
-  ];
   const defaultProps = useMemo(() => {
     return {
       ...FlexLayout.defaultProps,

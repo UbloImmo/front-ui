@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { GridLayout } from "./Grid.layout";
 import { GridFlow, GridGap, GridLayoutProps, GridTemplate } from "./Grid.types";
 
+import { arrayOf } from "@/utils/array.utils";
 import { ComponentVariants } from "@docs/blocks";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -28,6 +29,7 @@ const GridItemSpans = styled(GridItem)`
   grid-column: span 4;
   &:first-child {
     grid-row: span 2;
+    height: 100%;
   }
 
   &:nth-child(4) {
@@ -35,9 +37,7 @@ const GridItemSpans = styled(GridItem)`
   }
 `;
 
-const sampleGridItems = Array.from({ length: 4 }, (_, index) => (
-  <GridItem key={index} />
-));
+const sampleGridItems = arrayOf(4, (index) => <GridItem key={index} />);
 
 export const Default: Story = {
   args: {
@@ -45,8 +45,8 @@ export const Default: Story = {
   },
 };
 
+const gaps: GridGap[] = ["s-1", "24px", "3rem", 4];
 export const Gap = (props: Partial<GridLayoutProps>) => {
-  const gaps: GridGap[] = ["s-1", "24px", "3rem", 4];
   const defaultProps = useMemo(() => {
     return {
       ...GridLayout.defaultProps,
@@ -69,9 +69,8 @@ Gap.args = {
   children: sampleGridItems,
 };
 
+const columns: GridTemplate[] = [2, 4, ["1fr", "2fr"], "unset"];
 export const Columns = (props: Partial<GridLayoutProps>) => {
-  const columns: GridTemplate[] = [2, 4, ["1fr", "2fr"], "unset"];
-
   const defaultProps = useMemo(() => {
     return {
       ...GridLayout.defaultProps,
@@ -96,9 +95,9 @@ Columns.args = {
   justify: "center",
 };
 
-export const Rows = (props: Partial<GridLayoutProps>) => {
-  const rows: GridTemplate[] = [2, "unset"];
+const rows: GridTemplate[] = [2, "unset"];
 
+export const Rows = (props: Partial<GridLayoutProps>) => {
   const defaultProps = useMemo(() => {
     return {
       ...GridLayout.defaultProps,
@@ -124,8 +123,9 @@ Rows.args = {
   children: sampleGridItems,
 };
 
+const flow: GridFlow[] = ["row", "column"];
+
 export const Flow = (props: Partial<GridLayoutProps>) => {
-  const flow: GridFlow[] = ["row", "column"];
   const defaultProps = useMemo(() => {
     return {
       ...GridLayout.defaultProps,
@@ -146,15 +146,13 @@ export const Flow = (props: Partial<GridLayoutProps>) => {
   );
 };
 Flow.args = {
-  children: Array.from({ length: 2 }, (_, index) => <GridItem key={index} />),
+  children: arrayOf(2, (index) => <GridItem key={index} />),
   rows: 2,
 };
 
 export const Spans: Story = {
   args: {
-    children: Array.from({ length: 4 }, (_, index) => (
-      <GridItemSpans key={index} />
-    )),
+    children: arrayOf(4, (index) => <GridItemSpans key={index} />),
     rows: 2,
   },
 };
