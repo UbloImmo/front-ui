@@ -64,7 +64,7 @@ const Dialog = (props: DialogProps): Nullable<JSX.Element> => {
     <Portal rootSelector={portalRoot}>
       <DialogOverlay
         aria-hidden="true"
-        data-test-id="dialog-overlay"
+        data-testid="dialog-overlay"
         onClick={close}
       />
       <DialogWrapper data-testid="dialog-wrapper">
