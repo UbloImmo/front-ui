@@ -5,6 +5,7 @@ import { Badge } from "./Badge.component";
 import { BadgeProps, BadgeShade } from "./Badge.types";
 import { IconName } from "..";
 import { FlexRowLayout } from "../../layouts";
+import { useMergedProps } from "../../utils";
 
 import { ComponentVariants } from "@docs/blocks";
 import { ColorPalette } from "@types";
@@ -39,12 +40,7 @@ export const Colors = (props: Partial<BadgeProps>) => {
     "error",
     "gray",
   ];
-  const defaultProps = useMemo(() => {
-    return {
-      ...Badge.defaultProps,
-      ...props,
-    };
-  }, [props]);
+  const defaultProps = useMergedProps(Badge.defaultProps, props);
 
   return (
     <ComponentVariants
