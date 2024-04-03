@@ -298,3 +298,23 @@ export const capitalize = (str: string): string => {
 
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+/**
+ * Checks if the input string is empty.
+ *
+ * @param {string} str - the input string to be checked
+ * @return {boolean} true if the input string is empty, false otherwise
+ */
+export const isEmptyString = (str: string): boolean => {
+  return str.length === 0;
+};
+
+/**
+ * Checks if the given value is a non-empty string.
+ *
+ * @param {unknown} value - The value to check.
+ * @return {boolean} Whether the value is a non-empty string or not.
+ */
+export const isNonEmptyString = (value: unknown): value is string => {
+  return isString(value) && !isEmptyString(value);
+};
