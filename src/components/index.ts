@@ -8,3 +8,5 @@ export * from "./Badge";
 export * from "./Loading";
 export * from "./Portal";
 export * from "./Dialog";
+export * from "./InputLabel";
+export * from "./InputAssistiveText";
