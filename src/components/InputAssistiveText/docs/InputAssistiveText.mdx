@@ -12,11 +12,14 @@ import * as InputAssistiveTextStories from "../InputAssistiveText.stories.tsx";
 ## Usage
 
 **InputAssistiveText** provides an optional descriptive text below the [Input component](?path=/docs/components-input-usage--docs).
-This text offers to users additional information about the input field.
-
-> It can also notify users of any errors that might occur during input entry.
 
 <Canvas of={InputAssistiveTextStories.Default} />
+
+This text offers to users additional information about the input field.
+
+<Canvas of={InputAssistiveTextStories.TextLength} />
+
+> It can also notify users of any errors that might occur during input entry.
 
 ## Handling errors
 
@@ -25,6 +28,3 @@ You can indicate an error by setting the `error` property to `true` and providin
 <Canvas of={InputAssistiveTextStories.States} />
 
 </Content>
-import { FiletypeTsx } from "react-bootstrap-icons"
-
-import ts from "typescript";
