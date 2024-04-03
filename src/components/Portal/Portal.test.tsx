@@ -5,6 +5,7 @@ import { Portal } from "./Portal.component";
 import { testComponentFactory } from "@/tests";
 
 import type { PortalProps } from "./Portal.types";
+import type { ReactNode } from "react";
 
 const testId = "portal-child";
 
@@ -13,17 +14,31 @@ const props: PortalProps = {
   children: <div data-testid={testId}>test portal child</div>,
 };
 
-const testPortal = testComponentFactory<PortalProps>("Portal", Portal, {
-  props,
-  tests: [
-    {
-      name: "should render a child",
-      test: ({ queryByTestId }) => {
-        expect(queryByTestId(testId)).toBeDefined();
+const Wrapper = ({ children }: { children?: ReactNode }) => {
+  return (
+    <>
+      <div id="dialog-root"></div>
+      {children}
+    </>
+  );
+};
+
+const testPortal = testComponentFactory<PortalProps>(
+  "Portal",
+  Portal,
+  {
+    props,
+    tests: [
+      {
+        name: "should render a child",
+        test: ({ queryByTestId }) => {
+          expect(queryByTestId(testId)).toBeDefined();
+        },
       },
-    },
-  ],
-});
+    ],
+  },
+  Wrapper
+);
 
 global.console.error = mock(() => {});
 testPortal({ ...props, rootSelector: "nowhere" })(

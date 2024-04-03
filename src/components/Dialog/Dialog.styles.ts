@@ -1,6 +1,6 @@
 import { css, keyframes } from "styled-components";
 
-const Z_INDEX = 100;
+const Z_INDEX = 1;
 const INIT_SCALE = 0.8;
 
 const overlayAnimation = keyframes`
@@ -31,7 +31,7 @@ export const dialogOverlayStyles = css`
   position: fixed;
   inset: 0;
   z-index: ${Z_INDEX};
-  background: var(--gray-900-65);
+  background: var(--gray-50-75);
 `;
 
 export const dialogWrapperStyles = css`

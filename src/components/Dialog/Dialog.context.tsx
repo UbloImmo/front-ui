@@ -1,6 +1,7 @@
 import {
   isBoolean,
   isNull,
+  isString,
   type Nullable,
   type Optional,
 } from "@ubloimmo/front-util";
@@ -22,7 +23,9 @@ import {
   GlobalDialogContext,
 } from "./Dialog.types";
 
-import { useLogger } from "@utils";
+import { isEmptyString, isNonEmptyString, useLogger } from "@utils";
+
+const DEFAULT_PORTAL_ROOT = "#dialog-root";
 
 /**
  * Custom hook for managing global dialog states.
@@ -30,7 +33,7 @@ import { useLogger } from "@utils";
  * @param {DialogContextProps} params - Parameters for the dialog context
  * @return {GlobalDialogContext} The global dialog context object
  */
-const useGlobalDialogContext = (
+export const useGlobalDialogContext = (
   params: DialogContextProps
 ): GlobalDialogContext => {
   const { error, log, warn, debug } = useLogger("Dialog Manager", {
@@ -53,13 +56,20 @@ const useGlobalDialogContext = (
     {}
   );
 
-  const portalRoot = useMemo(
-    () => params.portalRoot ?? "#dialog-root",
-    [params]
-  );
+  const portalRoot = useMemo(() => {
+    if (!params || !params?.portalRoot) return DEFAULT_PORTAL_ROOT;
+    if (!isNonEmptyString(params?.portalRoot)) {
+      error("portalRoot must be a CSS selector string");
+      return DEFAULT_PORTAL_ROOT;
+    }
+    return params.portalRoot;
+  }, [params, error]);
 
   /**
+   * Finds the state of a dialog based on its reference.
    *
+   * @param {DialogReference} reference - The dialog reference to search for
+   * @return {Nullable<boolean>} The state of the dialog
    */
   const findDialogState = useCallback(
     (reference: DialogReference): Nullable<boolean> => {
@@ -116,7 +126,16 @@ const useGlobalDialogContext = (
       log(
         `Registering dialog ${reference}... (${registerCounter.current} already registered)`
       );
+      if (!isString(reference)) {
+        error("Dialog reference should be a string");
+        return;
+      }
+      if (isEmptyString(reference)) {
+        error("Dialog reference should not be an empty string");
+        return;
+      }
       if (isDialogRegistered(reference)) {
+        // TODO: test
         error(`Dialog ${reference} already registered`);
         return;
       }
@@ -138,10 +157,11 @@ const useGlobalDialogContext = (
     (reference: DialogReference) => {
       log(`Unregistering dialog ${reference}...`);
       if (!isDialogRegistered(reference)) {
+        // TODO: test
         log("Dialog already unregistered");
         return;
       }
-      changeDialogState(reference, null);
+      changeDialogState(reference, null); // TODO: test
       registerCounter.current--;
       log(`Dialog ${reference} unregistered`);
     },
@@ -152,6 +172,7 @@ const useGlobalDialogContext = (
    * See {@link GlobalDialogContext.openDialog}
    */
   const openDialog = useCallback(
+    // TODO: test function
     (reference: DialogReference) => {
       const dialogState = findDialogState(reference);
       if (isNull(dialogState)) {
@@ -168,6 +189,7 @@ const useGlobalDialogContext = (
    * See {@link GlobalDialogContext.closeDialog}
    */
   const closeDialog = useCallback(
+    // TODO: test function
     (reference: DialogReference) => {
       const dialogState = findDialogState(reference);
       if (isNull(dialogState)) {
@@ -184,6 +206,7 @@ const useGlobalDialogContext = (
    * See {@link GlobalDialogContext.toggleDialog}
    */
   const toggleDialog = useCallback(
+    // TODO: test function
     (reference: DialogReference) => {
       const state = findDialogState(reference);
       if (isNull(state)) {
@@ -201,6 +224,7 @@ const useGlobalDialogContext = (
    * See {@link GlobalDialogContext.setDialogState}
    */
   const setDialogState = useCallback(
+    // TODO: test function
     (reference: DialogReference, open: boolean) => {
       if (!isDialogRegistered(reference)) {
         error(`Dialog ${reference} not found`);
@@ -224,12 +248,12 @@ const useGlobalDialogContext = (
   return {
     registerDialog,
     unregisterDialog,
+    isDialogRegistered,
     isDialogOpen,
     openDialog,
     closeDialog,
     toggleDialog,
     setDialogState,
-    isDialogRegistered,
     portalRoot,
   };
 };
