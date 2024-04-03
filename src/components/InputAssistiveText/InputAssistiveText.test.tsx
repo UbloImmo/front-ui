@@ -15,7 +15,7 @@ describe("InputAssistiveText", () => {
         {
           name: "should render",
           test: ({ queryByTestId }) => {
-            expect(queryByTestId("input-assistive-text")).toBeDefined();
+            expect(queryByTestId("assistive-text")).toBeDefined();
           },
         },
       ],
