@@ -1,4 +1,4 @@
-import { describe, expect } from "bun:test";
+import { Mock, describe, expect, mock } from "bun:test";
 
 import { InputAssistiveText } from "./InputAssistiveText.component";
 import { InputAssistiveTextProps } from "./InputAssistiveText.types";
@@ -22,12 +22,15 @@ describe("InputAssistiveText", () => {
     }
   );
 
+  global.console.warn = mock(() => {});
+
   testInputAssistiveText({ assistiveText: null, errorText: null })(
     "should render null and warn",
     ({ queryByTestId }) => {
       const nullText = queryByTestId("assistive-text");
       expect(nullText).toBeNull();
       expect(global.console.warn).toHaveBeenCalled();
+      (global.console.warn as Mock<(_msg: unknown) => void>).mockReset();
     }
   );
 
@@ -35,6 +38,7 @@ describe("InputAssistiveText", () => {
     "should warn if error is true and no errorText is provided",
     () => {
       expect(global.console.warn).toHaveBeenCalled();
+      (global.console.warn as Mock<(_msg: unknown) => void>).mockReset();
     }
   );
 

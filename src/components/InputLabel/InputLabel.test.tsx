@@ -1,4 +1,4 @@
-import { describe, expect } from "bun:test";
+import { Mock, describe, expect, mock } from "bun:test";
 
 import { InputLabel } from "./InputLabel.component";
 import { InputLabelProps } from "./InputLabel.types";
@@ -22,10 +22,13 @@ describe("InputLabel", () => {
     }
   );
 
+  global.console.warn = mock(() => {});
+
   testInputLabel({ label: null, required: false })(
     "should warn if label is null",
     () => {
       expect(global.console.warn).toHaveBeenCalled();
+      (global.console.warn as Mock<(_msg: unknown) => void>).mockReset();
     }
   );
 
