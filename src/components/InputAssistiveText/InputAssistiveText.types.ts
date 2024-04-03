@@ -4,13 +4,13 @@ export type InputAssistiveTextProps = {
   /**
    * The text content to be displayed as assistive text
    * @type {string}
-   * @default "[Assistive text]"
+   * @default null
    */
   assistiveText?: Nullable<string>;
   /**
    * The text content to be displayed as error text
    * @type {string}
-   * @default "[Error text]"
+   * @default null
    */
   errorText?: Nullable<string>;
   /**

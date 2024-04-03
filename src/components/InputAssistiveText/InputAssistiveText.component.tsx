@@ -10,16 +10,16 @@ import { Text } from "../Text/Text.component";
 import { isNonEmptyString, useLogger, useMergedProps } from "@utils";
 
 const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
-  assistiveText: "[Assistive text]",
-  errorText: "[Error text]",
+  assistiveText: null,
+  errorText: null,
   error: false,
 };
 
 /**
- * Generate the assistive text for the input based on the provided props.
+ * Renders an assistive text for the Input component based on the provided props.
  *
  * @version 0.0.1
- * @param {DefaultInputAssistiveTextProps} props - The properties for the assistive text.
+ * @param {InputAssistiveTextProps} props - The properties for the assistive text.
  * @return {Nullable<JSX.Element>} The JSX element representing the assistive text.
  */
 const InputAssistiveText = (
@@ -43,12 +43,13 @@ const InputAssistiveText = (
   }
   return (
     <InnerAssistiveText data-testid="assistive-text">
-      <Text size="xs" color="gray-400">
-        {assistiveText}
-      </Text>
-      {error && isNonEmptyString(errorText) && (
+      {error && isNonEmptyString(errorText) ? (
         <Text size="xs" color="error-base">
           {errorText}
+        </Text>
+      ) : (
+        <Text size="xs" color="gray-400">
+          {assistiveText}
         </Text>
       )}
     </InnerAssistiveText>
