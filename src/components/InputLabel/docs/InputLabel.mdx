@@ -1,0 +1,25 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as InputLabelStories from "../InputLabel.stories.tsx";
+import { Text } from "../../Text/Text.component.tsx";
+
+<Meta title="Components/InputLabel/Usage" />
+
+<ComponentInfo of={InputLabelStories} />
+
+<Content>
+
+## Usage
+
+**InputLabel** provides a label for the [Input component](?path=/docs/components-input-usage--docs). It helps users understand the purpose of the input and makes a form more accessible by associating the label with the corresponding input field.
+
+<Canvas of={InputLabelStories.Default} />
+
+### Required
+
+With the property `required` in **InputLabel**, you can visually indicate whether the input field is required. When the property `required` is true, an additional symbol (<Text color="warning-base">\*</Text>) is displayed after the label.
+
+<Canvas of={InputLabelStories.Required} />
+
+</Content>
