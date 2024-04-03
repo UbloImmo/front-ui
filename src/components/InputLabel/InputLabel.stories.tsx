@@ -26,7 +26,7 @@ export const Default: Story = {
   args: InputLabel.defaultProps,
 };
 
-const required: boolean[] = [false, true];
+const required = [false, true];
 
 export const Required = (props: Partial<InputLabelProps>) => {
   const defaultProps = useMergedProps(InputLabel.defaultProps, props);
@@ -37,6 +37,7 @@ export const Required = (props: Partial<InputLabelProps>) => {
       variants={required}
       for="required"
       of={InputLabel}
+      propLabels
     />
   );
 };

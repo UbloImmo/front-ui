@@ -1,0 +1,30 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as InputAssistiveTextStories from "../InputAssistiveText.stories.tsx";
+
+<Meta title="Components/InputAssistiveText/Usage" />
+
+<ComponentInfo of={InputAssistiveTextStories} />
+
+<Content>
+
+## Usage
+
+**InputAssistiveText** provides an optional descriptive text below the [Input component](?path=/docs/components-input-usage--docs).
+
+<Canvas of={InputAssistiveTextStories.Default} />
+
+This text offers to users additional information about the input field.
+
+<Canvas of={InputAssistiveTextStories.TextLength} />
+
+> It can also notify users of any errors that might occur during input entry.
+
+## Handling errors
+
+You can indicate an error by setting the `error` property to `true` and providing the corresponding error text in the `errorText` property.
+
+<Canvas of={InputAssistiveTextStories.States} />
+
+</Content>
