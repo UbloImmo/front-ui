@@ -23,7 +23,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: InputAssistiveText.defaultProps,
+  args: {
+    assistiveText: "[Assistive text]",
+    errorText: "[Error text]",
+  },
 };
 
 const errors = [false, true];
@@ -46,4 +49,25 @@ export const States = (props: InputAssistiveTextProps) => {
 States.args = {
   assistiveText: "This is an assistive text for the input.",
   errorText: "This is an error message for the input.",
+};
+
+const assistiveTexts = [
+  "Please enter a valid email address.",
+  "Please enter a valid email address in the format example@example.com. This email will be used to send you important updates and notifications.",
+];
+
+export const TextLength = (props: InputAssistiveTextProps) => {
+  const defaultProps = useMergedProps(InputAssistiveText.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={assistiveTexts}
+      for="assistiveText"
+      of={InputAssistiveText}
+      justify="center"
+      scaling={1.1}
+      columns={2}
+    />
+  );
 };
