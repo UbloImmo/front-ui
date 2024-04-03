@@ -186,16 +186,3 @@ export type DialogContextProviderProps = Pick<
 >;
 
 export type DialogContextProps = Omit<DialogContextProviderProps, "children">;
-
-export type PortalProps = {
-  /**
-   * The content to render inside the portal's root element
-   * @default undefined
-   */
-  children?: ReactNode;
-  /**
-   * A css selector needed to find the root element to attach the portal to
-   * @default "#dialog-root"
-   */
-  rootSelector?: string;
-};

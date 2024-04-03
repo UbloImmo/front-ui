@@ -6,4 +6,5 @@ export * from "./Text";
 export * from "./Button";
 export * from "./Badge";
 export * from "./Loading";
+export * from "./Portal";
 export * from "./Dialog";

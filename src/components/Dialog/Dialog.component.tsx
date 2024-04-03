@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import styled from "styled-components";
 
 import { useDialog } from "./Dialog.context";
-import { Portal } from "./Dialog.portal";
 import {
   dialogOverlayStyles,
   dialogContentStyles,
   dialogWrapperStyles,
 } from "./Dialog.styles";
+import { Portal } from "../Portal";
 
 import { mergeDefaultProps, useLogger } from "@utils";
 
