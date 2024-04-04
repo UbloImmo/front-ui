@@ -34,3 +34,10 @@ export const Default: Story = {
     placeholder: "Password",
   },
 };
+
+export const Visibility: Story = {
+  args: {
+    placeholder: "Password",
+    value: "Visible Password",
+  },
+};
