@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas } from "@docs/blocks"
-import { Content } from "@docs/containers"
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
 import * as TextInputStories from "../TextInput.stories.tsx";
 
 <Meta title="Components/Input/TextInput/Usage" />
@@ -9,6 +9,15 @@ import * as TextInputStories from "../TextInput.stories.tsx";
 
 <Content>
 
-TODO
+## Usage
+
+`TextInput` component is an interactive single-line text-field, a specific type of [Input](?path=/docs/components-input-props--docs), used to allow the user to enter text values and data.
+It is commonly used in form patterns to prompt users for their name, address, and other details.
+
+### Value
+
+`TextInput` is initialized without a value, enabling users to enter their own data. It accepts all characters as text value.
+
+<Canvas of={TextInputStories.Default} />
 
 </Content>
