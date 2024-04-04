@@ -2,9 +2,9 @@ import { styled } from "styled-components";
 
 import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
 
-import { useStyleProps } from "@utils";
+import { useStyleProps, useTestId } from "@utils";
 
-import type { StyleProps, TextProps } from "@types";
+import type { StyleProps, TextProps, WithTestId } from "@types";
 
 const defaultTextProps: Required<TextProps> = {
   ...defaultTypographyProps,
@@ -14,14 +14,15 @@ const defaultTextProps: Required<TextProps> = {
 /**
  * Renders its children in accordance with global typography styles.
  *
- * @version 0.0.1
- * @param {TextProps} props - Text component props
+ * @version 0.0.2
+ * @param {WithTestId<TextProps>} props - Text component props
  * @returns {JSX.Element}
  */
-const Text = (props: TextProps): JSX.Element => {
+const Text = (props: WithTestId<TextProps>): JSX.Element => {
   const innerProps = useStyleProps(props);
+  const testId = useTestId("text", props);
   return (
-    <TextInner data-testid="text" {...innerProps}>
+    <TextInner data-testid={testId} {...innerProps}>
       {props.children}
     </TextInner>
   );

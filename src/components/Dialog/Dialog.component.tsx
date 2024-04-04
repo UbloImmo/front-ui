@@ -10,9 +10,10 @@ import {
 } from "./Dialog.styles";
 import { Portal } from "../Portal";
 
-import { mergeDefaultProps, useLogger } from "@utils";
+import { mergeDefaultProps, useLogger, useTestId } from "@utils";
 
 import type { DefaultDialogProps, DialogProps } from "./Dialog.types";
+import type { WithTestId } from "@types";
 
 const defaultDialogProps: DefaultDialogProps = {
   reference: "dialog",
@@ -28,15 +29,16 @@ const defaultDialogProps: DefaultDialogProps = {
  *
  * @version 0.0.1
  *
- * @param {DialogProps} props - the properties for the Dialog component
+ * @param {WithTestId<DialogProps>} props - the properties for the Dialog component
  * @returns {Nullable<JSX.Element>} the rendered dialog or null if closed
  */
-const Dialog = (props: DialogProps): Nullable<JSX.Element> => {
+const Dialog = (props: WithTestId<DialogProps>): Nullable<JSX.Element> => {
   const { error } = useLogger("Dialog");
   const { children, open, reference } = mergeDefaultProps(
     defaultDialogProps,
     props
   );
+  const testId = useTestId("dialog-content", props);
   const { isOpen, isRegistered, portalRoot, close, register, unregister, set } =
     useDialog(reference);
 
@@ -71,7 +73,7 @@ const Dialog = (props: DialogProps): Nullable<JSX.Element> => {
         <DialogContent
           aria-label="dialog content"
           role="dialog"
-          data-testid="dialog-content"
+          data-testid={testId}
         >
           {children}
         </DialogContent>
