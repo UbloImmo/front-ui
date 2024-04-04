@@ -4,7 +4,7 @@ import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
 
 import { useStyleProps, useTestId } from "@utils";
 
-import type { StyleProps, TextProps, WithTestId } from "@types";
+import type { StyleProps, TestIdProps, TextProps } from "@types";
 
 const defaultTextProps: Required<TextProps> = {
   ...defaultTypographyProps,
@@ -18,7 +18,7 @@ const defaultTextProps: Required<TextProps> = {
  * @param {WithTestId<TextProps>} props - Text component props
  * @returns {JSX.Element}
  */
-const Text = (props: WithTestId<TextProps>): JSX.Element => {
+const Text = (props: TextProps & TestIdProps): JSX.Element => {
   const innerProps = useStyleProps(props);
   const testId = useTestId("text", props);
   return (

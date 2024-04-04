@@ -8,6 +8,3 @@ export type TestIdProps = {
    */
   testId?: string;
 };
-
-export type WithTestId<TProps extends Record<string, unknown>> = TProps &
-  TestIdProps;

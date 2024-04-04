@@ -158,7 +158,6 @@ export type DialogProps = {
    * @remarks Must be a non-empty string
    *
    * @type {DialogReference}
-   *
    * @required
    */
   reference: DialogReference;

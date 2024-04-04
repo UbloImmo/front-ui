@@ -4,7 +4,7 @@ import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
 
 import { useStyleProps, useTestId } from "@utils";
 
-import type { HeadingProps, StyleProps, WithTestId } from "@types";
+import type { HeadingProps, StyleProps, TestIdProps } from "@types";
 
 const defaultHeadingProps: Required<HeadingProps> = {
   ...defaultTypographyProps,
@@ -19,12 +19,16 @@ const defaultHeadingProps: Required<HeadingProps> = {
  * @param {WithTestId<HeadingProps>} props - Heading component props
  * @return {JSX.Element} - The styled heading component
  */
-const Heading = (props: WithTestId<HeadingProps>) => {
+const Heading = (props: HeadingProps & TestIdProps) => {
   const innerProps = useStyleProps(props);
   const testId = useTestId("heading", props);
 
   return (
-    <HeadingInner {...innerProps} data-testid={testId}>
+    <HeadingInner
+      as={props.size ?? defaultHeadingProps.size}
+      {...innerProps}
+      data-testid={testId}
+    >
       {props.children}
     </HeadingInner>
   );
