@@ -38,6 +38,13 @@ const transformNumber = (nativeValue: NativeInputValue): Nullable<number> => {
   return parseFloat(nativeValue);
 };
 
+/**
+ * Renders a number input component.
+ *
+ * @version 0.0.1
+ * @param {NumberInputProps} props - The props for the NumberInput component.
+ * @return {JSX.Element} The rendered NumberInput component.
+ */
 const NumberInput = (props: NumberInputProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultNumberInputProps, props);
 
