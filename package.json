@@ -1,5 +1,5 @@
 {
-  "name": "@ubloimmo/front-ui",
+  "name": "@ubloimmo/uikit",
   "description": "Colors, themes, typography, common components for use in frontend applications",
   "version": "0.0.1",
   "module": "src/index.ts",
@@ -52,6 +52,7 @@
     "jest": "^29.7.0",
     "madge": "^6.1.0",
     "prettier": "^2.8.7",
+    "react-docgen-typescript": "^2.2.2",
     "storybook": "^8.0.4",
     "svg-parser": "^2.0.4",
     "typescript": "^5.3.3",
@@ -79,8 +80,11 @@
     "pre-push": "bun test:all",
     "pre-commit": "bun test:unit",
     "icons:generate": "bun scripts/svg/index.ts",
+    "uninstall": "rm -rf node_modules",
+    "reinstall": "bun run uninstall && bun install",
     "storybook": "storybook dev -p 6007 --debug --no-open",
     "storybook:open": "storybook dev -p 6007 --debug",
+    "storybook:reinstall": "bun run reinstall && bun storybook",
     "build-storybook": "storybook build"
   },
   "type": "module",
