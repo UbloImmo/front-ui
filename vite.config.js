@@ -10,10 +10,10 @@ export default {
   plugins: [tsConfigPaths()],
   resolve: {
     alias: {
-      "@/*": "/src/*",
       "@docs/*": "/docs/*",
       "@types/*": "/src/types/*",
       "@utils/*": "/src/utils/*",
+      "@/*": "/src/*",
       "@components/*": "/src/components/*",
     },
   },
