@@ -7,7 +7,9 @@ import {
 } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import type { StylePropName, StyleProps } from "@types";
+import { isNonEmptyString } from "@utils";
+
+import type { StylePropName, StyleProps, WithTestId } from "@types";
 
 /**
  * Merges the provided default props with the given props, prioritizing the props values when available.
@@ -118,4 +120,25 @@ export const useStyleProps = <TProps extends Record<string, unknown>>(
 export const useStatic = <TData>(data: TData) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return useMemo(() => data, []);
+};
+
+/**
+ * Concatenates a test id based on the provided baseTestId and additional testId.
+ *
+ * @template {Record<string, unknown>} TProps - The component's base props
+ *
+ * @param {string} baseTestId - The base test id to start with.
+ * @param {WithTestId<TProps>} props - Component props that could contain a custom test id to append to the base test id.
+ * @return {string} The generated test id.
+ */
+export const useTestId = <TProps extends Record<string, unknown>>(
+  baseTestId: string,
+  props?: WithTestId<TProps>
+) => {
+  return useMemo(() => {
+    if (!props) return baseTestId;
+    const { testId } = props;
+    if (!isNonEmptyString(testId ?? "")) return baseTestId;
+    return `${baseTestId} ${testId}`;
+  }, [props, baseTestId]);
 };

@@ -12,6 +12,7 @@ import {
   useStyleProps,
   useMergedProps,
   useStatic,
+  useTestId,
 } from "@utils";
 
 import type { StyleProps } from "@types";
@@ -149,6 +150,43 @@ describe("prop utils", () => {
       testHook(value)(`should return ${key}`, (result) => {
         expect(result).toBe(value);
       });
+    });
+  });
+
+  describe("useTestId", () => {
+    type Hook = typeof useTestId;
+    const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
+      "useTestId",
+      useTestId
+    );
+    const baseTestId = "base";
+    const customTestId = "custom";
+    const testBaseId = testHook(baseTestId);
+
+    testBaseId("should return a string with base test id", (result) => {
+      expect(result).toBeString();
+      expect(result).toBe(baseTestId);
+    });
+
+    const testMissingCustomId = testHook(baseTestId, {});
+    testMissingCustomId(
+      "should return a string with base test id",
+      (result) => {
+        expect(result).toBeString();
+        expect(result).toBe(baseTestId);
+      }
+    );
+
+    const testEmptySting = testHook(baseTestId, { testId: "" });
+    testEmptySting("should return a string with base test id", (result) => {
+      expect(result).toBeString();
+      expect(result).toBe(baseTestId);
+    });
+
+    const testCustomId = testHook(baseTestId, { testId: customTestId });
+    testCustomId("should return a string with both test ids", (result) => {
+      expect(result).toBeString();
+      expect(result).toBe(`${baseTestId} ${customTestId}`);
     });
   });
 });
