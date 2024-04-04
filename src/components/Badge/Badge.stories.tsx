@@ -31,15 +31,16 @@ export const Default: Story = {
   args: Badge.defaultProps,
 };
 
+const colors: (keyof ColorPalette)[] = [
+  "primary",
+  "success",
+  "pending",
+  "warning",
+  "error",
+  "gray",
+];
+
 export const Colors = (props: Partial<BadgeProps>) => {
-  const colors: (keyof ColorPalette)[] = [
-    "primary",
-    "success",
-    "pending",
-    "warning",
-    "error",
-    "gray",
-  ];
   const defaultProps = useMergedProps(Badge.defaultProps, props);
 
   return (
@@ -49,6 +50,7 @@ export const Colors = (props: Partial<BadgeProps>) => {
       for="color"
       of={Badge}
       align="center"
+      propLabels
     />
   );
 };
@@ -57,8 +59,8 @@ Colors.args = {
   shade: "light",
 };
 
+const shades: BadgeShade[] = ["light", "dark"];
 export const Shades = (props: Partial<BadgeProps>) => {
-  const shades: BadgeShade[] = ["light", "dark"];
   const defaultProps = useMemo(() => {
     return {
       ...Badge.defaultProps,
@@ -73,6 +75,7 @@ export const Shades = (props: Partial<BadgeProps>) => {
       for="shade"
       of={Badge}
       align="center"
+      propLabels
     />
   );
 };
