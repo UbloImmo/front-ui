@@ -319,7 +319,7 @@ export const useDialog = (reference: DialogReference) => {
 export const DialogProvider = ({
   children,
   portalRoot,
-}: DialogContextProviderProps) => {
+}: DialogContextProviderProps): JSX.Element => {
   const context = useGlobalDialogContext({ portalRoot });
   return (
     <DialogContext.Provider value={context}>{children}</DialogContext.Provider>
