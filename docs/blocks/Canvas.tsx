@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import { useStyleProps } from "@utils";
 
 import type { StyleProps } from "@types";
+import { typographyFontFace } from "@/typography";
 
 type SBCanvasProps = Parameters<typeof SBCanvas>[0];
 
@@ -58,7 +59,9 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
   }
 
   & .docblock-code-toggle {
-    padding: var(--s-1) var(--s-3);
+    ${typographyFontFace()}
+    font-weight: var(--text-weight-semibold) !important;
+    padding: var(--s-05) var(--s-3);
     color: var(--primary-dark);
     background: var(--color);
     background: var(--primary-light);
@@ -68,7 +71,8 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     box-shadow: var(--shadow-button) !important;
     width: auto;
     border: 1px solid transparent;
-    transition: color 200ms ease-out 0s, background 200ms ease-out 0s;
+    transition: color 200ms ease-out 0s, background 200ms ease-out 0s,
+      border-color 200ms ease-out 0s;
 
     &.docblock-code-toggle--expanded {
       background: var(--primary-medium);
@@ -108,7 +112,9 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
   .sbdocs-preview:has(.docblock-code-toggle--expanded)
     > div:not(.docs-story)
     button {
-    padding: var(--s-1) var(--s-3);
+    ${typographyFontFace()}
+    font-weight: var(--text-weight-semibold) !important;
+    padding: var(--s-05) var(--s-3);
     color: var(--primary-light);
     background: var(--color);
     background: var(--gray-900);
@@ -118,7 +124,7 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     box-shadow: var(--shadow-button) !important;
     width: auto;
     border: 1px solid transparent;
-    transition: color 200ms ease-out 0s, background 200ms ease-out 0s;
+    transition: color 200ms ease-out 0s, border-color 200ms ease-out 0s;
   }
 
   ${({ $horizontal }) =>

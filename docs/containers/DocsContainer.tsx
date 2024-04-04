@@ -56,8 +56,17 @@ const StyleReset = styled.div`
       }
     }
 
-    span {
+    span,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       ${typographyFontFace()}
+      padding: 0;
+      border: none;
     }
 
     a {
@@ -86,5 +95,42 @@ const StyleReset = styled.div`
 
   .sbdocs-content {
     max-width: unset;
+  }
+
+  .sbdocs-content .docblock-source {
+    background: var(--gray-50) !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: var(--s-2) !important;
+
+    pre.prismjs {
+      padding: var(--s-8) !important;
+    }
+
+    div:has(button) {
+      right: var(--s-1);
+      bottom: var(--s-1);
+      background: none;
+
+      button {
+        ${typographyFontFace()}
+        font-weight: var(--text-weight-semibold) !important;
+        padding: var(--s-05) var(--s-3);
+        color: var(--primary-dark);
+        background: var(--color);
+        background: var(--primary-light);
+        border-radius: var(--s-6);
+        font-size: var(--text-xs);
+        font-weight: bold;
+        box-shadow: var(--shadow-button) !important;
+        width: auto;
+        border: 1px solid transparent;
+        transition: color 200ms ease-out 0s, border-color 200ms ease-out 0s;
+
+        &:hover {
+          border-color: var(--primary-medium);
+        }
+      }
+    }
   }
 `;
