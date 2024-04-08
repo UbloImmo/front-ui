@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas } from "@docs/blocks"
-import { Content } from "@docs/containers"
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
 import * as EmailInputStories from "../EmailInput.stories.tsx";
 
 <Meta title="Components/Input/EmailInput/Usage" />
@@ -9,6 +9,17 @@ import * as EmailInputStories from "../EmailInput.stories.tsx";
 
 <Content>
 
-TODO
+## Usage
+
+`EmailInput` component is an interactive single-line text-field, a specific type of [Input](?path=/docs/components-input-usage--docs).
+It is commonly used in form layouts to prompt users for their email address.
+
+### Value
+
+`EmailInput` is initialized without a value, enabling users to enter their email address.
+
+When the users enter their email, `EmailInput`'s value is set to null until it matches the email adress pattern (eg: *mail@example.com*, *mail@example.adress.com*).
+
+<Canvas of={EmailInputStories.Default} />
 
 </Content>
