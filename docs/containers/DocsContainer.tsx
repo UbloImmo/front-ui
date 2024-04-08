@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { StorybookThemeProvider } from "./StoryDecorator";
 
 import { getClientSlugs } from "@/themes";
-import { typographyFontFace } from "@/typography";
+import { codeFontFace, typographyFontFace } from "@/typography";
 
 import type { ClientColorPaletteKey } from "@types";
 
@@ -69,6 +69,10 @@ const StyleReset = styled.div`
       border: none;
     }
 
+    pre.prismjs span {
+      ${codeFontFace(true)};
+    }
+
     a {
       font-size: var(--text-m);
       color: var(--primary-base);
@@ -105,6 +109,7 @@ const StyleReset = styled.div`
 
     pre.prismjs {
       padding: var(--s-8) !important;
+      ${codeFontFace(true)};
     }
 
     div:has(button) {
