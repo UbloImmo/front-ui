@@ -31,7 +31,8 @@ export const dialogOverlayStyles = css`
   position: fixed;
   inset: 0;
   z-index: ${Z_INDEX};
-  background: var(--gray-50-75);
+  background: var(--gray-50-50);
+  backdrop-filter: blur(var(--s-2));
 `;
 
 export const dialogWrapperStyles = css`
