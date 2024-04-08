@@ -70,6 +70,7 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
     if (isOpen && isFunction<VoidFn>(onOpened)) onOpened();
     if (!isOpen && isFunction<VoidFn>(onClosed)) onClosed();
     isOpenRef.current = isOpen;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   if (!reference) {
