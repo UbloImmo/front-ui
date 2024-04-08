@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas, ComponentProps } from "@docs/blocks"
-import { Content } from "@docs/containers"
+import { ComponentInfo, Canvas, ComponentProps } from "@docs/blocks";
+import { Content } from "@docs/containers";
 import * as InputStories from "../Input.stories.tsx";
 
 <Meta title="Components/Input/Usage" />
@@ -11,6 +11,45 @@ import * as InputStories from "../Input.stories.tsx";
 
 ## Usage
 
-TODO
+Inputs are interactive value fields, commonly used in a form pattern, allowing users to enter data.
+
+Input's specific value type can be set with the `type` property.
+
+<Canvas of={InputStories.Types} />
+
+#### Here the ready to use specific Input Components:
+
+- [TextInput](?path=/docs/components-input-textinput-usage--docs)
+- [NumberInput](?path=/docs/components-input-numberinput-usage--docs)
+- [EmailInput](?path=/docs/components-input-emailinput-usage--docs)
+- [PasswordInput](?path=/docs/components-input-passwordinput-usage--docs)
+
+> All input types share common properties such as `required`, `disabled`, `error`, and `placeholder`. => [Checkout Common Input properties](?path=/docs/components-input-common-properties--docs)
+
+## Controls
+
+All inputs can be managed on their state, appearance, and interactions with the users.
+
+### Disable
+
+Inputs are active by default. Deactivate an input, and prevent the user from entering any data, can be done with the property `disabled`.
+
+When set to true, the input become read-only, and is grayed out to inform users that they can't enter value there.
+
+<Canvas of={InputStories.Disabled} />
+
+### Error
+
+Controlling the validity of an input can be made with the `error` property.
+
+When set to true, the input's style changes (red border color) and alert visually the user that the entered data is invalid.
+
+<Canvas of={InputStories.Error} />
+
+### Placeholder
+
+While the placeholder property is optional, including it in the input field is useful for guiding users on the expected value. This placeholder remains visible until users enter a value.
+
+<Canvas of={InputStories.Placeholder} />
 
 </Content>

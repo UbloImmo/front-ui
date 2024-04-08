@@ -18,3 +18,20 @@ export const Default: Story = {
     onChange: fn(),
   },
 };
+
+export const MinMaxValue: Story = {
+  args: {
+    placeholder: "Number input",
+    min: 1,
+    max: 5,
+    onChange: fn(),
+  },
+};
+
+export const Steps: Story = {
+  args: {
+    placeholder: "Number input",
+    step: 5,
+    onChange: fn(),
+  },
+};

@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas } from "@docs/blocks"
-import { Content } from "@docs/containers"
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
 import * as NumberInputStories from "../NumberInput.stories.tsx";
 
 <Meta title="Components/Input/NumberInput/Usage" />
@@ -9,6 +9,24 @@ import * as NumberInputStories from "../NumberInput.stories.tsx";
 
 <Content>
 
-TODO
+## Usage
+
+`NumberInput` component is a specific type of [Input](?path=/docs/components-input-usage--docs), used to allow the user to enter enter numerical values. It is commonly used for entering data such as age, price, or quantity, while also ensuring that the user enters a valid number.
+
+> You can't enter anything other than numbers in `NumberInput`. Give it a try in the field below!
+
+<Canvas of={NumberInputStories.Default} />
+
+## Minimum and Maximum values
+
+The optional properties `min` and `max` allow you to define a range of accepted values. In the example below, the minimum value is _1_ and the maximum value is _5_.
+
+<Canvas of={NumberInputStories.MinMaxValue} />
+
+## Steps
+
+You can customize the increment value using the optional `step` property, enabling users to conveniently adjust the value in preset increments. In the example below, the step is configured as `5`, resulting in the value being increased or decreased by 5 units at a time.
+
+<Canvas of={NumberInputStories.Steps} />
 
 </Content>

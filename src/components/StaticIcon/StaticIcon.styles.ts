@@ -55,5 +55,11 @@ export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
       ? `1px solid var(--${borderColor})`
       : "1px solid transparent"};
     background-color: var(--${backgroundColor});
+    max-height: calc(
+      ${staticIconSizeToIconSizeMap[size]} + (var(--${padding}) * 2)
+    );
+    max-width: calc(
+      ${staticIconSizeToIconSizeMap[size]} + (var(--${padding}) * 2)
+    );
   `;
 };
