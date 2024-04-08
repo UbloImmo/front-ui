@@ -53,6 +53,7 @@ export const Disabled = (props: Partial<InputProps<"text">>) => {
       variants={booleans}
       for="disabled"
       of={TextInput}
+      scaling={1}
       propLabels
     />
   );
@@ -71,6 +72,7 @@ export const Error = (props: Partial<InputProps<"text">>) => {
       variants={booleans}
       for="error"
       of={TextInput}
+      scaling={1}
       propLabels
     />
   );
@@ -89,6 +91,7 @@ export const Placeholder = (props: Partial<InputProps<"text">>) => {
       variants={placeholders}
       for="placeholder"
       of={TextInput}
+      scaling={1}
       propLabels
     />
   );
