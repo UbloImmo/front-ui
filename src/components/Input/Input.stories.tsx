@@ -31,15 +31,16 @@ export const Default: Story = {
 };
 
 const types: InputType[] = ["text", "number", "email", "password"];
-export const Types = (
-  props: Partial<GenericInputProps<(typeof types)[number]>>
-) => {
+export const Types = (props: GenericInputProps<(typeof types)[number]>) => {
   return (
-    <>
-      {types.map((type: InputType) => (
-        <Input key={type} type={type} {...props} />
-      ))}
-    </>
+    <ComponentVariants
+      defaults={props}
+      variants={types}
+      for="type"
+      of={Input}
+      scaling={1}
+      propLabels
+    />
   );
 };
 
