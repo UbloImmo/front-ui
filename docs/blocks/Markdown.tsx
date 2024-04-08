@@ -2,7 +2,7 @@ import { Markdown as SBMarkdown } from "@storybook/blocks";
 import { useMemo } from "react";
 import styled, { css } from "styled-components";
 
-import { Em, Strong, headingOfSize, textOfSize } from "./Typography";
+import { Em, Strong, specificHeading, textOfSize } from "./Typography";
 
 import type { StyleProps } from "@types";
 
@@ -12,14 +12,14 @@ type MarkdownProps = {
 };
 
 export const markdownOverrides = {
-  h1: headingOfSize("h1", "bold"),
-  h2: headingOfSize("h2", "bold"),
-  h3: headingOfSize("h3", "semiBold"),
-  h4: headingOfSize("h4", "bold"),
-  h5: headingOfSize("h4", "semiBold"),
-  h6: headingOfSize("h4", "regular"),
-  span: textOfSize("m", "regular"),
-  p: textOfSize("m", "regular"),
+  h1: specificHeading("h1", "bold", "gray-900"),
+  h2: specificHeading("h2", "bold", "gray-900"),
+  h3: specificHeading("h3", "semiBold", "gray-900"),
+  h4: specificHeading("h4", "semiBold", "gray-800"),
+  h5: specificHeading("h4", "semiBold", "gray-700"),
+  h6: specificHeading("h4", "regular", "gray-700"),
+  span: textOfSize("m", "regular", "gray-700"),
+  p: textOfSize("m", "regular", "gray-700"),
   em: Em,
   strong: Strong,
 };

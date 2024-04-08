@@ -1,0 +1,59 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as DialogStories from "../Dialog.stories.tsx";
+
+
+<Meta title="Components/Dialog/Usage" />
+
+<ComponentInfo of={DialogStories} />
+
+<Content>
+
+## Usage
+
+### Opening a dialog
+
+#### As soon as it is rendered
+
+By passing `Dialog` an `open` property, its open state can be controlled directly from its parent component.
+
+> Since this behavior can be obnoxious in the context of this page,
+> please refer to [this component's story](?path=/story/components-dialog-stories--default) to try it out.
+
+#### Programatically
+
+As long as it is within the `DialogProvider`'s children,
+any component can call `useDialog("ref").open()` to open a dialog,
+be it above, below or inside the `Dialog` in the DOM.
+
+*Every example here uses this method.*
+
+> Refer to the component's and context's [API reference](?path=/docs/components-dialog-api-reference--docs) for more details.
+
+<Canvas of={DialogStories.Default} />
+
+###  Closing a dialog
+
+#### With its overlay
+
+Clicking outside a dialog's content while it is open will close it.
+
+#### Programatically
+
+By calling `useDialog("ref").close()` from anywhere inside the `DialogProvider`, the corresponding `Dialog` component will close.
+
+This feature enables the creation of bespoke "Close" buttons.
+
+<Canvas of={DialogStories.CloseButton} />
+
+
+### Content
+
+A `Dialog` renders its children in an overlay whenever its corresponding state is `true`.
+
+Below are a few examples of can be renderered.
+
+<Canvas of={DialogStories.Content} />
+
+</Content>

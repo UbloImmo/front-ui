@@ -36,21 +36,26 @@ export const Heading = ({
 };
 
 /**
- * Returns a Heading component with the specified size and props.
+ * Returns a Heading component with the specified size, weight and color.
  * Used to replace documentation MDX components.
  *
  * @param {HeadingProps["size"]} size - The size of the heading
  * @param {HeadingProps["weight"]} [weight = "semiBold"] - The weight of the heading
- * @param {Omit<HeadingProps, "size" | "important">} props - The other props for the heading
+ * @param {PaletteColor} [color = "gray-900"] - The weight of the heading
+ * @param {Omit<HeadingProps, "size" | "important" | "color">} props - The other props for the heading
  */
-export const headingOfSize =
-  (size: HeadingProps["size"], weight: HeadingProps["weight"] = "semiBold") =>
+export const specificHeading =
+  (
+    size: HeadingProps["size"],
+    weight: HeadingProps["weight"] = "semiBold",
+    color: PaletteColor = "gray-900"
+  ) =>
   ({
     children,
     ...props
-  }: Omit<HeadingProps, "size" | "important" | "weight">) =>
+  }: Omit<HeadingProps, "size" | "important" | "weight" | "color">) =>
     (
-      <Heading {...props} size={size} weight={weight}>
+      <Heading {...props} size={size} weight={weight} color={color}>
         {children}
       </Heading>
     );
@@ -79,15 +84,23 @@ export const Text = ({
  * Returns a Text component with the specified size and props.
  * Used to replace documentation MDX components.
  *
- * @param {HeadingProps["size"]} size - The size of the text
- * @param {HeadingProps["weight"]} [weight = "regular"] - The weight of the text
- * @param {Omit<HeadingProps, "size" | "important">} props - The other props for the heading
+ * @param {TextProps["size"]} size - The size of the text
+ * @param {TextProps["weight"]} [weight = "regular"] - The weight of the text
+ * @param {PaletteColor} [color = "gray-900"] - The color of the text
+ * @param {Omit<TextProps, "size" | "important">} props - The other props for the heading
  */
 export const textOfSize =
-  (size: TextProps["size"], weight: TextProps["weight"] = "regular") =>
-  ({ children, ...props }: Omit<TextProps, "size" | "important" | "weight">) =>
+  (
+    size: TextProps["size"],
+    weight: TextProps["weight"] = "regular",
+    color: PaletteColor = "gray-900"
+  ) =>
+  ({
+    children,
+    ...props
+  }: Omit<TextProps, "size" | "important" | "weight" | "color">) =>
     (
-      <Text {...props} size={size} weight={weight}>
+      <Text {...props} size={size} weight={weight} color={color}>
         {children}
       </Text>
     );

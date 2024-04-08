@@ -4,7 +4,7 @@ import { isFunction, isObject, transformObject } from "@ubloimmo/front-util";
 import { describe, expect, it } from "bun:test";
 
 import type { GenericFn, MaybeAsyncFn, VoidFn } from "@ubloimmo/front-util";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 
 /**
  *
@@ -88,7 +88,8 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
   staticTests?: {
     props: TProps;
     tests: { name: string; test: VoidFn<[RenderResult]> }[];
-  }
+  },
+  Wrapper?: ({ children }: { children?: ReactNode }) => JSX.Element
 ) => {
   describe(componentName, () => {
     it.if(!isObject(Component))("should be a function", () => {
@@ -106,7 +107,15 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
     //   cleanup();
     // });
     if (staticTests && staticTests.tests && staticTests.props) {
-      const renderResult = render(<Component {...staticTests.props} />);
+      const renderFn = () =>
+        Wrapper
+          ? render(
+              <Wrapper>
+                <Component {...staticTests.props} />
+              </Wrapper>
+            )
+          : render(<Component {...staticTests.props} />);
+      const renderResult = renderFn();
       staticTests.tests.forEach(({ name, test }) =>
         it(name, () => {
           test(renderResult);
@@ -133,7 +142,15 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
         it(testlabel, async () => {
           cleanup();
           const user = userEvent.setup();
-          const renderResult = render(<Component {...testProps} />);
+          const renderFn = () =>
+            Wrapper
+              ? render(
+                  <Wrapper>
+                    <Component {...testProps} />
+                  </Wrapper>
+                )
+              : render(<Component {...testProps} />);
+          const renderResult = renderFn();
           await tests(renderResult, user, testProps);
           cleanup();
         });

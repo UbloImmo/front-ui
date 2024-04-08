@@ -23,7 +23,7 @@ const defaultAnimationName = defaultLoadingProps.animation;
  * @return {Nullable<JSX.Element>} the rendered loading animation component, or null if no animation found
  */
 const Loading = (props: LoadingProps): Nullable<JSX.Element> => {
-  const { warn, error } = useLogger("Loading");
+  const { warn } = useLogger("Loading");
   const { animation, ...mergedProps } = useMergedProps(
     defaultLoadingProps,
     props
@@ -40,10 +40,6 @@ const Loading = (props: LoadingProps): Nullable<JSX.Element> => {
     return LoadingAnimations[animation];
   }, [animation, warn]);
 
-  if (!Animation) {
-    error(`No animation linked to name ${animation}`);
-    return null;
-  }
   return <Animation {...mergedProps} />;
 };
 

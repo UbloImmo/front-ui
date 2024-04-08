@@ -29,7 +29,7 @@ export const Header = ({ children }: HeaderProps) => {
 };
 
 const Container = styled.header`
-  padding: var(--s-8) 0;
+  padding: 0 0 var(--s-8);
   background: var(--gray-50);
   box-shadow: var(--shadow-card);
 

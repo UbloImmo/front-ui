@@ -1,11 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 import path from "path";
-import {
-  loadConfigFromFile,
-  mergeConfig,
-  type InlineConfig,
-  type ConfigEnv,
-} from "vite";
+import { mergeConfig } from "vite";
 
 const config: StorybookConfig = {
   stories: [

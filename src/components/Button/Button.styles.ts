@@ -226,6 +226,13 @@ const commonButtonStyles = ({
     box-shadow: none;
   }
 
+  // fix width if only icon
+  &:has([data-testid="icon"]):not(:has(span[data-testid="text"])) {
+    width: var(--s-10);
+    max-width: var(--s-10);
+    min-width: var(--s-10);
+  }
+
   @media screen and (max-width: ${breakpointsPx.SM}) {
     gap: var(--s-3);
     padding: var(--s-5) var(--s-${label ? 6 : 5});
@@ -233,6 +240,12 @@ const commonButtonStyles = ({
     border-radius: var(--s-7);
     min-height: var(--s-14);
     max-height: var(--s-14);
+
+    &:has([data-testid="icon"]):not(:has(span[data-testid="text"])) {
+      width: var(--s-14);
+      max-width: var(--s-14);
+      min-width: var(--s-14);
+    }
   }
 `;
 
