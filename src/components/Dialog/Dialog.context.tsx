@@ -50,11 +50,10 @@ export const useGlobalDialogContext = (
    */
   const dialogStateMapRef = useRef<InternalDialogStateMap>({});
   /**
-   * Mirrors {@link dialogStateMapRef} and causes re-renders whenever it changes.
+   * Mirrors {@link dialogStateMapRef}
+   * Used exclusively to trigger re-renders and to sync with prop changes.
    */
-  const [dialogStateMap, setDialogStateMap] = useState<InternalDialogStateMap>(
-    {}
-  );
+  const [_, setDialogStateMap] = useState<InternalDialogStateMap>({});
 
   const portalRoot = useMemo(() => {
     if (!params || !params?.portalRoot) return DEFAULT_PORTAL_ROOT;
@@ -73,9 +72,9 @@ export const useGlobalDialogContext = (
    */
   const findDialogState = useCallback(
     (reference: DialogReference): Nullable<boolean> => {
-      return dialogStateMap[reference] ?? null;
+      return dialogStateMapRef.current[reference] ?? null;
     },
-    [dialogStateMap]
+    []
   );
 
   /**
@@ -135,7 +134,6 @@ export const useGlobalDialogContext = (
         return;
       }
       if (isDialogRegistered(reference)) {
-        // TODO: test
         error(`Dialog ${reference} already registered`);
         return;
       }
@@ -157,22 +155,20 @@ export const useGlobalDialogContext = (
     (reference: DialogReference) => {
       log(`Unregistering dialog ${reference}...`);
       if (!isDialogRegistered(reference)) {
-        // TODO: test
-        log("Dialog already unregistered");
+        warn("Dialog already unregistered");
         return;
       }
-      changeDialogState(reference, null); // TODO: test
+      changeDialogState(reference, null);
       registerCounter.current--;
       log(`Dialog ${reference} unregistered`);
     },
-    [log, isDialogRegistered, changeDialogState]
+    [warn, log, isDialogRegistered, changeDialogState]
   );
 
   /**
    * See {@link GlobalDialogContext.openDialog}
    */
   const openDialog = useCallback(
-    // TODO: test function
     (reference: DialogReference) => {
       const dialogState = findDialogState(reference);
       if (isNull(dialogState)) {
@@ -189,7 +185,6 @@ export const useGlobalDialogContext = (
    * See {@link GlobalDialogContext.closeDialog}
    */
   const closeDialog = useCallback(
-    // TODO: test function
     (reference: DialogReference) => {
       const dialogState = findDialogState(reference);
       if (isNull(dialogState)) {
@@ -227,12 +222,14 @@ export const useGlobalDialogContext = (
     // TODO: test function
     (reference: DialogReference, open: boolean) => {
       if (!isDialogRegistered(reference)) {
-        error(`Dialog ${reference} not found`);
+        warn(
+          `Unable to set dialog ${reference}'s open state. Unknown reference.`
+        );
         return;
       }
       changeDialogState(reference, open);
     },
-    [changeDialogState, error, isDialogRegistered]
+    [changeDialogState, warn, isDialogRegistered]
   );
 
   /**

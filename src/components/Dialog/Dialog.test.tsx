@@ -6,9 +6,18 @@ import { Dialog } from "./Dialog.component";
 
 import { testComponentFactory, testHookFactory } from "@/tests";
 
-import { DialogProvider, useGlobalDialogContext } from ".";
+import {
+  DialogProvider,
+  useGlobalDialogContext,
+  useDialogManager,
+  useDialog,
+} from ".";
 
-import type { DialogProps } from "./Dialog.types";
+import type {
+  DialogContext,
+  DialogProps,
+  GlobalDialogContext,
+} from "./Dialog.types";
 import type { ReactNode } from "react";
 
 const testIds = {
@@ -17,6 +26,30 @@ const testIds = {
   content: "dialog-content",
   child: "dialog-child",
 };
+
+const contextKeys: (keyof GlobalDialogContext)[] = [
+  "portalRoot",
+  "registerDialog",
+  "unregisterDialog",
+  "isDialogRegistered",
+  "openDialog",
+  "closeDialog",
+  "toggleDialog",
+  "setDialogState",
+  "isDialogOpen",
+];
+
+const useDialogKeys: (keyof DialogContext)[] = [
+  "portalRoot",
+  "isOpen",
+  "isRegistered",
+  "open",
+  "close",
+  "toggle",
+  "register",
+  "unregister",
+  "set",
+];
 
 const props: DialogProps = {
   ...Dialog.defaultProps,
@@ -86,17 +119,7 @@ const testUseGlobalDialogContext = () => {
   // @ts-ignore need this to check for unhandled props
   testContext()("should not throw if no arguments are provided", (result) => {
     expect(result).toBeObject();
-    expect(result).toContainKeys([
-      "portalRoot",
-      "registerDialog",
-      "unregisterDialog",
-      "isDialogRegistered",
-      "openDialog",
-      "closeDialog",
-      "toggleDialog",
-      "setDialogState",
-      "isDialogOpen",
-    ]);
+    expect(result).toContainKeys(contextKeys);
   });
 
   testContext({ portalRoot: undefined })(
@@ -139,16 +162,18 @@ const testUseGlobalDialogContext = () => {
     (global.console.error as Mock<VoidFn>).mockReset();
   });
 
-  // testDefaultContext(
-  //   "should error when registering multiple times",
-  //   ({ registerDialog }) => {
-  //     (global.console.error as Mock<VoidFn>).mockReset();
-  //     act(() => registerDialog("duplicate", false));
-  //     act(() => registerDialog("duplicate", false));
-  //     expect(global.console.error).toHaveBeenCalled();
-  //     (global.console.error as Mock<VoidFn>).mockReset();
-  //   }
-  // );
+  testDefaultContext(
+    "should error when registering multiple times",
+    ({ registerDialog }) => {
+      (global.console.error as Mock<VoidFn>).mockReset();
+      act(() => {
+        registerDialog("duplicate", false);
+        registerDialog("duplicate", false);
+      });
+      expect(global.console.error).toHaveBeenCalled();
+      (global.console.error as Mock<VoidFn>).mockReset();
+    }
+  );
 
   testDefaultContext(
     "should error when registering an invalid reference",
@@ -180,8 +205,6 @@ const testUseGlobalDialogContext = () => {
     }
   );
 
-  (global.console.warn as Mock<VoidFn>).mockReset();
-
   testDefaultContext(
     "should open a registered dialog",
     ({ registerDialog, openDialog }) => {
@@ -196,7 +219,151 @@ const testUseGlobalDialogContext = () => {
       (global.console.warn as Mock<VoidFn>).mockReset();
     }
   );
+
+  testDefaultContext(
+    "should warn when unregistering an unregistered dialog",
+    ({ unregisterDialog }) => {
+      expect(unregisterDialog).toBeFunction();
+      expect(unregisterDialog).not.toThrow();
+      (global.console.warn as Mock<VoidFn>).mockReset();
+      act(() => unregisterDialog("test"));
+      expect(global.console.warn).toHaveBeenCalled();
+      (global.console.warn as Mock<VoidFn>).mockReset();
+    }
+  );
+
+  testDefaultContext(
+    "should register, open, close and unregister a dialog",
+    ({
+      registerDialog,
+      unregisterDialog,
+      openDialog,
+      closeDialog,
+      isDialogOpen,
+      isDialogRegistered,
+    }) => {
+      expect(registerDialog).toBeFunction();
+      expect(isDialogRegistered).toBeFunction();
+      expect(openDialog).toBeFunction();
+      expect(isDialogOpen).toBeFunction();
+      expect(closeDialog).toBeFunction();
+      expect(unregisterDialog).toBeFunction();
+
+      (global.console.warn as Mock<VoidFn>).mockReset();
+      (global.console.error as Mock<VoidFn>).mockReset();
+
+      act(() => registerDialog("test", false));
+      expect(global.console.error).not.toHaveBeenCalled();
+      expect(isDialogRegistered("test")).toBe(true);
+      act(() => openDialog("test"));
+      expect(global.console.warn).not.toHaveBeenCalled();
+      expect(isDialogOpen("test")).toBe(true);
+      act(() => closeDialog("test"));
+      expect(global.console.warn).not.toHaveBeenCalled();
+      expect(isDialogOpen("test")).toBe(false);
+      act(() => unregisterDialog("test"));
+      expect(global.console.error).not.toHaveBeenCalled();
+      expect(isDialogRegistered("test")).toBe(false);
+
+      (global.console.warn as Mock<VoidFn>).mockReset();
+      (global.console.error as Mock<VoidFn>).mockReset();
+    }
+  );
+
+  testDefaultContext(
+    "should toggle a dialog",
+    ({ registerDialog, toggleDialog, isDialogOpen }) => {
+      act(() => registerDialog("test", false));
+      expect(isDialogOpen("test")).toBe(false);
+      act(() => toggleDialog("test"));
+      expect(isDialogOpen("test")).toBe(true);
+      act(() => toggleDialog("test"));
+      expect(isDialogOpen("test")).toBe(false);
+    }
+  );
+
+  testDefaultContext(
+    "should set a dialog's state",
+    ({ registerDialog, setDialogState, isDialogOpen, isDialogRegistered }) => {
+      expect(setDialogState).toBeFunction();
+      expect(setDialogState).not.toThrow();
+
+      act(() => registerDialog("test", false));
+      expect(isDialogRegistered("test")).toBe(true);
+      expect(isDialogOpen("test")).toBe(false);
+      act(() => setDialogState("test", true));
+      expect(isDialogOpen("test")).toBe(true);
+      act(() => setDialogState("test", false));
+      expect(isDialogOpen("test")).toBe(false);
+    }
+  );
+
+  testDefaultContext(
+    "should warn when opening, closing, toggling or setting the state of an unregistered dialog",
+    ({
+      isDialogRegistered,
+      openDialog,
+      closeDialog,
+      toggleDialog,
+      setDialogState,
+    }) => {
+      expect(isDialogRegistered("test")).toBe(false);
+
+      (global.console.warn as Mock<VoidFn>).mockReset();
+      act(() => openDialog("test"));
+      expect(global.console.warn).toHaveBeenCalled();
+
+      (global.console.warn as Mock<VoidFn>).mockReset();
+      act(() => closeDialog("test"));
+      expect(global.console.warn).toHaveBeenCalled();
+
+      (global.console.warn as Mock<VoidFn>).mockReset();
+      act(() => toggleDialog("test"));
+      expect(global.console.warn).toHaveBeenCalled();
+
+      (global.console.warn as Mock<VoidFn>).mockReset();
+      act(() => toggleDialog("test"));
+      expect(global.console.warn).toHaveBeenCalled();
+
+      (global.console.warn as Mock<VoidFn>).mockReset();
+      act(() => setDialogState("test", true));
+      expect(global.console.warn).toHaveBeenCalled();
+
+      (global.console.warn as Mock<VoidFn>).mockReset();
+    }
+  );
+};
+
+const testUseDialogManager = () => {
+  type Hook = typeof useDialogManager;
+  const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
+    "useDialogManager",
+    useDialogManager
+  );
+
+  testHook()("should return all methods from context", (result) => {
+    expect(result).toBeObject();
+    expect(result).toContainKeys(contextKeys);
+  });
+};
+
+const testUseDialog = () => {
+  type Hook = typeof useDialog;
+  const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
+    "useDialogr",
+    useDialog
+  );
+
+  testHook("test")(
+    "should return an object containing all keys and methods",
+    (result) => {
+      expect(result).toBeObject();
+      expect(result).toContainKeys(useDialogKeys);
+    }
+  );
 };
 describe("Dialog", () => {
   testUseGlobalDialogContext();
+  testUseDialogManager();
+  testUseDialog();
 });
