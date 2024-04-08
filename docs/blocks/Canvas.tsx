@@ -1,10 +1,10 @@
 import { Canvas as SBCanvas } from "@storybook/blocks";
 import styled, { css } from "styled-components";
 
+import { typographyFontFace } from "@/typography";
 import { useStyleProps } from "@utils";
 
 import type { StyleProps } from "@types";
-import { typographyFontFace } from "@/typography";
 
 type SBCanvasProps = Parameters<typeof SBCanvas>[0];
 

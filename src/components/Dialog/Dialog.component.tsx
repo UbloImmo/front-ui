@@ -1,5 +1,10 @@
-import { isBoolean, type Nullable } from "@ubloimmo/front-util";
-import { useEffect } from "react";
+import {
+  isBoolean,
+  isFunction,
+  type Nullable,
+  type VoidFn,
+} from "@ubloimmo/front-util";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { useDialog } from "./Dialog.context";
@@ -20,6 +25,8 @@ const defaultDialogProps: DefaultDialogProps = {
   portalRoot: "#dialog-root",
   open: false,
   children: null,
+  onOpened: null,
+  onClosed: null,
 };
 
 /**
@@ -34,13 +41,15 @@ const defaultDialogProps: DefaultDialogProps = {
  */
 const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
   const { error } = useLogger("Dialog");
-  const { children, open, reference } = mergeDefaultProps(
+  const { children, open, reference, onClosed, onOpened } = mergeDefaultProps(
     defaultDialogProps,
     props
   );
   const testId = useTestId("dialog-content", props);
   const { isOpen, isRegistered, portalRoot, close, register, unregister, set } =
     useDialog(reference);
+
+  const isOpenRef = useRef<boolean>(open);
 
   useEffect(() => {
     if (isRegistered) return unregister;
@@ -55,6 +64,13 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
+
+  useEffect(() => {
+    if (isOpenRef.current === isOpen) return;
+    if (isOpen && isFunction<VoidFn>(onOpened)) onOpened();
+    if (!isOpen && isFunction<VoidFn>(onClosed)) onClosed();
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
 
   if (!reference) {
     error("No reference provided");

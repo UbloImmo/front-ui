@@ -171,6 +171,18 @@ export type DialogProps = {
    */
   open?: boolean;
   /**
+   * Optional callback function that gets called whenever the dialog is opened
+   *
+   * @type {VoidFn}
+   */
+  onOpened?: Nullable<VoidFn>;
+  /**
+   * Optional callback function that gets called whenever the dialog is closed
+   *
+   * @type {VoidFn}
+   */
+  onClosed?: Nullable<VoidFn>;
+  /**
    * A css selector needed to find the root element the attache the portal to
    * @default "#dialog-root"
    */

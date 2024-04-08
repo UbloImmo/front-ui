@@ -1,3 +1,4 @@
+import { fn } from "@storybook/test";
 import styled, { css } from "styled-components";
 
 import { Dialog } from "./Dialog.component";
@@ -18,6 +19,8 @@ const meta = {
   component: Dialog,
   args: {
     reference: "story-dialog",
+    onOpened: fn(),
+    onClosed: fn(),
   },
   decorators: [
     (Story) => (

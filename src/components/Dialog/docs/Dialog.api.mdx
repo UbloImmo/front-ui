@@ -11,6 +11,117 @@ import * as DialogStories from "../Dialog.stories.tsx";
 
 ## API Reference
 
-TODO
+Our Dialog component expects to be used within a parent `DialogProvider`
+and interacted with through methods exposed by either `useDialog` or `useDialogManager` hooks.
+
+### Basic example
+
+```tsx
+import { DialogProvider, Dialog, useDialog } from "@ubloimmo/uikit";
+
+const App = () => {
+  // Wrap your app's content with the Provider
+    return (
+        <>
+            <DialogProvider portalRoot="#dialog-root">
+                <Page />
+            </DialogProvider>
+            {/* This is where any open dialog inside your app will render */}
+            <div id="dialog-root" />
+        </>
+    )
+}
+
+/**
+ * Any page / component where you want to instanciate a dialog
+ */ 
+const Page = () => {
+    // The dialog reference is used to control any rendered dialog
+    // from anywhere else inside your app
+    const dialogReference = "my-dialog";
+    // Pass the reference to the useDialog hook to access
+    // specific methods for controlling a single dialog
+    const { open } = useDialog(dialogReference)
+    return (
+        <>
+            <button title="open dialog" onClick={open}>Open</button>
+            <Dialog reference={dialogReference}>
+                <div>Dialog content</div>
+            </Dialog>
+        </>
+    )
+}
+
+```
+
+### Setup
+
+#### Portals
+
+All dialogs render their children through a portal to a `portal root` (e.g. an HTML element that can be seperate from your app).
+
+This root can be declared anywhere inside your app, though it is recommended to place it inside your app's `body` in `public/index.html`
+
+> Make sure this root can be easily found by `document.querySelector` (e.g. by giving an `id`).
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My app</title>
+    </head>
+    <body>
+        <div id="app"/>
+        <div id="dialog-root"/>
+    </body>
+</html>
+
+```
+
+#### Context & Provider
+
+Our Dialog component expects to be used within a parent `DialogProvider`.
+It should to be rendered near the root of your DOM tree, preferably inside App.tsx.
+<br/>
+**Import it and wrap your content in it.**
+
+> Alternatively, use `DialogProvider` to wrap a single component if you feel like it.
+
+```tsx
+import { DialogProvider } from "@ubloimmo/uikit";
+
+const App = () => {
+    return (
+        <DialogProvider portalRoot="#dialog-root">
+            {/* Your app's content */}
+        </DialogProvider>
+  )
+}
+```
+
+### Controlling a single dialog
+
+#### Through its direct parent
+
+If all you need is a simple dialog that reacts to a `boolean` state, you can pass it as to `Dialog`'s `open` property.
+
+`Dialog` will open and close accordingly.
+
+> 
+
+```tsx
+import { useState } from "react";
+import { Dialog } from "@ubloimmo/uikit";
+
+const Parent = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <Dialog open={isOpen}>
+            my dialog
+        </Dialog>
+    )
+}
+```
 
 </Content>
