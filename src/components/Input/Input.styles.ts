@@ -83,7 +83,7 @@ export const inputGroupedControlStyles = ({
 
 export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   max-height: var(--s-10);
-  min-width: 0;
+  min-width: 12rem;
   padding: var(--s-2);
   border-radius: var(--s-1);
   border: none;
