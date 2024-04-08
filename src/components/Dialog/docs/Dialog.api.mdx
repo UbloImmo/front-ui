@@ -238,7 +238,7 @@ import { Dialog, useDialog } from "@ubloimmo/uikit";
 const Page = () => {
     const { open } = useDialog("my-dialog");
 
-    const onDialogVisibilyChanged = useCallback((opened: boolean) => {
+    const onDialogVisibilityChanged = useCallback((opened: boolean) => {
         console.log(`Dialog is ${opened ? "open" : "closed"}`);
     }, [])
 
@@ -247,8 +247,8 @@ const Page = () => {
             <button onClick={open} >Open dialog</button>
             <Dialog
                 reference="my-dialog"
-                onOpened={() => onDialogVisibilyChanged(true)}
-                onClosed={() => onDialogVisibilyChanged(false)}
+                onOpened={() => onDialogVisibilityChanged(true)}
+                onClosed={() => onDialogVisibilityChanged(false)}
             >
                 <Modal />
             </Dialog>
