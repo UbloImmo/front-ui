@@ -60,7 +60,7 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
 
   & .docblock-code-toggle {
     ${typographyFontFace()}
-    font-weight: var(--text-weight-semibold) !important;
+    font-weight: var(--text-weight-medium) !important;
     padding: var(--s-05) var(--s-3);
     color: var(--primary-dark);
     background: var(--color);
@@ -113,7 +113,7 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     > div:not(.docs-story)
     button {
     ${typographyFontFace()}
-    font-weight: var(--text-weight-semibold) !important;
+    font-weight: var(--text-weight-medium) !important;
     padding: var(--s-05) var(--s-3);
     color: var(--primary-light);
     background: var(--color);

@@ -81,7 +81,7 @@ const HeadingSizeRenderer = (props: HeadingProps) => {
   );
 };
 
-const weights: TypographyWeight[] = ["regular", "semiBold", "bold"] as const;
+const weights: TypographyWeight[] = ["regular", "medium", "bold"] as const;
 export const Weights = (props: HeadingProps) => {
   const mergedProps = useMergedProps(Heading.defaultProps, props);
   return (

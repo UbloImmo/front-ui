@@ -87,7 +87,7 @@ const ComponentPropsTableHeader = (): JSX.Element => {
       <TableRow>
         {columns.map((column, index) => (
           <TableHeaderCell key={`${column}-${index}`}>
-            <Text size="s" weight="semiBold" color="gray-800" important>
+            <Text size="s" weight="medium" color="gray-800" important>
               {column}
             </Text>
           </TableHeaderCell>
@@ -117,7 +117,7 @@ const ComponentPropRow = ({
       <TableCell>
         <Text
           size="m"
-          weight={todo ? "regular" : required ? "bold" : "semiBold"}
+          weight={todo ? "regular" : required ? "bold" : "medium"}
           color={todo ? "gray-400" : required ? "primary-base" : "primary-dark"}
           important
           lineThrough={todo}

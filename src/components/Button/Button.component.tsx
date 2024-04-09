@@ -86,7 +86,7 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
     >
       {icon && <Icon name={icon} size="1rem" />}
       {label && label.length > 0 && (
-        <Text size="m" weight="semiBold">
+        <Text size="m" weight="medium">
           {label}
         </Text>
       )}

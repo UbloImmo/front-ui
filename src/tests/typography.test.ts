@@ -44,7 +44,7 @@ describe("typography", () => {
       expect(buildTypographyWeightMap()).not.toBeEmptyObject();
       expect(buildTypographyWeightMap()).toContainKeys([
         "bold",
-        "semiBold",
+        "medium",
         "regular",
       ]);
     });
@@ -160,7 +160,7 @@ describe("typography", () => {
           underline: true,
           overline: true,
           lineThrough: true,
-          weight: "semiBold",
+          weight: "medium",
           important: false,
           children: null,
           ellipsis: false,

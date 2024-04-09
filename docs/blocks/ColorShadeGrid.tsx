@@ -136,7 +136,7 @@ const ColorShadeSwatch = ({
 
   return (
     <ShadeContainer $background={color} $x={x} $y={y}>
-      <Text weight="semiBold" size="s" color="gray-500" important>
+      <Text weight="medium" size="s" color="gray-500" important>
         {colorName}
       </Text>
       {opacity && (

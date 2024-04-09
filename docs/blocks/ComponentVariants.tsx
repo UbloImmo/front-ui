@@ -183,7 +183,7 @@ export const ComponentVariants = <
               <Component {...variantProps} />
             </div>
             <ComponentLabelContainer className="prop-variant-label">
-              <Text size="xs" color="gray-600" weight="semiBold">
+              <Text size="xs" color="gray-600" weight="medium">
                 <code>{variantProps.__propVariantLabel}</code>
               </Text>
             </ComponentLabelContainer>
