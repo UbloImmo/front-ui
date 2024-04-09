@@ -56,6 +56,7 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     right: var(--s-1);
     bottom: var(--s-1);
     background: none;
+    z-index: unset;
   }
 
   & .docblock-code-toggle {
@@ -124,6 +125,7 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     box-shadow: var(--shadow-button) !important;
     width: auto;
     border: 1px solid transparent;
+    z-index: initial;
     transition: color 200ms ease-out 0s, border-color 200ms ease-out 0s;
   }
 

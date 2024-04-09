@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 
-import { typographyWeightMap } from "../../typography";
+import { breakpointsPx } from "@/sizes";
 
 import type {
   CommonInputStyleProps,
@@ -43,6 +43,7 @@ export const inputControlGroupStyles = () => css`
   position: absolute;
   top: var(--s-2);
   bottom: var(--s-2);
+  width: var(--s-3);
   transform: unset;
   display: flex;
   flex-direction: column;
@@ -82,7 +83,9 @@ export const inputGroupedControlStyles = ({
 `;
 
 export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
-  max-height: var(--s-10);
+  max-height: var(--s-8);
+  height: var(--s-8);
+  min-height: var(--s-8);
   min-width: 12rem;
   padding: var(--s-2);
   border-radius: var(--s-1);
@@ -90,7 +93,7 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   outline: none;
   background: #fff;
   font-size: var(--text-m);
-  font-weight: ${typographyWeightMap.regular};
+  font-weight: var(--text-weight-regular);
   color: var(--${$error ? "error-dark" : "gray-800"});
   box-shadow: var(--shadow-input-${$error ? "error" : "default"}-default);
   outline-offset: -2px;
@@ -119,5 +122,12 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
 
   &:disabled::placeholder {
     color: var(--gray-300);
+  }
+
+  @media screen and (max-width: ${breakpointsPx.SM}) {
+    max-height: var(--s-10);
+    height: var(--s-10);
+    min-height: var(--s-10);
+    font-weight: var(--text-weight-medium);
   }
 `;

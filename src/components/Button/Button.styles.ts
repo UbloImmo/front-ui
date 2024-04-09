@@ -184,7 +184,6 @@ const commonButtonStyles = ({
   max-height: var(--s-10);
   min-height: var(--s-10);
   font-size: var(--text-m);
-  font-weight: var(--text-weight-bold);
   border-radius: var(--s-5);
   cursor: pointer;
   display: flex;
