@@ -77,8 +77,7 @@ export const textSizesToCssVars = (): {
   mobile: CssVar<CssRem>[];
   weights: CssVar<`${number}`>[];
 } => {
-  const allTextSizes = { ...texts.text, ...texts.heading };
-  const vars = objectEntries(allTextSizes).map(([size, weights]) => {
+  const vars = objectEntries(texts.desktop).map(([size, weights]) => {
     const { fontSize } = weights.regular.css.style;
 
     return {
