@@ -50,7 +50,7 @@ const TestCard = ({
   return (
     <CardContainer $large={large}>
       <FlexColumnLayout gap="s-4">
-        <Heading size="h3" weight="semiBold">
+        <Heading size="h3" weight="medium">
           {title}
         </Heading>
         <Text color="gray-700">{children}</Text>

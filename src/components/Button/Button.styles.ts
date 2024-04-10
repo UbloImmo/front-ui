@@ -179,13 +179,18 @@ const commonButtonStyles = ({
   label,
   color,
 }: DefaultButtonProps): RuleSet => css`
-  padding: var(--s-3) var(--s-${label ? 4 : 3});
-  height: var(--s-10);
-  max-height: var(--s-10);
-  min-height: var(--s-10);
+  --button-size: var(--s-8);
+  --padding-vertical: calc(var(--button-size) / 4);
+  --padding-horizontal-label: calc(var(--button-size) / 2);
+  --padding-horizontal: ${label
+    ? cssVarUsage("padding-horizontal-label")
+    : cssVarUsage("padding-vertical")};
+  padding: var(--padding-vertical) var(--padding-horizontal);
+  height: var(--button-size);
+  max-height: var(--button-size);
+  min-height: var(--button-size);
   font-size: var(--text-m);
-  font-weight: var(--text-weight-bold);
-  border-radius: var(--s-5);
+  border-radius: calc(var(--button-size) / 2);
   cursor: pointer;
   display: flex;
   flex-direction: ${iconPlacement === "right" ? "row-reverse" : "row"};
@@ -228,24 +233,16 @@ const commonButtonStyles = ({
 
   // fix width if only icon
   &:has([data-testid="icon"]):not(:has(span[data-testid="text"])) {
-    width: var(--s-10);
-    max-width: var(--s-10);
-    min-width: var(--s-10);
+    width: var(--button-size);
+    max-width: var(--button-size);
+    min-width: var(--button-size);
   }
 
-  @media screen and (max-width: ${breakpointsPx.SM}) {
+  @media only screen and (max-width: ${breakpointsPx.XS}) {
+    --button-size: var(--s-13);
+    --padding-vertical: var(--s-4);
+    --padding-horizontal-label: var(--s-6);
     gap: var(--s-3);
-    padding: var(--s-5) var(--s-${label ? 6 : 5});
-    height: var(--s-14);
-    border-radius: var(--s-7);
-    min-height: var(--s-14);
-    max-height: var(--s-14);
-
-    &:has([data-testid="icon"]):not(:has(span[data-testid="text"])) {
-      width: var(--s-14);
-      max-width: var(--s-14);
-      min-width: var(--s-14);
-    }
   }
 `;
 

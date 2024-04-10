@@ -58,6 +58,7 @@ const StyleReset = styled.div`
 
     span,
     p,
+    a,
     h1,
     h2,
     h3,
@@ -119,7 +120,7 @@ const StyleReset = styled.div`
 
       button {
         ${typographyFontFace()}
-        font-weight: var(--text-weight-semibold) !important;
+        font-weight: var(--text-weight-medium) !important;
         padding: var(--s-05) var(--s-3);
         color: var(--primary-dark);
         background: var(--color);

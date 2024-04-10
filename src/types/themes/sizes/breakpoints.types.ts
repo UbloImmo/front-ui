@@ -1,14 +1,6 @@
 import { CssPx, Enum } from "../../";
 
-export const breakpointLabels = [
-  "XXS",
-  "XS",
-  "SM",
-  "MD",
-  "LG",
-  "XL",
-  "XXL",
-] as const;
+export const breakpointLabels = ["XXS", "XS", "SM", "MD", "LG", "XL"] as const;
 
 export type BreakpointLabel = Enum<typeof breakpointLabels>;
 

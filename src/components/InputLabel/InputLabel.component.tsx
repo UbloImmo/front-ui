@@ -34,7 +34,7 @@ const InputLabel = (props: InputLabelProps): JSX.Element => {
         {label}
       </Text>
       {required && (
-        <Text color="warning-base" size="s" weight="semiBold">
+        <Text color="warning-base" size="s" weight="medium">
           *
         </Text>
       )}

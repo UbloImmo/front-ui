@@ -11,10 +11,10 @@ import type {
   TypographyProps,
   TypographyWeight,
   AnyTypographyProps,
-  TextSize,
-  HeadingSize,
   CssRem,
   StyleProps,
+  FontWeight,
+  TypographySize,
 } from "@types";
 
 /**
@@ -24,9 +24,12 @@ import type {
  */
 export const buildTypographyWeightMap = (): Record<
   TypographyWeight,
-  string
+  FontWeight
 > => {
-  return transformObject(texts.text.m, (token) => token.css.style.fontWeight);
+  return transformObject(
+    texts.desktop.m,
+    (token) => token.css.style.fontWeight
+  );
 };
 
 export const typographyWeightMap = buildTypographyWeightMap();
@@ -71,12 +74,10 @@ export const mobileFontSize = (desktopSize: CssRem): CssRem => {
   return cssRem(extractRem(desktopSize) + FONT_SIZE_MOBILE_INCREMENT);
 };
 
-const validTypographySizes: (TextSize | HeadingSize)[] = objectKeys({
-  ...texts.text,
-  ...texts.heading,
-});
+export const allTypographySizes: TypographySize[] = objectKeys(texts.desktop);
 
-const validTypographyWeights: TypographyWeight[] = objectKeys(texts.text.m);
+export const allTypographyWeights: TypographyWeight[] =
+  objectKeys(typographyWeightMap);
 
 /**
  * Sanitizes the typography properties based on the defaults and the provided props.
@@ -92,9 +93,9 @@ export const sanitizeTypographyProps = (
   props: AnyTypographyProps
 ): Required<AnyTypographyProps> => {
   const rawSize = props.size ?? defaults.size;
-  const size = validTypographySizes.includes(rawSize) ? rawSize : defaults.size;
+  const size = allTypographySizes.includes(rawSize) ? rawSize : defaults.size;
   const rawWeight = props.weight ?? defaults.weight;
-  const weight = validTypographyWeights.includes(rawWeight)
+  const weight = allTypographyWeights.includes(rawWeight)
     ? rawWeight
     : defaults.weight;
   return {
@@ -120,8 +121,6 @@ export const sanitizeTypographyProps = (
 export const buildTypographyStyle = (
   defaults: Required<AnyTypographyProps>
 ): StyleFunction<StyleProps<TextProps | HeadingProps>> => {
-  const allSizes = { ...texts.text, ...texts.heading };
-
   return (props) => {
     const {
       size,
@@ -141,7 +140,7 @@ export const buildTypographyStyle = (
       textIndent,
       textOverflow: $textOverflow,
       fontFeatureSettings,
-    } = allSizes[size][weight].css.style;
+    } = texts.desktop[size][weight].css.style;
     const fontSize = `text-${size}`;
     const fontWeight = cssVarUsage(`text-weight-${weight.toLowerCase()}`);
     const fontStyle = italic ?? defaults.italic ? "italic" : "normal";

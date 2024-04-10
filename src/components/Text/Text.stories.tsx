@@ -82,7 +82,7 @@ const TextSizeRenderer = (props: TextProps) => {
   );
 };
 
-const weights: TypographyWeight[] = ["regular", "semiBold", "bold"] as const;
+const weights: TypographyWeight[] = ["regular", "medium", "bold"] as const;
 export const Weights = (props: TextProps) => {
   const mergedProps = useMergedProps(Text.defaultProps, props);
   return (

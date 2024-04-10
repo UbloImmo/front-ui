@@ -56,7 +56,7 @@ const Badge = (props: BadgeProps): JSX.Element => {
           size="s-3"
         />
       )}
-      <Text size="s" color={textColorStyle}>
+      <Text size="s" color={textColorStyle} weight="medium">
         {label}
       </Text>
     </BadgeContainer>

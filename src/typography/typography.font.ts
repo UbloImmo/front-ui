@@ -1,9 +1,11 @@
 import { css } from "styled-components";
 
+import { Gilroy } from "./fonts";
+
 import type { RuleSet } from "styled-components";
 
 const fontFamily = {
-  sans: `"Open Sans Variable", "Helvetica", "Inter", "Arial", "Calibri",
+  sans: `"Gilroy", "Helvetica", "Inter", "Arial", "Calibri",
   "Segoe UI", sans-serif`,
   code: `"Menlo", "Inconsolata", "Fira Code", "Fira Code", "Source Mono",
   "Consolas", monospace`,
@@ -44,9 +46,12 @@ export const codeFontFace = (important?: boolean): RuleSet => {
  */
 export const linkFontFace = (): RuleSet => {
   return css`
+    ${Gilroy}
+
     * {
       font-synthesis: style;
       text-rendering: optimizeLegibility;
+      font-variant-ligatures: none;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }

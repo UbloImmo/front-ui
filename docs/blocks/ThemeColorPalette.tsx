@@ -59,7 +59,7 @@ export const ThemeColorShades = ({
     <BlockContainer>
       <BlockSection align="baseline" justify="space-between" gap="s-3">
         <BlockSection align="baseline" justify="start" gap="s-3">
-          <Heading important size="h4" weight="semiBold">
+          <Heading important size="h4" weight="medium">
             {title ?? colorKey}
           </Heading>
           <Pre $background={lightShade} $foreground={darkShade} $padded={false}>

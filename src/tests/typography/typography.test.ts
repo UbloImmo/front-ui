@@ -1,10 +1,8 @@
 import { describe, expect, it } from "bun:test";
 
-import { testLenghts } from "./css.test";
-import {
-  typographyFontFace,
-  linkFontFace,
-} from "../typography/typography.font";
+import { testLenghts } from "../css.test";
+
+import { typographyFontFace, linkFontFace } from "@/typography/typography.font";
 import {
   buildTypographyWeightMap,
   typographyTextDecoration,
@@ -12,8 +10,7 @@ import {
   defaultTypographyProps,
   sanitizeTypographyProps,
   buildTypographyStyle,
-} from "../typography/typography.styles";
-
+} from "@/typography/typography.styles";
 import { cssRem } from "@utils";
 
 import type { AnyTypographyProps, TextProps, TypographyProps } from "@types";
@@ -44,7 +41,7 @@ describe("typography", () => {
       expect(buildTypographyWeightMap()).not.toBeEmptyObject();
       expect(buildTypographyWeightMap()).toContainKeys([
         "bold",
-        "semiBold",
+        "medium",
         "regular",
       ]);
     });
@@ -160,7 +157,7 @@ describe("typography", () => {
           underline: true,
           overline: true,
           lineThrough: true,
-          weight: "semiBold",
+          weight: "medium",
           important: false,
           children: null,
           ellipsis: false,

@@ -5,13 +5,12 @@ import { cssPx } from "../utils";
 import { Breakpoints, BreakpointsPx } from "@types";
 
 export const breakpoints: Breakpoints = {
-  XXS: 320,
-  XS: 420,
-  SM: 640,
-  MD: 768,
-  LG: 1024,
-  XL: 1280,
-  XXL: 1536,
+  XXS: 478,
+  XS: 767,
+  SM: 991,
+  MD: 1280,
+  LG: 1440,
+  XL: 1920,
 } as const;
 
 export const breakpointsPx: BreakpointsPx = transformObject(breakpoints, cssPx);

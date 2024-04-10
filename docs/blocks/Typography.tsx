@@ -40,14 +40,14 @@ export const Heading = ({
  * Used to replace documentation MDX components.
  *
  * @param {HeadingProps["size"]} size - The size of the heading
- * @param {HeadingProps["weight"]} [weight = "semiBold"] - The weight of the heading
+ * @param {HeadingProps["weight"]} [weight = "medium"] - The weight of the heading
  * @param {PaletteColor} [color = "gray-900"] - The weight of the heading
  * @param {Omit<HeadingProps, "size" | "important" | "color">} props - The other props for the heading
  */
 export const specificHeading =
   (
     size: HeadingProps["size"],
-    weight: HeadingProps["weight"] = "semiBold",
+    weight: HeadingProps["weight"] = "medium",
     color: PaletteColor = "gray-900"
   ) =>
   ({
@@ -165,7 +165,7 @@ export const Em = styled.em`
 export const Strong = styled.strong`
   color: inherit !important;
   font-size: inherit !important;
-  font-weight: var(--text-weight-semibold) !important;
+  font-weight: var(--text-weight-medium) !important;
   font-style: inherit !important;
   font-variation-settings: inherit !important;
 `;

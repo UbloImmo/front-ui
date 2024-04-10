@@ -1,25 +1,28 @@
 import { texts } from "@ubloimmo/front-tokens";
 
-import type { Enum, PaletteColor } from "../";
+import type { PaletteColor } from "../";
 import type { ReactNode } from "react";
 
 export type TypographyTokens = typeof texts;
 
 export type TypographyCategory = keyof TypographyTokens & string;
 
-export type TypographySize<TCategory extends TypographyCategory> =
-  keyof TypographyTokens[TCategory] & string;
+export type TypographyBreakpoint = Exclude<TypographyCategory, "@figma">;
 
-export type TextSize = TypographySize<"text">;
+export type TypographySize = string &
+  keyof TypographyTokens[TypographyBreakpoint];
 
-export type HeadingSize = TypographySize<"heading">;
+type HeadingSizeTemplate = `h${number}`;
 
-const typographyWeights = ["regular", "semiBold", "bold"] as const;
+export type TextSize = Exclude<TypographySize, HeadingSizeTemplate>;
 
-export type TypographyWeight = Enum<typeof typographyWeights>;
+export type HeadingSize = TypographySize & HeadingSizeTemplate;
+
+export type TypographyWeight =
+  keyof TypographyTokens[TypographyBreakpoint][TypographySize];
 
 export type TypographyToken =
-  TypographyTokens["text"][TextSize][TypographyWeight];
+  TypographyTokens[TypographyBreakpoint][TypographySize][TypographyWeight];
 
 export type TypographyProps = {
   /**
@@ -56,7 +59,7 @@ export type TypographyProps = {
   /**
    * The font weight of the text contents.
    *
-   * Either `regular`, `semiBold` or `bold`.
+   * Either `regular`, `medium` or `bold`.
    *
    * @type {TypographyWeight}
    * @default "regular"
@@ -113,5 +116,5 @@ export type HeadingProps = TypographyProps & {
 };
 
 export type AnyTypographyProps = TypographyProps & {
-  size?: HeadingProps["size"] | TextProps["size"];
+  size?: TypographySize;
 };

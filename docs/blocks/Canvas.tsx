@@ -56,11 +56,12 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     right: var(--s-1);
     bottom: var(--s-1);
     background: none;
+    z-index: unset;
   }
 
   & .docblock-code-toggle {
     ${typographyFontFace()}
-    font-weight: var(--text-weight-semibold) !important;
+    font-weight: var(--text-weight-medium) !important;
     padding: var(--s-05) var(--s-3);
     color: var(--primary-dark);
     background: var(--color);
@@ -113,7 +114,7 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     > div:not(.docs-story)
     button {
     ${typographyFontFace()}
-    font-weight: var(--text-weight-semibold) !important;
+    font-weight: var(--text-weight-medium) !important;
     padding: var(--s-05) var(--s-3);
     color: var(--primary-light);
     background: var(--color);
@@ -124,6 +125,7 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     box-shadow: var(--shadow-button) !important;
     width: auto;
     border: 1px solid transparent;
+    z-index: initial;
     transition: color 200ms ease-out 0s, border-color 200ms ease-out 0s;
   }
 

@@ -1,4 +1,3 @@
-import "@fontsource-variable/open-sans/index.css";
 import { texts } from "@ubloimmo/front-tokens";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
 import { createGlobalStyle, css, type RuleSet } from "styled-components";
@@ -77,8 +76,7 @@ export const textSizesToCssVars = (): {
   mobile: CssVar<CssRem>[];
   weights: CssVar<`${number}`>[];
 } => {
-  const allTextSizes = { ...texts.text, ...texts.heading };
-  const vars = objectEntries(allTextSizes).map(([size, weights]) => {
+  const vars = objectEntries(texts.desktop).map(([size, weights]) => {
     const { fontSize } = weights.regular.css.style;
 
     return {
@@ -207,7 +205,7 @@ export const buildGlobalStyle = (theme: Theme): RuleSet => {
       effectCssVars,
       weightCssVars,
     ],
-    [["SM", [textMobileCssVars]]]
+    [["XS", [textMobileCssVars]]]
   );
 };
 
