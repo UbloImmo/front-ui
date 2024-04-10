@@ -2,6 +2,7 @@ import { objectValues } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
 
 import { fontFace, fontFamily } from "@/typography/font.utils";
+import { Gilroy } from "@/typography/fonts";
 
 import type { FontFaceDeclaration } from "@types";
 
@@ -51,6 +52,14 @@ describe("font", () => {
         .forEach((fontValue) => {
           expect(fontFamilyStr).toIncludeRepeated(fontValue, 2);
         });
+    });
+  });
+
+  describe("Gilroy", () => {
+    it("should be a valid font family", () => {
+      expect(Gilroy).toBeFunction();
+      expect(Gilroy).not.toThrow();
+      expect(Gilroy()).toBeObject();
     });
   });
 });
