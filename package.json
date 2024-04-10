@@ -89,7 +89,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@fontsource-variable/open-sans": "^5.0.23",
     "@ubloimmo/front-tokens": "0.1.11",
     "@ubloimmo/front-util": "latest",
     "bootstrap-icons": "^1.11.3",

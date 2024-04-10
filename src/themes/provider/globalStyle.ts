@@ -1,4 +1,3 @@
-import "@fontsource-variable/open-sans/index.css";
 import { texts } from "@ubloimmo/front-tokens";
 import { objectEntries, Logger } from "@ubloimmo/front-util";
 import { createGlobalStyle, css, type RuleSet } from "styled-components";
