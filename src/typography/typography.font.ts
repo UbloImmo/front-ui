@@ -51,6 +51,7 @@ export const linkFontFace = (): RuleSet => {
     * {
       font-synthesis: style;
       text-rendering: optimizeLegibility;
+      font-variant-ligatures: none;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
