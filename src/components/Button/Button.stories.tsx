@@ -1,4 +1,5 @@
 import { fn } from "@storybook/test";
+import { isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
 import { Button } from "./Button.component";
@@ -155,16 +156,17 @@ SecondaryColors.parameters = {
 };
 
 export const Icons = (props: ButtonProps) => {
+  const icon = isString(props.icon) ? props.icon : "CircleFill";
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultMockProps,
-    { ...props, icon: "CircleFill" }
+    { ...props, icon }
   );
 
   return (
     <FlexRowLayout gap="s-8">
       <ComponentVariants
         defaults={defaultProps}
-        variants={[null, "CircleFill"]}
+        variants={[null, icon]}
         for="icon"
         of={Button}
         scaling={1}
