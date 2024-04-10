@@ -36,17 +36,27 @@ export const cssRem = (rem: number): CssRem => `${rem}rem`;
  * Converts a value in number pixels to a value in number rems.
  *
  * @param {number} px - the value in number pixels to be converted to number rems
+ * @param {number} [toFixed] - The amount of digits after the decimal point.
  * @return {number} the converted value in numbers rems
  */
-export const pxToRem = (px: number): number => px / REM_FACTOR;
+export const pxToRem = (px: number, toFixed?: number): number => {
+  const rem = px / REM_FACTOR;
+  if (!isNumber(toFixed)) return rem;
+  return Number(rem.toFixed(toFixed));
+};
 
 /**
  * Converts a value in number rems to a value in number pixels.
  *
  * @param {number} rem - the value in number rems to be converted to number pixels
+ * @param {number} [toFixed] - The amount of digits after the decimal point.
  * @return {number} the converted value in numbers pixels
  */
-export const remToPx = (rem: number): number => rem * REM_FACTOR;
+export const remToPx = (rem: number, toFixed?: number): number => {
+  const px = rem * REM_FACTOR;
+  if (!isNumber(toFixed)) return px;
+  return Number(px.toFixed(toFixed));
+};
 
 /**
  * Extracts the numerical value from a CSS length value in pixels.
@@ -70,19 +80,21 @@ export const extractRem = (cssRem: CssRem): number =>
  * Converts a value in pixels to a value in rems using the provided utility functions.
  *
  * @param {CssPx} cssPx - the value in pixels to be converted to rems
+ * @param {number} [toFixed] - The amount of digits after the decimal point.
  * @return {CssRem} the converted value in rems
  */
-export const cssPxToCssRem = (cssPx: CssPx): CssRem =>
-  cssRem(pxToRem(extractPx(cssPx)));
+export const cssPxToCssRem = (cssPx: CssPx, toFixed?: number): CssRem =>
+  cssRem(pxToRem(extractPx(cssPx), toFixed));
 
 /**
  * Convert a value from CSS rem units to CSS px units.
  *
  * @param {CssRem} cssRem - the value in CSS rem units
+ * @param {number} [toFixed] - The amount of digits after the decimal point.
  * @return {CssPx} the value in CSS px units
  */
-export const cssRemToCssPx = (cssRem: CssRem): CssPx =>
-  cssPx(remToPx(extractRem(cssRem)));
+export const cssRemToCssPx = (cssRem: CssRem, toFixed?: number): CssPx =>
+  cssPx(remToPx(extractRem(cssRem), toFixed));
 
 /**
  * Predicate that checks if the given value is a CSS pixel value.

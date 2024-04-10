@@ -3,6 +3,8 @@ import { ComponentInfo, Canvas, Markdown, Text, Heading } from "@docs/blocks"
 import { Content } from "@docs/containers"
 import * as TextStories from "../Text.stories.tsx";
 import { GridLayout } from "../../../layouts";
+import { texts } from "@ubloimmo/front-tokens";
+import { cssRemToCssPx } from "@utils";
 
 <Meta title="Components/Text/Usage" />
 
@@ -23,7 +25,7 @@ If no size is provided, defaults to `m`.
 <GridLayout columns={3} gap={2}>
 
 <div>
-<Heading size="h4" weight="bold">M (16px)</Heading>
+<Heading size="h4" weight="bold">M ({cssRemToCssPx(texts.desktop.m.regular.css.style.fontSize)})</Heading>
 <Text>Our default font size.</Text>
 <br/>
 <Text size="s" color="gray-700">Used in body text, buttons, inputs and mostly everywhere
@@ -31,7 +33,7 @@ we need to clearly convey primary information to our users.</Text>
 </div>
 
 <div>
-<Heading size="h4" weight="bold">S (14px)</Heading>
+<Heading size="h4" weight="bold">S ({cssRemToCssPx(texts.desktop.s.regular.css.style.fontSize)})</Heading>
 <Text>Our smaller font size.</Text>
 <br/>
 <Text size="s" color="gray-700">Used in captions, labels and for displaying secondary information.
@@ -39,7 +41,7 @@ This is what you are reading right now.</Text>
 </div>
 
 <div>
-<Heading size="h4" weight="bold">XS (12px)</Heading>
+<Heading size="h4" weight="bold">XS ({cssRemToCssPx(texts.desktop.xs.regular.css.style.fontSize)})</Heading>
 <Text>Our smallest font size.</Text>
 <br/>
 <Text size="s" color="gray-700">Used for conveying contextual tertiary information,
@@ -85,3 +87,4 @@ Defaults to `gray-900`.
 > See our [Color Palette](?path=/docs/color-palette--docs)'s documentation for an exhaustive list of usable values.
 
 </Content>
+
