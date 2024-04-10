@@ -40,3 +40,8 @@ export type IconProps = {
 };
 
 export type DefaultIconProps = Required<IconProps>;
+
+export type MissingIcon = {
+  (): JSX.Element;
+  __missing: true;
+};
