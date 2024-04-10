@@ -4,7 +4,8 @@ import type {
   FontStyleDeclaration,
 } from "@types";
 
-export const fontFace = (declaration: FontFaceDeclaration) => {
+export const fontFace = (declaration: FontFaceDeclaration): string => {
+  if (!declaration) return "";
   return `
     @font-face {
       font-family: "${declaration.fontFamily}";
@@ -19,7 +20,7 @@ export const fontFace = (declaration: FontFaceDeclaration) => {
 export const fontFamily =
   (familyDeclaration: FontFamilyDeclaration) =>
   (styleDeclarations: FontStyleDeclaration[]) =>
-    styleDeclarations
+    (styleDeclarations ?? [])
       .map((styleDeclaration) =>
         fontFace({
           ...familyDeclaration,
