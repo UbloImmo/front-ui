@@ -4,6 +4,8 @@ export { BuildingBlocks } from "./BuildingBlocks.icon";
 export { BuildingBlocksFill } from "./BuildingBlocksFill.icon";
 export { CatRobot } from "./CatRobot.icon";
 export { Delete } from "./Delete.icon";
+export { Figma } from "./Figma.icon";
+export { FigmaFill } from "./FigmaFill.icon";
 export { Fire } from "./Fire.icon";
 export { FireFill } from "./FireFill.icon";
 export { MeasuringTape } from "./MeasuringTape.icon";
