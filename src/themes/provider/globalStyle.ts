@@ -206,7 +206,7 @@ export const buildGlobalStyle = (theme: Theme): RuleSet => {
       effectCssVars,
       weightCssVars,
     ],
-    [["SM", [textMobileCssVars]]]
+    [["XS", [textMobileCssVars]]]
   );
 };
 

@@ -124,7 +124,7 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
     color: var(--gray-300);
   }
 
-  @media screen and (max-width: ${breakpointsPx.SM}) {
+  @media screen and (max-width: ${breakpointsPx.XS}) {
     max-height: var(--s-10);
     height: var(--s-10);
     min-height: var(--s-10);
