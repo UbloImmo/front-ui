@@ -131,7 +131,7 @@ const generateRootIconIndex = (rootDirPath: string): FileDescription => {
  * @return {FileDescription} the file description object containing path and contents
  */
 const generateCommonTypesDefs = (rootDirPath: string): FileDescription => {
-  const contents = `import type { CssLength, PaletteColor } from "../../../types";
+  const contents = `import type { CssLength, PaletteColor } from "@types";
 
 export type CommonIconProps = {
   color?: PaletteColor;

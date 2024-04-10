@@ -79,7 +79,7 @@
     "prepare": "husky",
     "pre-push": "bun test:all",
     "pre-commit": "bun test:unit",
-    "icons:generate": "bun scripts/svg/index.ts",
+    "icons:generate": "bun scripts/svg/index.ts && bun test:lint:fix",
     "uninstall": "rm -rf node_modules",
     "reinstall": "bun run uninstall && bun install",
     "storybook": "storybook dev -p 6007 --debug --no-open",
