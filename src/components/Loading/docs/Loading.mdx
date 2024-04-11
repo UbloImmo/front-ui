@@ -1,13 +1,13 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas, Markdown } from "@docs/blocks"
-import { Content } from "@docs/containers"
+import { ComponentInfo, Canvas, Markdown } from "@docs/blocks";
+import { Content } from "@docs/containers";
 import * as LoadingStories from "./../Loading.stories.tsx";
 import * as LoadingAnimations from "../animations";
 import { objectKeys } from "@ubloimmo/front-util";
 
 <Meta title="Components/Loading/Usage" />
 
-<ComponentInfo of={LoadingStories} />
+<ComponentInfo of={LoadingStories} figmaId="223%3A3021" />
 
 <Content>
 
@@ -19,7 +19,7 @@ This component currently offers {objectKeys(LoadingAnimations).length} animation
 
 It defaults to `BouncingBalls`, but can be overriden by providing an `LoadingAnimation` name to its `animation` property.
 
-<Canvas of={LoadingStories.Animations}/>
+<Canvas of={LoadingStories.Animations} />
 
 ### Sizing
 
@@ -28,7 +28,7 @@ If no size is provided, it defaults to `s-4` (1rem).
 
 > It's up to the specific animation's implementation to decide whether `size` affects it height, width, or both.
 
-<Canvas of={LoadingStories.Sizes}/>
+<Canvas of={LoadingStories.Sizes} />
 
 ### Colors
 
@@ -37,7 +37,6 @@ If no color is provided, it defaults to `primary-light`.
 
 > Some animations might not take this property into account.
 
-<Canvas of={LoadingStories.Colors}/>
-
+<Canvas of={LoadingStories.Colors} />
 
 </Content>
