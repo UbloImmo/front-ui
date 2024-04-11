@@ -10,7 +10,12 @@
 
 name: NPM Publish
 run-name: Publishing NPM package
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: "Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease"
+        required: true
 
 jobs:
   build_package:
@@ -39,8 +44,8 @@ jobs:
         id: node_setup
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Check node
         id: node_check
@@ -60,6 +65,7 @@ jobs:
           which jq
           jq --version
 
+      # Configure Git
       - name: Setup git
         id: git_setup
         env:
@@ -69,27 +75,43 @@ jobs:
           git config --global user.email "${{ env.CI_COMMIT_EMAIL }}"
           git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
 
-      - name: Increment revision
-        id: increment_revision
-        run: npm version patch
+      # Bump package version
+      # Use tag latest
+      - name: Bump release version
+        if: startsWith(github.event.inputs.release-type, 'pre') != true
+        run: |
+          echo "NEW_VERSION=$(npm --no-git-tag-version version $RELEASE_TYPE)" >> $GITHUB_ENV
+          echo "RELEASE_TAG=latest" >> $GITHUB_ENV
+        env:
+          RELEASE_TYPE: ${{ github.event.inputs.release-type }}
+
+      # Bump package pre-release version
+      # Use tag beta for pre-release versions
+      - name: Bump pre-release version
+        if: startsWith(github.event.inputs.release-type, 'pre')
+        run: |
+          echo "NEW_VERSION=$(npm --no-git-tag-version --preid=beta version $RELEASE_TYPE
+          echo "RELEASE_TAG=beta" >> $GITHUB_ENV
+        env:
+          RELEASE_TYPE: ${{ github.event.inputs.release-type }}
+
+      # Commit changes
+      - name: Commit package.json changes and create tag
+        run: |
+          git add "package.json"
+          git add "CHANGELOG.md"
+          git commit -m "chore: release ${{ env.NEW_VERSION }}"
+          git tag ${{ env.NEW_VERSION }}
 
       - name: Build package
         id: package_build
-        run: bun run build
+        run: bun run lib:build
 
       - name: Publish package
         id: package_publish
         run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-      - name: Git commit & push `main`
-        id: git_push_main
-        run: |
-          message="build: ${{ steps.increment_revision.outputs.version }}"
-          git add .
-          git commit -m "$message"
-          git push
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   trigger_release:
     name: "Trigger release"
