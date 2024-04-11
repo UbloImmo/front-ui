@@ -42,6 +42,13 @@ export const useIconSize = (
   }, [size, warn]);
 };
 
+/**
+ * Loads an icon based on the provided name, trying different locations and types of icons.
+ *
+ * @param {IconName} name - The name of the icon to load.
+ * @param {VoidFn<[unknown]>} warn - A function to call in case of a warning or failure during icon loading.
+ * @return {Promise<{ default: GeneratedIcon | MissingIcon }>} The loaded icon or a missing icon placeholder.
+ */
 export const loadIcon = async (
   name: IconName,
   warn: VoidFn<[unknown]>
