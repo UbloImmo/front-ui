@@ -51,10 +51,18 @@ jobs:
           BRANCH: ${{ github.ref_name }}
           RELEASE_LEVEL: ${{ github.event.inputs.release-type }}
 
+      - name: "Fetch bumper app token"
+        id: bumper_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.BUMPER_APP_ID }}
+          private-key: ${{ secrets.BUMPER_SECRET }}
+
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           ref: main
+          token: ${{ steps.bumper_token.outputs.token }}
 
       - name: Setup node
         id: node_setup
@@ -75,11 +83,11 @@ jobs:
       - name: Setup git
         id: git_setup
         env:
-          CI_COMMIT_AUTHOR: CI
-          CI_COMMIT_EMAIL: ci@users.noreply.github.com
+          CI_COMMIT_AUTHOR: github-actions
+          CI_COMMIT_EMAIL: github-actions@github.com
         run: |
-          git config --global user.email "${{ env.CI_COMMIT_EMAIL }}"
-          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+          git config user.email "${{ env.CI_COMMIT_EMAIL }}"
+          git config user.name "${{ env.CI_COMMIT_AUTHOR }}"
 
       # Bump package version
       # Use tag latest
@@ -122,7 +130,7 @@ jobs:
       # Push repository changes
       - name: Push changes to repository
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.bumper_token.outputs.token }}
         run: |
           git push origin main && git push --tags
 
