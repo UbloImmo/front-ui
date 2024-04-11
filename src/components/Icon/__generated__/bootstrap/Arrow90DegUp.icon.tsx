@@ -1,11 +1,8 @@
 import { useMemo } from "react";
 
-import {
-  cssLengthUsage,
-  cssVarUsage,
-  mergeDefaultProps,
-} from "../../../../utils";
 import { CommonIconProps, commonIconDefaulProps } from "../common.types";
+
+import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "@utils";
 /**
  * React component generated from bootstrap icon: `arrow-90deg-up`.
  * Auto-generated before NPM release

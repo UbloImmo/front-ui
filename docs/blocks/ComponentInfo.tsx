@@ -1,15 +1,21 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
 import { Header } from "../containers";
 
-import { GridLayout } from "@/layouts";
+import { FlexLayout, GridLayout } from "@/layouts";
 import { parseJsDoc } from "@docs/docs.utils";
+
+import { Button } from "@components";
 
 import { Text, HeaderInfo, Canvas, Markdown } from ".";
 
 import type { ComponentStory } from "@docs/docs.types";
 import type { ReactNode } from "react";
+
+const FIGMA_TEMPLATE =
+  "https://www.figma.com/file/1VG7s2BzfgmnAnaCrUCVu6?node-id=";
+const GITHUB_TEMPLATE = "https://github.com/UbloImmo/front-ui/blob/main/src/";
 
 type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
   name: string;
@@ -18,10 +24,7 @@ type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
   children?: ReactNode;
   version?: string;
   description?: string;
-  links?: {
-    code: string;
-    design: string;
-  };
+  figmaId?: string;
   of: ComponentStory<TComponentProps>;
 };
 
@@ -81,12 +84,58 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
     };
   }, [props]);
 
+  const githubLink = useMemo(() => {
+    //lowercase the first letter of the parent directory
+    const parentLink =
+      parent &&
+      parent.replace("Components", "components").replace("Layouts", "layouts");
+    return `${GITHUB_TEMPLATE}${parentLink}/${title}`;
+  }, [title, parent]);
+
+  const figmaLink = useMemo(() => {
+    return `${FIGMA_TEMPLATE}${props.figmaId}`;
+  }, [props]);
+
+  const handleSourceLink = useCallback(
+    (link: string) => () => {
+      if (link) {
+        window.open(link, "_blank");
+      }
+    },
+    []
+  );
+
   return (
     <Header>
-      <HeaderInfo parent={parent} title={title}>
-        {description && <Markdown>{description}</Markdown>}
-        {props.children}
-      </HeaderInfo>
+      <FlexLayout direction="column" gap="s-2" fill>
+        <HeaderInfo parent={parent} title={title}>
+          {description && <Markdown>{description}</Markdown>}
+          {props.children}
+        </HeaderInfo>
+
+        <FlexLayout wrap gap="s-2">
+          <Button
+            icon="Github"
+            role="link"
+            label="View code"
+            title="Check source code on GitHub"
+            color="black"
+            secondary
+            onClick={handleSourceLink(githubLink)}
+          />
+          {props.figmaId && (
+            <Button
+              icon="Figma"
+              role="link"
+              label="View design"
+              title="Check design on Figma"
+              secondary
+              onClick={handleSourceLink(figmaLink)}
+            />
+          )}
+        </FlexLayout>
+      </FlexLayout>
+
       <GridLayout
         gap={{ column: "s-4", row: "s-2" }}
         flow="row"

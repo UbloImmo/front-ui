@@ -1,11 +1,8 @@
 import { useMemo } from "react";
 
-import {
-  cssLengthUsage,
-  cssVarUsage,
-  mergeDefaultProps,
-} from "../../../../utils";
 import { CommonIconProps, commonIconDefaulProps } from "../common.types";
+
+import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "@utils";
 /**
  * React component generated from bootstrap icon: `hammer`.
  * Auto-generated before NPM release

@@ -259,12 +259,10 @@ const iconFileDeclaration = (
     ? "bootstrap"
     : "custom";
   const importTemplate = `import { useMemo } from "react";
+
 import { CommonIconProps, commonIconDefaulProps } from "../common.types";
-import {
-  cssLengthUsage,
-  cssVarUsage,
-  mergeDefaultProps,
-} from "../../../../utils";`;
+
+import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "@utils";`;
 
   const tsxReturn = svgRootNodeToTsx(parseSvgStr(svg));
 

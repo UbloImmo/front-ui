@@ -1,7 +1,7 @@
 import { Logger } from "@ubloimmo/front-util";
 
 import { FileDescription, NormalizedIconFileDeclaration } from "./svg.types";
-const ROOT_DIR_PATH = "@/components/Icon/__generated__";
+const ROOT_DIR_PATH = "src/components/Icon/__generated__";
 
 const BOOTSTRAP_ICONS_DIR_PATH = `${ROOT_DIR_PATH}/bootstrap`;
 const CUSTOM_ICONS_DIR_PATH = `${ROOT_DIR_PATH}/custom`;
@@ -131,7 +131,7 @@ const generateRootIconIndex = (rootDirPath: string): FileDescription => {
  * @return {FileDescription} the file description object containing path and contents
  */
 const generateCommonTypesDefs = (rootDirPath: string): FileDescription => {
-  const contents = `import type { CssLength, PaletteColor } from "../../../types";
+  const contents = `import type { CssLength, PaletteColor } from "@types";
 
 export type CommonIconProps = {
   color?: PaletteColor;

@@ -156,6 +156,10 @@ const buttonColorStyles = (props: DefaultButtonProps): RuleSet => {
 
     svg {
       fill: ${getColor("icon")};
+
+      path {
+        fill: inherit;
+      }
     }
 
     &:hover:not(:disabled) {
