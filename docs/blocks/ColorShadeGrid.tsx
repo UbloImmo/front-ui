@@ -9,6 +9,7 @@ import { Text } from "@components";
 import type {
   DefaultPaletteColorShadeKey,
   GrayscalePaletteColorShadeKey,
+  PaletteColor,
   PaletteColorShaded,
   RgbaColorStr,
 } from "@types";
@@ -91,8 +92,14 @@ export const ColorShadeGrid = ({
           </Text>
         </GridItem>
       ))}
-      {shades.map(({ name: shadeName, shades }, shadeIndex) => {
-        return shades.map(({ name: opacityName, color }, opacityIndex) => {
+      {shades.map(({ name: shadeName, shades: colorShades }, shadeIndex) => {
+        let textColor = [...shades].reverse()[shadeIndex].name as PaletteColor;
+        if (textColor === shadeName) {
+          // make sure the text color is not the same as the shade color
+          textColor = shades[0].name as PaletteColor;
+        }
+
+        return colorShades.map(({ name: opacityName, color }, opacityIndex) => {
           const name = `${shadeName}-${opacityName}`;
           return (
             <ColorShadeSwatch
@@ -102,6 +109,7 @@ export const ColorShadeGrid = ({
               opacity={opacityName}
               x={shadeIndex + 2}
               y={opacityIndex + 2}
+              textColor={textColor}
             />
           );
         });
@@ -116,6 +124,7 @@ type ColorShadeSwatchProps = {
   x: number;
   y: number;
   colorName: string;
+  textColor: PaletteColor;
 };
 
 /**
@@ -131,16 +140,17 @@ const ColorShadeSwatch = ({
   x,
   y,
   colorName,
+  textColor,
 }: ColorShadeSwatchProps) => {
   const hex = rgbaColorConverter.strToHex(color);
 
   return (
     <ShadeContainer $background={color} $x={x} $y={y}>
-      <Text weight="medium" size="s" color="gray-500" important>
+      <Text weight="medium" size="s" color={textColor} important>
         {colorName}
       </Text>
       {opacity && (
-        <Text size="xs" color="gray-500" important>
+        <Text size="xs" color={textColor} important>
           <code>{hex}</code>
         </Text>
       )}
@@ -187,7 +197,6 @@ const ShadeContainer = styled.div.attrs<{
   transform: scale(1);
 
   & > span {
-    mix-blend-mode: difference;
     filter: blur(var(--s-2));
     opacity: 0;
     transition: all 150ms ease-out 0s;

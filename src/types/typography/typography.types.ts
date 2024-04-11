@@ -1,6 +1,6 @@
 import { texts } from "@ubloimmo/front-tokens";
 
-import type { PaletteColor } from "../";
+import type { PaletteColor } from "@types";
 import type { ReactNode } from "react";
 
 export type TypographyTokens = typeof texts;

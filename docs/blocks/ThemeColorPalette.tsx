@@ -5,7 +5,7 @@ import styled, { useTheme } from "styled-components";
 import { ColorShadeGrid } from "./ColorShadeGrid";
 import { Pre } from "./Typography";
 
-import { Heading, Text } from "@/components";
+import { Button, Heading } from "@/components";
 import { FlexLayout } from "@/layouts";
 
 import type {
@@ -66,20 +66,17 @@ export const ThemeColorShades = ({
             theme.{colorKey}
           </Pre>
         </BlockSection>
-        <BlockSection align="center" gap="s-1" justify="end">
-          <BlockTab
-            $selected={!showCodePreview}
+        <BlockSection align="center" gap="s-2" justify="end">
+          <Button
+            secondary={showCodePreview}
             onClick={toggleShowCodePreview}
-          >
-            <Text important weight="bold" size="xs">
-              Swatches
-            </Text>
-          </BlockTab>
-          <BlockTab $selected={showCodePreview} onClick={toggleShowCodePreview}>
-            <Text important weight="bold" size="xs">
-              Code
-            </Text>
-          </BlockTab>
+            label="Swatches"
+          />
+          <Button
+            secondary={!showCodePreview}
+            onClick={toggleShowCodePreview}
+            label="Code"
+          />
         </BlockSection>
       </BlockSection>
       {children && <BlockSection direction="column">{children}</BlockSection>}
@@ -164,21 +161,4 @@ const BlockContainer = styled.div`
 
 const BlockSection = styled(FlexLayout)`
   flex: 1;
-`;
-
-const BlockTab = styled.button.attrs<{ $selected?: boolean }>((props) => ({
-  ...props,
-  disabled: props.$selected,
-}))`
-  border: none;
-  background: ${({ $selected }) =>
-    $selected ? "var(--gray-600)" : "var(--gray-100)"};
-  border-radius: var(--s-2);
-
-  span {
-    color: ${({ $selected }) =>
-      $selected ? "white" : "var(--gray-700)"} !important;
-  }
-  padding: var(--s-2) var(--s-4);
-  cursor: ${({ $selected }) => ($selected ? "default" : "pointer")};
 `;

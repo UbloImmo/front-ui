@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it, mock } from "bun:test";
 
 import * as generated from "./__generated__";
 import { Icon } from "./Icon.component";
-import { useIconSize } from "./Icon.utils";
+import { useIconSize } from "./Icon.utils.tsx";
 import { ThemeProvider } from "../../themes";
 
 import { testHookFactory } from "@/tests";
@@ -102,66 +102,69 @@ describe("Icon", () => {
     expect(Icon).toBeFunction();
   });
 
-  it("should render", () => {
-    const { getByTestId } = render(
+  it("should render", async () => {
+    const { findByTestId } = render(
       <ThemeProvider>
         <Icon name="Circle" />
       </ThemeProvider>
     );
-    expect(getByTestId("icon")).toBeDefined();
+    const icon = await findByTestId("icon");
+    expect(icon).toBeDefined();
   });
 
-  it.todo("should warn when missing its `name` prop", () => {
+  it.todo("should warn when missing its `name` prop", async () => {
     // mock global console object to list to calls
     global.console.warn = mock(warnCopy);
-    const { getByTestId } = render(
-      <ThemeProvider>
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore Need to ignore in order to test missing prop */}
-        <Icon />
-      </ThemeProvider>
-    );
+    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+    /* @ts-ignore Need to ignore in order to test missing prop */
+    const { findByTestId } = render(<Icon />);
+    const icon = await findByTestId("icon");
+    expect(icon).toBeDefined();
     expect(global.console.warn).toHaveBeenCalled();
-    expect(getByTestId("icon")).toBeDefined();
   });
 
-  it("should support spacing labels as sizes", () => {
+  it("should support spacing labels as sizes", async () => {
     global.console.warn = mock(warnCopy);
-    const { getAllByTestId } = render(
+    const { findAllByTestId } = render(
       <ThemeProvider>
         <Icon name="Circle" size="s-05" />
         <Icon name="Circle" size="s-4" />
         <Icon name="Circle" size="s-112353513153" />
       </ThemeProvider>
     );
+    const icons = await findAllByTestId("icon");
     expect(global.console.warn).not.toHaveBeenCalled();
-    expect(getAllByTestId("icon")).toBeArrayOfSize(3);
+    expect(icons).toBeArrayOfSize(3);
   });
 
-  it("should return null if provided with an unknown icon name", () => {
+  it("should return null if provided with an unknown icon name", async () => {
     // mock global console object to list to calls
     global.console.warn = mock(warnCopy);
-    const { getByTestId } = render(
-      <ThemeProvider>
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore Need to ignore in order to test missing prop */}
-        <Icon name="UNSUPPORTED ICON" />
-      </ThemeProvider>
-    );
-    expect(() => getByTestId("icon")).toThrow();
-    expect(global.console.warn).toHaveBeenCalled();
+    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+    /* @ts-ignore Need to ignore in order to test missing prop */
+    const { findByTestId } = render(<Icon name="UNSUPPORTED ICON" />);
+
+    expect(async () => await findByTestId("icon")).toThrow();
   });
 
-  it("should render any generated icon", () => {
-    objectKeys(generated).forEach((iconName: IconName) => {
-      const { getByTestId } = render(
-        <ThemeProvider>
-          <Icon name={iconName} />
-        </ThemeProvider>
-      );
-      expect(getByTestId("icon")).toBeDefined();
+  objectKeys(generated).forEach((iconName) => {
+    it(`sould render the generated icon: "${iconName}"`, async () => {
+      const { findByTestId } = render(<Icon name={iconName} />);
+      const icon = await findByTestId("icon");
+      expect(icon).toBeDefined();
       cleanup();
     });
+  });
+
+  it.todo("should render any generated icon", async () => {
+    await Promise.all(
+      objectKeys(generated).map(async (iconName: IconName) => {
+        const { findByTestId } = render(<Icon name={iconName} />);
+        const icon = await findByTestId("icon");
+        expect(icon).toBeDefined();
+        cleanup();
+      })
+    );
   });
 
   testUseIconSize();

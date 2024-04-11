@@ -1,14 +1,18 @@
-import { useMemo } from "react";
+import { useMemo, lazy, Suspense } from "react";
 
-import * as generatedIcons from "./__generated__";
-import { DefaultIconProps, GeneratedIcon, IconProps } from "./Icon.types";
-import { useIconSize } from "./Icon.utils";
+import {
+  DefaultIconProps,
+  GeneratedIcon,
+  IconProps,
+  type MissingIcon,
+} from "./Icon.types";
+import { isMissingIcon, loadIcon, useIconSize } from "./Icon.utils.tsx";
 
 import { mergeDefaultProps, useLogger } from "@utils";
 
-import type { Nullable } from "@ubloimmo/front-util";
+import type { LazyExoticComponent } from "react";
 
-export const defaultIconProps: DefaultIconProps = {
+const defaultIconProps: DefaultIconProps = {
   size: "s-4",
   color: "primary-base",
   name: "Circle",
@@ -29,6 +33,10 @@ export const defaultIconProps: DefaultIconProps = {
  */
 const Icon = (props: IconProps) => {
   const { warn } = useLogger("Icon");
+  // runtime variable is needed instead of state or ref
+  // in order to be updated during lazy load
+  // only lasts 1 render
+  let iconIsMissing = false;
 
   if (!props.name) warn("Missing name prop");
   const { name, color, size } = useMemo(
@@ -36,19 +44,31 @@ const Icon = (props: IconProps) => {
     [props]
   );
 
-  const IconComponent = useMemo<Nullable<GeneratedIcon>>(
-    () => generatedIcons[name] ?? null,
-    [name]
-  );
+  const IconComponent = useMemo<
+    | LazyExoticComponent<GeneratedIcon | MissingIcon>
+    | GeneratedIcon
+    | MissingIcon
+  >(() => {
+    return lazy(async () => {
+      const icon = await loadIcon(name, warn);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      iconIsMissing = isMissingIcon(icon.default);
+      return icon;
+    });
+  }, [name, warn]);
 
   // sanitize size before passing it as svg width & height
   const parsedSize = useIconSize(size, warn);
 
-  if (!IconComponent) {
+  if (!IconComponent || iconIsMissing) {
     warn(`No icon component found for name "${name}"`);
     return null;
   }
-  return <IconComponent size={parsedSize} color={color} />;
+  return (
+    <Suspense fallback={null}>
+      <IconComponent size={parsedSize} color={color} />
+    </Suspense>
+  );
 };
 
 Icon.defaultProps = defaultIconProps;

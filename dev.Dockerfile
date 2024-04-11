@@ -3,7 +3,7 @@ FROM node:latest AS builder
 WORKDIR /app
 COPY . .
 RUN npm install -g bun && bun install --frozen-lockfile
-RUN bun run build-storybook
+RUN bun run storybook:build
 
 FROM nginx:alpine
 COPY --from=build /app/storybook-static /usr/share/nginx/html/design-system

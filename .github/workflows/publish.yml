@@ -8,39 +8,33 @@
 # - on each commit to main with a new version
 # - manually in the "actions" tab of the repository
 
-name: NPM Publish
-run-name: Publishing NPM package
-on: workflow_dispatch
+name: Publish
+run-name: Publishing
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: "Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease"
+        required: true
+        type: string
 
 jobs:
-  build_package:
-    name: Build NPM package
+  prepare_publish:
+    name: Prepare Publish
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: action/checkout@v4
+        uses: actions/checkout@v4
         with:
-          ref: "main"
-
-      - name: Setup Bun
-        id: bun_setup
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-
-      - name: Check bun
-        id: bun_check
-        run: |
-          which bun
-          bun --version
+          ref: main
 
       - name: Setup node
         id: node_setup
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Check node
         id: node_check
@@ -50,16 +44,7 @@ jobs:
           which npm
           npm --version
 
-      - name: Setup jq
-        id: jq_setup
-        uses: dcarbone/install-jq-action@v2.1.0
-
-      - name: Check jq
-        id: jq_check
-        run: |
-          which jq
-          jq --version
-
+      # Configure Git
       - name: Setup git
         id: git_setup
         env:
@@ -69,30 +54,55 @@ jobs:
           git config --global user.email "${{ env.CI_COMMIT_EMAIL }}"
           git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
 
-      - name: Increment revision
-        id: increment_revision
-        run: npm version patch
-
-      - name: Build package
-        id: package_build
-        run: bun run build
-
-      - name: Publish package
-        id: package_publish
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-      - name: Git commit & push `main`
-        id: git_push_main
+      # Bump package version
+      # Use tag latest
+      - name: Bump release version
+        if: startsWith(github.event.inputs.release-type, 'pre') != true
         run: |
-          message="build: ${{ steps.increment_revision.outputs.version }}"
-          git add .
-          git commit -m "$message"
-          git push
+          echo "NEW_VERSION=$(npm --no-git-tag-version version $RELEASE_TYPE)" >> $GITHUB_ENV
+          echo "RELEASE_TAG=latest" >> $GITHUB_ENV
+          echo "NEW_VERSION="$NEW_VERSION" >> $GITHUB_OUTPUT
 
-  trigger_release:
-    name: "Trigger release"
-    needs: build_package
-    uses: "./.github/workflows/release.yml"
+        env:
+          RELEASE_TYPE: ${{ github.event.inputs.release-type }}
+
+      # Bump package pre-release version
+      # Use tag beta for pre-release versions
+      - name: Bump pre-release version
+        if: startsWith(github.event.inputs.release-type, 'pre')
+        run: |
+          echo "NEW_VERSION=$(npm --no-git-tag-version --preid=beta version $RELEASE_TYPE)" >> $GITHUB_ENV
+          echo "RELEASE_TAG=beta" >> $GITHUB_ENV
+        env:
+          RELEASE_TYPE: ${{ github.event.inputs.release-type }}
+
+      # Update changelog unreleased section with new version
+      - name: Update changelog
+        uses: superfaceai/release-changelog-action@v1
+        with:
+          path-to-changelog: CHANGELOG.md
+          version: ${{ env.NEW_VERSION }}
+          operation: release
+
+      # Commit changes
+      - name: Commit CHANGELOG.md & package.json changes and create tag
+        run: |
+          git add "package.json"
+          git add "CHANGELOG.md"
+          git commit -m "chore: release ${{ env.NEW_VERSION }}"
+          git tag ${{ env.NEW_VERSION }}
+
+      # Push repository changes
+      - name: Push changes to repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin main && git push --tags
+
+  trigger_publish:
+    name: "Trigger lib publish"
+    needs: prepare_publish
+    uses: "./.github/workflows/lib_publish.yml"
     secrets: inherit
+    with:
+      pre-release: ${{ startsWith(github.event.inputs.release-type, 'pre') }}

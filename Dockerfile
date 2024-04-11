@@ -7,7 +7,7 @@ COPY bun.lockb bun.lockb
 RUN npm install -g bun
 RUN bun install --frozen-lockfile
 COPY . .
-RUN bun run build-storybook
+RUN bun run storybook:build
 
 FROM alpine:3.15 as Stage
 WORKDIR /usr/src/app/storybook-static

@@ -68,5 +68,6 @@ const config: StorybookConfig = {
 
     return head;
   },
+  staticDirs: [{ from: "../src/typography/fonts/Gilroy", to: "/assets/fonts" }],
 };
 export default config;
