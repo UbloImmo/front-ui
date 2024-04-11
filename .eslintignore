@@ -1,3 +1,4 @@
 dist
 lib
-generated
+__generated__
+node_modules
