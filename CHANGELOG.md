@@ -9,14 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-#### Global theme
-
+- Global Theme
 - Theme context, provider & consumer hook.
 - Global style injector (based on `styled-components`'s `GlobalStyle` component).
   - Conversion of theme into CSS variables.
 
-##### Color palette
-
+- Color palette
 - Static colors (`error`, `success`, `warning`, `pending`).
 - Client brand colors (auto generated from `@ublo-immo/front-tokens`).
 - Dynamic color (`primary`).
@@ -24,96 +22,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Color shade opacity transformers.
 - [Documentation](https://ublo.ublo.org/design-system?path=/docs/color-palette--docs)
 
-##### Typography management
-
+- Typography
 - Static assets (`Gilroy` font).
 - Font face css imports & declarations.
 - Responsive font sizes:
   - Headings (`h1`, `h2`, `h3`, `h4`).
   - Texts (`m`, `s`, `xs`).
 
-##### Organization data fetching
-
+- Organisation data fetching
 - Palette overrides (`getThemeOverrides` function).
 - Organization assets (`logo`, `palette`, `name`, `favicon`).
 - Available through `theme.organization`.
 
-##### Sizes
-
+- Sizes
 - Spacing scale generation (base unit: `4px`).
 - Responsive breakpoints.
 
-#### UI Components
+- UI Components
 
-##### Typography
-
+- Typography components
 - `v0.0.2` Text
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-text-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-text-properties--docs)
-
 - `v0.0.2` Heading
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-heading-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-heading-properties--docs)
 
-##### Interaction
-
+- Interaction components
 - `v0.0.1` Button
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-button-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-button-properties--docs)
 
-##### Feedback
-
+- Feedback components
 - `v0.0.2` Badge
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-badge-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-badge-properties--docs)
-
 - `v0.0.1` Loading
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-loading-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-loading-properties--docs)
   - [Contributing](https://ublo.ublo.org/design-system?path=/docs/components-loading-contributing--docs)
-
 - `v0.0.1` Dialog
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-dialog-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-dialog-properties--docs)
   - [API Reference](https://ublo.ublo.org/design-system?path=/docs/components-dialog-api-reference--docs)
 
-##### Iconography
-
+- Iconography components
 - `v0.0.2` Icon
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-icon-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-icon-properties--docs)
   - [Repository](https://ublo.ublo.org/design-system?path=/docs/components-icon-repository--docs)
-
 - `v0.0.1` StaticIcon
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-staticicon-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-staticicon-properties--docs)
 
-##### Form
-
-###### Inputs
-
+- Form components
+- Inputs
 - `v0.0.1` Input
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-input-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-input-common-properties--docs)
-
 - `v0.0.1` TextInput
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-input-textinput-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-input-textinput-properties--docs)
-
 - `v0.0.1` NumberInput
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-input-numberinput-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-input-numberinput-properties--docs)
-
 - `v0.0.1` EmailInput
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-input-emailinput-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-input-emailinput-properties--docs)
-
 - `v0.0.1` PasswordInput
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-input-passwordinput-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-input-passwordinput-properties--docs)
 
-###### Input decorators
-
+- Input decorators
 - `v0.0.1` InputLabel
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-inputlabel-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-inputlabel-properties--docs)
@@ -122,12 +102,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-inputassistivetext-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-inputassistivetext-properties--docs)
 
-#### UI Layouts
-
+- UI layouts
 - `v0.0.1` Flex
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/layouts-flex-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/layouts-flex-properties--docs)
-
 - `v0.0.1` Grid
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/layouts-grid-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/layouts-grid-properties--docs)

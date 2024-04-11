@@ -24,6 +24,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Release level check
+        run: |
+          case "$RELEASE_LEVEL" in
+            major|minor|patch|premajor|preminor|prepatch|prerelease)
+              echo "Release-level is OK"
+              ;;
+            *)
+              echo "Unknown release-level"
+              exit 1
+              ;;
+          esac
+        env:
+          RELEASE_LEVEL: ${{ github.event.inputs.release-type }}
+
+      - name: Branch check
+        run: |
+          if [[ $RELEASE_LEVEL != pre* ]] && [[ $BRANCH != main ]]
+          then
+            echo "Stable release on other then main branch is not allowed"
+            exit 1
+          fi
+
+          echo "Release-level and branch combination is VALID"
+        env:
+          BRANCH: ${{ github.ref_name }}
+          RELEASE_LEVEL: ${{ github.event.inputs.release-type }}
+
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
