@@ -132,7 +132,7 @@
     "storybook": "storybook dev -p 6007 --debug --no-open",
     "storybook:open": "storybook dev -p 6007 --debug",
     "storybook:reinstall": "bun run reinstall && bun storybook",
-    "build-storybook": "storybook build",
+    "storybook:build": "storybook build",
     "lib:build": "vite build --config vite.config.build.ts"
   },
   "type": "module",
