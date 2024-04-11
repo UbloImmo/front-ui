@@ -5,15 +5,14 @@ All notable changes to the library will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
 
+## 0.0.2-beta.0 - 2024-04-11
 ### Added
-
 - Global Theme
 - Theme context, provider & consumer hook.
 - Global style injector (based on `styled-components`'s `GlobalStyle` component).
   - Conversion of theme into CSS variables.
-
 - Color palette
 - Static colors (`error`, `success`, `warning`, `pending`).
 - Client brand colors (auto generated from `@ublo-immo/front-tokens`).
@@ -21,25 +20,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Typography styles based on figma-generated text tokens.
 - Color shade opacity transformers.
 - [Documentation](https://ublo.ublo.org/design-system?path=/docs/color-palette--docs)
-
 - Typography
 - Static assets (`Gilroy` font).
 - Font face css imports & declarations.
 - Responsive font sizes:
   - Headings (`h1`, `h2`, `h3`, `h4`).
   - Texts (`m`, `s`, `xs`).
-
 - Organisation data fetching
 - Palette overrides (`getThemeOverrides` function).
 - Organization assets (`logo`, `palette`, `name`, `favicon`).
 - Available through `theme.organization`.
-
 - Sizes
 - Spacing scale generation (base unit: `4px`).
 - Responsive breakpoints.
-
 - UI Components
-
 - Typography components
 - `v0.0.2` Text
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-text-usage--docs)
@@ -47,12 +41,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.2` Heading
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-heading-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-heading-properties--docs)
-
 - Interaction components
 - `v0.0.1` Button
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-button-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-button-properties--docs)
-
 - Feedback components
 - `v0.0.2` Badge
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-badge-usage--docs)
@@ -65,7 +57,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-dialog-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-dialog-properties--docs)
   - [API Reference](https://ublo.ublo.org/design-system?path=/docs/components-dialog-api-reference--docs)
-
 - Iconography components
 - `v0.0.2` Icon
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-icon-usage--docs)
@@ -74,7 +65,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.1` StaticIcon
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-staticicon-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-staticicon-properties--docs)
-
 - Form components
 - Inputs
 - `v0.0.1` Input
@@ -92,16 +82,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.1` PasswordInput
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-input-passwordinput-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-input-passwordinput-properties--docs)
-
 - Input decorators
 - `v0.0.1` InputLabel
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-inputlabel-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-inputlabel-properties--docs)
-
 - `v0.0.1` InputAssistiveText
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-inputassistivetext-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-inputassistivetext-properties--docs)
-
 - UI layouts
 - `v0.0.1` Flex
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/layouts-flex-usage--docs)
