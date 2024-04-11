@@ -12,7 +12,7 @@ import { mergeDefaultProps, useLogger } from "@utils";
 
 import type { LazyExoticComponent } from "react";
 
-export const defaultIconProps: DefaultIconProps = {
+const defaultIconProps: DefaultIconProps = {
   size: "s-4",
   color: "primary-base",
   name: "Circle",

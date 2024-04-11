@@ -7,7 +7,6 @@ import {
 } from "./StaticIcon.styles";
 import { DefaultStaticIconProps, StaticIconProps } from "./StaticIcon.types";
 import { Icon, IconProps } from "../Icon";
-import { defaultIconProps } from "../Icon/Icon.component";
 
 import { PaletteColor, StyleProps } from "@types";
 import { mergeDefaultProps, useStyleProps } from "@utils";
@@ -16,7 +15,7 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
   color: "primary",
   size: "s",
   stroke: false,
-  name: defaultIconProps.name,
+  name: Icon.defaultProps.name,
 };
 
 /**
