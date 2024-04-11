@@ -1,6 +1,9 @@
 import { isNullish } from "@ubloimmo/front-util";
 import { ReactNode, useMemo, useState, useEffect } from "react";
-import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import {
+  ThemeProvider as StyledThemeProvider,
+  useTheme as useStyledTheme,
+} from "styled-components";
 
 import { GlobalStyle } from "./globalStyle";
 import { buildTheme } from "../theme";
@@ -8,9 +11,10 @@ import { buildTheme } from "../theme";
 import type {
   ClientColorPaletteKey,
   GetThemeOverridesFn,
+  Theme,
   ThemeOverride,
 } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
+import type { GenericFn, Nullable } from "@ubloimmo/front-util";
 
 type ThemeProviderProps = {
   children: ReactNode;
@@ -57,3 +61,10 @@ export const ThemeProvider = ({
     </StyledThemeProvider>
   );
 };
+
+/**
+ * A re-export of `styled-components`' `useTheme` hook , typed to return {@link Theme}
+ *
+ * @returns {Theme}
+ */
+export const useTheme = useStyledTheme as GenericFn<[], Theme>;
