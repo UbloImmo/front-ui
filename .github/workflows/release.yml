@@ -48,7 +48,7 @@ jobs:
         id: release_version
         run: |
           version=$(echo $(<./package.json) | jq ".version")
-          echo "version=$version" >> $GITHUB_VERSION
+          echo "version=$version" >> $GITHUB_OUTPUT
 
       # Read version changelog
       - name: Get version changelog
