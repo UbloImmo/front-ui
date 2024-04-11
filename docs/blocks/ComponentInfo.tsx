@@ -3,8 +3,10 @@ import styled from "styled-components";
 
 import { Header } from "../containers";
 
-import { GridLayout } from "@/layouts";
+import { FlexLayout, GridLayout } from "@/layouts";
 import { parseJsDoc } from "@docs/docs.utils";
+
+import { Button } from "@components";
 
 import { Text, HeaderInfo, Canvas, Markdown } from ".";
 
@@ -18,10 +20,7 @@ type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
   children?: ReactNode;
   version?: string;
   description?: string;
-  links?: {
-    code: string;
-    design: string;
-  };
+  figmaId?: string;
   of: ComponentStory<TComponentProps>;
 };
 
@@ -81,12 +80,53 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
     };
   }, [props]);
 
+  const githubLink = useMemo(() => {
+    //lowercase the first letter of the parent, needed when contains subdirectory (e.g: "Components/Input" => "components/Input")
+    const parentLink =
+      parent && parent?.slice(0, 1).toLowerCase() + parent?.slice(1);
+    return `https://github.com/UbloImmo/front-ui/blob/main/src/${parentLink}/${title}`;
+  }, [title, parent]);
+
+  const figmaLink = useMemo(() => {
+    return `https://www.figma.com/file/1VG7s2BzfgmnAnaCrUCVu6?node-id=${props.figmaId}`;
+  }, [props]);
+
+  const handleSourceLink = (link: string) => () => {
+    if (link) {
+      window.open(link, "_blank");
+    }
+  };
+
   return (
     <Header>
       <HeaderInfo parent={parent} title={title}>
         {description && <Markdown>{description}</Markdown>}
         {props.children}
       </HeaderInfo>
+
+      <FlexLayout wrap gap="s-2">
+        <Button
+          icon="Github"
+          role="link"
+          label="View code"
+          title="Check source code on GitHub"
+          iconPlacement="right"
+          secondary
+          onClick={handleSourceLink(githubLink)}
+        />
+        {props.figmaId && (
+          <Button
+            icon="Figma"
+            role="link"
+            label="View design"
+            title="Check design on Figma"
+            iconPlacement="right"
+            secondary
+            onClick={handleSourceLink(figmaLink)}
+          />
+        )}
+      </FlexLayout>
+
       <GridLayout
         gap={{ column: "s-4", row: "s-2" }}
         flow="row"
