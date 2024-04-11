@@ -2,6 +2,7 @@ import { create } from "@storybook/theming/create";
 
 import { buildTheme } from "../src/themes";
 import { blendColors } from "../src/utils";
+import { fontFamilySets } from "../src/typography/typography.font";
 
 const t = buildTheme();
 
@@ -11,9 +12,8 @@ const t = buildTheme();
 export default create({
   base: "light",
   // Typography
-  fontBase: '"Open Sans", sans-serif',
-  fontCode:
-    '"JetBrains Mono", "Inconsolata", "Fira Code", "Fira Mono", monospace',
+  fontBase: fontFamilySets.sans,
+  fontCode: fontFamilySets.code,
 
   // Branding
   brandTitle: t.organization.name ?? "Ublo",

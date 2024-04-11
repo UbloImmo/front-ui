@@ -4,12 +4,12 @@ import { Gilroy } from "./fonts";
 
 import type { RuleSet } from "styled-components";
 
-const fontFamily = {
+export const fontFamilySets = {
   sans: `"Gilroy", "Helvetica", "Inter", "Arial", "Calibri",
   "Segoe UI", sans-serif`,
   code: `"Menlo", "Inconsolata", "Fira Code", "Fira Code", "Source Mono",
   "Consolas", monospace`,
-};
+} as const;
 
 /**
  * Defines the font family for typography.
@@ -21,7 +21,7 @@ const fontFamily = {
 export const typographyFontFace = (important?: boolean): RuleSet => {
   const $important = important ? " !important" : "";
   return css`
-    font-family: ${fontFamily.sans}${$important};
+    font-family: ${fontFamilySets.sans}${$important};
   `;
 };
 
@@ -35,7 +35,7 @@ export const typographyFontFace = (important?: boolean): RuleSet => {
 export const codeFontFace = (important?: boolean): RuleSet => {
   const $important = important ? " !important" : "";
   return css`
-    font-family: ${fontFamily.code}${$important};
+    font-family: ${fontFamilySets.code}${$important};
   `;
 };
 
