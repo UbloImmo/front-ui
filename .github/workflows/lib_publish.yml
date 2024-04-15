@@ -55,6 +55,10 @@ jobs:
           git config --global user.email "${{ env.CI_COMMIT_EMAIL }}"
           git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
 
+      - name: Install deps
+        id: install_deps
+        run: bun install
+
       - name: Build package
         id: package_build
         run: bun run lib:build
