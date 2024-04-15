@@ -44,7 +44,7 @@
       "default": "./dist/sizes.js"
     }
   },
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "author": "Jean-Nicolas Veigel <art.jnveigel@gmail.com>",
   "homepage": "https://github.com/UbloImmo/front-ui",
   "repository": {

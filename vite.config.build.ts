@@ -61,7 +61,7 @@ const chunkBanner = (fileName: string) => {
   return `/**
 ${bannerHeader}* @ubloimmo/uikit version ${version}
 *
-* © Ublo ${currentYear}
+* Copyright © Ublo ${currentYear}
 * https://ublo.immo
 */
 
