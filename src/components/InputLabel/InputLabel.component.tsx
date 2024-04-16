@@ -11,7 +11,7 @@ export const defaultInputLabelProps: DefaultInputLabelProps = {
 
 /**
  * Renders an input label component, to be used in association with the Input component.
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
@@ -30,11 +30,11 @@ const InputLabel = (props: InputLabelProps): JSX.Element => {
 
   return (
     <InnerInputLabel data-testid="input-label" {...mergedProps}>
-      <Text color="gray-600" size="s">
+      <Text color="gray-600" size="m">
         {label}
       </Text>
       {required && (
-        <Text color="warning-base" size="s" weight="medium">
+        <Text color="warning-base" size="m" weight="medium">
           *
         </Text>
       )}

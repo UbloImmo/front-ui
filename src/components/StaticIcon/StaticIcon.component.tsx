@@ -21,7 +21,7 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
 /**
  * Wraps an `Icon` in a container of the same color, a shade lighter.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {StaticIconProps} props - The props for the static icon.
  * @return {JSX.Element} The static icon component.
@@ -37,7 +37,11 @@ const StaticIcon = (props: StaticIconProps) => {
   const iconProps = useMemo<Pick<IconProps, "color" | "size">>(() => {
     const iconSize = staticIconSizeToIconSizeMap[size];
     const iconColor: PaletteColor =
-      color === "gray" ? "gray-600" : `${color}-base`;
+      color === "gray"
+        ? "gray-600"
+        : color === "white"
+        ? "gray-500"
+        : `${color}-base`;
 
     return {
       color: iconColor,

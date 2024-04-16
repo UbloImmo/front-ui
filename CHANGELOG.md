@@ -2,7 +2,7 @@
 
 All notable changes to the library will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
@@ -10,6 +10,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - License & copyright
+
+- `v0.0.1` Action component
+  - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-action-usage--docs)
+  - [Props](https://ublo.ublo.org/design-system?path=/docs/components-action-properties--docs)
+
+- Component bootstrap script
+- Component lazy loading util
+
+- Icons:
+  - CircleDotted (custom icon)
+
+- Card elevation shadow
+
+### Removed
+
+- Icons:
+  - Delete (custom icon)
+
+### Changed
+
+- `v0.0.2` Button component
+  - Secondary styles (white, primary, error)
+- `v0.0.3` Badge component
+  - Test id support
+- `v0.0.2` StaticIcon component
+  - White variant
+
+### Fixed
+
+- `v0.0.2` InputLabel
+  - Text size after font style overhaul
+- `v0.0.2` InputAssistiveText
+  - Text size after font style overhaul
 
 ## 0.1.0-beta.0 - 2024-04-11
 

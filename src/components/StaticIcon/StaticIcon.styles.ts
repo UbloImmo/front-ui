@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 
-import { fromStyleProps } from "@utils";
+import { cssVarUsage, fromStyleProps } from "@utils";
 
 import type {
   DefaultStaticIconProps,
@@ -46,7 +46,10 @@ export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
   const borderColor = `${color}-${borderColorShade}` as const;
 
   const backgroundColorShade = color === "gray" ? "50" : "light";
-  const backgroundColor = `${color}-${backgroundColorShade}` as const;
+  const backgroundColor =
+    color === "white"
+      ? "white"
+      : cssVarUsage(`${color}-${backgroundColorShade}`);
 
   return css`
     padding: var(--${padding});
@@ -54,12 +57,14 @@ export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
     border: ${stroke
       ? `1px solid var(--${borderColor})`
       : "1px solid transparent"};
-    background-color: var(--${backgroundColor});
+    background: ${backgroundColor};
     max-height: calc(
       ${staticIconSizeToIconSizeMap[size]} + (var(--${padding}) * 2)
     );
     max-width: calc(
       ${staticIconSizeToIconSizeMap[size]} + (var(--${padding}) * 2)
     );
+
+    transition: background 150ms ease-out 0s;
   `;
 };

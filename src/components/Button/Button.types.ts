@@ -1,5 +1,10 @@
 import type { IconName } from "..";
-import type { Enum, PaletteColor, RequireAtLeastOne } from "@types";
+import type {
+  Enum,
+  PaletteColor,
+  RequireAtLeastOne,
+  RgbaColorStr,
+} from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { AriaRole } from "react";
 
@@ -123,7 +128,7 @@ export type ButtonProps = {
 
 export type DefaultButtonProps = Required<ButtonProps>;
 
-export type ButtonElementColor = PaletteColor | "transparent";
+export type ButtonElementColor = PaletteColor | "transparent" | RgbaColorStr;
 
 export type ButtonStyleColors = {
   background?: ButtonElementColor;
