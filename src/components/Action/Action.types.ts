@@ -15,6 +15,7 @@ export type ActionProps = {
    *
    * @type {string}
    * @required
+   * @default "[Action]"
    */
   label: string;
   /**
@@ -22,6 +23,7 @@ export type ActionProps = {
    *
    * @type {IconName}
    * @required
+   * @default "Cursor"
    */
   icon: IconName;
   /**
