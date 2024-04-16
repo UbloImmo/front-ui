@@ -7,29 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.1.0 - 2024-04-16
 ### Added
-
 - License & copyright
-
 - `v0.0.1` Action component
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-action-usage--docs)
   - [Props](https://ublo.ublo.org/design-system?path=/docs/components-action-properties--docs)
-
 - Component bootstrap script
 - Component lazy loading util
-
 - Icons:
   - CircleDotted (custom icon)
-
 - Card elevation shadow
 
-### Removed
-
-- Icons:
-  - Delete (custom icon)
-
 ### Changed
-
 - `v0.0.2` Button component
   - Secondary styles (white, primary, error)
 - `v0.0.3` Badge component
@@ -37,8 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.2` StaticIcon component
   - White variant
 
-### Fixed
+### Removed
+- Icons:
+  - Delete (custom icon)
 
+### Fixed
 - `v0.0.2` InputLabel
   - Text size after font style overhaul
 - `v0.0.2` InputAssistiveText
