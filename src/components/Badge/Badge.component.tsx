@@ -14,7 +14,7 @@ import { useMergedProps, useStyleProps, useTestId } from "@utils";
 
 import type { PaletteColor, StyleProps, TestIdProps } from "@types";
 
-export const defaultBadgeProps: DefaultBadgeProps = {
+const defaultBadgeProps: DefaultBadgeProps = {
   label: "label",
   icon: null,
   color: "primary",
@@ -34,7 +34,7 @@ export const defaultBadgeProps: DefaultBadgeProps = {
 const Badge = (props: BadgeProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultBadgeProps, props);
   const styledProps = useStyleProps(mergedProps);
-  const testId = useTestId("badge", mergedProps);
+  const testId = useTestId("badge", props);
   const { color, shade, label, icon } = mergedProps;
   const { iconColorStyle, textColorStyle } = useMemo(() => {
     const { iconColor, textColor } =

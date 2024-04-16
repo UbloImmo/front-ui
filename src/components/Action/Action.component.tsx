@@ -34,7 +34,7 @@ import type {
   StaticIconSize,
 } from "../StaticIcon/StaticIcon.types";
 
-const ActionBadge = lazy(loadComponent<BadgeProps, "Badge">("Badge"));
+const ActionBadge = lazy(loadComponent("Badge", import("../Badge")));
 
 const staticIconSizeMap: Record<ActionSize, StaticIconSize> = {
   default: "s",
@@ -91,13 +91,14 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     return { size, color, name: mergedProps.icon };
   }, [mergedProps, isHovering]);
 
-  const badgeProps = useMemo<Nullable<BadgeProps>>(() => {
+  const badgeProps = useMemo<Nullable<BadgeProps & TestIdProps>>(() => {
     if (!mergedProps.badgeLabel || isEmptyString(mergedProps.badgeLabel))
       return null;
     return {
       label: mergedProps.badgeLabel,
       color: mergedProps.disabled ? "gray" : "primary",
       shade: "light",
+      testId: "action-badge",
     };
   }, [mergedProps]);
 
@@ -147,7 +148,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
         <Text {...textProps} testId="action-label">
           {mergedProps.label}
         </Text>
-        {badgeProps && <ActionBadge {...badgeProps} />}
+        {badgeProps && <ActionBadge {...badgeProps} testId="action-badge" />}
       </FlexLayout>
     </ActionContainer>
   );

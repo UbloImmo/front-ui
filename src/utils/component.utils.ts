@@ -1,14 +1,24 @@
+import type { TestIdProps } from "@types";
 import type { FC } from "react";
+
+type Component<TComponentProps extends Record<string, unknown>> =
+  TComponentProps extends infer TBaseProps & TestIdProps
+    ?
+        | FC<TBaseProps & TestIdProps>
+        | (FC<TComponentProps> & { defaultProps: Required<TBaseProps> })
+    :
+        | FC<TComponentProps>
+        | (FC<TComponentProps> & { defaultProps: Required<TComponentProps> });
 
 type ComponentModule<
   TComponentName extends string,
   TComponentProps extends Record<string, unknown>
-> = {
-  [key in TComponentName]: FC<TComponentProps>;
+> = Record<string, unknown> & {
+  [key in TComponentName]: Component<TComponentProps>;
 };
 
 type ComponentDefaultModule<TComponentProps extends Record<string, unknown>> = {
-  default: FC<TComponentProps>;
+  default: Component<TComponentProps>;
 };
 
 /**
@@ -24,9 +34,8 @@ type ComponentDefaultModule<TComponentProps extends Record<string, unknown>> = {
  * ```tsx
  * import { lazy, useReducer } from "react";
  * import { loadComponent } from "@utils";
- * imoprt type { BadgeProps } from "@components/Badge";
  *
- * const LazyLoadedBadge = lazy(loadComponent<BadgeProps, "Badge">("Badge"));
+ * const LazyLoadedBadge = lazy(loadComponent("Badge", import("../Badge")));
  *
  * export const MyComponent = () => {
  *  const [state, toggleState] = useReducer((state) => !state, false);
@@ -41,23 +50,20 @@ type ComponentDefaultModule<TComponentProps extends Record<string, unknown>> = {
  */
 export const loadComponent =
   <
-    TComponentProps extends Record<string, unknown>,
-    TComponentName extends string
+    TComponentName extends string,
+    TComponentProps extends Record<string, unknown>
   >(
     componentName: TComponentName,
-    componentPath?: string
+    modulePromise: Promise<ComponentModule<TComponentName, TComponentProps>>
   ) =>
   async (): Promise<ComponentDefaultModule<TComponentProps>> => {
-    const path = componentPath ?? `@components/${componentName}`;
-    const absolutePath = path
-      .replace("@components/", "/src/components/")
-      .replace("@/", "/src/");
-    const module = (await import(absolutePath)) as ComponentModule<
-      TComponentName,
-      TComponentProps
-    >;
-    if (!(componentName in module)) {
-      throw new Error(`Component ${componentName} not found in ${path}`);
+    try {
+      const module = await modulePromise;
+      if (!(componentName in module)) {
+        throw new Error(`Component ${componentName} not found`);
+      }
+      return { default: module[componentName] };
+    } catch (e) {
+      throw new Error(`Failed to load component ${componentName}: ${e}`);
     }
-    return { default: module[componentName] };
   };
