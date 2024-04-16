@@ -23,9 +23,10 @@ type ComponentDefaultModule<TComponentProps extends Record<string, unknown>> = {
  * @example
  * ```tsx
  * import { lazy, useReducer } from "react";
- * imoprt { loadComponent } from "@utils";
+ * import { loadComponent } from "@utils";
+ * imoprt type { BadgeProps } from "@components/Badge";
  *
- * const LazyLoadedBadge = lazy(loadComponent<BadgeProps, "Badge">('Badge'));
+ * const LazyLoadedBadge = lazy(loadComponent<BadgeProps, "Badge">("Badge"));
  *
  * export const MyComponent = () => {
  *  const [state, toggleState] = useReducer((state) => !state, false);
