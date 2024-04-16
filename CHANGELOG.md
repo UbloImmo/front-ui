@@ -12,8 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - License & copyright
 
 - `v0.0.1` Action component
-- `v0.0.2` StaticIcon component
-  - White variant
 
 - Component bootstrap script
 - Component lazy loading util
@@ -32,6 +30,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.2` Button component
   - Secondary styles (white, primary, error)
+- `v0.0.3` Badge component
+  - Test id support
+- `v0.0.2` StaticIcon component
+  - White variant
 
 ### Fixed
 
