@@ -10,8 +10,8 @@ import { BadgeProps, DefaultBadgeProps } from "./Badge.types";
 import { Icon } from "../Icon/Icon.component";
 import { Text } from "../Text/Text.component";
 
-import { PaletteColor, StyleProps } from "@types";
-import { useMergedProps, useStyleProps } from "@utils";
+import { PaletteColor, StyleProps, type TestIdProps } from "@types";
+import { useMergedProps, useStyleProps, useTestId } from "@utils";
 
 export const defaultBadgeProps: DefaultBadgeProps = {
   label: "label",
@@ -30,10 +30,11 @@ export const defaultBadgeProps: DefaultBadgeProps = {
  * @return {JSX.Element} the Badge component
  */
 
-const Badge = (props: BadgeProps): JSX.Element => {
+const Badge = (props: BadgeProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultBadgeProps, props);
-  const { color, shade, label, icon } = mergedProps;
   const styledProps = useStyleProps(mergedProps);
+  const testId = useTestId("badge", mergedProps);
+  const { color, shade, label, icon } = mergedProps;
   const { iconColorStyle, textColorStyle } = useMemo(() => {
     const { iconColor, textColor } =
       color === "gray"
@@ -47,7 +48,7 @@ const Badge = (props: BadgeProps): JSX.Element => {
   }, [color, shade]);
 
   return (
-    <BadgeContainer data-testid="badge" {...styledProps}>
+    <BadgeContainer data-testid={testId} {...styledProps}>
       {icon && (
         <Icon
           data-testid="badge-icon"
