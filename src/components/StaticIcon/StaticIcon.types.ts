@@ -5,14 +5,16 @@ import { ColorKey, Enum, SpacingLabel } from "@types";
 const staticIconSizes = ["xs", "s", "m", "l"] as const;
 export type StaticIconSize = Enum<typeof staticIconSizes>;
 
+export type StaticIconColor = ColorKey | "white";
+
 export type StaticIconProps = {
   /**
    * The color of the staticIcon
    *
-   * @type {ColorKey}
+   * @type {StaticIconColor}
    * @default "primary"
    */
-  color?: ColorKey;
+  color?: StaticIconColor;
   /**
    * The size of the Icon.
    * Influences the padding and border radius of the wrapper as well
