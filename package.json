@@ -143,5 +143,8 @@
       "json",
       "html"
     ]
+  },
+  "dependencies": {
+    "@ubloimmo/front-tokens": "^0.1.13"
   }
 }

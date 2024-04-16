@@ -155,12 +155,17 @@ describe("palette", () => {
     describe("parsing", () => {
       it("should parse an effect token", () => {
         expect(parseEffectToken).toBeFunction();
-        expect(() => parseEffectToken(effects.shadow.card)).not.toThrow();
-        expect(parseEffectToken(effects.shadow.card)).toContainKey(
+        expect(() =>
+          parseEffectToken(effects.shadow.card.default)
+        ).not.toThrow();
+        expect(parseEffectToken(effects.shadow.card.default)).toContainKey(
           "originalValue"
         );
         expect(
-          parseEffectToken({ ...effects.shadow.card, value: "blur(45px)" })
+          parseEffectToken({
+            ...effects.shadow.card.default,
+            value: "blur(45px)",
+          })
         ).not.toContainKey("originalValue");
       });
     });
@@ -178,9 +183,9 @@ describe("palette", () => {
         name,
         rgbaColorConverter.strToArr(value),
       ]);
-    const parsedEffect = parseEffectToken(effects.shadow.card);
+    const parsedEffect = parseEffectToken(effects.shadow.card.default);
     const parsedEffectWithoutColor = parseEffectToken({
-      ...effects.shadow.card,
+      ...effects.shadow.card.default,
       value: "blur(45px)",
     });
     const parsedEffectWithPrimaryDefault = parseEffectToken(
