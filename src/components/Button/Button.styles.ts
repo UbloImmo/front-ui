@@ -6,7 +6,7 @@ import {
 import { css } from "styled-components";
 
 import { breakpointsPx } from "@/sizes";
-import { cssVarUsage, fromStyleProps } from "@utils";
+import { cssVarUsage, fromStyleProps, isValidRgbaStr } from "@utils";
 
 import type {
   ButtonColor,
@@ -14,7 +14,13 @@ import type {
   ButtonStyleColors,
   DefaultButtonProps,
 } from "./Button.types";
-import type { ColorKey, CssVarUsage, StyleProps, ValueMap } from "@types";
+import type {
+  ColorKey,
+  CssVarUsage,
+  RgbaColorStr,
+  StyleProps,
+  ValueMap,
+} from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { RuleSet } from "styled-components";
 
@@ -51,11 +57,12 @@ const whiteButtonStyle: ButtonStyle = {
   },
   secondary: {
     default: {
-      content: "gray-900",
-      border: "gray-50",
+      content: "rgba(255, 255, 255, 1)",
+      border: "rgba(255, 255, 255, 1)",
+      background: "rgba(255, 255, 255, 0.05)",
     },
     hover: {
-      background: "primary-light",
+      background: "rgba(255, 255, 255, 0.05)",
     },
   },
 };
@@ -92,11 +99,12 @@ const colorButtonStyle = (color: Exclude<ColorKey, "gray">): ButtonStyle => ({
   secondary: {
     default: {
       border: `${color}-base`,
-      content: `${color}-dark`,
+      content: `${color}-base`,
       icon: `${color}-base`,
     },
     hover: {
       icon: `${color}-dark`,
+      content: `${color}-dark`,
       background: `${color}-light`,
       border: `${color}-dark`,
     },
@@ -119,7 +127,7 @@ const computeButtonColor = ({
     buttonStyleMap[color][secondary ? "secondary" : "primary"];
 
   let defaultColors = transformObject(rawButtonColors.default, (color) =>
-    color ? cssVarUsage(color) : null
+    color ? (isValidRgbaStr(color) ? color : cssVarUsage(color)) : null
   );
   defaultColors = {
     ...defaultColors,
@@ -129,10 +137,19 @@ const computeButtonColor = ({
     objectEntries({
       ...rawButtonColors.hover,
       icon: rawButtonColors.hover.icon ?? rawButtonColors.hover.content,
-    }).map(([key, color]): [keyof ButtonStyleColors, Nullable<CssVarUsage>] => [
-      key,
-      color ? cssVarUsage(color) : defaultColors[key] ?? null,
-    ])
+    }).map(
+      ([key, color]): [
+        keyof ButtonStyleColors,
+        Nullable<CssVarUsage | RgbaColorStr>
+      ] => [
+        key,
+        color
+          ? isValidRgbaStr(color)
+            ? color
+            : cssVarUsage(color)
+          : defaultColors[key] ?? null,
+      ]
+    )
   );
 
   return (key: keyof ButtonStyleColors, hovering?: boolean) => {
