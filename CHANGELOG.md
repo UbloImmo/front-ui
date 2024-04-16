@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - License & copyright
 
 - `v0.0.1` Action component
+  - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-action-usage--docs)
+  - [Props](https://ublo.ublo.org/design-system?path=/docs/components-action-properties--docs)
 
 - Component bootstrap script
 - Component lazy loading util
