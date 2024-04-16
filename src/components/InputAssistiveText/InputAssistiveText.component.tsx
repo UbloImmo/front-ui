@@ -18,7 +18,7 @@ const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
 /**
  * Renders an assistive text for the Input component based on the provided props.
  *
- * @version 0.0.1
+ * @version 0.0.2
  * @param {InputAssistiveTextProps} props - The properties for the assistive text.
  * @return {Nullable<JSX.Element>} The JSX element representing the assistive text.
  */
@@ -44,11 +44,11 @@ const InputAssistiveText = (
   return (
     <InnerAssistiveText data-testid="assistive-text">
       {error && isNonEmptyString(errorText) ? (
-        <Text size="xs" color="error-base">
+        <Text size="s" color="error-base">
           {errorText}
         </Text>
       ) : (
-        <Text size="xs" color="gray-400">
+        <Text size="s" color="gray-400">
           {assistiveText}
         </Text>
       )}
