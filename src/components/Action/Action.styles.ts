@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css, type RuleSet } from "styled-components";
 
 import { cssVarUsage } from "@utils";
 
@@ -20,10 +20,16 @@ const borderRadii: Record<ActionSize, SpacingLabel> = {
   large: "s-3",
 };
 
+/**
+ * Generates the styles for the action component container button.
+ *
+ * @param {StyleProps<DefaultActionProps>} styleProps - Style props mapped from the action component's props.
+ * @return {RuleSet} The generated CSS styles for the action container.
+ */
 export const actionContainerStyles = ({
   $size,
   $disabled,
-}: StyleProps<DefaultActionProps>) => {
+}: StyleProps<DefaultActionProps>): RuleSet => {
   const paddingHorizontal = horizontalPaddings[$size];
   const height = heights[$size];
   const borderRadius = borderRadii[$size];
