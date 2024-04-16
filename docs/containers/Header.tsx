@@ -31,7 +31,7 @@ export const Header = ({ children }: HeaderProps) => {
 const Container = styled.header`
   padding: 0 0 var(--s-8);
   background: var(--gray-50);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card-default);
 
   & [data-layout="docs-content"] {
     padding-bottom: var(--s-4);
