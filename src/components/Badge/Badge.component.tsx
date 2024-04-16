@@ -10,8 +10,9 @@ import { BadgeProps, DefaultBadgeProps } from "./Badge.types";
 import { Icon } from "../Icon/Icon.component";
 import { Text } from "../Text/Text.component";
 
-import { PaletteColor, StyleProps, type TestIdProps } from "@types";
 import { useMergedProps, useStyleProps, useTestId } from "@utils";
+
+import type { PaletteColor, StyleProps, TestIdProps } from "@types";
 
 export const defaultBadgeProps: DefaultBadgeProps = {
   label: "label",
