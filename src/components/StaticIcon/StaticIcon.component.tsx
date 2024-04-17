@@ -21,7 +21,7 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
 /**
  * Wraps an `Icon` in a container of the same color, a shade lighter.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {StaticIconProps} props - The props for the static icon.
  * @return {JSX.Element} The static icon component.
