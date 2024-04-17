@@ -56,13 +56,15 @@ export const actionContainerStyles = ({
       text-overflow: ellipsis;
       max-height: 100%;
       width: 100%;
-      overflow: hidden;
+      overflow-y: hidden;
       overflow-wrap: break-word;
       display: block;
       display: -moz-box;
       display: -webkit-box;
       -webkit-box-orient: vertical;
+      -moz-box-orient: vertical;
       -webkit-line-clamp: 2;
+      -moz-line-clamp: 2;
     }
 
     *[data-testid="badge action-badge"] span {
@@ -72,6 +74,7 @@ export const actionContainerStyles = ({
     }
 
     div[data-testid="flex"] {
+      height: 100%;
       overflow: hidden;
     }
 
