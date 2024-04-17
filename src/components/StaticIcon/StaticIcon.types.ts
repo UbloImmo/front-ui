@@ -44,6 +44,6 @@ export type StaticIconProps = {
 export type DefaultStaticIconProps = Required<StaticIconProps>;
 
 export type StaticIconContainerStyle = {
-  padding: SpacingLabel;
   borderRadius: SpacingLabel;
+  size: SpacingLabel;
 };
