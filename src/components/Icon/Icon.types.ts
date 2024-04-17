@@ -1,4 +1,4 @@
-import { GenericFn } from "@ubloimmo/front-util";
+import { GenericFn, objectKeys } from "@ubloimmo/front-util";
 
 import * as GeneratedIcons from "./__generated__";
 import { CommonIconProps } from "./__generated__/common.types";
@@ -8,6 +8,8 @@ import { FixedCssLength, PaletteColor } from "@types";
 const IconName = GeneratedIcons;
 
 export type IconName = keyof typeof IconName;
+
+export const allIconNames = objectKeys(IconName) as IconName[];
 
 export type GeneratedIcon = GenericFn<[CommonIconProps], JSX.Element>;
 

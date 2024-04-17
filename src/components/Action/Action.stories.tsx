@@ -1,6 +1,7 @@
 import { fn } from "@storybook/test";
 
 import { Action } from "./Action.component";
+import { allIconNames } from "../Icon/Icon.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { useMergedProps } from "@utils";
@@ -14,7 +15,28 @@ const meta = {
   component: Action,
   title: "Components/Action/Stories",
   args: {
+    ...Action.defaultProps,
     onClick: fn(),
+  },
+  argTypes: {
+    label: {
+      control: "text",
+    },
+    icon: {
+      options: allIconNames,
+    },
+    size: {
+      options: ["default", "large"],
+    },
+    title: {
+      control: "text",
+    },
+    badgeLabel: {
+      control: "text",
+    },
+    disabled: {
+      control: "boolean",
+    },
   },
 } satisfies Meta<typeof Action>;
 
