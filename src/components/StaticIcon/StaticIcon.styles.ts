@@ -14,20 +14,20 @@ export const staticIconSizeToContainerStyleMap: ValueMap<
   StaticIconContainerStyle
 > = {
   xs: {
-    padding: "s-1",
     borderRadius: "s-1",
+    size: "s-5",
   },
   s: {
-    padding: "s-2",
     borderRadius: "s-1",
+    size: "s-7",
   },
   m: {
-    padding: "s-2",
     borderRadius: "s-2",
+    size: "s-10",
   },
   l: {
-    padding: "s-3",
     borderRadius: "s-4",
+    size: "s-12",
   },
 };
 
@@ -40,7 +40,10 @@ export const staticIconSizeToIconSizeMap: ValueMap<StaticIconSize, CssRem> = {
 
 export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
   const { size, color, stroke } = fromStyleProps(props);
-  const { padding, borderRadius } = staticIconSizeToContainerStyleMap[size];
+  const { borderRadius, size: wrapperSize } =
+    staticIconSizeToContainerStyleMap[size];
+
+  const containerSize = cssVarUsage(wrapperSize);
 
   const borderColorShade = color === "gray" ? "300" : "medium";
   const borderColor = `${color}-${borderColorShade}` as const;
@@ -52,19 +55,17 @@ export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
       : cssVarUsage(`${color}-${backgroundColorShade}`);
 
   return css`
-    padding: var(--${padding});
     border-radius: var(--${borderRadius});
     border: ${stroke
       ? `1px solid var(--${borderColor})`
       : "1px solid transparent"};
     background: ${backgroundColor};
-    max-height: calc(
-      ${staticIconSizeToIconSizeMap[size]} + (var(--${padding}) * 2)
-    );
-    max-width: calc(
-      ${staticIconSizeToIconSizeMap[size]} + (var(--${padding}) * 2)
-    );
-
+    height: ${containerSize};
+    min-height: ${containerSize};
+    max-height: ${containerSize};
+    width: ${containerSize};
+    min-width: ${containerSize};
+    max-width: ${containerSize};
     transition: background 150ms ease-out 0s;
   `;
 };

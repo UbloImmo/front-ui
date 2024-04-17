@@ -54,7 +54,7 @@ const defaultActionProps: DefaultActionProps = {
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -126,7 +126,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     }
     return {
       direction: "row",
-      gap: "s-4",
+      gap: "s-2",
       align: "center",
       justify: "space-between",
     };
@@ -136,7 +136,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     <ActionContainer
       data-testid={testId}
       type="button"
-      title={mergedProps.label}
+      title={mergedProps.title ?? mergedProps.label}
       onClick={onClick}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
