@@ -40,7 +40,7 @@ export const actionContainerStyles = ({
     min-height: ${height};
     max-height: ${height};
     width: 100%;
-    padding: var(--s-1) var(--${paddingHorizontal});
+    padding: var(--s-05) var(--${paddingHorizontal});
     display: flex;
     align-items: center;
     gap: var(--s-4);
@@ -53,12 +53,26 @@ export const actionContainerStyles = ({
       box-shadow 300ms ease-out 0s;
 
     span[data-testid="text action-label"] {
-      display: block;
-      overflow: hidden;
       text-overflow: ellipsis;
       max-height: 100%;
-      max-width: fit-content;
+      width: 100%;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      display: block;
+      display: -moz-box;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
+    }
+
+    *[data-testid="badge action-badge"] span {
+      max-width: max-content;
+      min-width: max-content;
+      white-space: nowrap;
+    }
+
+    div[data-testid="flex"] {
+      overflow: hidden;
     }
 
     &:hover:not(:disabled) {
