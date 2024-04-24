@@ -267,7 +267,7 @@ const defaultDialogContext: GlobalDialogContext = {
   portalRoot: "#dialog-root",
 };
 
-const DialogContext = createContext(defaultDialogContext);
+const DialogReactContext = createContext(defaultDialogContext);
 
 /**
  * A hook that returns the methods exposed by {@link useGlobalDialogContext} through {@link DialogContext}.
@@ -277,7 +277,7 @@ const DialogContext = createContext(defaultDialogContext);
  * @return {GlobalDialogContext} The global dialog context from the useContext hook.
  */
 export const useDialogManager = (): GlobalDialogContext => {
-  return useContext(DialogContext);
+  return useContext(DialogReactContext);
 };
 
 /**
@@ -319,6 +319,8 @@ export const DialogProvider = ({
 }: DialogContextProviderProps): JSX.Element => {
   const context = useGlobalDialogContext({ portalRoot });
   return (
-    <DialogContext.Provider value={context}>{children}</DialogContext.Provider>
+    <DialogReactContext.Provider value={context}>
+      {children}
+    </DialogReactContext.Provider>
   );
 };
