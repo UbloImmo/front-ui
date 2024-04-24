@@ -51,7 +51,7 @@ const StaticIcon = (props: StaticIconProps) => {
 
   return (
     <StaticIconContainer data-testid="static-icon" {...styledProps}>
-      <Icon name={name} {...iconProps}></Icon>
+      <Icon name={name} {...iconProps} />
     </StaticIconContainer>
   );
 };
