@@ -4,7 +4,7 @@ import { DefaultInputLabelProps, InputLabelProps } from "./InputLabel.types";
 import { isNonEmptyString, useLogger, useMergedProps } from "../../utils";
 import { Text } from "../Text/Text.component";
 
-export const defaultInputLabelProps: DefaultInputLabelProps = {
+const defaultInputLabelProps: DefaultInputLabelProps = {
   label: "[Input label]",
   required: false,
 };
