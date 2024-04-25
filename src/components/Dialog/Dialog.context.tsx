@@ -14,16 +14,16 @@ import {
   useState,
 } from "react";
 
-import {
-  type DialogContextProps,
-  type DialogContext,
-  type DialogReference,
-  type DialogContextProviderProps,
-  type InternalDialogStateMap,
+import { isEmptyString, isNonEmptyString, useLogger } from "@utils";
+
+import type {
+  DialogContextProps,
+  DialogContext,
+  DialogReference,
+  DialogContextProviderProps,
+  InternalDialogStateMap,
   GlobalDialogContext,
 } from "./Dialog.types";
-
-import { isEmptyString, isNonEmptyString, useLogger } from "@utils";
 
 const DEFAULT_PORTAL_ROOT = "#dialog-root";
 
