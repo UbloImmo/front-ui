@@ -20,7 +20,7 @@ import type {
 } from "@types";
 import type { GenericFn } from "@ubloimmo/front-util";
 
-const lorem = "The brown fox jumps over the lazy dog.";
+const lorem = "The quick brown fox jumps over the lazy dog.";
 const componentSource = componentSourceFactory<TextProps>(
   "Text",
   { children: lorem },
