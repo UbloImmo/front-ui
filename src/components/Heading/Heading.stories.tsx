@@ -18,7 +18,7 @@ import type {
   TypographyWeight,
 } from "@types";
 
-const lorem = "The brown fox jumps over the lazy dog.";
+const lorem = "The quick brown fox jumps over the lazy dog.";
 
 const componentSource = componentSourceFactory<HeadingProps>(
   "Heading",

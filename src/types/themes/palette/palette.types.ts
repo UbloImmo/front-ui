@@ -1,7 +1,7 @@
 import { colors } from "@ubloimmo/front-tokens";
 import { GenericFn } from "@ubloimmo/front-util";
 
-import { HexColorAlpha, RgbaColorStr, Enum } from "../../";
+import type { HexColorAlpha, RgbaColorStr, Enum, EnumExtension } from "@types";
 
 export const defaultPaletteColorShadeKeys = [
   "dark",
@@ -74,6 +74,8 @@ export type Color = keyof StaticColorPalette | keyof DynamicColorPalette;
 
 export type ColorKey = keyof ColorPalette & string;
 
+export type ColorKeyOrWhite = EnumExtension<ColorKey, "white">;
+
 export type ShadeKey<TColorKey extends ColorKey> =
   keyof ColorPalette[TColorKey] & string;
 
@@ -82,3 +84,5 @@ export type PaletteColor = {
     [TShadeKey in ShadeKey<TColorKey>]: `${TColorKey}-${TShadeKey}`;
   }[ShadeKey<TColorKey>];
 }[ColorKey];
+
+export type PaletteColorOrWhite = EnumExtension<PaletteColor, "white">;

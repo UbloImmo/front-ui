@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v.0.0.1` State indicator component
+- `EnumExtension` generic type
+
+### Changed
+
+- Typings
+  - Replace `StaticIconColor` with `ColorKeyOrWhite`
+
+### Fixed
+- Text & Heading stories text content
+
 ## 0.1.2 - 2024-04-25
 
 ## 0.1.1 - 2024-04-17
