@@ -34,7 +34,7 @@ echo "creating new component $component_name"
 mkdir_if_missing "$component_path"
 mkdir_if_missing "$component_path/docs"
 
-touch_if_missing "$component_paht/$component_name.component.tsx"
+touch_if_missing "$component_path/$component_name.component.tsx"
 touch_if_missing "$component_path/$component_name.styles.ts"
 touch_if_missing "$component_path/$component_name.stories.tsx"
 touch_if_missing "$component_path/$component_name.test.ts"
