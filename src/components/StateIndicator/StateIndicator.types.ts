@@ -1,6 +1,10 @@
 import type { IconName } from "../Icon";
-import type { StaticIconColor } from "../StaticIcon/StaticIcon.types";
-import type { PaletteColor, StyleProps } from "@types";
+import type {
+  ColorKeyOrWhite,
+  PaletteColor,
+  PaletteColorOrWhite,
+  StyleProps,
+} from "@types";
 
 export type StateIndicatorProps = {
   /**
@@ -25,16 +29,16 @@ export type StateIndicatorProps = {
    *
    * Controls its background, border, label & icon colors
    *
-   * @type {PaletteColor | "white"}
+   * @type {ColorKeyOrWhite}
    * @default "primary"
    */
-  color?: StaticIconColor;
+  color?: ColorKeyOrWhite;
 };
 
 export type DefaultStateIndicatorProps = Required<StateIndicatorProps>;
 
 export type StateIndicatorStyleColors = {
-  background: PaletteColor | "white";
+  background: PaletteColorOrWhite;
   label: PaletteColor;
   icon: PaletteColor;
   border: PaletteColor;

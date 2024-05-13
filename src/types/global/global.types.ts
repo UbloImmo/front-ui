@@ -33,3 +33,18 @@ export type RequireAtLeastOne<
     [K in TKeys]-?: Required<Pick<TChoices, K>> &
       Partial<Pick<TChoices, Exclude<TKeys, K>>>;
   }[TKeys];
+
+/**
+ * Takes a string enum or a string array  and extends it with another enum.
+ *
+ * @template {string | string[] | readonly string[]} TEnum - The base string enum or string array
+ * @template {string | string[] | readonly string[]} TExtension - The extension string enum or string array
+ */
+export type EnumExtension<
+  TEnum extends string | string[] | readonly string[],
+  TExtension extends string | string[] | readonly string[]
+> =
+  | (TEnum extends string[] | readonly string[] ? Enum<TEnum> : TEnum)
+  | (TExtension extends string[] | readonly string[]
+      ? Enum<TExtension>
+      : TExtension);

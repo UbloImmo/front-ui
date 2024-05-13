@@ -5,12 +5,9 @@ import { FlexRowLayout } from "../../layouts";
 
 import { ComponentVariants } from "@docs/blocks";
 
-import type {
-  StaticIconColor,
-  StaticIconProps,
-  StaticIconSize,
-} from "./StaticIcon.types";
+import type { StaticIconProps, StaticIconSize } from "./StaticIcon.types";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { ColorKeyOrWhite } from "@types";
 
 const meta: Meta<typeof StaticIcon> = {
   title: "Components/StaticIcon/Stories",
@@ -31,7 +28,7 @@ export const Default: Story = {
   args: StaticIcon.defaultProps,
 };
 
-const colors: StaticIconColor[] = [
+const colors: ColorKeyOrWhite[] = [
   "primary",
   "success",
   "pending",

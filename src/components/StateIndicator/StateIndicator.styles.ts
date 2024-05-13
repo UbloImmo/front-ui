@@ -6,10 +6,10 @@ import type {
   StateIndicatorStyleColors,
   StateIndicatorStyleProps,
 } from "./StateIndicator.types";
-import type { StaticIconColor } from "../StaticIcon/StaticIcon.types";
+import type { ColorKeyOrWhite } from "@types";
 
 export const computeStateIndicatorColors = (
-  color: StaticIconColor
+  color: ColorKeyOrWhite
 ): StateIndicatorStyleColors => {
   if (color === "gray") {
     return {

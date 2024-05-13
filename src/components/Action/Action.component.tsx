@@ -9,6 +9,7 @@ import { Text } from "../Text";
 import { FlexLayout, FlexLayoutProps } from "@/layouts";
 import {
   TextProps,
+  type ColorKeyOrWhite,
   type PaletteColor,
   type StyleProps,
   type TestIdProps,
@@ -30,7 +31,6 @@ import type {
 import type { BadgeProps } from "../Badge";
 import type {
   StaticIconProps,
-  StaticIconColor,
   StaticIconSize,
 } from "../StaticIcon/StaticIcon.types";
 
@@ -82,7 +82,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
   }, [mergedProps]);
 
   const staticIconProps = useMemo<StaticIconProps>(() => {
-    const color: StaticIconColor = mergedProps.disabled
+    const color: ColorKeyOrWhite = mergedProps.disabled
       ? "white"
       : isHovering
       ? "primary"

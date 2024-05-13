@@ -6,8 +6,8 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { StateIndicatorProps } from "./StateIndicator.types";
-import type { StaticIconColor } from "../StaticIcon/StaticIcon.types";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { ColorKeyOrWhite } from "@types";
 
 const componentTemplate = componentSourceFactory(
   "StateIndicator",
@@ -15,7 +15,7 @@ const componentTemplate = componentSourceFactory(
   StateIndicator.defaultProps
 );
 
-const colors: StaticIconColor[] = [
+const colors: ColorKeyOrWhite[] = [
   "primary",
   "success",
   "pending",
