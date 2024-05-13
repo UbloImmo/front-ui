@@ -57,6 +57,7 @@ const StateIndicator = (
       size: "s",
       weight: "medium",
       color: colors.label,
+      ellipsis: true,
     };
   }, [colors]);
 
@@ -64,9 +65,7 @@ const StateIndicator = (
     <StateIndicatorContainer {...styleProps} data-testid={testId}>
       <FlexLayout align="center" justify="start" fill gap="s-3">
         <Icon {...iconProps} />
-        <Text {...TextProps} ellipsis>
-          {mergedProps.label}
-        </Text>
+        <Text {...TextProps}>{mergedProps.label}</Text>
       </FlexLayout>
     </StateIndicatorContainer>
   );
