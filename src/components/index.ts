@@ -10,3 +10,4 @@ export * from "./Portal";
 export * from "./Dialog";
 export * from "./InputLabel";
 export * from "./InputAssistiveText";
+export * from "./StateIndicator";
