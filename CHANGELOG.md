@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- `v0.0.2` StateIndicator
+  - Set minimum height to 40px
+  - Reduce markup complexity (remove nested div)
+
 ## 0.2.0 - 2024-05-13
 ### Added
 - `v.0.0.1` State indicator component
