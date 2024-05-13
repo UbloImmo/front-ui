@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Creates a component's file structure
+# Usage: bun init:component <component_name>
+
 mkdir_if_missing() {
   if [ ! -d "$1" ];
   then
