@@ -75,4 +75,4 @@ jobs:
     uses: "./.github/workflows/release.yml"
     secrets: inherit
     with:
-      pre-release: "${{ github.event.inputs.pre-release }}"
+      pre-release: "${{ inputs.pre-release }}"
