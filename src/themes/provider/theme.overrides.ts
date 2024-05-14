@@ -1,4 +1,4 @@
-import { Nullable, transformObject } from "@ubloimmo/front-util";
+import { Nullable, isString, transformObject } from "@ubloimmo/front-util";
 
 import {
   blendColors,
@@ -46,7 +46,13 @@ const fetchThemeOverrides = async (
       mode: "no-cors",
     });
     const theme = (await res.json()) as ThemeOverrideReponse;
-    if (!theme || !theme.organization?.name) {
+    if (
+      !theme ||
+      !(
+        isString(theme.organization?.name) ||
+        isString(theme.organization?.assets?.logo)
+      )
+    ) {
       return null;
     }
     return theme as ThemeOverride;
