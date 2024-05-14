@@ -48,3 +48,15 @@ export type EnumExtension<
   | (TExtension extends string[] | readonly string[]
       ? Enum<TExtension>
       : TExtension);
+
+/**
+ * Extracts the type of the value in TUnion that matches TSelection
+ *
+ * @remarks Not really needed, basically acts as a safeguard when using only a subset of an existing union
+ *
+ * @template TUnion - Base Union type
+ * @template TSelection - Subset of TUnion
+ */
+export type Extract<TUnion, TSelection> = TSelection extends TUnion
+  ? TSelection
+  : never;

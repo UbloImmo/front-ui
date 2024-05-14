@@ -51,16 +51,18 @@ export const stateIndicatorStyle = ({
     width: 100%;
     max-width: 100%;
     min-width: 0;
+    min-height: var(--s-10);
     border-radius: var(--s-1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--s-3);
+    overflow-x: hidden;
+    overflow-y: visible;
 
     svg {
       min-width: var(--s-3);
-    }
-
-    &,
-    & > div {
-      overflow-x: hidden;
-      overflow-y: visible;
     }
 
     span {

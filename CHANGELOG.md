@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- `v0.0.1` Action Icon component
+  - Logic
+  - Styles
+  - Stories
+  - Tests
+- `Extract` type: a safeguard when dealing with union subsets
+
+### Fixed
+- `v0.0.2` State Indicator component
+  - Set minimum height to 40px
+  - Reduce markup complexity (remove nested div)
+
 ## 0.2.0 - 2024-05-13
 ### Added
 - `v.0.0.1` State indicator component

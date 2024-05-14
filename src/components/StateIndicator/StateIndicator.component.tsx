@@ -6,7 +6,6 @@ import {
   stateIndicatorStyle,
 } from "./StateIndicator.styles";
 
-import { FlexLayout } from "@/layouts";
 import { useMergedProps, useStyleProps, useTestId } from "@utils";
 
 import { Icon, IconProps, Text } from "@components";
@@ -28,7 +27,7 @@ const defaultStateIndicatorProps: DefaultStateIndicatorProps = {
  * Essentially a blown up `Badge` that fills its container
  * and has an extra `white` color.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {TestIdProps & StateIndicatorProps} props - the state indicator props
  * @returns {JSX.Element} - the state indicator markup
@@ -63,10 +62,8 @@ const StateIndicator = (
 
   return (
     <StateIndicatorContainer {...styleProps} data-testid={testId}>
-      <FlexLayout align="center" justify="start" fill gap="s-3">
-        <Icon {...iconProps} />
-        <Text {...TextProps}>{mergedProps.label}</Text>
-      </FlexLayout>
+      <Icon {...iconProps} />
+      <Text {...TextProps}>{mergedProps.label}</Text>
     </StateIndicatorContainer>
   );
 };
