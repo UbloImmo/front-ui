@@ -1,4 +1,4 @@
-# @ubloimmo/uikit `v0.0.1`
+# @ubloimmo/uikit
 
 Ublo's global uikit library.
 
