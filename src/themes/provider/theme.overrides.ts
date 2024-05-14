@@ -17,7 +17,7 @@ import type {
   ThemeOverridePalette,
 } from "@types";
 
-export const DEFAULT_UBLO_API_URL = "https://ublo.ublo.org/api";
+export const DEFAULT_UBLO_API_URL = "https://ublo.ublo.org";
 
 /**
  * Generates a path template for theme overrides based on the given base path.
@@ -27,7 +27,7 @@ export const DEFAULT_UBLO_API_URL = "https://ublo.ublo.org/api";
  */
 const themeOverridesPathTemplate = (
   basePath: string
-): `${string}/themes/json` => `${basePath}/themes/json` as const;
+): `${string}/api/themes/json` => `${basePath}/api/themes/json` as const;
 
 /**
  * Fetches theme overrides from the specified base path.
