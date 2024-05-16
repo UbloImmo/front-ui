@@ -1,3 +1,5 @@
+import { fn } from "@storybook/test";
+
 import { Input } from "./Input.component";
 import { GenericInputProps, InputProps, InputType } from "./Input.types";
 import { TextInput } from "../Input/TextInput/TextInput.component";
@@ -30,10 +32,11 @@ export const Default: Story = {
   },
 };
 
-const types: InputType[] = ["text", "number", "email", "password"];
+const types: InputType[] = ["text", "number", "email", "password", "phone"];
 export const Types = (props: GenericInputProps<(typeof types)[number]>) => {
   return (
     <ComponentVariants
+      columns={2}
       defaults={props}
       variants={types}
       for="type"
@@ -42,6 +45,10 @@ export const Types = (props: GenericInputProps<(typeof types)[number]>) => {
       propLabels
     />
   );
+};
+
+Types.args = {
+  onChange: fn(),
 };
 
 const booleans: boolean[] = [true, false];

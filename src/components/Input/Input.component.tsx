@@ -4,6 +4,7 @@ import { EmailInput } from "./EmailInput/EmailInput.component";
 import { inputTypes } from "./Input.types";
 import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput/PasswordInput.component";
+import { PhoneInput } from "./PhoneInput/PhoneInput.component";
 import { TextInput } from "./TextInput/TextInput.component";
 
 import { useLogger } from "@utils";
@@ -22,6 +23,7 @@ const inputComponentMap: TypedInputComponentMap = {
   number: NumberInput,
   password: PasswordInput,
   email: EmailInput,
+  phone: PhoneInput,
 };
 
 /**
