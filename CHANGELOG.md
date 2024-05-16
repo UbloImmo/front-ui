@@ -7,11 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Fixed
-
-- Theme override URL template
-
-## 0.3.0 - 2024-05-14
 ### Added
 
 - `v.0.0.1` PhoneInput component
