@@ -10,8 +10,6 @@ import { ThemeProvider } from "../../themes";
 import { testHookFactory } from "@/tests";
 import { isCssRem } from "@utils";
 
-import type { IconName } from ".";
-
 const warnCopy = global.console.warn;
 
 const testUseIconSize = () => {
@@ -154,17 +152,6 @@ describe("Icon", () => {
       expect(icon).toBeDefined();
       cleanup();
     });
-  });
-
-  it.todo("should render any generated icon", async () => {
-    await Promise.all(
-      objectKeys(generated).map(async (iconName: IconName) => {
-        const { findByTestId } = render(<Icon name={iconName} />);
-        const icon = await findByTestId("icon");
-        expect(icon).toBeDefined();
-        cleanup();
-      })
-    );
   });
 
   testUseIconSize();
