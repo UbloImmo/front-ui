@@ -3,12 +3,13 @@ import { useRef, useMemo, useCallback, ChangeEventHandler } from "react";
 import {
   CountrySelector,
   ParsedCountry,
+  defaultCountries,
   usePhoneInput,
 } from "react-international-phone";
 import "react-international-phone/style.css";
 import styled from "styled-components";
 
-import { countryList, defaultToFrenchPhone } from "./PhoneInput.utils";
+import { defaultToFrenchPhone } from "./PhoneInput.utils";
 import {
   StyledInput,
   StyledInputContainer,
@@ -81,12 +82,13 @@ const PhoneInput = (props: InputProps<"phone">): JSX.Element => {
   const inputStyles = useInputStyles(mergedProps);
 
   return (
-    <StyledInputContainer {...inputStyles}>
+    <StyledInputContainer {...inputStyles} data-testid="input-phone-container">
       <StyledCountrySelector
         selectedCountry={country.iso2}
         onSelect={changeCountryOnSelect}
-        countries={countryList}
-        buttonStyle={{ border: "none", background: "transparent" }}
+        countries={defaultCountries}
+        disabled={mergedProps.disabled}
+        data-testid="input-phone-control"
         dropdownStyleProps={{
           className: "dropdown-container",
           listItemClassName: "list-item",
@@ -99,6 +101,7 @@ const PhoneInput = (props: InputProps<"phone">): JSX.Element => {
         ref={inputRef}
         value={inputValue}
         onChange={interceptOnChange}
+        disabled={mergedProps.disabled}
       />
     </StyledInputContainer>
   );
@@ -108,6 +111,11 @@ PhoneInput.defaultProps = defaultPhoneInputProps;
 export { PhoneInput };
 
 const StyledCountrySelector = styled(CountrySelector)`
+  --react-international-phone-country-selector-arrow-color: var(
+    --control-color
+  );
+  --react-international-phone-country-selector-arrow-size: 5px;
+
   position: static;
   pointer-events: all;
   height: 100%;
@@ -117,13 +125,21 @@ const StyledCountrySelector = styled(CountrySelector)`
     padding-left: var(--s-1);
     position: absolute;
     z-index: 1;
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 
   .dropdown-container {
+    --react-international-phone-dropdown-shadow: var(
+      --shadow-card-elevation-low
+    );
+    --react-international-phone-dropdown-top: var(--s-7);
+
     border-radius: 0 0 var(--s-2) var(--s-2);
-    box-shadow: var(--shadow-card-elevation-low);
-    background-color: white;
-    top: var(--s-7);
     max-height: 120px;
     z-index: unset;
     width: 100%;
@@ -139,13 +155,14 @@ const StyledCountrySelector = styled(CountrySelector)`
   }
 
   .list-item {
+    --react-international-phone-selected-dropdown-item-background-color: var(
+      --primary-light
+    );
+
     padding: var(--s-2);
     border-bottom: 1px solid var(--gray-50);
     color: var(--gray-800);
-
-    &[aria-selected="true"] {
-      background-color: var(--primary-light);
-    }
+    height: auto;
 
     &:hover {
       background-color: var(--gray-50);
