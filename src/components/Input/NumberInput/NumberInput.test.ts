@@ -10,8 +10,8 @@ import type { Nullable } from "@ubloimmo/front-util";
 const testId = "input-number";
 
 describe("Input", () => {
-  const testTextInput = testComponentFactory<NumberInputProps>(
-    "TextInput",
+  const testNumberInput = testComponentFactory<NumberInputProps>(
+    "NumberInput",
     NumberInput,
     {
       props: NumberInput.defaultProps,
@@ -28,7 +28,7 @@ describe("Input", () => {
 
   const onChange = mock((_value: Nullable<number>) => {});
 
-  testTextInput({
+  testNumberInput({
     value: 15,
   })("should hold a given value", ({ queryByTestId }) => {
     const input = queryByTestId(testId) as HTMLInputElement;
@@ -36,7 +36,7 @@ describe("Input", () => {
     expect(input.value).toBe("15");
   });
 
-  testTextInput({
+  testNumberInput({
     onChange,
   })(
     "should trigger onChange",
@@ -47,4 +47,24 @@ describe("Input", () => {
       expect(onChange).toHaveBeenCalled();
     }
   );
+
+  testNumberInput({
+    onChange,
+    value: 15,
+  })("should increment", async ({ queryByTestId }, { click }) => {
+    const input = queryByTestId(testId) as HTMLInputElement;
+    const button = queryByTestId("input-control-increment") as HTMLDivElement;
+    await click(button);
+    expect(input.value).toBe("16");
+  });
+
+  testNumberInput({
+    onChange,
+    value: 15,
+  })("should decrement", async ({ queryByTestId }, { click }) => {
+    const input = queryByTestId(testId) as HTMLInputElement;
+    const button = queryByTestId("input-control-decrement") as HTMLDivElement;
+    await click(button);
+    expect(input.value).toBe("14");
+  });
 });
