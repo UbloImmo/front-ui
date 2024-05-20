@@ -1,4 +1,4 @@
-import { Nullable } from "@ubloimmo/front-util";
+import { Nullable, isNull } from "@ubloimmo/front-util";
 import { useRef, useMemo, useCallback, ChangeEventHandler } from "react";
 import {
   CountrySelector,
@@ -9,7 +9,7 @@ import {
 import "react-international-phone/style.css";
 import styled from "styled-components";
 
-import { defaultToFrenchPhone } from "./PhoneInput.utils";
+import { FRENCH_PHONE_PREFIX, defaultToFrenchPhone } from "./PhoneInput.utils";
 import {
   StyledInput,
   StyledInputContainer,
@@ -27,11 +27,12 @@ const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
 };
 
 /**
- * Renders a international phone input component. Does international phone formatting on the input value.
+ * Renders a international phone input component.
+ * Does international phone formatting on the input value.
  *
  * @version 0.0.1
  * @param {InputProps<"phone">} props - The input props.
- * @return {JSX.Element} The rendered text input component.
+ * @return {JSX.Element} The rendered phone input component.
  */
 const PhoneInput = (props: InputProps<"phone">): JSX.Element => {
   const mergedProps = useMergedProps(defaultPhoneInputProps, props);
@@ -64,7 +65,7 @@ const PhoneInput = (props: InputProps<"phone">): JSX.Element => {
   const interceptOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (event) => {
       if (prevPhone.current === "" && event.target.value === "0") {
-        event.target.value = "+33";
+        event.target.value = FRENCH_PHONE_PREFIX;
       }
       handlePhoneValueChange(event);
       prevPhone.current = event.target.value;
@@ -75,6 +76,9 @@ const PhoneInput = (props: InputProps<"phone">): JSX.Element => {
   const changeCountryOnSelect = useCallback(
     (country: ParsedCountry) => {
       setCountry(country.iso2);
+      if (!isNull(inputRef.current)) {
+        inputRef.current.focus();
+      }
     },
     [setCountry]
   );
@@ -114,7 +118,9 @@ const StyledCountrySelector = styled(CountrySelector)`
   --react-international-phone-country-selector-arrow-color: var(
     --control-color
   );
-  --react-international-phone-country-selector-arrow-size: 5px;
+  --react-international-phone-country-selector-arrow-size: calc(
+    var(--s-1) * 1.5
+  );
 
   position: static;
   pointer-events: all;

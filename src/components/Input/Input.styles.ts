@@ -22,6 +22,10 @@ export const commonInputContainerStyles = ({
     --control-color: var(--gray-400);
   }
 
+  &:has(input:disabled) * {
+    cursor: not-allowed;
+  }
+
   &:hover input:not(:disabled) {
     box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
   }
