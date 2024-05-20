@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.4.0 - 2024-05-20
 ### Added
-
 - `v.0.0.1` PhoneInput component
 - Full coverage test for NumberInput component
 
@@ -36,34 +36,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 0.2.0 - 2024-05-13
 ### Added
-
 - `v.0.0.1` State indicator component
 - `EnumExtension` generic type
 
 ### Changed
-
 - Typings
   - Replace `StaticIconColor` with `ColorKeyOrWhite`
 
 ### Fixed
-
 - Text & Heading stories text content
 
 ## 0.1.2 - 2024-04-25
 
 ## 0.1.1 - 2024-04-17
-
 ### Fixed
-
 - `v0.0.3` Static Icon component
   - Sizing
 - `v0.0.2` Action component
   - Responsive behaviour
 
 ## 0.1.0 - 2024-04-16
-
 ### Added
-
 - License & copyright
 - `v0.0.1` Action component
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-action-usage--docs)
@@ -75,7 +68,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Card elevation shadow
 
 ### Changed
-
 - `v0.0.2` Button component
   - Secondary styles (white, primary, error)
 - `v0.0.3` Badge component
@@ -84,12 +76,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - White variant
 
 ### Removed
-
 - Icons:
   - Delete (custom icon)
 
 ### Fixed
-
 - `v0.0.2` InputLabel
   - Text size after font style overhaul
 - `v0.0.2` InputAssistiveText
@@ -98,9 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.1.0-beta.0 - 2024-04-11
 
 ## 0.0.2-beta.0 - 2024-04-11
-
 ### Added
-
 - Global Theme
 - Theme context, provider & consumer hook.
 - Global style injector (based on `styled-components`'s `GlobalStyle` component).
