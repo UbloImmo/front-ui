@@ -39,7 +39,13 @@ export type DefaultCommonInputProps = Required<CommonInputProps>;
  *
  * **Sensitive**
  */
-export const inputTypes = ["text", "number", "password", "email"] as const;
+export const inputTypes = [
+  "text",
+  "number",
+  "password",
+  "email",
+  "phone",
+] as const;
 
 /**
  * Custom Input types
@@ -59,6 +65,7 @@ export type InputType = Enum<typeof inputTypes>;
 export type InputValue<TType extends InputType> = TType extends
   | "text"
   | "password"
+  | "phone"
   ? string
   : TType extends "number"
   ? number

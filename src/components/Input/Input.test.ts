@@ -44,6 +44,13 @@ describe("Input", () => {
     }
   );
 
+  testGenericInput({ type: "phone" })(
+    "should render a phone input",
+    ({ queryByTestId }) => {
+      expect(queryByTestId("input-phone")).toBeDefined();
+    }
+  );
+
   global.console.warn = mock(() => {});
   global.console.error = mock(() => {});
 

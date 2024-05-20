@@ -1,0 +1,26 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as PhoneInputStories from "../PhoneInput.stories.tsx";
+
+<Meta title="Components/Input/PhoneInput/Usage" />
+
+<ComponentInfo of={PhoneInputStories} />
+
+<Content>
+
+## Usage
+
+`PhoneInput` component is an interactive single-line text-field, a specific type of [Input](?path=/docs/components-input-usage--docs), commonly used in form layouts to prompt users for their phone number.
+
+### Value
+
+`PhoneInput` is preloaded with the French dial code _+33_.
+
+> The output phone number being formatted to an international format, `PhoneInput` includes a dropdown of all coutries with their corresponding dialcode and formatting. Git it a try !
+
+<Canvas of={PhoneInputStories.Default} />
+
+To maintain French formatting, if the user enters a new phone number starting with _0_, this _0_ will automatically be replaced with _+33_.
+
+</Content>
