@@ -106,6 +106,7 @@ const PhoneInput = (props: InputProps<"phone">): JSX.Element => {
         value={inputValue}
         onChange={interceptOnChange}
         disabled={mergedProps.disabled}
+        placeholder={mergedProps.placeholder}
       />
     </StyledInputContainer>
   );
