@@ -114,6 +114,7 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
         "react-bootstrap-icons",
         "@ubloimmo/front-tokens",
         "@ubloimmo/front-util",
+        "react-international-phone",
       ],
       output: {
         globals: {
