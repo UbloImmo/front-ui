@@ -7,12 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.4.4 - 2024-05-21
 ### Added
-
 - Phone input default placeholder
 
 ### Fixed
-
 - Phone input foreign styles
 
 ## 0.4.3 - 2024-05-21
