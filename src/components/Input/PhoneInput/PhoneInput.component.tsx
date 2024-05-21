@@ -24,13 +24,14 @@ const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
+  placeholder: "+33 0 00 00 00 00",
 };
 
 /**
  * Renders a international phone input component.
  * Does international phone formatting on the input value.
  *
- * @version 0.0.1
+ * @version 0.0.2
  * @param {InputProps<"phone">} props - The input props.
  * @return {JSX.Element} The rendered phone input component.
  */
