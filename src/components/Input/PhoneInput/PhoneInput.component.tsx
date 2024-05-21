@@ -93,11 +93,6 @@ const PhoneInput = (props: InputProps<"phone">): JSX.Element => {
         countries={defaultCountries}
         disabled={mergedProps.disabled}
         data-testid="input-phone-control"
-        dropdownStyleProps={{
-          className: "dropdown-container",
-          listItemClassName: "list-item",
-          listItemDialCodeClassName: "dial-code",
-        }}
       />
       <StyledPhoneInput
         data-testid={testId}
