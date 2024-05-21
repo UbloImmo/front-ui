@@ -25,7 +25,7 @@ export type LoadingProps = {
    * Some animations might have fixed colors and not take this into account
    *
    * @type {PaletteColor}
-   * @default "primary-light"
+   * @default "primary-base"
    */
   color?: PaletteColor;
 };

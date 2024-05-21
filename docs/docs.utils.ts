@@ -35,30 +35,55 @@ export const removeJsDocDecorators = (jsdoc: string) => {
 };
 
 /**
+ * Returns a function that searches for a given decorator in an array of lines
+ * and returns the value of the decorator if found.
+ *
+ * @param {string[]} lines - An array of lines to search for the decorator.
+ * @param {string} decorator - The decorator to search for in the lines.
+ * @return {Nullable<string>} The value of the decorator if found, otherwise null.
+ */
+const pruneDecorator =
+  (lines: string[]) =>
+  (decorator: string): Nullable<string> =>
+    lines
+      .find((line) => line.includes(decorator))
+      ?.split(decorator)[1]
+      ?.trim() ?? null;
+
+/**
+ * Returns a function that checks if a given decorator is present in an array of lines.
+ *
+ * @param {string[]} lines - An array of lines to search for the decorator.
+ * @param {string} decorator - The decorator to search for in the lines.
+ * @return {boolean} True if the decorator is found, false otherwise.
+ */
+const containsDecorator =
+  (lines: string[]) =>
+  (decorator: string): boolean => {
+    return !!lines.find((line) => line.includes(decorator));
+  };
+/**
  * Parses the JSDoc string and extracts the default value if present.
  *
  * @param {string} jsDoc - The JSDoc string to be parsed
  * @returns {ParsedJsDoc} An object containing the parsed default value, description, and a flag indicating if there's a todo
  */
 export const parseJsDoc = (jsDoc: string): ParsedJsDoc => {
+  const description = removeJsDocDecorators(jsDoc);
   const lines = jsDoc.split("\n");
 
-  const pruneDecorator = (decorator: string): Nullable<string> =>
-    lines
-      .find((line) => line.includes(decorator))
-      ?.split(decorator)[1]
-      ?.trim() ?? null;
+  const prune = pruneDecorator(lines);
+  const contains = containsDecorator(lines);
 
-  const defaultValue = pruneDecorator("@default");
-  const todoLine = lines.find((line) => line.includes("@todo"));
-  const todo = !!todoLine;
-  const reason = pruneDecorator("@todo");
-  const description = removeJsDocDecorators(jsDoc);
-  const version = pruneDecorator("@version");
-  const rawType = pruneDecorator("@type") ?? "";
-  const prunedType = /{(.+)}/.exec(rawType);
+  const required = contains("@required");
+  const internal = contains("@private");
+  const todo = contains("@todo");
+  const reason = prune("@todo");
+  const defaultValue = prune("@default");
+  const version = prune("@version");
+  const rawType = prune("@type");
+  const prunedType = /{(.+)}/.exec(rawType ?? "");
   const type = prunedType ? prunedType[1] ?? null : null;
-  const required = !!lines.find((line) => line.includes("@required"));
   return {
     description,
     defaultValue,
@@ -67,6 +92,7 @@ export const parseJsDoc = (jsDoc: string): ParsedJsDoc => {
     version,
     type,
     required,
+    internal,
   };
 };
 

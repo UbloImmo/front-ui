@@ -2,7 +2,13 @@ import { CssLength, Enum } from "@types";
 
 import type { ReactNode } from "react";
 
-const gridFlows = ["row", "column"] as const;
+const gridFlows = [
+  "row",
+  "column",
+  "row dense",
+  "column dense",
+  "dense",
+] as const;
 
 export type GridFlow = Enum<typeof gridFlows>;
 

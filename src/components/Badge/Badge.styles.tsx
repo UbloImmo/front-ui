@@ -31,7 +31,7 @@ export const grayBadgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
   },
 };
 
-export const backgroundShade = (props: StyleProps<DefaultBadgeProps>) => {
+export const badgeStyle = (props: StyleProps<DefaultBadgeProps>) => {
   const { color, shade } = fromStyleProps(props);
   const { backgroundColor } =
     color === "gray"
@@ -51,6 +51,15 @@ export const backgroundShade = (props: StyleProps<DefaultBadgeProps>) => {
     height: var(--s-5);
     max-height: var(--s-5);
     min-height: var(--s-5);
+    max-width: max-content;
     user-select: none;
+    overflow: hidden;
+
+    span {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 16rem;
+    }
   `;
 };

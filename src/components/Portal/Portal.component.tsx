@@ -16,6 +16,8 @@ const defaultPortalProps: DefaultPortalProps = {
  *
  * @version 0.0.1
  *
+ * @private - Used interally by Dialog
+ *
  * @param {PortalProps} props - the properties for the Portal component
  * @return {JSX.Element} the rendered content in the portal
  */

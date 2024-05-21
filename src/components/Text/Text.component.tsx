@@ -12,7 +12,7 @@ const defaultTextProps: Required<TextProps> = {
 };
 
 /**
- * Renders its children in accordance with global typography styles.
+ * Customizable, accessible global text.
  *
  * @version 0.0.2
  * @param {WithTestId<TextProps>} props - Text component props

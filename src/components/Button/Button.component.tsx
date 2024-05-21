@@ -55,7 +55,8 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
     mergedProps.onClick();
   }, [mergedProps]);
 
-  const { label, icon, disabled, title, role, type } = mergedProps;
+  const { icon, disabled, title, role, type } = mergedProps;
+  let { label } = mergedProps;
 
   const ariaTitle = useMemo(() => {
     return title && title.length > 0 ? title : label ?? undefined;
@@ -69,7 +70,7 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
     warn(
       "Button must have at least a label and / or an icon. Both are missing"
     );
-    return null;
+    label = "[Label]";
   }
 
   return (

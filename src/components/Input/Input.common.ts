@@ -18,7 +18,7 @@ export const defaultCommonInputProps: DefaultCommonInputProps = {
   error: false,
   disabled: false,
   required: false,
-  placeholder: "",
+  placeholder: "[placeholder]",
 } as const;
 
 /**

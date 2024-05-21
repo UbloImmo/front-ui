@@ -9,3 +9,4 @@ export * from "./IconSearch";
 export * from "./ComponentProps";
 export * from "./Markdown";
 export * from "./ObjectDocTable";
+export * from "./ComponentList";
