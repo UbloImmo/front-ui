@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.4.1 - 2024-05-21
+
 ## 0.4.0 - 2024-05-20
 ### Added
 - `v.0.0.1` PhoneInput component
