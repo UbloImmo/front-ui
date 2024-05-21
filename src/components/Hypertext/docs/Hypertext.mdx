@@ -1,0 +1,30 @@
+import * as HypertextStories from "../Hypertext.stories.tsx";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Components/Hypertext/Usage" />
+
+<ComponentInfo of={HypertextStories} figmaId="1102-3A8905" />
+
+<Content>
+
+## Usage
+
+`Hypertext` is used to render a clickable link that opens in a new tab, allowing users to navigate to different pages.
+
+### children
+
+To label the redirection in the component, you can provide the desired text as the `children` prop.
+
+<Canvas of={HypertextStories.Default} />
+
+### href
+
+To provide the redirection link to `Hypertext`, use the `href` props.
+
+> The link will open in a new tab
+
+<Canvas of={HypertextStories.TextLengths} />
+
+</Content>
