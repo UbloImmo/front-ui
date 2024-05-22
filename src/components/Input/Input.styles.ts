@@ -13,6 +13,7 @@ export const commonInputContainerStyles = ({
   position: relative;
   height: max-content;
   width: 100%;
+  max-width: 100%;
 
   --control-color: var(--${$error ? "error-dark" : "gray-600"});
   &:has(input:focus:not(:disabled)) {
@@ -93,7 +94,7 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   min-height: var(--s-8);
   min-width: 12rem;
   width: 100%;
-
+  max-width: 100%;
   padding: var(--s-2);
   border-radius: var(--s-1);
   border: none;

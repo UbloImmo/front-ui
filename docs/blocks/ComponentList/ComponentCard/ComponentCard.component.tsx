@@ -1,3 +1,4 @@
+import { linkTo } from "@storybook/addon-links";
 import { useMemo } from "react";
 import styled from "styled-components";
 
@@ -5,6 +6,7 @@ import {
   componentCardStyle,
   componentCardContainerStyle,
   componentCardInfoContainerStyle,
+  componentCardScaleContainerStyle,
 } from "./ComponentCard.styles";
 import {
   ComponentCardContainerProps,
@@ -35,16 +37,16 @@ export const ComponentCard = <
     randomSize ? randomCellSize() : "small"
   );
 
-  const { description, internal, todo } = useStatic<Partial<ParsedJsDoc>>(
-    () => {
-      if (!isDocumentedComponent(Component)) return {};
+  const { description, internal, todo, version } = useStatic<
+    Partial<ParsedJsDoc>
+  >(() => {
+    if (!isDocumentedComponent(Component)) return {};
 
-      const jsdoc = Component.__docgenInfo.description ?? null;
+    const jsdoc = Component.__docgenInfo.description ?? null;
 
-      if (!jsdoc) return {};
-      return parseJsDoc(jsdoc);
-    }
-  );
+    if (!jsdoc) return {};
+    return parseJsDoc(jsdoc);
+  });
 
   const componentProps = useMemo(() => {
     if (!hasDefaultProps(Component)) return null;
@@ -66,6 +68,11 @@ export const ComponentCard = <
     };
   }, [Component, name]);
 
+  const redirectToDocs = useMemo(() => {
+    const url = `Components/${name}/Usage`;
+    return linkTo(url);
+  }, [name]);
+
   if (!componentProps || !description) return null;
   const renderedComponent = Component(componentProps);
 
@@ -74,17 +81,25 @@ export const ComponentCard = <
   }
 
   return (
-    <CardContainer $size={size} data-testid="component-card">
+    <CardContainer
+      $size={size}
+      data-testid="component-card"
+      title={name}
+      onClick={redirectToDocs}
+    >
       <ComponentContainer data-testid="component-card-component-container">
-        {renderedComponent}
+        <ComponentScaleContainer data-testid="component-card-scale-container">
+          {renderedComponent}
+        </ComponentScaleContainer>
+        {version && <Badge label={version} color="gray" />}
       </ComponentContainer>
       <InfoContainer>
-        <FlexRowLayout gap="s-2" align="baseline" justify="start">
+        <FlexRowLayout gap="s-2" align="center" justify="start">
           <Heading size="h3" weight="medium" color="gray-800" important>
             {name}
           </Heading>
-          {todo && <Badge label="WIP" color="pending" />}
           {internal && <Badge label="Internal" color="warning" />}
+          {todo && <Badge label="WIP" color="pending" />}
         </FlexRowLayout>
         {description && (
           <Text size="s" color="gray-600" important>
@@ -102,6 +117,10 @@ const CardContainer = styled.article<ComponentCardContainerProps>`
 
 const ComponentContainer = styled.div`
   ${componentCardContainerStyle}
+`;
+
+const ComponentScaleContainer = styled.div`
+  ${componentCardScaleContainerStyle}
 `;
 
 const InfoContainer = styled.div`

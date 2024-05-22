@@ -54,6 +54,7 @@ export const extractComponentsFromIndex = <TIndex extends AnyIndex>(
     // only keep functions
     if (!isFunction<ComponentMask<TIndex>>(maybeComponent)) return false;
     if (!("defaultProps" in maybeComponent)) return false;
+    if (name === "Input") console.warn("Input passes");
     if (!isObject(maybeComponent.defaultProps)) return false;
     return true;
   });

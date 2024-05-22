@@ -19,7 +19,7 @@ export const ComponentsListRenderer = () => {
   if (!componentEntries) return null;
 
   return (
-    <GridLayout columns={4} gap="s-2" flow="dense">
+    <GridLayout columns={3} gap="s-3" flow="dense">
       {componentEntries.map(({ name, Component }, index) => (
         <ComponentCard
           key={name + index}

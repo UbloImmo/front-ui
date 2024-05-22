@@ -1,3 +1,4 @@
+import { linkTo } from "@storybook/addon-links";
 import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
@@ -11,6 +12,7 @@ import { Button } from "@components";
 import { Text, HeaderInfo, Canvas, Markdown } from ".";
 
 import type { ComponentStory } from "@docs/docs.types";
+import type { Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 const FIGMA_TEMPLATE =
@@ -41,13 +43,32 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
     return props.name ?? props.of.default.component.name;
   }, [props]);
 
-  const { title, parent } = useMemo<{ title: string; parent?: string }>(() => {
+  const { title, parent, propsLink } = useMemo<{
+    title: string;
+    parent?: string;
+    propsLink?: Nullable<string>;
+  }>(() => {
     let rawTitle = props.title ?? props.of.default.title;
 
     if (!rawTitle)
       return {
         title: name,
       };
+
+    const pageSubtitle = window.document.body.querySelector(
+      `main[data-layout="docs-content"] > span:first-child > h2[data-testid="heading"]:first-child`
+    );
+
+    const currentPageIsProps =
+      pageSubtitle && pageSubtitle.textContent === "Properties";
+
+    const propsLink = currentPageIsProps
+      ? null
+      : rawTitle.endsWith("/Usage")
+      ? rawTitle.replace("/Usage", "/Properties")
+      : rawTitle.endsWith("/Stories")
+      ? rawTitle.replace("/Stories", "/Properties")
+      : null;
 
     // remove "Stories" from the title if present
     if (rawTitle && rawTitle.endsWith("/Stories")) {
@@ -58,14 +79,17 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
       props.parent ?? (Array.isArray(rest) && rest.length > 0)
         ? rest.reverse().join("/")
         : "";
+
     if (parent.length === 0)
       return {
         title,
+        propsLink,
       };
 
     return {
       title,
       parent,
+      propsLink,
     };
   }, [props, name]);
 
@@ -96,7 +120,7 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
     return `${FIGMA_TEMPLATE}${props.figmaId}`;
   }, [props]);
 
-  const handleSourceLink = useCallback(
+  const openSourceLink = useCallback(
     (link: string) => () => {
       if (link) {
         window.open(link, "_blank");
@@ -104,6 +128,11 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
     },
     []
   );
+
+  const redirectToProps = useMemo(() => {
+    if (!propsLink) return null;
+    return linkTo(propsLink);
+  }, [propsLink]);
 
   return (
     <Header>
@@ -114,23 +143,34 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
         </HeaderInfo>
 
         <FlexLayout wrap gap="s-2">
+          {redirectToProps && (
+            <Button
+              icon="Gear"
+              role="link"
+              label="Properties"
+              title="Check component properties"
+              color="black"
+              secondary
+              onClick={redirectToProps}
+            />
+          )}
           <Button
             icon="Github"
             role="link"
-            label="View code"
+            label="Source"
             title="Check source code on GitHub"
             color="black"
             secondary
-            onClick={handleSourceLink(githubLink)}
+            onClick={openSourceLink(githubLink)}
           />
           {props.figmaId && (
             <Button
               icon="Figma"
               role="link"
-              label="View design"
+              label="Design"
               title="Check design on Figma"
               secondary
-              onClick={handleSourceLink(figmaLink)}
+              onClick={openSourceLink(figmaLink)}
             />
           )}
         </FlexLayout>
