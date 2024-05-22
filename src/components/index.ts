@@ -13,3 +13,4 @@ export * from "./Portal";
 export * from "./StateIndicator";
 export * from "./StaticIcon";
 export * from "./Text";
+export * from "./Hypertext";
