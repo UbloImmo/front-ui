@@ -15,4 +15,13 @@ export type HypertextProps = {
    * @default ""
    */
   href: string;
+  /**
+   * The Hypertext's additional information when hovered.
+   * @type {string}
+   * @required
+   * @default ""
+   */
+  title: string;
 };
+
+export type DefaultHypertextProps = Required<HypertextProps>;
