@@ -74,7 +74,7 @@ const StyleReset = styled.div`
       ${codeFontFace(true)};
     }
 
-    a {
+    a:not([data-testid="hypertext"]) {
       font-size: var(--text-m);
       color: var(--primary-base);
       font-weight: var(--text-weight-bold);
