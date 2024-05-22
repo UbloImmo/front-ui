@@ -4,7 +4,6 @@ import { Hypertext } from "./Hypertext.component";
 import { HypertextProps } from "./Hypertext.types";
 import { Text } from "../Text";
 
-import { FlexLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
@@ -22,13 +21,6 @@ const meta = {
     href: "https://www.ublo.immo/",
     title: "Ublo's homepage",
   },
-  decorators: [
-    (Story) => (
-      <FlexLayout gap="s-4" align="center" justify="start" wrap>
-        <Story />
-      </FlexLayout>
-    ),
-  ],
   parameters: {
     docs: componentSource(),
   },
@@ -72,8 +64,11 @@ TextLengths.parameters = {
 
 const HypertextInTextRenderer = (props: HypertextProps) => {
   return (
-    <Text>
-      lorem ipsum <Hypertext {...props}> dolor </Hypertext> sit amet
+    <Text size="s">
+      lorem ipsum <Hypertext {...props}>{props.children}</Hypertext> sit amet.
+      Cras consectetur fermentum ante, sed venenatis sem semper vel. Vestibulum
+      convallis nulla fermentum tincidunt fermentum. Etiam hendrerit bibendum
+      vestibulum.
     </Text>
   );
 };
@@ -83,11 +78,32 @@ export const HypertextInText = (props: HypertextProps) => {
   return (
     <ComponentVariants
       defaults={defaultProps}
-      variants={["dolor"]}
+      variants={texts}
       for="children"
       of={HypertextInTextRenderer}
       scaling={1}
       propLabels
     />
   );
+};
+
+const urls = ["https://www.ublo.immo/", "https://www.google.com/"];
+
+export const Redirection = (props: HypertextProps) => {
+  const defaultProps = useMergedProps(Hypertext.defaultProps, props);
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={urls}
+      for="href"
+      of={Hypertext}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+
+Redirection.args = {
+  children: "[Hypertext]",
+  title: "Redirects to another page",
 };

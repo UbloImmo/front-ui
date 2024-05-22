@@ -13,24 +13,24 @@ import { Meta } from "@storybook/blocks";
 
 `Hypertext` is used to render a clickable link that opens in a new tab, allowing users to navigate to different pages.
 
-<Canvas of={HypertextStories.Default} />
+### Content
 
-### children
-
-To label the redirection in the component, you can provide the desired text as the `children` prop.
+To label the redirection in the component, you can provide the desired text as the `children` property.
 
 <Canvas of={HypertextStories.HypertextInText} />
 
-### href
+### Redirection
 
-To provide the redirection link to `Hypertext`, use the `href` props.
+To provide the redirection link to `Hypertext`, use the `href` property.
 
 > The link will open in a new tab
 
-### title
+<Canvas of={HypertextStories.Redirection} />
 
-It is strongly recommended to provide a title for `Hypertext`, event though it is usually optionnal.
-The provided text in the `title` props will be desplayed in a tooltip when `Hypertext` is hovered, enhancing user experience and web accessibility.
+### Accessibility
+
+It is required to provide a title for `Hypertext`.
+The provided text in the `title` property will be displayed by the browser when `Hypertext` is hovered, enhancing user experience and web accessibility.
 
 <Canvas of={HypertextStories.TextLengths} />
 
