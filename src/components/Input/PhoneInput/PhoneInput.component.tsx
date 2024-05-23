@@ -8,7 +8,11 @@ import {
 } from "react-international-phone";
 import styled from "styled-components";
 
-import { reactInternalPhoneStyle } from "./PhoneInput.styles";
+import {
+  phoneInputContainerStyles,
+  phoneInputStyles,
+  reactInternalPhoneStyle,
+} from "./PhoneInput.styles";
 import { FRENCH_PHONE_PREFIX, defaultToFrenchPhone } from "./PhoneInput.utils";
 import {
   StyledInput,
@@ -103,6 +107,7 @@ const PhoneInput = (props: InputProps<"phone">): JSX.Element => {
         onChange={interceptOnChange}
         disabled={mergedProps.disabled}
         placeholder={mergedProps.placeholder}
+        type="tel"
       />
     </PhoneInputContainer>
   );
@@ -112,10 +117,10 @@ PhoneInput.defaultProps = defaultPhoneInputProps;
 export { PhoneInput };
 
 const PhoneInputContainer = styled(StyledInputContainer)`
+  ${phoneInputContainerStyles}
   ${reactInternalPhoneStyle}
 `;
 
 const StyledPhoneInput = styled(StyledInput)`
-  padding-left: var(--s-14);
-  position: relative;
+  ${phoneInputStyles}
 `;

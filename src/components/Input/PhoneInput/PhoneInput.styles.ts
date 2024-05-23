@@ -1,4 +1,24 @@
+import { breakpointsPx } from "@/sizes";
 import { css } from "styled-components";
+
+export const phoneInputContainerStyles = css`
+  max-width: 100%;
+  width: 100%;
+  &:has(
+      input[data-testid="input-phone"]:focus,
+      button.react-international-phone-country-selector-button--active
+    ) {
+    z-index: 1; // used to make sure whole input & country selector dropdown is visible when active
+  }
+`;
+
+export const phoneInputStyles = css`
+  padding-left: var(--s-14);
+  position: relative;
+  min-width: unset;
+  max-width: 100%;
+  width: 100%;
+`;
 
 /**
  * copied from react-international-phone/dist/index.css
@@ -99,7 +119,7 @@ export const reactInternalPhoneStyle = css`
   }
   .react-international-phone-country-selector-dropdown {
     position: absolute;
-    top: var(--s-9);
+    top: var(--s-7);
     left: 0;
     display: flex;
     width: 100%;
@@ -118,6 +138,10 @@ export const reactInternalPhoneStyle = css`
 
     &:focus-visible {
       outline: none;
+    }
+
+    @media only screen and (max-width: ${breakpointsPx.XS}) {
+      top: var(--s-9);
     }
   }
   .react-international-phone-country-selector-dropdown__preferred-list-divider {
