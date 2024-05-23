@@ -9,7 +9,7 @@ import { GlobalStyle } from "./globalStyle";
 import { buildTheme } from "../theme";
 
 import type {
-  ClientColorPaletteKey,
+  DynamicColorPaletteKey,
   GetThemeOverridesFn,
   Theme,
   ThemeOverride,
@@ -19,7 +19,7 @@ import type { GenericFn, Nullable } from "@ubloimmo/front-util";
 type ThemeProviderProps = {
   children: ReactNode;
   getOverridesFn?: GetThemeOverridesFn;
-  _forClient?: ClientColorPaletteKey;
+  _forceTheme?: DynamicColorPaletteKey;
 };
 
 /**
@@ -31,7 +31,7 @@ type ThemeProviderProps = {
 export const ThemeProvider = ({
   children,
   getOverridesFn,
-  _forClient = "ublo",
+  _forceTheme = "wisteria",
 }: ThemeProviderProps): JSX.Element => {
   const [overrides, setOverrides] = useState<Nullable<ThemeOverride>>();
 
@@ -50,8 +50,8 @@ export const ThemeProvider = ({
   }, [getOverridesFn]);
 
   const theme = useMemo(
-    () => buildTheme(overrides, _forClient),
-    [overrides, _forClient]
+    () => buildTheme(overrides, _forceTheme),
+    [overrides, _forceTheme]
   );
 
   return (

@@ -4,10 +4,10 @@ import styled from "styled-components";
 
 import { StorybookThemeProvider } from "./StoryDecorator";
 
-import { getClientSlugs } from "@/themes";
+import { getDynamicThemeSlugs } from "@/themes";
 import { codeFontFace, typographyFontFace } from "@/typography";
 
-import type { ClientColorPaletteKey } from "@types";
+import type { DynamicColorPaletteKey } from "@types";
 
 type DocsContainerProps = Parameters<typeof SBDocsContainer>[0];
 
@@ -21,13 +21,13 @@ export const DocsContainer = ({
 }: DocsContainerProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const storyContext = context as any;
-  const themeClient: Optional<ClientColorPaletteKey> =
+  const themeClient: Optional<DynamicColorPaletteKey> =
     storyContext?.store?.globals?.globals?.theme;
-  const clientSlugs = getClientSlugs();
-  const client: ClientColorPaletteKey =
+  const clientSlugs = getDynamicThemeSlugs();
+  const client: DynamicColorPaletteKey =
     isString(themeClient) && clientSlugs.includes(themeClient)
       ? themeClient
-      : "ublo";
+      : "wisteria";
   return (
     <StorybookThemeProvider theme={{ client }}>
       <StyleReset>

@@ -2,9 +2,9 @@ import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { ReactRenderer, type Preview } from "@storybook/react";
 import { objectFromEntries } from "@ubloimmo/front-util";
 
-import { getClientSlugs, ThemeProvider } from "@/themes";
+import { getDynamicThemeSlugs, ThemeProvider } from "@/themes";
 
-import type { ClientColorPaletteKey } from "@types";
+import type { DynamicColorPaletteKey } from "@types";
 import type { ReactNode } from "react";
 
 /**
@@ -15,13 +15,13 @@ export const StorybookThemeProvider = ({
   theme,
   children,
 }: {
-  theme: { client: ClientColorPaletteKey };
+  theme: { client: DynamicColorPaletteKey };
   children: ReactNode;
-}) => <ThemeProvider _forClient={theme.client}>{children}</ThemeProvider>;
+}) => <ThemeProvider _forceTheme={theme.client}>{children}</ThemeProvider>;
 
 const getStoryThemes = () => {
   const storyThemes = objectFromEntries(
-    getClientSlugs()
+    getDynamicThemeSlugs()
       .sort()
       .map((slug) => [slug, { client: slug }])
   );
@@ -34,7 +34,7 @@ const getStoryThemes = () => {
 export const StoryDecorator: Preview["decorators"] = [
   withThemeFromJSXProvider<ReactRenderer>({
     themes: getStoryThemes(),
-    defaultTheme: "ublo",
+    defaultTheme: "wisteria",
     Provider: StorybookThemeProvider,
   }),
 ];

@@ -6,7 +6,7 @@ import {
 import { themeOverridePaletteToColorPaletteShaded } from "./provider/theme.overrides";
 
 import type {
-  ClientColorPaletteKey,
+  DynamicColorPaletteKey,
   OrganizationData,
   Theme,
   ThemeOverride,
@@ -37,15 +37,15 @@ export const defaultOrganizationData: OrganizationData = {
  * to be used in {@link import("../themes/provider/theme.provider").ThemeProvider}
  *
  * @param {Nullable<ThemeOverride>} [themeOverrides = null] - Values to override the default theme
- * @param {ClientColorPaletteKey} [forClient] - Client name to build primary default color
+ * @param {DynamicColorPaletteKey} [forClient] - Client name to build primary default color
  * @return {Theme} The constructed theme object.
  */
 export const buildTheme = (
   themeOverrides: Nullable<ThemeOverride> = null,
-  forClient?: ClientColorPaletteKey
+  forClient?: DynamicColorPaletteKey
 ): Theme => {
   const colorPalette = buildColorPalette(forClient);
-  const defaultColorPalette = buildDynamicColorPalette("ublo");
+  const defaultColorPalette = buildDynamicColorPalette("primary");
   const theme: Theme = {
     organization: defaultOrganizationData,
     palette: buildLegacyColorPalette(),

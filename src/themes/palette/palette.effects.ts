@@ -7,7 +7,7 @@ import {
   rgbaColorConverter,
   parseCssVar,
   isSameShade,
-} from "@utils";
+} from "../../utils";
 
 import type {
   Token,
@@ -183,7 +183,6 @@ export const effectsToCssVars = (
       name,
       rgbaColorConverter.strToArr(value),
     ]);
-  console.log(colorVarsSplit);
   return parsedEffects.map((parsedEffect) =>
     parsedEffectToCssVar(parsedEffect, colorVarsSplit)
   );
