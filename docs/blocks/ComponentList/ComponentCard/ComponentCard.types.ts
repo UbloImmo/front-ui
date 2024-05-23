@@ -14,6 +14,7 @@ export type ComponentCardProps<
   TName extends ComponentName<TIndex>
 > = ComponentEntryItem<TIndex, TName> & {
   randomSize?: boolean;
+  parent?: string;
 };
 
 export type ComponentCardContainerProps = StyleProps<{

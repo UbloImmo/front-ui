@@ -1,6 +1,7 @@
 import type * as componentsIndexRaw from "@components";
 
 import type { DocgenInfo } from "@docs/docs.types";
+import type { GridTemplate } from "@layouts";
 import type { TestIdProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
@@ -105,3 +106,11 @@ export type ComponentEntries<TIndex extends AnyIndex> = ComponentEntryItem<
   TIndex,
   ComponentNameMask<TIndex>
 >[];
+
+export type ComponentListProps<TIndex extends AnyIndex> = {
+  index: TIndex;
+  exclude?: ComponentName<TIndex>[];
+  randomSize?: boolean;
+  parent?: string;
+  columns?: GridTemplate;
+};

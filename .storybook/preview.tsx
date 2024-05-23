@@ -14,6 +14,27 @@ const preview: Preview = {
       container: DocsContainer,
       components: markdownOverrides,
     },
+    options: {
+      storySort: (a, b) => {
+        const isDocs = (item) => item.type === "docs";
+        const isOverview = (item) =>
+          isDocs(item) && item.id.includes("overview");
+        if (isOverview(a)) {
+          console.log(a);
+        }
+        const compare = (compareFn) => (itemA, itemB) => {
+          if (compareFn(itemA) && !compareFn(itemB)) return -1;
+          if (!compareFn(itemA) && compareFn(itemB)) return 1;
+        };
+        const match = (matchFn) => (itemA, itemB) => {
+          return matchFn(itemA) || matchFn(itemB);
+        };
+        if (match(isOverview)(a, b)) return compare(isOverview)(a, b);
+        if (match(isDocs)(a, b)) return compare(isDocs)(a, b);
+
+        return a.id.localeCompare(b.id);
+      },
+    },
   },
   decorators: StoryDecorator,
 };

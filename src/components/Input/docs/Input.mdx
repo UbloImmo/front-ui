@@ -1,11 +1,12 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas, ComponentProps } from "@docs/blocks";
+import { ComponentInfo, Canvas, ComponentProps, ComponentList } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as InputStories from "../Input.stories.tsx";
+import * as inputsIndexRaw from "@components/Input";
 
 <Meta title="Components/Input/Usage" />
 
-<ComponentInfo of={InputStories} title="Components/Input" figmaId="76%3A6562" />
+<ComponentInfo of={InputStories} figmaId="76%3A6562" />
 
 <Content>
 
@@ -17,15 +18,13 @@ Input's specific value type can be set with the `type` property.
 
 <Canvas of={InputStories.Types} />
 
-#### Here the ready to use specific Input Components:
+### Specific Input Components
 
-- [TextInput](?path=/docs/components-input-textinput-usage--docs)
-- [NumberInput](?path=/docs/components-input-numberinput-usage--docs)
-- [EmailInput](?path=/docs/components-input-emailinput-usage--docs)
-- [PasswordInput](?path=/docs/components-input-passwordinput-usage--docs)
-- [PhoneInput](?path=/docs/components-input-phoneinput-usage--docs)
+<ComponentList index={inputsIndexRaw} parent="Input" exclude={["Input"]} columns={3} />
 
-> All input types share common properties such as `required`, `disabled`, `error`, and `placeholder`. => [Checkout Common Input properties](?path=/docs/components-input-common-properties--docs)
+> All input types share common properties such as `required`, `disabled`, `error`, and `placeholder`.
+> <br/>
+>[Checkout Common Input properties](?path=/docs/components-input-common-properties--docs)
 
 ## Controls
 

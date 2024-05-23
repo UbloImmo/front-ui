@@ -2,6 +2,7 @@ import { Content, Header } from "@docs/containers";
 import { HeaderInfo, Text} from "@docs/blocks";
 import { ComponentList } from "@docs/blocks/ComponentList/ComponentList.block"
 import { Meta } from "@storybook/blocks";
+import * as componentsIndexRaw from "@components";
 
 <Meta title="Components/Overview"/>
 
@@ -13,6 +14,6 @@ import { Meta } from "@storybook/blocks";
 
 <Content>
 
-<ComponentList />
+<ComponentList index={componentsIndexRaw} randomSize exclude={["EmailInput", "PhoneInput", "PasswordInput", "TextInput", "NumberInput"]}/>
 
 </Content>

@@ -78,3 +78,13 @@ export type CssVar<TValue extends string> = `${CssVarName}: ${TValue};`;
  * const primaryBaseUsage: CssVarUsage = "var(--primary-base)"
  */
 export type CssVarUsage = `var(${CssVarName})`;
+
+/**
+ * A CSS relative RGBA color
+ *
+ * @example
+ * const primaryBaseName: CssVarName = "--primary-base";
+ * const alpha = 0.73;
+ * const primaryBaseRelativeAlpha = `rgb(from var(--${primaryBaseName}) r g b / ${alpha})`
+ */
+export type CssRelativeRgbaColor = `rgb(from ${CssVarUsage} r g b / ${number})`;

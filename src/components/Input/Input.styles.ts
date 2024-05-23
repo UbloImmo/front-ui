@@ -133,7 +133,7 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   &:disabled {
     background: var(--gray-50);
     color: var(--gray-600);
-    box-shadow: var(--shadow-input ${$error ? "error-default" : "disabled"});
+    box-shadow: var(--shadow-input-${$error ? "error-default" : "disabled"});
   }
 
   &:disabled::placeholder {

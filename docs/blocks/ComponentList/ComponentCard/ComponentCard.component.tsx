@@ -18,7 +18,7 @@ import { hasDefaultProps, isDocumentedComponent } from "../ComponentList.utils";
 
 import { parseJsDoc } from "@docs/docs.utils";
 import { FlexRowLayout } from "@layouts";
-import { useStatic } from "@utils";
+import { capitalize, useStatic } from "@utils";
 
 import { Badge, Heading, Text } from "@components";
 
@@ -32,6 +32,7 @@ export const ComponentCard = <
   name,
   Component,
   randomSize,
+  parent,
 }: ComponentCardProps<TIndex, TName>) => {
   const size = useStatic<ComponentCardCellSize>(() =>
     randomSize ? randomCellSize() : "small"
@@ -56,7 +57,6 @@ export const ComponentCard = <
       name === "Text" || name === "Heading"
         ? {
             children: `Global ${name}`,
-            color: "primary-dark",
             weight: "medium",
             important: true,
           }
@@ -69,9 +69,10 @@ export const ComponentCard = <
   }, [Component, name]);
 
   const redirectToDocs = useMemo(() => {
-    const url = `Components/${name}/Usage`;
+    const parentPath = parent ? `/${capitalize(parent)}` : "";
+    const url = `Components${parentPath}/${name}/Usage`;
     return linkTo(url);
-  }, [name]);
+  }, [name, parent]);
 
   if (!componentProps || !description) return null;
   const renderedComponent = Component(componentProps);

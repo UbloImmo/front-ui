@@ -1,7 +1,7 @@
 import type { GenericFn } from "@ubloimmo/front-util";
 
 export type StoryToSort = {
-  type: "story";
+  type: "story" | "docs";
   id: string;
   name: string;
   title: string;

@@ -10,32 +10,31 @@ import {
 import { GridLayout } from "@layouts";
 import { useStatic } from "@utils";
 
-import * as componentsIndexRaw from "@components";
+import type { AnyIndex, ComponentListProps } from "./ComponentList.types";
 
-export const ComponentsListRenderer = () => {
-  const index = useStatic(extractComponentsFromIndex(componentsIndexRaw));
-  const componentEntries = useStatic(componentIndexToEntries(index));
+export const ComponentList = <TIndex extends AnyIndex>(
+  props: ComponentListProps<TIndex>
+) => {
+  const index = useStatic(extractComponentsFromIndex(props.index));
+  const componentEntries = useStatic(
+    componentIndexToEntries(index, props.exclude)
+  );
 
   if (!componentEntries) return null;
 
   return (
-    <GridLayout columns={3} gap="s-3" flow="dense">
-      {componentEntries.map(({ name, Component }, index) => (
-        <ComponentCard
-          key={name + index}
-          name={name}
-          Component={Component}
-          randomSize
-        />
-      ))}
-    </GridLayout>
-  );
-};
-
-export const ComponentList = () => {
-  return (
     <ComponentListContainer>
-      <ComponentsListRenderer />
+      <GridLayout columns={props.columns ?? 4} gap="s-3" flow="dense">
+        {componentEntries.map(({ name, Component }, index) => (
+          <ComponentCard
+            key={name + index}
+            name={name}
+            Component={Component}
+            randomSize={props.randomSize}
+            parent={props.parent}
+          />
+        ))}
+      </GridLayout>
     </ComponentListContainer>
   );
 };

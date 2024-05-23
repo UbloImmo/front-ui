@@ -1,5 +1,5 @@
 import { linkTo } from "@storybook/addon-links";
-import { useCallback, useMemo } from "react";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
 import { Header } from "../containers";
@@ -39,6 +39,18 @@ type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
 export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
   props: ComponentInfoProps<TComponentProps>
 ) => {
+  const [isPropsPage, setIsPropsPage] = useState(false);
+
+  useLayoutEffect(() => {
+    const pageSubtitle = document.querySelector(
+      `main[data-layout="docs-content"] > span:first-child > h2[data-testid="heading"]:first-child`
+    );
+
+    setIsPropsPage(
+      !!(pageSubtitle && pageSubtitle.textContent === "Properties")
+    );
+  }, []);
+
   const name = useMemo(() => {
     return props.name ?? props.of.default.component.name;
   }, [props]);
@@ -55,16 +67,7 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
         title: name,
       };
 
-    const pageSubtitle = window.document.body.querySelector(
-      `main[data-layout="docs-content"] > span:first-child > h2[data-testid="heading"]:first-child`
-    );
-
-    const currentPageIsProps =
-      pageSubtitle && pageSubtitle.textContent === "Properties";
-
-    const propsLink = currentPageIsProps
-      ? null
-      : rawTitle.endsWith("/Usage")
+    const propsLink = rawTitle.endsWith("/Usage")
       ? rawTitle.replace("/Usage", "/Properties")
       : rawTitle.endsWith("/Stories")
       ? rawTitle.replace("/Stories", "/Properties")
@@ -143,7 +146,7 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
         </HeaderInfo>
 
         <FlexLayout wrap gap="s-2">
-          {redirectToProps && (
+          {redirectToProps && !isPropsPage && (
             <Button
               icon="Gear"
               role="link"
