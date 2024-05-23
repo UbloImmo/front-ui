@@ -59,11 +59,7 @@ jobs:
         id: install_deps
         run: bun install
 
-      - name: Build package
-        id: package_build
-        run: bun run lib:build
-
-      - name: Publish package
+      - name: Build & Publish package
         id: package_publish
         run: npm publish --access public
         env:
