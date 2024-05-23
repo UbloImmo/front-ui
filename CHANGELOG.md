@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.5.1 - 2024-05-23
 ### Fixed
-
 - `v0.0.3` PhoneInput component
   - width
   - z-clashing
