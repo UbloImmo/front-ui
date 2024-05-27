@@ -27,7 +27,7 @@ export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
       </FlexColumnLayout>
 
       {children && (
-        <Text size="m" color="gray-600">
+        <Text size="m" color="primary-dark">
           {children}
         </Text>
       )}
