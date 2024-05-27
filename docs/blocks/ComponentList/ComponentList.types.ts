@@ -110,6 +110,7 @@ export type ComponentEntries<TIndex extends AnyIndex> = ComponentEntryItem<
 export type ComponentListProps<TIndex extends AnyIndex> = {
   index: TIndex;
   exclude?: ComponentName<TIndex>[];
+  include?: ComponentName<TIndex>[];
   randomSize?: boolean;
   parent?: string;
   columns?: GridTemplate;

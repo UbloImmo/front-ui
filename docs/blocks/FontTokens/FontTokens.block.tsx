@@ -1,0 +1,163 @@
+import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { useMemo } from "react";
+
+import { formatCssLength, isHeadingSize } from "./FontTokens.utils";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from "..";
+
+import { FlexRowLayout, GridLayout } from "@layouts";
+import { capitalize } from "@utils";
+
+import { Text, Heading, Badge } from "@components";
+
+import type { FontTokenRowProps } from "./FontTokens.types";
+import type { HeadingSize, TextSize, TypographyWeight } from "@types";
+
+const HEADING_SIZES: HeadingSize[] = ["h1", "h2", "h3", "h4"];
+const TEXT_SIZES: TextSize[] = ["m", "s", "xs"];
+const FONT_WEIGHTS: TypographyWeight[] = ["bold", "medium", "regular"] as const;
+const LOREM = "The quick brown fox jumps over the lazy dog.";
+
+export const FontTokens = () => {
+  return (
+    <Table>
+      <TableHeader>
+        <TableHeaderCell>
+          <Text size="s" weight="medium" color="gray-800" important>
+            Size
+          </Text>
+        </TableHeaderCell>
+        <TableHeaderCell>
+          <Text size="s" weight="medium" color="gray-800" important>
+            Preview
+          </Text>
+        </TableHeaderCell>
+        <TableHeaderCell>
+          <Text size="s" weight="medium" color="gray-800" important>
+            Specs
+          </Text>
+        </TableHeaderCell>
+      </TableHeader>
+      <TableHeader>
+        <TableHeaderCell>
+          <Text weight="medium" color="gray-800" important>
+            Headings
+          </Text>
+        </TableHeaderCell>
+      </TableHeader>
+      <TableBody>
+        {HEADING_SIZES.flatMap((size) =>
+          FONT_WEIGHTS.map((weight) => (
+            <FontTokenRow
+              key={`${size}-${weight}`}
+              size={size}
+              weight={weight}
+            />
+          ))
+        )}
+      </TableBody>
+      <TableHeader>
+        <TableHeaderCell>
+          <Text weight="medium" color="gray-800" important>
+            Texts
+          </Text>
+        </TableHeaderCell>
+      </TableHeader>
+      <TableBody>
+        {TEXT_SIZES.flatMap((size) =>
+          FONT_WEIGHTS.map((weight) => (
+            <FontTokenRow
+              key={`${size}-${weight}`}
+              size={size}
+              weight={weight}
+            />
+          ))
+        )}
+      </TableBody>
+    </Table>
+  );
+};
+
+const FontTokenRow = ({ size, weight }: FontTokenRowProps) => {
+  const specs = useMemo(
+    () => texts.desktop[size][weight].css.style,
+    [size, weight]
+  );
+
+  const { fontSize, lineHeight, letterSpacing, fontWeight } = useMemo(() => {
+    return {
+      fontSize: formatCssLength(specs.fontSize),
+      lineHeight: formatCssLength(specs.lineHeight),
+      letterSpacing: formatCssLength(specs.letterSpacing),
+      fontWeight: specs.fontWeight,
+    };
+  }, [specs]);
+
+  return (
+    <TableRow $required>
+      <TableCell $center>
+        <FlexRowLayout gap="s-1">
+          <Badge
+            label={size.toUpperCase()}
+            shade={weight === FONT_WEIGHTS[0] ? "dark" : "light"}
+          />
+          <Badge label={capitalize(weight)} color="gray" />
+        </FlexRowLayout>
+      </TableCell>
+      <TableCell $center>
+        {isHeadingSize(size) ? (
+          <Heading size={size} weight={weight} important>
+            {LOREM}
+          </Heading>
+        ) : (
+          <Text size={size} weight={weight} important>
+            {LOREM}
+          </Text>
+        )}
+      </TableCell>
+      <TableCell $center>
+        <GridLayout
+          columns={["auto", "auto"]}
+          gap={{
+            column: "s-2",
+            row: 0,
+          }}
+        >
+          <Text size="xs" color="gray-600" important>
+            Size:
+          </Text>
+          <Text size="xs" color="gray-700" weight="medium" important>
+            {fontSize}
+          </Text>
+
+          <Text size="xs" color="gray-600" important>
+            Line height:
+          </Text>
+          <Text size="xs" color="gray-700" weight="medium" important>
+            {lineHeight}
+          </Text>
+
+          <Text size="xs" color="gray-600" important>
+            Letter spacing:
+          </Text>
+          <Text size="xs" color="gray-700" weight="medium" important>
+            {letterSpacing}
+          </Text>
+
+          <Text size="xs" color="gray-600" important>
+            Weight:
+          </Text>
+          <Text size="xs" color="gray-700" weight="medium" important>
+            {fontWeight}
+          </Text>
+        </GridLayout>
+      </TableCell>
+    </TableRow>
+  );
+};

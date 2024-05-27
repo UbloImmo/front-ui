@@ -17,7 +17,7 @@ export const ComponentList = <TIndex extends AnyIndex>(
 ) => {
   const index = useStatic(extractComponentsFromIndex(props.index));
   const componentEntries = useStatic(
-    componentIndexToEntries(index, props.exclude)
+    componentIndexToEntries(index, props.exclude, props.include)
   );
 
   if (!componentEntries) return null;

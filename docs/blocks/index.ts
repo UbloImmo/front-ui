@@ -10,3 +10,6 @@ export * from "./ComponentProps";
 export * from "./Markdown";
 export * from "./ObjectDocTable";
 export * from "./ComponentList";
+export * from "./FontPreview";
+export * from "./FontTokens";
+export * from "./Table";

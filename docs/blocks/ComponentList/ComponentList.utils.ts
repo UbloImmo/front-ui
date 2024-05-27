@@ -66,7 +66,8 @@ export const extractComponentsFromIndex = <TIndex extends AnyIndex>(
 
 export const componentIndexToEntries = <TIndex extends AnyIndex>(
   index: Nullish<ComponentIndex<TIndex>>,
-  exclude?: ComponentName<TIndex>[]
+  exclude?: ComponentName<TIndex>[],
+  include?: ComponentName<TIndex>[]
 ): Nullable<ComponentEntries<TIndex>> => {
   if (isNullish(index)) return null;
 
@@ -81,7 +82,8 @@ export const componentIndexToEntries = <TIndex extends AnyIndex>(
       })
     )
     .sort((a, b) => a.name.localeCompare(b.name))
-    .filter(({ name }) => (!exclude ? true : !exclude.includes(name)));
+    .filter(({ name }) => (!exclude ? true : !exclude.includes(name)))
+    .filter(({ name }) => (!include ? true : include.includes(name)));
   if (!entries.length) return null;
 
   return entries;

@@ -1,0 +1,33 @@
+import { Meta } from "@storybook/blocks";
+import { HeaderInfo, ComponentList, Text, FontPreview, FontTokens } from "../blocks";
+import { Content, Header } from "../containers";
+import * as componentsIndexRaw from "../../src/components";
+
+<Meta title="Foundations/Typography"/>
+
+<Header>
+  <HeaderInfo title="Typography" parent="Foundations">
+    <Text color="gray-600">We pay extra care to our typography in order to ensure optimal legibility.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Font
+
+Ublo's interfaces use `Gilroy` as the primary font, a modern sans-serif that's accessible and functional.
+Various weights, sizes and letter spacings are combined in order to make it work in any setting.
+
+<FontPreview />
+
+## Heading & Text Styles
+
+Styles applied to headings and texts depend on their `size` and `weights`.
+
+<FontTokens />
+
+## Dedicated components
+
+<ComponentList index={componentsIndexRaw} include={["Text", "Heading"]} columns={2} />
+
+</Content>

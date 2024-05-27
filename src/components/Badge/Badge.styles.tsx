@@ -58,7 +58,6 @@ export const badgeStyle = (props: StyleProps<DefaultBadgeProps>) => {
     span {
       white-space: nowrap;
       text-overflow: ellipsis;
-      overflow: hidden;
       max-width: 16rem;
     }
   `;

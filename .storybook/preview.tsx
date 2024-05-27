@@ -17,8 +17,12 @@ const preview: Preview = {
     options: {
       storySort: (a, b) => {
         const isDocs = (item) => item.type === "docs";
-        const isOverview = (item) =>
-          isDocs(item) && item.id.includes("overview");
+        const contains = (key) => (item) =>
+          item.id.toLowerCase().includes(key.toLowerCase());
+
+        const isOverview = (item) => isDocs(item) && contains("overview")(item);
+
+        const isFoundations = contains("foundations");
 
         const compare = (compareFn) => (itemA, itemB) => {
           if (compareFn(itemA) && !compareFn(itemB)) return -1;
@@ -27,6 +31,9 @@ const preview: Preview = {
         const match = (matchFn) => (itemA, itemB) => {
           return matchFn(itemA) || matchFn(itemB);
         };
+
+        if (match(isFoundations)(a, b)) return compare(isFoundations)(a, b);
+
         if (match(isOverview)(a, b)) return compare(isOverview)(a, b);
         if (match(isDocs)(a, b)) return compare(isDocs)(a, b);
 
