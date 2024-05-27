@@ -30,7 +30,7 @@ export const FontTokens = () => {
       <TableHeader>
         <TableHeaderCell>
           <Text size="s" weight="medium" color="gray-800" important>
-            Size
+            Size / Weight
           </Text>
         </TableHeaderCell>
         <TableHeaderCell>
