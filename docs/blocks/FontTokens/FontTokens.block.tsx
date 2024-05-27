@@ -46,7 +46,7 @@ export const FontTokens = () => {
       </TableHeader>
       <TableHeader>
         <TableHeaderCell colSpan={4}>
-          <Text weight="medium" color="gray-800" important>
+          <Text size="s" weight="medium" color="gray-800" important>
             Headings
           </Text>
         </TableHeaderCell>
