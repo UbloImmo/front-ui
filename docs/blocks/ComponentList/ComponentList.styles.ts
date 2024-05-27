@@ -4,7 +4,7 @@ import { breakpointsPx } from "@/sizes";
 
 export const componentListStyle = (): RuleSet => {
   return css`
-    margin-bottom: var(--s-6);
+    margin: var(--s-6) 0;
 
     [data-testid="grid"] {
       --cell-size-large: 2;

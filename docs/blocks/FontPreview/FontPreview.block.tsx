@@ -44,7 +44,7 @@ const FontPreviewBox = styled.div`
   background: var(--gray-50);
   padding: var(--s-8) var(--s-4);
   border-radius: var(--s-2);
-  margin-top: var(--s-4) !important;
+  margin-top: var(--s-6) !important;
 
   ${SIZE} {
     margin: 0 !important;
