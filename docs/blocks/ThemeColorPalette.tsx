@@ -156,7 +156,6 @@ const BlockContainer = styled.div`
   border-radius: var(--s-2);
   overflow: hidden;
   margin: var(--s-8) 0 !important;
-  box-shadow: ${({ theme }) => theme.palette.shadows.flat};
 `;
 
 const BlockSection = styled(FlexLayout)`

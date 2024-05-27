@@ -59,13 +59,13 @@ The library generates and exports its colors directly inside the global `theme` 
 - Each **color** is represented as an `object` that contains several **shades**
 - Each **shade** contains both `rgba` and `hex` properties and an `opacity()` method to allow for further customization
 
-```json
-{
+```tsx
+const color = {
   "[color]": {
     "[shade]": {
       "hex": "#fff",
       "rgba": "rgba(255, 255, 255, 1)",
-      "opacity": "[Function(number)]"
+      "opacity": (alpha: number) => `rgba(255, 255, 255, ${alpha / 100})` 
     }
   }
 }
