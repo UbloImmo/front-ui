@@ -31,10 +31,12 @@ export type GrayscalePaletteColorShadeKey = Enum<
   typeof grayscalePaletteColorShadeKeys
 >;
 
+export type ShadeOpacityFn = GenericFn<[number], RgbaColorStr>;
+
 export type PaletteColorShade = {
   rgba: RgbaColorStr;
   hex: HexColorAlpha;
-  opacity: GenericFn<[number], RgbaColorStr>;
+  opacity: ShadeOpacityFn;
 };
 
 export type AnyPaletteColorShadeKeys =

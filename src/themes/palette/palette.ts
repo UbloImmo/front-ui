@@ -24,19 +24,29 @@ import {
   StaticColorPalette,
   Token,
   RgbaColorArr,
+  type ShadeOpacityFn,
+  type RgbaColorStr,
 } from "@types";
 
 /**
  * Creates a function that takes an opacity value and returns the RGBA color with the specified opacity.
  *
- * @param {number} a - The opacity value to be applied to the RGBA color.
- * @return {string} The RGBA color with the specified opacity.
+ * @param {number} rgbaColorArr - The opacity value to be applied to the RGBA color.
+ * @return {ShadeOpacityFn} The shade opacity function.
  */
-export const shadeOpacityFactory = (rgbaColorArr: RgbaColorArr) => {
+export const shadeOpacityFactory = (
+  rgbaColorArr: RgbaColorArr
+): ShadeOpacityFn => {
   if (!rgbaColorArr || !isArray(rgbaColorArr))
     throw new Error("Invalid color provided");
   const [r, g, b] = rgbaColorArr;
-  return (a: number) => rgbaColorConverter.arrToStr([r, g, b, a]);
+  /**
+   * A function that takes an opacity value and returns the RGBA color with the specified opacity.
+   *
+   * @param {number} a - The opacity value to be applied to the RGBA color.
+   * @return {RgbaColorStr} The RGBA color with the specified opacity.
+   */
+  return (a: number): RgbaColorStr => rgbaColorConverter.arrToStr([r, g, b, a]);
 };
 
 /**
