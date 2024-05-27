@@ -14,3 +14,4 @@ export * from "./StateIndicator";
 export * from "./StaticIcon";
 export * from "./Text";
 export * from "./Hypertext";
+export * from "./Tooltip";
