@@ -129,11 +129,10 @@ export const parsedEffectToCssVar = (
     (_match, colorStr: RgbaColorStr) => {
       // check if effect color is included in color vars
       const matchingColorVar = colorVarsSplit.find(([_name, rgba]) => {
-        console.debug(
-          `comparing ${name} (${colorStr}) with ${_name} (${rgba}), delta: ${EFFECT_COLOR_DELTA}`
-        );
+        // console.debug(
+        //   `comparing ${name} (${colorStr}) with ${_name} (${rgba}), delta: ${EFFECT_COLOR_DELTA}`
+        // );
         const isFound = isSameShade(rgba, colorStr, EFFECT_COLOR_DELTA);
-        if (isFound) console.debug(`FOUND ${_name}(${rgba})`);
         return isFound;
       });
       // return original rgba color if not found
@@ -142,7 +141,6 @@ export const parsedEffectToCssVar = (
         return colorStr;
       }
       const matchingVarName = matchingColorVar[0];
-      console.warn("found", name, matchingVarName);
       const effectColorAlpha = rgbaColorConverter.strToObj(colorStr).a;
 
       // map ublo's primary color to client primary color

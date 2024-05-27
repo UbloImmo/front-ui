@@ -146,11 +146,12 @@ const dynamicClientColorPalette = (): DynamicColorPalette => {
             dynamicColorTokenGroup.light.value,
             0.5
           );
-          const mediumToken: Token<"COLOR"> = {
-            name: "medium",
-            type: "COLOR",
-            value: mediumColor,
-          };
+          const mediumToken: Token<"COLOR"> =
+            dynamicColorTokenGroup?.medium ?? {
+              name: "medium",
+              type: "COLOR",
+              value: mediumColor,
+            };
           const updatedTokenGroup = {
             dark: dynamicColorTokenGroup.dark,
             base: dynamicColorBase,
