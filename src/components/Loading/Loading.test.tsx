@@ -32,12 +32,12 @@ testLoading({
 });
 
 testLoading({})("should render without props", ({ queryByTestId }) => {
-  expect(queryByTestId(testId)).toBeDefined();
+  expect(queryByTestId(testId)).not.toBeNull();
 });
 
-testLoading({ animation: "Spinner" })(
+testLoading({ animation: "Ripple" })(
   "should render another animation",
   ({ queryByTestId }) => {
-    expect(queryByTestId(testId)).toBeDefined();
+    expect(queryByTestId(testId)).not.toBeNull();
   }
 );
