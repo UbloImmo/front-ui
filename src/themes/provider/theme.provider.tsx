@@ -31,7 +31,7 @@ type ThemeProviderProps = {
 export const ThemeProvider = ({
   children,
   getOverridesFn,
-  _forceTheme = "wisteria",
+  _forceTheme = "primary",
 }: ThemeProviderProps): JSX.Element => {
   const [overrides, setOverrides] = useState<Nullable<ThemeOverride>>();
 

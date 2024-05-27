@@ -27,7 +27,7 @@ export const DocsContainer = ({
   const client: DynamicColorPaletteKey =
     isString(themeClient) && clientSlugs.includes(themeClient)
       ? themeClient
-      : "wisteria";
+      : "primary";
   return (
     <StorybookThemeProvider theme={{ client }}>
       <StyleReset>

@@ -34,7 +34,7 @@ const getStoryThemes = () => {
 export const StoryDecorator: Preview["decorators"] = [
   withThemeFromJSXProvider<ReactRenderer>({
     themes: getStoryThemes(),
-    defaultTheme: "wisteria",
+    defaultTheme: "primary",
     Provider: StorybookThemeProvider,
   }),
 ];

@@ -33,7 +33,7 @@ export default create({
   appBorderRadius: 8,
 
   // Button Colors
-  buttonBg: t.primary.medium.rgba,
+  buttonBg: t.primary.medium.opacity(0.25),
   buttonBorder: t.primary.base.rgba,
 
   // Boolean Colors
