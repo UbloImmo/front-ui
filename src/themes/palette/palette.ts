@@ -11,7 +11,7 @@ import {
 
 import { rgbaColorConverter, blendColors } from "../../utils";
 
-import {
+import type {
   AnyPaletteColorShadeKeys,
   DynamicColorPalette,
   DynamicColorPaletteKey as DynamicColorPaletteKey,
@@ -24,15 +24,15 @@ import {
   StaticColorPalette,
   Token,
   RgbaColorArr,
-  type ShadeOpacityFn,
-  type RgbaColorStr,
+  ShadeOpacityFn,
+  RgbaColorStr,
 } from "@types";
 
 /**
  * Creates a function that takes an opacity value and returns the RGBA color with the specified opacity.
  *
  * @param {number} rgbaColorArr - The opacity value to be applied to the RGBA color.
- * @return {ShadeOpacityFn} The shade opacity function.
+ * @return {ShadeOpacityFn} The shade opacity function
  */
 export const shadeOpacityFactory = (
   rgbaColorArr: RgbaColorArr
