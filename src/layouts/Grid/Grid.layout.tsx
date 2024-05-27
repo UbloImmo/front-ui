@@ -26,7 +26,7 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
  * @param {GridLayoutProps} [props = defaultGridLayoutProps] - optional props
  * @return {JSX.Element} The styled grid wrapper
  */
-export const GridLayout = (props: GridLayoutProps): JSX.Element => {
+const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const innerProps = useStyleProps(props);
   return (
     <GridLayoutInner {...innerProps} data-testid="grid">
@@ -34,9 +34,10 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
     </GridLayoutInner>
   );
 };
+GridLayout.defaultProps = defaultGridLayoutProps;
+
+export { GridLayout };
 
 const GridLayoutInner = styled.div<StyleProps<GridLayoutProps>>`
   ${buildGridLayoutStyle(defaultGridLayoutProps)}
 `;
-
-GridLayout.defaultProps = defaultGridLayoutProps;

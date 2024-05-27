@@ -1,4 +1,4 @@
-import { CssLength, Enum } from "@types";
+import { CssLength, Enum, type StyleProps } from "@types";
 
 import type { ReactNode } from "react";
 
@@ -12,7 +12,7 @@ const gridFlows = [
 
 export type GridFlow = Enum<typeof gridFlows>;
 
-const gridAlignments = ["center", "start", "end"] as const;
+const gridAlignments = ["center", "start", "end", "baseline"] as const;
 
 export type GridAlignment = Enum<typeof gridAlignments>;
 
@@ -77,3 +77,88 @@ export type GridLayoutProps = {
 };
 
 export type GridLayoutDefaultProps = Required<GridLayoutProps>;
+
+export type GridStartPosition = number | `${number}` | "auto";
+
+export type GridEndPosition = GridStartPosition | `span ${number}`;
+
+type GridAxisPositionStr = `${GridStartPosition} / ${GridEndPosition}`;
+
+type GridAxisPosition =
+  | GridAxisPositionStr
+  | { start?: GridStartPosition; end?: GridEndPosition };
+
+type GridDetailedPosition = {
+  /**
+   * The item's start row on the grid
+   * @default "auto"
+   * @type {GridStartPosition}
+   */
+  rowStart?: GridStartPosition;
+  /**
+   * The item's end row on the grid
+   * @default "auto"
+   * @type {GridEndPosition}
+   */
+  rowEnd?: GridEndPosition;
+  /**
+   * The item's start column on the grid
+   * @default "auto"
+   * @type {GridStartPosition}
+   */
+  columnStart?: GridStartPosition;
+  /**
+   * The item's end column on the grid
+   * @default "auto"
+   * @type {GridEndPosition}
+   */
+  columnEnd?: GridEndPosition;
+};
+
+export type GridCombinedPosition = {
+  /**
+   * The item's row position on the grid
+   * @default "auto / auto"
+   * @type {GridAxisPosition}
+   */
+  row?: GridAxisPosition;
+  /**
+   * The item's column position on the grid
+   * @default "auto / auto"
+   * @type {GridAxisPosition}
+   */
+  column?: GridAxisPosition;
+};
+
+type GridItemCommonProps = {
+  /**
+   * The children to render inside the grid item
+   */
+  children?: ReactNode;
+  /**
+   * The alignment of the grid item based on **X axis**
+   * @default "start"
+   * @type {GridAlignment}
+   */
+  justify?: GridAlignment;
+  /**
+   * The alignment of the grid item based on **Y axis**
+   * @default "start"
+   * @type {GridAlignment}
+   */
+  align?: GridAlignment;
+};
+
+export interface GridItemProps
+  extends GridItemCommonProps,
+    GridCombinedPosition {}
+
+export interface GridItemProps
+  extends GridItemCommonProps,
+    GridDetailedPosition {}
+
+export type GridItemDefaultProps = Required<GridItemProps>;
+
+export type GridItemStyleProps = StyleProps<
+  Required<GridDetailedPosition & Omit<GridItemCommonProps, "children">>
+>;
