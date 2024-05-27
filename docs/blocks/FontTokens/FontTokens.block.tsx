@@ -11,8 +11,8 @@ import {
   TableRow,
 } from "..";
 
-import { FlexRowLayout, GridLayout } from "@layouts";
-import { capitalize } from "@utils";
+import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
+import { capitalize, cssVarName } from "@utils";
 
 import { Text, Heading, Badge } from "@components";
 
@@ -45,7 +45,7 @@ export const FontTokens = () => {
         </TableHeaderCell>
       </TableHeader>
       <TableHeader>
-        <TableHeaderCell>
+        <TableHeaderCell colSpan={4}>
           <Text weight="medium" color="gray-800" important>
             Headings
           </Text>
@@ -63,7 +63,7 @@ export const FontTokens = () => {
         )}
       </TableBody>
       <TableHeader>
-        <TableHeaderCell>
+        <TableHeaderCell colSpan={4}>
           <Text weight="medium" color="gray-800" important>
             Texts
           </Text>
@@ -99,6 +99,14 @@ const FontTokenRow = ({ size, weight }: FontTokenRowProps) => {
     };
   }, [specs]);
 
+  const cssVars = useMemo(
+    () => ({
+      size: cssVarName(`text-${size}`),
+      weight: cssVarName(`text-weight-${weight}`),
+    }),
+    [size, weight]
+  );
+
   return (
     <TableRow $required>
       <TableCell $center>
@@ -123,11 +131,13 @@ const FontTokenRow = ({ size, weight }: FontTokenRowProps) => {
       </TableCell>
       <TableCell $center>
         <GridLayout
-          columns={["auto", "auto"]}
+          columns={["auto", "auto", "auto"]}
           gap={{
             column: "s-2",
             row: 0,
           }}
+          align="baseline"
+          justify="start"
         >
           <Text size="xs" color="gray-600" important>
             Size:
@@ -135,19 +145,8 @@ const FontTokenRow = ({ size, weight }: FontTokenRowProps) => {
           <Text size="xs" color="gray-700" weight="medium" important>
             {fontSize}
           </Text>
-
-          <Text size="xs" color="gray-600" important>
-            Line height:
-          </Text>
           <Text size="xs" color="gray-700" weight="medium" important>
-            {lineHeight}
-          </Text>
-
-          <Text size="xs" color="gray-600" important>
-            Letter spacing:
-          </Text>
-          <Text size="xs" color="gray-700" weight="medium" important>
-            {letterSpacing}
+            {cssVars.size}
           </Text>
 
           <Text size="xs" color="gray-600" important>
@@ -156,6 +155,28 @@ const FontTokenRow = ({ size, weight }: FontTokenRowProps) => {
           <Text size="xs" color="gray-700" weight="medium" important>
             {fontWeight}
           </Text>
+          <Text size="xs" color="gray-700" weight="medium" important>
+            {cssVars.weight}
+          </Text>
+
+          <Text size="xs" color="gray-600" important>
+            Line height:
+          </Text>
+
+          <Text size="xs" color="gray-700" weight="medium" important>
+            {lineHeight}
+          </Text>
+
+          <GridItem columnStart="1">
+            <Text size="xs" color="gray-600" important>
+              Letter spacing:
+            </Text>
+          </GridItem>
+          <GridItem>
+            <Text size="xs" color="gray-700" weight="medium" important>
+              {letterSpacing}
+            </Text>
+          </GridItem>
         </GridLayout>
       </TableCell>
     </TableRow>
