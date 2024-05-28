@@ -51,7 +51,7 @@ export const ThemeProvider = ({
     if (
       noFavicon ||
       faviconApplied.current ||
-      FAVICON_APPLY_TRY_COUNT_LIMIT >= FAVICON_APPLY_TRY_COUNT_LIMIT
+      faviconApplyTryCount.current >= FAVICON_APPLY_TRY_COUNT_LIMIT
     ) {
       return;
     }
