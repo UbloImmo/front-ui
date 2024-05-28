@@ -1,62 +1,67 @@
-import { isNullish } from "@ubloimmo/front-util";
-import { ReactNode, useMemo, useState, useEffect } from "react";
+import { isNull, isNullish } from "@ubloimmo/front-util";
+import { useMemo, useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   ThemeProvider as StyledThemeProvider,
   useTheme as useStyledTheme,
 } from "styled-components";
 
-import { GlobalStyle } from "./globalStyle";
-import { buildTheme } from "../theme";
+import { GlobalStyle } from "./GlobalStyle";
+import { applyFavicon, buildTheme } from "../theme";
 
-import type {
-  DynamicColorPaletteKey,
-  GetThemeOverridesFn,
-  Theme,
-  ThemeOverride,
-} from "@types";
+import type { Theme, ThemeOverride, ThemeProviderProps } from "@types";
 import type { GenericFn, Nullable } from "@ubloimmo/front-util";
 
-type ThemeProviderProps = {
-  children: ReactNode;
-  getOverridesFn?: GetThemeOverridesFn;
-  _forceTheme?: DynamicColorPaletteKey;
-};
+const FAVICON_APPLY_TRY_COUNT_LIMIT = 3;
 
 /**
  * ThemeProvider component to provide `styled-components` theme to the children components.
  *
- * @param {ReactNode} children - The child components to apply the theme to.
+ * @param {ThemeProviderProps} props - The provider's props
  * @return {JSX.Element} The styled theme provider component with the provided theme.
  */
 export const ThemeProvider = ({
   children,
   getOverridesFn,
   _forceTheme = "primary",
+  noFavicon = false,
+  faviconLinkSelectors,
 }: ThemeProviderProps): JSX.Element => {
-  const [overrides, setOverrides] = useState<Nullable<ThemeOverride>>();
+  const [overrides, setOverrides] = useState<Nullable<ThemeOverride>>(null);
+  const faviconApplied = useRef(false);
+  const faviconApplyTryCount = useRef(0);
 
   useEffect(() => {
-    if (isNullish(getOverridesFn)) return;
+    if (isNullish(getOverridesFn) || !isNull(overrides)) return;
     /**
      * Fetches overrides asynchronously and sets the overrides data.
-     *
-     * @return {Promise<void>}
      */
     const fetchOverrides = async () => {
       const data = await getOverridesFn();
       setOverrides(data);
     };
     fetchOverrides();
-  }, [getOverridesFn]);
+  }, [getOverridesFn, overrides]);
 
   const theme = useMemo(
     () => buildTheme(overrides, _forceTheme),
     [overrides, _forceTheme]
   );
 
+  useLayoutEffect(() => {
+    if (
+      noFavicon ||
+      faviconApplied.current ||
+      FAVICON_APPLY_TRY_COUNT_LIMIT >= FAVICON_APPLY_TRY_COUNT_LIMIT
+    ) {
+      return;
+    }
+    faviconApplied.current = applyFavicon(theme, faviconLinkSelectors);
+    faviconApplyTryCount.current++;
+  }, [theme, noFavicon, faviconLinkSelectors]);
+
   return (
     <StyledThemeProvider theme={theme}>
-      <GlobalStyle />
+      <GlobalStyle theme={theme} />
       {children}
     </StyledThemeProvider>
   );

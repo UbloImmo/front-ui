@@ -1,3 +1,5 @@
+import { isString, type Nullable } from "@ubloimmo/front-util";
+
 import {
   buildColorPalette,
   buildDynamicColorPalette,
@@ -7,11 +9,11 @@ import { themeOverridePaletteToColorPaletteShaded } from "./provider/theme.overr
 
 import type {
   DynamicColorPaletteKey,
+  FaviconLinkSelectors,
   OrganizationData,
   Theme,
   ThemeOverride,
 } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
 
 /**
  * Organization data for ublo's staging & local environments
@@ -65,4 +67,39 @@ export const buildTheme = (
     },
     primary: themeOverridePaletteToColorPaletteShaded(palette),
   };
+};
+
+/**
+ * Applies the favicon to the document head based on the provided theme.
+ *
+ * @param {Theme} theme - The theme object containing the favicon details.
+ * @param {FaviconLinkSelectors} [linkSelectors] - Optional link selectors for the favicon.
+ * @returns {boolean} - Returns true if the favicon is successfully applied, false otherwise.
+ */
+export const applyFavicon = (
+  theme: Theme,
+  linkSelectors?: FaviconLinkSelectors
+): boolean => {
+  if (!theme?.organization?.assets?.favicon) return false;
+  const { x16, x32 } = theme.organization.assets.favicon;
+  if (!isString(x16) || !isString(x32)) return false;
+  if (!document || !document?.head) return false;
+  const link16 = document.head.querySelector<HTMLLinkElement>(
+    linkSelectors?.x16 ?? "link#favicon-16[rel='icon']"
+  );
+  const link32 = document.head.querySelector<HTMLLinkElement>(
+    linkSelectors?.x32 ?? "link#favicon-32[rel='icon']"
+  );
+  // set
+  if (link16) {
+    link16.type = "image/png";
+    link16.href = x16;
+  }
+  if (link32) {
+    link32.type = "image/png";
+    link32.href = x32;
+  }
+  // check
+  if (link16?.href === x16 || link32?.href === x32) return true;
+  return link16?.href === x16 || link32?.href === x32;
 };
