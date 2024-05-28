@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- Actually check if favicon has been applied 
+
 ## 0.6.1 - 2024-05-28
 ### Added
 - Set favicon from theme provider according to overrides

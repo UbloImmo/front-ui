@@ -81,15 +81,13 @@ export const applyFavicon = (
   linkSelectors?: FaviconLinkSelectors
 ): boolean => {
   if (!theme?.organization?.assets?.favicon) return false;
+  const x16Selector = linkSelectors?.x16 ?? "link#favicon-16[rel='icon']";
+  const x32Selector = linkSelectors?.x32 ?? "link#favicon-32[rel='icon']";
   const { x16, x32 } = theme.organization.assets.favicon;
   if (!isString(x16) || !isString(x32)) return false;
   if (!document || !document?.head) return false;
-  const link16 = document.head.querySelector<HTMLLinkElement>(
-    linkSelectors?.x16 ?? "link#favicon-16[rel='icon']"
-  );
-  const link32 = document.head.querySelector<HTMLLinkElement>(
-    linkSelectors?.x32 ?? "link#favicon-32[rel='icon']"
-  );
+  const link16 = document.head.querySelector<HTMLLinkElement>(x16Selector);
+  const link32 = document.head.querySelector<HTMLLinkElement>(x32Selector);
   // set
   if (link16) {
     link16.type = "image/png";
@@ -100,6 +98,7 @@ export const applyFavicon = (
     link32.href = x32;
   }
   // check
-  if (link16?.href === x16 || link32?.href === x32) return true;
-  return link16?.href === x16 || link32?.href === x32;
+  const link16Check = document.head.querySelector<HTMLLinkElement>(x16Selector);
+  const link32Check = document.head.querySelector<HTMLLinkElement>(x32Selector);
+  return link16Check?.href === x16 || link32Check?.href === x32;
 };

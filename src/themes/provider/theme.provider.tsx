@@ -1,5 +1,5 @@
 import { isNull, isNullish } from "@ubloimmo/front-util";
-import { useMemo, useState, useEffect, useLayoutEffect, useRef } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import {
   ThemeProvider as StyledThemeProvider,
   useTheme as useStyledTheme,
@@ -47,7 +47,7 @@ export const ThemeProvider = ({
     [overrides, _forceTheme]
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (
       noFavicon ||
       faviconApplied.current ||
