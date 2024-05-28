@@ -31,7 +31,12 @@ export const StorybookThemeProvider = ({
   theme,
   children,
 }: StorybookThemeProviderProps) => (
-  <ThemeProvider _forceTheme={theme.client}>{children}</ThemeProvider>
+  <ThemeProvider
+    _forceTheme={theme.client}
+    faviconLinkSelectors={{ x16: 'link[rel="icon"]' }}
+  >
+    {children}
+  </ThemeProvider>
 );
 
 const getStoryThemes = () => {
