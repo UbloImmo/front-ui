@@ -12,7 +12,7 @@ export type TooltipContentFn = GenericFn<[], ReactNode>;
 
 export type TooltipProps = {
   /**
-   * The wrapped content in the tooltip
+   * The wrapped content by the tooltip
    * @required
    */
   children: ReactNode;
@@ -28,17 +28,14 @@ export type TooltipProps = {
    */
   direction?: TooltipDirection;
   /**
-   * The icon do display when no `children` are provided
+   * The icon to display when no `children` are provided
    * @type {IconName}
    * @default "QuestionCircleFill"
    */
   icon?: IconName;
   /**
    * Intersection root to compare against when positioning tooltip
-   *
    * @remarks defaults to viewport
-   *
-   *
    * @default null
    *
    */

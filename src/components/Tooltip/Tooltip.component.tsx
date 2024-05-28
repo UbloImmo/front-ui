@@ -35,7 +35,7 @@ import type {
 } from "./Tooltip.types";
 
 const defaultTooltipProps: DefaultTooltipProps = {
-  children: "<span>The children</span>",
+  children: "",
   content: "[Tooltip content]",
   direction: "top",
   icon: "QuestionCircleFill",
@@ -49,7 +49,15 @@ const inverseDirectionMap: Record<TooltipDirection, TooltipDirection> = {
   right: "left",
 };
 
-const Tooltip = (props: TooltipProps) => {
+/**
+ * Text popup box that appears when the user hovers over an element
+ *
+ * @version 0.0.1
+ *
+ * @param {TooltipProps} props - The tooltip's props
+ * @returns {JSX.Element} The rendered tooltip
+ */
+const Tooltip = (props: TooltipProps): JSX.Element => {
   const { error } = useLogger("Tooltip");
   const mergedProps = useMergedProps(defaultTooltipProps, props);
 
@@ -64,20 +72,36 @@ const Tooltip = (props: TooltipProps) => {
   const tooltipWrapperRef = useRef<Nullable<HTMLDivElement>>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
+  /**
+   * Setting the current direction of the tooltip's placeholder
+   */
   useEffect(() => {
     tooltipDirectionRef.current = direction;
   }, [direction]);
 
+  /**
+   * Detects when tooltip is clipped and changes its direction to the opposite
+   */
   useLayoutEffect(() => {
     declareObserver: {
       if (!isNull(observerRef.current)) break declareObserver;
 
       observerRef.current = new IntersectionObserver(
         (entries) => {
+          /**
+           * Gets current direction of the tooltip
+           * initializes the clipping direction as null
+           */
           const currentDirection = tooltipDirectionRef.current;
           let clippingDirection: Nullable<TooltipDirection> = null;
+
           entries.forEach(
             ({ boundingClientRect: { top, bottom, left, right } }) => {
+              /**
+               * Sets the conditions to activate the clipping
+               * Checks if the tooltip is clipped
+               * Updates the clipping direction when clipped
+               */
               const clippingMap: Record<TooltipDirection, boolean> = {
                 top: top < 0,
                 bottom: bottom > window.innerHeight,
@@ -93,6 +117,9 @@ const Tooltip = (props: TooltipProps) => {
             }
           );
 
+          /**
+           * Update tooltip direction when clipped to the opposite of the clipping direction
+           */
           if (clippingDirection) {
             setTooltipDirection(inverseDirectionMap[clippingDirection]);
           } else {
@@ -109,7 +136,9 @@ const Tooltip = (props: TooltipProps) => {
     const tooltipElement = tooltipRef.current;
     const tooltipWrapperElement = tooltipWrapperRef.current;
 
-    // observer le toolip SI tooltipRef.current n'est pas null
+    /**
+     * Checking if the tooltip elements are not null to observe them and enable clipping
+     */
     observeTooltip: {
       if (isNull(tooltipElement) || isNull(tooltipWrapperElement))
         break observeTooltip;
@@ -141,6 +170,9 @@ const Tooltip = (props: TooltipProps) => {
     return content;
   }, [content, error]);
 
+  /**
+   * Checks children props and if it is empty, renders a default questionmark icon in the children property
+   */
   const RenderedChildren = useCallback(() => {
     if (!children || (isString(children) && isEmptyString(children))) {
       return <Icon name={icon} size="s-4" color="gray-700" />;
@@ -151,7 +183,7 @@ const Tooltip = (props: TooltipProps) => {
   return (
     <TooltipWrapper
       aria-describedby="[data-testid='tooltip']"
-      data-testid="toolip-wrapper"
+      data-testid="tooltip-wrapper"
       ref={tooltipWrapperRef}
     >
       <ToolipPlaceholder
