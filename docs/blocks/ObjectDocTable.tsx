@@ -1,20 +1,26 @@
 import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo } from "react";
-import styled, { css } from "styled-components";
 
 import { formatPropInfo } from "@docs/docs.utils";
 import { useStatic } from "@utils";
 
 import { Text } from "@components";
 
-import { Markdown } from ".";
+import {
+  Markdown,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from ".";
 
 import type {
   DocgenPropDef,
   DocgenProps,
   ParsedPropInfo,
 } from "@docs/docs.types";
-import type { StyleProps } from "@types";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 type ComponentPropInfo = DocgenPropDef<NullishPrimitives> & {
@@ -143,98 +149,3 @@ const ComponentPropRow = ({
     </TableRow>
   );
 };
-
-const Table = styled.table`
-  display: block;
-  max-width: 100%;
-  width: max-content;
-  margin-top: var(--s-6) !important;
-  margin-bottom: var(--s-8) !important;
-  border-radius: var(--s-2);
-  background: var(--gray-50) !important;
-  padding: var(--s-1) var(--s-1) 0 !important;
-  border-collapse: separate !important;
-  border-spacing: var(--s-1) var(--s-2) !important;
-  border: none !important;
-  overflow-y: hidden !important;
-  overflow-x: auto !important;
-`;
-
-const TableBody = styled.tbody``;
-
-const TableRow = styled.tr<
-  Partial<StyleProps<Pick<ParsedPropInfo, "todo" | "required">>>
->`
-  ${({ $todo }) =>
-    $todo
-      ? css`
-          & > td {
-            opacity: 0.5;
-            background: none;
-          }
-        `
-      : css`
-          &:hover td {
-            background: var(--primary-light-50);
-            transition-duration: 150ms;
-
-            &:first-child {
-              background: var(--primary-light);
-            }
-          }
-        `}
-  ${({ $required }) =>
-    $required &&
-    css`
-      & > td {
-        background: #fff;
-      }
-    `}
-
-  background: none !important;
-`;
-const TableHeader = styled.thead`
-  border-top-left-radius: var(--s-2);
-  border-top-right-radius: var(--s-2);
-  overflow-y: hidden !important;
-  background: var(--gray-50) !important;
-  border: none !important;
-`;
-
-const TableHeaderCell = styled.th`
-  text-transform: capitalize;
-  padding: 0 var(--s-2) !important;
-  text-align: left;
-  background: none !important;
-  border: none !important;
-  display: table-cell;
-`;
-
-const TableCell = styled.td`
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: var(--s-1);
-  border: none !important;
-  padding: var(--s-2) !important;
-  display: table-cell;
-  width: max-content;
-  vertical-align: top;
-  transition: background 300ms ease-out 0s;
-
-  span:has(*) {
-    margin: 0 !important;
-  }
-  // normalize stacked margins
-  span:not(:has(*:not(code))) {
-    margin: var(--s-1) 0 !important;
-  }
-
-  &:nth-child(3) code {
-    background: none;
-    border: none;
-    white-space: nowrap;
-  }
-
-  &:last-child {
-    min-width: 16rem;
-  }
-`;

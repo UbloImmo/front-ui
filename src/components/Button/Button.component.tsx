@@ -1,4 +1,4 @@
-import { isNull, type Nullable } from "@ubloimmo/front-util";
+import { isNull } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
@@ -32,12 +32,12 @@ const defaultButtonProps: DefaultButtonProps = {
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {ButtonProps} props - the button's props
- * @returns {Nullable<JSX.Element>} the rendered button
+ * @returns {JSX.Element} the rendered button
  */
-const Button = (props: ButtonProps): Nullable<JSX.Element> => {
+const Button = (props: ButtonProps): JSX.Element => {
   const { warn } = useLogger("Button");
   const mergedProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultButtonProps,
@@ -55,7 +55,8 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
     mergedProps.onClick();
   }, [mergedProps]);
 
-  const { label, icon, disabled, title, role, type } = mergedProps;
+  const { icon, disabled, title, role, type } = mergedProps;
+  let { label } = mergedProps;
 
   const ariaTitle = useMemo(() => {
     return title && title.length > 0 ? title : label ?? undefined;
@@ -69,7 +70,7 @@ const Button = (props: ButtonProps): Nullable<JSX.Element> => {
     warn(
       "Button must have at least a label and / or an icon. Both are missing"
     );
-    return null;
+    label = "[Label]";
   }
 
   return (

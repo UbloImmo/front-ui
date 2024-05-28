@@ -4,30 +4,36 @@ import styled from "styled-components";
 
 import { StorybookThemeProvider } from "./StoryDecorator";
 
-import { getClientSlugs } from "@/themes";
+import { getDynamicThemeSlugs } from "@/themes";
 import { codeFontFace, typographyFontFace } from "@/typography";
 
-import type { ClientColorPaletteKey } from "@types";
+import type { DynamicColorPaletteKey } from "@types";
 
 type DocsContainerProps = Parameters<typeof SBDocsContainer>[0];
 
 /**
- * Wraps each MDX documentation with a dynamic theme provider
+ * Wraps each MDX documentation with a dynamic theme provider.
+ *
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The child components.
+ * @param {Object} props.context - The context object.
+ * @param {Object} props.theme - The theme object.
+ * @return {JSX.Element} The rendered component.
  */
 export const DocsContainer = ({
   children,
   context,
   theme,
-}: DocsContainerProps) => {
+}: DocsContainerProps): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const storyContext = context as any;
-  const themeClient: Optional<ClientColorPaletteKey> =
+  const themeClient: Optional<DynamicColorPaletteKey> =
     storyContext?.store?.globals?.globals?.theme;
-  const clientSlugs = getClientSlugs();
-  const client: ClientColorPaletteKey =
+  const clientSlugs = getDynamicThemeSlugs();
+  const client: DynamicColorPaletteKey =
     isString(themeClient) && clientSlugs.includes(themeClient)
       ? themeClient
-      : "ublo";
+      : "primary";
   return (
     <StorybookThemeProvider theme={{ client }}>
       <StyleReset>

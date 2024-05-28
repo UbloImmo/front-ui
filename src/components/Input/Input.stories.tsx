@@ -11,7 +11,7 @@ import { useMergedProps } from "@utils";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/Input/Common/Stories",
+  title: "Components/Input/Stories",
   component: Input,
   decorators: [
     (Story) => (

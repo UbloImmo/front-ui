@@ -12,7 +12,7 @@ const defaultHeadingProps: Required<HeadingProps> = {
 } as const;
 
 /**
- * Renders a heading component
+ * Customizable, accessible heading.
  *
  * @version 0.0.2
  *

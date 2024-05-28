@@ -1,2 +1,2 @@
 export * from "./BouncingBalls";
-export * from "./Spinner";
+export * from "./Ripple";

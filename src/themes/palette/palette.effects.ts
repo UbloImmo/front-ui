@@ -3,11 +3,10 @@ import { isObject, objectEntries } from "@ubloimmo/front-util";
 
 import {
   cssVar,
-  cssVarUsage,
   rgbaRegex,
   rgbaColorConverter,
-  isSameColor,
   parseCssVar,
+  isSameShade,
 } from "../../utils";
 
 import type {
@@ -20,11 +19,13 @@ import type {
   CssVar,
   CssVarName,
   CssVarUsage,
+  CssRelativeRgbaColor,
 } from "@types";
 
 const substitutionRegex = /\$\$(rgba\([\d,.\s]+\))\$\$/g;
-const defaultPrimaryName = "primary-default" as const;
-const primaryName = "primary" as const;
+const PRIMARY_NAME_DEFAULT = "primary-default" as const;
+const PRIMARY_NAME = "primary" as const;
+const EFFECT_COLOR_DELTA = 2;
 
 /**
  * Predicate function to check if the input value is a Token of a specific type.
@@ -111,9 +112,13 @@ const effectTokenOrGroupToEffect = (
 export const parsedEffectToCssVar = (
   { value, name, originalValue }: ParsedEffect,
   colorVarsSplit: [CssVarName, RgbaColorArr][] = []
-): CssVar<string> | CssVar<`${string}${CssVarUsage}`> => {
+):
+  | CssVar<string>
+  | CssVar<`${string}${CssVarUsage}`>
+  | CssVar<CssRelativeRgbaColor> => {
   // return regular css var if no effect color parsed
   if (!originalValue) {
+    console.warn("missing", name, value);
     return cssVar(name, value);
   }
   // reset regex beforechecking
@@ -124,21 +129,31 @@ export const parsedEffectToCssVar = (
     (_match, colorStr: RgbaColorStr) => {
       // check if effect color is included in color vars
       const matchingColorVar = colorVarsSplit.find(([_name, rgba]) => {
-        return isSameColor(rgba, colorStr);
+        // console.debug(
+        //   `comparing ${name} (${colorStr}) with ${_name} (${rgba}), delta: ${EFFECT_COLOR_DELTA}`
+        // );
+        const isFound = isSameShade(rgba, colorStr, EFFECT_COLOR_DELTA);
+        return isFound;
       });
-      // retrun original rgba color if not found
-      if (!matchingColorVar) return colorStr;
-      const matchingVarName = matchingColorVar[0];
-      // if color is default primary, replace it with primary equivalent
-      if (matchingVarName.includes(defaultPrimaryName)) {
-        const newVarName = matchingVarName
-          .replace(defaultPrimaryName, primaryName)
-          .slice(2);
-        return cssVarUsage(newVarName);
+      // return original rgba color if not found
+      if (!matchingColorVar) {
+        console.warn("missing", name, colorStr);
+        return colorStr;
       }
-      // format matching color var name as css var usage
+      const matchingVarName = matchingColorVar[0];
+      const effectColorAlpha = rgbaColorConverter.strToObj(colorStr).a;
+
+      // map ublo's primary color to client primary color
+      const newVarName = matchingVarName.includes(PRIMARY_NAME_DEFAULT)
+        ? (matchingVarName.replace(
+            PRIMARY_NAME_DEFAULT,
+            PRIMARY_NAME
+          ) as CssVarName)
+        : matchingVarName;
+      // derive color from variable and keep alpha
+      const relativeColor: CssRelativeRgbaColor = `rgb(from var(${newVarName}) r g b / ${effectColorAlpha})`;
       // and use them as replacement
-      return cssVarUsage(matchingColorVar[0].substring(2));
+      return relativeColor;
     }
   );
   // reset regex after checking

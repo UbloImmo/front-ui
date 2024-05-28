@@ -21,10 +21,7 @@ const defaultIconProps: DefaultIconProps = {
 /**
  * Renders the appropriate icon component based on the provided props.
  *
- * This function first determines the icon name based on the provided props,
- * then looks up the corresponding icon component. If the icon component is
- * found, it is rendered with the provided size and color props. If the icon
- * component is not found, null is returned.
+ * @remarks Determines the icon name based on the provided name, then looks up the corresponding icon component.
  *
  * @version 0.0.1
  *

@@ -22,9 +22,9 @@ describe("Button", () => {
   global.console.warn = mock(() => {});
 
   testButton({ label: null, icon: null })(
-    "should not render",
+    "should warn",
     ({ queryByTestId }) => {
-      expect(queryByTestId("button")).toBeNull();
+      expect(queryByTestId("button")).not.toBeNull();
       expect(global.console.warn).toHaveBeenCalled();
     }
   );

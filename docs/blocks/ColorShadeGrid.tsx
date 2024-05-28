@@ -167,7 +167,6 @@ const ShadeGridContainer = styled.div`
   background: #fff;
   border-radius: var(--s-1);
   overflow: hidden;
-  box-shadow: ${({ theme }) => theme.palette.shadows.flat};
 `;
 
 const ShadeContainer = styled.div.attrs<{

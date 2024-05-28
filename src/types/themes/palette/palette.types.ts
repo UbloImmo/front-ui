@@ -31,10 +31,12 @@ export type GrayscalePaletteColorShadeKey = Enum<
   typeof grayscalePaletteColorShadeKeys
 >;
 
+export type ShadeOpacityFn = GenericFn<[number], RgbaColorStr>;
+
 export type PaletteColorShade = {
   rgba: RgbaColorStr;
   hex: HexColorAlpha;
-  opacity: GenericFn<[number], RgbaColorStr>;
+  opacity: ShadeOpacityFn;
 };
 
 export type AnyPaletteColorShadeKeys =
@@ -53,24 +55,26 @@ export type StaticColorPalette = {
   gray: PaletteColorShaded<GrayscalePaletteColorShadeKey[]>;
 };
 
-export type ClientColorPaletteKey = Exclude<
+export type DynamicColorPaletteKey = Exclude<
   keyof typeof colors,
   keyof StaticColorPalette
 >;
 
-export type ClientColorPalette = {
-  [TKey in ClientColorPaletteKey]: PaletteColorShaded<
+export type DynamicColorPalette = {
+  [TKey in DynamicColorPaletteKey]: PaletteColorShaded<
     DefaultPaletteColorShadeKey[]
   >;
 };
 
-export type DynamicColorPalette = {
+export type DynamicColorPaletteSubset = {
   primary: PaletteColorShaded<DefaultPaletteColorShadeKey[]>;
 };
 
-export interface ColorPalette extends StaticColorPalette, DynamicColorPalette {}
+export interface ColorPalette
+  extends StaticColorPalette,
+    DynamicColorPaletteSubset {}
 
-export type Color = keyof StaticColorPalette | keyof DynamicColorPalette;
+export type Color = keyof StaticColorPalette | keyof DynamicColorPaletteSubset;
 
 export type ColorKey = keyof ColorPalette & string;
 

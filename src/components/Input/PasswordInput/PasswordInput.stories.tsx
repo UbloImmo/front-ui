@@ -11,7 +11,6 @@ const meta = {
       description: "Whether the password is visible at first.",
       table: {
         type: { summary: "boolean" },
-        defaultValue: { summary: false },
       },
     },
     allowChangeVisibility: {
@@ -20,7 +19,6 @@ const meta = {
       control: "boolean",
       table: {
         type: { summary: "boolean" },
-        defaultValue: { summary: true },
       },
     },
   },

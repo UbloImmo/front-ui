@@ -4,6 +4,7 @@ import {
   objectEntries,
   objectFromEntries,
   transformObject,
+  type GenericFn,
 } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
@@ -114,12 +115,16 @@ export const useStyleProps = <TProps extends Record<string, unknown>>(
 /**
  * Returns a memoized, static version of the input data.
  *
- * @param {TData} data - The input data to be memoized.
+ * @template {unknown} TData - The type of the input data.
+ * @param {TData | GenericFn<[], TData>} data - The input data to be memoized.
  * @return {TData} The memoized version of the input data.
  */
-export const useStatic = <TData>(data: TData) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  return useMemo(() => data, []);
+export const useStatic = <TData>(data: TData | GenericFn<[], TData>) => {
+  return useMemo<TData>(
+    () => (isFunction<GenericFn<[], TData>>(data) ? data() : data),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 };
 
 /**

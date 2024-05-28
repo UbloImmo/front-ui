@@ -41,6 +41,7 @@ module.exports = {
           ["@components", "src/components"],
           ["@utils", "src/utils"],
           ["@types", "src/types"],
+          ["@layouts", "src/layouts"],
           ["@docs", "docs"],
           ["@", "src"],
         ],

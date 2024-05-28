@@ -13,6 +13,7 @@ export const commonInputContainerStyles = ({
   position: relative;
   height: max-content;
   width: 100%;
+  max-width: 100%;
 
   --control-color: var(--${$error ? "error-dark" : "gray-600"});
   &:has(input:focus:not(:disabled)) {
@@ -28,6 +29,7 @@ export const commonInputContainerStyles = ({
 
   &:hover input:not(:disabled) {
     box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
+    transition-duration: 150ms;
   }
 `;
 
@@ -92,7 +94,7 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   min-height: var(--s-8);
   min-width: 12rem;
   width: 100%;
-
+  max-width: 100%;
   padding: var(--s-2);
   border-radius: var(--s-1);
   border: none;
@@ -105,6 +107,14 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   outline-offset: -2px;
   outline-width: 3px;
   outline: none;
+
+  &,
+  &::placeholder {
+    transition-property: box-shadow, outline, background, color;
+    transition-duration: 300ms;
+    transition-timing-function: ease-out;
+    transition-delay: 0s;
+  }
 
   &:focus:not(:disabled) {
     color: var(--gray-800);
@@ -123,11 +133,20 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   &:disabled {
     background: var(--gray-50);
     color: var(--gray-600);
-    box-shadow: var(--shadow-input ${$error ? "error-default" : "disabled"});
+    box-shadow: var(--shadow-input-${$error ? "error-default" : "disabled"});
   }
 
   &:disabled::placeholder {
     color: var(--gray-300);
+  }
+
+  &:hover,
+  &:focus,
+  &:disabled {
+    &,
+    &::placeholder {
+      transition-duration: 150ms;
+    }
   }
 
   @media screen and (max-width: ${breakpointsPx.XS}) {

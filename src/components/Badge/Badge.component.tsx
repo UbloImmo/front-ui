@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import styled from "styled-components";
 
 import {
-  backgroundShade,
+  badgeStyle,
   badgeShadeStyleMap,
   grayBadgeShadeStyleMap,
 } from "./Badge.styles";
@@ -15,7 +15,7 @@ import { useMergedProps, useStyleProps, useTestId } from "@utils";
 import type { PaletteColor, StyleProps, TestIdProps } from "@types";
 
 const defaultBadgeProps: DefaultBadgeProps = {
-  label: "label",
+  label: "[label]",
   icon: null,
   color: "primary",
   shade: "light",
@@ -23,9 +23,9 @@ const defaultBadgeProps: DefaultBadgeProps = {
 /**
  * Renders a Badge component, with an optionnal Icon and a required Text.
  *
- * Badge shades are based on two sets of colors, light and dark, depending on the shade prop.
+ * @remarks Badge shades are based on two sets of colors, light and dark, depending on the shade prop.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {BadgeProps} props - the props for the Badge component
  * @return {JSX.Element} the Badge component
@@ -69,5 +69,5 @@ Badge.defaultProps = defaultBadgeProps;
 export { Badge };
 
 const BadgeContainer = styled.div<StyleProps<DefaultBadgeProps>>`
-  ${backgroundShade}
+  ${badgeStyle}
 `;

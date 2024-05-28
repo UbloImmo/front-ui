@@ -8,7 +8,7 @@ import { useLogger, useMergedProps } from "@utils";
 
 const defaultLoadingProps: DefaultLoadingProps = {
   size: "s-4",
-  color: "primary-light",
+  color: "primary-base",
   animation: "BouncingBalls",
 };
 

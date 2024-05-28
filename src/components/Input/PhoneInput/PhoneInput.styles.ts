@@ -1,5 +1,6 @@
-import { breakpointsPx } from "@/sizes";
 import { css } from "styled-components";
+
+import { breakpointsPx } from "@/sizes";
 
 export const phoneInputContainerStyles = css`
   max-width: 100%;

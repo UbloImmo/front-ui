@@ -34,7 +34,7 @@ const inputComponentMap: TypedInputComponentMap = {
  * @param {GenericInputProps<TType>} props - The generic input props.
  * @returns {Nullable<JSX.Element>}
  */
-export const Input = <TType extends InputType = "text">({
+const Input = <TType extends InputType = "text">({
   type,
   ...props
 }: GenericInputProps<TType>): Nullable<JSX.Element> => {
@@ -60,3 +60,8 @@ export const Input = <TType extends InputType = "text">({
 
   return <InputComponent {...props} />;
 };
+Input.defaultProps = { ...TextInput.defaultProps } as Required<
+  Parameters<typeof Input>[0]
+>;
+
+export { Input };

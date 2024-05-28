@@ -26,7 +26,7 @@ export type DocgenProps<TComponentProps extends Record<string, unknown>> = {
   >;
 };
 
-type DocgenInfo<TComponentProps extends Record<string, unknown>> = {
+export type DocgenInfo<TComponentProps extends Record<string, unknown>> = {
   description?: string;
   displayName: string;
   props: DocgenProps<TComponentProps>;
@@ -46,13 +46,45 @@ export type ComponentStory<TComponentProps extends Record<string, unknown>> = {
 };
 
 export type ParsedJsDoc = {
+  /**
+   * The description of the component / function
+   */
   description: string;
+  /**
+   * The default value if manually specified
+   * maps to the `@default` decorator
+   */
   defaultValue: Nullable<string>;
+  /**
+   * Whether the component / function is a todo
+   * maps to the `@todo` decorator
+   */
   todo: boolean;
+  /**
+   * The reason for the todo if flagged
+   * maps to the `@todo` decorator's reason
+   */
   reason: Nullable<string>;
+  /**
+   * The version of the component / function
+   * maps to the `@version` decorator
+   */
   version: Nullable<string>;
+  /**
+   * The type of the value
+   * maps to the `@type` decorator
+   */
   type: Nullable<string>;
+  /**
+   * Whether the value is required
+   * maps to the `@required` decorator
+   */
   required: boolean;
+  /**
+   * Whether the value is internal
+   * maps to the `@private` decorator
+   */
+  internal: boolean;
 };
 
 export type ParsedJsDocDescription = Omit<ParsedJsDoc, "defaultValue"> & {

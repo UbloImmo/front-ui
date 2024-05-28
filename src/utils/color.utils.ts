@@ -446,14 +446,17 @@ export const isSameColor = (colorA: AnyColor, colorB: AnyColor): boolean => {
  *
  * @param {AnyColor} colorA - the first color to compare
  * @param {AnyColor} colorB - the second color to compare
+ * @param {number} [delta = 0] - optional margin or error
  * @return {boolean} true if the colors have the same shade, false otherwise
  *
  * @see isSameColor to compare colors including their alpha channel
  */
-export const isSameShade = (colorA: AnyColor, colorB: AnyColor) => {
+export const isSameShade = (colorA: AnyColor, colorB: AnyColor, delta = 0) => {
   const aArr = anyColorToRgbaColorArr(colorA);
   const bArr = anyColorToRgbaColorArr(colorB);
-  return aArr.slice(0, 2).every((channel, index) => channel === bArr[index]);
+  return aArr
+    .slice(0, 2)
+    .every((channel, index) => Math.abs(channel - bArr[index]) <= delta);
 };
 
 /**

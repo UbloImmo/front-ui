@@ -11,32 +11,42 @@ import {
 
 import { rgbaColorConverter, blendColors } from "../../utils";
 
-import {
+import type {
   AnyPaletteColorShadeKeys,
-  ClientColorPalette,
-  ClientColorPaletteKey,
+  DynamicColorPalette,
+  DynamicColorPaletteKey as DynamicColorPaletteKey,
   ColorPalette,
   DefaultPaletteColorShadeKey,
-  DynamicColorPalette,
+  DynamicColorPaletteSubset,
   GrayscalePaletteColorShadeKey,
   PaletteColorShade,
   PaletteColorShaded,
   StaticColorPalette,
   Token,
   RgbaColorArr,
+  ShadeOpacityFn,
+  RgbaColorStr,
 } from "@types";
 
 /**
  * Creates a function that takes an opacity value and returns the RGBA color with the specified opacity.
  *
- * @param {number} a - The opacity value to be applied to the RGBA color.
- * @return {string} The RGBA color with the specified opacity.
+ * @param {number} rgbaColorArr - The opacity value to be applied to the RGBA color.
+ * @return {ShadeOpacityFn} The shade opacity function
  */
-export const shadeOpacityFactory = (rgbaColorArr: RgbaColorArr) => {
+export const shadeOpacityFactory = (
+  rgbaColorArr: RgbaColorArr
+): ShadeOpacityFn => {
   if (!rgbaColorArr || !isArray(rgbaColorArr))
     throw new Error("Invalid color provided");
   const [r, g, b] = rgbaColorArr;
-  return (a: number) => rgbaColorConverter.arrToStr([r, g, b, a]);
+  /**
+   * A function that takes an opacity value and returns the RGBA color with the specified opacity.
+   *
+   * @param {number} a - The opacity value to be applied to the RGBA color.
+   * @return {RgbaColorStr} The RGBA color with the specified opacity.
+   */
+  return (a: number): RgbaColorStr => rgbaColorConverter.arrToStr([r, g, b, a]);
 };
 
 /**
@@ -88,17 +98,16 @@ const STATIC_COLOR_KEYS: (keyof typeof colors)[] = [
   "warning",
   "pending",
   "gray",
-  "primary", // included since it maps to ublo's colors and is exported by Design tokens library
 ];
 
 /**
- * Retrieves the client slugs from the color tokens.
+ * Retrieves the dynamic color slugs from the color tokens.
  *
- * @return {ClientColorPaletteKey[]} An array of client color palette keys.
+ * @return {DynamicColorPaletteKey[]} An array of client color palette keys.
  */
-export const getClientSlugs = (): ClientColorPaletteKey[] => {
+export const getDynamicThemeSlugs = (): DynamicColorPaletteKey[] => {
   return objectKeys(colors).filter(
-    (colorKey): colorKey is ClientColorPaletteKey =>
+    (colorKey): colorKey is DynamicColorPaletteKey =>
       !STATIC_COLOR_KEYS.includes(colorKey)
   );
 };
@@ -106,56 +115,60 @@ export const getClientSlugs = (): ClientColorPaletteKey[] => {
 /**
  * Builds the client color palette based on the provided colors object.
  *
- * @return {ClientColorPalette} The client color palette object.
+ * @return {DynamicColorPalette} The client color palette object.
  */
-const buildClientColorPalette = (): ClientColorPalette => {
+const dynamicClientColorPalette = (): DynamicColorPalette => {
   // filter out static color keys
-  const clientColorKeys = getClientSlugs();
+  const dynamicColorKeys = getDynamicThemeSlugs();
   // match client color keys to their tokens
-  const clientColorTokens = objectFromEntries(
+  const dynamicColorTokens = objectFromEntries(
     arrayFilter(
-      clientColorKeys.map(
+      dynamicColorKeys.map(
         (
           key
         ): [
-          ClientColorPaletteKey,
+          DynamicColorPaletteKey,
           Nullable<Record<DefaultPaletteColorShadeKey, Token<"COLOR">>>
         ] => {
-          const clientColorTokenGroup = colors[
+          const dynamicColorTokenGroup = colors[
             key
-          ] as unknown as (typeof colors)[ClientColorPaletteKey] & {
+          ] as unknown as (typeof colors)[DynamicColorPaletteKey] & {
             main?: Token<"COLOR">;
           };
-          // TODO: remove this step once client color design file is updated
-          if (!clientColorTokenGroup?.main) return [key, null];
+          // TODO: remove this step once api serves complete color themes per organization
+          const dynamicColorBase =
+            dynamicColorTokenGroup?.main ?? dynamicColorTokenGroup.base;
+          if (!dynamicColorBase) return [key, null];
+
           // blend between light and main to generate medium
           const mediumColor = blendColors(
-            clientColorTokenGroup.main.value,
-            clientColorTokenGroup.light.value,
+            dynamicColorBase.value,
+            dynamicColorTokenGroup.light.value,
             0.5
           );
-          const mediumToken: Token<"COLOR"> = {
-            name: "medium",
-            type: "COLOR",
-            value: mediumColor,
-          };
+          const mediumToken: Token<"COLOR"> =
+            dynamicColorTokenGroup?.medium ?? {
+              name: "medium",
+              type: "COLOR",
+              value: mediumColor,
+            };
           const updatedTokenGroup = {
-            dark: clientColorTokenGroup.dark,
-            base: clientColorTokenGroup.main,
+            dark: dynamicColorTokenGroup.dark,
+            base: dynamicColorBase,
             medium: mediumToken,
-            light: clientColorTokenGroup.light,
+            light: dynamicColorTokenGroup.light,
           };
           return [key, updatedTokenGroup];
         }
       ),
       (item) => !isNull(item[1])
     ) as [
-      ClientColorPaletteKey,
+      DynamicColorPaletteKey,
       Record<DefaultPaletteColorShadeKey, Token<"COLOR">>
     ][]
   );
   return transformObject(
-    clientColorTokens,
+    dynamicColorTokens,
     colorTokenGroupToPaletteColorShaded<DefaultPaletteColorShadeKey[]>
   );
 };
@@ -163,13 +176,13 @@ const buildClientColorPalette = (): ClientColorPalette => {
 /**
  * Builds a dynamic color palette for the specified client.
  *
- * @param {ClientColorPaletteKey} forClient - the key of the client color palette
- * @return {DynamicColorPalette} the dynamic color palette for the specified client
+ * @param {DynamicColorPaletteKey} forClient - the key of the client color palette
+ * @return {DynamicColorPaletteSubset} the dynamic color palette for the specified client
  */
 export const buildDynamicColorPalette = (
-  forClient: ClientColorPaletteKey = "ublo"
-): DynamicColorPalette => {
-  const clientColorPalette = buildClientColorPalette();
+  forClient: DynamicColorPaletteKey = "primary"
+): DynamicColorPaletteSubset => {
+  const clientColorPalette = dynamicClientColorPalette();
   return {
     primary: clientColorPalette[forClient],
   };
@@ -178,11 +191,11 @@ export const buildDynamicColorPalette = (
 /**
  * Builds a color palette for the specified client.
  *
- * @param {ClientColorPaletteKey} forClient - the key for the client color palette
+ * @param {DynamicColorPaletteKey} forClient - the key for the client color palette
  * @return {ColorPalette} the color palette for the specified client
  */
 export const buildColorPalette = (
-  forClient: ClientColorPaletteKey = "ublo"
+  forClient: DynamicColorPaletteKey = "primary"
 ): ColorPalette => {
   return {
     ...buildDynamicColorPalette(forClient),

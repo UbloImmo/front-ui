@@ -22,7 +22,7 @@ export const Default: Story = {
   args: Loading.defaultProps,
 };
 
-const animations: LoadingAnimation[] = ["BouncingBalls", "Spinner"];
+const animations: LoadingAnimation[] = ["BouncingBalls", "Ripple"];
 export const Animations = (props: LoadingProps) => {
   const defaultProps = useMergedProps(Loading.defaultProps, props);
 

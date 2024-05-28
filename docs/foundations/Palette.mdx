@@ -1,12 +1,12 @@
 import { Meta, ColorPalette, ColorItem } from "@storybook/blocks";
-import { ThemeColorShades, Heading, Text, Pre, HeaderInfo } from "../blocks";
+import { ThemeColorShades, Heading, Text, Pre, HeaderInfo, Markdown } from "../blocks";
 import { Content, Header } from "../containers";
 
-<Meta title="Color Palette"/>
+<Meta title="Foundations/Color Palette"/>
 
 <Header>
   <HeaderInfo title="Color Palette" parent="Design system">
-    <Text color="gray-600">Colors have several shades and can broadly be separated into `dynamic` and `static` colors</Text>
+    <Text size="m" color="primary-dark">Colors have several shades and can broadly be separated into `dynamic` and `static` colors</Text>
   </HeaderInfo>
 </Header>
 
@@ -21,18 +21,7 @@ according to the current user's organization's palette.
   <Text size="s" color="gray-600">The primary color defaults to Ublo's color palette and is overriden according to the current user's organization's palette.</Text>
 </ThemeColorShades>
 
-## Static colors
-
-Static colors are true to their name and do not change across client organizations.
-
-These include grayscale color shades as well as out status colors.
-
-<ThemeColorShades colorKey="gray" title="Gray scale" initShowOpacity>
-  <Text size="s" color="gray-600">Neutral tones used to display text, backgrounds, separators, shadows and various UI elements.</Text>
-  <Text size="s" color="gray-600">Fun fact: This paragraph uses the shade `gray-600`!</Text>
-</ThemeColorShades>
-
-### Status colors
+## Status colors
 
 Status colors are used throughout our product to convey feedback to the user.
 
@@ -55,19 +44,28 @@ Status colors are used throughout our product to convey feedback to the user.
   <br/>such as during form validation. Also shows up as a badge color for certain states within the product</Text>
 </ThemeColorShades>
 
+## Grayscale colors
+
+<ThemeColorShades colorKey="gray" title="Gray scale" initShowOpacity>
+  <Text size="s" color="gray-600">Neutral tones used to display text, backgrounds, separators, shadows and various UI elements.</Text>
+  <Text size="s" color="gray-600">Fun fact: This paragraph uses the shade `gray-600`!</Text>
+</ThemeColorShades>
+
+
+
 ## Structure
 The library generates and exports its colors directly inside the global `theme` object.
 
 - Each **color** is represented as an `object` that contains several **shades**
 - Each **shade** contains both `rgba` and `hex` properties and an `opacity()` method to allow for further customization
 
-```json
-{
+```tsx
+const color = {
   "[color]": {
     "[shade]": {
       "hex": "#fff",
       "rgba": "rgba(255, 255, 255, 1)",
-      "opacity": "[Function(number)]"
+      "opacity": (alpha: number) => `rgba(255, 255, 255, ${alpha / 100})` 
     }
   }
 }

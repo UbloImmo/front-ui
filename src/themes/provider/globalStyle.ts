@@ -28,14 +28,21 @@ import type {
  * @template {AnyPaletteColorShadeKeys} TShadeKeys - Shade keys contained in the shaded palette color
  * @param {string} colorName - the name of the palette color
  * @param {PaletteColorShaded<TShadeKeys>} shadedColors - the shaded palette color
+ * @param {boolean} generateAlpha - whether to generate alpha variables
  * @return {CssVar<RgbaColorStr>[]} an array of CSS variables for the palette color shades
  */
 export const paletteColorToCssVars = <
   TShadeKeys extends AnyPaletteColorShadeKeys
 >(
   colorName: string,
-  shadedColors: PaletteColorShaded<TShadeKeys>
+  shadedColors: PaletteColorShaded<TShadeKeys>,
+  generateAlpha?: boolean
 ): CssVar<RgbaColorStr>[] => {
+  if (!generateAlpha)
+    return objectEntries(shadedColors).map(
+      ([shadeName, { rgba }]): CssVar<RgbaColorStr> =>
+        cssVar(`${colorName.toLowerCase()}-${shadeName.toLowerCase()}`, rgba)
+    );
   return objectEntries(shadedColors).flatMap(
     ([shadeName, { rgba, opacity }]): CssVar<RgbaColorStr>[] => {
       const varName = `${colorName.toLowerCase()}-${shadeName.toLowerCase()}`;
@@ -186,21 +193,31 @@ export const buildGlobalStyle = (theme: Theme): RuleSet => {
   // filter legacy palette and organization out
   const { palette: _, organization: __, ...palette } = theme;
   // generate css vars from non-legacy palette
-  const paletteCssVars = objectEntries(palette).flatMap(
+  const paletteCssVarsAlpha = objectEntries(palette).flatMap(
     ([colorName, shadedColor]) =>
       paletteColorToCssVars(
         colorName,
-        shadedColor as PaletteColorShaded<AnyPaletteColorShadeKeys>
+        shadedColor as PaletteColorShaded<AnyPaletteColorShadeKeys>,
+        true
       )
   );
 
-  const effectCssVars = effectsToCssVars(paletteCssVars);
+  const paletteCssVarsNoAlpha = objectEntries(palette).flatMap(
+    ([colorName, shadedColor]) =>
+      paletteColorToCssVars(
+        colorName,
+        shadedColor as PaletteColorShaded<AnyPaletteColorShadeKeys>,
+        false
+      )
+  );
+
+  const effectCssVars = effectsToCssVars(paletteCssVarsNoAlpha);
 
   // declare them in as global css variables
   return declareGlobalStyle(
     [
       spacingsCssVars,
-      paletteCssVars,
+      paletteCssVarsAlpha,
       textDesktopCssVars,
       effectCssVars,
       weightCssVars,

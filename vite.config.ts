@@ -13,8 +13,9 @@ export default {
       "@docs/*": "/docs/*",
       "@types/*": "/src/types/*",
       "@utils/*": "/src/utils/*",
-      "@/*": "/src/*",
+      "@layouts/*": "/src/layouts/*",
       "@components/*": "/src/components/*",
+      "@/*": "/src/*",
     },
   },
 };
