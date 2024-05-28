@@ -7,8 +7,8 @@ import { TooltipDirection, TooltipProps } from "./Tooltip.types";
 import { Badge } from "../Badge";
 import { Text } from "../Text";
 
-import { useMergedProps } from "@utils";
 import { ComponentVariants } from "@docs/blocks";
+import { useMergedProps } from "@utils";
 
 const Container = styled.div`
   height: 6rem;
@@ -92,20 +92,25 @@ const TooltipIntersectionRenderer = (props: TooltipProps) => {
 };
 
 const TooltipIntersectionContainer = styled.div`
-  box-shadow: var(--shadow-card-default);
-  max-height: 6rem;
-  height: 6rem;
-  overflow-y: auto;
-  border: 1px dashed var(--primary-medium-50);
+  max-height: 8rem;
+  height: 8rem;
+  overflow: auto;
+  border-radius: var(--s-05);
+  background: white;
+  position: relative;
 `;
 
 const TooltipPaddedContainer = styled.div`
-  padding: 12rem var(--s-4);
+  padding: 30% 100%;
+  position: static;
 `;
 
-const intersectionRoots = ["#intersection-root"];
+const intersectionRoots = [null, "#intersection-root"];
 export const IntersectionRoots = (props: Partial<TooltipProps>) => {
-  const defaultProps = useMergedProps(Tooltip.defaultProps, props);
+  const defaultProps = useMergedProps(Tooltip.defaultProps, {
+    ...props,
+    direction: props.direction ?? "bottom",
+  });
 
   return (
     <ComponentVariants

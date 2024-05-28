@@ -86,6 +86,7 @@ export const getTooltipStyles = ($direction: TooltipDirection) => {
     transition: visibility 0s, opacity 0.2s ease-out;
     visibility: hidden;
     opacity: 0;
+    pointer-events: none;
     ${directionStyles[$direction]}
   `;
 };
@@ -144,5 +145,6 @@ export const tooltipWrapperStyles = css`
   &:hover [data-testid="tooltip"] {
     visibility: visible;
     opacity: 1;
+    pointer-events: auto;
   }
 `;

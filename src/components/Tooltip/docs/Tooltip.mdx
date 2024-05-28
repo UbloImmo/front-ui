@@ -20,21 +20,37 @@ import { Icon } from "@/components/Icon/Icon.component.tsx";
 
 You can set the text in the tooltip with the `content` property.
 
+> TODO: Story variant: JSX in content
+
 <Canvas of={TooltipStories.Content} />
 
 ### Directions
 
 `Tooltip` can be positioned on _top_, _bottom_, _left_ or _right_ of the element, using the `direction` property.
 
-> Tooltip has edge detection: it automatically adjusts its direction when it encounters an edge and chooses the available Direction.
+> The direction you pass is only used if it doesn't prevent it from being visible.
 
 <Canvas of={TooltipStories.Directions} />
 
 #### Edge detection
 
-### Wrapped Element
+By default, tooltips check if they intersect *with the whole **viewport*** and reposition themselves in order to visible.
+<br/>
+This behavior can be overridden by setting the `intersectionRoot` property.
+Tooltips that have a specific `intersectionRoot` will use it as a basis for staying visible.
 
-By default, `Tooltip` is triggered by the icon <Icon name="QuestionCircleFill" color="gray-700" />. To customize the trigger, you can set your desired element in the `children` property.
+> Try scrolling in both areas to see how each Tooltip's position reacts.
+
+<Canvas of={TooltipStories.IntersectionRoots} />
+
+
+### Wrapping existing elements
+
+By default, a `Tooltip` is show when hovering the rendered <Icon name="QuestionCircleFill" color="gray-700" size="s-3" /> icon.
+
+Want to show a tooltip over any other element (e.g. links, menus, forms ...) ? Put it inside `Tooltip`'s `children` property.
+
+> You get a tooltip ! You get a tooltip !
 
 <Canvas of={TooltipStories.Children} />
 
