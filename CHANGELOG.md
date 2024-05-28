@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- Compare favicon retry count to retry limit, allowing favicon to actually be applied
+
 ## 0.6.2 - 2024-05-28
 ### Fixed
 - Actually check if favicon has been applied
