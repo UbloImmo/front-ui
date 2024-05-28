@@ -49,6 +49,11 @@ const inverseDirectionMap: Record<TooltipDirection, TooltipDirection> = {
   right: "left",
 };
 
+const THRESHOLD_COUNT = 10;
+const THRESHOLDS = Array(THRESHOLD_COUNT + 1)
+  .fill(1)
+  .map((_, i) => i / THRESHOLD_COUNT);
+
 /**
  * Text popup box that appears when the user hovers over an element
  *
@@ -103,26 +108,23 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
             ({
               boundingClientRect: { top, bottom, left, right },
               rootBounds,
-              target,
             }) => {
-              const bounds: Omit<DOMRectReadOnly, "toJSON"> = rootBounds ?? {
+              const bounds: Pick<
+                DOMRectReadOnly,
+                "top" | "bottom" | "left" | "right"
+              > = rootBounds ?? {
                 top: 0,
                 bottom: window.innerHeight,
                 left: 0,
                 right: window.innerWidth,
-                height: window.innerHeight,
-                width: window.innerWidth,
-                x: 0,
-                y: 0,
               };
 
               const diffs = {
                 top: top - bounds.top,
-                bottom: bottom - bounds.bottom,
-                right: right - bounds.right,
+                bottom: bounds.bottom - bottom,
+                right: bounds.right - right,
                 left: left - bounds.left,
               };
-
               /**
                * Sets the conditions to activate the clipping
                * Checks if the tooltip is clipped
@@ -130,29 +132,34 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
                */
               const clippingMap: Record<TooltipDirection, boolean> = {
                 top: diffs.top < 0,
-                bottom: diffs.bottom > bounds.bottom,
-                right: diffs.right > window.innerWidth,
+                bottom: diffs.bottom < 0,
+                right: diffs.right < 0,
                 left: diffs.left < 0,
               };
 
-              const clippingEntry = objectEntries(clippingMap).find(
-                ([_key, isClipping]) => isClipping
-              );
-              console.log({
-                element: target,
-                bounds,
-                clippingMap,
-                target: { top, bottom, left, right },
-                diffs,
-                clippingEntry,
-              });
-              clippingDirection = clippingEntry
-                ? clippingEntry[0]
-                : clippingDirection;
+              /**
+               * Updates the clipping direction
+               * with the direction that is clippin the most by comparing diffs
+               */
+              clippingDirection =
+                objectEntries(clippingMap).reduce(
+                  (
+                    prevClipDir: Nullable<TooltipDirection>,
+                    [clipDir, isClipping]
+                  ): Nullable<TooltipDirection> => {
+                    if (!isClipping) return prevClipDir;
+                    const currentDiff = Math.abs(diffs[clipDir]);
+                    if (
+                      !prevClipDir ||
+                      currentDiff > Math.abs(diffs[prevClipDir])
+                    )
+                      return clipDir;
+                    return prevClipDir;
+                  },
+                  clippingDirection
+                ) ?? clippingDirection;
             }
           );
-
-          console.log(clippingDirection);
 
           /**
            * Update tooltip direction when clipped to the opposite of the clipping direction
@@ -165,7 +172,7 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
         },
         {
           root: observerRoot,
-          threshold: [0, 0.5, 1],
+          threshold: THRESHOLDS,
         }
       );
     }
