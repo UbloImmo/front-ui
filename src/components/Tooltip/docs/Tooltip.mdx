@@ -1,0 +1,39 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as TooltipStories from "../Tooltip.stories.tsx";
+import { Icon } from "@/components/Icon/Icon.component.tsx";
+
+<Meta title="Components/Tooltip/Usage" />
+
+<ComponentInfo of={TooltipStories} figmaId="756-3440" />
+
+<Content>
+
+## Usage
+
+`Tooltip` allows to display helpful information to users when they hover over an element.
+
+`Tooltip` is very useful tool to improve user experience, by offering explanations to the users, and guiding their navigation within the interface.
+
+### Content
+
+You can set the text in the tooltip with the `content` property.
+
+<Canvas of={TooltipStories.Content} />
+
+### Directions
+
+`Tooltip` can be positioned on _top_, _bottom_, _left_ or _right_ of the element, using the `direction` property.
+
+> Tooltip has edge detection: it automatically adjusts its direction when it encounters an edge and chooses the available Direction.
+
+<Canvas of={TooltipStories.Directions} />
+
+### Wrapped Element
+
+By default, `Tooltip` is triggered by the icon <Icon name="QuestionCircleFill" color="gray-700" />. To customize the trigger, you can set your desired element in the `children` property.
+
+<Canvas of={TooltipStories.Children} />
+
+</Content>
