@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.1` GridItem layout
+- Docs
+  - `Typography` page
+  - `Components/Overview` index mdx page
+  - `ComponentInfo` block
+    - Link to related `Properties` page
+
+### Fixed
+
+- Shadow / effect parsing following `@ubloimmo/front-tokens` regen
+- Various minor fixes
+
+### Changed
+
+- Story sorting in storybook
+- Docs
+  - Index pages
+  - Moved `Color Palette` page to `Foundations` category
+  - Page Header Styles
+
 ## 0.5.1 - 2024-05-23
 ### Fixed
 - `v0.0.3` PhoneInput component
