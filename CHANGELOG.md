@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.6.0 - 2024-05-28
 ### Added
-
 - `v0.0.1` GridItem layout
 - Docs
   - `Typography` page
@@ -16,18 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ComponentInfo` block
     - Link to related `Properties` page
 
-### Fixed
-
-- Shadow / effect parsing following `@ubloimmo/front-tokens` regen
-- Various minor fixes
-
 ### Changed
-
 - Story sorting in storybook
 - Docs
   - Index pages
   - Moved `Color Palette` page to `Foundations` category
   - Page Header Styles
+
+### Fixed
+- Shadow / effect parsing following `@ubloimmo/front-tokens` regen
+- Various minor fixes
 
 ## 0.5.1 - 2024-05-23
 ### Fixed
