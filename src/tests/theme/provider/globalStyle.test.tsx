@@ -6,11 +6,9 @@ import {
   spacingsToCssVars,
   paletteColorToCssVars,
   buildTheme,
-  buildGlobalStyle,
   textSizesToCssVars,
   GlobalStyle,
   cssReset,
-  declareGlobalStyle,
   joinCssVarCollection,
 } from "../../../themes";
 import { testComponentFactory } from "../../test.utils";
@@ -64,29 +62,29 @@ describe("global style", () => {
       );
     });
 
-    it("should work even when the theme is missing", () => {
-      expect(buildGlobalStyle).toBeDefined();
-      expect(buildGlobalStyle).toBeFunction();
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore buildGlobalStyle() is typed to require the theme as its only argument. but it should be resilient even when it is missing
-      expect(() => buildGlobalStyle()).not.toThrow();
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore buildGlobalStyle() is typed to require the theme as its only argument. but it should be resilient even when it is missing
-      expect(buildGlobalStyle()).toBeObject();
-    });
+    // it.skip("should work even when the theme is missing", () => {
+    //   expect(buildGlobalStyle).toBeDefined();
+    //   expect(buildGlobalStyle).toBeFunction();
+    //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //   // @ts-ignore buildGlobalStyle() is typed to require the theme as its only argument. but it should be resilient even when it is missing
+    //   expect(() => buildGlobalStyle()).not.toThrow();
+    //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //   // @ts-ignore buildGlobalStyle() is typed to require the theme as its only argument. but it should be resilient even when it is missing
+    //   expect(buildGlobalStyle()).toBeObject();
+    // });
 
-    it("should build the global style", () => {
-      expect(buildGlobalStyle).toBeDefined();
-      expect(buildGlobalStyle).toBeFunction();
-      expect(() => buildGlobalStyle(buildTheme())).not.toThrow();
-      expect(buildGlobalStyle(buildTheme())).toBeObject();
-    });
+    // it("should build the global style", () => {
+    //   expect(buildGlobalStyle).toBeDefined();
+    //   expect(buildGlobalStyle).toBeFunction();
+    //   expect(() => buildGlobalStyle(buildTheme())).not.toThrow();
+    //   expect(buildGlobalStyle(buildTheme())).toBeObject();
+    // });
 
-    it("should declare the global style css", () => {
-      expect(declareGlobalStyle).toBeDefined();
-      expect(declareGlobalStyle).toBeFunction();
-      expect(declareGlobalStyle([], [])).toBeObject();
-    });
+    // it("should declare the global style css", () => {
+    //   expect(declareGlobalStyle).toBeDefined();
+    //   expect(declareGlobalStyle).toBeFunction();
+    //   expect(declareGlobalStyle([], [])).toBeObject();
+    // });
 
     it("should include a css reset", () => {
       expect(cssReset).toBeDefined();

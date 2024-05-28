@@ -5,7 +5,7 @@ import {
   useTheme as useStyledTheme,
 } from "styled-components";
 
-import { GlobalStyle } from "./globalStyle";
+import { GlobalStyle } from "./GlobalStyle";
 import { applyFavicon, buildTheme } from "../theme";
 
 import type { Theme, ThemeOverride, ThemeProviderProps } from "@types";
@@ -61,7 +61,7 @@ export const ThemeProvider = ({
 
   return (
     <StyledThemeProvider theme={theme}>
-      <GlobalStyle />
+      <GlobalStyle theme={theme} />
       {children}
     </StyledThemeProvider>
   );

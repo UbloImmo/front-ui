@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Theme provider optimizations
 - Bumped `@ubloimmo/front-tokens` to `0.0.17`
+- Rewrite `GlobalStyle` in order to decrease excessive renders and increase perf
 
 ### Fixed
 
