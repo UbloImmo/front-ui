@@ -101,5 +101,5 @@ export const applyFavicon = (
   }
   // check
   if (link16?.href === x16 || link32?.href === x32) return true;
-  return false;
+  return (flink16?.href === x16 || link32?.href === x32)
 };
