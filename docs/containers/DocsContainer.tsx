@@ -12,13 +12,19 @@ import type { DynamicColorPaletteKey } from "@types";
 type DocsContainerProps = Parameters<typeof SBDocsContainer>[0];
 
 /**
- * Wraps each MDX documentation with a dynamic theme provider
+ * Wraps each MDX documentation with a dynamic theme provider.
+ *
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The child components.
+ * @param {Object} props.context - The context object.
+ * @param {Object} props.theme - The theme object.
+ * @return {JSX.Element} The rendered component.
  */
 export const DocsContainer = ({
   children,
   context,
   theme,
-}: DocsContainerProps) => {
+}: DocsContainerProps): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const storyContext = context as any;
   const themeClient: Optional<DynamicColorPaletteKey> =

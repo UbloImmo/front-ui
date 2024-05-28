@@ -19,7 +19,12 @@ const CHARACTERS = [
   "!@#$%^&*()",
 ];
 
-export const FontPreview = () => {
+/**
+ * Renders a preview of the font with different weights and characters.
+ *
+ * @return {JSX.Element} The JSX element representing the font preview.
+ */
+export const FontPreview = (): JSX.Element => {
   return (
     <FontPreviewBox>
       <FlexColumnLayout gap="s-8" align="start" justify="start">

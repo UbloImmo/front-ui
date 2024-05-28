@@ -12,7 +12,13 @@ export const isHeadingSize = (size: TypographySize): size is HeadingSize => {
   return ["h1", "h2", "h3", "h4"].includes(size);
 };
 
-export const formatCssLength = (rem: CssRem) => {
+/**
+ * Formats a CSS rem length value to display it as px and rem.
+ *
+ * @param {CssRem} rem - The CSS length value in rem.
+ * @return {string} The formatted CSS length value in px and rem.
+ */
+export const formatCssLength = (rem: CssRem): string => {
   const lenghtPx = cssRemToCssPx(rem, 2);
   const lengthRem = cssPxToCssRem(lenghtPx, 2);
   return `${lenghtPx} / ${lengthRem}`;

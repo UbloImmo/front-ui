@@ -7,17 +7,32 @@ import { getDynamicThemeSlugs, ThemeProvider } from "@/themes";
 import type { DynamicColorPaletteKey } from "@types";
 import type { ReactNode } from "react";
 
+type StorybookThemeProviderProps = {
+  theme: { client: DynamicColorPaletteKey };
+  children: ReactNode;
+};
+
 /**
  * Bridges the gap between the client slug coming from `@storybook/addon-themes`
  * and the app's {@link ThemeProvider} used in the docs & stories.
  */
+
+/**
+ * Bridges the gap between the client slug coming from `@storybook/addon-themes`
+ * and the app's {@link ThemeProvider} used in the docs & stories.
+ *
+ * @param {StorybookThemeProviderProps} props - The props for the StorybookThemeProvider component.
+ * @param {{client: DynamicColorPaletteKey}} props.theme - The partial theme object conaining the client slug.
+ * @param {DynamicColorPaletteKey} props.theme.client - The client slug.
+ * @param {ReactNode} props.children - The child components to apply the theme to.
+ * @return {JSX.Element} The styled theme provider component with the provided theme.
+ */
 export const StorybookThemeProvider = ({
   theme,
   children,
-}: {
-  theme: { client: DynamicColorPaletteKey };
-  children: ReactNode;
-}) => <ThemeProvider _forceTheme={theme.client}>{children}</ThemeProvider>;
+}: StorybookThemeProviderProps) => (
+  <ThemeProvider _forceTheme={theme.client}>{children}</ThemeProvider>
+);
 
 const getStoryThemes = () => {
   const storyThemes = objectFromEntries(

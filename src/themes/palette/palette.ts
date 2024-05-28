@@ -101,7 +101,7 @@ const STATIC_COLOR_KEYS: (keyof typeof colors)[] = [
 ];
 
 /**
- * Retrieves the client slugs from the color tokens.
+ * Retrieves the dynamic color slugs from the color tokens.
  *
  * @return {DynamicColorPaletteKey[]} An array of client color palette keys.
  */

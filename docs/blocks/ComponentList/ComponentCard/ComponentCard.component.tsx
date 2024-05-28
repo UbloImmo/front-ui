@@ -25,6 +25,21 @@ import { Badge, Heading, Text } from "@components";
 import type { AnyIndex, ComponentName } from "../ComponentList.types";
 import type { ParsedJsDoc } from "@docs/docs.types";
 
+/**
+ * Renders a component card for a given component in the documentation.
+ *
+ * @remarks Used in ComponentList
+ *
+ * @template {AnyIndex} TIndex - The shape of an index.ts file containing the component
+ * @template {ComponentName<TIndex>} TName - The name of the component as exported in <TIndex>
+ *
+ * @param {ComponentCardProps<TIndex, TName>} props - The props for the component card.
+ * @param {TIndex} props.name - The name of the component.
+ * @param {React.ComponentType<TComponentProps>} props.Component - The component to render.
+ * @param {boolean} props.randomSize - Whether to randomly generate the size of the card.
+ * @param {string} props.parent - The parent of the component.
+ * @return {JSX.Element | null} The rendered component card or null if componentProps or description is falsy.
+ */
 export const ComponentCard = <
   TIndex extends AnyIndex,
   TName extends ComponentName<TIndex>
