@@ -39,7 +39,7 @@ export type TooltipProps = {
    * @default null
    *
    */
-  intersectionRoot?: Nullable<HTMLElement>;
+  intersectionRoot?: Nullable<HTMLElement | string>;
 };
 
 export type DefaultTooltipProps = Required<TooltipProps>;

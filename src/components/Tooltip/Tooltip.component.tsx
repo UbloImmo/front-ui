@@ -86,6 +86,10 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
     declareObserver: {
       if (!isNull(observerRef.current)) break declareObserver;
 
+      const observerRoot = isString(intersectionRoot)
+        ? document.querySelector<HTMLElement>(intersectionRoot)
+        : intersectionRoot;
+
       observerRef.current = new IntersectionObserver(
         (entries) => {
           /**
@@ -96,26 +100,59 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
           let clippingDirection: Nullable<TooltipDirection> = null;
 
           entries.forEach(
-            ({ boundingClientRect: { top, bottom, left, right } }) => {
+            ({
+              boundingClientRect: { top, bottom, left, right },
+              rootBounds,
+              target,
+            }) => {
+              const bounds: Omit<DOMRectReadOnly, "toJSON"> = rootBounds ?? {
+                top: 0,
+                bottom: window.innerHeight,
+                left: 0,
+                right: window.innerWidth,
+                height: window.innerHeight,
+                width: window.innerWidth,
+                x: 0,
+                y: 0,
+              };
+
+              const diffs = {
+                top: top - bounds.top,
+                bottom: bottom - bounds.bottom,
+                right: right - bounds.right,
+                left: left - bounds.left,
+              };
+
               /**
                * Sets the conditions to activate the clipping
                * Checks if the tooltip is clipped
                * Updates the clipping direction when clipped
                */
               const clippingMap: Record<TooltipDirection, boolean> = {
-                top: top < 0,
-                bottom: bottom > window.innerHeight,
-                right: right > window.innerWidth,
-                left: left < 0,
+                top: diffs.top < 0,
+                bottom: diffs.bottom > bounds.bottom,
+                right: diffs.right > window.innerWidth,
+                left: diffs.left < 0,
               };
+
               const clippingEntry = objectEntries(clippingMap).find(
                 ([_key, isClipping]) => isClipping
               );
+              console.log({
+                element: target,
+                bounds,
+                clippingMap,
+                target: { top, bottom, left, right },
+                diffs,
+                clippingEntry,
+              });
               clippingDirection = clippingEntry
                 ? clippingEntry[0]
                 : clippingDirection;
             }
           );
+
+          console.log(clippingDirection);
 
           /**
            * Update tooltip direction when clipped to the opposite of the clipping direction
@@ -127,7 +164,7 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
           }
         },
         {
-          root: intersectionRoot,
+          root: observerRoot,
           threshold: [0, 0.5, 1],
         }
       );
