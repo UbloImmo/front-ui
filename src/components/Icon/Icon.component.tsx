@@ -21,7 +21,7 @@ const defaultIconProps: DefaultIconProps = {
 /**
  * Renders the appropriate icon component based on the provided props.
  *
- * @remarks Fetermines the icon name based on the provided name, then looks up the corresponding icon component.
+ * @remarks Determines the icon name based on the provided name, then looks up the corresponding icon component.
  *
  * @version 0.0.1
  *
