@@ -80,6 +80,7 @@ export const getTooltipStyles = ($direction: TooltipDirection) => {
     color: var(--gray-50);
     width: max-content;
     height: max-content;
+    max-width: 12rem;
     padding: var(--s-1);
     border-radius: var(--s-05);
     transition: visibility 0s, opacity 0.2s ease-out;
