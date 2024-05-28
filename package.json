@@ -145,7 +145,7 @@
     ]
   },
   "dependencies": {
-    "@ubloimmo/front-tokens": "^0.1.16",
+    "@ubloimmo/front-tokens": "^0.1.17",
     "react-international-phone": "^4.2.9"
   }
 }

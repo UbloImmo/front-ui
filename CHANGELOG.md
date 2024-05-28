@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Theme provider optimizations
+- Bumped `@ubloimmo/front-tokens` to `0.0.17`
+
+### Fixed
+
+- Effect color mapping thanks to updated design tokens
 
 ## 0.6.0 - 2024-05-28
 ### Added
