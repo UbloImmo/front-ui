@@ -1,5 +1,5 @@
 import { Nullable } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { useMemo, type ReactPortal } from "react";
 import { createPortal } from "react-dom";
 
 import { useLogger, useMergedProps } from "@utils";
@@ -19,9 +19,9 @@ const defaultPortalProps: DefaultPortalProps = {
  * @private - Used interally by Dialog
  *
  * @param {PortalProps} props - the properties for the Portal component
- * @return {JSX.Element} the rendered content in the portal
+ * @return {Nullable<ReactPortal>} the rendered content in the portal
  */
-const Portal = (props: PortalProps) => {
+const Portal = (props: PortalProps): Nullable<ReactPortal> => {
   const { children, rootSelector } = useMergedProps(defaultPortalProps, props);
   const { error } = useLogger("Portal");
   const root = useMemo<Nullable<HTMLElement>>(() => {
