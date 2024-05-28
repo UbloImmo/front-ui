@@ -53,9 +53,13 @@ export const actionContainerStyles = ({
       box-shadow 300ms ease-out 0s;
 
     span[data-testid="text action-label"] {
+      ${$size === "default" &&
+      css`
+        flex: 1;
+      `}
       text-overflow: ellipsis;
       max-height: 100%;
-      width: 100%;
+      max-width: fit-content;
       overflow-y: hidden;
       overflow-wrap: break-word;
       display: block;
