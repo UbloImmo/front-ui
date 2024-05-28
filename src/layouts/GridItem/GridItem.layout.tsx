@@ -1,0 +1,67 @@
+import styled from "styled-components";
+
+import { gridItemStyles } from "./GridItem.styles";
+import { useGridItemPosition } from "./GridItem.utils";
+
+import { useStyleProps, useTestId } from "@utils";
+
+import type {
+  GridItemDefaultProps,
+  GridItemProps,
+  GridItemStyleProps,
+} from "./GridItem.types";
+import type { TestIdProps } from "@types";
+
+const defaultGridItemProps: GridItemDefaultProps = {
+  rowStart: "auto",
+  rowEnd: "auto",
+  columnStart: "auto",
+  columnEnd: "auto",
+  row: "auto / auto",
+  column: "auto / auto",
+  children: null,
+  align: "start",
+  justify: "start",
+};
+
+/**
+ * Renders a grid item with the specified position and children.
+ *
+ * @version 0.0.1
+ *
+ * @param {GridItemProps} props - The props for the grid item.
+ * @param {Optional<GridStartPosition>} props.rowStart - The start position of the row.
+ * @param {Optional<GridEndPosition>} props.rowEnd - The end position of the row.
+ * @param {Optional<GridStartPosition>} props.columnStart - The start position of the column.
+ * @param {Optional<GridEndPosition>} props.columnEnd - The end position of the column.
+ * @param {GridStartPosition | GridDetailedPosition | string} props.row - The row position.
+ * @param {GridStartPosition | GridDetailedPosition | string} props.column - The column position.
+ * @param {ReactNode} props.children - The children to render inside the grid item.
+ * @return {JSX.Element} The rendered grid item.
+ */
+const GridItem = (props: GridItemProps & TestIdProps): JSX.Element => {
+  const testId = useTestId("grid-item", props as TestIdProps);
+  const position = useGridItemPosition(defaultGridItemProps, props);
+  const styleProps = useStyleProps(position);
+
+  return (
+    <GridItemContainer
+      {...styleProps}
+      data-testid={testId}
+      data-layout="grid-item"
+      data-column-start={position.columnStart}
+      data-column-end={position.columnEnd}
+      data-row-start={position.rowStart}
+      data-row-end={position.rowEnd}
+    >
+      {props.children}
+    </GridItemContainer>
+  );
+};
+GridItem.defaultProps = defaultGridItemProps;
+
+export { GridItem };
+
+const GridItemContainer = styled.div<GridItemStyleProps>`
+  ${gridItemStyles}
+`;
