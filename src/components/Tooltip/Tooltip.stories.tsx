@@ -1,13 +1,15 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Nullable, isString, objectEntries } from "@ubloimmo/front-util";
+import { isString } from "@ubloimmo/front-util";
 import styled from "styled-components";
 
 import { Tooltip } from "./Tooltip.component";
 import { TooltipDirection, TooltipProps } from "./Tooltip.types";
 import { Badge } from "../Badge";
+import { StaticIcon } from "../StaticIcon";
 import { Text } from "../Text";
 
 import { ComponentVariants } from "@docs/blocks";
+import { FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
 const Container = styled.div`
@@ -39,41 +41,75 @@ export const Directions = (props: Partial<TooltipProps>) => {
   const defaultProps = useMergedProps(Tooltip.defaultProps, props);
   return (
     <Container>
-      {directions.map((direction) => (
-        <Tooltip {...defaultProps} direction={direction} key={direction} />
-      ))}
+      <ComponentVariants
+        defaults={defaultProps}
+        variants={directions}
+        for="direction"
+        of={Tooltip}
+        scaling={1}
+        justify="center"
+        align="center"
+        propLabels
+      />
     </Container>
   );
 };
 
-const contents = ["Some hint", "A much longer and much more descriptive hint"];
-
+const contents = [
+  { value: "Some hint", label: "Some hint" },
+  {
+    value: "A much longer and much more descriptive hint",
+    label: "A much longer and much more descriptive hint",
+  },
+  {
+    value: (
+      <FlexRowLayout gap="s-2" align="center" fill key="content">
+        <StaticIcon name="Square" size="xs" stroke />
+        <Text color="gray-50">Some hint</Text>
+      </FlexRowLayout>
+    ),
+    label: "JSX example",
+  },
+];
 export const Content = (props: Partial<TooltipProps>) => {
   const defaultProps = useMergedProps(Tooltip.defaultProps, props);
+
   return (
     <Container>
-      {contents.map((content) => (
-        <Tooltip {...defaultProps} content={content} key={content} />
-      ))}
+      <ComponentVariants
+        defaults={defaultProps}
+        variants={contents}
+        for="content"
+        of={Tooltip}
+        scaling={1}
+        justify="center"
+        align="center"
+        forceCompound
+      />
     </Container>
   );
 };
 
-const children: Record<string, Nullable<JSX.Element>> = {
-  null: null,
-  badge: <Badge />,
-  text: <Text>Text</Text>,
-};
+const children = [
+  { value: null, label: "null" },
+  { value: <Badge />, label: "Badge" },
+  { value: <Text>Text</Text>, label: "Text" },
+];
 
 export const Children = (props: Partial<TooltipProps>) => {
   const defaultProps = useMergedProps(Tooltip.defaultProps, props);
   return (
     <Container>
-      {objectEntries(children).map(([key, child]) => (
-        <Tooltip {...defaultProps} key={key}>
-          {child}
-        </Tooltip>
-      ))}
+      <ComponentVariants
+        defaults={defaultProps}
+        variants={children}
+        for="children"
+        of={Tooltip}
+        scaling={1}
+        justify="center"
+        align="center"
+        forceCompound
+      />
     </Container>
   );
 };
@@ -101,7 +137,7 @@ const TooltipIntersectionContainer = styled.div`
 `;
 
 const TooltipPaddedContainer = styled.div`
-  padding: 30% 100%;
+  padding: 100% 100%;
   position: static;
 `;
 

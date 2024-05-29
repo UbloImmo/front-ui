@@ -17,7 +17,7 @@ export type TooltipProps = {
    */
   children: ReactNode;
   /**
-   * The text displayed in the tooltip
+   * The text or element displayed in the tooltip
    * @required
    */
   content: NonNullish<ReactNode | TooltipContentFn>;

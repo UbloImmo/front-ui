@@ -83,6 +83,11 @@ type ComponentVariantsConfig<
    */
   propLabels?: boolean;
   /**
+   * Whether to skip compound variant value typecheck
+   * @default false
+   */
+  forceCompound?: boolean;
+  /**
    * Whether to fill the horizontal or vertical space.
    * @default false
    */
@@ -115,7 +120,8 @@ export const ComponentVariants = <
         "value" in variant &&
         "label" in variant &&
         isString(variant.label) &&
-        typeof variant.value === typeof props.defaults[props.for];
+        (typeof variant.value === typeof props.defaults[props.for] ||
+          props.forceCompound);
       if (isCompound)
         return {
           ...props.defaults,

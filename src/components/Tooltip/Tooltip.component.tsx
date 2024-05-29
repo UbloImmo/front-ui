@@ -4,7 +4,6 @@ import {
   isNull,
   isObject,
   isString,
-  objectEntries,
 } from "@ubloimmo/front-util";
 import {
   useCallback,
@@ -21,6 +20,7 @@ import {
   tooltipPlaceholderStyles,
   tooltipWrapperStyles,
 } from "./Tooltip.styles";
+import { computedTooltipIntersections } from "./Tooltip.utils";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
@@ -40,13 +40,6 @@ const defaultTooltipProps: DefaultTooltipProps = {
   direction: "top",
   icon: "QuestionCircleFill",
   intersectionRoot: null,
-};
-
-const inverseDirectionMap: Record<TooltipDirection, TooltipDirection> = {
-  top: "bottom",
-  bottom: "top",
-  left: "right",
-  right: "left",
 };
 
 const THRESHOLD_COUNT = 10;
@@ -96,80 +89,84 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
         : intersectionRoot;
 
       observerRef.current = new IntersectionObserver(
-        (entries) => {
-          /**
-           * Gets current direction of the tooltip
-           * initializes the clipping direction as null
-           */
-          const currentDirection = tooltipDirectionRef.current;
-          let clippingDirection: Nullable<TooltipDirection> = null;
+        computedTooltipIntersections(
+          () => tooltipDirectionRef.current,
+          setTooltipDirection
+        ),
+        // (entries) => {
+        //   /**
+        //    * Gets current direction of the tooltip
+        //    * initializes the clipping direction as null
+        //    */
+        //   const currentDirection = tooltipDirectionRef.current;
+        //   let clippingDirection: Nullable<TooltipDirection> = null;
 
-          entries.forEach(
-            ({
-              boundingClientRect: { top, bottom, left, right },
-              rootBounds,
-            }) => {
-              const bounds: Pick<
-                DOMRectReadOnly,
-                "top" | "bottom" | "left" | "right"
-              > = rootBounds ?? {
-                top: 0,
-                bottom: window.innerHeight,
-                left: 0,
-                right: window.innerWidth,
-              };
+        //   entries.forEach(
+        //     ({
+        //       boundingClientRect: { top, bottom, left, right },
+        //       rootBounds,
+        //     }) => {
+        //       const bounds: Pick<
+        //         DOMRectReadOnly,
+        //         "top" | "bottom" | "left" | "right"
+        //       > = rootBounds ?? {
+        //         top: 0,
+        //         bottom: window.innerHeight,
+        //         left: 0,
+        //         right: window.innerWidth,
+        //       };
 
-              const diffs = {
-                top: top - bounds.top,
-                bottom: bounds.bottom - bottom,
-                right: bounds.right - right,
-                left: left - bounds.left,
-              };
-              /**
-               * Sets the conditions to activate the clipping
-               * Checks if the tooltip is clipped
-               * Updates the clipping direction when clipped
-               */
-              const clippingMap: Record<TooltipDirection, boolean> = {
-                top: diffs.top < 0,
-                bottom: diffs.bottom < 0,
-                right: diffs.right < 0,
-                left: diffs.left < 0,
-              };
+        //       const diffs = {
+        //         top: top - bounds.top,
+        //         bottom: bounds.bottom - bottom,
+        //         right: bounds.right - right,
+        //         left: left - bounds.left,
+        //       };
+        //       /**
+        //        * Sets the conditions to activate the clipping
+        //        * Checks if the tooltip is clipped
+        //        * Updates the clipping direction when clipped
+        //        */
+        //       const clippingMap: Record<TooltipDirection, boolean> = {
+        //         top: diffs.top < 0,
+        //         bottom: diffs.bottom < 0,
+        //         right: diffs.right < 0,
+        //         left: diffs.left < 0,
+        //       };
 
-              /**
-               * Updates the clipping direction
-               * with the direction that is clippin the most by comparing diffs
-               */
-              clippingDirection =
-                objectEntries(clippingMap).reduce(
-                  (
-                    prevClipDir: Nullable<TooltipDirection>,
-                    [clipDir, isClipping]
-                  ): Nullable<TooltipDirection> => {
-                    if (!isClipping) return prevClipDir;
-                    const currentDiff = Math.abs(diffs[clipDir]);
-                    if (
-                      !prevClipDir ||
-                      currentDiff > Math.abs(diffs[prevClipDir])
-                    )
-                      return clipDir;
-                    return prevClipDir;
-                  },
-                  clippingDirection
-                ) ?? clippingDirection;
-            }
-          );
+        //       /**
+        //        * Updates the clipping direction
+        //        * with the direction that is clippin the most by comparing diffs
+        //        */
+        //       clippingDirection =
+        //         objectEntries(clippingMap).reduce(
+        //           (
+        //             prevClipDir: Nullable<TooltipDirection>,
+        //             [clipDir, isClipping]
+        //           ): Nullable<TooltipDirection> => {
+        //             if (!isClipping) return prevClipDir;
+        //             const currentDiff = Math.abs(diffs[clipDir]);
+        //             if (
+        //               !prevClipDir ||
+        //               currentDiff > Math.abs(diffs[prevClipDir])
+        //             )
+        //               return clipDir;
+        //             return prevClipDir;
+        //           },
+        //           clippingDirection
+        //         ) ?? clippingDirection;
+        //     }
+        //   );
 
-          /**
-           * Update tooltip direction when clipped to the opposite of the clipping direction
-           */
-          if (clippingDirection) {
-            setTooltipDirection(inverseDirectionMap[clippingDirection]);
-          } else {
-            setTooltipDirection(currentDirection);
-          }
-        },
+        //   /**
+        //    * Update tooltip direction when clipped to the opposite of the clipping direction
+        //    */
+        //   if (clippingDirection) {
+        //     setTooltipDirection(inverseDirectionMap[clippingDirection]);
+        //   } else {
+        //     setTooltipDirection(currentDirection);
+        //   }
+        // },
         {
           root: observerRoot,
           threshold: THRESHOLDS,
@@ -200,7 +197,18 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
 
   const tooltipContent = useMemo(() => {
     if (isFunction<TooltipContentFn>(content)) return content();
+
+    /**
+     * Accepts only JSX elements if content is an object
+     */
     if (isObject(content)) {
+      if (
+        "$$typeof" in content &&
+        typeof content.$$typeof === "symbol" &&
+        String(content.$$typeof) === "Symbol(react.element)"
+      ) {
+        return content;
+      }
       error("Objecs are not valid as tooltip content");
       return "";
     }

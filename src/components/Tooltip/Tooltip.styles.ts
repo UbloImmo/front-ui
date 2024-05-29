@@ -124,10 +124,10 @@ export const tooltipPlaceholderStyles = ($direction: TooltipDirection) => {
       pointer-events: none;
       user-select: none;
     }
-    transition: visibility 0s, opacity 0.2s ease-out;
+    background: red;
     width: max-content;
     height: max-content;
-    padding: calc(${TOOLTIP_OFFSET} + var(--s-05))
+    padding: calc(${TOOLTIP_OFFSET} + var(--s-))
       calc(${TOOLTIP_OFFSET} + var(--s-1));
 
     ${containerStyles[$direction]}

@@ -73,3 +73,24 @@ testTooltip({
 
   resetObserverCallbacks();
 });
+
+global.console.error = mock(() => {});
+
+testTooltip({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore needed to check error detection
+  content: { foo: "bar" },
+})(
+  "should warn if regular object is passed in content props",
+  ({ queryByTestId }) => {
+    expect(queryByTestId(testId)).not.toBeNull();
+    expect(global.console.error).toHaveBeenCalled();
+  }
+);
+
+// if content is JSX Element
+// testTooltip({
+//   content: <
+// })
+
+// tooltip direction change when intersection

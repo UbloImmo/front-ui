@@ -14,13 +14,11 @@ import { Icon } from "@/components/Icon/Icon.component.tsx";
 
 `Tooltip` allows to display helpful information to users when they hover over an element.
 
-`Tooltip` is very useful tool to improve user experience, by offering explanations to the users, and guiding their navigation within the interface.
+It is very useful tool to improve user experience, by offering explanations to the users, and guiding their navigation within the interface.
 
 ### Content
 
-You can set the text in the tooltip with the `content` property.
-
-> TODO: Story variant: JSX in content
+You can set your desired text or element in the tooltip with the `content` property.
 
 <Canvas of={TooltipStories.Content} />
 
@@ -34,19 +32,19 @@ You can set the text in the tooltip with the `content` property.
 
 #### Edge detection
 
-By default, tooltips check if they intersect *with the whole **viewport*** and reposition themselves in order to visible.
-<br/>
-This behavior can be overridden by setting the `intersectionRoot` property.
-Tooltips that have a specific `intersectionRoot` will use it as a basis for staying visible.
+By default, tooltips check if they intersect **with the whole viewport** and reposition themselves in order to visible.
+
+<br />
+This behavior can be overridden by setting the `intersectionRoot` property. Tooltips
+that have a specific `intersectionRoot` will use it as a basis for staying visible.
 
 > Try scrolling in both areas to see how each Tooltip's position reacts.
 
 <Canvas of={TooltipStories.IntersectionRoots} />
 
-
 ### Wrapping existing elements
 
-By default, a `Tooltip` is show when hovering the rendered <Icon name="QuestionCircleFill" color="gray-700" size="s-3" /> icon.
+By default, a `Tooltip` is shown when hovering the rendered <Icon name="QuestionCircleFill" color="gray-700" size="s-3" /> icon.
 
 Want to show a tooltip over any other element (e.g. links, menus, forms ...) ? Put it inside `Tooltip`'s `children` property.
 
