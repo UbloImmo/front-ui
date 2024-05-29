@@ -127,7 +127,7 @@ export const tooltipPlaceholderStyles = ($direction: TooltipDirection) => {
     background: red;
     width: max-content;
     height: max-content;
-    padding: calc(${TOOLTIP_OFFSET} + var(--s-))
+    padding: calc(${TOOLTIP_OFFSET} + var(--s-1))
       calc(${TOOLTIP_OFFSET} + var(--s-1));
 
     ${containerStyles[$direction]}

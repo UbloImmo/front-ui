@@ -5,7 +5,7 @@ import {
   objectEntries,
 } from "@ubloimmo/front-util";
 
-import type { TooltipDirection } from "./Tooltip.types";
+import type { ToolipIntersection, TooltipDirection } from "./Tooltip.types";
 
 const inverseDirectionMap: Record<TooltipDirection, TooltipDirection> = {
   top: "bottom",
@@ -22,7 +22,7 @@ const inverseDirectionMap: Record<TooltipDirection, TooltipDirection> = {
  * @param {GenericFn<[TooltipDirection], void>} setTooltipDirection - sets the direction of the tooltip.
  * @return {IntersectionObserverCallback}.
  */
-export const computedTooltipIntersections =
+export const computeTooltipIntersections =
   (
     getTooltipDirection: GenericFn<[], TooltipDirection>,
     setTooltipDirection: GenericFn<[TooltipDirection]>
@@ -33,18 +33,14 @@ export const computedTooltipIntersections =
      * initializes the clipping direction as null
      */
     let clippingDirection: Nullable<TooltipDirection> = null;
+    let prevPassDiffRatios: Nullable<ToolipIntersection> = null;
 
     entries.forEach(
       ({
-        boundingClientRect: { top, bottom, left, right },
+        boundingClientRect: { top, bottom, left, right, height, width },
         rootBounds,
-        target,
-        intersectionRect,
       }) => {
-        const bounds: Pick<
-          DOMRectReadOnly,
-          "top" | "bottom" | "left" | "right"
-        > = {
+        const bounds: ToolipIntersection = {
           top: isObject(rootBounds) ? rootBounds.top : 0,
           bottom: isObject(rootBounds) ? rootBounds.bottom : window.innerHeight,
           left: isObject(rootBounds) ? rootBounds.left : 0,
@@ -53,9 +49,21 @@ export const computedTooltipIntersections =
 
         const diffs = {
           top: top - bounds.top,
-          bottom: bounds.bottom - bottom,
+          bottom: bounds.bottom - bottom - (observer.root ? 0 : height),
           right: bounds.right - right,
           left: left - bounds.left,
+        };
+        const diffRatiosRaw = {
+          top: diffs.top / (height || 1),
+          bottom: diffs.bottom / (height || 1),
+          left: diffs.left / (width || 1),
+          right: diffs.right / (width || 1),
+        };
+        const diffRatios = {
+          top: diffRatiosRaw.top < 0 ? Math.abs(diffRatiosRaw.top) : 0,
+          bottom: diffRatiosRaw.bottom < 0 ? Math.abs(diffRatiosRaw.bottom) : 0,
+          left: diffRatiosRaw.left < 0 ? Math.abs(diffRatiosRaw.left) : 0,
+          right: diffRatiosRaw.right < 0 ? Math.abs(diffRatiosRaw.right) : 0,
         };
         /**
          * Sets the conditions to activate the clipping
@@ -69,48 +77,46 @@ export const computedTooltipIntersections =
           left: diffs.left < 0,
         };
 
-        if (
-          (target as HTMLDivElement).dataset["testid"] === "tooltip-placeholder"
-        ) {
-          console.table({
-            rootBounds,
-            bounds: {
-              top: bounds.top,
-              bottom: bounds.bottom,
-              left: bounds.left,
-              right: bounds.right,
-            },
-            targetBounds: { top, bottom, left, right },
-            diffs,
-            intersectionRect,
-            clippingMap,
-          });
-          console.log(
-            window.innerHeight,
-            bounds.bottom,
-            observer.root,
-            document.body.getBoundingClientRect().height
-          );
-        }
-
         /**
          * Updates the clipping direction
          * with the direction that is clippin the most by comparing diffs
          */
-        clippingDirection =
+        const currentClippingDirection =
           objectEntries(clippingMap).reduce(
             (
               prevClipDir: Nullable<TooltipDirection>,
               [clipDir, isClipping]
             ): Nullable<TooltipDirection> => {
               if (!isClipping) return prevClipDir;
-              const currentDiff = Math.abs(diffs[clipDir]);
-              if (!prevClipDir || currentDiff > Math.abs(diffs[prevClipDir]))
+              if (!prevClipDir) {
                 return clipDir;
+              }
+              // get intersection ratio for currently evaluated clipping direction
+              const currentDiffRatio = diffRatios[clipDir];
+              const prevDiffRatio = diffRatios[prevClipDir];
+              if (currentDiffRatio > prevDiffRatio) return clipDir;
               return prevClipDir;
             },
             clippingDirection
           ) ?? clippingDirection;
+
+        if (currentClippingDirection) {
+          if (
+            clippingDirection &&
+            prevPassDiffRatios &&
+            clippingDirection !== currentClippingDirection
+          ) {
+            const currentDiffRatio = diffRatios[currentClippingDirection];
+            const prevPassDiffRatio = prevPassDiffRatios[clippingDirection];
+            if (currentDiffRatio > prevPassDiffRatio) {
+              clippingDirection = currentClippingDirection;
+            }
+          } else {
+            clippingDirection = currentClippingDirection;
+          }
+        }
+
+        prevPassDiffRatios = diffRatios;
       }
     );
 

@@ -1,10 +1,13 @@
 import { Nullable, isArray, isNumber } from "@ubloimmo/front-util";
-import { expect, mock } from "bun:test";
+import { describe, expect, it, mock } from "bun:test";
 
 import { Tooltip } from "./Tooltip.component";
-import { TooltipProps } from "./Tooltip.types";
+import { TooltipProps, type TooltipDirection } from "./Tooltip.types";
+import { computeTooltipIntersections } from "./Tooltip.utils";
 
 import { testComponentFactory } from "@/tests";
+
+import type { DeepPartial } from "@types";
 
 const testId = "tooltip-wrapper";
 
@@ -94,3 +97,68 @@ testTooltip({
 // })
 
 // tooltip direction change when intersection
+
+const FAKE_DIRECTION: TooltipDirection = "top";
+
+const createFakeIntersectionObserverEntry = (
+  intersection?: DeepPartial<IntersectionObserverEntry>
+): IntersectionObserverEntry => {
+  const initFakeDomRect = (
+    extension?: DeepPartial<DOMRectReadOnly>
+  ): DOMRectReadOnly => ({
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    width: 0,
+    height: 0,
+    x: 0,
+    y: 0,
+    ...(extension ?? {}),
+    toJSON: mock(() => {}),
+  });
+  return {
+    boundingClientRect: initFakeDomRect(intersection?.boundingClientRect),
+    intersectionRatio: intersection?.intersectionRatio ?? 0,
+    isIntersecting: intersection?.isIntersecting ?? false,
+    target: (intersection?.target ?? document.createElement("div")) as Element,
+    intersectionRect: initFakeDomRect(intersection?.intersectionRect),
+    rootBounds: initFakeDomRect(intersection?.rootBounds ?? {}),
+    time: intersection?.time ?? 0,
+  };
+};
+
+const getDirection = mock(() => FAKE_DIRECTION);
+const setDirection = mock((_direction: TooltipDirection) => {});
+
+describe("Tooltip", () => {
+  describe("computeTooltipIntersections", () => {
+    it.todo("should be and return a function", () => {
+      expect(computeTooltipIntersections).toBeDefined();
+      expect(computeTooltipIntersections).toBeFunction();
+      expect(
+        computeTooltipIntersections(getDirection, setDirection)
+      ).toBeFunction();
+    });
+
+    it.todo("should return a valid direction from an intersection", () => {
+      const observer = new FakeIntersectionObserver(
+        computeTooltipIntersections(getDirection, setDirection)
+      );
+      const fakeSetter = mock((_direction: TooltipDirection) => {});
+      computeTooltipIntersections(getDirection, fakeSetter)(
+        [
+          createFakeIntersectionObserverEntry({
+            isIntersecting: true,
+            boundingClientRect: {
+              x: 2,
+            },
+          }),
+        ],
+        observer
+      );
+
+      expect(fakeSetter).toHaveBeenCalledWith(FAKE_DIRECTION);
+    });
+  });
+});

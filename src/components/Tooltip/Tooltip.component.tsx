@@ -2,6 +2,7 @@ import {
   Nullable,
   isFunction,
   isNull,
+  isNumber,
   isObject,
   isString,
 } from "@ubloimmo/front-util";
@@ -20,7 +21,7 @@ import {
   tooltipPlaceholderStyles,
   tooltipWrapperStyles,
 } from "./Tooltip.styles";
-import { computedTooltipIntersections } from "./Tooltip.utils";
+import { computeTooltipIntersections } from "./Tooltip.utils";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
@@ -42,7 +43,7 @@ const defaultTooltipProps: DefaultTooltipProps = {
   intersectionRoot: null,
 };
 
-const THRESHOLD_COUNT = 10;
+const THRESHOLD_COUNT = 50;
 const THRESHOLDS = Array(THRESHOLD_COUNT + 1)
   .fill(1)
   .map((_, i) => i / THRESHOLD_COUNT);
@@ -56,7 +57,7 @@ const THRESHOLDS = Array(THRESHOLD_COUNT + 1)
  * @returns {JSX.Element} The rendered tooltip
  */
 const Tooltip = (props: TooltipProps): JSX.Element => {
-  const { error } = useLogger("Tooltip");
+  const { error, warn } = useLogger("Tooltip");
   const mergedProps = useMergedProps(defaultTooltipProps, props);
 
   const { children, content, direction, icon, intersectionRoot } = mergedProps;
@@ -89,84 +90,10 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
         : intersectionRoot;
 
       observerRef.current = new IntersectionObserver(
-        computedTooltipIntersections(
+        computeTooltipIntersections(
           () => tooltipDirectionRef.current,
           setTooltipDirection
         ),
-        // (entries) => {
-        //   /**
-        //    * Gets current direction of the tooltip
-        //    * initializes the clipping direction as null
-        //    */
-        //   const currentDirection = tooltipDirectionRef.current;
-        //   let clippingDirection: Nullable<TooltipDirection> = null;
-
-        //   entries.forEach(
-        //     ({
-        //       boundingClientRect: { top, bottom, left, right },
-        //       rootBounds,
-        //     }) => {
-        //       const bounds: Pick<
-        //         DOMRectReadOnly,
-        //         "top" | "bottom" | "left" | "right"
-        //       > = rootBounds ?? {
-        //         top: 0,
-        //         bottom: window.innerHeight,
-        //         left: 0,
-        //         right: window.innerWidth,
-        //       };
-
-        //       const diffs = {
-        //         top: top - bounds.top,
-        //         bottom: bounds.bottom - bottom,
-        //         right: bounds.right - right,
-        //         left: left - bounds.left,
-        //       };
-        //       /**
-        //        * Sets the conditions to activate the clipping
-        //        * Checks if the tooltip is clipped
-        //        * Updates the clipping direction when clipped
-        //        */
-        //       const clippingMap: Record<TooltipDirection, boolean> = {
-        //         top: diffs.top < 0,
-        //         bottom: diffs.bottom < 0,
-        //         right: diffs.right < 0,
-        //         left: diffs.left < 0,
-        //       };
-
-        //       /**
-        //        * Updates the clipping direction
-        //        * with the direction that is clippin the most by comparing diffs
-        //        */
-        //       clippingDirection =
-        //         objectEntries(clippingMap).reduce(
-        //           (
-        //             prevClipDir: Nullable<TooltipDirection>,
-        //             [clipDir, isClipping]
-        //           ): Nullable<TooltipDirection> => {
-        //             if (!isClipping) return prevClipDir;
-        //             const currentDiff = Math.abs(diffs[clipDir]);
-        //             if (
-        //               !prevClipDir ||
-        //               currentDiff > Math.abs(diffs[prevClipDir])
-        //             )
-        //               return clipDir;
-        //             return prevClipDir;
-        //           },
-        //           clippingDirection
-        //         ) ?? clippingDirection;
-        //     }
-        //   );
-
-        //   /**
-        //    * Update tooltip direction when clipped to the opposite of the clipping direction
-        //    */
-        //   if (clippingDirection) {
-        //     setTooltipDirection(inverseDirectionMap[clippingDirection]);
-        //   } else {
-        //     setTooltipDirection(currentDirection);
-        //   }
-        // },
         {
           root: observerRoot,
           threshold: THRESHOLDS,
@@ -210,17 +137,18 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
         return content;
       }
       error("Objecs are not valid as tooltip content");
-      return "";
+      return null;
     }
-    if (isString(content)) {
+    if (isString(content) || isNumber(content)) {
       return (
         <Text color="gray-50" size="s">
           {content}
         </Text>
       );
     }
+    warn(`Empty tooltip content provided: ${content}`);
     return content;
-  }, [content, error]);
+  }, [content, error, warn]);
 
   /**
    * Checks children props and if it is empty, renders a default questionmark icon in the children property
@@ -238,21 +166,25 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
       data-testid="tooltip-wrapper"
       ref={tooltipWrapperRef}
     >
-      <ToolipPlaceholder
-        data-testid="tooltip-placeholder"
-        ref={tooltipRef}
-        $direction={direction}
-        aria-hidden
-      >
-        {tooltipContent}
-      </ToolipPlaceholder>
-      <TooltipContainer
-        data-testid="tooltip"
-        role="tooltip"
-        $direction={tooltipDirection}
-      >
-        {tooltipContent}
-      </TooltipContainer>
+      {tooltipContent && (
+        <>
+          <ToolipPlaceholder
+            data-testid="tooltip-placeholder"
+            ref={tooltipRef}
+            $direction={direction}
+            aria-hidden
+          >
+            {tooltipContent}
+          </ToolipPlaceholder>
+          <TooltipContainer
+            data-testid="tooltip"
+            role="tooltip"
+            $direction={tooltipDirection}
+          >
+            {tooltipContent}
+          </TooltipContainer>
+        </>
+      )}
       <RenderedChildren />
     </TooltipWrapper>
   );

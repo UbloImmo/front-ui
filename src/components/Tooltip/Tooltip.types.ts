@@ -47,3 +47,8 @@ export type DefaultTooltipProps = Required<TooltipProps>;
 export type TooltipStyleProps = StyleProps<
   Pick<DefaultTooltipProps, "direction">
 >;
+
+export type ToolipIntersection = Pick<
+  DOMRectReadOnly,
+  "top" | "bottom" | "left" | "right"
+>;

@@ -128,8 +128,8 @@ const TooltipIntersectionRenderer = (props: TooltipProps) => {
 };
 
 const TooltipIntersectionContainer = styled.div`
-  max-height: 8rem;
-  height: 8rem;
+  max-height: 12rem;
+  height: 12rem;
   overflow: auto;
   border-radius: var(--s-05);
   background: white;
@@ -145,7 +145,7 @@ const intersectionRoots = [null, "#intersection-root"];
 export const IntersectionRoots = (props: Partial<TooltipProps>) => {
   const defaultProps = useMergedProps(Tooltip.defaultProps, {
     ...props,
-    direction: props.direction ?? "bottom",
+    direction: props.direction ?? "top",
   });
 
   return (

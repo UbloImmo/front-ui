@@ -60,3 +60,7 @@ export type EnumExtension<
 export type Extract<TUnion, TSelection> = TSelection extends TUnion
   ? TSelection
   : never;
+
+export type DeepPartial<T extends object> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
