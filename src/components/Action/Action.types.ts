@@ -1,6 +1,5 @@
 import type { IconName } from "../Icon";
-import type { Enum } from "@types";
-import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 const actionSizes = ["default", "large"] as const;
 

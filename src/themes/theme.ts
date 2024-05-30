@@ -1,4 +1,4 @@
-import { isString, type Nullable } from "@ubloimmo/front-util";
+import { isString, type Nullable, type DeepPick } from "@ubloimmo/front-util";
 
 import {
   buildColorPalette,
@@ -72,18 +72,18 @@ export const buildTheme = (
 /**
  * Applies the favicon to the document head based on the provided theme.
  *
- * @param {Theme} theme - The theme object containing the favicon details.
+ * @param {DeepPick<ThemeOverride, "organization.assets.favicon">} themeSlice - The theme object containing the favicon details.
  * @param {FaviconLinkSelectors} [linkSelectors] - Optional link selectors for the favicon.
  * @returns {boolean} - Returns true if the favicon is successfully applied, false otherwise.
  */
 export const applyFavicon = (
-  theme: Theme,
+  themeSlice: DeepPick<ThemeOverride, "organization.assets.favicon">,
   linkSelectors?: FaviconLinkSelectors
 ): boolean => {
-  if (!theme?.organization?.assets?.favicon) return false;
+  if (!themeSlice?.organization?.assets?.favicon) return false;
   const x16Selector = linkSelectors?.x16 ?? "link#favicon-16[rel='icon']";
   const x32Selector = linkSelectors?.x32 ?? "link#favicon-32[rel='icon']";
-  const { x16, x32 } = theme.organization.assets.favicon;
+  const { x16, x32 } = themeSlice.organization.assets.favicon;
   if (!isString(x16) || !isString(x32)) return false;
   if (!document || !document?.head) return false;
   const link16 = document.head.querySelector<HTMLLinkElement>(x16Selector);

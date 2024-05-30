@@ -1,4 +1,4 @@
-import { Enum } from "../";
+import type { Enum } from "@ubloimmo/front-util";
 
 export type RgbaColorStr =
   | `rgba(${number}, ${number}, ${number}, ${number})`

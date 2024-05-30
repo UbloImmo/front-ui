@@ -1,5 +1,5 @@
-import { CssFr, CssLength, Enum } from "@types";
-
+import type { CssFr, CssLength } from "@types";
+import type { Enum } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 const flexAlignments = [

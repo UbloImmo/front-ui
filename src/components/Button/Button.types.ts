@@ -1,11 +1,11 @@
 import type { IconName } from "..";
+import type { PaletteColor, RgbaColorStr } from "@types";
 import type {
   Enum,
-  PaletteColor,
+  Nullable,
   RequireAtLeastOne,
-  RgbaColorStr,
-} from "@types";
-import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+  VoidFn,
+} from "@ubloimmo/front-util";
 import type { AriaRole } from "react";
 
 export const buttonColors = [

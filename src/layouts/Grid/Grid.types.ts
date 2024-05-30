@@ -1,5 +1,5 @@
-import { CssLength, Enum } from "@types";
-
+import type { CssLength } from "@types";
+import type { Enum } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 const gridFlows = [

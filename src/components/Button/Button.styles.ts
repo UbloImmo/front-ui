@@ -14,14 +14,8 @@ import type {
   ButtonStyleColors,
   DefaultButtonProps,
 } from "./Button.types";
-import type {
-  ColorKey,
-  CssVarUsage,
-  RgbaColorStr,
-  StyleProps,
-  ValueMap,
-} from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
+import type { ColorKey, CssVarUsage, RgbaColorStr, StyleProps } from "@types";
+import type { Nullable, ValueMap } from "@ubloimmo/front-util";
 import type { RuleSet } from "styled-components";
 
 const blackButtonStyle: ButtonStyle = {

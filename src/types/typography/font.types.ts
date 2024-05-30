@@ -1,4 +1,4 @@
-import type { Enum } from "@types";
+import type { Enum } from "@ubloimmo/front-util";
 
 const fontFormats = ["woff2", "woff", "eot", "svg", "opentype", "truetype"];
 
