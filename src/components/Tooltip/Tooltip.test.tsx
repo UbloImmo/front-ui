@@ -3,7 +3,10 @@ import { describe, expect, it, mock } from "bun:test";
 
 import { Tooltip } from "./Tooltip.component";
 import { TooltipProps, type TooltipDirection } from "./Tooltip.types";
-import { computeTooltipIntersections } from "./Tooltip.utils";
+import {
+  computeTooltipIntersections,
+  generateThresholds,
+} from "./Tooltip.utils";
 import { Badge } from "../Badge";
 
 import { testComponentFactory } from "@/tests";
@@ -152,11 +155,11 @@ describe("Tooltip", () => {
     });
 
     it("should return a valid direction from an intersection", () => {
+      setDirection.mockReset();
       const observer = new FakeIntersectionObserver(
         computeTooltipIntersections(getDirection, setDirection)
       );
-      const fakeSetter = mock((_direction: TooltipDirection) => {});
-      computeTooltipIntersections(getDirection, fakeSetter)(
+      computeTooltipIntersections(getDirection, setDirection)(
         [
           createFakeIntersectionObserverEntry({
             isIntersecting: true,
@@ -165,15 +168,16 @@ describe("Tooltip", () => {
         observer
       );
 
-      expect(fakeSetter).toHaveBeenCalledWith(FAKE_DIRECTION);
+      expect(setDirection).toHaveBeenCalledWith(FAKE_DIRECTION);
+      setDirection.mockReset();
     });
 
-    it("should set direction correctly when clipped", () => {
+    it("should update clipping direction correctly when clipped", () => {
+      setDirection.mockReset();
       const observer = new FakeIntersectionObserver(
         computeTooltipIntersections(getDirection, setDirection)
       );
-      const fakeSetter = mock((_direction: TooltipDirection) => {});
-      computeTooltipIntersections(getDirection, fakeSetter)(
+      computeTooltipIntersections(getDirection, setDirection)(
         [
           createFakeIntersectionObserverEntry({
             isIntersecting: true,
@@ -184,15 +188,16 @@ describe("Tooltip", () => {
         ],
         observer
       );
-      expect(fakeSetter).toHaveBeenCalledWith("bottom");
+      expect(setDirection).toHaveBeenCalledWith("bottom");
+      setDirection.mockReset();
     });
 
-    it("should update clipping direction when multiple clipping directions detected", () => {
+    it("should update clipping direction correctly when multiple clipping directions detected", () => {
+      setDirection.mockReset();
       const observer = new FakeIntersectionObserver(
         computeTooltipIntersections(getDirection, setDirection)
       );
-      const fakeSetter = mock((_direction: TooltipDirection) => {});
-      computeTooltipIntersections(getDirection, fakeSetter)(
+      computeTooltipIntersections(getDirection, setDirection)(
         [
           createFakeIntersectionObserverEntry({
             isIntersecting: true,
@@ -209,7 +214,22 @@ describe("Tooltip", () => {
         ],
         observer
       );
-      expect(fakeSetter).toHaveBeenCalledWith("bottom");
+      expect(setDirection).toHaveBeenCalledWith("bottom");
+      setDirection.mockReset();
+    });
+  });
+});
+
+describe("Tooltip", () => {
+  describe("generateThresholds", () => {
+    it("should be and return a function", () => {
+      expect(generateThresholds).toBeDefined();
+      expect(generateThresholds).toBeFunction();
+    });
+
+    it("should return an array of thresholds", () => {
+      expect(generateThresholds(0)).toEqual([]);
+      expect(generateThresholds(2)).toEqual([0, 0.5, 1]);
     });
   });
 });
