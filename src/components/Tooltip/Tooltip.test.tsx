@@ -4,6 +4,7 @@ import { describe, expect, it, mock } from "bun:test";
 import { Tooltip } from "./Tooltip.component";
 import { TooltipProps, type TooltipDirection } from "./Tooltip.types";
 import { computeTooltipIntersections } from "./Tooltip.utils";
+import { Badge } from "../Badge";
 
 import { testComponentFactory } from "@/tests";
 
@@ -68,8 +69,7 @@ global.IntersectionObserver = FakeIntersectionObserver;
 
 testTooltip({
   ...Tooltip.defaultProps,
-})("should render with default props", ({ queryByTestId, debug }) => {
-  debug();
+})("should render with default props", ({ queryByTestId }) => {
   expect(fakeObserverCallbacks.constructor).toHaveBeenCalled();
   expect(fakeObserverCallbacks.observe).toHaveBeenCalled();
   expect(queryByTestId(testId)).not.toBeNull();
@@ -78,6 +78,7 @@ testTooltip({
 });
 
 global.console.error = mock(() => {});
+global.console.warn = mock(() => {});
 
 testTooltip({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -91,12 +92,21 @@ testTooltip({
   }
 );
 
-// if content is JSX Element
-// testTooltip({
-//   content: <
-// })
+testTooltip({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore needed to check error detection
+  content: null,
+})("should warn if null is passed in content props", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(global.console.warn).toHaveBeenCalled();
+});
 
-// tooltip direction change when intersection
+testTooltip({
+  ...Tooltip.defaultProps,
+  content: <Badge label="test" />,
+})("should render with JSX in content props", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+});
 
 const FAKE_DIRECTION: TooltipDirection = "top";
 
@@ -133,7 +143,7 @@ const setDirection = mock((_direction: TooltipDirection) => {});
 
 describe("Tooltip", () => {
   describe("computeTooltipIntersections", () => {
-    it.todo("should be and return a function", () => {
+    it("should be and return a function", () => {
       expect(computeTooltipIntersections).toBeDefined();
       expect(computeTooltipIntersections).toBeFunction();
       expect(
@@ -141,7 +151,24 @@ describe("Tooltip", () => {
       ).toBeFunction();
     });
 
-    it.todo("should return a valid direction from an intersection", () => {
+    it("should return a valid direction from an intersection", () => {
+      const observer = new FakeIntersectionObserver(
+        computeTooltipIntersections(getDirection, setDirection)
+      );
+      const fakeSetter = mock((_direction: TooltipDirection) => {});
+      computeTooltipIntersections(getDirection, fakeSetter)(
+        [
+          createFakeIntersectionObserverEntry({
+            isIntersecting: true,
+          }),
+        ],
+        observer
+      );
+
+      expect(fakeSetter).toHaveBeenCalledWith(FAKE_DIRECTION);
+    });
+
+    it("should set direction correctly when clipped", () => {
       const observer = new FakeIntersectionObserver(
         computeTooltipIntersections(getDirection, setDirection)
       );
@@ -151,14 +178,38 @@ describe("Tooltip", () => {
           createFakeIntersectionObserverEntry({
             isIntersecting: true,
             boundingClientRect: {
-              x: 2,
+              top: -10,
             },
           }),
         ],
         observer
       );
+      expect(fakeSetter).toHaveBeenCalledWith("bottom");
+    });
 
-      expect(fakeSetter).toHaveBeenCalledWith(FAKE_DIRECTION);
+    it("should update clipping direction when multiple clipping directions detected", () => {
+      const observer = new FakeIntersectionObserver(
+        computeTooltipIntersections(getDirection, setDirection)
+      );
+      const fakeSetter = mock((_direction: TooltipDirection) => {});
+      computeTooltipIntersections(getDirection, fakeSetter)(
+        [
+          createFakeIntersectionObserverEntry({
+            isIntersecting: true,
+            boundingClientRect: {
+              top: -10,
+            },
+          }),
+          createFakeIntersectionObserverEntry({
+            isIntersecting: true,
+            boundingClientRect: {
+              left: -1,
+            },
+          }),
+        ],
+        observer
+      );
+      expect(fakeSetter).toHaveBeenCalledWith("bottom");
     });
   });
 });
