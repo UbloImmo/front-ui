@@ -1,6 +1,6 @@
 import type { IconName } from "../Icon";
-import type { ColorKey, Enum, Extract, StyleProps } from "@types";
-import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { ColorKey, StyleProps } from "@types";
+import type { Enum, Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 const actionIconSizes = ["m", "s"];
 export type ActionIconSize = Enum<typeof actionIconSizes>;

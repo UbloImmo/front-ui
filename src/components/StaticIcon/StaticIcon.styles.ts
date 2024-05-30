@@ -7,7 +7,8 @@ import type {
   StaticIconContainerStyle,
   StaticIconSize,
 } from "./StaticIcon.types";
-import type { CssRem, StyleProps, ValueMap } from "@types";
+import type { CssRem, StyleProps } from "@types";
+import type { ValueMap } from "@ubloimmo/front-util";
 
 export const staticIconSizeToContainerStyleMap: ValueMap<
   StaticIconSize,

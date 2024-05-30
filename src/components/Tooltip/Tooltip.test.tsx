@@ -1,8 +1,7 @@
-import { Nullable, isArray, isNumber } from "@ubloimmo/front-util";
+import { isArray, isNumber } from "@ubloimmo/front-util";
 import { describe, expect, it, mock } from "bun:test";
 
 import { Tooltip } from "./Tooltip.component";
-import { TooltipProps, type TooltipDirection } from "./Tooltip.types";
 import {
   computeTooltipIntersections,
   generateThresholds,
@@ -11,7 +10,8 @@ import { Badge } from "../Badge";
 
 import { testComponentFactory } from "@/tests";
 
-import type { DeepPartial } from "@types";
+import type { TooltipProps, TooltipDirection } from "./Tooltip.types";
+import type { DeepPartial, Nullable } from "@ubloimmo/front-util";
 
 const testId = "tooltip-wrapper";
 
@@ -114,7 +114,9 @@ testTooltip({
 const FAKE_DIRECTION: TooltipDirection = "top";
 
 const createFakeIntersectionObserverEntry = (
-  intersection?: DeepPartial<IntersectionObserverEntry>
+  intersection?: DeepPartial<Omit<IntersectionObserverEntry, "target">> & {
+    target?: Element;
+  }
 ): IntersectionObserverEntry => {
   const initFakeDomRect = (
     extension?: DeepPartial<DOMRectReadOnly>

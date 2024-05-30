@@ -1,5 +1,5 @@
-import type { Email, Enum, StyleProps } from "@types";
-import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { Email, StyleProps } from "@types";
+import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { FC } from "react";
 
 /**
