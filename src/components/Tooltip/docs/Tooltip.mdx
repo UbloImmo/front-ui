@@ -1,0 +1,55 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as TooltipStories from "../Tooltip.stories.tsx";
+import { Icon } from "@/components/Icon/Icon.component.tsx";
+
+<Meta title="Components/Tooltip/Usage" />
+
+<ComponentInfo of={TooltipStories} figmaId="756-3440" />
+
+<Content>
+
+## Usage
+
+`Tooltip` allows to display helpful information to users when they hover over an element.
+
+It is very useful tool to improve user experience, by offering explanations to the users, and guiding their navigation within the interface.
+
+### Content
+
+You can set your desired text or element in the tooltip with the `content` property.
+
+<Canvas of={TooltipStories.Content} />
+
+### Directions
+
+`Tooltip` can be positioned on _top_, _bottom_, _left_ or _right_ of the element, using the `direction` property.
+
+> The direction you pass is only used if it doesn't prevent it from being visible.
+
+<Canvas of={TooltipStories.Directions} />
+
+#### Edge detection
+
+By default, tooltips check if they intersect **with the whole viewport** and reposition themselves in order to visible.
+
+<br />
+This behavior can be overridden by setting the `intersectionRoot` property. Tooltips
+that have a specific `intersectionRoot` will use it as a basis for staying visible.
+
+> Try scrolling in both areas to see how each Tooltip's position reacts.
+
+<Canvas of={TooltipStories.IntersectionRoots} />
+
+### Wrapping existing elements
+
+By default, a `Tooltip` is shown when hovering the rendered <Icon name="QuestionCircleFill" color="gray-700" size="s-3" /> icon.
+
+Want to show a tooltip over any other element (e.g. links, menus, forms ...) ? Put it inside `Tooltip`'s `children` property.
+
+> You get a tooltip ! You get a tooltip !
+
+<Canvas of={TooltipStories.Children} />
+
+</Content>
