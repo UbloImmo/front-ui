@@ -13,13 +13,9 @@ const directionStyles = {
     transform: translateX(-50%);
 
     &::after {
-      content: "";
-      position: absolute;
       top: 100%;
       left: 50%;
       margin-left: -5px;
-      border-width: 5px;
-      border-style: solid;
       border-color: var(--gray-700) transparent transparent transparent;
     }
   `,
@@ -29,13 +25,9 @@ const directionStyles = {
     transform: translateX(-50%);
 
     &::after {
-      content: "";
-      position: absolute;
       bottom: 100%;
       left: 50%;
       margin-left: -5px;
-      border-width: 5px;
-      border-style: solid;
       border-color: transparent transparent var(--gray-700) transparent;
     }
   `,
@@ -45,13 +37,9 @@ const directionStyles = {
     transform: translateY(-50%);
 
     &::after {
-      content: "";
-      position: absolute;
       top: 50%;
       right: 100%;
       margin-top: -5px;
-      border-width: 5px;
-      border-style: solid;
       border-color: transparent var(--gray-700) transparent transparent;
     }
   `,
@@ -61,19 +49,15 @@ const directionStyles = {
     transform: translateY(-50%);
 
     &::after {
-      content: "";
-      position: absolute;
       top: 50%;
       left: 100%;
       margin-top: -5px;
-      border-width: 5px;
-      border-style: solid;
       border-color: transparent transparent transparent var(--gray-700);
     }
   `,
 };
 
-export const getTooltipStyles = ($direction: TooltipDirection) => {
+export const tooltipStyles = ($direction: TooltipDirection) => {
   return css`
     position: absolute;
     background: var(--gray-700);
@@ -88,6 +72,13 @@ export const getTooltipStyles = ($direction: TooltipDirection) => {
     opacity: 0;
     pointer-events: none;
     ${directionStyles[$direction]}
+
+    &::after {
+      content: "";
+      position: absolute;
+      border-width: 5px;
+      border-style: solid;
+    }
   `;
 };
 
@@ -136,7 +127,6 @@ export const tooltipPlaceholderStyles = ($direction: TooltipDirection) => {
 
 export const tooltipWrapperStyles = css`
   position: relative;
-  // display: inline-flex; // needed to fit around content without being affected by default line height
   line-height: 0px;
   height: fit-content;
   width: fit-content;
