@@ -1,4 +1,4 @@
-import { isFunction, isNull, isNullish } from "@ubloimmo/front-util";
+import { isNull, isNullish } from "@ubloimmo/front-util";
 import { useMemo, useState, useEffect, useRef } from "react";
 import {
   ThemeProvider as StyledThemeProvider,
@@ -6,19 +6,11 @@ import {
 } from "styled-components";
 
 import { GlobalStyle } from "./GlobalStyle";
+import { useLogger } from "../../utils";
 import { applyFavicon, buildTheme } from "../theme";
 
-import { useLogger } from "@utils";
-
-import type {
-  GetThemeOverridesFn,
-  Theme,
-  ThemeOverride,
-  ThemeProviderProps,
-} from "@types";
+import type { Theme, ThemeOverride, ThemeProviderProps } from "@types";
 import type { GenericFn, Nullable } from "@ubloimmo/front-util";
-
-const FAVICON_APPLY_TRY_COUNT_LIMIT = 3;
 
 /**
  * ThemeProvider component to provide `styled-components` theme to the children components.
@@ -35,67 +27,53 @@ export const ThemeProvider = ({
 }: ThemeProviderProps): JSX.Element => {
   const { warn, debug } = useLogger("ThemeProvider");
   const [overrides, setOverrides] = useState<Nullable<ThemeOverride>>(null);
-  const [overridesFetched, setOverridesFetched] = useState(false);
-  const faviconApplied = useRef(false);
-  const faviconApplyTryCount = useRef(0);
+  const overridesFetched = useRef(false);
 
   useEffect(() => {
-    if (isNullish(getOverridesFn) || !isNull(overrides) || overridesFetched)
+    if (
+      isNullish(getOverridesFn) ||
+      !isNull(overrides) ||
+      overridesFetched.current
+    )
       return;
     /**
      * Fetches overrides asynchronously and sets the overrides data.
+     * Sets favicon from overrides if the favicon is not already applied.
      */
     const fetchOverrides = async () => {
+      debug("fetching overrides...");
       try {
         const data = await getOverridesFn();
         setOverrides(data);
+        if (!isNull(data) && !noFavicon) {
+          debug(`Applying favicon ${data ? "with" : "without"} overrides...`);
+          const faviconApplied = applyFavicon(data, faviconLinkSelectors);
+          debug(`Favicon ${faviconApplied ? "applied" : "replacement failed"}`);
+        }
       } catch (e) {
         warn((e as Error).message);
         if (overrides) {
           setOverrides(null);
         }
       }
-      setOverridesFetched(true);
+
+      overridesFetched.current = true;
     };
     fetchOverrides();
-  }, [getOverridesFn, overrides, warn, overridesFetched]);
+  }, [
+    getOverridesFn,
+    overrides,
+    warn,
+    overridesFetched,
+    faviconLinkSelectors,
+    debug,
+    noFavicon,
+  ]);
 
   const theme = useMemo(
     () => buildTheme(overrides, _forceTheme),
     [overrides, _forceTheme]
   );
-
-  const waitingForOverrides = useMemo(
-    () => isFunction<GetThemeOverridesFn>(getOverridesFn) && !overridesFetched,
-    [getOverridesFn, overridesFetched]
-  );
-
-  useEffect(() => {
-    if (noFavicon) return;
-    if (waitingForOverrides) {
-      debug("Waiting for overrides...");
-      return;
-    }
-    if (
-      faviconApplied.current ||
-      faviconApplyTryCount.current >= FAVICON_APPLY_TRY_COUNT_LIMIT
-    ) {
-      return;
-    }
-    debug(`Applying favicon ${overrides ? "with" : "without"} overrides...`);
-    faviconApplied.current = applyFavicon(theme, faviconLinkSelectors);
-    debug(
-      `Favicon ${faviconApplied.current ? "applied" : "replacement failed"}`
-    );
-    faviconApplyTryCount.current++;
-  }, [
-    theme,
-    noFavicon,
-    faviconLinkSelectors,
-    debug,
-    waitingForOverrides,
-    overrides,
-  ]);
 
   return (
     <StyledThemeProvider theme={theme}>
