@@ -129,3 +129,10 @@ export const computeTooltipIntersections =
       setTooltipDirection(getTooltipDirection());
     }
   };
+
+export const generateThresholds = (count: number) => {
+  if (!count) return [];
+  return Array(count + 1)
+    .fill(1)
+    .map((_, i) => i / count);
+};

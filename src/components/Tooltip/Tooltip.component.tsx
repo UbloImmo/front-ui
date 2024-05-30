@@ -17,11 +17,14 @@ import {
 import styled from "styled-components";
 
 import {
-  getTooltipStyles,
   tooltipPlaceholderStyles,
+  tooltipStyles,
   tooltipWrapperStyles,
 } from "./Tooltip.styles";
-import { computeTooltipIntersections } from "./Tooltip.utils";
+import {
+  computeTooltipIntersections,
+  generateThresholds,
+} from "./Tooltip.utils";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
@@ -43,11 +46,8 @@ const defaultTooltipProps: DefaultTooltipProps = {
   intersectionRoot: null,
 };
 
-const THRESHOLD_COUNT = 50;
-const THRESHOLDS = Array(THRESHOLD_COUNT + 1)
-  .fill(1)
-  .map((_, i) => i / THRESHOLD_COUNT);
-
+const THRESHOLD_COUNT = 15;
+const THRESHOLDS = generateThresholds(THRESHOLD_COUNT);
 /**
  * Text popup box that appears when the user hovers over an element
  *
@@ -198,7 +198,7 @@ const ToolipPlaceholder = styled.div<TooltipStyleProps>`
 `;
 
 const TooltipContainer = styled.div<TooltipStyleProps>`
-  ${({ $direction }) => getTooltipStyles($direction)}
+  ${({ $direction }) => tooltipStyles($direction)}
 `;
 
 const TooltipWrapper = styled.div`
