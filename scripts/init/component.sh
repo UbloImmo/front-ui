@@ -159,11 +159,11 @@ touch_if_missing "$component_path/docs/$component_name.mdx" "$component_docs_con
 
 component_docs_props_content="
 import { Meta } from \"@storybook/blocks\";
-import { ComponentInfo, Canvas } from \"@docs/blocks\";
+import { ComponentInfo, ComponentProps } from \"@docs/blocks\";
 import { Content } from \"@docs/containers\";
 import * as ${component_name}Stories from \"../${component_name}.stories.tsx\";
 
-<Meta title=\"Components/${component_name}/Usage\" />
+<Meta title=\"Components/${component_name}/Properties\" />
 
 <ComponentInfo of={${component_name}Stories} />
 
