@@ -233,8 +233,8 @@ const commonButtonStyles = ({
   &:hover {
     transition-duration: 150ms;
 
-    svg,
-    span {
+    & > svg[data-testid="icon"],
+    & > span {
       transition-duration: 150ms;
     }
   }
@@ -271,14 +271,13 @@ const buttonLoadingStyles = ({
   return css`
     position: relative;
 
-    & > span,
-    & > svg[data-testid="icon"] {
-      transition: opacity 150ms ease-in-out 0s;
-      opacity: ${contentOpacity};
-    }
-
     ${loading &&
     css`
+      & > span,
+      & > svg[data-testid="icon"] {
+        transition: opacity 150ms ease-in-out 0s;
+        opacity: ${contentOpacity};
+      }
       cursor: progress;
       background: ${getColor("background", true)};
     `}
