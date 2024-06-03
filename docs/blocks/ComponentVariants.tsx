@@ -42,6 +42,7 @@ type ComponentVariantsConfig<
    */
   variants:
     | TComponentProps[TPropKey][]
+    | readonly TComponentProps[TPropKey][]
     | { value: TComponentProps[TPropKey]; label: string }[];
   /**
    * Dictates the gap between the variants.
