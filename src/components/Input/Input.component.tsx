@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import { EmailInput } from "./EmailInput/EmailInput.component";
-import { inputTypes } from "./Input.types";
+import { inputTypes } from "./Input.data";
 import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput/PasswordInput.component";
 import { PhoneInput } from "./PhoneInput/PhoneInput.component";
@@ -11,14 +11,14 @@ import { useLogger } from "@utils";
 
 import type {
   GenericInputProps,
-  InputProps,
-  InputType,
-  TypedInputComponentMap,
-} from "./Input.types";
+  SpecificInputComponentMap,
+  SpecificInputProps,
+} from "./Input.generic.types";
+import type { InputType } from "./Input.types";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { FC } from "react";
 
-const inputComponentMap: TypedInputComponentMap = {
+const inputComponentMap: SpecificInputComponentMap = {
   text: TextInput,
   number: NumberInput,
   password: PasswordInput,
@@ -40,8 +40,10 @@ const Input = <TType extends InputType = "text">({
 }: GenericInputProps<TType>): Nullable<JSX.Element> => {
   const { warn, error } = useLogger("Input");
 
-  const InputComponent = useMemo<Nullable<FC<InputProps<TType>>>>(() => {
-    const DefaultTextInput = TextInput as FC<InputProps<TType>>;
+  const InputComponent = useMemo<
+    Nullable<FC<SpecificInputProps<TType>>>
+  >(() => {
+    const DefaultTextInput = TextInput as FC<SpecificInputProps<TType>>;
     if (!type) {
       warn("No type provided, defaulting to 'text'");
       return DefaultTextInput;
@@ -58,10 +60,7 @@ const Input = <TType extends InputType = "text">({
     return null;
   }
 
-  return <InputComponent {...props} />;
+  return <InputComponent {...(props as SpecificInputProps<TType>)} />;
 };
-Input.defaultProps = { ...TextInput.defaultProps } as Required<
-  Parameters<typeof Input>[0]
->;
 
 export { Input };
