@@ -13,6 +13,7 @@ import {
   useMergedProps,
   useStatic,
   useTestId,
+  useClassName,
 } from "@utils";
 
 import type { StyleProps } from "@types";
@@ -188,5 +189,48 @@ describe("prop utils", () => {
       expect(result).toBeString();
       expect(result).toBe(`${baseTestId} ${customTestId}`);
     });
+  });
+
+  describe("useClassname", () => {
+    type Hook = typeof useClassName;
+    const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
+      "useClassname",
+      useClassName
+    );
+
+    const validProps = {
+      className: "override",
+    };
+
+    testHook(validProps)("should extract className from props", (result) => {
+      expect(result).toBe(validProps.className);
+    });
+
+    const nullableProps = {
+      className: null,
+    };
+
+    testHook(nullableProps)(
+      "should convert null className to undefined",
+      (result) => {
+        expect(result).toBeUndefined();
+      }
+    );
+
+    testHook()("should return undefined if missing props", (result) => {
+      expect(result).toBeUndefined();
+    });
+
+    const missingProps = {
+      a: "not a className",
+    };
+
+    // @ts-expect-error needs an invalid type in order to test guard
+    testHook(missingProps)(
+      "should return undefined is no className in props",
+      (result) => {
+        expect(result).toBeUndefined();
+      }
+    );
   });
 });

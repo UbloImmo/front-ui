@@ -5,12 +5,18 @@ import {
   objectFromEntries,
   transformObject,
   type GenericFn,
+  type Optional,
 } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
 import { isNonEmptyString } from "./string.utils";
 
-import type { StylePropName, StyleProps, TestIdProps } from "@types";
+import type {
+  StyleOverrideProps,
+  StylePropName,
+  StyleProps,
+  TestIdProps,
+} from "@types";
 
 /**
  * Merges the provided default props with the given props, prioritizing the props values when available.
@@ -139,11 +145,28 @@ export const useStatic = <TData>(data: TData | GenericFn<[], TData>) => {
 export const useTestId = <TProps extends Record<string, unknown>>(
   baseTestId: string,
   props?: TProps & TestIdProps
-) => {
-  return useMemo(() => {
+): string => {
+  return useMemo((): string => {
     if (!props) return baseTestId;
     const { testId } = props;
     if (!isNonEmptyString(testId ?? "")) return baseTestId;
     return `${baseTestId} ${testId}`;
   }, [props, baseTestId]);
+};
+
+/**
+ * Returns the `className` prop from the given `props` object, or `undefined` if it is not provided or is an empty string.
+ *
+ * @template {StyleOverrideProps} TProps - The object containing the `className` prop.
+ *
+ * @param {TProps} props - The object containing the `className` prop.
+ * @return {Optional<string>} The `className` prop, or `undefined` if it is not provided.
+ */
+export const useClassName = <TProps extends StyleOverrideProps>(
+  props?: TProps
+): Optional<string> => {
+  return useMemo((): Optional<string> => {
+    if (!props || !("className" in props)) return undefined;
+    return props?.className ?? undefined;
+  }, [props]);
 };
