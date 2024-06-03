@@ -20,8 +20,8 @@ describe("Input", () => {
       tests: [
         {
           name: "should render",
-          test: ({ queryByTestId }) => {
-            expect(queryByTestId(testId)).toBeDefined();
+          test: async ({ findByTestId }) => {
+            expect(await findByTestId(testId)).not.toBeNull();
           },
         },
       ],
@@ -32,7 +32,7 @@ describe("Input", () => {
     value: "example@mail.fr",
   })("should hold a given value", ({ queryByTestId }) => {
     const input = queryByTestId(testId) as HTMLInputElement;
-    expect(input).toBeDefined();
+    expect(input).not.toBeNull();
     expect(input.value).toBe("example@mail.fr");
   });
 

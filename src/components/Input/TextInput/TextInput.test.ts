@@ -32,7 +32,7 @@ describe("Input", () => {
     value: "test",
   })("should hold a given value", async ({ findByTestId }) => {
     const input = (await findByTestId(testId)) as HTMLInputElement;
-    expect(input).toBeDefined();
+    expect(input).not.toBeNull();
     expect(input.value).toBe("test");
   });
 

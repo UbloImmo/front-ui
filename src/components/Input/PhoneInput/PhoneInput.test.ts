@@ -18,8 +18,8 @@ describe("Input", () => {
       tests: [
         {
           name: "should render",
-          test: ({ queryByTestId }) => {
-            expect(queryByTestId(testId)).toBeDefined();
+          test: async ({ findByTestId }) => {
+            expect(await findByTestId(testId)).not.toBeNull();
           },
         },
       ],
@@ -28,8 +28,8 @@ describe("Input", () => {
 
   testPhoneInput({
     value: "+33612345678",
-  })("should hold a given value", ({ queryByTestId }) => {
-    const input = queryByTestId(testId) as HTMLInputElement;
+  })("should hold a given value", async ({ findByTestId }) => {
+    const input = (await findByTestId(testId)) as HTMLInputElement;
     expect(input).not.toBeNull();
     expect(input.value).toBe("+33 6 12 34 56 78");
   });
@@ -40,9 +40,9 @@ describe("Input", () => {
     onChange,
   })(
     "should trigger onChange",
-    async ({ queryByTestId }, { click, keyboard }) => {
+    async ({ findByTestId }, { click, keyboard }) => {
       onChange.mockReset();
-      const input = queryByTestId(testId) as HTMLInputElement;
+      const input = (await findByTestId(testId)) as HTMLInputElement;
       await click(input);
       await keyboard("+33612345678");
       expect(onChange).toHaveBeenCalled();
@@ -54,9 +54,9 @@ describe("Input", () => {
     value: "",
   })(
     "should update phone value correctly",
-    async ({ queryByTestId }, { click, keyboard }) => {
+    async ({ findByTestId }, { click, keyboard }) => {
       onChange.mockReset();
-      const input = queryByTestId(testId) as HTMLInputElement;
+      const input = (await findByTestId(testId)) as HTMLInputElement;
       await click(input);
       await keyboard("[Backspace][Backspace][Backspace][Backspace]");
       await keyboard("0");
@@ -68,13 +68,13 @@ describe("Input", () => {
     onChange,
   })(
     "should trigger country control on click",
-    async ({ queryByTestId, queryByRole }, { click }) => {
+    async ({ findByTestId, findByRole }, { click }) => {
       onChange.mockReset();
-      const input = queryByTestId(testId) as Nullable<HTMLInputElement>;
+      const input = (await findByTestId(testId)) as HTMLInputElement;
       expect(input).not.toBeNull();
-      const container = queryByTestId("input-phone-container");
+      const container = await findByTestId("input-phone-container");
       expect(container).not.toBeNull();
-      const button = queryByRole("combobox");
+      const button = await findByRole("combobox");
       expect(button).not.toBeNull();
 
       await click(button as HTMLButtonElement);
