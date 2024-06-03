@@ -1,6 +1,8 @@
 export * from "./Input.component";
-export * from "./Input.types";
 export * from "./Input.utils";
+export * from "./Input.data";
+export type * from "./Input.types";
+export type * from "./Input.generic.types";
 
 export * from "./EmailInput";
 export * from "./NumberInput";
