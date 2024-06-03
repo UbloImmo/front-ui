@@ -16,7 +16,7 @@ testChip({ ...Chip.defaultProps })("should render", ({ queryByTestId }) => {
 
 testChip({
   ...Chip.defaultProps,
-  onClick,
+  onDelete: onClick,
 })("should trigger onClick", async ({ queryByTestId }, { click }) => {
   expect(queryByTestId("chip")).not.toBeNull();
   expect(queryByTestId("chip-button")).not.toBeNull();

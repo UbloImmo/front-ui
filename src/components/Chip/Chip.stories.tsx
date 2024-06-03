@@ -137,7 +137,7 @@ export const WithDelete = (props: Partial<ChipProps>) => {
           {...mergedProps}
           key={label}
           label={label}
-          onClick={() => handleDelete(label)}
+          onDelete={() => handleDelete(label)}
         />
       ))}
     </FlexRowLayout>

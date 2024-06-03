@@ -32,11 +32,11 @@ export type ChipProps = {
    */
   iconPlacement?: IconPlacement;
   /**
-   * Callback when clicking on the button of the Chip
+   * Callback when clicking on the remove button
    * @type {VoidFn | null}
    * @default null
    */
-  onClick?: Nullable<VoidFn>;
+  onDelete?: Nullable<VoidFn>;
 };
 
 export type DefaultChipProps = Required<ChipProps>;

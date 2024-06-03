@@ -22,7 +22,7 @@ const defaultChipProps: DefaultChipProps = {
   icon: "Square",
   color: "primary",
   iconPlacement: "left",
-  onClick: null,
+  onDelete: null,
 };
 
 /**
@@ -40,9 +40,9 @@ const Chip = (props: ChipProps): JSX.Element => {
   const { label, icon, color } = mergedProps;
   const { warn } = useLogger("Chip");
 
-  const onClick = useCallback(() => {
-    if (isNull(mergedProps.onClick)) return;
-    mergedProps.onClick();
+  const onDelete = useCallback(() => {
+    if (isNull(mergedProps.onDelete)) return;
+    mergedProps.onDelete();
   }, [mergedProps]);
 
   const iconColorStyle = `${color}-base` as PaletteColor;
@@ -65,7 +65,7 @@ const Chip = (props: ChipProps): JSX.Element => {
         </Text>
       </ChipContainer>
 
-      <ChipButton {...styledProps} onClick={onClick} data-testid="chip-button">
+      <ChipButton {...styledProps} onClick={onDelete} data-testid="chip-button">
         <Icon name="X" size="s-4" color={iconColorStyle} />
       </ChipButton>
     </ChipWrapper>
