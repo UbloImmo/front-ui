@@ -4,14 +4,8 @@ import { Badge } from "./Badge.component";
 
 import { testComponentFactory } from "@/tests";
 
-testComponentFactory("Badge", Badge, {
-  props: Badge.defaultProps,
-  tests: [
-    {
-      name: "should render",
-      test: ({ queryByTestId }) => {
-        expect(queryByTestId("badge")).toBeDefined();
-      },
-    },
-  ],
+const testBadge = testComponentFactory("Badge", Badge);
+
+testBadge({ label: "badge" })("should render", ({ queryByTestId }) => {
+  expect(queryByTestId("badge")).not.toBeNull();
 });

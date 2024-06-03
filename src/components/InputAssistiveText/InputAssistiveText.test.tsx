@@ -5,6 +5,8 @@ import { InputAssistiveTextProps } from "./InputAssistiveText.types";
 
 import { testComponentFactory } from "@/tests";
 
+const testId = "assistive-text";
+
 describe("InputAssistiveText", () => {
   const testInputAssistiveText = testComponentFactory<InputAssistiveTextProps>(
     "InputAssistiveText",
@@ -14,8 +16,8 @@ describe("InputAssistiveText", () => {
       tests: [
         {
           name: "should render",
-          test: ({ queryByTestId }) => {
-            expect(queryByTestId("assistive-text")).toBeDefined();
+          test: async ({ findByTestId }) => {
+            expect(await findByTestId(testId)).not.toBeNull();
           },
         },
       ],
@@ -27,7 +29,7 @@ describe("InputAssistiveText", () => {
   testInputAssistiveText({ assistiveText: null, errorText: null })(
     "should render null and warn",
     ({ queryByTestId }) => {
-      const nullText = queryByTestId("assistive-text");
+      const nullText = queryByTestId(testId);
       expect(nullText).toBeNull();
       expect(global.console.warn).toHaveBeenCalled();
       (global.console.warn as Mock<(_msg: unknown) => void>).mockReset();
@@ -46,9 +48,9 @@ describe("InputAssistiveText", () => {
     assistiveText: null,
     errorText: "this is an error test",
     error: true,
-  })("should render the error text correctly", ({ queryByTestId }) => {
-    const errorText = queryByTestId("assistive-text") as HTMLSpanElement;
-    expect(errorText).toBeDefined();
+  })("should render the error text correctly", async ({ findByTestId }) => {
+    const errorText = (await findByTestId("assistive-text")) as HTMLSpanElement;
+    expect(errorText).not.toBeNull();
     expect(errorText.textContent).toBe("this is an error test");
   });
 });

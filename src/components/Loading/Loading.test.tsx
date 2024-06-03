@@ -12,8 +12,8 @@ const testLoading = testComponentFactory<LoadingProps>("Loading", Loading, {
   tests: [
     {
       name: "should render",
-      test: ({ queryByTestId }) => {
-        expect(queryByTestId(testId)).toBeDefined();
+      test: async ({ findByTestId }) => {
+        expect(await findByTestId(testId)).not.toBeNull();
       },
     },
   ],
@@ -31,13 +31,13 @@ testLoading({
   (global.console.warn as Mock<(_msg: unknown) => void>).mockReset();
 });
 
-testLoading({})("should render without props", ({ queryByTestId }) => {
-  expect(queryByTestId(testId)).not.toBeNull();
+testLoading({})("should render without props", async ({ findByTestId }) => {
+  expect(await findByTestId(testId)).not.toBeNull();
 });
 
 testLoading({ animation: "Ripple" })(
   "should render another animation",
-  ({ queryByTestId }) => {
-    expect(queryByTestId(testId)).not.toBeNull();
+  async ({ findByTestId }) => {
+    expect(await findByTestId(testId)).not.toBeNull();
   }
 );
