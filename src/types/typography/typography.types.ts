@@ -1,6 +1,6 @@
 import { texts } from "@ubloimmo/front-tokens";
 
-import type { PaletteColor } from "@types";
+import type { StyleOverrideProps, PaletteColor } from "@types";
 import type { ReactNode } from "react";
 
 export type TypographyTokens = typeof texts;
@@ -89,7 +89,7 @@ export type TypographyProps = {
    * @default undefined
    */
   children?: ReactNode;
-};
+} & StyleOverrideProps;
 
 export type TextProps = TypographyProps & {
   /**
