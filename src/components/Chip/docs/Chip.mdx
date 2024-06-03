@@ -32,7 +32,11 @@ By default, the icon in a `Chip` is positioned on the left of its label. You can
 
 ### Delete button
 
-To add interactivity on the `Chip` and use it as a filter or selection tag, you can provide your desired callback function with the `onClick` property. This callback function will be triggered when the button on the right of the `Chip` is clicked.
-This allows you to implement your trigger action to remove a filter or an option.
+To use the interactivity of the `Chip`, you can provide your desired callback function in the optional `onDelete` property. This will be triggered when the button on the right of the `Chip` is clicked.
+This allows you to implement your trigger action to remove the selected `Chip`.
+
+> Give it a try and delete those chips below !
+
+<Canvas of={ChipStories.WithDelete} />
 
 </Content>
