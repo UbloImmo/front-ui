@@ -10,7 +10,7 @@ export const componentCardStyle = ({
   return css`
     --cell-size: var(--cell-size-${$size});
     padding: var(--s-2);
-    background: var(--gray-50);
+    background: var(--primary-light-30);
     border-radius: var(--s-3);
     display: flex;
     flex-direction: column;
@@ -30,12 +30,12 @@ export const componentCardStyle = ({
 
     &:hover {
       border-color: var(--primary-medium-40);
-      background: var(--primary-light-40);
+      background: var(--primary-light-60);
       transition-duration: 150ms;
       box-shadow: var(--shadow-card-elevation-medium);
 
       [data-testid="component-card-component-container"] {
-        background: var(--gray-50);
+        background: var(--gray-50-50);
         border-color: var(--primary-light);
 
         [data-testid="component-card-scale-container"] {
