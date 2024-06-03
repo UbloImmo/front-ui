@@ -1,15 +1,15 @@
 import { describe, expect, mock } from "bun:test";
 
-import { testComponentFactory } from "@/tests";
+import { NumberInput } from "./NumberInput.component";
 
-import { NumberInput } from ".";
+import { testComponentFactory } from "@/tests";
 
 import type { NumberInputProps } from "./NumberInput.types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const testId = "input-number";
 
-describe("Input", () => {
+describe("Input", async () => {
   const testNumberInput = testComponentFactory<NumberInputProps>(
     "NumberInput",
     NumberInput,
@@ -18,8 +18,8 @@ describe("Input", () => {
       tests: [
         {
           name: "should render",
-          test: ({ queryByTestId }) => {
-            expect(queryByTestId(testId)).toBeDefined();
+          test: async ({ findByTestId }) => {
+            expect(await findByTestId(testId)).not.toBeNull();
           },
         },
       ],

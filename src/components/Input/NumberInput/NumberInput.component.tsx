@@ -3,17 +3,16 @@ import { useCallback, useMemo, useRef } from "react";
 
 import { StyledNumberInput } from "./NumberInput.styles";
 import {
-  useInputOnChange,
-  useInputValue,
-  useInputStyles,
-  type NativeInputValue,
-} from "..";
-import {
   StyledInputContainer,
   defaultCommonInputProps,
   StyledInputControlGroup,
   StyledInputGroupedControl,
 } from "../Input.common";
+import {
+  useInputOnChange,
+  useInputValue,
+  useInputStyles,
+} from "../Input.utils";
 
 import { useMergedProps } from "@utils";
 
@@ -23,6 +22,7 @@ import type {
   DefaultNumberInputProps,
   NumberInputProps,
 } from "./NumberInput.types";
+import type { NativeInputValue } from "../Input.utils";
 
 const defaultNumberInputProps: DefaultNumberInputProps = {
   ...defaultCommonInputProps,
