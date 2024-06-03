@@ -15,7 +15,7 @@ export const markdownOverrides = {
   h1: specificHeading("h1", "bold", "gray-900"),
   h2: specificHeading("h2", "bold", "gray-900"),
   h3: specificHeading("h3", "medium", "gray-900"),
-  h4: specificHeading("h4", "medium", "gray-800"),
+  h4: specificHeading("h4", "medium", "gray-900"),
   h5: specificHeading("h4", "medium", "gray-700"),
   h6: specificHeading("h4", "regular", "gray-700"),
   span: textOfSize("m", "regular", "gray-700"),
