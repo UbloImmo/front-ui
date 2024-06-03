@@ -27,7 +27,7 @@ const defaultStateIndicatorProps: DefaultStateIndicatorProps = {
  * Essentially a blown up `Badge` that fills its container
  * and has an extra `white` color.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {TestIdProps & StateIndicatorProps} props - the state indicator props
  * @returns {JSX.Element} - the state indicator markup
@@ -53,7 +53,7 @@ const StateIndicator = (
 
   const TextProps = useMemo<TextProps>(() => {
     return {
-      size: "s",
+      size: "m",
       weight: "medium",
       color: colors.label,
       ellipsis: true,
