@@ -1,0 +1,68 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as FieldStories from "../Field.stories.tsx";
+
+<Meta title="Components/Field/Usage" />
+
+<ComponentInfo of={FieldStories} />
+
+<Content>
+
+## Usage
+
+Render an [input](?path=/docs/components-input-usage--docs), its [label](?path=/docs/components-inputlabel-usage--docs) and [assistive / error text](?path=/docs/components-inputassistivetext-usage--docs) from a single component.
+
+### Input type
+
+By providing a `type` property, a `Field` can render any supported Input and will inherit its specific properties. Defaults to `text` if not provided.
+
+<Canvas of={FieldStories.Types} />
+
+### Common input properties
+
+All common and specific [input properties](?path=/docs/components-input-properties--docs) (e.g. `required`, `disabled`, etc...) are passed directly to the underlying input.
+
+> See [`Input`](?path=/docs/components-input-usage--docs)'s documentation for further details.
+
+#### Required
+
+<Canvas of={FieldStories.Required} />
+
+#### Disabled
+
+<Canvas of={FieldStories.Disabled} />
+
+### Accessibility
+
+#### Label
+
+Fiels uses an [`InputLabel`](?path=/docs/components-inputlabel-usage--docs) under the hood.
+As such, it inherits both its `label` and `required` properties and passes them along.
+
+> Clicking on a field's label will focus its input.
+
+<Canvas of={FieldStories.Labels} />
+
+#### Assistive text
+
+You might have noticed that a Field's default assistive text is an obvious placeholder.
+It is meant to be *replaced* with an indication to our users about how / why they need to fill the field.
+This could be an example, a reason, an explation or any useful text.
+
+> If you really don't want to display an assistive text under a Field's input, set its `assistiveText` property to `null`.
+
+<Canvas of={FieldStories.AssistiveTexts} />
+
+#### Error state
+
+If provided with an `error` property, a `Field` will pass it on to its underlying `Input` and display its `errorText` if provided.
+
+> Only the input's error state will be shown if no `errorText` is provided.
+
+<Canvas of={FieldStories.ErrorTexts} />
+
+
+</Content>
+

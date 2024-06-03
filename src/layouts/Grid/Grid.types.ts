@@ -1,4 +1,4 @@
-import type { CssLength } from "@types";
+import type { CssLength, StyleOverrideProps } from "@types";
 import type { Enum } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -74,6 +74,6 @@ export type GridLayoutProps = {
    * @type {ReactNode}
    */
   children?: ReactNode;
-};
+} & StyleOverrideProps;
 
 export type GridLayoutDefaultProps = Required<GridLayoutProps>;

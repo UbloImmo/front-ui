@@ -109,6 +109,7 @@ export const sanitizeTypographyProps = (
     children: props.children ?? null,
     important: props.important ?? false,
     ellipsis: props.ellipsis ?? false,
+    className: null,
   };
 };
 
@@ -186,4 +187,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   important: false,
   ellipsis: false,
   children: null,
+  className: null,
 } as const;

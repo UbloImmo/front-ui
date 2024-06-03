@@ -14,9 +14,10 @@ import {
   useInputValue,
 } from "../Input.utils";
 
-import { useMergedProps } from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
 import type { DefaultInputProps, InputProps } from "../Input.types";
+import type { TestIdProps } from "@types";
 
 const defaultEmailInputProps: DefaultInputProps<"email"> = {
   ...defaultCommonInputProps,
@@ -31,7 +32,7 @@ const defaultEmailInputProps: DefaultInputProps<"email"> = {
  * @param {InputProps<"email">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
-const EmailInput = (props: InputProps<"email">): JSX.Element => {
+const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultEmailInputProps, props);
   const onChange = useInputOnChange<"email">(
     (nativeValue) => isString(nativeValue),
@@ -41,10 +42,12 @@ const EmailInput = (props: InputProps<"email">): JSX.Element => {
   );
   const value = useInputValue(mergedProps.value);
   const inputStyles = useInputStyles(mergedProps);
+  const testId = useTestId("input-email", props);
+
   return (
-    <StyledInputContainer {...inputStyles}>
+    <StyledInputContainer {...inputStyles} data-testid="input-email-container">
       <StyledInput
-        data-testid="input-email"
+        data-testid={testId}
         value={value}
         type="email"
         onChange={onChange}

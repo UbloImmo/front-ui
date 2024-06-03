@@ -1,5 +1,5 @@
 import type { GridAlignment } from "../Grid/Grid.types";
-import type { StyleProps } from "@types";
+import type { StyleOverrideProps, StyleProps } from "@types";
 import type { Optional } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -83,7 +83,7 @@ type GridItemCommonProps = {
    * @type {GridAlignment}
    */
   align?: GridAlignment;
-};
+} & StyleOverrideProps;
 
 export interface GridItemProps
   extends GridItemCommonProps,

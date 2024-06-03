@@ -1,15 +1,15 @@
 import { describe, expect, mock } from "bun:test";
 
-import { testComponentFactory } from "@/tests";
+import { NumberInput } from "./NumberInput.component";
 
-import { NumberInput } from ".";
+import { testComponentFactory } from "@/tests";
 
 import type { NumberInputProps } from "./NumberInput.types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const testId = "input-number";
 
-describe("Input", () => {
+describe("Input", async () => {
   const testNumberInput = testComponentFactory<NumberInputProps>(
     "NumberInput",
     NumberInput,
@@ -18,8 +18,8 @@ describe("Input", () => {
       tests: [
         {
           name: "should render",
-          test: ({ queryByTestId }) => {
-            expect(queryByTestId(testId)).toBeDefined();
+          test: async ({ findByTestId }) => {
+            expect(await findByTestId(testId)).not.toBeNull();
           },
         },
       ],
@@ -30,9 +30,9 @@ describe("Input", () => {
 
   testNumberInput({
     value: 15,
-  })("should hold a given value", ({ queryByTestId }) => {
-    const input = queryByTestId(testId) as HTMLInputElement;
-    expect(input).toBeDefined();
+  })("should hold a given value", async ({ findByTestId }) => {
+    const input = (await findByTestId(testId)) as HTMLInputElement;
+    expect(input).not.toBeNull();
     expect(input.value).toBe("15");
   });
 
@@ -40,8 +40,8 @@ describe("Input", () => {
     onChange,
   })(
     "should trigger onChange",
-    async ({ queryByTestId }, { click, keyboard }) => {
-      const input = queryByTestId(testId) as HTMLInputElement;
+    async ({ findByTestId }, { click, keyboard }) => {
+      const input = (await findByTestId(testId)) as HTMLInputElement;
       await click(input);
       await keyboard("15");
       expect(onChange).toHaveBeenCalled();
@@ -51,9 +51,11 @@ describe("Input", () => {
   testNumberInput({
     onChange,
     value: 15,
-  })("should increment", async ({ queryByTestId }, { click }) => {
-    const input = queryByTestId(testId) as HTMLInputElement;
-    const button = queryByTestId("input-control-increment") as HTMLDivElement;
+  })("should increment", async ({ findByTestId }, { click }) => {
+    const input = (await findByTestId(testId)) as HTMLInputElement;
+    const button = (await findByTestId(
+      "input-control-increment"
+    )) as HTMLDivElement;
     await click(button);
     expect(input.value).toBe("16");
   });
@@ -61,9 +63,11 @@ describe("Input", () => {
   testNumberInput({
     onChange,
     value: 15,
-  })("should decrement", async ({ queryByTestId }, { click }) => {
-    const input = queryByTestId(testId) as HTMLInputElement;
-    const button = queryByTestId("input-control-decrement") as HTMLDivElement;
+  })("should decrement", async ({ findByTestId }, { click }) => {
+    const input = (await findByTestId(testId)) as HTMLInputElement;
+    const button = (await findByTestId(
+      "input-control-decrement"
+    )) as HTMLDivElement;
     await click(button);
     expect(input.value).toBe("14");
   });

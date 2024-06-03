@@ -3,19 +3,18 @@ import { useCallback, useMemo, useRef } from "react";
 
 import { StyledNumberInput } from "./NumberInput.styles";
 import {
-  useInputOnChange,
-  useInputValue,
-  useInputStyles,
-  type NativeInputValue,
-} from "..";
-import {
   StyledInputContainer,
   defaultCommonInputProps,
   StyledInputControlGroup,
   StyledInputGroupedControl,
 } from "../Input.common";
+import {
+  useInputOnChange,
+  useInputValue,
+  useInputStyles,
+} from "../Input.utils";
 
-import { useMergedProps } from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
 import { Icon } from "@components";
 
@@ -23,6 +22,8 @@ import type {
   DefaultNumberInputProps,
   NumberInputProps,
 } from "./NumberInput.types";
+import type { NativeInputValue } from "../Input.utils";
+import type { TestIdProps } from "@types";
 
 const defaultNumberInputProps: DefaultNumberInputProps = {
   ...defaultCommonInputProps,
@@ -45,12 +46,14 @@ const transformNumber = (nativeValue: NativeInputValue): Nullable<number> => {
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
  */
-const NumberInput = (props: NumberInputProps): JSX.Element => {
+const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultNumberInputProps, props);
 
   const inputRef = useRef<Nullable<HTMLInputElement>>(null);
 
   const value = useInputValue(mergedProps.value);
+
+  const testId = useTestId("input-number", props);
 
   const onChange = useInputOnChange<"number">(
     (_) => true,
@@ -101,9 +104,9 @@ const NumberInput = (props: NumberInputProps): JSX.Element => {
   }, [mergedProps.step]);
 
   return (
-    <StyledInputContainer {...inputStyles}>
+    <StyledInputContainer {...inputStyles} data-testid="input-number-container">
       <StyledNumberInput
-        data-testid="input-number"
+        data-testid={testId}
         value={value}
         onChange={onChange}
         type="number"

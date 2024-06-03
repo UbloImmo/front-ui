@@ -160,6 +160,7 @@ describe("typography", () => {
           weight: "medium",
           important: false,
           children: null,
+          className: null,
           ellipsis: false,
         };
         expect(sanitizeTypographyProps(defaultProps, validProps)).toEqual(

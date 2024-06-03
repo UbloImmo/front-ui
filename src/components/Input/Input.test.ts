@@ -1,10 +1,12 @@
 import { describe, expect, mock } from "bun:test";
 
 import { Input } from "./Input.component";
+import { inputTypes } from "./Input.data";
 
 import { testComponentFactory } from "@/tests";
 
-import type { GenericInputProps, InputType } from "./Input.types";
+import type { GenericInputProps } from "./Input.generic.types";
+import type { InputType } from "./Input.types";
 
 describe("Input", () => {
   const testGenericInput = testComponentFactory<GenericInputProps<InputType>>(
@@ -15,41 +17,20 @@ describe("Input", () => {
   // @ts-ignore needed to check unintended behavior with no props
   testGenericInput({})(
     "should render a text input when no props",
-    ({ queryByTestId }) => {
-      expect(queryByTestId("input-text")).toBeDefined();
+    async ({ findByTestId }) => {
+      const input = await findByTestId("input-text");
+      expect(input).not.toBeNull();
     }
   );
-  testGenericInput({ type: "text" })(
-    "should render a text input",
-    ({ queryByTestId }) => {
-      expect(queryByTestId("input-text")).toBeDefined();
-    }
-  );
-  testGenericInput({ type: "email" })(
-    "should render an email input",
-    ({ queryByTestId }) => {
-      expect(queryByTestId("input-email")).toBeDefined();
-    }
-  );
-  testGenericInput({ type: "password" })(
-    "should render a password input",
-    ({ queryByTestId }) => {
-      expect(queryByTestId("input-password")).toBeDefined();
-    }
-  );
-  testGenericInput({ type: "number" })(
-    "should render a number input",
-    ({ queryByTestId }) => {
-      expect(queryByTestId("input-number")).toBeDefined();
-    }
-  );
-
-  testGenericInput({ type: "phone" })(
-    "should render a phone input",
-    ({ queryByTestId }) => {
-      expect(queryByTestId("input-phone")).toBeDefined();
-    }
-  );
+  inputTypes.forEach((type) => {
+    testGenericInput({ type })(
+      `should render a ${type} input`,
+      async ({ findByTestId }) => {
+        const input = await findByTestId(`input-${type}`);
+        expect(input).not.toBeNull();
+      }
+    );
+  });
 
   global.console.warn = mock(() => {});
   global.console.error = mock(() => {});
@@ -58,8 +39,9 @@ describe("Input", () => {
   // @ts-ignore needed to check unintended behavior with wrong props
   testGenericInput({ type: "UNSUPPORTED" })(
     "should warn and render a text input",
-    ({ queryByTestId }) => {
-      expect(queryByTestId("input-text")).toBeDefined();
+    async ({ findByTestId }) => {
+      const input = await findByTestId("input-text");
+      expect(input).not.toBeNull();
       expect(global.console.warn).toHaveBeenCalled();
     }
   );

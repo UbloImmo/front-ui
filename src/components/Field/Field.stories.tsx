@@ -1,0 +1,198 @@
+import { fn } from "@storybook/test";
+
+import { Field } from "./Field.component";
+import { inputTypes } from "../Input/Input.data";
+
+import { ComponentVariants } from "@docs/blocks";
+import { componentSourceFactory } from "@docs/docs.utils";
+import { useMergedProps } from "@utils";
+
+import type { FieldProps } from "./Field.types";
+import type { InputType } from "../Input";
+import type { Meta, StoryObj } from "@storybook/react";
+
+const componentSource = componentSourceFactory<FieldProps<InputType>>(
+  "Field",
+  {
+    type: "text",
+    label: "[Field label]",
+  },
+  Field.defaultProps
+);
+
+const meta = {
+  component: Field,
+  title: "Components/Field/Stories",
+  args: {
+    ...Field.defaultProps,
+    onChange: fn() as FieldProps<"text">["onChange"],
+    label: "Some field",
+    placeholder: "Some field's placeholder",
+    assistiveText: "Some field's assistive text",
+    errorText: "Some field's error text",
+  },
+  argTypes: {
+    type: {
+      options: inputTypes,
+      table: {
+        defaultValue: {
+          summary: "text",
+        },
+      },
+    },
+    assistiveText: {
+      type: "string",
+      table: {
+        defaultValue: {
+          summary: "Some field's assistive text",
+        },
+      },
+    },
+    errorText: {
+      type: "string",
+      table: {
+        defaultValue: {
+          summary: "Some field's error text",
+        },
+      },
+    },
+    error: {
+      type: "boolean",
+    },
+    label: {
+      type: "string",
+    },
+    placeholder: {
+      type: "string",
+      table: {
+        defaultValue: {
+          summary: "Some field's placeholder",
+        },
+      },
+    },
+  },
+  parameters: {
+    docs: componentSource(),
+  },
+} satisfies Meta<typeof Field>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default = {} as Story;
+
+export const Types = (props: FieldProps<InputType>) => {
+  const defaults = useMergedProps(
+    Field.defaultProps as Required<FieldProps<InputType>>,
+    props
+  );
+  return (
+    <ComponentVariants
+      variants={inputTypes}
+      for="type"
+      of={Field}
+      defaults={defaults}
+      propLabels
+      scaling={1}
+      columns={2}
+    />
+  );
+};
+
+const labels = ["First name", "Last name"];
+
+export const Labels = (props: FieldProps<InputType>) => {
+  const defaults = useMergedProps(
+    Field.defaultProps as Required<FieldProps<InputType>>,
+    props
+  );
+  return (
+    <ComponentVariants
+      variants={labels}
+      for="label"
+      of={Field}
+      defaults={defaults}
+      propLabels
+      scaling={1}
+      columns={2}
+    />
+  );
+};
+
+const bools = [false, true];
+
+export const Required = (props: FieldProps<InputType>) => {
+  const defaults = useMergedProps(
+    Field.defaultProps as Required<FieldProps<InputType>>,
+    props
+  );
+  return (
+    <ComponentVariants
+      variants={bools}
+      for="required"
+      of={Field}
+      defaults={defaults}
+      propLabels
+      scaling={1}
+      columns={2}
+    />
+  );
+};
+
+export const Disabled = (props: FieldProps<InputType>) => {
+  const defaults = useMergedProps(
+    Field.defaultProps as Required<FieldProps<InputType>>,
+    props
+  );
+  return (
+    <ComponentVariants
+      variants={bools}
+      for="disabled"
+      of={Field}
+      defaults={defaults}
+      propLabels
+      scaling={1}
+      columns={2}
+    />
+  );
+};
+
+const assistiveTexts = ["The CVC can be found on the back of your card", null];
+
+export const AssistiveTexts = (props: FieldProps<InputType>) => {
+  const defaults = useMergedProps(
+    Field.defaultProps as Required<FieldProps<InputType>>,
+    props
+  );
+  return (
+    <ComponentVariants
+      variants={assistiveTexts}
+      for="assistiveText"
+      of={Field}
+      defaults={defaults}
+      propLabels
+      scaling={1}
+      columns={2}
+    />
+  );
+};
+
+const errorTexts = ["This field is required", null];
+
+export const ErrorTexts = (props: FieldProps<InputType>) => {
+  const defaults = useMergedProps(
+    Field.defaultProps as Required<FieldProps<InputType>>,
+    { ...props, error: true, assistiveText: null }
+  );
+  return (
+    <ComponentVariants
+      variants={errorTexts}
+      for="errorText"
+      of={Field}
+      defaults={defaults}
+      propLabels
+      scaling={1}
+      columns={2}
+    />
+  );
+};

@@ -15,3 +15,4 @@ export * from "./StaticIcon";
 export * from "./Text";
 export * from "./Hypertext";
 export * from "./Tooltip";
+export * from "./Field";

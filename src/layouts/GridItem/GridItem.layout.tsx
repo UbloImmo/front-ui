@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { gridItemStyles } from "./GridItem.styles";
 import { useGridItemPosition } from "./GridItem.utils";
 
-import { useStyleProps, useTestId } from "@utils";
+import { useClassName, useStyleProps, useTestId } from "@utils";
 
 import type {
   GridItemDefaultProps,
@@ -19,9 +19,10 @@ const defaultGridItemProps: GridItemDefaultProps = {
   columnEnd: "auto",
   row: "auto / auto",
   column: "auto / auto",
-  children: null,
   align: "start",
   justify: "start",
+  children: null,
+  className: null,
 };
 
 /**
@@ -43,11 +44,13 @@ const GridItem = (props: GridItemProps & TestIdProps): JSX.Element => {
   const testId = useTestId("grid-item", props as TestIdProps);
   const position = useGridItemPosition(defaultGridItemProps, props);
   const styleProps = useStyleProps(position);
+  const className = useClassName(props);
 
   return (
     <GridItemContainer
       {...styleProps}
       data-testid={testId}
+      className={className}
       data-layout="grid-item"
       data-column-start={position.columnStart}
       data-column-end={position.columnEnd}

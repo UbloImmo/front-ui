@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
 
-import { useStyleProps, useTestId } from "@utils";
+import { useClassName, useStyleProps, useTestId } from "@utils";
 
 import type { HeadingProps, StyleProps, TestIdProps } from "@types";
 
@@ -14,7 +14,7 @@ const defaultHeadingProps: Required<HeadingProps> = {
 /**
  * Customizable, accessible heading.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {WithTestId<HeadingProps>} props - Heading component props
  * @return {JSX.Element} - The styled heading component
@@ -22,12 +22,14 @@ const defaultHeadingProps: Required<HeadingProps> = {
 const Heading = (props: HeadingProps & TestIdProps) => {
   const innerProps = useStyleProps(props);
   const testId = useTestId("heading", props);
+  const className = useClassName(props);
 
   return (
     <HeadingInner
       as={props.size ?? defaultHeadingProps.size}
       {...innerProps}
       data-testid={testId}
+      className={className}
     >
       {props.children}
     </HeadingInner>

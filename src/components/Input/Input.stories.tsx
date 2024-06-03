@@ -1,18 +1,25 @@
 import { fn } from "@storybook/test";
 
 import { Input } from "./Input.component";
-import { GenericInputProps, InputProps, InputType } from "./Input.types";
+import { inputTypes } from "./Input.data";
 import { TextInput } from "../Input/TextInput/TextInput.component";
 
 import { FlexRowLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
 import { useMergedProps } from "@utils";
 
+import type { GenericInputProps } from "./Input.generic.types";
+import type { InputProps, InputType } from "./Input.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
   title: "Components/Input/Stories",
   component: Input,
+  argTypes: {
+    type: {
+      options: inputTypes,
+    },
+  },
   decorators: [
     (Story) => (
       <FlexRowLayout gap="s-4" align="center" justify="start" wrap>

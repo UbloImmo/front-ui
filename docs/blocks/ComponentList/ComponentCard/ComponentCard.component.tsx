@@ -65,7 +65,7 @@ export const ComponentCard = <
   });
 
   const componentProps = useMemo(() => {
-    if (!hasDefaultProps(Component)) return null;
+    if (!hasDefaultProps(Component)) return {};
 
     const { defaultProps } = Component;
     const additionalProps =

@@ -1,4 +1,6 @@
-import { Nullable } from "@ubloimmo/front-util";
+import type { StyleOverrideProps } from "@types";
+import type { Nullable } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 export type InputLabelProps = {
   /**
@@ -14,6 +16,12 @@ export type InputLabelProps = {
    * @type {boolean}
    */
   required?: boolean;
-};
+  /**
+   * The child inputs to be rendered inside the label.
+   *
+   * @default null
+   */
+  children?: ReactNode;
+} & StyleOverrideProps;
 
 export type DefaultInputLabelProps = Required<InputLabelProps>;

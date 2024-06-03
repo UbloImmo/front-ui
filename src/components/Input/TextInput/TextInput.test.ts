@@ -1,10 +1,9 @@
 import { describe, expect, mock } from "bun:test";
 
-import { InputProps } from "..";
+import { TextInput } from "./TextInput.component";
+import { InputProps } from "../Input.types";
 
 import { testComponentFactory } from "@/tests";
-
-import { TextInput } from ".";
 
 import type { Nullable } from "@ubloimmo/front-util";
 
@@ -19,8 +18,8 @@ describe("Input", () => {
       tests: [
         {
           name: "should render",
-          test: ({ queryByTestId }) => {
-            expect(queryByTestId(testId)).toBeDefined();
+          test: async ({ findByTestId }) => {
+            expect(await findByTestId(testId)).not.toBeNull();
           },
         },
       ],
@@ -31,9 +30,9 @@ describe("Input", () => {
 
   testTextInput({
     value: "test",
-  })("should hold a given value", ({ queryByTestId }) => {
-    const input = queryByTestId(testId) as HTMLInputElement;
-    expect(input).toBeDefined();
+  })("should hold a given value", async ({ findByTestId }) => {
+    const input = (await findByTestId(testId)) as HTMLInputElement;
+    expect(input).not.toBeNull();
     expect(input.value).toBe("test");
   });
 
@@ -41,8 +40,8 @@ describe("Input", () => {
     onChange,
   })(
     "should trigger onChange",
-    async ({ queryByTestId }, { click, keyboard }) => {
-      const input = queryByTestId(testId) as HTMLInputElement;
+    async ({ findByTestId }, { click, keyboard }) => {
+      const input = (await findByTestId(testId)) as HTMLInputElement;
       await click(input);
       await keyboard("test");
       expect(onChange).toHaveBeenCalled();

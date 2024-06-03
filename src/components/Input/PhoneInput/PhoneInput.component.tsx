@@ -24,6 +24,8 @@ import { useInputStyles } from "../Input.utils";
 
 import { useMergedProps, useTestId } from "@utils";
 
+import type { TestIdProps } from "@types";
+
 const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
   ...defaultCommonInputProps,
   value: null,
@@ -39,7 +41,7 @@ const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
  * @param {InputProps<"phone">} props - The input props.
  * @return {JSX.Element} The rendered phone input component.
  */
-const PhoneInput = (props: InputProps<"phone">): JSX.Element => {
+const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultPhoneInputProps, props);
   const testId = useTestId("input-phone", props);
 

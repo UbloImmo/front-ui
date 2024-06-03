@@ -64,9 +64,6 @@ export const extractComponentsFromIndex = <TIndex extends AnyIndex>(
     if (!isComponentName(name)) return false;
     // only keep functions
     if (!isFunction<ComponentMask<TIndex>>(maybeComponent)) return false;
-    // only keep components that expose their default props
-    if (!("defaultProps" in maybeComponent)) return false;
-    if (!isObject(maybeComponent.defaultProps)) return false;
     return true;
   });
 

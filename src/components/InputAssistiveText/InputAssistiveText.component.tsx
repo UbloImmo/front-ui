@@ -1,4 +1,4 @@
-import { Nullable } from "@ubloimmo/front-util";
+import { Nullable, isNull } from "@ubloimmo/front-util";
 import styled from "styled-components";
 
 import {
@@ -33,7 +33,10 @@ const InputAssistiveText = (
   const { assistiveText, errorText, error } = mergedProps;
   const { warn } = useLogger("InputAssistiveText");
 
-  if (!isNonEmptyString(assistiveText) && !isNonEmptyString(errorText)) {
+  if (
+    (isNull(assistiveText) || !isNonEmptyString(assistiveText)) &&
+    (isNull(errorText) || !isNonEmptyString(errorText))
+  ) {
     warn("InputAssistiveText must have a defined assistiveText or errorText.");
     return null;
   }

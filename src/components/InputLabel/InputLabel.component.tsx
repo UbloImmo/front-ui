@@ -1,27 +1,42 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { DefaultInputLabelProps, InputLabelProps } from "./InputLabel.types";
-import { isNonEmptyString, useLogger, useMergedProps } from "../../utils";
+import {
+  isNonEmptyString,
+  useClassName,
+  useLogger,
+  useMergedProps,
+  useTestId,
+} from "../../utils";
 import { Text } from "../Text/Text.component";
+
+import type {
+  DefaultInputLabelProps,
+  InputLabelProps,
+} from "./InputLabel.types";
+import type { StyleProps, TestIdProps } from "@types";
 
 const defaultInputLabelProps: DefaultInputLabelProps = {
   label: "[Input label]",
   required: false,
+  children: null,
+  className: null,
 };
 
 /**
  * Renders an input label component, to be used in association with the Input component.
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
  */
-const InputLabel = (props: InputLabelProps): JSX.Element => {
+const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("InputLabel");
   const mergedProps = useMergedProps<DefaultInputLabelProps, InputLabelProps>(
     defaultInputLabelProps,
     props
   );
+  const testId = useTestId("input-label", props);
+  const className = useClassName(mergedProps);
   const { label, required } = mergedProps;
 
   if (!isNonEmptyString(label)) {
@@ -29,15 +44,20 @@ const InputLabel = (props: InputLabelProps): JSX.Element => {
   }
 
   return (
-    <InnerInputLabel data-testid="input-label" {...mergedProps}>
-      <Text color="gray-600" size="m">
+    <InnerInputLabel
+      className={className}
+      data-testid={testId}
+      data-required={String(required)}
+    >
+      <InputLabelText
+        color="gray-600"
+        size="m"
+        testId="input-label-text"
+        $required={required}
+      >
         {label}
-      </Text>
-      {required && (
-        <Text color="warning-base" size="m" weight="medium">
-          *
-        </Text>
-      )}
+      </InputLabelText>
+      {mergedProps.children}
     </InnerInputLabel>
   );
 };
@@ -45,7 +65,28 @@ const InputLabel = (props: InputLabelProps): JSX.Element => {
 InputLabel.defaultProps = defaultInputLabelProps;
 export { InputLabel };
 
-const InnerInputLabel = styled.label<DefaultInputLabelProps>`
+const InputLabelText = styled(Text)<StyleProps<InputLabelProps>>`
+  ${(props) =>
+    props.$required &&
+    css`
+      &::after {
+        content: " *";
+        color: var(--warning-base);
+      }
+    `}
+`;
+
+const InnerInputLabel = styled.label`
   display: flex;
-  gap: var(--s-05);
+  flex-direction: column;
+  gap: var(--s-2);
+
+  & > span[data-testid="text input-label-text"] {
+    transition: color 150ms ease-out 0s;
+  }
+
+  &:has(input:focus, textarea:focus, select:focus)
+    > span[data-testid="text input-label-text"] {
+    color: var(--gray-800);
+  }
 `;
