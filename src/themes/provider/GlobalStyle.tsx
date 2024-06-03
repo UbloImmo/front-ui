@@ -33,6 +33,8 @@ type GlobalStyleProps = {
   theme: Theme;
 };
 
+const GLOBAL_STYLE_RENDER_WARN_THRESHOLD = 3;
+
 /**
  * Generates CSS variables for the given palette color and its shades.
  *
@@ -237,7 +239,7 @@ const useGlobalStyle = (theme: Theme): GlobaStyleInnerProps => {
   );
 
   renderCount.current++;
-  if (renderCount.current > 1) {
+  if (renderCount.current > GLOBAL_STYLE_RENDER_WARN_THRESHOLD) {
     warn(`Excessive renders detected! (Rendered ${renderCount.current} times)`);
   }
 
