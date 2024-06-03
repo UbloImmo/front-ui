@@ -5,6 +5,8 @@ import { InputLabelProps } from "./InputLabel.types";
 
 import { testComponentFactory } from "@/tests";
 
+const testId = "input-label";
+
 describe("InputLabel", () => {
   const testInputLabel = testComponentFactory<InputLabelProps>(
     "InputLabel",
@@ -14,8 +16,9 @@ describe("InputLabel", () => {
       tests: [
         {
           name: "should render",
-          test: ({ queryByTestId }) => {
-            expect(queryByTestId("input-label")).toBeDefined();
+          test: async ({ findByTestId }) => {
+            const label = await findByTestId(testId);
+            expect(label).not.toBeNull();
           },
         },
       ],
@@ -33,11 +36,11 @@ describe("InputLabel", () => {
   );
 
   testInputLabel({ label: "test input", required: true })(
-    "should render with symbol '*'",
-    ({ queryByTestId }) => {
-      const label = queryByTestId("input-label") as HTMLSpanElement;
-      expect(label).toBeDefined();
-      expect(label.textContent).toInclude("*");
+    "should have required data attributte",
+    async ({ findByTestId }) => {
+      const label = (await findByTestId(testId)) as HTMLSpanElement;
+      expect(label).not.toBeNull();
+      expect(label.dataset.required).toBe("true");
     }
   );
 });
