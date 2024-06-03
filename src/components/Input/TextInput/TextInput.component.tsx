@@ -7,7 +7,7 @@ import {
   useInputValue,
 } from "../Input.utils";
 
-import { useMergedProps } from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
 import type { DefaultInputProps, InputProps } from "../Input.types";
 
@@ -35,9 +35,10 @@ const TextInput = (props: InputProps<"text">): JSX.Element => {
   );
   const value = useInputValue(mergedProps.value);
   const inputStyles = useInputStyles(mergedProps);
+  const testId = useTestId("input-text", props);
   return (
     <StyledInput
-      data-testid="input-text"
+      data-testid={testId}
       value={value}
       type="text"
       onChange={onChange}

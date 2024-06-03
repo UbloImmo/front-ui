@@ -15,6 +15,7 @@ import type {
   SpecificInputProps,
 } from "./Input.generic.types";
 import type { InputType } from "./Input.types";
+import type { TestIdProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { FC } from "react";
 
@@ -37,7 +38,7 @@ const inputComponentMap: SpecificInputComponentMap = {
 const Input = <TType extends InputType = "text">({
   type,
   ...props
-}: GenericInputProps<TType>): Nullable<JSX.Element> => {
+}: GenericInputProps<TType> & TestIdProps): Nullable<JSX.Element> => {
   const { warn, error } = useLogger("Input");
 
   const InputComponent = useMemo<
@@ -60,6 +61,8 @@ const Input = <TType extends InputType = "text">({
     return null;
   }
 
+  // pass all props to the input component
+  // including `testId` prop as-is
   return <InputComponent {...(props as SpecificInputProps<TType>)} />;
 };
 

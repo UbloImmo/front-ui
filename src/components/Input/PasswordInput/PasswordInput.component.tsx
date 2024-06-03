@@ -16,7 +16,7 @@ import {
   useInputValue,
 } from "../Input.utils";
 
-import { useMergedProps } from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
 import type {
   DefaultPasswordInputProps,
@@ -24,6 +24,7 @@ import type {
   PasswordVisibility,
 } from "./PasswordInput.types";
 import type { InputValue } from "../Input.types";
+import type { TestIdProps } from "@types";
 
 const defaultPasswordInputProps: DefaultPasswordInputProps = {
   ...defaultCommonInputProps,
@@ -42,7 +43,9 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
  * @param {PasswordInputProps} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
-const PasswordInput = (props: PasswordInputProps): JSX.Element => {
+const PasswordInput = (
+  props: PasswordInputProps & TestIdProps
+): JSX.Element => {
   const inputRef = useRef<Nullable<HTMLInputElement>>(null);
   const mergedProps = useMergedProps(defaultPasswordInputProps, props);
 
@@ -95,10 +98,15 @@ const PasswordInput = (props: PasswordInputProps): JSX.Element => {
   const value = useInputValue(mergedProps.value);
 
   const inputStyles = useInputStyles(mergedProps);
+
+  const testId = useTestId("input-password", props);
   return (
-    <StyledInputContainer {...inputStyles}>
+    <StyledInputContainer
+      {...inputStyles}
+      data-testid="input-password-container"
+    >
       <StyledInput
-        data-testid="input-password"
+        data-testid={testId}
         value={value}
         type={visibility.inputType}
         onChange={onChange}
