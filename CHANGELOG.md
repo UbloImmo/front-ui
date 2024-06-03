@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Various minor fixes in multiple components
+  - Unit tests
+  - Styles
+  - Test ids
+
+### Changed
+
+- Component init script
+  - Added Boilerplace file contents
+
+- Generic Input component typings
+
+- Component init script
+  - Added boilerplate content
+
+### Added
+
+- `v0.0.1` Field component
+- New `className` prop for compatibility with `styled([Component])` usage:
+  - `Text`, `Heading` typo components
+  - `Flex`, `Grid` & `GridItem` layouts
+
 ## 0.7.0 - 2024-05-30
 ### Added
 - `v0.0.1` Tooltip component
