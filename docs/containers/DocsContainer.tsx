@@ -52,7 +52,7 @@ const StyleReset = styled.div`
       padding: var(--s-1) var(--s-2);
       border-left: var(--s-1) solid var(--primary-medium);
       border-radius: var(--s-1);
-      background: var(--primary-light-30);
+      background: var(--primary-light);
       margin-top: var(--s-2);
       margin-bottom: var(--s-1);
       span {
