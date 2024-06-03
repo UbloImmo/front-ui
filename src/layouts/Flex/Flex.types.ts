@@ -1,4 +1,4 @@
-import type { CssFr, CssLength } from "@types";
+import type { StyleOverrideProps, CssFr, CssLength } from "@types";
 import type { Enum } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -89,7 +89,7 @@ export type FlexLayoutProps = {
    * @type {ReactNode}
    */
   children?: ReactNode;
-};
+} & StyleOverrideProps;
 
 export type FlexLayoutDefaultProps = Required<FlexLayoutProps>;
 
