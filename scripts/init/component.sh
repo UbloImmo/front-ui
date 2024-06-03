@@ -67,7 +67,17 @@ const default${component_name}Props: ${component_name}DefaultProps = {
   // TODO
 };
 
-const ${component_name} = (props: ${component_name}Props & TestIdProps) => {
+/**
+ * ${component_name} component
+ * 
+ * TODO description
+ *
+ * @version 0.0.1
+ *
+ * @param {${component_name}Props & TestIdProps} props - ${component_name} component props
+ * @returns {JSX.Element}
+ */
+const ${component_name} = (props: ${component_name}Props & TestIdProps): JSX.Element => {
   const { log } = useLogger(\"${component_name}\");
   const mergedProps = useMergedProps(props, default${component_name}Props);
   const testId = useTestId(\"${component_test_id}\", props);
