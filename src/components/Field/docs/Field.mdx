@@ -38,12 +38,17 @@ All common and specific [input properties](?path=/docs/components-input-properti
 
 #### Label
 
-Fiels uses an [`InputLabel`](?path=/docs/components-inputlabel-usage--docs) under the hood.
-As such, it inherits both its `label` and `required` properties and passes them along.
+Fields use an [`InputLabel`](?path=/docs/components-inputlabel-usage--docs) under the hood.
+As such, they inherit both its `label`, `required` and `tooltip` properties and pass them along.
 
 > Clicking on a field's label will focus its input.
 
+
 <Canvas of={FieldStories.Labels} />
+
+#### Toolips
+
+<Canvas of={FieldStories.Tooltips} overflowHidden />
 
 #### Assistive text
 
@@ -55,14 +60,15 @@ This could be an example, a reason, an explation or any useful text.
 
 <Canvas of={FieldStories.AssistiveTexts} />
 
-#### Error state
+#### Errors & validation
 
 If provided with an `error` property, a `Field` will pass it on to its underlying `Input` and display its `errorText` if provided.
 
-> Only the input's error state will be shown if no `errorText` is provided.
+Similarly, if the child `Input` reports an invalid [validity state](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) (e.g. no value when required and the likes), the parent `Field` will display a corresponding generic error message.
+
+> Only the input's error state will be shown if no `errorText` is provided nor reported.
 
 <Canvas of={FieldStories.ErrorTexts} />
-
 
 </Content>
 
