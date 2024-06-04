@@ -25,12 +25,17 @@ import type {
 /**
  * All props exposed by a native input
  */
-type NativeInputProps = Required<
+export type NativeInputProps = Required<
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 >;
 
 /**
- * The value returned by a {@link NativeInputProps} `onChange` callback
+ * `onChange` property of a native input
+ */
+export type NativeInputOnChangeFn = NativeInputProps["onChange"];
+
+/**
+ * The value returned by a {@link NativeInputOnChangeFn} callback
  */
 export type NativeInputValue = number | string | undefined;
 
@@ -59,16 +64,19 @@ type InputOnChangeConditionFn = GenericFn<[NativeInputValue], boolean>;
  * @template {InputType} TType
  * @param {InputOnChangeConditionFn} condition - function that dictates whether to trigger the onChange event
  * @param {InputOnChangeValueTransformerFn<TType>} valueTransformer - function to transform the input value
- * @param {Optional<InputOnChangeFn<TType>>} onChange - optional callback function for onChange event
+ * @param {Nullish<InputOnChangeFn<TType>>} onChange - callback function for onChange event
+ * @param {Nullish<NativeInputOnChangeFn>} onChangeNative - native callback function for onChange event
  * @return {VoidFn<NativeInputProps["onChange"]>} the generated callback function for input onChange event, to be used as the native input's onChange prop
  */
 export const useInputOnChange = <TType extends InputType>(
   condition: InputOnChangeConditionFn,
   valueTransformer: InputOnChangeValueTransformerFn<TType>,
-  onChange?: Nullish<InputOnChangeFn<TType>>
+  onChange: Nullish<InputOnChangeFn<TType>>,
+  onChangeNative: Nullish<NativeInputOnChangeFn>
 ) => {
-  return useCallback<NativeInputProps["onChange"]>(
+  return useCallback<NativeInputOnChangeFn>(
     (e) => {
+      if (isFunction<NativeInputOnChangeFn>(onChangeNative)) onChangeNative(e);
       if (
         condition(e.target.value) &&
         isFunction<InputOnChangeFn<TType>>(onChange)
@@ -76,7 +84,7 @@ export const useInputOnChange = <TType extends InputType>(
         onChange(valueTransformer(e.target.value));
       }
     },
-    [onChange, condition, valueTransformer]
+    [onChange, onChangeNative, condition, valueTransformer]
   );
 };
 
