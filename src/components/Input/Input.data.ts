@@ -9,4 +9,5 @@ export const inputTypes = [
   "password",
   "email",
   "phone",
+  "currency",
 ] as const;

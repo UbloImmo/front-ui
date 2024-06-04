@@ -4,6 +4,7 @@ export * from "./Input.data";
 export type * from "./Input.types";
 export type * from "./Input.generic.types";
 
+export * from "./CurrencyInput";
 export * from "./EmailInput";
 export * from "./NumberInput";
 export * from "./PasswordInput";

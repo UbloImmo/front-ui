@@ -39,13 +39,12 @@ export const Default: Story = {
   },
 };
 
-const types: InputType[] = ["text", "number", "email", "password", "phone"];
-export const Types = (props: GenericInputProps<(typeof types)[number]>) => {
+export const Types = (props: GenericInputProps<InputType>) => {
   return (
     <ComponentVariants
       columns={2}
       defaults={props}
-      variants={types}
+      variants={inputTypes}
       for="type"
       of={Input}
       scaling={1}
