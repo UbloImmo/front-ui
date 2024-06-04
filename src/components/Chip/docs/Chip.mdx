@@ -1,0 +1,42 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as ChipStories from "../Chip.stories.tsx";
+
+<Meta title="Components/Chip/Usage" />
+
+<ComponentInfo of={ChipStories} figmaId="858-5093" />
+
+<Content>
+
+## Usage
+
+### Colors
+
+Like the `Badge` component, Chip takes **raw** colors _(e.g. `primary`)_ and **not** shaded colors _(e.g. `primary-light`)_ as its `color` property.
+The resulting Chip's background, text and icon colors are computed based on this property.
+
+<Canvas of={ChipStories.Colors} />
+
+### Label and Icon
+
+`Chip` needs a **label** and an **icon** with a valid `IconName` to render properly.
+
+> Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list.
+
+### Icon placement
+
+By default, the icon in a `Chip` is positioned on the left of its label. You can easily switch icon's position to the right by setting the property `iconPlacement` to **right**.
+
+<Canvas of={ChipStories.Placement} />
+
+### Delete button
+
+To use the interactivity of the `Chip`, you can provide your desired callback function in the optional `onDelete` property. This will be triggered when the button on the right of the `Chip` is clicked.
+This allows you to implement your trigger action to remove the selected `Chip`.
+
+> Give it a try and delete those chips below !
+
+<Canvas of={ChipStories.WithDelete} />
+
+</Content>

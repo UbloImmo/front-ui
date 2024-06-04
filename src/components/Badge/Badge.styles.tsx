@@ -1,13 +1,13 @@
 import { css } from "styled-components";
 
-import { fromStyleProps } from "@utils";
+import { fromStyleProps, isGrayColor } from "@utils";
 
 import type {
   BadgeShade,
   BadgeShadeStyle,
   DefaultBadgeProps,
 } from "./Badge.types";
-import type { StyleProps } from "@types";
+import type { PaletteColor, StyleProps } from "@types";
 import type { ValueMap } from "@ubloimmo/front-util";
 
 export const badgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
@@ -38,16 +38,24 @@ export const grayBadgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
 
 export const badgeStyle = (props: StyleProps<DefaultBadgeProps>) => {
   const { color, shade } = fromStyleProps(props);
-  const { backgroundColor } =
-    color === "gray"
-      ? grayBadgeShadeStyleMap[shade]
-      : badgeShadeStyleMap[shade];
 
-  const borderColorShade = color === "gray" ? "300" : "medium";
+  const { backgroundColor } = isGrayColor(color)
+    ? grayBadgeShadeStyleMap[shade]
+    : badgeShadeStyleMap[shade];
+
+  const borderColorShade = isGrayColor(color) ? "300" : "medium";
+  const borderColor = `${color}-${borderColorShade}` as PaletteColor;
+  const background = `${color}-${backgroundColor}` as PaletteColor;
 
   return css`
-    border: 1px solid var(--${color}-${borderColorShade});
-    background-color: var(--${color}-${backgroundColor});
+    border: 1px solid var(--${borderColor});
+    background-color: var(--${background});
+    ${commonBadgeStyles}
+  `;
+};
+
+export const commonBadgeStyles = () => {
+  return css`
     padding: 0 var(--s-2);
     border-radius: var(--s-1);
     gap: var(--s-1);
@@ -64,6 +72,7 @@ export const badgeStyle = (props: StyleProps<DefaultBadgeProps>) => {
       white-space: nowrap;
       text-overflow: ellipsis;
       max-width: 16rem;
+      overflow-y: hidden;
     }
   `;
 };

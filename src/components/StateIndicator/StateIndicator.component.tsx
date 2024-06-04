@@ -61,7 +61,7 @@ const StateIndicator = (
   }, [colors]);
 
   return (
-    <StateIndicatorContainer {...styleProps} data-testid={testId}>
+    <StateIndicatorContainer {...styleProps} data-testid={testId} role="status">
       <Icon {...iconProps} />
       <Text {...TextProps}>{mergedProps.label}</Text>
     </StateIndicatorContainer>

@@ -499,3 +499,14 @@ export const isPaletteColor = (value: unknown): value is PaletteColor => {
   }
   return ["light", "dark", "medium", "base"].includes(shade);
 };
+
+/**
+ * Checks if the given value is a valid gray color key.
+ *
+ * @param {unknown} value - The value to be checked.
+ * @return {value is ColorKey & "gray"} Returns true if the value is a valid gray color key.
+ */
+export const isGrayColor = (value: unknown): value is ColorKey & "gray" => {
+  if (!isString(value)) return false;
+  return value === "gray";
+};

@@ -49,7 +49,7 @@ const Badge = (props: BadgeProps & TestIdProps): JSX.Element => {
   }, [color, shade]);
 
   return (
-    <BadgeContainer data-testid={testId} {...styledProps}>
+    <BadgeContainer data-testid={testId} {...styledProps} role="status">
       {icon && (
         <Icon
           data-testid="badge-icon"

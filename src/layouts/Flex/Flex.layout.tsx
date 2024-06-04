@@ -22,6 +22,7 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   fill: false,
   children: null,
   className: null,
+  role: null,
 } as const;
 
 /**
@@ -38,7 +39,12 @@ export const FlexLayout = (
   const testId = useTestId("flex", props);
   const className = useClassName(props);
   return (
-    <FlexLayoutInner {...innerProps} data-testid={testId} className={className}>
+    <FlexLayoutInner
+      {...innerProps}
+      data-testid={testId}
+      className={className}
+      role={props.role ?? undefined}
+    >
       {props.children}
     </FlexLayoutInner>
   );
