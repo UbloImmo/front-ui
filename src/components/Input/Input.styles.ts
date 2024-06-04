@@ -4,6 +4,7 @@ import { breakpointsPx } from "@/sizes";
 
 import type {
   CommonInputStyleProps,
+  InputControlAnchorProps,
   InputControlStyleProps,
 } from "./Input.types";
 
@@ -33,19 +34,22 @@ export const commonInputContainerStyles = ({
   }
 `;
 
-const commonInputControlStyles = () => css`
+const commonInputControlStyles = ({
+  $anchor = "right",
+}: InputControlAnchorProps) => css`
   border: none;
   padding: 0;
   background: none;
-  right: var(--s-2);
+  ${$anchor}: var(--s-2);
 
   svg {
     fill: var(--control-color);
+    transition: fill 150ms ease-out 0s;
   }
 `;
 
-export const inputControlGroupStyles = () => css`
-  ${commonInputControlStyles}
+export const inputControlGroupStyles = (props: InputControlAnchorProps) => css`
+  ${commonInputControlStyles(props)}
   position: absolute;
   top: var(--s-2);
   bottom: var(--s-2);
@@ -61,7 +65,7 @@ export const inputControlStyles = ({
   onClick,
   ...props
 }: InputControlStyleProps) => css`
-  ${commonInputControlStyles}
+  ${commonInputControlStyles(props)}
   position: absolute;
   height: var(--s-4); // center vertically;
   top: 50%;
@@ -76,7 +80,7 @@ export const inputGroupedControlStyles = ({
   onClick,
   ...props
 }: InputControlStyleProps) => css`
-  ${commonInputControlStyles}
+  ${commonInputControlStyles(props)}
   width: var(--s-4);
   height: max-content;
   flex: 1;
