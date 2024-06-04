@@ -1,6 +1,6 @@
 import type { StyleOverrideProps, CssFr, CssLength } from "@types";
-import type { Enum } from "@ubloimmo/front-util";
-import type { ReactNode } from "react";
+import type { Enum, Nullable } from "@ubloimmo/front-util";
+import type { AriaRole, ReactNode } from "react";
 
 const flexAlignments = [
   "center",
@@ -89,6 +89,13 @@ export type FlexLayoutProps = {
    * @type {ReactNode}
    */
   children?: ReactNode;
+  /**
+   * the ARIA role of the element
+   *
+   * @default null
+   * @type {AriaRole}
+   */
+  role?: Nullable<AriaRole>;
 } & StyleOverrideProps;
 
 export type FlexLayoutDefaultProps = Required<FlexLayoutProps>;
