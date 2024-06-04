@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.1` CurrencyInput component
+- New `name` & `onChangeNative` props for all Inputs & Field components
+- `useTestId` & `TestIdProps`
+  - Ability to override / replace default test id
+
+### Changed
+
+- Propagate native input event from custom inputs regardless of onChange condition
+- `v0.0.2` Field component
+  - Display generic error messages based on underlying input validity
+  - Propagate child input's native `onChange` event
+- `v0.0.4` InputLabel component
+  - Add ability to render tooltip by passing its props under the optional `tooltip` key
+- `v0.0.3` InputAssistiveText component
+  - Add support for custom test id
+
 ## 0.9.0 - 2024-06-04
 ### Added
 - `v0.0.1` Chip component
