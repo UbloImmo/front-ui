@@ -11,6 +11,7 @@ type SBCanvasProps = Parameters<typeof SBCanvas>[0];
 type CanvasLayoutProps = {
   horizontal?: boolean;
   inHeader?: boolean;
+  overflowHidden?: boolean;
 };
 
 type CanvasProps = SBCanvasProps & CanvasLayoutProps;
@@ -92,6 +93,11 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     // story container has generated classname
     & > div:first-child {
       padding: var(--padding);
+      ${({ $overflowHidden }) =>
+        $overflowHidden &&
+        css`
+          overflow: hidden;
+        `}
     }
 
     & .innerZoomElementWrapper > div {
