@@ -1,11 +1,15 @@
 import { InputLabel } from "./InputLabel.component";
-import { InputLabelProps } from "./InputLabel.types";
+import {
+  InputLabelProps,
+  type InputLabelTooltipProps,
+} from "./InputLabel.types";
 import { FlexRowLayout } from "../../layouts";
 import { useMergedProps } from "../../utils";
 
 import { ComponentVariants } from "@docs/blocks";
 
 import type { Meta, StoryObj } from "@storybook/react";
+import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {
   title: "Components/InputLabel/Stories",
@@ -38,6 +42,23 @@ export const Required = (props: Partial<InputLabelProps>) => {
       for="required"
       of={InputLabel}
       propLabels
+    />
+  );
+};
+
+const tooltipProps: Nullable<InputLabelTooltipProps>[] = [
+  null,
+  { content: "Label tooltip" },
+];
+export const Tooltips = (props: Partial<InputLabelProps>) => {
+  const defaultProps = useMergedProps(InputLabel.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={tooltipProps}
+      for="tooltip"
+      of={InputLabel}
     />
   );
 };
