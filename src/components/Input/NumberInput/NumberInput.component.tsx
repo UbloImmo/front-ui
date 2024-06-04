@@ -29,9 +29,11 @@ const defaultNumberInputProps: DefaultNumberInputProps = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
-  min: null,
-  max: null,
+  onChangeNative: null,
+  min: -Infinity,
+  max: Infinity,
   step: 1,
+  name: null,
 };
 
 const transformNumber = (nativeValue: NativeInputValue): Nullable<number> => {
@@ -42,7 +44,7 @@ const transformNumber = (nativeValue: NativeInputValue): Nullable<number> => {
 /**
  * Renders a number input component.
  *
- * @version 0.0.1
+ * @version 0.0.2
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
  */
@@ -58,7 +60,8 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
   const onChange = useInputOnChange<"number">(
     (_) => true,
     transformNumber,
-    mergedProps.onChange
+    mergedProps.onChange,
+    mergedProps.onChangeNative
   );
 
   const clampAndPropagate = useCallback(

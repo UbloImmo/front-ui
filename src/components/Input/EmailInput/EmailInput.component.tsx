@@ -23,12 +23,14 @@ const defaultEmailInputProps: DefaultInputProps<"email"> = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
+  onChangeNative: null,
+  name: null,
 };
 
 /**
  * Renders an email input component. Does some rudimentary format validation on the input value.
  *
- * @version 0.0.1
+ * @version 0.0.2
  * @param {InputProps<"email">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
@@ -38,7 +40,8 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
     (nativeValue) => isString(nativeValue),
     (nativeValue) =>
       isEmailString(nativeValue) && nativeValue.length > 0 ? nativeValue : null,
-    mergedProps.onChange
+    mergedProps.onChange,
+    mergedProps.onChangeNative
   );
   const value = useInputValue(mergedProps.value);
   const inputStyles = useInputStyles(mergedProps);

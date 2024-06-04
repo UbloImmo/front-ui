@@ -30,15 +30,17 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
+  onChangeNative: null,
   onVisibilityChange: null,
   allowChangeVisibility: true,
   visible: false,
+  name: null,
 };
 
 /**
  * Renders a password input component that allows for password visibility toggle.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {PasswordInputProps} props - The input props.
  * @return {JSX.Element} The rendered text input component.
@@ -92,7 +94,8 @@ const PasswordInput = (
       isString(nativeValue),
     (nativeValue) =>
       isString(nativeValue) && nativeValue.length > 0 ? nativeValue : null,
-    mergedProps.onChange
+    mergedProps.onChange,
+    mergedProps.onChangeNative
   );
 
   const value = useInputValue(mergedProps.value);

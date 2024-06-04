@@ -1,4 +1,4 @@
-import { Nullable, isNull } from "@ubloimmo/front-util";
+import { Nullable, isFunction, isNull } from "@ubloimmo/front-util";
 import { useRef, useMemo, useCallback, ChangeEventHandler } from "react";
 import {
   CountrySelector,
@@ -20,7 +20,7 @@ import {
   defaultCommonInputProps,
 } from "../Input.common";
 import { DefaultInputProps, InputProps } from "../Input.types";
-import { useInputStyles } from "../Input.utils";
+import { NativeInputOnChangeFn, useInputStyles } from "../Input.utils";
 
 import { useMergedProps, useTestId } from "@utils";
 
@@ -30,14 +30,16 @@ const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
-  placeholder: "+33 0 00 00 00 00",
+  onChangeNative: null,
+  placeholder: "+33 6 00 00 00 00",
+  name: null,
 };
 
 /**
  * Renders a international phone input component.
  * Does international phone formatting on the input value.
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @param {InputProps<"phone">} props - The input props.
  * @return {JSX.Element} The rendered phone input component.
  */
@@ -75,9 +77,12 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
         event.target.value = FRENCH_PHONE_PREFIX;
       }
       handlePhoneValueChange(event);
+      if (isFunction<NativeInputOnChangeFn>(mergedProps.onChangeNative)) {
+        mergedProps.onChangeNative(event);
+      }
       prevPhone.current = event.target.value;
     },
-    [handlePhoneValueChange]
+    [handlePhoneValueChange, mergedProps]
   );
 
   const changeCountryOnSelect = useCallback(

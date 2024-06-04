@@ -1,6 +1,8 @@
 import { inputTypes } from "./Input.data";
 
-import type { Email, StyleProps } from "@types";
+import type { NativeInputOnChangeFn } from "./Input.utils";
+import type { DirectionHorizontal } from "@/types/global/direction.types";
+import type { CurrencyInt, Email, StyleProps } from "@types";
 import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 /**
@@ -57,6 +59,8 @@ export type InputValue<TType extends InputType> = TType extends
   ? string
   : TType extends "number"
   ? number
+  : TType extends "currency"
+  ? CurrencyInt
   : TType extends "email"
   ? Email
   : never;
@@ -99,6 +103,22 @@ export type InputProps<TType extends InputType> = CommonInputProps & {
    * @type {InputOnChangeFn | null}
    */
   onChange?: Nullable<InputOnChangeFn<TType>>;
+
+  /**
+   * The name of the input
+   *
+   * @default null
+   */
+  name?: Nullable<string>;
+  /**
+   * The input's native `onChange` callback
+   *
+   * @remarks is called before `props.onChange`, regardless of its call condition
+   *
+   * @type {Nullable<NativeInputOnChangeFn>}
+   * @default undefined
+   */
+  onChangeNative?: Nullable<NativeInputOnChangeFn>;
 };
 
 export type DefaultInputProps<TType extends InputType> = Required<
@@ -109,4 +129,7 @@ export type CommonInputStyleProps = StyleProps<DefaultCommonInputProps>;
 
 export type InputControlStyleProps = CommonInputStyleProps & {
   onClick?: VoidFn;
+  $anchor?: DirectionHorizontal;
 };
+
+export type InputControlAnchorProps = Pick<InputControlStyleProps, "$anchor">;
