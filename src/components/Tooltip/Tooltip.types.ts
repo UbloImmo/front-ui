@@ -1,15 +1,7 @@
 import type { IconName } from "../Icon/Icon.types";
-import type { StyleProps } from "@types";
-import type {
-  GenericFn,
-  NonNullish,
-  Nullable,
-  Enum,
-} from "@ubloimmo/front-util";
+import type { Direction, StyleProps } from "@types";
+import type { GenericFn, NonNullish, Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
-
-const tooltipDirections = ["top", "right", "bottom", "left"] as const;
-export type TooltipDirection = Enum<typeof tooltipDirections>;
 
 export type TooltipContentFn = GenericFn<[], ReactNode>;
 
@@ -26,10 +18,10 @@ export type TooltipProps = {
   content: NonNullish<ReactNode | TooltipContentFn>;
   /**
    * The direction of the tooltip
-   * @type {TooltipDirection}
+   * @type {Direction}
    * @default "top"
    */
-  direction?: TooltipDirection;
+  direction?: Direction;
   /**
    * The icon to display when no `children` are provided
    * @type {IconName}
@@ -51,7 +43,4 @@ export type TooltipStyleProps = StyleProps<
   Pick<DefaultTooltipProps, "direction">
 >;
 
-export type ToolipIntersection = Pick<
-  DOMRectReadOnly,
-  "top" | "bottom" | "left" | "right"
->;
+export type ToolipIntersection = Pick<DOMRectReadOnly, Direction>;

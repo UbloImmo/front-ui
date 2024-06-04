@@ -10,7 +10,8 @@ import { Badge } from "../Badge";
 
 import { testComponentFactory } from "@/tests";
 
-import type { TooltipProps, TooltipDirection } from "./Tooltip.types";
+import type { TooltipProps } from "./Tooltip.types";
+import type { Direction } from "@types";
 import type { DeepPartial, Nullable } from "@ubloimmo/front-util";
 
 const testId = "tooltip-wrapper";
@@ -111,7 +112,7 @@ testTooltip({
   expect(queryByTestId(testId)).not.toBeNull();
 });
 
-const FAKE_DIRECTION: TooltipDirection = "top";
+const FAKE_DIRECTION: Direction = "top";
 
 const createFakeIntersectionObserverEntry = (
   intersection?: DeepPartial<Omit<IntersectionObserverEntry, "target">> & {
@@ -144,7 +145,7 @@ const createFakeIntersectionObserverEntry = (
 };
 
 const getDirection = mock(() => FAKE_DIRECTION);
-const setDirection = mock((_direction: TooltipDirection) => {});
+const setDirection = mock((_direction: Direction) => {});
 
 describe("Tooltip", () => {
   describe("computeTooltipIntersections", () => {

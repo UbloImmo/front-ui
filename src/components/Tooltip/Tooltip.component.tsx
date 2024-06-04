@@ -33,10 +33,10 @@ import { isEmptyString, useLogger, useMergedProps } from "@utils";
 import type {
   DefaultTooltipProps,
   TooltipContentFn,
-  TooltipDirection,
   TooltipProps,
   TooltipStyleProps,
 } from "./Tooltip.types";
+import type { Direction } from "@types";
 
 const defaultTooltipProps: DefaultTooltipProps = {
   children: "",
@@ -63,9 +63,9 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
   const { children, content, direction, icon, intersectionRoot } = mergedProps;
 
   const [tooltipDirection, setTooltipDirection] =
-    useState<TooltipDirection>(direction);
+    useState<Direction>(direction);
 
-  const tooltipDirectionRef = useRef<TooltipDirection>(direction);
+  const tooltipDirectionRef = useRef<Direction>(direction);
 
   const tooltipRef = useRef<Nullable<HTMLDivElement>>(null);
   const tooltipWrapperRef = useRef<Nullable<HTMLDivElement>>(null);

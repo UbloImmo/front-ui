@@ -3,7 +3,6 @@ import { isString } from "@ubloimmo/front-util";
 import styled from "styled-components";
 
 import { Tooltip } from "./Tooltip.component";
-import { TooltipDirection, TooltipProps } from "./Tooltip.types";
 import { Badge } from "../Badge";
 import { StaticIcon } from "../StaticIcon";
 import { Text } from "../Text";
@@ -11,6 +10,9 @@ import { Text } from "../Text";
 import { ComponentVariants } from "@docs/blocks";
 import { FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
+
+import type { TooltipProps } from "./Tooltip.types";
+import type { Direction } from "@types";
 
 const Container = styled.div`
   height: 6rem;
@@ -35,7 +37,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-const directions: TooltipDirection[] = ["top", "bottom", "left", "right"];
+const directions: Direction[] = ["top", "bottom", "left", "right"];
 
 export const Directions = (props: Partial<TooltipProps>) => {
   const defaultProps = useMergedProps(Tooltip.defaultProps, props);
