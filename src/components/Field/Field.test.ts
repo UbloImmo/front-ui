@@ -5,8 +5,9 @@ import { inputTypes } from "../Input/Input.data";
 
 import { testComponentFactory } from "@/tests";
 
-const testId = "flex flex-column field";
-const labelTestId = "input-label field-label";
+const testId = "field";
+const labelTestId = "field-label";
+const assistiveTextTestId = "field-assistive-text";
 
 const testField = testComponentFactory("Field", Field);
 
@@ -19,9 +20,11 @@ const testEachFieldType = () => {
         const field = await findByTestId(testId);
         const label = await findByTestId(labelTestId);
         const input = await findByTestId(inputTestId);
+        const assistiveText = await findByTestId(assistiveTextTestId);
         expect(field).not.toBeNull();
         expect(label).not.toBeNull();
         expect(input).not.toBeNull();
+        expect(assistiveText).not.toBeNull();
       }
     );
   });
