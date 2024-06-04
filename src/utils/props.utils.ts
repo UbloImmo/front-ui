@@ -149,7 +149,8 @@ export const useTestId = <TProps extends Record<string, unknown>>(
   return useMemo((): string => {
     if (!props) return baseTestId;
     const { testId } = props;
-    if (!isNonEmptyString(testId ?? "")) return baseTestId;
+    if (!testId || !isNonEmptyString(testId)) return baseTestId;
+    if (props?.overrideTestId) return testId;
     return `${baseTestId} ${testId}`;
   }, [props, baseTestId]);
 };

@@ -7,4 +7,11 @@ export type TestIdProps = {
    * @default undefined
    */
   testId?: string;
+  /**
+   * Whether to replace the default test id
+   * insted of appending it at the end
+   *
+   * @default false
+   */
+  overrideTestId?: boolean;
 };
