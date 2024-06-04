@@ -79,7 +79,7 @@ const default${component_name}Props: ${component_name}DefaultProps = {
  */
 const ${component_name} = (props: ${component_name}Props & TestIdProps): JSX.Element => {
   const { log } = useLogger(\"${component_name}\");
-  const mergedProps = useMergedProps(props, default${component_name}Props);
+  const mergedProps = useMergedProps(default${component_name}Props, props);
   const testId = useTestId(\"${component_test_id}\", props);
   // TODO
 
