@@ -10,7 +10,8 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
-import type { ChipProps, IconPlacement } from "./Chip.types";
+import type { ChipProps } from "./Chip.types";
+import type { HorizontalDirection } from "@/types/global/direction.types";
 import type { ColorKey } from "@types";
 
 const defaultMockProps = {
@@ -36,7 +37,7 @@ const colors: ColorKey[] = [
   "gray",
 ];
 
-const placement: IconPlacement[] = ["left", "right"];
+const placements: HorizontalDirection[] = ["left", "right"];
 
 const meta = {
   title: "Components/Chip/Stories",
@@ -49,7 +50,7 @@ const meta = {
       control: "text",
     },
     iconPlacement: {
-      options: placement,
+      options: placements,
     },
     color: {
       options: colors,
@@ -60,7 +61,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <FlexColumnLayout gap="s-8">
+      <FlexColumnLayout gap="s-2">
         <Story />
       </FlexColumnLayout>
     ),
@@ -100,7 +101,7 @@ export const Placement = (props: Partial<ChipProps>) => {
   return (
     <ComponentVariants
       defaults={mergedProps}
-      variants={placement}
+      variants={placements}
       for="iconPlacement"
       of={Chip}
       align="center"
@@ -111,7 +112,7 @@ export const Placement = (props: Partial<ChipProps>) => {
 
 Placement.parameters = {
   docs: componentSource(
-    placement.flatMap((placement) => ({
+    placements.flatMap((placement) => ({
       iconPlacement: placement,
       label: "[Chip]",
       icon: "Square",
@@ -131,7 +132,7 @@ export const WithDelete = (props: Partial<ChipProps>) => {
 
   const mergedProps = useMergedProps(Chip.defaultProps, props);
   return (
-    <FlexRowLayout gap="s-8" align="center">
+    <FlexRowLayout gap="s-2" align="center">
       {labels.map((label) => (
         <Chip
           {...mergedProps}

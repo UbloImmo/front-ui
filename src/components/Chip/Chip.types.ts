@@ -1,10 +1,8 @@
 import { IconName } from "../Icon";
 
+import type { HorizontalDirection } from "@/types/global/direction.types";
 import type { ColorKey } from "@types";
-import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
-
-const iconPlacement = ["left", "right"] as const;
-export type IconPlacement = Enum<typeof iconPlacement>;
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 export type ChipProps = {
   /**
@@ -30,7 +28,7 @@ export type ChipProps = {
    * Whether to display the icon on the left or on the right of the label
    * @default "left"
    */
-  iconPlacement?: IconPlacement;
+  iconPlacement?: HorizontalDirection;
   /**
    * Callback when clicking on the remove button
    * @type {VoidFn | null}
