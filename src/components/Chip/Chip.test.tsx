@@ -6,23 +6,25 @@ import { ChipProps } from "./Chip.types";
 
 import { testComponentFactory } from "@/tests";
 
+const testId = "flex flex-row chip";
+
 const testChip = testComponentFactory<ChipProps>("Chip", Chip);
 
-const onClick = mock(() => {});
+const onDelete = mock(() => {});
 
 testChip({ ...Chip.defaultProps })("should render", ({ queryByTestId }) => {
-  expect(queryByTestId("chip")).not.toBeNull();
+  expect(queryByTestId(testId)).not.toBeNull();
 });
 
 testChip({
   ...Chip.defaultProps,
-  onDelete: onClick,
+  onDelete: onDelete,
 })("should trigger onClick", async ({ queryByTestId }, { click }) => {
-  expect(queryByTestId("chip")).not.toBeNull();
+  expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId("chip-button")).not.toBeNull();
   await click(queryByTestId("chip-button") as HTMLButtonElement);
-  expect(onClick).toHaveBeenCalled();
-  onClick.mockReset();
+  expect(onDelete).toHaveBeenCalled();
+  onDelete.mockReset();
 });
 
 global.console.warn = mock(() => {});
@@ -30,7 +32,7 @@ global.console.warn = mock(() => {});
 testChip({ ...Chip.defaultProps, label: "" })(
   "should warn if missing label in props",
   ({ queryByTestId }) => {
-    expect(queryByTestId("chip")).not.toBeNull();
+    expect(queryByTestId(testId)).not.toBeNull();
     expect(global.console.warn).toHaveBeenCalled();
     (global.console.warn as Mock<VoidFn>).mockReset();
   }
@@ -38,11 +40,10 @@ testChip({ ...Chip.defaultProps, label: "" })(
 
 testChip({
   ...Chip.defaultProps,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore needed to check error detection
+  // @ts-expect-error need this to check for unhandled icon props
   icon: null,
 })("should warn if missing icon in props", ({ queryByTestId }) => {
-  expect(queryByTestId("chip")).not.toBeNull();
+  expect(queryByTestId(testId)).not.toBeNull();
   expect(global.console.warn).toHaveBeenCalled();
   (global.console.warn as Mock<VoidFn>).mockReset();
 });
