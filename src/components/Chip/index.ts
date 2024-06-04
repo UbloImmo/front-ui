@@ -1,2 +1,2 @@
 export * from "./Chip.component";
-export * from "./Chip.types";
+export type * from "./Chip.types";
