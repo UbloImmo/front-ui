@@ -18,7 +18,7 @@ testChip({ ...Chip.defaultProps })("should render", ({ queryByTestId }) => {
 
 testChip({
   ...Chip.defaultProps,
-  onDelete: onDelete,
+  onDelete,
 })("should trigger onClick", async ({ queryByTestId }, { click }) => {
   expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId("chip-button")).not.toBeNull();
@@ -43,6 +43,15 @@ testChip({
   // @ts-expect-error need this to check for unhandled icon props
   icon: null,
 })("should warn if missing icon in props", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(global.console.warn).toHaveBeenCalled();
+  (global.console.warn as Mock<VoidFn>).mockReset();
+});
+
+testChip({
+  ...Chip.defaultProps,
+  deleteButtonTitle: null,
+})("should warn if missing deleteButtonTitle in props", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
   expect(global.console.warn).toHaveBeenCalled();
   (global.console.warn as Mock<VoidFn>).mockReset();

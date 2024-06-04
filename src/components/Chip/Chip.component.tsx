@@ -24,6 +24,7 @@ const defaultChipProps: DefaultChipProps = {
   color: "primary",
   iconPlacement: "left",
   onDelete: null,
+  deleteButtonTitle: "[Delete action description]",
 };
 
 /**
@@ -38,7 +39,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("chip", props);
 
-  const { label, icon, color } = mergedProps;
+  const { label, icon, color, deleteButtonTitle } = mergedProps;
   const { warn } = useLogger("Chip");
 
   const onDelete = useCallback(() => {
@@ -60,8 +61,14 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
     warn(`Missing required icon, defaulting to ${defaultChipProps.icon}`);
   }
 
+  if (!props.deleteButtonTitle) {
+    warn(
+      `Missing required title for delete button, defaulting to ${defaultChipProps.deleteButtonTitle}`
+    );
+  }
+
   return (
-    <FlexRowLayout align="center" testId={testId}>
+    <FlexRowLayout align="center" testId={testId} role="listitem">
       <ChipContainer {...styledProps}>
         <Icon name={icon} size="s-3" color={iconColorStyle} />
         <Text size="s" weight="medium" color={textColorStyle} ellipsis>
@@ -69,7 +76,13 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
         </Text>
       </ChipContainer>
 
-      <ChipButton {...styledProps} onClick={onDelete} data-testid="chip-button">
+      <ChipButton
+        {...styledProps}
+        onClick={onDelete}
+        data-testid="chip-button"
+        title={deleteButtonTitle ?? undefined}
+        aria-label={deleteButtonTitle ?? undefined}
+      >
         <Icon name="X" size="s-4" color={iconColorStyle} />
       </ChipButton>
     </FlexRowLayout>

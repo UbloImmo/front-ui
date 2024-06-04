@@ -11,7 +11,7 @@ import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
 import type { ChipProps } from "./Chip.types";
-import type { HorizontalDirection } from "@/types/global/direction.types";
+import type { DirectionHorizontal } from "@/types/global/direction.types";
 import type { ColorKey } from "@types";
 
 const defaultMockProps = {
@@ -24,6 +24,7 @@ const componentSource = componentSourceFactory<ChipProps>(
   {
     label: "[Chip]",
     icon: "Square",
+    deleteButtonTitle: "[Delete action]",
   },
   Chip.defaultProps
 );
@@ -37,7 +38,7 @@ const colors: ColorKey[] = [
   "gray",
 ];
 
-const placements: HorizontalDirection[] = ["left", "right"];
+const placements: DirectionHorizontal[] = ["left", "right"];
 
 const meta = {
   title: "Components/Chip/Stories",
@@ -92,7 +93,12 @@ export const Colors = (props: Partial<ChipProps>) => {
 
 Colors.parameters = {
   docs: componentSource(
-    colors.flatMap((color) => ({ color, label: "[Chip]", icon: "Square" }))
+    colors.flatMap((color) => ({
+      color,
+      label: "[Chip]",
+      icon: "Square",
+      deleteButtonTitle: "[Delete action]",
+    }))
   ),
 };
 
@@ -116,6 +122,7 @@ Placement.parameters = {
       iconPlacement: placement,
       label: "[Chip]",
       icon: "Square",
+      deleteButtonTitle: "[Delete action]",
     }))
   ),
 };
