@@ -18,10 +18,8 @@ export const buildChipContainerStyles = (
   const background = `${color}-${backgroundColor}` as PaletteColor;
 
   return css`
-    display: flex;
-    align-items: center;
-    flex-direction: ${iconPlacement === "left" ? "row" : "row-reverse"};
     ${commonBadgeStyles}
+    flex-direction: ${iconPlacement === "left" ? "row" : "row-reverse"};
     border: 1px solid var(--${borderColor});
     background-color: var(--${background});
     border-radius: var(--s-1) 0 0 var(--s-1);
