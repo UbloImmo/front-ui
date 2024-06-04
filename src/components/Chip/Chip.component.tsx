@@ -24,7 +24,7 @@ const defaultChipProps: DefaultChipProps = {
   color: "primary",
   iconPlacement: "left",
   onDelete: null,
-  deleteButtonTitle: "[Delete action description]",
+  deleteButtonTitle: null,
 };
 
 /**
@@ -68,7 +68,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   }
 
   return (
-    <FlexRowLayout align="center" testId={testId} role="listitem">
+    <FlexRowLayout align="center" testId={testId} role="status">
       <ChipContainer {...styledProps}>
         <Icon name={icon} size="s-3" color={iconColorStyle} />
         <Text size="s" weight="medium" color={textColorStyle} ellipsis>
