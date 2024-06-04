@@ -6,9 +6,13 @@ import { toStyleProps } from "@utils";
 import type {
   CommonInputStyleProps,
   DefaultCommonInputProps,
+  InputOnChangeConditionFn,
   InputOnChangeFn,
+  InputOnChangeValueTransformerFn,
   InputType,
   InputValue,
+  NativeInputOnChangeFn,
+  NativeInputValue,
 } from "./Input.types";
 import type {
   GenericFn,
@@ -16,47 +20,7 @@ import type {
   Nullish,
   VoidFn,
 } from "@ubloimmo/front-util";
-import type {
-  DetailedHTMLProps,
-  InputHTMLAttributes,
-  MutableRefObject,
-} from "react";
-
-/**
- * All props exposed by a native input
- */
-export type NativeInputProps = Required<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
->;
-
-/**
- * `onChange` property of a native input
- */
-export type NativeInputOnChangeFn = NativeInputProps["onChange"];
-
-/**
- * The value returned by a {@link NativeInputOnChangeFn} callback
- */
-export type NativeInputValue = number | string | undefined;
-
-/**
- * Callback function used by the {@link useInputOnChange} hook
- * to transform an input's native value into an {@link InputValue}.
- *
- * @template {InputType} TType - The input's type
- * @param {NativeInputValue} value - The input's native value
- * @return {Nullable<InputValue<TType>>} The input's transformed value
- */
-type InputOnChangeValueTransformerFn<TType extends InputType> = GenericFn<
-  [NativeInputValue],
-  Nullable<InputValue<TType>>
->;
-
-/**
- * Callback function used by the {@link useInputOnChange} hook
- * if the native input value should be passed to the {@link InputOnChangeValueTransformerFn}.
- */
-type InputOnChangeConditionFn = GenericFn<[NativeInputValue], boolean>;
+import type { MutableRefObject } from "react";
 
 /**
  * A hook to handle native inputs' onChange events and transform their value if needed.

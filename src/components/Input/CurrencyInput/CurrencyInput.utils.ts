@@ -10,16 +10,12 @@ import {
 import { useCallback, useMemo, useState } from "react";
 
 import { signIconMap } from "./CurrencyInput.data";
-import {
-  NativeInputOnChangeFn,
-  useInputOnChange,
-  useInputValue,
-  type NativeInputValue,
-} from "../Input.utils";
+import { useInputOnChange, useInputValue } from "../Input.utils";
 
 import { isEmptyString, isNegative, isZero, toFixed } from "@utils";
 
 import type { CurrencyInputDefaultProps } from "./CurrencyInput.types";
+import type { NativeInputValue, NativeInputOnChangeFn } from "../Input.types";
 import type {
   NumberSign,
   CurrencyFloat,
@@ -29,7 +25,7 @@ import type {
 import type { Nullable, Nullish } from "@ubloimmo/front-util";
 
 const CURRENCY_DECIMALS = 2;
-const CURRENCY_FACTOR = Math.pow(10, CURRENCY_DECIMALS);
+const CURRENCY_FACTOR = 10 ** CURRENCY_DECIMALS;
 
 const currencyIntToFloat = (currencyInt: CurrencyInt): number => {
   if (!isNumber(currencyInt)) throw new Error("currencyInt must be a number");

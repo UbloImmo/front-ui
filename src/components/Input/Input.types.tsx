@@ -1,9 +1,43 @@
 import { inputTypes } from "./Input.data";
 
-import type { NativeInputOnChangeFn } from "./Input.utils";
 import type { DirectionHorizontal } from "@/types/global/direction.types";
 import type { CurrencyInt, Email, StyleProps } from "@types";
-import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { Enum, GenericFn, Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
+
+/**
+ * All props exposed by a native input
+ */
+export type NativeInputProps = Required<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+>;
+
+/**
+ * `onChange` property of a native input
+ */
+export type NativeInputOnChangeFn = NativeInputProps["onChange"];
+
+/**
+ * The value returned by a {@link NativeInputOnChangeFn} callback
+ */
+export type NativeInputValue = number | string | undefined;
+
+/**
+ * Callback function used by the {@link useInputOnChange} hook
+ * to transform an input's native value into an {@link InputValue}.
+ *
+ * @template {InputType} TType - The input's type
+ * @param {NativeInputValue} value - The input's native value
+ * @return {Nullable<InputValue<TType>>} The input's transformed value
+ */
+export type InputOnChangeValueTransformerFn<TType extends InputType> =
+  GenericFn<[NativeInputValue], Nullable<InputValue<TType>>>;
+
+/**
+ * Callback function used by the {@link useInputOnChange} hook
+ * if the native input value should be passed to the {@link InputOnChangeValueTransformerFn}.
+ */
+export type InputOnChangeConditionFn = GenericFn<[NativeInputValue], boolean>;
 
 /**
  * Common props shared by all Input components

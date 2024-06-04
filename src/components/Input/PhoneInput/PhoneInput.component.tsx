@@ -19,11 +19,15 @@ import {
   StyledInputContainer,
   defaultCommonInputProps,
 } from "../Input.common";
-import { DefaultInputProps, InputProps } from "../Input.types";
-import { NativeInputOnChangeFn, useInputStyles } from "../Input.utils";
+import { useInputStyles } from "../Input.utils";
 
 import { useMergedProps, useTestId } from "@utils";
 
+import type {
+  DefaultInputProps,
+  InputProps,
+  NativeInputOnChangeFn,
+} from "../Input.types";
 import type { TestIdProps } from "@types";
 
 const defaultPhoneInputProps: DefaultInputProps<"phone"> = {

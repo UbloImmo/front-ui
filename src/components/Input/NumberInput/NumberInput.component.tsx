@@ -22,7 +22,7 @@ import type {
   DefaultNumberInputProps,
   NumberInputProps,
 } from "./NumberInput.types";
-import type { NativeInputValue } from "../Input.utils";
+import type { NativeInputValue } from "../Input.types";
 import type { TestIdProps } from "@types";
 
 const defaultNumberInputProps: DefaultNumberInputProps = {
