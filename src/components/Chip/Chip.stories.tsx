@@ -45,6 +45,7 @@ const meta = {
   component: Chip,
   args: {
     ...defaultMockProps,
+    deleteButtonTitle: "[Delete action]",
   },
   argTypes: {
     label: {
