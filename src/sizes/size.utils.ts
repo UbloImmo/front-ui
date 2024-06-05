@@ -5,15 +5,19 @@ import {
   cssPxToCssRem,
   cssRem,
   cssVarName,
+  extractRem,
   isCssPx,
   isCssRem,
   isSpacingLabel,
+  remToPx,
 } from "@utils";
 
 import type { CssRem, FixedCssLength, SpacingLabel } from "@types";
 
 /**
  * Parses a fixed CSS length and returns a CssRem value.
+ *
+ * @remarks all number values are interpreted as rems.
  *
  * @param {FixedCssLength} length - The length to be parsed.
  * @param {VoidFn<[unknown]>} [warn] - An optional warning function.
@@ -53,4 +57,20 @@ export const parseFixedLength = (
   }
   if (isNumber(length)) return cssRem(length);
   return length;
+};
+
+/**
+ * Parses a fixed CSS length to pixels using {@link parseFixedLength}.
+ *
+ * @remarks all number values are interpreted as rems.
+ *
+ * @param {FixedCssLength} length - The CSS length to convert.
+ * @param {VoidFn<[unknown]>} [warn] - An optional warning function.
+ * @return {number} The converted length in pixels.
+ */
+export const parseFixedLengthToPx = (
+  length: FixedCssLength,
+  warn?: VoidFn<[unknown]>
+): number => {
+  return remToPx(extractRem(parseFixedLength(length, warn)));
 };
