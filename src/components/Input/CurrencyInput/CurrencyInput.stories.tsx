@@ -1,5 +1,5 @@
 import { fn } from "@storybook/test";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { CurrencyInput } from "./CurrencyInput.component";
 
@@ -17,6 +17,32 @@ const componentSource = componentSourceFactory<CurrencyInputProps>(
   CurrencyInput.defaultProps
 );
 
+const decorators: Meta<typeof CurrencyInput>["decorators"] = (
+  Story,
+  context
+) => {
+  const [value, setValue] = useState(context.args.value ?? null);
+
+  useEffect(() => {
+    setValue(context.args.value ?? null);
+  }, [context.args.value]);
+  const onChange = useCallback(
+    (v: typeof value) => {
+      if (context.args.onChange) context.args.onChange(v);
+      setValue(v);
+    },
+    [setValue, context]
+  );
+  return (
+    <CurrencyInput
+      {...context.args}
+      value={value}
+      onChange={onChange}
+      placeholder="test"
+    />
+  );
+};
+
 const meta = {
   component: CurrencyInput,
   title: "Components/Input/CurrencyInput/Stories",
@@ -25,17 +51,7 @@ const meta = {
     onChange: fn(),
     placeholder: "Currency input",
   },
-  decorators: (Story, context) => {
-    const [value, setValue] = useState(context.args.value ?? null);
-    const onChange = useCallback(
-      (v: typeof value) => {
-        if (context.args.onChange) context.args.onChange(v);
-        setValue(v);
-      },
-      [setValue, context]
-    );
-    return <Story {...context.args} value={value} onChange={onChange} />;
-  },
+  decorators,
   argTypes: {
     min: {
       type: "number",
@@ -65,13 +81,9 @@ const meta = {
 } satisfies Meta<typeof CurrencyInput>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<Meta<typeof CurrencyInput>>;
 
-export const Default: Story = {
-  args: {
-    placeholder: "Currency input",
-  },
-};
+export const Default: Story = {};
 
 const currencies: Currency[] = ["euro", "dollar", "pound", "yen"];
 
@@ -105,8 +117,6 @@ export const SignControl: Story = {
 
 export const MinMaxValue = (props: Partial<FieldProps<"currency">>) => {
   const defaultProps = useMergedProps(CurrencyInput.defaultProps, props);
-
-  console.log(defaultProps.onChange);
 
   return (
     <Field
