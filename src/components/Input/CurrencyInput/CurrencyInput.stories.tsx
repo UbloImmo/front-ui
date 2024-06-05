@@ -3,16 +3,17 @@ import { useCallback, useState } from "react";
 
 import { CurrencyInput } from "./CurrencyInput.component";
 
+import { Field, FieldProps } from "@/components/Field";
+import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
+import { useMergedProps } from "@utils";
 
-import type { CurrencyInputProps } from "./CurrencyInput.types";
+import type { Currency, CurrencyInputProps } from "./CurrencyInput.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<CurrencyInputProps>(
   "CurrencyInput",
-  {
-    // TODO
-  },
+  {},
   CurrencyInput.defaultProps
 );
 
@@ -22,6 +23,7 @@ const meta = {
   args: {
     ...CurrencyInput.defaultProps,
     onChange: fn(),
+    placeholder: "Currency input",
   },
   decorators: (Story, context) => {
     const [value, setValue] = useState(context.args.value ?? null);
@@ -32,9 +34,7 @@ const meta = {
       },
       [setValue, context]
     );
-    return (
-      <CurrencyInput {...context.args} value={value} onChange={onChange} />
-    );
+    return <Story {...context.args} value={value} onChange={onChange} />;
   },
   argTypes: {
     min: {
@@ -67,4 +67,63 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    placeholder: "Currency input",
+  },
+};
+
+const currencies: Currency[] = ["euro", "dollar", "pound", "yen"];
+
+export const Currencies = (props: Partial<CurrencyInputProps>) => {
+  const defaultProps = useMergedProps(CurrencyInput.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={currencies}
+      for="currency"
+      of={CurrencyInput}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+
+Currencies.args = {
+  placeholder: "Currency input",
+  onChange: fn(),
+};
+
+export const SignControl: Story = {
+  args: {
+    placeholder: "Currency input",
+    showSign: true,
+    onChange: fn(),
+  },
+};
+
+export const MinMaxValue = (props: Partial<FieldProps<"currency">>) => {
+  const defaultProps = useMergedProps(CurrencyInput.defaultProps, props);
+
+  console.log(defaultProps.onChange);
+
+  return (
+    <Field
+      {...defaultProps}
+      type="currency"
+      max={5}
+      min={1}
+      label={"Minimum and maximum values"}
+      assistiveText={"Type a number between 1 and 5"}
+      errorText={"Please enter a number between 1 and 5"}
+    />
+  );
+};
+
+MinMaxValue.args = {
+  args: {
+    placeholder: "Currency input",
+    onChange: fn(),
+  },
+};
