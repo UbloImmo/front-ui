@@ -146,6 +146,7 @@
     ]
   },
   "dependencies": {
+    "@radix-ui/react-popover": "^1.0.7",
     "@ubloimmo/front-tokens": "^0.1.19",
     "@ubloimmo/front-util": "^0.0.17",
     "react-international-phone": "^4.2.9",
