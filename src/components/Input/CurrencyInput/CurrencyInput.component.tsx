@@ -42,7 +42,7 @@ const defaultCurrencyInputProps: CurrencyInputDefaultProps = {
 /**
  * A number input tailored to handeling monetary values
  *
- * TODO description
+ * Does some rudimentary monetary like number formatting.
  *
  * @version 0.0.1
  *
@@ -80,6 +80,8 @@ const CurrencyInput = (
         inputMode="decimal"
         pattern={validationPattern}
         name={mergedProps.name ?? undefined}
+        min={mergedProps.min ?? undefined}
+        max={mergedProps.max ?? undefined}
         required={mergedProps.required}
         disabled={mergedProps.disabled}
         placeholder={mergedProps.placeholder}
