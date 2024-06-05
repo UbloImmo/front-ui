@@ -136,7 +136,8 @@ export const tooltipWrapperStyles = ({
   width: fit-content;
   cursor: ${$cursor};
 
-  &:hover [data-testid="tooltip"] {
+  &:hover [data-testid="tooltip"],
+  &:focus [data-testid="tooltip"] {
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
