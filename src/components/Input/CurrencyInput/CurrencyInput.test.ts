@@ -19,7 +19,7 @@ import type { VoidFn } from "@ubloimmo/front-util";
 
 const testId = "input-currency";
 
-// TODO: currency input tests
+// TODO: missing currency input fns & hooks tests
 describe("Input", () => {
   const testInput = testComponentFactory<CurrencyInputProps>(
     "CurrencyInput",
