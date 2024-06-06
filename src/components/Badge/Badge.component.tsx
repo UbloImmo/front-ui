@@ -6,7 +6,6 @@ import {
   badgeShadeStyleMap,
   grayBadgeShadeStyleMap,
 } from "./Badge.styles";
-import { BadgeProps, DefaultBadgeProps } from "./Badge.types";
 import { Icon } from "../Icon/Icon.component";
 import { Text } from "../Text/Text.component";
 
@@ -18,6 +17,7 @@ import {
   useTestId,
 } from "@utils";
 
+import type { BadgeProps, DefaultBadgeProps } from "./Badge.types";
 import type { PaletteColor, StyleProps, TestIdProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
