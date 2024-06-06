@@ -1,5 +1,5 @@
 import { isNull } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { MouseEventHandler, useCallback, useMemo } from "react";
 import styled from "styled-components";
 
 import { buildChipContainerStyles, buildChipButtonStyles } from "./Chip.styles";
@@ -30,7 +30,7 @@ const defaultChipProps: DefaultChipProps = {
 /**
  * An interactive `Badge` with a remove button, can be used as a filter tag.
  *
- * @version 0.0.2
+ * @version 0.0.3
  * @param {ChipProps} props - the props for the Chip component
  * @returns {JSX.Element} - the Chip component
  */
@@ -42,10 +42,14 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   const { label, icon, color, deleteButtonTitle } = mergedProps;
   const { warn } = useLogger("Chip");
 
-  const onDelete = useCallback(() => {
-    if (isNull(mergedProps.onDelete)) return;
-    mergedProps.onDelete();
-  }, [mergedProps]);
+  const onDelete = useCallback<MouseEventHandler<HTMLElement>>(
+    (event) => {
+      if (isNull(mergedProps.onDelete)) return;
+      event.stopPropagation();
+      mergedProps.onDelete();
+    },
+    [mergedProps]
+  );
 
   const { iconColorStyle, textColorStyle } = useMemo(() => {
     const iconColorStyle = `${color}-base` as PaletteColor;
