@@ -1,0 +1,41 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as CurrencyInputStories from "../CurrencyInput.stories.tsx";
+
+<Meta title="Components/Input/CurrencyInput/Usage" />
+
+<ComponentInfo of={CurrencyInputStories} figmaId="76-6562" />
+
+<Content>
+
+## Usage
+
+`CurrencyInput` component is a specific type of [Input](?path=/docs/components-input-usage--docs), used to allow the user to enter enter currency values.
+
+> Like its sibling `NumberInput`, you can't enter anything other than numbers in this component.
+
+## Currencies
+
+`CurrencyInput` displays the corresponding currency icon based on the `currency` property. By default, the currency is set to **euro**.
+You can customize the currency by using the `currency` property.
+
+> `CurrencyInput` accepts the following values: **euro**, **pound**, **dollar**, and **yen**.
+
+<Canvas of={CurrencyInputStories.Currencies} />
+
+## Control Sign
+
+The `CurrencyInput` component provides a toggle control, allowing users to enter positive or negative currency values. By setting the `showSign` property to `true`, you can enable the sign control. The default sign value is set to **+** with the property `defaultSign`.
+
+<Canvas of={CurrencyInputStories.SignControl} />
+
+## Minimum and Maximum Values
+
+Like `NumberInput`, `CurrencyInput` values can be bound with optional **min** and **max**.
+
+> In the field below, `min` is set to 1 and `max` to 5.
+
+<Canvas of={CurrencyInputStories.MinMaxValue} />
+
+</Content>

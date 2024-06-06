@@ -1,4 +1,4 @@
-import { isFunction, isNull } from "@ubloimmo/front-util";
+import { isArray, isFunction, isNull } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 
 import { toStyleProps } from "@utils";
@@ -6,9 +6,13 @@ import { toStyleProps } from "@utils";
 import type {
   CommonInputStyleProps,
   DefaultCommonInputProps,
+  InputOnChangeConditionFn,
   InputOnChangeFn,
+  InputOnChangeValueTransformerFn,
   InputType,
   InputValue,
+  NativeInputOnChangeFn,
+  NativeInputValue,
 } from "./Input.types";
 import type {
   GenericFn,
@@ -16,42 +20,7 @@ import type {
   Nullish,
   VoidFn,
 } from "@ubloimmo/front-util";
-import type {
-  DetailedHTMLProps,
-  InputHTMLAttributes,
-  MutableRefObject,
-} from "react";
-
-/**
- * All props exposed by a native input
- */
-type NativeInputProps = Required<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
->;
-
-/**
- * The value returned by a {@link NativeInputProps} `onChange` callback
- */
-export type NativeInputValue = number | string | undefined;
-
-/**
- * Callback function used by the {@link useInputOnChange} hook
- * to transform an input's native value into an {@link InputValue}.
- *
- * @template {InputType} TType - The input's type
- * @param {NativeInputValue} value - The input's native value
- * @return {Nullable<InputValue<TType>>} The input's transformed value
- */
-type InputOnChangeValueTransformerFn<TType extends InputType> = GenericFn<
-  [NativeInputValue],
-  Nullable<InputValue<TType>>
->;
-
-/**
- * Callback function used by the {@link useInputOnChange} hook
- * if the native input value should be passed to the {@link InputOnChangeValueTransformerFn}.
- */
-type InputOnChangeConditionFn = GenericFn<[NativeInputValue], boolean>;
+import type { MutableRefObject } from "react";
 
 /**
  * A hook to handle native inputs' onChange events and transform their value if needed.
@@ -59,16 +28,26 @@ type InputOnChangeConditionFn = GenericFn<[NativeInputValue], boolean>;
  * @template {InputType} TType
  * @param {InputOnChangeConditionFn} condition - function that dictates whether to trigger the onChange event
  * @param {InputOnChangeValueTransformerFn<TType>} valueTransformer - function to transform the input value
- * @param {Optional<InputOnChangeFn<TType>>} onChange - optional callback function for onChange event
+ * @param {Nullish<InputOnChangeFn<TType>>} onChange - callback function for onChange event
+ * @param {Nullish<NativeInputOnChangeFn | Nullable<NativeInputOnChangeFn>[]>} onChangeNative - native callback function for onChange event, or an array of them
  * @return {VoidFn<NativeInputProps["onChange"]>} the generated callback function for input onChange event, to be used as the native input's onChange prop
  */
 export const useInputOnChange = <TType extends InputType>(
   condition: InputOnChangeConditionFn,
   valueTransformer: InputOnChangeValueTransformerFn<TType>,
-  onChange?: Nullish<InputOnChangeFn<TType>>
+  onChange: Nullish<InputOnChangeFn<TType>>,
+  onChangeNative: Nullish<
+    NativeInputOnChangeFn | Nullable<NativeInputOnChangeFn>[]
+  >
 ) => {
-  return useCallback<NativeInputProps["onChange"]>(
+  return useCallback<NativeInputOnChangeFn>(
     (e) => {
+      if (isFunction<NativeInputOnChangeFn>(onChangeNative)) onChangeNative(e);
+      if (isArray(onChangeNative) && onChangeNative.length > 0) {
+        onChangeNative
+          .filter(isFunction<NativeInputOnChangeFn>)
+          .forEach((listener) => listener(e));
+      }
       if (
         condition(e.target.value) &&
         isFunction<InputOnChangeFn<TType>>(onChange)
@@ -76,7 +55,7 @@ export const useInputOnChange = <TType extends InputType>(
         onChange(valueTransformer(e.target.value));
       }
     },
-    [onChange, condition, valueTransformer]
+    [onChange, onChangeNative, condition, valueTransformer]
   );
 };
 
@@ -93,6 +72,8 @@ type InputValueTransformerFn<TType extends InputType> = GenericFn<
   NativeInputValue
 >;
 
+type InputValueFallbackTransformerFn = GenericFn<[], NativeInputValue>;
+
 /**
  * A hook that processes and returns a memoized {@link NativeInputValue}
  * based on the provided {@link InputValue}.
@@ -103,15 +84,21 @@ type InputValueTransformerFn<TType extends InputType> = GenericFn<
  */
 export const useInputValue = <TType extends InputType>(
   value: Nullable<InputValue<TType>>,
-  valueTransformer?: InputValueTransformerFn<TType>
+  valueTransformer?: InputValueTransformerFn<TType>,
+  fallback?: InputValueFallbackTransformerFn
 ): NativeInputValue => {
   return useMemo(() => {
-    if (isNull(value)) return undefined;
+    if (isNull(value)) {
+      if (isFunction<InputValueFallbackTransformerFn>(fallback))
+        return fallback();
+
+      return undefined;
+    }
     if (isFunction<InputValueTransformerFn<TType>>(valueTransformer)) {
       return valueTransformer(value);
     }
     return value;
-  }, [value, valueTransformer]);
+  }, [value, valueTransformer, fallback]);
 };
 
 /**

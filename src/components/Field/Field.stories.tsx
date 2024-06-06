@@ -9,7 +9,9 @@ import { useMergedProps } from "@utils";
 
 import type { FieldProps } from "./Field.types";
 import type { InputType } from "../Input";
+import type { InputLabelTooltipProps } from "../InputLabel";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { Nullable } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<FieldProps<InputType>>(
   "Field",
@@ -191,6 +193,28 @@ export const ErrorTexts = (props: FieldProps<InputType>) => {
       of={Field}
       defaults={defaults}
       propLabels
+      scaling={1}
+      columns={2}
+    />
+  );
+};
+
+const tooltipProps: Nullable<InputLabelTooltipProps>[] = [
+  null,
+  { content: "Label tooltip" },
+];
+
+export const Tooltips = (props: FieldProps<InputType>) => {
+  const defaults = useMergedProps(
+    Field.defaultProps as Required<FieldProps<InputType>>,
+    props
+  );
+  return (
+    <ComponentVariants
+      variants={tooltipProps}
+      for="tooltip"
+      of={Field}
+      defaults={defaults}
       scaling={1}
       columns={2}
     />

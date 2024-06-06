@@ -1,6 +1,9 @@
+import type { TooltipProps } from "../Tooltip";
 import type { StyleOverrideProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
+
+export type InputLabelTooltipProps = Omit<TooltipProps, "children">;
 
 export type InputLabelProps = {
   /**
@@ -22,6 +25,14 @@ export type InputLabelProps = {
    * @default null
    */
   children?: ReactNode;
+  /**
+   * The tooltip to be displayed when hovering over the label.
+   * @remarks No tooltip will render if omitted.
+   *
+   * @type {Nullable<InputLabelTooltipProps>}
+   * @default null
+   */
+  tooltip?: Nullable<InputLabelTooltipProps>;
 } & StyleOverrideProps;
 
 export type DefaultInputLabelProps = Required<InputLabelProps>;

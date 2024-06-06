@@ -15,12 +15,14 @@ const defaultTextInputProps: DefaultInputProps<"text"> = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
+  onChangeNative: null,
+  name: null,
 };
 
 /**
  * Renders a text input component.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {InputProps<"text">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
@@ -31,7 +33,8 @@ const TextInput = (props: InputProps<"text">): JSX.Element => {
     (nativeValue) => isString(nativeValue),
     (nativeValue) =>
       isString(nativeValue) && nativeValue.length > 0 ? nativeValue : null,
-    mergedProps.onChange
+    mergedProps.onChange,
+    mergedProps.onChangeNative
   );
   const value = useInputValue(mergedProps.value);
   const inputStyles = useInputStyles(mergedProps);

@@ -8,6 +8,9 @@ import {
   useTestId,
 } from "../../utils";
 import { Text } from "../Text/Text.component";
+import { Tooltip } from "../Tooltip";
+
+import { FlexRowLayout } from "@layouts";
 
 import type {
   DefaultInputLabelProps,
@@ -20,11 +23,12 @@ const defaultInputLabelProps: DefaultInputLabelProps = {
   required: false,
   children: null,
   className: null,
+  tooltip: null,
 };
 
 /**
  * Renders an input label component, to be used in association with the Input component.
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
@@ -49,14 +53,17 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
       data-testid={testId}
       data-required={String(required)}
     >
-      <InputLabelText
-        color="gray-600"
-        size="m"
-        testId="input-label-text"
-        $required={required}
-      >
-        {label}
-      </InputLabelText>
+      <FlexRowLayout align="center" gap="s-2" justify="space-between">
+        <InputLabelText
+          color="gray-600"
+          size="m"
+          testId="input-label-text"
+          $required={required}
+        >
+          {label}
+        </InputLabelText>
+        {mergedProps.tooltip && <Tooltip {...mergedProps.tooltip} />}
+      </FlexRowLayout>
       {mergedProps.children}
     </InnerInputLabel>
   );
@@ -81,12 +88,12 @@ const InnerInputLabel = styled.label`
   flex-direction: column;
   gap: var(--s-2);
 
-  & > span[data-testid="text input-label-text"] {
+  & span[data-testid="text input-label-text"] {
     transition: color 150ms ease-out 0s;
   }
 
   &:has(input:focus, textarea:focus, select:focus)
-    > span[data-testid="text input-label-text"] {
+    span[data-testid="text input-label-text"] {
     color: var(--gray-800);
   }
 `;

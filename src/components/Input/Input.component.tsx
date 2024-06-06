@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 
+import { CurrencyInput } from "./CurrencyInput";
 import { EmailInput } from "./EmailInput/EmailInput.component";
 import { inputTypes } from "./Input.data";
 import { NumberInput } from "./NumberInput";
@@ -25,6 +26,7 @@ const inputComponentMap: SpecificInputComponentMap = {
   password: PasswordInput,
   email: EmailInput,
   phone: PhoneInput,
+  currency: CurrencyInput,
 };
 
 /**

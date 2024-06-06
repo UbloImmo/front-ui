@@ -1,12 +1,13 @@
-import { css } from "styled-components";
+import { css, type RuleSet } from "styled-components";
 
 import { cssVarUsage } from "@utils";
 
-import type { TooltipDirection } from "./Tooltip.types";
+import type { Direction } from "@types";
+import type { ValueMap } from "@ubloimmo/front-util";
 
 const TOOLTIP_OFFSET = cssVarUsage("s-2");
 
-const directionStyles = {
+const directionStyles: ValueMap<Direction, RuleSet> = {
   top: css`
     bottom: calc(100% + ${TOOLTIP_OFFSET});
     left: 50%;
@@ -57,7 +58,7 @@ const directionStyles = {
   `,
 };
 
-export const tooltipStyles = ($direction: TooltipDirection) => {
+export const tooltipStyles = ($direction: Direction) => {
   return css`
     position: absolute;
     background: var(--gray-700);
@@ -105,7 +106,7 @@ const containerStyles = {
   `,
 };
 
-export const tooltipPlaceholderStyles = ($direction: TooltipDirection) => {
+export const tooltipPlaceholderStyles = ($direction: Direction) => {
   return css`
     position: absolute;
     &,

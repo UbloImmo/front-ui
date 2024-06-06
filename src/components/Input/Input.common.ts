@@ -11,6 +11,7 @@ import {
 import type {
   CommonInputStyleProps,
   DefaultCommonInputProps,
+  InputControlAnchorProps,
   InputControlStyleProps,
 } from "./Input.types.ts";
 
@@ -53,7 +54,7 @@ export const StyledInputControl = styled.div<InputControlStyleProps>`
  *
  * Useful when creating stateful inputs with multiple controls,
  */
-export const StyledInputControlGroup = styled.div`
+export const StyledInputControlGroup = styled.div<InputControlAnchorProps>`
   ${inputControlGroupStyles}
 `;
 

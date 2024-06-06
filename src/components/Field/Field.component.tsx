@@ -1,6 +1,9 @@
-import { useMemo, type FC } from "react";
+import { isFunction } from "@ubloimmo/front-util";
+import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
+import { useFieldValidity } from "./Field.utils";
+import { NativeInputOnChangeFn } from "../Input";
 import { defaultCommonInputProps } from "../Input/Input.common";
 import { Input } from "../Input/Input.component";
 import { inputTypes } from "../Input/Input.data";
@@ -8,13 +11,7 @@ import { InputAssistiveText } from "../InputAssistiveText";
 import { InputLabel } from "../InputLabel";
 
 import { FlexColumnLayout } from "@layouts";
-import {
-  useLogger,
-  useTestId,
-  useMergedProps,
-  useClassName,
-  useStatic,
-} from "@utils";
+import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
 
 import type { FieldProps, FieldDefaultProps } from "./Field.types";
 import type { InputType } from "../Input/Input.types";
@@ -32,12 +29,14 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
   value: null,
   onChange: null,
   className: null,
+  name: null,
+  onChangeNative: null,
 };
 
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
@@ -45,7 +44,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
 const Field = <TType extends InputType>(
   props: FieldProps<TType> & TestIdProps
 ): Nullable<JSX.Element> => {
-  const { error } = useLogger("Field");
+  const logger = useLogger("Field");
 
   const mergedProps: FieldDefaultProps<InputType> = useMergedProps<
     FieldDefaultProps<InputType>,
@@ -55,31 +54,57 @@ const Field = <TType extends InputType>(
   const testId = useTestId("field", props);
   const className = useClassName(mergedProps);
 
-  const displayAssistiveText = useMemo(() => {
-    return !!(mergedProps.assistiveText || mergedProps.errorText);
-  }, [mergedProps]);
+  const { errorText, error, setValidityState } = useFieldValidity(mergedProps);
 
-  // cast in render needed to fix testing compilation errors
-  const FieldInput = useStatic(
-    () => Input as FC<FieldProps<InputType> & TestIdProps>
+  /**
+   * Native input on change middleware that updates the validity state
+   */
+  const updateValidityOnChange = useCallback<NativeInputOnChangeFn>(
+    (event) => {
+      setValidityState(event.target.validity);
+      if (isFunction<NativeInputOnChangeFn>(mergedProps.onChangeNative)) {
+        mergedProps.onChangeNative(event);
+      }
+    },
+    [mergedProps, setValidityState]
   );
 
+  const shoulDisplayAssistiveText = useMemo(() => {
+    return !!(mergedProps.assistiveText || errorText);
+  }, [mergedProps, errorText]);
+
+  // TODO: native error messages for each input validity state
+
   if (!mergedProps.type || !inputTypes?.includes(mergedProps.type)) {
-    error(`Invalid type (${mergedProps.type}) provided.`);
+    logger.error(`Invalid type (${mergedProps.type}) provided.`);
     return null;
   }
 
   return (
     <FieldContainer
       testId={testId}
+      overrideTestId
       data-field-type={mergedProps.type}
       className={className}
       gap="s-1"
     >
-      <InputLabel {...mergedProps} testId="field-label">
-        <FieldInput {...mergedProps} testId="field-input" />
+      <InputLabel {...mergedProps} testId="field-label" overrideTestId>
+        <Input
+          {...mergedProps}
+          testId="field-input"
+          onChangeNative={updateValidityOnChange}
+          error={error}
+        />
       </InputLabel>
-      {displayAssistiveText && <InputAssistiveText {...mergedProps} />}
+      {shoulDisplayAssistiveText && (
+        <InputAssistiveText
+          assistiveText={mergedProps.assistiveText}
+          errorText={errorText}
+          error={error}
+          testId="field-assistive-text"
+          overrideTestId
+        />
+      )}
     </FieldContainer>
   );
 };

@@ -1,3 +1,4 @@
+import type { CurrencyInputProps } from "./CurrencyInput";
 import type { InputType, InputProps } from "./Input.types";
 import type { NumberInputProps } from "./NumberInput/NumberInput.types";
 import type { PasswordInputProps } from "./PasswordInput/PasswordInput.types";
@@ -10,6 +11,7 @@ type SpecificInputPropsMap = {
   phone: InputProps<"phone">;
   number: NumberInputProps;
   password: PasswordInputProps;
+  currency: CurrencyInputProps;
 };
 
 export type SpecificInputProps<TType extends InputType> =

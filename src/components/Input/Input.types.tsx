@@ -1,7 +1,43 @@
 import { inputTypes } from "./Input.data";
 
-import type { Email, StyleProps } from "@types";
-import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { DirectionHorizontal } from "@/types/global/direction.types";
+import type { CurrencyInt, Email, StyleProps } from "@types";
+import type { Enum, GenericFn, Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
+
+/**
+ * All props exposed by a native input
+ */
+export type NativeInputProps = Required<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+>;
+
+/**
+ * `onChange` property of a native input
+ */
+export type NativeInputOnChangeFn = NativeInputProps["onChange"];
+
+/**
+ * The value returned by a {@link NativeInputOnChangeFn} callback
+ */
+export type NativeInputValue = number | string | undefined;
+
+/**
+ * Callback function used by the {@link useInputOnChange} hook
+ * to transform an input's native value into an {@link InputValue}.
+ *
+ * @template {InputType} TType - The input's type
+ * @param {NativeInputValue} value - The input's native value
+ * @return {Nullable<InputValue<TType>>} The input's transformed value
+ */
+export type InputOnChangeValueTransformerFn<TType extends InputType> =
+  GenericFn<[NativeInputValue], Nullable<InputValue<TType>>>;
+
+/**
+ * Callback function used by the {@link useInputOnChange} hook
+ * if the native input value should be passed to the {@link InputOnChangeValueTransformerFn}.
+ */
+export type InputOnChangeConditionFn = GenericFn<[NativeInputValue], boolean>;
 
 /**
  * Common props shared by all Input components
@@ -57,6 +93,8 @@ export type InputValue<TType extends InputType> = TType extends
   ? string
   : TType extends "number"
   ? number
+  : TType extends "currency"
+  ? CurrencyInt
   : TType extends "email"
   ? Email
   : never;
@@ -99,6 +137,22 @@ export type InputProps<TType extends InputType> = CommonInputProps & {
    * @type {InputOnChangeFn | null}
    */
   onChange?: Nullable<InputOnChangeFn<TType>>;
+
+  /**
+   * The name of the input
+   *
+   * @default null
+   */
+  name?: Nullable<string>;
+  /**
+   * The input's native `onChange` callback
+   *
+   * @remarks is called before `props.onChange`, regardless of its call condition
+   *
+   * @type {Nullable<NativeInputOnChangeFn>}
+   * @default undefined
+   */
+  onChangeNative?: Nullable<NativeInputOnChangeFn>;
 };
 
 export type DefaultInputProps<TType extends InputType> = Required<
@@ -109,4 +163,7 @@ export type CommonInputStyleProps = StyleProps<DefaultCommonInputProps>;
 
 export type InputControlStyleProps = CommonInputStyleProps & {
   onClick?: VoidFn;
+  $anchor?: DirectionHorizontal;
 };
+
+export type InputControlAnchorProps = Pick<InputControlStyleProps, "$anchor">;

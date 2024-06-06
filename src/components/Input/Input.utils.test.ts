@@ -3,6 +3,7 @@ import { describe, expect, mock } from "bun:test";
 import { testHookFactory } from "../../tests";
 
 import {
+  NativeInputOnChangeFn,
   useInputControlCallback,
   useInputOnChange,
   useInputStyles,
@@ -18,6 +19,11 @@ import type { Nullable, Optional } from "@ubloimmo/front-util";
 import type { ChangeEvent, MutableRefObject } from "react";
 
 const mockOnChange = mock((_value: Nullable<InputValue<InputType>>) => {});
+const mockOnChangeNative = mock<NativeInputOnChangeFn>((_event) => {});
+
+const mockEvent = {
+  target: { value: "test" },
+} as ChangeEvent<HTMLInputElement>;
 
 const testUseInputOnChange = () => {
   type Hook = typeof useInputOnChange;
@@ -25,7 +31,7 @@ const testUseInputOnChange = () => {
     "useInputOnChange",
     useInputOnChange,
     {
-      params: [() => true, () => "test"],
+      params: [() => true, () => "test", () => {}, () => {}],
       tests: [
         {
           name: "should return a function",
@@ -34,28 +40,42 @@ const testUseInputOnChange = () => {
       ],
     }
   );
-
-  testHook(
-    () => false,
-    () => null,
-    mockOnChange
-  )("should never call onChange but call condition", (cb) => {
-    cb({ target: { value: "test" } } as ChangeEvent<HTMLInputElement>);
-    expect(mockOnChange).not.toHaveBeenCalled();
-  });
-
   const mockTransformer = mock((value: Optional<string | number>) =>
     String(value)
   );
 
   testHook(
+    () => false,
+    () => null,
+    mockOnChange,
+    mockOnChangeNative
+  )("should never call onChange but call condition", (cb) => {
+    cb(mockEvent);
+    expect(mockTransformer).not.toHaveBeenCalled();
+    expect(mockOnChange).not.toHaveBeenCalled();
+    expect(mockOnChangeNative).toHaveBeenCalledWith(mockEvent);
+
+    mockTransformer.mockReset();
+    mockOnChange.mockReset();
+    mockOnChangeNative.mockReset();
+  });
+
+  testHook(
     () => true,
     mockTransformer,
-    mockOnChange
+    mockOnChange,
+    mockOnChangeNative
   )("should call onChange & transformer", (cb) => {
-    cb({ target: { value: "test" } } as ChangeEvent<HTMLInputElement>);
-    expect(mockTransformer).toHaveBeenCalledWith("test");
-    expect(mockOnChange).toHaveBeenCalledWith("test");
+    cb(mockEvent);
+    expect(mockTransformer).toHaveBeenCalledWith(mockEvent.target.value);
+    expect(mockOnChange).toHaveBeenCalledWith(
+      mockTransformer(mockEvent.target.value)
+    );
+    expect(mockOnChangeNative).toHaveBeenCalledWith(mockEvent);
+
+    mockTransformer.mockReset();
+    mockOnChange.mockReset();
+    mockOnChangeNative.mockReset();
   });
 };
 
@@ -112,12 +132,7 @@ const testUseInputStyles = () => {
     }
   );
 
-  testHook({
-    error: true,
-    disabled: true,
-    required: true,
-    placeholder: "test",
-  })("should transform input style props", (styles) => {
+  testHook(inputProps)("should transform input style props", (styles) => {
     expect(styles).toEqual({
       $error: true,
       $disabled: true,

@@ -1,5 +1,5 @@
 import type { IconName } from "..";
-import type { PaletteColor, RgbaColorStr } from "@types";
+import type { DirectionHorizontal, PaletteColor, RgbaColorStr } from "@types";
 import type {
   Enum,
   Nullable,
@@ -21,10 +21,6 @@ export type ButtonColor = Enum<typeof buttonColors>;
 const buttonTypes = ["button", "submit"] as const;
 
 export type ButtonType = Enum<typeof buttonTypes>;
-
-const buttonIconPlacements = ["left", "right"] as const;
-
-export type ButtonIconPlacement = Enum<typeof buttonIconPlacements>;
 
 export type ButtonProps = {
   /**
@@ -105,9 +101,10 @@ export type ButtonProps = {
    *
    * Has no effect if only `icon` and no `label` is provided.
    *
+   * @type {DirectionHorizontal}
    * @default "left"
    */
-  iconPlacement?: ButtonIconPlacement;
+  iconPlacement?: DirectionHorizontal;
 } & RequireAtLeastOne<{
   /**
    * The label of the button.

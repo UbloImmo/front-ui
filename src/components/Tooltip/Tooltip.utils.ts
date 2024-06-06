@@ -5,9 +5,10 @@ import {
   objectEntries,
 } from "@ubloimmo/front-util";
 
-import type { ToolipIntersection, TooltipDirection } from "./Tooltip.types";
+import type { ToolipIntersection } from "./Tooltip.types";
+import type { Direction } from "@types";
 
-const inverseDirectionMap: Record<TooltipDirection, TooltipDirection> = {
+const inverseDirectionMap: Record<Direction, Direction> = {
   top: "bottom",
   bottom: "top",
   left: "right",
@@ -18,21 +19,21 @@ const inverseDirectionMap: Record<TooltipDirection, TooltipDirection> = {
  * Returns an IntersectionObserverCallback that computes the intersection of a tooltip
  * with the viewport or other intersection root and updates its direction accordingly.
  *
- * @param {GenericFn<[], TooltipDirection>} getTooltipDirection - get the current direction of the tooltip.
- * @param {GenericFn<[TooltipDirection], void>} setTooltipDirection - sets the direction of the tooltip.
+ * @param {GenericFn<[], Direction>} getTooltipDirection - get the current direction of the tooltip.
+ * @param {GenericFn<[Direction], void>} setTooltipDirection - sets the direction of the tooltip.
  * @return {IntersectionObserverCallback}.
  */
 export const computeTooltipIntersections =
   (
-    getTooltipDirection: GenericFn<[], TooltipDirection>,
-    setTooltipDirection: GenericFn<[TooltipDirection]>
+    getTooltipDirection: GenericFn<[], Direction>,
+    setTooltipDirection: GenericFn<[Direction]>
   ): IntersectionObserverCallback =>
   (entries, observer) => {
     /**
      * Gets current direction of the tooltip
      * initializes the clipping direction as null
      */
-    let clippingDirection: Nullable<TooltipDirection> = null;
+    let clippingDirection: Nullable<Direction> = null;
     let prevPassDiffRatios: Nullable<ToolipIntersection> = null;
 
     entries.forEach(
@@ -70,7 +71,7 @@ export const computeTooltipIntersections =
          * Checks if the tooltip is clipped
          * Updates the clipping direction when clipped
          */
-        const clippingMap: Record<TooltipDirection, boolean> = {
+        const clippingMap: Record<Direction, boolean> = {
           top: diffs.top < 0,
           bottom: diffs.bottom < 0,
           right: diffs.right < 0,
@@ -84,9 +85,9 @@ export const computeTooltipIntersections =
         const currentClippingDirection =
           objectEntries(clippingMap).reduce(
             (
-              prevClipDir: Nullable<TooltipDirection>,
+              prevClipDir: Nullable<Direction>,
               [clipDir, isClipping]
-            ): Nullable<TooltipDirection> => {
+            ): Nullable<Direction> => {
               if (!isClipping) return prevClipDir;
               if (!prevClipDir) {
                 return clipDir;
