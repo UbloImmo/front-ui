@@ -10,7 +10,13 @@ import { BadgeProps, DefaultBadgeProps } from "./Badge.types";
 import { Icon } from "../Icon/Icon.component";
 import { Text } from "../Text/Text.component";
 
-import { useLogger, useMergedProps, useStyleProps, useTestId } from "@utils";
+import {
+  isEmptyString,
+  useLogger,
+  useMergedProps,
+  useStyleProps,
+  useTestId,
+} from "@utils";
 
 import type { PaletteColor, StyleProps, TestIdProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
@@ -50,7 +56,7 @@ const Badge = (props: BadgeProps & TestIdProps): Nullable<JSX.Element> => {
     return { iconColorStyle, textColorStyle };
   }, [color, shade]);
 
-  if (!label && !icon) {
+  if ((!label || isEmptyString(label)) && !icon) {
     warn("Both label and icon are missing, please provide at least one");
     return null;
   }
@@ -65,7 +71,7 @@ const Badge = (props: BadgeProps & TestIdProps): Nullable<JSX.Element> => {
           size="s-3"
         />
       )}
-      {label && (
+      {label && !isEmptyString(label) && (
         <Text size="s" color={textColorStyle} weight="medium">
           {label}
         </Text>
