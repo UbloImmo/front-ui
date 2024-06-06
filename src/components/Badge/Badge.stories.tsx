@@ -12,9 +12,15 @@ import { ColorPalette } from "@types";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
+const args = {
+  ...Badge.defaultProps,
+  label: "[label]",
+};
+
 const meta = {
   title: "Components/Badge/Stories",
   component: Badge,
+  args,
   decorators: [
     (Story) => (
       <FlexRowLayout gap="s-4" align="center" justify="start" wrap>
@@ -28,7 +34,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: Badge.defaultProps,
+  args,
 };
 
 const colors: (keyof ColorPalette)[] = [

@@ -10,12 +10,13 @@ import { BadgeProps, DefaultBadgeProps } from "./Badge.types";
 import { Icon } from "../Icon/Icon.component";
 import { Text } from "../Text/Text.component";
 
-import { useMergedProps, useStyleProps, useTestId } from "@utils";
+import { useLogger, useMergedProps, useStyleProps, useTestId } from "@utils";
 
 import type { PaletteColor, StyleProps, TestIdProps } from "@types";
+import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultBadgeProps: DefaultBadgeProps = {
-  label: "[label]",
+  label: null,
   icon: null,
   color: "primary",
   shade: "light",
@@ -25,16 +26,17 @@ const defaultBadgeProps: DefaultBadgeProps = {
  *
  * @remarks Badge shades are based on two sets of colors, light and dark, depending on the shade prop.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {BadgeProps} props - the props for the Badge component
- * @return {JSX.Element} the Badge component
+ * @return {Nullable<JSX.Element>} the Badge component
  */
 
-const Badge = (props: BadgeProps & TestIdProps): JSX.Element => {
+const Badge = (props: BadgeProps & TestIdProps): Nullable<JSX.Element> => {
+  const { warn } = useLogger("Badge");
   const mergedProps = useMergedProps(defaultBadgeProps, props);
   const styledProps = useStyleProps(mergedProps);
-  const testId = useTestId("badge", props);
+  const testId = useTestId<TestIdProps>("badge", props);
   const { color, shade, label, icon } = mergedProps;
   const { iconColorStyle, textColorStyle } = useMemo(() => {
     const { iconColor, textColor } =
@@ -48,6 +50,11 @@ const Badge = (props: BadgeProps & TestIdProps): JSX.Element => {
     return { iconColorStyle, textColorStyle };
   }, [color, shade]);
 
+  if (!label && !icon) {
+    warn("Both label and icon are missing, please provide at least one");
+    return null;
+  }
+
   return (
     <BadgeContainer data-testid={testId} {...styledProps} role="status">
       {icon && (
@@ -58,9 +65,11 @@ const Badge = (props: BadgeProps & TestIdProps): JSX.Element => {
           size="s-3"
         />
       )}
-      <Text size="s" color={textColorStyle} weight="medium">
-        {label}
-      </Text>
+      {label && (
+        <Text size="s" color={textColorStyle} weight="medium">
+          {label}
+        </Text>
+      )}
     </BadgeContainer>
   );
 };

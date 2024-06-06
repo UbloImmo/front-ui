@@ -4,26 +4,27 @@ import type {
   DefaultPaletteColorShadeKey,
   GrayscalePaletteColorShadeKey,
 } from "@types";
-import type { Enum, Nullable } from "@ubloimmo/front-util";
+import type { Enum, Nullable, RequireAtLeastOne } from "@ubloimmo/front-util";
 
 const badgeShades = ["light", "dark"] as const;
 export type BadgeShade = Enum<typeof badgeShades>;
 
-export type BadgeProps = {
+export type BadgeProps = RequireAtLeastOne<{
   /**
    * The label of the Badge
    *
    * @required
-   * @type {string}
-   * @default undefined
+   * @type {Nullable<string>}
+   * @default null
    */
-  label: string;
+  label: Nullable<string>;
   /**
    * Optional icon to display inside the Badge
    *
    * @type {IconName}
    */
-  icon?: Nullable<IconName>;
+  icon: Nullable<IconName>;
+}> & {
   /**
    * The dominant color of the Badge
    *
