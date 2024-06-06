@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.10.3 - 2024-06-06
 ### Changed
-
 - `v.0.0.5` Badge component
   - Require at least one of `label` or `icon`
 
