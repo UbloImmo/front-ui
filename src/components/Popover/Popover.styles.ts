@@ -36,6 +36,11 @@ export const popoverContentStyles = ({
       outline: none;
     }
 
+    &,
+    & > *:first-child {
+      z-index: 1;
+    }
+
     ${$fitTriggerWidth &&
     css`
       & > *:first-child {
@@ -54,5 +59,6 @@ export const popoverContentWrapperStyles = (): RuleSet => {
     border-radius: var(--s-2);
     box-shadow: var(--shadow-card-elevation-medium);
     width: fit-content;
+    z-index: 1;
   `;
 };

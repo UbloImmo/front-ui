@@ -17,7 +17,7 @@ import {
 
 import { useTestId, useMergedProps } from "@utils";
 
-import { Button, Text } from "@components";
+import { Text } from "@components";
 
 import type {
   PopoverProps,
@@ -29,7 +29,7 @@ import type { TestIdProps } from "@types";
 const defaultPopoverProps: PopoverDefaultProps = {
   align: "center",
   side: "bottom",
-  children: <Button label="Trigger popover" color="black" />,
+  children: null,
   content: <Text>Popover content</Text>,
   defaultOpen: false,
   sideOffset: "s-1",

@@ -110,7 +110,7 @@ type UncontrolledPopoverProps = PopoverContentProps & {
   /**
    * The trigger for the popover.
    */
-  children: NonNullish<ReactNode>;
+  children: ReactNode;
   /**
    * The popover's content.
    */
