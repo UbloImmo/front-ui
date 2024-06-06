@@ -104,7 +104,10 @@ Colors.parameters = {
 };
 
 export const Placement = (props: Partial<ChipProps>) => {
-  const mergedProps = useMergedProps(Chip.defaultProps, props);
+  const mergedProps = useMergedProps(Chip.defaultProps, {
+    ...props,
+    icon: "Square",
+  });
   return (
     <ComponentVariants
       defaults={mergedProps}

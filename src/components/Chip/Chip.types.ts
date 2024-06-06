@@ -14,10 +14,10 @@ export type ChipProps = {
   label: string;
   /**
    * The icon to display next to the label of the Chip
-   * @required
-   * @type {IconName}
+   * @default null
+   * @type {Nullable<IconName>}
    */
-  icon: IconName;
+  icon?: Nullable<IconName>;
   /**
    * The dominant color of the Chip
    *

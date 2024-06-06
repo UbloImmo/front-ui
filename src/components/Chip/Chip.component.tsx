@@ -20,7 +20,7 @@ import type { PaletteColor, StyleProps, TestIdProps } from "@types";
 
 const defaultChipProps: DefaultChipProps = {
   label: "[Chip]",
-  icon: "Square",
+  icon: null,
   color: "primary",
   iconPlacement: "left",
   onDelete: null,
@@ -30,7 +30,7 @@ const defaultChipProps: DefaultChipProps = {
 /**
  * An interactive `Badge` with a remove button, can be used as a filter tag.
  *
- * @version 0.0.1
+ * @version 0.0.2
  * @param {ChipProps} props - the props for the Chip component
  * @returns {JSX.Element} - the Chip component
  */
@@ -57,10 +57,6 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
     warn(`Missing required label, defaulting to ${defaultChipProps.label}`);
   }
 
-  if (!props.icon) {
-    warn(`Missing required icon, defaulting to ${defaultChipProps.icon}`);
-  }
-
   if (!props.deleteButtonTitle) {
     warn(
       `Missing required title for delete button, defaulting to ${defaultChipProps.deleteButtonTitle}`
@@ -70,7 +66,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   return (
     <FlexRowLayout align="center" testId={testId} role="status">
       <ChipContainer {...styledProps}>
-        <Icon name={icon} size="s-3" color={iconColorStyle} />
+        {icon && <Icon name={icon} size="s-3" color={iconColorStyle} />}
         <Text size="s" weight="medium" color={textColorStyle} ellipsis>
           {label}
         </Text>
