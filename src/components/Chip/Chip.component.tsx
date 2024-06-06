@@ -57,10 +57,6 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
     warn(`Missing required label, defaulting to ${defaultChipProps.label}`);
   }
 
-  if (!props.icon) {
-    warn(`Missing required icon, defaulting to ${defaultChipProps.icon}`);
-  }
-
   if (!props.deleteButtonTitle) {
     warn(
       `Missing required title for delete button, defaulting to ${defaultChipProps.deleteButtonTitle}`
