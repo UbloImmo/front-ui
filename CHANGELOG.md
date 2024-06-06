@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v.0.0.4` Chip component
+  - assign onDelete to delete button onMouseDown as well to stop event propagation
+
 ## 0.10.1 - 2024-06-06
 ### Fixed
 - `v.0.0.3` Chip component
