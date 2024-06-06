@@ -30,7 +30,7 @@ const defaultChipProps: DefaultChipProps = {
 /**
  * An interactive `Badge` with a remove button, can be used as a filter tag.
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @param {ChipProps} props - the props for the Chip component
  * @returns {JSX.Element} - the Chip component
  */
@@ -79,6 +79,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
       <ChipButton
         {...styledProps}
         onClick={onDelete}
+        onMouseDown={onDelete}
         data-testid="chip-button"
         title={deleteButtonTitle ?? undefined}
         aria-label={deleteButtonTitle ?? undefined}
