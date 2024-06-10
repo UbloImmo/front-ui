@@ -8,7 +8,7 @@ import { useMergedProps } from "@utils";
 import { Badge, StateIndicator, Button, Field } from "@components";
 
 import type { PopoverProps } from "./Popover.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 const componentSource = componentSourceFactory<PopoverProps>(
   "Popover",
@@ -17,7 +17,7 @@ const componentSource = componentSourceFactory<PopoverProps>(
 
 const meta = {
   component: Popover,
-  title: "Components/Popover/Stories",
+  title: "Layouts/Popover/Stories",
   args: {
     ...Popover.defaultProps,
   },
@@ -27,9 +27,6 @@ const meta = {
 } satisfies Meta<typeof Popover>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {};
 
 const buildLabeledElementsList = (label: string) => {
   return [
@@ -38,6 +35,15 @@ const buildLabeledElementsList = (label: string) => {
     <StateIndicator key="state-indicator" label={"State Indicator " + label} />,
     <Field key="field" type="text" label={"Field " + label} />,
   ];
+};
+
+const defaultTrigger = buildLabeledElementsList("trigger")[0];
+export const Default = (props: Partial<PopoverProps>) => {
+  return (
+    <Popover content="[Popover Content]" {...props}>
+      {defaultTrigger}
+    </Popover>
+  );
 };
 
 const triggers = buildLabeledElementsList("trigger");
@@ -108,6 +114,27 @@ export const Content = (props: Partial<PopoverProps>) => {
           ))}
         </GridLayout>
       )}
+    />
+  );
+};
+
+export const Fit = (props: Partial<PopoverProps>) => {
+  const defaults = useMergedProps(Popover.defaultProps, {
+    ...props,
+    content: <div>Contents</div>,
+    children: buildLabeledElementsList("trigger")[0],
+  });
+
+  return (
+    <ComponentVariants
+      columns={2}
+      align="center"
+      justify="center"
+      defaults={defaults}
+      variants={bools}
+      for="fitTriggerWidth"
+      of={Popover}
+      scaling={1}
     />
   );
 };

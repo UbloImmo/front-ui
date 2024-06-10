@@ -30,4 +30,3 @@ export * from "./CopyClipboardInfoCard";
 export * from "./EntityInfoCard";
 export * from "./Checkbox";
 export * from "./Callout";
-export * from "./Popover";
