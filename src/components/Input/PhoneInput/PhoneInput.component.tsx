@@ -1,4 +1,4 @@
-import { Nullable, isFunction, isNull } from "@ubloimmo/front-util";
+import { isFunction, isNull } from "@ubloimmo/front-util";
 import { useRef, useMemo, useCallback, ChangeEventHandler } from "react";
 import {
   CountrySelector,
@@ -19,9 +19,9 @@ import {
   StyledInputContainer,
   defaultCommonInputProps,
 } from "../Input.common";
-import { useInputStyles } from "../Input.utils";
+import { useInputRef, useInputStyles } from "../Input.utils";
 
-import { useMergedProps, useTestId } from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type {
   DefaultInputProps,
@@ -43,7 +43,7 @@ const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
  * Renders a international phone input component.
  * Does international phone formatting on the input value.
  *
- * @version 0.0.4
+ * @version 0.0.5
  * @param {InputProps<"phone">} props - The input props.
  * @return {JSX.Element} The rendered phone input component.
  */
@@ -51,7 +51,7 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultPhoneInputProps, props);
   const testId = useTestId("input-phone", props);
 
-  const inputRef = useRef<Nullable<HTMLInputElement>>(null);
+  const { inputRef, forwardRef } = useInputRef(mergedProps);
 
   const initialValue = useMemo(
     () => defaultToFrenchPhone(mergedProps.value ?? ""),
@@ -96,8 +96,10 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
         inputRef.current.focus();
       }
     },
-    [setCountry]
+    [inputRef, setCountry]
   );
+
+  const onBlur = useHtmlAttribute(mergedProps.onBlur);
 
   const inputStyles = useInputStyles(mergedProps);
 
@@ -113,9 +115,10 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
       <StyledPhoneInput
         data-testid={testId}
         {...inputStyles}
-        ref={inputRef}
+        ref={forwardRef}
         value={inputValue}
         onChange={interceptOnChange}
+        onBlur={onBlur}
         disabled={mergedProps.disabled}
         placeholder={mergedProps.placeholder}
         type="tel"

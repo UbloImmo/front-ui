@@ -10,11 +10,12 @@ import {
 } from "../Input.common";
 import {
   useInputOnChange,
+  useInputRef,
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
 
-import { useMergedProps, useTestId } from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type { DefaultInputProps, InputProps } from "../Input.types";
 import type { TestIdProps } from "@types";
@@ -36,6 +37,7 @@ const defaultEmailInputProps: DefaultInputProps<"email"> = {
  */
 const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultEmailInputProps, props);
+
   const onChange = useInputOnChange<"email">(
     (nativeValue) => isString(nativeValue),
     (nativeValue) =>
@@ -43,9 +45,16 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
     mergedProps.onChange,
     mergedProps.onChangeNative
   );
+
   const value = useInputValue(mergedProps.value);
+
   const inputStyles = useInputStyles(mergedProps);
+
   const testId = useTestId("input-email", props);
+
+  const { forwardRef } = useInputRef(mergedProps);
+
+  const onBlur = useHtmlAttribute(mergedProps.onBlur);
 
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-email-container">
@@ -54,9 +63,11 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
         value={value}
         type="email"
         onChange={onChange}
+        onBlur={onBlur}
         required={mergedProps.required}
         placeholder={mergedProps.placeholder}
         disabled={mergedProps.disabled}
+        ref={forwardRef}
         {...inputStyles}
       />
       <StyledInputControl {...inputStyles}>

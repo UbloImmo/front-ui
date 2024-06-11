@@ -1,5 +1,5 @@
-import { isNull, isString, type Nullable } from "@ubloimmo/front-util";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { isNull, isString } from "@ubloimmo/front-util";
+import { useEffect, useMemo, useState } from "react";
 
 import { Icon } from "../../Icon";
 import {
@@ -12,11 +12,12 @@ import {
 import {
   useInputControlCallback,
   useInputOnChange,
+  useInputRef,
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
 
-import { useMergedProps, useTestId } from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type {
   DefaultPasswordInputProps,
@@ -30,7 +31,6 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
-  onChangeNative: null,
   onVisibilityChange: null,
   allowChangeVisibility: true,
   visible: false,
@@ -40,7 +40,7 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
 /**
  * Renders a password input component that allows for password visibility toggle.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {PasswordInputProps} props - The input props.
  * @return {JSX.Element} The rendered text input component.
@@ -48,12 +48,13 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
 const PasswordInput = (
   props: PasswordInputProps & TestIdProps
 ): JSX.Element => {
-  const inputRef = useRef<Nullable<HTMLInputElement>>(null);
   const mergedProps = useMergedProps(defaultPasswordInputProps, props);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(
     mergedProps.visible
   );
+
+  const { inputRef, forwardRef } = useInputRef(mergedProps);
 
   useEffect(() => {
     // update the password visibility if props change
@@ -103,6 +104,9 @@ const PasswordInput = (
   const inputStyles = useInputStyles(mergedProps);
 
   const testId = useTestId("input-password", props);
+
+  const onBlur = useHtmlAttribute(mergedProps.onBlur);
+
   return (
     <StyledInputContainer
       {...inputStyles}
@@ -113,12 +117,13 @@ const PasswordInput = (
         value={value}
         type={visibility.inputType}
         onChange={onChange}
+        onBlur={onBlur}
         placeholder={mergedProps.placeholder}
         disabled={mergedProps.disabled}
         required={mergedProps.required}
         aria-roledescription="Champs de saisie mot de passe"
         role="textbox"
-        ref={inputRef}
+        ref={forwardRef}
         {...inputStyles}
       ></StyledInput>
       <StyledInputControlGroup>

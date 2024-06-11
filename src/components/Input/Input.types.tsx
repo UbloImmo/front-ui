@@ -3,7 +3,13 @@ import { inputTypes } from "./Input.data";
 import type { DirectionHorizontal } from "@/types/global/direction.types";
 import type { CurrencyInt, Email, StyleProps } from "@types";
 import type { Enum, GenericFn, Nullable, VoidFn } from "@ubloimmo/front-util";
-import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
+import type {
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+  MutableRefObject,
+  Ref,
+  RefCallback,
+} from "react";
 
 /**
  * All props exposed by a native input
@@ -16,6 +22,11 @@ export type NativeInputProps = Required<
  * `onChange` property of a native input
  */
 export type NativeInputOnChangeFn = NativeInputProps["onChange"];
+
+/**
+ * `onBlur` property of a native input
+ */
+export type NativeInputOnBlurFn = NativeInputProps["onBlur"];
 
 /**
  * The value returned by a {@link NativeInputOnChangeFn} callback
@@ -67,6 +78,30 @@ export type CommonInputProps = {
    * @default ""
    */
   placeholder?: string;
+  /**
+   * The input's ref
+   *
+   * @default null
+   */
+  inputRef?: Ref<Nullable<HTMLInputElement>>;
+  /**
+   * The input's native `onChange` callback
+   *
+   * @remarks is called before `props.onChange`, regardless of its call condition
+   *
+   * @type {Nullable<NativeInputOnChangeFn>}
+   * @default null
+   */
+  onChangeNative?: Nullable<NativeInputOnChangeFn>;
+  /**
+   * The input's native `onBlur` callback
+   *
+   * @remarks Stricty declared for compatibility with react-hook-form
+   *
+   * @type {Nullable<NativeInputOnBlurFn>}
+   * @default null
+   */
+  onBlur?: Nullable<NativeInputOnBlurFn>;
 };
 
 export type DefaultCommonInputProps = Required<CommonInputProps>;
@@ -144,22 +179,15 @@ export type InputProps<TType extends InputType> = CommonInputProps & {
    * @default null
    */
   name?: Nullable<string>;
-  /**
-   * The input's native `onChange` callback
-   *
-   * @remarks is called before `props.onChange`, regardless of its call condition
-   *
-   * @type {Nullable<NativeInputOnChangeFn>}
-   * @default undefined
-   */
-  onChangeNative?: Nullable<NativeInputOnChangeFn>;
 };
 
 export type DefaultInputProps<TType extends InputType> = Required<
   InputProps<TType>
 >;
 
-export type CommonInputStyleProps = StyleProps<DefaultCommonInputProps>;
+export type CommonInputStyleProps = StyleProps<
+  Omit<DefaultCommonInputProps, "inputRef" | "onChangeNative" | "onBlur">
+>;
 
 export type InputControlStyleProps = CommonInputStyleProps & {
   onClick?: VoidFn;
@@ -167,3 +195,8 @@ export type InputControlStyleProps = CommonInputStyleProps & {
 };
 
 export type InputControlAnchorProps = Pick<InputControlStyleProps, "$anchor">;
+
+export type UseInputRefReturn<TElement extends Element> = {
+  inputRef: MutableRefObject<Nullable<TElement>>;
+  forwardRef: RefCallback<Nullable<TElement>>;
+};

@@ -1,5 +1,5 @@
 import { isArray, isFunction, isNull } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 import { toStyleProps } from "@utils";
 
@@ -13,6 +13,7 @@ import type {
   InputValue,
   NativeInputOnChangeFn,
   NativeInputValue,
+  UseInputRefReturn,
 } from "./Input.types";
 import type {
   GenericFn,
@@ -20,7 +21,7 @@ import type {
   Nullish,
   VoidFn,
 } from "@ubloimmo/front-util";
-import type { MutableRefObject } from "react";
+import type { MutableRefObject, RefCallback } from "react";
 
 /**
  * A hook to handle native inputs' onChange events and transform their value if needed.
@@ -137,4 +138,40 @@ export const useInputControlCallback = (
     // call callback
     callback();
   }, [inputRef, mergedProps, callback]);
+};
+
+/**
+ * Declared and exposes an input element to both parent and inner ref.
+ *
+ * @template {Element} TElement: The type of the HTML element to be assigned to both parent and inner refs.
+ *
+ * @param {DefaultCommonInputProps} mergedProps: The merged props object containing the `disabled` and parent `inputRef` properties.
+ * @returns {UseInputRefReturn<TElement>}: An object containing the `inputRef` and `forwardRef` properties.
+ */
+export const useInputRef = <TElement extends Element = HTMLInputElement>(
+  mergedProps: DefaultCommonInputProps
+): UseInputRefReturn<TElement> => {
+  // declare & expose inner input ref for components that need it
+  const inputRef = useRef<Nullable<TElement>>(null);
+  /**
+   * callback passed to input elements's `ref` property that assigns the element to both parent and inner refs
+   *
+   * @param {Nullable<TElement>} inputElement: The element or null to be assigned to both parent and inner refs
+   *
+   */
+  const forwardRef = useCallback<RefCallback<Nullable<TElement>>>(
+    (inputElement) => {
+      inputRef.current = inputElement;
+      if (!mergedProps.inputRef) return;
+      if (isFunction<VoidFn<[Nullable<TElement>]>>(mergedProps.inputRef)) {
+        mergedProps.inputRef(inputElement);
+      } else {
+        (mergedProps.inputRef as MutableRefObject<Nullable<TElement>>).current =
+          inputElement;
+      }
+    },
+    [mergedProps]
+  );
+
+  return { inputRef, forwardRef };
 };

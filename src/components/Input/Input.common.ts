@@ -20,6 +20,9 @@ export const defaultCommonInputProps: DefaultCommonInputProps = {
   disabled: false,
   required: false,
   placeholder: "[placeholder]",
+  inputRef: null,
+  onChangeNative: null,
+  onBlur: null,
 } as const;
 
 /**

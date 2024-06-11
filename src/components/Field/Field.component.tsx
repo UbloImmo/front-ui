@@ -30,13 +30,12 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
   onChange: null,
   className: null,
   name: null,
-  onChangeNative: null,
 };
 
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}

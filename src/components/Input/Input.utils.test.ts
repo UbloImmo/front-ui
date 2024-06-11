@@ -114,6 +114,9 @@ const inputProps: DefaultCommonInputProps = {
   disabled: true,
   required: true,
   placeholder: "test",
+  inputRef: null,
+  onChangeNative: null,
+  onBlur: null,
 };
 
 const testUseInputStyles = () => {
