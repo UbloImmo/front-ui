@@ -32,7 +32,7 @@ const inputComponentMap: SpecificInputComponentMap = {
 /**
  * Renders a specific input component based on the provided `type` prop.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {GenericInputProps<TType>} props - The generic input props.
  * @returns {Nullable<JSX.Element>}
@@ -58,6 +58,10 @@ const Input = <TType extends InputType = "text">({
     return inputComponentMap[type];
   }, [type, warn]);
 
+  const inputProps = useMemo(() => {
+    return props as SpecificInputProps<TType>;
+  }, [props]);
+
   if (!InputComponent) {
     error(`No component for input type: ${type}`);
     return null;
@@ -65,7 +69,7 @@ const Input = <TType extends InputType = "text">({
 
   // pass all props to the input component
   // including `testId` prop as-is
-  return <InputComponent {...(props as SpecificInputProps<TType>)} />;
+  return <InputComponent {...inputProps} />;
 };
 
 export { Input };

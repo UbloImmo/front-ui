@@ -1,11 +1,14 @@
 import {
   isFunction,
+  isNull,
   isUndefined,
   objectEntries,
   objectFromEntries,
   transformObject,
   type GenericFn,
+  type Nullable,
   type Optional,
+  type Primitives,
 } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
@@ -154,6 +157,22 @@ export const useTestId = <TProps extends Record<string, unknown>>(
     return `${baseTestId} ${testId}`;
   }, [props, baseTestId]);
 };
+
+/**
+ * Returns the given `attribute`'s value, or `undefined` if it is `null`.
+ *
+ * @template {Primitives} TAttributeValue - The type of the attribute value.
+ *
+ * @param {Nullable<TArttributeValue>} attribute - The attribute value or null.
+ * @returns {Optional<TAttributeValue>} The given attribute value, or `undefined` if it is `null`.
+ */
+export const useHtmlAttribute = <TAttributeValue extends Primitives>(
+  attribute: Nullable<TAttributeValue>
+): Optional<NonNullable<TAttributeValue>> =>
+  useMemo<Optional<TAttributeValue>>(() => {
+    if (isNull(attribute)) return undefined;
+    return attribute;
+  }, [attribute]);
 
 /**
  * Returns the `className` prop from the given `props` object, or `undefined` if it is not provided or is an empty string.

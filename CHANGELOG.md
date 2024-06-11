@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `onBlur` & `inputRef` to all input & field components
+- `useInputRef` custom hook
+  - used to assign an element to both parent and inner `inputRef`s
+  - returns inner `inputRef` & `forwardRef` callback setter
+- `useHtmlAttribute` custom hook
+  - normalizes an nullable value and returns `undefined` if `null`
+
 ## 0.10.3 - 2024-06-06
 ### Changed
 - `v.0.0.5` Badge component

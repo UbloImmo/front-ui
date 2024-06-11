@@ -1,5 +1,5 @@
 import { isNumber, isString, type Nullable } from "@ubloimmo/front-util";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 
 import { StyledNumberInput } from "./NumberInput.styles";
 import {
@@ -12,9 +12,10 @@ import {
   useInputOnChange,
   useInputValue,
   useInputStyles,
+  useInputRef,
 } from "../Input.utils";
 
-import { useMergedProps, useTestId } from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import { Icon } from "@components";
 
@@ -29,7 +30,6 @@ const defaultNumberInputProps: DefaultNumberInputProps = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
-  onChangeNative: null,
   min: -Infinity,
   max: Infinity,
   step: 1,
@@ -44,14 +44,14 @@ const transformNumber = (nativeValue: NativeInputValue): Nullable<number> => {
 /**
  * Renders a number input component.
  *
- * @version 0.0.2
+ * @version 0.0.3
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
  */
 const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultNumberInputProps, props);
 
-  const inputRef = useRef<Nullable<HTMLInputElement>>(null);
+  const { inputRef, forwardRef } = useInputRef(mergedProps);
 
   const value = useInputValue(mergedProps.value);
 
@@ -80,7 +80,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
       }
       if (mergedProps.onChange) mergedProps.onChange(value);
     },
-    [mergedProps]
+    [inputRef, mergedProps]
   );
 
   const incrementValue = useCallback(() => {
@@ -88,14 +88,14 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
     const currentValue = transformNumber(inputRef.current?.value ?? value) ?? 0;
     const incremented = currentValue + mergedProps.step;
     clampAndPropagate(incremented);
-  }, [mergedProps, value, clampAndPropagate]);
+  }, [inputRef, value, mergedProps.step, clampAndPropagate]);
 
   const decrementValue = useCallback(() => {
     if (!inputRef.current) return;
     const currentValue = transformNumber(inputRef.current?.value ?? value) ?? 0;
     const decremented = currentValue - mergedProps.step;
     clampAndPropagate(decremented);
-  }, [mergedProps, value, clampAndPropagate]);
+  }, [inputRef, value, mergedProps.step, clampAndPropagate]);
 
   const inputStyles = useInputStyles(mergedProps);
 
@@ -106,12 +106,15 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
     };
   }, [mergedProps.step]);
 
+  const onBlur = useHtmlAttribute(mergedProps.onBlur);
+
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-number-container">
       <StyledNumberInput
         data-testid={testId}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         type="number"
         min={mergedProps.min ?? undefined}
         max={mergedProps.max ?? undefined}
@@ -119,7 +122,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
         placeholder={mergedProps.placeholder}
         required={mergedProps.required}
         disabled={mergedProps.disabled}
-        ref={inputRef}
+        ref={forwardRef}
         {...inputStyles}
       />
       <StyledInputControlGroup>

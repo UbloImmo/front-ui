@@ -1,5 +1,11 @@
 import { renderHook } from "@testing-library/react";
-import { objectValues, objectKeys, objectEntries } from "@ubloimmo/front-util";
+import {
+  objectValues,
+  objectKeys,
+  objectEntries,
+  isUndefined,
+  isNull,
+} from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
 
 import { testPrimitives } from "./test.data";
@@ -14,6 +20,7 @@ import {
   useStatic,
   useTestId,
   useClassName,
+  useHtmlAttribute,
 } from "@utils";
 
 import type { StyleProps } from "@types";
@@ -232,5 +239,31 @@ describe("prop utils", () => {
         expect(result).toBeUndefined();
       }
     );
+  });
+
+  describe("useHtmlAttribute", () => {
+    type Hook = typeof useHtmlAttribute;
+    const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
+      "useHtmlAttribute",
+      useHtmlAttribute
+    );
+
+    objectEntries(testPrimitives).forEach(([key, value]) => {
+      const isNullValue = isNull(value);
+      const isOptionalValue = isUndefined(value);
+      const nullableValue = isUndefined(value) ? null : value;
+      testHook(nullableValue)(
+        `should return ${key === "null" ? "undefined" : key} for ${key} value`,
+        (result) => {
+          if (isNullValue || isOptionalValue) {
+            expect(result).toBeUndefined();
+          } else {
+            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result).toBe(value);
+          }
+        }
+      );
+    });
   });
 });

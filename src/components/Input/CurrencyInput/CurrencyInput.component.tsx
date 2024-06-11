@@ -13,10 +13,10 @@ import {
   StyledInputControl,
   defaultCommonInputProps,
 } from "../Input.common";
-import { useInputStyles } from "../Input.utils";
+import { useInputRef, useInputStyles } from "../Input.utils";
 
 import { Icon, type IconProps } from "@/components/Icon";
-import { useMergedProps, useTestId } from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type {
   CurrencyInputDefaultProps,
@@ -29,7 +29,6 @@ const defaultCurrencyInputProps: CurrencyInputDefaultProps = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
-  onChangeNative: null,
   name: null,
   min: 0,
   max: Infinity,
@@ -44,7 +43,7 @@ const defaultCurrencyInputProps: CurrencyInputDefaultProps = {
  *
  * Does some rudimentary monetary like number formatting.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {CurrencyInputProps & TestIdProps} props - CurrencyInput component props
  * @returns {JSX.Element}
@@ -59,7 +58,12 @@ const CurrencyInput = (
     useCurrencyInput(mergedProps);
 
   const validationPattern = useCurrencyInputValidationPattern(mergedProps);
+
   const inputStyles = useInputStyles(mergedProps);
+
+  const { forwardRef } = useInputRef(mergedProps);
+
+  const onBlur = useHtmlAttribute(mergedProps.onBlur);
 
   const iconProps = useMemo<IconProps>(
     () => ({
@@ -87,6 +91,8 @@ const CurrencyInput = (
         placeholder={mergedProps.placeholder}
         value={inputValue}
         onChange={onChange}
+        onBlur={onBlur}
+        ref={forwardRef}
         $showSign={mergedProps.showSign}
         {...inputStyles}
       />
