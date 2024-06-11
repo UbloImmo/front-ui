@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.10.4 - 2024-06-11
 ### Added
-
 - `onBlur` & `inputRef` to all input & field components
 - `useInputRef` custom hook
   - used to assign an element to both parent and inner `inputRef`s
