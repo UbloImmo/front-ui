@@ -21,7 +21,9 @@ export const actionIconContainerStyles = ({
 
   return css`
     background: ${background};
-    border: 1px solid ${borderColorTransparent};
+    border: none;
+    outline: 1px solid ${borderColorTransparent};
+    outline-offset: -1px;
     padding: ${padding};
     height: ${size};
     width: ${size};
@@ -35,8 +37,12 @@ export const actionIconContainerStyles = ({
     justify-content: center;
     cursor: pointer;
     box-shadow: var(--shadow-button);
-    transition: background 300ms ease-out 0s, border-color 300ms ease-out 0s,
+    transition: background 300ms ease-out 0s, outline-color 300ms ease-out 0s,
       box-shadow 300ms ease-out 0s;
+
+    svg[data-testid="icon"] {
+      transition: fill 300ms ease-out 0s;
+    }
 
     &:disabled {
       cursor: not-allowed;
@@ -44,11 +50,14 @@ export const actionIconContainerStyles = ({
     }
 
     &:hover:not(:disabled) {
-      transition-duration: 150ms;
-      border-color: ${borderColor};
+      &,
+      svg[data-testid="icon"] {
+        transition-duration: 150ms;
+      }
+      outline-color: ${borderColor};
       box-shadow: var(--shadow-card-elevation-medium);
 
-      svg {
+      svg[data-testid="icon"] {
         fill: ${iconHoverColor};
       }
     }

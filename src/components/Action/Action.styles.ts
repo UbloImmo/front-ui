@@ -45,11 +45,13 @@ export const actionContainerStyles = ({
     align-items: center;
     gap: var(--s-4);
     background: ${background};
-    border: 1px solid transparent;
+    border: none;
+    outline: 1px solid transparent;
+    outline-offset: -1px;
     box-shadow: var(--shadow-button);
     border-radius: var(--${borderRadius});
 
-    transition: background 300ms ease-out 0s, border-color 300ms ease-out 0s,
+    transition: background 300ms ease-out 0s, outline-color 300ms ease-out 0s,
       box-shadow 300ms ease-out 0s;
 
     span[data-testid="text action-label"] {
@@ -83,8 +85,12 @@ export const actionContainerStyles = ({
     }
 
     &:hover:not(:disabled) {
-      transition-duration: 150ms;
-      border-color: var(--primary-medium);
+      &,
+      svg[data-testid="icon"],
+      span[data-testid="text action-label"] {
+        transition-duration: 150ms;
+      }
+      outline-color: var(--primary-medium);
       box-shadow: var(--shadow-card-elevation-medium);
     }
 

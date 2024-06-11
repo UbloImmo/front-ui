@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- `v0.0.3` Action
+  - Tweaked hover styling (remove double border)
+- `v0.0.2` ActionIcon
+  - Tweaked hover styling (remove double border)
+
 ## 0.10.4 - 2024-06-11
 ### Added
 - `onBlur` & `inputRef` to all input & field components
