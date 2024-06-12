@@ -1,2 +1,2 @@
 export * from "./Badge.component";
-export * from "./Badge.types";
+export type * from "./Badge.types";
