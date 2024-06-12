@@ -57,7 +57,7 @@ export const badgeStyle = (props: StyleProps<DefaultBadgeProps>) => {
 export const commonBadgeStyles = () => {
   return css`
     padding: 0 var(--s-2);
-    border-radius: var(--s-1);
+    border-radius: var(--s-3);
     gap: var(--s-1);
     display: flex;
     align-items: center;
