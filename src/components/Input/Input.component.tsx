@@ -32,7 +32,7 @@ const inputComponentMap: SpecificInputComponentMap = {
 /**
  * Renders a specific input component based on the provided `type` prop.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {GenericInputProps<TType>} props - The generic input props.
  * @returns {Nullable<JSX.Element>}

@@ -96,7 +96,7 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
   max-height: var(--s-8);
   height: var(--s-8);
   min-height: var(--s-8);
-  min-width: 12rem;
+  min-width: 6rem;
   width: 100%;
   max-width: 100%;
   padding: var(--s-2);
