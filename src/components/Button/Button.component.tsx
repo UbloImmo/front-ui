@@ -39,7 +39,7 @@ const defaultButtonProps: DefaultButtonProps = {
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {ButtonProps} props - the button's props
  * @returns {JSX.Element} the rendered button
