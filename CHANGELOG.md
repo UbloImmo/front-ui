@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.5` Button component
+  - Avoid text break by setting inner span width to `max-content`
+
 ## 0.10.6 - 2024-06-13
 ### Changed
 - `v0.0.4` Button component

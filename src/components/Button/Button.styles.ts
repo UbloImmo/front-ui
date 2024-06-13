@@ -220,6 +220,7 @@ const commonButtonStyles = ({
 
   & > span {
     transition: color 300ms ease-out 0s;
+    width: max-content;
   }
 
   & > svg[data-testid="icon"] {
