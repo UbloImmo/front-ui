@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.4` Button component
+  - Add testid prop support
+  - Add style override usage (`styled(Button)`) support
+
 ## 0.10.5 - 2024-06-12
 ### Changed
-- `v.0.0.6` Badge component
+- `v0.0.6` Badge component
   - increased `border-radius` for rounded corners
 
 ## 0.10.4 - 2024-06-11
