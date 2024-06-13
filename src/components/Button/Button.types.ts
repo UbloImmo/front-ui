@@ -1,5 +1,10 @@
 import type { IconName } from "..";
-import type { DirectionHorizontal, PaletteColor, RgbaColorStr } from "@types";
+import type {
+  DirectionHorizontal,
+  PaletteColor,
+  RgbaColorStr,
+  StyleOverrideProps,
+} from "@types";
 import type {
   Enum,
   Nullable,
@@ -22,7 +27,7 @@ const buttonTypes = ["button", "submit"] as const;
 
 export type ButtonType = Enum<typeof buttonTypes>;
 
-export type ButtonProps = {
+export type ButtonProps = StyleOverrideProps & {
   /**
    * The type of the button. Either `button` or `submit`.
    * Useful for form submissions.
@@ -106,22 +111,22 @@ export type ButtonProps = {
    */
   iconPlacement?: DirectionHorizontal;
 } & RequireAtLeastOne<{
-  /**
-   * The label of the button.
-   *
-   * @required
-   * @type {string | null}
-   * @default "Button"
-   */
-  label: Nullable<string>;
-  /**
-   * The name of the icon to display in the button.
-   *
-   * @type {IconName | null}
-   * @default undefined
-   */
-  icon: Nullable<IconName>;
-}>;
+    /**
+     * The label of the button.
+     *
+     * @required
+     * @type {string | null}
+     * @default "Button"
+     */
+    label: Nullable<string>;
+    /**
+     * The name of the icon to display in the button.
+     *
+     * @type {IconName | null}
+     * @default undefined
+     */
+    icon: Nullable<IconName>;
+  }>;
 
 export type DefaultButtonProps = Required<ButtonProps>;
 

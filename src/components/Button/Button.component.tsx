@@ -10,10 +10,16 @@ import { Icon } from "../Icon";
 import { Loading } from "../Loading/Loading.component";
 import { Text } from "../Text";
 
-import { useLogger, useMergedProps, useStyleProps } from "@utils";
+import {
+  useClassName,
+  useLogger,
+  useMergedProps,
+  useStyleProps,
+  useTestId,
+} from "@utils";
 
 import type { ButtonProps, DefaultButtonProps } from "./Button.types";
-import type { StyleProps } from "@types";
+import type { StyleProps, TestIdProps } from "@types";
 
 const defaultButtonProps: DefaultButtonProps = {
   type: "button",
@@ -27,23 +33,26 @@ const defaultButtonProps: DefaultButtonProps = {
   disabled: false,
   loading: false,
   onClick: null,
+  className: null,
 };
 
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {ButtonProps} props - the button's props
  * @returns {JSX.Element} the rendered button
  */
-const Button = (props: ButtonProps): JSX.Element => {
+const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("Button");
   const mergedProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultButtonProps,
     props
   );
   const styledProps = useStyleProps(mergedProps);
+  const testId = useTestId<ButtonProps>("button", props);
+  const className = useClassName(props);
 
   const onClick = useCallback(() => {
     if (
@@ -77,7 +86,8 @@ const Button = (props: ButtonProps): JSX.Element => {
     <StyledButton
       {...styledProps}
       type={type}
-      data-testid="button"
+      data-testid={testId}
+      className={className}
       onClick={onClick}
       disabled={disabled}
       aria-disabled={disabled}
