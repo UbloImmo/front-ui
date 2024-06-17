@@ -58,6 +58,21 @@ export type ButtonProps = StyleOverrideProps & {
    */
   disabled?: boolean;
   /**
+   * Whether to inverse the button's icon and label positions
+   *
+   * Applies `flex-direction: row-reverse`
+   *
+   * @default false
+   */
+  reverse?: boolean;
+  /**
+   * Whether the button should take up the full width of its container.
+   *
+   * @default false
+   */
+  fullWidth?: boolean;
+
+  /**
    * Whether to display a loading spinner or not.
    *
    * Setting this to `true` will also prevent any `onClick` events from being triggered.

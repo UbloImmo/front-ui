@@ -285,6 +285,18 @@ const buttonLoadingStyles = ({
   `;
 };
 
+const buttonModifierStyles = ({
+  reverse,
+  fullWidth,
+}: DefaultButtonProps): RuleSet => {
+  const flexDirection = reverse ? "row-reverse" : "row";
+  const width = fullWidth ? "100%" : "auto";
+  return css`
+    flex-direction: ${flexDirection};
+    width: ${width};
+  `;
+};
+
 export const buildButtonStyles = (
   styledProps: StyleProps<DefaultButtonProps>
 ): RuleSet => {
@@ -294,6 +306,7 @@ export const buildButtonStyles = (
     ${commonButtonStyles(props)}
     ${buttonColorStyles(props)}
     ${buttonLoadingStyles(props)}
+    ${buttonModifierStyles(props)}
   `;
 };
 
