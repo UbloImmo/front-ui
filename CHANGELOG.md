@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.6` Button components
+  - `fullWidth` prop: fills the parent container if true
+
 ## 0.10.7 - 2024-06-13
 ### Fixed
 - `v0.0.5` Button component

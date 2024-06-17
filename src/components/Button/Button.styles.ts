@@ -285,6 +285,13 @@ const buttonLoadingStyles = ({
   `;
 };
 
+const buttonModifierStyles = ({ fullWidth }: DefaultButtonProps): RuleSet => {
+  const width = fullWidth ? "100%" : "auto";
+  return css`
+    width: ${width};
+  `;
+};
+
 export const buildButtonStyles = (
   styledProps: StyleProps<DefaultButtonProps>
 ): RuleSet => {
@@ -294,6 +301,7 @@ export const buildButtonStyles = (
     ${commonButtonStyles(props)}
     ${buttonColorStyles(props)}
     ${buttonLoadingStyles(props)}
+    ${buttonModifierStyles(props)}
   `;
 };
 

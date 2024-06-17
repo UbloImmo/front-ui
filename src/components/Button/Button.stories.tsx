@@ -15,6 +15,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react";
+import type { DirectionHorizontal } from "@types";
 
 const defaultMockProps = {
   ...Button.defaultProps,
@@ -263,4 +264,61 @@ Loading.parameters = {
     ...baseLoadingProps,
     ...baseLoadingProps.map((props) => ({ ...props, loading: true })),
   ]),
+};
+
+const reverseProps: ButtonProps = {
+  label: "Continue",
+  icon: "ArrowRightShort",
+};
+
+const iconPlacements: DirectionHorizontal[] = ["left", "right"];
+
+export const IconPlacement = (props: ButtonProps) => {
+  const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
+    Button.defaultProps,
+    { ...props, ...reverseProps }
+  );
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={iconPlacements}
+      for="iconPlacement"
+      of={Button}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+IconPlacement.parameters = {
+  docs: componentSource(
+    iconPlacements.map(
+      (iconPlacement): ButtonProps => ({ ...reverseProps, iconPlacement })
+    )
+  ),
+};
+const bools = [false, true];
+
+export const FullWidth = (props: ButtonProps) => {
+  const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
+    Button.defaultProps,
+    { ...props, ...reverseProps }
+  );
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={bools}
+      for="fullWidth"
+      of={Button}
+      columns={2}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+FullWidth.parameters = {
+  docs: componentSource(
+    bools.map((fullWidth): ButtonProps => ({ ...reverseProps, fullWidth }))
+  ),
 };

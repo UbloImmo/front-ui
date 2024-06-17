@@ -32,6 +32,7 @@ const defaultButtonProps: DefaultButtonProps = {
   secondary: false,
   disabled: false,
   loading: false,
+  fullWidth: false,
   onClick: null,
   className: null,
 };
@@ -39,7 +40,7 @@ const defaultButtonProps: DefaultButtonProps = {
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {ButtonProps} props - the button's props
  * @returns {JSX.Element} the rendered button
