@@ -33,7 +33,6 @@ const defaultButtonProps: DefaultButtonProps = {
   disabled: false,
   loading: false,
   fullWidth: false,
-  reverse: false,
   onClick: null,
   className: null,
 };

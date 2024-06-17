@@ -285,14 +285,9 @@ const buttonLoadingStyles = ({
   `;
 };
 
-const buttonModifierStyles = ({
-  reverse,
-  fullWidth,
-}: DefaultButtonProps): RuleSet => {
-  const flexDirection = reverse ? "row-reverse" : "row";
+const buttonModifierStyles = ({ fullWidth }: DefaultButtonProps): RuleSet => {
   const width = fullWidth ? "100%" : "auto";
   return css`
-    flex-direction: ${flexDirection};
     width: ${width};
   `;
 };
