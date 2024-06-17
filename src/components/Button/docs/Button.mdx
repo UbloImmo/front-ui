@@ -23,10 +23,14 @@ Please refer to the [Icon Repository](?path=/docs/components-icon-repository--do
 
 <Canvas of={ButtonStories.Icons} />
 
-### Styling
+## Styling
+
+Most visual aspects of buttons can be customized to fit most flow's requirements.
+
+
+### Colors
 
 A Button can be colored by passing it a `color` property.
-
 This dictates the color palette it'll be displaying while in its default, hover and disabled states.
 
 #### Primary buttons
@@ -37,12 +41,31 @@ This dictates the color palette it'll be displaying while in its default, hover 
 
 Passing it the `secondary` property will further style it according to its color.
 
+> Use `secondary` to differenciate a button for other in its range / screen based on the importance of the action it triggers. 
+
 <Canvas of={ButtonStories.SecondaryColors} />
 
-### Loading state
+### Icon / label position
+
+Buttons with icons display them in front of their label by default.
+If you ever need to display a button's label in front of its icons, set its `reverse` property to `true`.
+
+<Canvas of={ButtonStories.Reverse} />
+
+### Width
+
+A button will try to only take as much visual space as needed for it to full display its content.
+This behavior can be overridden to make it fill its parent by applying the `fullWidth` property to it.
+
+> A full width button's content will be centered.
+
+<Canvas of={ButtonStories.FullWidth} />
+
+## Loading state
 
 A Button will display a loading animation when passed a `loading` property.
-Buttons in a loading state will not trigger their `onClick` event listeners to prevent users rage-clicking and triggering the same callback mutliple times.
+
+Buttons in a loading state will not trigger their `onClick` event listeners to prevent users rage-clicking and triggering the same action mutliple times.
 
 <Canvas of={ButtonStories.Loading} />
 

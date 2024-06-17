@@ -264,3 +264,57 @@ Loading.parameters = {
     ...baseLoadingProps.map((props) => ({ ...props, loading: true })),
   ]),
 };
+
+const bools = [false, true];
+
+const reverseProps: ButtonProps = {
+  label: "Continue",
+  icon: "ArrowRightShort",
+};
+
+export const Reverse = (props: ButtonProps) => {
+  const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
+    Button.defaultProps,
+    { ...props, ...reverseProps }
+  );
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={bools}
+      for="reverse"
+      of={Button}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+Reverse.parameters = {
+  docs: componentSource(
+    bools.map((reverse): ButtonProps => ({ ...reverseProps, reverse }))
+  ),
+};
+
+export const FullWidth = (props: ButtonProps) => {
+  const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
+    Button.defaultProps,
+    { ...props, ...reverseProps }
+  );
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={bools}
+      for="fullWidth"
+      of={Button}
+      columns={2}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+Reverse.parameters = {
+  docs: componentSource(
+    bools.map((fullWidth): ButtonProps => ({ ...reverseProps, fullWidth }))
+  ),
+};
