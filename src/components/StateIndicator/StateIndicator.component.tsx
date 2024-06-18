@@ -27,7 +27,7 @@ const defaultStateIndicatorProps: DefaultStateIndicatorProps = {
  * Essentially a blown up `Badge` that fills its container
  * and has an extra `white` color.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {TestIdProps & StateIndicatorProps} props - the state indicator props
  * @returns {JSX.Element} - the state indicator markup

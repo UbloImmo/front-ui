@@ -68,7 +68,7 @@ export const stateIndicatorStyle = ({
     span {
       max-width: 100%;
       min-width: 0;
-      overflow-y: visible;
+      overflow: hidden;
     }
 
     ::-webkit-scrollbar {
