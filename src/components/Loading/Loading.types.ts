@@ -1,10 +1,15 @@
 import * as LoadingAnimations from "./animations";
 
-import { FixedCssLength, PaletteColor } from "@types";
+import {
+  FixedCssLength,
+  PaletteColor,
+  StyleOverrideProps,
+  TestIdProps,
+} from "@types";
 
 export type LoadingAnimation = keyof typeof LoadingAnimations;
 
-export type LoadingProps = {
+export type LoadingProps = StyleOverrideProps & {
   /**
    * The name of the animation to play
    *
@@ -32,4 +37,8 @@ export type LoadingProps = {
 
 export type DefaultLoadingProps = Required<LoadingProps>;
 
-export type LoadingAnimationProps = Pick<DefaultLoadingProps, "size" | "color">;
+export type LoadingAnimationProps = Pick<
+  DefaultLoadingProps,
+  "size" | "color" | "className"
+> &
+  TestIdProps;
