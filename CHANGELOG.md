@@ -7,47 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.4` TextInput component
+  - TestIdProps
+
 ## 0.11.0 - 2024-06-19
+
 ### Added
+
 - `v0.0.2` Loading component
-  
+
   - animation type `ProgressBar`
   - `className` & `TestId` props
+
 - `v0.0.1` SmallLoader component
 
 ### Fixed
+
 - `v0.0.4` NumberInput component
-  
+
   - prevent controls from changing value when input is `disabled`
+
 - `v0.0.4` StateIndicator component
   - styles: set overflow to hidden to disable scrollbar inside the component in Firefox
 
 ## 0.10.8 - 2024-06-17
+
 ### Added
+
 - `v0.0.6` Button components
   - `fullWidth` prop: fills the parent container if true
 
 ## 0.10.7 - 2024-06-13
+
 ### Fixed
+
 - `v0.0.5` Button component
   - Avoid text break by setting inner span width to `max-content`
 
 ## 0.10.6 - 2024-06-13
+
 ### Changed
+
 - `v0.0.4` Button component
   - Add testid prop support
   - Add style override usage (`styled(Button)`) support
 
 ### Fixed
+
 - reduced all input components `min-width` to 6rem
 
 ## 0.10.5 - 2024-06-12
+
 ### Changed
+
 - `v0.0.6` Badge component
   - increased `border-radius` for rounded corners
 
 ## 0.10.4 - 2024-06-11
+
 ### Added
+
 - `onBlur` & `inputRef` to all input & field components
 - `useInputRef` custom hook
   - used to assign an element to both parent and inner `inputRef`s
@@ -56,28 +77,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - normalizes an nullable value and returns `undefined` if `null`
 
 ## 0.10.3 - 2024-06-06
+
 ### Changed
+
 - `v.0.0.5` Badge component
   - Require at least one of `label` or `icon`
 
 ## 0.10.2 - 2024-06-06
+
 ### Fixed
+
 - `v.0.0.4` Chip component
   - assign onDelete to delete button onMouseDown as well to stop event propagation
 
 ## 0.10.1 - 2024-06-06
+
 ### Fixed
+
 - `v.0.0.3` Chip component
   - stop onDelete event propagation
 
 ## 0.10.0 - 2024-06-06
+
 ### Added
+
 - `v0.0.1` CurrencyInput component
 - New `name` & `onChangeNative` props for all Inputs & Field components
 - `useTestId` & `TestIdProps`
   - Ability to override / replace default test id
 
 ### Changed
+
 - Propagate native input event from custom inputs regardless of onChange condition
 - `v0.0.2` Field component
   - Display generic error messages based on underlying input validity
@@ -88,26 +118,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add support for custom test id
 
 ### Fixed
+
 - `v.0.0.2` Chip component
   - make icon property optional
 
 ## 0.9.0 - 2024-06-04
+
 ### Added
+
 - `v0.0.1` Chip component
 
 ## 0.8.1 - 2024-06-03
+
 ### Fixed
+
 - `v0.0.3` State Indicator
   - Use correct text size (from S to M)
 
 ## 0.8.0 - 2024-06-03
+
 ### Added
+
 - `v0.0.1` Field component
 - New `className` prop for compatibility with `styled([Component])` usage:
   - `Text`, `Heading` typo components
   - `Flex`, `Grid` & `GridItem` layouts
 
 ### Changed
+
 - Component init script
   - Added Boilerplace file contents
 - Generic Input component typings
@@ -115,41 +153,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added boilerplate content
 
 ### Fixed
+
 - Various minor fixes in multiple components
   - Unit tests
   - Styles
   - Test ids
 
 ## 0.7.0 - 2024-05-30
+
 ### Added
+
 - `v0.0.1` Tooltip component
 
 ## 0.6.4 - 2024-05-29
+
 ### Fixed
+
 - Wait for overrides to have been fetched before applying favicon
 
 ## 0.6.3 - 2024-05-28
+
 ### Fixed
+
 - Compare favicon retry count to retry limit, allowing favicon to actually be applied
 
 ## 0.6.2 - 2024-05-28
+
 ### Fixed
+
 - Actually check if favicon has been applied
 
 ## 0.6.1 - 2024-05-28
+
 ### Added
+
 - Set favicon from theme provider according to overrides
 
 ### Changed
+
 - Theme provider optimizations
 - Bumped `@ubloimmo/front-tokens` to `0.0.17`
 - Rewrite `GlobalStyle` in order to decrease excessive renders and increase perf
 
 ### Fixed
+
 - Effect color mapping thanks to updated design tokens
 
 ## 0.6.0 - 2024-05-28
+
 ### Added
+
 - `v0.0.1` GridItem layout
 - Docs
   - `Typography` page
@@ -158,6 +211,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Link to related `Properties` page
 
 ### Changed
+
 - Story sorting in storybook
 - Docs
   - Index pages
@@ -165,25 +219,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Page Header Styles
 
 ### Fixed
+
 - Shadow / effect parsing following `@ubloimmo/front-tokens` regen
 - Various minor fixes
 
 ## 0.5.1 - 2024-05-23
+
 ### Fixed
+
 - `v0.0.3` PhoneInput component
   - width
   - z-clashing
   - responsive height
 
 ## 0.5.0 - 2024-05-22
+
 ### Added
+
 - `v.0.0.1` Hypertext component
 
 ## 0.4.4 - 2024-05-21
+
 ### Added
+
 - Phone input default placeholder
 
 ### Fixed
+
 - Phone input foreign styles
 
 ## 0.4.3 - 2024-05-21
@@ -193,20 +255,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.4.1 - 2024-05-21
 
 ## 0.4.0 - 2024-05-20
+
 ### Added
+
 - `v.0.0.1` PhoneInput component
 - Full coverage test for NumberInput component
 
 ## 0.3.2 - 2024-05-14
+
 ### Fixed
+
 - Theme override validation condition
 
 ## 0.3.1 - 2024-05-14
+
 ### Fixed
+
 - Theme override URL template
 
 ## 0.3.0 - 2024-05-14
+
 ### Added
+
 - `v0.0.1` Action Icon component
   - Logic
   - Styles
@@ -215,33 +285,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Extract` type: a safeguard when dealing with union subsets
 
 ### Fixed
+
 - `v0.0.2` State Indicator component
   - Set minimum height to 40px
   - Reduce markup complexity (remove nested div)
 
 ## 0.2.0 - 2024-05-13
+
 ### Added
+
 - `v.0.0.1` State indicator component
 - `EnumExtension` generic type
 
 ### Changed
+
 - Typings
   - Replace `StaticIconColor` with `ColorKeyOrWhite`
 
 ### Fixed
+
 - Text & Heading stories text content
 
 ## 0.1.2 - 2024-04-25
 
 ## 0.1.1 - 2024-04-17
+
 ### Fixed
+
 - `v0.0.3` Static Icon component
   - Sizing
 - `v0.0.2` Action component
   - Responsive behaviour
 
 ## 0.1.0 - 2024-04-16
+
 ### Added
+
 - License & copyright
 - `v0.0.1` Action component
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-action-usage--docs)
@@ -253,6 +332,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Card elevation shadow
 
 ### Changed
+
 - `v0.0.2` Button component
   - Secondary styles (white, primary, error)
 - `v0.0.3` Badge component
@@ -261,10 +341,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - White variant
 
 ### Removed
+
 - Icons:
   - Delete (custom icon)
 
 ### Fixed
+
 - `v0.0.2` InputLabel
   - Text size after font style overhaul
 - `v0.0.2` InputAssistiveText
@@ -273,7 +355,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.1.0-beta.0 - 2024-04-11
 
 ## 0.0.2-beta.0 - 2024-04-11
+
 ### Added
+
 - Global Theme
 - Theme context, provider & consumer hook.
 - Global style injector (based on `styled-components`'s `GlobalStyle` component).
