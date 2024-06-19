@@ -7,10 +7,21 @@ import { useMergedProps } from "@utils";
 import type { LoadingAnimation, LoadingProps } from "./Loading.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
+const animations: LoadingAnimation[] = [
+  "BouncingBalls",
+  "Ripple",
+  "ProgressBar",
+];
+
 const meta = {
   title: "Components/Loading/Stories",
   component: Loading,
   args: Loading.defaultProps,
+  argTypes: {
+    animation: {
+      options: animations,
+    },
+  },
 } satisfies Meta<typeof Loading>;
 export default meta;
 
@@ -22,7 +33,6 @@ export const Default: Story = {
   args: Loading.defaultProps,
 };
 
-const animations: LoadingAnimation[] = ["BouncingBalls", "Ripple"];
 export const Animations = (props: LoadingProps) => {
   const defaultProps = useMergedProps(Loading.defaultProps, props);
 
@@ -32,6 +42,7 @@ export const Animations = (props: LoadingProps) => {
       variants={animations}
       for="animation"
       of={Loading}
+      align="center"
       scaling={1.1}
     />
   );

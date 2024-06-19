@@ -44,7 +44,7 @@ const transformNumber = (nativeValue: NativeInputValue): Nullable<number> => {
 /**
  * Renders a number input component.
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
  */
@@ -84,18 +84,30 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
   );
 
   const incrementValue = useCallback(() => {
-    if (!inputRef.current) return;
+    if (!inputRef.current || mergedProps.disabled) return;
     const currentValue = transformNumber(inputRef.current?.value ?? value) ?? 0;
     const incremented = currentValue + mergedProps.step;
     clampAndPropagate(incremented);
-  }, [inputRef, value, mergedProps.step, clampAndPropagate]);
+  }, [
+    inputRef,
+    value,
+    mergedProps.step,
+    clampAndPropagate,
+    mergedProps.disabled,
+  ]);
 
   const decrementValue = useCallback(() => {
-    if (!inputRef.current) return;
+    if (!inputRef.current || mergedProps.disabled) return;
     const currentValue = transformNumber(inputRef.current?.value ?? value) ?? 0;
     const decremented = currentValue - mergedProps.step;
     clampAndPropagate(decremented);
-  }, [inputRef, value, mergedProps.step, clampAndPropagate]);
+  }, [
+    inputRef,
+    value,
+    mergedProps.step,
+    clampAndPropagate,
+    mergedProps.disabled,
+  ]);
 
   const inputStyles = useInputStyles(mergedProps);
 
@@ -133,6 +145,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
           aria-label={controlLabels.increment}
           title={controlLabels.increment}
           role="button"
+          aria-disabled={mergedProps.disabled}
           aria-roledescription="Bouton d'augmentation, permet d'augmenter la valeur"
         >
           <Icon name="ChevronUp" size="s-3" />
@@ -141,6 +154,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
           {...inputStyles}
           onClick={decrementValue}
           data-testid="input-control-decrement"
+          aria-disabled={mergedProps.disabled}
           aria-label={controlLabels.decrement}
           title={controlLabels.decrement}
           role="button"

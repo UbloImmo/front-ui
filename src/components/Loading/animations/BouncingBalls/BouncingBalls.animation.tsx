@@ -5,7 +5,7 @@ import { bouncingBallsStyle } from "./BouncingBalls.styles";
 import { LoadingAnimationProps } from "../../Loading.types";
 
 import { parseFixedLength } from "@/sizes/size.utils";
-import { cssVarUsage } from "@utils";
+import { cssVarUsage, useClassName } from "@utils";
 
 export const BouncingBalls = (props: LoadingAnimationProps) => {
   const innerProps = useMemo(() => {
@@ -15,13 +15,16 @@ export const BouncingBalls = (props: LoadingAnimationProps) => {
     };
   }, [props]);
 
+  const className = useClassName(props);
+
   return (
     <Container
       xmlns="http://www.w3.org/2000/svg"
       height={innerProps.size}
       fill={innerProps.color}
       viewBox="0 0 48 28"
-      data-testid="loading-indicator"
+      data-testid={props.testId}
+      className={className}
     >
       <g>
         <circle cx="4" cy="14" r="4" />
