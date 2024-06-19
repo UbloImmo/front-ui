@@ -6,18 +6,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory(
   "SmallLoader",
-  {
-    // TODO
-  },
   SmallLoader.defaultProps
 );
 
 const meta = {
   component: SmallLoader,
   title: "Components/SmallLoader/Stories",
-  args: {
-    // TODO
-  },
   parameters: {
     docs: componentSource(),
   },
