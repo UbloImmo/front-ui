@@ -11,6 +11,7 @@ import {
 import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type { DefaultInputProps, InputProps } from "../Input.types";
+import type { TestIdProps } from "@types";
 
 const defaultTextInputProps: DefaultInputProps<"text"> = {
   ...defaultCommonInputProps,
@@ -22,12 +23,12 @@ const defaultTextInputProps: DefaultInputProps<"text"> = {
 /**
  * Renders a text input component.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {InputProps<"text">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
-const TextInput = (props: InputProps<"text">): JSX.Element => {
+const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultTextInputProps, props);
   const onChange = useInputOnChange<"text">(
     (nativeValue) => isString(nativeValue),
