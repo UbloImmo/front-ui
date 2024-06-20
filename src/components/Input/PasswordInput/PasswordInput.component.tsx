@@ -40,7 +40,7 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
 /**
  * Renders a password input component that allows for password visibility toggle.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {PasswordInputProps} props - The input props.
  * @return {JSX.Element} The rendered text input component.
@@ -124,6 +124,7 @@ const PasswordInput = (
         aria-roledescription="Champs de saisie mot de passe"
         role="textbox"
         ref={forwardRef}
+        autoComplete="new-password"
         {...inputStyles}
       ></StyledInput>
       <StyledInputControlGroup>
