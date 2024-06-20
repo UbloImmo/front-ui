@@ -21,9 +21,15 @@ export const gridItemStyles = ({
   $columnEnd,
   $align,
   $justify,
+  $fill,
 }: GridItemStyleProps): RuleSet => css`
   grid-row: ${$rowStart} / ${$rowEnd};
   grid-column: ${$columnStart} / ${$columnEnd};
   align-self: ${$align};
   justify-self: ${$justify};
+  ${$fill &&
+  css`
+    width: 100%;
+    height: 100%;
+  `}
 `;

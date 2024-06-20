@@ -105,7 +105,7 @@ export const parseGridItemPosition = (
  */
 export const useGridItemPosition = (
   defaultProps: GridItemDefaultProps,
-  { justify, align, ...position }: GridItemProps
+  { justify, align, fill, ...position }: GridItemProps
 ): GridItemInnerProps => {
   const parsedPosition = parseGridItemPosition(position);
   const {
@@ -118,5 +118,6 @@ export const useGridItemPosition = (
     ...parsedPosition,
     justify,
     align,
+    fill,
   });
 };
