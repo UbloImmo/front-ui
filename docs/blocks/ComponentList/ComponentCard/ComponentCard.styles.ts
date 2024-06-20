@@ -39,7 +39,7 @@ export const componentCardStyle = ({
         border-color: var(--primary-light);
 
         [data-testid="component-card-scale-container"] {
-          transform: scale(1.05);
+          transform: scale(1);
           transition: transform 600ms ease-in-out 0s;
         }
 
@@ -67,7 +67,7 @@ export const componentCardContainerStyle = (): RuleSet => {
     position: relative;
 
     & > * {
-      transform: scale(1);
+      transform: scale(0.95);
       transition: transform 300ms ease-out 0s;
     }
 
@@ -84,7 +84,7 @@ export const componentCardContainerStyle = (): RuleSet => {
 
 export const componentCardScaleContainerStyle = (): RuleSet => {
   return css`
-    transform: scale(1);
+    transform: scale(0.95);
     transition: transform 300ms ease-out 0s;
     width: 100%;
     display: flex;

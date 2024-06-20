@@ -75,6 +75,10 @@ export const ComponentCard = <
             weight: "medium",
             important: true,
           }
+        : name === "Badge"
+        ? { label: "Badge" }
+        : name === "InputAssistiveText"
+        ? { assistiveText: "Input assistive text" }
         : {};
 
     return {
@@ -89,7 +93,9 @@ export const ComponentCard = <
     return linkTo(url);
   }, [name, parent]);
 
-  if (!componentProps || !description) return null;
+  if (!componentProps || !description) {
+    return null;
+  }
   const renderedComponent = Component(componentProps);
 
   if (!renderedComponent) {
