@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.2` GridItem layout
   - Add optional `fill` prop to fill grid area
 
+- `v0.0.5` InputLabel component
+  - Add optional `compact` prop to display tooltip next to label
+
 - Docs source code generation
   - Added support for object / array props with proper formatting
 

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import styled, { css } from "styled-components";
 
 import {
@@ -24,11 +25,12 @@ const defaultInputLabelProps: DefaultInputLabelProps = {
   children: null,
   className: null,
   tooltip: null,
+  compact: false,
 };
 
 /**
  * Renders an input label component, to be used in association with the Input component.
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
@@ -47,13 +49,18 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
     warn("InputLabel must have a defined label.");
   }
 
+  const justify = useMemo(() => {
+    if (mergedProps.compact) return "start";
+    return "space-between";
+  }, [mergedProps.compact]);
+
   return (
     <InnerInputLabel
       className={className}
       data-testid={testId}
       data-required={String(required)}
     >
-      <FlexRowLayout align="center" gap="s-2" justify="space-between">
+      <FlexRowLayout align="center" gap="s-2" justify={justify}>
         <InputLabelText
           color="gray-600"
           size="m"
