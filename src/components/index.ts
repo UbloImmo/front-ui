@@ -23,3 +23,4 @@ export * from "./Modal";
 export * from "./ComboBox";
 export * from "./ComboBoxButton";
 export * from "./Avatar";
+export * from "./Divider";

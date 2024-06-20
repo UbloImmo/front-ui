@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.1` Divider component
+  - A horizontal line with an optional label
+
 ## 0.15.0 - 2024-07-02
 ### Added
 - `v0.0.1` Avatar component

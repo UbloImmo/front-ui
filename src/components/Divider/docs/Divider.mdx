@@ -1,0 +1,25 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as DividerStories from "../Divider.stories.tsx";
+
+<Meta title="Components/Divider/Usage" />
+
+<ComponentInfo of={DividerStories} figmaId="1757-9715" />
+
+<Content>
+
+## Usage
+
+A divider is a single, non-interactive horizontal line spanning the whole width of its container
+
+### Label
+
+By providing a `label` property, a divider can display it to the left of its line.
+
+> Divider labels get rendered as bold `h4` [Headings](?path=/docs/components-heading-usage--docs).
+
+<Canvas of={DividerStories.Labels} />
+
+</Content>
