@@ -7,15 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.11.2 - 2024-06-20
 ### Changed
-
 - Upgraded storybook to latest version
 
 ### Fixed
-
 - `v0.0.3` EmailInput component
   - Use standard validation regex
-
 - `v0.0.4` PasswordInput component
   - Include `autoComplete="new-password"` attribute
 
