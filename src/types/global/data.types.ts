@@ -27,3 +27,10 @@ export type CurrencyStr = `${number},${number}` | `${number},00`;
 export type CurrencyStrWithSymbol = `${CurrencyStr} €`;
 
 export type NumberSign = "+" | "-";
+
+export type FormattedCurrencyStr =
+  | CurrencyStr
+  | `${string},${number}`
+  | `${string},00`;
+
+export type FormattedCurrencyStrWithSymbol = `${FormattedCurrencyStr} €`;

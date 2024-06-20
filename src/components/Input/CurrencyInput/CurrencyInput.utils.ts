@@ -25,6 +25,7 @@ import type {
   CurrencyFloat,
   CurrencyInt,
   CurrencyStr,
+  FormattedCurrencyStrWithSymbol,
 } from "@types";
 import type { GenericFn, Nullable, Nullish } from "@ubloimmo/front-util";
 
@@ -446,4 +447,38 @@ export const useCurrencyInput = (
     signIcon,
     toggleSign,
   };
+};
+
+/**
+ * Formats a currency integer to a string representation with the currency symbol.
+ *
+ * @param {CurrencyInt} currencyInt - The currency integer to format.
+ * @return {`${CurrencyStr} €`} The formatted currency string with the currency symbol.
+ *
+ * @throws {Error} If the input is not an int.
+ */
+export const formatCurrencyInt = (
+  currencyInt: CurrencyInt
+): FormattedCurrencyStrWithSymbol => {
+  const currencyStr = currencyIntToStr(currencyInt);
+  const [intStr, decimalStr = "00"] = currencyStr.split(",");
+  let i = 0;
+  const intStrWithSpaces = intStr
+    .split("")
+    .reverse()
+    .map((digit, index) => {
+      i++;
+      if (i % 3 === 0 && index !== 0) {
+        return ` ${digit}`;
+      }
+      return digit;
+    })
+    .reverse()
+    .join("");
+
+  const currencyStrWithSpaces = [intStrWithSpaces, decimalStr]
+    .join(",")
+    .trim() as CurrencyStr;
+
+  return `${currencyStrWithSpaces} €`;
 };

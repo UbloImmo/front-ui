@@ -10,6 +10,7 @@ import {
   currencyIntToStr,
   currencyNumberToStr,
   currencyStrToInt,
+  formatCurrencyInt,
   nativeCurrencyValueToFloat,
 } from "./CurrencyInput.utils";
 
@@ -227,6 +228,24 @@ describe("Input", () => {
         expect(computeCurrencySign(-1)).toBe("-");
         expect(computeCurrencySign(1)).toBe("+");
         expect(computeCurrencySign(0)).toBe(null);
+      });
+    });
+
+    describe("formatCurrencyInt", () => {
+      it("should be a function", () => {
+        expect(formatCurrencyInt).toBeFunction();
+      });
+
+      it("should throw if not provided with a number", () => {
+        expect(formatCurrencyInt).toThrow();
+      });
+
+      it("should return a currency string with a symbol", () => {
+        expect(formatCurrencyInt(123456)).toBe("1 234,56 €");
+        expect(formatCurrencyInt(0)).toBe("0,00 €");
+        expect(formatCurrencyInt(-123456)).toBe("-1 234,56 €");
+        expect(formatCurrencyInt(12345)).toBe("123,45 €");
+        expect(formatCurrencyInt(99999999999)).toBe("999 999 999,99 €");
       });
     });
   });
