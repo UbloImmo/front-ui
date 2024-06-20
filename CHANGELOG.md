@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.2` GridItem layout
   - Add optional `fill` prop to fill grid area
 
+### Fixed
+
+- `v0.0.4` Field component
+  - Do not render assistive / error text if no content available
+  - This prevents rendering an additional gap at the bottom of the field between its input and an effectively empty div.
+
 ## 0.15.0 - 2024-07-02
 ### Added
 - `v0.0.1` Avatar component
