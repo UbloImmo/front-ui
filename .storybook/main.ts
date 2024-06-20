@@ -8,6 +8,7 @@ const config: StorybookConfig = {
     "../docs/**/*.mdx",
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
+
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
@@ -17,16 +18,16 @@ const config: StorybookConfig = {
     "@storybook/addon-viewport",
     "@storybook/addon-themes",
   ],
+
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
-  core: {
-    builder: "@storybook/builder-vite",
-  },
-  docs: {
-    autodocs: "tag",
-  },
+
+  core: {},
+
+  docs: {},
+
   async viteFinal(config, { configType }) {
     const isProd = configType === "PRODUCTION";
     if (isProd) {
@@ -58,6 +59,7 @@ const config: StorybookConfig = {
       },
     });
   },
+
   managerHead: (head, { configType }) => {
     if (configType === "PRODUCTION") {
       return `
@@ -68,6 +70,11 @@ const config: StorybookConfig = {
 
     return head;
   },
+
   staticDirs: [{ from: "../src/typography/fonts/Gilroy", to: "/assets/fonts" }],
+
+  typescript: {
+    reactDocgen: "react-docgen-typescript"
+  }
 };
 export default config;
