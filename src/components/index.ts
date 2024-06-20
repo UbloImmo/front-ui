@@ -24,3 +24,4 @@ export * from "./ComboBox";
 export * from "./ComboBoxButton";
 export * from "./Avatar";
 export * from "./Divider";
+export * from "./Form";

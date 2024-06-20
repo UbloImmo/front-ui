@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.1` Divider component
   - A horizontal line with an optional label
 
+- `v0.0.1` Form component
+  - The whold shebang
+
 ### Changed
 
 - `v0.0.2` GridItem layout

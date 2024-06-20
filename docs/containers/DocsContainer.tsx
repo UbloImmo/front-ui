@@ -93,7 +93,7 @@ const StyleReset = styled.div`
     }
 
     code {
-      font-size: inherit !important;
+      font-size: inherit;
       font-style: inherit !important;
       font-weight: inherit !important;
       color: inherit !important;
@@ -101,6 +101,10 @@ const StyleReset = styled.div`
       border: 1px solid var(--gray-100-50);
       padding: var(--s-05) var(--s-1);
       border-radius: var(--s-1);
+    }
+
+    span[data-testid="text"] > code {
+      font-size: var(--text-s) !important;
     }
   }
 

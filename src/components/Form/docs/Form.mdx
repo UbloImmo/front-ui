@@ -1,4 +1,3 @@
-
 import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
@@ -12,7 +11,86 @@ import * as FormStories from "../Form.stories.tsx";
 
 ## Usage
 
-TODO
+Forms are tricky. There are a lot of prerequisites needed for them to be great to use.
+
+Our `Form` component is our try at simplifying the whole experience, both for our users and collaborators.
+Built around our very own [Field](?path=/docs/components-field-usage--docs) component,
+it handles both edition and consultation of various data structures while providing ease of user.
+
+> You'll be looking at a simple address form in the majority of the upcoming examples.
+
+### Switching between edition & consultation
+
+A form's default behaviour is to first present its data in an easily readable manner, and allow users to edit when its `Edit` button has been clicked.
+
+Some information may however only be edited under certain conditions. To restrict edit access, use the `readonly` property.
+If you want to save your users a click, a form can be made editable from the get-go by setting its `defaultEditing` property to `true`.
+While you can easily customize the behaviour of individual form fields and disable them all, an easier way to achieve this is to set the `disabled` property on the form itself.
+
+> In order: default behaviour, `readonly`, `defaultEditing` & `disabled`
+
+<Canvas of={FormStories.EditStates} />
+
+### Data & Content
+
+Various forms can be modeled, displayed, filled-in, validated and submitted using a single component.
+
+> Take a look at the _Show code_ button under the preview to wrap your head around the various [properties](?path=/docs/components-form-properties--docs) and their usage.
+
+<Canvas of={FormStories.Contents} />
+
+#### Data Validation
+
+User data can be error-prone. Form supports data validation through `zod` schemas.
+Provide it as a form's `schema` property for it to be used to validate user- or initial data.
+**Error messages can be manually provided but are generated from the schema by default.**
+
+> Both forms below share the same structure, but the one one the right is missing its data.
+> <br/>
+> Notice how errors are reported to the user even while out of edit mode.
+
+<Canvas of={FormStories.Validation} />
+
+
+#### Data fetching
+
+To fetch existing data to be displayed inside a form, provide it with a `query` property. 
+
+```tsx
+import { Form, arrayOf } from "@ubloimmo/uikit";
+
+// async function that returns at least partial data
+const fetchAsyncData = async () => {
+  const res = await fetch("/api/data");
+  return await res.json();
+}
+
+const MyAsyncForm = () => (
+  <Form query={fetchData} />
+)
+
+// non-async function that return data 
+const generateData = (numberCount: number) => ({
+  randomNumbers: arrayOf(numberCount, () => Math.random()),
+})
+
+const MyGeneratedForm = () => (
+  <Form query={generateData} />
+)
+
+// static data object
+// this could also be derived from a state
+const staticData = {
+  firstName: "John",
+  lastName: "Doe",
+}
+
+const MyStaticForm = () => (
+  <Form query={staticData} />
+)
+
+```
 
 </Content>
+import { arrayOf } from "@utils";
 

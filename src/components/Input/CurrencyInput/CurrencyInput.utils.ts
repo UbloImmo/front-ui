@@ -187,13 +187,11 @@ export const nativeCurrencyValueToFloat = (
 export const useCurrencyInputValidationPattern = ({
   min,
 }: Pick<CurrencyInputDefaultProps, "min">): string => {
-  return useMemo(
-    () =>
-      `^[+${
-        (min ?? 0) < 0 ? "-" : ""
-      }]?[0-9]+(?:[.][0-9]{0,${CURRENCY_DECIMALS}})?$`,
-    [min]
-  );
+  return useMemo(() => {
+    return `^[+${
+      (min ?? 0) < 0 ? "-" : ""
+    }]?[0-9\\s]+(?:[.,][0-9]{0,${CURRENCY_DECIMALS}})?$`;
+  }, [min]);
 };
 
 /**
