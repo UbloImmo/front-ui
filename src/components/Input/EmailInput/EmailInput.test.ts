@@ -75,8 +75,9 @@ describe("Input", () => {
       const validEmails = [
         "example@mail.fr",
         "a@aa.co",
-        "a3@tes5t.www1",
-        "example1.878676arta@side.extension",
+        "a3@tes5t.com",
+        "example1878676arta@site.extension",
+        "support@jam-france.com",
       ];
 
       validEmails.forEach((email) => {
