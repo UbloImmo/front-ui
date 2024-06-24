@@ -6,7 +6,7 @@ import { Icon } from "../Icon";
 import { Text } from "../Text";
 
 import { FlexColumnLayout } from "@layouts";
-import { useLogger, useTestId, useMergedProps } from "@utils";
+import { useLogger, useTestId, useMergedProps, isNonEmptyString } from "@utils";
 
 import type { InfoBoxProps, InfoBoxDefaultProps } from "./InfoBox.types";
 import type { TestIdProps } from "@types";
@@ -35,6 +35,13 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
     return info ? "gray-800" : "gray-500";
   }, [info]);
 
+  const displayInfo = useMemo(() => {
+    if (isNonEmptyString(info)) {
+      return info;
+    }
+    return `Non renseignée(s)`;
+  }, [info]);
+
   if (!label) {
     warn(`Missing required label, defaulting to ${defaultInfoBoxProps.label}`);
   }
@@ -50,7 +57,7 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
         {label}
       </Text>
       <Text size="m" weight="medium" color={stateColor}>
-        {info ? info : `Non renseignée(s)`}
+        {displayInfo}
       </Text>
     </InfoBoxContainer>
   );
