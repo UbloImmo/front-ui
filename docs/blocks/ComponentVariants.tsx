@@ -17,33 +17,7 @@ import type {
 } from "@/layouts";
 import type { FC } from "react";
 
-type ComponentVariantsConfig<
-  TComponentProps extends Record<string, unknown>,
-  TPropKey extends keyof TComponentProps
-> = {
-  /**
-   * The key of the prop to vary upon.
-   * @required
-   */
-  for: TPropKey;
-  /**
-   * The component to render the variants for.
-   * @required
-   */
-  of: FC<TComponentProps>;
-  /**
-   * The default values for the component's props.
-   * @required
-   */
-  defaults: TComponentProps;
-  /**
-   * List of possible values for the component's prop.
-   * @required
-   */
-  variants:
-    | TComponentProps[TPropKey][]
-    | readonly TComponentProps[TPropKey][]
-    | { value: TComponentProps[TPropKey]; label: string }[];
+type ComponentVariantsBaseConfig = {
   /**
    * Dictates the gap between the variants.
    * @default "2rem".
@@ -100,6 +74,71 @@ type PropVariant<TComponentProps extends Record<string, unknown>> =
     __propVariantLabel: string;
   };
 
+type ComponentVariantsConfig<
+  TComponentProps extends Record<string, unknown>,
+  TPropKey extends keyof TComponentProps
+> = ComponentVariantsBaseConfig & {
+  /**
+   * The key of the prop to vary upon.
+   * @required
+   */
+  for: TPropKey;
+  /**
+   * The component to render the variants for.
+   * @required
+   */
+  of: FC<TComponentProps>;
+  /**
+   * The default values for the component's props.
+   * @required
+   */
+  defaults: TComponentProps;
+  /**
+   * List of possible values for the component's prop.
+   * @required
+   */
+  variants:
+    | TComponentProps[TPropKey][]
+    | readonly TComponentProps[TPropKey][]
+    | { value: TComponentProps[TPropKey]; label: string }[];
+};
+
+export type DetailConfigVariants<
+  TComponentProps extends Record<string, unknown>
+> = (Partial<TComponentProps> | PropVariant<Partial<TComponentProps>>)[];
+
+type ComponentVariantsDetailedConfig<
+  TComponentProps extends Record<string, unknown>
+> = ComponentVariantsBaseConfig & {
+  for?: never;
+  /**
+   * The component to render the variants for.
+   * @required
+   */
+  of: FC<TComponentProps>;
+  /**
+   * The default values for the component's props.
+   * @required
+   */
+  defaults: TComponentProps;
+  /**
+   * List of possible values for the component's prop.
+   * @required
+   */
+  variants: DetailConfigVariants<TComponentProps>;
+};
+
+const isDetailledConfig = <
+  TComponentProps extends Record<string, unknown>,
+  TPropKey extends keyof TComponentProps & string
+>(
+  props:
+    | ComponentVariantsConfig<TComponentProps, TPropKey>
+    | ComponentVariantsDetailedConfig<TComponentProps>
+): props is ComponentVariantsDetailedConfig<TComponentProps> => {
+  return !("for" in props);
+};
+
 /**
  * Renders the same component many times with different values for a single prop
  *
@@ -112,9 +151,23 @@ export const ComponentVariants = <
   TComponentProps extends Record<string, unknown>,
   TPropKey extends keyof TComponentProps & string
 >(
-  props: ComponentVariantsConfig<TComponentProps, TPropKey>
+  props:
+    | ComponentVariantsConfig<TComponentProps, TPropKey>
+    | ComponentVariantsDetailedConfig<TComponentProps>
 ): JSX.Element => {
   const propVariants = useMemo<PropVariant<TComponentProps>[]>(() => {
+    if (isDetailledConfig(props)) {
+      return props.variants.map(
+        (variant): PropVariant<TComponentProps> => ({
+          ...props.defaults,
+          ...variant,
+          __propVariantLabel: isString(variant?.__propVariantLabel)
+            ? variant.__propVariantLabel
+            : JSON.stringify(variant).replace(/"/g, ""),
+        })
+      );
+    }
+
     return props.variants.map((variant): PropVariant<TComponentProps> => {
       const isCompound =
         isObject(variant) &&

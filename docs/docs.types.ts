@@ -17,7 +17,7 @@ export type DocgenPropDef<TPropType> = {
     computed: boolean;
   };
   value?: TPropType;
-  tsType: DocgenPropType;
+  type: DocgenPropType;
 };
 
 export type DocgenProps<TComponentProps extends Record<string, unknown>> = {

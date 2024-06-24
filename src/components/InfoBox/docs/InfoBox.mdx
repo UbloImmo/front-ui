@@ -1,0 +1,31 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as InfoBoxStories from "../InfoBox.stories.tsx";
+
+<Meta title="Components/InfoBox/Usage" />
+
+<ComponentInfo of={InfoBoxStories} figmaId="802-11337" />
+
+<Content>
+
+## Usage
+
+`InfoBox` can be used to display various types of contextual data in a visually more appealing way.
+
+It consists of these properties:
+
+- `label`, to set a title for the contextual data
+  provides a title,
+- `info`, where is provided the contextual data,
+- `icon` to visually represent the type of information being displayed.
+
+<Canvas of={InfoBoxStories.Examples} />
+
+### Contextual Data
+
+To display contextual data in the `InfoBox`, use the `info` property. While this property stays empty, the text defaults to _Non renseignée(s)_ and the `InfoBox` content's color change to a lighter gray.
+
+<Canvas of={InfoBoxStories.Info} />
+
+</Content>
