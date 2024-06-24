@@ -99,38 +99,35 @@ export const parseJsDoc = (jsDoc: string): ParsedJsDoc => {
 /**
  * Formats the prop type based on the given TypeScript type and default value.
  *
- * @param {Pick<DocgenPropDef<NullishPrimitives>, "tsType" | "defaultValue">} param - An object containing the TypeScript type and default value.
- * @param {TsTypeDef} param.tsType - The TypeScript type definition.
+ * @param {Pick<DocgenPropDef<NullishPrimitives>, "type" | "defaultValue">} param - An object containing the TypeScript type and default value.
+ * @param {TsTypeDef} param.type - The TypeScript type definition.
  * @param {PropDefaultValue} param.defaultValue - The default value of the prop.
  * @return {string} The formatted prop type.
  */
 const formatPropType = ({
-  tsType,
+  type,
   defaultValue,
-}: Pick<
-  DocgenPropDef<NullishPrimitives>,
-  "tsType" | "defaultValue"
->): string => {
-  let output = tsType.name;
+}: Pick<DocgenPropDef<NullishPrimitives>, "type" | "defaultValue">): string => {
+  let output = type.name;
 
   // format enums
   const enumIndexStr = "[number]";
-  if (tsType.name.endsWith(enumIndexStr)) {
-    const typeName = tsType.name.slice(0, -enumIndexStr.length - 1);
+  if (type.name.endsWith(enumIndexStr)) {
+    const typeName = type.name.slice(0, -enumIndexStr.length - 1);
     // assume types are names after enums
     output = capitalize(typeName);
   }
   // format unions
-  if (tsType.name === "union" && isArray(tsType?.elements)) {
-    output = tsType.elements
-      .map((nestedType) => formatPropType({ tsType: nestedType }))
+  if (type.name === "union" && isArray(type?.elements)) {
+    output = type.elements
+      .map((nestedType) => formatPropType({ type: nestedType }))
       .join(" |\xa0");
   }
 
   // format literals
-  if (tsType.name === "literal" && isString(tsType.value)) {
+  if (type.name === "literal" && isString(type.value)) {
     // replace SPACING LABEL
-    output = tsType.value.replaceAll(
+    output = type.value.replaceAll(
       /\${typeof SPACING_PREFIX}/g,
       SPACING_PREFIX
     );
@@ -141,12 +138,12 @@ const formatPropType = ({
       : [typeStr.trim()];
 
   if (
-    tsType.name === "intersection" &&
-    isArray(tsType?.elements) &&
-    isString(tsType.raw)
+    type.name === "intersection" &&
+    isArray(type?.elements) &&
+    isString(type.raw)
   ) {
-    const rawElements = tsType.raw.split("&").map((item) => item.trim());
-    const elementTypes = tsType.elements
+    const rawElements = type.raw.split("&").map((item) => item.trim());
+    const elementTypes = type.elements
       .map((element) => ({
         ...element,
         name:
@@ -155,23 +152,23 @@ const formatPropType = ({
           element.name,
       }))
       // format each element
-      .map((elementType) => formatPropType({ tsType: elementType }));
+      .map((elementType) => formatPropType({ type: elementType }));
 
     return elementTypes.join(" & ");
   }
 
   // format exculdes
   formatExclude: {
-    if (tsType.name === "Exclude" && isArray(tsType?.elements)) {
-      const [base, intersection] = tsType.elements;
+    if (type.name === "Exclude" && isArray(type?.elements)) {
+      const [base, intersection] = type.elements;
       if (!base) {
         break formatExclude;
       }
       if (!intersection) {
-        return formatPropType({ tsType: base });
+        return formatPropType({ type: base });
       }
-      const baseType = formatPropType({ tsType: base });
-      const intersectionType = formatPropType({ tsType: intersection });
+      const baseType = formatPropType({ type: base });
+      const intersectionType = formatPropType({ type: intersection });
       // convert base and intersection to unions
       const baseUnion = toUnion(baseType);
       const intersectionUnion = toUnion(intersectionType);
@@ -181,7 +178,7 @@ const formatPropType = ({
       );
       // re-run through union formatter
       return formatPropType({
-        tsType: {
+        type: {
           name: "union",
           elements: finalUnion.map((name) => ({
             name,
@@ -192,7 +189,7 @@ const formatPropType = ({
   }
 
   // handle unpopulated known types
-  if (tsType.name === "unknown") {
+  if (type.name === "unknown") {
     // format callbacks
     if (defaultValue?.value === "() => {}") {
       return "Function";
@@ -249,21 +246,27 @@ const parsePropDescription = ({
  */
 export const formatPropInfo = ({
   required: req,
-  tsType,
+  type,
   defaultValue,
   description,
   name: rawName,
 }: DocgenPropDef<NullishPrimitives> & { name: string }): ParsedPropInfo => {
   const parsedDescription = parsePropDescription({ description, defaultValue });
-  const type =
+
+  const docGenTypeName: Nullable<string> = (
+    type ? /{(.+)}/.exec(type.name) ?? [null, null] : [null, null]
+  )[1];
+  const docGenType = { ...type, name: docGenTypeName ?? type.name };
+
+  const finalType =
     parsedDescription.type ??
-    formatPropType({ tsType: tsType ?? { name: "unknown" }, defaultValue });
+    formatPropType({ type: docGenType ?? { name: "unknown" }, defaultValue });
   const required = parsedDescription.required || req;
   const requiredStr = required ? "Yes" : "No";
   const name = required ? rawName : `${rawName}?`;
   return {
     ...parsedDescription,
-    type,
+    type: finalType,
     required,
     requiredStr,
     name,
@@ -314,7 +317,7 @@ const tagIndentation = (indentation: number): string =>
 /**
  * Factory function for creating TSX tag markup with properties and children.
  *
- * Transformed from svg icon generatio script
+ * Transformed from svg icon generation script
  */
 const tagFactory =
   (tagName: string, indentation = 0, printWidth = 80) =>

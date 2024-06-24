@@ -5,6 +5,7 @@ import { StoryDecorator } from "../docs/containers/StoryDecorator";
 import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
+  tags: ["autodocs"],
   parameters: {
     controls: {
       expanded: true,
