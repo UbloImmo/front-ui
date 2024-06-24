@@ -1,6 +1,7 @@
 import { InfoBox } from "./InfoBox.component";
+import { allIconNames } from "../Icon/Icon.types";
 
-import { ComponentVariants } from "@docs/blocks";
+import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
@@ -28,6 +29,11 @@ const meta = {
   parameters: {
     docs: componentSource(),
   },
+  argTypes: {
+    icon: {
+      options: allIconNames,
+    },
+  },
 } satisfies Meta<typeof InfoBox>;
 
 export default meta;
@@ -50,9 +56,37 @@ export const Info = (props: InfoBoxProps) => {
       variants={infos}
       for="info"
       of={InfoBox}
-      align="center"
       propLabels
-      scaling={1}
+    />
+  );
+};
+
+const examples: DetailConfigVariants<InfoBoxProps> = [
+  {
+    icon: "Heart",
+    label: "Favorite food",
+    info: "Pizza",
+  },
+  {
+    icon: "Globe",
+    label: "Location",
+    info: "Paris",
+    __propVariantLabel: "Location info box",
+  },
+  {
+    icon: "CashStack",
+    label: "Income",
+    info: "0 €",
+  },
+];
+
+export const Examples = () => {
+  return (
+    <ComponentVariants
+      defaults={InfoBox.defaultProps}
+      variants={examples}
+      of={InfoBox}
+      columns={examples.length}
     />
   );
 };
