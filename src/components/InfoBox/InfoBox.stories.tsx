@@ -66,17 +66,19 @@ const examples: DetailConfigVariants<InfoBoxProps> = [
     icon: "Heart",
     label: "Favorite food",
     info: "Pizza",
+    __propVariantLabel: "Favorite food",
   },
   {
     icon: "Globe",
     label: "Location",
     info: "Paris",
-    __propVariantLabel: "Location info box",
+    __propVariantLabel: "Location",
   },
   {
     icon: "CashStack",
     label: "Income",
     info: "0 €",
+    __propVariantLabel: "Income",
   },
 ];
 
