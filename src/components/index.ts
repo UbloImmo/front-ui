@@ -18,3 +18,4 @@ export * from "./Tooltip";
 export * from "./Field";
 export * from "./Chip";
 export * from "./SmallLoader";
+export * from "./InfoBox";
