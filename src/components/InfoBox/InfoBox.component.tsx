@@ -42,11 +42,11 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
     return `Non renseignée(s)`;
   }, [info]);
 
-  if (!mergedProps.label) {
+  if (!props.label) {
     warn(`Missing required label, defaulting to ${defaultInfoBoxProps.label}`);
   }
 
-  if (!mergedProps.icon) {
+  if (!props.icon) {
     warn(`Missing required icon, defaulting to ${defaultInfoBoxProps.icon}`);
   }
 
