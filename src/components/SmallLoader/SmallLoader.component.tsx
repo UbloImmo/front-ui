@@ -7,7 +7,6 @@ import { useMergedProps, useTestId } from "@utils";
 import type { TestIdProps } from "@types";
 
 /**
- * SmallLoader component
  *
  * A loading animation that can be used in page redirection
  *
