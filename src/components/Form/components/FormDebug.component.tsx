@@ -106,15 +106,6 @@ export const FormDebug = (): Nullable<JSX.Element> => {
         color="primary"
       />
       <DebugBlock
-        label="Initial Data"
-        content={data}
-        column="1 / span 2"
-        row="auto / span 2"
-        align="start"
-        justify="start"
-        color="primary"
-      />
-      <DebugBlock
         label={`Active Data (${isDataDifferent ? "Edited" : "Untouched"})`}
         content={data}
         color={isDataDifferent ? "warning" : "pending"}
@@ -122,6 +113,16 @@ export const FormDebug = (): Nullable<JSX.Element> => {
         row="auto / span 2"
         align="start"
         justify="start"
+        open
+      />
+      <DebugBlock
+        label="Initial Data"
+        content={data}
+        column="1 / span 2"
+        row="auto / span 2"
+        align="start"
+        justify="start"
+        color="primary"
       />
       <DebugErrorsBlock column="3 / span 2" row="auto / span 2" />
     </DebugContainer>
@@ -146,17 +147,21 @@ const DebugErrorsBlock = (layout: GridItemProps) => {
   return (
     <DebugBlockParentContainer fill {...layout}>
       <DebugPre $color="error">
-        <Heading size="h4" weight="medium" color="error-base">
-          {label}
-        </Heading>
-        {errors.map(({ path, ...error }, index) => (
-          <DebugBlock
-            key={`${path}-${index}`}
-            label={`${path} (${error.code})`}
-            content={error}
-            color="error"
-          />
-        ))}
+        <details>
+          <summary>
+            <Heading size="h4" weight="medium" color="error-base">
+              {label}
+            </Heading>
+          </summary>
+          {errors.map(({ path, ...error }, index) => (
+            <DebugBlock
+              key={`${path}-${index}`}
+              label={`${path} (${error.code})`}
+              content={error}
+              color="error"
+            />
+          ))}
+        </details>
       </DebugPre>
     </DebugBlockParentContainer>
   );
@@ -166,12 +171,14 @@ type DebugBlockProps = Omit<GridItemProps, "children"> & {
   label: string;
   content: object | string;
   color?: ColorKey;
+  open?: boolean;
 };
 
 const DebugBlock = ({
   label,
   content,
   color = "warning",
+  open,
   ...layout
 }: DebugBlockProps) => {
   const debugInfo = useMemo(() => {
@@ -190,12 +197,17 @@ const DebugBlock = ({
   return (
     <GridItem fill {...layout}>
       <DebugPre $color={color}>
-        <Heading size="h4" weight="medium" color={headingColor}>
-          {label}
-        </Heading>
-        <Text size="s">
-          <code>{debugInfo}</code>
-        </Text>
+        <details open={open}>
+          <summary>
+            <Heading size="h4" weight="medium" color={headingColor}>
+              {label}
+            </Heading>
+          </summary>
+
+          <Text size="s">
+            <code>{debugInfo}</code>
+          </Text>
+        </details>
       </DebugPre>
     </GridItem>
   );
@@ -211,5 +223,5 @@ const DebugPre = styled.pre<FormDebugPreStyleProps>`
 
 const DebugBlockParentContainer = styled(GridItem)`
   max-height: 100%;
-  overflow-y: auto;
+  overflow: auto;
 `;

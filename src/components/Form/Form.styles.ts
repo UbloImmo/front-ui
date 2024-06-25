@@ -131,10 +131,33 @@ export const formDebugPreStyles = ({
     gap: var(--s-4);
     width: 100%;
     height: 100%;
+    overflow: auto;
 
     div,
     pre {
       height: auto;
+    }
+
+    details {
+      summary {
+        list-style-position: inside;
+        padding-bottom: var(--s-2);
+        user-select: none;
+        cursor: pointer;
+
+        [data-testid="heading"] {
+          user-select: none;
+          display: inline-block;
+          padding-left: var(--s-1);
+        }
+
+        &::marker {
+          color: var(--${$color}-medium);
+          font-size: var(--text-s);
+          list-style-position: inside;
+          margin-top: calc(var(--s-1) * -1);
+        }
+      }
     }
 
     span {
