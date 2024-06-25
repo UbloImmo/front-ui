@@ -1,7 +1,8 @@
 /**
- * A very basic email string template type
+ * A very basic email string type alias
+ * Used to differentiate between emails and regular strings
  */
-export type Email = `${string}@${string}.${string}`;
+export type Email = string;
 
 /**
  * Basic type alias for currency (int)
