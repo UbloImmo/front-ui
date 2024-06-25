@@ -49,7 +49,7 @@ const addressFormProps: FormProps<Address> = {
       label: "Street",
     },
     {
-      type: "text",
+      type: "number",
       source: "number",
       label: "Street number",
     },
@@ -63,6 +63,9 @@ const addressFormProps: FormProps<Address> = {
       type: "text",
       source: "city",
       label: "City",
+      layout: {
+        readonly: true,
+      },
     },
     {
       type: "text",
@@ -104,6 +107,7 @@ export const Default: Story = {
 const identitySchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
+  age: z.number().nullish(),
   contact: z.object({
     email: z.string().email(),
     phone: z.string(),
@@ -252,4 +256,19 @@ Validation.parameters = {
     addressFormProps as FormProps<object>,
     { ...addressFormProps, query: undefined } as FormProps<object>,
   ]),
+};
+
+export const Debug = (props: FormStoryProps) => {
+  const mergedProps = useMergedProps(addressFormProps, props);
+
+  return (
+    <GridLayout columns={1} gap={"s-8"}>
+      <GridItem fill>
+        <Form {...mergedProps} />
+      </GridItem>
+      <GridItem fill>
+        <Form {...mergedProps} debug />
+      </GridItem>
+    </GridLayout>
+  );
 };

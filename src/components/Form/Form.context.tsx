@@ -269,7 +269,7 @@ const useFormFields = <TData extends object>(
   formData: UseFormDataReturn<TData>,
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
-  content?: FormContent<TData, InputType>[]
+  content?: FormContent<TData>[]
 ): BuiltFormContent<InputType>[] => {
   /**
    * @see {@link GetFieldValueFn}
@@ -333,7 +333,7 @@ const useFormFields = <TData extends object>(
    */
   const buildFieldProps = useCallback<BuildFieldPropsFn<TData>>(
     <TType extends InputType>(
-      formField: FormFieldProps<TData, TType>
+      formField: FormFieldProps<TData>
     ): BuiltFieldProps<TType> => {
       const {
         source,
@@ -343,6 +343,7 @@ const useFormFields = <TData extends object>(
         error,
         required,
         layout,
+        type,
         ...rest
       } = formField;
 
@@ -356,6 +357,7 @@ const useFormFields = <TData extends object>(
         value: getFieldValue<DeepKeyOf<FormData<TData>>>(
           source as DeepKeyOf<FormData<TData>>
         ),
+        type: type as TType,
         disabled: disabled || modifiers.disabled,
         required: isFieldRequired(source, required),
         layout,

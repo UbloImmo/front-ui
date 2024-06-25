@@ -173,7 +173,7 @@ export const isSchemaFieldRequired = <TData extends object>(
  * @return {boolean} Returns `true` if `fieldOrDivider` is a `FormDividerProps`, otherwise `false`.
  */
 export const isFormDivider = <TData extends object>(
-  fieldOrDivider: FormContent<TData, InputType> | BuiltFormContent<InputType>
+  fieldOrDivider: FormContent<TData> | BuiltFormContent<InputType>
 ): fieldOrDivider is FormDividerProps => {
   if (isString(fieldOrDivider) && fieldOrDivider === "divider") return true;
   const keys = objectKeys(fieldOrDivider);

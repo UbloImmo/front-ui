@@ -73,9 +73,7 @@ export type FormData<TData extends object> = DeepPartial<TData>;
 
 // --------------------------------- FIELD ----------------------------------
 
-type RequiredFieldKeys = "label" | "type";
-
-type OmittedFieldKeys = RequiredFieldKeys | "value";
+export type FormFieldLayoutHiddenFn = GenericFn<[], boolean>;
 
 /**
  * Props added to form field that control its layout inside the form
@@ -98,29 +96,45 @@ export type FormFieldLayoutProps = {
      * @default false
      */
     readonly?: boolean;
+    /**
+     * Whether to hide the field in both display AND edit modes
+     *
+     * @type {boolean | FormFieldLayoutHiddenFn}
+     * @default false
+     */
+    hidden?: boolean | FormFieldLayoutHiddenFn;
   };
 };
+type RequiredFieldKeys = "label" | "type";
+
+type OmittedFieldKeys = RequiredFieldKeys | "value";
 
 /**
- * Individual form field props. Used to render and link a single field inside a form.
+ * A single form field as defined inside a form's `content`.
+ * Used to render and link a single field inside a form
  *
+ * Its `type` being restricted by its `source`,
+ * it allows for specific additional props according to its type
  *
  * @template {object} TData - The type of the form data
- * @template {InputType} TType - The field's input type
  *
- * @see {@link FieldProps}, {@link DeepKeyOfType}, {@link FormFieldLayoutProps}
+ * @see {@link FormFieldProps}
  */
-export type FormFieldProps<TData extends object, TType extends InputType> = {
-  /**
-   * Source to retrieve and change the field's data relative to the form's `query` and limited by its own `type` property
-   *
-   * @type {FormFieldSource<TData, TType>}
-   * @required
-   */
-  source: FormFieldSource<TData, TType>;
-} & Pick<FieldProps<NoInfer<TType>>, RequiredFieldKeys> &
-  Omit<FieldProps<NoInfer<TType>>, OmittedFieldKeys> &
-  FormFieldLayoutProps;
+export type FormFieldProps<TData extends object> = {
+  [TType in InputType]: FormFieldSource<TData, TType> extends never
+    ? never
+    : {
+        /**
+         * Source to retrieve and change the field's data relative to the form's `query` and limited by its own `type` property
+         *
+         * @type {FormFieldSource<TData, TType>}
+         * @required
+         */
+        source: FormFieldSource<TData, TType>;
+      } & Pick<FieldProps<TType>, RequiredFieldKeys> &
+        Omit<FieldProps<NoInfer<TType>>, OmittedFieldKeys> &
+        FormFieldLayoutProps;
+}[InputType];
 
 /**
  * Individual built {@link FieldProps} and {@link FormFieldLayoutProps}. Gets passed to the `FormField` component.
@@ -145,12 +159,11 @@ export type FormDividerProps =
  * A single form field or divider to display inside the form
  *
  * @template {object} TData - The type of the {@link FormData}
- * @template {InputType} TType - The field's input type
  *
  * @see {@link FormFieldProps}, {@link FormDividerProps}
  */
-export type FormContent<TData extends object, TType extends InputType> =
-  | FormFieldProps<NoInfer<TData>, TType>
+export type FormContent<TData extends object> =
+  | FormFieldProps<NoInfer<TData>>
   | FormDividerProps;
 
 /**
@@ -256,7 +269,7 @@ export type FormContentProps<TData extends object> = {
    * @type {FormContent<TData>[]}
    * @default []
    */
-  content?: FormContent<TData, InputType>[];
+  content?: FormContent<TData>[];
 };
 
 /**
@@ -451,7 +464,7 @@ export type MutateFormDataFn<TData extends object> = <
  * @returns {FieldProps<TType>} The built and linked {@link FieldProps}
  */
 export type BuildFieldPropsFn<TData extends object> = <TType extends InputType>(
-  formField: FormFieldProps<TData, TType>
+  formField: FormFieldProps<TData>
 ) => BuiltFieldProps<TType>;
 
 /**
