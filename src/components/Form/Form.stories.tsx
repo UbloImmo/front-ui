@@ -63,9 +63,6 @@ const addressFormProps: FormProps<Address> = {
       type: "text",
       source: "city",
       label: "City",
-      layout: {
-        readonly: true,
-      },
     },
     {
       type: "text",
