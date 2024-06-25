@@ -1,3 +1,4 @@
+import { isBoolean, isFunction, type Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
 import { FormFieldDisplay } from "./FormFieldDisplay.component";
@@ -7,7 +8,7 @@ import { type GridEndPosition, GridItem } from "@layouts";
 
 import { type InputType, Field } from "@components";
 
-import type { BuiltFieldProps } from "../Form.types";
+import type { BuiltFieldProps, FormFieldLayoutHiddenFn } from "../Form.types";
 
 /**
  * Renders a form field based on the provided layout and props.
@@ -15,12 +16,12 @@ import type { BuiltFieldProps } from "../Form.types";
  * @remarks will render the corresponding field or display field based on the form context.
  *
  * @param {BuiltFieldProps<InputType>} layout - The layout of the form field.
- * @return {JSX.Element} The rendered form field component.
+ * @return {Nullable<JSX.Element>} The rendered form field component.
  */
 export const FormField = ({
   layout,
   ...props
-}: BuiltFieldProps<InputType>): JSX.Element => {
+}: BuiltFieldProps<InputType>): Nullable<JSX.Element> => {
   const { isEditing } = useFormContext();
 
   /**
@@ -38,6 +39,18 @@ export const FormField = ({
   const FieldOrDisplayField = useMemo(() => {
     return isEditing && !layout?.readonly ? Field : FormFieldDisplay;
   }, [isEditing, layout]);
+
+  const isHidden = useMemo(
+    () =>
+      isFunction<FormFieldLayoutHiddenFn>(layout?.hidden)
+        ? layout.hidden()
+        : isBoolean(layout?.hidden)
+        ? layout.hidden
+        : false,
+    [layout]
+  );
+
+  if (isHidden) return null;
 
   return (
     <GridItem
