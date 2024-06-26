@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.13.0 - 2024-06-26
+
 ## 0.12.0 - 2024-06-24
 ### Added
 - `v0.0.1` InfoBox component
