@@ -44,8 +44,6 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
     return mergedProps.reference ?? defaultReference;
   }, [mergedProps, defaultReference]);
 
-  // TODO
-
   const { closeDialog } = useDialogManager();
 
   const closeDialogOnClick = useCallback<VoidFn>(() => {

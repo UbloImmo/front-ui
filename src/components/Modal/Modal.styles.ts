@@ -22,6 +22,12 @@ export const modalCardStyles = ({ $size }: ModalStyleProps) => {
     padding: var(--s-6);
     border-radius: var(--s-2);
     position: relative;
+    box-shadow: var(--shadow-card-elevation-high);
+    overflow-y: auto;
+
+    [data-testid="modal"]:has(&) {
+      overflow: unset;
+    }
   `;
 };
 
