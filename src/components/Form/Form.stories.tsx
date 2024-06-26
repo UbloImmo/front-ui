@@ -258,14 +258,5 @@ Validation.parameters = {
 export const Debug = (props: FormStoryProps) => {
   const mergedProps = useMergedProps(addressFormProps, props);
 
-  return (
-    <GridLayout columns={1} gap={"s-8"}>
-      <GridItem fill>
-        <Form {...mergedProps} />
-      </GridItem>
-      <GridItem fill>
-        <Form {...mergedProps} debug />
-      </GridItem>
-    </GridLayout>
-  );
+  return <Form {...mergedProps} debug />;
 };

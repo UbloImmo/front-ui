@@ -141,9 +141,12 @@ export const formDebugPreStyles = ({
     details {
       summary {
         list-style-position: inside;
-        padding-bottom: var(--s-2);
         user-select: none;
         cursor: pointer;
+
+        &[open] {
+          padding-bottom: var(--s-2);
+        }
 
         [data-testid="heading"] {
           user-select: none;
@@ -162,6 +165,13 @@ export const formDebugPreStyles = ({
 
     span {
       color: inherit;
+
+      code {
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        line-height: inherit;
+      }
     }
   `;
 };
