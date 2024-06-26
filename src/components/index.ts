@@ -19,3 +19,4 @@ export * from "./Field";
 export * from "./Chip";
 export * from "./SmallLoader";
 export * from "./InfoBox";
+export * from "./Modal";
