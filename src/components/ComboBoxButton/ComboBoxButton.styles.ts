@@ -1,9 +1,10 @@
 import styled, { RuleSet, css } from "styled-components";
+
 import {
-  ComboBoxButtonContainerStyleProps,
   ComboBoxButtonDefaultProps,
   ComboButtonIconContainerStyleProps,
 } from "./ComboBoxButton.types";
+
 import { StyleProps } from "@types";
 import { cssVarUsage } from "@utils";
 
