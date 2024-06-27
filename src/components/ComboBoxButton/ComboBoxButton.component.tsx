@@ -1,0 +1,104 @@
+import { isNull } from "@ubloimmo/front-util";
+import { MouseEventHandler, useCallback, useMemo } from "react";
+import styled from "styled-components";
+
+import {
+  ComboBoxButtonStyles,
+  ComboBoxIconContainer,
+} from "./ComboBoxButton.styles";
+import { Icon } from "../Icon";
+import { Text } from "../Text";
+
+import { StyleProps, type TestIdProps } from "@types";
+import {
+  useLogger,
+  useTestId,
+  useMergedProps,
+  isEmptyString,
+  useStyleProps,
+} from "@utils";
+
+import type {
+  ComboBoxButtonProps,
+  ComboBoxButtonDefaultProps,
+} from "./ComboBoxButton.types";
+
+const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
+  active: false,
+  multi: false,
+  label: "[ComboBox option]",
+  onSelect: null,
+  disabled: false,
+};
+
+/**
+ * A single clickable option in a ComboBox
+ *
+ * @version 0.0.1
+ *
+ * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
+ * @returns {JSX.Element}
+ */
+const ComboBoxButton = (
+  props: ComboBoxButtonProps & TestIdProps
+): JSX.Element => {
+  const { warn } = useLogger("ComboBoxButton");
+  const mergedProps = useMergedProps(defaultComboBoxButtonProps, props);
+  const { label, multi, active } = mergedProps;
+  const styleProps = useStyleProps(mergedProps);
+  const testId = useTestId("combo-box-button", props);
+
+  if (!props.label || isEmptyString(props.label)) {
+    warn(
+      `Missing required label, defaulting to ${defaultComboBoxButtonProps.label}`
+    );
+  }
+
+  const onSelect = useCallback<MouseEventHandler<HTMLElement>>(
+    (event) => {
+      if (isNull(mergedProps.onSelect)) return;
+      event.stopPropagation();
+      mergedProps.onSelect();
+    },
+    [mergedProps]
+  );
+
+  const iconName = useMemo(() => {
+    return multi
+      ? active
+        ? "CheckSquareFill"
+        : "Square"
+      : active
+      ? "CheckCircleFill"
+      : "Circle";
+  }, [multi, active]);
+
+  const activeColor = useMemo(() => {
+    return active ? "primary-dark" : "gray-800";
+  }, [active]);
+
+  return (
+    <ComboBoxButtonContainer
+      data-testid={testId}
+      onClick={onSelect}
+      {...styleProps}
+    >
+      <ComboBoxIconContainer $active={active ?? false}>
+        <Icon name={iconName} color={activeColor} />
+        <Icon name={iconName} color={activeColor} />
+      </ComboBoxIconContainer>
+
+      <Text color={activeColor}>{label}</Text>
+    </ComboBoxButtonContainer>
+  );
+};
+
+ComboBoxButton.defaultProps = defaultComboBoxButtonProps;
+
+export { ComboBoxButton };
+
+const ComboBoxButtonContainer = styled.button<
+  StyleProps<ComboBoxButtonDefaultProps>
+>`
+  ${ComboBoxButtonStyles}
+`;
