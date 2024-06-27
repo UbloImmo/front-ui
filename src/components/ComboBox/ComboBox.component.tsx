@@ -35,7 +35,6 @@ const ComboBox = (props: ComboBoxProps & TestIdProps): JSX.Element => {
   const isOptionActive = (option: string) => selection.includes(option);
 
   const handleSelectOption = (option: string) => {
-    console.log(multi);
     if (multi) {
       if (isOptionActive(option)) {
         const newSelection = [...selection].filter((value) => value !== option);
