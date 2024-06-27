@@ -87,6 +87,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
       direction={direction}
       gap="s-2"
       wrap
+      role="combobox"
     >
       {(options ?? []).map((option, index) => (
         <ComboBoxButton

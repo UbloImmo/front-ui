@@ -80,6 +80,7 @@ const ComboBoxButton = (
       data-testid={testId}
       onClick={onSelect}
       disabled={mergedProps.disabled}
+      type="button"
       {...styleProps}
     >
       <ComboBoxIconContainer $active={active ?? false}>
