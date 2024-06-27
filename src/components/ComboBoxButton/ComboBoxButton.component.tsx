@@ -73,22 +73,19 @@ const ComboBoxButton = (
       : "Circle";
   }, [multi, active]);
 
-  const activeColor = useMemo(() => {
-    return active ? "primary-dark" : "gray-800";
-  }, [active]);
-
   return (
     <ComboBoxButtonContainer
       data-testid={testId}
       onClick={onSelect}
+      disabled={mergedProps.disabled}
       {...styleProps}
     >
       <ComboBoxIconContainer $active={active ?? false}>
-        <Icon name={iconName} color={activeColor} />
-        <Icon name={iconName} color={activeColor} />
+        <Icon name={iconName} />
+        <Icon name={iconName} />
       </ComboBoxIconContainer>
 
-      <Text color={activeColor}>{label}</Text>
+      <Text weight="medium">{label}</Text>
     </ComboBoxButtonContainer>
   );
 };
