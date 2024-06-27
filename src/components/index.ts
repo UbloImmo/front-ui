@@ -20,3 +20,5 @@ export * from "./Chip";
 export * from "./SmallLoader";
 export * from "./InfoBox";
 export * from "./Modal";
+export * from "./ComboBox";
+export * from "./ComboBoxButton";
