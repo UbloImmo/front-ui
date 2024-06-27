@@ -7,10 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.2` ComboBox component
+  - include "combobox" ARIA role
+
+- `v0.0.2` ComboBoxButcon component
+  - set type to "button"
+
 ## 0.14.0 - 2024-06-27
 ### Added
 - `v0.0.1` ComboBox component
-- `v0.0.1` ComboBoxButton component
+- `v0.0.1` ComboBoxButcon component
 
 ## 0.13.0 - 2024-06-26
 
