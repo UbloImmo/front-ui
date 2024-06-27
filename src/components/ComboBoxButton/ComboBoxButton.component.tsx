@@ -36,7 +36,7 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
 /**
  * A single clickable option in a ComboBox
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
  * @returns {JSX.Element}
@@ -80,6 +80,7 @@ const ComboBoxButton = (
       data-testid={testId}
       onClick={onSelect}
       disabled={mergedProps.disabled}
+      type="button"
       {...styleProps}
     >
       <ComboBoxIconContainer $active={active ?? false}>

@@ -25,7 +25,7 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
 /**
  * A group of ComboButtons that act as a select or radio input.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -87,6 +87,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
       direction={direction}
       gap="s-2"
       wrap
+      role="combobox"
     >
       {(options ?? []).map((option, index) => (
         <ComboBoxButton
