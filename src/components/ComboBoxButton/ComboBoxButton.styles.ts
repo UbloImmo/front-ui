@@ -1,21 +1,23 @@
-import styled, { RuleSet, css } from "styled-components";
+import { type RuleSet, css } from "styled-components";
 
-import {
+import { cssVarUsage } from "@utils";
+
+import type {
   ComboBoxButtonDefaultProps,
   ComboButtonIconContainerStyleProps,
 } from "./ComboBoxButton.types";
-
-import { StyleProps } from "@types";
-import { cssVarUsage } from "@utils";
+import type { StyleProps } from "@types";
 
 export const ComboBoxButtonStyles = ({
   $active,
+  $fill,
 }: StyleProps<ComboBoxButtonDefaultProps>): RuleSet => {
   return css`
-    display: flex;
     min-height: var(--s-8);
     height: var(--s-8);
     max-height: var(--s-8);
+    width: max-content;
+    display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: var(--s-2);
@@ -24,9 +26,16 @@ export const ComboBoxButtonStyles = ({
     padding: var(--s-2) var(--s-4);
     border-radius: var(--s-1);
     border: 1px solid var(--primary-medium);
+    overflow: hidden;
+
+    ${$fill &&
+    css`
+      flex: 1;
+    `}
 
     span[data-testid="text"] {
       color: ${$active ? cssVarUsage("primary-dark") : cssVarUsage("gray-800")};
+      overflow: hidden;
     }
 
     &:disabled {
@@ -76,7 +85,3 @@ export const ComboBoxIconContainerStyle = ({
     }
   `;
 };
-
-export const ComboBoxIconContainer = styled.div<ComboButtonIconContainerStyleProps>`
-  ${ComboBoxIconContainerStyle}
-`;

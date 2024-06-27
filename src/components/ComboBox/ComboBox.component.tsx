@@ -1,8 +1,11 @@
-import { useCallback, useMemo, useState } from "react";
+import { isFunction, type NullishPrimitives } from "@ubloimmo/front-util";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   type ComboBoxProps,
   type ComboBoxDefaultProps,
+  type ComboBoxOption,
+  type ComboBoxOnChangeFn,
 } from "./ComboBox.types";
 import { ComboBoxButton } from "../ComboBoxButton";
 
@@ -11,10 +14,12 @@ import { useTestId, useMergedProps, useLogger } from "@utils";
 
 import type { TestIdProps } from "@types";
 
-const defaultComboBoxProps: ComboBoxDefaultProps = {
+const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   options: null,
   direction: "column",
   multi: false,
+  onChange: () => {},
+  disabled: false,
 };
 
 /**
@@ -25,38 +30,50 @@ const defaultComboBoxProps: ComboBoxDefaultProps = {
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
  */
-const ComboBox = (props: ComboBoxProps & TestIdProps): JSX.Element => {
+const ComboBox = <TOptionValue extends NullishPrimitives>(
+  props: ComboBoxProps<TOptionValue> & TestIdProps
+): JSX.Element => {
   const { warn } = useLogger("ComboBox");
-  const mergedProps = useMergedProps(defaultComboBoxProps, props);
-  const { options, multi } = mergedProps;
+  const mergedProps = useMergedProps(
+    defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue>,
+    props
+  );
+  const { options, multi, onChange, disabled, direction } = mergedProps;
   const testId = useTestId("combo-box", props);
 
-  const [selection, setSelection] = useState<string[]>([]);
+  const [selection, setSelection] = useState<TOptionValue[]>([]);
   const isOptionActive = useCallback(
-    (option: string) => selection.includes(option),
+    (option: ComboBoxOption<TOptionValue>) => selection.includes(option.value),
     [selection]
   );
 
-  const handleSelectOption = useMemo(
-    () => (option: string) => {
+  useEffect(() => {
+    if (isFunction<ComboBoxOnChangeFn<TOptionValue>>(onChange) && !disabled) {
+      onChange(selection);
+    }
+  }, [disabled, onChange, selection]);
+
+  const selectOptionOnClick = useCallback(
+    (option: ComboBoxOption<TOptionValue>) => () => {
+      if (disabled) return;
       if (multi) {
         if (isOptionActive(option)) {
           const newSelection = [...selection].filter(
-            (value) => value !== option
+            (value) => value !== option.value
           );
           setSelection(newSelection);
         } else {
-          setSelection([...selection, option]);
+          setSelection([...selection, option.value]);
         }
       } else {
         if (isOptionActive(option)) {
           setSelection([]);
         } else {
-          setSelection([option]);
+          setSelection([option.value]);
         }
       }
     },
-    [multi, selection, isOptionActive]
+    [multi, selection, isOptionActive, disabled]
   );
 
   if (!props.options) {
@@ -64,14 +81,22 @@ const ComboBox = (props: ComboBoxProps & TestIdProps): JSX.Element => {
   }
 
   return (
-    <FlexLayout testId={testId} overrideTestId {...mergedProps} gap="s-2">
-      {(options ?? []).map((option) => (
+    <FlexLayout
+      testId={testId}
+      overrideTestId
+      direction={direction}
+      gap="s-2"
+      wrap
+    >
+      {(options ?? []).map((option, index) => (
         <ComboBoxButton
-          label={option}
-          key={option}
+          label={option.label}
+          key={option.label + index}
           active={isOptionActive(option)}
+          disabled={option.disabled || props.disabled}
           multi={multi}
-          onSelect={() => handleSelectOption(option)}
+          fill={direction === "column"}
+          onSelect={selectOptionOnClick(option)}
         />
       ))}
     </FlexLayout>

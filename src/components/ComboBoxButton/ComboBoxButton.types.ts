@@ -39,6 +39,12 @@ export type ComboBoxButtonProps = {
    */
 
   disabled?: boolean;
+  /**
+   * Applies flex: 1 to button if provided
+   *
+   * @default false
+   */
+  fill?: boolean;
 };
 
 export type ComboBoxButtonDefaultProps = Required<ComboBoxButtonProps>;

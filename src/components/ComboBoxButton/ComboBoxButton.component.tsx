@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import {
   ComboBoxButtonStyles,
-  ComboBoxIconContainer,
+  ComboBoxIconContainerStyle,
 } from "./ComboBoxButton.styles";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
@@ -21,6 +21,7 @@ import {
 import type {
   ComboBoxButtonProps,
   ComboBoxButtonDefaultProps,
+  ComboButtonIconContainerStyleProps,
 } from "./ComboBoxButton.types";
 
 const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
@@ -29,6 +30,7 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
   label: "[ComboBox option]",
   onSelect: null,
   disabled: false,
+  fill: false,
 };
 
 /**
@@ -85,7 +87,9 @@ const ComboBoxButton = (
         <Icon name={iconName} />
       </ComboBoxIconContainer>
 
-      <Text weight="medium">{label}</Text>
+      <Text weight="medium" ellipsis>
+        {label}
+      </Text>
     </ComboBoxButtonContainer>
   );
 };
@@ -98,4 +102,8 @@ const ComboBoxButtonContainer = styled.button<
   StyleProps<ComboBoxButtonDefaultProps>
 >`
   ${ComboBoxButtonStyles}
+`;
+
+const ComboBoxIconContainer = styled.div<ComboButtonIconContainerStyleProps>`
+  ${ComboBoxIconContainerStyle}
 `;
