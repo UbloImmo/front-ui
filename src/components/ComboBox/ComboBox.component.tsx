@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import {
   type ComboBoxProps,
@@ -32,24 +32,32 @@ const ComboBox = (props: ComboBoxProps & TestIdProps): JSX.Element => {
   const testId = useTestId("combo-box", props);
 
   const [selection, setSelection] = useState<string[]>([]);
-  const isOptionActive = (option: string) => selection.includes(option);
+  const isOptionActive = useCallback(
+    (option: string) => selection.includes(option),
+    [selection]
+  );
 
-  const handleSelectOption = (option: string) => {
-    if (multi) {
-      if (isOptionActive(option)) {
-        const newSelection = [...selection].filter((value) => value !== option);
-        setSelection(newSelection);
+  const handleSelectOption = useMemo(
+    () => (option: string) => {
+      if (multi) {
+        if (isOptionActive(option)) {
+          const newSelection = [...selection].filter(
+            (value) => value !== option
+          );
+          setSelection(newSelection);
+        } else {
+          setSelection([...selection, option]);
+        }
       } else {
-        setSelection([...selection, option]);
+        if (isOptionActive(option)) {
+          setSelection([]);
+        } else {
+          setSelection([option]);
+        }
       }
-    } else {
-      if (isOptionActive(option)) {
-        setSelection([]);
-      } else {
-        setSelection([option]);
-      }
-    }
-  };
+    },
+    [multi, selection, isOptionActive]
+  );
 
   if (!props.options) {
     warn(`Missing required labels`);
