@@ -24,7 +24,9 @@ import {
 } from "react";
 
 import {
+  buildFormText,
   isFormDivider,
+  isFormText,
   isSchemaFieldRequired,
   setObjectValue,
 } from "./Form.utils";
@@ -380,6 +382,7 @@ const useFormFields = <TData extends object>(
     if (!content || !content.length) return [];
     return content.map((content) => {
       if (isFormDivider(content)) return content;
+      if (isFormText(content)) return buildFormText(content);
       return buildFieldProps(content);
     });
   }, [buildFieldProps, content]);

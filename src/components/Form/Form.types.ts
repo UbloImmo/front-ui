@@ -29,7 +29,7 @@ import type {
   Replace,
   VoidFn,
 } from "@ubloimmo/front-util";
-import type { FormEventHandler } from "react";
+import type { FormEventHandler, ReactNode } from "react";
 import type { ZodIssue, ZodObject, ZodType, ZodTypeAny } from "zod";
 
 // -------------------------------- GLOBALS ----------------------------------
@@ -160,12 +160,17 @@ export type FormDividerProps =
 
 // -------------------------------- INFOS -----------------------------------
 
-export type FormTextProps = Replace<
+export type FormTextProps = Omit<
   TextProps,
-  "children",
-  { content: string },
-  "content"
->;
+  "children" | keyof StyleOverrideProps
+> & {
+  content: ReactNode;
+  kind: "text";
+};
+
+export type BuiltFormTextProps = Omit<TextProps, keyof StyleOverrideProps> & {
+  kind: "text";
+};
 
 // ------------------------------- CONTENT ----------------------------------
 
@@ -178,7 +183,8 @@ export type FormTextProps = Replace<
  */
 export type FormContent<TData extends object> =
   | FormFieldProps<NoInfer<TData>>
-  | FormDividerProps;
+  | FormDividerProps
+  | FormTextProps;
 
 /**
  * Either a single {@link BuiltFieldProps} object or {@link FormDividerProps}
@@ -187,7 +193,8 @@ export type FormContent<TData extends object> =
  */
 export type BuiltFormContent<TType extends InputType> =
   | BuiltFieldProps<TType>
-  | FormDividerProps;
+  | FormDividerProps
+  | BuiltFormTextProps;
 
 // -------------------------------- SCHEMA ----------------------------------
 

@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Input styles
+  - Added support for displaying inside a table cell
+
 - `v0.0.2` GridItem layout
   - Add optional `fill` prop to fill grid area
 

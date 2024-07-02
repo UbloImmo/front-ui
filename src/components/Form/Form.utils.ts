@@ -18,10 +18,12 @@ import type { InputType } from "@components";
 import type {
   BuiltFieldProps,
   BuiltFormContent,
+  BuiltFormTextProps,
   FormContent,
   FormDividerProps,
   FormSchema,
   FormSource,
+  FormTextProps,
 } from "./Form.types";
 
 /**
@@ -169,22 +171,59 @@ export const isSchemaFieldRequired = <TData extends object>(
  *
  * @template {object} TData - The type of the form data.
  *
- * @param {FormContent<TData, InputType> | BuiltFormContent<InputType>} fieldOrDivider - The object to check.
+ * @param {FormContent<TData, InputType> | BuiltFormContent<InputType>} content - The object to check.
  * @return {boolean} Returns `true` if `fieldOrDivider` is a `FormDividerProps`, otherwise `false`.
  */
 export const isFormDivider = <TData extends object>(
-  fieldOrDivider: FormContent<TData> | BuiltFormContent<InputType>
-): fieldOrDivider is FormDividerProps => {
-  if (isString(fieldOrDivider) && fieldOrDivider === "divider") return true;
-  const keys = objectKeys(fieldOrDivider);
+  content: FormContent<TData> | BuiltFormContent<InputType>
+): content is FormDividerProps => {
+  if (isString(content) && content === "divider") return true;
+  if (isFormText(content) || isBuiltFormText(content)) return false;
+  const keys = objectKeys(content);
   if (keys.length === 0) return true;
   if (
     keys.length === 1 &&
     keys[0] === "label" &&
-    (isString(fieldOrDivider.label) || isNull(fieldOrDivider.label))
+    (isString(content.label) || isNull(content.label))
   )
     return true;
   return false;
+};
+
+/**
+ * Checks if the given `contentOrText` is a `FormTextProps` object.
+ *
+ * @template {object} TData - The type of the form data.
+ *
+ * @param {FormContent<TData> | BuiltFormContent<InputType>} content - The content or text to check.
+ * @return {contentOrText is FormTextProps} - `true` if `contentOrText` is a `FormTextProps` object, `false` otherwise.
+ */
+export const isFormText = <TData extends object>(
+  content: FormContent<TData> | BuiltFormContent<InputType>
+): content is FormTextProps => {
+  return (
+    isObject(content) &&
+    "kind" in content &&
+    content.kind === "text" &&
+    "content" in content
+  );
+};
+
+/**
+ * Checks if the given `contentOrText` is a `BuiltFormTextProps` object.
+ *
+ * @param {FormContent<TData> | BuiltFormContent<InputType>} contentOrText - The content or text to check.
+ * @returns {contentOrText is BuiltFormTextProps} - `true` if `contentOrText` is a `BuiltFormTextProps` object, `false` otherwise.
+ */
+export const isBuiltFormText = <TData extends object>(
+  content: FormContent<TData> | BuiltFormContent<InputType>
+): content is BuiltFormTextProps => {
+  return (
+    isObject(content) &&
+    "kind" in content &&
+    content.kind === "text" &&
+    "children" in content
+  );
 };
 
 /**
@@ -192,12 +231,26 @@ export const isFormDivider = <TData extends object>(
  *
  * @template {InputType} TType - The type of the input.
  *
- * @param {BuiltFormContent<TType>} fieldOrDivider - The object to check.
+ * @param {BuiltFormContent<TType>} content - The object to check.
  * @return {fieldOrDivider is BuiltFieldProps<TType>} Returns `true` if `fieldOrDivider` is a built form field, otherwise `false`.
  */
 export const isBuiltFormField = <TType extends InputType>(
-  fieldOrDivider: BuiltFormContent<TType>
-): fieldOrDivider is BuiltFieldProps<TType> => {
-  if (isFormDivider(fieldOrDivider)) return false;
-  return true;
+  content: BuiltFormContent<TType>
+): content is BuiltFieldProps<TType> => {
+  return !isFormDivider(content) && !isBuiltFormText(content);
+};
+
+/**
+ * Builds a `BuiltFormTextProps` object from a `FormTextProps` object.
+ *
+ * @param {FormTextProps} formText - The input `FormTextProps` object.
+ * @return {BuiltFormTextProps} The resulting `BuiltFormTextProps` object.
+ */
+export const buildFormText = (formText: FormTextProps): BuiltFormTextProps => {
+  const { kind, content, ...rest } = formText;
+  return {
+    ...rest,
+    kind,
+    children: content,
+  };
 };

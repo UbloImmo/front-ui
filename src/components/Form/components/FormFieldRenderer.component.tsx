@@ -2,9 +2,14 @@ import { isString, type Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled from "styled-components";
 
+import { FormText } from "./FormText.component";
 import { useFormContext } from "../Form.context";
 import { formFieldListContainerStyles } from "../Form.styles";
-import { isBuiltFormField, isFormDivider } from "../Form.utils";
+import {
+  isBuiltFormField,
+  isBuiltFormText,
+  isFormDivider,
+} from "../Form.utils";
 
 import { GridLayout } from "@layouts";
 
@@ -16,14 +21,17 @@ export const FormFieldRenderer = <TData extends object>() => {
   const { content } = useFormContext<TData>();
 
   const renderedContent = useMemo<Nullable<JSX.Element>[]>(() => {
-    return content.map((fieldOrDivider, index) => {
-      if (isBuiltFormField(fieldOrDivider)) {
-        return <FormField {...fieldOrDivider} key={`form-field-${index}`} />;
+    return content.map((contentItem, index) => {
+      if (isBuiltFormField(contentItem)) {
+        return <FormField {...contentItem} key={`form-field-${index}`} />;
       }
-      if (!isFormDivider(fieldOrDivider)) return null;
-      const dividerProps: DividerProps = isString(fieldOrDivider)
+      if (isBuiltFormText(contentItem)) {
+        return <FormText {...contentItem} key={`form-field-${index}`} />;
+      }
+      if (!isFormDivider(contentItem)) return null;
+      const dividerProps: DividerProps = isString(contentItem)
         ? {}
-        : fieldOrDivider;
+        : contentItem;
       return <FormDivider {...dividerProps} key={`form-divider-${index}`} />;
     });
   }, [content]);

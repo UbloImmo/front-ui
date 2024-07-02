@@ -55,6 +55,14 @@ const addressFormProps: FormProps<Address> = {
     },
     "divider",
     {
+      kind: "text",
+      content: "A simple text field",
+      size: "m",
+      weight: "bold",
+      color: "primary-dark",
+      italic: true,
+    },
+    {
       type: "text",
       source: "zipCode",
       label: "Zip code",

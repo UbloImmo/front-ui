@@ -6,3 +6,4 @@ export * from "./FormField.component";
 export * from "./FormFieldDisplay.component";
 export * from "./FormFieldRenderer.component";
 export * from "./FormHeader.component";
+export * from "./FormText.component";
