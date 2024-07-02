@@ -49,7 +49,6 @@ export const FormEditBanner = (): JSX.Element => {
       />
       <Button
         label="Save"
-        icon="Floppy2Fill"
         type="submit"
         disabled={submitDisabled}
         loading={isSubmitting}
