@@ -516,9 +516,9 @@ const useFormEditState = (modifiers: FormModifers): UseFormEditStateReturn => {
   }, [modifiers.readonly]);
 
   /**
-   * Switches the form out of edit mode
+   * Switches the form out of edit mode while preserving the form's data
    *
-   * @todo reset form data to its initial state when triggered
+   * @remarks use {@link cancelEdition} to go back to view mode and reset the form's data to its initial state
    */
   const stopEditing = useCallback<VoidFn>(() => {
     setIsEditing(false);

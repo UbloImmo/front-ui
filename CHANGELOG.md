@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.1` Form component
   - Renders a form and its fields in edit and / or read mode
   - Supports all currently implemented fields
+  - Data validation using zod schemas, error propagation
 
 ### Changed
 
