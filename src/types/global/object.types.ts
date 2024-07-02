@@ -16,5 +16,5 @@ export type RequiredNonNever<TObject extends Record<string, unknown>> = {
   [TKey in Exclude<
     KeyOf<TObject>,
     DeepKeyOfType<TObject, Optional<never>>
-  >]: NonOptional<TObject[TKey]>;
+  >]-?: NonOptional<TObject[TKey]>;
 };
