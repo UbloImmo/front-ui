@@ -1,4 +1,3 @@
-
 import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
@@ -12,7 +11,32 @@ import * as AvatarStories from "../Avatar.stories.tsx";
 
 ## Usage
 
-TODO
+The Avatar component can display the user's profile picture, it's initials, or a count of remaining profiles.
+
+<Canvas of={AvatarStories.Variants} />
+
+### Displaying the profile picture
+
+To display the profile picture in `Avatar`, you can provide the image path or URL in the property `imageUrl`
+
+<Canvas of={AvatarStories.ImageVariant} />
+
+### Displaying the initials
+
+To display the initials instead of the profile picture in the `Avatar` component, you can provide the profile's name in the `name` property for an organization profile, or in the `firstName` and `lastName` properties for a user profile.
+
+<Canvas of={AvatarStories.NameVariants} />
+
+### Displaying the number
+
+`Avatar` comes with another variant, allowing to display the number of remaining profiles. To use this variant, use the `count` property
+
+<Canvas of={AvatarStories.NumberVariants} />
+
+## Sizes
+
+`Avatar` currently provides two sizes: **m** and **xl**. Its default size set to _m_. To customize the size, use the optional `size` property.
+
+<Canvas of={AvatarStories.Sizes} />
 
 </Content>
-
