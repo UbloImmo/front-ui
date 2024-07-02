@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - A horizontal line with an optional label
 
 - `v0.0.1` Form component
-  - The whold shebang
+  - Renders a form and its fields in edit and / or read mode
+  - Supports all currently implemented fields
 
 ### Changed
 
@@ -56,6 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.1` ComboBoxButton component
 
 ## 0.13.0 - 2024-06-26
+### Added
+- `v0.0.1` Modal component
 
 ## 0.12.0 - 2024-06-24
 ### Added
