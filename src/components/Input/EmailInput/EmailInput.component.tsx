@@ -31,7 +31,7 @@ const defaultEmailInputProps: DefaultInputProps<"email"> = {
 /**
  * Renders an email input component. Does some rudimentary format validation on the input value.
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @param {InputProps<"email">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
@@ -69,6 +69,7 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
         disabled={mergedProps.disabled}
         ref={forwardRef}
         {...inputStyles}
+        autoComplete="email"
       />
       <StyledInputControl {...inputStyles}>
         <Icon name="At" />
