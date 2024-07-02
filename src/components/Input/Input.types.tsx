@@ -73,6 +73,13 @@ export type CommonInputProps = {
    */
   required?: boolean;
   /**
+   * Whether the input rendered inside a table.
+   * Affects styling.
+   *
+   * @default false
+   */
+  table?: boolean;
+  /**
    * The text to display when the input has no value
    *
    * @default ""

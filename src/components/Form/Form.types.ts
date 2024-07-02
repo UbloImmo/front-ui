@@ -8,7 +8,12 @@ import type {
   InputValue,
 } from "@components";
 
-import type { ColorKey, StyleOverrideProps, StyleProps } from "@types";
+import type {
+  ColorKey,
+  StyleOverrideProps,
+  StyleProps,
+  TextProps,
+} from "@types";
 import type {
   DeepKeyOf,
   DeepKeyOfType,
@@ -152,6 +157,15 @@ export type BuiltFieldProps<TType extends InputType> = FieldProps<TType> &
 export type FormDividerProps =
   | "divider"
   | Omit<DividerProps, keyof StyleOverrideProps>;
+
+// -------------------------------- INFOS -----------------------------------
+
+export type FormTextProps = Replace<
+  TextProps,
+  "children",
+  { content: string },
+  "content"
+>;
 
 // ------------------------------- CONTENT ----------------------------------
 

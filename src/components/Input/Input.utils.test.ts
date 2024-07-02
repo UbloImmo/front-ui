@@ -86,8 +86,8 @@ const testUseInputValue = () => {
     useInputValue
   );
 
-  testHook(null)("should return undefined", (value) => {
-    expect(value).toBeUndefined();
+  testHook(null)("should return an empty string", (value) => {
+    expect(value).toBe("");
   });
 
   testHook("test")("should return string", (value) =>
@@ -113,6 +113,7 @@ const inputProps: DefaultCommonInputProps = {
   error: true,
   disabled: true,
   required: true,
+  table: true,
   placeholder: "test",
   inputRef: null,
   onChangeNative: null,
@@ -140,6 +141,7 @@ const testUseInputStyles = () => {
       $error: true,
       $disabled: true,
       $required: true,
+      $table: true,
       $placeholder: "test",
     });
   });
