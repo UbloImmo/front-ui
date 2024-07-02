@@ -7,32 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.16.0 - 2024-07-02
 ### Added
-
 - `v0.0.1` Divider component
   - A horizontal line with an optional label
-
 - `v0.0.1` Form component
   - Renders a form and its fields in edit and / or read mode
   - Supports all currently implemented fields
   - Data validation using zod schemas, error propagation
 
 ### Changed
-
 - Input styles
   - Added support for displaying inside a table cell
-
 - `v0.0.2` GridItem layout
   - Add optional `fill` prop to fill grid area
-
 - `v0.0.5` InputLabel component
   - Add optional `compact` prop to display tooltip next to label
-
 - Docs source code generation
   - Added support for object / array props with proper formatting
 
 ### Fixed
-
 - `v0.0.4` Field component
   - Do not render assistive / error text if no content available
   - This prevents rendering an additional gap at the bottom of the field between its input and an effectively empty div.
