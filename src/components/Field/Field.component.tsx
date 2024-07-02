@@ -25,7 +25,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
   ...InputAssistiveText.defaultProps,
   label: "[Field label]",
   placeholder: "[Field placeholder]",
-  assistiveText: "[Field assistive text]",
+  assistiveText: null,
   value: null,
   onChange: null,
   className: null,
@@ -35,7 +35,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
@@ -69,10 +69,8 @@ const Field = <TType extends InputType>(
   );
 
   const shoulDisplayAssistiveText = useMemo(() => {
-    return !!(mergedProps.assistiveText || errorText);
-  }, [mergedProps, errorText]);
-
-  // TODO: native error messages for each input validity state
+    return !!(mergedProps.assistiveText || (errorText && error));
+  }, [mergedProps, errorText, error]);
 
   if (!mergedProps.type || !inputTypes?.includes(mergedProps.type)) {
     logger.error(`Invalid type (${mergedProps.type}) provided.`);

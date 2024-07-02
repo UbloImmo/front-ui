@@ -9,6 +9,7 @@ import {
   isNullish,
   type Primitives,
   isUndefined,
+  isObject,
 } from "@ubloimmo/front-util";
 
 import { SPACING_PREFIX } from "@types";
@@ -292,6 +293,20 @@ const tagProperties = (properties?: Record<string, unknown>): string[] => {
       }
       if (isString(value)) {
         return output(`"${value}"`);
+      }
+      if (isObject(value)) {
+        const stringObj = JSON.stringify(value, undefined, 2).replaceAll(
+          /"(\S+)":\s/gi,
+          "$1: "
+        );
+
+        const lines = stringObj.split("\n");
+        const propObj = lines
+          .map((line, index) =>
+            index === 0 || index - 1 === lines.length ? line : `  ${line}`
+          )
+          .join("\n");
+        return output(`{${propObj}}`);
       }
       return output(`{${value}}`);
     })

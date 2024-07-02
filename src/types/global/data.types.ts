@@ -1,7 +1,8 @@
 /**
- * A very basic email string template type
+ * A very basic email string type alias
+ * Used to differentiate between emails and regular strings
  */
-export type Email = `${string}@${string}.${string}`;
+export type Email = string;
 
 /**
  * Basic type alias for currency (int)
@@ -27,3 +28,10 @@ export type CurrencyStr = `${number},${number}` | `${number},00`;
 export type CurrencyStrWithSymbol = `${CurrencyStr} €`;
 
 export type NumberSign = "+" | "-";
+
+export type FormattedCurrencyStr =
+  | CurrencyStr
+  | `${string},${number}`
+  | `${string},00`;
+
+export type FormattedCurrencyStrWithSymbol = `${FormattedCurrencyStr} €`;

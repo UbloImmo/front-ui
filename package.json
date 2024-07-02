@@ -106,7 +106,8 @@
     "react-dom": "^18.2.0",
     "styled-components": "^6.1.8",
     "typescript": "^5.3.3",
-    "vite": "^5.1.6"
+    "vite": "^5.1.6",
+    "zod": "^3.23.8"
   },
   "scripts": {
     "incrementRevision": "bun src/scripts/incrementRevision.ts",
@@ -146,6 +147,7 @@
   "dependencies": {
     "@ubloimmo/front-tokens": "^0.1.18",
     "@ubloimmo/front-util": "^0.0.17",
-    "react-international-phone": "^4.2.9"
+    "react-international-phone": "^4.2.9",
+    "zod": "^3.23.8"
   }
 }

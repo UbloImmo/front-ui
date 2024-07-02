@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css, type RuleSet } from "styled-components";
 
 import { breakpointsPx } from "@/sizes";
 
@@ -10,7 +10,7 @@ import type {
 
 export const commonInputContainerStyles = ({
   $error,
-}: CommonInputStyleProps) => css`
+}: CommonInputStyleProps): RuleSet => css`
   position: relative;
   height: max-content;
   width: 100%;
@@ -36,7 +36,7 @@ export const commonInputContainerStyles = ({
 
 const commonInputControlStyles = ({
   $anchor = "right",
-}: InputControlAnchorProps) => css`
+}: InputControlAnchorProps): RuleSet => css`
   border: none;
   padding: 0;
   background: none;
@@ -48,7 +48,9 @@ const commonInputControlStyles = ({
   }
 `;
 
-export const inputControlGroupStyles = (props: InputControlAnchorProps) => css`
+export const inputControlGroupStyles = (
+  props: InputControlAnchorProps
+): RuleSet => css`
   ${commonInputControlStyles(props)}
   position: absolute;
   top: var(--s-2);
@@ -64,7 +66,7 @@ export const inputControlGroupStyles = (props: InputControlAnchorProps) => css`
 export const inputControlStyles = ({
   onClick,
   ...props
-}: InputControlStyleProps) => css`
+}: InputControlStyleProps): RuleSet => css`
   ${commonInputControlStyles(props)}
   position: absolute;
   height: var(--s-4); // center vertically;
@@ -79,7 +81,7 @@ export const inputControlStyles = ({
 export const inputGroupedControlStyles = ({
   onClick,
   ...props
-}: InputControlStyleProps) => css`
+}: InputControlStyleProps): RuleSet => css`
   ${commonInputControlStyles(props)}
   width: var(--s-4);
   height: max-content;
@@ -92,7 +94,10 @@ export const inputGroupedControlStyles = ({
   cursor: ${!onClick ? "default" : props.$disabled ? "not-allowed" : "pointer"};
 `;
 
-export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
+export const commonInputStyles = ({
+  $error,
+  $table,
+}: CommonInputStyleProps): RuleSet => css`
   max-height: var(--s-8);
   height: var(--s-8);
   min-height: var(--s-8);
@@ -152,6 +157,13 @@ export const commonInputStyles = ({ $error }: CommonInputStyleProps) => css`
       transition-duration: 150ms;
     }
   }
+
+  ${$table &&
+  css`
+    border-radius: 0;
+    box-shadow: ${$error ? "var(--shadow-input-error-default)" : "none"};
+    outline: none;
+  `}
 
   @media screen and (max-width: ${breakpointsPx.XS}) {
     max-height: var(--s-10);

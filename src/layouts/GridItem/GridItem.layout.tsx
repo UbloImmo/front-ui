@@ -21,6 +21,7 @@ const defaultGridItemProps: GridItemDefaultProps = {
   column: "auto / auto",
   align: "start",
   justify: "start",
+  fill: false,
   children: null,
   className: null,
 };
@@ -28,7 +29,7 @@ const defaultGridItemProps: GridItemDefaultProps = {
 /**
  * Renders a grid item with the specified position and children.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {GridItemProps} props - The props for the grid item.
  * @param {Optional<GridStartPosition>} props.rowStart - The start position of the row.
@@ -56,6 +57,7 @@ const GridItem = (props: GridItemProps & TestIdProps): JSX.Element => {
       data-column-end={position.columnEnd}
       data-row-start={position.rowStart}
       data-row-end={position.rowEnd}
+      data-fill={position.fill}
     >
       {props.children}
     </GridItemContainer>

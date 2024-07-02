@@ -92,8 +92,7 @@ export const useInputValue = <TType extends InputType>(
     if (isNull(value)) {
       if (isFunction<InputValueFallbackTransformerFn>(fallback))
         return fallback();
-
-      return undefined;
+      return "";
     }
     if (isFunction<InputValueTransformerFn<TType>>(valueTransformer)) {
       return valueTransformer(value);
@@ -112,8 +111,8 @@ export const useInputStyles = (
   mergedProps: DefaultCommonInputProps
 ): CommonInputStyleProps => {
   return useMemo(() => {
-    const { error, disabled, placeholder, required } = mergedProps;
-    return toStyleProps({ error, disabled, placeholder, required });
+    const { error, disabled, placeholder, required, table } = mergedProps;
+    return toStyleProps({ error, disabled, placeholder, required, table });
   }, [mergedProps]);
 };
 

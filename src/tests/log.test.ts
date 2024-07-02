@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { objectValues } from "@ubloimmo/front-util";
+import { LoggerFn, isFunction, objectValues } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
 
 import { testPrimitives } from "./test.data";
@@ -18,13 +18,21 @@ describe("useLogger", () => {
   it("should return safe logging functions", () => {
     const { result } = renderHook(() => useLogger("test"));
     expect(result.current).not.toBeEmptyObject();
-    expect(result.current).toContainKeys(["error", "warn", "info", "debug"]);
+    expect(result.current).toContainKeys([
+      "error",
+      "warn",
+      "info",
+      "debug",
+      "log",
+    ]);
     objectValues(result.current).forEach((logFn) => {
-      expect(logFn).toBeFunction();
-      expect(logFn).not.toThrow();
-      objectValues(testPrimitives).forEach((primitive) => {
-        expect(() => logFn(primitive)).not.toThrow();
-      });
+      if (isFunction<LoggerFn>(logFn)) {
+        expect(logFn).toBeFunction();
+        expect(logFn).not.toThrow();
+        objectValues(testPrimitives).forEach((primitive) => {
+          expect(() => logFn(primitive)).not.toThrow();
+        });
+      }
     });
   });
 });

@@ -13,20 +13,21 @@ const testField = testComponentFactory("Field", Field);
 
 const testEachFieldType = () => {
   inputTypes.forEach((type) => {
-    testField({ type, label: `Field (${type})` })(
-      "should render",
-      async ({ findByTestId }) => {
-        const inputTestId = `input-${type} field-input`;
-        const field = await findByTestId(testId);
-        const label = await findByTestId(labelTestId);
-        const input = await findByTestId(inputTestId);
-        const assistiveText = await findByTestId(assistiveTextTestId);
-        expect(field).not.toBeNull();
-        expect(label).not.toBeNull();
-        expect(input).not.toBeNull();
-        expect(assistiveText).not.toBeNull();
-      }
-    );
+    testField({
+      type,
+      label: `Field (${type})`,
+      assistiveText: "Field assistive text",
+    })("should render", async ({ findByTestId }) => {
+      const inputTestId = `input-${type} field-input`;
+      const field = await findByTestId(testId);
+      const label = await findByTestId(labelTestId);
+      const input = await findByTestId(inputTestId);
+      const assistiveText = await findByTestId(assistiveTextTestId);
+      expect(field).not.toBeNull();
+      expect(label).not.toBeNull();
+      expect(input).not.toBeNull();
+      expect(assistiveText).not.toBeNull();
+    });
   });
 };
 

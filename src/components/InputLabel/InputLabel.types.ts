@@ -33,6 +33,11 @@ export type InputLabelProps = {
    * @default null
    */
   tooltip?: Nullable<InputLabelTooltipProps>;
+  /**
+   * Flag to make the input label as compact as possible.
+   * If `tooltip` is also provided, it will be rendererd next to the label
+   */
+  compact?: boolean;
 } & StyleOverrideProps;
 
 export type DefaultInputLabelProps = Required<InputLabelProps>;

@@ -65,27 +65,28 @@ export const parseGridItemPosition = (
   let columnEnd: Optional<GridEndPosition> = undefined;
 
   // combined position
-  if (position.row) {
+  if (position.row && position.row !== "auto / auto") {
     const parsedRow = parseGridAxisPosition(position.row);
     rowStart = parsedRow.start;
     rowEnd = parsedRow.end;
   }
-  if (position.column) {
+  if (position.column && position.column !== "auto / auto") {
     const parsedColumn = parseGridAxisPosition(position.column);
     columnStart = parsedColumn.start;
     columnEnd = parsedColumn.end;
   }
+
   // detailed position
-  if (!isUndefined(position.columnStart)) {
+  if (!isUndefined(position.columnStart) && isUndefined(columnStart)) {
     columnStart = position.columnStart;
   }
-  if (!isUndefined(position.columnEnd)) {
+  if (!isUndefined(position.columnEnd) && isUndefined(columnEnd)) {
     columnEnd = position.columnEnd;
   }
-  if (!isUndefined(position.rowStart)) {
+  if (!isUndefined(position.rowStart) && isUndefined(rowStart)) {
     rowStart = position.rowStart;
   }
-  if (!isUndefined(position.rowEnd)) {
+  if (!isUndefined(position.rowEnd) && isUndefined(rowEnd)) {
     rowEnd = position.rowEnd;
   }
   return {
@@ -105,7 +106,7 @@ export const parseGridItemPosition = (
  */
 export const useGridItemPosition = (
   defaultProps: GridItemDefaultProps,
-  { justify, align, ...position }: GridItemProps
+  { justify, align, fill, ...position }: GridItemProps
 ): GridItemInnerProps => {
   const parsedPosition = parseGridItemPosition(position);
   const {
@@ -118,5 +119,6 @@ export const useGridItemPosition = (
     ...parsedPosition,
     justify,
     align,
+    fill,
   });
 };

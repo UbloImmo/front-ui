@@ -83,6 +83,12 @@ type GridItemCommonProps = {
    * @type {GridAlignment}
    */
   align?: GridAlignment;
+  /**
+   * Whether to fill the grid cell
+   *
+   * @default false
+   */
+  fill?: boolean;
 } & StyleOverrideProps;
 
 export interface GridItemProps
