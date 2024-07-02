@@ -69,6 +69,7 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
         disabled={mergedProps.disabled}
         ref={forwardRef}
         {...inputStyles}
+        autoComplete="email"
       />
       <StyledInputControl {...inputStyles}>
         <Icon name="At" />
