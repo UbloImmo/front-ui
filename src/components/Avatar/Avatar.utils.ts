@@ -35,7 +35,7 @@ export const isAvatarPropsCount = (
   if (!containsCount) return false;
   const isValidCount = isPositive(mergedProps.count);
   if (!isValidCount) {
-    if (warn) warn("Count shoud be greater than 0");
+    if (warn) warn("Count should be a positive number");
     return false;
   }
   return true;
