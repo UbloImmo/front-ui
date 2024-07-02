@@ -85,7 +85,7 @@ export const Variants = () => {
 
 const withImageUrl = ["https://t.ly/lJMVh", null];
 
-export const ImageVariant = (props: Partial<AvatarProps>) => {
+export const ImageVariants = (props: Partial<AvatarProps>) => {
   const mergedProps = useMergedProps(Avatar.defaultProps, props);
 
   return (
