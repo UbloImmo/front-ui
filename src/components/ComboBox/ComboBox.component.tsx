@@ -1,4 +1,8 @@
-import { isFunction, type NullishPrimitives } from "@ubloimmo/front-util";
+import {
+  GenericFn,
+  isFunction,
+  type NullishPrimitives,
+} from "@ubloimmo/front-util";
 import { useCallback, useEffect, useState } from "react";
 
 import {
@@ -16,6 +20,7 @@ import type { TestIdProps } from "@types";
 
 const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   options: null,
+  value: null,
   direction: "column",
   multi: false,
   onChange: () => {},
@@ -25,7 +30,7 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
 /**
  * A group of ComboButtons that act as a select or radio input.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -41,7 +46,23 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
   const { options, multi, onChange, disabled, direction } = mergedProps;
   const testId = useTestId("combo-box", props);
 
-  const [selection, setSelection] = useState<TOptionValue[]>([]);
+  const getInitialSelection = useCallback<
+    GenericFn<[], TOptionValue[]>
+  >((): TOptionValue[] => {
+    if (mergedProps.value) {
+      if (Array.isArray(mergedProps.value)) return mergedProps.value;
+      return [mergedProps.value];
+    }
+    return [];
+  }, [mergedProps.value]);
+
+  const [selection, setSelection] =
+    useState<TOptionValue[]>(getInitialSelection);
+
+  useEffect(() => {
+    setSelection(getInitialSelection);
+  }, [mergedProps.value, getInitialSelection]);
+
   const isOptionActive = useCallback(
     (option: ComboBoxOption<TOptionValue>) => selection.includes(option.value),
     [selection]

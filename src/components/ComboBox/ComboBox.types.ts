@@ -39,6 +39,17 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = Record<
   options: Nullable<ComboBoxOption<TOptionValue>[]>;
 
   /**
+   * The value of the selected option. Either a single value or an array if `multi` is true
+   *
+   * @remarks Setting this to null or some other value that is not included in the options array
+   * will result in none the the options being active
+   *
+   * @type {TOptionValue | TOptionValue[]}
+   * @default null
+   */
+  value?: Nullable<TOptionValue | TOptionValue[]>;
+
+  /**
    * The layout of the options (horizontal or vertical)
    * @default "column"
    * @type {FlexDirection}
