@@ -20,7 +20,7 @@ export const defaultCommonInputProps: DefaultCommonInputProps = {
   disabled: false,
   required: false,
   table: false,
-  placeholder: "[placeholder]",
+  placeholder: "",
   inputRef: null,
   onChangeNative: null,
   onBlur: null,
