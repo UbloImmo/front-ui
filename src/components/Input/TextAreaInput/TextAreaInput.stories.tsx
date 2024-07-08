@@ -1,13 +1,13 @@
 import { TextAreaInput } from "./TextAreaInput.component";
+import { TextAreaInputProps } from "./TextAreaInput.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
-import type { InputProps } from "../Input.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const componentSource = componentSourceFactory<InputProps<"textarea">>(
+const componentSource = componentSourceFactory<TextAreaInputProps>(
   "TextAreaInput",
   TextAreaInput.defaultProps
 );
@@ -15,7 +15,6 @@ const componentSource = componentSourceFactory<InputProps<"textarea">>(
 const meta = {
   component: TextAreaInput,
   title: "Components/Input/TextAreaInput/Stories",
-  args: {},
   parameters: {
     docs: componentSource(),
   },
@@ -24,9 +23,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    placeholder: "Textarea input",
+  },
+};
 
-export const Resize = (props: InputProps<"textarea">) => {
+export const Resize = (props: Partial<TextAreaInputProps>) => {
   const mergedProps = useMergedProps(props, TextAreaInput.defaultProps);
   return (
     <ComponentVariants
