@@ -1,9 +1,7 @@
 import { TextAreaInput } from "./TextAreaInput.component";
 import { TextAreaInputProps } from "./TextAreaInput.types";
 
-import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
-import { useMergedProps } from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -29,15 +27,9 @@ export const Default: Story = {
   },
 };
 
-export const Resize = (props: Partial<TextAreaInputProps>) => {
-  const mergedProps = useMergedProps(props, TextAreaInput.defaultProps);
-  return (
-    <ComponentVariants
-      defaults={mergedProps}
-      variants={[false, true]}
-      for="resize"
-      of={TextAreaInput}
-      propLabels
-    />
-  );
+export const Resize: Story = {
+  args: {
+    placeholder: "Textarea input",
+    resize: true,
+  },
 };
