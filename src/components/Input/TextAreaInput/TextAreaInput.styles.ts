@@ -9,5 +9,4 @@ export const StyledTextArea = styled.textarea<TextAreaInputStyleProps>`
   resize: ${({ $resize }) => ($resize ? "vertical" : "none")};
   max-height: unset;
   height: var(--s-16);
-  min-height: var(--s-10);
 `;
