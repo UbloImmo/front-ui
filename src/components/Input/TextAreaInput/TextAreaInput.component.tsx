@@ -1,4 +1,4 @@
-import { isString } from "@ubloimmo/front-util";
+import { isNullish, isString } from "@ubloimmo/front-util";
 import { ChangeEventHandler, FocusEventHandler } from "react";
 
 import { StyledTextArea } from "./TextAreaInput.styles";
@@ -45,7 +45,7 @@ const TextAreaInput = (
     mergedProps.value,
     undefined,
     undefined,
-    !!mergedProps.onChange || !mergedProps.value
+    !mergedProps.onChange && isNullish(mergedProps.value)
   );
 
   const onChange = useInputOnChange<"textarea">(

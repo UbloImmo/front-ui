@@ -420,7 +420,7 @@ export const useCurrencyInput = (
       }
       return formatCurrencyInputValue(nativeInputValue)(currencyInt);
     },
-    !!mergedProps.onChange || !mergedProps.value
+    !mergedProps.onChange && isNullish(mergedProps.value)
   );
 
   const strictInputValue = useMemo(() => {
