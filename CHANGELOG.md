@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.3` ComboBox
   - Support for setting & updating selection through `value` prop
 
+### Fixed
+
+- `v0.0.4` Input components
+  - replace placholder `placeholder` default prop with empty string
+
 ## 0.16.0 - 2024-07-02
 ### Added
 - `v0.0.1` Divider component
