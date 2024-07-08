@@ -46,7 +46,12 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
     mergedProps.onChangeNative
   );
 
-  const value = useInputValue(mergedProps.value);
+  const value = useInputValue(
+    mergedProps.value,
+    undefined,
+    undefined,
+    !!mergedProps.onChange || !mergedProps.value
+  );
 
   const inputStyles = useInputStyles(mergedProps);
 

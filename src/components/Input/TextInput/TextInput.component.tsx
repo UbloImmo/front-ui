@@ -37,7 +37,12 @@ const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
     mergedProps.onChange,
     mergedProps.onChangeNative
   );
-  const value = useInputValue(mergedProps.value);
+  const value = useInputValue(
+    mergedProps.value,
+    undefined,
+    undefined,
+    !!mergedProps.onChange || !mergedProps.value
+  );
   const inputStyles = useInputStyles(mergedProps);
   const testId = useTestId("input-text", props);
   const onBlur = useHtmlAttribute(mergedProps.onBlur);

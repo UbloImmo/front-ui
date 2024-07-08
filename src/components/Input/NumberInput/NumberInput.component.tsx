@@ -53,7 +53,12 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
 
   const { inputRef, forwardRef } = useInputRef(mergedProps);
 
-  const value = useInputValue(mergedProps.value);
+  const value = useInputValue(
+    mergedProps.value,
+    undefined,
+    undefined,
+    !!mergedProps.onChange || !mergedProps.value
+  );
 
   const testId = useTestId("input-number", props);
 
