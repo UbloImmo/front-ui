@@ -16,7 +16,7 @@ export const defaultSpacingMapConfig = {
    * Maximum factor for the generated spacing map.
    * Affects number of generated spacing keys and values
    */
-  maxScale: 16, // 16*4 = 64px = 4rem
+  maxScale: 20, // 16*5 = 80px = 5rem
 } as const;
 
 /**
