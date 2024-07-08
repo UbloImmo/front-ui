@@ -7,13 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.16.1 - 2024-07-08
 ### Changed
-
 - `v0.0.3` ComboBox
   - Support for setting & updating selection through `value` prop
 
 ### Fixed
-
 - `v0.0.4` Input components
   - replace placholder `placeholder` default prop with empty string
 - TYPES: Do not export inner flex layout to avoid ts error when used as a dependency
