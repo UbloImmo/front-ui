@@ -11,4 +11,5 @@ export const inputTypes = [
   "phone",
   "currency",
   "textarea",
+  "select",
 ] as const;
