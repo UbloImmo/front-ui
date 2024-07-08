@@ -419,7 +419,8 @@ export const useCurrencyInput = (
         return "";
       }
       return formatCurrencyInputValue(nativeInputValue)(currencyInt);
-    }
+    },
+    !mergedProps.onChange && isNullish(mergedProps.value)
   );
 
   const strictInputValue = useMemo(() => {

@@ -1,4 +1,4 @@
-import { isString } from "@ubloimmo/front-util";
+import { isNullish, isString } from "@ubloimmo/front-util";
 
 import { isEmailString } from "./EmailInput.utils";
 import { Icon } from "../../Icon/Icon.component";
@@ -46,7 +46,12 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
     mergedProps.onChangeNative
   );
 
-  const value = useInputValue(mergedProps.value);
+  const value = useInputValue(
+    mergedProps.value,
+    undefined,
+    undefined,
+    !mergedProps.onChange && isNullish(mergedProps.value)
+  );
 
   const inputStyles = useInputStyles(mergedProps);
 

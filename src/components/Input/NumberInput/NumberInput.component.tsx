@@ -1,4 +1,9 @@
-import { isNumber, isString, type Nullable } from "@ubloimmo/front-util";
+import {
+  isNullish,
+  isNumber,
+  isString,
+  type Nullable,
+} from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 
 import { StyledNumberInput } from "./NumberInput.styles";
@@ -53,7 +58,12 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
 
   const { inputRef, forwardRef } = useInputRef(mergedProps);
 
-  const value = useInputValue(mergedProps.value);
+  const value = useInputValue(
+    mergedProps.value,
+    undefined,
+    undefined,
+    !mergedProps.onChange && isNullish(mergedProps.value)
+  );
 
   const testId = useTestId("input-number", props);
 

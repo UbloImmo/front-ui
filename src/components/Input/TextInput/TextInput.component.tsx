@@ -1,4 +1,4 @@
-import { isString } from "@ubloimmo/front-util";
+import { isNullish, isString } from "@ubloimmo/front-util";
 
 import { StyledInput, defaultCommonInputProps } from "../Input.common";
 import {
@@ -37,7 +37,12 @@ const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
     mergedProps.onChange,
     mergedProps.onChangeNative
   );
-  const value = useInputValue(mergedProps.value);
+  const value = useInputValue(
+    mergedProps.value,
+    undefined,
+    undefined,
+    !mergedProps.onChange && isNullish(mergedProps.value)
+  );
   const inputStyles = useInputStyles(mergedProps);
   const testId = useTestId("input-text", props);
   const onBlur = useHtmlAttribute(mergedProps.onBlur);

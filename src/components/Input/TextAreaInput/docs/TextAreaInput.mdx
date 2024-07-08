@@ -1,0 +1,27 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as TextAreaInputStories from "../TextAreaInput.stories.tsx";
+
+<Meta title="Components/Input/TextAreaInput/Usage" />
+
+<ComponentInfo of={TextAreaInputStories} figmaId="76-3A6562" />
+
+<Content>
+
+## Usage
+
+`TextAreaInput` component is an interactive text-field, a specific type of [Input](?path=/docs/components-input-usage--docs), and a multi-line variant of the [TextInput](?path=/docs/components-input-textinput-usage--docs).
+It is commonly used in form layouts to prompt users for longer text messages or additional details, such as comments, descriptions, or feedbacks.
+
+### Value
+
+`TextAreaInput` is initialized without a value, enabling users to enter their own text. It accepts all characters as text value.
+
+## Resize
+
+`TextAreaInput` has an optionnal `resize` property. When this property is set to _true_, the input becomes vertically resizable.
+
+<Canvas of={TextAreaInputStories.Resize} />
+
+</Content>

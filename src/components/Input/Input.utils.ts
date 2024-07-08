@@ -81,24 +81,30 @@ type InputValueFallbackTransformerFn = GenericFn<[], NativeInputValue>;
  *
  * @template {InputType} TType
  * @param {InputValue<TType>} value - The input value to be processed.
+ * @param {InputValueTransformerFn<TType>?} valueTransformer - Optional value transformer function.
+ * @param {InputValueFallbackTransformerFn?} fallback - Optional fallback function.
+ * @param {boolean?} uncontrolled - Optional flag to indicate when uncontrolled input.
  * @return {NativeInputValue} The processed input value.
  */
 export const useInputValue = <TType extends InputType>(
   value: Nullable<InputValue<TType>>,
   valueTransformer?: InputValueTransformerFn<TType>,
-  fallback?: InputValueFallbackTransformerFn
+  fallback?: InputValueFallbackTransformerFn,
+  uncontrolled?: boolean
 ): NativeInputValue => {
   return useMemo(() => {
     if (isNull(value)) {
       if (isFunction<InputValueFallbackTransformerFn>(fallback))
         return fallback();
+
+      if (uncontrolled) return undefined;
       return "";
     }
     if (isFunction<InputValueTransformerFn<TType>>(valueTransformer)) {
       return valueTransformer(value);
     }
     return value;
-  }, [value, valueTransformer, fallback]);
+  }, [value, valueTransformer, fallback, uncontrolled]);
 };
 
 /**

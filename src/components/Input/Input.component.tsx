@@ -6,6 +6,7 @@ import { inputTypes } from "./Input.data";
 import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput/PasswordInput.component";
 import { PhoneInput } from "./PhoneInput/PhoneInput.component";
+import { TextAreaInput } from "./TextAreaInput";
 import { TextInput } from "./TextInput/TextInput.component";
 
 import { useLogger } from "@utils";
@@ -27,6 +28,7 @@ const inputComponentMap: SpecificInputComponentMap = {
   email: EmailInput,
   phone: PhoneInput,
   currency: CurrencyInput,
+  textarea: TextAreaInput,
 };
 
 /**

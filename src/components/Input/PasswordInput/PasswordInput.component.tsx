@@ -1,4 +1,4 @@
-import { isNull, isString } from "@ubloimmo/front-util";
+import { isNull, isNullish, isString } from "@ubloimmo/front-util";
 import { useEffect, useMemo, useState } from "react";
 
 import { Icon } from "../../Icon";
@@ -99,7 +99,12 @@ const PasswordInput = (
     mergedProps.onChangeNative
   );
 
-  const value = useInputValue(mergedProps.value);
+  const value = useInputValue(
+    mergedProps.value,
+    undefined,
+    undefined,
+    !mergedProps.onChange && isNullish(mergedProps.value)
+  );
 
   const inputStyles = useInputStyles(mergedProps);
 
