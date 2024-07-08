@@ -10,7 +10,7 @@ import {
   useInputValue,
 } from "../Input.utils";
 
-import { useLogger, useTestId, useMergedProps, useHtmlAttribute } from "@utils";
+import { useTestId, useMergedProps, useHtmlAttribute } from "@utils";
 
 import type {
   TextAreaInputDefaultProps,
@@ -38,7 +38,6 @@ const defaultTextAreaInputProps: TextAreaInputDefaultProps = {
 const TextAreaInput = (
   props: TextAreaInputProps & TestIdProps
 ): JSX.Element => {
-  const { log } = useLogger("TextAreaInput");
   const mergedProps = useMergedProps(defaultTextAreaInputProps, props);
   const testId = useTestId("input-textarea", props);
   const inputStyles = useInputStyles(mergedProps);
@@ -60,8 +59,6 @@ const TextAreaInput = (
   const { forwardRef } = useInputRef<HTMLTextAreaElement>(mergedProps);
 
   const onBlur = useHtmlAttribute<FocusEventHandler>(mergedProps.onBlur);
-
-  log(mergedProps);
 
   return (
     <StyledTextArea
