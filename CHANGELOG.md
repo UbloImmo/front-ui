@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `v0.0.1` TextAreaInput
+- `v0.0.1` TextAreaInput component
+
+### Fixed
+
+- (Un)controlled input detection & warnings
 
 ## 0.16.1 - 2024-07-08
 
