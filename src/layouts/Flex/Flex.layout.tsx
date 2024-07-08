@@ -79,6 +79,6 @@ export const FlexColumnLayout = (
 
 FlexLayout.defaultProps = defaultFlexLayoutProps;
 
-export const FlexLayoutInner = styled.div<StyleProps<FlexLayoutProps>>`
+const FlexLayoutInner = styled.div<StyleProps<FlexLayoutProps>>`
   ${buildFlexLayoutStyle(defaultFlexLayoutProps)}
 `;

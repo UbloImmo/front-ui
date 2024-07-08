@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.4` Input components
   - replace placholder `placeholder` default prop with empty string
+- TYPES: Do not export inner flex layout to avoid ts error when used as a dependency
 
 ## 0.16.0 - 2024-07-02
 ### Added
