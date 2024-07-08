@@ -169,8 +169,8 @@ export const commonInputStyles = ({
     &:not(textarea) {
       max-height: var(--s-10);
       height: var(--s-10);
-      min-height: var(--s-10);
-      font-weight: var(--text-weight-medium);
     }
+    min-height: var(--s-10);
+    font-weight: var(--text-weight-medium);
   }
 `;
