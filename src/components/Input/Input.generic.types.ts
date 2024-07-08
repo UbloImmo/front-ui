@@ -2,6 +2,7 @@ import type { CurrencyInputProps } from "./CurrencyInput";
 import type { InputType, InputProps } from "./Input.types";
 import type { NumberInputProps } from "./NumberInput/NumberInput.types";
 import type { PasswordInputProps } from "./PasswordInput/PasswordInput.types";
+import type { TextAreaInputProps } from "./TextAreaInput";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { FC } from "react";
 
@@ -12,6 +13,7 @@ type SpecificInputPropsMap = {
   number: NumberInputProps;
   password: PasswordInputProps;
   currency: CurrencyInputProps;
+  textarea: TextAreaInputProps;
 };
 
 export type SpecificInputProps<TType extends InputType> =

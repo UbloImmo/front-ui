@@ -132,6 +132,7 @@ export type InputValue<TType extends InputType> = TType extends
   | "text"
   | "password"
   | "phone"
+  | "textarea"
   ? string
   : TType extends "number"
   ? number
