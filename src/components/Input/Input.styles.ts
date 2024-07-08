@@ -166,9 +166,11 @@ export const commonInputStyles = ({
   `}
 
   @media screen and (max-width: ${breakpointsPx.XS}) {
-    max-height: var(--s-10);
-    height: var(--s-10);
-    min-height: var(--s-10);
-    font-weight: var(--text-weight-medium);
+    &:not(textarea) {
+      max-height: var(--s-10);
+      height: var(--s-10);
+      min-height: var(--s-10);
+      font-weight: var(--text-weight-medium);
+    }
   }
 `;
