@@ -5,6 +5,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta = {
   title: "Components/Input/TextInput/Stories",
   component: TextInput,
+  args: {
+    uncontrolled: true,
+  },
 } satisfies Meta<typeof TextInput>;
 
 export default meta;

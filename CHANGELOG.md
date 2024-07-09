@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Input / Field controlled / uncontrolled states and value propagation
+
 ## 0.17.0 - 2024-07-08
 ### Added
 - `v0.0.1` TextAreaInput component

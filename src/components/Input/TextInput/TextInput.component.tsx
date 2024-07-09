@@ -1,4 +1,4 @@
-import { isNullish, isString } from "@ubloimmo/front-util";
+import { isString } from "@ubloimmo/front-util";
 
 import { StyledInput, defaultCommonInputProps } from "../Input.common";
 import {
@@ -23,7 +23,7 @@ const defaultTextInputProps: DefaultInputProps<"text"> = {
 /**
  * Renders a text input component.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {InputProps<"text">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
@@ -37,16 +37,13 @@ const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
     mergedProps.onChange,
     mergedProps.onChangeNative
   );
-  const value = useInputValue(
-    mergedProps.value,
-    undefined,
-    undefined,
-    !mergedProps.onChange && isNullish(mergedProps.value)
-  );
+
+  const value = useInputValue<"text">(mergedProps.value, props);
   const inputStyles = useInputStyles(mergedProps);
   const testId = useTestId("input-text", props);
-  const onBlur = useHtmlAttribute(mergedProps.onBlur);
   const { forwardRef } = useInputRef(mergedProps);
+  const onBlur = useHtmlAttribute(mergedProps.onBlur);
+  const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
   return (
     <StyledInput
       data-testid={testId}
@@ -57,6 +54,7 @@ const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
       placeholder={mergedProps.placeholder}
       required={mergedProps.required}
       disabled={mergedProps.disabled}
+      autoComplete={autoComplete}
       ref={forwardRef}
       {...inputStyles}
     />

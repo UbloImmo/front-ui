@@ -20,6 +20,9 @@ const meta = {
       options: inputTypes,
     },
   },
+  args: {
+    uncontrolled: true,
+  },
   decorators: [
     (Story) => (
       <FlexRowLayout gap="s-4" align="center" justify="start" wrap>

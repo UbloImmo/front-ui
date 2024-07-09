@@ -408,6 +408,7 @@ export const useCurrencyInput = (
 
   const inputValue = useInputValue<"currency">(
     clampedValue,
+    mergedProps,
     formatCurrencyInputValue(nativeInputValue),
     () => {
       const currencyInt = clampToMinMax(
@@ -419,8 +420,7 @@ export const useCurrencyInput = (
         return "";
       }
       return formatCurrencyInputValue(nativeInputValue)(currencyInt);
-    },
-    !mergedProps.onChange && isNullish(mergedProps.value)
+    }
   );
 
   const strictInputValue = useMemo(() => {

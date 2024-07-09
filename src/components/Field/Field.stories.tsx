@@ -1,4 +1,5 @@
 import { fn } from "@storybook/test";
+import { useState } from "react";
 
 import { Field } from "./Field.component";
 import { inputTypes } from "../Input/Input.data";
@@ -8,7 +9,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { FieldProps } from "./Field.types";
-import type { InputType } from "../Input";
+import type { InputType, InputValue } from "../Input";
 import type { InputLabelTooltipProps } from "../InputLabel";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
@@ -32,6 +33,7 @@ const meta = {
     placeholder: "Some field's placeholder",
     assistiveText: "Some field's assistive text",
     errorText: "Some field's error text",
+    uncontrolled: true,
   },
   argTypes: {
     type: {
@@ -217,6 +219,23 @@ export const Tooltips = (props: FieldProps<InputType>) => {
       defaults={defaults}
       scaling={1}
       columns={2}
+    />
+  );
+};
+
+export const Controlled = (props: Partial<FieldProps<InputType>>) => {
+  const [innerValue, setInnerValue] =
+    useState<Nullable<InputValue<InputType>>>(null);
+
+  return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore needed to check unintended behavior with no props
+    <Field
+      {...props}
+      type={props.type as InputType}
+      value={innerValue}
+      onChange={setInnerValue}
+      uncontrolled={false}
     />
   );
 };

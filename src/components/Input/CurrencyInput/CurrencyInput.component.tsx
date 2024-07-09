@@ -43,7 +43,7 @@ const defaultCurrencyInputProps: CurrencyInputDefaultProps = {
  *
  * Does some rudimentary monetary like number formatting.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {CurrencyInputProps & TestIdProps} props - CurrencyInput component props
  * @returns {JSX.Element}
@@ -64,6 +64,7 @@ const CurrencyInput = (
   const { forwardRef } = useInputRef(mergedProps);
 
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
+  const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
 
   const iconProps = useMemo<IconProps>(
     () => ({
@@ -83,6 +84,7 @@ const CurrencyInput = (
         lang="fr-FR"
         inputMode="decimal"
         pattern={validationPattern}
+        autoComplete={autoComplete}
         name={mergedProps.name ?? undefined}
         min={mergedProps.min ?? undefined}
         max={mergedProps.max ?? undefined}

@@ -1,4 +1,4 @@
-import { isArray, isFunction, isNull } from "@ubloimmo/front-util";
+import { isArray, isFunction, isNull, isUndefined } from "@ubloimmo/front-util";
 import { useCallback, useMemo, useRef } from "react";
 
 import { toStyleProps } from "@utils";
@@ -9,6 +9,7 @@ import type {
   InputOnChangeConditionFn,
   InputOnChangeFn,
   InputOnChangeValueTransformerFn,
+  InputProps,
   InputType,
   InputValue,
   NativeInputOnChangeFn,
@@ -81,6 +82,7 @@ type InputValueFallbackTransformerFn = GenericFn<[], NativeInputValue>;
  *
  * @template {InputType} TType
  * @param {InputValue<TType>} value - The input value to be processed.
+ * @param {InputProps<TType>} rawProps - The input props, not merged.
  * @param {InputValueTransformerFn<TType>?} valueTransformer - Optional value transformer function.
  * @param {InputValueFallbackTransformerFn?} fallback - Optional fallback function.
  * @param {boolean?} uncontrolled - Optional flag to indicate when uncontrolled input.
@@ -88,23 +90,24 @@ type InputValueFallbackTransformerFn = GenericFn<[], NativeInputValue>;
  */
 export const useInputValue = <TType extends InputType>(
   value: Nullable<InputValue<TType>>,
+  rawProps: InputProps<TType>,
   valueTransformer?: InputValueTransformerFn<TType>,
-  fallback?: InputValueFallbackTransformerFn,
-  uncontrolled?: boolean
+  fallback?: InputValueFallbackTransformerFn
 ): NativeInputValue => {
   return useMemo(() => {
     if (isNull(value)) {
       if (isFunction<InputValueFallbackTransformerFn>(fallback))
         return fallback();
-
-      if (uncontrolled) return undefined;
+      // detect uncontrolled inputs
+      if (rawProps.uncontrolled || isUndefined(rawProps.value))
+        return undefined;
       return "";
     }
     if (isFunction<InputValueTransformerFn<TType>>(valueTransformer)) {
       return valueTransformer(value);
     }
     return value;
-  }, [value, valueTransformer, fallback, uncontrolled]);
+  }, [value, valueTransformer, fallback, rawProps]);
 };
 
 /**
