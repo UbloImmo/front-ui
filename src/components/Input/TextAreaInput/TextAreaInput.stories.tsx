@@ -15,6 +15,9 @@ const componentSource = componentSourceFactory<TextAreaInputProps>(
 const meta = {
   component: TextAreaInput,
   title: "Components/Input/TextAreaInput/Stories",
+  args: {
+    uncontrolled: true,
+  },
   parameters: {
     docs: componentSource(),
   },

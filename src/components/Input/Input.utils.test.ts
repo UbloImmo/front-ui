@@ -86,27 +86,44 @@ const testUseInputValue = () => {
     useInputValue
   );
 
-  testHook(null)("should return an empty string", (value) => {
+  testHook(null, { value: null })("should return an empty string", (value) => {
     expect(value).toBe("");
   });
 
-  testHook("test")("should return string", (value) =>
+  testHook(null, {})(
+    "should return an undefined when value is undefined",
+    (value) => {
+      expect(value).toBeUndefined();
+    }
+  );
+
+  testHook(null, { value: null, uncontrolled: true })(
+    "should return an undefined when uncontrolled",
+    (value) => {
+      expect(value).toBeUndefined();
+    }
+  );
+
+  testHook("test", {})("should return string", (value) =>
     expect(value).toBeString()
   );
 
-  testHook(123)("should return number", (value) => expect(value).toBeNumber());
+  testHook(123, {})("should return number", (value) =>
+    expect(value).toBeNumber()
+  );
 
   const mockTransformer = mock(
     (_value: Nullable<InputValue<InputType>>) => "transformed"
   );
 
-  testHook("test", mockTransformer)(
-    "should return transformed value",
-    (value) => {
-      expect(value).toBe("transformed");
-      expect(mockTransformer).toHaveBeenCalledWith("test");
-    }
-  );
+  testHook(
+    "test",
+    {},
+    mockTransformer
+  )("should return transformed value", (value) => {
+    expect(value).toBe("transformed");
+    expect(mockTransformer).toHaveBeenCalledWith("test");
+  });
 };
 
 const inputProps: DefaultCommonInputProps = {
@@ -118,6 +135,8 @@ const inputProps: DefaultCommonInputProps = {
   inputRef: null,
   onChangeNative: null,
   onBlur: null,
+  autoComplete: null,
+  uncontrolled: false,
 };
 
 const testUseInputStyles = () => {

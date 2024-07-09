@@ -5,6 +5,7 @@ import type { CurrencyInt, Email, StyleProps } from "@types";
 import type { Enum, GenericFn, Nullable, VoidFn } from "@ubloimmo/front-util";
 import type {
   DetailedHTMLProps,
+  HTMLInputAutoCompleteAttribute,
   InputHTMLAttributes,
   MutableRefObject,
   Ref,
@@ -80,11 +81,19 @@ export type CommonInputProps = {
    */
   table?: boolean;
   /**
+   * Whether the input is uncontrolled (no value)
+   */
+  uncontrolled?: boolean;
+  /**
    * The text to display when the input has no value
    *
    * @default ""
    */
   placeholder?: string;
+  /**
+   * The input's `autoComplete` hint attribute
+   */
+  autoComplete?: Nullable<HTMLInputAutoCompleteAttribute>;
   /**
    * The input's ref
    *
@@ -194,7 +203,10 @@ export type DefaultInputProps<TType extends InputType> = Required<
 >;
 
 export type CommonInputStyleProps = StyleProps<
-  Omit<DefaultCommonInputProps, "inputRef" | "onChangeNative" | "onBlur">
+  Omit<
+    DefaultCommonInputProps,
+    "inputRef" | "onChangeNative" | "onBlur" | "autoComplete" | "uncontrolled"
+  >
 >;
 
 export type InputControlStyleProps = CommonInputStyleProps & {

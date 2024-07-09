@@ -1,4 +1,4 @@
-import { isNull, isNullish, isString } from "@ubloimmo/front-util";
+import { isNull, isString } from "@ubloimmo/front-util";
 import { useEffect, useMemo, useState } from "react";
 
 import { Icon } from "../../Icon";
@@ -40,7 +40,7 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
 /**
  * Renders a password input component that allows for password visibility toggle.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {PasswordInputProps} props - The input props.
  * @return {JSX.Element} The rendered text input component.
@@ -99,18 +99,14 @@ const PasswordInput = (
     mergedProps.onChangeNative
   );
 
-  const value = useInputValue(
-    mergedProps.value,
-    undefined,
-    undefined,
-    !mergedProps.onChange && isNullish(mergedProps.value)
-  );
+  const value = useInputValue<"password">(mergedProps.value, props);
 
   const inputStyles = useInputStyles(mergedProps);
 
   const testId = useTestId("input-password", props);
 
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
+  const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
 
   return (
     <StyledInputContainer
@@ -129,7 +125,7 @@ const PasswordInput = (
         aria-roledescription="Champs de saisie mot de passe"
         role="textbox"
         ref={forwardRef}
-        autoComplete="new-password"
+        autoComplete={autoComplete}
         {...inputStyles}
       ></StyledInput>
       <StyledInputControlGroup>

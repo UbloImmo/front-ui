@@ -5,6 +5,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta = {
   title: "Components/Input/PasswordInput/Stories",
   component: PasswordInput,
+  args: {
+    uncontrolled: true,
+  },
   argTypes: {
     visible: {
       control: "boolean",

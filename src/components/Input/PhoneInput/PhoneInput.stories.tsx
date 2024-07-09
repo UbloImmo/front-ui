@@ -7,6 +7,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta = {
   title: "Components/Input/PhoneInput/Stories",
   component: PhoneInput,
+  args: {
+    uncontrolled: true,
+  },
 } satisfies Meta<typeof PhoneInput>;
 
 export default meta;

@@ -1,9 +1,4 @@
-import {
-  isNullish,
-  isNumber,
-  isString,
-  type Nullable,
-} from "@ubloimmo/front-util";
+import { isNumber, isString, type Nullable } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 
 import { StyledNumberInput } from "./NumberInput.styles";
@@ -49,7 +44,7 @@ const transformNumber = (nativeValue: NativeInputValue): Nullable<number> => {
 /**
  * Renders a number input component.
  *
- * @version 0.0.4
+ * @version 0.0.5
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
  */
@@ -58,12 +53,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
 
   const { inputRef, forwardRef } = useInputRef(mergedProps);
 
-  const value = useInputValue(
-    mergedProps.value,
-    undefined,
-    undefined,
-    !mergedProps.onChange && isNullish(mergedProps.value)
-  );
+  const value = useInputValue<"number">(mergedProps.value, props);
 
   const testId = useTestId("input-number", props);
 
@@ -129,6 +119,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
   }, [mergedProps.step]);
 
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
+  const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
 
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-number-container">
@@ -145,6 +136,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
         required={mergedProps.required}
         disabled={mergedProps.disabled}
         ref={forwardRef}
+        autoComplete={autoComplete}
         {...inputStyles}
       />
       <StyledInputControlGroup>

@@ -50,6 +50,7 @@ const meta = {
     ...CurrencyInput.defaultProps,
     onChange: fn(),
     placeholder: "Currency input",
+    uncontrolled: true,
   },
   decorators,
   argTypes: {

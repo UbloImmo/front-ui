@@ -1,4 +1,4 @@
-import { isNullish, isString } from "@ubloimmo/front-util";
+import { isString } from "@ubloimmo/front-util";
 import { ChangeEventHandler, FocusEventHandler } from "react";
 
 import { StyledTextArea } from "./TextAreaInput.styles";
@@ -41,12 +41,7 @@ const TextAreaInput = (
   const mergedProps = useMergedProps(defaultTextAreaInputProps, props);
   const testId = useTestId("input-textarea", props);
   const inputStyles = useInputStyles(mergedProps);
-  const value = useInputValue(
-    mergedProps.value,
-    undefined,
-    undefined,
-    !mergedProps.onChange && isNullish(mergedProps.value)
-  );
+  const value = useInputValue<"textarea">(mergedProps.value, props);
 
   const onChange = useInputOnChange<"textarea">(
     (nativeValue) => isString(nativeValue),
@@ -59,10 +54,10 @@ const TextAreaInput = (
   const { forwardRef } = useInputRef<HTMLTextAreaElement>(mergedProps);
 
   const onBlur = useHtmlAttribute<FocusEventHandler>(mergedProps.onBlur);
+  const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
 
   return (
     <StyledTextArea
-      {...inputStyles}
       data-testid={testId}
       value={value}
       name={mergedProps.name ?? undefined}
@@ -72,6 +67,8 @@ const TextAreaInput = (
       onChange={onChange}
       onBlur={onBlur}
       ref={forwardRef}
+      autoComplete={autoComplete}
+      {...inputStyles}
       $resize={mergedProps.resize}
     />
   );

@@ -1,6 +1,5 @@
-import { isNullish, isString } from "@ubloimmo/front-util";
+import { isString } from "@ubloimmo/front-util";
 
-import { isEmailString } from "./EmailInput.utils";
 import { Icon } from "../../Icon/Icon.component";
 import {
   StyledInput,
@@ -31,7 +30,7 @@ const defaultEmailInputProps: DefaultInputProps<"email"> = {
 /**
  * Renders an email input component. Does some rudimentary format validation on the input value.
  *
- * @version 0.0.4
+ * @version 0.0.5
  * @param {InputProps<"email">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
@@ -40,18 +39,12 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
 
   const onChange = useInputOnChange<"email">(
     (nativeValue) => isString(nativeValue),
-    (nativeValue) =>
-      isEmailString(nativeValue) && nativeValue.length > 0 ? nativeValue : null,
+    (nativeValue) => (isString(nativeValue) ? nativeValue : null),
     mergedProps.onChange,
     mergedProps.onChangeNative
   );
 
-  const value = useInputValue(
-    mergedProps.value,
-    undefined,
-    undefined,
-    !mergedProps.onChange && isNullish(mergedProps.value)
-  );
+  const value = useInputValue<"email">(mergedProps.value, props);
 
   const inputStyles = useInputStyles(mergedProps);
 
@@ -60,6 +53,7 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
   const { forwardRef } = useInputRef(mergedProps);
 
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
+  const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
 
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-email-container">
@@ -74,7 +68,7 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
         disabled={mergedProps.disabled}
         ref={forwardRef}
         {...inputStyles}
-        autoComplete="email"
+        autoComplete={autoComplete}
       />
       <StyledInputControl {...inputStyles}>
         <Icon name="At" />

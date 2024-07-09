@@ -35,7 +35,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
