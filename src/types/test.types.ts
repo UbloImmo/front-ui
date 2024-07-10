@@ -9,7 +9,7 @@ export type TestIdProps = {
   testId?: string;
   /**
    * Whether to replace the default test id
-   * insted of appending it at the end
+   * instead of appending it at the end
    *
    * @default false
    */
