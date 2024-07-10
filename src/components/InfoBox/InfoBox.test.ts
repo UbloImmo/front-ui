@@ -12,3 +12,11 @@ testInfoBox({ ...InfoBox.defaultProps })(
     expect(queryByTestId("info-box")).not.toBeNull();
   }
 );
+
+testInfoBox({ ...InfoBox.defaultProps, info: "Testing" })(
+  "should render with info when property is provided",
+  ({ queryByTestId }) => {
+    expect(queryByTestId("info-box-text")).not.toBeNull();
+    expect(queryByTestId("info-box-text")?.textContent).toBe("Testing");
+  }
+);

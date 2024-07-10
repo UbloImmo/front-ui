@@ -56,7 +56,13 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
       <Text size="m" weight="bold" color={stateColor}>
         {label}
       </Text>
-      <Text size="m" weight="medium" color={stateColor}>
+      <Text
+        size="m"
+        weight="medium"
+        color={stateColor}
+        testId={`${testId}-text`}
+        overrideTestId
+      >
         {displayInfo}
       </Text>
     </InfoBoxContainer>
