@@ -84,6 +84,12 @@ export type TypographyProps = {
    */
   ellipsis?: boolean;
   /**
+   * Whether or not the text contents should be uppercase
+   *
+   * @default false
+   */
+  uppercase?: boolean;
+  /**
    * Any valid react children.
    *
    * @default undefined

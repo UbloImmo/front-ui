@@ -238,3 +238,23 @@ Colors.parameters = {
     componentPropTemplate("color", colors.flatMap(colorToShades))
   ),
 };
+
+export const Uppercase = (props: TextProps) => {
+  return (
+    <ComponentVariants
+      defaults={props}
+      variants={booleans}
+      for="uppercase"
+      of={Text}
+      direction="column"
+      align="start"
+      gap={1}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+Uppercase.args = {};
+Uppercase.parameters = {
+  docs: componentSource(componentPropTemplate("uppercase", booleans)),
+};
