@@ -1,0 +1,32 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as SwitchStories from "../Switch.stories.tsx";
+
+<Meta title="Components/Switch/Usage" />
+
+<ComponentInfo of={SwitchStories} figmaId="1757-7940" />
+
+<Content>
+
+## Usage
+
+The `Switch` component is commonly used to enable users to toggling the activation or deactivation of features or options.
+
+### Activate the switch
+
+When it comes to selecting or deselecting options, features, etc., `Switch` can be an alternative to ComboBox by allowing users to independently choose options from a list.
+
+> `Switch` state is handled with the `active` property
+
+<Canvas of={SwitchStories.Active} />
+
+### Disabled
+
+The `Switch` component includes an optional `disabled` property, which can be set to true when you want to disable the toggling functionality.
+
+> Give it a try, those Switches below won't toggle if you click on them
+
+<Canvas of={SwitchStories.Disabled} />
+
+</Content>

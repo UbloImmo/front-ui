@@ -25,3 +25,4 @@ export * from "./ComboBoxButton";
 export * from "./Avatar";
 export * from "./Divider";
 export * from "./Form";
+export * from "./Switch";
