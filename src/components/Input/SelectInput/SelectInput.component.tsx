@@ -1,10 +1,14 @@
 import { NullishPrimitives } from "@ubloimmo/front-util";
-import styled from "styled-components";
+import { useState } from "react";
 
+import { SelectInputOption } from "./components/SelectInputOption.component";
+import {
+  SelectInputContainer,
+  SelectOptionsContainer,
+  StyledSelectInput,
+} from "./SelectInput.styles";
 import { StyledInputControl, defaultCommonInputProps } from "../Input.common";
-import { commonInputContainerStyles, commonInputStyles } from "../Input.styles";
-import { CommonInputStyleProps } from "../Input.types";
-import { useInputStyles } from "../Input.utils";
+import { useInputStyles, useInputValue } from "../Input.utils";
 
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
@@ -13,6 +17,7 @@ import { useMergedProps, useTestId } from "@utils";
 import type {
   SelectInputProps,
   DefaultSelectInputProps,
+  SelectOption,
 } from "./SelectInput.types";
 import type { TestIdProps } from "@types";
 
@@ -21,7 +26,34 @@ const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives> = {
   value: null,
   onChange: null,
   name: null,
-  options: [],
+  options: [
+    {
+      label: "Option 1",
+      value: "option-1",
+    },
+    {
+      label: "Option 2",
+      value: "option-2",
+    },
+    {
+      label: "Option 3",
+      value: "option-3",
+    },
+    {
+      label: "Option 4",
+      value: "option-4",
+      disabled: true,
+    },
+    {
+      label: "Option 5",
+      value: "option-5",
+    },
+    {
+      label: "Option 6",
+      value: "option-6",
+    },
+  ],
+  placeholder: "Select an option",
 };
 
 /**
@@ -40,28 +72,54 @@ const SelectInput = <TValue extends NullishPrimitives>(
   const mergedProps = useMergedProps(defaultSelectInputProps, props);
 
   const inputStyles = useInputStyles(mergedProps);
-  const { value, placeholder, disabled } = mergedProps;
+  const { value, placeholder, disabled, options } = mergedProps;
+
+  const initializeValue = useInputValue(value);
+
+  const [selectedOption, setSelectedOption] = useState(initializeValue);
+  const [isOpen, setIsOpen] = useState(false);
+
   const testId = useTestId("input-select", props);
+
+  const handleSelectOption = () => {};
 
   return (
     <>
-      <SelectInputContainer
-        {...inputStyles}
-        data-testid={testId}
-        role="listbox"
-      >
-        <StyledSelectInput {...inputStyles} disabled={disabled}>
-          {value ? <Text>{value}</Text> : <Text>{placeholder}</Text>}
+      <SelectInputContainer {...inputStyles} data-testid={testId}>
+        <StyledSelectInput
+          {...inputStyles}
+          disabled={disabled}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {selectedOption ? (
+            <Text weight="medium">{selectedOption}</Text>
+          ) : (
+            <Text weight="medium" color="gray-400">
+              {placeholder}
+            </Text>
+          )}
         </StyledSelectInput>
         <StyledInputControl {...inputStyles}>
           <Icon name="CaretDownFill" />
         </StyledInputControl>
+
+        {isOpen && (
+          <SelectOptionsContainer role="listbox">
+            {options.map((option: SelectOption<TValue>) => (
+              <SelectInputOption
+                key={option.value}
+                onClick={() => {
+                  setIsOpen(false);
+                  setSelectedOption(option.label);
+                }}
+                value={option.value}
+                disabled={option.disabled}
+                label={option.label}
+              />
+            ))}
+          </SelectOptionsContainer>
+        )}
       </SelectInputContainer>
-      <div>
-        <option>Option value 1</option>
-        <option>Option value 2</option>
-        <option>Option value 3</option>
-      </div>
     </>
   );
 };
@@ -70,20 +128,3 @@ SelectInput.defaultProps =
   defaultSelectInputProps as DefaultSelectInputProps<NullishPrimitives>;
 
 export { SelectInput };
-
-const SelectInputContainer = styled.div<CommonInputStyleProps>`
-  ${commonInputContainerStyles}
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-
-const StyledSelectInput = styled.button<CommonInputStyleProps>`
-  ${commonInputStyles}
-  cursor: pointer;
-  text-align: left;
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-`;

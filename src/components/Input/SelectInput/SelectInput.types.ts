@@ -8,10 +8,12 @@ import type {
   VoidFn,
 } from "@ubloimmo/front-util";
 
-type SelectOption<TValue extends NullishPrimitives> = {
+export type SelectOption<TValue extends NullishPrimitives> = {
   value: TValue | null;
   label: string;
   disabled?: boolean;
+  // selected: boolean;
+  onClick?: VoidFn;
 };
 
 // groupe d'options
@@ -36,7 +38,7 @@ type SelectOptionsQueryFn<TValue extends NullishPrimitives> = MaybeAsyncFn<
  * Soit un array d'options ou groupes,
  * soit une fonction potentiellement async qui retourne une liste d'options / groupes
  */
-type SelectOptionsQuery<TValue extends NullishPrimitives> =
+export type SelectOptionsQuery<TValue extends NullishPrimitives> =
   | SelectOptionOrGroup<TValue>[]
   | SelectOptionsQueryFn<TValue>;
 
