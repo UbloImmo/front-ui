@@ -1,5 +1,7 @@
 import { InputOnChangeFn, InputProps, InputValue } from "../Input.types";
 
+import { StyleProps } from "@types";
+
 import type {
   NullishPrimitives,
   MaybeAsyncFn,
@@ -12,9 +14,13 @@ export type SelectOption<TValue extends NullishPrimitives> = {
   value: TValue | null;
   label: string;
   disabled?: boolean;
-  // selected: boolean;
-  onClick?: VoidFn;
+  active?: boolean;
+  onSelect?: Nullable<VoidFn>;
 };
+
+export type SelectOptionItemStyleProps = StyleProps<
+  SelectOption<NullishPrimitives>
+>;
 
 // groupe d'options
 type SelectOptionGroup<TValue extends NullishPrimitives> = {

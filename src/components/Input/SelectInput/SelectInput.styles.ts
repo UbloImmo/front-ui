@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { css, RuleSet } from "styled-components";
 
+import { SelectOptionItemStyleProps } from "./SelectInput.types";
 import { commonInputContainerStyles, commonInputStyles } from "../Input.styles";
 import { CommonInputStyleProps } from "../Input.types";
 
@@ -24,11 +25,11 @@ export const StyledSelectInput = styled.button<CommonInputStyleProps>`
 
 export const SelectOptionsContainer = styled.div`
   position: absolute;
-  top: var(--s-8);
+  top: var(--s-7);
   width: 100%;
   left: 0;
   z-index: -1;
-  border-radius: var(--s-1);
+  border-radius: 0 0 var(--s-1) var(--s-1);
   height: 7rem;
   background-color: white;
   overflow-y: scroll;
@@ -38,3 +39,43 @@ export const SelectOptionsContainer = styled.div`
     top: var(--s-9);
   }
 `;
+
+export const buildSelectOptionItemStyles = ({
+  $active,
+  $disabled,
+}: SelectOptionItemStyleProps): RuleSet => {
+  return css`
+    padding: var(--s-2);
+    transition: color 150ms ease-in-out, background-color 300ms ease-in-out;
+    border-top: 1px solid var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    ${$active
+      ? `span[data-testid="text"] {
+          font-weight: var(--text-weight-bold);
+    }`
+      : `
+      span[data-testid="text"] {
+            font-weight: var(--text-weight-medium);
+      }
+    `}
+
+    ${$disabled &&
+    `
+    color: var(--gray-500);
+      background-color: var(--gray-50);
+      cursor: not-allowed;
+    `}
+
+    ${!$disabled &&
+    `
+    &:hover {
+      span[data-testid="text"] {
+        color: var(--primary-base);
+      }
+      background-color: var(--primary-light);
+    }`}
+  `;
+};

@@ -11,3 +11,4 @@ export * from "./PasswordInput";
 export * from "./PhoneInput";
 export * from "./TextInput";
 export * from "./TextAreaInput";
+export * from "./SelectInput";

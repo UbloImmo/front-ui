@@ -1,5 +1,5 @@
 import { NullishPrimitives } from "@ubloimmo/front-util";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { SelectInputOption } from "./components/SelectInputOption.component";
 import {
@@ -26,34 +26,8 @@ const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives> = {
   value: null,
   onChange: null,
   name: null,
-  options: [
-    {
-      label: "Option 1",
-      value: "option-1",
-    },
-    {
-      label: "Option 2",
-      value: "option-2",
-    },
-    {
-      label: "Option 3",
-      value: "option-3",
-    },
-    {
-      label: "Option 4",
-      value: "option-4",
-      disabled: true,
-    },
-    {
-      label: "Option 5",
-      value: "option-5",
-    },
-    {
-      label: "Option 6",
-      value: "option-6",
-    },
-  ],
-  placeholder: "Select an option",
+  options: [],
+  placeholder: "",
 };
 
 /**
@@ -72,16 +46,28 @@ const SelectInput = <TValue extends NullishPrimitives>(
   const mergedProps = useMergedProps(defaultSelectInputProps, props);
 
   const inputStyles = useInputStyles(mergedProps);
-  const { value, placeholder, disabled, options } = mergedProps;
 
-  const initializeValue = useInputValue(value);
+  const { placeholder, disabled, options } = mergedProps;
+
+  const initializeValue = useInputValue(props.value);
 
   const [selectedOption, setSelectedOption] = useState(initializeValue);
   const [isOpen, setIsOpen] = useState(false);
 
   const testId = useTestId("input-select", props);
 
-  const handleSelectOption = () => {};
+  const handleSelectOption = useCallback(
+    (option: SelectOption<TValue>) => {
+      return () => {
+        if (disabled || option.disabled) return;
+        setIsOpen(false);
+        setSelectedOption(option.label);
+      };
+    },
+    [disabled]
+  );
+
+  const handleToggle = () => setIsOpen(!isOpen);
 
   return (
     <>
@@ -89,7 +75,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
         <StyledSelectInput
           {...inputStyles}
           disabled={disabled}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={handleToggle}
         >
           {selectedOption ? (
             <Text weight="medium">{selectedOption}</Text>
@@ -105,18 +91,19 @@ const SelectInput = <TValue extends NullishPrimitives>(
 
         {isOpen && (
           <SelectOptionsContainer role="listbox">
-            {options.map((option: SelectOption<TValue>) => (
-              <SelectInputOption
-                key={option.value}
-                onClick={() => {
-                  setIsOpen(false);
-                  setSelectedOption(option.label);
-                }}
-                value={option.value}
-                disabled={option.disabled}
-                label={option.label}
-              />
-            ))}
+            {(options as SelectOption<TValue>[]).map(
+              (option: SelectOption<TValue>, index: number) => (
+                <SelectInputOption
+                  key={`${option.value}-${index}`}
+                  onSelect={handleSelectOption(option)}
+                  value={option.value}
+                  disabled={option.disabled}
+                  label={option.label}
+                  active={selectedOption === option.label}
+                  aria-selected={selectedOption === option.label}
+                />
+              )
+            )}
           </SelectOptionsContainer>
         )}
       </SelectInputContainer>
