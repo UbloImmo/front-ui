@@ -23,6 +23,7 @@ const valueFormatters: FormDisplayValueFormatterMap = {
   password: (value) => arrayOf(value.length, () => "*").join(""),
   phone: String,
   textarea: String,
+  select: String,
 };
 
 const noValue = "—";

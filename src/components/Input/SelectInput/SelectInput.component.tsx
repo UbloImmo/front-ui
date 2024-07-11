@@ -8,7 +8,7 @@ import {
   StyledSelectInput,
 } from "./SelectInput.styles";
 import { StyledInputControl, defaultCommonInputProps } from "../Input.common";
-import { useInputStyles, useInputValue } from "../Input.utils";
+import { useInputStyles } from "../Input.utils";
 
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
@@ -49,9 +49,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
 
   const { placeholder, disabled, options } = mergedProps;
 
-  const initializeValue = useInputValue(props.value);
-
-  const [selectedOption, setSelectedOption] = useState(initializeValue);
+  const [selectedOption, setSelectedOption] = useState(props.value);
   const [isOpen, setIsOpen] = useState(false);
 
   const testId = useTestId("input-select", props);
@@ -61,7 +59,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
       return () => {
         if (disabled || option.disabled) return;
         setIsOpen(false);
-        setSelectedOption(option.label);
+        setSelectedOption(option.label as TValue);
       };
     },
     [disabled]

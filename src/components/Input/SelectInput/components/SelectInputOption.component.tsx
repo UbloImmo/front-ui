@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 
-import { useInputValue } from "../../Input.utils";
 import { buildSelectOptionItemStyles } from "../SelectInput.styles";
 import { SelectOption, SelectOptionItemStyleProps } from "../SelectInput.types";
 
@@ -14,8 +13,6 @@ import type { NullishPrimitives } from "@ubloimmo/front-util";
 const SelectInputOption = <TValue extends NullishPrimitives>(
   props: SelectOption<TValue>
 ): JSX.Element => {
-  const inputValue = useInputValue(props.label);
-
   const styleProps = useStyleProps(props);
 
   const textColor = useMemo(() => {
@@ -29,7 +26,7 @@ const SelectInputOption = <TValue extends NullishPrimitives>(
       {...styleProps}
     >
       <Text color={textColor} size="m">
-        {inputValue}
+        {props.label}
       </Text>
       {props.active && <Icon name="Check" color="gray-800" size="s-4" />}
     </SelectOptionItem>
