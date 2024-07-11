@@ -55,6 +55,7 @@ const config: StorybookConfig = {
         },
       },
       resolve: {
+        extensions: [".mdx", ".mjs", ".js", ".ts", ".tsx"],
         alias,
       },
     });
@@ -74,7 +75,7 @@ const config: StorybookConfig = {
   staticDirs: [{ from: "../src/typography/fonts/Gilroy", to: "/assets/fonts" }],
 
   typescript: {
-    reactDocgen: "react-docgen-typescript"
-  }
+    reactDocgen: "react-docgen-typescript",
+  },
 };
 export default config;
