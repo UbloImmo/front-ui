@@ -10,25 +10,40 @@ testSwitch(Switch.defaultProps)("should render", ({ queryByTestId }) => {
   expect(queryByTestId("switch")).not.toBeNull();
 });
 
+testSwitch({ ...Switch.defaultProps })(
+  "should toggle active state on click",
+  async ({ queryByTestId }, { click }) => {
+    const switchContainer = (await queryByTestId(
+      "switch-container"
+    )) as HTMLButtonElement;
+    expect(switchContainer).not.toBeNull();
+    await click(switchContainer);
+    expect(switchContainer.getAttribute("aria-checked")).toBe("true");
+  }
+);
+
 testSwitch({ ...Switch.defaultProps, disabled: true, active: false })(
   "should not toggle active state on click when disabled",
   async ({ queryByTestId }, { click }) => {
-    expect(queryByTestId("switch-toggle")).not.toBeNull();
-    await click(queryByTestId("switch-toggle") as HTMLDivElement);
-    expect(queryByTestId("switch-toggle")?.getAttribute("aria-disabled")).toBe(
-      "true"
-    );
-    expect(Switch.defaultProps.active).toBe(false);
+    const switchContainer = (await queryByTestId(
+      "switch-container"
+    )) as HTMLButtonElement;
+    expect(switchContainer).not.toBeNull();
+    await click(switchContainer);
+    expect(switchContainer.getAttribute("aria-disabled")).toBe("true");
+    expect(switchContainer.disabled).toBe(true);
   }
 );
 
 testSwitch({ ...Switch.defaultProps, disabled: true, active: true })(
   "should not toggle active state on click when both disabled and active",
   async ({ queryByTestId }, { click }) => {
-    expect(queryByTestId("switch-toggle")).not.toBeNull();
-    await click(queryByTestId("switch-toggle") as HTMLDivElement);
-    expect(queryByTestId("switch-toggle")?.getAttribute("aria-disabled")).toBe(
-      "true"
-    );
+    const switchContainer = (await queryByTestId(
+      "switch-container"
+    )) as HTMLButtonElement;
+    expect(switchContainer).not.toBeNull();
+    await click(switchContainer);
+    expect(switchContainer.getAttribute("aria-disabled")).toBe("true");
+    expect(switchContainer.disabled).toBe(true);
   }
 );
