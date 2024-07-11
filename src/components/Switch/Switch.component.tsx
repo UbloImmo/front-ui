@@ -1,13 +1,11 @@
-import { useMemo, useState } from "react";
+import { isBoolean } from "@ubloimmo/front-util";
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
-import {
-  SwitchContainer,
-  SwitchToggleStyles,
-  SwitchToggleCheckboxStyles,
-} from "./Switch.styles";
+import { SwitchContainerStyles, SwitchHandleStyles } from "./Switch.styles";
 import { Text } from "../Text";
 
+import { FlexLayout } from "@layouts";
 import { useTestId, useMergedProps, useStyleProps } from "@utils";
 
 import type {
@@ -37,54 +35,68 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("switch", props);
 
-  const [isActive, setIsActive] = useState(active);
+  const [isActive, setIsActive] = useState(props.active ?? false);
 
-  const toggleSwitch = () => {
-    if (disabled) return;
-    setIsActive(!isActive);
+  useEffect(() => {
+    if (isBoolean(props.active) && active !== props.active) {
+      setIsActive(props.active);
+    }
+  }, [active, props.active]);
 
-    if (mergedProps.onChange) mergedProps.onChange();
-  };
+  const propagateOnChange = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      if (props.disabled) return;
+      const newActive = !isActive;
+
+      if (props.onChange) props.onChange(newActive);
+      setIsActive(newActive);
+    },
+    [isActive, props]
+  );
 
   const textColor = useMemo(() => {
     return isActive && !disabled ? "primary-base" : "gray-600";
   }, [isActive, disabled]);
 
   return (
-    <SwitchContainer data-testid={testId}>
-      <SwitchToggle
-        onClick={toggleSwitch}
-        onChange={mergedProps.onChange ?? undefined}
+    <FlexLayout gap="s-2" testId={testId} align="center" overrideTestId>
+      <SwitchContainer
+        onClick={propagateOnChange}
         {...styleProps}
-        $disabled={disabled}
+        disabled={disabled}
         $active={isActive}
         role="checkbox"
+        type="button"
         aria-checked={isActive}
         aria-disabled={disabled}
-        data-testid={`${testId}-toggle`}
+        data-testid={`${testId}-container`}
+        data-active={isActive}
       >
-        <SwitchToggleCheckbox
+        <SwitchHandle
           {...styleProps}
           $active={isActive}
           aria-checked={isActive}
           aria-disabled={disabled}
+          data-testid={`${testId}-handle`}
+          data-active={isActive}
         />
-      </SwitchToggle>
+      </SwitchContainer>
 
       <Text weight="bold" color={textColor} uppercase>
         {isActive ? "oui" : "non"}
       </Text>
-    </SwitchContainer>
+    </FlexLayout>
   );
 };
 Switch.defaultProps = defaultSwitchProps;
 
 export { Switch };
 
-const SwitchToggleCheckbox = styled.div<SwitchStyleProps>`
-  ${SwitchToggleCheckboxStyles}
+const SwitchContainer = styled.button<SwitchStyleProps>`
+  ${SwitchContainerStyles}
 `;
 
-const SwitchToggle = styled.div<SwitchStyleProps>`
-  ${SwitchToggleStyles}
+const SwitchHandle = styled.div<SwitchStyleProps>`
+  ${SwitchHandleStyles}
 `;

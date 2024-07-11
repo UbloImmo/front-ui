@@ -16,12 +16,12 @@ export type SwitchProps = {
   disabled?: boolean;
 
   /**
-   * The Switch's additional callback.
+   * The Switch's callback.
    *
-   * @type {Nullable<VoidFn>}
+   * @type {Nullable<VoidFn<[boolean]>>}
    * @default {null}
    */
-  onChange?: Nullable<VoidFn>;
+  onChange?: Nullable<VoidFn<[boolean]>>;
 };
 
 export type SwitchDefaultProps = Required<SwitchProps>;
