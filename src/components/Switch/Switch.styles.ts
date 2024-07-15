@@ -1,5 +1,9 @@
 import { css, keyframes, RuleSet } from "styled-components";
 
+import { SwitchStyleProps } from "./Switch.types";
+
+import { cssVarUsage } from "@utils";
+
 export const SwitchContainerStyles = (): RuleSet => {
   return css`
     cursor: pointer;
@@ -11,63 +15,59 @@ export const SwitchContainerStyles = (): RuleSet => {
     background-color: var(--gray-300);
     transition: background-color 0.4s ease;
 
-    &[data-active="true"] {
+    &[aria-checked="true"] {
       background-color: var(--primary-base);
-
-      &:disabled {
-        background-color: var(--gray-600);
-      }
     }
 
     &[data-active="false"]:not(:disabled) {
       background-color: var(--gray-300);
     }
+
+    &:disabled {
+      background-color: var(--gray-600);
+    }
   `;
 };
 
 const switchActiveCSSAnim = keyframes`
-  from {
-    transform: translateX(0);
-  }
   25% {
-    transform: scaleY(0.8);
+    scale: 0.8;
     width: var(--s-6);
   }
-  to {
+  100% {
+    scale: 1;
     transform: translateX(1.1rem);
   }
 `;
 
 const switchInactiveCSSAnim = keyframes`
-  from {
-    transform: translateX(1.1rem);
-  }
   25% {
-    transform: scaleY(0.8);
+    scale: 0.8;
     width: var(--s-6);
   }
-  to {
+  100% {
+    scale: 1;
     transform: translateX(0);
   }
 `;
 
-export const SwitchHandleStyles = (): RuleSet => {
+export const SwitchHandleStyles = ({
+  $disabled,
+}: SwitchStyleProps): RuleSet => {
   return css`
     width: var(--s-4);
     height: var(--s-4);
     border-radius: var(--s-4);
-    background: white;
+    background: ${$disabled ? cssVarUsage("gray-200") : "white"};
     cursor: inherit;
-    transition: transform 300ms ease-out;
 
-    &[data-active="true"] {
-      animation: ${switchActiveCSSAnim} 300ms ease-out;
-      transform: translateX(1.1rem);
+    &[aria-checked="true"] {
+      animation: ${switchActiveCSSAnim} 300ms ease-out forwards;
     }
 
-    &[data-active="false"] {
-      animation: ${switchInactiveCSSAnim} 300ms ease-out;
-      transform: translateX(0);
+    &[aria-checked="false"] {
+      animation: ${switchInactiveCSSAnim} 300ms ease-out forwards reverse;
+      transform: translateX(1.1rem);
     }
   `;
 };
