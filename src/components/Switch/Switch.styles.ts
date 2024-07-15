@@ -36,7 +36,7 @@ const switchActiveCSSAnim = keyframes`
   }
   100% {
     scale: 1;
-    transform: translateX(1.1rem);
+    translate:1.1rem 0;
   }
 `;
 
@@ -47,7 +47,7 @@ const switchInactiveCSSAnim = keyframes`
   }
   100% {
     scale: 1;
-    transform: translateX(0);
+    translate: 0;
   }
 `;
 
@@ -67,7 +67,7 @@ export const SwitchHandleStyles = ({
 
     &[aria-checked="false"] {
       animation: ${switchInactiveCSSAnim} 300ms ease-out forwards;
-      transform: translateX(1.1rem);
+      translate: 1.1rem 0;
     }
   `;
 };
