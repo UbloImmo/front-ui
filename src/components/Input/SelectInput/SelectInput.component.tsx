@@ -139,11 +139,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
             // input lorsque searchable
             e.target.dataset.testid === "input-select-query" ||
             // option
-            e.target.dataset.testid === "input-select-option" ||
-            // control
-            e.target.dataset.testid === "input-select-control" ||
-            // option label
-            e.target.dataset.testid === "input-select-option-label"
+            e.target.dataset.testid === "input-select-option"
           )
             return;
         }
