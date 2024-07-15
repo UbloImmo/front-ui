@@ -106,7 +106,7 @@ export const useInputValue = <TType extends InputType>(
     if (isFunction<InputValueTransformerFn<TType>>(valueTransformer)) {
       return valueTransformer(value);
     }
-    return value;
+    return value as NativeInputValue;
   }, [value, valueTransformer, fallback, rawProps]);
 };
 
