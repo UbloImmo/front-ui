@@ -19,7 +19,7 @@ export const SwitchContainerStyles = (): RuleSet => {
       background-color: var(--primary-base);
     }
 
-    &[data-active="false"]:not(:disabled) {
+    &[aria-checked="false"] {
       background-color: var(--gray-300);
     }
 
@@ -66,7 +66,7 @@ export const SwitchHandleStyles = ({
     }
 
     &[aria-checked="false"] {
-      animation: ${switchInactiveCSSAnim} 300ms ease-out forwards reverse;
+      animation: ${switchInactiveCSSAnim} 300ms ease-out forwards;
       transform: translateX(1.1rem);
     }
   `;
