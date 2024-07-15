@@ -15,7 +15,6 @@ export type SelectOption<TValue extends NullishPrimitives> = {
   label: string;
   disabled?: boolean;
   active?: boolean;
-  onSelect?: Nullable<VoidFn>;
 };
 
 export type SelectOptionItemStyleProps = StyleProps<
@@ -23,22 +22,20 @@ export type SelectOptionItemStyleProps = StyleProps<
 >;
 
 // groupe d'options
-type SelectOptionGroup<TValue extends NullishPrimitives> = {
+export type SelectOptionGroup<TValue extends NullishPrimitives> = {
   label: string;
   options: SelectOption<TValue>[];
 };
 
-type SelectOptionOrGroup<TValue extends NullishPrimitives> =
+export type SelectOptionOrGroup<TValue extends NullishPrimitives> =
   | SelectOption<TValue>
   | SelectOptionGroup<TValue>;
 
 /**
  * Une fonction potentiellement async sans arguments qui retourne une liste d'options / groupes
  */
-type SelectOptionsQueryFn<TValue extends NullishPrimitives> = MaybeAsyncFn<
-  string[],
-  SelectOptionOrGroup<TValue>[]
->;
+export type SelectOptionsQueryFn<TValue extends NullishPrimitives> =
+  MaybeAsyncFn<string[], SelectOptionOrGroup<TValue>[]>;
 
 /**
  * Soit un array d'options ou groupes,
@@ -58,9 +55,15 @@ export type SelectInputProps<TValue extends NullishPrimitives> = Replace<
   }
 > & {
   options?: SelectOptionsQuery<TValue>;
+  searchable?: boolean;
   disabled?: boolean;
   placeholder?: Nullable<string>;
 };
 
 export type DefaultSelectInputProps<TValue extends NullishPrimitives> =
   Required<SelectInputProps<TValue>>;
+
+export type SelectInputOptionProps<TValue extends NullishPrimitives> =
+  SelectOption<TValue> & {
+    onSelect?: Nullable<VoidFn>;
+  };

@@ -1,5 +1,5 @@
-import { NullishPrimitives } from "@ubloimmo/front-util";
-import { useCallback, useState } from "react";
+import { NullishPrimitives, isObject, isString } from "@ubloimmo/front-util";
+import { useCallback, useId, useLayoutEffect, useState } from "react";
 
 import { SelectInputOption } from "./components/SelectInputOption.component";
 import {
@@ -7,28 +7,26 @@ import {
   SelectOptionsContainer,
   StyledSelectInput,
 } from "./SelectInput.styles";
-import { StyledInputControl, defaultCommonInputProps } from "../Input.common";
-import { useInputStyles } from "../Input.utils";
+import {
+  defaultSelectInputProps,
+  isSelectOptionGroup,
+  useSelectOptions,
+  useSelectValue,
+} from "./SelectInput.utils";
+import { StyledInput, StyledInputControl } from "../Input.common";
+import {
+  useInputOnChange,
+  useInputRef,
+  useInputStyles,
+  useInputValue,
+} from "../Input.utils";
 
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
-import { useMergedProps, useTestId } from "@utils";
+import { useHtmlAttribute, useTestId } from "@utils";
 
-import type {
-  SelectInputProps,
-  DefaultSelectInputProps,
-  SelectOption,
-} from "./SelectInput.types";
+import type { SelectInputProps, SelectOption } from "./SelectInput.types";
 import type { TestIdProps } from "@types";
-
-const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives> = {
-  ...defaultCommonInputProps,
-  value: null,
-  onChange: null,
-  name: null,
-  options: [],
-  placeholder: "",
-};
 
 /**
  * SelectInput component
@@ -43,73 +41,170 @@ const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives> = {
 const SelectInput = <TValue extends NullishPrimitives>(
   props: SelectInputProps<TValue> & TestIdProps
 ) => {
-  const mergedProps = useMergedProps(defaultSelectInputProps, props);
+  const { options, mergedProps } = useSelectOptions(props);
 
+  const {
+    displayOptions,
+    setInternalValue,
+    activeOption,
+    autoCompleteQuery,
+    setAutoCompleteQuery,
+  } = useSelectValue(mergedProps, options);
   const inputStyles = useInputStyles(mergedProps);
 
-  const { placeholder, disabled, options } = mergedProps;
+  const { placeholder, disabled, searchable } = mergedProps;
 
-  const [selectedOption, setSelectedOption] = useState(props.value);
   const [isOpen, setIsOpen] = useState(false);
+
+  const inputId = useId();
 
   const testId = useTestId("input-select", props);
 
-  const handleSelectOption = useCallback(
+  const { inputRef, forwardRef } = useInputRef(mergedProps);
+
+  const closeOptions = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+    setIsOpen(false);
+  }, [inputRef]);
+
+  const openOptions = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+    setIsOpen(true);
+  }, [inputRef]);
+
+  const toggleOptionList = useCallback(() => {
+    if (isOpen) {
+      closeOptions();
+    } else {
+      openOptions();
+    }
+  }, [closeOptions, openOptions, isOpen]);
+
+  const selectOptionAndClose = useCallback(
     (option: SelectOption<TValue>) => {
       return () => {
         if (disabled || option.disabled) return;
-        setIsOpen(false);
-        setSelectedOption(option.label as TValue);
+        closeOptions();
+        setInternalValue(option.value);
       };
     },
-    [disabled]
+    [closeOptions, disabled, setInternalValue]
   );
 
-  const handleToggle = () => setIsOpen(!isOpen);
+  const onQueryChange = useInputOnChange<"text">(
+    () => searchable && !disabled,
+    (nativeValue) => (isString(nativeValue) ? nativeValue : null),
+    setAutoCompleteQuery,
+    mergedProps.onChangeNative
+  );
+
+  const query = useInputValue(autoCompleteQuery, props);
+
+  const openOptionsOnFocus = useCallback(() => {
+    if (disabled || !searchable) return;
+    setIsOpen(true);
+  }, [disabled, searchable]);
+
+  const onBlur = useHtmlAttribute(mergedProps.onBlur);
+
+  useLayoutEffect(() => {
+    const onPointerDown = (e: PointerEvent) => {
+      if (!e.target) return;
+      if ("id" in e.target) {
+        if (e.target.id === inputId) return;
+      }
+      if ("dataset" in e.target && isObject(e.target.dataset)) {
+        if ("testid" in e.target.dataset) {
+          if (
+            // conteneur
+            e.target.dataset.testid === testId ||
+            // liste d'options
+            e.target.dataset.testid === "input-select-options" ||
+            // input lorsque searchable
+            e.target.dataset.testid === "input-select-query" ||
+            // option
+            e.target.dataset.testid === "input-select-option"
+          )
+            return;
+        }
+      }
+
+      setIsOpen(false);
+    };
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeOptions();
+      }
+    };
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, [closeOptions, inputId, testId]);
 
   return (
-    <>
-      <SelectInputContainer {...inputStyles} data-testid={testId}>
+    <SelectInputContainer {...inputStyles} data-testid={testId}>
+      {mergedProps.searchable ? (
+        <StyledInput
+          {...inputStyles}
+          value={query}
+          onChange={onQueryChange}
+          data-testid={"input-select-query"}
+          placeholder={placeholder}
+          disabled={disabled}
+          onFocus={openOptionsOnFocus}
+          onBlur={onBlur}
+          id={inputId}
+          ref={forwardRef}
+          autoComplete="none"
+        />
+      ) : (
         <StyledSelectInput
           {...inputStyles}
           disabled={disabled}
-          onClick={handleToggle}
+          onClick={toggleOptionList}
+          id={inputId}
         >
-          {selectedOption ? (
-            <Text weight="medium">{selectedOption}</Text>
+          {activeOption ? (
+            <Text weight="medium">{activeOption.label}</Text>
           ) : (
             <Text weight="medium" color="gray-400">
               {placeholder}
             </Text>
           )}
         </StyledSelectInput>
-        <StyledInputControl {...inputStyles}>
-          <Icon name="CaretDownFill" />
-        </StyledInputControl>
+      )}
+      <StyledInputControl {...inputStyles} onClick={toggleOptionList}>
+        <Icon name="CaretDownFill" />
+      </StyledInputControl>
 
-        {isOpen && (
-          <SelectOptionsContainer role="listbox">
-            {(options as SelectOption<TValue>[]).map(
-              (option: SelectOption<TValue>, index: number) => (
-                <SelectInputOption
-                  key={`${option.value}-${index}`}
-                  onSelect={handleSelectOption(option)}
-                  value={option.value}
-                  disabled={option.disabled}
-                  label={option.label}
-                  active={selectedOption === option.label}
-                  aria-selected={selectedOption === option.label}
-                />
-              )
-            )}
-          </SelectOptionsContainer>
-        )}
-      </SelectInputContainer>
-    </>
+      {isOpen && (
+        <SelectOptionsContainer
+          role="listbox"
+          data-testid="input-select-options"
+        >
+          {displayOptions.map((optionOrGroup, index) =>
+            isSelectOptionGroup(optionOrGroup) ? null : (
+              <SelectInputOption
+                key={`${optionOrGroup.value}-${index}`}
+                onSelect={selectOptionAndClose(optionOrGroup)}
+                {...optionOrGroup}
+              />
+            )
+          )}
+        </SelectOptionsContainer>
+      )}
+    </SelectInputContainer>
   );
 };
 
-SelectInput.defaultProps =
-  defaultSelectInputProps as DefaultSelectInputProps<NullishPrimitives>;
+SelectInput.defaultProps = defaultSelectInputProps;
 
 export { SelectInput };

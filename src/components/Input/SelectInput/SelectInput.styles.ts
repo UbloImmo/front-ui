@@ -1,6 +1,5 @@
 import styled, { css, RuleSet } from "styled-components";
 
-import { SelectOptionItemStyleProps } from "./SelectInput.types";
 import { commonInputContainerStyles, commonInputStyles } from "../Input.styles";
 import { CommonInputStyleProps } from "../Input.types";
 
@@ -40,10 +39,7 @@ export const SelectOptionsContainer = styled.div`
   }
 `;
 
-export const buildSelectOptionItemStyles = ({
-  $active,
-  $disabled,
-}: SelectOptionItemStyleProps): RuleSet => {
+export const buildSelectOptionItemStyles = (): RuleSet => {
   return css`
     padding: var(--s-2);
     transition: color 150ms ease-in-out, background-color 300ms ease-in-out;
@@ -52,30 +48,16 @@ export const buildSelectOptionItemStyles = ({
     align-items: center;
     justify-content: space-between;
 
-    ${$active
-      ? `span[data-testid="text"] {
-          font-weight: var(--text-weight-bold);
-    }`
-      : `
-      span[data-testid="text"] {
-            font-weight: var(--text-weight-medium);
-      }
-    `}
-
-    ${$disabled &&
-    `
-    color: var(--gray-500);
+    &[aria-disabled] {
       background-color: var(--gray-50);
       cursor: not-allowed;
-    `}
+    }
 
-    ${!$disabled &&
-    `
-    &:hover {
+    &:not([aria-disabled]):hover {
       span[data-testid="text"] {
         color: var(--primary-base);
       }
       background-color: var(--primary-light);
-    }`}
+    }
   `;
 };

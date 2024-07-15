@@ -74,7 +74,7 @@ export const inputControlStyles = ({
   transform: translateY(-50%);
   width: var(--s-4);
   min-width: max-content;
-  pointer-events: ${!onClick ? "none" : "auto"};
+  pointer-events: ${onClick ? "all" : "non"};
   cursor: ${!onClick ? "default" : props.$disabled ? "not-allowed" : "pointer"};
 `;
 
