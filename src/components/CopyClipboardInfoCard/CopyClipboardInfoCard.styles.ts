@@ -1,0 +1,45 @@
+import { css } from "styled-components";
+
+import type { CopyClipboardInfoCardStyleProps } from "./CopyClipboardInfoCard.types";
+
+export const copyClipboardInfoCardContainerStyles = ({
+  $isEmpty,
+}: CopyClipboardInfoCardStyleProps) => css`
+  min-height: var(--s-10);
+  padding: var(--s-2) var(--s-3);
+  background: var(--gray-50);
+  border-radius: var(--s-1);
+  border: 1px solid var(--primary-medium-00);
+  position: relative;
+  transition: border-color 300ms ease-out 0s;
+
+  ${!$isEmpty &&
+  css`
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--primary-medium);
+      transition-duration: 150ms;
+
+      // target copy icon
+      div[data-testid="copy-clipboard-info-card-icon-container"] {
+        transition-duration: 150ms;
+        pointer-events: all;
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  `}
+`;
+
+export const copyClipboardInfoCardIconContainerStyles = () => css`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: var(--s-3);
+  opacity: 0;
+  transition: opacity 300ms ease-out 0s;
+  pointer-events: none;
+  height: var(--s-4);
+  width: var(--s-4);
+`;

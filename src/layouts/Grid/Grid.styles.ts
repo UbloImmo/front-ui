@@ -61,7 +61,7 @@ export const buildGridLayoutStyle =
     defaultProps: GridLayoutDefaultProps
   ): StyleFunction<StyleProps<GridLayoutProps>> =>
   (props: StyleProps<GridLayoutProps>) => {
-    const { flow, gap, justify, align, columns, rows, inline } =
+    const { flow, gap, justify, align, columns, rows, inline, fill } =
       mergeDefaultProps(defaultProps, fromStyleProps(props));
     const { row, column } = gridGap(gap);
     const display = inline ? "inline-grid" : "grid";
@@ -75,5 +75,9 @@ export const buildGridLayoutStyle =
       grid-row-gap: ${row};
       align-items: ${align};
       justify-content: ${justify};
+      ${fill &&
+      css`
+        width: 100%;
+      `}
     `;
   };
