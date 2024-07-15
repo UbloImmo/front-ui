@@ -69,7 +69,6 @@ const SelectInput = <TValue extends NullishPrimitives>(
     if (inputRef.current) {
       inputRef.current.blur();
     }
-
     setIsOpen(false);
   }, [inputRef]);
 
@@ -77,7 +76,6 @@ const SelectInput = <TValue extends NullishPrimitives>(
     if (inputRef.current) {
       inputRef.current.focus();
     }
-
     setIsOpen(true);
   }, [inputRef]);
 

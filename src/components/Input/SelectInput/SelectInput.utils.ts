@@ -195,7 +195,6 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
     if (!mergedProps.searchable) {
       return allFlattenOptions;
     }
-
     if (
       isString(autoCompleteQuery) &&
       isObject(activeOption) &&
