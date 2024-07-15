@@ -72,6 +72,7 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
         aria-disabled={disabled}
         data-testid={`${testId}-container`}
         data-active={isActive}
+        tabIndex={disabled ? -1 : 0}
       >
         <SwitchHandle
           {...styleProps}
