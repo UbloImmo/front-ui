@@ -187,15 +187,14 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
   }, [allFlattenOptions, internalValue]);
 
   const filteredOptions = useMemo(() => {
-    if (!mergedProps.searchable) {
-      return allFlattenOptions;
-    }
     if (
+      !mergedProps.searchable &&
       isString(autoCompleteQuery) &&
       isObject(activeOption) &&
       autoCompleteQuery === activeOption?.label
-    )
+    ) {
       return allFlattenOptions;
+    }
 
     return allFlattenOptions.filter((option) => {
       return option.label

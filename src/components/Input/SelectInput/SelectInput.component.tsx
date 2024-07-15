@@ -114,9 +114,8 @@ const SelectInput = <TValue extends NullishPrimitives>(
   useLayoutEffect(() => {
     const onPointerDown = (e: PointerEvent) => {
       if (!e.target) return;
-      if ("id" in e.target) {
-        if (e.target.id === inputId) return;
-      }
+      if ("id" in e.target && e.target.id === inputId) return;
+
       if ("dataset" in e.target && isObject(e.target.dataset)) {
         if ("testid" in e.target.dataset) {
           if (
