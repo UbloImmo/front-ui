@@ -15,6 +15,12 @@ export type CopyClipboardInfoCardProps = Omit<InfoBoxProps, "label"> & {
    * @remarks If missing, clicking on the label will not act as a link
    */
   href?: Nullable<string>;
+  /**
+   * The label to be displayed in the tooltip when hovering the copy icon
+   *
+   * @default "Copy to clipboard"
+   */
+  copyTooltipLabel?: string;
 };
 
 export type CopyClipboardInfoCardDefaultProps =

@@ -1,10 +1,10 @@
-import { css } from "styled-components";
+import { css, type RuleSet } from "styled-components";
 
 import type { CopyClipboardInfoCardStyleProps } from "./CopyClipboardInfoCard.types";
 
 export const copyClipboardInfoCardContainerStyles = ({
   $isEmpty,
-}: CopyClipboardInfoCardStyleProps) => css`
+}: CopyClipboardInfoCardStyleProps): RuleSet => css`
   min-height: var(--s-10);
   padding: var(--s-2) var(--s-3);
   background: var(--gray-50);
@@ -15,8 +15,6 @@ export const copyClipboardInfoCardContainerStyles = ({
 
   ${!$isEmpty &&
   css`
-    cursor: pointer;
-
     &:hover {
       border-color: var(--primary-medium);
       transition-duration: 150ms;
@@ -32,7 +30,7 @@ export const copyClipboardInfoCardContainerStyles = ({
   `}
 `;
 
-export const copyClipboardInfoCardIconContainerStyles = () => css`
+export const copyClipboardInfoCardIconContainerStyles = (): RuleSet => css`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -42,4 +40,20 @@ export const copyClipboardInfoCardIconContainerStyles = () => css`
   pointer-events: none;
   height: var(--s-4);
   width: var(--s-4);
+
+  &:hover svg[data-testid="icon"] {
+    fill: var(--primary-dark);
+  }
+`;
+
+export const copyClipboardInfoCardLinkStyles = (): RuleSet => css`
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+  font-size: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  max-width: 100%;
+  width: max-content;
+  cursor: pointer;
 `;
