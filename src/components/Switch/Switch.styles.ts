@@ -4,18 +4,26 @@ import { SwitchStyleProps } from "./Switch.types";
 
 import { cssVarUsage } from "@utils";
 
+const sharedSwitchStyles = css`
+  --padding: 0.1875rem;
+  --translateX: calc(var(--s-5) - var(--padding));
+`;
+
 export const SwitchContainerStyles = (): RuleSet => {
   return css`
+    ${sharedSwitchStyles}
     cursor: pointer;
     width: var(--s-10);
+    max-width: var(--s-10);
+    min-width: var(--s-10);
     height: 1.375rem;
     border-radius: var(--s-5);
-    padding: 0.15rem 0.2rem;
+    padding: var(--padding);
     border: none;
     background-color: var(--gray-300);
-    transition: background-color 0.4s ease;
+    transition: background-color 300ms ease;
 
-    &[aria-checked="true"] {
+    &[aria-checked] {
       background-color: var(--primary-base);
     }
 
@@ -36,7 +44,7 @@ const switchActiveCSSAnim = keyframes`
   }
   100% {
     scale: 1;
-    translate:1.1rem 0;
+    translate: var(--translateX) 0;
   }
 `;
 
@@ -61,13 +69,13 @@ export const SwitchHandleStyles = ({
     background: ${$disabled ? cssVarUsage("gray-200") : "white"};
     cursor: inherit;
 
-    &[aria-checked="true"] {
+    &[aria-checked] {
       animation: ${switchActiveCSSAnim} 300ms ease-out forwards;
     }
 
     &[aria-checked="false"] {
       animation: ${switchInactiveCSSAnim} 300ms ease-out forwards;
-      translate: 1.1rem 0;
+      translate: var(--translateX) 0;
     }
   `;
 };
