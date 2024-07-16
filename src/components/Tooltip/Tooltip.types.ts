@@ -1,9 +1,18 @@
 import type { IconName } from "../Icon/Icon.types";
 import type { Direction, StyleProps } from "@types";
-import type { GenericFn, NonNullish, Nullable } from "@ubloimmo/front-util";
+import type {
+  Enum,
+  GenericFn,
+  NonNullish,
+  Nullable,
+} from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 export type TooltipContentFn = GenericFn<[], ReactNode>;
+
+const cursors = ["default", "pointer", "not-allowed", "help"] as const;
+
+export type ToolitipCursor = Enum<typeof cursors>;
 
 export type TooltipProps = {
   /**
@@ -35,12 +44,22 @@ export type TooltipProps = {
    *
    */
   intersectionRoot?: Nullable<HTMLElement | string>;
+  /**
+   * The cursor of the tooltip
+   *
+   * @default "help"
+   */
+  cursor?: ToolitipCursor;
 };
 
 export type DefaultTooltipProps = Required<TooltipProps>;
 
 export type TooltipStyleProps = StyleProps<
   Pick<DefaultTooltipProps, "direction">
+>;
+
+export type TooltipWrapperStyleProps = StyleProps<
+  Pick<DefaultTooltipProps, "cursor">
 >;
 
 export type ToolipIntersection = Pick<DOMRectReadOnly, Direction>;
