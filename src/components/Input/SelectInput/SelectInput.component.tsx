@@ -176,7 +176,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
       {isOpen && (
         <SelectOptionsContainer
           role="listbox"
-          data-testid="input-select-options"
+          data-testid={`${testId}-options`}
         >
           {displayOptions.map((optionOrGroup, index) =>
             isSelectOptionGroup(optionOrGroup) ? null : (
@@ -195,7 +195,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
             {...inputStyles}
             value={query}
             onChange={onQueryChange}
-            data-testid={"input-select-query"}
+            data-testid={`${testId}-query`}
             placeholder={placeholder}
             disabled={disabled}
             onFocus={openOptionsOnFocus}
@@ -203,6 +203,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
             id={inputId}
             ref={forwardRef}
             autoComplete="none"
+            aria-expanded={isOpen}
           />
         ) : (
           <StyledSelectInput
@@ -210,6 +211,8 @@ const SelectInput = <TValue extends NullishPrimitives>(
             disabled={disabled}
             onClick={toggleOptionList}
             id={inputId}
+            data-testid={`${testId}-button`}
+            aria-expanded={isOpen}
           >
             {activeOption ? (
               <Text weight="medium" color={valueTextColor} ellipsis>
@@ -219,7 +222,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
               <Text
                 weight="medium"
                 color="gray-400"
-                testId="input-select-placeholder"
+                testId={`${testId}-placeholder`}
                 overrideTestId
                 ellipsis
               >
@@ -230,7 +233,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
         )}
         <StyledInputControl
           {...inputStyles}
-          data-testid={"input-select-control"}
+          data-testid={`${testId}-control`}
           onClick={toggleOptionList}
         >
           <Icon name="CaretDownFill" />
