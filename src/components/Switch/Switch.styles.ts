@@ -65,6 +65,8 @@ export const SwitchHandleStyles = ({
   return css`
     width: var(--s-4);
     height: var(--s-4);
+    min-width: var(--s-4);
+    min-height: var(--s-4);
     border-radius: var(--s-4);
     background: ${$disabled ? cssVarUsage("gray-200") : "white"};
     cursor: inherit;
