@@ -56,7 +56,14 @@ const SelectInputOption = <TValue extends NullishPrimitives>(
       aria-disabled={props.disabled}
       {...styleProps}
     >
-      <Text {...textProps}>{props.label}</Text>
+      <Text
+        {...textProps}
+        testId="input-select-option-label"
+        overrideTestId
+        ellipsis
+      >
+        {props.label}
+      </Text>
       {props.active && <Icon name="Check" color={contentColor} size="s-4" />}
     </SelectOptionItem>
   );

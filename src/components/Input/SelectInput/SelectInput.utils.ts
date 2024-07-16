@@ -63,7 +63,7 @@ export const useSelectOptions = <TValue extends NullishPrimitives>(
   const [options, setOptions] = useState(initialOptions);
 
   /**
-   * Loads select opionts from query into `data` and `initialData` states
+   * Loads select options from query into `data` and `initialData` states
    * white updating `isLoading` state
    */
   const loadOptions = useCallback(async () => {
@@ -180,6 +180,11 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
     return flattenOptions(options);
   }, [options]);
 
+  const isQuerying = useMemo(
+    () => isString(autoCompleteQuery) && isNonEmptyString(autoCompleteQuery),
+    [autoCompleteQuery]
+  );
+
   const activeOption = useMemo(() => {
     return (
       allFlattenOptions.find(({ value }) => value === internalValue) ?? null
@@ -187,8 +192,11 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
   }, [allFlattenOptions, internalValue]);
 
   const filteredOptions = useMemo(() => {
+    if (!mergedProps.searchable) {
+      return allFlattenOptions;
+    }
+
     if (
-      !mergedProps.searchable &&
       isString(autoCompleteQuery) &&
       isObject(activeOption) &&
       autoCompleteQuery === activeOption?.label
@@ -208,11 +216,6 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
     mergedProps.searchable,
   ]);
 
-  const isQuerying = useMemo(
-    () => isString(autoCompleteQuery) && isNonEmptyString(autoCompleteQuery),
-    [autoCompleteQuery]
-  );
-
   const displayOptions = useMemo(() => {
     const rootOptions = isQuerying ? filteredOptions : allFlattenOptions;
 
@@ -226,6 +229,17 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
       activeOption.label !== autoCompleteQuery
     ) {
       setAutoCompleteQuery(activeOption.label);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeOption]);
+
+  useEffect(() => {
+    if (!mergedProps.onChange) return;
+
+    if (activeOption) {
+      mergedProps.onChange(activeOption.value);
+    } else {
+      mergedProps.onChange(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeOption]);

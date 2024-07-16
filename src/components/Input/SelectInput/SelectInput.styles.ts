@@ -1,68 +1,66 @@
-import styled, { css, RuleSet } from "styled-components";
+import { css, RuleSet } from "styled-components";
 
-import { commonInputContainerStyles, commonInputStyles } from "../Input.styles";
-import { CommonInputStyleProps } from "../Input.types";
+export const SelectInputStyles = (): RuleSet => {
+  return css`
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
 
-import { breakpointsPx } from "@/sizes";
+    &:disabled {
+      cursor: not-allowed;
+    }
+  `;
+};
 
-export const SelectInputContainer = styled.div<CommonInputStyleProps>`
-  ${commonInputContainerStyles}
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-
-export const StyledSelectInput = styled.button<CommonInputStyleProps>`
-  ${commonInputStyles}
-  cursor: pointer;
-  text-align: left;
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-`;
-
-export const SelectOptionsContainer = styled.div`
-  position: absolute;
-  top: var(--s-7);
-  width: 100%;
-  left: 0;
-  z-index: -1;
-  border-radius: 0 0 var(--s-1) var(--s-1);
-  height: 7rem;
-  background-color: white;
-  overflow-y: scroll;
-  box-shadow: var(--shadow-card-elevation-low);
-
-  @media only screen and (max-width: ${breakpointsPx.XS}) {
-    top: var(--s-9);
-  }
-`;
+export const SelectOptionContainerStyles = (): RuleSet => {
+  return css`
+    position: relative;
+    top: calc(var(--s-1) * -1);
+    padding-top: var(--s-1);
+    width: 100%;
+    border-radius: 0 0 var(--s-1) var(--s-1);
+    min-height: var(--s-8);
+    max-height: calc(var(--s-8) * 7 + var(--s-1));
+    height: fit-content;
+    background-color: white;
+    overflow-y: scroll;
+    box-shadow: var(--shadow-card-elevation-low);
+  `;
+};
 
 export const buildSelectOptionItemStyles = (): RuleSet => {
   return css`
     padding: var(--s-2);
+    height: var(--s-8);
+    min-height: var(--s-8);
+    max-height: var(--s-8);
     transition: color 150ms ease-in-out, background-color 300ms ease-in-out;
     border-top: 1px solid var(--primary-light);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    cursor: pointer;
 
     &[aria-disabled] {
       cursor: not-allowed;
-      position: relative;
 
-      &::after {
+      &::before {
         content: "";
         position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        inset: 0;
-        width: 100%;
-        height: var(--s-8);
         background-color: var(--gray-50);
+        inset: 0 1px;
       }
+
+      &:last-child::before {
+        bottom: 1px;
+      }
+    }
+
+    span[data-testid="input-select-option-label"],
+    svg[data-testid="icon"] {
+      position: relative;
     }
 
     &:not([aria-disabled]):hover {
@@ -70,6 +68,13 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
         color: var(--primary-base);
       }
       background-color: var(--primary-light);
+    }
+
+    &:last-child {
+      &::before,
+      & {
+        border-radius: 0 0 var(--s-1) var(--s-1);
+      }
     }
   `;
 };

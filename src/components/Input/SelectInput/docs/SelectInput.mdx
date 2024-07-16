@@ -15,10 +15,14 @@ import * as SelectInputStories from "../SelectInput.stories.tsx";
 
 ### Disabling options
 
-To prevent user from selecting a specific Option, you can set it to disabled.
+By default, all options in `SelectInput` are selectable. To restrict a user from selecting a particular option, you can add a `disabled` property to it.
 
-### Searching among the options
+<Canvas of={SelectInputStories.DisabledOptions} />
 
-To allow users to type the search option, you can set the property
+### Searchable
+
+To enable searching and filtering the options in `SelectInput`, you can set the searchable property to true. This allows users to type and search for specific options.
+
+<Canvas of={SelectInputStories.Searchable} />
 
 </Content>
