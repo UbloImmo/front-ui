@@ -29,9 +29,7 @@ import type { SelectInputProps, SelectOption } from "./SelectInput.types";
 import type { TestIdProps } from "@types";
 
 /**
- * SelectInput component
- *
- * TODO description
+ * An input that displays a list of options, and allows the user to select one.
  *
  * @version 0.0.1
  *
@@ -66,6 +64,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
     if (inputRef.current) {
       inputRef.current.blur();
     }
+
     setIsOpen(false);
   }, [inputRef]);
 
@@ -73,14 +72,15 @@ const SelectInput = <TValue extends NullishPrimitives>(
     if (inputRef.current) {
       inputRef.current.focus();
     }
+
     setIsOpen(true);
   }, [inputRef]);
 
   const toggleOptionList = useCallback(() => {
-    if (isOpen) {
-      closeOptions();
-    } else {
+    if (!isOpen) {
       openOptions();
+    } else {
+      closeOptions();
     }
   }, [closeOptions, openOptions, isOpen]);
 
@@ -126,7 +126,9 @@ const SelectInput = <TValue extends NullishPrimitives>(
             // input lorsque searchable
             e.target.dataset.testid === "input-select-query" ||
             // option
-            e.target.dataset.testid === "input-select-option"
+            e.target.dataset.testid === "input-select-option" ||
+            // control
+            e.target.dataset.testid === "input-select-control"
           )
             return;
         }
@@ -163,6 +165,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
           id={inputId}
           ref={forwardRef}
           autoComplete="none"
+          onClick={toggleOptionList}
         />
       ) : (
         <StyledSelectInput
@@ -180,7 +183,11 @@ const SelectInput = <TValue extends NullishPrimitives>(
           )}
         </StyledSelectInput>
       )}
-      <StyledInputControl {...inputStyles} onClick={toggleOptionList}>
+      <StyledInputControl
+        {...inputStyles}
+        data-testid={"input-select-control"}
+        onClick={toggleOptionList}
+      >
         <Icon name="CaretDownFill" />
       </StyledInputControl>
 
