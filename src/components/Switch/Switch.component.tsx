@@ -63,9 +63,7 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
     <FlexLayout gap="s-2" testId={testId} align="center" overrideTestId>
       <SwitchContainer
         onClick={propagateOnChange}
-        {...styleProps}
         disabled={disabled}
-        $active={isActive}
         role="checkbox"
         type="button"
         aria-checked={isActive}
@@ -94,7 +92,7 @@ Switch.defaultProps = defaultSwitchProps;
 
 export { Switch };
 
-const SwitchContainer = styled.button<SwitchStyleProps>`
+const SwitchContainer = styled.button`
   ${SwitchContainerStyles}
 `;
 
