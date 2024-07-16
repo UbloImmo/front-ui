@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas, Markdown, Text, Heading } from "@docs/blocks"
-import { Content } from "@docs/containers"
+import { ComponentInfo, Canvas, Markdown, Text, Heading } from "@docs/blocks";
+import { Content } from "@docs/containers";
 import * as TextStories from "../Text.stories.tsx";
 import { GridLayout } from "../../../layouts";
 import { texts } from "@ubloimmo/front-tokens";
@@ -17,7 +17,8 @@ import { cssRemToCssPx } from "@utils";
 ### Font size
 
 You can use one of the 3 preset sizes according to your needs.
-<br/>
+
+<br />
 If no size is provided, defaults to `m`.
 
 <Canvas of={TextStories.Sizes} />
@@ -25,27 +26,39 @@ If no size is provided, defaults to `m`.
 <GridLayout columns={3} gap={2}>
 
 <div>
-<Heading size="h4" weight="bold">M ({cssRemToCssPx(texts.desktop.m.regular.css.style.fontSize, 2)})</Heading>
-<Text>Our default font size.</Text>
-<br/>
-<Text size="s" color="gray-700">Used in body text, buttons, inputs and mostly everywhere
-we need to clearly convey primary information to our users.</Text>
+  <Heading size="h4" weight="bold">
+    M ({cssRemToCssPx(texts.desktop.m.regular.css.style.fontSize, 2)})
+  </Heading>
+  <Text>Our default font size.</Text>
+  <br />
+  <Text size="s" color="gray-700">
+    Used in body text, buttons, inputs and mostly everywhere we need to clearly
+    convey primary information to our users.
+  </Text>
 </div>
 
 <div>
-<Heading size="h4" weight="bold">S ({cssRemToCssPx(texts.desktop.s.regular.css.style.fontSize, 2)})</Heading>
-<Text>Our smaller font size.</Text>
-<br/>
-<Text size="s" color="gray-700">Used in captions, labels and for displaying secondary information.
-This is what you are reading right now.</Text>
+  <Heading size="h4" weight="bold">
+    S ({cssRemToCssPx(texts.desktop.s.regular.css.style.fontSize, 2)})
+  </Heading>
+  <Text>Our smaller font size.</Text>
+  <br />
+  <Text size="s" color="gray-700">
+    Used in captions, labels and for displaying secondary information. This is
+    what you are reading right now.
+  </Text>
 </div>
 
 <div>
-<Heading size="h4" weight="bold">XS ({cssRemToCssPx(texts.desktop.xs.regular.css.style.fontSize, 2)})</Heading>
-<Text>Our smallest font size.</Text>
-<br/>
-<Text size="s" color="gray-700">Used for conveying contextual tertiary information,
-such as in assistive texts and error messages under text inputs.</Text>
+  <Heading size="h4" weight="bold">
+    XS ({cssRemToCssPx(texts.desktop.xs.regular.css.style.fontSize, 2)})
+  </Heading>
+  <Text>Our smallest font size.</Text>
+  <br />
+  <Text size="s" color="gray-700">
+    Used for conveying contextual tertiary information, such as in assistive
+    texts and error messages under text inputs.
+  </Text>
 </div>
 
 </GridLayout>
@@ -53,16 +66,26 @@ such as in assistive texts and error messages under text inputs.</Text>
 ### Font weight
 
 Control your text's weight with the `weight` property. Defaults to `regular`.
-<br/>
+
+<br />
 <Canvas of={TextStories.Weights} />
 
 ### Italics
 
 If you need to render italic text (for some obscure reason), set this component's `italic` property to `true`.
-<br/>
+
+<br />
 It defaults to `false`, obviously.
 
 <Canvas of={TextStories.Italic} />
+
+### Uppercase
+
+If, like for italic text, you need to render your text in all capitalized letters, for some reason, you can set the optional `uppercase` property to `true`.
+
+Like the `italic` property, please don't overuse it.
+
+<Canvas of={TextStories.Uppercase} />
 
 ### Decorations
 
@@ -79,7 +102,8 @@ Defaults to `false`.
 ### Colors
 
 Colorize a text block's color by passing it any valid color variable.
-<br/>
+
+<br />
 Defaults to `gray-900`.
 
 <Canvas of={TextStories.Colors} />
@@ -87,4 +111,3 @@ Defaults to `gray-900`.
 > See our [Color Palette](?path=/docs/foundations-color-palette--docs)'s documentation for an exhaustive list of usable values.
 
 </Content>
-
