@@ -49,8 +49,20 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
     justify-content: space-between;
 
     &[aria-disabled] {
-      background-color: var(--gray-50);
       cursor: not-allowed;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        inset: 0;
+        width: 100%;
+        height: var(--s-8);
+        background-color: var(--gray-50);
+      }
     }
 
     &:not([aria-disabled]):hover {
