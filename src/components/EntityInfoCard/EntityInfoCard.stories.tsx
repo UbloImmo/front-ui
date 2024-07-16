@@ -4,7 +4,11 @@ import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { InfoBoxProps, CopyClipboardInfoCardProps } from "@components";
 
-import type { EntityInfoCardProps } from "./EntityInfoCard.types";
+import type {
+  EntityAction,
+  EntityInfoCardProps,
+  EntityStatusRow,
+} from "./EntityInfoCard.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource =
@@ -59,6 +63,30 @@ const infoBoxes: InfoBoxProps[] = [
   },
 ];
 
+const statusRows: EntityStatusRow[] = [
+  {
+    label: "Assurance :",
+    badge: {
+      label: "Valide",
+      color: "success",
+    },
+  },
+  {
+    label: "Contrat :",
+    badge: {
+      label: "En attente",
+      color: "pending",
+    },
+  },
+];
+
+const actions: EntityAction[] = [
+  {
+    label: "Créer une facture",
+    icon: "File",
+  },
+];
+
 const moralProfileEntityCardProps: EntityInfoCardProps = {
   name: "Action Logement",
   state: {
@@ -66,7 +94,7 @@ const moralProfileEntityCardProps: EntityInfoCardProps = {
     icon: "Bank",
     color: "primary",
   },
-  action: {
+  actionIcon: {
     title: "Supprimer",
     icon: "Trash3",
     color: "error",
@@ -81,20 +109,36 @@ const personalProfileEntityCardProps: EntityInfoCardProps = {
     icon: "EmojiSmile",
     color: "primary",
   },
-  action: {
+  actionIcon: {
     title: "Supprimer",
     icon: "Trash3",
     color: "error",
   },
   infoCards: [...infoCards.slice(0, 3)],
   infoBoxes,
+  statusRows,
+};
+
+const rentalFolderEntityCardProps: EntityInfoCardProps = {
+  name: "Rental Folder",
+  state: {
+    label: "Active depuis le [jj/mm/yyyy]",
+    icon: "Folder",
+    color: "success",
+  },
+  actionIcon: {
+    title: "Supprimer",
+    icon: "Trash3",
+    color: "error",
+  },
+  statusRows,
+  actions,
 };
 
 const meta = {
   component: EntityInfoCard,
   title: "Components/EntityInfoCard/Stories",
   args: {
-    // TODO
     name: "[Name]",
     infoCards: [
       {
@@ -123,4 +167,8 @@ export const MoralProfile: Story = {
 
 export const PersonalProfile: Story = {
   args: personalProfileEntityCardProps,
+};
+
+export const RentalFolder: Story = {
+  args: rentalFolderEntityCardProps,
 };

@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 import {
+  entityCardActionsContainerStyles,
   entityCardContainerStyles,
   entityCardContentStyles,
   entityCardHeaderStyles,
   entityCardHeadingStyles,
+  entityCardStatusRowContainerStyles,
 } from "./EntityInfoCard.styles";
 
 import {
@@ -22,6 +24,9 @@ import {
   InfoBox,
   CopyClipboardInfoCard,
   ActionIcon,
+  Text,
+  Badge,
+  Action,
 } from "@components";
 
 import type {
@@ -34,11 +39,13 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
   name: "[Name]",
   infoCards: [],
   infoBoxes: [],
+  statusRows: [],
+  actions: [],
   state: {
     label: "[State]",
     icon: "Square",
   },
-  action: null,
+  actionIcon: null,
 };
 
 /**
@@ -80,9 +87,9 @@ const EntityInfoCard = (
           testId={`${testId}-state-indicator`}
           overrideTestId
         />
-        {mergedProps.action && (
+        {mergedProps.actionIcon && (
           <ActionIcon
-            {...props.action}
+            {...props.actionIcon}
             size="default"
             testId={`${testId}-action`}
             overrideTestId
@@ -123,7 +130,7 @@ const EntityInfoCard = (
                   key={boxTestId}
                   testId={boxTestId}
                   columnEnd={columnEnd}
-                  fill
+                  fill="force"
                 >
                   <InfoBox {...infoBox} testId={boxTestId} overrideTestId />
                 </GridItem>
@@ -131,7 +138,49 @@ const EntityInfoCard = (
             })}
           </GridLayout>
         )}
+        {!!mergedProps.statusRows.length && (
+          <FlexColumnLayout gap={0} fill>
+            {mergedProps.statusRows.map((statusRow, index) => {
+              const rowTestId = `${testId}-status-row-${index}`;
+              return (
+                <EntityCardStatusRowContainer
+                  key={rowTestId}
+                  testId={rowTestId}
+                  overrideTestId
+                  fill
+                  align="center"
+                  justify="space-between"
+                >
+                  <Text size="m" color="gray-800" weight="medium">
+                    {statusRow.label}
+                  </Text>
+                  <Badge {...statusRow.badge} />
+                </EntityCardStatusRowContainer>
+              );
+            })}
+          </FlexColumnLayout>
+        )}
       </EntityCardContent>
+      {!!mergedProps.actions.length && (
+        <EntityCardActionsContainer
+          testId={`${testId}-actions`}
+          overrideTestId
+          fill
+          gap="s-1"
+        >
+          {mergedProps.actions.map((action, index) => {
+            const actionTestId = `${testId}-action-${index}`;
+            return (
+              <Action
+                key={actionTestId}
+                testId={actionTestId}
+                overrideTestId
+                {...action}
+              />
+            );
+          })}
+        </EntityCardActionsContainer>
+      )}
     </EntityCardContainer>
   );
 };
@@ -153,4 +202,12 @@ const EntityCardContent = styled(FlexColumnLayout)`
 
 const EntityCardHeading = styled(Heading)`
   ${entityCardHeadingStyles}
+`;
+
+const EntityCardStatusRowContainer = styled(FlexRowLayout)`
+  ${entityCardStatusRowContainerStyles}
+`;
+
+const EntityCardActionsContainer = styled(FlexColumnLayout)`
+  ${entityCardActionsContainerStyles}
 `;

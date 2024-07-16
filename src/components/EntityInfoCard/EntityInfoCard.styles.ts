@@ -15,13 +15,34 @@ export const entityCardHeaderStyles = (): RuleSet => css`
 export const entityCardContentStyles = (): RuleSet => css`
   padding: var(--s-4);
   background: white;
-  border-bottom-left-radius: var(--s-2);
-  border-bottom-right-radius: var(--s-2);
   border-top: 1px solid var(--primary-light);
+
+  &:last-child {
+    border-bottom-left-radius: var(--s-2);
+    border-bottom-right-radius: var(--s-2);
+  }
 `;
 
 export const entityCardHeadingStyles = (): RuleSet => css`
   width: 100%;
   flex: 1;
   padding-bottom: var(--s-3);
+`;
+
+export const entityCardStatusRowContainerStyles = (): RuleSet => css`
+  width: 100%;
+  padding: var(--s-3) 0;
+  flex: 1;
+  background: white;
+  &:not(:last-child) {
+    box-shadow: var(--border-bottom);
+  }
+`;
+
+export const entityCardActionsContainerStyles = (): RuleSet => css`
+  background: var(--gray-50);
+  padding: var(--s-1);
+  border-top: 1px solid var(--primary-light);
+  border-bottom-left-radius: var(--s-2);
+  border-bottom-right-radius: var(--s-2);
 `;

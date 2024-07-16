@@ -4,11 +4,13 @@ import type {
   InfoBoxProps,
   ActionIconProps,
   BadgeProps,
+  ActionProps,
 } from "@components";
 
 import type { Nullable } from "@ubloimmo/front-util";
 
-export type EntityAction = Omit<ActionIconProps, "size">;
+export type EntityActionIcon = Omit<ActionIconProps, "size">;
+export type EntityAction = Omit<ActionProps, "size">;
 
 export type EntityStatusRow = {
   label: string;
@@ -32,11 +34,11 @@ export type EntityInfoCardProps = {
    * An action made available to the user to interact with the whole entity.
    * Usually is deletion.
    *
-   * @remarks Rendered as an `Action`
+   * @remarks Rendered as an `ActionIcon`
    *
    * @default null
    */
-  action?: Nullable<EntityAction>;
+  actionIcon?: Nullable<EntityActionIcon>;
   /**
    * A list of Info Cards
    *
@@ -54,7 +56,22 @@ export type EntityInfoCardProps = {
    * @default []
    */
   infoBoxes?: InfoBoxProps[];
-  // statusRows?: EntityStatusRow[];
+  /**
+   * A list of Status Rows
+   *
+   * @remarks renderes as a list of rows containing a `Text`s and a `Badge`.
+   *
+   * @default []
+   */
+  statusRows?: EntityStatusRow[];
+  /**
+   * A list of actions to be made available to the user
+   *
+   * @remarks rendered as an `Action`
+   *
+   * @default []
+   */
+  actions?: EntityAction[];
 };
 
 export type EntityInfoCardDefaultProps = Required<EntityInfoCardProps>;
