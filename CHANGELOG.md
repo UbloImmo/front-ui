@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.1` CopyClipboardInfoCard
+  - Displays an info and / or a link in an easily readable card
+  - Allows easy copying to clipboard
+
+- `v0.0.1` EntityInfoCard
+  - Polymorphic component that displays various relevant data about an entity
+  - Renders several levels of data and info in a easily digestible manner
+
 ### Changed
 
 - `v0.0.2` Switch component
