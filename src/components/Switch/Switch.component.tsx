@@ -82,8 +82,8 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
         />
       </SwitchContainer>
 
-      <Text weight="bold" color={textColor} uppercase>
-        {isActive ? "oui" : "non"}
+      <Text weight="bold" color={textColor}>
+        {isActive ? "OUI" : "NON"}
       </Text>
     </FlexLayout>
   );
