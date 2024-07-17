@@ -16,6 +16,22 @@ export type SwitchProps = {
   disabled?: boolean;
 
   /**
+   * Whether an helper text should be displayed
+   * @default false
+   */
+  withHelper?: boolean;
+
+  /**
+   * The helper text to be displayed on active state
+   */
+  activeHelperText?: Nullable<string>;
+
+  /**
+   * The helper text to be displayed on inactive state
+   */
+  inactiveHelperText?: Nullable<string>;
+
+  /**
    * The Switch's callback.
    *
    * @type {Nullable<VoidFn<[boolean]>>}
