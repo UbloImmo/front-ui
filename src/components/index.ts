@@ -27,3 +27,4 @@ export * from "./Divider";
 export * from "./Form";
 export * from "./Switch";
 export * from "./CopyClipboardInfoCard";
+export * from "./EntityInfoCard";

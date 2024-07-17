@@ -10,7 +10,6 @@ import {
 import { copyToClipboard } from "./CopyClipboardInfoCard.utils";
 
 import { FlexRowLayout } from "@layouts";
-import { PaletteColor, TextProps, type TestIdProps } from "@types";
 import { useLogger, useTestId, useMergedProps, isEmptyString } from "@utils";
 
 import { Icon, InfoBox, Text, Tooltip, type IconProps } from "@components";
@@ -20,9 +19,9 @@ import type {
   CopyClipboardInfoCardDefaultProps,
   CopyClipboardInfoCardStyleProps,
 } from "./CopyClipboardInfoCard.types";
+import type { PaletteColor, TextProps, TestIdProps } from "@types";
 
 const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
-  // TODO
   ...InfoBox.defaultProps,
   copyData: null,
   href: null,
@@ -30,8 +29,6 @@ const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
 };
 
 /**
- * CopyClipboardInfoCard component
- *
  * A single, clickable card that displays information and allows the user to copy it to the clipboard.
  *
  * @version 0.0.1
@@ -42,11 +39,9 @@ const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
 const CopyClipboardInfoCard = (
   props: CopyClipboardInfoCardProps & TestIdProps
 ): JSX.Element => {
-  const { log } = useLogger("CopyClipboardInfoCard");
+  const logger = useLogger("CopyClipboardInfoCard");
   const mergedProps = useMergedProps(defaultCopyClipboardInfoCardProps, props);
   const testId = useTestId("copy-clipboard-info-card", props);
-
-  log(mergedProps);
 
   const isEmpty = useMemo(
     () => isNullish(mergedProps.info) || isEmptyString(mergedProps.info),
@@ -89,8 +84,8 @@ const CopyClipboardInfoCard = (
     if (isEmpty || !copyData) {
       return;
     }
-    copyToClipboard(copyData);
-  }, [mergedProps.copyData, mergedProps.info, isEmpty]);
+    copyToClipboard(copyData, logger);
+  }, [mergedProps.copyData, mergedProps.info, isEmpty, logger]);
 
   return (
     <CopyClipboardInfoCardContainer
@@ -108,10 +103,15 @@ const CopyClipboardInfoCard = (
         overrideTestId
         size="m"
         align="center"
+        ellipsis
         {...textProps}
       >
         {mergedProps.href && !isEmpty ? (
-          <CopyClipboardInfoCardLink href={mergedProps.href} target="_blank">
+          <CopyClipboardInfoCardLink
+            href={mergedProps.href}
+            target="_blank"
+            data-testid={`${testId}-link`}
+          >
             {info}
           </CopyClipboardInfoCardLink>
         ) : (

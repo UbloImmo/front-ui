@@ -21,7 +21,6 @@ const defaultAvatarProps: AvatarDefaultProps = {
   size: "m",
   firstName: "",
   lastName: "",
-  name: "",
   avatarUrl: null,
 };
 

@@ -1,6 +1,7 @@
 
 import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Icon, Input } from "@components"
 import { Content } from "@docs/containers";
 import * as CopyClipboardInfoCardStories from "../CopyClipboardInfoCard.stories.tsx";
 
@@ -12,7 +13,51 @@ import * as CopyClipboardInfoCardStories from "../CopyClipboardInfoCard.stories.
 
 ## Usage
 
-TODO
+You will rarely need to use this component by itself but may often come across it when rendered by other components - such as [EntityInfoCard](?path=/components-entityinfocard--usage).
+It displays basic information and allows users to **easily copy it**.
+
+### Content customization
+
+#### Main information
+
+The `info` property is directly displayed in the `CopyClipboardInfoCard` component as text.
+
+<Canvas of={CopyClipboardInfoCardStories.Info} />
+
+#### Icon
+
+The `icon` property allows you to customize the icon used to represent the type of information displayed.
+The icon is rendered by [Icon](?path=/components-icon--usage) component.
+
+<Canvas of={CopyClipboardInfoCardStories.Icon} />
+
+#### Href
+
+Sometimes the displayed information is a link (think of an email address, a phone number...).
+By setting the `href` property, the info will be underlined and clickable.
+
+> Clicking on the info will open the provided link in a new tab.
+
+<Canvas of={CopyClipboardInfoCardStories.Href} />
+
+### Behavior
+
+#### Copy data
+
+By clicking on the <Icon name="Files" /> Icon, the displayed information gets copied to the user's clipboard.
+
+If you need to format it before copying or simply want to override the data to be copied, provide `copyData` to this component.
+
+<Canvas of={CopyClipboardInfoCardStories.CopyData} />
+
+<Input type="text" uncontrolled placeholder="Try pasting here"/>
+
+### Empty state
+
+There are times when the information you want to display is not yet available or simply missing.
+`CopyClipboardInfoCard` will show its empty state to reflect that.
+
+<Canvas of={CopyClipboardInfoCardStories.Empty} />
 
 </Content>
 

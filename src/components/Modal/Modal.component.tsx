@@ -24,8 +24,6 @@ const defaultModalProps: ModalDefaultProps = {
 };
 
 /**
- * Modal component
- *
  * A simple modal with a title and close button. Built on top of [Dialog](/?path=/docs/components-dialog-usage--docs)
  *
  * @version 0.0.1

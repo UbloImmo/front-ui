@@ -7,6 +7,7 @@ import {
   entityCardHeaderStyles,
   entityCardHeadingStyles,
   entityCardStatusRowContainerStyles,
+  entityCardStatusRowListStyles,
 } from "./EntityInfoCard.styles";
 
 import {
@@ -36,7 +37,7 @@ import type {
 import type { TestIdProps } from "@types";
 
 const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
-  name: "[Name]",
+  name: null,
   infoCards: [],
   infoBoxes: [],
   statusRows: [],
@@ -46,12 +47,11 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
     icon: "Square",
   },
   actionIcon: null,
+  children: null,
 };
 
 /**
- * EntityInfoCard component
- *
- * TODO description
+ * Displays key information about an entity in a card.
  *
  * @version 0.0.1
  *
@@ -61,12 +61,9 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
 const EntityInfoCard = (
   props: EntityInfoCardProps & TestIdProps
 ): JSX.Element => {
-  const { log, warn } = useLogger("EntityInfoCard");
+  const { warn } = useLogger("EntityInfoCard");
   const mergedProps = useMergedProps(defaultEntityInfoCardProps, props);
   const testId = useTestId("entity-info-card", props);
-  // TODO
-
-  log(mergedProps);
 
   if (!props.name) {
     warn(
@@ -97,14 +94,17 @@ const EntityInfoCard = (
         )}
       </EntityCardHeader>
       <EntityCardContent fill gap="s-2">
-        <EntityCardHeading
-          size="h3"
-          weight="bold"
-          color="primary-dark"
-          align="center"
-        >
-          {mergedProps.name}
-        </EntityCardHeading>
+        {mergedProps.children}
+        {mergedProps.name && (
+          <EntityCardHeading
+            size="h3"
+            weight="bold"
+            color="primary-dark"
+            align="center"
+          >
+            {mergedProps.name}
+          </EntityCardHeading>
+        )}
         {mergedProps.infoCards.map((infoCard, index) => {
           const cardTestId = `${testId}-info-card-${index}`;
           return (
@@ -139,7 +139,7 @@ const EntityInfoCard = (
           </GridLayout>
         )}
         {!!mergedProps.statusRows.length && (
-          <FlexColumnLayout gap={0} fill>
+          <EntityCardStatusRowList gap={0} fill>
             {mergedProps.statusRows.map((statusRow, index) => {
               const rowTestId = `${testId}-status-row-${index}`;
               return (
@@ -158,7 +158,7 @@ const EntityInfoCard = (
                 </EntityCardStatusRowContainer>
               );
             })}
-          </FlexColumnLayout>
+          </EntityCardStatusRowList>
         )}
       </EntityCardContent>
       {!!mergedProps.actions.length && (
@@ -206,6 +206,10 @@ const EntityCardHeading = styled(Heading)`
 
 const EntityCardStatusRowContainer = styled(FlexRowLayout)`
   ${entityCardStatusRowContainerStyles}
+`;
+
+const EntityCardStatusRowList = styled(FlexColumnLayout)`
+  ${entityCardStatusRowListStyles}
 `;
 
 const EntityCardActionsContainer = styled(FlexColumnLayout)`

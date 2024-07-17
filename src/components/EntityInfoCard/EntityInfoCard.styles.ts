@@ -26,16 +26,27 @@ export const entityCardContentStyles = (): RuleSet => css`
 export const entityCardHeadingStyles = (): RuleSet => css`
   width: 100%;
   flex: 1;
-  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-3);
 `;
 
 export const entityCardStatusRowContainerStyles = (): RuleSet => css`
   width: 100%;
-  padding: var(--s-3) 0;
   flex: 1;
   background: white;
+
+  &:not(:first-child) {
+    padding-top: var(--s-3);
+  }
+
   &:not(:last-child) {
+    padding-bottom: var(--s-3);
     box-shadow: var(--border-bottom);
+  }
+`;
+
+export const entityCardStatusRowListStyles = (): RuleSet => css`
+  &:not(:first-child) {
+    margin-top: var(--s-2);
   }
 `;
 

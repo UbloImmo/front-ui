@@ -8,6 +8,7 @@ import type {
 } from "@components";
 
 import type { Nullable } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 export type EntityActionIcon = Omit<ActionIconProps, "size">;
 export type EntityAction = Omit<ActionProps, "size">;
@@ -21,9 +22,8 @@ export type EntityInfoCardProps = {
   /**
    * The entity's name
    *
-   * @required
    */
-  name: string;
+  name?: Nullable<string>;
   /**
    * The state to display above the entity's name and info
    *
@@ -72,6 +72,14 @@ export type EntityInfoCardProps = {
    * @default []
    */
   actions?: EntityAction[];
+  /**
+   * A custom element to display relavant information about the entity
+   *
+   * @remarks Rendered as the first element after the header.
+   *
+   * @default null
+   */
+  children?: ReactNode;
 };
 
 export type EntityInfoCardDefaultProps = Required<EntityInfoCardProps>;

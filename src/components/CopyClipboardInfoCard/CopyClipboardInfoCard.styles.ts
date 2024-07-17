@@ -12,6 +12,7 @@ export const copyClipboardInfoCardContainerStyles = ({
   border: 1px solid var(--primary-medium-00);
   position: relative;
   transition: border-color 300ms ease-out 0s;
+  padding-right: var(--s-8);
 
   ${!$isEmpty &&
   css`
