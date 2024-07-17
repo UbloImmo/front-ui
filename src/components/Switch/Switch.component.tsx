@@ -19,19 +19,23 @@ const defaultSwitchProps: SwitchDefaultProps = {
   disabled: false,
   active: false,
   onChange: null,
+  withHelper: false,
+  activeHelperText: "OUI",
+  inactiveHelperText: "NON",
 };
 
 /**
  * A toggable component to use when we want the user to enable or disable an option or a feature
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {SwitchProps & TestIdProps} props - Switch component props
  * @returns {JSX.Element}
  */
 const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultSwitchProps, props);
-  const { disabled, active } = mergedProps;
+  const { disabled, active, withHelper, activeHelperText, inactiveHelperText } =
+    mergedProps;
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("switch", props);
 
@@ -60,7 +64,7 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
   }, [isActive, disabled]);
 
   return (
-    <FlexLayout gap="s-2" testId={testId} align="center" overrideTestId>
+    <FlexLayout testId={testId} gap="s-2" align="center" overrideTestId>
       <SwitchContainer
         onClick={propagateOnChange}
         disabled={disabled}
@@ -82,9 +86,11 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
         />
       </SwitchContainer>
 
-      <Text weight="bold" color={textColor}>
-        {isActive ? "OUI" : "NON"}
-      </Text>
+      {withHelper && (
+        <Text weight="bold" color={textColor}>
+          {isActive ? activeHelperText : inactiveHelperText}
+        </Text>
+      )}
     </FlexLayout>
   );
 };

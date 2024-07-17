@@ -31,4 +31,20 @@ The `Switch` component includes an optional `disabled` property, which can be se
 
 <Canvas of={SwitchStories.Disabled} />
 
+### Adding an helper text
+
+To provide additional information about the active or inactive state of the `Switch` component, you can use the optional `withHelper`, along with the `activeHelperText` and `inactiveHelperText` properties. Here is an example :
+
+```ts
+{
+  withHelper: true,
+  activeHelperText: "Your helper text when the Switch is active",
+  inactiveHelperText: "Your helper text when the Switch is inactive",
+}
+```
+
+When these properties are set, the helper text will be displayed to the right of the `Switch` component.
+
+<Canvas of={SwitchStories.WithHelper} />
+
 </Content>
