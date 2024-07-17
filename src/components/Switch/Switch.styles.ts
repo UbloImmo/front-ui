@@ -6,7 +6,7 @@ import { cssVarUsage } from "@utils";
 
 const sharedSwitchStyles = css`
   --padding: 0.1875rem;
-  --translateX: calc(var(--s-5) - var(--padding));
+  --translateX: calc(var(--s-4) + var(--padding) / 2);
 `;
 
 export const SwitchContainerStyles = (): RuleSet => {
