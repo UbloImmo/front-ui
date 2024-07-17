@@ -298,7 +298,7 @@ const ComponentWrapper = styled.article<{
 
   &:hover {
     .component-container {
-      transform: scale(${({ $scaling }) => $scaling ?? 1.2});
+      transform: scale(${({ $scaling }) => $scaling ?? 1});
       z-index: 3;
     }
 

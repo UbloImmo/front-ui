@@ -16,6 +16,7 @@ import {
 import { randomCellSize } from "./ComponentCard.utils";
 import { hasDefaultProps, isDocumentedComponent } from "../ComponentList.utils";
 
+import { Markdown } from "@docs/blocks/Markdown";
 import { parseJsDoc } from "@docs/docs.utils";
 import { FlexRowLayout } from "@layouts";
 import { capitalize, useStatic } from "@utils";
@@ -57,7 +58,6 @@ export const ComponentCard = <
     Partial<ParsedJsDoc>
   >(() => {
     if (!isDocumentedComponent(Component)) return {};
-
     const jsdoc = Component.__docgenInfo.description ?? null;
 
     if (!jsdoc) return {};
@@ -79,6 +79,10 @@ export const ComponentCard = <
         ? { label: "Badge" }
         : name === "InputAssistiveText"
         ? { assistiveText: "Input assistive text" }
+        : name === "Avatar"
+        ? { name: "Mathilde Carbonet" }
+        : name === "EntityInfoCard"
+        ? { name: "Entity" }
         : {};
 
     return {
@@ -125,7 +129,7 @@ export const ComponentCard = <
         </FlexRowLayout>
         {description && (
           <Text size="s" color="gray-600" important>
-            {description}
+            <Markdown>{description}</Markdown>
           </Text>
         )}
       </InfoContainer>

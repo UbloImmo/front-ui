@@ -80,7 +80,9 @@ const StyleReset = styled.div`
       ${codeFontFace(true)};
     }
 
-    a:not([data-testid="hypertext"]) {
+    a:not([data-testid="hypertext"]):not(
+        [data-testid="copy-clipboard-info-card-link"]
+      ).sbdocs-a {
       font-size: var(--text-m);
       color: var(--primary-base);
       font-weight: var(--text-weight-bold);
