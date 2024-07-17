@@ -106,9 +106,15 @@ export const parseJsDoc = (jsDoc: string): ParsedJsDoc => {
  * @return {string} The formatted prop type.
  */
 const formatPropType = ({
-  type,
+  tsType: type,
   defaultValue,
-}: Pick<DocgenPropDef<NullishPrimitives>, "type" | "defaultValue">): string => {
+}: Pick<
+  DocgenPropDef<NullishPrimitives>,
+  "tsType" | "defaultValue"
+>): string => {
+  if (!type) {
+    type = { name: "unknown" };
+  }
   let output = type.name;
 
   // format enums
@@ -121,7 +127,7 @@ const formatPropType = ({
   // format unions
   if (type.name === "union" && isArray(type?.elements)) {
     output = type.elements
-      .map((nestedType) => formatPropType({ type: nestedType }))
+      .map((nestedType) => formatPropType({ tsType: nestedType }))
       .join(" |\xa0");
   }
 
@@ -153,7 +159,7 @@ const formatPropType = ({
           element.name,
       }))
       // format each element
-      .map((elementType) => formatPropType({ type: elementType }));
+      .map((elementType) => formatPropType({ tsType: elementType }));
 
     return elementTypes.join(" & ");
   }
@@ -166,10 +172,10 @@ const formatPropType = ({
         break formatExclude;
       }
       if (!intersection) {
-        return formatPropType({ type: base });
+        return formatPropType({ tsType: base });
       }
-      const baseType = formatPropType({ type: base });
-      const intersectionType = formatPropType({ type: intersection });
+      const baseType = formatPropType({ tsType: base });
+      const intersectionType = formatPropType({ tsType: intersection });
       // convert base and intersection to unions
       const baseUnion = toUnion(baseType);
       const intersectionUnion = toUnion(intersectionType);
@@ -179,7 +185,7 @@ const formatPropType = ({
       );
       // re-run through union formatter
       return formatPropType({
-        type: {
+        tsType: {
           name: "union",
           elements: finalUnion.map((name) => ({
             name,
@@ -247,12 +253,16 @@ const parsePropDescription = ({
  */
 export const formatPropInfo = ({
   required: req,
-  type,
+  tsType: type,
   defaultValue,
   description,
   name: rawName,
 }: DocgenPropDef<NullishPrimitives> & { name: string }): ParsedPropInfo => {
   const parsedDescription = parsePropDescription({ description, defaultValue });
+
+  if (!type) {
+    type = { name: "unknown" };
+  }
 
   const docGenTypeName: Nullable<string> = (
     type ? /{(.+)}/.exec(type.name) ?? [null, null] : [null, null]
@@ -261,7 +271,7 @@ export const formatPropInfo = ({
 
   const finalType =
     parsedDescription.type ??
-    formatPropType({ type: docGenType ?? { name: "unknown" }, defaultValue });
+    formatPropType({ tsType: docGenType ?? { name: "unknown" }, defaultValue });
   const required = parsedDescription.required || req;
   const requiredStr = required ? "Yes" : "No";
   const name = required ? rawName : `${rawName}?`;
