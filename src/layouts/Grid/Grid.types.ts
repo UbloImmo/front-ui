@@ -69,6 +69,13 @@ export type GridLayoutProps = {
    */
   inline?: boolean;
   /**
+   * Whether the grid should fill the available space on the X axis
+   *
+   * @default false
+   * @type {boolean}
+   */
+  fill?: boolean;
+  /**
    * the child elements to be rendered in the grid
    * @default null
    * @type {ReactNode}

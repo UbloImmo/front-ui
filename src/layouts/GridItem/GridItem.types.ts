@@ -86,9 +86,11 @@ type GridItemCommonProps = {
   /**
    * Whether to fill the grid cell
    *
+   * @remarks if set to `force`, its first child will also fill the grid cell
+   *
    * @default false
    */
-  fill?: boolean;
+  fill?: boolean | "force";
 } & StyleOverrideProps;
 
 export interface GridItemProps

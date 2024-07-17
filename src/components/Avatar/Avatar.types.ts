@@ -6,14 +6,17 @@ export type AvatarSize = Extract<ExtendedComponentSize, "m" | "xl">;
 
 export type AvatarPropsFullName = {
   /**
-   * @default "m"
-   *
    * The size of the Avatar
+   *
+   * @type {AvatarSize}
+   * @default "m"
    */
   size?: AvatarSize;
 
   /**
    * The full name of the user (Name variant)
+   *
+   * @type {string}
    * @required
    * @default ""
    */
@@ -36,15 +39,18 @@ export type AvatarPropsFullName = {
 
   /**
    * The image URL to be displayed in the Avatar (Picture variant)
+   *
+   * @type {Nullable<string>}
    */
   avatarUrl?: Nullable<string>;
 };
 
 export type AvatarPropsFirstLastName = {
   /**
-   * @default "m"
-   *
    * The size of the Avatar
+   *
+   * @type {AvatarSize}
+   * @default "m"
    */
   size?: AvatarSize;
 
@@ -55,11 +61,17 @@ export type AvatarPropsFirstLastName = {
 
   /**
    * The first name of the user (Name variant)
+   *
+   * @type {string}
+   * @required
    */
   firstName: string;
 
   /**
    * The first name of the user (Name version)
+   *
+   * @type {string}
+   * @required
    */
   lastName: string;
 
@@ -70,15 +82,18 @@ export type AvatarPropsFirstLastName = {
 
   /**
    * The image URL to be displayed in the Avatar (Picture variant)
+   *
+   * @type {Nullable<string>}
    */
   avatarUrl?: Nullable<string>;
 };
 
 export type AvatarPropsCount = {
   /**
-   * @default "m"
-   *
    * The size of the Avatar
+   *
+   * @type {AvatarSize}
+   * @default "m"
    */
   size?: AvatarSize;
 
@@ -99,6 +114,9 @@ export type AvatarPropsCount = {
 
   /**
    * The number to be displayed in the Avatar (Number variant)
+   *
+   * @type {number}
+   * @required
    */
   count: number;
 

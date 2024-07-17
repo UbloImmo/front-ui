@@ -2,6 +2,7 @@ import { css, type RuleSet } from "styled-components";
 
 import { cssVarUsage } from "@utils";
 
+import type { TooltipWrapperStyleProps } from "./Tooltip.types";
 import type { Direction } from "@types";
 import type { ValueMap } from "@ubloimmo/front-util";
 
@@ -58,7 +59,7 @@ const directionStyles: ValueMap<Direction, RuleSet> = {
   `,
 };
 
-export const tooltipStyles = ($direction: Direction) => {
+export const tooltipStyles = ($direction: Direction): RuleSet => {
   return css`
     position: absolute;
     background: var(--gray-700);
@@ -106,7 +107,7 @@ const containerStyles = {
   `,
 };
 
-export const tooltipPlaceholderStyles = ($direction: Direction) => {
+export const tooltipPlaceholderStyles = ($direction: Direction): RuleSet => {
   return css`
     position: absolute;
     &,
@@ -126,12 +127,14 @@ export const tooltipPlaceholderStyles = ($direction: Direction) => {
   `;
 };
 
-export const tooltipWrapperStyles = css`
+export const tooltipWrapperStyles = ({
+  $cursor,
+}: TooltipWrapperStyleProps): RuleSet => css`
   position: relative;
   line-height: 0px;
   height: fit-content;
   width: fit-content;
-  cursor: help;
+  cursor: ${$cursor};
 
   &:hover [data-testid="tooltip"] {
     visibility: visible;

@@ -15,6 +15,7 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
   columns: 12,
   rows: "unset",
   inline: false,
+  fill: false,
   children: null,
   className: null,
 } as const;
@@ -22,7 +23,7 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
 /**
  * A grid wrapper layout with default `row` flow and 12 columns
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {GridLayoutProps} [props = defaultGridLayoutProps] - optional props
  * @return {JSX.Element} The styled grid wrapper

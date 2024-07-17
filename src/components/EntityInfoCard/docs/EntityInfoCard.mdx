@@ -1,0 +1,48 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Hypertext } from "@components";
+import { Content } from "@docs/containers";
+import * as EntityInfoCardStories from "../EntityInfoCard.stories.tsx";
+
+<Meta title="Components/EntityInfoCard/Usage" />
+
+<ComponentInfo of={EntityInfoCardStories} figmaId="802-12034"/>
+
+<Content>
+
+## Usage
+
+Need to display an entity's relevant information, state and / or trigger simple actions on it ?
+_Look no further!_
+
+### Content customization
+
+#### Examples
+
+Here are some of the ways one could use `EntityInfoCard` to provide a clutter-free view into an entity's data.
+
+<Canvas of={EntityInfoCardStories.Examples} />
+
+#### Information display
+
+EntityInfoCard can display information in various forms, through the use of several global components:
+- [InfoBox](?path=/docs/components-infobox-usage--docs)
+- [CopyClipboardInfoCard](?path=/docs/components-copyclipboardinfocard-usage--docs)
+- [Badge](?path=/docs/components-badge-usage--docs)
+
+> Combine some or all of them to create a disctinct layout for each entity.
+>
+> Each of the following examples use the same underlying data.
+
+<Canvas of={EntityInfoCardStories.InfoStyles} />
+
+#### Custom Content
+
+When all is lost and you need to display some info using custom means, pass a regular element / component into `EntityInfoCard`'s `children`.
+
+<Canvas of={EntityInfoCardStories.MainContent} />
+
+
+</Content>
+

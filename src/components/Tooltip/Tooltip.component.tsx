@@ -35,6 +35,7 @@ import type {
   TooltipContentFn,
   TooltipProps,
   TooltipStyleProps,
+  TooltipWrapperStyleProps,
 } from "./Tooltip.types";
 import type { Direction } from "@types";
 
@@ -44,6 +45,7 @@ const defaultTooltipProps: DefaultTooltipProps = {
   direction: "top",
   icon: "QuestionCircleFill",
   intersectionRoot: null,
+  cursor: "help",
 };
 
 const THRESHOLD_COUNT = 15;
@@ -51,7 +53,7 @@ const THRESHOLDS = generateThresholds(THRESHOLD_COUNT);
 /**
  * Text popup box that appears when the user hovers over an element
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {TooltipProps} props - The tooltip's props
  * @returns {JSX.Element} The rendered tooltip
@@ -165,6 +167,7 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
       aria-describedby="[data-testid='tooltip']"
       data-testid="tooltip-wrapper"
       ref={tooltipWrapperRef}
+      $cursor={mergedProps.cursor}
     >
       {tooltipContent && (
         <>
@@ -201,6 +204,6 @@ const TooltipContainer = styled.div<TooltipStyleProps>`
   ${({ $direction }) => tooltipStyles($direction)}
 `;
 
-const TooltipWrapper = styled.div`
+const TooltipWrapper = styled.div<TooltipWrapperStyleProps>`
   ${tooltipWrapperStyles}
 `;

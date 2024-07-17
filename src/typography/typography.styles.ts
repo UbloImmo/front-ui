@@ -110,6 +110,7 @@ export const sanitizeTypographyProps = (
     children: props.children ?? null,
     important: props.important ?? false,
     ellipsis: props.ellipsis ?? false,
+    align: props.align ?? "left",
     className: null,
   };
 };
@@ -135,11 +136,11 @@ export const buildTypographyStyle = (
       important: $important,
       ellipsis,
       uppercase,
+      align,
     } = sanitizeTypographyProps(defaults, fromStyleProps(props));
     const {
       letterSpacing,
       lineHeight,
-      textAlign,
       textIndent,
       textOverflow: $textOverflow,
       fontFeatureSettings,
@@ -166,12 +167,14 @@ export const buildTypographyStyle = (
       letter-spacing: ${letterSpacing} ${important};
       text-indent: ${textIndent} ${important};
       line-height: ${lineHeight} ${important};
-      text-align: ${textAlign} ${important};
+      text-align: ${align} ${important};
       text-overflow: ${textOverflow} ${important};
       font-feature-settings: ${fontFeatureSettings} ${important};
       text-decoration: ${textDecoration} ${important};
       text-transform: ${textTransform} ${important};
 
+      text-underline-offset: 0.25em;
+      text-decoration-thickness: 1px;
       ${ellipsis &&
       css`
         overflow-x: hidden ${important};
@@ -192,6 +195,7 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   important: false,
   ellipsis: false,
   uppercase: false,
+  align: "left",
   children: null,
   className: null,
 } as const;

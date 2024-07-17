@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 import path from "path";
-import { mergeConfig } from "vite";
+import { mergeConfig, optimizeDeps } from "vite";
 
 const config: StorybookConfig = {
   stories: [
@@ -55,6 +55,7 @@ const config: StorybookConfig = {
         },
       },
       resolve: {
+        extensions: [".mdx", ".mjs", ".js", ".ts", ".tsx"],
         alias,
       },
     });
@@ -74,7 +75,7 @@ const config: StorybookConfig = {
   staticDirs: [{ from: "../src/typography/fonts/Gilroy", to: "/assets/fonts" }],
 
   typescript: {
-    reactDocgen: "react-docgen-typescript"
-  }
+    reactDocgen: "react-docgen",
+  },
 };
 export default config;

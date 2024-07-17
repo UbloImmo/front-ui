@@ -24,6 +24,8 @@ export type TypographyWeight =
 export type TypographyToken =
   TypographyTokens[TypographyBreakpoint][TypographySize][TypographyWeight];
 
+export type TypographyAlignment = "left" | "center" | "right";
+
 export type TypographyProps = {
   /**
    * The color of the text contents
@@ -89,6 +91,17 @@ export type TypographyProps = {
    * @default false
    */
   uppercase?: boolean;
+  /**
+   * The alignment of the text contents.
+   *
+   * Either `left`, `center` or `right`.
+   *
+   * @remarks Maps to `text-align` CSS property.
+   *
+   * @type {TypographyAlignment}
+   * @default "left"
+   */
+  align?: TypographyAlignment;
   /**
    * Any valid react children.
    *

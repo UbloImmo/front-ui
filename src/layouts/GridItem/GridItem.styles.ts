@@ -32,4 +32,12 @@ export const gridItemStyles = ({
     width: 100%;
     height: 100%;
   `}
+
+  ${$fill === "force" &&
+  css`
+    & > :first-child {
+      width: 100%;
+      height: 100%;
+    }
+  `}
 `;
