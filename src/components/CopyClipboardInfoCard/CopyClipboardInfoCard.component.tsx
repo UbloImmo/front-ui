@@ -123,7 +123,7 @@ const CopyClipboardInfoCard = (
         <CopyClipboardInfoCardIconContainer
           data-testid="copy-clipboard-info-card-icon-container"
           onClick={copyInfo}
-          title="Copy to clipboard"
+          title={mergedProps.copyTooltipLabel}
         >
           <Icon name="Files" color="primary-base" size="s-4" />
         </CopyClipboardInfoCardIconContainer>
