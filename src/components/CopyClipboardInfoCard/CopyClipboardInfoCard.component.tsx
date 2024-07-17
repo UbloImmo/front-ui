@@ -12,7 +12,7 @@ import { copyToClipboard } from "./CopyClipboardInfoCard.utils";
 import { FlexRowLayout } from "@layouts";
 import { useLogger, useTestId, useMergedProps, isEmptyString } from "@utils";
 
-import { Icon, InfoBox, Text, Tooltip, type IconProps } from "@components";
+import { Icon, InfoBox, Text, type IconProps } from "@components";
 
 import type {
   CopyClipboardInfoCardProps,
@@ -123,14 +123,9 @@ const CopyClipboardInfoCard = (
         <CopyClipboardInfoCardIconContainer
           data-testid="copy-clipboard-info-card-icon-container"
           onClick={copyInfo}
+          title="Copy to clipboard"
         >
-          <Tooltip
-            content={mergedProps.copyTooltipLabel}
-            cursor="pointer"
-            direction="left"
-          >
-            <Icon name="Files" color="primary-base" size="s-4" />
-          </Tooltip>
+          <Icon name="Files" color="primary-base" size="s-4" />
         </CopyClipboardInfoCardIconContainer>
       )}
     </CopyClipboardInfoCardContainer>
