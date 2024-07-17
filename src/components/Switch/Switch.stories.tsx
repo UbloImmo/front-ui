@@ -20,8 +20,6 @@ const meta = {
     disabled: false,
     active: false,
     withHelper: false,
-    activeHelperText: "OUI",
-    inactiveHelperText: "NON",
     onChange: fn(),
   },
   argTypes: {

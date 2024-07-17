@@ -20,8 +20,8 @@ const defaultSwitchProps: SwitchDefaultProps = {
   active: false,
   onChange: null,
   withHelper: false,
-  activeHelperText: null,
-  inactiveHelperText: null,
+  activeHelperText: "OUI",
+  inactiveHelperText: "NON",
 };
 
 /**
