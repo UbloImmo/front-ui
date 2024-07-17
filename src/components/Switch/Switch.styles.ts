@@ -20,19 +20,15 @@ export const SwitchContainerStyles = (): RuleSet => {
     border-radius: var(--s-5);
     padding: var(--padding);
     border: none;
-    background-color: var(--gray-300);
     transition: background-color 300ms ease;
+    background-color: var(--gray-200);
 
-    &[aria-checked] {
+    &[aria-checked="true"] {
       background-color: var(--primary-base);
-    }
 
-    &[aria-checked="false"] {
-      background-color: var(--gray-300);
-    }
-
-    &:disabled {
-      background-color: var(--gray-600);
+      &:disabled {
+        background-color: var(--gray-500);
+      }
     }
   `;
 };
@@ -61,6 +57,7 @@ const switchInactiveCSSAnim = keyframes`
 
 export const SwitchHandleStyles = ({
   $disabled,
+  $active,
 }: SwitchStyleProps): RuleSet => {
   return css`
     width: var(--s-4);
@@ -68,7 +65,11 @@ export const SwitchHandleStyles = ({
     min-width: var(--s-4);
     min-height: var(--s-4);
     border-radius: var(--s-4);
-    background: ${$disabled ? cssVarUsage("gray-200") : "white"};
+    background: ${$disabled
+      ? $active
+        ? cssVarUsage("gray-200")
+        : cssVarUsage("gray-400")
+      : "white"};
     cursor: inherit;
 
     &[aria-checked] {
