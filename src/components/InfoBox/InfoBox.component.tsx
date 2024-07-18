@@ -6,10 +6,10 @@ import { Icon } from "../Icon";
 import { Text } from "../Text";
 
 import { FlexColumnLayout } from "@layouts";
-import { TextProps, type TestIdProps } from "@types";
 import { useLogger, useTestId, useMergedProps, isNonEmptyString } from "@utils";
 
 import type { InfoBoxProps, InfoBoxDefaultProps } from "./InfoBox.types";
+import type { TextProps, TestIdProps } from "@types";
 
 const defaultInfoBoxProps: InfoBoxDefaultProps = {
   icon: "Square",
