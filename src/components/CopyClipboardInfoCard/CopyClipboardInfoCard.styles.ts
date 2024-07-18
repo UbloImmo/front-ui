@@ -57,4 +57,14 @@ export const copyClipboardInfoCardLinkStyles = (): RuleSet => css`
   max-width: 100%;
   width: max-content;
   cursor: pointer;
+
+  span:has(&) {
+    transition: color 300ms ease-out 0s, text-decoration-color 300ms ease-out 0s;
+
+    &:has(a:hover) {
+      transition-duration: 150ms;
+      color: var(--primary-base);
+      text-decoration-color: var(--primary-medium);
+    }
+  }
 `;

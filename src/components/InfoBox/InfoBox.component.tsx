@@ -6,10 +6,10 @@ import { Icon } from "../Icon";
 import { Text } from "../Text";
 
 import { FlexColumnLayout } from "@layouts";
+import { TextProps, type TestIdProps } from "@types";
 import { useLogger, useTestId, useMergedProps, isNonEmptyString } from "@utils";
 
 import type { InfoBoxProps, InfoBoxDefaultProps } from "./InfoBox.types";
-import type { TestIdProps } from "@types";
 
 const defaultInfoBoxProps: InfoBoxDefaultProps = {
   icon: "Square",
@@ -20,7 +20,7 @@ const defaultInfoBoxProps: InfoBoxDefaultProps = {
 /**
  * A small card to display contextual data.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {InfoBoxProps & TestIdProps} props - InfoBox component props
  * @returns {JSX.Element}
@@ -42,6 +42,13 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
     return `Non renseignée(s)`;
   }, [info]);
 
+  const textProps = useMemo<TextProps>(() => {
+    return {
+      color: stateColor,
+      weight: info ? "medium" : "regular",
+    };
+  }, [stateColor, info]);
+
   if (!props.label) {
     warn(`Missing required label, defaulting to ${defaultInfoBoxProps.label}`);
   }
@@ -56,13 +63,7 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
       <Text size="m" weight="bold" color={stateColor}>
         {label}
       </Text>
-      <Text
-        size="m"
-        weight="medium"
-        color={stateColor}
-        testId={`${testId}-text`}
-        overrideTestId
-      >
+      <Text size="m" {...textProps} testId={`${testId}-text`} overrideTestId>
         {displayInfo}
       </Text>
     </InfoBoxContainer>
