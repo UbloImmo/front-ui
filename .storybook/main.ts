@@ -24,7 +24,9 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  core: {},
+  core: {
+    builder: "@storybook/builder-vite",
+  },
 
   docs: {},
 
