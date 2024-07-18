@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.2` CopyClipboardInfoCard
+  - Display underline in href label even through ellipsis
+  - Change href label color on hover
+
+- `v0.0.2` InfoBox
+  - Display missing info text in regular weight
+
+- Storybook stability
+  - Use `@storybook/builder-vite` in config
+
 ## 0.19.0 - 2024-07-17
 ### Added
 - `v0.0.1` CopyClipboardInfoCard

@@ -62,6 +62,7 @@
     "@storybook/addon-themes": "^8.1.10",
     "@storybook/addon-viewport": "^8.1.10",
     "@storybook/blocks": "^8.1.10",
+    "@storybook/builder-vite": "8.1.10",
     "@storybook/icons": "^1.2.9",
     "@storybook/react": "^8.1.10",
     "@storybook/react-vite": "^8.1.10",
