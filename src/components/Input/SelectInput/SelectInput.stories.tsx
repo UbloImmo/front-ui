@@ -105,6 +105,23 @@ export const GroupOptions: Story = {
           },
         ],
       },
+      {
+        label: "Group 2",
+        options: [
+          {
+            label: "Option 4",
+            value: "option-4",
+          },
+          {
+            label: "Option 5",
+            value: "option-5",
+          },
+          {
+            label: "Option 6",
+            value: "option-6",
+          },
+        ],
+      },
     ],
   },
 };

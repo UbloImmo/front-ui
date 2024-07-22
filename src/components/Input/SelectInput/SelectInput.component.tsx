@@ -2,6 +2,7 @@ import { NullishPrimitives, isObject, isString } from "@ubloimmo/front-util";
 import { useCallback, useId, useLayoutEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
+import { SelectInputGroupOption } from "./components/SelectInputGroupOption.component";
 import { SelectInputOption } from "./components/SelectInputOption.component";
 import {
   SelectInputStyles,
@@ -172,10 +173,18 @@ const SelectInput = <TValue extends NullishPrimitives>(
           role="listbox"
           data-testid={`${testId}-options`}
         >
-          <SelectInputOption value={placeholder} label={placeholder} />
+          <SelectInputOption
+            value={placeholder}
+            label={placeholder}
+            onSelect={selectOptionAndClose({ label: placeholder, value: null })}
+          />
           {displayOptions.map((optionOrGroup, index) =>
             isSelectOptionGroup(optionOrGroup) ? (
-              <p key={`${index}`}>Select option group</p>
+              <SelectInputGroupOption
+                key={`${optionOrGroup.label}-${index}`}
+                onSelect={selectOptionAndClose(optionOrGroup.options[index])}
+                {...optionOrGroup}
+              />
             ) : (
               <SelectInputOption
                 key={`${optionOrGroup.value}-${index}`}
