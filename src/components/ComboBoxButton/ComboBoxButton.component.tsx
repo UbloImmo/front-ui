@@ -47,7 +47,7 @@ const ComboBoxButton = (
 ): JSX.Element => {
   const { warn } = useLogger("ComboBoxButton");
   const mergedProps = useMergedProps(defaultComboBoxButtonProps, props);
-  const { label, multi, active } = mergedProps;
+  const { label, multi, active, showIcon } = mergedProps;
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("combo-box-button", props);
 
@@ -76,6 +76,10 @@ const ComboBoxButton = (
       : "Circle";
   }, [multi, active]);
 
+  if (multi && !showIcon) {
+    warn("Multi mode requires showIcon to be true");
+  }
+
   return (
     <ComboBoxButtonContainer
       data-testid={testId}
@@ -84,7 +88,7 @@ const ComboBoxButton = (
       type="button"
       {...styleProps}
     >
-      {props.showIcon && (
+      {showIcon && (
         <ComboBoxIconContainer $active={active ?? false}>
           <Icon name={iconName} />
           <Icon name={iconName} />

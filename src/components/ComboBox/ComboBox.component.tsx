@@ -44,7 +44,8 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue>,
     props
   );
-  const { options, multi, onChange, disabled, direction } = mergedProps;
+  const { options, multi, onChange, disabled, direction, showIcon } =
+    mergedProps;
   const testId = useTestId("combo-box", props);
 
   const getInitialSelection = useCallback<
@@ -102,6 +103,10 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     warn(`Missing required labels`);
   }
 
+  if (multi && !showIcon) {
+    warn("Multi mode requires showIcon to be true");
+  }
+
   return (
     <FlexLayout
       testId={testId}
@@ -116,11 +121,11 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
           label={option.label}
           key={option.label + index}
           active={isOptionActive(option)}
-          disabled={option.disabled || props.disabled}
+          disabled={option.disabled || disabled}
           multi={multi}
           fill={direction === "column"}
           onSelect={selectOptionOnClick(option)}
-          showIcon={props.showIcon}
+          showIcon={showIcon}
         />
       ))}
     </FlexLayout>
