@@ -2,6 +2,7 @@ import {
   Nullable,
   isArray,
   isFunction,
+  isNull,
   isObject,
   isString,
   type Nullish,
@@ -218,8 +219,31 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
   const displayOptions = useMemo(() => {
     const rootOptions = isQuerying ? filteredOptions : allFlattenOptions;
 
-    return assignActiveOption(rootOptions, internalValue);
-  }, [filteredOptions, internalValue, isQuerying, allFlattenOptions]);
+    return assignActiveOption(options, internalValue)
+      .map((optionOrGroup) => {
+        if (isSelectOption(optionOrGroup)) {
+          return rootOptions.find(
+            (rootOption) => rootOption.value === optionOrGroup.value
+          )
+            ? optionOrGroup
+            : null;
+        }
+
+        const groupOptions = optionOrGroup.options.filter((groupOption) =>
+          rootOptions.find(
+            (rootOption) => rootOption.value === groupOption.value
+          )
+        );
+
+        if (!groupOptions.length) return null;
+
+        return {
+          ...optionOrGroup,
+          options: groupOptions,
+        };
+      })
+      .filter((optionOrGroup) => !isNull(optionOrGroup));
+  }, [isQuerying, filteredOptions, allFlattenOptions, options, internalValue]);
 
   useEffect(() => {
     if (
