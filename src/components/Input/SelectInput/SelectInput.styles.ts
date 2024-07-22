@@ -43,6 +43,10 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
     position: relative;
     cursor: pointer;
 
+    span {
+      overflow: hidden;
+    }
+
     &[aria-disabled] {
       cursor: not-allowed;
 
