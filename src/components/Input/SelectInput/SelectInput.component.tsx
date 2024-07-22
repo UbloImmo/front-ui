@@ -1,8 +1,14 @@
 import { NullishPrimitives, isObject, isString } from "@ubloimmo/front-util";
-import { useCallback, useId, useLayoutEffect, useMemo, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
 import styled from "styled-components";
 
-import { SelectInputGroupOption } from "./components/SelectInputGroupOption.component";
 import { SelectInputOption } from "./components/SelectInputOption.component";
 import {
   SelectInputStyles,
@@ -180,11 +186,25 @@ const SelectInput = <TValue extends NullishPrimitives>(
           />
           {displayOptions.map((optionOrGroup, index) =>
             isSelectOptionGroup(optionOrGroup) ? (
-              <SelectInputGroupOption
-                key={`${optionOrGroup.label}-${index}`}
-                onSelect={selectOptionAndClose(optionOrGroup.options[index])}
-                {...optionOrGroup}
-              />
+              <Fragment key={`${optionOrGroup.label}-${index}`}>
+                <GroupOptionLabel
+                  color="gray-600"
+                  weight="bold"
+                  size="s"
+                  uppercase
+                  testId="input-select-option-group-label"
+                  overrideTestId
+                >
+                  {optionOrGroup.label}
+                </GroupOptionLabel>
+                {optionOrGroup.options.map((option, index) => (
+                  <SelectInputOption
+                    key={`${option.label}-${index}`}
+                    onSelect={selectOptionAndClose(option)}
+                    {...option}
+                  />
+                ))}
+              </Fragment>
             ) : (
               <SelectInputOption
                 key={`${optionOrGroup.value}-${index}`}
@@ -267,4 +287,22 @@ const SelectOptionsContainer = styled.div`
 const StyledSelectInput = styled.button<CommonInputStyleProps>`
   ${commonInputStyles}
   ${SelectInputStyles}
+`;
+
+const GroupOptionLabel = styled(Text)`
+  padding: var(--s-2);
+  height: var(--s-6);
+  min-height: var(--s-6);
+  max-height: var(--s-6);
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--primary-light);
+
+  &::before {
+    content: "";
+    background-color: var(--gray-50);
+    position: absolute;
+    inset: 0 1px;
+  }
 `;
