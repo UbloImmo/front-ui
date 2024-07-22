@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.3` ComboBox & `v0.0.2` ComboBoxButton
   - add optional `showIcon` property (set default to `true`)
   - add button shadow on enabled options
+
+## 0.19.2 - 2024-07-22
+
+### Added
+
 - New icons following `front-tokens@0.1.19` update
 
 ## 0.19.1 - 2024-07-18
