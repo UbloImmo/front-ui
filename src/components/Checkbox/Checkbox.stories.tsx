@@ -44,47 +44,42 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-const states: DetailConfigVariants<CheckboxProps> = [
+export const States = () => {
+  return (
+    <ComponentVariants
+      of={Checkbox}
+      for="active"
+      defaults={Checkbox.defaultProps}
+      variants={checkboxStatus}
+      propLabels
+    />
+  );
+};
+
+const disabledStates: DetailConfigVariants<CheckboxProps> = [
   {
-    active: false,
-    disabled: false,
-    __propVariantLabel: "Default",
-  },
-  {
-    active: false,
+    active: true,
     disabled: true,
-    __propVariantLabel: "Disabled",
-  },
-  {
-    active: "mixed",
-    disabled: false,
-    __propVariantLabel: "Mixed",
+    __propVariantLabel: "Disabled and Active",
   },
   {
     active: "mixed",
     disabled: true,
     __propVariantLabel: "Disabled and Mixed",
   },
-
   {
-    active: true,
-    disabled: false,
-    __propVariantLabel: "Active",
-  },
-  {
-    active: true,
+    active: false,
     disabled: true,
-    __propVariantLabel: "Disabled and Active",
+    __propVariantLabel: "Disabled",
   },
 ];
 
-export const States = () => {
+export const Disabled = () => {
   return (
     <ComponentVariants
       of={Checkbox}
-      columns={2}
       defaults={Checkbox.defaultProps}
-      variants={states}
+      variants={disabledStates}
       propLabels
     />
   );

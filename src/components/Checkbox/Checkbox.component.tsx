@@ -8,7 +8,7 @@ import {
 import { Icon } from "../Icon";
 
 import { StyleProps, type TestIdProps } from "@types";
-import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
+import { useTestId, useMergedProps, useStyleProps } from "@utils";
 
 import type {
   CheckboxProps,
@@ -77,9 +77,10 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
 
       <input
         type="checkbox"
-        aria-checked={active}
+        data-testid={`${testId}-input`}
+        aria-checked={isActive}
         aria-disabled={disabled}
-        checked={active === true || active === "mixed"}
+        checked={isActive === true || isActive === "mixed"}
         disabled={disabled}
       />
       <Icon name="Square" color={iconColor} />

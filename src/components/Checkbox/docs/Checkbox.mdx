@@ -11,11 +11,21 @@ import * as CheckboxStories from "../Checkbox.stories.tsx";
 
 ## Usage
 
-`Checkbox` allow users to select one or more items from a set of options.
+`Checkbox` allow users to select one or more items from a set of options, by toggling between checked, and unchecked.
 They are commonly used in forms and lists to enable users to make multiple selections efficiently.
 
-### States
+### Toggling the checkbox
+
+Toggling the checkbox will make it checked and update it's `active` property to `true`.
+In addition to the **checked/unchecked** state, `Checkbox` can have a **mixed** state, to use when toggling many checkboxes.
+While the checkboxes aren't **all** checked, it's state will be set to **mixed**.
 
 <Canvas of={CheckboxStories.States} />
+
+### Disabled state
+
+The checkbox can be disabled by setting the optional `disabled` property.
+
+<Canvas of={CheckboxStories.Disabled} />
 
 </Content>
