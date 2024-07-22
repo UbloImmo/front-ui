@@ -31,12 +31,13 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
   onSelect: null,
   disabled: false,
   fill: false,
+  showIcon: true,
 };
 
 /**
  * A single clickable option in a ComboBox
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
  * @returns {JSX.Element}
@@ -83,10 +84,12 @@ const ComboBoxButton = (
       type="button"
       {...styleProps}
     >
-      <ComboBoxIconContainer $active={active ?? false}>
-        <Icon name={iconName} />
-        <Icon name={iconName} />
-      </ComboBoxIconContainer>
+      {props.showIcon && (
+        <ComboBoxIconContainer $active={active ?? false}>
+          <Icon name={iconName} />
+          <Icon name={iconName} />
+        </ComboBoxIconContainer>
+      )}
 
       <Text weight="medium" ellipsis>
         {label}

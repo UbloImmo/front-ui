@@ -25,12 +25,13 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   multi: false,
   onChange: () => {},
   disabled: false,
+  showIcon: true,
 };
 
 /**
  * A group of ComboButtons that act as a select or radio input.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -119,6 +120,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
           multi={multi}
           fill={direction === "column"}
           onSelect={selectOptionOnClick(option)}
+          showIcon={props.showIcon}
         />
       ))}
     </FlexLayout>

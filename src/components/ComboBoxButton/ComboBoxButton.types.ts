@@ -45,6 +45,14 @@ export type ComboBoxButtonProps = {
    * @default false
    */
   fill?: boolean;
+
+  /**
+   * Whether to show the check icon when an option is selected
+   *
+   * @default true
+   * @type {boolean}
+   */
+  showIcon?: boolean;
 };
 
 export type ComboBoxButtonDefaultProps = Required<ComboBoxButtonProps>;

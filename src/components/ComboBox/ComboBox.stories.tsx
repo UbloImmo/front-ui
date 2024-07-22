@@ -1,5 +1,6 @@
 import { ComboBox } from "./ComboBox.component";
 
+import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { ComboBoxOption, ComboBoxProps } from "./ComboBox.types";
@@ -41,6 +42,9 @@ const meta = {
     direction: {
       options: ["row", "column"],
     },
+    showIcon: {
+      type: "boolean",
+    },
   },
   parameters: {
     docs: componentSource(),
@@ -51,3 +55,61 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const MultiSelect = () => {
+  return (
+    <ComponentVariants
+      for="multi"
+      of={ComboBox}
+      defaults={meta.args}
+      variants={[false, true]}
+      propLabels
+    />
+  );
+};
+
+export const Direction = () => {
+  return (
+    <ComponentVariants
+      for="direction"
+      of={ComboBox}
+      defaults={meta.args}
+      variants={["row", "column"]}
+      propLabels
+    />
+  );
+};
+
+export const DisabledOptions: Story = {
+  args: {
+    options: [
+      {
+        label: "This option is selectable",
+        value: "option-1",
+        disabled: false,
+      },
+      {
+        label: "...but not this one",
+        value: "option-2",
+        disabled: true,
+      },
+      {
+        label: "...nor this one",
+        value: "option-3",
+        disabled: true,
+      },
+    ],
+  },
+};
+
+export const ShowIcon = () => {
+  return (
+    <ComponentVariants
+      for="showIcon"
+      of={ComboBox}
+      defaults={meta.args}
+      variants={[true, false]}
+      propLabels
+    />
+  );
+};
