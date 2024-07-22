@@ -172,8 +172,11 @@ const SelectInput = <TValue extends NullishPrimitives>(
           role="listbox"
           data-testid={`${testId}-options`}
         >
+          <SelectInputOption value={placeholder} label={placeholder} />
           {displayOptions.map((optionOrGroup, index) =>
-            isSelectOptionGroup(optionOrGroup) ? null : (
+            isSelectOptionGroup(optionOrGroup) ? (
+              <p key={`${index}`}>Select option group</p>
+            ) : (
               <SelectInputOption
                 key={`${optionOrGroup.value}-${index}`}
                 onSelect={selectOptionAndClose(optionOrGroup)}
