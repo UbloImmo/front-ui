@@ -100,7 +100,7 @@
     "vite-tsconfig-paths": "^4.3.2"
   },
   "peerDependencies": {
-    "@ubloimmo/front-tokens": "^0.1.18",
+    "@ubloimmo/front-tokens": "^0.1.19",
     "@ubloimmo/front-util": "^0.0.17",
     "bootstrap-icons": "^1.11.3",
     "react": "^18.2.0",
@@ -146,7 +146,7 @@
     ]
   },
   "dependencies": {
-    "@ubloimmo/front-tokens": "^0.1.18",
+    "@ubloimmo/front-tokens": "^0.1.19",
     "@ubloimmo/front-util": "^0.0.17",
     "react-international-phone": "^4.2.9",
     "zod": "^3.23.8"
