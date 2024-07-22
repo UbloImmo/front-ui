@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.19.2 - 2024-07-22
 ### Added
-
 - New icons following `front-tokens@0.1.19` update
 
 ## 0.19.1 - 2024-07-18
@@ -134,14 +134,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.11.0 - 2024-06-19
 ### Added
 - `v0.0.2` Loading component
-
+  
   - animation type `ProgressBar`
   - `className` & `TestId` props
 - `v0.0.1` SmallLoader component
 
 ### Fixed
 - `v0.0.4` NumberInput component
-
+  
   - prevent controls from changing value when input is `disabled`
 - `v0.0.4` StateIndicator component
   - styles: set overflow to hidden to disable scrollbar inside the component in Firefox
