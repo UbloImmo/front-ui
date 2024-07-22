@@ -1,9 +1,13 @@
 import { fn } from "@storybook/test";
+import { useMemo, useState } from "react";
 
 import { Checkbox } from "./Checkbox.component";
+import { Text } from "../Text";
 
 import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
+import { FlexColumnLayout, FlexRowLayout } from "@layouts";
+import { arrayOf } from "@utils";
 
 import type { CheckboxProps, CheckboxStatus } from "./Checkbox.types";
 import type { Meta, StoryObj } from "@storybook/react";
@@ -82,5 +86,63 @@ export const Disabled = () => {
       variants={disabledStates}
       propLabels
     />
+  );
+};
+
+const baseItems: { label: string; checked: CheckboxStatus }[] = arrayOf(
+  5,
+  (index) => ({
+    label: "Item " + index,
+    checked: false,
+  })
+);
+
+export const Mixed = () => {
+  const [items, setItems] = useState(baseItems);
+
+  const checkItem = (index: number) => (active: CheckboxStatus) => {
+    const newItems = items.map((item, i) => {
+      if (index === i)
+        return {
+          ...item,
+          checked: active,
+        };
+      return item;
+    });
+
+    setItems(newItems);
+  };
+
+  const checkAll = (active: CheckboxStatus) => {
+    setItems(
+      items.map((item) => ({
+        ...item,
+        checked: active,
+      }))
+    );
+  };
+
+  const allChecked = useMemo<CheckboxStatus>(() => {
+    return items.every(({ checked }) => checked) ||
+      items.some(({ checked }) => checked)
+      ? "mixed"
+      : false;
+  }, [items]);
+
+  return (
+    <FlexColumnLayout gap="s-4">
+      <FlexRowLayout gap="s-2">
+        <Checkbox active={allChecked} onChange={checkAll} />
+        <Text weight="bold">Select all</Text>
+      </FlexRowLayout>
+      <FlexColumnLayout gap="s-2">
+        {items.map((item, index) => (
+          <FlexRowLayout key={item.label} gap="s-2">
+            <Checkbox active={item.checked} onChange={checkItem(index)} />
+            <Text>{item.label}</Text>
+          </FlexRowLayout>
+        ))}
+      </FlexColumnLayout>
+    </FlexColumnLayout>
   );
 };

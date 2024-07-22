@@ -50,3 +50,17 @@ testCheckbox({ ...Checkbox.defaultProps, onChange })(
     onChange.mockReset();
   }
 );
+
+testCheckbox({ ...Checkbox.defaultProps, onChange, active: "mixed" })(
+  "should trigger onChange and pass the active mixed state as argument",
+  async ({ queryByTestId }, { click }) => {
+    const checkboxInput = (await queryByTestId(
+      "checkbox-input"
+    )) as HTMLInputElement;
+    expect(checkboxInput).not.toBeNull();
+    await click(checkboxInput);
+    expect(onChange).toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledWith(false);
+    onChange.mockReset();
+  }
+);

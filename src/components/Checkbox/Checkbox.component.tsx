@@ -10,11 +10,7 @@ import { Icon } from "../Icon";
 import { StyleProps, type TestIdProps } from "@types";
 import { useTestId, useMergedProps, useStyleProps } from "@utils";
 
-import type {
-  CheckboxProps,
-  CheckboxDefaultProps,
-  CheckboxStatus,
-} from "./Checkbox.types";
+import type { CheckboxProps, CheckboxDefaultProps } from "./Checkbox.types";
 
 const defaultCheckboxProps: CheckboxDefaultProps = {
   active: false,
@@ -32,17 +28,18 @@ const defaultCheckboxProps: CheckboxDefaultProps = {
  */
 const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultCheckboxProps, props);
-  const { active, disabled } = mergedProps;
+  const { disabled, onChange } = mergedProps;
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("checkbox", props);
 
-  const [isActive, setIsActive] = useState(props.active ?? false);
+  const [isActive, setIsActive] = useState(mergedProps.active);
 
   useEffect(() => {
-    if (active !== undefined && active !== props.active) {
-      setIsActive(props.active as CheckboxStatus);
+    if (mergedProps.active !== isActive) {
+      setIsActive(mergedProps.active);
     }
-  }, [active, props.active]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mergedProps.active]);
 
   const iconColor = useMemo(() => {
     return disabled
@@ -57,17 +54,23 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
   const propagateOnChange = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
-      if (props.disabled) return;
+      if (disabled) return;
+
       const newActive = !isActive;
 
-      if (props.onChange) props.onChange(newActive);
+      if (onChange) onChange(newActive);
       setIsActive(newActive);
     },
-    [isActive, props]
+    [isActive, disabled, onChange]
   );
 
   return (
-    <CheckboxContainer data-testid={testId} onClick={propagateOnChange}>
+    <CheckboxContainer
+      data-testid={testId}
+      onClick={propagateOnChange}
+      aria-checked={isActive}
+      aria-disabled={disabled}
+    >
       {isActive && (
         <ActiveIconContainer {...styleProps} $active={isActive}>
           <Icon name="CheckSquareFill" color={iconColor} />
@@ -80,7 +83,7 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
         data-testid={`${testId}-input`}
         aria-checked={isActive}
         aria-disabled={disabled}
-        checked={isActive === true || isActive === "mixed"}
+        checked={!!isActive}
         disabled={disabled}
       />
       <Icon name="Square" color={iconColor} />
