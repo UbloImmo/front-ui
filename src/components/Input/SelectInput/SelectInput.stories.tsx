@@ -82,6 +82,21 @@ export const DisabledOptions: Story = {
 export const Searchable: Story = {
   args: {
     searchable: true,
+    placeholder: "Type to search for an option",
+    options: [
+      {
+        label: "First option",
+        value: "option-1",
+      },
+      {
+        label: "Second option",
+        value: "option-2",
+      },
+      {
+        label: "Third option",
+        value: "option-3",
+      },
+    ],
   },
 };
 
