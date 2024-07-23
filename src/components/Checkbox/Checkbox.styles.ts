@@ -22,6 +22,10 @@ export const buildCheckboxContainerStyles = (): RuleSet => {
     input[type="checkbox"] {
       appearance: none;
     }
+
+    &[aria-disabled="true"] {
+      cursor: not-allowed;
+    }
   `;
 };
 
