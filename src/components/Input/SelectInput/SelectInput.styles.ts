@@ -29,6 +29,17 @@ export const SelectOptionContainerStyles = (): RuleSet => {
   `;
 };
 
+const beforeBackgroundColorStyle = (): RuleSet => {
+  return css`
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: var(--gray-50);
+      inset: 0 1px;
+    }
+  `;
+};
+
 export const buildSelectOptionItemStyles = (): RuleSet => {
   return css`
     padding: var(--s-2);
@@ -50,12 +61,7 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
     &[aria-disabled] {
       cursor: not-allowed;
 
-      &::before {
-        content: "";
-        position: absolute;
-        background-color: var(--gray-50);
-        inset: 0 1px;
-      }
+      ${beforeBackgroundColorStyle}
 
       &:last-child::before {
         bottom: 1px;
@@ -80,5 +86,24 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
         border-radius: 0 0 var(--s-1) var(--s-1);
       }
     }
+  `;
+};
+
+export const groupOptionLabelStyles = (): RuleSet => {
+  return css`
+    padding: var(--s-1) var(--s-2);
+    height: var(--s-6);
+    min-height: var(--s-6);
+    max-height: var(--s-6);
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid var(--primary-light);
+
+    span[data-testid="text"] {
+      position: relative;
+    }
+
+    ${beforeBackgroundColorStyle}
   `;
 };
