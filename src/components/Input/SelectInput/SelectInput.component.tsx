@@ -11,6 +11,7 @@ import styled from "styled-components";
 
 import { SelectInputOption } from "./components/SelectInputOption.component";
 import {
+  groupOptionLabelStyles,
   SelectInputStyles,
   SelectOptionContainerStyles,
 } from "./SelectInput.styles";
@@ -22,7 +23,6 @@ import {
 } from "./SelectInput.utils";
 import { StyledInput, StyledInputControl } from "../Input.common";
 import { commonInputContainerStyles, commonInputStyles } from "../Input.styles";
-import { CommonInputStyleProps } from "../Input.types";
 import {
   useInputOnChange,
   useInputRef,
@@ -36,6 +36,7 @@ import { FlexColumnLayout } from "@layouts";
 import { useHtmlAttribute, useTestId } from "@utils";
 
 import type { SelectInputProps, SelectOption } from "./SelectInput.types";
+import type { CommonInputStyleProps } from "../Input.types";
 import type { TestIdProps } from "@types";
 
 /**
@@ -178,24 +179,15 @@ const SelectInput = <TValue extends NullishPrimitives>(
         <SelectOptionsContainer
           role="listbox"
           data-testid={`${testId}-options`}
+          aria-haspopup="listbox"
         >
-          <SelectInputOption
-            value={placeholder}
-            label={placeholder}
-            onSelect={selectOptionAndClose({ label: placeholder, value: null })}
-          />
           {displayOptions.map((optionOrGroup, index) =>
             isSelectOptionGroup(optionOrGroup) ? (
               <Fragment key={`${optionOrGroup.label}-${index}`}>
-                <GroupOptionLabel
-                  color="gray-600"
-                  weight="bold"
-                  size="s"
-                  uppercase
-                  testId="input-select-option-group-label"
-                  overrideTestId
-                >
-                  {optionOrGroup.label}
+                <GroupOptionLabel tabIndex={-1}>
+                  <Text color="gray-600" weight="bold" size="s" uppercase>
+                    {optionOrGroup.label}
+                  </Text>
                 </GroupOptionLabel>
                 {optionOrGroup.options.map((option, index) => (
                   <SelectInputOption
@@ -239,6 +231,8 @@ const SelectInput = <TValue extends NullishPrimitives>(
             id={inputId}
             data-testid={`${testId}-button`}
             aria-expanded={isOpen}
+            type="button"
+            tabIndex={0}
           >
             {activeOption ? (
               <Text weight="medium" color={valueTextColor} ellipsis>
@@ -249,6 +243,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
                 weight="medium"
                 color="gray-400"
                 testId={`${testId}-placeholder`}
+                aria-placeholder={placeholder}
                 overrideTestId
                 ellipsis
               >
@@ -289,20 +284,6 @@ const StyledSelectInput = styled.button<CommonInputStyleProps>`
   ${SelectInputStyles}
 `;
 
-const GroupOptionLabel = styled(Text)`
-  padding: var(--s-2);
-  height: var(--s-6);
-  min-height: var(--s-6);
-  max-height: var(--s-6);
-  position: relative;
-  display: flex;
-  align-items: center;
-  border-top: 1px solid var(--primary-light);
-
-  &::before {
-    content: "";
-    background-color: var(--gray-50);
-    position: absolute;
-    inset: 0 1px;
-  }
+const GroupOptionLabel = styled.div`
+  ${groupOptionLabelStyles}
 `;

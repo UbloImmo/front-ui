@@ -10,13 +10,13 @@ import { buildSelectOptionItemStyles } from "../SelectInput.styles";
 
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
-import { PaletteColor, TextProps } from "@types";
 import { useStyleProps } from "@utils";
 
 import type {
   SelectOptionItemStyleProps,
   SelectInputOptionProps,
 } from "../SelectInput.types";
+import type { PaletteColor, TextProps } from "@types";
 
 const SelectInputOption = <TValue extends NullishPrimitives>(
   props: SelectInputOptionProps<TValue>
@@ -55,6 +55,7 @@ const SelectInputOption = <TValue extends NullishPrimitives>(
       data-testid="input-select-option"
       aria-disabled={props.disabled}
       {...styleProps}
+      tabIndex={props.disabled ? -1 : 0}
     >
       <Text
         {...textProps}
