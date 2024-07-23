@@ -28,3 +28,4 @@ export * from "./Form";
 export * from "./Switch";
 export * from "./CopyClipboardInfoCard";
 export * from "./EntityInfoCard";
+export * from "./Checkbox";
