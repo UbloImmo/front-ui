@@ -5,6 +5,7 @@ import type {
   ActionIconProps,
   BadgeProps,
   ActionProps,
+  OnCopiedFn,
 } from "@components";
 
 import type { Nullable } from "@ubloimmo/front-util";
@@ -80,6 +81,14 @@ export type EntityInfoCardProps = {
    * @default null
    */
   children?: ReactNode;
+  /**
+   * callback called when the user copies information
+   * displayed in the `CopyClipboardInfoCard`
+   *
+   * @type {Nullable<OnCopiedFn>}
+   * @default null
+   */
+  onInfoCopied?: Nullable<OnCopiedFn>;
 };
 
 export type EntityInfoCardDefaultProps = Required<EntityInfoCardProps>;

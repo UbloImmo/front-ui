@@ -1,3 +1,5 @@
+import { fn } from "@storybook/test";
+
 import { EntityInfoCard } from "./EntityInfoCard.component";
 
 import { ComponentVariants } from "@docs/blocks";
@@ -131,6 +133,7 @@ const moralProfileEntityCardProps: EntityInfoCardProps = {
   },
   actionIcon,
   infoCards,
+  onInfoCopied: fn(),
 };
 
 const personalProfileEntityCardProps: EntityInfoCardProps = {
@@ -143,6 +146,7 @@ const personalProfileEntityCardProps: EntityInfoCardProps = {
   actionIcon,
   infoCards: [...infoCards].slice(0, 3),
   infoBoxes,
+  onInfoCopied: fn(),
 };
 
 const rentalFolderEntityCardProps: EntityInfoCardProps = {
@@ -154,6 +158,7 @@ const rentalFolderEntityCardProps: EntityInfoCardProps = {
   actionIcon,
   statusRows,
   actions,
+  onInfoCopied: fn(),
 };
 
 const agencEntityCardProps: EntityInfoCardProps = {
@@ -164,6 +169,7 @@ const agencEntityCardProps: EntityInfoCardProps = {
   },
   actionIcon,
   infoCards: [...infoCards].slice(0, 4),
+  onInfoCopied: fn(),
 };
 
 const meta = {

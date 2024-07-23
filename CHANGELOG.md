@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.2` EntityInfoCard
+  - `onInfoCopied` callback property that gets called
+    if any nested CopyClipboardInfoCard's info gets copied to the users's clipboard
+- `v0.0.3` CopyClipboardInfoCard
+  - `onCopied` callback property
+
+### Fixed
+
+- `v0.0.3` CopyClipboardInfoCard
+  - Information span overflow & ellipsis
+
 ## 0.19.2 - 2024-07-22
 ### Added
 - New icons following `front-tokens@0.1.19` update

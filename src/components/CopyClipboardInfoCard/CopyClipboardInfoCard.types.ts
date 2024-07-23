@@ -1,6 +1,12 @@
 import type { InfoBoxProps } from "../InfoBox";
 import type { StyleProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+
+/**
+ * Callback that gets called after the content is copied to the user's clipboard
+ * @param {string} content - The content that was copied
+ */
+export type OnCopiedFn = VoidFn<[string]>;
 
 export type CopyClipboardInfoCardProps = Omit<InfoBoxProps, "label"> & {
   /**
@@ -29,6 +35,17 @@ export type CopyClipboardInfoCardProps = Omit<InfoBoxProps, "label"> & {
    * @default "Copy to clipboard"
    */
   copyTooltipLabel?: string;
+  /**
+   * Optional callback that gets called after the content is copied
+   * to the user's clipboard
+   *
+   * @param {string} content - The content that was copied
+   *
+   *
+   * @type {Nullable<VoidFn<[string]>}
+   * @default null
+   */
+  onCopied?: Nullable<OnCopiedFn>;
 };
 
 export type CopyClipboardInfoCardDefaultProps =

@@ -2,6 +2,12 @@ import { css, type RuleSet } from "styled-components";
 
 import type { CopyClipboardInfoCardStyleProps } from "./CopyClipboardInfoCard.types";
 
+export const copyClipboardInfoCardLabelStyles = (): RuleSet => css`
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+`;
+
 export const copyClipboardInfoCardContainerStyles = ({
   $isEmpty,
 }: CopyClipboardInfoCardStyleProps): RuleSet => css`
