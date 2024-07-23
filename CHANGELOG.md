@@ -20,12 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - New icons following `front-tokens@0.1.19` update
 
-## 0.19.2 - 2024-07-22
-
-### Added
-
-- New icons following `front-tokens@0.1.19` update
-
 ## 0.19.1 - 2024-07-18
 
 ### Fixed
