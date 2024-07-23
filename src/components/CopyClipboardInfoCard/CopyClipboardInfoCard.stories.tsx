@@ -1,3 +1,5 @@
+import { fn } from "@storybook/test";
+
 import { CopyClipboardInfoCard } from "./CopyClipboardInfoCard.component";
 import { allIconNames } from "../Icon/Icon.types";
 
@@ -17,6 +19,7 @@ const meta = {
   title: "Components/CopyClipboardInfoCard/Stories",
   args: {
     info: "[Info]",
+    onCopied: fn(),
   },
 
   argTypes: {

@@ -48,12 +48,13 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
   },
   actionIcon: null,
   children: null,
+  onInfoCopied: null,
 };
 
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
@@ -107,12 +108,21 @@ const EntityInfoCard = (
         )}
         {mergedProps.infoCards.map((infoCard, index) => {
           const cardTestId = `${testId}-info-card-${index}`;
+          const propagateOnCopied = (content: string) => {
+            if (mergedProps.onInfoCopied) {
+              mergedProps.onInfoCopied(content);
+            }
+            if (infoCard.onCopied) {
+              infoCard.onCopied(content);
+            }
+          };
           return (
             <CopyClipboardInfoCard
               key={cardTestId}
               testId={cardTestId}
               overrideTestId
               {...infoCard}
+              onCopied={propagateOnCopied}
             />
           );
         })}

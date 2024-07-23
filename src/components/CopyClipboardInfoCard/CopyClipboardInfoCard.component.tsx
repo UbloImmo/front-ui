@@ -5,6 +5,7 @@ import styled from "styled-components";
 import {
   copyClipboardInfoCardContainerStyles,
   copyClipboardInfoCardIconContainerStyles,
+  copyClipboardInfoCardLabelStyles,
   copyClipboardInfoCardLinkStyles,
 } from "./CopyClipboardInfoCard.styles";
 import { copyToClipboard } from "./CopyClipboardInfoCard.utils";
@@ -26,12 +27,13 @@ const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
   copyData: null,
   href: null,
   copyTooltipLabel: "Copy to clipboard",
+  onCopied: null,
 };
 
 /**
  * A single, clickable card that displays information and allows the user to copy it to the clipboard.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {CopyClipboardInfoCardProps & TestIdProps} props - CopyClipboardInfoCard component props
  * @returns {JSX.Element}
@@ -84,8 +86,14 @@ const CopyClipboardInfoCard = (
     if (isEmpty || !copyData) {
       return;
     }
-    copyToClipboard(copyData, logger);
-  }, [mergedProps.copyData, mergedProps.info, isEmpty, logger]);
+    copyToClipboard(copyData, mergedProps.onCopied, logger);
+  }, [
+    mergedProps.copyData,
+    mergedProps.info,
+    mergedProps.onCopied,
+    isEmpty,
+    logger,
+  ]);
 
   return (
     <CopyClipboardInfoCardContainer
@@ -136,8 +144,7 @@ CopyClipboardInfoCard.defaultProps = defaultCopyClipboardInfoCardProps;
 export { CopyClipboardInfoCard };
 
 const CopyClipboardInfoCardLabel = styled(Text)`
-  flex: 1;
-  overflow: unset;
+  ${copyClipboardInfoCardLabelStyles}
 `;
 
 const CopyClipboardInfoCardLink = styled.a`
