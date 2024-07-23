@@ -33,7 +33,7 @@ const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
 /**
  * A single, clickable card that displays information and allows the user to copy it to the clipboard.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {CopyClipboardInfoCardProps & TestIdProps} props - CopyClipboardInfoCard component props
  * @returns {JSX.Element}
