@@ -74,8 +74,17 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = Record<
    * Whether to disable the selection of all options
    *
    * @default false
+   * @type {boolean}
    */
   disabled?: boolean;
+
+  /**
+   * Whether to show the check icon when an option is selected
+   *
+   * @default true
+   * @type {boolean}
+   */
+  showIcon?: boolean;
 };
 
 export type ComboBoxDefaultProps<TOptionValue extends NullishPrimitives> =

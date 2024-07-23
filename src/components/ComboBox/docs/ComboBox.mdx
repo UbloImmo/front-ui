@@ -1,4 +1,3 @@
-
 import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
@@ -12,7 +11,30 @@ import * as ComboBoxStories from "../ComboBox.stories.tsx";
 
 ## Usage
 
-TODO
+`ComboBox` is a component that will be useful for enabling the user to select from a predefined set of options.
+
+### Selecting only one or many options
+
+By default, `ComboBox` allows the user to select a single option. To enable multiple selections, set the multi property to true.
+
+<Canvas of={ComboBoxStories.MultiSelect} />
+
+### Displaying the options
+
+The options in `Combobox` are displayed in a row by default, wrapping into multiple rows on smaller devices. If you prefer a vertical display, you can set the direction property to `column`.
+
+<Canvas of={ComboBoxStories.Direction} />
+
+### Disabling the options
+
+To prevent the user from selecting an option, you can set the optional `disabled` property to `true` for the desired option.
+
+<Canvas of={ComboBoxStories.DisabledOptions} />
+
+### Showing the check icon
+
+By default, the check icon displaying the selected option is visible. However, if you need a more compact layout of the `ComboBox` options, you can hide this icon by setting the `showIcon` property to false.
+
+<Canvas of={ComboBoxStories.ShowIcon} />
 
 </Content>
-
