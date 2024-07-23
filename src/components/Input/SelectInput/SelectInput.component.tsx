@@ -147,7 +147,11 @@ const SelectInput = <TValue extends NullishPrimitives>(
             // input lorsque searchable
             e.target.dataset.testid === "input-select-query" ||
             // option
-            e.target.dataset.testid === "input-select-option"
+            e.target.dataset.testid === "input-select-option" ||
+            // control
+            e.target.dataset.testid === "input-select-control" ||
+            // option label
+            e.target.dataset.testid === "input-select-option-label"
           )
             return;
         }
@@ -222,6 +226,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
             ref={forwardRef}
             autoComplete="none"
             aria-expanded={isOpen}
+            tabIndex={0}
           />
         ) : (
           <StyledSelectInput
