@@ -19,7 +19,7 @@ const defaultCheckboxProps: CheckboxDefaultProps = {
 };
 
 /**
- * A simple checkbox that let users select one or more options from a set of choices.
+ * A simple checkbox that let users select multiple options from a set of items, or mark one individual item as selected
  *
  * @version 0.0.1
  *
