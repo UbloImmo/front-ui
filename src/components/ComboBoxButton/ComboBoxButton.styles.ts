@@ -38,6 +38,10 @@ export const ComboBoxButtonStyles = ({
       overflow: hidden;
     }
 
+    &:not(:disabled) {
+      box-shadow: var(--shadow-button);
+    }
+
     &:disabled {
       background-color: var(--gray-50);
       border-color: var(--gray-300);

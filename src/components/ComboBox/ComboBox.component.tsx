@@ -25,12 +25,13 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   multi: false,
   onChange: () => {},
   disabled: false,
+  showIcon: true,
 };
 
 /**
  * A group of ComboButtons that act as a select or radio input.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -43,7 +44,8 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue>,
     props
   );
-  const { options, multi, onChange, disabled, direction } = mergedProps;
+  const { options, multi, onChange, disabled, direction, showIcon } =
+    mergedProps;
   const testId = useTestId("combo-box", props);
 
   const getInitialSelection = useCallback<
@@ -101,6 +103,10 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     warn(`Missing required labels`);
   }
 
+  if (multi && !showIcon) {
+    warn("Multi mode requires showIcon to be true");
+  }
+
   return (
     <FlexLayout
       testId={testId}
@@ -115,10 +121,11 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
           label={option.label}
           key={option.label + index}
           active={isOptionActive(option)}
-          disabled={option.disabled || props.disabled}
+          disabled={option.disabled || disabled}
           multi={multi}
           fill={direction === "column"}
           onSelect={selectOptionOnClick(option)}
+          showIcon={showIcon}
         />
       ))}
     </FlexLayout>
