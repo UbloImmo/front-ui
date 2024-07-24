@@ -145,7 +145,7 @@ const assignActiveOption = <TValue extends NullishPrimitives>(
   });
 };
 
-const flattenOptions = <TValue extends NullishPrimitives>(
+export const flattedSelectOptions = <TValue extends NullishPrimitives>(
   options: SelectOptionOrGroup<TValue>[]
 ): SelectOption<TValue>[] => {
   return options.flatMap((option) => {
@@ -178,7 +178,7 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
   );
 
   const allFlattenOptions = useMemo(() => {
-    return flattenOptions(options);
+    return flattedSelectOptions(options);
   }, [options]);
 
   const isQuerying = useMemo(
