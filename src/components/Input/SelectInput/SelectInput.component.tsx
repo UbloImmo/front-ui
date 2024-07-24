@@ -12,8 +12,10 @@ import styled from "styled-components";
 import { SelectInputOption } from "./components/SelectInputOption.component";
 import {
   groupOptionLabelStyles,
-  SelectInputStyles,
-  SelectOptionContainerStyles,
+  selectInputContainerStyles,
+  selectInputStyles,
+  selectInputWrapperStyles,
+  selectOptionContainerStyles,
 } from "./SelectInput.styles";
 import {
   defaultSelectInputProps,
@@ -22,7 +24,7 @@ import {
   useSelectValue,
 } from "./SelectInput.utils";
 import { StyledInput, StyledInputControl } from "../Input.common";
-import { commonInputContainerStyles, commonInputStyles } from "../Input.styles";
+import { commonInputStyles } from "../Input.styles";
 import {
   useInputOnChange,
   useInputRef,
@@ -178,12 +180,13 @@ const SelectInput = <TValue extends NullishPrimitives>(
   }, [disabled]);
 
   return (
-    <FlexColumnLayout reverse>
+    <SelectInputWrapper reverse>
       {isOpen && (
         <SelectOptionsContainer
           role="listbox"
           data-testid={`${testId}-options`}
           aria-haspopup="listbox"
+          aria-expanded={isOpen}
         >
           {displayOptions.map((optionOrGroup, index) =>
             isSelectOptionGroup(optionOrGroup) ? (
@@ -211,7 +214,11 @@ const SelectInput = <TValue extends NullishPrimitives>(
           )}
         </SelectOptionsContainer>
       )}
-      <SelectInputContainer {...inputStyles} data-testid={testId}>
+      <SelectInputContainer
+        {...inputStyles}
+        data-testid={testId}
+        aria-expanded={isOpen}
+      >
         {mergedProps.searchable ? (
           <StyledInput
             {...inputStyles}
@@ -265,7 +272,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
           <Icon name="CaretDownFill" />
         </StyledInputControl>
       </SelectInputContainer>
-    </FlexColumnLayout>
+    </SelectInputWrapper>
   );
 };
 
@@ -273,20 +280,21 @@ SelectInput.defaultProps = defaultSelectInputProps;
 
 export { SelectInput };
 
+const SelectInputWrapper = styled(FlexColumnLayout)`
+  ${selectInputWrapperStyles}
+`;
+
 const SelectInputContainer = styled.div<CommonInputStyleProps>`
-  ${commonInputContainerStyles}
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+  ${selectInputContainerStyles}
 `;
 
 const SelectOptionsContainer = styled.div`
-  ${SelectOptionContainerStyles}
+  ${selectOptionContainerStyles}
 `;
 
 const StyledSelectInput = styled.button<CommonInputStyleProps>`
   ${commonInputStyles}
-  ${SelectInputStyles}
+  ${selectInputStyles}
 `;
 
 const GroupOptionLabel = styled.div`

@@ -1,6 +1,12 @@
 import { css, RuleSet } from "styled-components";
 
-export const SelectInputStyles = (): RuleSet => {
+import { commonInputContainerStyles } from "../Input.styles";
+
+import { breakpointsPx } from "@/sizes";
+
+import type { CommonInputStyleProps } from "../Input.types";
+
+export const selectInputStyles = (): RuleSet => {
   return css`
     cursor: pointer;
     text-align: left;
@@ -13,10 +19,33 @@ export const SelectInputStyles = (): RuleSet => {
   `;
 };
 
-export const SelectOptionContainerStyles = (): RuleSet => {
+export const selectInputWrapperStyles = (): RuleSet => css`
+  position: relative;
+  --input-height: var(--s-8);
+
+  @media screen and (max-width: ${breakpointsPx.XS}) {
+    --input-height: var(--s-10);
+  }
+`;
+
+export const selectInputContainerStyles = (
+  props: CommonInputStyleProps
+): RuleSet => css`
+  ${commonInputContainerStyles(props)}
+
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &[aria-expanded] {
+    z-index: 1;
+  }
+`;
+
+export const selectOptionContainerStyles = (): RuleSet => {
   return css`
-    position: relative;
-    top: calc(var(--s-1) * -1);
+    position: absolute;
+    top: calc(var(--input-height) + var(--s-1) * -1);
     padding-top: var(--s-1);
     width: 100%;
     border-radius: 0 0 var(--s-1) var(--s-1);
@@ -25,7 +54,11 @@ export const SelectOptionContainerStyles = (): RuleSet => {
     height: fit-content;
     background-color: white;
     overflow-y: scroll;
-    box-shadow: var(--shadow-card-elevation-low);
+    box-shadow: var(--shadow-card-elevation-medium);
+
+    &[aria-expanded] {
+      z-index: 1;
+    }
   `;
 };
 
