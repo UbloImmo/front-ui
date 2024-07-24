@@ -74,7 +74,7 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
     }
 
     &:not([aria-disabled]):hover {
-      span[data-testid="text"] {
+      span[data-testid="input-select-option-label"] {
         color: var(--primary-base);
       }
       background-color: var(--primary-light);
