@@ -1,3 +1,4 @@
+import { isNull } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled from "styled-components";
 
@@ -42,7 +43,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
   const testId = useTestId("callout", props);
 
   const iconName = useMemo(() => {
-    if (!icon) return;
+    if (isNull(icon)) return null;
     return icon === "auto" ? computeCalloutIconNames[color] : icon;
   }, [icon, color]);
 
@@ -58,14 +59,22 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
 
   return (
     <CalloutContainer {...styleProps} data-testid={testId}>
-      {icon && <Icon color={calloutColors.icon} name={iconName} size="s-4" />}
+      {icon && (
+        <Icon
+          color={calloutColors.icon}
+          name={iconName ?? undefined}
+          size="s-4"
+        />
+      )}
       <div>
         {title && (
-          <Heading size="h4" color={calloutColors.text}>
+          <Heading size="h4" weight="medium" color={calloutColors.text}>
             {props.title}
           </Heading>
         )}
-        <Text color={calloutColors.text}>{label}</Text>
+        <Text weight="medium" color={calloutColors.text}>
+          {label}
+        </Text>
       </div>
     </CalloutContainer>
   );
