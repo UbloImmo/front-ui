@@ -6,7 +6,7 @@ import type { ColorKey, PaletteColor, StyleProps } from "@types";
 
 export type CalloutColor = Exclude<ColorKey, "success">;
 
-export type CalloutIcon = Nullable<IconName> | "auto";
+export type CalloutIcon = IconName | "auto";
 
 export type CalloutProps = {
   /**
@@ -31,10 +31,10 @@ export type CalloutProps = {
   /**
    * The callout's custom icon
    *
-   * @type {CalloutIcon}
+   * @type {Nullable<CalloutIcon>}
    * @default "auto"
    */
-  icon?: CalloutIcon;
+  icon?: Nullable<CalloutIcon>;
 
   /**
    * The callout's optional title to display before the label
