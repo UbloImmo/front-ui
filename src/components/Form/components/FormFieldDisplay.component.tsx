@@ -38,9 +38,17 @@ const valueFormatters: FormDisplayValueFormatterMap = {
       : noValue,
 };
 
+/**
+ * Renders a form field's display value and read-mode label
+ *
+ * @template {TType extends InputType} TType - The type of the {@link FormFieldProps}'s `type` property
+ *
+ * @param {BuiltFieldProps<TType>} props - The {@link BuiltFieldProps} object
+ * @returns {JSX.Element} The {@link FieldDisplayContainer} containing the field's display value
+ */
 export const FormFieldDisplay = <TType extends InputType>(
   props: BuiltFieldProps<TType>
-) => {
+): JSX.Element => {
   const { label, value, type, error, errorText } = props;
   const displayContent = useMemo(() => {
     const content: JSX.Element | string = !isNullish(value)
