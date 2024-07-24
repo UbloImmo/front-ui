@@ -11,6 +11,7 @@ import {
   type CalloutDefaultProps,
   CalloutStyleProps,
 } from "./Callout.types";
+import { Heading } from "../Heading";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
@@ -21,7 +22,8 @@ import type { TestIdProps } from "@types";
 const defaultCalloutProps: CalloutDefaultProps = {
   label: "[label]",
   color: "primary",
-  icon: null,
+  icon: "auto",
+  title: null,
 };
 
 /**
@@ -36,11 +38,12 @@ const defaultCalloutProps: CalloutDefaultProps = {
 const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
   const { log, warn } = useLogger("Callout");
   const mergedProps = useMergedProps(defaultCalloutProps, props);
-  const { icon, label, color } = mergedProps;
+  const { icon, label, color, title } = mergedProps;
   const testId = useTestId("callout", props);
 
   const iconName = useMemo(() => {
-    return icon ?? computeCalloutIconNames[color];
+    if (!icon) return;
+    return icon === "auto" ? computeCalloutIconNames[color] : icon;
   }, [icon, color]);
 
   const calloutColors = useMemo(() => computeCalloutColors(color), [color]);
@@ -55,8 +58,15 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
 
   return (
     <CalloutContainer {...styleProps} data-testid={testId}>
-      <Icon color={calloutColors.icon} name={iconName} size="s-4" />
-      <Text color={calloutColors.label}>{label}</Text>
+      {icon && <Icon color={calloutColors.icon} name={iconName} size="s-4" />}
+      <div>
+        {title && (
+          <Heading size="h4" color={calloutColors.text}>
+            {props.title}
+          </Heading>
+        )}
+        <Text color={calloutColors.text}>{label}</Text>
+      </div>
     </CalloutContainer>
   );
 };

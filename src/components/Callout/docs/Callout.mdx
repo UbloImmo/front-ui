@@ -22,18 +22,34 @@ The `color` property is set by default to `primary`.
 
 ## Icon
 
+### Using a custom icon
+
 `Callout` uses an [Icon](?path=/docs/components-icon-usage--docs) by default that illustrates the state of the component (determined by the `color` property). This helps visually inform the user about the nature of the information.
 
-However, if you want to customize the icon further, you can replace the default icon by providing a valid `IconName` in the optional `icon` property.
+This icon is rendered with the optional `icon` property set by default to `auto`.
+
+However, if you want to customize the icon further, you can replace the default icon by providing a valid `IconName` in this `icon` property.
 
 > Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list of `IconName`.
 
 <Canvas of={CalloutStories.WithCustomIcon} />
 
+### Removing the icon
+
+You can remove the icon displayed in `Callout` by setting the `icon` property to `null`
+
+<Canvas of={CalloutStories.WithoutIcon} />
+
 ## Label
 
-`Callout` render its text with the required `label` property.
+`Callout` render its text with the **required** `label` property.
 
 <Canvas of={CalloutStories.Labels} />
+
+## Adding a title
+
+You can add an extra **title** to your `Callout`'s text, using the optional `title` property.
+
+<Canvas of={CalloutStories.WithTitle} />
 
 </Content>

@@ -24,7 +24,7 @@ export const computeCalloutColors = (
       background: "gray-50",
       borderLeft: "gray-600",
       icon: "gray-600",
-      label: "gray-700",
+      text: "gray-700",
     };
   }
 
@@ -32,7 +32,7 @@ export const computeCalloutColors = (
     background: `${color}-light`,
     borderLeft: `${color}-base`,
     icon: `${color}-base`,
-    label: `${color}-dark`,
+    text: `${color}-dark`,
   };
 };
 
@@ -43,6 +43,7 @@ export const calloutStyle = ({
   return css`
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: var(--s-3);
     padding: var(--s-3) var(--s-4);
     min-height: var(--s-10);

@@ -38,8 +38,12 @@ const meta = {
       defaultValue: Callout.defaultProps.label,
     },
     icon: {
-      options: allIconNames,
+      options: ["auto", ...allIconNames],
       defaultValue: Callout.defaultProps.icon,
+    },
+    title: {
+      type: "string",
+      defaultValue: Callout.defaultProps.title,
     },
   },
   parameters: {
@@ -125,6 +129,10 @@ WithCustomIcon.parameters = {
   ),
 };
 
+export const WithoutIcon: Story = {
+  args: { ...Callout.defaultProps, icon: null },
+};
+
 const labels = [
   "Callout short label",
   "This is a really, really, needlessly long label for a callout, to show how it behave with more text",
@@ -147,4 +155,8 @@ export const Labels = (props: CalloutProps) => {
 
 Labels.parameters = {
   docs: componentSource(labels.map((label) => ({ label }))),
+};
+
+export const WithTitle: Story = {
+  args: { ...Callout.defaultProps, title: "This is the callout's title" },
 };

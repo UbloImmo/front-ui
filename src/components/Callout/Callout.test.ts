@@ -18,8 +18,22 @@ testCallout({ ...Callout.defaultProps, icon: "Square" })(
   }
 );
 
+testCallout({ ...Callout.defaultProps, icon: null })(
+  "should render without icon",
+  ({ queryByTestId }) => {
+    expect(queryByTestId(testId)).not.toBeNull();
+  }
+);
+
 testCallout({ ...Callout.defaultProps, color: "gray" })(
   "should replace with provided gray color props",
+  ({ queryByTestId }) => {
+    expect(queryByTestId(testId)).not.toBeNull();
+  }
+);
+
+testCallout({ ...Callout.defaultProps, title: "Callout test title" })(
+  "should replace with title props",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
   }

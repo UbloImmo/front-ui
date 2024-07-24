@@ -6,6 +6,8 @@ import type { ColorKey, PaletteColor, StyleProps } from "@types";
 
 export type CalloutColor = Exclude<ColorKey, "success">;
 
+export type CalloutIcon = Nullable<IconName> | "auto";
+
 export type CalloutProps = {
   /**
    * The callout's text message
@@ -29,10 +31,18 @@ export type CalloutProps = {
   /**
    * The callout's custom icon
    *
-   * @type {IconName}
+   * @type {CalloutIcon}
+   * @default "auto"
+   */
+  icon?: CalloutIcon;
+
+  /**
+   * The callout's optional title to display before the label
+   *
+   * @type {string}
    * @default null
    */
-  icon?: Nullable<IconName>;
+  title?: Nullable<string>;
 };
 
 export type CalloutDefaultProps = Required<CalloutProps>;
@@ -41,9 +51,9 @@ export type CalloutStyleColors = {
   background: PaletteColor;
   borderLeft: PaletteColor;
   icon: PaletteColor;
-  label: PaletteColor;
+  text: PaletteColor;
 };
 
 export type CalloutStyleProps = StyleProps<
-  Omit<CalloutStyleColors, "label" | "icon">
+  Omit<CalloutStyleColors, "icon" | "text">
 >;
