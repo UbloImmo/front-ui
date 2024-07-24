@@ -1,0 +1,39 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as CalloutStories from "../Callout.stories.tsx";
+
+<Meta title="Components/Callout/Usage" />
+
+<ComponentInfo of={CalloutStories} figmaId="1672-2110" />
+
+<Content>
+
+## Usage
+
+`Callout` is useful to provide feedback to the users. It can be used to display general information, warnings or instructions related to a form.
+
+## Colors
+
+To enhance user experience, the `Callout`'s state is visually represented through the `color` property, allowing the user to easily identify whether the message is a warning, an additional information, or an alert.
+The `color` property is set by default to `primary`.
+
+<Canvas of={CalloutStories.Colors} />
+
+## Icon
+
+`Callout` uses an [Icon](?path=/docs/components-icon-usage--docs) by default that illustrates the state of the component (determined by the `color` property). This helps visually inform the user about the nature of the information.
+
+However, if you want to customize the icon further, you can replace the default icon by providing a valid `IconName` in the optional `icon` property.
+
+> Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list of `IconName`.
+
+<Canvas of={CalloutStories.WithCustomIcon} />
+
+## Label
+
+`Callout` render its text with the required `label` property.
+
+<Canvas of={CalloutStories.Labels} />
+
+</Content>
