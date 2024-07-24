@@ -7,17 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.21.0 - 2024-07-24
 ### Added
-
 - `v0.0.1` SelectInput
   - A customizable, searchable select input
 
 ### Changed
-
 - `mergeDefaultProps`, `useMergedProps`
   - Allow foreign props not contained in defaultProps in final object.
   - Useful for polymorphic props
-
 - `FormFieldDisplay`
   - display selected option's label based on field value
 
