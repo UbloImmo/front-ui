@@ -6,6 +6,7 @@ import type {
   InputOnChangeFn,
   InputType,
   InputValue,
+  SpecificInputProps,
 } from "@components";
 
 import type {
@@ -577,18 +578,22 @@ export type ComputeFormValidationFn = GenericFn<[], FormValidation>;
 /**
  * Transforms a field's value to its display value counterpart
  *
- * @remarks Most of the time, this is a string
+ * @remarks Most of the time, this is a native `String()` function
  *
  * @template {InputType} TType - The type of the {@link FormFieldProps}'s `type` property
  * @template TTransformedValue - The type of the transformed value, defaults to a string
  *
  * @param {InputValue<TType>} value - The value to be transformed
+ * @param {SpecificInputProps<TType>} inputProps - The complete input props object
  * @returns {TTransformedValue} The transformed value
  */
 export type FormDisplayValueFormatterFn<
   TType extends InputType,
   TTransformedValue = string
-> = GenericFn<[InputValue<TType>], TTransformedValue>;
+> = GenericFn<
+  [InputValue<TType>, SpecificInputProps<TType>],
+  TTransformedValue
+>;
 
 /**
  * Mapping of {@link InputType} to {@link FormDisplayValueFormatterFn}

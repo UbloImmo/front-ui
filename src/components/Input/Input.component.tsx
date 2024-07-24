@@ -6,6 +6,7 @@ import { inputTypes } from "./Input.data";
 import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput/PasswordInput.component";
 import { PhoneInput } from "./PhoneInput/PhoneInput.component";
+import { SelectInput } from "./SelectInput/SelectInput.component";
 import { TextAreaInput } from "./TextAreaInput";
 import { TextInput } from "./TextInput/TextInput.component";
 
@@ -29,6 +30,7 @@ const inputComponentMap: SpecificInputComponentMap = {
   phone: PhoneInput,
   currency: CurrencyInput,
   textarea: TextAreaInput,
+  select: SelectInput,
 };
 
 /**
@@ -48,7 +50,11 @@ const Input = <TType extends InputType = "text">({
   const InputComponent = useMemo<
     Nullable<FC<SpecificInputProps<TType>>>
   >(() => {
-    const DefaultTextInput = TextInput as FC<SpecificInputProps<TType>>;
+    const DefaultTextInput = TextInput as Omit<
+      FC<SpecificInputProps<TType>>,
+      "defaultProps"
+    > as FC<SpecificInputProps<TType>>;
+
     if (!type) {
       warn("No type provided, defaulting to 'text'");
       return DefaultTextInput;

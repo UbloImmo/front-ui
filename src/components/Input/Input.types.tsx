@@ -2,7 +2,13 @@ import { inputTypes } from "./Input.data";
 
 import type { DirectionHorizontal } from "@/types/global/direction.types";
 import type { CurrencyInt, Email, StyleProps } from "@types";
-import type { Enum, GenericFn, Nullable, VoidFn } from "@ubloimmo/front-util";
+import type {
+  Enum,
+  GenericFn,
+  Nullable,
+  NullishPrimitives,
+  VoidFn,
+} from "@ubloimmo/front-util";
 import type {
   DetailedHTMLProps,
   HTMLInputAutoCompleteAttribute,
@@ -149,6 +155,8 @@ export type InputValue<TType extends InputType> = TType extends
   ? CurrencyInt
   : TType extends "email"
   ? Email
+  : TType extends "select"
+  ? NullishPrimitives
   : never;
 
 /**

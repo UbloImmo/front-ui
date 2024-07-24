@@ -1,0 +1,28 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as SelectInputStories from "../SelectInput.stories.tsx";
+
+<Meta title="Components/Input/SelectInput/Usage" />
+
+<ComponentInfo of={SelectInputStories} />
+
+<Content>
+
+## Usage
+
+`SelectInput` component is a specific type of [Input](?path=/docs/components-input-usage--docs), used to prompt the user to select an option from a list.
+
+### Disabling options
+
+By default, all options in `SelectInput` are selectable. To restrict a user from selecting a particular option, you can add a `disabled` property to it.
+
+<Canvas of={SelectInputStories.DisabledOptions} />
+
+### Searchable
+
+To enable searching and filtering the options in `SelectInput`, you can set the searchable property to true. This allows users to type and search for specific options.
+
+<Canvas of={SelectInputStories.Searchable} />
+
+</Content>

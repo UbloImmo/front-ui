@@ -1,3 +1,4 @@
+import { fn } from "@storybook/test";
 import { z } from "zod";
 
 import { Form } from "./Form.component";
@@ -40,6 +41,7 @@ const addressData: FormData<Address> = {
 const addressFormProps: FormProps<Address> = {
   schema: addressSchema,
   query: addressData,
+  onSubmit: fn(),
   title: "Address",
   icon: "GeoAlt",
   content: [
@@ -73,9 +75,27 @@ const addressFormProps: FormProps<Address> = {
       label: "City",
     },
     {
-      type: "text",
+      type: "select",
       source: "country",
       label: "Country",
+      options: [
+        {
+          label: "France",
+          value: "FR",
+        },
+        {
+          label: "Italy",
+          value: "IT",
+        },
+        {
+          label: "Germany",
+          value: "DE",
+        },
+        {
+          label: "United States of America",
+          value: "US",
+        },
+      ],
       layout: {
         size: 2,
       },
@@ -139,6 +159,7 @@ const identityFormProps: FormProps<Identity> = {
   query: () => formData,
   schema: identitySchema,
   title: "Identity",
+  onSubmit: fn(),
   badge: {
     label: "Verified",
     color: "success",
