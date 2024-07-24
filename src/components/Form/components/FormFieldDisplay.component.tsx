@@ -1,8 +1,14 @@
-import { isNullish, isString, type Nullable } from "@ubloimmo/front-util";
+import {
+  isArray,
+  isNullish,
+  isString,
+  type Nullable,
+} from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled from "styled-components";
 
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
+import { flattedSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
 import { breakpointsPx } from "@/sizes";
 import { FlexColumnLayout, FlexLayout, FlexRowLayout } from "@layouts";
 import { arrayOf } from "@utils";
@@ -15,6 +21,8 @@ import type {
 } from "../Form.types";
 import type { InputType, InputValue } from "@/components/Input";
 
+const noValue = "—";
+
 const valueFormatters: FormDisplayValueFormatterMap = {
   text: String,
   number: String,
@@ -23,26 +31,25 @@ const valueFormatters: FormDisplayValueFormatterMap = {
   password: (value) => arrayOf(value.length, () => "*").join(""),
   phone: String,
   textarea: String,
-  select: String,
+  select: (fieldValue, { options }) =>
+    isArray(options)
+      ? flattedSelectOptions(options).find(({ value }) => value === fieldValue)
+          ?.label ?? String(fieldValue)
+      : noValue,
 };
 
-const noValue = "—";
-
-export const FormFieldDisplay = <TType extends InputType>({
-  label,
-  value,
-  type,
-  error,
-  errorText,
-}: BuiltFieldProps<TType>) => {
+export const FormFieldDisplay = <TType extends InputType>(
+  props: BuiltFieldProps<TType>
+) => {
+  const { label, value, type, error, errorText } = props;
   const displayContent = useMemo(() => {
     const content: JSX.Element | string = !isNullish(value)
-      ? valueFormatters[type](value as InputValue<TType>)
+      ? valueFormatters[type](value as InputValue<TType>, props)
       : noValue;
 
     if (isString(content)) return <FormFieldDisplayValue value={content} />;
     return content;
-  }, [value, type]);
+  }, [value, props, type]);
 
   const errorTooltip = useMemo<Nullable<TooltipProps>>(() => {
     if (!error || !errorText) return null;
