@@ -35,12 +35,15 @@ export const mergeDefaultProps = <
   defaultProps: TDefaultProps,
   props: TProps = {} as TProps
 ): TDefaultProps => {
-  return objectFromEntries(
-    objectEntries(defaultProps).map(([key, value]) => [
-      key,
-      isUndefined(props[key]) ? value : props[key],
-    ])
-  ) as TDefaultProps;
+  return {
+    ...props,
+    ...(objectFromEntries(
+      objectEntries(defaultProps).map(([key, value]) => [
+        key,
+        isUndefined(props[key]) ? value : props[key],
+      ])
+    ) as TDefaultProps),
+  };
 };
 
 /**
