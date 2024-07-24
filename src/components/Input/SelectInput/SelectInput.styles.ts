@@ -45,7 +45,7 @@ export const selectInputContainerStyles = (
 export const selectOptionContainerStyles = (): RuleSet => {
   return css`
     position: absolute;
-    top: calc(var(--input-height) + var(--s-1) * -1);
+    top: calc(var(--input-height) - var(--s-1));
     padding-top: var(--s-1);
     width: 100%;
     border-radius: 0 0 var(--s-1) var(--s-1);
