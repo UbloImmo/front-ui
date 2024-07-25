@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.1` Callout component
   - a card to display permanent feedback information
 
+### Fixed
+
+- `v0.0.3` EntityInfoCard component
+  - remove warn for missing name
+
 ## 0.21.0 - 2024-07-24
 
 ### Added

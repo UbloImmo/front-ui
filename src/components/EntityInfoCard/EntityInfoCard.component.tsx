@@ -17,7 +17,7 @@ import {
   GridLayout,
   type GridEndPosition,
 } from "@layouts";
-import { useLogger, useTestId, useMergedProps } from "@utils";
+import { useTestId, useMergedProps } from "@utils";
 
 import {
   StateIndicator,
@@ -54,7 +54,7 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
@@ -62,15 +62,8 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
 const EntityInfoCard = (
   props: EntityInfoCardProps & TestIdProps
 ): JSX.Element => {
-  const { warn } = useLogger("EntityInfoCard");
   const mergedProps = useMergedProps(defaultEntityInfoCardProps, props);
   const testId = useTestId("entity-info-card", props);
-
-  if (!props.name) {
-    warn(
-      `Missing required name, using "${defaultEntityInfoCardProps.name}" as default`
-    );
-  }
 
   return (
     <EntityCardContainer testId={testId} overrideTestId fill>
