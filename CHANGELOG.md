@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.3` EntityInfoCard component
   - remove warn for missing name
 
+- `v0.0.6` PhoneInput component
+  - Do not convert nullish values to `+33` on initialization
+
 ## 0.21.0 - 2024-07-24
 
 ### Added

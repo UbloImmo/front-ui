@@ -43,7 +43,7 @@ const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
  * Renders a international phone input component.
  * Does international phone formatting on the input value.
  *
- * @version 0.0.5
+ * @version 0.0.6
  * @param {InputProps<"phone">} props - The input props.
  * @return {JSX.Element} The rendered phone input component.
  */
@@ -73,6 +73,7 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
       inputRef,
       onChange: propagateChange,
       defaultCountry: "fr",
+      disableDialCodePrefill: true,
     });
 
   const interceptOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
