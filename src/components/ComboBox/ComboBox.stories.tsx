@@ -45,6 +45,9 @@ const meta = {
     showIcon: {
       type: "boolean",
     },
+    columns: {
+      type: "number",
+    },
   },
   parameters: {
     docs: componentSource(),

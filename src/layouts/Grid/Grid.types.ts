@@ -1,6 +1,6 @@
 import type { CssLength, StyleOverrideProps } from "@types";
-import type { Enum } from "@ubloimmo/front-util";
-import type { ReactNode } from "react";
+import type { Enum, Nullable } from "@ubloimmo/front-util";
+import type { AriaRole, ReactNode } from "react";
 
 const gridFlows = [
   "row",
@@ -81,6 +81,13 @@ export type GridLayoutProps = {
    * @type {ReactNode}
    */
   children?: ReactNode;
+  /**
+   * the ARIA role of the element
+   *
+   * @default null
+   * @type {AriaRole}
+   */
+  role?: Nullable<AriaRole>;
 } & StyleOverrideProps;
 
 export type GridLayoutDefaultProps = Required<GridLayoutProps>;

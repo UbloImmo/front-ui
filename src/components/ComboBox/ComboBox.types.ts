@@ -56,6 +56,12 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = Record<
    */
 
   direction?: FlexDirection;
+  /**
+   * The number of columns to use when displaying the combobox buttons
+   *
+   * @remarks This option will make ComboBox use a GridLayout instead of a FlexLayout
+   */
+  columns?: Nullable<number>;
 
   /**
    * Whether several options can be selected
