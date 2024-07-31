@@ -1,5 +1,6 @@
 import { type RuleSet, css } from "styled-components";
 
+import { breakpointsPx } from "@/sizes";
 import { cssVarUsage } from "@utils";
 
 import type {
@@ -7,7 +8,6 @@ import type {
   ComboButtonIconContainerStyleProps,
 } from "./ComboBoxButton.types";
 import type { StyleProps } from "@types";
-import { breakpointsPx } from "@/sizes";
 
 export const ComboBoxButtonStyles = ({
   $active,
