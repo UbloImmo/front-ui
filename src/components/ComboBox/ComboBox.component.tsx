@@ -1,6 +1,7 @@
 import {
   GenericFn,
   isFunction,
+  isNumber,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
 import { useCallback, useEffect, useState } from "react";
@@ -13,7 +14,7 @@ import {
 } from "./ComboBox.types";
 import { ComboBoxButton } from "../ComboBoxButton";
 
-import { FlexLayout } from "@layouts";
+import { FlexLayout, GridItem, GridLayout } from "@layouts";
 import { useTestId, useMergedProps, useLogger } from "@utils";
 
 import type { TestIdProps } from "@types";
@@ -26,12 +27,13 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   onChange: () => {},
   disabled: false,
   showIcon: true,
+  columns: null,
 };
 
 /**
- * A group of ComboButtons that act as a select or radio input.
+ * A group of ComboBoxButtons that act as a select or radio input.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -105,6 +107,38 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
 
   if (multi && !showIcon) {
     warn("Multi mode requires showIcon to be true");
+  }
+
+  if (isNumber(mergedProps.columns)) {
+    return (
+      <GridLayout
+        columns={mergedProps.columns}
+        gap="s-2"
+        fill
+        role="combobox"
+        testId={testId}
+        overrideTestId
+      >
+        {(options ?? []).map((option, index) => (
+          <GridItem
+            columnEnd="span 1"
+            rowEnd="span 1"
+            fill="force"
+            key={option.label + index}
+          >
+            <ComboBoxButton
+              label={option.label}
+              active={isOptionActive(option)}
+              disabled={option.disabled || disabled}
+              multi={multi}
+              fill={direction === "column"}
+              onSelect={selectOptionOnClick(option)}
+              showIcon={showIcon}
+            />
+          </GridItem>
+        ))}
+      </GridLayout>
+    );
   }
 
   return (

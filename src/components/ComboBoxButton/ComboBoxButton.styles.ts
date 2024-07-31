@@ -7,15 +7,17 @@ import type {
   ComboButtonIconContainerStyleProps,
 } from "./ComboBoxButton.types";
 import type { StyleProps } from "@types";
+import { breakpointsPx } from "@/sizes";
 
 export const ComboBoxButtonStyles = ({
   $active,
   $fill,
 }: StyleProps<ComboBoxButtonDefaultProps>): RuleSet => {
   return css`
-    min-height: var(--s-8);
-    height: var(--s-8);
-    max-height: var(--s-8);
+    --combobox-button-height: var(--s-8);
+    min-height: var(--combobox-button-height);
+    height: var(--combobox-button-height);
+    max-height: var(--combobox-button-height);
     width: max-content;
     display: flex;
     align-items: center;
@@ -53,6 +55,10 @@ export const ComboBoxButtonStyles = ({
       svg[data-testid="icon"] {
         fill: var(--gray-400);
       }
+    }
+
+    @media only screen and (max-width: ${breakpointsPx.XS}) {
+      --combobox-button-height: var(--s-10);
     }
   `;
 };
