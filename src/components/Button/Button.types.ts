@@ -11,7 +11,7 @@ import type {
   RequireAtLeastOne,
   VoidFn,
 } from "@ubloimmo/front-util";
-import type { AriaRole } from "react";
+import type { AriaRole, MouseEventHandler } from "react";
 
 export const buttonColors = [
   "primary",
@@ -93,6 +93,13 @@ export type ButtonProps = StyleOverrideProps & {
    * @default null
    */
   onClick?: Nullable<VoidFn>;
+  /**
+   * The callback function to be called when the button is clicked and not disabled.
+   *
+   * @type {Nullable<MouseEventHandler<HTMLButtonElement>>}
+   * @default null
+   */
+  onClickNative?: Nullable<MouseEventHandler<HTMLButtonElement>>;
   /**
    * The label of the button.
    *

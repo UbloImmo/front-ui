@@ -1,0 +1,43 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as PopoverStories from "../Popover.stories.tsx";
+
+<Meta title="Layouts/Popover/Usage" />
+
+<ComponentInfo of={PopoverStories} />
+
+<Content>
+
+## Usage
+
+A primitive wrapper for displaying elements on top of the regular app flow.
+
+### Content
+
+Anything you pass as a Popover's `content` will only get rendered once the popover is active.
+
+> The `content` property supports any `ReactNode` or component that returns one.
+
+<Canvas of={PopoverStories.Content} />
+
+
+#### Content Styling
+
+All above variants use the same `content` value, but you might have noticed that the second row displays its content in a card.
+This is the effect of setting the `wrapContent` property to `true`.
+
+> If you need to customize the popover content's styling further, either ignore or set `wrapContent` to `false` and style your content however you want.
+
+### Trigger
+
+Popover shows its content when its trigger is clicked and hits it upon another trigger click or when clicking outside the content.
+To set the Popover's Trigger, simply pass it as `children`.
+
+<Canvas of={PopoverStories.Triggers} />
+
+
+
+</Content>
+

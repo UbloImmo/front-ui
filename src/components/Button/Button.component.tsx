@@ -1,5 +1,5 @@
 import { isNull } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, type MouseEventHandler } from "react";
 import styled from "styled-components";
 
 import {
@@ -35,12 +35,13 @@ const defaultButtonProps: DefaultButtonProps = {
   fullWidth: false,
   onClick: null,
   className: null,
+  onClickNative: null,
 };
 
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {ButtonProps} props - the button's props
  * @returns {JSX.Element} the rendered button
@@ -55,15 +56,15 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
   const testId = useTestId<ButtonProps>("button", props);
   const className = useClassName(props);
 
-  const onClick = useCallback(() => {
-    if (
-      mergedProps.disabled ||
-      mergedProps.loading ||
-      isNull(mergedProps.onClick)
-    )
-      return;
-    mergedProps.onClick();
-  }, [mergedProps]);
+  const onClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
+    (event) => {
+      if (mergedProps.disabled) return;
+      if (mergedProps.onClickNative) mergedProps.onClickNative(event);
+      if (mergedProps.loading || isNull(mergedProps.onClick)) return;
+      mergedProps.onClick();
+    },
+    [mergedProps]
+  );
 
   const { icon, disabled, title, role, type } = mergedProps;
   let { label } = mergedProps;
