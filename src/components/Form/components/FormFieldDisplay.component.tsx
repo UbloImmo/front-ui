@@ -8,6 +8,7 @@ import { useMemo } from "react";
 import styled from "styled-components";
 
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
+import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
 import { flattedSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
 import { breakpointsPx } from "@/sizes";
 import { FlexColumnLayout, FlexLayout, FlexRowLayout } from "@layouts";
@@ -36,6 +37,11 @@ const valueFormatters: FormDisplayValueFormatterMap = {
       ? flattedSelectOptions(options).find(({ value }) => value === fieldValue)
           ?.label ?? String(fieldValue)
       : noValue,
+  date: (value) => {
+    const date = normalizeToDate(value);
+    if (date) return date.toLocaleDateString();
+    return "Invalid date";
+  },
 };
 
 /**

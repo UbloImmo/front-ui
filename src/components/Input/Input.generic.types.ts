@@ -1,4 +1,5 @@
 import type { CurrencyInputProps } from "./CurrencyInput";
+import type { DateInputProps } from "./DateInput/DateInput.types";
 import type { InputType, InputProps } from "./Input.types";
 import type { NumberInputProps } from "./NumberInput/NumberInput.types";
 import type { PasswordInputProps } from "./PasswordInput/PasswordInput.types";
@@ -16,6 +17,7 @@ type SpecificInputPropsMap = {
   currency: CurrencyInputProps;
   textarea: TextAreaInputProps;
   select: SelectInputProps<NullishPrimitives>;
+  date: DateInputProps;
 };
 
 export type SpecificInputProps<TType extends InputType> =

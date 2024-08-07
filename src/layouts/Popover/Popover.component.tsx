@@ -23,6 +23,7 @@ import type {
   PopoverProps,
   PopoverDefaultProps,
   PopoverContentStyleProps,
+  PopoverTriggerStyleProps,
 } from "./Popover.types";
 import type { TestIdProps } from "@types";
 
@@ -39,6 +40,7 @@ const defaultPopoverProps: PopoverDefaultProps = {
   fitTriggerWidth: false,
   sticky: "partial",
   wrapContent: false,
+  fill: false,
 };
 
 /**
@@ -73,7 +75,9 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
       {...controlledRootProps}
     >
       <PopoverTrigger asChild>
-        <PopoverInnerTrigger>{mergedProps.children}</PopoverInnerTrigger>
+        <PopoverInnerTrigger $fill={mergedProps.fill}>
+          {mergedProps.children}
+        </PopoverInnerTrigger>
       </PopoverTrigger>
       <PopoverContent
         side={mergedProps.side}
@@ -106,7 +110,7 @@ const PopoverTrigger = styled(PopoverPrimitive.Trigger)`
   ${popoverTriggerStyles}
 `;
 
-const PopoverInnerTrigger = styled.div`
+const PopoverInnerTrigger = styled.div<PopoverTriggerStyleProps>`
   ${popoverInnerTriggerStyles}
 `;
 

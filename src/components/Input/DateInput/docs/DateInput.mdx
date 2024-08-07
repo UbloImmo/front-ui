@@ -1,0 +1,25 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as DateInputStories from "../DateInput.stories.tsx";
+
+<Meta title="Components/Input/DateInput/Usage" />
+
+<ComponentInfo of={DateInputStories} figmaId="76%3A6562" />
+
+<Content>
+
+## Usage
+
+`DateInput` component is an interactive single-line text-field combined with a expandable Calendar, a specific type of [Input](?path=/docs/components-input-usage--docs).
+It is commonly used in form layouts to prompt users for a date address.
+
+### Value
+
+`EmailInput` is initialized without a value, enabling users to enter their email address.
+
+When the users enter their email, `EmailInput`'s value is set to null until it matches the email adress pattern (eg: *mail@example.com*, *mail@example.adress.com*).
+
+<Canvas of={DateInputStories.Default} />
+
+</Content>

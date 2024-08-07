@@ -127,6 +127,12 @@ type UncontrolledPopoverProps = PopoverContentProps & {
    * @default false
    */
   defaultOpen?: boolean;
+  /**
+   * Whether the popover trigger should take all available width
+   *
+   * @default false
+   */
+  fill?: boolean;
 };
 
 export type ControlledPopoverPropsExtension = {
@@ -164,4 +170,8 @@ export type PopoverDefaultProps =
 
 export type PopoverContentStyleProps = StyleProps<
   Pick<UncontrolledPopoverProps, "fitTriggerWidth">
+>;
+
+export type PopoverTriggerStyleProps = StyleProps<
+  Pick<UncontrolledPopoverProps, "fill">
 >;

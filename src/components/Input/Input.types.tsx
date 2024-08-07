@@ -149,6 +149,8 @@ export type InputValue<TType extends InputType> = TType extends
   | "phone"
   | "textarea"
   ? string
+  : TType extends "date"
+  ? string
   : TType extends "number"
   ? number
   : TType extends "currency"
