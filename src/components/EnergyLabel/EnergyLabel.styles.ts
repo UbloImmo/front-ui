@@ -6,12 +6,12 @@ import {
   EnergyLabelValue,
 } from "./EnergyLabel.types";
 
-import { HexColor, StyleProps } from "@types";
+import { HexColorOpaque, StyleProps } from "@types";
 import { cssVarUsage, fromStyleProps } from "@utils";
 
 type EnergyLabelColors = Record<
   EnergyLabelType,
-  Record<EnergyLabelValue, HexColor>
+  Record<EnergyLabelValue, HexColorOpaque>
 >;
 
 const colors: EnergyLabelColors = {
