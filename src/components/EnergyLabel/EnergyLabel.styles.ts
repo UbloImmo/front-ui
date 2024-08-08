@@ -1,12 +1,12 @@
-import { HexColor, StyleProps } from "@types";
+import { css } from "styled-components";
+
 import {
-  EnergyLabelDefaultProps,
   EnergyLabelProps,
   EnergyLabelType,
   EnergyLabelValue,
 } from "./EnergyLabel.types";
 
-import { css } from "styled-components";
+import { HexColor, StyleProps } from "@types";
 import { cssVarUsage, fromStyleProps } from "@utils";
 
 type EnergyLabelColors = Record<

@@ -1,10 +1,10 @@
 import { EnergyLabel } from "./EnergyLabel.component";
 
+import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { EnergyLabelProps } from "./EnergyLabel.types";
 import type { Meta, StoryObj } from "@storybook/react";
-import { ComponentVariants } from "@docs/blocks";
 
 const args = {
   ...EnergyLabel.defaultProps,

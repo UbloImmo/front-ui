@@ -1,13 +1,15 @@
+import styled from "styled-components";
+
+import { energyLabelStyle } from "./EnergyLabel.styles";
+import { Text } from "../Text";
+
+import { StyleProps, type TestIdProps } from "@types";
 import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
 
 import type {
   EnergyLabelProps,
   EnergyLabelDefaultProps,
 } from "./EnergyLabel.types";
-import { StyleProps, type TestIdProps } from "@types";
-import styled from "styled-components";
-import { energyLabelStyle } from "./EnergyLabel.styles";
-import { Text } from "../Text";
 
 const defaultEnergyLabelProps: EnergyLabelDefaultProps = {
   type: "DPE",
