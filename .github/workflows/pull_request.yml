@@ -46,7 +46,7 @@ jobs:
         id: bun_install
         run: bun install
 
-      - name: Typings Analysis (Typescript)
+      - name: Typings analysis (Typescript)
         id: test_types
         run: bun test:types
 
@@ -97,7 +97,7 @@ jobs:
         id: bun_install
         run: bun install
 
-      - name: Circular dependencies
+      - name: Circular dependencies analysis (madge)
         id: test_deps
         run: bun test:deps:circular
 
@@ -191,6 +191,6 @@ jobs:
         id: bun_install
         run: bun install
 
-      - name: Unit tests
+      - name: Unit tests (bun test)
         id: test_unit
         run: bun test:unit
