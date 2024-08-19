@@ -47,7 +47,7 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     background: ${({ $inHeader }) => ($inHeader ? "#fff" : "var(--gray-50)")};
     border: none;
     border-radius: var(--s-2);
-    overflow: hidden;
+    overflow: visible;
   }
 
   // story show/hide code button container
@@ -90,13 +90,17 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
   .docs-story {
     border-radius: 0;
 
+    ${({ $overflowHidden }) =>
+      css`
+        overflow: ${$overflowHidden ? "hidden" : "visible"};
+      `}
+
     // story container has generated classname
     & > div:first-child {
       padding: var(--padding);
       ${({ $overflowHidden }) =>
-        $overflowHidden &&
         css`
-          overflow: hidden;
+          overflow: ${$overflowHidden ? "hidden" : "visible"};
         `}
     }
 
