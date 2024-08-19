@@ -12,6 +12,7 @@ export const selectInputStyles = (): RuleSet => {
     text-align: left;
     display: flex;
     align-items: center;
+    gap: var(--s-1);
 
     &:disabled {
       cursor: not-allowed;
@@ -79,13 +80,20 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
     height: var(--s-8);
     min-height: var(--s-8);
     max-height: var(--s-8);
-    transition: color 150ms ease-in-out, background-color 300ms ease-in-out;
-    border-top: 1px solid var(--primary-light);
+    transition: background-color 300ms ease-out;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     cursor: pointer;
+
+    span[data-testid="input-select-option-label"] {
+      transition: color 300ms ease-out;
+    }
+
+    &:not(:first-child) {
+      border-top: 1px solid var(--primary-light);
+    }
 
     span {
       overflow: hidden;
@@ -108,8 +116,14 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
 
     &:not([aria-disabled]):hover {
       span[data-testid="input-select-option-label"] {
+        transition-duration: 150ms;
         color: var(--primary-base);
       }
+      svg[data-testid="icon"] {
+        transition-duration: 150ms;
+        fill: var(--primary-base);
+      }
+      transition-duration: 150ms;
       background-color: var(--primary-light);
     }
 

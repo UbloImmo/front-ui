@@ -1,5 +1,6 @@
 import { InputOnChangeFn, InputProps, InputValue } from "../Input.types";
 
+import { IconName } from "@/components/Icon";
 import { StyleProps } from "@types";
 
 import type {
@@ -8,12 +9,14 @@ import type {
   Nullable,
   Replace,
   VoidFn,
+  GenericFn,
 } from "@ubloimmo/front-util";
 
 export type SelectOption<TValue extends NullishPrimitives> = {
   value: TValue | null;
   label: string;
   disabled?: boolean;
+  icon?: IconName;
   active?: boolean;
 };
 
@@ -66,4 +69,9 @@ export type DefaultSelectInputProps<TValue extends NullishPrimitives> =
 export type SelectInputOptionProps<TValue extends NullishPrimitives> =
   SelectOption<TValue> & {
     onSelect?: Nullable<VoidFn>;
+  };
+
+export type SelectInputOptionGroupProps<TValue extends NullishPrimitives> =
+  SelectOptionGroup<TValue> & {
+    onSelectOption: GenericFn<[SelectOption<TValue>], VoidFn>;
   };

@@ -10,6 +10,7 @@ import { buildSelectOptionItemStyles } from "../SelectInput.styles";
 
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
+import { FlexRowLayout } from "@layouts";
 import { useStyleProps } from "@utils";
 
 import type {
@@ -18,6 +19,12 @@ import type {
 } from "../SelectInput.types";
 import type { PaletteColor, TextProps } from "@types";
 
+/**
+ * Renders a single select option
+ * @template {NullishPrimitives} TValue - The option's value
+ * @param {SelectInputOptionProps<TValue>} props - The option to render and its `onSelect` callback
+ * @returns JSX.Element
+ */
 const SelectInputOption = <TValue extends NullishPrimitives>(
   props: SelectInputOptionProps<TValue>
 ): JSX.Element => {
@@ -57,14 +64,19 @@ const SelectInputOption = <TValue extends NullishPrimitives>(
       {...styleProps}
       tabIndex={props.disabled ? -1 : 0}
     >
-      <Text
-        {...textProps}
-        testId="input-select-option-label"
-        overrideTestId
-        ellipsis
-      >
-        {props.label}
-      </Text>
+      <FlexRowLayout align="center" justify="start" gap="s-1">
+        {props.icon && (
+          <Icon name={props.icon} color={contentColor} size="s-3" />
+        )}
+        <Text
+          {...textProps}
+          testId="input-select-option-label"
+          overrideTestId
+          ellipsis
+        >
+          {props.label}
+        </Text>
+      </FlexRowLayout>
       {props.active && <Icon name="Check" color={contentColor} size="s-4" />}
     </SelectOptionItem>
   );
