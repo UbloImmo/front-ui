@@ -46,7 +46,6 @@ import {
   CalendarOnChangeFn,
   Icon,
   InputOnChangeFn,
-  NativeInputOnChangeFn,
 } from "@components";
 
 import type { DateInputDefaultProps, DateInputProps } from "./DateInput.types";
