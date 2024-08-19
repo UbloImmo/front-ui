@@ -47,7 +47,7 @@ export const popoverContentStyles = ({
 
     &,
     & > *:first-child {
-      z-index: 1;
+      z-index: 10;
     }
 
     ${$fitTriggerWidth &&
