@@ -1,4 +1,5 @@
 import {
+  DeepValueOf,
   deepValueOf,
   isBoolean,
   isFunction,
@@ -148,7 +149,7 @@ const useFormData = <TData extends object>(
       const mutated = setObjectValue(
         data,
         key as DeepKeyOf<FormData<TData>>,
-        value ?? undefined
+        value as DeepValueOf<FormData<TData>, DeepKeyOf<FormData<TData>>>
       );
       setData(mutated);
       return mutated;
@@ -355,7 +356,7 @@ const useFormFields = <TData extends object>(
         onChange: propagateChange<TType, typeof source>(
           source,
           onChange as InputOnChangeFn<TType>
-        ),
+        ) as BuiltFieldProps<TType>["onChange"],
         value: getFieldValue<DeepKeyOf<FormData<TData>>>(
           source as DeepKeyOf<FormData<TData>>
         ),
@@ -363,7 +364,7 @@ const useFormFields = <TData extends object>(
         disabled: disabled || modifiers.disabled,
         required: isFieldRequired(source, required),
         layout,
-      };
+      } as BuiltFieldProps<TType>;
     },
     [
       getFieldErrorProps,
