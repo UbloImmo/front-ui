@@ -3,15 +3,25 @@ import {
   isFunction,
   isNullish,
   isString,
+  transformObject,
   type Nullable,
 } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useId, useMemo, useState } from "react";
-
 import {
-  dateToDateISO,
-  isValidDateStr,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import styled from "styled-components";
+
+import { dateInputStyles } from "./DateInput.styles";
+import {
+  isValidDateNativeStr,
   normalizeToDate,
   normalizeToDateISO,
+  normalizeToDateNativeStr,
   normalizeToDateStr,
 } from "./DateInput.utils";
 import {
@@ -36,10 +46,15 @@ import {
   CalendarOnChangeFn,
   Icon,
   InputOnChangeFn,
+  NativeInputOnChangeFn,
 } from "@components";
 
 import type { DateInputDefaultProps, DateInputProps } from "./DateInput.types";
-import type { InputValue, NativeInputOnBlurFn } from "../Input.types";
+import type {
+  InputValue,
+  NativeInputOnBlurFn,
+  NativeInputValue,
+} from "../Input.types";
 import type { TestIdProps } from "@types";
 
 const defaultDateInputProps: DateInputDefaultProps = {
@@ -50,6 +65,9 @@ const defaultDateInputProps: DateInputDefaultProps = {
   onChangeNative: null,
   name: null,
   numberOfMonths: 1,
+  autoComplete: "date",
+  min: null,
+  max: null,
 };
 
 /**
@@ -62,60 +80,57 @@ const defaultDateInputProps: DateInputDefaultProps = {
  */
 const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultDateInputProps, props);
-  const { log } = useLogger("InputDate");
-
-  const [innerDateISO, setInnerDateISO] = useState<Nullable<string>>(
-    normalizeToDateISO(mergedProps.value)
+  const { debug } = useLogger("InputDate", {
+    // hideDebug: true,
+    spacing: 0,
+  });
+  const [innerDateStr, setInnerDateStr] = useState<string>(
+    normalizeToDateNativeStr(mergedProps.value) ?? ""
   );
 
-  // const [innerDateStr, setInnerDateStr] = useState<string>(
-  //   normalizeToDateStr(mergedProps.value) ?? ""
-  // );
+  const computedDateISO = useMemo(() => {
+    return normalizeToDateISO(innerDateStr);
+  }, [innerDateStr]);
 
-  const [isFocused, setIsFocused] = useState(false);
-
+  // update innerDateStr if form value changes
   useEffect(() => {
-    const dateISO = normalizeToDateISO(mergedProps.value);
-    if (dateISO !== innerDateISO) setInnerDateISO(dateISO);
+    const outerDateStr = normalizeToDateNativeStr(mergedProps.value);
+    if (isString(outerDateStr) && outerDateStr !== innerDateStr) {
+      setInnerDateStr(outerDateStr);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedProps.value]);
 
-  const inputValue = useInputValue<"date">(innerDateISO, props, (rawValue) => {
-    return normalizeToDateStr(rawValue) ?? rawValue;
-  });
+  const [isFocused, setIsFocused] = useState(false);
+
+  const inputValue = useInputValue<"date">(innerDateStr, props);
 
   const calendarValue = useMemo<Nullable<Date>>(() => {
-    return normalizeToDate(innerDateISO);
-  }, [innerDateISO]);
+    return normalizeToDate(computedDateISO);
+  }, [computedDateISO]);
 
   const setInnerValueAndPropagate = useCallback(
     (value: Nullable<InputValue<"date">>) => {
-      setInnerDateISO(value);
-      if (isFunction<InputOnChangeFn<"date">>(mergedProps.onChange))
-        mergedProps.onChange(value);
+      setInnerDateStr(value ?? "");
+      if (isFunction<InputOnChangeFn<"date">>(mergedProps.onChange)) {
+        mergedProps.onChange(
+          isValidDateNativeStr(value) ? normalizeToDateISO(value) : null
+        );
+      }
     },
     [mergedProps]
   );
 
   const onChange = useInputOnChange<"date">(
-    (nativeValue): nativeValue is InputValue<"date"> => isString(nativeValue),
-    (nativeValue) => {
-      if (
-        isString(nativeValue) &&
-        nativeValue.length > 0 &&
-        isValidDateStr(nativeValue)
-      ) {
-        return normalizeToDateISO(nativeValue);
-      }
-      return null;
-    },
+    () => true,
+    (nativeValue) => (isString(nativeValue) ? nativeValue : null),
     setInnerValueAndPropagate,
     mergedProps.onChangeNative
   );
 
   const onCalendarChange = useCallback<CalendarOnChangeFn>(
     (date) => {
-      setInnerValueAndPropagate(dateToDateISO(date));
+      setInnerValueAndPropagate(normalizeToDateNativeStr(date));
     },
     [setInnerValueAndPropagate]
   );
@@ -128,14 +143,10 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
 
   const testId = useTestId("input-date", props);
 
-  const inputId = useId();
-
   const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
 
   const toggleCalendarShown = useCallback(
     (open?: boolean) => {
-      log("toggle calendar");
-      log({ isFocused, open });
       if (isFocused) return;
       setCalendarShown(isBoolean(open) ? open : !calendarShown);
       if (isFocused) {
@@ -145,14 +156,20 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
         }, 1);
       }
     },
-    [calendarShown, inputRef, isFocused, log]
+    [calendarShown, inputRef, isFocused]
   );
 
-  log({ innerValue: innerDateISO, inputValue });
+  debug({ innerDateStr, computedDateISO, outerValue: mergedProps.value });
 
-  const onFocus = useCallback(() => {
+  const onFocus = useCallback<NativeInputOnBlurFn>((e) => {
+    e.preventDefault();
     setIsFocused(true);
-    setCalendarShown(false);
+  }, []);
+
+  const preventDefaultOnClick = useCallback<
+    MouseEventHandler<HTMLInputElement>
+  >((e) => {
+    e.preventDefault();
   }, []);
 
   const onBlur = useCallback<NativeInputOnBlurFn>(
@@ -164,43 +181,105 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
     [mergedProps]
   );
 
+  const onKeyDown = useCallback<KeyboardEventHandler<HTMLInputElement>>(
+    (event) => {
+      if (event.code === "Space" || event.code === "Enter") {
+        setCalendarShown(true);
+        event.preventDefault();
+      }
+      if (event.code === "Escape") {
+        setCalendarShown(false);
+      }
+    },
+    []
+  );
+
+  const inputType = useMemo<"text" | "date">(() => {
+    return isFocused ? "date" : "text";
+  }, [isFocused]);
+
+  const dynamicInputValue = useMemo<NativeInputValue>(() => {
+    return isString(inputValue)
+      ? isFocused
+        ? inputValue
+        : normalizeToDateStr(inputValue) ?? ""
+      : "";
+  }, [isFocused, inputValue]);
+
+  const minMax = useMemo(() => {
+    return { min: mergedProps.min, max: mergedProps.max };
+  }, [mergedProps]);
+
+  const inputMinMax = useMemo(() => {
+    if (!isFocused)
+      return {
+        min: undefined,
+        max: undefined,
+      };
+    return transformObject(
+      minMax,
+      (date) => normalizeToDateNativeStr(date) ?? undefined
+    );
+  }, [minMax, isFocused]);
+
+  const calendarMinMax = useMemo(() => {
+    return transformObject(minMax, normalizeToDate);
+  }, [minMax]);
+
+  debug({
+    minMax,
+    calendarMinMax,
+    inputMinMax,
+    tests: {
+      native: normalizeToDateNativeStr(minMax.max),
+    },
+  });
+
+  const inputDisabled = useMemo(() => {
+    return isBoolean(mergedProps.disabled) && mergedProps.disabled;
+  }, [mergedProps]);
+
   return (
     <Popover
       content={
         <Calendar
+          testId="input-date-calendar"
+          overrideTestId
           date={calendarValue}
           onChange={onCalendarChange}
           numberOfMonths={mergedProps.numberOfMonths}
           disabled={mergedProps.disabled}
+          {...calendarMinMax}
         />
       }
       fill
-      open={calendarShown}
+      open={calendarShown && !inputDisabled}
       onOpenChange={toggleCalendarShown}
       align="end"
     >
       <StyledInputContainer {...inputStyles} data-testid="input-date-container">
-        <StyledInput
+        <StyledDateInput
           data-testid={testId}
-          value={inputValue}
-          id={inputId}
-          type="text"
+          value={dynamicInputValue}
+          type={inputType}
           onChange={onChange}
           onBlur={onBlur}
           onFocus={onFocus}
+          onClick={preventDefaultOnClick}
+          onKeyDown={onKeyDown}
           placeholder={mergedProps.placeholder}
-          disabled={mergedProps.disabled}
+          disabled={inputDisabled}
           required={mergedProps.required}
-          aria-roledescription="Champs de saisie mot de passe"
-          role="textbox"
           ref={forwardRef}
           autoComplete={autoComplete}
           pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])\/(0[1-9]|1[012])\/[0-9]{4}"
+          {...inputMinMax}
           {...inputStyles}
-        ></StyledInput>
-        <StyledInputControlGroup>
+        />
+        <StyledInputControlGroup $noFocus {...inputStyles}>
           <StyledInputGroupedControl
             {...inputStyles}
+            $noFocus
             data-testid="input-control"
             onClick={toggleCalendarShown}
             title="Pick a date"
@@ -219,3 +298,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
 DateInput.defaultProps = defaultDateInputProps;
 
 export { DateInput };
+
+const StyledDateInput = styled(StyledInput)`
+  ${dateInputStyles}
+`;
