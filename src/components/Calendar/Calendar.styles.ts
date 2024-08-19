@@ -1,8 +1,9 @@
-import { breakpointsPx } from "@/sizes";
 import { texts } from "@ubloimmo/front-tokens";
 import { transformObject } from "@ubloimmo/front-util";
 import { getDefaultClassNames } from "react-day-picker";
 import { css } from "styled-components";
+
+import { breakpointsPx } from "@/sizes";
 
 const classNames = getDefaultClassNames();
 

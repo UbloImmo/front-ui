@@ -1,4 +1,5 @@
 import {
+  isArray,
   isNullish,
   objectValues,
   transformObject,
@@ -13,14 +14,15 @@ import styled from "styled-components";
 
 import { calendarWrapperStyles } from "./Calendar.styles";
 import { defaultCalendarAssistiveTextTemplate } from "./Calendar.utils";
+import { CalendarFooter } from "./components/CalendarFooter.component";
 import { CalendarNav } from "./components/CalendarNav.component";
 
 import {
-  useLogger,
   useTestId,
   useMergedProps,
   clamp,
   useHtmlAttribute,
+  useLogger,
 } from "@utils";
 
 import type {
@@ -28,13 +30,12 @@ import type {
   CalendarDefaultProps,
   CalenderInnerProps,
   CalendarRange,
+  CalendarMatcher,
 } from "./Calendar.types";
 import type { TestIdProps } from "@types";
 import type { DateRange } from "react-day-picker";
-import { CalendarFooter } from "./components/CalendarFooter.component";
 
 const defaultCalendarProps: CalendarDefaultProps = {
-  // TODO
   date: null,
   range: null,
   onChange: null,
@@ -45,6 +46,8 @@ const defaultCalendarProps: CalendarDefaultProps = {
   disabled: false,
   hidden: false,
   assistiveTextTemplate: defaultCalendarAssistiveTextTemplate,
+  min: null,
+  max: null,
 };
 
 /**
@@ -56,7 +59,7 @@ const defaultCalendarProps: CalendarDefaultProps = {
  * @returns {JSX.Element}
  */
 const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
-  const { log } = useLogger("Calendar");
+  const { debug } = useLogger("Calendar", { hideDebug: true });
   const mergedProps = useMergedProps(defaultCalendarProps, props);
   const assistiveTextTemplate = useMergedProps(
     defaultCalendarAssistiveTextTemplate,
@@ -79,23 +82,18 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
     [dateEnd, dateStart]
   );
 
+  debug({ calendarRange });
+
   useEffect(() => {
-    if (!mergedProps.range) return;
-    if (mergedProps.range.from !== dateStart) {
-      setDateStart(mergedProps.range.from);
+    const start = mergedProps.range?.from ?? mergedProps.date;
+    if (start !== dateStart) {
+      setDateStart(start);
     }
-    if (mergedProps.range.to !== dateEnd) {
-      setDateEnd(mergedProps.range.to);
+    if (mergedProps.range?.to !== dateEnd) {
+      setDateEnd(mergedProps.range?.to ?? null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedProps.range]);
-
-  useEffect(() => {
-    if (mergedProps.date !== dateStart) {
-      setDateStart(mergedProps.date);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mergedProps.date]);
 
   useEffect(() => {
     if (!mergedProps.onChange) return;
@@ -105,8 +103,6 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calendarRange]);
-
-  log(mergedProps);
 
   const numberOfMonths = useMemo(
     () => clamp(mergedProps.numberOfMonths, 1, 3),
@@ -169,6 +165,34 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
 
   const defaultMonth = useHtmlAttribute(calendarRange.from);
 
+  const minMax = useMemo<CalendarMatcher[]>(() => {
+    const matchers: CalendarMatcher[] = [];
+    if (mergedProps.max) {
+      matchers.push({
+        after: mergedProps.max,
+      });
+    }
+    if (mergedProps.min) {
+      matchers.push({
+        before: mergedProps.min,
+      });
+    }
+    return matchers;
+  }, [mergedProps]);
+
+  const disabled = useMemo<CalendarMatcher[]>(() => {
+    if (!mergedProps.disabled && !minMax.length) return [];
+    if (!mergedProps.disabled) return minMax;
+    if (isArray(mergedProps.disabled))
+      return {
+        ...(mergedProps.disabled as CalendarMatcher[]),
+        ...minMax,
+      };
+    return [mergedProps.disabled, ...minMax];
+  }, [mergedProps.disabled, minMax]);
+
+  debug({ disabled, minMax });
+
   return (
     <CalendarWrapper data-testid={testId}>
       <ReactDayPicker
@@ -176,7 +200,7 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
         showOutsideDays={numberOfMonths > 1}
         numberOfMonths={numberOfMonths}
         defaultMonth={defaultMonth}
-        disabled={mergedProps.disabled}
+        disabled={disabled}
         hidden={mergedProps.hidden}
         locale={mergedProps.locale}
         components={{
