@@ -7,32 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.23.0 - 2024-08-20
 ### Added
-
 - `v0.0.1` Calendar component
-
 - `v0.0.1` DateInput component
   - with Input, Field and Form integration
 
-### Fixed
-
-- `v0.0.2` Icon component
-  - Render transparent spacer of same size while icon is loading
-
 ### Changed
-
 - Global style
   - set selection highlight color based on current theme
-
 - `v0.0.2` SelectInput component
   - Move option groups to separate component
   - Add ability for options to have icons
-
 - `v0.0.3` Grid layout
   - Add support for ARIA role
-
 - `v0.0.5` ComboBox component
   - Add support for grid display when `columns` prop is provided
+
+### Fixed
+- `v0.0.2` Icon component
+  - Render transparent spacer of same size while icon is loading
 
 ## 0.22.0 - 2024-07-29
 ### Added
@@ -207,14 +201,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.11.0 - 2024-06-19
 ### Added
 - `v0.0.2` Loading component
-
+  
   - animation type `ProgressBar`
   - `className` & `TestId` props
 - `v0.0.1` SmallLoader component
 
 ### Fixed
 - `v0.0.4` NumberInput component
-
+  
   - prevent controls from changing value when input is `disabled`
 - `v0.0.4` StateIndicator component
   - styles: set overflow to hidden to disable scrollbar inside the component in Firefox
