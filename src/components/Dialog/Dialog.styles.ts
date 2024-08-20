@@ -53,6 +53,5 @@ export const dialogWrapperStyles = css`
 export const dialogContentStyles = css`
   max-height: 100%;
   max-width: 100%;
-  overflow-y: auto;
   pointer-events: auto;
 `;
