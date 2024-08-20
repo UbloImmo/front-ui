@@ -79,6 +79,28 @@ export const DisabledOptions: Story = {
   },
 };
 
+export const IconOptions: Story = {
+  args: {
+    placeholder: "These options have icons",
+    options: [
+      {
+        label: "I have an icon",
+        value: "option-1",
+        icon: "Triangle",
+      },
+      {
+        label: "Me too !",
+        value: "option-2",
+        icon: "EmojiWink",
+      },
+      {
+        label: "...I don't 😢",
+        value: "option-3",
+      },
+    ],
+  },
+};
+
 export const Searchable: Story = {
   args: {
     searchable: true,

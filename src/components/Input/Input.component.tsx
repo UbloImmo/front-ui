@@ -1,14 +1,15 @@
 import { useMemo } from "react";
 
 import { CurrencyInput } from "./CurrencyInput";
-import { EmailInput } from "./EmailInput/EmailInput.component";
+import { DateInput } from "./DateInput";
+import { EmailInput } from "./EmailInput";
 import { inputTypes } from "./Input.data";
 import { NumberInput } from "./NumberInput";
-import { PasswordInput } from "./PasswordInput/PasswordInput.component";
-import { PhoneInput } from "./PhoneInput/PhoneInput.component";
-import { SelectInput } from "./SelectInput/SelectInput.component";
+import { PasswordInput } from "./PasswordInput";
+import { PhoneInput } from "./PhoneInput";
+import { SelectInput } from "./SelectInput";
 import { TextAreaInput } from "./TextAreaInput";
-import { TextInput } from "./TextInput/TextInput.component";
+import { TextInput } from "./TextInput";
 
 import { useLogger } from "@utils";
 
@@ -31,6 +32,7 @@ const inputComponentMap: SpecificInputComponentMap = {
   currency: CurrencyInput,
   textarea: TextAreaInput,
   select: SelectInput,
+  date: DateInput,
 };
 
 /**

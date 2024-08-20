@@ -3,7 +3,13 @@ import { GenericFn, objectKeys } from "@ubloimmo/front-util";
 import * as GeneratedIcons from "./__generated__";
 import { CommonIconProps } from "./__generated__/common.types";
 
-import { FixedCssLength, PaletteColor } from "@types";
+import {
+  CssPx,
+  CssRem,
+  FixedCssLength,
+  PaletteColor,
+  StyleProps,
+} from "@types";
 
 const IconName = GeneratedIcons;
 
@@ -47,3 +53,7 @@ export type MissingIcon = {
   (): JSX.Element;
   __missing: true;
 };
+
+export type IconFallbackStyleProps = StyleProps<{
+  size: CssPx | CssRem;
+}>;

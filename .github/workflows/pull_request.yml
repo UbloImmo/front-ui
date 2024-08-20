@@ -7,14 +7,58 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check_pr:
-    name: Check PR
+  test-types:
+    name: Test - Types
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Setup Bun
+        id: bun_setup
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Check bun
+        id: bun_check
+        run: |
+          which bun
+          bun --version
+
+      - name: Setup node
+        id: node_setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Check node
+        id: node_check
+        run: |
+          which node
+          node --version
+          which npm
+          npm --version
+
+      - name: Install dependencies (bun)
+        id: bun_install
+        run: bun install
+
+      - name: Typings analysis (Typescript)
+        id: test_types
+        run: bun test:types
+
+  test-deps:
+    name: Test - Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Setup Bun
         id: bun_setup
         uses: oven-sh/setup-bun@v1
@@ -53,18 +97,100 @@ jobs:
         id: bun_install
         run: bun install
 
+      - name: Circular dependencies analysis (madge)
+        id: test_deps
+        run: bun test:deps:circular
+
+  test-lint:
+    name: Test - Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        id: bun_setup
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Check bun
+        id: bun_check
+        run: |
+          which bun
+          bun --version
+
+      - name: Setup node
+        id: node_setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: ESLint Cache
+        uses: actions/cache@v3
+        id: eslint-cache
+        with:
+          path: front/.cache/eslint
+          key: ${{ runner.os }}-eslint
+
+      - name: Check node
+        id: node_check
+        run: |
+          which node
+          node --version
+          which npm
+          npm --version
+
+      - name: Install dependencies (bun)
+        id: bun_install
+        run: bun install
+
       - name: Code analysis (ESLint) and style-guide analysis (Prettier)
         id: test_lint
         run: bun test:lint
 
-      - name: Typings Analysis (Typescript)
-        id: test_types
-        run: bun test:types
+  test_unit:
+    name: Test - Unit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Bun
+        id: bun_setup
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
-      - name: Circular dependencies
-        id: test_deps
-        run: bun test:deps:circular
+      - name: Check bun
+        id: bun_check
+        run: |
+          which bun
+          bun --version
 
-      - name: Unit tests
+      - name: Setup node
+        id: node_setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Check node
+        id: node_check
+        run: |
+          which node
+          node --version
+          which npm
+          npm --version
+
+      - name: Install dependencies (bun)
+        id: bun_install
+        run: bun install
+
+      - name: Unit tests (bun test)
         id: test_unit
         run: bun test:unit

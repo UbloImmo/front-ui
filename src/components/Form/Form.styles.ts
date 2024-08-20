@@ -106,8 +106,7 @@ export const formEditBannerStyles = ({
 
 export const formFieldListContainerStyles = (): RuleSet => {
   return css`
-    padding: var(--s-6);
-    padding-bottom: var(--s-8);
+    padding: 0 var(--s-6) var(--s-8);
   `;
 };
 

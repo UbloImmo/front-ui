@@ -1,0 +1,36 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as CalendarStories from "../Calendar.stories.tsx";
+
+<Meta title="Components/Calendar/Usage" />
+
+<ComponentInfo of={CalendarStories} />
+
+<Content>
+
+## Usage
+
+TODO
+
+### Selection modes
+
+<Canvas of={CalendarStories.SelectionModes} />
+
+### Number of months
+
+<Canvas of={CalendarStories.NumberOfMonths} />
+
+### Modifiers
+
+#### Disabled
+
+<Canvas of={CalendarStories.Disabled} />
+
+#### Minimum / Maximum dates
+
+<Canvas of={CalendarStories.MinMax} />
+
+</Content>
+

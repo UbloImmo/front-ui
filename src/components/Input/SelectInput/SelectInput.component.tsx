@@ -1,17 +1,10 @@
 import { NullishPrimitives, isObject, isString } from "@ubloimmo/front-util";
-import {
-  Fragment,
-  useCallback,
-  useId,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useId, useLayoutEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
 import { SelectInputOption } from "./components/SelectInputOption.component";
+import { SelectInputOptionGroup } from "./components/SelectInputOptionGroup.component";
 import {
-  groupOptionLabelStyles,
   selectInputContainerStyles,
   selectInputStyles,
   selectInputWrapperStyles,
@@ -45,14 +38,14 @@ import type { TestIdProps } from "@types";
  * An input that displays a list of options, and allows the user to select one.
  *
  * @todo
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
  */
 const SelectInput = <TValue extends NullishPrimitives>(
   props: SelectInputProps<TValue> & TestIdProps
-) => {
+): JSX.Element => {
   const { options, mergedProps } = useSelectOptions(props);
 
   const {
@@ -190,20 +183,11 @@ const SelectInput = <TValue extends NullishPrimitives>(
         >
           {displayOptions.map((optionOrGroup, index) =>
             isSelectOptionGroup(optionOrGroup) ? (
-              <Fragment key={`${optionOrGroup.label}-${index}`}>
-                <GroupOptionLabel tabIndex={-1}>
-                  <Text color="gray-600" weight="bold" size="s" uppercase>
-                    {optionOrGroup.label}
-                  </Text>
-                </GroupOptionLabel>
-                {optionOrGroup.options.map((option, index) => (
-                  <SelectInputOption
-                    key={`${option.label}-${index}`}
-                    onSelect={selectOptionAndClose(option)}
-                    {...option}
-                  />
-                ))}
-              </Fragment>
+              <SelectInputOptionGroup
+                {...optionOrGroup}
+                onSelectOption={selectOptionAndClose}
+                key={`${optionOrGroup.label}-${index}`}
+              />
             ) : (
               <SelectInputOption
                 key={`${optionOrGroup.value}-${index}`}
@@ -247,9 +231,18 @@ const SelectInput = <TValue extends NullishPrimitives>(
             tabIndex={0}
           >
             {activeOption ? (
-              <Text weight="medium" color={valueTextColor} ellipsis>
-                {activeOption.label}
-              </Text>
+              <>
+                {activeOption.icon && (
+                  <Icon
+                    name={activeOption.icon}
+                    color={valueTextColor}
+                    size="s-3"
+                  />
+                )}
+                <Text weight="medium" color={valueTextColor} ellipsis>
+                  {activeOption.label}
+                </Text>
+              </>
             ) : (
               <Text
                 weight="medium"
@@ -267,7 +260,7 @@ const SelectInput = <TValue extends NullishPrimitives>(
         <StyledInputControl
           {...inputStyles}
           data-testid={`${testId}-control`}
-          onClick={toggleOptionList}
+          // onClick={toggleOptionList}
         >
           <Icon name="CaretDownFill" />
         </StyledInputControl>
@@ -295,8 +288,4 @@ const SelectOptionsContainer = styled.div`
 const StyledSelectInput = styled.button<CommonInputStyleProps>`
   ${commonInputStyles}
   ${selectInputStyles}
-`;
-
-const GroupOptionLabel = styled.div`
-  ${groupOptionLabelStyles}
 `;

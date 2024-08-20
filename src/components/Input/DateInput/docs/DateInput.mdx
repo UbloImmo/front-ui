@@ -1,0 +1,56 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as DateInputStories from "../DateInput.stories.tsx";
+
+<Meta title="Components/Input/DateInput/Usage" />
+
+<ComponentInfo of={DateInputStories} figmaId="76%3A6562" />
+
+<Content>
+
+## Usage
+
+`DateInput` component is an interactive single-line text-field combined with a expandable Calendar, a specific type of [Input](?path=/docs/components-input-usage--docs).
+It is commonly used in form layouts to prompt users for a date address.
+
+### Value & Formatting
+
+`DateInput` is initialized without a value. It accepts the following formats:
+ - `ISO`
+ - `yyyy-MM-dd`
+ - `dd/MM/yyyy`
+
+But always reports changes to its value as `ISO`.
+
+> While the user is typing an incomplete date, `DateInput` will report its value as being `null`.
+
+Each input below consumes the same date, but in a different format
+
+<Canvas of={DateInputStories.Values} />
+
+### User input
+
+This input uses a native `<input type="date" />` under the hood to handle user inputs.
+Each browser's specific date picker element has been disabled in favor of our own [Calendar](?path=/docs/components-calendar-usage--docs) component.
+
+> Both input methods are synchronized automatically.
+
+#### Using the keyboard
+
+Focusing the input allows users to type a date using conventional means, one part (e.g. day, month, year) at a time, and cycle through available values using the arrow keys.
+
+> The displayed date's format follows the user's locale.
+
+<Canvas of={DateInputStories.Default} />
+
+#### Picking a date from a calendar
+
+Clicking on the calendar icon opens a calendar popover. Select a date on it and it gets reflected in the input's value.
+
+> Show more months side by side by providing the `numberOfMonths` property (max. 3).
+
+<Canvas of={DateInputStories.Default} />
+
+
+</Content>

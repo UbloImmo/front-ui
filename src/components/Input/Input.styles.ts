@@ -61,6 +61,10 @@ export const inputControlGroupStyles = (
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${props.$noFocus &&
+  css`
+    pointer-events: all;
+  `}
 `;
 
 export const inputControlStyles = ({
@@ -74,7 +78,7 @@ export const inputControlStyles = ({
   transform: translateY(-50%);
   width: var(--s-4);
   min-width: max-content;
-  pointer-events: ${onClick ? "all" : "non"};
+  pointer-events: ${onClick ? "all" : "none"};
   cursor: ${!onClick ? "default" : props.$disabled ? "not-allowed" : "pointer"};
 `;
 

@@ -1,6 +1,9 @@
 import { css } from "styled-components";
 
-import type { PopoverContentStyleProps } from "./Popover.types";
+import type {
+  PopoverContentStyleProps,
+  PopoverTriggerStyleProps,
+} from "./Popover.types";
 import type { RuleSet } from "styled-components";
 
 export const popoverRootStyles = (): RuleSet => {
@@ -19,10 +22,16 @@ export const popoverTriggerStyles = (): RuleSet => {
   `;
 };
 
-export const popoverInnerTriggerStyles = (): RuleSet => {
+export const popoverInnerTriggerStyles = ({
+  $fill,
+}: PopoverTriggerStyleProps): RuleSet => {
   return css`
     width: fit-content;
     height: fit-content;
+    ${$fill &&
+    css`
+      width: 100%;
+    `}
   `;
 };
 
@@ -38,7 +47,7 @@ export const popoverContentStyles = ({
 
     &,
     & > *:first-child {
-      z-index: 1;
+      z-index: 10;
     }
 
     ${$fitTriggerWidth &&

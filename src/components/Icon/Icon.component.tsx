@@ -1,8 +1,11 @@
 import { useMemo, lazy, Suspense } from "react";
+import styled from "styled-components";
 
+import { iconFallbackStyles } from "./Icon.styles.ts";
 import {
   DefaultIconProps,
   GeneratedIcon,
+  IconFallbackStyleProps,
   IconProps,
   type MissingIcon,
 } from "./Icon.types";
@@ -23,7 +26,7 @@ const defaultIconProps: DefaultIconProps = {
  *
  * @remarks Determines the icon name based on the provided name, then looks up the corresponding icon component.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {IconProps} props - The props for the icon component.
  * @return {JSX.Element | null} The rendered icon component or null if the icon component is not found.
@@ -62,7 +65,9 @@ const Icon = (props: IconProps) => {
     return null;
   }
   return (
-    <Suspense fallback={null}>
+    <Suspense
+      fallback={<IconFallback data-testid="icon-fallback" $size={parsedSize} />}
+    >
       <IconComponent size={parsedSize} color={color} />
     </Suspense>
   );
@@ -71,3 +76,7 @@ const Icon = (props: IconProps) => {
 Icon.defaultProps = defaultIconProps;
 
 export { Icon };
+
+const IconFallback = styled.div<IconFallbackStyleProps>`
+  ${iconFallbackStyles}
+`;

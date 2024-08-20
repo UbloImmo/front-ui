@@ -7,7 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.1` Calendar component
+
+- `v0.0.1` DateInput component
+  - with Input, Field and Form integration
+
+### Fixed
+
+- `v0.0.2` Icon component
+  - Render transparent spacer of same size while icon is loading
+
 ### Changed
+
+- Global style
+  - set selection highlight color based on current theme
+
+- `v0.0.2` SelectInput component
+  - Move option groups to separate component
+  - Add ability for options to have icons
 
 - `v0.0.3` Grid layout
   - Add support for ARIA role

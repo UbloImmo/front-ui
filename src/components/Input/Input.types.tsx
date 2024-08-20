@@ -148,6 +148,7 @@ export type InputValue<TType extends InputType> = TType extends
   | "password"
   | "phone"
   | "textarea"
+  | "date"
   ? string
   : TType extends "number"
   ? number
@@ -220,9 +221,13 @@ export type CommonInputStyleProps = StyleProps<
 export type InputControlStyleProps = CommonInputStyleProps & {
   onClick?: VoidFn;
   $anchor?: DirectionHorizontal;
+  $noFocus?: boolean;
 };
 
-export type InputControlAnchorProps = Pick<InputControlStyleProps, "$anchor">;
+export type InputControlAnchorProps = Pick<
+  InputControlStyleProps,
+  "$anchor" | "$noFocus"
+>;
 
 export type UseInputRefReturn<TElement extends Element> = {
   inputRef: MutableRefObject<Nullable<TElement>>;

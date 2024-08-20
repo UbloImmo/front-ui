@@ -160,6 +160,11 @@ export const cssReset = (): RuleSet => css`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    &::selection {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
   }
 `;
 
@@ -279,7 +284,6 @@ const appendGlobalStyle = ({
  *
  * @param {GlobalStyleProps} props - The props for the GlobalStyle component.
  * @param {Theme} props.theme - The theme object
- * @return {null}
  */
 export const GlobalStyle = ({ theme }: GlobalStyleProps) => {
   const innerProps = useGlobalStyle(theme);

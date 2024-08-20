@@ -31,7 +31,7 @@ const addressData: FormData<Address> = {
   street: "Main Street",
   city: "New York",
   zipCode: "12345",
-  country: "USA",
+  country: "US",
   coordinates: {
     latitude: 40.7128,
     longitude: -74.006,
@@ -132,7 +132,7 @@ export const Default: Story = {
 const identitySchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
-  age: z.number().nullish(),
+  dateOfBirth: z.string(),
   contact: z.object({
     email: z.string().email(),
     phone: z.string(),
@@ -186,9 +186,12 @@ const identityFormProps: FormProps<Identity> = {
       type: "text",
       source: "professionalInfo.role",
       label: "Job title",
-      layout: {
-        size: 2,
-      },
+    },
+    {
+      type: "date",
+      source: "dateOfBirth",
+      label: "Date of birth",
+      placeholder: "Date of birth",
     },
     {
       label: "Contact info",
