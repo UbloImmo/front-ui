@@ -25,4 +25,19 @@ To enable searching and filtering the options in `SelectInput`, you can set the 
 
 <Canvas of={SelectInputStories.Searchable} />
 
+### Customization
+
+This input supports rendering arbitrary components for its options as well as its selected option.
+
+> Extra data can be passed each option, and as such to custom components through the `option.extraData` property.
+
+The input's height will scale according to its option's size. It is currently not possible to customize the appearance of the inner search input
+that is displayed on focus when the `searchable` property is enabled.
+
+> Defaut effects and active indicators (checkmark) will not be renderered as to not draw over any custom component.
+> The active state can be consumed inside any custom component through the `props.active` property.
+
+<Canvas of={SelectInputStories.CustomComponents} />
+
+
 </Content>

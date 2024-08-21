@@ -1,5 +1,13 @@
-import { NullishPrimitives, isObject, isString } from "@ubloimmo/front-util";
-import { useCallback, useId, useLayoutEffect, useMemo, useState } from "react";
+import { NullishPrimitives, isString } from "@ubloimmo/front-util";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 
 import { SelectInputOption } from "./components/SelectInputOption.component";
@@ -37,16 +45,18 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @todo
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
  */
-const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
-  props: SelectInputProps<TValue> & TestIdProps
+const SelectInput = <
+  TValue extends NullishPrimitives = NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+>(
+  props: SelectInputProps<TValue, TExtraData> & TestIdProps
 ): JSX.Element => {
-  const { options, mergedProps } = useSelectOptions(props);
+  const { options, mergedProps, refetchOptions } = useSelectOptions(props);
 
   const {
     displayOptions,
@@ -55,7 +65,7 @@ const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
     autoCompleteQuery,
     setAutoCompleteQuery,
     isQuerying,
-  } = useSelectValue(mergedProps, options);
+  } = useSelectValue(mergedProps, options, refetchOptions);
   const inputStyles = useInputStyles(mergedProps);
 
   const { placeholder, disabled, searchable } = mergedProps;
@@ -65,6 +75,7 @@ const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
   const inputId = useId();
 
   const testId = useTestId("input-select", props);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { inputRef, forwardRef } = useInputRef(mergedProps);
 
@@ -76,11 +87,18 @@ const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
   }, [inputRef]);
 
   const openOptions = useCallback(() => {
+    setIsOpen(true);
     if (inputRef.current) {
       inputRef.current.focus();
     }
-    setIsOpen(true);
   }, [inputRef]);
+
+  useEffect(() => {
+    if (inputRef.current && searchable && isOpen) {
+      inputRef.current.focus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, inputRef.current]);
 
   const toggleOptionList = useCallback(() => {
     if (!isOpen) {
@@ -99,7 +117,7 @@ const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
         setInternalValue(option.value);
       };
     },
-    [closeOptions, disabled, setInternalValue, isQuerying, setAutoCompleteQuery]
+    [disabled, isQuerying, setAutoCompleteQuery, closeOptions, setInternalValue]
   );
 
   const onQueryChange = useInputOnChange<"text">(
@@ -128,29 +146,9 @@ const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
   useLayoutEffect(() => {
     const onPointerDown = (e: PointerEvent) => {
       if (!e.target) return;
-      if ("id" in e.target) {
-        if (e.target.id === inputId) return;
-      }
-
-      if ("dataset" in e.target && isObject(e.target.dataset)) {
-        if ("testid" in e.target.dataset) {
-          if (
-            // container
-            e.target.dataset.testid === testId ||
-            // liste d'options
-            e.target.dataset.testid === "input-select-options" ||
-            // input lorsque searchable
-            e.target.dataset.testid === "input-select-query" ||
-            // option
-            e.target.dataset.testid === "input-select-option" ||
-            // control
-            e.target.dataset.testid === "input-select-control" ||
-            // option label
-            e.target.dataset.testid === "input-select-option-label"
-          )
-            return;
-        }
-      }
+      if ("id" in e.target && e.target.id === inputId) return;
+      if (!wrapperRef.current) return;
+      if (wrapperRef.current.contains(e.target as HTMLElement)) return;
 
       setIsOpen(false);
     };
@@ -168,12 +166,22 @@ const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
     };
   }, [closeOptions, inputId, testId]);
 
+  const OptionComponent = useMemo(
+    () => mergedProps.Option ?? null,
+    [mergedProps]
+  );
+
+  const SelectedOptionComponent = useMemo(
+    () => mergedProps.SelectedOption ?? null,
+    [mergedProps]
+  );
+
   const valueTextColor = useMemo(() => {
     return disabled ? "gray-700" : "gray-800";
   }, [disabled]);
 
   return (
-    <SelectInputWrapper reverse>
+    <SelectInputWrapper reverse ref={wrapperRef}>
       {isOpen && (
         <SelectOptionsContainer
           role="listbox"
@@ -182,16 +190,18 @@ const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
           aria-expanded={isOpen}
         >
           {displayOptions.map((optionOrGroup, index) =>
-            isSelectOptionGroup(optionOrGroup) ? (
+            isSelectOptionGroup<TValue, TExtraData>(optionOrGroup) ? (
               <SelectInputOptionGroup
                 {...optionOrGroup}
                 onSelectOption={selectOptionAndClose}
                 key={`${optionOrGroup.label}-${index}`}
+                Option={OptionComponent}
               />
             ) : (
               <SelectInputOption
                 key={`${optionOrGroup.value}-${index}`}
                 onSelect={selectOptionAndClose(optionOrGroup)}
+                Option={OptionComponent}
                 {...optionOrGroup}
               />
             )
@@ -203,7 +213,7 @@ const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
         data-testid={testId}
         aria-expanded={isOpen}
       >
-        {mergedProps.searchable ? (
+        {mergedProps.searchable && isOpen ? (
           <StyledInput
             {...inputStyles}
             value={query}
@@ -231,38 +241,42 @@ const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
             tabIndex={0}
           >
             {activeOption ? (
-              <>
-                {activeOption.icon && (
-                  <Icon
-                    name={activeOption.icon}
-                    color={valueTextColor}
-                    size="s-3"
-                  />
-                )}
-                <Text weight="medium" color={valueTextColor} ellipsis>
-                  {activeOption.label}
-                </Text>
-              </>
+              SelectedOptionComponent ? (
+                <CustomSelectedOptionContainer>
+                  <SelectedOptionComponent {...activeOption} />
+                </CustomSelectedOptionContainer>
+              ) : (
+                <SelectedOptionContainer>
+                  {activeOption.icon && (
+                    <Icon
+                      name={activeOption.icon}
+                      color={valueTextColor}
+                      size="s-3"
+                    />
+                  )}
+                  <Text weight="medium" color={valueTextColor} ellipsis>
+                    {activeOption.label}
+                  </Text>
+                </SelectedOptionContainer>
+              )
             ) : (
-              <Text
-                weight="medium"
-                color="gray-400"
-                testId={`${testId}-placeholder`}
-                aria-placeholder={placeholder}
-                overrideTestId
-                ellipsis
-              >
-                {placeholder}
-              </Text>
+              <SelectedOptionContainer>
+                <Text
+                  weight="medium"
+                  color="gray-400"
+                  testId={`${testId}-placeholder`}
+                  aria-placeholder={placeholder}
+                  overrideTestId
+                  ellipsis
+                >
+                  {placeholder}
+                </Text>
+              </SelectedOptionContainer>
             )}
           </StyledSelectInput>
         )}
-        <StyledInputControl
-          {...inputStyles}
-          data-testid={`${testId}-control`}
-          // onClick={toggleOptionList}
-        >
-          <Icon name="CaretDownFill" />
+        <StyledInputControl {...inputStyles} data-testid={`${testId}-control`}>
+          <Icon name={mergedProps.controlIcon} />
         </StyledInputControl>
       </SelectInputContainer>
     </SelectInputWrapper>
@@ -288,4 +302,15 @@ const SelectOptionsContainer = styled.div`
 const StyledSelectInput = styled.button<CommonInputStyleProps>`
   ${commonInputStyles}
   ${selectInputStyles}
+`;
+
+const SelectedOptionContainer = styled.div`
+  ${selectInputStyles}
+  padding: var(--s-2);
+  padding-right: var(--s-8);
+`;
+
+const CustomSelectedOptionContainer = styled.div`
+  ${selectInputStyles}
+  padding-right: var(--s-6)
 `;

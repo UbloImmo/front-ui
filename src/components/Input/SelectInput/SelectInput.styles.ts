@@ -13,6 +13,10 @@ export const selectInputStyles = (): RuleSet => {
     display: flex;
     align-items: center;
     gap: var(--s-1);
+    padding: 0;
+    width: 100%;
+    max-height: fit-content;
+    height: fit-content;
 
     &:disabled {
       cursor: not-allowed;
@@ -23,6 +27,7 @@ export const selectInputStyles = (): RuleSet => {
 export const selectInputWrapperStyles = (): RuleSet => css`
   position: relative;
   --input-height: var(--s-8);
+  max-height: fit-content;
 
   @media screen and (max-width: ${breakpointsPx.XS}) {
     --input-height: var(--s-10);
@@ -46,7 +51,7 @@ export const selectInputContainerStyles = (
 export const selectOptionContainerStyles = (): RuleSet => {
   return css`
     position: absolute;
-    top: calc(var(--input-height) - var(--s-1));
+    top: calc(100% - var(--s-1));
     padding-top: var(--s-1);
     width: 100%;
     border-radius: 0 0 var(--s-1) var(--s-1);
@@ -74,29 +79,17 @@ const beforeBackgroundColorStyle = (): RuleSet => {
   `;
 };
 
-export const buildSelectOptionItemStyles = (): RuleSet => {
+const sharedSelectOptionContainerStyles = (): RuleSet => {
   return css`
-    padding: var(--s-2);
-    height: var(--s-8);
-    min-height: var(--s-8);
-    max-height: var(--s-8);
-    transition: background-color 300ms ease-out;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     position: relative;
     cursor: pointer;
-
-    span[data-testid="input-select-option-label"] {
-      transition: color 300ms ease-out;
-    }
 
     &:not(:first-child) {
       border-top: 1px solid var(--primary-light);
     }
 
-    span {
-      overflow: hidden;
+    & > *:not(:before) {
+      position: relative;
     }
 
     &[aria-disabled] {
@@ -107,6 +100,38 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
       &:last-child::before {
         bottom: 1px;
       }
+    }
+
+    &:last-child {
+      &::before,
+      & {
+        border-radius: 0 0 var(--s-1) var(--s-1);
+      }
+    }
+  `;
+};
+
+export const customSelectOptionStyles = sharedSelectOptionContainerStyles;
+
+export const selectOptionStyles = (): RuleSet => {
+  return css`
+    ${sharedSelectOptionContainerStyles}
+
+    padding: var(--s-2);
+    height: var(--s-8);
+    min-height: var(--s-8);
+    max-height: var(--s-8);
+    transition: background-color 300ms ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span[data-testid="input-select-option-label"] {
+      transition: color 300ms ease-out;
+    }
+
+    span {
+      overflow: hidden;
     }
 
     span[data-testid="input-select-option-label"],
@@ -125,13 +150,6 @@ export const buildSelectOptionItemStyles = (): RuleSet => {
       }
       transition-duration: 150ms;
       background-color: var(--primary-light);
-    }
-
-    &:last-child {
-      &::before,
-      & {
-        border-radius: 0 0 var(--s-1) var(--s-1);
-      }
     }
   `;
 };
