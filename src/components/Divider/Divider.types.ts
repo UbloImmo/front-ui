@@ -1,5 +1,8 @@
 import type { StyleOverrideProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
+import type { Enum, Nullable } from "@ubloimmo/front-util";
+
+const labelAlignments = ["start", "center"] as const;
+export type LabelAlignment = Enum<typeof labelAlignments>;
 
 export type DividerProps = StyleOverrideProps & {
   /**
@@ -8,6 +11,14 @@ export type DividerProps = StyleOverrideProps & {
    * @default null
    */
   label?: Nullable<string>;
+
+  /**
+   * The horizontal alignment of the label
+   *
+   * @default "start"
+   * @type {LabelAlignment}
+   */
+  justify?: LabelAlignment;
 };
 
 export type DividerDefaultProps = Required<DividerProps>;

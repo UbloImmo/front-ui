@@ -13,13 +13,14 @@ import {
   useClassName,
 } from "@utils";
 
-import { Heading } from "@components";
+import { Heading, Text } from "@components";
 
 import type { DividerProps, DividerDefaultProps } from "./Divider.types";
 import type { TestIdProps } from "@types";
 
 const defaultDividerProps: DividerDefaultProps = {
   label: null,
+  justify: "start",
   className: null,
 };
 
@@ -28,7 +29,7 @@ const defaultDividerProps: DividerDefaultProps = {
  *
  * A horizontal line that can be used to separate content, with an optional label.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {DividerProps & TestIdProps} props - Divider component props
  * @returns {JSX.Element}
@@ -36,6 +37,7 @@ const defaultDividerProps: DividerDefaultProps = {
 const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
   const { error } = useLogger("Divider");
   const mergedProps = useMergedProps(defaultDividerProps, props);
+  const { justify } = mergedProps;
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("divider", props);
   const className = useClassName(props);
@@ -58,7 +60,20 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
       justify="center"
       fill
     >
-      {label && (
+      {label && justify === "center" ? (
+        <>
+          <DividerLine data-testid="divider-line" />
+          <Text
+            size="s"
+            color="gray-400"
+            weight="medium"
+            testId="divider-label"
+            overrideTestId
+          >
+            {label}
+          </Text>
+        </>
+      ) : (
         <Heading
           size="h4"
           color="gray-700"
