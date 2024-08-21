@@ -28,6 +28,12 @@ const meta = {
     disabled: {
       type: "boolean",
     },
+    description: {
+      type: "string",
+    },
+    label: {
+      type: "string",
+    },
   },
   parameters: {
     docs: componentSource(),
@@ -47,6 +53,7 @@ export const Active = (props: ComboBoxButtonProps) => {
       defaults={props}
       variants={[true, false]}
       propLabels
+      columns={2}
     />
   );
 };
@@ -59,6 +66,7 @@ export const Disabled = (props: ComboBoxButtonProps) => {
       defaults={props}
       variants={[true, false]}
       propLabels
+      columns={2}
     />
   );
 };
@@ -71,6 +79,35 @@ export const Multi = (props: ComboBoxButtonProps) => {
       defaults={props}
       variants={[true, false]}
       propLabels
+      columns={2}
+    />
+  );
+};
+
+const descriptions = [null, "This button has a description!"];
+export const Description = (props: ComboBoxButtonProps) => {
+  return (
+    <ComponentVariants
+      variants={descriptions}
+      for="description"
+      of={ComboBoxButton}
+      defaults={props}
+      propLabels
+      columns={2}
+    />
+  );
+};
+
+const labels = ["Option A", "Option B with a somewhat longer label"];
+export const Label = (props: ComboBoxButtonProps) => {
+  return (
+    <ComponentVariants
+      variants={labels}
+      for="label"
+      of={ComboBoxButton}
+      defaults={props}
+      propLabels
+      columns={2}
     />
   );
 };

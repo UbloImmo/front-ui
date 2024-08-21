@@ -11,7 +11,8 @@ import * as ComboBoxStories from "../ComboBox.stories.tsx";
 
 ## Usage
 
-`ComboBox` is a component that will be useful for enabling the user to select from a predefined set of options.
+`ComboBox` is a component that enables the user to select from a predefined set of options.
+Uses [ComboBoxButtons](?path=/docs/components-comboboxbutton-usage--docs) under the hood.
 
 ### Selecting only one or many options
 
@@ -24,6 +25,12 @@ By default, `ComboBox` allows the user to select a single option. To enable mult
 The options in `Combobox` are displayed in a row by default, wrapping into multiple rows on smaller devices. If you prefer a vertical display, you can set the direction property to `column`.
 
 <Canvas of={ComboBoxStories.Direction} />
+
+When needed, options can be displayed in a grid. To do so, provide the `columns` property.
+
+> Options will be displayed in a grid with the specified number of columns.
+
+<Canvas of={ComboBoxStories.Columns} /> 
 
 ### Disabling the options
 

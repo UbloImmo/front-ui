@@ -83,6 +83,19 @@ export const Direction = () => {
   );
 };
 
+export const Columns = () => {
+  return (
+    <ComponentVariants
+      for="columns"
+      of={ComboBox}
+      defaults={meta.args}
+      variants={[1, 2]}
+      propLabels
+      columns={2}
+    />
+  );
+};
+
 export const DisabledOptions: Story = {
   args: {
     options: [
