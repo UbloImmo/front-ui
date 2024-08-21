@@ -1,4 +1,4 @@
-import { RgbaColorStr } from ".";
+import type { RgbaColorStr } from "./themes/color.types";
 
 export const tokenTypes = [
   "TEXT",

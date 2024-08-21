@@ -1,4 +1,4 @@
-import type { CssRem } from "../../global";
+import type { CssRem } from "@/types/global/css.types";
 
 export const UNIT_PX = 4 as const;
 

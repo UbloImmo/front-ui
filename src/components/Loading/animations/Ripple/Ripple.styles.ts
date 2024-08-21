@@ -3,7 +3,7 @@ import { css, keyframes, type StyleFunction } from "styled-components";
 import { parseFixedLength } from "@/sizes/size.utils";
 import { cssVarUsage } from "@utils";
 
-import type { LoadingAnimationProps } from "../../Loading.types";
+import type { LoadingAnimationProps } from "../Loading.animations.types";
 import type { StyleProps } from "@types";
 
 const cssAnim = keyframes`
@@ -17,7 +17,7 @@ const cssAnim = keyframes`
   }
 `;
 
-export const spinnerStyle: StyleFunction<StyleProps<LoadingAnimationProps>> = ({
+export const rippleStyle: StyleFunction<StyleProps<LoadingAnimationProps>> = ({
   $size,
   $color,
 }) => {

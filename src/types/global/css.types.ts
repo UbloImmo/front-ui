@@ -1,4 +1,4 @@
-import { SpacingLabel } from "..";
+import type { SpacingLabel } from "../themes/sizes/spacing.types";
 
 /**
  * A CSS `px` length

@@ -23,23 +23,11 @@ export type ComboBoxOption<TOptionValue extends NullishPrimitives> = {
   disabled?: boolean;
 };
 
-export type ComboBoxOnChangeMultiFn<TOptionValue extends NullishPrimitives> =
-  VoidFn<[TOptionValue[]]>;
+export type ComboBoxOnChangeFn<TOptionValue extends NullishPrimitives> = VoidFn<
+  [TOptionValue[]]
+>;
 
-export type ComboBoxOnChangeSingleFn<TOptionValue extends NullishPrimitives> =
-  VoidFn<[Nullable<TOptionValue>]>;
-
-export type ComboBoxOnChangeFn<
-  TOptionValue extends NullishPrimitives,
-  TMulti extends boolean
-> = TMulti extends true
-  ? ComboBoxOnChangeMultiFn<TOptionValue>
-  : ComboBoxOnChangeSingleFn<TOptionValue>;
-
-export type ComboBoxProps<
-  TOptionValue extends NullishPrimitives,
-  TMulti extends boolean = false
-> = {
+export type ComboBoxProps<TOptionValue extends NullishPrimitives> = {
   /**
    * The options to display in the combobox
    * @required
@@ -78,13 +66,13 @@ export type ComboBoxProps<
    * @type {boolean}
    */
 
-  multi?: TMulti;
+  multi?: boolean;
   /**
    * Callback that fires each time selected option(s) changes
    *
    * @remarks If `multi` is true, the callback will receive an array of selected values, otherwise it will receive a single value or `null`
    */
-  onChange?: Nullable<ComboBoxOnChangeFn<TOptionValue, TMulti>>;
+  onChange?: Nullable<ComboBoxOnChangeFn<NoInfer<TOptionValue>>>;
   /**
    * Whether to disable the selection of all options
    *
@@ -100,9 +88,19 @@ export type ComboBoxProps<
    * @type {boolean}
    */
   showIcon?: boolean;
+
+  /**
+   * Whether to make the combobox readonly.
+   *
+   * @remarks Disabled styles will not be applied but component will not be interactible
+   *
+   * @remarks Used in Form Field while a form is in "view" mode
+   *
+   * @type {boolean}
+   * @default false
+   */
+  readonly?: boolean;
 };
 
-export type ComboBoxDefaultProps<
-  TOptionValue extends NullishPrimitives,
-  TMulti extends boolean = false
-> = Required<ComboBoxProps<TOptionValue, TMulti>>;
+export type ComboBoxDefaultProps<TOptionValue extends NullishPrimitives> =
+  Required<ComboBoxProps<TOptionValue>>;

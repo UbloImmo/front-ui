@@ -53,8 +53,8 @@ const StyleReset = styled.div`
       border-left: var(--s-1) solid var(--primary-medium);
       border-radius: var(--s-1);
       background: var(--primary-light);
-      margin-top: var(--s-2);
-      margin-bottom: var(--s-1);
+      margin: var(--s-2) 0;
+      margin-bottom: var(--s-4);
       span {
         margin-bottom: 0 !important;
         font-size: var(--text-m);

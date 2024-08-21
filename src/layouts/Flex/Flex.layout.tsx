@@ -10,6 +10,7 @@ import type {
   FlexLayoutProps,
 } from "./Flex.types";
 import type { StyleProps, TestIdProps } from "@types";
+import { forwardRef } from "react";
 
 const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   direction: "row",
@@ -28,19 +29,21 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
 /**
  * A flexbox wrapper layout, with default properties direction set to `row`, align and justify set to `start`
  *
- * @version 0.0.1
+ * @version 0.0.2
  * @param {FlexLayoutProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */
-export const FlexLayout = (
-  props: FlexLayoutProps & TestIdProps
-): JSX.Element => {
+export const FlexLayout = forwardRef<
+  HTMLDivElement,
+  FlexLayoutProps & TestIdProps
+>((props: FlexLayoutProps & TestIdProps, ref): JSX.Element => {
   const innerProps = useStyleProps(props);
   const testId = useTestId("flex", props);
   const className = useClassName(props);
   return (
     <FlexLayoutInner
       {...innerProps}
+      ref={ref}
       data-testid={testId}
       className={className}
       role={props.role ?? undefined}
@@ -48,7 +51,7 @@ export const FlexLayout = (
       {props.children}
     </FlexLayoutInner>
   );
-};
+});
 
 /**
  * A {@link FlexLayout} variant with fixed `row` directionS
@@ -56,13 +59,14 @@ export const FlexLayout = (
  * @param {FlexDirectionLayoutProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */
-export const FlexRowLayout = (
-  props: FlexDirectionLayoutProps & TestIdProps
-): JSX.Element => {
+export const FlexRowLayout = forwardRef<
+  HTMLDivElement,
+  FlexDirectionLayoutProps & TestIdProps
+>((props: FlexDirectionLayoutProps & TestIdProps, ref): JSX.Element => {
   const testId = useTestId("flex-row", props);
 
-  return <FlexLayout {...props} direction="row" testId={testId} />;
-};
+  return <FlexLayout {...props} ref={ref} direction="row" testId={testId} />;
+});
 
 /**
  * A {@link FlexLayout} variant with fixed `column` direction
@@ -70,12 +74,13 @@ export const FlexRowLayout = (
  * @param {FlexDirectionLayoutProps} [props = defaultFlexColumnLayoutProps] - optional props.
  * @return {JSX.Element} The styled flex wrapper
  */
-export const FlexColumnLayout = (
-  props: FlexDirectionLayoutProps & TestIdProps
-): JSX.Element => {
+export const FlexColumnLayout = forwardRef<
+  HTMLDivElement,
+  FlexDirectionLayoutProps & TestIdProps
+>((props: FlexDirectionLayoutProps & TestIdProps, ref): JSX.Element => {
   const testId = useTestId("flex-column", props);
-  return <FlexLayout {...props} direction="column" testId={testId} />;
-};
+  return <FlexLayout {...props} ref={ref} direction="column" testId={testId} />;
+});
 
 FlexLayout.defaultProps = defaultFlexLayoutProps;
 

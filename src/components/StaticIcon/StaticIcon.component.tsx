@@ -5,32 +5,39 @@ import {
   staticIconSizeToIconSizeMap,
   staticIconStyle,
 } from "./StaticIcon.styles";
-import { DefaultStaticIconProps, StaticIconProps } from "./StaticIcon.types";
-import { Icon, IconProps } from "../Icon";
+import { Icon, type IconProps } from "../Icon";
 
-import { PaletteColor, StyleProps } from "@types";
-import { mergeDefaultProps, useStyleProps } from "@utils";
+import {
+  useHtmlAttribute,
+  useMergedProps,
+  useStyleProps,
+  useTestId,
+} from "@utils";
+
+import type {
+  DefaultStaticIconProps,
+  StaticIconProps,
+} from "./StaticIcon.types";
+import type { PaletteColor, StyleProps, TestIdProps } from "@types";
 
 const defaultStaticIconProps: DefaultStaticIconProps = {
   color: "primary",
   size: "s",
   stroke: false,
   name: Icon.defaultProps.name,
+  className: null,
 };
 
 /**
  * Wraps an `Icon` in a container of the same color, a shade lighter.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
- * @param {StaticIconProps} props - The props for the static icon.
+ * @param {StaticIconProps & TestIdProps} props - The props for the static icon.
  * @return {JSX.Element} The static icon component.
  */
-const StaticIcon = (props: StaticIconProps) => {
-  const mergedProps = useMemo(
-    () => mergeDefaultProps(defaultStaticIconProps, props),
-    [props]
-  );
+const StaticIcon = (props: StaticIconProps & TestIdProps) => {
+  const mergedProps = useMergedProps(defaultStaticIconProps, props);
 
   const { color, size, name } = mergedProps;
   const styledProps = useStyleProps(mergedProps);
@@ -49,8 +56,16 @@ const StaticIcon = (props: StaticIconProps) => {
     };
   }, [color, size]);
 
+  const testId = useTestId("static-icon", props);
+
+  const className = useHtmlAttribute(mergedProps.className);
+
   return (
-    <StaticIconContainer data-testid="static-icon" {...styledProps}>
+    <StaticIconContainer
+      data-testid={testId}
+      className={className}
+      {...styledProps}
+    >
       <Icon name={name} {...iconProps} />
     </StaticIconContainer>
   );

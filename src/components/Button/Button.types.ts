@@ -1,4 +1,4 @@
-import type { IconName } from "..";
+import type { IconName } from "../Icon/Icon.types";
 import type {
   DirectionHorizontal,
   PaletteColor,

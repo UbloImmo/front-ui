@@ -11,8 +11,7 @@ import {
   type ComboBoxProps,
   type ComboBoxDefaultProps,
   type ComboBoxOption,
-  type ComboBoxOnChangeMultiFn,
-  type ComboBoxOnChangeSingleFn,
+  type ComboBoxOnChangeFn,
 } from "./ComboBox.types";
 import { ComboBoxButton } from "../ComboBoxButton";
 
@@ -30,6 +29,7 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   disabled: false,
   showIcon: true,
   columns: null,
+  readonly: false,
 };
 
 /**
@@ -40,18 +40,15 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
  */
-const ComboBox = <
-  TOptionValue extends NullishPrimitives,
-  TMulti extends boolean = false
->(
-  props: ComboBoxProps<TOptionValue, TMulti> & TestIdProps
+const ComboBox = <TOptionValue extends NullishPrimitives>(
+  props: ComboBoxProps<TOptionValue> & TestIdProps
 ): JSX.Element => {
   const { warn } = useLogger("ComboBox");
   const mergedProps = useMergedProps(
-    defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue, TMulti>,
+    defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue>,
     props
   );
-  const { options, multi, onChange, disabled, direction, showIcon } =
+  const { options, multi, onChange, disabled, direction, showIcon, readonly } =
     mergedProps;
   const testId = useTestId("combo-box", props);
 
@@ -79,21 +76,15 @@ const ComboBox = <
 
   useEffect(() => {
     if (disabled) return;
-    if (multi && isFunction<ComboBoxOnChangeMultiFn<TOptionValue>>(onChange)) {
+
+    if (isFunction<ComboBoxOnChangeFn<TOptionValue>>(onChange)) {
       onChange(selection);
     }
-    if (
-      !multi &&
-      isFunction<ComboBoxOnChangeSingleFn<TOptionValue>>(onChange)
-    ) {
-      onChange(selection[0] ?? null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selection]);
+  }, [selection, onChange, disabled]);
 
   const selectOptionOnClick = useCallback(
     (option: ComboBoxOption<TOptionValue>) => () => {
-      if (disabled) return;
+      if (disabled || readonly) return;
       if (multi) {
         if (isOptionActive(option)) {
           const newSelection = [...selection].filter(
@@ -111,7 +102,7 @@ const ComboBox = <
         }
       }
     },
-    [multi, selection, isOptionActive, disabled]
+    [multi, selection, isOptionActive, disabled, readonly]
   );
 
   if (!props.options) {
