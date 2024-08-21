@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.6` ComboBox component
+  - Add support for comboboxButton descriptions
+
+- `v0.0.5` ComboBoxButton component
+  - Add `description` property
+  - Udpdate styles
+
+- `v0.0.2` FormField component
+  - Make field take full width based on breakpoint
+
 ## 0.23.1 - 2024-08-21
 ### Added
 - `v0.0.1` ComboBoxInput internal component
