@@ -23,6 +23,13 @@ const meta = {
       description: "The label to display",
       table: { defaultValue: { summary: "null" } },
     },
+    justify: {
+      type: "string",
+      options: ["start", "center"],
+      control: { type: "select" },
+      description: "The alignment of the label",
+      table: { defaultValue: { summary: "start" } },
+    },
   },
   parameters: {
     docs: componentSource(),
@@ -53,4 +60,24 @@ export const Labels = (props: DividerProps) => {
 };
 Labels.parameters = {
   docs: componentSource(labels.map((label) => ({ label }))),
+};
+
+export const Justify = (props: DividerProps) => {
+  const mergedProps = useMergedProps(Divider.defaultProps, props);
+  return (
+    <ComponentVariants
+      defaults={mergedProps}
+      variants={["start", "center"]}
+      for="justify"
+      of={Divider}
+      scaling={1}
+      columns={2}
+      align="center"
+      propLabels
+    />
+  );
+};
+
+Justify.args = {
+  label: "Divider label",
 };
