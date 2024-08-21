@@ -2,7 +2,9 @@ import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
 import { objectKeys } from "@ubloimmo/front-util";
 import { css, StyleFunction } from "styled-components";
 
+import { typographyWeightMap } from "./typogaphy.weight";
 import { typographyFontFace } from "./typography.font";
+
 import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "@utils";
 
 import type {
@@ -15,7 +17,6 @@ import type {
   StyleProps,
   TypographySize,
 } from "@types";
-import { typographyWeightMap } from "./typogaphy.weight";
 
 /**
  * Returns the CSS text decoration string based on the provided options.

@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 import { buildFlexLayoutStyle } from "./Flex.styles";
@@ -10,7 +11,6 @@ import type {
   FlexLayoutProps,
 } from "./Flex.types";
 import type { StyleProps, TestIdProps } from "@types";
-import { forwardRef } from "react";
 
 const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   direction: "row",
