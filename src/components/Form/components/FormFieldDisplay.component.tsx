@@ -48,18 +48,24 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
     if (date) return date.toLocaleDateString();
     return "Invalid date";
   },
-  combobox: (values, { options }) => {
+  combobox: (values, { options, direction, columns }) => {
+    const commonProps = {
+      direction,
+      columns,
+      readonly: true,
+      showIcon: false,
+    };
     if (!values || !options) return noValue;
     if (isArray(values)) {
       const displayOptions = options.filter(({ value }) =>
         values.includes(value)
       );
       if (!displayOptions?.length) return noValue;
-      return <ComboBox readonly showIcon={false} options={displayOptions} />;
+      return <ComboBox {...commonProps} options={displayOptions} />;
     }
     const option = options.find(({ value }) => value === values);
     if (!option) return noValue;
-    return <ComboBox readonly showIcon={false} options={[option]} />;
+    return <ComboBox {...commonProps} options={[option]} />;
   },
 };
 
