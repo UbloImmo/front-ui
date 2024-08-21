@@ -136,29 +136,35 @@ export type DefaultCommonInputProps = Required<CommonInputProps>;
 export type InputType = Enum<typeof inputTypes>;
 
 /**
+ * Intermediary map used by {@link InputValue}
+ */
+export type InputTypeMap<
+  TGenericValue extends NullishPrimitives = NullishPrimitives
+> = {
+  text: string;
+  password: string;
+  phone: string;
+  textarea: string;
+  date: string;
+  number: number;
+  currency: CurrencyInt;
+  email: Email;
+  select: TGenericValue;
+  combobox: TGenericValue | TGenericValue[];
+};
+
+/**
  * The value returned and taken by an input component.
  * Varies based on the component's {@link InputType}.
  *
  * @template {InputType} TType - The input's type
  *
- * @see {@link InputOnChangeFn}, {@link InputProps}
+ * @see {@link InputOnChangeFn}, {@link InputProps}, {@link InputTypeMap}
  */
-export type InputValue<TType extends InputType> = TType extends
-  | "text"
-  | "password"
-  | "phone"
-  | "textarea"
-  | "date"
-  ? string
-  : TType extends "number"
-  ? number
-  : TType extends "currency"
-  ? CurrencyInt
-  : TType extends "email"
-  ? Email
-  : TType extends "select"
-  ? NullishPrimitives
-  : never;
+export type InputValue<
+  TType extends InputType,
+  TGenericValue extends NullishPrimitives = NullishPrimitives
+> = InputTypeMap<TGenericValue>[TType];
 
 /**
  * An input components `onChange` callback function.
@@ -168,9 +174,10 @@ export type InputValue<TType extends InputType> = TType extends
  * @template {InputType} TType - The input's type
  * @param {Nullable<InputValue<TType>>} value - The input's updated value. Either {@link InputValue<TType>} or null
  */
-export type InputOnChangeFn<TType extends InputType> = VoidFn<
-  [Nullable<InputValue<TType>>]
->;
+export type InputOnChangeFn<
+  TType extends InputType,
+  TGenericValue extends NullishPrimitives = NullishPrimitives
+> = VoidFn<[Nullable<InputValue<TType, TGenericValue>>]>;
 
 /**
  * @extends {CommonInputProps}
@@ -180,7 +187,10 @@ export type InputOnChangeFn<TType extends InputType> = VoidFn<
  *
  * @see {@link InputValue}, {@link InputOnChangeFn}
  */
-export type InputProps<TType extends InputType> = CommonInputProps & {
+export type InputProps<
+  TType extends InputType,
+  TGenericValue extends NullishPrimitives = NullishPrimitives
+> = CommonInputProps & {
   /**
    * The input's value or null if empty
    *
@@ -189,7 +199,7 @@ export type InputProps<TType extends InputType> = CommonInputProps & {
    * @type {InputValue | null}
    *
    */
-  value?: Nullable<InputValue<TType>>;
+  value?: Nullable<InputValue<TType, TGenericValue>>;
   /**
    * The input's onChange callback. Optional.
    *
@@ -197,7 +207,7 @@ export type InputProps<TType extends InputType> = CommonInputProps & {
    *
    * @type {InputOnChangeFn | null}
    */
-  onChange?: Nullable<InputOnChangeFn<TType>>;
+  onChange?: Nullable<InputOnChangeFn<TType, TGenericValue>>;
 
   /**
    * The name of the input

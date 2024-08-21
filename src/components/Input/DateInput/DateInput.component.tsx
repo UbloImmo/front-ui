@@ -80,7 +80,7 @@ const defaultDateInputProps: DateInputDefaultProps = {
 const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultDateInputProps, props);
   const { debug } = useLogger("InputDate", {
-    // hideDebug: true,
+    hideDebug: true,
     spacing: 0,
   });
   const [innerDateStr, setInnerDateStr] = useState<string>(

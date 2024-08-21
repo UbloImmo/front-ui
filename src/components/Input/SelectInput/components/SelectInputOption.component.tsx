@@ -6,7 +6,10 @@ import {
 import { type MouseEventHandler, useCallback, useMemo } from "react";
 import styled from "styled-components";
 
-import { buildSelectOptionItemStyles } from "../SelectInput.styles";
+import {
+  customSelectOptionStyles,
+  selectOptionStyles,
+} from "../SelectInput.styles";
 
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
@@ -25,48 +28,73 @@ import type { PaletteColor, TextProps } from "@types";
  * @param {SelectInputOptionProps<TValue>} props - The option to render and its `onSelect` callback
  * @returns JSX.Element
  */
-const SelectInputOption = <TValue extends NullishPrimitives>(
-  props: SelectInputOptionProps<TValue>
-): JSX.Element => {
-  const styleProps = useStyleProps(props);
+const SelectInputOption = <
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+>({
+  Option,
+  onSelect,
+  ...option
+}: SelectInputOptionProps<TValue, TExtraData>): JSX.Element => {
+  const styleProps = useStyleProps(option);
 
   const contentColor = useMemo<PaletteColor>(() => {
-    return props.disabled ? "gray-500" : props.active ? "gray-900" : "gray-800";
-  }, [props]);
+    return option.disabled
+      ? "gray-500"
+      : option.active
+      ? "gray-900"
+      : "gray-800";
+  }, [option]);
 
   const propagateSelection = useCallback<MouseEventHandler<HTMLDivElement>>(
     (event) => {
       event.preventDefault();
       event.stopPropagation();
 
-      if (isFunction<VoidFn>(props.onSelect)) props.onSelect();
+      if (isFunction<VoidFn>(onSelect)) onSelect();
     },
-    [props]
+    [onSelect]
   );
 
   const textProps = useMemo<TextProps>(
     () => ({
       color: contentColor,
-      weight: props.active ? "bold" : "medium",
+      weight: option.active ? "bold" : "medium",
       size: "m",
     }),
-    [contentColor, props.active]
+    [contentColor, option]
   );
 
+  if (Option)
+    return (
+      <CustomSelectOptionContainer
+        role="option"
+        onClick={propagateSelection}
+        aria-selected={option.active}
+        data-active={option.active}
+        data-testid="input-select-option"
+        aria-disabled={option.disabled}
+        {...styleProps}
+        tabIndex={option.disabled ? -1 : 0}
+      >
+        <Option {...option} />
+      </CustomSelectOptionContainer>
+    );
+
   return (
-    <SelectOptionItem
+    <SelectOptionContainer
       role="option"
       onClick={propagateSelection}
-      aria-selected={props.active}
-      data-active={props.active}
+      aria-selected={option.active}
+      data-active={option.active}
       data-testid="input-select-option"
-      aria-disabled={props.disabled}
+      aria-disabled={option.disabled}
       {...styleProps}
-      tabIndex={props.disabled ? -1 : 0}
+      tabIndex={option.disabled ? -1 : 0}
     >
       <FlexRowLayout align="center" justify="start" gap="s-1">
-        {props.icon && (
-          <Icon name={props.icon} color={contentColor} size="s-3" />
+        {option.icon && (
+          <Icon name={option.icon} color={contentColor} size="s-3" />
         )}
         <Text
           {...textProps}
@@ -74,16 +102,21 @@ const SelectInputOption = <TValue extends NullishPrimitives>(
           overrideTestId
           ellipsis
         >
-          {props.label}
+          {option.label}
         </Text>
       </FlexRowLayout>
-      {props.active && <Icon name="Check" color={contentColor} size="s-4" />}
-    </SelectOptionItem>
+
+      {option.active && <Icon name="Check" color={contentColor} size="s-4" />}
+    </SelectOptionContainer>
   );
 };
 
 export { SelectInputOption };
 
-const SelectOptionItem = styled.div<SelectOptionItemStyleProps>`
-  ${buildSelectOptionItemStyles}
+const SelectOptionContainer = styled.div<SelectOptionItemStyleProps>`
+  ${selectOptionStyles}
+`;
+
+const CustomSelectOptionContainer = styled.div<SelectOptionItemStyleProps>`
+  ${customSelectOptionStyles}
 `;

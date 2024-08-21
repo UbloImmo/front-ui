@@ -13,4 +13,5 @@ export const inputTypes = [
   "textarea",
   "select",
   "date",
+  "combobox",
 ] as const;

@@ -1,10 +1,10 @@
+import type { OrganizationData } from "./overrides.types";
+import type { LegacyPalette } from "./palette/palette.legacy.types";
 import type {
   ColorPalette,
-  LegacyPalette,
-  OrganizationData,
-  PaletteColorShaded,
   DefaultPaletteColorShadeKey,
-} from ".";
+  PaletteColorShaded,
+} from "./palette/palette.types";
 
 /**
  * Styled-components theme

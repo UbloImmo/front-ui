@@ -1,7 +1,7 @@
 import { Logger, transformObject } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import { capitalize } from ".";
+import { capitalize } from "./string.utils";
 
 import type { LoggerFn, LoggerConfig } from "@ubloimmo/front-util";
 

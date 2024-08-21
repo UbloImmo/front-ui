@@ -1,6 +1,7 @@
 import {
   GenericFn,
   isFunction,
+  isNullish,
   isNumber,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
@@ -22,18 +23,19 @@ import type { TestIdProps } from "@types";
 const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   options: null,
   value: null,
-  direction: "column",
+  direction: "row",
   multi: false,
-  onChange: () => {},
+  onChange: null,
   disabled: false,
   showIcon: true,
   columns: null,
+  readonly: false,
 };
 
 /**
  * A group of ComboBoxButtons that act as a select or radio input.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -46,14 +48,14 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue>,
     props
   );
-  const { options, multi, onChange, disabled, direction, showIcon } =
+  const { options, multi, onChange, disabled, direction, showIcon, readonly } =
     mergedProps;
   const testId = useTestId("combo-box", props);
 
   const getInitialSelection = useCallback<
     GenericFn<[], TOptionValue[]>
   >((): TOptionValue[] => {
-    if (mergedProps.value) {
+    if (!isNullish(mergedProps.value)) {
       if (Array.isArray(mergedProps.value)) return mergedProps.value;
       return [mergedProps.value];
     }
@@ -73,14 +75,16 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
   );
 
   useEffect(() => {
-    if (isFunction<ComboBoxOnChangeFn<TOptionValue>>(onChange) && !disabled) {
+    if (disabled) return;
+
+    if (isFunction<ComboBoxOnChangeFn<TOptionValue>>(onChange)) {
       onChange(selection);
     }
-  }, [disabled, onChange, selection]);
+  }, [selection, onChange, disabled]);
 
   const selectOptionOnClick = useCallback(
     (option: ComboBoxOption<TOptionValue>) => () => {
-      if (disabled) return;
+      if (disabled || readonly) return;
       if (multi) {
         if (isOptionActive(option)) {
           const newSelection = [...selection].filter(
@@ -98,11 +102,11 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
         }
       }
     },
-    [multi, selection, isOptionActive, disabled]
+    [multi, selection, isOptionActive, disabled, readonly]
   );
 
   if (!props.options) {
-    warn(`Missing required labels`);
+    warn(`Missing required options`);
   }
 
   if (multi && !showIcon) {

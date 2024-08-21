@@ -1,11 +1,11 @@
 import type { IconName } from "../Icon/Icon.types";
-import type { SpacingLabel, ColorKeyOrWhite } from "@types";
+import type { SpacingLabel, ColorKeyOrWhite, StyleOverrideProps } from "@types";
 import type { Enum } from "@ubloimmo/front-util";
 
 const staticIconSizes = ["xs", "s", "m", "l"] as const;
 export type StaticIconSize = Enum<typeof staticIconSizes>;
 
-export type StaticIconProps = {
+export type StaticIconProps = StyleOverrideProps & {
   /**
    * The color of the staticIcon
    *

@@ -16,6 +16,7 @@ import { isNonEmptyString, useLogger, useMergedProps } from "@utils";
 
 import type {
   DefaultSelectInputProps,
+  RefetchSelectOptionsFn,
   SelectInputProps,
   SelectOption,
   SelectOptionGroup,
@@ -32,22 +33,31 @@ export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives>
     options: [],
     placeholder: "",
     searchable: false,
+    Option: null,
+    SelectedOption: null,
+    controlIcon: "CaretDownFill",
   };
 
-export const useSelectOptions = <TValue extends NullishPrimitives>(
-  props: SelectInputProps<TValue>
+export const useSelectOptions = <
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+>(
+  props: SelectInputProps<TValue, TExtraData>
 ) => {
   const logger = useLogger("SelectInput");
 
   const mergedProps = useMergedProps<
-    DefaultSelectInputProps<TValue>,
-    SelectInputProps<TValue>
-  >(defaultSelectInputProps as DefaultSelectInputProps<TValue>, props);
+    DefaultSelectInputProps<TValue, TExtraData>,
+    SelectInputProps<TValue, TExtraData>
+  >(
+    defaultSelectInputProps as DefaultSelectInputProps<TValue, TExtraData>,
+    props
+  );
   /**
    * Initial select options from props
    */
   const [initialOptions, setInitialOptions] = useState<
-    SelectOptionOrGroup<TValue>[]
+    SelectOptionOrGroup<TValue, TExtraData>[]
   >(() => {
     if (isArray(mergedProps.options)) return mergedProps.options;
     return [];
@@ -67,32 +77,38 @@ export const useSelectOptions = <TValue extends NullishPrimitives>(
    * Loads select options from query into `data` and `initialData` states
    * white updating `isLoading` state
    */
-  const loadOptions = useCallback(async () => {
-    if (isLoading) return;
-    if (!isFunction<SelectOptionsQueryFn<TValue>>(mergedProps.options)) {
-      if (isArray(mergedProps.options)) {
-        setOptions(mergedProps.options);
-        setInitialOptions(mergedProps.options);
+  const loadOptions = useCallback<RefetchSelectOptionsFn>(
+    async (query: Nullable<string>) => {
+      if (
+        !isFunction<SelectOptionsQueryFn<TValue, TExtraData>>(
+          mergedProps.options
+        )
+      ) {
+        if (isArray(mergedProps.options)) {
+          setOptions(mergedProps.options);
+          setInitialOptions(mergedProps.options);
+        }
+        return;
       }
-      return;
-    }
-    setIsLoading(true);
-    try {
-      const data = await mergedProps.options();
-      setOptions(data);
-      setInitialOptions(data);
-    } catch (e) {
-      logger.error(e);
-      logger.warn("Failed to load form data");
-    }
-    setIsLoading(false);
-  }, [mergedProps, logger, isLoading]);
+      setIsLoading(true);
+      try {
+        const data = await mergedProps.options(query ?? null);
+        setOptions(data);
+        setInitialOptions(data);
+      } catch (e) {
+        logger.error(e);
+        logger.warn("Failed to load form data");
+      }
+      setIsLoading(false);
+    },
+    [mergedProps, logger]
+  );
 
   /**
    * Effect used for loading initial select options if it is a function
    */
   useEffect(() => {
-    loadOptions();
+    loadOptions(null);
   }, [mergedProps.options, loadOptions]);
 
   return {
@@ -104,15 +120,21 @@ export const useSelectOptions = <TValue extends NullishPrimitives>(
   };
 };
 
-export const isSelectOption = <TValue extends NullishPrimitives>(
-  optionOrGroup: SelectOptionOrGroup<TValue>
-): optionOrGroup is SelectOption<TValue> => {
+export const isSelectOption = <
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+>(
+  optionOrGroup: SelectOptionOrGroup<TValue, TExtraData>
+): optionOrGroup is SelectOption<TValue, TExtraData> => {
   return "value" in optionOrGroup && !("options" in optionOrGroup);
 };
 
-export const isSelectOptionGroup = <TValue extends NullishPrimitives>(
-  optionOrGroup: SelectOptionOrGroup<TValue>
-): optionOrGroup is SelectOptionGroup<TValue> => {
+export const isSelectOptionGroup = <
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+>(
+  optionOrGroup: SelectOptionOrGroup<TValue, TExtraData>
+): optionOrGroup is SelectOptionGroup<TValue, TExtraData> => {
   return !("value" in optionOrGroup) && "options" in optionOrGroup;
 };
 
@@ -124,30 +146,38 @@ export const isSelectOptionGroup = <TValue extends NullishPrimitives>(
  * @param {TValue} value - The value to compare against.
  * @return {SelectOptionOrGroup<TValue>[]} - The modified array of SelectOption or SelectOptionGroup objects.
  */
-const assignActiveOption = <TValue extends NullishPrimitives>(
-  options: SelectOptionOrGroup<TValue>[],
+const assignActiveOption = <
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+>(
+  options: SelectOptionOrGroup<TValue, TExtraData>[],
   value: Nullable<TValue>
-): SelectOptionOrGroup<TValue>[] => {
-  return options.map((optionOrGroup): SelectOptionOrGroup<TValue> => {
-    if (isSelectOption(optionOrGroup))
+): SelectOptionOrGroup<TValue, TExtraData>[] => {
+  return options.map(
+    (optionOrGroup): SelectOptionOrGroup<TValue, TExtraData> => {
+      if (isSelectOption(optionOrGroup))
+        return {
+          ...optionOrGroup,
+          active: optionOrGroup.value === value,
+        };
+
       return {
         ...optionOrGroup,
-        active: optionOrGroup.value === value,
+        options: optionOrGroup.options.map((groupOption) => ({
+          ...groupOption,
+          active: groupOption.value === value,
+        })),
       };
-
-    return {
-      ...optionOrGroup,
-      options: optionOrGroup.options.map((groupOption) => ({
-        ...groupOption,
-        active: groupOption.value === value,
-      })),
-    };
-  });
+    }
+  );
 };
 
-export const flattedSelectOptions = <TValue extends NullishPrimitives>(
-  options: SelectOptionOrGroup<TValue>[]
-): SelectOption<TValue>[] => {
+export const flattedSelectOptions = <
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+>(
+  options: SelectOptionOrGroup<TValue, TExtraData>[]
+): SelectOption<TValue, TExtraData>[] => {
   return options.flatMap((option) => {
     if (isSelectOption(option)) {
       return option;
@@ -157,9 +187,13 @@ export const flattedSelectOptions = <TValue extends NullishPrimitives>(
   });
 };
 
-export const useSelectValue = <TValue extends NullishPrimitives>(
-  mergedProps: DefaultSelectInputProps<TValue>,
-  options: SelectOptionOrGroup<TValue>[]
+export const useSelectValue = <
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+>(
+  mergedProps: DefaultSelectInputProps<TValue, TExtraData>,
+  options: SelectOptionOrGroup<TValue, TExtraData>[],
+  refetchOptions: RefetchSelectOptionsFn
 ) => {
   const [internalValue, setInternalValue] = useState<Nullable<TValue>>(
     mergedProps.value ?? null
@@ -185,6 +219,13 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
     () => isString(autoCompleteQuery) && isNonEmptyString(autoCompleteQuery),
     [autoCompleteQuery]
   );
+
+  useEffect(() => {
+    if (isQuerying && isString(autoCompleteQuery)) {
+      refetchOptions(autoCompleteQuery);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoCompleteQuery, isQuerying]);
 
   const activeOption = useMemo(() => {
     return (
@@ -216,7 +257,9 @@ export const useSelectValue = <TValue extends NullishPrimitives>(
     mergedProps.searchable,
   ]);
 
-  const displayOptions = useMemo(() => {
+  const displayOptions = useMemo<
+    SelectOptionOrGroup<TValue, TExtraData>[]
+  >(() => {
     const rootOptions = isQuerying ? filteredOptions : allFlattenOptions;
 
     return assignActiveOption(options, internalValue)

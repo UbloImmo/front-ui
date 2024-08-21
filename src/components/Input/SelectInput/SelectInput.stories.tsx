@@ -1,12 +1,21 @@
 import { fn } from "@storybook/test";
-import { NullishPrimitives } from "@ubloimmo/front-util";
+import styled, { css } from "styled-components";
 
 import { SelectInput } from "./SelectInput.component";
 
+import { Badge, type BadgeProps } from "@/components/Badge";
+import { allIconNames } from "@/components/Icon/Icon.types";
+import { Text } from "@/components/Text";
 import { componentSourceFactory } from "@docs/docs.utils";
+import { FlexRowLayout } from "@layouts";
 
-import type { SelectInputProps } from "./SelectInput.types";
+import type {
+  CustomOptionComponent,
+  SelectInputProps,
+  SelectOptionOrGroup,
+} from "./SelectInput.types";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   SelectInputProps<NullishPrimitives>
@@ -49,6 +58,9 @@ const meta = {
     },
     required: {
       type: "boolean",
+    },
+    controlIcon: {
+      options: allIconNames,
     },
   },
 } satisfies Meta<typeof SelectInput>;
@@ -162,3 +174,71 @@ export const GroupOptions: Story = {
     ],
   },
 };
+
+const CustomOption: CustomOptionComponent<string, BadgeProps> = (option) => {
+  return (
+    <CustomOptionContainer justify="space-between" align="center" fill>
+      <Text>{option.label}</Text>
+      <Badge {...option.extraData} />
+    </CustomOptionContainer>
+  );
+};
+
+const options: SelectOptionOrGroup<string, BadgeProps>[] = [
+  {
+    label: "Option 1",
+    value: "option-1",
+    extraData: {
+      label: "Badge",
+      color: "primary",
+      shade: "light",
+    },
+  },
+  {
+    label: "Option 2",
+    value: "option-2",
+    extraData: {
+      label: "Another badge",
+      color: "warning",
+      shade: "dark",
+    },
+  },
+  {
+    label: "Custom group",
+    options: [
+      {
+        label: "Option 3",
+        value: "option-3",
+        extraData: {
+          label: "Another badge",
+          color: "success",
+          shade: "light",
+          icon: "EmojiSmile",
+        },
+      },
+    ],
+  },
+];
+
+export const CustomComponents = (
+  props: SelectInputProps<string, BadgeProps>
+) => {
+  return (
+    <SelectInput
+      {...props}
+      options={options}
+      Option={CustomOption}
+      SelectedOption={CustomOption}
+    />
+  );
+};
+
+const CustomOptionContainer = styled(FlexRowLayout)<{ $active?: boolean }>`
+  padding: var(--s-2);
+
+  ${({ $active }) =>
+    $active &&
+    css`
+      background-color: var(--primary-light);
+    `}
+`;

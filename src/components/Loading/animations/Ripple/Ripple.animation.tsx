@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-import { spinnerStyle as RippleStyle } from "./Ripple.styles";
+import { rippleStyle } from "./Ripple.styles";
 
 import { useClassName, useStyleProps } from "@utils";
 
-import type { LoadingAnimationProps } from "../../Loading.types";
+import type { LoadingAnimationProps } from "../Loading.animations.types";
 import type { StyleProps } from "@types";
 
 /**
@@ -28,5 +28,5 @@ export const Ripple = (props: LoadingAnimationProps): JSX.Element => {
 };
 
 const Renderer = styled.div<StyleProps<LoadingAnimationProps>>`
-  ${RippleStyle}
+  ${rippleStyle}
 `;

@@ -1,9 +1,11 @@
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
-import { objectKeys, transformObject } from "@ubloimmo/front-util";
+import { objectKeys } from "@ubloimmo/front-util";
 import { css, StyleFunction } from "styled-components";
 
+import { typographyWeightMap } from "./typogaphy.weight";
 import { typographyFontFace } from "./typography.font";
-import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "../utils";
+
+import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "@utils";
 
 import type {
   HeadingProps,
@@ -13,26 +15,8 @@ import type {
   AnyTypographyProps,
   CssRem,
   StyleProps,
-  FontWeight,
   TypographySize,
 } from "@types";
-
-/**
- * Builds a typography weight map based on the generated text styles.
- *
- * @return {Record<TypographyWeight, string>} The typography weight map.
- */
-export const buildTypographyWeightMap = (): Record<
-  TypographyWeight,
-  FontWeight
-> => {
-  return transformObject(
-    texts.desktop.m,
-    (token) => token.css.style.fontWeight
-  );
-};
-
-export const typographyWeightMap = buildTypographyWeightMap();
 
 /**
  * Returns the CSS text decoration string based on the provided options.

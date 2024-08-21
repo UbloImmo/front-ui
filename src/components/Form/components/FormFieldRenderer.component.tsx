@@ -2,6 +2,8 @@ import { isString, type Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled from "styled-components";
 
+import { FormDivider } from "./FormDivider.component";
+import { FormField } from "./FormField.component";
 import { FormText } from "./FormText.component";
 import { useFormContext } from "../Form.context";
 import { formFieldListContainerStyles } from "../Form.styles";
@@ -12,8 +14,6 @@ import {
 } from "../Form.utils";
 
 import { GridLayout } from "@layouts";
-
-import { FormField, FormDivider } from ".";
 
 import type { DividerProps } from "@/components/Divider";
 

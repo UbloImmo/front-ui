@@ -156,6 +156,10 @@ describe("Input", () => {
   testSelectInput({ options: options, searchable: true })(
     "should render and be typable when searchable property is true",
     async ({ queryByTestId }, { click, keyboard }) => {
+      const inputSelect = queryByTestId(
+        `${testId}-button`
+      ) as HTMLButtonElement;
+      await click(inputSelect);
       const searchableInput = queryByTestId(
         `${testId}-query`
       ) as HTMLInputElement;

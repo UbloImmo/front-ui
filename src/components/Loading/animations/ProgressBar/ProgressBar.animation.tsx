@@ -4,7 +4,7 @@ import { ProgressBarStyle } from "./ProgressBar.styles";
 
 import { useClassName, useStyleProps } from "@utils";
 
-import type { LoadingAnimationProps } from "../../Loading.types";
+import type { LoadingAnimationProps } from "../Loading.animations.types";
 import type { StyleProps } from "@types";
 
 /**

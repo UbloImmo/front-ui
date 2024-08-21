@@ -7,7 +7,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { GridItem, GridLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
-import type { FormDataProps, FormProps, FormData } from "./Form.types";
+import type { FormProps, FormData } from "./Form.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const addressSchema = z.object({
@@ -103,10 +103,10 @@ const addressFormProps: FormProps<Address> = {
   ],
 };
 
-const componentSource = componentSourceFactory<FormDataProps<object>>(
+const componentSource = componentSourceFactory<FormProps<object>>(
   "Form",
   {
-    // TODO
+    title: "Form",
   },
   Form.defaultProps
 );
@@ -133,6 +133,7 @@ const identitySchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
   dateOfBirth: z.string(),
+  numberOfChildren: z.number().nullish(),
   contact: z.object({
     email: z.string().email(),
     phone: z.string(),
@@ -142,6 +143,8 @@ const identitySchema = z.object({
       role: z.string().nullish(),
     })
     .nullish(),
+  isCitizen: z.boolean(),
+  maritalStatus: z.enum(["single", "married", "widowed", "divorced"]),
 });
 
 type Identity = z.output<typeof identitySchema>;
@@ -192,6 +195,55 @@ const identityFormProps: FormProps<Identity> = {
       source: "dateOfBirth",
       label: "Date of birth",
       placeholder: "Date of birth",
+    },
+    "divider",
+    {
+      type: "combobox",
+      source: "isCitizen",
+      label: "Citizenship",
+      options: [
+        {
+          label: "Citizen",
+          value: true,
+        },
+        {
+          label: "Foreigner",
+          value: false,
+        },
+      ],
+      columns: 2,
+      layout: {
+        size: 2,
+      },
+    },
+    "divider",
+    {
+      label: "Marital status",
+      source: "maritalStatus",
+      type: "select",
+      options: [
+        {
+          label: "Married",
+          value: "married",
+        },
+        {
+          label: "Single",
+          value: "single",
+        },
+        {
+          label: "Divorced",
+          value: "divorced",
+        },
+        {
+          label: "Widow",
+          value: "widowed",
+        },
+      ],
+    },
+    {
+      label: "Number of children",
+      source: "numberOfChildren",
+      type: "number",
     },
     {
       label: "Contact info",
@@ -288,7 +340,12 @@ Validation.parameters = {
 };
 
 export const Debug = (props: FormStoryProps) => {
-  const mergedProps = useMergedProps(addressFormProps, props);
+  const mergedProps = useMergedProps(identityFormProps, props);
 
   return <Form {...mergedProps} debug />;
+};
+Debug.parameters = {
+  docs: componentSource([
+    { ...(identityFormProps as FormProps<object>), debug: true },
+  ]),
 };

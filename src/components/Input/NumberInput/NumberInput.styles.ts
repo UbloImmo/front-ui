@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { StyledInput } from "../Input.common";
 
-import type { CommonInputStyleProps } from "..";
+import type { CommonInputStyleProps } from "../Input.types";
 
 export const StyledNumberInput = styled(StyledInput)<CommonInputStyleProps>`
   &::-webkit-outer-spin-button,

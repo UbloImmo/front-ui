@@ -6,13 +6,49 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-### Added
-- `v0.0.1` EnergyLabel component
 
 ### Changed
 
 - `v0.0.2` Divider component
   - added property `justify` to change label alignment (`start` or `center`)
+
+### Added
+
+- `v0.0.1` ComboBoxInput internal component
+  - Used to make comboBox available as a field and inside forms
+  - `onChange` returns a single value or `null` when `multi=false`
+
+- `v0.0.1` EnergyLabel component
+
+### Changed
+
+- `v0.0.3` SelectInput component
+  - Add support for custom option components
+  - Refetch options on search query change
+  - Pass search query to options query function
+
+- `v0.0.6` ComboBox component
+  - Add `readonly` property to only disable interactivity while keeping styles
+
+- `v0.0.4` ComboBoxButton component
+  - Add slight hover style indication
+
+- `v0.0.2` Form component
+  - Update typings (especially `FormFieldProps<TData>`) by narrowing a form field's valid `type` based on its `source` and not the other way around. This enables nested Generic fields (e.g. `Select`, `ComboBox`) and their options to be correctly typed
+  - Add support for discrete components when rendering a field's display state
+
+- `v0.0.6` Input component
+  - Update typings to make them more modular
+  - declare `inputComponentMap` inside the component's `render` body to benefit from nested generics
+
+### Fixed
+
+- `v0.0.6` ComboBox component
+  - Infinite renders caused by `props.value` & `selection` mismatch
+  - Properly handle falsy values by checking with `isNullish(value)` instead of `!value`
+
+- `v0.0.3` SelectInput component
+  - Rewrite outside click detection to work with custom components by checking wether click target is contained within the select inputs DOM tree
 
 ## 0.23.0 - 2024-08-20
 

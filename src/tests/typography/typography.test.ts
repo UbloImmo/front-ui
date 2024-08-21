@@ -2,9 +2,9 @@ import { describe, expect, it } from "bun:test";
 
 import { testLenghts } from "../css.test";
 
+import { buildTypographyWeightMap } from "@/typography/typogaphy.weight";
 import { typographyFontFace, linkFontFace } from "@/typography/typography.font";
 import {
-  buildTypographyWeightMap,
   typographyTextDecoration,
   mobileFontSize,
   defaultTypographyProps,

@@ -1,10 +1,10 @@
 import { StyleFunction, css, keyframes } from "styled-components";
 
-import { LoadingAnimationProps } from "../../Loading.types";
-
 import { parseFixedLength } from "@/sizes/size.utils";
 import { StyleProps } from "@types";
 import { cssRem, cssVarUsage, extractRem } from "@utils";
+
+import type { LoadingAnimationProps } from "../Loading.animations.types";
 
 const cssAnim = keyframes`
   0% {
