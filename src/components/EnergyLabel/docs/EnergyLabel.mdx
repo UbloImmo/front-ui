@@ -1,0 +1,35 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as EnergyLabelStories from "../EnergyLabel.stories.tsx";
+
+<Meta title="Components/EnergyLabel/Usage" />
+
+<ComponentInfo of={EnergyLabelStories} figmaId="2366-9199"/>
+
+<Content>
+
+## Usage
+
+### Values
+
+EnergyLabel adapt their container's background color based on their `value` property and `type` chosen. If `value` is not provided, the default value is **-** and background color is **#F9F9FD**.
+
+<Canvas of={EnergyLabelStories.ValuesDPE} />
+<Canvas of={EnergyLabelStories.ValuesGES} />
+
+### Types
+
+EnergyLabel adapts the background color shades of its container according to its `type` property.
+
+<Canvas of={EnergyLabelStories.Types} />
+
+### States
+
+If state is `active` the label will be rendered with a background color, otherwise it will be rendered with **#F9F9FD** color.
+
+<Canvas of={EnergyLabelStories.States} />
+
+</Content>
+
