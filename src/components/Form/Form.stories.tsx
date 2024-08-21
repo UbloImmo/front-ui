@@ -144,12 +144,7 @@ const identitySchema = z.object({
     })
     .nullish(),
   isCitizen: z.boolean(),
-  maritalStatus: z.union([
-    z.literal("single"),
-    z.literal("married"),
-    z.literal("divorced"),
-    z.literal("widowed"),
-  ]),
+  maritalStatus: z.enum(["single", "married", "widowed", "divorced"]),
 });
 
 type Identity = z.output<typeof identitySchema>;
@@ -216,6 +211,7 @@ const identityFormProps: FormProps<Identity> = {
           value: false,
         },
       ],
+      columns: 2,
       layout: {
         size: 2,
       },
