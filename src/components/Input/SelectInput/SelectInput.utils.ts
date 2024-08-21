@@ -79,7 +79,6 @@ export const useSelectOptions = <
    */
   const loadOptions = useCallback<RefetchSelectOptionsFn>(
     async (query: Nullable<string>) => {
-      // if (isLoading) return;
       if (
         !isFunction<SelectOptionsQueryFn<TValue, TExtraData>>(
           mergedProps.options
