@@ -29,7 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.6` ComboBox component
   - Add `readonly` property to only disable interactivity while keeping styles
-  
 
 - `v0.0.4` ComboBoxButton component
   - Add slight hover style indication
@@ -50,7 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.3` SelectInput component
   - Rewrite outside click detection to work with custom components by checking wether click target is contained within the select inputs DOM tree
-
 
 ## 0.23.0 - 2024-08-20
 
