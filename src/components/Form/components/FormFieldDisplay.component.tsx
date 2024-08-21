@@ -4,7 +4,7 @@ import {
   isString,
   type Nullable,
 } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import styled from "styled-components";
 
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
@@ -14,7 +14,13 @@ import { breakpointsPx } from "@/sizes";
 import { FlexColumnLayout, FlexLayout, FlexRowLayout } from "@layouts";
 import { arrayOf } from "@utils";
 
-import { InputLabel, Icon, Text, type TooltipProps } from "@components";
+import {
+  InputLabel,
+  Icon,
+  Text,
+  type TooltipProps,
+  ComboBox,
+} from "@components";
 
 import type {
   BuiltFieldProps,
@@ -24,7 +30,7 @@ import type { InputType, InputValue } from "@/components/Input";
 
 const noValue = "—";
 
-const valueFormatters: FormDisplayValueFormatterMap = {
+const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
   text: String,
   number: String,
   email: String,
@@ -42,6 +48,19 @@ const valueFormatters: FormDisplayValueFormatterMap = {
     if (date) return date.toLocaleDateString();
     return "Invalid date";
   },
+  combobox: (values, { options }) => {
+    if (!values || !options) return noValue;
+    if (isArray(values)) {
+      const displayOptions = options.filter(({ value }) =>
+        values.includes(value)
+      );
+      if (!displayOptions?.length) return noValue;
+      return <ComboBox readonly showIcon={false} options={displayOptions} />;
+    }
+    const option = options.find(({ value }) => value === values);
+    if (!option) return noValue;
+    return <ComboBox readonly showIcon={false} options={[option]} />;
+  },
 };
 
 /**
@@ -57,7 +76,7 @@ export const FormFieldDisplay = <TType extends InputType>(
 ): JSX.Element => {
   const { label, value, type, error, errorText } = props;
   const displayContent = useMemo(() => {
-    const content: JSX.Element | string = !isNullish(value)
+    const content: ReactNode = !isNullish(value)
       ? valueFormatters[type](value as InputValue<TType>, props)
       : noValue;
 

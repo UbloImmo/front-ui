@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
+import { FormEditButton } from "./FormEditButton.component";
 import { formHeaderStyles } from "../Form.styles";
 
 import { FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
 import { Heading, Badge, Icon } from "@components";
-
-import { FormEditButton } from ".";
 
 import type { FormHeaderProps } from "../Form.types";
 

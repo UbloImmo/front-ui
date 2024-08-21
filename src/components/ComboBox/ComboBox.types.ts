@@ -23,20 +23,29 @@ export type ComboBoxOption<TOptionValue extends NullishPrimitives> = {
   disabled?: boolean;
 };
 
-export type ComboBoxOnChangeFn<TOptionValue extends NullishPrimitives> = VoidFn<
-  [TOptionValue[]]
->;
+export type ComboBoxOnChangeMultiFn<TOptionValue extends NullishPrimitives> =
+  VoidFn<[TOptionValue[]]>;
 
-export type ComboBoxProps<TOptionValue extends NullishPrimitives> = Record<
-  string,
-  unknown
-> & {
+export type ComboBoxOnChangeSingleFn<TOptionValue extends NullishPrimitives> =
+  VoidFn<[Nullable<TOptionValue>]>;
+
+export type ComboBoxOnChangeFn<
+  TOptionValue extends NullishPrimitives,
+  TMulti extends boolean
+> = TMulti extends true
+  ? ComboBoxOnChangeMultiFn<TOptionValue>
+  : ComboBoxOnChangeSingleFn<TOptionValue>;
+
+export type ComboBoxProps<
+  TOptionValue extends NullishPrimitives,
+  TMulti extends boolean = false
+> = {
   /**
-   * The label of the ComboBox
+   * The options to display in the combobox
    * @required
    * @default null
    */
-  options: Nullable<ComboBoxOption<TOptionValue>[]>;
+  options?: Nullable<ComboBoxOption<TOptionValue>[]>;
 
   /**
    * The value of the selected option. Either a single value or an array if `multi` is true
@@ -69,13 +78,13 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = Record<
    * @type {boolean}
    */
 
-  multi?: boolean;
+  multi?: TMulti;
   /**
    * Callback that fires each time selected option(s) changes
    *
-   *
+   * @remarks If `multi` is true, the callback will receive an array of selected values, otherwise it will receive a single value or `null`
    */
-  onChange?: ComboBoxOnChangeFn<TOptionValue>;
+  onChange?: Nullable<ComboBoxOnChangeFn<TOptionValue, TMulti>>;
   /**
    * Whether to disable the selection of all options
    *
@@ -93,5 +102,7 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = Record<
   showIcon?: boolean;
 };
 
-export type ComboBoxDefaultProps<TOptionValue extends NullishPrimitives> =
-  Required<ComboBoxProps<TOptionValue>>;
+export type ComboBoxDefaultProps<
+  TOptionValue extends NullishPrimitives,
+  TMulti extends boolean = false
+> = Required<ComboBoxProps<TOptionValue, TMulti>>;

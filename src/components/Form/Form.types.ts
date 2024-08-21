@@ -71,7 +71,7 @@ export type FormFieldSource<
 /**
  * Raw partial initial form data
  *
- * @template {object} TData - The type of the form dat
+ * @template {object} TData - The type of the form data
  *
  * @see {@link DeepPartial}
  */
@@ -111,22 +111,30 @@ export type FormFieldLayoutProps = {
     hidden?: boolean | FormFieldLayoutHiddenFn;
   };
 };
+
+/**
+ * Determines a field's value type according to its `source`'s type
+ *
+ * @template {object} TData - The type of the form data
+ * @template {FormFieldSource<TData, InputType>} TSource - The field's source
+ */
+type FormFieldType<
+  TData extends object,
+  TSource extends FormFieldSource<TData, InputType>
+> = {
+  [TType in InputType]: DeepValueOf<
+    CompleteFormData<TData>,
+    TSource
+  > extends InputValue<TType>
+    ? TType
+    : never;
+}[InputType];
+
 type RequiredFieldKeys = "label" | "type";
 
 type OmittedFieldKeys = RequiredFieldKeys | "value";
 
-/**
- * A single form field as defined inside a form's `content`.
- * Used to render and link a single field inside a form
- *
- * Its `type` being restricted by its `source`,
- * it allows for specific additional props according to its type
- *
- * @template {object} TData - The type of the form data
- *
- * @see {@link FormFieldProps}
- */
-export type FormFieldProps<TData extends object> = {
+export type FormFieldPropsLax<TData extends object> = {
   [TType in InputType]: FormFieldSource<TData, TType> extends never
     ? never
     : {
@@ -138,9 +146,58 @@ export type FormFieldProps<TData extends object> = {
          */
         source: FormFieldSource<TData, TType>;
       } & Pick<FieldProps<TType>, RequiredFieldKeys> &
-        Omit<FieldProps<NoInfer<TType>>, OmittedFieldKeys> &
+        Omit<
+          FieldProps<
+            NoInfer<TType>,
+            DeepValueOf<
+              CompleteFormData<TData>,
+              NoInfer<FormFieldSource<TData, TType>>
+            >
+          >,
+          OmittedFieldKeys
+        > &
         FormFieldLayoutProps;
 }[InputType];
+
+/**
+ * A single form field as defined inside a form's `content`.
+ * Used to render and link a single field inside a form
+ *
+ * Its `type` being restricted by its `source`,
+ * it allows for specific additional props according to its type
+ *
+ * @template {object} TData - The type of the form data
+ *
+ * @remarks If no form type matches the field's `source`, it will be treated as any type
+ *
+ * @see {@link FormFieldProps}, {@link FormFieldPropsLax}
+ */
+export type FormFieldProps<TData extends object> = {
+  [TSource in FormFieldSource<TData, InputType>]: FormFieldType<
+    TData,
+    TSource
+  > extends infer TType
+    ? TType extends InputType
+      ? {
+          /**
+           * Source to retrieve and change the field's data relative to the form's `query` and limited by its own `type` property
+           *
+           * @type {FormFieldSource<TData, TType>}
+           * @required
+           */
+          source: TSource;
+        } & Pick<FieldProps<TType>, RequiredFieldKeys> &
+          Omit<
+            FieldProps<
+              NoInfer<TType>,
+              DeepValueOf<CompleteFormData<TData>, TSource>
+            >,
+            OmittedFieldKeys
+          > &
+          FormFieldLayoutProps
+      : FormFieldPropsLax<TData>
+    : never;
+}[FormFieldSource<TData, InputType>];
 
 /**
  * Individual built {@link FieldProps} and {@link FormFieldLayoutProps}. Gets passed to the `FormField` component.
@@ -183,7 +240,7 @@ export type BuiltFormTextProps = Omit<TextProps, keyof StyleOverrideProps> & {
  * @see {@link FormFieldProps}, {@link FormDividerProps}
  */
 export type FormContent<TData extends object> =
-  | FormFieldProps<NoInfer<TData>>
+  | FormFieldProps<TData>
   | FormDividerProps
   | FormTextProps;
 
@@ -589,7 +646,7 @@ export type ComputeFormValidationFn = GenericFn<[], FormValidation>;
  */
 export type FormDisplayValueFormatterFn<
   TType extends InputType,
-  TTransformedValue = string
+  TTransformedValue extends ReactNode = string
 > = GenericFn<
   [InputValue<TType>, SpecificInputProps<TType>],
   TTransformedValue
@@ -598,8 +655,10 @@ export type FormDisplayValueFormatterFn<
 /**
  * Mapping of {@link InputType} to {@link FormDisplayValueFormatterFn}
  */
-export type FormDisplayValueFormatterMap = {
-  [TType in InputType]: FormDisplayValueFormatterFn<TType>;
+export type FormDisplayValueFormatterMap<
+  TTransformedValue extends ReactNode = string
+> = {
+  [TType in InputType]: FormDisplayValueFormatterFn<TType, TTransformedValue>;
 };
 
 // ------------------------------- RETURNS ---------------------------------

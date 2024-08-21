@@ -43,7 +43,7 @@ import type { TestIdProps } from "@types";
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
  */
-const SelectInput = <TValue extends NullishPrimitives>(
+const SelectInput = <TValue extends NullishPrimitives = NullishPrimitives>(
   props: SelectInputProps<TValue> & TestIdProps
 ): JSX.Element => {
   const { options, mergedProps } = useSelectOptions(props);

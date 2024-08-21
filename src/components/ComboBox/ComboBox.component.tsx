@@ -1,6 +1,7 @@
 import {
   GenericFn,
   isFunction,
+  isNullish,
   isNumber,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
@@ -10,7 +11,8 @@ import {
   type ComboBoxProps,
   type ComboBoxDefaultProps,
   type ComboBoxOption,
-  type ComboBoxOnChangeFn,
+  type ComboBoxOnChangeMultiFn,
+  type ComboBoxOnChangeSingleFn,
 } from "./ComboBox.types";
 import { ComboBoxButton } from "../ComboBoxButton";
 
@@ -22,9 +24,9 @@ import type { TestIdProps } from "@types";
 const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   options: null,
   value: null,
-  direction: "column",
+  direction: "row",
   multi: false,
-  onChange: () => {},
+  onChange: null,
   disabled: false,
   showIcon: true,
   columns: null,
@@ -33,17 +35,20 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
 /**
  * A group of ComboBoxButtons that act as a select or radio input.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
  */
-const ComboBox = <TOptionValue extends NullishPrimitives>(
-  props: ComboBoxProps<TOptionValue> & TestIdProps
+const ComboBox = <
+  TOptionValue extends NullishPrimitives,
+  TMulti extends boolean = false
+>(
+  props: ComboBoxProps<TOptionValue, TMulti> & TestIdProps
 ): JSX.Element => {
   const { warn } = useLogger("ComboBox");
   const mergedProps = useMergedProps(
-    defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue>,
+    defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue, TMulti>,
     props
   );
   const { options, multi, onChange, disabled, direction, showIcon } =
@@ -53,7 +58,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
   const getInitialSelection = useCallback<
     GenericFn<[], TOptionValue[]>
   >((): TOptionValue[] => {
-    if (mergedProps.value) {
+    if (!isNullish(mergedProps.value)) {
       if (Array.isArray(mergedProps.value)) return mergedProps.value;
       return [mergedProps.value];
     }
@@ -73,10 +78,18 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
   );
 
   useEffect(() => {
-    if (isFunction<ComboBoxOnChangeFn<TOptionValue>>(onChange) && !disabled) {
+    if (disabled) return;
+    if (multi && isFunction<ComboBoxOnChangeMultiFn<TOptionValue>>(onChange)) {
       onChange(selection);
     }
-  }, [disabled, onChange, selection]);
+    if (
+      !multi &&
+      isFunction<ComboBoxOnChangeSingleFn<TOptionValue>>(onChange)
+    ) {
+      onChange(selection[0] ?? null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selection]);
 
   const selectOptionOnClick = useCallback(
     (option: ComboBoxOption<TOptionValue>) => () => {
@@ -102,7 +115,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
   );
 
   if (!props.options) {
-    warn(`Missing required labels`);
+    warn(`Missing required options`);
   }
 
   if (multi && !showIcon) {

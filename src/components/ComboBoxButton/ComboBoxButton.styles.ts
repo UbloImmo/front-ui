@@ -24,10 +24,11 @@ export const ComboBoxButtonStyles = ({
     justify-content: flex-start;
     gap: var(--s-2);
     cursor: pointer;
-    background-color: ${$active ? cssVarUsage("primary-light") : "white"};
+    background: ${$active ? cssVarUsage("primary-light") : "white"};
     padding: var(--s-2) var(--s-4);
     border-radius: var(--s-1);
     border: 1px solid var(--primary-medium);
+    transition: 300ms background ease-out 0s, 300ms border-color ease-out 0s;
     overflow: hidden;
 
     ${$fill &&
@@ -45,7 +46,7 @@ export const ComboBoxButtonStyles = ({
     }
 
     &:disabled {
-      background-color: var(--gray-50);
+      background: var(--gray-50);
       border-color: var(--gray-300);
 
       span[data-testid="text"] {
@@ -55,6 +56,10 @@ export const ComboBoxButtonStyles = ({
       svg[data-testid="icon"] {
         fill: var(--gray-400);
       }
+    }
+
+    &:hover:not(:disabled) {
+      border-color: var(--primary-base);
     }
 
     @media only screen and (max-width: ${breakpointsPx.XS}) {

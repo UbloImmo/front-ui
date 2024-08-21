@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 
+import { ComboBoxInput } from "./ComboBoxInput";
 import { CurrencyInput } from "./CurrencyInput";
 import { DateInput } from "./DateInput";
 import { EmailInput } from "./EmailInput";
@@ -11,19 +12,21 @@ import { SelectInput } from "./SelectInput";
 import { TextAreaInput } from "./TextAreaInput";
 import { TextInput } from "./TextInput";
 
-import { useLogger } from "@utils";
+import { useLogger, useStatic } from "@utils";
 
 import type {
   GenericInputProps,
+  SpecificInputComponent,
   SpecificInputComponentMap,
   SpecificInputProps,
 } from "./Input.generic.types";
 import type { InputType } from "./Input.types";
 import type { TestIdProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
-import type { FC } from "react";
+import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
-const inputComponentMap: SpecificInputComponentMap = {
+const inputComponentMap = <
+  TGenericValue extends NullishPrimitives = NullishPrimitives
+>(): SpecificInputComponentMap<TGenericValue> => ({
   text: TextInput,
   number: NumberInput,
   password: PasswordInput,
@@ -31,31 +34,39 @@ const inputComponentMap: SpecificInputComponentMap = {
   phone: PhoneInput,
   currency: CurrencyInput,
   textarea: TextAreaInput,
-  select: SelectInput,
+  select: SelectInput<TGenericValue>,
   date: DateInput,
-};
+  combobox: ComboBoxInput<TGenericValue>,
+});
 
 /**
  * Renders a specific input component based on the provided `type` prop.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {GenericInputProps<TType>} props - The generic input props.
  * @returns {Nullable<JSX.Element>}
  */
-const Input = <TType extends InputType = "text">({
+const Input = <
+  TType extends InputType = "text",
+  TGenericValue extends NullishPrimitives = NullishPrimitives
+>({
   type,
   ...props
 }: GenericInputProps<TType> & TestIdProps): Nullable<JSX.Element> => {
   const { warn, error } = useLogger("Input");
 
+  const inputMap = useStatic<SpecificInputComponentMap<TGenericValue>>(
+    inputComponentMap<TGenericValue>
+  );
+
   const InputComponent = useMemo<
-    Nullable<FC<SpecificInputProps<TType>>>
+    Nullable<SpecificInputComponent<TType, TGenericValue>>
   >(() => {
-    const DefaultTextInput = TextInput as Omit<
-      FC<SpecificInputProps<TType>>,
-      "defaultProps"
-    > as FC<SpecificInputProps<TType>>;
+    const DefaultTextInput = TextInput as SpecificInputComponent<
+      TType,
+      TGenericValue
+    >;
 
     if (!type) {
       warn("No type provided, defaulting to 'text'");
@@ -65,11 +76,11 @@ const Input = <TType extends InputType = "text">({
       warn(`Unsupported input type (${type}), defaulting to 'text'`);
       return DefaultTextInput;
     }
-    return inputComponentMap[type];
-  }, [type, warn]);
+    return inputMap[type];
+  }, [type, warn, inputMap]);
 
   const inputProps = useMemo(() => {
-    return props as SpecificInputProps<TType>;
+    return props as SpecificInputProps<TType, TGenericValue>;
   }, [props]);
 
   if (!InputComponent) {

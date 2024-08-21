@@ -14,6 +14,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.2` Divider component
   - added property `justify` to change label alignment (`start` or `center`)
 
+### Added
+
+- `v0.0.1` ComboBoxInput internal component
+  - Used to make comboBox available as a field and inside forms
+
+### Changed
+
+- `v0.0.6` ComboBox component **[BREAKING CHANGE]**
+  - `onChange` now returns a single value or `null` when `multi=false`
+
+- `v0.0.4` ComboBoxButton component
+  - Add slight hover style indication
+
+- `v0.0.2` Form component
+  - Update typings (especially `FormFieldProps<TData>`) by narrowing a form field's valid `type` based on its `source` and not the other way around. This enables nested Generic fields (e.g. `Select`, `ComboBox`) and their options to be correctly typed
+  - Add support for discrete components when rendering a field's display state
+
+- `v0.0.6` Input component
+  - Update typings to make them more modular
+  - declare `inputComponentMap` inside the component's `render` body to benefit from nested generics
+
+### Fixed
+
+- `v0.0.6` ComboBox component
+  - Infinite renders caused by `props.value` & `selection` mismatch
+  - Properly handle falsy values by checking with `isNullish(value)` instead of `!value`
+
+
 ## 0.23.0 - 2024-08-20
 
 ### Added
