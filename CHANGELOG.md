@@ -18,11 +18,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.1` ComboBoxInput internal component
   - Used to make comboBox available as a field and inside forms
+  - `onChange` returns a single value or `null` when `multi=false`
 
 ### Changed
 
-- `v0.0.6` ComboBox component **[BREAKING CHANGE]**
-  - `onChange` now returns a single value or `null` when `multi=false`
+- `v0.0.3` SelectInput component
+  - Add support for custom option components
+  - Refetch options on search query change
+  - Pass search query to options query function
+
+- `v0.0.6` ComboBox component
+  - Add `readonly` property to only disable interactivity while keeping styles
+  
 
 - `v0.0.4` ComboBoxButton component
   - Add slight hover style indication
@@ -40,6 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.6` ComboBox component
   - Infinite renders caused by `props.value` & `selection` mismatch
   - Properly handle falsy values by checking with `isNullish(value)` instead of `!value`
+
+- `v0.0.3` SelectInput component
+  - Rewrite outside click detection to work with custom components by checking wether click target is contained within the select inputs DOM tree
 
 
 ## 0.23.0 - 2024-08-20
