@@ -44,7 +44,7 @@ export const Default: Story = {
   args,
 };
 
-export const ActiveState = (props: EnergyLabelProps) => {
+export const States = (props: EnergyLabelProps) => {
   return (
     <ComponentVariants
       defaults={props}
@@ -56,9 +56,62 @@ export const ActiveState = (props: EnergyLabelProps) => {
     />
   );
 };
-// <EnergyLabel {...args} state="active" />
 
-ActiveState.args = {
+States.args = {
   state: "active",
   value: "A",
+};
+
+export const ValuesDPE = (props: EnergyLabelProps) => {
+  return (
+    <ComponentVariants
+      defaults={props}
+      variants={["A", "B", "C", "D", "E", "F", "G", null]}
+      for="value"
+      of={EnergyLabel}
+      align="center"
+      propLabels
+    />
+  );
+};
+
+ValuesDPE.args = {
+  state: "active",
+  type: "DPE",
+};
+
+export const ValuesGES = (props: EnergyLabelProps) => {
+  return (
+    <ComponentVariants
+      defaults={props}
+      variants={["A", "B", "C", "D", "E", "F", "G", null]}
+      for="value"
+      of={EnergyLabel}
+      align="center"
+      propLabels
+    />
+  );
+};
+
+ValuesGES.args = {
+  state: "active",
+  type: "GES",
+};
+
+export const Types = (props: EnergyLabelProps) => {
+  return (
+    <ComponentVariants
+      defaults={props}
+      variants={["DPE", "GES"]}
+      for="type"
+      of={EnergyLabel}
+      align="center"
+      propLabels
+    />
+  );
+};
+
+Types.args = {
+  value: "A",
+  state: "active",
 };

@@ -18,7 +18,7 @@ export type EnergyLabelProps = {
   type: EnergyLabelType;
 
   /**
-   * The value of the EnergyLabel
+   * The value of the EnergyLabel (A, B, C, D, E, F or G)
    *
    * @type {Nullable<EnergyLabelValue>}
    * @default null
