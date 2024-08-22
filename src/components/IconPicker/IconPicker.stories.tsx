@@ -1,0 +1,44 @@
+import { fn } from "@storybook/test";
+
+import { IconPicker } from "./IconPicker.component";
+
+import { componentSourceFactory } from "@docs/docs.utils";
+
+import type { IconPickerProps } from "./IconPicker.types";
+import type { Meta, StoryObj } from "@storybook/react";
+
+const componentSource = componentSourceFactory<IconPickerProps>(
+  "IconPicker",
+  IconPicker.defaultProps
+);
+
+const meta = {
+  component: IconPicker,
+  title: "Components/IconPicker/Stories",
+  args: {
+    icons: [
+      "EmojiHeartEyes",
+      "EmojiSmile",
+      "EmojiNeutral",
+      "EmojiFrown",
+      "EmojiAngry",
+      "EmojiWink",
+    ],
+    onChange: fn(),
+    value: "EmojiHeartEyes",
+  },
+  parameters: {
+    docs: componentSource(),
+  },
+} satisfies Meta<typeof IconPicker>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};

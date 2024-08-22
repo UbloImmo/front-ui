@@ -31,3 +31,4 @@ export * from "./EntityInfoCard";
 export * from "./Checkbox";
 export * from "./Callout";
 export * from "./Calendar";
+export * from "./IconPicker";
