@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `v0.0.6` ComboBox component
+- `v0.0.7` ComboBox component
   - Add support for comboboxButton descriptions
 
 - `v0.0.5` ComboBoxButton component
