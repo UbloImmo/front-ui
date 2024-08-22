@@ -12,6 +12,13 @@ export type ComboBoxButtonProps = {
   label: string;
 
   /**
+   * The description to be displayed in the ComboBoxOptionButton
+   * @type {string}
+   * @default {null}
+   */
+  description?: Nullable<string>;
+
+  /**
    * Whether the ComboBoxButton is selected or not
    * @default {false}
    */

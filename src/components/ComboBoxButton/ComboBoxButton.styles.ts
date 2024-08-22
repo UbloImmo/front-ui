@@ -12,12 +12,16 @@ import type { StyleProps } from "@types";
 export const ComboBoxButtonStyles = ({
   $active,
   $fill,
+  $description,
 }: StyleProps<ComboBoxButtonDefaultProps>): RuleSet => {
+  const height = $description
+    ? "fit-content"
+    : cssVarUsage("combobox-button-height");
   return css`
     --combobox-button-height: var(--s-8);
     min-height: var(--combobox-button-height);
-    height: var(--combobox-button-height);
-    max-height: var(--combobox-button-height);
+    height: ${height};
+    max-height: ${height};
     width: max-content;
     display: flex;
     align-items: center;
@@ -36,8 +40,7 @@ export const ComboBoxButtonStyles = ({
       flex: 1;
     `}
 
-    span[data-testid="text"] {
-      color: ${$active ? cssVarUsage("primary-dark") : cssVarUsage("gray-800")};
+    span[data-testid="combo-box-button-label"] {
       overflow: hidden;
     }
 
@@ -48,18 +51,15 @@ export const ComboBoxButtonStyles = ({
     &:disabled {
       background: var(--gray-50);
       border-color: var(--gray-300);
-
-      span[data-testid="text"] {
-        color: var(--gray-600);
-      }
-
-      svg[data-testid="icon"] {
-        fill: var(--gray-400);
-      }
     }
 
     &:hover:not(:disabled) {
       border-color: var(--primary-base);
+    }
+
+    div[data-testid="combo-box-button-content"] {
+      flex: 1;
+      overflow: hidden;
     }
 
     @media only screen and (max-width: ${breakpointsPx.XS}) {

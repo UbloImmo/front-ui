@@ -4,11 +4,13 @@ import { useMemo, useRef } from "react";
 import { createGlobalStyle, css, type RuleSet } from "styled-components";
 
 import { breakpointsPx, buildSpacingMap } from "../../sizes";
-import { linkFontFace } from "../../typography/typography.font";
+import {
+  mobileFontSize,
+  typographyWeightMap,
+  linkFontFace,
+} from "../../typography";
 import { cssVar, useLogger, useStatic } from "../../utils";
 import { effectsToCssVars } from "../palette";
-
-import { mobileFontSize, typographyWeightMap } from "@/typography";
 
 import type {
   Theme,

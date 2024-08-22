@@ -1,9 +1,11 @@
 import { isBoolean, isFunction, type Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
+import styled from "styled-components";
 
 import { FormFieldDisplay } from "./FormFieldDisplay.component";
 import { useFormContext } from "../Form.context";
 
+import { breakpointsPx } from "@/sizes";
 import { type GridEndPosition, GridItem } from "@layouts";
 
 import { type InputType, Field } from "@components";
@@ -12,6 +14,8 @@ import type { BuiltFieldProps, FormFieldLayoutHiddenFn } from "../Form.types";
 
 /**
  * Renders a form field based on the provided layout and props.
+ *
+ * @version 0.0.2
  *
  * @remarks will render the corresponding field or display field based on the form context.
  *
@@ -53,7 +57,7 @@ export const FormField = ({
   if (isHidden) return null;
 
   return (
-    <GridItem
+    <FormFieldGridItem
       columnEnd={columnEnd}
       align="start"
       testId="form-field-container"
@@ -61,6 +65,12 @@ export const FormField = ({
       fill
     >
       <FieldOrDisplayField {...props} testId="form-field" />
-    </GridItem>
+    </FormFieldGridItem>
   );
 };
+
+const FormFieldGridItem = styled(GridItem)`
+  @media only screen and (max-width: ${breakpointsPx.XS}) {
+    grid-column-end: -1;
+  }
+`;

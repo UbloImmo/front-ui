@@ -16,6 +16,11 @@ export type ComboBoxOption<TOptionValue extends NullishPrimitives> = {
    */
   value: TOptionValue;
   /**
+   * The option's description
+   * @default null
+   */
+  description?: Nullable<string>;
+  /**
    * Whether an option is disabled an cannot be selected
    *
    * @default false

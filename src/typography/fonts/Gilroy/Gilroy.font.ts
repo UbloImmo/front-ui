@@ -7,8 +7,7 @@ import mediumItalic from "./Gilroy-MediumItalic.woff2";
 import regular from "./Gilroy-Regular.woff2";
 import regularItalic from "./Gilroy-Regularitalic.woff2";
 import { fontFamily } from "../../font.utils";
-
-import { buildTypographyWeightMap } from "@/typography/typogaphy.weight";
+import { buildTypographyWeightMap } from "../../typogaphy.weight";
 
 const GilroyFamily = fontFamily({
   fontFamily: "Gilroy",

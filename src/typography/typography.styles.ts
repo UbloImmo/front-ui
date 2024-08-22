@@ -4,8 +4,7 @@ import { css, StyleFunction } from "styled-components";
 
 import { typographyWeightMap } from "./typogaphy.weight";
 import { typographyFontFace } from "./typography.font";
-
-import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "@utils";
+import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "../utils";
 
 import type {
   HeadingProps,
