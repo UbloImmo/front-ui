@@ -23,9 +23,10 @@ export type ContextLineProps = {
   /**
    * A custom element to display in the ContextLine
    *
-   * @default: null
+   * @required
+   * @default null
    */
-  children?: ReactNode;
+  children: ReactNode;
 };
 
 export type ContextLineDefaultProps = Required<ContextLineProps>;

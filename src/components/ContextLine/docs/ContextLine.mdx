@@ -14,8 +14,19 @@ import * as ContextLineStories from "../ContextLine.stories.tsx";
 
 ### First
 
+You can set the `first` property to **first**, **default** or **last** for vertical placement of the label and children.
+Its default value is **default**.
+
 <Canvas of={ContextLineStories.First} />
 
 ### Label
+
+A label can be provided in the `label` property. It's a required property.
+<Canvas of={ContextLineStories.Label} />
+
+### Children
+
+You must add a **children** component (eg. `<Badge />` component to display a state of something).
+<Canvas of={ContextLineStories.Children} />
 
 </Content>

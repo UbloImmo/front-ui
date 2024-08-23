@@ -1,31 +1,29 @@
 import { css } from "styled-components";
-import { ContextLineFirst } from "./ContextLine.types";
+import { ContextLineProps } from "./ContextLine.types";
+import { StyleProps } from "@types";
+import { fromStyleProps } from "@utils";
 
-export const contextLineStyles = css<{ first?: ContextLineFirst }>`
-  display: flex;
-  justify-content: space-between;
-  background: #ffffff;
-  width: 100%;
+export const contextLineStyles = (props: StyleProps<ContextLineProps>) => {
+  const { first } = fromStyleProps<ContextLineProps>(props);
 
-  ${({ first }) => {
-    switch (first) {
-      case "first":
-        return css`
-          align-items: flex-start;
-          height: var(--s-8);
-          box-shadow: var(--border-bottom);
-        `;
-      case "default":
-        return css`
-          align-items: center;
-          height: var(--s-11);
-          box-shadow: var(--border-bottom);
-        `;
-      case "last":
-        return css`
-          align-items: flex-end;
-          height: var(--s-8);
-        `;
-    }
-  }}
-`;
+  const heightContainer = first === "default" ? "var(--s-11)" : "var(--s-8)";
+
+  const alignContent =
+    first === "first"
+      ? "flex-start"
+      : first === "default"
+      ? "center"
+      : "flex-end";
+
+  const boxShadow = first === "last" ? "none" : "var(--border-bottom)";
+
+  return css`
+    display: flex;
+    justify-content: space-between;
+    background: #ffffff;
+    width: 100%;
+    align-items: ${alignContent};
+    height: ${heightContainer};
+    box-shadow: ${boxShadow};
+  `;
+};

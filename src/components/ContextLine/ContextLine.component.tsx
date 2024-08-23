@@ -3,21 +3,20 @@ import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
 import type {
   ContextLineProps,
   ContextLineDefaultProps,
-  ContextLineFirst,
 } from "./ContextLine.types";
-import type { TestIdProps } from "@types";
+import type { StyleProps, TestIdProps } from "@types";
 import styled from "styled-components";
 import { contextLineStyles } from "./ContextLine.styles";
 import { Text } from "../Text";
+import { Badge } from "../Badge";
 
 const defaultContextLineProps: ContextLineDefaultProps = {
   first: "default",
-  label: null,
-  children: null,
+  label: "[label]",
+  children: <Badge label="Children" color="primary" />,
 };
 
 /**
- * ContextLine component
  *
  * Use ContextLine inside contextual areas to display current state of something.
  *
@@ -39,7 +38,7 @@ const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
   return (
     <ContextLineContainer data-testid={testId} {...styledProps}>
       <Text weight="medium" testId="context-line-label" overrideTestId>
-        {mergedProps.label}
+        {mergedProps.label} :
       </Text>
       {mergedProps.children}
     </ContextLineContainer>
@@ -50,6 +49,6 @@ ContextLine.defaultProps = defaultContextLineProps;
 
 export { ContextLine };
 
-const ContextLineContainer = styled.div<{ first?: ContextLineFirst }>`
+const ContextLineContainer = styled.div<StyleProps<ContextLineProps>>`
   ${contextLineStyles}
 `;
