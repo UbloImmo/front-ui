@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Circular dependencies in whole project
+
+### Changed
+
+- `v0.0.2` Callout component
+  - Replace px usage with css variable
+  - Mute logs
+
+- `v0.0.2` ActionIcon component
+  - Include style override props
+
+- `v0.0.4` EntityInfoCard compoenent
+  - Add support for ContextMenu
+
 ## 0.25.0 - 2024-08-27
 ### Added
 - `v0.0.1` IconPicker component
