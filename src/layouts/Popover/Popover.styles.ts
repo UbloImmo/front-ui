@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css, keyframes } from "styled-components";
 
 import type {
   PopoverContentStyleProps,
@@ -35,6 +35,17 @@ export const popoverInnerTriggerStyles = ({
   `;
 };
 
+const scaleIn = keyframes`
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+`;
+
 export const popoverContentStyles = ({
   $fitTriggerWidth,
 }: PopoverContentStyleProps): RuleSet => {
@@ -49,6 +60,9 @@ export const popoverContentStyles = ({
     & > *:first-child {
       z-index: 10;
     }
+
+    transform-origin: var(--radix-popover-content-transform-origin);
+    animation: ${scaleIn} 300ms var(--bezier);
 
     ${$fitTriggerWidth &&
     css`
