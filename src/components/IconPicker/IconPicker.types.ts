@@ -1,8 +1,9 @@
 import { Nullable, VoidFn } from "@ubloimmo/front-util";
 
-import { IconName } from "../Icon/Icon.types";
-
+import type { IconName } from "../Icon/Icon.types";
 import type { StyleOverrideProps } from "@types";
+
+type IconPickerOnChangeFn = VoidFn<[IconName | null]>;
 
 export type IconPickerProps = {
   /**
@@ -19,9 +20,9 @@ export type IconPickerProps = {
 
   /**
    * Callback function that runs when a user selects an icon
-   * @type {VoidFn<[IconName | null]>}
+   * @type {IconPickerOnChangeFn}
    */
-  onChange?: Nullable<VoidFn<[IconName | null]>>;
+  onChange?: Nullable<IconPickerOnChangeFn>;
 
   /**
    * Whether the selection in IconPicker is disabled
