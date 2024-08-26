@@ -4,7 +4,7 @@ import { ComboBoxInput } from "./ComboBoxInput";
 import { CurrencyInput } from "./CurrencyInput";
 import { DateInput } from "./DateInput";
 import { EmailInput } from "./EmailInput";
-import { IconPickerInput } from "./IconPickerInput/IconPickerInput.component";
+import { IconPickerInput } from "./IconPickerInput";
 import { inputTypes } from "./Input.data";
 import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput";

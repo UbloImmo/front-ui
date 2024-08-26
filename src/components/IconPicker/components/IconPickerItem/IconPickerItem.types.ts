@@ -1,7 +1,7 @@
 import { VoidFn } from "@ubloimmo/front-util";
 
-import { IconName } from "@/components/Icon/Icon.types";
-import { StyleProps } from "@types";
+import type { IconName } from "@/components/Icon/Icon.types";
+import type { StyleProps } from "@types";
 
 export type IconPickerItemProps = {
   /** The name of the icon to be displayed in IconPickerItem.

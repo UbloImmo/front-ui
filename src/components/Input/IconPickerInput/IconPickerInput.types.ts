@@ -1,8 +1,8 @@
 import { NonNullish } from "@ubloimmo/front-util";
 
-import { InputProps } from "../Input.types";
-
 import { IconPickerProps } from "@/components/IconPicker";
+
+import type { InputProps } from "../Input.types";
 
 export type IconPickerInputProps = IconPickerProps & InputProps<"icon-picker">;
 

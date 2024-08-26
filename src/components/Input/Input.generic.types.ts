@@ -1,10 +1,9 @@
 import { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
-import { IconPickerInputProps } from "./IconPickerInput/IconPickerInput.types";
-
 import type { ComboBoxInputProps } from "./ComboBoxInput";
 import type { CurrencyInputProps } from "./CurrencyInput";
 import type { DateInputProps } from "./DateInput/DateInput.types";
+import type { IconPickerInputProps } from "./IconPickerInput/IconPickerInput.types";
 import type { InputType, InputProps } from "./Input.types";
 import type { NumberInputProps } from "./NumberInput/NumberInput.types";
 import type { PasswordInputProps } from "./PasswordInput/PasswordInput.types";

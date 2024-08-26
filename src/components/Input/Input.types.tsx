@@ -1,6 +1,6 @@
 import { inputTypes } from "./Input.data";
-import { IconName } from "../Icon";
 
+import type { IconName } from "../Icon";
 import type { DirectionHorizontal } from "@/types/global/direction.types";
 import type { CurrencyInt, Email, StyleProps } from "@types";
 import type {
