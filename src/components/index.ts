@@ -34,3 +34,4 @@ export * from "./Calendar";
 export * from "./IconPicker";
 export * from "./EnergyLabel";
 export * from "./ContextLine";
+export * from "./ContextMenu";

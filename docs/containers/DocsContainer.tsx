@@ -76,6 +76,21 @@ const StyleReset = styled.div`
       border: none;
     }
 
+    ul {
+      ${typographyFontFace()};
+      margin: 0;
+      padding: 0;
+      padding-left: var(--s-4);
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+      color: var(--gray-700);
+      margin-left: var(--s-2);
+      ${typographyFontFace()};
+    }
+
     pre.prismjs span {
       ${codeFontFace(true)};
     }
