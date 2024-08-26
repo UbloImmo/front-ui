@@ -52,7 +52,7 @@ export const calloutStyle = ({
     min-width: 0;
     border-radius: var(--s-1);
     background-color: var(--${$background});
-    border-left: 4px solid var(--${$borderLeft});
+    border-left: var(--s-1) solid var(--${$borderLeft});
 
     svg {
       min-width: var(--s-4);

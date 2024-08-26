@@ -31,13 +31,13 @@ const defaultCalloutProps: CalloutDefaultProps = {
  * A card to display permanent feedback information.
  * Its color indicates the type of feedback.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {CalloutProps & TestIdProps} props - Callout component props
  * @returns {JSX.Element}
  */
 const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
-  const { log, warn } = useLogger("Callout");
+  const { warn } = useLogger("Callout");
   const mergedProps = useMergedProps(defaultCalloutProps, props);
   const { icon, label, color, title } = mergedProps;
   const testId = useTestId("callout", props);
@@ -50,8 +50,6 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
   const calloutColors = useMemo(() => computeCalloutColors(color), [color]);
 
   const styleProps = useStyleProps(calloutColors);
-
-  log(mergedProps);
 
   if (!props.label) {
     warn(`Missing required label, defaulting to ${defaultCalloutProps.label}`);
