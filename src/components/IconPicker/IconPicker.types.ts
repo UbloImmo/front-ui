@@ -9,7 +9,7 @@ export type IconPickerProps = {
    * The set of icons to display in IconPicker
    * @type {IconName[]}
    */
-  icons: IconName[];
+  icons?: IconName[];
 
   /**
    * The currently selected icon

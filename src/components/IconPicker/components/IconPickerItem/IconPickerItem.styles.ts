@@ -1,17 +1,17 @@
 import { css, RuleSet } from "styled-components";
 
-import { IconPickerItemStylePropsStyleProps } from "./IconPickerItem.types";
+import { IconPickerItemStyleProps } from "./IconPickerItem.types";
 
 import { cssVarUsage } from "@utils";
 
 export const IconPickerItemStyles = ({
   $active,
-}: IconPickerItemStylePropsStyleProps): RuleSet => {
+  $readonly,
+}: IconPickerItemStyleProps): RuleSet => {
   return css`
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     width: var(--s-8);
     height: var(--s-8);
     min-width: var(--s-8);
@@ -31,14 +31,21 @@ export const IconPickerItemStyles = ({
       fill: ${$active ? cssVarUsage("primary-base") : cssVarUsage("gray-700")};
     }
 
-    &:hover {
-      border: 1px solid
-        ${$active ? cssVarUsage("primary-base") : cssVarUsage("primary-medium")};
+    ${!$readonly &&
+    css`
+      cursor: pointer;
 
-      svg[data-testid="icon"] {
-        fill: var(--primary-dark);
+      &:hover:not(:disabled) {
+        border: 1px solid
+          ${$active
+            ? cssVarUsage("primary-base")
+            : cssVarUsage("primary-medium")};
+
+        svg[data-testid="icon"] {
+          fill: var(--primary-dark);
+        }
       }
-    }
+    `}
 
     &:disabled {
       border: 1px solid ${$active ? cssVarUsage("gray-300") : "transparent"};

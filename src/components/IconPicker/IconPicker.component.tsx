@@ -13,7 +13,7 @@ import type {
 import type { TestIdProps } from "@types";
 
 const defaultIconPickerProps: IconPickerDefaultProps = {
-  icons: ["Circle", "Square", "Triangle"],
+  icons: [],
   value: null,
   onChange: null,
   disabled: false,
@@ -30,7 +30,7 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
  * @returns {JSX.Element}
  */
 const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
-  const { log } = useLogger("IconPicker");
+  const { warn, log } = useLogger("IconPicker");
   const mergedProps = useMergedProps(defaultIconPickerProps, props);
   const testId = useTestId("icon-picker", props);
   const className = useClassName(mergedProps);
@@ -67,8 +67,11 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedProps.onChange, selection]);
 
-  log(mergedProps);
+  if (!mergedProps.icons.length) {
+    warn(`Missing icons`);
+  }
 
+  log(testId);
   return (
     <FlexLayout testId={testId} gap="s-2" className={className} overrideTestId>
       {mergedProps.icons.map((icon) => (
