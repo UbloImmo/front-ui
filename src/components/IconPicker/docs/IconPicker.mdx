@@ -13,9 +13,21 @@ import * as IconPickerStories from "../IconPicker.stories.tsx";
 
 ### Selecting an icon
 
+`IconPicker` functions similarly to a single-select [ComboBox](?path=/docs/components-combobox-usage--docs), but is specifically designed for **icon selection**, making it useful for assigning a visual reference within a form context.
+
 <Canvas of={IconPickerStories.Default} />
 
+### Required
+
+By default, users can clear their selection. To prevent this and make a selection mandatory, set the `required` property to `true`.
+
+> Give it a try below, the selection remains even after clicking on the selected icon.
+
+<Canvas of={IconPickerStories.Required} />
+
 ### Disabled
+
+To unset the selection, set the optional `disabled` property to true.
 
 <Canvas of={IconPickerStories.Disabled} />
 
