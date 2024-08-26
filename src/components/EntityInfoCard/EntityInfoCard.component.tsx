@@ -28,6 +28,7 @@ import {
   Text,
   Badge,
   Action,
+  ContextMenu,
 } from "@components";
 
 import type {
@@ -35,6 +36,8 @@ import type {
   EntityInfoCardDefaultProps,
 } from "./EntityInfoCard.types";
 import type { TestIdProps } from "@types";
+import { useRef } from "react";
+import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
   name: null,
@@ -49,12 +52,13 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
   actionIcon: null,
   children: null,
   onInfoCopied: null,
+  contextMenu: null,
 };
 
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
@@ -64,9 +68,10 @@ const EntityInfoCard = (
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultEntityInfoCardProps, props);
   const testId = useTestId("entity-info-card", props);
+  const elementRef = useRef<Nullable<HTMLDivElement>>(null);
 
   return (
-    <EntityCardContainer testId={testId} overrideTestId fill>
+    <EntityCardContainer testId={testId} overrideTestId fill ref={elementRef}>
       <EntityCardHeader
         testId={`${testId}-header`}
         overrideTestId
@@ -80,10 +85,21 @@ const EntityInfoCard = (
         />
         {mergedProps.actionIcon && (
           <ActionIcon
-            {...props.actionIcon}
+            {...mergedProps.actionIcon}
             size="default"
             testId={`${testId}-action`}
             overrideTestId
+          />
+        )}
+        {mergedProps.contextMenu && (
+          <ContextMenu
+            {...mergedProps.contextMenu}
+            size="m"
+            side="bottom"
+            align="end"
+            testId={`${testId}-context-menu`}
+            overrideTestId
+            collisionBoundary={elementRef.current}
           />
         )}
       </EntityCardHeader>

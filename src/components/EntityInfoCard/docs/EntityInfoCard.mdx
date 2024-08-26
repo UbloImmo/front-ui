@@ -43,6 +43,27 @@ When all is lost and you need to display some info using custom means, pass a re
 
 <Canvas of={EntityInfoCardStories.MainContent} />
 
+### Header customization
+
+#### State
+
+`EntityInfoCard` makes use of a [StateIndicator](?path=/docs/components-stateindicator-usage--docs) in its header.
+As such, its `state` property accepts all of the underlying component's properties.
+
+<Canvas of={EntityInfoCardStories.State} />
+
+#### Action Icon
+
+A standard [ActionIcon](?path=/docs/components-actionicon-usage--docs) is rendered when the `actionIcon` property is provided.
+
+<Canvas of={EntityInfoCardStories.ActionIcon} />
+
+#### Context Menu
+
+One sometimes needs to display additional secondary actions in a context menu.
+`EntityInfoCard` will render a [ContextMenu](?path=/docs/components-contextmenu-usage--docs) in its header if its `contextMenu` property is provided.
+
+<Canvas of={EntityInfoCardStories.ContextMenu} />
 
 </Content>
 

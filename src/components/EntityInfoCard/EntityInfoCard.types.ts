@@ -6,6 +6,7 @@ import type {
   BadgeProps,
   ActionProps,
   OnCopiedFn,
+  ContextMenuProps,
 } from "@components";
 
 import type { Nullable } from "@ubloimmo/front-util";
@@ -40,6 +41,14 @@ export type EntityInfoCardProps = {
    * @default null
    */
   actionIcon?: Nullable<EntityActionIcon>;
+  /**
+   * A context menu that can be displayed when the user right clicks on the entity
+   *
+   * @remarks Renders to the right of the card
+   *
+   * @default null
+   */
+  contextMenu?: Nullable<ContextMenuProps>;
   /**
    * A list of Info Cards
    *
