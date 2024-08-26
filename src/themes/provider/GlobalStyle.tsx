@@ -270,6 +270,7 @@ const appendGlobalStyle = ({
     ${linkFontFace()}
     ${cssReset()}
     :root {
+      --bezier: cubic-bezier(0.38, 0, 0.21, 0.98);
       ${defaultCssVarsStr}
     }
     ${mediaQueries}
