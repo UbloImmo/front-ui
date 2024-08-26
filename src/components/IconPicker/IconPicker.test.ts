@@ -51,5 +51,24 @@ testIconPicker({
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith("EmojiSmile");
+    onChange.mockReset();
+  }
+);
+
+testIconPicker({
+  icons: sampleIcons,
+  value: "EmojiSmile",
+  onChange,
+})(
+  "should reset value on change if value is already set",
+  async ({ queryByTestId, queryAllByTestId }, { click }) => {
+    expect(queryByTestId(testId)).not.toBeNull();
+    expect(queryAllByTestId(`${testId}-item`)).not.toBeNull();
+
+    await click(queryAllByTestId(`${testId}-item`)[1]);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith(null);
+    onChange.mockReset();
   }
 );
