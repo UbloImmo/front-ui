@@ -1,19 +1,19 @@
+import { fn } from "@storybook/test";
+
 import { ContextMenu } from "./ContextMenu.component";
-import { ActionIcon } from "../ActionIcon";
+import { Button } from "../Button";
+import { Icon, type IconName } from "../Icon";
 
+import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
+import { useMergedProps } from "@utils";
 
+import type { ContextMenuItemSize } from "./components";
 import type {
   ContextMenuItemData,
   ContextMenuProps,
 } from "./ContextMenu.types";
 import type { Meta } from "@storybook/react";
-import { ComponentVariants } from "@docs/blocks";
-import { useMergedProps } from "@utils";
-import type { ContextMenuItemSize } from "./components";
-import { Button } from "../Button";
-import { Icon, type IconName } from "../Icon";
-import { fn } from "@storybook/test";
 
 const componentSource = componentSourceFactory<ContextMenuProps>(
   "ContextMenu",
@@ -78,8 +78,8 @@ export const Sizes = (props: ContextMenuProps) => {
 
 const triggers = [
   null,
-  <Button label="I am a custom trigger" />,
-  <Icon name="MenuDown" />,
+  <Button key="button" label="I am a custom trigger" />,
+  <Icon key="icon" name="MenuDown" />,
 ];
 export const Triggers = (props: ContextMenuProps) => {
   const defaults = useMergedProps(defaultProps, props);

@@ -7,27 +7,24 @@ import {
 import { useMemo, type ReactNode } from "react";
 import styled from "styled-components";
 
+import { ComboBox } from "@/components/ComboBox";
+import { Icon } from "@/components/Icon";
 import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
 import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
 import { flattedSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
+import { InputLabel } from "@/components/InputLabel";
+import { Text } from "@/components/Text";
 import { breakpointsPx } from "@/sizes";
 import { FlexColumnLayout, FlexLayout, FlexRowLayout } from "@layouts";
 import { arrayOf } from "@utils";
-
-import {
-  InputLabel,
-  Icon,
-  Text,
-  type TooltipProps,
-  ComboBox,
-} from "@components";
 
 import type {
   BuiltFieldProps,
   FormDisplayValueFormatterMap,
 } from "../Form.types";
 import type { InputType, InputValue } from "@/components/Input";
+import type { TooltipProps } from "@/components/Tooltip";
 
 const noValue = "—";
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useFormContext } from "../Form.context";
 import { formEditButtonStyles } from "../Form.styles";
 
-import { Button } from "@components";
+import { Button } from "@/components/Button";
 
 import type { FormEditButtonStyleProps } from "../Form.types";
 

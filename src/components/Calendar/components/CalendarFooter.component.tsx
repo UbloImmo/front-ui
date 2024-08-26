@@ -1,7 +1,7 @@
 import { isString } from "@ubloimmo/front-util";
 import { Footer, type FooterProps } from "react-day-picker";
 
-import { InputAssistiveText } from "@components";
+import { InputAssistiveText } from "@/components/InputAssistiveText";
 
 export const CalendarFooter = ({ children, ...props }: FooterProps) => {
   return (

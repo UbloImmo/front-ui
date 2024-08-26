@@ -4,10 +4,9 @@ import styled from "styled-components";
 import { useFormContext } from "../Form.context";
 import { formEditBannerStyles } from "../Form.styles";
 
+import { Button } from "@/components/Button";
 import { FlexRowLayout } from "@layouts";
 import { useStyleProps } from "@utils";
-
-import { Button } from "@components";
 
 import type { FormEditBannerStyleProps } from "../Form.types";
 

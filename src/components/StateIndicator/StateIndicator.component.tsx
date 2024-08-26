@@ -6,9 +6,9 @@ import {
   stateIndicatorStyle,
 } from "./StateIndicator.styles";
 
+import { Icon, type IconProps } from "@/components/Icon";
+import { Text } from "@/components/Text";
 import { useMergedProps, useStyleProps, useTestId } from "@utils";
-
-import { Icon, IconProps, Text } from "@components";
 
 import type {
   DefaultStateIndicatorProps,

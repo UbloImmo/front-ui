@@ -1,4 +1,5 @@
 import { isString } from "@ubloimmo/front-util";
+import { useMemo } from "react";
 import styled from "styled-components";
 
 import { contextMenuItemStyles } from "./ContextMenuItem.styles";
@@ -12,7 +13,6 @@ import type {
   ContextMenuItemDefaultProps,
 } from "./ContextMenuItem.types";
 import type { TestIdProps } from "@types";
-import { useMemo } from "react";
 
 const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
   label: "[Label]",

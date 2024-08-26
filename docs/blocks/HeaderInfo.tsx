@@ -1,4 +1,4 @@
-import { Text } from "../blocks";
+import { Text } from "./Typography";
 
 import { FlexColumnLayout } from "@/layouts";
 

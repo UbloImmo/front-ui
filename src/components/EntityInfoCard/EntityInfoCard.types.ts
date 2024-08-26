@@ -1,14 +1,13 @@
+import type { ActionProps } from "@/components/Action";
+import type { ActionIconProps } from "@/components/ActionIcon";
+import type { BadgeProps } from "@/components/Badge";
+import type { ContextMenuProps } from "@/components/ContextMenu";
 import type {
-  StateIndicatorProps,
   CopyClipboardInfoCardProps,
-  InfoBoxProps,
-  ActionIconProps,
-  BadgeProps,
-  ActionProps,
   OnCopiedFn,
-  ContextMenuProps,
-} from "@components";
-
+} from "@/components/CopyClipboardInfoCard";
+import type { InfoBoxProps } from "@/components/InfoBox";
+import type { StateIndicatorProps } from "@/components/StateIndicator";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 

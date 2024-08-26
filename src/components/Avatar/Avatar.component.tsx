@@ -9,9 +9,9 @@ import {
   isAvatarPropsWithUrl,
 } from "./Avatar.utils";
 
+import { Heading } from "@/components/Heading";
+import { Text } from "@/components/Text";
 import { useTestId, useMergedProps, useStyleProps, useLogger } from "@utils";
-
-import { Heading, Text } from "@components";
 
 import type { AvatarProps, AvatarDefaultProps } from "./Avatar.types";
 import type { PaletteColor, StyleProps, TestIdProps } from "@types";

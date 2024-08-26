@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import styled from "styled-components";
 
 import {
@@ -10,6 +11,15 @@ import {
   entityCardStatusRowListStyles,
 } from "./EntityInfoCard.styles";
 
+import { Action } from "@/components/Action";
+import { ActionIcon } from "@/components/ActionIcon";
+import { Badge } from "@/components/Badge";
+import { ContextMenu } from "@/components/ContextMenu";
+import { CopyClipboardInfoCard } from "@/components/CopyClipboardInfoCard";
+import { Heading } from "@/components/Heading";
+import { InfoBox } from "@/components/InfoBox";
+import { StateIndicator } from "@/components/StateIndicator";
+import { Text } from "@/components/Text";
 import {
   FlexColumnLayout,
   FlexRowLayout,
@@ -19,24 +29,11 @@ import {
 } from "@layouts";
 import { useTestId, useMergedProps } from "@utils";
 
-import {
-  StateIndicator,
-  Heading,
-  InfoBox,
-  CopyClipboardInfoCard,
-  ActionIcon,
-  Text,
-  Badge,
-  Action,
-  ContextMenu,
-} from "@components";
-
 import type {
   EntityInfoCardProps,
   EntityInfoCardDefaultProps,
 } from "./EntityInfoCard.types";
 import type { TestIdProps } from "@types";
-import { useRef } from "react";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {

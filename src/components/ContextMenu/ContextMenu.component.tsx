@@ -17,11 +17,11 @@ import {
   ContextMenuStyleProps,
   type ContextMenuActionIconStyleProps,
 } from "./ContextMenu.types";
+import { ActionIcon } from "../ActionIcon";
 
 import { FlexColumnLayout, Popover } from "@layouts";
 import { FixedCssLength, type TestIdProps } from "@types";
 import { useLogger, useTestId, useMergedProps } from "@utils";
-import { ActionIcon } from "../ActionIcon";
 
 const defaultContextMenuProps: ContextMenuDefaultProps = {
   ...Popover.defaultProps,

@@ -1,4 +1,4 @@
-import type { GridAlignment } from "@layouts";
+import type { GridAlignment } from "@/layouts/Grid";
 import type { PopoverContentProps as PopoverPrimitiveContentProps } from "@radix-ui/react-popover";
 import type { Direction, FixedCssLength, StyleProps } from "@types";
 import type {

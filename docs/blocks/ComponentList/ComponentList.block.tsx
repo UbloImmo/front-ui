@@ -28,7 +28,6 @@ export const ComponentList = <TIndex extends AnyIndex>(
   const componentEntries = useStatic(
     componentIndexToEntries(index, props.exclude, props.include)
   );
-  console.log(index, componentEntries);
 
   if (!componentEntries) return null;
 

@@ -1,8 +1,9 @@
 import { VoidFn, isFunction, type Nullable } from "@ubloimmo/front-util";
-import { lazy, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 
 import { actionContainerStyles } from "./Action.styles";
+import { Badge, type BadgeProps } from "../Badge";
 import { StaticIcon } from "../StaticIcon";
 import { Text } from "../Text";
 
@@ -20,7 +21,6 @@ import {
   useMergedProps,
   useStyleProps,
   useTestId,
-  loadComponent,
 } from "@utils";
 
 import type {
@@ -28,7 +28,6 @@ import type {
   ActionSize,
   DefaultActionProps,
 } from "./Action.types";
-import { Badge, type BadgeProps } from "../Badge";
 import type {
   StaticIconProps,
   StaticIconSize,

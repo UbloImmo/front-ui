@@ -2,11 +2,7 @@ import { fn } from "@storybook/test";
 
 import { EntityInfoCard } from "./EntityInfoCard.component";
 
-import {
-  ComponentVariants,
-  type DetailConfigVariants,
-  type PropVariant,
-} from "@docs/blocks";
+import { ComponentVariants, type PropVariant } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
@@ -18,7 +14,6 @@ import {
   Heading,
   Badge,
   type StateIndicatorProps,
-  type ContextMenuProps,
   type ActionIconProps,
 } from "@components";
 

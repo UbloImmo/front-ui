@@ -1,7 +1,7 @@
 import type { InputType, GenericInputProps } from "../Input";
 import type { InputAssistiveTextProps } from "../InputAssistiveText";
 import type { InputLabelProps } from "../InputLabel";
-import type { StyleOverrideProps } from "@types";
+import type { StyleOverrideProps } from "@/types/global/styles.types";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 export type FieldProps<

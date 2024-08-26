@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { useFormContext } from "../Form.context";
 import { formDebugPreStyles, formDebugContainerStyles } from "../Form.styles";
 
+import { Heading } from "@/components/Heading";
+import { Text } from "@/components/Text";
 import { GridLayout, GridItem, type GridItemProps } from "@layouts";
 import { arrayOf } from "@utils";
-
-import { Heading, Text } from "@components";
 
 import type { FormDebugPreStyleProps } from "../Form.types";
 import type { PaletteColor, ColorKey } from "@types";

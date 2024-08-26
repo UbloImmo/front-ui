@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { dividerLineStyles } from "./Divider.styles";
 
+import { Heading } from "@/components/Heading";
+import { Text } from "@/components/Text";
 import { FlexRowLayout } from "@layouts";
 import {
   useTestId,
@@ -12,8 +14,6 @@ import {
   useLogger,
   useClassName,
 } from "@utils";
-
-import { Heading, Text } from "@components";
 
 import type { DividerProps, DividerDefaultProps } from "./Divider.types";
 import type { TestIdProps } from "@types";

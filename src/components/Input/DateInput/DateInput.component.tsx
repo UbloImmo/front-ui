@@ -38,18 +38,14 @@ import {
   useInputValue,
 } from "../Input.utils";
 
+import { Calendar, type CalendarOnChangeFn } from "@/components/Calendar";
+import { Icon } from "@/components/Icon";
 import { Popover } from "@layouts";
 import { useHtmlAttribute, useLogger, useMergedProps, useTestId } from "@utils";
 
-import {
-  Calendar,
-  CalendarOnChangeFn,
-  Icon,
-  InputOnChangeFn,
-} from "@components";
-
 import type { DateInputDefaultProps, DateInputProps } from "./DateInput.types";
 import type {
+  InputOnChangeFn,
   InputValue,
   NativeInputOnBlurFn,
   NativeInputValue,
@@ -255,6 +251,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
       open={calendarShown && !inputDisabled}
       onOpenChange={toggleCalendarShown}
       align="end"
+      collisionPadding="s-1"
     >
       <StyledInputContainer {...inputStyles} data-testid="input-date-container">
         <StyledDateInput

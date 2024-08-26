@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { FormEditButton } from "./FormEditButton.component";
 import { formHeaderStyles } from "../Form.styles";
 
+import { Badge } from "@/components/Badge";
+import { Heading } from "@/components/Heading";
+import { Icon } from "@/components/Icon";
 import { FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
-
-import { Heading, Badge, Icon } from "@components";
 
 import type { FormHeaderProps } from "../Form.types";
 

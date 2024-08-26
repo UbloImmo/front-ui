@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
-} from "..";
+} from "../Table";
 
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
 import { capitalize, cssVarName } from "@utils";

@@ -3,17 +3,18 @@ import { useCallback, useId, useMemo } from "react";
 import styled from "styled-components";
 
 import { modalButtonStyles, modalCardStyles } from "./Modal.styles";
-import {
-  type ModalProps,
-  type ModalDefaultProps,
-  ModalStyleProps,
-} from "./Modal.types";
 
+import { Button } from "@/components/Button";
+import { Dialog, useDialogManager } from "@/components/Dialog";
+import { Heading } from "@/components/Heading";
 import { FlexColumnLayout } from "@layouts";
 import { useLogger, useTestId, useMergedProps } from "@utils";
 
-import { Heading, Button, Dialog, useDialogManager } from "@components";
-
+import type {
+  ModalProps,
+  ModalDefaultProps,
+  ModalStyleProps,
+} from "./Modal.types";
 import type { TestIdProps } from "@types";
 
 const defaultModalProps: ModalDefaultProps = {

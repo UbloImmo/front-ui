@@ -5,7 +5,7 @@ import { SelectInputOption } from "./SelectInputOption.component";
 import { groupOptionLabelStyles } from "../SelectInput.styles";
 import { SelectInputOptionGroupProps } from "../SelectInput.types";
 
-import { Text } from "@components";
+import { Text } from "@/components/Text";
 
 /**
  * Renders a single select option group and its nested options

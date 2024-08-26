@@ -1,4 +1,4 @@
-import type { CssPx } from "@types";
+import type { CssPx } from "@/types/global/css.types";
 import type { Enum } from "@ubloimmo/front-util";
 
 export const breakpointLabels = ["XXS", "XS", "SM", "MD", "LG", "XL"] as const;
