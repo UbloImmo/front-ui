@@ -27,10 +27,6 @@ export const IconPickerItemStyles = ({
     transition: 300ms background-color ease-out 0s,
       300ms border-color ease-out 0s;
 
-    svg[data-testid="icon"] {
-      fill: ${$active ? cssVarUsage("primary-base") : cssVarUsage("gray-700")};
-    }
-
     ${!$readonly &&
     css`
       cursor: pointer;
@@ -54,12 +50,6 @@ export const IconPickerItemStyles = ({
         : cssVarUsage("gray-50")};
       box-shadow: none;
       cursor: not-allowed;
-
-      svg[data-testid="icon"] {
-        fill: ${$active
-          ? cssVarUsage("primary-dark")
-          : cssVarUsage("gray-400")};
-      }
     }
   `;
 };
