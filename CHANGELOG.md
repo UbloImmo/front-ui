@@ -20,8 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.2` ActionIcon component
   - Include style override props
 
-- `v0.0.4` EntityInfoCard compoenent
+- `v0.0.4` EntityInfoCard component
   - Add support for ContextMenu
+
+### Added
+
+- `v0.0.1` ContextMenu component
 
 ## 0.25.0 - 2024-08-27
 ### Added
