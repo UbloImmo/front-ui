@@ -30,7 +30,7 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
  * @returns {JSX.Element}
  */
 const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
-  const { warn, log } = useLogger("IconPicker");
+  const { warn } = useLogger("IconPicker");
   const mergedProps = useMergedProps(defaultIconPickerProps, props);
   const testId = useTestId("icon-picker", props);
   const className = useClassName(mergedProps);
@@ -71,7 +71,6 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
     warn(`Missing icons`);
   }
 
-  log(testId);
   return (
     <FlexLayout testId={testId} gap="s-2" className={className} overrideTestId>
       {mergedProps.icons.map((icon) => (
