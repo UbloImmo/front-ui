@@ -106,7 +106,6 @@ export type PopoverContentFn = GenericFn<[], ReactNode>;
 export type PopoverContent = NonNullish<ReactNode | PopoverContentFn>;
 
 type UncontrolledPopoverProps = PopoverContentProps & {
-  // TODO
   /**
    * The trigger for the popover.
    */
@@ -154,7 +153,7 @@ export type ControlledPopoverPropsExtension = {
   onOpenChange: PopoverOnOpenChangeFn;
 };
 
-type ControlledPopoverProps = UncontrolledPopoverProps &
+export type ControlledPopoverProps = UncontrolledPopoverProps &
   ControlledPopoverPropsExtension;
 
 export type PopoverProps = UncontrolledPopoverProps | ControlledPopoverProps;
