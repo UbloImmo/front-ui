@@ -1,3 +1,10 @@
+import { useMemo } from "react";
+import styled from "styled-components";
+
+import { contextLineStyles } from "./ContextLine.styles";
+import { Badge } from "../Badge";
+import { Text } from "../Text";
+
 import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
 
 import type {
@@ -5,13 +12,8 @@ import type {
   ContextLineDefaultProps,
 } from "./ContextLine.types";
 import type { StyleProps, TestIdProps } from "@types";
-import styled from "styled-components";
-import { contextLineStyles } from "./ContextLine.styles";
-import { Text } from "../Text";
-import { Badge } from "../Badge";
 
 const defaultContextLineProps: ContextLineDefaultProps = {
-  first: "default",
   label: "[label]",
   children: <Badge label="Children" color="primary" />,
 };
@@ -33,12 +35,14 @@ const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
 
   log(mergedProps);
 
-  if (!props.label) warn("Missing label prop");
+  if (!mergedProps.label) warn("Missing label prop");
+
+  const label = useMemo(() => `${mergedProps.label}`, [mergedProps.label]);
 
   return (
     <ContextLineContainer data-testid={testId} {...styledProps}>
       <Text weight="medium" testId="context-line-label" overrideTestId>
-        {mergedProps.label} :
+        {label} :
       </Text>
       {mergedProps.children}
     </ContextLineContainer>

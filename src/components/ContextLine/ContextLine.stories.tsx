@@ -1,12 +1,12 @@
 import { ContextLine } from "./ContextLine.component";
+import { Badge } from "../Badge";
 
+import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
+import { useMergedProps } from "@utils";
 
 import type { ContextLineProps } from "./ContextLine.types";
 import type { Meta, StoryObj } from "@storybook/react";
-import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
-import { Badge } from "../Badge";
-import { useMergedProps } from "@utils";
 
 const args = {
   ...ContextLine.defaultProps,
@@ -15,7 +15,6 @@ const args = {
 const componentSource = componentSourceFactory<ContextLineProps>(
   "ContextLine",
   {
-    first: "default",
     label: "[label]",
     children: '<Badge label="Children" color="primary" />',
   },
@@ -24,10 +23,6 @@ const componentSource = componentSourceFactory<ContextLineProps>(
 
 const meta = {
   argTypes: {
-    first: {
-      control: "radio",
-      options: ["first", "default", "last"],
-    },
     label: {
       control: "text",
     },
@@ -35,7 +30,6 @@ const meta = {
   component: ContextLine,
   title: "Components/ContextLine/Stories",
   args: {
-    first: "default",
     label: "[label]",
   },
   parameters: {
@@ -54,32 +48,87 @@ export const Default: Story = {
   },
 };
 
-const firstVariants: DetailConfigVariants<ContextLineProps> = [
+const infosVariants = [
   {
-    __propVariantLabel: "First",
-    first: "first",
+    label: "Label",
+    badgeLabel: "Badge",
+    badgeColor: "primary",
+    badgeIcon: "CircleFill",
   },
-  {
-    __propVariantLabel: "Default",
-    first: "default",
-  },
-  {
-    __propVariantLabel: "Last",
-    first: "last",
-  },
-];
+] as const;
 
-export const First = (props: ContextLineProps) => {
+const infosBisVariants = [
+  {
+    label: "Label 1",
+    badgeLabel: "Badge 1",
+    badgeColor: "primary",
+    badgeIcon: "CircleFill",
+  },
+  {
+    label: "Label 2",
+    badgeLabel: "Badge 2",
+    badgeColor: "success",
+    badgeIcon: "CircleFill",
+  },
+  {
+    label: "Label 3",
+    badgeLabel: "Badge 3",
+    badgeColor: "warning",
+    badgeIcon: "CircleFill",
+  },
+] as const;
+
+const contextLineVariants: DetailConfigVariants<{ rows: ContextLineProps[] }> =
+  [
+    {
+      __propVariantLabel: "Example",
+      rows: infosVariants.map((info) => ({
+        label: info.label,
+        children: (
+          <Badge
+            label={info.badgeLabel}
+            color={info.badgeColor}
+            icon={info.badgeIcon}
+          />
+        ),
+      })),
+    },
+    {
+      __propVariantLabel: "Example",
+      rows: infosBisVariants.map((info) => ({
+        label: info.label,
+        children: (
+          <Badge
+            label={info.badgeLabel}
+            color={info.badgeColor}
+            icon={info.badgeIcon}
+          />
+        ),
+      })),
+    },
+  ];
+
+export const Example = (props: ContextLineProps) => {
   const mergedProps = useMergedProps(ContextLine.defaultProps, props);
 
   return (
     <ComponentVariants
-      columns={3}
-      defaults={mergedProps}
-      variants={firstVariants}
-      of={ContextLine}
-      align="center"
-      propLabels
+      columns={2}
+      defaults={{ rows: [mergedProps] }}
+      variants={contextLineVariants}
+      of={(variant: { rows: ContextLineProps[] }) => (
+        <div
+          style={{
+            padding: "1rem",
+            backgroundColor: "white",
+            border: "1px solid var(--primary-light)",
+          }}
+        >
+          {variant.rows.map((row, index) => (
+            <ContextLine key={index} {...row} />
+          ))}
+        </div>
+      )}
     />
   );
 };
@@ -107,13 +156,11 @@ Label.args = {
 const childrenVariants: DetailConfigVariants<ContextLineProps> = [
   {
     __propVariantLabel: "Example 1",
-    first: "default",
     label: "Contrat de location",
     children: <Badge label="Valide" color="success" icon="CircleFill" />,
   },
   {
     __propVariantLabel: "Example 2",
-    first: "default",
     label: "Assurance",
     children: (
       <Badge label="Manquante" color="warning" icon="QuestionCircleFill" />
@@ -121,7 +168,6 @@ const childrenVariants: DetailConfigVariants<ContextLineProps> = [
   },
   {
     __propVariantLabel: "Example 3",
-    first: "default",
     label: "Assurance",
     children: (
       <Badge label="Expirée" color="error" icon="ExclamationCircleFill" />

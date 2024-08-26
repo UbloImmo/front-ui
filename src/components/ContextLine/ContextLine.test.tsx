@@ -1,7 +1,7 @@
 import { expect } from "bun:test";
 
-import { Badge } from "../Badge";
 import { ContextLine } from "./ContextLine.component";
+import { Badge } from "../Badge";
 
 import { testComponentFactory } from "@/tests";
 
