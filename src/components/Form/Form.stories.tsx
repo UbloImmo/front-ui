@@ -145,6 +145,7 @@ const identitySchema = z.object({
     .nullish(),
   isCitizen: z.boolean(),
   maritalStatus: z.enum(["single", "married", "widowed", "divorced"]),
+  icon: z.enum(["Square", "Triangle", "Circle"]),
 });
 
 type Identity = z.output<typeof identitySchema>;
@@ -156,6 +157,7 @@ const formData: FormData<Identity> = {
     email: "k6bqg@example.com",
     phone: "+33 6 00 00 00 00",
   },
+  icon: "Square",
 };
 
 const identityFormProps: FormProps<Identity> = {
@@ -171,6 +173,7 @@ const identityFormProps: FormProps<Identity> = {
   defaultValues: {
     firstName: "John",
     lastName: "Doe",
+    icon: "Square",
   },
   content: [
     {
@@ -257,6 +260,12 @@ const identityFormProps: FormProps<Identity> = {
       type: "phone",
       source: "contact.phone",
       label: "Phone number",
+    },
+    {
+      type: "icon-picker",
+      source: "icon",
+      label: "Pick an icon",
+      icons: ["Square", "Triangle", "Circle"],
     },
   ],
 };

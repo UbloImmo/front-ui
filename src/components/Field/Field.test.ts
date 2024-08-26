@@ -19,10 +19,12 @@ const testEachFieldType = () => {
       assistiveText: "Field assistive text",
     })("should render", async ({ findByTestId }) => {
       const inputTestId = `input-${type} field-input`;
+
       const field = await findByTestId(testId);
       const label = await findByTestId(labelTestId);
       const input = await findByTestId(inputTestId);
       const assistiveText = await findByTestId(assistiveTextTestId);
+
       expect(field).not.toBeNull();
       expect(label).not.toBeNull();
       expect(input).not.toBeNull();

@@ -4,6 +4,7 @@ import { ComboBoxInput } from "./ComboBoxInput";
 import { CurrencyInput } from "./CurrencyInput";
 import { DateInput } from "./DateInput";
 import { EmailInput } from "./EmailInput";
+import { IconPickerInput } from "./IconPickerInput/IconPickerInput.component";
 import { inputTypes } from "./Input.data";
 import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput";
@@ -37,6 +38,7 @@ const inputComponentMap = <
   select: SelectInput<TGenericValue>,
   date: DateInput,
   combobox: ComboBoxInput<TGenericValue>,
+  "icon-picker": IconPickerInput,
 });
 
 /**
