@@ -28,13 +28,11 @@ import type {
   ActionSize,
   DefaultActionProps,
 } from "./Action.types";
-import type { BadgeProps } from "../Badge";
+import { Badge, type BadgeProps } from "../Badge";
 import type {
   StaticIconProps,
   StaticIconSize,
 } from "../StaticIcon/StaticIcon.types";
-
-const ActionBadge = lazy(loadComponent("Badge", import("../Badge")));
 
 const staticIconSizeMap: Record<ActionSize, StaticIconSize> = {
   default: "s",
@@ -148,7 +146,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
         <Text {...textProps} testId="action-label">
           {mergedProps.label}
         </Text>
-        {badgeProps && <ActionBadge {...badgeProps} testId="action-badge" />}
+        {badgeProps && <Badge {...badgeProps} testId="action-badge" />}
       </FlexLayout>
     </ActionContainer>
   );
