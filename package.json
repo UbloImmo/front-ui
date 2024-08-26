@@ -121,7 +121,7 @@
     "test:unit:coverage:watch": "bun test --coverage --watch",
     "test:unit:watch": "bun test --watch",
     "test:deps": "bun madge src --extensions js,jsx,ts,tsx",
-    "test:deps:circular": "bun madge src --extensions js,jsx,ts,tsx --circular",
+    "test:deps:circular": "bun madge src --extensions js,jsx,ts,tsx --circular --warning --ts-config tsconfig.json",
     "test:all": "bun test:lint && bun test:types && bun test:deps:circular && bun test:unit",
     "prepare": "husky",
     "pre-push": "bun test:all",
