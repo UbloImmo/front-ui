@@ -206,6 +206,11 @@ const SelectInput = <
               />
             )
           )}
+          {searchable && !displayOptions.length && (
+            <EmptyResultsText color="gray-400">
+              Aucun résultat pour cette recherche
+            </EmptyResultsText>
+          )}
         </SelectOptionsContainer>
       )}
       <SelectInputContainer
@@ -313,4 +318,8 @@ const SelectedOptionContainer = styled.div`
 const CustomSelectedOptionContainer = styled.div`
   ${selectInputStyles}
   padding-right: var(--s-6)
+`;
+
+const EmptyResultsText = styled(Text)`
+  padding: var(--s-2);
 `;
