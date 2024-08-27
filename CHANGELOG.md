@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.1` IconPickerInput internal component
   - Used to make IconPicker available as a field and inside forms
 
+## 0.24.0 - 2024-08-27
+### Added
+- `v0.0.1` ContextLine component
+
 ## 0.23.2 - 2024-08-22
 
 ### Changed

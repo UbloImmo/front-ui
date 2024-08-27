@@ -1,0 +1,32 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as ContextLineStories from "../ContextLine.stories.tsx";
+
+<Meta title="Components/ContextLine/Usage" />
+
+<ComponentInfo of={ContextLineStories} figmaId="2348-2673"/>
+
+<Content>
+
+## Usage
+
+### Example
+
+When using multiple `ContextLine` components, their padding and box-shadow will adapt according to their position in the parent component (first-child, default and last-child).
+You can inspect it to see the effect.
+
+<Canvas of={ContextLineStories.Example} />
+
+### Label
+
+A label can be provided in the `label` property. It's a required property.
+<Canvas of={ContextLineStories.Label} />
+
+### Children
+
+You must add a **children** component (eg. `<Badge />` component to display a state of something).
+<Canvas of={ContextLineStories.Children} />
+
+</Content>
