@@ -25,21 +25,44 @@ export type CssRem = `${number}rem`;
 export type CssFr = `${number}fr`;
 
 /**
+ * A CSS `%` length
+ *
+ * @example
+ * const percent: CssPercent = "50%";
+ */
+export type CssPercent = `${number}%`;
+
+export type CssLengthKeyword =
+  | "auto"
+  | "min-content"
+  | "max-content"
+  | "fit-content";
+
+/**
  * Any supported CSS length declaration
  *
  * Can be any of the following:
  * - {@link CssPx}: `100px`, `200px`, `300px`, etc...
  * - {@link CssRem}: `100rem`, `200rem`, `300rem`, etc...
  * - {@link CssFr}: `1fr`, `2fr`, `3fr`, etc...
+ * - {@link CssPercent}: `50%`, `100%`, `200%`, etc...
  * - {@link SpacingLabel}: `s05`, `s1`, `s2`, `s3`, etc...
+ * - {@link CssLengthKeyword}: `auto`, `min-content`, `max-content`, `fit-content`
  * - {@link number}: `100`, `200`, `300`, etc...
  */
-export type CssLength = SpacingLabel | CssRem | CssPx | CssFr | number;
+export type CssLength =
+  | SpacingLabel
+  | CssRem
+  | CssPx
+  | CssFr
+  | CssPercent
+  | CssLengthKeyword
+  | number;
 
 /**
   Absolute CSS lenghts declarations
 */
-export type FixedCssLength = Exclude<CssLength, CssFr>;
+export type FixedCssLength = SpacingLabel | CssRem | CssPx | number;
 
 /**
  * Any supported CSS length usage
@@ -48,9 +71,17 @@ export type FixedCssLength = Exclude<CssLength, CssFr>;
  * - {@link CssPx}: `100px`, `200px`, `300px`, etc...
  * - {@link CssRem}: `100rem`, `200rem`, `300rem`, etc...
  * - {@link CssFr}: `1fr`, `2fr`, `3fr`, etc...
+ * - {@link CssPercent}: `50%`, `100%`, `200%`, etc...
  * - {@link CssVarUsage}: `var(--s05)`, `var(--s1)`, `var(--s2)`, `var(--s3)`, etc...
+ * - {@link CssLengthKeyword}: `auto`, `min-content`, `max-content`, `fit-content`
  */
-export type CssLengthUsage = CssPx | CssRem | CssVarUsage | CssFr;
+export type CssLengthUsage =
+  | CssPx
+  | CssRem
+  | CssVarUsage
+  | CssFr
+  | CssPercent
+  | CssLengthKeyword;
 
 /**
  * A CSS variable name

@@ -124,6 +124,15 @@ export type ButtonProps = StyleOverrideProps & {
    * @default "left"
    */
   iconPlacement?: DirectionHorizontal;
+  /**
+   * Whether to only show the button's label while hovering.
+   *
+   * @remarks Requires both `icon` and `label` to be provided. Ges overridden by `fullWidth`.
+   *
+   * @type {boolean}
+   * @default false
+   */
+  expandOnHover?: boolean;
 } & RequireAtLeastOne<{
     /**
      * The label of the button.
