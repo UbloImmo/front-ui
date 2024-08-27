@@ -2,11 +2,11 @@ import type { SelectInputProps } from "../SelectInput";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 export type SearchInputProps<
-  TGenericValue extends NullishPrimitives = NullishPrimitives,
+  TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives
-> = Omit<
-  SelectInputProps<TGenericValue, TExtraData>,
-  "searchable" | "controlIcon"
->;
+> = Omit<SelectInputProps<TValue, TExtraData>, "searchable" | "controlIcon">;
 
-export type SearchInputDefaultProps = Required<SearchInputProps>;
+export type SearchInputDefaultProps<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+> = Required<SearchInputProps<TValue, TExtraData>>;

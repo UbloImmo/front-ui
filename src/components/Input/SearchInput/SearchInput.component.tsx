@@ -11,12 +11,13 @@ import type {
 } from "./SearchInput.types";
 import type { TestIdProps } from "@types";
 
-const defaultSearchInputProps: SearchInputDefaultProps = {
+const defaultSearchInputProps: SearchInputDefaultProps<NullishPrimitives> = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
   name: null,
   options: [],
+  placeholder: "",
   Option: null,
   SelectedOption: null,
 };
