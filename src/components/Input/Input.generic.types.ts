@@ -23,6 +23,7 @@ type SpecificInputPropsMap<
   date: DateInputProps;
   combobox: ComboBoxInputProps<TGenericValue>;
   "icon-picker": IconPickerInputProps;
+  search: SelectInputProps<TGenericValue>;
 };
 
 export type SpecificInputProps<

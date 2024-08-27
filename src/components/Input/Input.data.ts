@@ -15,4 +15,5 @@ export const inputTypes = [
   "date",
   "combobox",
   "icon-picker",
+  "search",
 ] as const;

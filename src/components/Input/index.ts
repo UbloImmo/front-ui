@@ -15,3 +15,4 @@ export * from "./SelectInput";
 export * from "./DateInput";
 export * from "./ComboBoxInput";
 export * from "./IconPickerInput";
+export * from "./SearchInput";

@@ -9,6 +9,7 @@ import { inputTypes } from "./Input.data";
 import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput";
 import { PhoneInput } from "./PhoneInput";
+import { SearchInput } from "./SearchInput";
 import { SelectInput } from "./SelectInput";
 import { TextAreaInput } from "./TextAreaInput";
 import { TextInput } from "./TextInput";
@@ -39,6 +40,7 @@ const inputComponentMap = <
   date: DateInput,
   combobox: ComboBoxInput<TGenericValue>,
   "icon-picker": IconPickerInput,
+  search: SearchInput<TGenericValue>,
 });
 
 /**
