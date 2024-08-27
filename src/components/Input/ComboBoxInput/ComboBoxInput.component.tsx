@@ -32,7 +32,7 @@ const defaultComboBoxInputProps: ComboBoxInputDefaultProps<NullishPrimitives> =
  *
  * @version 0.0.1
  *
- * @param {CurrencyInputProps & TestIdProps} props - CurrencyInput component props
+ * @param {ComboBoxInputProps & TestIdProps} props - ComboBoxInput component props
  * @returns {JSX.Element}
  */
 const ComboBoxInput = <

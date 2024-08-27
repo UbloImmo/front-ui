@@ -101,6 +101,7 @@ const useFormData = <TData extends object>(
    * white updating `isLoading` state
    */
   const loadFormData = useCallback(async () => {
+    // TODO: Merge with default values
     if (!isFunction<FormQueryFn<TData>>(props.query)) {
       if (isObject(props.query)) {
         setData(props.query);

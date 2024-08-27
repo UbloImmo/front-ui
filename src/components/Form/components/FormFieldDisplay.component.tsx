@@ -7,6 +7,7 @@ import {
 import { useMemo, type ReactNode } from "react";
 import styled from "styled-components";
 
+import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
 import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
 import { flattedSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
@@ -66,6 +67,11 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
     const option = options.find(({ value }) => value === values);
     if (!option) return noValue;
     return <ComboBox {...commonProps} options={[option]} />;
+  },
+  "icon-picker": (value) => {
+    if (!value) return noValue;
+
+    return <IconPickerItem name={value} active readonly />;
   },
 };
 
