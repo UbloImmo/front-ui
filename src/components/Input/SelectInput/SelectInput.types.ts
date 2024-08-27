@@ -85,10 +85,42 @@ export type SelectInputProps<
       Nullable<VoidFn<[Nullable<TValue>]>>;
   }
 > & {
+  /**
+   * The options data to be displayed in the dropdown
+   *
+   * @type {SelectOptionsQuery<TValue, TExtraData>}
+   * @default null
+   */
   options?: SelectOptionsQuery<TValue, TExtraData>;
+
+  /**
+   * Whether the user can search for an option by typing
+   *
+   * @default false
+   * @type {boolean}
+   */
   searchable?: boolean;
+
+  /**
+   * Whether the input is disabled
+   * @default false
+   * @type {boolean}
+   */
   disabled?: boolean;
+
+  /**
+   * The placeholder of the input
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
   placeholder?: Nullable<string>;
+
+  /**
+   * The custom Option component that gets rendered for each option
+   *
+   * @type {Nullable<CustomOptionComponent<TValue, TExtraData>>}
+   */
   Option?: Nullable<CustomOptionComponent<TValue, TExtraData>>;
   SelectedOption?: Nullable<CustomSelectedOptionComponent<TValue, TExtraData>>;
   /**
