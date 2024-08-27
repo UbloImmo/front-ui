@@ -25,6 +25,7 @@ export const FormEditButton = (): JSX.Element => {
       overrideTestId
       label={"Edit"}
       secondary
+      expandOnHover
     />
   );
 };

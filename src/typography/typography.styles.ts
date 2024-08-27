@@ -160,9 +160,10 @@ export const buildTypographyStyle = (
       text-decoration-thickness: 1px;
       ${ellipsis &&
       css`
-        overflow-x: hidden ${important};
+        overflow: hidden ${important};
         white-space: nowrap ${important};
         max-width: 100% ${important};
+        flex: 1;
       `}
     `;
   };

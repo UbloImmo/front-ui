@@ -8,6 +8,7 @@ import styled from "styled-components";
 
 import {
   customSelectOptionStyles,
+  selectOptionLabelContainerStyles,
   selectOptionStyles,
 } from "../SelectInput.styles";
 
@@ -92,7 +93,13 @@ const SelectInputOption = <
       {...styleProps}
       tabIndex={option.disabled ? -1 : 0}
     >
-      <FlexRowLayout align="center" justify="start" gap="s-1">
+      <SelectOptionValueContainer
+        {...styleProps}
+        align="center"
+        justify="start"
+        gap="s-1"
+        fill
+      >
         {option.icon && (
           <Icon name={option.icon} color={contentColor} size="s-3" />
         )}
@@ -104,7 +111,7 @@ const SelectInputOption = <
         >
           {option.label}
         </Text>
-      </FlexRowLayout>
+      </SelectOptionValueContainer>
 
       {option.active && <Icon name="Check" color={contentColor} size="s-4" />}
     </SelectOptionContainer>
@@ -119,4 +126,10 @@ const SelectOptionContainer = styled.div<SelectOptionItemStyleProps>`
 
 const CustomSelectOptionContainer = styled.div<SelectOptionItemStyleProps>`
   ${customSelectOptionStyles}
+`;
+
+const SelectOptionValueContainer = styled(
+  FlexRowLayout
+)<SelectOptionItemStyleProps>`
+  ${selectOptionLabelContainerStyles}
 `;
