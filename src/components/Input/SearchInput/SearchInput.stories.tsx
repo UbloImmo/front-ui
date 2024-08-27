@@ -6,8 +6,11 @@ import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { SearchInputProps } from "./SearchInput.types";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { NullishPrimitives } from "@ubloimmo/front-util";
 
-const componentSource = componentSourceFactory<SearchInputProps>(
+const componentSource = componentSourceFactory<
+  SearchInputProps<NullishPrimitives>
+>(
   "SearchInput",
   {
     // TODO
