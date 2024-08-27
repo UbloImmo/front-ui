@@ -15,9 +15,8 @@ import {
   usePopoverOffset,
 } from "./Popover.utils";
 
+import { Text } from "@/components/Text";
 import { useTestId, useMergedProps } from "@utils";
-
-import { Text } from "@components";
 
 import type {
   PopoverProps,

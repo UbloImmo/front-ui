@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import styled from "styled-components";
 
 import {
@@ -10,6 +11,15 @@ import {
   entityCardStatusRowListStyles,
 } from "./EntityInfoCard.styles";
 
+import { Action } from "@/components/Action";
+import { ActionIcon } from "@/components/ActionIcon";
+import { Badge } from "@/components/Badge";
+import { ContextMenu } from "@/components/ContextMenu";
+import { CopyClipboardInfoCard } from "@/components/CopyClipboardInfoCard";
+import { Heading } from "@/components/Heading";
+import { InfoBox } from "@/components/InfoBox";
+import { StateIndicator } from "@/components/StateIndicator";
+import { Text } from "@/components/Text";
 import {
   FlexColumnLayout,
   FlexRowLayout,
@@ -19,22 +29,12 @@ import {
 } from "@layouts";
 import { useTestId, useMergedProps } from "@utils";
 
-import {
-  StateIndicator,
-  Heading,
-  InfoBox,
-  CopyClipboardInfoCard,
-  ActionIcon,
-  Text,
-  Badge,
-  Action,
-} from "@components";
-
 import type {
   EntityInfoCardProps,
   EntityInfoCardDefaultProps,
 } from "./EntityInfoCard.types";
 import type { TestIdProps } from "@types";
+import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
   name: null,
@@ -49,12 +49,13 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
   actionIcon: null,
   children: null,
   onInfoCopied: null,
+  contextMenu: null,
 };
 
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
@@ -64,9 +65,10 @@ const EntityInfoCard = (
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultEntityInfoCardProps, props);
   const testId = useTestId("entity-info-card", props);
+  const elementRef = useRef<Nullable<HTMLDivElement>>(null);
 
   return (
-    <EntityCardContainer testId={testId} overrideTestId fill>
+    <EntityCardContainer testId={testId} overrideTestId fill ref={elementRef}>
       <EntityCardHeader
         testId={`${testId}-header`}
         overrideTestId
@@ -80,10 +82,21 @@ const EntityInfoCard = (
         />
         {mergedProps.actionIcon && (
           <ActionIcon
-            {...props.actionIcon}
+            {...mergedProps.actionIcon}
             size="default"
             testId={`${testId}-action`}
             overrideTestId
+          />
+        )}
+        {mergedProps.contextMenu && (
+          <ContextMenu
+            {...mergedProps.contextMenu}
+            size="m"
+            side="bottom"
+            align="end"
+            testId={`${testId}-context-menu`}
+            overrideTestId
+            collisionBoundary={elementRef.current}
           />
         )}
       </EntityCardHeader>

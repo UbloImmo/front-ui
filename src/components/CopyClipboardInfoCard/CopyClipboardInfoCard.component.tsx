@@ -10,10 +10,11 @@ import {
 } from "./CopyClipboardInfoCard.styles";
 import { copyToClipboard } from "./CopyClipboardInfoCard.utils";
 
+import { Icon, type IconProps } from "@/components/Icon";
+import { InfoBox } from "@/components/InfoBox";
+import { Text } from "@/components/Text";
 import { FlexRowLayout } from "@layouts";
 import { useLogger, useTestId, useMergedProps, isEmptyString } from "@utils";
-
-import { Icon, InfoBox, Text, type IconProps } from "@components";
 
 import type {
   CopyClipboardInfoCardProps,

@@ -1,14 +1,13 @@
+import type { BadgeProps } from "@/components/Badge";
+import type { DividerProps } from "@/components/Divider";
+import type { FieldProps } from "@/components/Field";
+import type { IconName } from "@/components/Icon";
 import type {
-  BadgeProps,
-  DividerProps,
-  FieldProps,
-  IconName,
   InputOnChangeFn,
   InputType,
-  InputValue,
   SpecificInputProps,
-} from "@components";
-
+  InputValue,
+} from "@/components/Input";
 import type {
   ColorKey,
   StyleOverrideProps,

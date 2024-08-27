@@ -5,7 +5,13 @@ import styled from "styled-components";
 import { actionIconContainerStyles } from "./ActionIcon.styles";
 import { Icon } from "../Icon";
 
-import { useLogger, useMergedProps, useStyleProps, useTestId } from "@utils";
+import {
+  useClassName,
+  useLogger,
+  useMergedProps,
+  useStyleProps,
+  useTestId,
+} from "@utils";
 
 import type {
   ActionIconProps,
@@ -23,6 +29,7 @@ const defaultActionIconProps: DefaultActionIconProps = {
   onClick: null,
   disabled: false,
   title: "[Action title]",
+  className: null,
 };
 
 /**
@@ -30,7 +37,7 @@ const defaultActionIconProps: DefaultActionIconProps = {
  *
  * No label, no tags, just an icon.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ActionIconProps & TestIdProps} props - The properties for the action icon
  * @return {JSX.Element} The rendered action icon component
@@ -76,9 +83,12 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
     if (isFunction<VoidFn>(mergedProps.onClick)) mergedProps.onClick();
   }, [mergedProps]);
 
+  const className = useClassName(mergedProps);
+
   return (
     <ActionIconContainer
       {...styleProps}
+      className={className}
       data-testid={testId}
       disabled={mergedProps.disabled}
       aria-disabled={mergedProps.disabled}

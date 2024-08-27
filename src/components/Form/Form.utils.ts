@@ -13,8 +13,6 @@ import {
 } from "@ubloimmo/front-util";
 import { ZodNullable, ZodOptional, ZodUnion, type ZodType } from "zod";
 
-import type { InputType } from "@components";
-
 import type {
   BuiltFieldProps,
   BuiltFormContent,
@@ -25,6 +23,7 @@ import type {
   FormSource,
   FormTextProps,
 } from "./Form.types";
+import type { InputType } from "@/components/Input";
 
 /**
  * Checks if the given key is a valid array index key.

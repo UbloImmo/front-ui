@@ -1,20 +1,20 @@
 import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import { formatPropInfo } from "@docs/docs.utils";
-import { useStatic } from "@utils";
-
-import { Text } from "@components";
-
+import { Markdown } from "./Markdown";
 import {
-  Markdown,
   Table,
   TableBody,
   TableCell,
   TableHeader,
   TableHeaderCell,
   TableRow,
-} from ".";
+} from "./Table";
+
+import { formatPropInfo } from "@docs/docs.utils";
+import { useStatic } from "@utils";
+
+import { Text } from "@components";
 
 import type {
   DocgenPropDef,

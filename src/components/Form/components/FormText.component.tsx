@@ -1,6 +1,5 @@
+import { Text } from "@/components/Text";
 import { GridItem } from "@layouts";
-
-import { Text } from "@components";
 
 import type { BuiltFormTextProps } from "../Form.types";
 

@@ -1,4 +1,4 @@
-import { Popover } from "./Popover.component";
+import { Popover } from "./Popover.layout";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";

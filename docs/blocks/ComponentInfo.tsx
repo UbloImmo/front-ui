@@ -2,14 +2,16 @@ import { linkTo } from "@storybook/addon-links";
 import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
+import { Canvas } from "./Canvas";
+import { HeaderInfo } from "./HeaderInfo";
+import { Markdown } from "./Markdown";
+import { Text } from "./Typography";
 import { Header } from "../containers";
 
 import { FlexLayout, GridLayout } from "@/layouts";
 import { parseJsDoc } from "@docs/docs.utils";
 
 import { Button } from "@components";
-
-import { Text, HeaderInfo, Canvas, Markdown } from ".";
 
 import type { ComponentStory } from "@docs/docs.types";
 import type { Nullable } from "@ubloimmo/front-util";

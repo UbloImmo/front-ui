@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { FormFieldDisplay } from "./FormFieldDisplay.component";
 import { useFormContext } from "../Form.context";
 
+import { Field } from "@/components/Field";
+import { type InputType } from "@/components/Input";
 import { breakpointsPx } from "@/sizes";
 import { type GridEndPosition, GridItem } from "@layouts";
-
-import { type InputType, Field } from "@components";
 
 import type { BuiltFieldProps, FormFieldLayoutHiddenFn } from "../Form.types";
 

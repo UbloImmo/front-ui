@@ -1,5 +1,5 @@
 import type { IconName } from "../Icon";
-import type { ColorKey, StyleProps } from "@types";
+import type { ColorKey, StyleOverrideProps, StyleProps } from "@types";
 import type { Enum, Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 const actionIconSizes = ["m", "s"];
@@ -7,7 +7,7 @@ export type ActionIconSize = Enum<typeof actionIconSizes>;
 
 export type ActionIconColor = Extract<ColorKey, "primary" | "error">;
 
-export type ActionIconProps = {
+export type ActionIconProps = StyleOverrideProps & {
   /**
    * The name of the nested icon to render
    * @type {IconName}

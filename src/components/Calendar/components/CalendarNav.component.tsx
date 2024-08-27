@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useDayPicker, type NavProps } from "react-day-picker";
 import styled from "styled-components";
 
-import { Button } from "@components";
+import { Button } from "@/components/Button";
 
 export const CalendarNav = (props: NavProps) => {
   const { goToMonth, nextMonth, previousMonth } = useDayPicker();

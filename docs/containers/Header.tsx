@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { FlexColumnLayout } from "@/layouts";
+import { Content } from "./Content";
 
-import { Content } from ".";
+import { FlexColumnLayout } from "@/layouts";
 
 import type { ReactNode } from "react";
 

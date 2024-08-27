@@ -69,7 +69,7 @@ type ComponentVariantsBaseConfig = {
   fill?: FlexFill;
 };
 
-type PropVariant<TComponentProps extends Record<string, unknown>> =
+export type PropVariant<TComponentProps extends Record<string, unknown>> =
   TComponentProps & {
     __propVariantLabel: string;
   };
@@ -294,6 +294,7 @@ const ComponentWrapper = styled.article<{
     min-height: max-content;
     transform-origin: center;
     transition: transform 150ms ease-out 0s;
+    transform: scale(1);
   }
 
   &:hover {

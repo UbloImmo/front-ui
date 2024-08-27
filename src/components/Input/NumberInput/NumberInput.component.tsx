@@ -15,9 +15,8 @@ import {
   useInputRef,
 } from "../Input.utils";
 
+import { Icon } from "@/components/Icon";
 import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
-
-import { Icon } from "@components";
 
 import type {
   DefaultNumberInputProps,

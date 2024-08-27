@@ -2,7 +2,7 @@ import { fn } from "@storybook/test";
 
 import { EntityInfoCard } from "./EntityInfoCard.component";
 
-import { ComponentVariants } from "@docs/blocks";
+import { ComponentVariants, type PropVariant } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
@@ -14,6 +14,7 @@ import {
   Heading,
   Badge,
   type StateIndicatorProps,
+  type ActionIconProps,
 } from "@components";
 
 import type {
@@ -23,6 +24,7 @@ import type {
   EntityStatusRow,
 } from "./EntityInfoCard.types";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { Nullable } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<EntityInfoCardProps>(
   "EntityInfoCard",
@@ -287,6 +289,12 @@ const sharedInfos = [
     color: "primary",
     info: "Info 2",
   },
+  {
+    label: "Label 3",
+    icon: "TriangleFill",
+    color: "primary",
+    info: "Info 3",
+  },
 ] as const;
 
 const infoStyleVariants = [
@@ -347,12 +355,6 @@ const infoStyleVariants = [
         },
       })
     ),
-    // actions: sharedInfos.map(
-    //   (info): EntityAction => ({
-    //     label: info.label,
-    //     icon: info.icon,
-    //   })
-    // ),
   },
 ];
 
@@ -426,5 +428,99 @@ MainContent.parameters = {
         ...variant,
       })
     )
+  ),
+};
+
+const states = [agencEntityCardProps.state, rentalFolderEntityCardProps.state];
+export const State = (props: EntityInfoCardProps) => {
+  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={states}
+      for="state"
+      of={EntityInfoCard}
+    />
+  );
+};
+State.parameters = {
+  docs: componentSource(
+    states.map((state) => ({
+      ...EntityInfoCard.defaultProps,
+      state,
+    }))
+  ),
+};
+
+const actionIcons: Nullable<ActionIconProps>[] = [
+  actionIcon,
+  {
+    title: "Duplicate",
+    icon: "Copy",
+    color: "primary",
+  },
+];
+export const ActionIcon = (props: EntityInfoCardProps) => {
+  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={actionIcons}
+      for="actionIcon"
+      of={EntityInfoCard}
+    />
+  );
+};
+ActionIcon.parameters = {
+  docs: componentSource(
+    actionIcons.map((actionIcon) => ({
+      ...EntityInfoCard.defaultProps,
+      actionIcon,
+    }))
+  ),
+};
+
+const contextMenus: PropVariant<Partial<EntityInfoCardProps>>[] = [
+  { actionIcon, contextMenu: null, __propVariantLabel: "No context menu" },
+  {
+    __propVariantLabel: "With Context menu",
+    actionIcon,
+    contextMenu: {
+      items: [
+        {
+          label: "Item 1",
+        },
+        {
+          label: "Item 2 lorem ipsum dolor sit amet",
+          icon: "Alarm",
+          badgeLabel: "new",
+          disabled: true,
+        },
+      ],
+    },
+  },
+];
+export const ContextMenu = (props: EntityInfoCardProps) => {
+  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={contextMenus}
+      of={EntityInfoCard}
+    />
+  );
+};
+ContextMenu.parameters = {
+  docs: componentSource(
+    contextMenus.map(({ __propVariantLabel, ...variant }) => ({
+      ...EntityInfoCard.defaultProps,
+      ...variant,
+    }))
   ),
 };

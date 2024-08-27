@@ -1,13 +1,13 @@
+import type { ActionProps } from "@/components/Action";
+import type { ActionIconProps } from "@/components/ActionIcon";
+import type { BadgeProps } from "@/components/Badge";
+import type { ContextMenuProps } from "@/components/ContextMenu";
 import type {
-  StateIndicatorProps,
   CopyClipboardInfoCardProps,
-  InfoBoxProps,
-  ActionIconProps,
-  BadgeProps,
-  ActionProps,
   OnCopiedFn,
-} from "@components";
-
+} from "@/components/CopyClipboardInfoCard";
+import type { InfoBoxProps } from "@/components/InfoBox";
+import type { StateIndicatorProps } from "@/components/StateIndicator";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -40,6 +40,14 @@ export type EntityInfoCardProps = {
    * @default null
    */
   actionIcon?: Nullable<EntityActionIcon>;
+  /**
+   * A context menu that can be displayed when the user right clicks on the entity
+   *
+   * @remarks Renders to the right of the card
+   *
+   * @default null
+   */
+  contextMenu?: Nullable<ContextMenuProps>;
   /**
    * A list of Info Cards
    *

@@ -1,0 +1,58 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as ContextMenuStories from "../ContextMenu.stories.tsx";
+
+<Meta title="Components/ContextMenu/Usage" />
+
+<ComponentInfo of={ContextMenuStories} />
+
+<Content>
+
+## Usage
+
+ContextMenu is a simple menu wrapped in a [Popover](?path=/docs/layouts-popover-usage--docs). It includes a healthy amount of variants and properties.
+
+### Items
+
+To customize what items (e.g. actions) are available in the context menu, use the `items` property.
+<br/>
+Each item holds:
+- a required `label`
+- an optional `onClick` callback
+- ...and most of [Action's properties](?path=/docs/components-action-properties--docs).
+
+<Canvas of={ContextMenuStories.Items} />
+
+### Sizes
+
+<Canvas of={ContextMenuStories.Sizes} />
+
+### Open / closed state
+
+`ContextMenu` is closed by default and does not need its state to be controlled externally.
+Providing both `open` and `onOpenChange` properties allows one to control its visibility if needed.
+
+> Setting its `defaultOpen` property to `true` will automatically open the menu on first render.
+
+<Canvas of={ContextMenuStories.DefaultOpen} />
+
+### Trigger
+
+By default, `ContextMenu` renders a customized [ActionIcon](?path=/docs/components-actionicon--usage) as a trigger.
+
+#### Trigger icon
+
+The `icon` property is used to customize the icon displayed by the default trigger. Defaults to `ThreeDotsVertical`.
+
+<Canvas of={ContextMenuStories.Icons} />
+
+#### Custom trigger
+
+Replace the default trigger with any React node or component by passing it as the `children` property.
+
+<Canvas of={ContextMenuStories.Triggers} />
+
+</Content>
+
