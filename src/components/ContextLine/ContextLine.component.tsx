@@ -37,12 +37,12 @@ const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
 
   if (!mergedProps.label) warn("Missing label prop");
 
-  const label = useMemo(() => `${mergedProps.label}`, [mergedProps.label]);
+  const label = useMemo(() => `${mergedProps.label} :`, [mergedProps.label]);
 
   return (
     <ContextLineContainer data-testid={testId} {...styledProps}>
       <Text weight="medium" testId="context-line-label" overrideTestId>
-        {label} :
+        {label}
       </Text>
       {mergedProps.children}
     </ContextLineContainer>
