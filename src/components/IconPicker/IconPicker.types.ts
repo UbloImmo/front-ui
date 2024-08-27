@@ -1,7 +1,6 @@
-import { Nullable, VoidFn } from "@ubloimmo/front-util";
-
 import type { IconName } from "../Icon/Icon.types";
 import type { StyleOverrideProps } from "@types";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 type IconPickerOnChangeFn = VoidFn<[IconName | null]>;
 

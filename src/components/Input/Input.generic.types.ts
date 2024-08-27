@@ -1,14 +1,13 @@
-import { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
-
 import type { ComboBoxInputProps } from "./ComboBoxInput";
 import type { CurrencyInputProps } from "./CurrencyInput";
 import type { DateInputProps } from "./DateInput/DateInput.types";
-import type { IconPickerInputProps } from "./IconPickerInput/IconPickerInput.types";
+import type { IconPickerInputProps } from "./IconPickerInput";
 import type { InputType, InputProps } from "./Input.types";
 import type { NumberInputProps } from "./NumberInput/NumberInput.types";
 import type { PasswordInputProps } from "./PasswordInput/PasswordInput.types";
 import type { SelectInputProps } from "./SelectInput/SelectInput.types";
 import type { TextAreaInputProps } from "./TextAreaInput";
+import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 type SpecificInputPropsMap<
   TGenericValue extends NullishPrimitives = NullishPrimitives
