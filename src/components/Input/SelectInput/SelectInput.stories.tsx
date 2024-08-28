@@ -272,7 +272,7 @@ const controlIcons: IconName[] = [
   "Bank",
 ];
 
-export const ControlsIcons = () => {
+export const ControlIcon = () => {
   return (
     <ComponentVariants
       defaults={meta.args}
