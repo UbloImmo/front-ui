@@ -11,7 +11,7 @@ const preview: Preview = {
     },
     docs: {
       container: DocsContainer,
-      components: markdownOverrides,
+      components: markdownOverrides(),
     },
     options: {
       /**
