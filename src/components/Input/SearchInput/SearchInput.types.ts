@@ -6,9 +6,9 @@ export type SearchInputProps<
   TExtraData extends NullishPrimitives = NullishPrimitives
 > = Omit<SelectInputProps<TValue, TExtraData>, "searchable" | "options"> & {
   /**
-   * Options to display in the search input.
+   * The list of results to display in the search input.
    *
-   * This property is a rename of `options` from inherited `SelectInputProps`,
+   * @remarks This property is a rename of `options` from inherited `SelectInputProps`,
    * for more clarity and better alignment with the context of a search input.
    *
    * See {@link SelectInputProps}.
