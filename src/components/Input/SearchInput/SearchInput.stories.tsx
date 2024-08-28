@@ -23,7 +23,7 @@ const meta = {
   title: "Components/Input/SearchInput/Stories",
   args: {
     placeholder: "Type your query...",
-    options: [
+    results: () => [
       {
         label: "Option 1",
         value: "option-1",

@@ -1,9 +1,9 @@
 import { NullishPrimitives } from "@ubloimmo/front-util";
 
-import { SelectInput } from "..";
+import { SelectInput } from "../..";
 import { defaultCommonInputProps } from "../Input.common";
 
-import { useLogger, useTestId, useMergedProps } from "@utils";
+import { useTestId, useMergedProps } from "@utils";
 
 import type {
   SearchInputDefaultProps,
@@ -16,10 +16,11 @@ const defaultSearchInputProps: SearchInputDefaultProps<NullishPrimitives> = {
   value: null,
   onChange: null,
   name: null,
-  options: [],
+  results: null,
   placeholder: "",
   Option: null,
   SelectedOption: null,
+  controlIcon: "Search",
 };
 
 /**
@@ -36,19 +37,20 @@ const SearchInput = <
 >(
   props: SearchInputProps<TValue, TExtraData> & TestIdProps
 ): JSX.Element => {
-  const { log } = useLogger("SearchInput");
-  const mergedProps = useMergedProps(props);
+  const { results, ...mergedProps } = useMergedProps(
+    defaultSearchInputProps as SearchInputDefaultProps<TValue, TExtraData>,
+    props
+  );
   const testId = useTestId("input-search", props);
-
-  log(testId);
 
   return (
     <SelectInput
+      options={results || []}
       {...mergedProps}
       testId={testId}
       overrideTestId
       searchable
-      controlIcon="Search"
+      controlIcon={mergedProps.controlIcon}
     />
   );
 };
