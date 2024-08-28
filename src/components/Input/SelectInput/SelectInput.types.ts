@@ -114,19 +114,8 @@ export type SelectInputProps<
    */
   searchable?: boolean;
 
-  /**
-   * Whether the input is disabled
-   * @default false
-   * @type {boolean}
-   */
   disabled?: boolean;
 
-  /**
-   * The placeholder of the input
-   *
-   * @type {Nullable<string>}
-   * @default null
-   */
   placeholder?: Nullable<string>;
 
   /**
@@ -135,6 +124,12 @@ export type SelectInputProps<
    * @type {Nullable<CustomOptionComponent<TValue, TExtraData>>}
    */
   Option?: Nullable<CustomOptionComponent<TValue, TExtraData>>;
+
+  /**
+   * The custom SelectedOption component that gets rendered for the selected option
+   *
+   * @type {Nullable<CustomSelectedOptionComponent<TValue>>}
+   */
   SelectedOption?: Nullable<CustomSelectedOptionComponent<TValue>>;
   /**
    * The icon that gets displayed right of the control
