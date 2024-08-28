@@ -25,7 +25,7 @@ const defaultSearchInputProps: SearchInputDefaultProps<NullishPrimitives> = {
 };
 
 /**
- * An input to select a value from a list of options by typing.
+ * An input designed for querying and retrieving information from a dataset by typing
  *
  * @version 0.0.1
  *
