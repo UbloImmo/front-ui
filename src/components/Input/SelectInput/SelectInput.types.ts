@@ -114,10 +114,6 @@ export type SelectInputProps<
    */
   searchable?: boolean;
 
-  disabled?: boolean;
-
-  placeholder?: Nullable<string>;
-
   /**
    * The custom Option component that gets rendered for each option
    *
