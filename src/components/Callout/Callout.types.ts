@@ -1,8 +1,7 @@
-import { Nullable } from "@ubloimmo/front-util";
-
-import { IconName } from "../Icon";
-
+import type { IconName } from "../Icon";
 import type { ColorKey, PaletteColor, StyleProps } from "@types";
+import type { Nullable } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 export type CalloutColor = Exclude<ColorKey, "success">;
 
@@ -12,11 +11,11 @@ export type CalloutProps = {
   /**
    * The callout's text message
    *
-   * @type {string}
+   * @type {NonNullable<ReactNode>}
    * @required
    * @default "[label]"
    */
-  label: string;
+  children: NonNullable<ReactNode>;
 
   /**
    * The callout's main color

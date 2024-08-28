@@ -43,7 +43,7 @@ globalThis.console.warn = mock(() => {});
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore need this to check for unhandled props
-testCallout({ ...Callout.defaultProps, label: null })(
+testCallout({ ...Callout.defaultProps, children: null })(
   "should warn when missing label property",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
