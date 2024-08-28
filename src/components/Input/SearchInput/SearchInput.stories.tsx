@@ -10,33 +10,31 @@ import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   SearchInputProps<NullishPrimitives>
->(
-  "SearchInput",
-  {
-    // TODO
-  },
-  SearchInput.defaultProps
-);
+>("SearchInput", SearchInput.defaultProps);
+
+const getResults = () => {
+  return [
+    {
+      label: "Option 1",
+      value: "option-1",
+    },
+    {
+      label: "Option 2",
+      value: "option-2",
+    },
+    {
+      label: "Option 3",
+      value: "option-3",
+    },
+  ];
+};
 
 const meta = {
   component: SearchInput,
   title: "Components/Input/SearchInput/Stories",
   args: {
     placeholder: "Type your query...",
-    results: () => [
-      {
-        label: "Option 1",
-        value: "option-1",
-      },
-      {
-        label: "Option 2",
-        value: "option-2",
-      },
-      {
-        label: "Option 3",
-        value: "option-3",
-      },
-    ],
+    results: getResults,
     onChange: fn(),
   },
   parameters: {
