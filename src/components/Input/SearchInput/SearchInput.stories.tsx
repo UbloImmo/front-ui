@@ -2,9 +2,11 @@ import { fn } from "@storybook/test";
 
 import { SearchInput } from "./SearchInput.component";
 
+import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { SearchInputProps } from "./SearchInput.types";
+import type { IconName } from "@/components/Icon";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
 
@@ -57,3 +59,17 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+const controlIcons: IconName[] = ["Search", "Person", "BuildingAdd", "Bank"];
+
+export const ControlIcon = () => {
+  return (
+    <ComponentVariants
+      defaults={meta.args}
+      variants={controlIcons}
+      of={SearchInput}
+      for="controlIcon"
+      propLabels
+    />
+  );
+};
