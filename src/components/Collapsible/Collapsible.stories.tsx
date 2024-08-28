@@ -16,30 +16,39 @@ const componentSource = componentSourceFactory<CollapsibleProps>(
   Collapsible.defaultProps
 );
 
-const CollapsibleChildren = (
+const defaultChildrenProperty = <Text>[children]</Text>;
+
+const defaultCollapsibleComponent = {
+  ...Collapsible.defaultProps,
+  children: defaultChildrenProperty,
+};
+
+const defaultCollapsibleChildren: CollapsibleDefaultProps = {
+  ...defaultCollapsibleComponent,
+  subCollapsibles: [
+    {
+      ...Collapsible.defaultProps,
+      children: defaultChildrenProperty,
+      subCollapsibles: [defaultCollapsibleComponent],
+    },
+  ],
+};
+
+const CustomCollapsibleChildren = (
   <FlexRowLayout align="center" fill gap="s-2">
     <StaticIcon name="BuildingBlocks" color="primary" />
     <Text>Collapsible children</Text>
   </FlexRowLayout>
 );
 
-const subCollapsible: CollapsibleDefaultProps = {
-  isOpen: false,
-  onOpenChange: false,
-  disabled: false,
-  compact: false,
-  children: <Text>Sub collapsible children</Text>,
-  subCollapsibles: null,
-};
-
-const SubCollapsibles: CollapsibleDefaultProps[] = [
+const CustomSubCollapsibles: CollapsibleDefaultProps[] = [
   {
     isOpen: false,
     onOpenChange: false,
     disabled: false,
     compact: false,
-    children: <Text>Sub collapsible children</Text>,
-    subCollapsibles: [subCollapsible, subCollapsible],
+    children: CustomCollapsibleChildren,
+    subCollapsibles: [defaultCollapsibleComponent, defaultCollapsibleComponent],
   },
   {
     isOpen: false,
@@ -55,9 +64,8 @@ const meta = {
   component: Collapsible,
   title: "Components/Collapsible/Stories",
   args: {
-    ...Collapsible.defaultProps,
-    children: CollapsibleChildren,
-    subCollapsibles: SubCollapsibles,
+    ...defaultCollapsibleChildren,
+    subCollapsibles: [defaultCollapsibleChildren],
   },
   parameters: {
     docs: componentSource(),
@@ -68,3 +76,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const CustomChildren: Story = {
+  args: {
+    children: CustomCollapsibleChildren,
+    subCollapsibles: CustomSubCollapsibles,
+  },
+};
