@@ -15,10 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `v0.0.4` SelectInput component
+
   - add `Loading` component displaying when `isLoading` is true
   - add empty state text in `searchable` mode when there are no results
   - styles: fixed cursor `not-allowed` application on children elements when disabled
-- Form field
+
+- FormField component
+  - update display value for search and select inputs
 
 ## 0.26.0 - 2024-08-27
 
