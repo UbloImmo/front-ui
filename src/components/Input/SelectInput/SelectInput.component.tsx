@@ -264,7 +264,10 @@ const SelectInput = <
             {activeOption ? (
               SelectedOptionComponent ? (
                 <CustomSelectedOptionContainer>
-                  <SelectedOptionComponent {...activeOption} />
+                  <SelectedOptionComponent
+                    value={activeOption.value}
+                    disabled={disabled}
+                  />
                 </CustomSelectedOptionContainer>
               ) : (
                 <SelectedOptionContainer>

@@ -13,6 +13,7 @@ import { FlexRowLayout } from "@layouts";
 
 import type {
   CustomOptionComponent,
+  CustomSelectedOptionComponent,
   SelectInputProps,
   SelectOptionOrGroup,
 } from "./SelectInput.types";
@@ -186,6 +187,28 @@ const CustomOption: CustomOptionComponent<string, BadgeProps> = (option) => {
   );
 };
 
+const CustomSelectedOption: CustomSelectedOptionComponent<string> = ({
+  value,
+  disabled,
+}: {
+  value: Nullable<string>;
+  disabled?: boolean;
+}) => {
+  if (disabled) {
+    return (
+      <CustomOptionContainer align="center" fill>
+        <Text>Not selectable</Text>
+      </CustomOptionContainer>
+    );
+  }
+
+  return (
+    <CustomOptionContainer justify="space-between" align="center" fill>
+      <Text>Selected value: {value}</Text>
+    </CustomOptionContainer>
+  );
+};
+
 const options: SelectOptionOrGroup<string, BadgeProps>[] = [
   {
     label: "Option 1",
@@ -230,7 +253,7 @@ export const CustomComponents = (
       {...props}
       options={options}
       Option={CustomOption}
-      SelectedOption={CustomOption}
+      SelectedOption={CustomSelectedOption}
     />
   );
 };
