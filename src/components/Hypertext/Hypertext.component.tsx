@@ -16,7 +16,7 @@ const defaultHypertextProps: DefaultHypertextProps = {
 /**
  * Renders a hyperlink component with a text and an icon.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {HypertextProps} props - The hypertext's props
  * @return {JSX.Element} The rendered hypertext
