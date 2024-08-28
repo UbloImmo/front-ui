@@ -34,6 +34,8 @@ import {
 } from "../Input.utils";
 
 import { Icon } from "@/components/Icon";
+import { InputAssistiveText } from "@/components/InputAssistiveText";
+import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import { FlexColumnLayout } from "@layouts";
 import { useHtmlAttribute, useTestId } from "@utils";
@@ -45,7 +47,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -56,7 +58,9 @@ const SelectInput = <
 >(
   props: SelectInputProps<TValue, TExtraData> & TestIdProps
 ): JSX.Element => {
-  const { options, mergedProps, refetchOptions } = useSelectOptions(props);
+  const [isOpen, setIsOpen] = useState(false);
+  const { options, mergedProps, refetchOptions, isLoading } =
+    useSelectOptions(props);
 
   const {
     displayOptions,
@@ -65,12 +69,10 @@ const SelectInput = <
     autoCompleteQuery,
     setAutoCompleteQuery,
     isQuerying,
-  } = useSelectValue(mergedProps, options, refetchOptions);
+  } = useSelectValue(mergedProps, options, refetchOptions, isOpen);
   const inputStyles = useInputStyles(mergedProps);
 
   const { placeholder, disabled, searchable } = mergedProps;
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const inputId = useId();
 
@@ -180,6 +182,20 @@ const SelectInput = <
     return disabled ? "gray-700" : "gray-800";
   }, [disabled]);
 
+  const isEmptyResult = useMemo(() => {
+    return !displayOptions.length;
+  }, [displayOptions]);
+
+  const assistiveText = useMemo(() => {
+    return isLoading
+      ? "Loading options..."
+      : searchable
+      ? isString(query) && query.length
+        ? `No result for "${query}".`
+        : "Type to search..."
+      : "No options available.";
+  }, [isLoading, query, searchable]);
+
   return (
     <SelectInputWrapper reverse ref={wrapperRef}>
       {isOpen && (
@@ -206,10 +222,10 @@ const SelectInput = <
               />
             )
           )}
-          {searchable && !displayOptions.length && (
-            <EmptyResultsText color="gray-400">
-              Aucun résultat pour cette recherche
-            </EmptyResultsText>
+          {isEmptyResult && (
+            <AssistiveTextWrapper>
+              <InputAssistiveText assistiveText={assistiveText} />
+            </AssistiveTextWrapper>
           )}
         </SelectOptionsContainer>
       )}
@@ -281,7 +297,11 @@ const SelectInput = <
           </StyledSelectInput>
         )}
         <StyledInputControl {...inputStyles} data-testid={`${testId}-control`}>
-          <Icon name={mergedProps.controlIcon} />
+          {isOpen && isLoading ? (
+            <Loading animation="BouncingBalls" size="s-4" />
+          ) : (
+            <Icon name={mergedProps.controlIcon} />
+          )}
         </StyledInputControl>
       </SelectInputContainer>
     </SelectInputWrapper>
@@ -320,6 +340,6 @@ const CustomSelectedOptionContainer = styled.div`
   padding-right: var(--s-6)
 `;
 
-const EmptyResultsText = styled(Text)`
+const AssistiveTextWrapper = styled.div`
   padding: var(--s-2);
 `;
