@@ -298,7 +298,14 @@ const buttonModifierStyles = ({
 
   return css`
     &[data-expandable="true"] {
+      --padding-vertical: calc((var(--button-size) / 4) - var(--s-05) + 1px);
+
+      @media only screen and (max-width: ${breakpointsPx.XS}) {
+        --padding-vertical: calc(var(--s-4) + 1px);
+      }
+
       --padding-horizontal: var(--padding-vertical);
+
       transition: color 300ms var(--bezier) 0s,
         background-color 300ms var(--bezier) 0s,
         border-color 300ms var(--bezier) 0s, padding 300ms var(--bezier) 0s,
