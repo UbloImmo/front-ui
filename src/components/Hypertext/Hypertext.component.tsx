@@ -45,7 +45,7 @@ const Hypertext = (props: HypertextProps): JSX.Element => {
       rel="noreferrer"
       data-testid="hypertext"
     >
-      <Text size="m" weight="medium" color="primary-base">
+      <Text size="m" weight="medium" color="primary-base" underline>
         {children}
       </Text>
       <Icon name="BoxArrowUpRight" size="s-3" color="primary-base" />
