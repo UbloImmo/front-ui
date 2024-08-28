@@ -1,8 +1,8 @@
 import { NullishPrimitives, type Nullable } from "@ubloimmo/front-util";
 import { useCallback } from "react";
 
-import { SelectInput } from "../..";
 import { defaultCommonInputProps } from "../Input.common";
+import { SelectInput } from "../SelectInput";
 
 import { useTestId, useMergedProps } from "@utils";
 
