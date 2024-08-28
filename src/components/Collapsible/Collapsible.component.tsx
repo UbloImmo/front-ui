@@ -5,15 +5,17 @@ import {
   caretContainerStyles,
   collapsibleContainerStyles,
 } from "./Collapsible.styles";
+import {
+  type CollapsibleProps,
+  type CollapsibleDefaultProps,
+  CollapsibleCaretStyleProps,
+  type CollapsibleContainerStyleProps,
+} from "./Collapsible.types";
 import { Icon } from "../Icon";
 
 import { FlexRowLayout } from "@layouts";
-import { useLogger, useTestId, useMergedProps } from "@utils";
+import { useTestId, useMergedProps } from "@utils";
 
-import type {
-  CollapsibleProps,
-  CollapsibleDefaultProps,
-} from "./Collapsible.types";
 import type { TestIdProps } from "@types";
 
 const defaultCollapsibleProps: CollapsibleDefaultProps = {
@@ -28,45 +30,49 @@ const defaultCollapsibleProps: CollapsibleDefaultProps = {
 /**
  * An expandable component that allow users to reveal or hide sub content by clicking on its headers.
  *
- * Can have several sub collapsibles layers.
- *
  * @version 0.0.1
  *
  * @param {CollapsibleProps & TestIdProps} props - Collapsible component props
  * @returns {JSX.Element}
  */
 const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
-  const { log } = useLogger("Collapsible");
-
   const mergedProps = useMergedProps(defaultCollapsibleProps, props);
+  const { disabled, subCollapsibles, compact, children } = mergedProps;
   const [isOpen, setIsOpen] = useState(mergedProps.isOpen);
   const testId = useTestId("collapsible", props);
 
-  log(mergedProps);
-
   const iconColor = useMemo(() => {
-    return mergedProps.disabled ? "gray-400" : "gray-900";
-  }, [mergedProps.disabled]);
+    return disabled ? "gray-400" : "gray-900";
+  }, [disabled]);
 
   const openCollapsible = useCallback(() => {
-    if (mergedProps.disabled) return;
+    if (disabled) return;
+    if (!subCollapsibles) return;
 
     setIsOpen(!isOpen);
-  }, [isOpen, mergedProps.disabled]);
+  }, [isOpen, disabled, subCollapsibles]);
 
   return (
     <>
-      <CollapsibleContainer data-testid={testId} align="center" fill>
-        <CaretContainer onClick={openCollapsible}>
+      <CollapsibleContainer
+        testId={testId}
+        overrideTestId
+        align="center"
+        fill
+        $compact={compact}
+        $disabled={disabled}
+        {...mergedProps}
+      >
+        <CaretContainer onClick={openCollapsible} $isOpen={isOpen}>
           <Icon name="CaretRightFill" size="s-2" color={iconColor} />
         </CaretContainer>
-        {mergedProps.children}
+        {children}
       </CollapsibleContainer>
 
-      {mergedProps.subCollapsibles && isOpen && (
+      {subCollapsibles && isOpen && (
         <SubCollapsibleContainer>
-          {mergedProps.subCollapsibles.map((collapsible, index) => (
-            <Collapsible key={index} {...collapsible} />
+          {subCollapsibles.map((collapsible, index) => (
+            <Collapsible key={index} {...collapsible} compact={compact} />
           ))}
         </SubCollapsibleContainer>
       )}
@@ -77,11 +83,13 @@ Collapsible.defaultProps = defaultCollapsibleProps;
 
 export { Collapsible };
 
-const CollapsibleContainer = styled(FlexRowLayout)`
+const CollapsibleContainer = styled(
+  FlexRowLayout
+)<CollapsibleContainerStyleProps>`
   ${collapsibleContainerStyles}
 `;
 
-const CaretContainer = styled.div`
+const CaretContainer = styled.div<CollapsibleCaretStyleProps>`
   ${caretContainerStyles}
 `;
 
