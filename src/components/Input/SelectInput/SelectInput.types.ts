@@ -68,10 +68,23 @@ export type CustomOptionComponent<
   TExtraData extends NullishPrimitives = NullishPrimitives
 > = FC<SelectOption<TValue, TExtraData>>;
 
-export type CustomSelectedOptionComponent<
-  TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
-> = FC<SelectOption<TValue, TExtraData>>;
+/**
+ * The custom component to render the selected option
+ */
+export type CustomSelectedOptionComponent<TValue extends NullishPrimitives> =
+  FC<{
+    /**
+     * The value of the selected custom option
+     * @type {Nullable<TValue>}
+     */
+    value: Nullable<TValue>;
+
+    /**
+     * Whether the selection is disabled
+     * @type {boolean}
+     */
+    disabled?: boolean;
+  }>;
 
 export type SelectInputProps<
   TValue extends NullishPrimitives,
@@ -122,7 +135,7 @@ export type SelectInputProps<
    * @type {Nullable<CustomOptionComponent<TValue, TExtraData>>}
    */
   Option?: Nullable<CustomOptionComponent<TValue, TExtraData>>;
-  SelectedOption?: Nullable<CustomSelectedOptionComponent<TValue, TExtraData>>;
+  SelectedOption?: Nullable<CustomSelectedOptionComponent<TValue>>;
   /**
    * The icon that gets displayed right of the control
    *
