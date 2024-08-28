@@ -12,7 +12,7 @@ import { Icon } from "@/components/Icon";
 import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
 import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
-import { flattedSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
+import { flattenSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
 import { InputLabel } from "@/components/InputLabel";
 import { Text } from "@/components/Text";
 import { breakpointsPx } from "@/sizes";
@@ -21,12 +21,32 @@ import { arrayOf } from "@utils";
 
 import type {
   BuiltFieldProps,
+  FormDisplayValueFormatterFn,
   FormDisplayValueFormatterMap,
 } from "../Form.types";
 import type { InputType, InputValue } from "@/components/Input";
 import type { TooltipProps } from "@/components/Tooltip";
 
 const noValue = "—";
+
+const displaySelectValue: FormDisplayValueFormatterFn<"select", ReactNode> = (
+  fieldValue,
+  { options, SelectedOption, disabled }
+) => {
+  const option = isArray(options)
+    ? flattenSelectOptions(options).find(({ value }) => value === fieldValue) ??
+      null
+    : null;
+
+  const optionValue = option?.value ?? fieldValue;
+
+  if (!optionValue) return noValue;
+
+  if (SelectedOption)
+    return <SelectedOption value={optionValue} disabled={disabled} />;
+
+  return option?.label ?? String(fieldValue);
+};
 
 const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
   text: String,
@@ -36,11 +56,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
   password: (value) => arrayOf(value.length, () => "*").join(""),
   phone: String,
   textarea: String,
-  select: (fieldValue, { options }) =>
-    isArray(options)
-      ? flattedSelectOptions(options).find(({ value }) => value === fieldValue)
-          ?.label ?? String(fieldValue)
-      : noValue,
+  select: displaySelectValue,
   date: (value) => {
     const date = normalizeToDate(value);
     if (date) return date.toLocaleDateString();
@@ -69,6 +85,11 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
     if (!value) return noValue;
 
     return <IconPickerItem name={value} active readonly />;
+  },
+  search: (fieldValue, { disabled, SelectedOption }) => {
+    if (!fieldValue) return noValue;
+    if (!SelectedOption) return String(fieldValue);
+    return <SelectedOption value={fieldValue} disabled={disabled} />;
   },
 };
 
