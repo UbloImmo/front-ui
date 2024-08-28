@@ -1,4 +1,5 @@
-import { NullishPrimitives } from "@ubloimmo/front-util";
+import { NullishPrimitives, type Nullable } from "@ubloimmo/front-util";
+import { useCallback } from "react";
 
 import { SelectInput } from "../..";
 import { defaultCommonInputProps } from "../Input.common";
@@ -43,9 +44,17 @@ const SearchInput = <
   );
   const testId = useTestId("input-search", props);
 
+  const getResults = useCallback(
+    async (query: Nullable<string>) => {
+      if (!results) return [];
+      return await results(query);
+    },
+    [results]
+  );
+
   return (
     <SelectInput
-      options={results || []}
+      options={getResults}
       {...mergedProps}
       testId={testId}
       overrideTestId
