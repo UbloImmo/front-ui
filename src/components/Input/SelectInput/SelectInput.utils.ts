@@ -12,7 +12,12 @@ import { useState, useCallback, useEffect, useMemo } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
 
-import { isNonEmptyString, useLogger, useMergedProps } from "@utils";
+import {
+  isEmptyString,
+  isNonEmptyString,
+  useLogger,
+  useMergedProps,
+} from "@utils";
 
 import type {
   DefaultSelectInputProps,
@@ -172,7 +177,7 @@ const assignActiveOption = <
   );
 };
 
-export const flattedSelectOptions = <
+export const flattenSelectOptions = <
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives
 >(
@@ -193,7 +198,8 @@ export const useSelectValue = <
 >(
   mergedProps: DefaultSelectInputProps<TValue, TExtraData>,
   options: SelectOptionOrGroup<TValue, TExtraData>[],
-  refetchOptions: RefetchSelectOptionsFn
+  refetchOptions: RefetchSelectOptionsFn,
+  isOpen: boolean
 ) => {
   const [internalValue, setInternalValue] = useState<Nullable<TValue>>(
     mergedProps.value ?? null
@@ -212,7 +218,7 @@ export const useSelectValue = <
   );
 
   const allFlattenOptions = useMemo(() => {
-    return flattedSelectOptions(options);
+    return flattenSelectOptions(options);
   }, [options]);
 
   const isQuerying = useMemo(
@@ -221,8 +227,15 @@ export const useSelectValue = <
   );
 
   useEffect(() => {
-    if (isQuerying && isString(autoCompleteQuery)) {
-      refetchOptions(autoCompleteQuery);
+    if (
+      isOpen &&
+      isQuerying &&
+      isString(autoCompleteQuery) &&
+      (autoCompleteQuery !== activeOption?.label || !activeOption)
+    ) {
+      refetchOptions(
+        isEmptyString(autoCompleteQuery) ? null : autoCompleteQuery
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoCompleteQuery, isQuerying]);
@@ -292,7 +305,8 @@ export const useSelectValue = <
     if (
       activeOption &&
       activeOption.label &&
-      activeOption.label !== autoCompleteQuery
+      activeOption.label !== autoCompleteQuery &&
+      !isQuerying
     ) {
       setAutoCompleteQuery(activeOption.label);
     }
