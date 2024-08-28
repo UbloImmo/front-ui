@@ -1,10 +1,12 @@
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
-import { objectKeys } from "@ubloimmo/front-util";
-import { css, StyleFunction } from "styled-components";
+import { objectKeys, transformObject } from "@ubloimmo/front-util";
+import { css, type StyleFunction, type RuleSet } from "styled-components";
 
 import { typographyWeightMap } from "./typogaphy.weight";
 import { typographyFontFace } from "./typography.font";
 import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "../utils";
+
+import { breakpointsPx } from "@/sizes";
 
 import type {
   HeadingProps,
@@ -15,6 +17,8 @@ import type {
   CssRem,
   StyleProps,
   TypographySize,
+  TypographyBreakpoint,
+  TypographyStyle,
 } from "@types";
 
 /**
@@ -99,6 +103,57 @@ export const sanitizeTypographyProps = (
 };
 
 /**
+ * Extracts the typography style object from the texts object given a breakpoint, size and weight.
+ *
+ * @param {TypographyBreakpoint} breakpoint - the breakpoint
+ * @param {TypographySize} size - the size
+ * @param {TypographyWeight} weight - the weight
+ * @return {TypographyStyle} the extracted typography style
+ */
+const extractTypographyStyle = (
+  breakpoint: TypographyBreakpoint,
+  size: TypographySize,
+  weight: TypographyWeight
+): TypographyStyle => {
+  return texts[breakpoint][size][weight].css.style;
+};
+
+/**
+ * Creates a function that takes a CSS value and returns a CSS declaration.
+ * If important is true, adds !important to the declaration.
+ *
+ * @param {boolean} [important=false] - whether to add !important to the declaration
+ * @returns {(value: string) => string} - a function that takes a CSS value
+ * and returns a CSS declaration
+ */
+const applyRule = (important?: boolean) => (value: string) => {
+  return important ? `${value} !important` : value;
+};
+
+/**
+ * Takes a typography style object and returns a styled component CSS declaration
+ * that only includes the letter spacing, text indent, line height and font feature settings.
+ *
+ * @param {TypographyStyle} style - the typography style object
+ * @param {boolean} [important=false] - whether to add !important to the CSS declaration
+ * @returns {RuleSet} - a styled component CSS declaration
+ */
+const baseTypographyStyle = (
+  style: TypographyStyle,
+  important?: boolean
+): RuleSet => {
+  const { letterSpacing, textIndent, lineHeight, fontFeatureSettings } =
+    transformObject(style, applyRule(important));
+
+  return css`
+    letter-spacing: ${letterSpacing};
+    text-indent: ${textIndent};
+    line-height: ${lineHeight};
+    font-feature-settings: ${fontFeatureSettings};
+  `;
+};
+
+/**
  * Builds a typography style based on the provided defaults.
  *
  * @param {Required<AnyTypographyProps>} defaults - the default typography props
@@ -116,19 +171,15 @@ export const buildTypographyStyle = (
       underline,
       overline,
       lineThrough,
-      important: $important,
+      important,
       ellipsis,
       uppercase,
       align,
     } = sanitizeTypographyProps(defaults, fromStyleProps(props));
-    const {
-      letterSpacing,
-      lineHeight,
-      textIndent,
-      textOverflow: $textOverflow,
-      fontFeatureSettings,
-    } = texts.desktop[size][weight].css.style;
-    const fontSize = `text-${size}`;
+    const dekstopStyle = extractTypographyStyle("desktop", size, weight);
+    const mobileStyle = extractTypographyStyle("mobile", size, weight);
+
+    const fontSize = cssVarUsage(`text-${size}`);
     const fontWeight = cssVarUsage(`text-weight-${weight.toLowerCase()}`);
     const fontStyle = italic ?? defaults.italic ? "italic" : "normal";
     const fontItalic = `"ital" ${italic ?? defaults.italic ? 1 : 0}`;
@@ -138,31 +189,32 @@ export const buildTypographyStyle = (
       underline,
       overline,
     });
-    const important = $important ? "!important" : "";
-    const textOverflow = ellipsis ? "ellipsis" : $textOverflow;
+    const apply = applyRule(important);
+    const textOverflow = ellipsis ? "ellipsis" : dekstopStyle.textOverflow;
     return css`
       ${typographyFontFace()}
-      font-size: ${cssVarUsage(fontSize)} ${important};
-      font-style: ${fontStyle} ${important};
-      font-variation-settings: ${fontItalic} ${important};
-      font-weight: ${fontWeight} ${important};
-      color: ${cssVarUsage(color)} ${important};
-      letter-spacing: ${letterSpacing} ${important};
-      text-indent: ${textIndent} ${important};
-      line-height: ${lineHeight} ${important};
-      text-align: ${align} ${important};
-      text-overflow: ${textOverflow} ${important};
-      font-feature-settings: ${fontFeatureSettings} ${important};
-      text-decoration: ${textDecoration} ${important};
-      text-transform: ${textTransform} ${important};
-
+      ${baseTypographyStyle(dekstopStyle, important)}
+      font-size: ${apply(fontSize)};
+      font-style: ${apply(fontStyle)};
+      font-variation-settings: ${apply(fontItalic)};
+      font-weight: ${apply(fontWeight)};
+      color: ${apply(cssVarUsage(color))};
+      text-align: ${apply(align)};
+      text-overflow: ${apply(textOverflow)};
+      text-decoration: ${apply(textDecoration)};
+      text-transform: ${apply(textTransform)};
       text-underline-offset: 0.25em;
       text-decoration-thickness: 1px;
+
+      @media only screen and (max-width: ${breakpointsPx.XS}) {
+        ${baseTypographyStyle(mobileStyle, important)}
+      }
+
       ${ellipsis &&
       css`
-        overflow: hidden ${important};
-        white-space: nowrap ${important};
-        max-width: 100% ${important};
+        overflow: ${apply("hidden")};
+        white-space: ${apply("nowrap")};
+        max-width: ${apply("100%")};
         flex: 1;
       `}
     `;
