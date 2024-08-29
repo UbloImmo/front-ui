@@ -8,6 +8,7 @@ import {
   type ButtonProps,
   type DefaultButtonProps,
 } from "./Button.types";
+import { allIconNames } from "../Icon/Icon.types";
 
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
@@ -16,7 +17,6 @@ import { useMergedProps } from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react";
 import type { DirectionHorizontal } from "@types";
-import { allIconNames } from "../Icon/Icon.types";
 
 const defaultMockProps = {
   ...Button.defaultProps,
