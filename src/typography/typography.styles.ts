@@ -4,9 +4,8 @@ import { css, type StyleFunction, type RuleSet } from "styled-components";
 
 import { typographyWeightMap } from "./typogaphy.weight";
 import { typographyFontFace } from "./typography.font";
+import { breakpointsPx } from "../sizes";
 import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "../utils";
-
-import { breakpointsPx } from "@/sizes";
 
 import type {
   HeadingProps,

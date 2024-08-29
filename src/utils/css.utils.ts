@@ -1,5 +1,6 @@
 import { isNumber, isString, isUndefined } from "@ubloimmo/front-util";
 
+import { isNonEmptyString } from "./string.utils";
 import { SPACING_PREFIX } from "../types";
 
 import type {
@@ -15,7 +16,6 @@ import type {
   FixedCssLength,
   SpacingLabel,
 } from "@types";
-import { isNonEmptyString } from "./string.utils";
 
 export const REM_FACTOR = 16 as const;
 
