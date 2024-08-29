@@ -25,6 +25,11 @@ export type TypographyWeight =
 export type TypographyToken =
   TypographyTokens[TypographyBreakpoint][TypographySize][TypographyWeight];
 
+export type TypographyStyle = Record<
+  keyof TypographyToken["css"]["style"],
+  string
+>;
+
 export type TypographyAlignment = "left" | "center" | "right";
 
 export type TypographyProps = {

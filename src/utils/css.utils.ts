@@ -6,13 +6,16 @@ import type {
   CssFr,
   CssLength,
   CssLengthUsage,
+  CssPercent,
   CssPx,
   CssRem,
   CssVar,
   CssVarName,
   CssVarUsage,
+  FixedCssLength,
   SpacingLabel,
 } from "@types";
+import { isNonEmptyString } from "./string.utils";
 
 export const REM_FACTOR = 16 as const;
 
@@ -179,6 +182,36 @@ export const isCssFr = (value: unknown): value is CssFr => {
 };
 
 /**
+ * Type guard to check if the input value is of type {@link CssPercent}.
+ *
+ * @param {unknown} value - The value to be checked
+ * @return {boolean} Whether the input value is of type CssFr
+ */
+export const isCssPercent = (value: unknown): value is CssPercent => {
+  if (!isString(value) || !value.includes("%")) {
+    return false;
+  }
+  const frValue = parseFloat(value.split("%")[0]);
+  if (isNaN(frValue)) return false;
+
+  return true;
+};
+
+/**
+ * Type guard to check if the input value is of type {@link CssVarName}.
+ *
+ * It checks if the value is a string that starts with "--" and if the substring
+ * after "--" is a non-empty string.
+ *
+ * @param {unknown} value - The value to be checked
+ * @return {boolean} Whether the input value is of type CssVarName
+ */
+export const isCssVarName = (value: unknown): value is CssVarName => {
+  if (!isString(value) || !value.startsWith("--")) return false;
+  return isNonEmptyString(value.split("--")[1]);
+};
+
+/**
  * Checks if the given value is a {@link SpacingLabel} by validating its format and scale.
  *
  * @param {unknown} value - the value to be checked
@@ -197,24 +230,60 @@ export const isSpacingLabel = (value: unknown): value is SpacingLabel => {
 };
 
 /**
+ * Type guard to check if the input value is of type {@link CssLength}.
+ *
+ * @param {unknown} value - The value to be checked
+ * @return {boolean} Whether the input value is of type CssLength
+ */
+export const isCssLength = (value: unknown): value is CssLength => {
+  return (
+    isNumber(value) ||
+    isSpacingLabel(value) ||
+    isCssRem(value) ||
+    isCssPx(value) ||
+    isCssFr(value) ||
+    isCssPercent(value)
+  );
+};
+
+/**
+ * Type guard to check if the input value is of type {@link FixedCssLength}.
+ *
+ * A {@link FixedCssLength} is a CSS length that is not relative to the
+ * viewport size. It can be a number, a {@link SpacingLabel}, a CSS `rem`
+ * length, or a CSS `px` length.
+ *
+ * @param {unknown} value - The value to be checked
+ * @return {boolean} Whether the input value is of type FixedCssLength
+ */
+export const isFixedCssLength = (value: unknown): value is FixedCssLength => {
+  return (
+    isNumber(value) ||
+    isSpacingLabel(value) ||
+    isCssRem(value) ||
+    isCssPx(value)
+  );
+};
+
+/**
  * Parses an input {@link CssLength} into its corresponding {@link CssLengthUsage}.
  *
  * @remarks number values are converted to rem values, spacings labels are converted to their corresponding {@link CssVarUsage}
  *
- * @param {CssLength} gap - the flex gap value to be processed
+ * @param {CssLength} length - the flex gap value to be processed
  * @return {CssLengthUsage} the processed CSS value
  */
-export const cssLengthUsage = (gap: CssLength): CssLengthUsage => {
-  if (isNumber(gap)) {
-    return cssRem(gap);
+export const cssLengthUsage = (length: CssLength): CssLengthUsage => {
+  if (isNumber(length)) {
+    return cssRem(length);
   }
-  if (isCssPx(gap) || isCssRem(gap)) {
-    return gap;
+  if (isCssPx(length) || isCssRem(length)) {
+    return length;
   }
-  if (isSpacingLabel(gap)) {
-    return cssVarUsage(gap);
+  if (isSpacingLabel(length)) {
+    return cssVarUsage(length);
   }
-  return gap;
+  return length;
 };
 
 /**

@@ -1,4 +1,5 @@
 import { Callout } from "./Callout.component";
+import { Hypertext } from "../Hypertext";
 import { allIconNames } from "../Icon/Icon.types";
 
 import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
@@ -25,17 +26,13 @@ const meta = {
   component: Callout,
   title: "Components/Callout/Stories",
   args: {
-    label: "[Label]",
+    children: "[Label]",
     color: "primary",
   },
   argTypes: {
     color: {
       options: calloutColors,
       defaultValue: Callout.defaultProps.color,
-    },
-    label: {
-      type: "string",
-      defaultValue: Callout.defaultProps.label,
     },
     icon: {
       options: ["auto", ...allIconNames],
@@ -80,25 +77,25 @@ const withCustomIcons: DetailConfigVariants<CalloutProps> = [
   {
     color: "primary",
     icon: "EmojiSmile",
-    label: "This callout has a custom icon",
+    children: "This callout has a custom icon",
     __propVariantLabel: "Primary with custom icon",
   },
   {
     color: "pending",
     icon: "Calendar3",
-    label: "The next meeting is set for next week",
+    children: "The next meeting is set for next week",
     __propVariantLabel: "Pending with custom icon",
   },
   {
     color: "error",
     icon: "FiletypePdf",
-    label: "Please upload your file in a PDF format",
+    children: "Please upload your file in a PDF format",
     __propVariantLabel: "Error with custom icon",
   },
   {
     color: "gray",
     icon: "Archive",
-    label: "The file you uploaded will be archived",
+    children: "The file you uploaded will be archived",
     __propVariantLabel: "Gray with custom icon",
   },
 ];
@@ -133,9 +130,22 @@ export const WithoutIcon: Story = {
   args: { ...Callout.defaultProps, icon: null },
 };
 
-const labels = [
+const children = [
   "Callout short label",
   "This is a really, really, needlessly long label for a callout, to show how it behave with more text",
+  <>
+    This callout contains an embedded&nbsp;
+    <Hypertext
+      href="/?path=/docs/components-hypertext-usage--docs"
+      title="Go to component"
+    >
+      Hypertext component
+    </Hypertext>
+    .
+  </>,
+  <>
+    This one has <em>italics</em> and <strong>bold</strong> text.
+  </>,
 ];
 
 export const Labels = (props: CalloutProps) => {
@@ -144,8 +154,8 @@ export const Labels = (props: CalloutProps) => {
   return (
     <ComponentVariants
       defaults={defaultProps}
-      variants={labels}
-      for="label"
+      variants={children}
+      for="children"
       of={Callout}
       columns={2}
       propLabels
@@ -154,7 +164,7 @@ export const Labels = (props: CalloutProps) => {
 };
 
 Labels.parameters = {
-  docs: componentSource(labels.map((label) => ({ label }))),
+  docs: componentSource(children.map((content) => ({ children: content }))),
 };
 
 export const WithTitle: Story = {

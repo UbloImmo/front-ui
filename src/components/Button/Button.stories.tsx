@@ -16,6 +16,7 @@ import { useMergedProps } from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react";
 import type { DirectionHorizontal } from "@types";
+import { allIconNames } from "../Icon/Icon.types";
 
 const defaultMockProps = {
   ...Button.defaultProps,
@@ -40,6 +41,11 @@ const meta = {
   ],
   parameters: {
     docs: componentSource(),
+  },
+  argTypes: {
+    icon: {
+      options: allIconNames,
+    },
   },
   args: { ...defaultMockProps, label: "Button" },
 } satisfies Meta<typeof Button>;
@@ -320,5 +326,31 @@ export const FullWidth = (props: ButtonProps) => {
 FullWidth.parameters = {
   docs: componentSource(
     bools.map((fullWidth): ButtonProps => ({ ...reverseProps, fullWidth }))
+  ),
+};
+
+export const Expandable = (props: ButtonProps) => {
+  const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
+    Button.defaultProps,
+    { ...reverseProps, ...props, icon: props.icon ?? "ArrowRight" }
+  );
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={[...bools].reverse()}
+      for="expandOnHover"
+      of={Button}
+      scaling={1}
+      columns={2}
+      propLabels
+    />
+  );
+};
+Expandable.parameters = {
+  docs: componentSource(
+    bools.map(
+      (expandOnHover): ButtonProps => ({ ...reverseProps, expandOnHover })
+    )
   ),
 };

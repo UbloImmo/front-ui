@@ -21,7 +21,7 @@ import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
 import type { TestIdProps } from "@types";
 
 const defaultCalloutProps: CalloutDefaultProps = {
-  label: "[label]",
+  children: "[label]",
   color: "primary",
   icon: "auto",
   title: null,
@@ -31,7 +31,7 @@ const defaultCalloutProps: CalloutDefaultProps = {
  * A card to display permanent feedback information.
  * Its color indicates the type of feedback.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {CalloutProps & TestIdProps} props - Callout component props
  * @returns {JSX.Element}
@@ -39,7 +39,7 @@ const defaultCalloutProps: CalloutDefaultProps = {
 const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("Callout");
   const mergedProps = useMergedProps(defaultCalloutProps, props);
-  const { icon, label, color, title } = mergedProps;
+  const { icon, children, color, title } = mergedProps;
   const testId = useTestId("callout", props);
 
   const iconName = useMemo(() => {
@@ -51,8 +51,10 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
 
   const styleProps = useStyleProps(calloutColors);
 
-  if (!props.label) {
-    warn(`Missing required label, defaulting to ${defaultCalloutProps.label}`);
+  if (!props.children) {
+    warn(
+      `Missing required children, defaulting to ${defaultCalloutProps.children}`
+    );
   }
 
   return (
@@ -66,12 +68,17 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
       )}
       <div>
         {title && (
-          <Heading size="h4" weight="medium" color={calloutColors.text}>
-            {props.title}
+          <Heading
+            size="h4"
+            weight="medium"
+            color={calloutColors.text}
+            important
+          >
+            {title}
           </Heading>
         )}
         <Text weight="medium" color={calloutColors.text}>
-          {label}
+          {children}
         </Text>
       </div>
     </CalloutContainer>

@@ -1,4 +1,4 @@
-import { isNull } from "@ubloimmo/front-util";
+import { isNull, isString } from "@ubloimmo/front-util";
 import { useCallback, useMemo, type MouseEventHandler } from "react";
 import styled from "styled-components";
 
@@ -33,6 +33,7 @@ const defaultButtonProps: DefaultButtonProps = {
   disabled: false,
   loading: false,
   fullWidth: false,
+  expandOnHover: false,
   onClick: null,
   className: null,
   onClickNative: null,
@@ -41,7 +42,7 @@ const defaultButtonProps: DefaultButtonProps = {
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {ButtonProps} props - the button's props
  * @returns {JSX.Element} the rendered button
@@ -66,7 +67,8 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
     [mergedProps]
   );
 
-  const { icon, disabled, title, role, type } = mergedProps;
+  const { icon, disabled, title, role, type, expandOnHover, fullWidth } =
+    mergedProps;
   let { label } = mergedProps;
 
   const ariaTitle = useMemo(() => {
@@ -76,6 +78,21 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
   const ariaRole = useMemo(() => {
     return role ?? "button";
   }, [role]);
+
+  const expandable = useMemo(() => {
+    if (!expandOnHover) return false;
+
+    if (!isString(icon) || !isString(label)) {
+      warn(`Both label and icon must be provided to expand on hover`);
+      return false;
+    }
+
+    if (fullWidth) {
+      warn(`fullWidth takes precence over expandOnHover.`);
+      return false;
+    }
+    return true;
+  }, [expandOnHover, fullWidth, label, icon, warn]);
 
   if ((!icon && !label) || (!icon && label?.length === 0)) {
     warn(
@@ -89,6 +106,7 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
       {...styledProps}
       type={type}
       data-testid={testId}
+      data-expandable={expandable}
       className={className}
       onClick={onClick}
       disabled={disabled}

@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas } from "@docs/blocks";
+import { ComponentInfo, Canvas, Callout } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as ButtonStories from "../Button.stories.tsx";
 
@@ -62,11 +62,24 @@ This behavior can be overridden to make it fill its parent by applying the `full
 
 <Canvas of={ButtonStories.FullWidth} />
 
+### Expanding on hover
+
+Compact buttons can still provide useful information about their purpose.
+By providing the `expandOnHover` property, a button will behave as an icon-only button and only show its label when hovered
+
+> Both `icon` and `label` properties are required in order enable this variant.
+
+<Canvas of={ButtonStories.Expandable} />
+
+<Callout color="warning" icon="ExclamationTriangle">
+This behavior will get overridden by the `fullWidth` property if both are provided.
+</Callout>
+
 ## Loading state
 
 A Button will display a loading animation when passed a `loading` property.
 
-Buttons in a loading state will not trigger their `onClick` event listeners to prevent users rage-clicking and triggering the same action mutliple times.
+Buttons in a loading state will not trigger their `onClick` event listeners to prevent users _rage-clicking_ and triggering the same action multiple times.
 
 <Canvas of={ButtonStories.Loading} />
 

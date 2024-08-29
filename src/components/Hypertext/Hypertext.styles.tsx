@@ -5,10 +5,10 @@ export const hypertextStyle = css`
   width: min-content;
   min-width: min-content;
   cursor: pointer;
+  text-decoration: none;
 
   &,
   & > span[data-testid="text"] {
-    text-decoration: none;
     font-size: inherit;
     font-weight: inherit;
     line-height: inherit;
@@ -16,7 +16,10 @@ export const hypertextStyle = css`
   }
 
   & > span[data-testid="text"] {
+    text-decoration-color: var(--primary-base-00);
     display: inherit;
+    transition: color 300ms var(--bezier),
+      text-decoration-color 300ms var(--bezier);
   }
 
   & > span,
@@ -24,7 +27,7 @@ export const hypertextStyle = css`
   & > svg > path {
     transition-duration: 300ms;
     transition-property: color, fill;
-    transition-timing-function: ease-out;
+    transition-timing-function: var(--bezier);
   }
 
   & > svg[data-testid="icon"]:last-child {
@@ -41,6 +44,7 @@ export const hypertextStyle = css`
 
     & > span[data-testid="text"] {
       color: var(--primary-dark);
+      text-decoration-color: var(--primary-base);
     }
 
     & > svg[data-testid="icon"]:last-child,

@@ -1,14 +1,13 @@
 import { isBoolean, isFunction, type Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
-import styled from "styled-components";
 
 import { FormFieldDisplay } from "./FormFieldDisplay.component";
+import { FormFieldGridItem } from "./FormFieldGridItem.component";
 import { useFormContext } from "../Form.context";
 
 import { Field } from "@/components/Field";
 import { type InputType } from "@/components/Input";
-import { breakpointsPx } from "@/sizes";
-import { type GridEndPosition, GridItem } from "@layouts";
+import { type GridEndPosition } from "@layouts";
 
 import type { BuiltFieldProps, FormFieldLayoutHiddenFn } from "../Form.types";
 
@@ -68,9 +67,3 @@ export const FormField = ({
     </FormFieldGridItem>
   );
 };
-
-const FormFieldGridItem = styled(GridItem)`
-  @media only screen and (max-width: ${breakpointsPx.XS}) {
-    grid-column-end: -1;
-  }
-`;

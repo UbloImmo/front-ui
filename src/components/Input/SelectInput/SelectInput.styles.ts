@@ -3,7 +3,9 @@ import { css, RuleSet } from "styled-components";
 import { commonInputContainerStyles } from "../Input.styles";
 
 import { breakpointsPx } from "@/sizes";
+import { cssDimensions } from "@/utils/styles.utils";
 
+import type { SelectOptionItemStyleProps } from "./SelectInput.types";
 import type { CommonInputStyleProps } from "../Input.types";
 
 export const selectInputStyles = (): RuleSet => {
@@ -60,7 +62,8 @@ export const selectOptionContainerStyles = (): RuleSet => {
     max-height: calc(var(--s-8) * 7 + var(--s-1));
     height: fit-content;
     background-color: white;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: var(--shadow-card-elevation-medium);
 
     &[aria-expanded] {
@@ -114,6 +117,16 @@ const sharedSelectOptionContainerStyles = (): RuleSet => {
 
 export const customSelectOptionStyles = sharedSelectOptionContainerStyles;
 
+export const selectOptionLabelContainerStyles = ({
+  $active,
+}: SelectOptionItemStyleProps): RuleSet => {
+  if (!$active) return css``;
+
+  return css`
+    max-width: calc(100% - var(--s-5));
+  `;
+};
+
 export const selectOptionStyles = (): RuleSet => {
   return css`
     ${sharedSelectOptionContainerStyles}
@@ -122,6 +135,7 @@ export const selectOptionStyles = (): RuleSet => {
     height: var(--s-8);
     min-height: var(--s-8);
     max-height: var(--s-8);
+    width: 100%;
     transition: background-color 300ms ease-out;
     display: flex;
     align-items: center;
@@ -133,6 +147,10 @@ export const selectOptionStyles = (): RuleSet => {
 
     span {
       overflow: hidden;
+    }
+
+    svg[data-testid="icon"] {
+      ${cssDimensions("s-4", "s-4", true)}
     }
 
     span[data-testid="input-select-option-label"],

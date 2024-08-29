@@ -7,12 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Added
-
-- `v0.0.1` SearchInput component
-  - an input designed for querying and retrieving information from a dataset by typing
-
 ### Changed
+
+- `v0.0.2` HyperText component
+  - Show underline on hover for better accessibility
+
+- `v0.0.8` Button component
+  - New `expandOnHover` property that requires both icon and label
 
 - `v0.0.4` SelectInput component
 
@@ -22,6 +23,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - FormField component
   - update display value for search and select inputs
+
+- `v0.0.3` Callout component
+  - Replace `label` prop with `children` to allow for nested links and other content
+
+- **`GLOBAL`** Typography
+  - Replace letter spacing, text indent, line height and font feature settings upon viewport size change (media queries)
+
+### Fixed
+
+- `v0.0.3` Form component
+  - Fix responsive content display at very small viewport sizes
+
+- `v0.0.4` SelectInput component
+  - Option label ellispis at small sizes
+
+### Added
+
+- **`DOCS`** Callout block
+  - parses markdown content and formats it accordingly for usage inside component documentation files
+
+- `v0.0.1` SearchInput component
+  - an input designed for querying and retrieving information from a dataset by typing
 
 ## 0.26.0 - 2024-08-27
 

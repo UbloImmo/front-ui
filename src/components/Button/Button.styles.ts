@@ -6,6 +6,7 @@ import {
 import { css } from "styled-components";
 
 import { breakpointsPx } from "@/sizes";
+import { cssDimensions } from "@/utils/styles.utils";
 import { cssVarUsage, fromStyleProps, isValidRgbaStr } from "@utils";
 
 import type {
@@ -193,74 +194,78 @@ const commonButtonStyles = ({
   iconPlacement,
   label,
   color,
-}: DefaultButtonProps): RuleSet => css`
-  --button-size: var(--s-8);
-  --padding-vertical: calc(var(--button-size) / 4);
-  --padding-horizontal-label: calc(var(--button-size) / 2);
-  --padding-horizontal: ${label
-    ? cssVarUsage("padding-horizontal-label")
-    : cssVarUsage("padding-vertical")};
-  padding: var(--padding-vertical) var(--padding-horizontal);
-  height: var(--button-size);
-  max-height: var(--button-size);
-  min-height: var(--button-size);
-  font-size: var(--text-m);
-  border-radius: calc(var(--button-size) / 2);
-  cursor: pointer;
-  display: flex;
-  flex-direction: ${iconPlacement === "right" ? "row-reverse" : "row"};
-  align-items: center;
-  justify-content: center;
-  gap: var(--s-2);
-  border-width: 1px;
-  border-style: solid;
-  box-shadow: ${color === "clear" ? "none" : "var(--shadow-button)"};
-  transition: color 300ms ease-out 0s, background-color 300ms ease-out 0s,
-    border-color 300ms ease-out 0s;
+}: DefaultButtonProps): RuleSet => {
+  return css`
+    --button-size: var(--s-8);
+    --padding-vertical: calc(var(--button-size) / 4);
+    --padding-horizontal-label: calc(var(--button-size) / 2);
+    --padding-horizontal: ${label
+      ? cssVarUsage("padding-horizontal-label")
+      : cssVarUsage("padding-vertical")};
+    padding: var(--padding-vertical) var(--padding-horizontal);
+    height: var(--button-size);
+    max-height: var(--button-size);
+    min-height: var(--button-size);
+    font-size: var(--text-m);
+    border-radius: calc(var(--button-size) / 2);
+    cursor: pointer;
+    display: flex;
+    flex-direction: ${iconPlacement === "right" ? "row-reverse" : "row"};
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-2);
+    border-width: 1px;
+    border-style: solid;
+    box-shadow: ${color === "clear" ? "none" : "var(--shadow-button)"};
+    transition: color 300ms var(--bezier) 0s,
+      background-color 300ms var(--bezier) 0s,
+      border-color 300ms var(--bezier) 0s;
 
-  & > span {
-    transition: color 300ms ease-out 0s;
-    width: max-content;
-  }
-
-  & > svg[data-testid="icon"] {
-    transition: fill 300ms ease-out 0s;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &:hover {
-    transition-duration: 150ms;
-
-    & > svg[data-testid="icon"],
     & > span {
-      transition-duration: 150ms;
+      transition: color 300ms var(--bezier) 0s, opacity 300ms var(--bezier) 0s;
+      width: max-content;
     }
-  }
 
-  &:disabled,
-  &:disabled:hover {
-    cursor: not-allowed;
-    opacity: 0.33;
-    box-shadow: none;
-  }
+    & > svg[data-testid="icon"] {
+      transition: fill 300ms var(--bezier) 0s;
+      ${cssDimensions("s-4", "s-4", true)}
+    }
 
-  // fix width if only icon
-  &:has([data-testid="icon"]):not(:has(span[data-testid="text"])) {
-    width: var(--button-size);
-    max-width: var(--button-size);
-    min-width: var(--button-size);
-  }
+    &:focus {
+      outline: none;
+    }
 
-  @media only screen and (max-width: ${breakpointsPx.XS}) {
-    --button-size: var(--s-13);
-    --padding-vertical: var(--s-4);
-    --padding-horizontal-label: var(--s-6);
-    gap: var(--s-3);
-  }
-`;
+    &:hover {
+      transition-duration: 150ms;
+
+      & > svg[data-testid="icon"],
+      & > span {
+        transition-duration: 150ms;
+      }
+    }
+
+    &:disabled,
+    &:disabled:hover {
+      cursor: not-allowed;
+      opacity: 0.33;
+      box-shadow: none;
+    }
+
+    // fix width if only icon
+    &:has([data-testid="icon"]):not(:has(span[data-testid="text"])) {
+      width: var(--button-size);
+      max-width: var(--button-size);
+      min-width: var(--button-size);
+    }
+
+    @media only screen and (max-width: ${breakpointsPx.XS}) {
+      --button-size: var(--s-13);
+      --padding-vertical: var(--s-4);
+      --padding-horizontal-label: var(--s-6);
+      gap: var(--s-3);
+    }
+  `;
+};
 
 const buttonLoadingStyles = ({
   loading,
@@ -285,10 +290,58 @@ const buttonLoadingStyles = ({
   `;
 };
 
-const buttonModifierStyles = ({ fullWidth }: DefaultButtonProps): RuleSet => {
-  const width = fullWidth ? "100%" : "auto";
+const buttonModifierStyles = ({
+  fullWidth,
+  loading,
+}: DefaultButtonProps): RuleSet => {
+  if (fullWidth) return cssDimensions("100%", "--button-size", true);
+
   return css`
-    width: ${width};
+    &[data-expandable="true"] {
+      --padding-vertical: calc((var(--button-size) / 4) - var(--s-05) + 1px);
+
+      @media only screen and (max-width: ${breakpointsPx.XS}) {
+        --padding-vertical: calc(var(--s-4) + 1px);
+      }
+
+      --padding-horizontal: var(--padding-vertical);
+
+      transition: color 300ms var(--bezier) 0s,
+        background-color 300ms var(--bezier) 0s,
+        border-color 300ms var(--bezier) 0s, padding 300ms var(--bezier) 0s,
+        width 300ms var(--bezier) 0s;
+      justify-content: flex-start;
+
+      pointer-events: all;
+      overflow: hidden;
+      width: var(--button-size);
+
+      span[data-testid="text"] {
+        pointer-events: none;
+        opacity: 0;
+        transition-duration: 300ms;
+      }
+
+      &:not(:disabled):hover {
+        transition-duration: 150ms;
+        --padding-horizontal: var(--padding-horizontal-label);
+        width: fit-content;
+        // CSS Values 5 Working draft
+        // https://drafts.csswg.org/css-values-5/#calc-size
+        // allow for graceful transition to auto
+        // use chromium flag:  #enable-experimental-web-platform-features to preview
+        width: calc-size(fit-content);
+
+        span[data-testid="text"] {
+          ${!loading &&
+          css`
+            opacity: 1;
+            transition-delay: 150ms;
+          `}
+          pointer-events: auto;
+        }
+      }
+    }
   `;
 };
 

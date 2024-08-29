@@ -70,8 +70,10 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
           icon="XLg"
           onClick={closeDialogOnClick}
           title="Close"
+          label="Close"
           testId="modal-close-button"
           overrideTestId
+          expandOnHover
         />
         <FlexColumnLayout fill gap="s-3">
           {mergedProps.title && (
