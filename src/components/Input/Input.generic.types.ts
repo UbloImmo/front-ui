@@ -5,6 +5,7 @@ import type { IconPickerInputProps } from "./IconPickerInput";
 import type { InputType, InputProps } from "./Input.types";
 import type { NumberInputProps } from "./NumberInput/NumberInput.types";
 import type { PasswordInputProps } from "./PasswordInput/PasswordInput.types";
+import type { SearchInputProps } from "./SearchInput";
 import type { SelectInputProps } from "./SelectInput/SelectInput.types";
 import type { TextAreaInputProps } from "./TextAreaInput";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
@@ -23,6 +24,7 @@ type SpecificInputPropsMap<
   date: DateInputProps;
   combobox: ComboBoxInputProps<TGenericValue>;
   "icon-picker": IconPickerInputProps;
+  search: SearchInputProps<TGenericValue>;
 };
 
 export type SpecificInputProps<

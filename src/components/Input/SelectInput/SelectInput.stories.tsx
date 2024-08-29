@@ -2,20 +2,23 @@ import { fn } from "@storybook/test";
 import styled, { css } from "styled-components";
 
 import { SelectInput } from "./SelectInput.component";
+import { flattenSelectOptions } from "./SelectInput.utils";
 
 import { Badge, type BadgeProps } from "@/components/Badge";
-import { allIconNames } from "@/components/Icon/Icon.types";
+import { allIconNames, type IconName } from "@/components/Icon/Icon.types";
 import { Text } from "@/components/Text";
+import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout } from "@layouts";
 
 import type {
   CustomOptionComponent,
+  CustomSelectedOptionComponent,
   SelectInputProps,
   SelectOptionOrGroup,
 } from "./SelectInput.types";
 import type { Meta, StoryObj } from "@storybook/react";
-import type { NullishPrimitives } from "@ubloimmo/front-util";
+import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   SelectInputProps<NullishPrimitives>
@@ -184,6 +187,28 @@ const CustomOption: CustomOptionComponent<string, BadgeProps> = (option) => {
   );
 };
 
+const CustomSelectedOption: CustomSelectedOptionComponent<string> = ({
+  value,
+  disabled,
+}: {
+  value: Nullable<string>;
+  disabled?: boolean;
+}) => {
+  if (disabled) {
+    return (
+      <CustomOptionContainer align="center" fill>
+        <Text>Not selectable</Text>
+      </CustomOptionContainer>
+    );
+  }
+
+  return (
+    <CustomOptionContainer justify="space-between" align="center" fill>
+      <Text>Selected value: {value}</Text>
+    </CustomOptionContainer>
+  );
+};
+
 const options: SelectOptionOrGroup<string, BadgeProps>[] = [
   {
     label: "Option 1",
@@ -228,7 +253,7 @@ export const CustomComponents = (
       {...props}
       options={options}
       Option={CustomOption}
-      SelectedOption={CustomOption}
+      SelectedOption={CustomSelectedOption}
     />
   );
 };
@@ -242,3 +267,42 @@ const CustomOptionContainer = styled(FlexRowLayout)<{ $active?: boolean }>`
       background-color: var(--primary-light);
     `}
 `;
+
+const delayedOptions = (query: Nullable<string>) => {
+  const optionsCopy = flattenSelectOptions(options);
+  return new Promise<SelectOptionOrGroup<string, BadgeProps>[]>((resolve) => {
+    setTimeout(() => {
+      if (!query) {
+        resolve(optionsCopy);
+        return;
+      }
+      resolve(optionsCopy.filter(({ label }) => label.includes(query)));
+    }, 3000);
+  });
+};
+
+export const LoadingOptions: Story = {
+  args: {
+    options: delayedOptions,
+    searchable: true,
+  },
+};
+
+const controlIcons: IconName[] = [
+  "CaretDownFill",
+  "Person",
+  "BuildingAdd",
+  "Bank",
+];
+
+export const ControlIcon = () => {
+  return (
+    <ComponentVariants
+      defaults={meta.args}
+      variants={controlIcons}
+      of={SelectInput}
+      for="controlIcon"
+      propLabels
+    />
+  );
+};

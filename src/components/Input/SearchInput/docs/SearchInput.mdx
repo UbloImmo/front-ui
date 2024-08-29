@@ -1,0 +1,29 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as SearchInputStories from "../SearchInput.stories.tsx";
+import { Icon } from "../../../Icon/Icon.component.tsx";
+
+<Meta title="Components/Input/SearchInput/Usage" />
+
+<ComponentInfo of={SearchInputStories} figmaId="76-6562" />
+
+<Content>
+
+## Usage
+
+`SearchInput` component is a specific type of [Input](?path=/docs/components-input-usage--docs), designed to user selection of a result by typing a query.
+
+> This component is built upon [SelectInput](?path=/docs/components-input-selectinput-usage--docs) with the `searchable`property enabled by default.
+
+<Canvas of={SearchInputStories.Default} />
+
+### Control Icons
+
+As for its sibling `SelectInput`, the optional `controlIcon` property, set by default to `Search` ( <Icon name="Search" /> ) can be customized to provide visual information on the results.
+
+Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list.
+
+<Canvas of={SearchInputStories.ControlIcon} />
+
+</Content>

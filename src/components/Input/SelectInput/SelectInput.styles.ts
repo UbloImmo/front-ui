@@ -18,7 +18,8 @@ export const selectInputStyles = (): RuleSet => {
     max-height: fit-content;
     height: fit-content;
 
-    &:disabled {
+    &:disabled,
+    &:disabled > * {
       cursor: not-allowed;
     }
   `;

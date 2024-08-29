@@ -2,6 +2,7 @@ import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as SelectInputStories from "../SelectInput.stories.tsx";
+import { Icon } from "../../../Icon/Icon.component.tsx";
 
 <Meta title="Components/Input/SelectInput/Usage" />
 
@@ -39,5 +40,18 @@ that is displayed on focus when the `searchable` property is enabled.
 
 <Canvas of={SelectInputStories.CustomComponents} />
 
+### Loading options
+
+This input visually display the loading state of the options by displaying a loading animation. Specifically, a **BouncingBalls** [Loading](?path=/docs/components-loading-usage--docs) component is displayed within the input while the options are being loaded.
+
+<Canvas of={SelectInputStories.LoadingOptions} />
+
+### Control Icon
+
+`SelectInput` uses by default `CaretDownFill` [Icon](?path=/docs/components-icon-usage--docs) (<Icon name="CaretDownFill" />). To custom the input, provide the name of your icon in the optional property `controlIcon`.
+
+Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list.
+
+<Canvas of={SelectInputStories.ControlIcon} />
 
 </Content>
