@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 import path from "path";
-import { mergeConfig, optimizeDeps } from "vite";
+import { mergeConfig } from "vite";
 
 const config: StorybookConfig = {
   stories: [
@@ -40,6 +40,7 @@ const config: StorybookConfig = {
       optimizeDeps: {
         ...(config.optimizeDeps ?? {}),
         entries: isProd ? config.optimizeDeps?.entries : [],
+        exclude: ["node_modules/.cache/storybook"],
       },
     });
 
