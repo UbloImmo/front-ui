@@ -10,7 +10,19 @@ import type { ReactNode } from "react";
 
 export type TooltipContentFn = GenericFn<[], ReactNode>;
 
-const cursors = ["default", "pointer", "not-allowed", "help"] as const;
+const cursors = [
+  "default",
+  "pointer",
+  "not-allowed",
+  "help",
+  "pointer",
+  "progress",
+  "wait",
+  "context-menu",
+  "cell",
+  "crosshair",
+  "copy",
+] as const;
 
 export type ToolitipCursor = Enum<typeof cursors>;
 
@@ -59,7 +71,7 @@ export type TooltipStyleProps = StyleProps<
 >;
 
 export type TooltipWrapperStyleProps = StyleProps<
-  Pick<DefaultTooltipProps, "cursor">
+  Pick<DefaultTooltipProps, "cursor"> & { innerTestId: string }
 >;
 
 export type ToolipIntersection = Pick<DOMRectReadOnly, Direction>;

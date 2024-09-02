@@ -67,8 +67,8 @@ export const tooltipStyles = ($direction: Direction): RuleSet => {
     width: max-content;
     height: max-content;
     max-width: 12rem;
-    padding: var(--s-1);
-    border-radius: var(--s-05);
+    padding: var(--s-05) var(--s-1);
+    border-radius: var(--s-1);
     transition: visibility 0s, opacity 0.2s ease-out;
     visibility: hidden;
     opacity: 0;
@@ -117,7 +117,6 @@ export const tooltipPlaceholderStyles = ($direction: Direction): RuleSet => {
       pointer-events: none;
       user-select: none;
     }
-    background: red;
     width: max-content;
     height: max-content;
     padding: calc(${TOOLTIP_OFFSET} + var(--s-1))
@@ -129,6 +128,7 @@ export const tooltipPlaceholderStyles = ($direction: Direction): RuleSet => {
 
 export const tooltipWrapperStyles = ({
   $cursor,
+  $innerTestId,
 }: TooltipWrapperStyleProps): RuleSet => css`
   position: relative;
   line-height: 0px;
@@ -136,8 +136,8 @@ export const tooltipWrapperStyles = ({
   width: fit-content;
   cursor: ${$cursor};
 
-  &:hover [data-testid="tooltip"],
-  &:focus [data-testid="tooltip"] {
+  &:hover [data-testid="${$innerTestId}"],
+  &:focus [data-testid="${$innerTestId}"] {
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
