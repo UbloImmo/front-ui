@@ -1,16 +1,12 @@
-import { transformObject } from "@ubloimmo/front-util";
 import { createContext, useContext } from "react";
 
-import { defaultTranslations } from "./translation.defaults";
-import { makeTranslationFnMap } from "./translation.utils";
-import { mergeDefaultProps, useStatic } from "../props.utils";
+import { mergeTranslationMap } from "./translation.utils";
+import { useStatic } from "../props.utils";
 
 import type {
-  CompleteTranslationMap,
   TranslationContext,
   TranslationContextProps,
   TranslationMap,
-  TranslationSubsetName,
 } from "./translation.types";
 
 /**
@@ -26,30 +22,11 @@ import type {
 const useUikitTranslationContext = (
   replacementMap: TranslationMap = {}
 ): TranslationContext => {
-  return useStatic(() => {
-    return transformObject(
-      defaultTranslations,
-      (defaultTranslationsForSubset) => {
-        return makeTranslationFnMap(
-          mergeDefaultProps<
-            CompleteTranslationMap<TranslationSubsetName>,
-            TranslationMap<TranslationSubsetName>
-          >(
-            defaultTranslationsForSubset as CompleteTranslationMap<TranslationSubsetName>,
-            replacementMap
-          )
-        );
-      }
-    ) as TranslationContext;
-  });
+  return useStatic(() => mergeTranslationMap(replacementMap));
 };
 
 const UikitTranslationContext = createContext<TranslationContext>(
-  transformObject(defaultTranslations, (defaultTranslationsForSubset) =>
-    makeTranslationFnMap(
-      defaultTranslationsForSubset as CompleteTranslationMap<TranslationSubsetName>
-    )
-  ) as TranslationContext
+  mergeTranslationMap()
 );
 
 /**

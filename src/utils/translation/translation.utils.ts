@@ -1,5 +1,12 @@
-import { isFunction, isNumber, transformObject } from "@ubloimmo/front-util";
+import {
+  isFunction,
+  isNumber,
+  isObject,
+  transformObject,
+} from "@ubloimmo/front-util";
 
+import { defaultTranslations } from "./translation.defaults";
+import { mergeDefaultProps } from "../props.utils";
 import { isNonEmptyString } from "../string.utils";
 
 import type {
@@ -7,6 +14,8 @@ import type {
   CompleteTranslationFnMap,
   CompleteTranslationMap,
   TranslationSubsetName,
+  TranslationMap,
+  TranslationContext,
 } from "./translation.types";
 
 /**
@@ -27,6 +36,9 @@ export const makeTranslationFnMap = <
 >(
   translationMap: CompleteTranslationMap<TTranslationSubsetName>
 ): CompleteTranslationFnMap<TTranslationSubsetName> => {
+  if (!isObject(translationMap)) {
+    return {} as CompleteTranslationFnMap<TTranslationSubsetName>;
+  }
   return transformObject(translationMap, (translation) => {
     if (isFunction<TranslationFn>(translation)) {
       return translation;
@@ -36,4 +48,36 @@ export const makeTranslationFnMap = <
         .filter((arg) => isNonEmptyString(arg) || isNumber(arg))
         .join(" ");
   });
+};
+
+/**
+ * Merges a given replacement map with the default translations.
+ *
+ * @param {TranslationMap} [replacementMap={}] The replacement map to merge
+ *   with the default translations.
+ * @return {TranslationContext} The merged translation context.
+ */
+export const mergeTranslationMap = (
+  replacementMap: TranslationMap = {}
+): TranslationContext => {
+  if (!isObject(replacementMap))
+    return transformObject(defaultTranslations, (translationMap) =>
+      makeTranslationFnMap<TranslationSubsetName>(
+        translationMap as CompleteTranslationMap<TranslationSubsetName>
+      )
+    ) as TranslationContext;
+  return transformObject(
+    defaultTranslations,
+    (defaultTranslationsForSubset) => {
+      return makeTranslationFnMap(
+        mergeDefaultProps<
+          CompleteTranslationMap<TranslationSubsetName>,
+          TranslationMap<TranslationSubsetName>
+        >(
+          defaultTranslationsForSubset as CompleteTranslationMap<TranslationSubsetName>,
+          replacementMap
+        )
+      );
+    }
+  ) as TranslationContext;
 };
