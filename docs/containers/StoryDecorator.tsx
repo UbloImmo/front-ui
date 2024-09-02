@@ -31,9 +31,7 @@ export const StorybookThemeProvider = ({
     _forceTheme={theme.client}
     faviconLinkSelectors={{ x16: 'link[rel="icon"]' }}
   >
-    <UikitTranslationProvider translations={{ close: "Fermer" }}>
-      {children}
-    </UikitTranslationProvider>
+    <UikitTranslationProvider>{children}</UikitTranslationProvider>
   </ThemeProvider>
 );
 

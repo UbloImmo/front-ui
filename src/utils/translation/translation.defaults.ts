@@ -3,7 +3,7 @@ import type {
   DefaultTranslationMaps,
 } from "./translation.types";
 
-const globalT: CompleteTranslationMap<"global"> = {
+const globalTranslations: CompleteTranslationMap<"global"> = {
   yes: "Yes",
   no: "No",
   back: "Back",
@@ -72,7 +72,7 @@ const status: CompleteTranslationMap<"status"> = {
 };
 
 export const defaultTranslations: DefaultTranslationMaps = {
-  global: globalT,
+  global: globalTranslations,
   action,
   validation,
   status,

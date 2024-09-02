@@ -4,8 +4,10 @@ import type { ReactNode } from "react";
 
 export type TranslationSubsetName = KeyOf<typeof translationKeys>;
 
-export type TranslationFn<TArgs extends unknown[] = (string | string)[]> =
-  GenericFn<TArgs, string>;
+export type TranslationFn<TArgs extends unknown[] = string[]> = GenericFn<
+  TArgs,
+  string
+>;
 
 export type TranslationKeySubset<
   TTranslationSubsetName extends TranslationSubsetName
