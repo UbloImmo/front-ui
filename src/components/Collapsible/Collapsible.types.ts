@@ -52,8 +52,3 @@ export type CollapsibleContainerStyleProps = Pick<
   StyleProps<CollapsibleDefaultProps>,
   "$compact" | "$disabled"
 >;
-
-export type CollapsibleCaretStyleProps = Pick<
-  StyleProps<CollapsibleDefaultProps>,
-  "$isOpen" | "$disabled"
->;

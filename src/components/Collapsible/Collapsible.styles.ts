@@ -1,9 +1,6 @@
-import { css } from "styled-components";
+import { css, type RuleSet } from "styled-components";
 
-import type {
-  CollapsibleCaretStyleProps,
-  CollapsibleContainerStyleProps,
-} from "./Collapsible.types";
+import type { CollapsibleContainerStyleProps } from "./Collapsible.types";
 
 export const collapsibleContainerStyles = ({
   $compact,
@@ -28,21 +25,24 @@ export const collapsibleContainerStyles = ({
   `;
 };
 
-export const caretContainerStyles = ({
-  $isOpen,
-}: CollapsibleCaretStyleProps) => {
+export const caretContainerStyles = (): RuleSet => {
   return css`
     // padding set to expand caret clickable area
     padding: var(--s-2) var(--s-2) var(--s-2) 0;
-
+    border: none;
+    background: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    & > [data-testid="icon"] {
+    &[aria-expanded] [data-testid="icon"] {
       transition: transform 150ms var(--bezier);
-      ${$isOpen ? "transform: rotate(90deg);" : ""}
+    }
+
+    &[aria-expanded="true"] [data-testid="icon"] {
+      transform: rotate(90deg);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
     }
   `;
 };

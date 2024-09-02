@@ -8,7 +8,6 @@ import {
 import {
   type CollapsibleProps,
   type CollapsibleDefaultProps,
-  CollapsibleCaretStyleProps,
   type CollapsibleContainerStyleProps,
 } from "./Collapsible.types";
 import { Icon } from "../Icon";
@@ -28,7 +27,7 @@ const defaultCollapsibleProps: CollapsibleDefaultProps = {
 };
 
 /**
- * An expandable component that allow users to reveal or hide sub content by clicking on its headers.
+ * An expandable component that allow users to reveal or hide sub content on click.
  *
  * @version 0.0.1
  *
@@ -71,8 +70,9 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
           aria-expanded={isOpen}
           data-testid={`${testId}-caret`}
           onClick={openCollapsible}
-          $isOpen={isOpen}
-          $disabled={disabled}
+          aria-disabled={disabled}
+          disabled={disabled}
+          type="button"
         >
           <Icon name="CaretRightFill" size="s-2" color={iconColor} />
         </CaretContainer>
@@ -109,7 +109,7 @@ const CollapsibleContainer = styled(
   ${collapsibleContainerStyles}
 `;
 
-const CaretContainer = styled.div<CollapsibleCaretStyleProps>`
+const CaretContainer = styled.button`
   ${caretContainerStyles}
 `;
 
