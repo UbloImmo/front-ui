@@ -25,16 +25,19 @@ const action: CompleteTranslationMap<"action"> = {
   save: "Save",
   reset: "Reset",
   copy: "Copy",
+  copyToClipboard: "Copy to clipboard",
   paste: "Paste",
   add: "Add",
   remove: "Remove",
   clear: "Clear",
   select: "Select",
   unselect: "Unselect",
-  "select-all": "Select all",
-  "deselect-all": "Deselect all",
+  selectAll: "Select all",
+  unselectAll: "Unselect all",
   expand: "Expand",
   collapse: "Collapse",
+  show: "Show",
+  hide: "Hide",
 } as const;
 
 const validation: CompleteTranslationMap<"validation"> = {
@@ -42,16 +45,16 @@ const validation: CompleteTranslationMap<"validation"> = {
   required: "Required",
   invalid: "Invalid",
   valid: "Valid",
-  "pattern-mismatch": (pattern) => `Pattern (${pattern}) does not match`,
-  "too-short": "Value is too short",
-  "too-long": "Value is too long",
-  "too-low": "Value is too low",
-  "too-high": "Value is too high",
-  "not-allowed": "Value is not allowed",
-  "too-big": "Value is too big",
-  "too-small": "Value is too small",
-  "step-mismatch": (step) => `Value does not respect the required step ${step}`,
-  "type-mismatch": "Value does not respect the required type",
+  patternMismatch: (pattern) => `Pattern (${pattern}) does not match`,
+  tooShort: "Value is too short",
+  tooLong: "Value is too long",
+  tooLow: "Value is too low",
+  tooHigh: "Value is too high",
+  notAllowed: "Value is not allowed",
+  tooBig: "Value is too big",
+  tooSmall: "Value is too small",
+  stepMismatch: (step) => `Value does not respect the required step ${step}`,
+  typeMismatch: "Value does not respect the required type",
 };
 
 const status: CompleteTranslationMap<"status"> = {
@@ -62,6 +65,10 @@ const status: CompleteTranslationMap<"status"> = {
   success: "Success",
   warning: "Warning",
   caution: "Caution",
+  error: "Error",
+  disabled: "Disabled",
+  archived: "Archived",
+  hidden: "Hidden",
 };
 
 export const defaultTranslations: DefaultTranslationMaps = {

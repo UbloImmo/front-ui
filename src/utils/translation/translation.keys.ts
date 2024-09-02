@@ -20,16 +20,19 @@ const actionTranslationKeys = [
   "save",
   "reset",
   "copy",
+  "copyToClipboard",
   "paste",
   "add",
   "remove",
   "clear",
   "select",
   "unselect",
-  "select-all",
-  "deselect-all",
+  "selectAll",
+  "unselectAll",
   "expand",
   "collapse",
+  "show",
+  "hide",
 ] as const;
 
 const validationTranslationKeys = [
@@ -37,16 +40,16 @@ const validationTranslationKeys = [
   "required",
   "invalid",
   "valid",
-  "pattern-mismatch",
-  "too-short",
-  "too-long",
-  "too-low",
-  "too-high",
-  "not-allowed",
-  "too-big",
-  "too-small",
-  "step-mismatch",
-  "type-mismatch",
+  "patternMismatch",
+  "tooShort",
+  "tooLong",
+  "tooLow",
+  "tooHigh",
+  "notAllowed",
+  "tooBig",
+  "tooSmall",
+  "stepMismatch",
+  "typeMismatch",
 ] as const;
 
 const statusTranslationKeys = [
@@ -57,6 +60,10 @@ const statusTranslationKeys = [
   "success",
   "warning",
   "caution",
+  "error",
+  "disabled",
+  "archived",
+  "hidden",
 ] as const;
 
 export const translationKeys = {
