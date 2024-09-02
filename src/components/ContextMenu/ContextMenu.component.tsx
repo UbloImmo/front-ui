@@ -21,7 +21,12 @@ import { ActionIcon } from "../ActionIcon";
 
 import { FlexColumnLayout, Popover } from "@layouts";
 import { FixedCssLength, type TestIdProps } from "@types";
-import { useLogger, useTestId, useMergedProps } from "@utils";
+import {
+  useLogger,
+  useTestId,
+  useMergedProps,
+  useUikitTranslation,
+} from "@utils";
 
 const defaultContextMenuProps: ContextMenuDefaultProps = {
   ...Popover.defaultProps,
@@ -123,6 +128,12 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
     [testId, size, isMediumSize, menuItems]
   );
 
+  const tl = useUikitTranslation();
+  const actionIconTitle = useMemo(
+    () => tl.action[open ? "hide" : "show"]("menu"),
+    [open, tl.action]
+  );
+
   const PopoverChildren = useMemo(() => {
     if (children) return children;
     return (
@@ -133,9 +144,10 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
         disabled={disabled}
         testId="context-menu-trigger"
         overrideTestId
+        title={actionIconTitle}
       />
     );
-  }, [children, icon, open, disabled]);
+  }, [children, icon, open, disabled, actionIconTitle]);
 
   return (
     <Popover
