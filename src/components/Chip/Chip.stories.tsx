@@ -24,7 +24,6 @@ const componentSource = componentSourceFactory<ChipProps>(
   {
     label: "[Chip]",
     icon: "Square",
-    deleteButtonTitle: "[Delete action]",
   },
   Chip.defaultProps
 );
@@ -45,7 +44,6 @@ const meta = {
   component: Chip,
   args: {
     ...defaultMockProps,
-    deleteButtonTitle: "[Delete action]",
   },
   argTypes: {
     label: {

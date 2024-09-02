@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Global translation provider
+
+### Changed
+
+- `v0.0.5` Chip component
+  - Translate delete button title
+
+- `v0.0.5` ComboBoxButton component
+  - Translate select / unselect ARIA label
+
+- `v0.0.2` Modal component
+  - Translate close button label & title
+
+- `v0.0.2` FormEditButton internal component
+  - Translate label & title
+
+- `v0.0.2` CopyClipboardInfoCard component
+  - Translate tooltip content
+
+- `v0.0.3` Switch component
+  - Translation active / inactive helper labels
+
+### Fixed
+
+- `v0.0.5` Tooltip component
+  - Add support for usage inside other uikit components by checking aborting if IntersectionObserver is defined in global context
+
 ## 0.27.1 - 2024-08-29
 
 ## 0.27.0 - 2024-08-29

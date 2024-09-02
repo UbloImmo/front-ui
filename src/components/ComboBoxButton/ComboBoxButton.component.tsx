@@ -17,6 +17,7 @@ import {
   useMergedProps,
   isEmptyString,
   useStyleProps,
+  useUikitTranslation,
 } from "@utils";
 
 import type {
@@ -39,7 +40,7 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
 /**
  * A single clickable option in a ComboBox
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
  * @returns {JSX.Element}
@@ -106,12 +107,20 @@ const ComboBoxButton = (
     [active, disabled, iconName]
   );
 
+  const tl = useUikitTranslation();
+  const ariaLabel = useMemo(() => {
+    return tl.action[active ? "unselect" : "select"](label);
+  }, [active, label, tl.action]);
+
   return (
     <ComboBoxButtonContainer
       data-testid={testId}
       onClick={onSelect}
       disabled={mergedProps.disabled}
       type="button"
+      title={ariaLabel}
+      aria-label={ariaLabel}
+      aria-disabled={mergedProps.disabled}
       {...styleProps}
     >
       {showIcon && (

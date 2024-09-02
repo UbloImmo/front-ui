@@ -3,6 +3,7 @@ import { ReactRenderer, type Preview } from "@storybook/react";
 import { objectFromEntries } from "@ubloimmo/front-util";
 
 import { getDynamicThemeSlugs, ThemeProvider } from "@/themes";
+import { UikitTranslationProvider } from "@/utils";
 
 import type { DynamicColorPaletteKey } from "@types";
 import type { ReactNode } from "react";
@@ -11,11 +12,6 @@ type StorybookThemeProviderProps = {
   theme: { client: DynamicColorPaletteKey };
   children: ReactNode;
 };
-
-/**
- * Bridges the gap between the client slug coming from `@storybook/addon-themes`
- * and the app's {@link ThemeProvider} used in the docs & stories.
- */
 
 /**
  * Bridges the gap between the client slug coming from `@storybook/addon-themes`
@@ -35,7 +31,7 @@ export const StorybookThemeProvider = ({
     _forceTheme={theme.client}
     faviconLinkSelectors={{ x16: 'link[rel="icon"]' }}
   >
-    {children}
+    <UikitTranslationProvider>{children}</UikitTranslationProvider>
   </ThemeProvider>
 );
 

@@ -13,6 +13,7 @@ import {
   useMergedProps,
   useStyleProps,
   useTestId,
+  useUikitTranslation,
 } from "@utils";
 
 import type { ChipProps, DefaultChipProps } from "./Chip.types";
@@ -30,7 +31,7 @@ const defaultChipProps: DefaultChipProps = {
 /**
  * An interactive `Badge` with a remove button, can be used as a filter tag.
  *
- * @version 0.0.4
+ * @version 0.0.5
  * @param {ChipProps} props - the props for the Chip component
  * @returns {JSX.Element} - the Chip component
  */
@@ -41,6 +42,12 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
 
   const { label, icon, color, deleteButtonTitle } = mergedProps;
   const { warn } = useLogger("Chip");
+
+  const tl = useUikitTranslation();
+  const deleteLabel = useMemo(
+    () => deleteButtonTitle ?? tl.action.delete(label),
+    [deleteButtonTitle, label, tl]
+  );
 
   const onDelete = useCallback<MouseEventHandler<HTMLElement>>(
     (event) => {
@@ -61,12 +68,6 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
     warn(`Missing required label, defaulting to ${defaultChipProps.label}`);
   }
 
-  if (!props.deleteButtonTitle) {
-    warn(
-      `Missing required title for delete button, defaulting to ${defaultChipProps.deleteButtonTitle}`
-    );
-  }
-
   return (
     <FlexRowLayout align="center" testId={testId} role="status">
       <ChipContainer {...styledProps}>
@@ -81,8 +82,8 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
         onClick={onDelete}
         onMouseDown={onDelete}
         data-testid="chip-button"
-        title={deleteButtonTitle ?? undefined}
-        aria-label={deleteButtonTitle ?? undefined}
+        title={deleteLabel}
+        aria-label={deleteLabel}
       >
         <Icon name="X" size="s-4" color={iconColorStyle} />
       </ChipButton>

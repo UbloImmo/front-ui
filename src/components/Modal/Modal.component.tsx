@@ -8,7 +8,13 @@ import { Button } from "@/components/Button";
 import { Dialog, useDialogManager } from "@/components/Dialog";
 import { Heading } from "@/components/Heading";
 import { FlexColumnLayout } from "@layouts";
-import { useLogger, useTestId, useMergedProps } from "@utils";
+import {
+  useLogger,
+  useTestId,
+  useMergedProps,
+  useUikitTranslation,
+  useStatic,
+} from "@utils";
 
 import type {
   ModalProps,
@@ -27,7 +33,7 @@ const defaultModalProps: ModalDefaultProps = {
 /**
  * A simple modal with a title and close button. Built on top of [Dialog](/?path=/docs/components-dialog-usage--docs)
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ModalProps & TestIdProps} props - Modal component props
  * @returns {Nullable<JSX.Element>}
@@ -36,6 +42,8 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
   const { error } = useLogger("Modal");
   const mergedProps = useMergedProps(defaultModalProps, props);
   const testId = useTestId("modal", props);
+  const tl = useUikitTranslation();
+  const closeLabel = useStatic(tl.action.close);
 
   const defaultReference = useId();
 
@@ -69,8 +77,8 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
           color="black"
           icon="XLg"
           onClick={closeDialogOnClick}
-          title="Close"
-          label="Close"
+          title={closeLabel}
+          label={closeLabel}
           testId="modal-close-button"
           overrideTestId
           expandOnHover

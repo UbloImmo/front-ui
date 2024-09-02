@@ -37,10 +37,9 @@ export type ChipProps = {
   onDelete?: Nullable<VoidFn>;
   /**
    * The title to display when hovering over the remove button
-   * @required for web accessibility
    * @type {Nullable<string>}
    */
-  deleteButtonTitle: Nullable<string>;
+  deleteButtonTitle?: Nullable<string>;
 };
 
 export type DefaultChipProps = Required<ChipProps>;

@@ -30,11 +30,12 @@ export type CopyClipboardInfoCardProps = Omit<InfoBoxProps, "label"> & {
   /**
    * The label to be displayed in the tooltip when hovering the copy icon
    *
+   * @remarks If missing, the translated `copy-to-clipboard` label will be used
    *
-   * @type {string}
-   * @default "Copy to clipboard"
+   * @type {Nullable<string>}
+   * @default null
    */
-  copyTooltipLabel?: string;
+  copyTooltipLabel?: Nullable<string>;
   /**
    * Optional callback that gets called after the content is copied
    * to the user's clipboard

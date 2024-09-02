@@ -9,12 +9,19 @@ import {
   copyClipboardInfoCardLinkStyles,
 } from "./CopyClipboardInfoCard.styles";
 import { copyToClipboard } from "./CopyClipboardInfoCard.utils";
+import { Tooltip } from "../Tooltip";
 
 import { Icon, type IconProps } from "@/components/Icon";
 import { InfoBox } from "@/components/InfoBox";
 import { Text } from "@/components/Text";
 import { FlexRowLayout } from "@layouts";
-import { useLogger, useTestId, useMergedProps, isEmptyString } from "@utils";
+import {
+  useLogger,
+  useTestId,
+  useMergedProps,
+  isEmptyString,
+  useUikitTranslation,
+} from "@utils";
 
 import type {
   CopyClipboardInfoCardProps,
@@ -27,7 +34,7 @@ const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
   ...InfoBox.defaultProps,
   copyData: null,
   href: null,
-  copyTooltipLabel: "Copy to clipboard",
+  copyTooltipLabel: null,
   onCopied: null,
 };
 
@@ -96,6 +103,12 @@ const CopyClipboardInfoCard = (
     logger,
   ]);
 
+  const tl = useUikitTranslation();
+  const tooltipLabel = useMemo(
+    () => mergedProps.copyTooltipLabel ?? tl.action.copyToClipboard(),
+    [mergedProps.copyTooltipLabel, tl.action]
+  );
+
   return (
     <CopyClipboardInfoCardContainer
       testId={testId}
@@ -132,9 +145,16 @@ const CopyClipboardInfoCard = (
         <CopyClipboardInfoCardIconContainer
           data-testid="copy-clipboard-info-card-icon-container"
           onClick={copyInfo}
-          title={mergedProps.copyTooltipLabel}
+          title={tooltipLabel}
         >
-          <Icon name="Files" color="primary-base" size="s-4" />
+          <Tooltip
+            content={tooltipLabel}
+            cursor="copy"
+            testId="copy-clipboard-info-card-tooltip"
+            overrideTestId
+          >
+            <Icon name="Files" color="primary-base" size="s-4" />
+          </Tooltip>
         </CopyClipboardInfoCardIconContainer>
       )}
     </CopyClipboardInfoCardContainer>

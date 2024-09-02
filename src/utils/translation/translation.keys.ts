@@ -1,0 +1,74 @@
+const globalTranslationKeys = [
+  "yes",
+  "no",
+  "back",
+  "next",
+  "previous",
+  "search",
+  "home",
+] as const;
+
+const actionTranslationKeys = [
+  "submit",
+  "confirm",
+  "create",
+  "delete",
+  "cancel",
+  "close",
+  "edit",
+  "modify",
+  "save",
+  "reset",
+  "copy",
+  "copyToClipboard",
+  "paste",
+  "add",
+  "remove",
+  "clear",
+  "select",
+  "unselect",
+  "selectAll",
+  "unselectAll",
+  "expand",
+  "collapse",
+  "show",
+  "hide",
+] as const;
+
+const validationTranslationKeys = [
+  "missing",
+  "required",
+  "invalid",
+  "valid",
+  "patternMismatch",
+  "tooShort",
+  "tooLong",
+  "tooLow",
+  "tooHigh",
+  "notAllowed",
+  "tooBig",
+  "tooSmall",
+  "stepMismatch",
+  "typeMismatch",
+] as const;
+
+const statusTranslationKeys = [
+  "active",
+  "inactive",
+  "pending",
+  "loading",
+  "success",
+  "warning",
+  "caution",
+  "error",
+  "disabled",
+  "archived",
+  "hidden",
+] as const;
+
+export const translationKeys = {
+  global: globalTranslationKeys,
+  action: actionTranslationKeys,
+  validation: validationTranslationKeys,
+  status: statusTranslationKeys,
+} as const;

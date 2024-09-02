@@ -28,7 +28,7 @@ import {
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
-import { isEmptyString, useLogger, useMergedProps } from "@utils";
+import { isEmptyString, useLogger, useMergedProps, useTestId } from "@utils";
 
 import type {
   DefaultTooltipProps,
@@ -37,7 +37,7 @@ import type {
   TooltipStyleProps,
   TooltipWrapperStyleProps,
 } from "./Tooltip.types";
-import type { Direction } from "@types";
+import type { Direction, TestIdProps } from "@types";
 
 const defaultTooltipProps: DefaultTooltipProps = {
   children: "",
@@ -53,14 +53,15 @@ const THRESHOLDS = generateThresholds(THRESHOLD_COUNT);
 /**
  * Text popup box that appears when the user hovers over an element
  *
- * @version 0.0.2
+ * @version 0.0.5
  *
- * @param {TooltipProps} props - The tooltip's props
+ * @param {TooltipProps & TestIdProps} props - The tooltip's props
  * @returns {JSX.Element} The rendered tooltip
  */
-const Tooltip = (props: TooltipProps): JSX.Element => {
+const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
   const { error, warn } = useLogger("Tooltip");
   const mergedProps = useMergedProps(defaultTooltipProps, props);
+  const testId = useTestId("tooltip", props);
 
   const { children, content, direction, icon, intersectionRoot } = mergedProps;
 
@@ -87,11 +88,15 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
     declareObserver: {
       if (!isNull(observerRef.current)) break declareObserver;
 
+      const IO = global.IntersectionObserver ?? null;
+
+      if (isNull(IO)) break declareObserver;
+
       const observerRoot = isString(intersectionRoot)
         ? document.querySelector<HTMLElement>(intersectionRoot)
         : intersectionRoot;
 
-      observerRef.current = new IntersectionObserver(
+      observerRef.current = new IO(
         computeTooltipIntersections(
           () => tooltipDirectionRef.current,
           setTooltipDirection
@@ -110,7 +115,11 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
      * Checking if the tooltip elements are not null to observe them and enable clipping
      */
     observeTooltip: {
-      if (isNull(tooltipElement) || isNull(tooltipWrapperElement))
+      if (
+        isNull(tooltipElement) ||
+        isNull(tooltipWrapperElement) ||
+        isNull(observerRef.current)
+      )
         break observeTooltip;
       observerRef.current.observe(tooltipElement);
       observerRef.current.observe(tooltipWrapperElement);
@@ -164,15 +173,16 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
 
   return (
     <TooltipWrapper
-      aria-describedby="[data-testid='tooltip']"
-      data-testid="tooltip-wrapper"
+      aria-describedby={`[data-testid="${testId}"]`}
+      data-testid={`${testId}-wrapper`}
       ref={tooltipWrapperRef}
       $cursor={mergedProps.cursor}
+      $innerTestId={testId}
     >
       {tooltipContent && (
         <>
           <ToolipPlaceholder
-            data-testid="tooltip-placeholder"
+            data-testid={`${testId}-placeholder`}
             ref={tooltipRef}
             $direction={direction}
             aria-hidden
@@ -180,7 +190,7 @@ const Tooltip = (props: TooltipProps): JSX.Element => {
             {tooltipContent}
           </ToolipPlaceholder>
           <TooltipContainer
-            data-testid="tooltip"
+            data-testid={testId}
             role="tooltip"
             $direction={tooltipDirection}
           >

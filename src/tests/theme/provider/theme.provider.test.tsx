@@ -1,7 +1,6 @@
 import { render, cleanup } from "@testing-library/react";
 import { fakeFetchFactory } from "@ubloimmo/front-util";
 import { describe, it, expect, afterEach, mock } from "bun:test";
-import React from "react";
 
 import {
   ThemeProvider,
