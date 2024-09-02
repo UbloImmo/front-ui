@@ -31,6 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.3` Switch component
   - Translation active / inactive helper labels
 
+### Fixed
+
+- `v0.0.5` Tooltip component
+  - Add support for usage inside other uikit components by checking aborting if IntersectionObserver is defined in global context
+
 ## 0.27.1 - 2024-08-29
 
 ## 0.27.0 - 2024-08-29

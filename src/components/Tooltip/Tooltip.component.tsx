@@ -53,7 +53,7 @@ const THRESHOLDS = generateThresholds(THRESHOLD_COUNT);
 /**
  * Text popup box that appears when the user hovers over an element
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {TooltipProps & TestIdProps} props - The tooltip's props
  * @returns {JSX.Element} The rendered tooltip
@@ -88,11 +88,15 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
     declareObserver: {
       if (!isNull(observerRef.current)) break declareObserver;
 
+      const IO = IntersectionObserver ?? null;
+
+      if (isNull(IO)) break declareObserver;
+
       const observerRoot = isString(intersectionRoot)
         ? document.querySelector<HTMLElement>(intersectionRoot)
         : intersectionRoot;
 
-      observerRef.current = new IntersectionObserver(
+      observerRef.current = new IO(
         computeTooltipIntersections(
           () => tooltipDirectionRef.current,
           setTooltipDirection
@@ -111,7 +115,11 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
      * Checking if the tooltip elements are not null to observe them and enable clipping
      */
     observeTooltip: {
-      if (isNull(tooltipElement) || isNull(tooltipWrapperElement))
+      if (
+        isNull(tooltipElement) ||
+        isNull(tooltipWrapperElement) ||
+        isNull(observerRef.current)
+      )
         break observeTooltip;
       observerRef.current.observe(tooltipElement);
       observerRef.current.observe(tooltipWrapperElement);
