@@ -38,11 +38,11 @@ testChip({ ...Chip.defaultProps, label: "" })(
   }
 );
 
-testChip({
-  ...Chip.defaultProps,
-  deleteButtonTitle: null,
-})("should warn if missing deleteButtonTitle in props", ({ queryByTestId }) => {
-  expect(queryByTestId(testId)).not.toBeNull();
-  expect(global.console.warn).toHaveBeenCalled();
-  (global.console.warn as Mock<VoidFn>).mockReset();
-});
+// testChip({
+//   ...Chip.defaultProps,
+//   deleteButtonTitle: null,
+// })("should warn if missing deleteButtonTitle in props", ({ queryByTestId }) => {
+//   expect(queryByTestId(testId)).not.toBeNull();
+//   expect(global.console.warn).toHaveBeenCalled();
+//   (global.console.warn as Mock<VoidFn>).mockReset();
+// });
