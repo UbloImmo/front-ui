@@ -20,7 +20,7 @@ import type { TestIdProps } from "@types";
 
 const defaultCollapsibleProps: CollapsibleDefaultProps = {
   isOpen: false,
-  onOpenChange: false,
+  onOpenChange: null,
   disabled: false,
   compact: false,
   children: null,
@@ -37,7 +37,8 @@ const defaultCollapsibleProps: CollapsibleDefaultProps = {
  */
 const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultCollapsibleProps, props);
-  const { disabled, subCollapsibles, compact, children } = mergedProps;
+  const { disabled, subCollapsibles, compact, children, onOpenChange } =
+    mergedProps;
   const [isOpen, setIsOpen] = useState(mergedProps.isOpen);
   const testId = useTestId("collapsible", props);
 
@@ -49,8 +50,10 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
     if (disabled) return;
     if (!subCollapsibles) return;
 
+    if (onOpenChange) onOpenChange(!isOpen);
+
     setIsOpen(!isOpen);
-  }, [isOpen, disabled, subCollapsibles]);
+  }, [isOpen, disabled, subCollapsibles, onOpenChange]);
 
   return (
     <>
@@ -59,11 +62,18 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
         overrideTestId
         align="center"
         fill
+        aria-expanded={isOpen}
         $compact={compact}
         $disabled={disabled}
         {...mergedProps}
       >
-        <CaretContainer onClick={openCollapsible} $isOpen={isOpen}>
+        <CaretContainer
+          aria-expanded={isOpen}
+          data-testid={`${testId}-caret`}
+          onClick={openCollapsible}
+          $isOpen={isOpen}
+          $disabled={disabled}
+        >
           <Icon name="CaretRightFill" size="s-2" color={iconColor} />
         </CaretContainer>
         {children}
@@ -71,9 +81,19 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
 
       {subCollapsibles && isOpen && (
         <SubCollapsibleContainer>
-          {subCollapsibles.map((collapsible, index) => (
-            <Collapsible key={index} {...collapsible} compact={compact} />
-          ))}
+          {subCollapsibles.map((collapsible, index) => {
+            const subCollapsibleTestId = `sub${testId}-${index}`;
+
+            return (
+              <Collapsible
+                key={subCollapsibleTestId}
+                testId={subCollapsibleTestId}
+                overrideTestId
+                {...collapsible}
+                compact={compact}
+              />
+            );
+          })}
         </SubCollapsibleContainer>
       )}
     </>

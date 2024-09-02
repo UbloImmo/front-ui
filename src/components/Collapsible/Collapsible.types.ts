@@ -1,5 +1,5 @@
 import type { StyleProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 export type CollapsibleProps = {
@@ -13,9 +13,9 @@ export type CollapsibleProps = {
   /**
    * Whether to call a function when the state changes
    * @default false
-   * @type {boolean}
+   * @type {VoidFn<[boolean]>}
    */
-  onOpenChange?: boolean;
+  onOpenChange?: Nullable<VoidFn<[boolean]>>;
   /**
    * Whether to display the collapsible in compact mode
    * @default false
@@ -55,5 +55,5 @@ export type CollapsibleContainerStyleProps = Pick<
 
 export type CollapsibleCaretStyleProps = Pick<
   StyleProps<CollapsibleDefaultProps>,
-  "$isOpen"
+  "$isOpen" | "$disabled"
 >;
