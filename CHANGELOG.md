@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.2` CopyClipboardInfoCard component
   - Translate tooltip content
 
+- `v0.0.3` Switch component
+  - Translation active / inactive helper labels
 
 ## 0.27.1 - 2024-08-29
 

@@ -6,7 +6,13 @@ import { SwitchContainerStyles, SwitchHandleStyles } from "./Switch.styles";
 import { Text } from "../Text";
 
 import { FlexLayout } from "@layouts";
-import { useTestId, useMergedProps, useStyleProps } from "@utils";
+import {
+  useTestId,
+  useMergedProps,
+  useStyleProps,
+  useStatic,
+  useUikitTranslation,
+} from "@utils";
 
 import type {
   SwitchProps,
@@ -20,22 +26,21 @@ const defaultSwitchProps: SwitchDefaultProps = {
   active: false,
   onChange: null,
   withHelper: false,
-  activeHelperText: "OUI",
-  inactiveHelperText: "NON",
+  activeHelperText: null,
+  inactiveHelperText: null,
 };
 
 /**
  * A toggable component to use when we want the user to enable or disable an option or a feature
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {SwitchProps & TestIdProps} props - Switch component props
  * @returns {JSX.Element}
  */
 const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultSwitchProps, props);
-  const { disabled, active, withHelper, activeHelperText, inactiveHelperText } =
-    mergedProps;
+  const { disabled, active, withHelper } = mergedProps;
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("switch", props);
 
@@ -57,6 +62,21 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
       setIsActive(newActive);
     },
     [isActive, props]
+  );
+
+  const tl = useUikitTranslation();
+
+  const activeHelperText = useStatic(
+    () => mergedProps.activeHelperText ?? tl.global.yes().toUpperCase()
+  );
+
+  const inactiveHelperText = useStatic(
+    () => mergedProps.inactiveHelperText ?? tl.global.no().toUpperCase()
+  );
+
+  const helperText = useMemo(
+    () => (isActive ? activeHelperText : inactiveHelperText),
+    [activeHelperText, inactiveHelperText, isActive]
   );
 
   const textColor = useMemo(() => {
@@ -88,7 +108,7 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
 
       {withHelper && (
         <Text weight="bold" color={textColor}>
-          {isActive ? activeHelperText : inactiveHelperText}
+          {helperText}
         </Text>
       )}
     </FlexLayout>
