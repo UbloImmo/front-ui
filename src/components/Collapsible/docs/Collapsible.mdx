@@ -1,0 +1,35 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as CollapsibleStories from "../Collapsible.stories.tsx";
+import { Icon } from "../../Icon/Icon.component.tsx";
+
+<Meta title="Components/Collapsible/Usage" />
+
+<ComponentInfo of={CollapsibleStories} figmaId="2583-10008" />
+
+<Content>
+
+## Usage
+
+`Collapsible` is a component that functions similarly to an accordion, allowing users to expand and reveal its nested content by clicking on the caret icon (<Icon name="CaretRightFill" color="gray-900" size="s-2" />).
+
+`Collapsible` components are nested to create a tree-like structure of expandable content.
+
+> Which means that you can nest `Collapsible` components as many levels deep as you need 🤯.
+
+<Canvas of={CollapsibleStories.Default} />
+
+## Custom content
+
+`Collapsible` is a flexible component that accepts any item or component as its `children`, allowing you to fully customize both the main content and any sub-elements.
+
+<Canvas of={CollapsibleStories.CustomChildren} />
+
+## Compact
+
+You can change the display of `Collapsible` to a compact layout by setting the optional `compact` property.
+
+<Canvas of={CollapsibleStories.Compact} />
+
+</Content>
