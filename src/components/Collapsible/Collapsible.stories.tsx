@@ -51,7 +51,7 @@ const defaultCollapsibleChildren: CollapsibleDefaultProps = {
 
 const CustomSubCollapsibles: CollapsibleDefaultProps[] = [
   {
-    isOpen: false,
+    open: false,
     onOpenChange: null,
     disabled: false,
     compact: false,
@@ -59,7 +59,7 @@ const CustomSubCollapsibles: CollapsibleDefaultProps[] = [
     subCollapsibles: [defaultCollapsibleComponent, defaultCollapsibleComponent],
   },
   {
-    isOpen: false,
+    open: false,
     onOpenChange: null,
     disabled: false,
     compact: false,
@@ -103,7 +103,7 @@ export const Compact = () => {
       of={Collapsible}
       variants={[false, true]}
       for="compact"
-      defaults={{ ...defaultCollapsibleChildren, isOpen: true }}
+      defaults={{ ...defaultCollapsibleChildren, open: true }}
       columns={2}
       propLabels
     />

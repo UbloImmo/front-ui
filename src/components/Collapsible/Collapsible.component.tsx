@@ -18,7 +18,7 @@ import { useTestId, useMergedProps } from "@utils";
 import type { TestIdProps } from "@types";
 
 const defaultCollapsibleProps: CollapsibleDefaultProps = {
-  isOpen: false,
+  open: false,
   onOpenChange: null,
   disabled: false,
   compact: false,
@@ -38,20 +38,21 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultCollapsibleProps, props);
   const { disabled, subCollapsibles, compact, children, onOpenChange } =
     mergedProps;
-  const [isOpen, setIsOpen] = useState(mergedProps.isOpen);
+  const [isOpen, setIsOpen] = useState(mergedProps.open);
   const testId = useTestId("collapsible", props);
 
   const iconColor = useMemo(() => {
     return disabled ? "gray-400" : "gray-900";
   }, [disabled]);
 
-  const openCollapsible = useCallback(() => {
+  const toggleCollapsible = useCallback(() => {
     if (disabled) return;
     if (!subCollapsibles) return;
 
-    if (onOpenChange) onOpenChange(!isOpen);
+    const newIsOpen = !isOpen;
 
-    setIsOpen(!isOpen);
+    if (onOpenChange) onOpenChange(newIsOpen);
+    setIsOpen(newIsOpen);
   }, [isOpen, disabled, subCollapsibles, onOpenChange]);
 
   return (
@@ -69,7 +70,7 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
         <CaretContainer
           aria-expanded={isOpen}
           data-testid={`${testId}-caret`}
-          onClick={openCollapsible}
+          onClick={toggleCollapsible}
           aria-disabled={disabled}
           disabled={disabled}
           type="button"
@@ -115,4 +116,6 @@ const CaretContainer = styled.button`
 
 const SubCollapsibleContainer = styled.div`
   padding-left: var(--s-4);
+  width: 100%;
+  max-width: 100%;
 `;

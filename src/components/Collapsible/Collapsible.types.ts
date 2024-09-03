@@ -8,7 +8,7 @@ export type CollapsibleProps = {
    * @default false
    * @type {boolean}
    */
-  isOpen?: boolean;
+  open?: boolean;
 
   /**
    * Whether to call a function when the state changes
