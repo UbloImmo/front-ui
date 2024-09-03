@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
 import {
@@ -54,6 +54,12 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
     if (onOpenChange) onOpenChange(newIsOpen);
     setIsOpen(newIsOpen);
   }, [isOpen, disabled, subCollapsibles, onOpenChange]);
+
+  useEffect(() => {
+    if (mergedProps.open !== isOpen) setIsOpen(mergedProps.open);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mergedProps.open]);
 
   return (
     <>
