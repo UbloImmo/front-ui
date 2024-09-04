@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.29.1 - 2024-09-04
+
 ## 0.29.0 - 2024-09-03
 ### Added
 - `v0.0.1` Collapsible component
