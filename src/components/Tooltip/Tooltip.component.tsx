@@ -88,7 +88,7 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
     declareObserver: {
       if (!isNull(observerRef.current)) break declareObserver;
 
-      const IO = global.IntersectionObserver ?? null;
+      const IO = window.IntersectionObserver ?? null;
 
       if (isNull(IO)) break declareObserver;
 
