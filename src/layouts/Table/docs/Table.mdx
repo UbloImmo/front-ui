@@ -5,12 +5,28 @@ import * as TableStories from "../Table.stories.tsx";
 
 <Meta title="Layouts/Table/Usage" />
 
-<ComponentInfo of={TableStories} />
+<ComponentInfo of={TableStories} figmaId="2407-17514" />
 
 <Content>
 
 ## Usage
 
-TODO
+`Table` is useful to display data in a structured and organized manner, with rows and columns that can be customized to fit specific needs.
+
+`Table` can be used with `TableHeader`, `TableHeaderCell`, `TableBody`, `TableRow`, and `TableCell` to create a fully structured table.
+
+<Canvas of={TableStories.CustomContent} />
+
+## Adding a TableHeader
+
+To label your columns and inform users of their type, use `TableHeader` and `TableHeaderCell` above your table.
+
+<Canvas of={TableStories.WithHeader} />
+
+## Spanning the columns
+
+You can use the optional property `colSpan` on `TableHeaderCell` and `TableCell` to define the number of columns to be spanned in your table
+
+<Canvas of={TableStories.ColSpan} />
 
 </Content>
