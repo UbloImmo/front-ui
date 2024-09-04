@@ -5,7 +5,6 @@ export const tableRowStyles = (): RuleSet => {
     td {
       border-right: 1px solid var(--gray-200);
       border-bottom: 1px solid var(--gray-200);
-      padding: var(--s-2) var(--s-4);
     }
 
     td:first-child {

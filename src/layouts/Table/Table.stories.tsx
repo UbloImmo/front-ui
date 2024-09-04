@@ -26,12 +26,12 @@ const TableHeaderExample: ReactNode = (
 const TableBodyExample1: ReactNode = (
   <TableBody>
     <TableRow>
-      <TableCell>Body 1</TableCell>
-      <TableCell>Body 2</TableCell>
+      <TableCell padded>Body 1</TableCell>
+      <TableCell padded>Body 2</TableCell>
     </TableRow>
     <TableRow>
-      <TableCell>Body 3</TableCell>
-      <TableCell>Body 4</TableCell>
+      <TableCell padded>Body 3</TableCell>
+      <TableCell padded>Body 4</TableCell>
     </TableRow>
   </TableBody>
 );
@@ -39,13 +39,15 @@ const TableBodyExample1: ReactNode = (
 const SpanExample: ReactNode = (
   <TableBody>
     <TableRow>
-      <TableCell>Body 1</TableCell>
-      <TableCell colSpan={2}>Body 2</TableCell>
+      <TableCell padded>Body 1</TableCell>
+      <TableCell colSpan={2} padded>
+        Body 2
+      </TableCell>
     </TableRow>
     <TableRow>
-      <TableCell>Body 3</TableCell>
-      <TableCell>Body 4</TableCell>
-      <TableCell>Body 5</TableCell>
+      <TableCell padded>Body 3</TableCell>
+      <TableCell padded>Body 4</TableCell>
+      <TableCell padded>Body 5</TableCell>
     </TableRow>
   </TableBody>
 );
@@ -53,26 +55,56 @@ const SpanExample: ReactNode = (
 const TableBodyExample2: ReactNode = (
   <TableBody>
     <TableRow>
-      <TableCell>
+      <TableCell padded>
         <FlexRowLayout gap="s-2" align="center">
           <Avatar name="Mathilde Carbonet" />
           <Text>[Firstname Lastname]</Text>
         </FlexRowLayout>
       </TableCell>
-      <TableCell>
+      <TableCell padded>
         <Badge icon="Alarm" label="Planned" />
       </TableCell>
     </TableRow>
     <TableRow>
-      <TableCell>
+      <TableCell padded>
         <FlexRowLayout gap="s-2" align="center">
           <Avatar name="Mathilde Carbonet" />
           <Text>[Firstname Lastname]</Text>
         </FlexRowLayout>
       </TableCell>
-      <TableCell>
+      <TableCell padded>
         <Badge icon="Alarm" label="Overdue" color="warning" />
       </TableCell>
+    </TableRow>
+  </TableBody>
+);
+
+// TODO: Enable horizontal scroll for large tables
+const TableScrollViewExample: ReactNode = (
+  <TableBody>
+    <TableRow>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
+      <TableCell padded>Data</TableCell>
     </TableRow>
   </TableBody>
 );
@@ -113,5 +145,11 @@ export const CustomContent: Story = {
 export const ColSpan: Story = {
   args: {
     children: SpanExample,
+  },
+};
+
+export const ScrollView: Story = {
+  args: {
+    children: TableScrollViewExample,
   },
 };
