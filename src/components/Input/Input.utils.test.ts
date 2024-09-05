@@ -137,6 +137,7 @@ const inputProps: DefaultCommonInputProps = {
   onBlur: null,
   autoComplete: null,
   uncontrolled: false,
+  id: null,
 };
 
 const testUseInputStyles = () => {
