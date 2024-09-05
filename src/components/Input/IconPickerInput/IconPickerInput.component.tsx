@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
+import { useInputId } from "../Input.utils";
 
 import { IconPicker } from "@/components/IconPicker";
 import { TestIdProps } from "@types";
@@ -11,7 +12,6 @@ import type {
   IconPickerInputOnChangeFn,
   IconPickerInputProps,
 } from "./IconPickerInput.types";
-import { useInputId } from "../Input.utils";
 
 const defaultIconPickerInputProps: IconPickerInputDefaultProps = {
   ...IconPicker.defaultProps,

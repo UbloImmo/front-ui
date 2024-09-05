@@ -75,6 +75,7 @@ import type {
   BuildFormFieldLayoutFn,
   UseFormLayoutReturn,
   FormFieldLayoutHiddenFn,
+  FormOnSubmitErrorFn,
 } from "./Form.types";
 import type { InputOnChangeFn, InputType } from "../Input";
 import type { GridEndPosition } from "@layouts";
@@ -337,7 +338,7 @@ const useFormLayout = (
  * @param {FormContent<TData, TType>[]} content - The form content.
  * @return {BuiltFormContent<TData, InputType>[]} - The built field props for each form field.
  */
-const useFormFields = <TData extends object>(
+const useFormContent = <TData extends object>(
   formData: UseFormDataReturn<TData>,
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
@@ -523,6 +524,7 @@ const useFormSubmission = <TData extends object>(
   modifiers: FormModifers,
   editState: UseFormEditStateReturn,
   onSubmit: Nullish<FormOnSubmitFn<TData>>,
+  onSubmitError: Nullish<FormOnSubmitErrorFn>,
   logger: Logger
 ): UseFormSubmissionReturn => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -574,7 +576,11 @@ const useFormSubmission = <TData extends object>(
         setIsSubmitting(true);
         const result = await onSubmit(dataToSubmit);
         if (isBoolean(result)) {
-          logger.debug("TODO: handle submit failure visually");
+          if (!result && onSubmitError) {
+            onSubmitError(
+              new Error("Failed to submit form: `onSubmit` returned false.")
+            );
+          }
           return;
         }
         // overwrite internal form data upon submission
@@ -587,10 +593,22 @@ const useFormSubmission = <TData extends object>(
         setIsSubmitting(false);
       } catch (e: unknown) {
         logger.error(e);
+        if (onSubmitError)
+          onSubmitError(
+            new Error(`Failed to submit form: ${(e as Error).message}`)
+          );
         setIsSubmitting(false);
       }
     },
-    [modifiers, onSubmit, validation, logger, formData, editState]
+    [
+      modifiers,
+      onSubmit,
+      onSubmitError,
+      validation,
+      logger,
+      formData,
+      editState,
+    ]
   );
 
   /**
@@ -658,10 +676,10 @@ const useFormEditState = (modifiers: FormModifers): UseFormEditStateReturn => {
  * @param {Logger} logger - the logger object
  * @return {FormContext<TData>} - the form context object
  *
- * @see {@link useFormData}, {@link useFormValidation}, {@link useFormEditState} {@link useFormModifiers}, {@link useFormFields}, {@link useFormSubmission}
+ * @see {@link useFormData}, {@link useFormValidation}, {@link useFormEditState} {@link useFormModifiers}, {@link useFormContent}, {@link useFormSubmission}
  */
 export const useForm = <TData extends object>(
-  { columns, modal, ...props }: FormDefaultProps<TData>,
+  { columns, asModal, ...props }: FormDefaultProps<TData>,
   logger: Logger
 ): FormContext<TData> => {
   const formData = useFormData<TData>(props, logger);
@@ -672,8 +690,8 @@ export const useForm = <TData extends object>(
     formModifiers
   );
   const formEditState = useFormEditState(formModifiers);
-  const formLayout = useFormLayout({ columns, modal });
-  const content = useFormFields(
+  const formLayout = useFormLayout({ columns, asModal });
+  const content = useFormContent(
     formData,
     formValidation,
     formModifiers,
@@ -686,6 +704,7 @@ export const useForm = <TData extends object>(
     formModifiers,
     formEditState,
     props.onSubmit,
+    props.onSubmitError,
     logger
   );
 

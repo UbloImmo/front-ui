@@ -69,7 +69,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
       readonly: true,
       showIcon: false,
     };
-    if (!values || !options) return noValue;
+    if (isNullish(values) || !options) return noValue;
     if (isArray(values)) {
       const displayOptions = options.filter(({ value }) =>
         values.includes(value)

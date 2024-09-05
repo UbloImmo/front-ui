@@ -3,6 +3,7 @@ import {
   isFunction,
   isNullish,
   isNumber,
+  type Nullable,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
 import { useCallback, useEffect, useState } from "react";
@@ -53,22 +54,41 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     mergedProps;
   const testId = useTestId("combo-box", props);
 
-  const getInitialSelection = useCallback<
-    GenericFn<[], TOptionValue[]>
-  >((): TOptionValue[] => {
-    if (!isNullish(mergedProps.value)) {
-      if (Array.isArray(mergedProps.value)) return mergedProps.value;
-      return [mergedProps.value];
-    }
-    return [];
-  }, [mergedProps.value]);
+  const valueToSelection = useCallback(
+    (value: Nullable<TOptionValue | TOptionValue[]>): TOptionValue[] => {
+      if (isNullish(value)) return [];
+      if (Array.isArray(value)) return value as TOptionValue[];
+      return [value];
+    },
+    []
+  );
+
+  const getInitialSelection = useCallback<GenericFn<[], TOptionValue[]>>(
+    (): TOptionValue[] => valueToSelection(mergedProps.value),
+    [mergedProps.value, valueToSelection]
+  );
 
   const [selection, setSelection] =
     useState<TOptionValue[]>(getInitialSelection);
 
   useEffect(() => {
-    setSelection(getInitialSelection);
-  }, [mergedProps.value, getInitialSelection]);
+    const newSelection = valueToSelection(mergedProps.value);
+    const differentLengths = newSelection.length !== selection.length;
+    // update if number of values has changed (multi)
+    if (differentLengths) {
+      setSelection(newSelection);
+      return;
+    }
+    // compare values
+    const sameValues = newSelection.every((value, index) => {
+      return JSON.stringify(value) === JSON.stringify(selection[index]);
+    });
+    if (sameValues) return;
+
+    setSelection(newSelection);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mergedProps.value, valueToSelection]);
 
   const isOptionActive = useCallback(
     (option: ComboBoxOption<TOptionValue>) => selection.includes(option.value),
@@ -81,7 +101,8 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     if (isFunction<ComboBoxOnChangeFn<TOptionValue>>(onChange)) {
       onChange(selection);
     }
-  }, [selection, onChange, disabled]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selection, disabled]);
 
   const selectOptionOnClick = useCallback(
     (option: ComboBoxOption<TOptionValue>) => () => {

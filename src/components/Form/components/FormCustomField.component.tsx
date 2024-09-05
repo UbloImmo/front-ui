@@ -23,8 +23,8 @@ export const FormCustomField = (props: BuiltFormCustomFieldProps) => {
   const { isEditing } = useFormContext();
 
   const shoulDisplayAssistiveText = useMemo(() => {
-    return !!(assistiveText || (errorText && error));
-  }, [assistiveText, errorText, error]);
+    return isEditing && !!(assistiveText || (errorText && error));
+  }, [isEditing, assistiveText, errorText, error]);
 
   const customFieldProps = useMemo(() => {
     const disabled = isEditing ? fieldProps.disabled : true;

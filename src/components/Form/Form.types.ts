@@ -405,6 +405,15 @@ export type FormOnSubmitFn<TData extends object> = MaybeAsyncFn<
   boolean | FormData<TData> | void
 >;
 
+/**
+ * Form `onSubmitError` callback
+ *
+ * Gets triggered when an errors occurs during form submission
+ *
+ * @param {Error} error - The error that occurred
+ */
+export type FormOnSubmitErrorFn = VoidFn<[Error]>;
+
 // --------------------------------- PROPS ----------------------------------
 
 /**
@@ -443,7 +452,7 @@ export type FormModalProps = {
    * @type {Nullable<Omit<ModalProps, "title">>}
    * @default null
    */
-  modal?: Nullable<Omit<ModalProps, "title">>;
+  asModal?: Nullable<Omit<ModalProps, "title">>;
 };
 
 export type FormGridProps = {
@@ -520,6 +529,10 @@ export type FormDataProps<TData extends object> = {
    * Callback called when form is submitted
    */
   onSubmit?: Nullable<FormOnSubmitFn<TData>>;
+  /**
+   * Callback called when an errors occurs during form submission
+   */
+  onSubmitError?: Nullable<FormOnSubmitErrorFn>;
 };
 
 /**

@@ -25,6 +25,7 @@ const defaultFormProps: FormDefaultProps<object> = {
   schema: null,
   onChange: null,
   onSubmit: null,
+  onSubmitError: console.error,
   title: "Form",
   badge: null,
   icon: null,
@@ -35,7 +36,7 @@ const defaultFormProps: FormDefaultProps<object> = {
   validateOnChange: true,
   validateOnSubmit: true,
   debug: false,
-  modal: null,
+  asModal: null,
   columns: 2,
 };
 

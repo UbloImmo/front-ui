@@ -6,6 +6,8 @@ import { z } from "zod";
 import { Form } from "./Form.component";
 import { Callout } from "../Callout";
 import { Heading } from "../Heading";
+import { Icon } from "../Icon";
+import { Input } from "../Input";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
@@ -18,8 +20,6 @@ import type {
   CustomFormInputProps,
 } from "./Form.types";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Input } from "../Input";
-import { Icon } from "../Icon";
 
 const addressSchema = z.object({
   number: z.number().nullish(),
@@ -192,6 +192,9 @@ const identityFormProps: FormProps<Identity> = {
       source: "firstName",
       label: "First name",
       errorText: "Test",
+      tooltip: {
+        content: "Je suis un tooltip",
+      },
     },
     {
       type: "text",
@@ -211,25 +214,25 @@ const identityFormProps: FormProps<Identity> = {
       placeholder: "Date of birth",
     },
     "divider",
-    // {
-    //   type: "combobox",
-    //   source: "isCitizen",
-    //   label: "Citizenship",
-    //   options: [
-    //     {
-    //       label: "Citizen",
-    //       value: true,
-    //     },
-    //     {
-    //       label: "Foreigner",
-    //       value: false,
-    //     },
-    //   ],
-    //   columns: 2,
-    //   layout: {
-    //     size: 2,
-    //   },
-    // },
+    {
+      type: "combobox",
+      source: "isCitizen",
+      label: "Citizenship",
+      options: [
+        {
+          label: "Citizen",
+          value: true,
+        },
+        {
+          label: "Foreigner",
+          value: false,
+        },
+      ],
+      columns: 2,
+      layout: {
+        size: 2,
+      },
+    },
     "divider",
     {
       label: "Marital status",
@@ -413,8 +416,12 @@ export const CustomContent = () => {
 };
 
 const CustomInput = (props: CustomFormInputProps<string>) => {
-  console.log(props);
-  return "custom";
+  return (
+    <FlexRowLayout gap="s-1" align="center" fill>
+      <Icon name="Gear" />
+      <Input type="text" {...props} />
+    </FlexRowLayout>
+  );
 };
 
 const customIdentityContents: FormContent<Address>[] = [
