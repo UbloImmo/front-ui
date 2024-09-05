@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.8` ComboBox component
   - Update useEffect dependencies to remove infinite render
 
+- `v0.0.3` Divider component
+  - Only render Heading if divider label is provided
+
 ### Added
 
 - `v0.0.3` Form component
@@ -27,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.6` Field component
   - Link input and labels through `id` and `htmlFor` components using dynamically regenrated ids
+
+- `v0.0.3` FormEditBanner component
+  - Customizable submit & cancel labels using uikitTranslation action keys
 
 ## 0.29.1 - 2024-09-04
 

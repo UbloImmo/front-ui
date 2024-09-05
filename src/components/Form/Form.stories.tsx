@@ -411,6 +411,8 @@ export const CustomContent = () => {
           </Heading>
         ),
       ]}
+      cancelLabel="giveUp"
+      submitLabel="create"
     />
   );
 };

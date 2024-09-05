@@ -29,7 +29,7 @@ const defaultDividerProps: DividerDefaultProps = {
  *
  * A horizontal line that can be used to separate content, with an optional label.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {DividerProps & TestIdProps} props - Divider component props
  * @returns {JSX.Element}
@@ -73,7 +73,7 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
             {label}
           </Text>
         </>
-      ) : (
+      ) : label ? (
         <Heading
           size="h4"
           color="gray-700"
@@ -83,7 +83,7 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
         >
           {label}
         </Heading>
-      )}
+      ) : null}
       <DividerLine data-testid="divider-line" />
     </FlexRowLayout>
   );

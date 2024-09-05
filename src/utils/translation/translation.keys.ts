@@ -33,6 +33,7 @@ const actionTranslationKeys = [
   "collapse",
   "show",
   "hide",
+  "giveUp",
 ] as const;
 
 const validationTranslationKeys = [

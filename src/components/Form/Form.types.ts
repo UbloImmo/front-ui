@@ -34,6 +34,7 @@ import type {
   Replace,
   VoidFn,
 } from "@ubloimmo/front-util";
+import type { TranslationKey } from "@utils";
 import type { FC, FormEventHandler, ReactNode } from "react";
 import type { ZodIssue, ZodObject, ZodType, ZodTypeAny } from "zod";
 
@@ -533,6 +534,13 @@ export type FormDataProps<TData extends object> = {
    * Callback called when an errors occurs during form submission
    */
   onSubmitError?: Nullable<FormOnSubmitErrorFn>;
+  /**
+   * Callback called when form edition is cancelled
+   *
+   * @type {Nullable<VoidFn>}
+   * @default null
+   */
+  onCancelled?: Nullable<VoidFn>;
 };
 
 /**
@@ -592,6 +600,28 @@ export type FormModifierProps = {
 };
 
 /**
+ * Form props related to the banner displayed in `edit` mode
+ */
+export type FormEditBannerProps = {
+  /**
+   * Label of the submit button
+   *
+   * @type {TranslationKey<"action">}
+   * @default "save"
+   */
+  submitLabel?: TranslationKey<"action">;
+  /**
+   * Label of the cancel button
+   *
+   * @type {TranslationKey<"action">}
+   * @default "cancel"
+   */
+  cancelLabel?: TranslationKey<"action">;
+};
+
+export type DefaultFormEditBannerProps = Required<FormEditBannerProps>;
+
+/**
  * Form props directly passed to its underlying context
  *
  * @template {object} TData - The type of the form data
@@ -611,6 +641,7 @@ export type FormContextProps<TData extends object> = FormDataProps<TData> &
  */
 export type FormProps<TData extends object> = FormHeaderProps &
   FormLayoutProps &
+  FormEditBannerProps &
   FormContextProps<TData>;
 
 /**

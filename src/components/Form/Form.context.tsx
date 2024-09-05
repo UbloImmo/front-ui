@@ -525,6 +525,7 @@ const useFormSubmission = <TData extends object>(
   editState: UseFormEditStateReturn,
   onSubmit: Nullish<FormOnSubmitFn<TData>>,
   onSubmitError: Nullish<FormOnSubmitErrorFn>,
+  onCancelled: Nullish<VoidFn>,
   logger: Logger
 ): UseFormSubmissionReturn => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -624,6 +625,8 @@ const useFormSubmission = <TData extends object>(
     if (!editState.isEditing || isSubmitting) return;
     formData.setData(formData.initialData);
     editState.stopEditing();
+    if (onCancelled) onCancelled();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editState, formData, isSubmitting]);
 
   return { submitForm, isSubmitting, cancelEdition };
@@ -705,6 +708,7 @@ export const useForm = <TData extends object>(
     formEditState,
     props.onSubmit,
     props.onSubmitError,
+    props.onCancelled,
     logger
   );
 
