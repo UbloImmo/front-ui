@@ -7,10 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.8` ComboBox component
+  - Update useEffect dependencies to remove infinite render
+
 ### Added
+
 - `v0.0.3` Form component
   - Ability to customize columns. Rounds odd columns up to their even couterpart (3 becomes 4 and so on).
   - Ability to render bespoke components in content
+  - Ability to render bespoke, custom field inputs while preserving all common field properties
+    - Linked with form data
+    - Triggering validation
+    - Wrapped in label, assistive text
+
+- `v0.0.6` InputLabel component
+  - New `htmlFor` property, used to link labels with inputs
+
+- `v0.0.6` Field component
+  - Link input and labels through `id` and `htmlFor` components using dynamically regenrated ids
 
 ## 0.29.1 - 2024-09-04
 

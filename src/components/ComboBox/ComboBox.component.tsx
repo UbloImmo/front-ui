@@ -37,7 +37,7 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
 /**
  * A group of ComboBoxButtons that act as a select or radio input.
  *
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}

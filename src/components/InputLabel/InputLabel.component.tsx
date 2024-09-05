@@ -32,7 +32,7 @@ const defaultInputLabelProps: DefaultInputLabelProps = {
 
 /**
  * Renders an input label component, to be used in association with the Input component.
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
