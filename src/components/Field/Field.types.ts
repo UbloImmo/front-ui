@@ -10,7 +10,7 @@ export type FieldProps<
 > = GenericInputProps<TType, TGenericValue> &
   InputAssistiveTextProps &
   StyleOverrideProps &
-  Omit<InputLabelProps, "children">;
+  Omit<InputLabelProps, "children" | "htmlFor">;
 
 export type FieldDefaultProps<TType extends InputType = InputType> = Required<
   FieldProps<TType>

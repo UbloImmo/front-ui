@@ -4,13 +4,14 @@ import { defaultCommonInputProps } from "../Input.common";
 
 import { IconPicker } from "@/components/IconPicker";
 import { TestIdProps } from "@types";
-import { useTestId } from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
 import type {
   IconPickerInputDefaultProps,
   IconPickerInputOnChangeFn,
   IconPickerInputProps,
 } from "./IconPickerInput.types";
+import { useInputId } from "../Input.utils";
 
 const defaultIconPickerInputProps: IconPickerInputDefaultProps = {
   ...IconPicker.defaultProps,
@@ -36,19 +37,23 @@ const defaultIconPickerInputProps: IconPickerInputDefaultProps = {
 const IconPickerInput = (
   props: IconPickerInputProps & TestIdProps
 ): JSX.Element => {
+  const mergedProps = useMergedProps(defaultIconPickerInputProps, props);
   const testId = useTestId("input-icon-picker", props);
 
   const onIconPickerChange = useCallback<IconPickerInputOnChangeFn>(
     (value) => {
-      if (!props.onChange) return;
-      return props.onChange(value);
+      if (!mergedProps.onChange) return;
+      return mergedProps.onChange(value);
     },
-    [props]
+    [mergedProps]
   );
+
+  const id = useInputId(mergedProps);
 
   return (
     <IconPicker
-      {...props}
+      {...mergedProps}
+      id={id}
       testId={testId}
       overrideTestId
       onChange={onIconPickerChange}

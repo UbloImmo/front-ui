@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- `v0.0.3` Form component
+  - Ability to customize columns. Rounds odd columns up to their even couterpart (3 becomes 4 and so on).
+  - Ability to render bespoke components in content
+
 ## 0.29.1 - 2024-09-04
 
 ## 0.29.0 - 2024-09-03

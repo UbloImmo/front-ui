@@ -105,6 +105,13 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = {
    * @default false
    */
   readonly?: boolean;
+  /**
+   * The id of the combobox
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
+  id?: Nullable<string>;
 };
 
 export type ComboBoxDefaultProps<TOptionValue extends NullishPrimitives> =

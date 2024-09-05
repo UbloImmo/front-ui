@@ -19,6 +19,7 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
   disabled: false,
   required: false,
   className: null,
+  id: null,
 };
 
 /**
@@ -72,7 +73,13 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
   }
 
   return (
-    <FlexLayout testId={testId} gap="s-2" className={className} overrideTestId>
+    <FlexLayout
+      testId={testId}
+      gap="s-2"
+      className={className}
+      overrideTestId
+      id={mergedProps.id}
+    >
       {mergedProps.icons.map((icon) => (
         <IconPickerItem
           key={icon}

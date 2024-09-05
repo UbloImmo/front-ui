@@ -1,4 +1,3 @@
-import { isBoolean, isFunction, type Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
 import { FormFieldDisplay } from "./FormFieldDisplay.component";
@@ -6,10 +5,10 @@ import { FormFieldGridItem } from "./FormFieldGridItem.component";
 import { useFormContext } from "../Form.context";
 
 import { Field } from "@/components/Field";
-import { type InputType } from "@/components/Input";
-import { type GridEndPosition } from "@layouts";
 
-import type { BuiltFieldProps, FormFieldLayoutHiddenFn } from "../Form.types";
+import type { BuiltFieldProps } from "../Form.types";
+import type { InputType } from "@/components/Input";
+import type { Nullable } from "@ubloimmo/front-util";
 
 /**
  * Renders a form field based on the provided layout and props.
@@ -28,42 +27,25 @@ export const FormField = ({
   const { isEditing } = useFormContext();
 
   /**
-   * Compute the field's containg grid item column end prop based on field size
-   */
-  const columnEnd = useMemo<GridEndPosition>(() => {
-    return `span ${layout?.size ?? 1}`;
-  }, [layout]);
-
-  /**
    * Decide whether to display the field in edit or display mode
    *
    * @todo add individual field readonly prop to allow fields to stay in display mode even while editing
    */
   const FieldOrDisplayField = useMemo(() => {
-    return isEditing && !layout?.readonly ? Field : FormFieldDisplay;
+    return isEditing && !layout.readonly ? Field : FormFieldDisplay;
   }, [isEditing, layout]);
 
-  const isHidden = useMemo(
-    () =>
-      isFunction<FormFieldLayoutHiddenFn>(layout?.hidden)
-        ? layout.hidden()
-        : isBoolean(layout?.hidden)
-        ? layout.hidden
-        : false,
-    [layout]
-  );
-
-  if (isHidden) return null;
+  if (layout.hidden) return null;
 
   return (
     <FormFieldGridItem
-      columnEnd={columnEnd}
+      columnEnd={layout.columnEnd}
       align="start"
       testId="form-field-container"
       overrideTestId
       fill
     >
-      <FieldOrDisplayField {...props} testId="form-field" />
+      <FieldOrDisplayField {...props} layout={layout} testId="form-field" />
     </FormFieldGridItem>
   );
 };

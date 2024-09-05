@@ -125,6 +125,13 @@ export type CommonInputProps = {
    * @default null
    */
   onBlur?: Nullable<NativeInputOnBlurFn>;
+  /**
+   * The input's id. Used to link the input with its label
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
+  id?: Nullable<string>;
 };
 
 export type DefaultCommonInputProps = Required<CommonInputProps>;
@@ -227,7 +234,12 @@ export type DefaultInputProps<TType extends InputType> = Required<
 export type CommonInputStyleProps = StyleProps<
   Omit<
     DefaultCommonInputProps,
-    "inputRef" | "onChangeNative" | "onBlur" | "autoComplete" | "uncontrolled"
+    | "inputRef"
+    | "onChangeNative"
+    | "onBlur"
+    | "autoComplete"
+    | "uncontrolled"
+    | "id"
   >
 >;
 

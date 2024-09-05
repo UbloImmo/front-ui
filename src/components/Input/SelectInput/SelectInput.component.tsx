@@ -2,7 +2,6 @@ import { NullishPrimitives, isString } from "@ubloimmo/front-util";
 import {
   useCallback,
   useEffect,
-  useId,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -27,6 +26,7 @@ import {
 import { StyledInput, StyledInputControl } from "../Input.common";
 import { commonInputStyles } from "../Input.styles";
 import {
+  useInputId,
   useInputOnChange,
   useInputRef,
   useInputStyles,
@@ -74,7 +74,7 @@ const SelectInput = <
 
   const { placeholder, disabled, searchable } = mergedProps;
 
-  const inputId = useId();
+  const inputId = useInputId(mergedProps);
 
   const testId = useTestId("input-select", props);
   const wrapperRef = useRef<HTMLDivElement>(null);

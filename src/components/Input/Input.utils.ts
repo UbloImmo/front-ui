@@ -1,9 +1,10 @@
 import { isArray, isFunction, isNull, isUndefined } from "@ubloimmo/front-util";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useId, useMemo, useRef } from "react";
 
 import { toStyleProps } from "@utils";
 
 import type {
+  CommonInputProps,
   CommonInputStyleProps,
   DefaultCommonInputProps,
   InputOnChangeConditionFn,
@@ -182,4 +183,15 @@ export const useInputRef = <TElement extends Element = HTMLInputElement>(
   );
 
   return { inputRef, forwardRef };
+};
+
+/**
+ * Generates a unique id for the input element, if the `id` prop is not provided.
+ *
+ * @param {Pick<CommonInputProps, "id">} props: The props object containing the `id` property.
+ * @returns {string}: The unique id for the input element.
+ */
+export const useInputId = ({ id }: Pick<CommonInputProps, "id">) => {
+  const defaultId = useId();
+  return useMemo(() => id ?? defaultId, [id, defaultId]);
 };

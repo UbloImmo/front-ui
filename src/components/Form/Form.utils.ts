@@ -1,5 +1,6 @@
 import {
   isArray,
+  isFunction,
   isNull,
   isNumber,
   isObject,
@@ -8,16 +9,22 @@ import {
   type DeepKeyOf,
   type DeepValueOf,
   type KeyOf,
+  type NullishPrimitives,
   type Optional,
   type VoidFn,
 } from "@ubloimmo/front-util";
+import { type FC } from "react";
 import { ZodNullable, ZodOptional, ZodUnion, type ZodType } from "zod";
 
 import type {
   BuiltFieldProps,
   BuiltFormContent,
+  BuiltFormCustomFieldProps,
   BuiltFormTextProps,
+  CustomFormInputProps,
   FormContent,
+  FormCustomContentProps,
+  FormCustomFieldProps,
   FormDividerProps,
   FormSchema,
   FormSource,
@@ -177,7 +184,12 @@ export const isFormDivider = <TData extends object>(
   content: FormContent<TData> | BuiltFormContent<InputType>
 ): content is FormDividerProps => {
   if (isString(content) && content === "divider") return true;
-  if (isFormText(content) || isBuiltFormText(content)) return false;
+  if (
+    isFormText(content) ||
+    isBuiltFormText(content) ||
+    isFormCustomContent(content)
+  )
+    return false;
   const keys = objectKeys(content);
   if (keys.length === 0) return true;
   if (
@@ -187,6 +199,38 @@ export const isFormDivider = <TData extends object>(
   )
     return true;
   return false;
+};
+
+export const isFormCustomContent = <TData extends object>(
+  content: FormContent<TData> | BuiltFormContent<InputType>
+): content is FormCustomContentProps => {
+  if (isFunction<FC>(content)) return true;
+  return (
+    isObject(content) &&
+    "kind" in content &&
+    content.kind === "content" &&
+    "content" in content
+  );
+};
+
+export const isFormCustomField = <TData extends object>(
+  content: FormContent<TData>
+): content is FormCustomFieldProps<TData> => {
+  if (
+    isFormDivider(content) ||
+    isFormText(content) ||
+    isFormCustomContent(content)
+  )
+    return false;
+  return (
+    isObject(content) &&
+    "kind" in content &&
+    content.kind === "custom-field" &&
+    "source" in content &&
+    isString(content.source) &&
+    "CustomInput" in content &&
+    isFunction(content.CustomInput)
+  );
 };
 
 /**
@@ -236,7 +280,23 @@ export const isBuiltFormText = <TData extends object>(
 export const isBuiltFormField = <TType extends InputType>(
   content: BuiltFormContent<TType>
 ): content is BuiltFieldProps<TType> => {
-  return !isFormDivider(content) && !isBuiltFormText(content);
+  return (
+    !isFormDivider(content) &&
+    !isBuiltFormText(content) &&
+    !isFormCustomContent(content) &&
+    !isBuiltCustomFormField(content)
+  );
+};
+
+export const isBuiltCustomFormField = (
+  content: BuiltFormContent<InputType>
+): content is BuiltFormCustomFieldProps => {
+  return (
+    isObject(content) &&
+    "CustomInput" in content &&
+    !("source" in content) &&
+    isFunction<FC<CustomFormInputProps<NullishPrimitives>>>(content.CustomInput)
+  );
 };
 
 /**

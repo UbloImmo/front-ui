@@ -19,7 +19,7 @@ import {
   StyledInputContainer,
   defaultCommonInputProps,
 } from "../Input.common";
-import { useInputRef, useInputStyles } from "../Input.utils";
+import { useInputId, useInputRef, useInputStyles } from "../Input.utils";
 
 import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
@@ -103,6 +103,7 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
 
   const inputStyles = useInputStyles(mergedProps);
+  const id = useInputId(mergedProps);
 
   return (
     <PhoneInputContainer {...inputStyles} data-testid="input-phone-container">
@@ -123,6 +124,7 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
         disabled={mergedProps.disabled}
         placeholder={mergedProps.placeholder}
         type="tel"
+        id={id}
       />
     </PhoneInputContainer>
   );

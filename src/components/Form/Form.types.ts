@@ -7,11 +7,15 @@ import type {
   InputType,
   SpecificInputProps,
   InputValue,
+  CommonInputProps,
 } from "@/components/Input";
+import type { ModalProps } from "@/components/Modal";
+import type { GridEndPosition } from "@layouts";
 import type {
   ColorKey,
   StyleOverrideProps,
   StyleProps,
+  TestIdProps,
   TextProps,
 } from "@types";
 import type {
@@ -25,11 +29,12 @@ import type {
   MaybeAsyncFn,
   Nullable,
   Nullish,
+  NullishPrimitives,
   Optional,
   Replace,
   VoidFn,
 } from "@ubloimmo/front-util";
-import type { FormEventHandler, ReactNode } from "react";
+import type { FC, FormEventHandler, ReactNode } from "react";
 import type { ZodIssue, ZodObject, ZodType, ZodTypeAny } from "zod";
 
 // -------------------------------- GLOBALS ----------------------------------
@@ -80,6 +85,31 @@ export type FormData<TData extends object> = DeepPartial<TData>;
 
 export type FormFieldLayoutHiddenFn = GenericFn<[], boolean>;
 
+export type FormFieldLayout = {
+  /**
+   * Horizontal size of the field relative to the form's grid.
+   * Maps to `grid-column-end: span ${size}`
+   *
+   * @remarks if not provided, will default to half of the {@link FormLayoutProps.columns}.
+   *
+   * @default 1
+   */
+  size?: number;
+  /**
+   * Whether to render the field in display mode even while in edit mode
+   *
+   * @default false
+   */
+  readonly?: boolean;
+  /**
+   * Whether to hide the field in both display AND edit modes
+   *
+   * @type {boolean | FormFieldLayoutHiddenFn}
+   * @default false
+   */
+  hidden?: boolean | FormFieldLayoutHiddenFn;
+};
+
 /**
  * Props added to form field that control its layout inside the form
  */
@@ -87,28 +117,17 @@ export type FormFieldLayoutProps = {
   /**
    * Layout of the field
    */
-  layout?: {
-    /**
-     * Horizontal size of the field relative to the form's grid.
-     * Maps to `grid-column-end: span ${size}`
-     *
-     * @default 1
-     */
-    size?: number;
-    /**
-     * Whether to render the field in display mode even while in edit mode
-     *
-     * @default false
-     */
-    readonly?: boolean;
-    /**
-     * Whether to hide the field in both display AND edit modes
-     *
-     * @type {boolean | FormFieldLayoutHiddenFn}
-     * @default false
-     */
-    hidden?: boolean | FormFieldLayoutHiddenFn;
-  };
+  layout?: FormFieldLayout;
+};
+
+export type BuiltFormFieldLayout = Required<
+  Replace<FormFieldLayout, "hidden", { hidden: boolean }>
+> & {
+  columnEnd: GridEndPosition;
+};
+
+export type BuiltFormFieldLayoutProps = {
+  layout: BuiltFormFieldLayout;
 };
 
 /**
@@ -207,7 +226,8 @@ export type FormFieldProps<TData extends object> = {
  *
  */
 export type BuiltFieldProps<TType extends InputType> = FieldProps<TType> &
-  FormFieldLayoutProps;
+  BuiltFormFieldLayoutProps &
+  TestIdProps;
 
 // ------------------------------- DIVIDER ----------------------------------
 
@@ -217,6 +237,9 @@ export type FormDividerProps =
 
 // -------------------------------- INFOS -----------------------------------
 
+/**
+ * Props to pass to a `Text` component
+ */
 export type FormTextProps = Omit<
   TextProps,
   "children" | keyof StyleOverrideProps
@@ -229,6 +252,80 @@ export type BuiltFormTextProps = Omit<TextProps, keyof StyleOverrideProps> & {
   kind: "text";
 };
 
+// --------------------------- CUSTOM CONTENT -------------------------------
+
+/**
+ * Abritraty content, either an object marked as `kind: "content"` or a React functional component
+ */
+export type FormCustomContentProps =
+  | {
+      content: ReactNode | FC;
+      kind: "content";
+    }
+  | FC;
+
+export type BuiltFormCustomContentProps = Exclude<FormCustomContentProps, FC>;
+
+// ----------------------------- CUSTOM FIELDS ------------------------------
+
+export type CustomFormInputProps<TValue extends NullishPrimitives> =
+  CommonInputProps & {
+    /**
+     * The custom field's value or null if empty
+     *
+     * @default null
+     *
+     * @type {InputValue | null}
+     *
+     */
+    value?: Nullable<TValue>;
+    /**
+     * The custom field's onChange callback. Optional.
+     *
+     * @default null
+     *
+     * @type {InputOnChangeFn | null}
+     */
+    onChange?: Nullable<VoidFn<[Nullable<TValue>]>>;
+
+    /**
+     * The custom field's name
+     *
+     * @default null
+     */
+    name?: Nullable<string>;
+  };
+
+type PreservedFieldProps = Omit<
+  FieldProps<InputType>,
+  Exclude<
+    keyof CustomFormInputProps<NullishPrimitives>,
+    "onChange" | "disabled" | "error" | "required"
+  >
+>;
+
+export type FormCustomFieldProps<TData extends object> = {
+  [TSource in FormSource<TData>]: DeepValueOf<
+    CompleteFormData<TData>,
+    TSource
+  > extends infer TFieldValue
+    ? FormFieldLayoutProps &
+        PreservedFieldProps & {
+          kind: "custom-field";
+          source: TSource;
+          CustomInput: FC<
+            CustomFormInputProps<TFieldValue & NullishPrimitives>
+          >;
+        }
+    : never;
+}[FormSource<TData>];
+
+export type BuiltFormCustomFieldProps = PreservedFieldProps &
+  BuiltFormFieldLayoutProps &
+  CustomFormInputProps<NullishPrimitives> & {
+    CustomInput: FC<CustomFormInputProps<NullishPrimitives>>;
+  };
+
 // ------------------------------- CONTENT ----------------------------------
 
 /**
@@ -240,8 +337,10 @@ export type BuiltFormTextProps = Omit<TextProps, keyof StyleOverrideProps> & {
  */
 export type FormContent<TData extends object> =
   | FormFieldProps<TData>
+  | FormCustomFieldProps<TData>
   | FormDividerProps
-  | FormTextProps;
+  | FormTextProps
+  | FormCustomContentProps;
 
 /**
  * Either a single {@link BuiltFieldProps} object or {@link FormDividerProps}
@@ -250,7 +349,9 @@ export type FormContent<TData extends object> =
  */
 export type BuiltFormContent<TType extends InputType> =
   | BuiltFieldProps<TType>
+  | BuiltFormCustomFieldProps
   | FormDividerProps
+  | FormCustomContentProps
   | BuiltFormTextProps;
 
 // -------------------------------- SCHEMA ----------------------------------
@@ -332,6 +433,36 @@ export type FormHeaderProps = {
    */
   icon?: Nullable<IconName>;
 };
+
+export type FormModalProps = {
+  /**
+   * Optional {@link ModalProps} to display in a modal
+   *
+   * @remarks providing valid Modal props will render the form in a `Modal` component.
+   *
+   * @type {Nullable<Omit<ModalProps, "title">>}
+   * @default null
+   */
+  modal?: Nullable<Omit<ModalProps, "title">>;
+};
+
+export type FormGridProps = {
+  /**
+   * Optional number of columns to display the form's content in
+   *
+   * @remarks Odd values will be rounded up to even values
+   *
+   * @type {number}
+   * @default 2
+   */
+  columns?: number;
+};
+
+export type FormLayoutProps = FormGridProps & FormModalProps;
+
+export type DefaultFormGridProps = Required<FormGridProps>;
+
+export type DefaultFormLayoutProps = Required<FormLayoutProps>;
 
 /**
  * Form props related to its content
@@ -466,6 +597,7 @@ export type FormContextProps<TData extends object> = FormDataProps<TData> &
  * @see {@link FormHeaderProps}, {@link FormContextProps}
  */
 export type FormProps<TData extends object> = FormHeaderProps &
+  FormLayoutProps &
   FormContextProps<TData>;
 
 /**
@@ -544,6 +676,21 @@ export type MutateFormDataFn<TData extends object> = <
 export type BuildFieldPropsFn<TData extends object> = <TType extends InputType>(
   formField: FormFieldProps<TData>
 ) => BuiltFieldProps<TType>;
+
+/**
+ * Builds a {@link BuiltFormCustomFieldProps} object from a {@link FormCustomFieldProps} object
+ * links its `value`, `onChange`, `disabled`, `required`, `error` and `errorText` properties with the form data & schema,
+ * while preserving its `CustomInput` component;
+ *
+ * @template {object} TData - The type of the {@link FormData}
+ *
+ * @param {FormCustomFieldProps<TData>} formCustomField - The {@link FormCustomFieldProps}
+ *
+ * @returns {BuiltFormCustomFieldProps<TData>} The built and linked {@link BuiltFormCustomFieldProps}
+ */
+export type BuildCustomFieldPropsFn<TData extends object> = (
+  formCustomField: FormCustomFieldProps<TData>
+) => BuiltFormCustomFieldProps;
 
 /**
  * Retrieves the value of a {@link FormField} from the internal {@link FormData} using its `source`.
@@ -628,6 +775,11 @@ export type IsFieldRequiredFn<TData extends object> = (
  * @returns {FormValidation} The form's validation state
  */
 export type ComputeFormValidationFn = GenericFn<[], FormValidation>;
+
+export type BuildFormFieldLayoutFn = GenericFn<
+  [Optional<FormFieldLayout>],
+  BuiltFormFieldLayoutProps["layout"]
+>;
 
 // -------------------------- DISPLAY TRANSFORMS -----------------------------
 
@@ -796,6 +948,11 @@ export type UseFormEditStateReturn = {
   stopEditing: VoidFn;
 };
 
+export type UseFormLayoutReturn = {
+  columns: number;
+  buildFormFieldLayout: BuildFormFieldLayoutFn;
+};
+
 // ------------------------------- CONTEXT ---------------------------------
 
 /**
@@ -811,7 +968,8 @@ export type FormContext<TData extends object> = UseFormDataReturn<TData> &
   UseFormValidationReturn<TData> &
   UseFormSubmissionReturn &
   FormModifers &
-  UseFormEditStateReturn & {
+  UseFormEditStateReturn &
+  UseFormLayoutReturn & {
     /**
      * An array of {@link BuiltFieldProps},
      * used to render the form's fields

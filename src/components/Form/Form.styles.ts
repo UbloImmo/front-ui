@@ -29,7 +29,7 @@ export const formContainerStyles = ({
 
 export const formHeaderStyles = (): RuleSet => {
   return css`
-    padding: var(--s-8) var(--s-6);
+    padding: var(--s-8);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -84,10 +84,6 @@ export const formEditBannerStyles = ({
     transition: opacity 150ms ease-out 0s, height 150ms ease-out 0s,
       padding 300ms ease-out 0s;
 
-    & > button:first-child {
-      margin-left: calc(var(--padding-horizontal) * -1);
-    }
-
     ${!$isEditing &&
     css`
       height: 0;
@@ -106,7 +102,7 @@ export const formEditBannerStyles = ({
 
 export const formFieldListContainerStyles = (): RuleSet => {
   return css`
-    padding: 0 var(--s-6) var(--s-8);
+    padding: 0 var(--s-8) var(--s-8);
   `;
 };
 

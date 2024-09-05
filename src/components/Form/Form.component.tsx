@@ -35,12 +35,14 @@ const defaultFormProps: FormDefaultProps<object> = {
   validateOnChange: true,
   validateOnSubmit: true,
   debug: false,
+  modal: null,
+  columns: 2,
 };
 
 /**
  * A flexible yet expressive form renderer.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @template {object} TData - The type of the form data
  *

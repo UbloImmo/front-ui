@@ -30,6 +30,7 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   showIcon: true,
   columns: null,
   readonly: false,
+  id: null,
 };
 
 /**
@@ -94,12 +95,10 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
         } else {
           setSelection([...selection, option.value]);
         }
+      } else if (isOptionActive(option)) {
+        setSelection([]);
       } else {
-        if (isOptionActive(option)) {
-          setSelection([]);
-        } else {
-          setSelection([option.value]);
-        }
+        setSelection([option.value]);
       }
     },
     [multi, selection, isOptionActive, disabled, readonly]
