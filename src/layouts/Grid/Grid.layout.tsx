@@ -25,6 +25,7 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
   children: null,
   className: null,
   role: null,
+  id: null,
 } as const;
 
 /**
@@ -41,12 +42,14 @@ const GridLayout = (props: GridLayoutProps & TestIdProps): JSX.Element => {
   const testId = useTestId("grid", props);
   const className = useClassName(props);
   const role = useHtmlAttribute(mergedProps.role);
+  const id = useHtmlAttribute(mergedProps.id);
   return (
     <GridLayoutInner
       {...innerProps}
       data-testid={testId}
       role={role}
       className={className}
+      id={id}
     >
       {props.children}
     </GridLayoutInner>

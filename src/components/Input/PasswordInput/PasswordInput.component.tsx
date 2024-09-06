@@ -11,6 +11,7 @@ import {
 } from "../Input.common";
 import {
   useInputControlCallback,
+  useInputId,
   useInputOnChange,
   useInputRef,
   useInputStyles,
@@ -108,6 +109,8 @@ const PasswordInput = (
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
   const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
 
+  const id = useInputId(mergedProps);
+
   return (
     <StyledInputContainer
       {...inputStyles}
@@ -126,6 +129,7 @@ const PasswordInput = (
         role="textbox"
         ref={forwardRef}
         autoComplete={autoComplete}
+        id={id}
         {...inputStyles}
       ></StyledInput>
       <StyledInputControlGroup>

@@ -38,6 +38,8 @@ export type InputLabelProps = {
    * If `tooltip` is also provided, it will be rendererd next to the label
    */
   compact?: boolean;
+
+  htmlFor?: Nullable<string>;
 } & StyleOverrideProps;
 
 export type DefaultInputLabelProps = Required<InputLabelProps>;

@@ -38,6 +38,7 @@ const action: CompleteTranslationMap<"action"> = {
   collapse: "Collapse",
   show: "Show",
   hide: "Hide",
+  giveUp: "Give up",
 } as const;
 
 const validation: CompleteTranslationMap<"validation"> = {

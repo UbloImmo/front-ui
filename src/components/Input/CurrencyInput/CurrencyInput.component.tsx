@@ -13,7 +13,7 @@ import {
   StyledInputControl,
   defaultCommonInputProps,
 } from "../Input.common";
-import { useInputRef, useInputStyles } from "../Input.utils";
+import { useInputId, useInputRef, useInputStyles } from "../Input.utils";
 
 import { Icon, type IconProps } from "@/components/Icon";
 import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
@@ -73,6 +73,8 @@ const CurrencyInput = (
     [mergedProps.currency]
   );
 
+  const id = useInputId(mergedProps);
+
   return (
     <StyledInputContainer
       data-testid="input-currency-container"
@@ -95,6 +97,7 @@ const CurrencyInput = (
         onChange={onChange}
         onBlur={onBlur}
         ref={forwardRef}
+        id={id}
         $showSign={mergedProps.showSign}
         {...inputStyles}
       />

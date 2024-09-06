@@ -8,6 +8,7 @@ import {
   defaultCommonInputProps,
 } from "../Input.common";
 import {
+  useInputId,
   useInputOnChange,
   useInputRef,
   useInputStyles,
@@ -55,6 +56,8 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
   const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
 
+  const id = useInputId(mergedProps);
+
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-email-container">
       <StyledInput
@@ -67,8 +70,9 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
         placeholder={mergedProps.placeholder}
         disabled={mergedProps.disabled}
         ref={forwardRef}
-        {...inputStyles}
         autoComplete={autoComplete}
+        id={id}
+        {...inputStyles}
       />
       <StyledInputControl {...inputStyles}>
         <Icon name="At" />

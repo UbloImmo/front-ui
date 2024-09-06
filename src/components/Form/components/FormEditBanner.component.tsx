@@ -6,16 +6,32 @@ import { formEditBannerStyles } from "../Form.styles";
 
 import { Button } from "@/components/Button";
 import { FlexRowLayout } from "@layouts";
-import { useStyleProps } from "@utils";
+import {
+  useMergedProps,
+  useStatic,
+  useStyleProps,
+  useUikitTranslation,
+} from "@utils";
 
-import type { FormEditBannerStyleProps } from "../Form.types";
+import type {
+  DefaultFormEditBannerProps,
+  FormEditBannerProps,
+  FormEditBannerStyleProps,
+} from "../Form.types";
+
+const defaultFormEditBannerProps: DefaultFormEditBannerProps = {
+  submitLabel: "save",
+  cancelLabel: "cancel",
+};
 
 /**
  * Renders the form's edit banner, hiding it if the form is not in edit mode.
  *
+ * @version 0.0.2
+ *
  * @return {JSX.Element} The rendered FormEditBanner component.
  */
-export const FormEditBanner = (): JSX.Element => {
+export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
   const {
     isEditing,
     isLoading,
@@ -25,6 +41,12 @@ export const FormEditBanner = (): JSX.Element => {
     isValid,
   } = useFormContext();
   const styleProps = useStyleProps({ isEditing, isLoading, isSubmitting });
+
+  const tl = useUikitTranslation();
+  const mergedProps = useMergedProps(defaultFormEditBannerProps, props);
+
+  const cancelLabel = useStatic(tl.action[mergedProps.cancelLabel]);
+  const submitLabel = useStatic(tl.action[mergedProps.submitLabel]);
 
   const submitDisabled = useMemo<boolean>(() => {
     return isLoading || !isEditing || !isValid || disabled;
@@ -40,14 +62,14 @@ export const FormEditBanner = (): JSX.Element => {
       {...styleProps}
     >
       <Button
-        label="Cancel"
+        label={cancelLabel}
         onClick={cancelEdition}
         icon="ArrowReturnLeft"
         secondary
         color="clear"
       />
       <Button
-        label="Save"
+        label={submitLabel}
         type="submit"
         disabled={submitDisabled}
         loading={isSubmitting}

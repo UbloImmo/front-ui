@@ -1,13 +1,24 @@
 import { fn } from "@storybook/test";
+import { isArray } from "@ubloimmo/front-util";
+import { useState } from "react";
 import { z } from "zod";
 
 import { Form } from "./Form.component";
+import { Callout } from "../Callout";
+import { Heading } from "../Heading";
+import { Icon } from "../Icon";
+import { Input } from "../Input";
 
 import { componentSourceFactory } from "@docs/docs.utils";
-import { GridItem, GridLayout } from "@layouts";
-import { useMergedProps } from "@utils";
+import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
+import { useMergedProps, useStatic } from "@utils";
 
-import type { FormProps, FormData } from "./Form.types";
+import type {
+  FormProps,
+  FormData,
+  FormContent,
+  CustomFormInputProps,
+} from "./Form.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const addressSchema = z.object({
@@ -181,6 +192,9 @@ const identityFormProps: FormProps<Identity> = {
       source: "firstName",
       label: "First name",
       errorText: "Test",
+      tooltip: {
+        content: "Je suis un tooltip",
+      },
     },
     {
       type: "text",
@@ -357,4 +371,79 @@ Debug.parameters = {
   docs: componentSource([
     { ...(identityFormProps as FormProps<object>), debug: true },
   ]),
+};
+
+export const Steps = (props: FormStoryProps) => {
+  const { content, ...mergedProps } = useMergedProps(identityFormProps, props);
+  const steps = useStatic<FormContent<Identity>[][]>(
+    isArray(content)
+      ? ([
+          [...content].slice(0, 8),
+          [...content].slice(9),
+        ] as FormContent<Identity>[][])
+      : []
+  );
+
+  const [stepIndex, setStepIndex] = useState<number>(0);
+
+  return (
+    <Form
+      {...mergedProps}
+      content={steps[stepIndex]}
+      debug
+      onSubmit={() => setStepIndex(stepIndex + 1)}
+    />
+  );
+};
+
+export const CustomContent = () => {
+  return (
+    <Form
+      title="Form with custom content"
+      content={[
+        {
+          kind: "content",
+          content: <Callout>I am a callout</Callout>,
+        },
+        () => (
+          <Heading color="success-base" size="h4">
+            And I am a heading
+          </Heading>
+        ),
+      ]}
+      cancelLabel="giveUp"
+      submitLabel="create"
+    />
+  );
+};
+
+const CustomInput = (props: CustomFormInputProps<string>) => {
+  return (
+    <FlexRowLayout gap="s-1" align="center" fill>
+      <Icon name="Gear" />
+      <Input type="text" {...props} />
+    </FlexRowLayout>
+  );
+};
+
+const customIdentityContents: FormContent<Address>[] = [
+  {
+    kind: "custom-field",
+    source: "street",
+    label: "Custom Fist name input",
+    assistiveText: "This input was rendered using a custom field",
+    CustomInput,
+  },
+  ...(addressFormProps.content ?? []).slice(1),
+];
+
+export const CustomFields = (props: FormStoryProps) => {
+  const mergedProps = useMergedProps(addressFormProps, props);
+  return (
+    <Form
+      {...mergedProps}
+      content={customIdentityContents}
+      title="Form with custom field"
+    />
+  );
 };

@@ -26,6 +26,7 @@ export const defaultCommonInputProps: DefaultCommonInputProps = {
   onChangeNative: null,
   onBlur: null,
   autoComplete: null,
+  id: null,
 } as const;
 
 /**

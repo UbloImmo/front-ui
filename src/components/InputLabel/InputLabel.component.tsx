@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import {
   isNonEmptyString,
   useClassName,
+  useHtmlAttribute,
   useLogger,
   useMergedProps,
   useTestId,
@@ -26,11 +27,12 @@ const defaultInputLabelProps: DefaultInputLabelProps = {
   className: null,
   tooltip: null,
   compact: false,
+  htmlFor: null,
 };
 
 /**
  * Renders an input label component, to be used in association with the Input component.
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
@@ -54,8 +56,11 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
     return "space-between";
   }, [mergedProps.compact]);
 
+  const htmlFor = useHtmlAttribute(mergedProps.htmlFor);
+
   return (
     <InnerInputLabel
+      htmlFor={htmlFor}
       className={className}
       data-testid={testId}
       data-required={String(required)}
@@ -79,17 +84,6 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
 InputLabel.defaultProps = defaultInputLabelProps;
 export { InputLabel };
 
-const InputLabelText = styled(Text)<StyleProps<InputLabelProps>>`
-  ${(props) =>
-    props.$required &&
-    css`
-      &::after {
-        content: " *";
-        color: var(--warning-base);
-      }
-    `}
-`;
-
 const InnerInputLabel = styled.label`
   display: flex;
   flex-direction: column;
@@ -103,4 +97,15 @@ const InnerInputLabel = styled.label`
     span[data-testid="text input-label-text"] {
     color: var(--gray-800);
   }
+`;
+
+const InputLabelText = styled(Text)<StyleProps<InputLabelProps>>`
+  ${(props) =>
+    props.$required &&
+    css`
+      &::after {
+        content: " *";
+        color: var(--warning-base);
+      }
+    `}
 `;

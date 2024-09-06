@@ -36,6 +36,15 @@ export type IconPickerProps = {
    * @remarks to be set in a form context, when IconPicker is used in as an {@link InputType}
    */
   required?: boolean;
+  /**
+   * The id of the IconPicker
+   * @type {Nullable<string>}
+   *
+   * @remarks Used by IconPickerInput
+   *
+   * @default null
+   */
+  id?: Nullable<string>;
 } & StyleOverrideProps;
 
 export type IconPickerDefaultProps = Required<IconPickerProps>;

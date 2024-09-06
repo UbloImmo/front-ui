@@ -88,6 +88,13 @@ export type GridLayoutProps = {
    * @type {AriaRole}
    */
   role?: Nullable<AriaRole>;
+  /**
+   * An optional id for the element
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
+  id?: Nullable<string>;
 } & StyleOverrideProps;
 
 export type GridLayoutDefaultProps = Required<GridLayoutProps>;

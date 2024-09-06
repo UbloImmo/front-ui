@@ -32,6 +32,7 @@ import {
   StyledInputGroupedControl,
 } from "../Input.common";
 import {
+  useInputId,
   useInputOnChange,
   useInputRef,
   useInputStyles,
@@ -234,6 +235,8 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
     return isBoolean(mergedProps.disabled) && mergedProps.disabled;
   }, [mergedProps]);
 
+  const id = useInputId(mergedProps);
+
   return (
     <Popover
       content={
@@ -269,6 +272,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
           ref={forwardRef}
           autoComplete={autoComplete}
           pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])\/(0[1-9]|1[012])\/[0-9]{4}"
+          id={id}
           {...inputMinMax}
           {...inputStyles}
         />

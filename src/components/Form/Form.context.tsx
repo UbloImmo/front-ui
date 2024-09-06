@@ -8,9 +8,12 @@ import {
   isUndefined,
   type DeepKeyOf,
   type Logger,
+  type Nullable,
   type Nullish,
+  type NullishPrimitives,
   type VoidFn,
 } from "@ubloimmo/front-util";
+import { merge } from "lodash";
 import {
   FormEventHandler,
   createContext,
@@ -26,6 +29,8 @@ import {
 
 import {
   buildFormText,
+  isFormCustomContent,
+  isFormCustomField,
   isFormDivider,
   isFormText,
   isSchemaFieldRequired,
@@ -59,8 +64,21 @@ import type {
   FormContent,
   BuiltFormContent,
   ComputeFormValidationFn,
+  BuildCustomFieldPropsFn,
+  FormCustomFieldProps,
+  BuiltFormCustomFieldProps,
+  CustomFormInputProps,
+  FormFieldLayout,
+  BuiltFormFieldLayoutProps,
+  FormDefaultProps,
+  DefaultFormLayoutProps,
+  BuildFormFieldLayoutFn,
+  UseFormLayoutReturn,
+  FormFieldLayoutHiddenFn,
+  FormOnSubmitErrorFn,
 } from "./Form.types";
 import type { InputOnChangeFn, InputType } from "../Input";
+import type { GridEndPosition } from "@layouts";
 
 /**
  * Custom form hook
@@ -100,32 +118,41 @@ const useFormData = <TData extends object>(
    * Loads form data from query into `data` and `initialData` states
    * white updating `isLoading` state
    */
-  const loadFormData = useCallback(async () => {
-    // TODO: Merge with default values
-    if (!isFunction<FormQueryFn<TData>>(props.query)) {
-      if (isObject(props.query)) {
-        setData(props.query);
-        setInitialData(props.query);
+  const loadFormData = useCallback(
+    async (mergeWithCurrent?: boolean) => {
+      if (!isFunction<FormQueryFn<TData>>(props.query)) {
+        if (isObject(props.query)) {
+          const newData = mergeWithCurrent
+            ? merge({ ...initialData }, { ...props.query })
+            : { ...props.query };
+          setData(newData);
+          setInitialData(newData);
+        }
+        return;
       }
-      return;
-    }
-    setIsLoading(true);
-    try {
-      const data: FormData<TData> = await props.query();
-      setData(data);
-      setInitialData(data);
-    } catch (e) {
-      logger.error(e);
-      logger.warn("Failed to load form data");
-    }
-    setIsLoading(false);
-  }, [props, logger]);
+      setIsLoading(true);
+      try {
+        const data: FormData<TData> = await props.query();
+        const newData = mergeWithCurrent
+          ? merge({ ...initialData }, data)
+          : data;
+        setData(newData);
+        setInitialData(newData);
+      } catch (e) {
+        logger.error(e);
+        logger.warn("Failed to load form data");
+      }
+      setIsLoading(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [props.query, logger]
+  );
 
   /**
    * Effect used for loading initial form data if query is a function
    */
   useEffect(() => {
-    loadFormData();
+    loadFormData(true);
   }, [props.query, loadFormData]);
 
   /**
@@ -247,13 +274,55 @@ const useFormValidation = <TData extends object>(
     if (modifiers.validateOnChange) {
       triggerFormValidation();
     }
-  }, [data, modifiers, triggerFormValidation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, triggerFormValidation]);
 
   return {
     ...formValidation,
     schema,
     triggerFormValidation,
     computeFormValidation,
+  };
+};
+
+const useFormLayout = (
+  formLayout: DefaultFormLayoutProps
+): UseFormLayoutReturn => {
+  const columns = useMemo(() => {
+    // only allow even number of columns
+    const minColumns = Math.max(formLayout.columns, 2);
+    const evenColumns = Math.ceil(minColumns / 2) * 2;
+    return evenColumns;
+  }, [formLayout]);
+
+  const buildFormFieldLayout = useCallback<BuildFormFieldLayoutFn>(
+    (fieldLayout?: FormFieldLayout): BuiltFormFieldLayoutProps["layout"] => {
+      const defaultSize = Math.max(1, Math.round(columns / 2));
+
+      const hidden = isFunction<FormFieldLayoutHiddenFn>(fieldLayout?.hidden)
+        ? fieldLayout.hidden()
+        : isBoolean(fieldLayout?.hidden)
+        ? fieldLayout.hidden
+        : false;
+
+      const size = fieldLayout?.size ?? defaultSize;
+
+      const columnEnd: GridEndPosition = `span ${size}`;
+
+      return {
+        ...fieldLayout,
+        hidden,
+        size,
+        columnEnd,
+        readonly: fieldLayout?.readonly ?? false,
+      };
+    },
+    [columns]
+  );
+
+  return {
+    columns,
+    buildFormFieldLayout,
   };
 };
 
@@ -267,12 +336,13 @@ const useFormValidation = <TData extends object>(
  * @param {UseFormValidationReturn<TData>} validation - The form validation.
  * @param {FormModifers} modifiers - The form modifiers.
  * @param {FormContent<TData, TType>[]} content - The form content.
- * @return {BuiltFormContent<InputType>[]} - The built field props for each form field.
+ * @return {BuiltFormContent<TData, InputType>[]} - The built field props for each form field.
  */
-const useFormFields = <TData extends object>(
+const useFormContent = <TData extends object>(
   formData: UseFormDataReturn<TData>,
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
+  formLayout: UseFormLayoutReturn,
   content?: FormContent<TData>[]
 ): BuiltFormContent<InputType>[] => {
   /**
@@ -364,8 +434,8 @@ const useFormFields = <TData extends object>(
         type: type as TType,
         disabled: disabled || modifiers.disabled,
         required: isFieldRequired(source, required),
-        layout,
-      } as BuiltFieldProps<TType>;
+        layout: formLayout.buildFormFieldLayout(layout),
+      };
     },
     [
       getFieldErrorProps,
@@ -373,6 +443,50 @@ const useFormFields = <TData extends object>(
       getFieldValue,
       modifiers.disabled,
       isFieldRequired,
+      formLayout,
+    ]
+  );
+
+  const buildCustomFieldProps = useCallback<BuildCustomFieldPropsFn<TData>>(
+    (
+      formCustomField: FormCustomFieldProps<TData>
+    ): BuiltFormCustomFieldProps => {
+      const {
+        source,
+        CustomInput,
+        kind: _kind,
+        layout,
+        onChange,
+        disabled,
+        errorText,
+        error,
+        required,
+        ...rest
+      } = formCustomField;
+
+      return {
+        ...rest,
+        ...getFieldErrorProps(source, error, errorText),
+        CustomInput,
+        onChange: propagateChange(
+          source,
+          onChange as Nullable<InputOnChangeFn<InputType>>
+        ) as CustomFormInputProps<NullishPrimitives>["onChange"],
+        value: getFieldValue<DeepKeyOf<FormData<TData>>>(
+          source as DeepKeyOf<FormData<TData>>
+        ),
+        disabled: disabled || modifiers.disabled,
+        required: isFieldRequired(source, required),
+        layout: formLayout.buildFormFieldLayout(layout),
+      };
+    },
+    [
+      formLayout,
+      getFieldErrorProps,
+      getFieldValue,
+      isFieldRequired,
+      modifiers.disabled,
+      propagateChange,
     ]
   );
 
@@ -383,11 +497,13 @@ const useFormFields = <TData extends object>(
   return useMemo<BuiltFormContent<InputType>[]>(() => {
     if (!content || !content.length) return [];
     return content.map((content) => {
-      if (isFormDivider(content)) return content;
+      if (isFormDivider(content) || isFormCustomContent(content))
+        return content;
       if (isFormText(content)) return buildFormText(content);
+      if (isFormCustomField(content)) return buildCustomFieldProps(content);
       return buildFieldProps(content);
     });
-  }, [buildFieldProps, content]);
+  }, [buildCustomFieldProps, buildFieldProps, content]);
 };
 
 /**
@@ -408,6 +524,8 @@ const useFormSubmission = <TData extends object>(
   modifiers: FormModifers,
   editState: UseFormEditStateReturn,
   onSubmit: Nullish<FormOnSubmitFn<TData>>,
+  onSubmitError: Nullish<FormOnSubmitErrorFn>,
+  onCancelled: Nullish<VoidFn>,
   logger: Logger
 ): UseFormSubmissionReturn => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -459,7 +577,11 @@ const useFormSubmission = <TData extends object>(
         setIsSubmitting(true);
         const result = await onSubmit(dataToSubmit);
         if (isBoolean(result)) {
-          logger.debug("TODO: handle submit failure visually");
+          if (!result && onSubmitError) {
+            onSubmitError(
+              new Error("Failed to submit form: `onSubmit` returned false.")
+            );
+          }
           return;
         }
         // overwrite internal form data upon submission
@@ -472,10 +594,22 @@ const useFormSubmission = <TData extends object>(
         setIsSubmitting(false);
       } catch (e: unknown) {
         logger.error(e);
+        if (onSubmitError)
+          onSubmitError(
+            new Error(`Failed to submit form: ${(e as Error).message}`)
+          );
         setIsSubmitting(false);
       }
     },
-    [modifiers, onSubmit, validation, logger, formData, editState]
+    [
+      modifiers,
+      onSubmit,
+      onSubmitError,
+      validation,
+      logger,
+      formData,
+      editState,
+    ]
   );
 
   /**
@@ -491,6 +625,8 @@ const useFormSubmission = <TData extends object>(
     if (!editState.isEditing || isSubmitting) return;
     formData.setData(formData.initialData);
     editState.stopEditing();
+    if (onCancelled) onCancelled();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editState, formData, isSubmitting]);
 
   return { submitForm, isSubmitting, cancelEdition };
@@ -543,10 +679,10 @@ const useFormEditState = (modifiers: FormModifers): UseFormEditStateReturn => {
  * @param {Logger} logger - the logger object
  * @return {FormContext<TData>} - the form context object
  *
- * @see {@link useFormData}, {@link useFormValidation}, {@link useFormEditState} {@link useFormModifiers}, {@link useFormFields}, {@link useFormSubmission}
+ * @see {@link useFormData}, {@link useFormValidation}, {@link useFormEditState} {@link useFormModifiers}, {@link useFormContent}, {@link useFormSubmission}
  */
 export const useForm = <TData extends object>(
-  props: FormProps<TData>,
+  { columns, asModal, ...props }: FormDefaultProps<TData>,
   logger: Logger
 ): FormContext<TData> => {
   const formData = useFormData<TData>(props, logger);
@@ -557,10 +693,12 @@ export const useForm = <TData extends object>(
     formModifiers
   );
   const formEditState = useFormEditState(formModifiers);
-  const content = useFormFields(
+  const formLayout = useFormLayout({ columns, asModal });
+  const content = useFormContent(
     formData,
     formValidation,
     formModifiers,
+    formLayout,
     props.content
   );
   const formSubmission = useFormSubmission(
@@ -569,6 +707,8 @@ export const useForm = <TData extends object>(
     formModifiers,
     formEditState,
     props.onSubmit,
+    props.onSubmitError,
+    props.onCancelled,
     logger
   );
 
@@ -578,6 +718,7 @@ export const useForm = <TData extends object>(
     ...formSubmission,
     ...formEditState,
     ...formModifiers,
+    ...formLayout,
     content,
   };
 };
@@ -601,6 +742,13 @@ const defaultFormContext: FormContext<object> = {
   ...defaultFormValidation,
   triggerFormValidation: () => {},
   computeFormValidation: () => defaultFormValidation,
+  columns: 2,
+  buildFormFieldLayout: () => ({
+    readonly: false,
+    hidden: false,
+    size: 1,
+    columnEnd: "span 1",
+  }),
 };
 
 const InternalFormContext =
@@ -621,7 +769,7 @@ export const useFormContext = <TData extends object>(): FormContext<TData> => {
 };
 
 export const FormProvider = <TData extends object>(
-  props: FormProps<TData> & { children: ReactNode }
+  props: FormDefaultProps<TData> & { children: ReactNode }
 ): JSX.Element => {
   const logger = useLogger("Form Context");
   const context = useForm<TData>(props, logger);

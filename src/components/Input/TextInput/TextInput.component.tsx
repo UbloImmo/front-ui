@@ -2,6 +2,7 @@ import { isString } from "@ubloimmo/front-util";
 
 import { StyledInput, defaultCommonInputProps } from "../Input.common";
 import {
+  useInputId,
   useInputOnChange,
   useInputRef,
   useInputStyles,
@@ -44,6 +45,7 @@ const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
   const { forwardRef } = useInputRef(mergedProps);
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
   const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
+  const id = useInputId(mergedProps);
   return (
     <StyledInput
       data-testid={testId}
@@ -56,6 +58,7 @@ const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
       disabled={mergedProps.disabled}
       autoComplete={autoComplete}
       ref={forwardRef}
+      id={id}
       {...inputStyles}
     />
   );

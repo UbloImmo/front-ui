@@ -4,6 +4,7 @@ import { ChangeEventHandler, FocusEventHandler } from "react";
 import { StyledTextArea } from "./TextAreaInput.styles";
 import { defaultCommonInputProps } from "../Input.common";
 import {
+  useInputId,
   useInputOnChange,
   useInputRef,
   useInputStyles,
@@ -55,6 +56,7 @@ const TextAreaInput = (
 
   const onBlur = useHtmlAttribute<FocusEventHandler>(mergedProps.onBlur);
   const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
+  const id = useInputId(mergedProps);
 
   return (
     <StyledTextArea
@@ -68,6 +70,7 @@ const TextAreaInput = (
       onBlur={onBlur}
       ref={forwardRef}
       autoComplete={autoComplete}
+      id={id}
       {...inputStyles}
       $resize={mergedProps.resize}
     />

@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
 import { useFieldValidity } from "./Field.utils";
-import { NativeInputOnChangeFn } from "../Input";
+import { NativeInputOnChangeFn, useInputId } from "../Input";
 import { defaultCommonInputProps } from "../Input/Input.common";
 import { Input } from "../Input/Input.component";
 import { inputTypes } from "../Input/Input.data";
@@ -35,7 +35,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
@@ -52,6 +52,14 @@ const Field = <TType extends InputType>(
 
   const testId = useTestId("field", props);
   const className = useClassName(mergedProps);
+
+  const inputId = useInputId(props);
+  const labelHtmlFor = useMemo(() => {
+    if (["icon-picker", "combobox"].includes(mergedProps.type)) {
+      return null;
+    }
+    return inputId;
+  }, [mergedProps.type, inputId]);
 
   const { errorText, error, setValidityState } = useFieldValidity(mergedProps);
 
@@ -85,9 +93,15 @@ const Field = <TType extends InputType>(
       className={className}
       gap="s-1"
     >
-      <InputLabel {...mergedProps} testId="field-label" overrideTestId>
+      <InputLabel
+        {...mergedProps}
+        testId="field-label"
+        overrideTestId
+        htmlFor={labelHtmlFor}
+      >
         <Input
           {...mergedProps}
+          id={inputId}
           testId="field-input"
           onChangeNative={updateValidityOnChange}
           error={error}
@@ -109,7 +123,7 @@ Field.defaultProps = defaultFieldProps;
 
 export { Field };
 
-const FieldContainer = styled(FlexColumnLayout)`
+export const FieldContainer = styled(FlexColumnLayout)`
   input,
   textarea,
   select,

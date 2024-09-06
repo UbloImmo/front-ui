@@ -3,7 +3,12 @@ import styled from "styled-components";
 
 import { buildFlexLayoutStyle } from "./Flex.styles";
 
-import { useClassName, useStyleProps, useTestId } from "@utils";
+import {
+  useClassName,
+  useHtmlAttribute,
+  useStyleProps,
+  useTestId,
+} from "@utils";
 
 import type {
   FlexDirectionLayoutProps,
@@ -24,6 +29,7 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   children: null,
   className: null,
   role: null,
+  id: null,
 } as const;
 
 /**
@@ -40,12 +46,14 @@ export const FlexLayout = forwardRef<
   const innerProps = useStyleProps(props);
   const testId = useTestId("flex", props);
   const className = useClassName(props);
+  const id = useHtmlAttribute(props.id ?? null);
   return (
     <FlexLayoutInner
       {...innerProps}
       ref={ref}
       data-testid={testId}
       className={className}
+      id={id}
       role={props.role ?? undefined}
     >
       {props.children}

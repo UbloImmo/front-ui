@@ -13,6 +13,7 @@ import {
   useInputValue,
   useInputStyles,
   useInputRef,
+  useInputId,
 } from "../Input.utils";
 
 import { Icon } from "@/components/Icon";
@@ -119,6 +120,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
 
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
   const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
+  const id = useInputId(mergedProps);
 
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-number-container">
@@ -136,6 +138,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
         disabled={mergedProps.disabled}
         ref={forwardRef}
         autoComplete={autoComplete}
+        id={id}
         {...inputStyles}
       />
       <StyledInputControlGroup>

@@ -25,6 +25,8 @@ const defaultFormProps: FormDefaultProps<object> = {
   schema: null,
   onChange: null,
   onSubmit: null,
+  onSubmitError: console.error,
+  onCancelled: null,
   title: "Form",
   badge: null,
   icon: null,
@@ -35,12 +37,16 @@ const defaultFormProps: FormDefaultProps<object> = {
   validateOnChange: true,
   validateOnSubmit: true,
   debug: false,
+  asModal: null,
+  columns: 2,
+  submitLabel: "save",
+  cancelLabel: "cancel",
 };
 
 /**
  * A flexible yet expressive form renderer.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @template {object} TData - The type of the form data
  *
@@ -62,6 +68,10 @@ const Form = <TData extends object>(
   );
 };
 
+Form.defaultProps = defaultFormProps;
+
+export { Form };
+
 /**
  * Renders the inner form component with specific elements.
  *
@@ -82,7 +92,10 @@ const InnerForm = <TData extends object>(
       <FormHeader {...props} />
       <FormFieldRenderer />
       <FormDebug />
-      <FormEditBanner />
+      <FormEditBanner
+        submitLabel={props.submitLabel}
+        cancelLabel={props.cancelLabel}
+      />
     </FormContainer>
   );
 };
@@ -90,6 +103,3 @@ const InnerForm = <TData extends object>(
 const FormContainer = styled.form<FormContainerStyleProps>`
   ${formContainerStyles}
 `;
-Form.defaultProps = defaultFormProps;
-
-export { Form };
