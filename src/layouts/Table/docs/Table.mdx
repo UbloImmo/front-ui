@@ -13,7 +13,7 @@ import * as TableStories from "../Table.stories.tsx";
 
 `Table` is useful to display data in a structured and organized manner, with rows and columns that can be customized to fit specific needs.
 
-`Table` can be used with `TableHeader`, `TableHeaderCell`, `TableBody`, `TableRow`, and `TableCell` to create a fully structured table.
+`Table` can be used with `TableHeader`, `TableHeaderCell`, `TableBody`, `TableRow`, `TableCell`, and `TableScrollView` to create a fully structured table.
 
 <Canvas of={TableStories.CustomContent} />
 
@@ -23,10 +23,22 @@ To label your columns and inform users of their type, use `TableHeader` and `Tab
 
 <Canvas of={TableStories.WithHeader} />
 
+## Setting the TableCell's padding
+
+`TableCell` has an optional `padded` property that you can use to add standard inner margin to your table cell when set to `true`.
+
+<Canvas of={TableStories.WithPadding} />
+
 ## Spanning the columns
 
 You can use the optional property `colSpan` on `TableHeaderCell` and `TableCell` to define the number of columns to be spanned in your table
 
 <Canvas of={TableStories.ColSpan} />
+
+## Handling large data with TableScrollView
+
+You can wrap your `Table` in `TableScrollView` to enable horizontal scroll for tables with large amount of data, ensuring user to seamlessly view and interact with content that surpasses the screen width.
+
+<Canvas of={TableStories.ScrollView} />
 
 </Content>
