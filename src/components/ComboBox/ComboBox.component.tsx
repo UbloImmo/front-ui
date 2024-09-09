@@ -37,7 +37,7 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
 /**
  * A group of ComboBoxButtons that act as a select or radio input.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -181,6 +181,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
           key={option.label + index}
           active={isOptionActive(option)}
           disabled={option.disabled || disabled}
+          description={option.description}
           multi={multi}
           fill={direction === "column"}
           onSelect={selectOptionOnClick(option)}
