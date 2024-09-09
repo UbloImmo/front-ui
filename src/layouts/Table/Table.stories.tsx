@@ -9,6 +9,7 @@ import { TableScrollView } from "./components/TableScrollView/TableScrollView.co
 import { Table } from "./Table.layout";
 import { FlexRowLayout } from "../Flex";
 
+import { breakpointsPx } from "@/sizes";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { arrayOf } from "@utils";
 
@@ -155,7 +156,7 @@ export const ScrollView: Story = {
   },
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: "700px" }}>
+      <div style={{ maxWidth: breakpointsPx.XXS }}>
         <TableScrollView>
           <Story />
         </TableScrollView>
