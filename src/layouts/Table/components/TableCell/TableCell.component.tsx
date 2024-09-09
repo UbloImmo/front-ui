@@ -4,9 +4,9 @@ import { tableCellStyles } from "./TableCell.styles";
 
 import { useMergedProps, useStyleProps } from "@utils";
 
-import type { CellProps, TableCellStyleProps } from "../../Table.types";
+import type { TableCellProps, TableCellStyleProps } from "./TableCell.types";
 
-const defaultTableCellProps: CellProps = {
+const defaultTableCellProps: TableCellProps = {
   children: null,
   colSpan: 1,
   padded: false,
@@ -18,13 +18,17 @@ const defaultTableCellProps: CellProps = {
  * @param {CellProps} props - The props for the component.
  * @return {JSX.Element} The rendered table cell.
  */
-const TableCell = (props: CellProps): JSX.Element => {
+const TableCell = (props: TableCellProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultTableCellProps, props);
 
   const styleProps = useStyleProps(mergedProps);
 
   return (
-    <StyledTableCell colSpan={mergedProps.colSpan} {...styleProps}>
+    <StyledTableCell
+      colSpan={mergedProps.colSpan}
+      data-testid="table-cell"
+      {...styleProps}
+    >
       {props.children}
     </StyledTableCell>
   );
