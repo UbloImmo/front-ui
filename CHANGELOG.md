@@ -7,13 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Changed
-
-- Updated dependencies
-
+## 0.30.1 - 2024-09-09
 ### Added
-
 - Generated new icons from tokens
+
+### Changed
+- Updated dependencies
 
 ## 0.30.0 - 2024-09-06
 ### Added
