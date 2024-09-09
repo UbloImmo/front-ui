@@ -5,10 +5,12 @@ import {
   TableRow,
 } from "./components";
 import { TableCell } from "./components/TableCell";
+import { TableScrollView } from "./components/TableScrollView/TableScrollView.component";
 import { Table } from "./Table.layout";
 import { FlexRowLayout } from "../Flex";
 
 import { componentSourceFactory } from "@docs/docs.utils";
+import { arrayOf } from "@utils";
 
 import { Avatar, Badge, Text } from "@components";
 
@@ -16,22 +18,31 @@ import type { TableProps } from "./Table.types";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ReactNode } from "react";
 
-const TableHeaderExample: ReactNode = (
+const HeaderExample: ReactNode = (
   <TableHeader>
     <TableHeaderCell>Header 1</TableHeaderCell>
     <TableHeaderCell>Header 2</TableHeaderCell>
   </TableHeader>
 );
 
-const TableBodyExample1: ReactNode = (
+const DefaultExample: ReactNode = (
   <TableBody>
     <TableRow>
-      <TableCell padded>Body 1</TableCell>
-      <TableCell padded>Body 2</TableCell>
+      <TableCell padded>Data 1</TableCell>
+      <TableCell padded>Data 2</TableCell>
     </TableRow>
     <TableRow>
-      <TableCell padded>Body 3</TableCell>
-      <TableCell padded>Body 4</TableCell>
+      <TableCell padded>Data 3</TableCell>
+      <TableCell padded>Data 4</TableCell>
+    </TableRow>
+  </TableBody>
+);
+
+const PaddingExample: ReactNode = (
+  <TableBody>
+    <TableRow>
+      <TableCell>Data 1</TableCell>
+      <TableCell padded>Data 2</TableCell>
     </TableRow>
   </TableBody>
 );
@@ -39,20 +50,20 @@ const TableBodyExample1: ReactNode = (
 const SpanExample: ReactNode = (
   <TableBody>
     <TableRow>
-      <TableCell padded>Body 1</TableCell>
+      <TableCell padded>Data 1</TableCell>
       <TableCell colSpan={2} padded>
-        Body 2
+        Data 2
       </TableCell>
     </TableRow>
     <TableRow>
-      <TableCell padded>Body 3</TableCell>
-      <TableCell padded>Body 4</TableCell>
-      <TableCell padded>Body 5</TableCell>
+      <TableCell padded>Data 3</TableCell>
+      <TableCell padded>Data 4</TableCell>
+      <TableCell padded>Data 5</TableCell>
     </TableRow>
   </TableBody>
 );
 
-const TableBodyExample2: ReactNode = (
+const CustomContentExample: ReactNode = (
   <TableBody>
     <TableRow>
       <TableCell padded>
@@ -79,33 +90,17 @@ const TableBodyExample2: ReactNode = (
   </TableBody>
 );
 
-// TODO: Enable horizontal scroll for large tables
-const TableScrollViewExample: ReactNode = (
+const ScrollViewExample: ReactNode = (
   <TableBody>
-    <TableRow>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-      <TableCell padded>Data</TableCell>
-    </TableRow>
+    {arrayOf(2, (index) => (
+      <TableRow key={index}>
+        {arrayOf(10, (index) => (
+          <TableCell padded key={index}>
+            Data {index + 1}
+          </TableCell>
+        ))}
+      </TableRow>
+    ))}
   </TableBody>
 );
 
@@ -118,7 +113,7 @@ const meta = {
   component: Table,
   title: "Layouts/Table/Stories",
   args: {
-    children: TableBodyExample1,
+    children: DefaultExample,
   },
   parameters: {
     docs: componentSource(),
@@ -132,13 +127,19 @@ export const Default: Story = {};
 
 export const WithHeader: Story = {
   args: {
-    children: [TableHeaderExample, TableBodyExample1],
+    children: [HeaderExample, DefaultExample],
+  },
+};
+
+export const WithPadding: Story = {
+  args: {
+    children: PaddingExample,
   },
 };
 
 export const CustomContent: Story = {
   args: {
-    children: [TableHeaderExample, TableBodyExample2],
+    children: [HeaderExample, CustomContentExample],
   },
 };
 
@@ -150,6 +151,15 @@ export const ColSpan: Story = {
 
 export const ScrollView: Story = {
   args: {
-    children: TableScrollViewExample,
+    children: ScrollViewExample,
   },
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: "700px" }}>
+        <TableScrollView>
+          <Story />
+        </TableScrollView>
+      </div>
+    ),
+  ],
 };
