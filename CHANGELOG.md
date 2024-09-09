@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Updated dependencies
+
+### Added
+
+- Generated new icons from tokens
+
 ## 0.30.0 - 2024-09-06
 ### Added
 - `v0.0.3` Form component
