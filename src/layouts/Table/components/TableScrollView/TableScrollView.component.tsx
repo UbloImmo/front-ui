@@ -18,7 +18,11 @@ import type { TableProps } from "../../Table.types";
  * @returns The table scroll view component.
  */
 const TableScrollView = (props: TableProps) => {
-  return <StyledTableScrollView>{props.children}</StyledTableScrollView>;
+  return (
+    <StyledTableScrollView data-testid="table-scroll-view">
+      {props.children}
+    </StyledTableScrollView>
+  );
 };
 
 export { TableScrollView };

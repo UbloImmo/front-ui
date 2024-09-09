@@ -4,9 +4,9 @@ import { tableHeaderCellStyles } from "./TableHeaderCell.styles";
 
 import { useMergedProps } from "@utils";
 
-import type { CellProps } from "../../Table.types";
+import type { TableCellProps } from "../TableCell";
 
-const defaultTableHeaderCellProps: CellProps = {
+const defaultTableHeaderCellProps: TableCellProps = {
   children: null,
   colSpan: 1,
 };
@@ -17,12 +17,15 @@ const defaultTableHeaderCellProps: CellProps = {
  * @param {CellProps} props - The props for the component.
  * @return {JSX.Element} The rendered table header cell.
  */
-const TableHeaderCell = (props: CellProps): JSX.Element => {
+const TableHeaderCell = (props: TableCellProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultTableHeaderCellProps, props);
 
   return (
-    <StyledTableHeaderCell colSpan={mergedProps.colSpan}>
-      <div>{props.children}</div>
+    <StyledTableHeaderCell
+      colSpan={mergedProps.colSpan}
+      data-testid="table-header-cell"
+    >
+      <div data-testid="table-header-cell-inner">{props.children}</div>
     </StyledTableHeaderCell>
   );
 };

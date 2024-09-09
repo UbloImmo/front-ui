@@ -15,8 +15,8 @@ import type { TableProps } from "../../Table.types";
  */
 const TableHeader = (props: TableProps) => {
   return (
-    <thead>
-      <tr>{props.children}</tr>
+    <thead data-testid="table-header">
+      <tr data-testid="table-header-row">{props.children}</tr>
     </thead>
   );
 };

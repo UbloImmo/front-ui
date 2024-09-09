@@ -8,7 +8,7 @@ import type { TableProps } from "../../Table.types";
  * @returns The table body component.
  */
 const TableBody = (props: TableProps) => {
-  return <tbody>{props.children}</tbody>;
+  return <tbody data-testid="table-body">{props.children}</tbody>;
 };
 
 export { TableBody };
