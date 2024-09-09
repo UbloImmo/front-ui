@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 
-import type { TableCellStyleProps } from "../../Table.types";
+import type { TableCellStyleProps } from "./TableCell.types";
 
 export const tableCellStyles = ({ $padded }: TableCellStyleProps) => {
   return css`
