@@ -1,9 +1,9 @@
 import { Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
+import { IconName } from "..";
 import { Badge } from "./Badge.component";
 import { BadgeProps, BadgeShade } from "./Badge.types";
-import { IconName } from "..";
 import { FlexRowLayout } from "../../layouts";
 import { useMergedProps } from "../../utils";
 

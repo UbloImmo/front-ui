@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { IconPickerItem } from "./components/IconPickerItem/IconPickerItem.component";
 import { IconName } from "../Icon/Icon.types";
+import { IconPickerItem } from "./components/IconPickerItem/IconPickerItem.component";
 
 import { FlexLayout } from "@layouts";
 import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
