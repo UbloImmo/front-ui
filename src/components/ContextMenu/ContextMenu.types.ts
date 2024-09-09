@@ -1,8 +1,8 @@
+import type { IconName } from "../Icon";
 import type {
   ContextMenuItemProps,
   ContextMenuItemSize,
 } from "./components/ContextMenuItem/ContextMenuItem.types";
-import type { IconName } from "../Icon";
 import type { ControlledPopoverProps } from "@layouts";
 import type { StyleProps, TestIdProps } from "@types";
 import type { ReactNode } from "react";
