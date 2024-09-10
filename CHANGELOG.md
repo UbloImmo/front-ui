@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.31.2 - 2024-09-10
 ### Fixed
 - `v0.0.7` CompoBoxButton component
   - grid column template set to `auto auto`
-
 
 ## 0.31.1 - 2024-09-10
 ### Added
