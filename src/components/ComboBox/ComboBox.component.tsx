@@ -229,7 +229,6 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
           active={isOptionActive(option)}
           description={option.description}
           disabled={option.disabled || disabled}
-          description={option.description}
           multi={multi}
           fill={direction === "column"}
           onSelect={selectOptionOnClick(option)}
