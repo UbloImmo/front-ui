@@ -23,6 +23,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.3` ActionIcon component
   - new `m` & `l` (formerly `m`) sizes
 
+## 0.31.0 - 2024-09-09
+### Added
+- `v0.0.1` Table layout
+  - A structured layout element used to display data in rows and columns.
+  - Sub-components included:
+    - TableHeader
+    - TableHeaderCell
+    - TableBody
+    - TableRow
+    - TableCell
+    - TableScrollView
+
+### Fixed
+- `v0.0.8` ComboBox component
+  - add missing `description` property for flexLayout display
+
+
 ## 0.30.1 - 2024-09-09
 ### Added
 - Generated new icons from tokens
