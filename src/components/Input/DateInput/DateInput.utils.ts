@@ -258,5 +258,5 @@ export const dateFormatters: ValueMap<
 > = {
   iso: normalizeToDateISO,
   native: normalizeToDateNativeStr,
-  "jj/mm/yyyy": normalizeToDateStr,
+  "dd/mm/yyyy": normalizeToDateStr,
 };
