@@ -7,13 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- `v0.0.7` CompoBoxButton component
+  - grid column template set to `auto auto`
+
+
 ## 0.31.1 - 2024-09-10
 ### Added
 - `v0.0.2` DateInput component
   - `format` property to control output format
 - `v0.0.9` ComboBox component
   - `creatable` property
-- `v0.0.8` CompoBoxButton component
+- `v0.0.6` CompoBoxButton component
   - `deletable`, `editable` properties
 
 ### Changed
