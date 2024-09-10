@@ -395,7 +395,7 @@ const useFormContent = <TData extends object>(
    */
   const isFieldRequired = useCallback<IsFieldRequiredFn<TData>>(
     (source, baseRequired) => {
-      if (baseRequired) return baseRequired;
+      if (isBoolean(baseRequired)) return baseRequired;
       if (!validation.schema) return false;
       return isSchemaFieldRequired(validation.schema, source);
     },

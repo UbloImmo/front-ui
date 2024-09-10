@@ -134,10 +134,17 @@ const isSchemaOptional = (schema: ZodType) => {
   if (schema instanceof ZodUnion) {
     return schema.options.some((option: ZodType) => isSchemaOptional(option));
   }
+  const typeName: string =
+    "typeName" in schema._def && isString(schema._def.typeName)
+      ? schema._def.typeName
+      : "";
   return (
     schema instanceof ZodOptional ||
     schema instanceof ZodNullable ||
-    schema instanceof ZodNull
+    schema instanceof ZodNull ||
+    typeName.includes("ZodOptional") ||
+    typeName.includes("ZodNullable") ||
+    typeName.includes("ZodNull")
   );
 };
 

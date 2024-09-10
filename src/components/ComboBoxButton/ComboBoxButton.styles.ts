@@ -1,6 +1,7 @@
 import { type RuleSet, css } from "styled-components";
 
 import { breakpointsPx } from "@/sizes";
+import { cssDimensions } from "@/utils/styles.utils";
 import { cssVarUsage } from "@utils";
 
 import type {
@@ -25,7 +26,7 @@ export const ComboBoxButtonWrapperStyles = ({
     : cssVarUsage("combobox-button-min-height")};
 
   display: inline-grid;
-  grid-template-columns: max-content auto;
+  grid-template-columns: auto auto;
   grid-template-rows: 1fr;
   background: none;
   border-radius: var(--s-1);
@@ -112,12 +113,7 @@ export const ComboBoxIconContainerStyle = ({
 }: ComboButtonIconContainerStyleProps) => {
   return css`
     position: relative;
-    height: var(--s-4);
-    min-height: var(--s-4);
-    max-height: var(--s-4);
-    width: var(--s-4);
-    min-width: var(--s-4);
-    max-width: var(--s-4);
+    ${cssDimensions("s-4", "s-4", true)}
 
     & > svg[data-testid="icon"] {
       position: absolute;
@@ -146,6 +142,8 @@ export const ComboBoxContextMenuTriggerStyles = (): RuleSet => css`
   justify-content: center;
   height: 100%;
   width: var(--s-8);
+  min-width: var(--s-8);
+  max-width: var(--s-8);
   min-height: var(--combobox-button-min-height);
   border: 1px solid var(--combobox-button-border-color);
   border-left: none;
