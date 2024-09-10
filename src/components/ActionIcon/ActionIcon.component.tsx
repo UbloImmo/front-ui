@@ -24,7 +24,7 @@ import type { VoidFn } from "@ubloimmo/front-util";
 
 const defaultActionIconProps: DefaultActionIconProps = {
   icon: "Square",
-  size: "m",
+  size: "l",
   color: "primary",
   onClick: null,
   disabled: false,
@@ -37,7 +37,7 @@ const defaultActionIconProps: DefaultActionIconProps = {
  *
  * No label, no tags, just an icon.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {ActionIconProps & TestIdProps} props - The properties for the action icon
  * @return {JSX.Element} The rendered action icon component
@@ -96,6 +96,7 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
       onClick={onClick}
       aria-label={mergedProps.title}
       role="button"
+      type="button"
     >
       <Icon {...iconProps} />
     </ActionIconContainer>

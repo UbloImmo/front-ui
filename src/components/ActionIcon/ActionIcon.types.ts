@@ -2,7 +2,7 @@ import type { IconName } from "../Icon";
 import type { ColorKey, StyleOverrideProps, StyleProps } from "@types";
 import type { Enum, Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
 
-const actionIconSizes = ["m", "s"];
+const actionIconSizes = ["l", "m", "s"];
 export type ActionIconSize = Enum<typeof actionIconSizes>;
 
 export type ActionIconColor = Extract<ColorKey, "primary" | "error">;
@@ -23,13 +23,13 @@ export type ActionIconProps = StyleOverrideProps & {
   /**
    * The size of the ActionIcon
    * @type {ActionIconSize}
-   * @default "m"
+   * @default "l"
    */
   size?: ActionIconSize;
   /**
    * The color of the ActionIcon.
    *
-   * Affects its appearance while hovering when size is `m`.
+   * Affects its appearance while hovering when size is `m` or `l`.
    *
    * @remarks Set it to `error` for destructive actions.
    *

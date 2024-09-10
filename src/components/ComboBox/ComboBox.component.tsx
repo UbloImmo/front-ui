@@ -6,7 +6,7 @@ import {
   type Nullable,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   type ComboBoxProps,
@@ -14,6 +14,7 @@ import {
   type ComboBoxOption,
   type ComboBoxOnChangeFn,
 } from "./ComboBox.types";
+import { ActionIcon } from "../ActionIcon";
 import { ComboBoxButton } from "../ComboBoxButton";
 
 import { FlexLayout, GridItem, GridLayout } from "@layouts";
@@ -32,12 +33,18 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
   columns: null,
   readonly: false,
   id: null,
+  creatable: false,
+  onCreate: null,
+  onOptionDelete: null,
+  onOptionEdit: null,
+  optionEditLabel: null,
+  optionDeleteLabel: null,
 };
 
 /**
  * A group of ComboBoxButtons that act as a select or radio input.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -133,6 +140,25 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     warn("Multi mode requires showIcon to be true");
   }
 
+  const onOptionDelete = useCallback(
+    (value: TOptionValue) => () => {
+      if (mergedProps.onOptionDelete) mergedProps.onOptionDelete(value);
+    },
+    [mergedProps]
+  );
+
+  const onOptionEdit = useCallback(
+    (value: TOptionValue) => () => {
+      if (mergedProps.onOptionEdit) mergedProps.onOptionEdit(value);
+    },
+    [mergedProps]
+  );
+
+  const creatable = useMemo(() => {
+    if (disabled || readonly) return false;
+    return mergedProps.creatable;
+  }, [disabled, readonly, mergedProps.creatable]);
+
   if (isNumber(mergedProps.columns)) {
     return (
       <GridLayout
@@ -156,12 +182,33 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
               description={option.description}
               disabled={option.disabled || disabled}
               multi={multi}
-              fill={direction === "column"}
+              fill
               onSelect={selectOptionOnClick(option)}
               showIcon={showIcon}
+              onDelete={onOptionDelete(option.value)}
+              onEdit={onOptionEdit(option.value)}
+              editable={option.editable}
+              deletable={option.deletable}
+              editLabel={mergedProps.optionEditLabel}
+              deleteLabel={mergedProps.optionDeleteLabel}
             />
           </GridItem>
         ))}
+        {creatable && (
+          <GridItem
+            columnEnd="span 1"
+            rowEnd="span 1"
+            fill="force"
+            key={"create-button"}
+          >
+            <ActionIcon
+              size="m"
+              color="primary"
+              icon="PlusLg"
+              onClick={mergedProps.onCreate}
+            />
+          </GridItem>
+        )}
       </GridLayout>
     );
   }
@@ -180,13 +227,28 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
           label={option.label}
           key={option.label + index}
           active={isOptionActive(option)}
+          description={option.description}
           disabled={option.disabled || disabled}
           multi={multi}
           fill={direction === "column"}
           onSelect={selectOptionOnClick(option)}
           showIcon={showIcon}
+          onDelete={onOptionDelete(option.value)}
+          onEdit={onOptionEdit(option.value)}
+          editable={option.editable}
+          deletable={option.deletable}
+          editLabel={mergedProps.optionEditLabel}
+          deleteLabel={mergedProps.optionDeleteLabel}
         />
       ))}
+      {creatable && (
+        <ActionIcon
+          size="m"
+          color="primary"
+          icon="PlusLg"
+          onClick={mergedProps.onCreate}
+        />
+      )}
     </FlexLayout>
   );
 };

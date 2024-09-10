@@ -14,7 +14,7 @@ import {
   type VoidFn,
 } from "@ubloimmo/front-util";
 import { type FC } from "react";
-import { ZodNullable, ZodOptional, ZodUnion, type ZodType } from "zod";
+import { ZodNull, ZodNullable, ZodOptional, ZodUnion, type ZodType } from "zod";
 
 import type {
   BuiltFieldProps,
@@ -134,7 +134,11 @@ const isSchemaOptional = (schema: ZodType) => {
   if (schema instanceof ZodUnion) {
     return schema.options.some((option: ZodType) => isSchemaOptional(option));
   }
-  return schema instanceof ZodOptional || schema instanceof ZodNullable;
+  return (
+    schema instanceof ZodOptional ||
+    schema instanceof ZodNullable ||
+    schema instanceof ZodNull
+  );
 };
 
 /**

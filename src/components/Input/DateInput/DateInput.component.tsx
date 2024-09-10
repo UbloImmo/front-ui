@@ -18,6 +18,7 @@ import styled from "styled-components";
 
 import { dateInputStyles } from "./DateInput.styles";
 import {
+  dateFormatters,
   isValidDateNativeStr,
   normalizeToDate,
   normalizeToDateISO,
@@ -64,12 +65,13 @@ const defaultDateInputProps: DateInputDefaultProps = {
   autoComplete: "date",
   min: null,
   max: null,
+  format: "iso",
 };
 
 /**
  * A simple date input combined with a Calendar.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {DateInputProps & TestIdProps} props - The input props.
  * @return {JSX.Element} The rendered date input component.
@@ -109,8 +111,9 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
     (value: Nullable<InputValue<"date">>) => {
       setInnerDateStr(value ?? "");
       if (isFunction<InputOnChangeFn<"date">>(mergedProps.onChange)) {
+        const formatter = dateFormatters[mergedProps.format];
         mergedProps.onChange(
-          isValidDateNativeStr(value) ? normalizeToDateISO(value) : null
+          isValidDateNativeStr(value) ? formatter(value) : null
         );
       }
     },

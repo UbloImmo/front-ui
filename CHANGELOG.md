@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.2` DateInput component
+  - `format` property to control output format
+  
+- `v0.0.9` ComboBox component
+  - `creatable` property
+
+- `v0.0.8` CompoBoxButton component
+  - `deletable`, `editable` properties
+
+### Changed
+
+- `v0.0.3` ActionIcon component
+  - new `m` & `l` (formerly `m`) sizes
+
 ## 0.30.1 - 2024-09-09
 ### Added
 - Generated new icons from tokens

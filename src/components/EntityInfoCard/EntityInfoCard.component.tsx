@@ -83,7 +83,7 @@ const EntityInfoCard = (
         {mergedProps.actionIcon && (
           <ActionIcon
             {...mergedProps.actionIcon}
-            size="default"
+            size="l"
             testId={`${testId}-action`}
             overrideTestId
           />

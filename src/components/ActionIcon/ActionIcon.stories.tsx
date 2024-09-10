@@ -40,7 +40,7 @@ const meta = {
       defaultValue: ActionIcon.defaultProps.icon,
     },
     size: {
-      options: ["s", "m"],
+      options: ["s", "m", "l"],
       defaultValue: ActionIcon.defaultProps.size,
     },
     color: {
@@ -71,7 +71,7 @@ export const Default: Story = {
   },
 };
 
-const sizes: ActionIconSize[] = ["m", "s"];
+const sizes: ActionIconSize[] = ["l", "m", "s"];
 export const Sizes = (props: ActionIconProps) => {
   const defaults = useMergedProps(ActionIcon.defaultProps, props);
 
@@ -91,6 +91,7 @@ export const Sizes = (props: ActionIconProps) => {
 const SizeRenderer = (props: ActionIconProps) => {
   return (
     <FlexRowLayout gap="s-8" align="center">
+      <ActionIcon {...props} size="l" />
       <ActionIcon {...props} size="m" />
       <ActionIcon {...props} size="s" />
     </FlexRowLayout>
