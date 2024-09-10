@@ -26,11 +26,29 @@ export type ComboBoxOption<TOptionValue extends NullishPrimitives> = {
    * @default false
    */
   disabled?: boolean;
+  /**
+   * Whether the option can be edited.
+   *
+   * @default false
+   */
+  editable?: boolean;
+  /**
+   * Whether the option can be deleted.
+   *
+   * @default false
+   */
+  deletable?: boolean;
 };
 
 export type ComboBoxOnChangeFn<TOptionValue extends NullishPrimitives> = VoidFn<
   [TOptionValue[]]
 >;
+
+/**
+ * Callback function for when an option is edited or deleted
+ */
+export type ComboBoxOptionCallback<TOptionValue extends NullishPrimitives> =
+  VoidFn<[TOptionValue]>;
 
 export type ComboBoxProps<TOptionValue extends NullishPrimitives> = {
   /**
@@ -112,6 +130,29 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = {
    * @default null
    */
   id?: Nullable<string>;
+  /**
+   * Whether creating a new option is allowed
+   *
+   * @remarks Translates to rendering a single Button
+   *
+   * @type {boolean}
+   * @default false
+   */
+  creatable?: boolean;
+  /**
+   * Callback that fires when a new option should be created
+   *
+   * @remarks The parent component is responsible for handling options and values upon creation
+   */
+  onCreate?: Nullable<VoidFn>;
+  /**
+   * Callback that fires when an option is edited
+   */
+  onOptionEdit?: Nullable<ComboBoxOptionCallback<TOptionValue>>;
+  onOptionDelete?: Nullable<ComboBoxOptionCallback<TOptionValue>>;
+
+  optionEditLabel?: null;
+  optionDeleteLabel?: null;
 };
 
 export type ComboBoxDefaultProps<TOptionValue extends NullishPrimitives> =

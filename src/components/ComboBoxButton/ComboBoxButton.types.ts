@@ -60,6 +60,39 @@ export type ComboBoxButtonProps = {
    * @type {boolean}
    */
   showIcon?: boolean;
+  /**
+   * Whether the ComboBoxButton is deletable
+   */
+  deletable?: boolean;
+  /**
+   * Whether the ComboBoxButton is editable
+   */
+  editable?: boolean;
+  /**
+   * Callback that gets fired whenever the user chooses to edit the ComboBoxButton
+   */
+  onEdit?: Nullable<VoidFn>;
+  /**
+   * Callback that gets fired whenever the user chooses to delete the ComboBoxButton
+   */
+  onDelete?: Nullable<VoidFn>;
+  /**
+   * The label to be displayed in the edit button
+   *
+   * @remarks If not provided, will default to `tl.actions.edit`
+   *
+   * @default null
+   */
+  editLabel?: Nullable<string>;
+  /**
+   * The label to be displayed in the delete button
+   *
+   * @remarks If not provided, will default to `tl.actions.delete`
+   *
+   * @default null
+   *
+   */
+  deleteLabel?: Nullable<string>;
 };
 
 export type ComboBoxButtonDefaultProps = Required<ComboBoxButtonProps>;

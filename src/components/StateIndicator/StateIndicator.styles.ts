@@ -52,6 +52,7 @@ export const stateIndicatorStyle = ({
     max-width: 100%;
     min-width: 0;
     min-height: var(--s-10);
+    max-height: var(--s-10);
     border-radius: var(--s-1);
     display: flex;
     flex-direction: row;

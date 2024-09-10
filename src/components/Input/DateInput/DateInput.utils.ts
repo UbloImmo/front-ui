@@ -1,4 +1,10 @@
-import { isNull, isString, type Nullable } from "@ubloimmo/front-util";
+import {
+  isNull,
+  isString,
+  type GenericFn,
+  type Nullable,
+  type ValueMap,
+} from "@ubloimmo/front-util";
 import {
   format,
   formatISO,
@@ -10,6 +16,7 @@ import {
 } from "date-fns";
 
 import type { InputValue } from "../Input.types";
+import type { DateInputFormat } from "./DateInput.types";
 
 const DATE_STR_FORMAT = "dd/MM/yyyy";
 const DATE_STR_FORMAT_NATIVE = "yyyy-MM-dd";
@@ -243,4 +250,13 @@ export const normalizeToDateNativeStr = (
     return dateISOToDateNativeStr(dateStrToDateISO(dateLike));
   if (isValidDateISO(dateLike)) return dateISOToDateNativeStr(dateLike);
   return null;
+};
+
+export const dateFormatters: ValueMap<
+  DateInputFormat,
+  GenericFn<[Nullable<Date | string>], Nullable<string>>
+> = {
+  iso: normalizeToDateISO,
+  native: normalizeToDateNativeStr,
+  "dd/mm/yyyy": normalizeToDateStr,
 };
