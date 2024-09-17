@@ -1,4 +1,4 @@
-import { InputOnChangeFn, InputProps, InputValue } from "../Input.types";
+import { InputProps, InputValue } from "../Input.types";
 
 import { IconName } from "@/components/Icon";
 import { StyleProps } from "@types";
@@ -90,12 +90,10 @@ export type SelectInputProps<
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives
 > = Replace<
-  InputProps<"select">,
+  InputProps<"select", TValue>,
   "value",
   {
     value?: Nullable<InputValue<"select">> & Nullable<TValue>;
-    onChange: Nullable<InputOnChangeFn<"select">> &
-      Nullable<VoidFn<[Nullable<TValue>]>>;
   }
 > & {
   /**

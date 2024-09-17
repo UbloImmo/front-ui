@@ -21,6 +21,7 @@ import type {
   GenericFn,
   Nullable,
   Nullish,
+  NullishPrimitives,
   VoidFn,
 } from "@ubloimmo/front-util";
 import type { MutableRefObject, RefCallback } from "react";
@@ -89,9 +90,12 @@ type InputValueFallbackTransformerFn = GenericFn<[], NativeInputValue>;
  * @param {boolean?} uncontrolled - Optional flag to indicate when uncontrolled input.
  * @return {NativeInputValue} The processed input value.
  */
-export const useInputValue = <TType extends InputType>(
-  value: Nullable<InputValue<TType>>,
-  rawProps: InputProps<TType>,
+export const useInputValue = <
+  TType extends InputType,
+  TGenericValue extends NullishPrimitives = NullishPrimitives
+>(
+  value: Nullable<InputValue<TType, TGenericValue>>,
+  rawProps: InputProps<TType, TGenericValue>,
   valueTransformer?: InputValueTransformerFn<TType>,
   fallback?: InputValueFallbackTransformerFn
 ): NativeInputValue => {

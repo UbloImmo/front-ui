@@ -4,7 +4,10 @@ import type { TableCellStyleProps } from "./TableCell.types";
 
 export const tableCellStyles = ({ $padded }: TableCellStyleProps) => {
   return css`
-    ${$padded && `padding: var(--s-2) var(--s-4);`}
+    ${$padded &&
+    css`
+      padding: var(--s-1) var(--s-2);
+    `}
     white-space: nowrap;
   `;
 };

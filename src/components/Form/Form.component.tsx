@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import styled from "styled-components";
 
 import {
@@ -8,6 +9,7 @@ import {
 } from "./components";
 import { FormProvider, useFormContext } from "./Form.context";
 import { formContainerStyles } from "./Form.styles";
+import { Dialog } from "../Dialog";
 
 import { useTestId, useMergedProps, useStyleProps } from "@utils";
 
@@ -19,7 +21,7 @@ import type {
 import type { TestIdProps } from "@types";
 
 const defaultFormProps: FormDefaultProps<object> = {
-  query: () => ({}),
+  query: {},
   defaultValues: {},
   content: [],
   schema: null,
@@ -46,7 +48,7 @@ const defaultFormProps: FormDefaultProps<object> = {
 /**
  * A flexible yet expressive form renderer.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @template {object} TData - The type of the form data
  *
@@ -87,17 +89,38 @@ const InnerForm = <TData extends object>(
   const testId = useTestId("form", props);
 
   const styleProps = useStyleProps({ isEditing, readonly, disabled });
-  return (
-    <FormContainer data-testid={testId} {...styleProps} onSubmit={submitForm}>
-      <FormHeader {...props} />
-      <FormFieldRenderer />
-      <FormDebug />
-      <FormEditBanner
-        submitLabel={props.submitLabel}
-        cancelLabel={props.cancelLabel}
-      />
-    </FormContainer>
+
+  const InnerContent = useMemo(
+    (): JSX.Element => (
+      <FormContainer
+        data-testid={testId}
+        onSubmit={submitForm}
+        {...styleProps}
+        $size={props.asModal?.size ?? "m"}
+        $asModal={!!props.asModal}
+      >
+        <FormHeader {...props} asModal={!!props.asModal} />
+        <FormFieldRenderer />
+        <FormDebug />
+        <FormEditBanner
+          submitLabel={props.submitLabel}
+          cancelLabel={props.cancelLabel}
+        />
+      </FormContainer>
+    ),
+    [props, styleProps, submitForm, testId]
   );
+
+  if (props.asModal) {
+    const { size: _s, reference, ...dialogProps } = props.asModal;
+    return (
+      <Dialog {...dialogProps} reference={reference ?? undefined}>
+        {InnerContent}
+      </Dialog>
+    );
+  }
+
+  return InnerContent;
 };
 
 const FormContainer = styled.form<FormContainerStyleProps>`

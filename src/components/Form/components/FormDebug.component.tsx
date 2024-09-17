@@ -1,12 +1,13 @@
 import { isString, type Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { useFormContext } from "../Form.context";
 import { formDebugPreStyles, formDebugContainerStyles } from "../Form.styles";
 
 import { Heading } from "@/components/Heading";
 import { Text } from "@/components/Text";
+import { breakpointsPx } from "@/sizes";
 import { GridLayout, GridItem, type GridItemProps } from "@layouts";
 import { arrayOf } from "@utils";
 
@@ -15,6 +16,8 @@ import type { PaletteColor, ColorKey } from "@types";
 
 /**
  * Memoizes and transforms form debug information for rendering in a debug panel.
+ *
+ * @version 0.0.2
  *
  * @return {Nullable<JSX.Element>} The debug information stringified with specific transformations.
  */
@@ -75,6 +78,7 @@ export const FormDebug = (): Nullable<JSX.Element> => {
         column="4 / span 1"
         row="1 / span 1"
         color={readonly ? "warning" : "primary"}
+        responsiveSmall
       />
       <DebugBlock
         label="Initial data fetch"
@@ -82,6 +86,7 @@ export const FormDebug = (): Nullable<JSX.Element> => {
         color={isLoading ? "pending" : "success"}
         column="3 / span 1"
         row="1 / span 1"
+        responsiveSmall
       />
       <DebugBlock
         label="Schema"
@@ -89,42 +94,36 @@ export const FormDebug = (): Nullable<JSX.Element> => {
         color={schema ? "success" : "warning"}
         column="3 / span 1"
         row="2 / span 1"
+        responsiveSmall
       />
-
       <DebugBlock
         label="Validation"
         content={validation}
         color={validationDisabled ? "warning" : "pending"}
         column="4 / span 1"
         row="2 / span 1"
+        responsiveSmall
       />
-      <DebugBlock
-        label="Mode"
-        content={readonly ? "Read only" : isEditing ? "Edit" : "Display"}
-        column="4 / span 1"
-        row="1 / span 1"
-        color="primary"
-      />
+      <DebugErrorsBlock column="3 / span 2" row="auto / span 2" />
       <DebugBlock
         label={`Active Data (${isDataDifferent ? "Edited" : "Untouched"})`}
         content={data}
         color={isDataDifferent ? "warning" : "pending"}
         column="1 / span 2"
-        row="auto / span 2"
+        row="1 / span 2"
         align="start"
         justify="start"
         open
       />
       <DebugBlock
         label="Initial Data"
-        content={data}
+        content={initialData}
         column="1 / span 2"
-        row="auto / span 2"
+        row="3 / span 2"
         align="start"
         justify="start"
         color="primary"
       />
-      <DebugErrorsBlock column="3 / span 2" row="auto / span 2" />
     </DebugContainer>
   );
 };
@@ -172,6 +171,7 @@ type DebugBlockProps = Omit<GridItemProps, "children"> & {
   content: object | string;
   color?: ColorKey;
   open?: boolean;
+  responsiveSmall?: boolean;
 };
 
 const DebugBlock = ({
@@ -179,6 +179,7 @@ const DebugBlock = ({
   content,
   color = "warning",
   open,
+  responsiveSmall,
   ...layout
 }: DebugBlockProps) => {
   const debugInfo = useMemo(() => {
@@ -195,7 +196,7 @@ const DebugBlock = ({
   );
 
   return (
-    <GridItem fill {...layout}>
+    <DebugGridItem fill {...layout} $responsiveSmall={responsiveSmall}>
       <DebugPre $color={color}>
         <details open={open}>
           <summary>
@@ -209,19 +210,36 @@ const DebugBlock = ({
           </Text>
         </details>
       </DebugPre>
-    </GridItem>
+    </DebugGridItem>
   );
 };
 
+const DebugGridItem = styled(GridItem)<{ $responsiveSmall?: boolean }>`
+  @container (max-width: ${breakpointsPx.SM}) {
+    grid-column: ${({ $responsiveSmall }) =>
+      $responsiveSmall ? "auto / span 1" : "1 / -1 "};
+    grid-row: auto / span 1;
+  }
+
+  ${({ $responsiveSmall }) =>
+    $responsiveSmall &&
+    css`
+      @container (max-width: ${breakpointsPx.XS}) {
+        grid-column: auto / span 2;
+      }
+    `}
+`;
+
 const DebugContainer = styled(GridLayout)`
   ${formDebugContainerStyles}
+  container-type: inline-size;
 `;
 
 const DebugPre = styled.pre<FormDebugPreStyleProps>`
   ${formDebugPreStyles}
 `;
 
-const DebugBlockParentContainer = styled(GridItem)`
+const DebugBlockParentContainer = styled(DebugGridItem)`
   max-height: 100%;
   overflow: auto;
 `;

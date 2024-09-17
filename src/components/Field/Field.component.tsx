@@ -35,7 +35,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
@@ -92,6 +92,7 @@ const Field = <TType extends InputType>(
       data-field-type={mergedProps.type}
       className={className}
       gap="s-1"
+      fill
     >
       <InputLabel
         {...mergedProps}

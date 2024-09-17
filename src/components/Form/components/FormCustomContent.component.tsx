@@ -5,7 +5,16 @@ import { FormFieldGridItem } from "./FormFieldGridItem.component";
 
 import type { BuiltFormCustomContentProps } from "../Form.types";
 
-export const FormCustomContent = ({ content }: BuiltFormCustomContentProps) => {
+/**
+ * A component that renders a custom content inside a form, which can be a React component
+ * or a React node.
+ *
+ * @param {BuiltFormCustomContentProps} props - The props of the component.
+ * @returns {JSX.Element} The rendered component.
+ */
+export const FormCustomContent = ({
+  content,
+}: BuiltFormCustomContentProps): JSX.Element => {
   const renderedContent = useMemo<ReactNode>(() => {
     if (isFunction<FC>(content)) {
       const ContentFc = content;

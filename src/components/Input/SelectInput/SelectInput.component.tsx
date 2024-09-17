@@ -41,7 +41,7 @@ import { FlexColumnLayout } from "@layouts";
 import { useHtmlAttribute, useTestId } from "@utils";
 
 import type { SelectInputProps, SelectOption } from "./SelectInput.types";
-import type { CommonInputStyleProps } from "../Input.types";
+import type { CommonInputStyleProps, InputProps } from "../Input.types";
 import type { TestIdProps } from "@types";
 
 /**
@@ -129,14 +129,18 @@ const SelectInput = <
     mergedProps.onChangeNative
   );
 
-  const query = useInputValue(autoCompleteQuery, props, (rawQuery) => {
-    if (!isOpen) {
-      if (activeOption) return activeOption.label;
+  const query = useInputValue<"text">(
+    autoCompleteQuery ?? null,
+    props as unknown as InputProps<"text">,
+    (rawQuery) => {
+      if (!isOpen) {
+        if (activeOption) return activeOption.label;
+        return undefined;
+      }
+      if (isString(rawQuery)) return rawQuery;
       return undefined;
     }
-    if (isString(rawQuery)) return rawQuery;
-    return undefined;
-  });
+  );
 
   const openOptionsOnFocus = useCallback(() => {
     if (disabled || !searchable) return;

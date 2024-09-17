@@ -167,6 +167,24 @@ export const commonInputStyles = ({
     border-radius: 0;
     box-shadow: ${$error ? "var(--shadow-input-error-default)" : "none"};
     outline: none;
+
+    --cell-border-radius: calc(var(--s-1) - 1px);
+
+    tr:first-child > td:has(&):first-child & {
+      border-top-left-radius: var(--cell-border-radius);
+    }
+
+    tr:first-child > td:has(&):last-of-type & {
+      border-top-right-radius: var(--cell-border-radius);
+    }
+
+    tbody:last-child > tr:last-of-type > td:has(&):first-child & {
+      border-bottom-left-radius: var(--cell-border-radius);
+    }
+
+    tbody:last-child > tr:last-of-type > td:has(&):last-of-type & {
+      border-bottom-right-radius: var(--cell-border-radius);
+    }
   `}
 
   @media screen and (max-width: ${breakpointsPx.XS}) {

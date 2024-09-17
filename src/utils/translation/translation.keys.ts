@@ -23,9 +23,11 @@ const actionTranslationKeys = [
   "copyToClipboard",
   "paste",
   "add",
+  "addItem",
   "remove",
   "clear",
   "select",
+  "selectItem",
   "unselect",
   "selectAll",
   "unselectAll",
@@ -65,6 +67,7 @@ const statusTranslationKeys = [
   "disabled",
   "archived",
   "hidden",
+  "empty",
 ] as const;
 
 export const translationKeys = {

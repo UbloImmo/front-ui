@@ -28,10 +28,12 @@ const action: CompleteTranslationMap<"action"> = {
   copyToClipboard: "Copy to clipboard",
   paste: "Paste",
   add: "Add",
+  addItem: "Add an item",
   remove: "Remove",
   clear: "Clear",
   select: "Select",
   unselect: "Unselect",
+  selectItem: "Select an item",
   selectAll: "Select all",
   unselectAll: "Unselect all",
   expand: "Expand",
@@ -70,6 +72,7 @@ const status: CompleteTranslationMap<"status"> = {
   disabled: "Disabled",
   archived: "Archived",
   hidden: "Hidden",
+  empty: "Empty",
 };
 
 export const defaultTranslations: DefaultTranslationMaps = {

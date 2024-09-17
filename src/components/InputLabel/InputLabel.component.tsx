@@ -99,7 +99,7 @@ const InnerInputLabel = styled.label`
   }
 `;
 
-const InputLabelText = styled(Text)<StyleProps<InputLabelProps>>`
+export const InputLabelText = styled(Text)<StyleProps<InputLabelProps>>`
   ${(props) =>
     props.$required &&
     css`

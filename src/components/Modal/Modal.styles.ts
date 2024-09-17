@@ -6,14 +6,14 @@ import type { ModalSize, ModalStyleProps } from "./Modal.types";
 import type { CssPx } from "@types";
 import type { ValueMap } from "@ubloimmo/front-util";
 
-const sizeWidthMap: ValueMap<ModalSize, CssPx> = {
+export const modalSizeToWidthMap: ValueMap<ModalSize, CssPx> = {
   s: "600px",
   m: "960px",
   l: "1280px",
 };
 
 export const modalCardStyles = ({ $size }: ModalStyleProps) => {
-  const width = cssPxToCssRem(sizeWidthMap[$size]);
+  const width = cssPxToCssRem(modalSizeToWidthMap[$size]);
   return css`
     max-width: ${width};
     width: ${width};

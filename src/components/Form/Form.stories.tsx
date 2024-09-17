@@ -1,17 +1,21 @@
 import { fn } from "@storybook/test";
-import { isArray } from "@ubloimmo/front-util";
-import { useState } from "react";
+import { isArray, objectFromEntries } from "@ubloimmo/front-util";
+import { useMemo, useState } from "react";
 import { z } from "zod";
 
 import { Form } from "./Form.component";
+import { Button } from "../Button";
 import { Callout } from "../Callout";
+import { DialogProvider, useDialog } from "../Dialog";
 import { Heading } from "../Heading";
 import { Icon } from "../Icon";
 import { Input } from "../Input";
+import { Tooltip } from "../Tooltip";
+import { isFormField } from "./Form.utils";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
-import { useMergedProps, useStatic } from "@utils";
+import { clamp, useMergedProps, useStatic } from "@utils";
 
 import type {
   FormProps,
@@ -125,9 +129,13 @@ const componentSource = componentSourceFactory<FormProps<object>>(
 const meta = {
   component: Form,
   title: "Components/Form/Stories",
-  parameters: {
-    docs: componentSource([addressFormProps as FormProps<object>]),
-  },
+  decorators: [
+    (Story) => (
+      <DialogProvider portalRoot="#dialog-root">
+        <Story />
+      </DialogProvider>
+    ),
+  ],
 } satisfies Meta<typeof Form>;
 
 export default meta;
@@ -145,10 +153,12 @@ const identitySchema = z.object({
   lastName: z.string(),
   dateOfBirth: z.string(),
   numberOfChildren: z.number().nullish(),
-  contact: z.object({
-    email: z.string().email(),
-    phone: z.string(),
-  }),
+  contact: z
+    .object({
+      email: z.string().email(),
+      phone: z.string(),
+    })
+    .nullish(),
   professionalInfo: z
     .object({
       role: z.string().nullish(),
@@ -373,48 +383,26 @@ Debug.parameters = {
   ]),
 };
 
-export const Steps = (props: FormStoryProps) => {
-  const { content, ...mergedProps } = useMergedProps(identityFormProps, props);
-  const steps = useStatic<FormContent<Identity>[][]>(
-    isArray(content)
-      ? ([
-          [...content].slice(0, 8),
-          [...content].slice(9),
-        ] as FormContent<Identity>[][])
-      : []
-  );
-
-  const [stepIndex, setStepIndex] = useState<number>(0);
-
-  return (
-    <Form
-      {...mergedProps}
-      content={steps[stepIndex]}
-      debug
-      onSubmit={() => setStepIndex(stepIndex + 1)}
-    />
-  );
+const customContentProps: FormProps<object> = {
+  title: "Form with custom content",
+  content: [
+    {
+      kind: "content",
+      content: <Callout>I am a callout</Callout>,
+    },
+    () => (
+      <Heading color="success-base" size="h4">
+        And I am a heading
+      </Heading>
+    ),
+  ],
 };
 
 export const CustomContent = () => {
-  return (
-    <Form
-      title="Form with custom content"
-      content={[
-        {
-          kind: "content",
-          content: <Callout>I am a callout</Callout>,
-        },
-        () => (
-          <Heading color="success-base" size="h4">
-            And I am a heading
-          </Heading>
-        ),
-      ]}
-      cancelLabel="giveUp"
-      submitLabel="create"
-    />
-  );
+  return <Form {...customContentProps} />;
+};
+CustomContent.parameters = {
+  docs: componentSource([customContentProps]),
 };
 
 const CustomInput = (props: CustomFormInputProps<string>) => {
@@ -446,4 +434,328 @@ export const CustomFields = (props: FormStoryProps) => {
       title="Form with custom field"
     />
   );
+};
+
+const formModalRef = "FORM_MODAL_REF";
+export const AsModal = (props: FormStoryProps) => {
+  const mergedProps = useMergedProps(addressFormProps, props);
+  const { open, close } = useDialog(formModalRef);
+  return (
+    <>
+      <Form
+        {...mergedProps}
+        title="Form in a modal"
+        asModal={{ reference: formModalRef }}
+        onCancelled={close}
+        onSubmit={close}
+        defaultEditing
+      />
+      <Button onClick={open} label="Open form in modal" />
+    </>
+  );
+};
+AsModal.parameters = {
+  docs: componentSource([
+    {
+      ...addressFormProps,
+      title: "Form in a modal",
+      asModal: { reference: formModalRef },
+      onCancelled: () => {},
+      onSubmit: () => {},
+      defaultEditing: true,
+    },
+  ]),
+};
+
+const identityTableSchema = z.object({
+  profiles: z
+    .array(
+      identitySchema.pick({
+        firstName: true,
+        lastName: true,
+        professionalInfo: true,
+        dateOfBirth: true,
+      })
+    )
+    .min(2)
+    .max(5),
+  bankAccounts: z
+    .array(
+      z.object({
+        name: z.string(),
+        primary: z
+          .boolean()
+          .nullish()
+          .transform(() => undefined),
+      })
+    )
+    .nullish(),
+});
+
+type IdentityTable = z.input<typeof identityTableSchema>;
+
+const tableFormProps: FormProps<IdentityTable> = {
+  title: "Form with table",
+  schema: identityTableSchema,
+  onSubmit: fn(),
+  defaultValues: {
+    profiles: [
+      {
+        firstName: "John",
+        lastName: "Doe",
+      },
+      {
+        dateOfBirth: "1990-01-01",
+      },
+    ],
+  },
+  content: [
+    {
+      kind: "table",
+      source: "profiles",
+      label:
+        "Renseignez le(s) propriétaire(s) du lot dans le tableau ci-dessous",
+      assistiveText: "assistive text",
+      deletable: true,
+      swappable: true,
+      EmptyCard: () => {
+        return <span>Empty card</span>;
+      },
+      layout: {
+        size: 2,
+      },
+      footer: {
+        kind: "button",
+        label: "Add row",
+        newRow: () => {
+          return {
+            lastName: String(Math.round(Math.random() * 100)),
+            professionalInfo: {
+              role: "Tester",
+            },
+          };
+        },
+      },
+      columns: [
+        {
+          type: "text",
+          source: "firstName",
+          label: "First name",
+          errorText: "Test",
+          tooltip: {
+            content: "Je suis un tooltip",
+          },
+        },
+        {
+          type: "text",
+          source: "lastName",
+          label: "Last name",
+          errorText: "Ceci est une erreur",
+        },
+        {
+          type: "select",
+          source: "professionalInfo.role",
+          label: "Job title",
+          options: [
+            {
+              label: "Developer",
+              value: "dev",
+            },
+            {
+              label: "UX Designer",
+              value: "designer_ux",
+            },
+            {
+              label: "UI Designer",
+              value: "designer_ui",
+            },
+            {
+              label: "UX/ UI Designer",
+              value: "designer_ux_ui",
+            },
+          ],
+        },
+        {
+          type: "date",
+          source: "dateOfBirth",
+          label: "Date of birth",
+          placeholder: "Date of birth",
+        },
+      ],
+    },
+    "divider",
+    {
+      kind: "table",
+      source: "bankAccounts",
+      label: "Bank accounts",
+      swappable: true,
+      deletable: true,
+      columns: [
+        {
+          type: "text",
+          source: "name",
+          label: "Account name",
+          layout: {
+            readonly: true,
+          },
+        },
+        {
+          kind: "custom-field",
+          source: "primary",
+          label: "",
+          CustomInput: ({ rowIndex }: CustomFormInputProps<boolean>) => {
+            if (rowIndex === 0)
+              return (
+                <FlexRowLayout align="center" justify="center">
+                  <Tooltip content="Primary account">
+                    <Icon name="StarFill" />
+                  </Tooltip>
+                </FlexRowLayout>
+              );
+            return null;
+          },
+        },
+      ],
+      footer: {
+        kind: "select",
+        searchable: true,
+        controlIcon: "Search",
+        options: [
+          {
+            label: "Credit agricole",
+            value: {
+              name: "Credit agricole",
+            },
+          },
+          {
+            label: "Bank of america",
+            value: {
+              name: "Bank of america",
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
+
+export const Table = (props: FormStoryProps) => {
+  const mergedProps = useMergedProps(tableFormProps, props);
+  return <Form {...mergedProps} />;
+};
+Table.parameters = {
+  docs: componentSource([tableFormProps as FormStoryProps]),
+};
+
+const creatableFormProps: FormProps<object> = {
+  title: "Creatable",
+  defaultEditing: true,
+  submitLabel: "create",
+  cancelLabel: "giveUp",
+  content: [
+    {
+      kind: "text",
+      content: "Form content goes here...",
+      align: "center",
+      italic: true,
+      color: "primary-base",
+    },
+  ],
+};
+
+export const CreatableForm = (props: FormStoryProps) => {
+  const mergedProps = useMergedProps(creatableFormProps, props);
+  return <Form {...mergedProps} />;
+};
+CreatableForm.parameters = {
+  docs: componentSource([creatableFormProps]),
+};
+
+export const Steps = () => {
+  const { content, ...mergedProps } = tableFormProps;
+  const steps = useStatic<FormContent<IdentityTable>[][]>(
+    isArray(content)
+      ? ([
+          [...content].slice(0, 1),
+          [...content].slice(2),
+        ] as FormContent<Identity>[][])
+      : []
+  );
+  const [stepIndex, setStepIndex] = useState<number>(0);
+  const maxStep = useStatic(steps.length - 1);
+  const title = useMemo<string>(
+    (): string =>
+      [mergedProps.title, "-", "Step", stepIndex + 1, "/", steps.length].join(
+        " "
+      ),
+    [mergedProps.title, stepIndex, steps.length]
+  );
+  const currentStep = useMemo(() => steps[stepIndex], [steps, stepIndex]);
+  const currentStepSchema = useMemo(
+    () =>
+      // @ts-expect-error This is not an intented use of the form, but still fun to play with nonetheless
+      mergedProps.schema?.pick(
+        objectFromEntries(
+          currentStep.filter(isFormField).map(({ source }) => [source, true])
+        )
+      ),
+    [currentStep, mergedProps.schema]
+  );
+
+  return (
+    <Form
+      {...mergedProps}
+      title={title}
+      schema={currentStepSchema}
+      content={currentStep}
+      onSubmit={() => setStepIndex(clamp(stepIndex + 1, 0, maxStep))}
+      onCancelled={() => setStepIndex(clamp(stepIndex - 1, 0, maxStep))}
+    />
+  );
+};
+Steps.parameters = {
+  docs: {
+    source: {
+      language: "tsx",
+      code: `export const Steps = () => {
+  const { content, ...mergedProps } = tableFormProps;
+  const steps = useStatic<FormContent<IdentityTable>[][]>(
+    isArray(content)
+      ? ([
+          [...content].slice(0, 3),
+          [...content].slice(3),
+        ] as FormContent<Identity>[][])
+      : []
+  );
+  const [stepIndex, setStepIndex] = useState<number>(0);
+  const maxStep = useStatic(steps.length - 1);
+  const title = useMemo<string>(
+    (): string => [mergedProps.title, "-", "Step", stepIndex + 1, "/", steps.length].join(" "),
+    [mergedProps.title, stepIndex, steps.length]
+  );
+  const currentStep = useMemo(() => steps[stepIndex], [steps, stepIndex]);
+  const currentStepSchema = useMemo(
+    () =>
+      // @ts-expect-error This is not an intented use of the form, but still fun to play with nonetheless
+      mergedProps.schema?.pick(
+        objectFromEntries(
+          currentStep.filter(isFormField).map(({ source }) => [source, true])
+        )
+      ),
+    [currentStep, mergedProps.schema]
+  );
+
+  return (
+    <Form
+      {...mergedProps}
+      title={title}
+      schema={currentStepSchema}
+      content={currentStep}
+      onSubmit={() => setStepIndex(clamp(stepIndex + 1, 0, maxStep))}
+      onCancelled={() => setStepIndex(clamp(stepIndex - 1, 0, maxStep))}
+    />
+  );
+}`,
+    },
+  },
 };

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { tableCellStyles } from "./TableCell.styles";
 
-import { useMergedProps, useStyleProps } from "@utils";
+import { useClassName, useMergedProps, useStyleProps } from "@utils";
 
 import type { TableCellProps, TableCellStyleProps } from "./TableCell.types";
 
@@ -23,10 +23,13 @@ const TableCell = (props: TableCellProps): JSX.Element => {
 
   const styleProps = useStyleProps(mergedProps);
 
+  const className = useClassName(props);
+
   return (
     <StyledTableCell
       colSpan={mergedProps.colSpan}
       data-testid="table-cell"
+      className={className}
       {...styleProps}
     >
       {props.children}

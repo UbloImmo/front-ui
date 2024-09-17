@@ -44,7 +44,7 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
 /**
  * A group of ComboBoxButtons that act as a select or radio input.
  *
- * @version 0.0.9
+ * @version 0.0.10
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -134,10 +134,6 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
 
   if (!props.options) {
     warn(`Missing required options`);
-  }
-
-  if (multi && !showIcon) {
-    warn("Multi mode requires showIcon to be true");
   }
 
   const onOptionDelete = useCallback(
