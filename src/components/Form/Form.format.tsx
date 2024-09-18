@@ -72,9 +72,13 @@ const displayComboBoxValue: FormDisplayValueFormatterFn<
   };
   if (isNullish(values) || !options) return noValue;
   if (isArray(values)) {
-    const displayOptions = options.filter(({ value }) =>
-      values.includes(value)
-    );
+    const displayOptions = options
+      .filter(({ value }) => values.includes(value))
+      .map((option) => ({
+        ...option,
+        editable: false,
+        deletable: false,
+      }));
     if (!displayOptions?.length) return noValue;
     return <ComboBox {...commonProps} options={displayOptions} />;
   }

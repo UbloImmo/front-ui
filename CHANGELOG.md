@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.8` ComboBoxButton component
+  - Remove warning when `multi` and `!showIcon`
+
+### Fixed
+
+- `v0.0.6` Form component
+  - Force ComboBox options to not be editable not deletable in display mode
+
+- `v0.0.10` ComboBox component
+  - type definitions for `optionEditLabel` `optionDeleteLabel` props
+  - JsDoc
+
 ## 0.32.1 - 2024-09-18
 ### Changed
 - `v0.0.5` Form component
