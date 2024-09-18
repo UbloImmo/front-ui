@@ -46,7 +46,7 @@ export const selectInputContainerStyles = (
   align-items: center;
   cursor: pointer;
 
-  &[aria-expanded] {
+  &[aria-expanded="true"] {
     z-index: 1;
   }
 `;
@@ -66,7 +66,7 @@ export const selectOptionContainerStyles = (): RuleSet => {
     overflow-x: hidden;
     box-shadow: var(--shadow-card-elevation-medium);
 
-    &[aria-expanded] {
+    &[aria-expanded="true"] {
       z-index: 1;
     }
   `;

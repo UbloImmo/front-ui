@@ -12,10 +12,12 @@ import { formFieldListContainerStyles } from "../Form.styles";
 import {
   isBuiltCustomFormField,
   isBuiltFormField,
+  isBuiltFormTable,
   isBuiltFormText,
   isFormCustomContent,
   isFormDivider,
 } from "../Form.utils";
+import { FormTable } from "./FormTable/FormTable.component";
 
 import { GridLayout } from "@layouts";
 
@@ -54,6 +56,9 @@ export const FormFieldRenderer = <TData extends object>() => {
             key={`form-custom-content-${index}`}
           />
         );
+      }
+      if (isBuiltFormTable(contentItem)) {
+        return <FormTable {...contentItem} key={`form-table-${index}`} />;
       }
       if (!isFormDivider(contentItem)) return null;
       const dividerProps: DividerProps = isString(contentItem)

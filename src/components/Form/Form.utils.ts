@@ -20,15 +20,19 @@ import type {
   BuiltFieldProps,
   BuiltFormContent,
   BuiltFormCustomFieldProps,
+  BuiltFormTableProps,
   BuiltFormTextProps,
   CustomFormInputProps,
   FormContent,
   FormCustomContentProps,
   FormCustomFieldProps,
   FormDividerProps,
+  FormFieldProps,
   FormSchema,
   FormSource,
+  FormTableProps,
   FormTextProps,
+  StableFormTableId,
 } from "./Form.types";
 import type { InputType } from "@/components/Input";
 
@@ -131,11 +135,14 @@ export const setObjectValue = <
  * @return {boolean} Returns true if the schema is optional, false otherwise.
  */
 const isSchemaOptional = (schema: ZodType) => {
+  if (!schema) return true;
   if (schema instanceof ZodUnion) {
     return schema.options.some((option: ZodType) => isSchemaOptional(option));
   }
   const typeName: string =
-    "typeName" in schema._def && isString(schema._def.typeName)
+    "_def" in schema &&
+    "typeName" in schema._def &&
+    isString(schema._def.typeName)
       ? schema._def.typeName
       : "";
   return (
@@ -150,6 +157,8 @@ const isSchemaOptional = (schema: ZodType) => {
 
 /**
  * Checks if a field in the given schema is required.
+ *
+ * @remarks Handles object as well as array schemas.
  *
  * @template {object} TData - The type of the form data.
  *
@@ -173,14 +182,25 @@ export const isSchemaFieldRequired = <TData extends object>(
     return false;
   }
 
-  if (!("shape" in schema)) return false;
-
-  if (!tails.length && schema.shape[head]) {
-    return !isSchemaOptional(schema.shape[head]);
+  if ("shape" in schema) {
+    if (!tails.length && schema.shape[head]) {
+      return !isSchemaOptional(schema.shape[head]);
+    }
+    const tail = tails.join(".");
+    return isSchemaFieldRequired(
+      schema.shape[head] as unknown as ZodType,
+      tail
+    );
   }
 
-  const tail = tails.join(".");
-  return isSchemaFieldRequired(schema.shape[head] as unknown as ZodType, tail);
+  if ("element" in schema && (isNumber(head) || isNumber(parseInt(head)))) {
+    if (!tails.length)
+      return !isSchemaOptional(schema.element as unknown as ZodType);
+    const tail = tails.join(".");
+    return isSchemaFieldRequired(schema.element as unknown as ZodType, tail);
+  }
+
+  return false;
 };
 
 /**
@@ -189,7 +209,7 @@ export const isSchemaFieldRequired = <TData extends object>(
  * @template {object} TData - The type of the form data.
  *
  * @param {FormContent<TData, InputType> | BuiltFormContent<InputType>} content - The object to check.
- * @return {boolean} Returns `true` if `fieldOrDivider` is a `FormDividerProps`, otherwise `false`.
+ * @return {content is FormDividerProps} Returns `true` if `fieldOrDivider` is a `FormDividerProps`, otherwise `false`.
  */
 export const isFormDivider = <TData extends object>(
   content: FormContent<TData> | BuiltFormContent<InputType>
@@ -198,7 +218,9 @@ export const isFormDivider = <TData extends object>(
   if (
     isFormText(content) ||
     isBuiltFormText(content) ||
-    isFormCustomContent(content)
+    isFormCustomContent(content) ||
+    isBuiltFormTable(content) ||
+    isFormTable(content)
   )
     return false;
   const keys = objectKeys(content);
@@ -212,6 +234,14 @@ export const isFormDivider = <TData extends object>(
   return false;
 };
 
+/**
+ * Checks if the given `content` is a `FormCustomContentProps` object.
+ *
+ * @template {object} TData - The type of the form data.
+ *
+ * @param {FormContent<TData, InputType> | BuiltFormContent<InputType>} content - The content to check.
+ * @return {content is FormCustomContentProps} - `true` if `content` is a `FormCustomContentProps` object, `false` otherwise.
+ */
 export const isFormCustomContent = <TData extends object>(
   content: FormContent<TData> | BuiltFormContent<InputType>
 ): content is FormCustomContentProps => {
@@ -224,6 +254,14 @@ export const isFormCustomContent = <TData extends object>(
   );
 };
 
+/**
+ * Determines if the given `content` is a `FormCustomFieldProps` type.
+ *
+ * @template {object} TData - The type of the form data.
+ *
+ * @param {FormContent<TData>} content - The object to check.
+ * @return {content is FormCustomFieldProps<TData>} Returns `true` if `fieldOrDivider` is a `FormCustomFieldProps`, otherwise `false`.
+ */
 export const isFormCustomField = <TData extends object>(
   content: FormContent<TData>
 ): content is FormCustomFieldProps<TData> => {
@@ -245,6 +283,32 @@ export const isFormCustomField = <TData extends object>(
 };
 
 /**
+ * Determines if the given `content` is a `FormFieldProps` type.
+ *
+ * @template {object} TData - The type of the form data.
+ *
+ * @param {FormContent<TData>} content - The object to check.
+ * @return {content is FormFieldProps<TData>} Returns `true` if `content` is a `FormFieldProps`, otherwise `false`.
+ */
+export const isFormField = <TData extends object>(
+  content: FormContent<TData>
+): content is FormFieldProps<TData> => {
+  if (
+    isFormDivider(content) ||
+    isFormText(content) ||
+    isFormCustomContent(content) ||
+    isFormCustomField(content)
+  )
+    return false;
+  return (
+    isObject(content) &&
+    "type" in content &&
+    "source" in content &&
+    "label" in content
+  );
+};
+
+/**
  * Checks if the given `contentOrText` is a `FormTextProps` object.
  *
  * @template {object} TData - The type of the form data.
@@ -260,6 +324,48 @@ export const isFormText = <TData extends object>(
     "kind" in content &&
     content.kind === "text" &&
     "content" in content
+  );
+};
+
+/**
+ * Checks if the given `content` is a `FormTableProps` object.
+ *
+ * @template {object} TData - The type of the form data.
+ *
+ * @param {FormContent<TData>} content - The content to check.
+ * @return {content is FormTableProps<TData>} - `true` if `content` is a `FormTableProps` object, `false` otherwise.
+ */
+export const isFormTable = <TData extends object>(
+  content: FormContent<TData>
+): content is FormTableProps<TData> => {
+  return (
+    isObject(content) &&
+    "columns" in content &&
+    isArray(content.columns) &&
+    "kind" in content &&
+    content.kind === "table" &&
+    "source" in content &&
+    isString(content.source)
+  );
+};
+
+/**
+ * Checks if the given `content` is a `BuiltFormTableProps` object.
+ *
+ * @param {BuiltFormContent<InputType>} content - The content to check.
+ * @return {content is BuiltFormTableProps} - `true` if `content` is a `BuiltFormTableProps` object, `false` otherwise.
+ */
+export const isBuiltFormTable = (
+  content: BuiltFormContent<InputType>
+): content is BuiltFormTableProps => {
+  return (
+    isObject(content) &&
+    "headers" in content &&
+    isArray(content.headers) &&
+    "kind" in content &&
+    content.kind === "table" &&
+    "rows" in content &&
+    isArray(content.rows)
   );
 };
 
@@ -295,10 +401,17 @@ export const isBuiltFormField = <TType extends InputType>(
     !isFormDivider(content) &&
     !isBuiltFormText(content) &&
     !isFormCustomContent(content) &&
-    !isBuiltCustomFormField(content)
+    !isBuiltCustomFormField(content) &&
+    !isBuiltFormTable(content)
   );
 };
 
+/**
+ * Checks if the given `content` is a `BuiltFormCustomFieldProps` object.
+ *
+ * @param {BuiltFormContent<InputType>} content - The content to check.
+ * @returns {content is BuiltFormCustomFieldProps} - `true` if `content` is a `BuiltFormCustomFieldProps` object, `false` otherwise.
+ */
 export const isBuiltCustomFormField = (
   content: BuiltFormContent<InputType>
 ): content is BuiltFormCustomFieldProps => {
@@ -324,3 +437,15 @@ export const buildFormText = (formText: FormTextProps): BuiltFormTextProps => {
     children: content,
   };
 };
+
+/**
+ * Builds a stable table id from a table's source and its index in the form content array.
+ *
+ * @param {string} tableSource - The table's source.
+ * @param {number} contentIndex - The table's index in the form content array.
+ * @return {StableFormTableId} The stable table id.
+ */
+export const builtFormTableId = (
+  tableSource: string,
+  contentIndex: number
+): StableFormTableId => `${tableSource}-${contentIndex}`;

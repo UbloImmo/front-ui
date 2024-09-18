@@ -1,5 +1,7 @@
 import { css, type RuleSet } from "styled-components";
 
+import { modalSizeToWidthMap } from "../Modal/Modal.styles";
+
 import { breakpointsPx } from "@/sizes";
 
 import type {
@@ -11,7 +13,10 @@ import type {
 
 export const formContainerStyles = ({
   $isEditing,
+  $size,
+  $asModal,
 }: FormContainerStyleProps): RuleSet => {
+  const asModalWidth = $size ? modalSizeToWidthMap[$size] : null;
   return css`
     background: white;
     box-shadow: var(--shadow-card-default);
@@ -19,6 +24,14 @@ export const formContainerStyles = ({
     position: relative;
     height: fit-content;
     transition: height 150ms ease-out 0s;
+
+    ${$asModal &&
+    asModalWidth &&
+    css`
+      max-width: ${asModalWidth};
+      width: ${asModalWidth};
+      max-width: 100%;
+    `}
 
     ${$isEditing &&
     css`
@@ -108,7 +121,7 @@ export const formFieldListContainerStyles = (): RuleSet => {
 
 export const formDebugContainerStyles = (): RuleSet => {
   return css`
-    padding: 0 var(--s-6);
+    padding: 0 var(--s-8);
   `;
 };
 
@@ -134,14 +147,13 @@ export const formDebugPreStyles = ({
     }
 
     details {
+      &[open] > summary {
+        margin-bottom: var(--s-2);
+      }
       summary {
         list-style-position: inside;
         user-select: none;
         cursor: pointer;
-
-        &[open] {
-          padding-bottom: var(--s-2);
-        }
 
         [data-testid="heading"] {
           user-select: none;
@@ -155,6 +167,10 @@ export const formDebugPreStyles = ({
           list-style-position: inside;
           margin-top: calc(var(--s-1) * -1);
         }
+      }
+
+      & > div:not(:last-child) {
+        margin-bottom: var(--s-2);
       }
     }
 

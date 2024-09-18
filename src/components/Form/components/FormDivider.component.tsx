@@ -8,7 +8,7 @@ import { GridItem } from "@layouts";
  * @param {DividerProps} props - The props for the divider component.
  * @return {JSX.Element} The rendered form divider component.
  */
-export const FormDivider = (props: DividerProps) => {
+export const FormDivider = (props: DividerProps): JSX.Element => {
   return (
     <GridItem columnStart={1} columnEnd={-1} fill>
       <Divider {...props} testId="form-divider" overrideTestId />

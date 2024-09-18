@@ -1,12 +1,15 @@
 import {
   DeepValueOf,
   deepValueOf,
+  isArray,
   isBoolean,
   isFunction,
+  isNull,
   isNullish,
   isObject,
   isUndefined,
   type DeepKeyOf,
+  type DeepKeyOfType,
   type Logger,
   type Nullable,
   type Nullish,
@@ -15,69 +18,89 @@ import {
 } from "@ubloimmo/front-util";
 import { merge } from "lodash";
 import {
-  FormEventHandler,
   createContext,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useReducer,
+  useRef,
   useState,
   type Context,
+  type FormEventHandler,
   type ReactNode,
 } from "react";
 
 import {
   buildFormText,
+  builtFormTableId,
+  isBuiltFormTable,
   isFormCustomContent,
   isFormCustomField,
   isFormDivider,
+  isFormField,
+  isFormTable,
   isFormText,
   isSchemaFieldRequired,
   setObjectValue,
 } from "./Form.utils";
 
-import { useLogger, useMergedProps } from "@utils";
+import { useLogger, useMergedProps, useUikitTranslation } from "@utils";
 
-import type {
-  FormProps,
-  FormData,
-  FormQueryFn,
-  FormValidation,
-  FormSchema,
-  MutateFormDataFn,
-  UseFormDataReturn,
-  FormFieldProps,
-  BuildFieldPropsFn,
-  GetFieldValueFn,
-  PropagateChangeFn,
-  GetFieldErrorFn,
-  FormOnSubmitFn,
-  FormModifierProps,
-  FormModifers,
-  UseFormValidationReturn,
-  UseFormSubmissionReturn,
-  FormContext,
-  UseFormEditStateReturn,
-  BuiltFieldProps,
-  IsFieldRequiredFn,
-  FormContent,
-  BuiltFormContent,
-  ComputeFormValidationFn,
-  BuildCustomFieldPropsFn,
-  FormCustomFieldProps,
-  BuiltFormCustomFieldProps,
-  CustomFormInputProps,
-  FormFieldLayout,
-  BuiltFormFieldLayoutProps,
-  FormDefaultProps,
-  DefaultFormLayoutProps,
-  BuildFormFieldLayoutFn,
-  UseFormLayoutReturn,
-  FormFieldLayoutHiddenFn,
-  FormOnSubmitErrorFn,
-} from "./Form.types";
+import type { FieldLabelProps } from "../Field";
 import type { InputOnChangeFn, InputType } from "../Input";
+import type {
+  AppendTableRowFn,
+  BuildCustomFieldPropsFn,
+  BuildFieldPropsFn,
+  BuildFormFieldLayoutFn,
+  BuildFormTablePropsFn,
+  BuiltFieldProps,
+  BuiltFormContent,
+  BuiltFormCustomFieldProps,
+  BuiltFormFieldLayoutProps,
+  BuiltFormTableProps,
+  BuiltFormTableRow,
+  ComputeFormValidationFn,
+  CustomFormInputProps,
+  DefaultFormLayoutProps,
+  DeleteTableRowFn,
+  FormContent,
+  FormContext,
+  FormCustomFieldProps,
+  FormData,
+  FormDefaultProps,
+  FormFieldLayout,
+  FormFieldLayoutHiddenFn,
+  FormFieldProps,
+  FormModifers,
+  FormModifierProps,
+  FormOnSubmitErrorFn,
+  FormOnSubmitFn,
+  FormProps,
+  FormQueryFn,
+  FormSchema,
+  FormSource,
+  FormTableProps,
+  FormTableRowIndexMap,
+  FormValidation,
+  GetFieldErrorFn,
+  GetFieldValueFn,
+  GetFormTableRowIndexMapFn,
+  IsFieldRequiredFn,
+  MutateFormDataFn,
+  PropagateChangeFn,
+  ReoderAllTableRowsIfNeededFn,
+  StableFormTableId,
+  StableFormTableRow,
+  UpdateFormTableRowIndexMapFn,
+  UseFormDataReturn,
+  UseFormEditStateReturn,
+  UseFormLayoutReturn,
+  UseFormSubmissionReturn,
+  UseFormTablesReturn,
+  UseFormValidationReturn,
+} from "./Form.types";
 import type { GridEndPosition } from "@layouts";
 
 /**
@@ -97,7 +120,7 @@ const useFormData = <TData extends object>(
    * Initial form data derived from the query or default values
    */
   const [initialData, setInitialData] = useState<FormData<TData>>(() => {
-    if (isObject(props.defaultValues)) return props.defaultValues;
+    if (isObject(props.defaultValues)) return { ...props.defaultValues };
     if (isFunction(props.query) || isUndefined(props.query))
       return {} as FormData<TData>;
     if (isObject(props.query)) return props.query as FormData<TData>;
@@ -117,6 +140,8 @@ const useFormData = <TData extends object>(
   /**
    * Loads form data from query into `data` and `initialData` states
    * white updating `isLoading` state
+   *
+   * @param {boolean} [mergeWithCurrent] - Whether to merge the new data with the current (e.g. previous or default) data.
    */
   const loadFormData = useCallback(
     async (mergeWithCurrent?: boolean) => {
@@ -145,7 +170,7 @@ const useFormData = <TData extends object>(
       setIsLoading(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.query, logger]
+    [props.query]
   );
 
   /**
@@ -245,6 +270,11 @@ const useFormValidation = <TData extends object>(
 ): UseFormValidationReturn<TData> => {
   const schema = useMemo(() => formSchema ?? null, [formSchema]);
 
+  /**
+   * Compute the whole form's validation state
+   *
+   * @see {@link ComputeFormValidationFn}
+   */
   const computeFormValidation = useCallback<ComputeFormValidationFn>(() => {
     if (!schema) return defaultFormValidation;
 
@@ -270,6 +300,9 @@ const useFormValidation = <TData extends object>(
     computeFormValidation()
   );
 
+  /**
+   * Effect used for triggering form validation on change based on modifier
+   */
   useEffect(() => {
     if (modifiers.validateOnChange) {
       triggerFormValidation();
@@ -288,13 +321,24 @@ const useFormValidation = <TData extends object>(
 const useFormLayout = (
   formLayout: DefaultFormLayoutProps
 ): UseFormLayoutReturn => {
+  /**
+   * The number of columns in the form. Only even column counts <= 2 are allowed.
+   *
+   * @remarks Odd column counts are rounded up to the next even number
+   */
   const columns = useMemo(() => {
     // only allow even number of columns
     const minColumns = Math.max(formLayout.columns, 2);
-    const evenColumns = Math.ceil(minColumns / 2) * 2;
-    return evenColumns;
+    return Math.ceil(minColumns / 2) * 2;
   }, [formLayout]);
 
+  /**
+   * Builts a {@link BuiltFormFieldLayout} object
+   * based its containing form's {@link FormLayoutProps} as well as its own {@link FormFieldLayout}
+   *
+   * @param {Optional<FormFieldLayout>} [layout] - The optional {@link FormFieldLayout}
+   * @return {BuiltFormFieldLayoutProps["layout"]} - The built {@link BuiltFormFieldLayout}
+   */
   const buildFormFieldLayout = useCallback<BuildFormFieldLayoutFn>(
     (fieldLayout?: FormFieldLayout): BuiltFormFieldLayoutProps["layout"] => {
       const defaultSize = Math.max(1, Math.round(columns / 2));
@@ -343,6 +387,7 @@ const useFormContent = <TData extends object>(
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
   formLayout: UseFormLayoutReturn,
+  logger: Logger,
   content?: FormContent<TData>[]
 ): BuiltFormContent<InputType>[] => {
   /**
@@ -447,6 +492,9 @@ const useFormContent = <TData extends object>(
     ]
   );
 
+  /**
+   * @see {@link BuildCustomFieldPropsFn}
+   */
   const buildCustomFieldProps = useCallback<BuildCustomFieldPropsFn<TData>>(
     (
       formCustomField: FormCustomFieldProps<TData>
@@ -490,20 +538,285 @@ const useFormContent = <TData extends object>(
     ]
   );
 
+  const tl = useUikitTranslation();
+
   /**
-   * The built field props
-   * @see {@link BuiltFieldPropsFn}, {@link buildFieldProps}
+   * @see {@link BuildFormTablePropsFn}
+   */
+  const buildFormTable = useCallback<BuildFormTablePropsFn<TData>>(
+    (
+      table: FormTableProps<TData>,
+      contentIndex: number
+    ): BuiltFormTableProps => {
+      // cast to remove `never` case and proceed as usual
+      const t = table as FormTableProps<{ arr: { data: string }[] }>;
+
+      const tableSource = t.source as DeepKeyOfType<
+        FormData<TData>,
+        Record<string, unknown>[]
+      >;
+      const tableFormSource = tableSource as FormSource<TData>;
+
+      const arrayValue = (getFieldValue(tableSource) ?? []) as Record<
+        string,
+        unknown
+      >[];
+
+      /**
+       * Deletes a row from the table
+       * @param index The index of the row to delete
+       */
+      const deleteRow: DeleteTableRowFn = (index) => {
+        const updatedArr = [...arrayValue];
+        updatedArr.splice(index, 1);
+        formData.mutateFormData(
+          tableFormSource,
+          updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
+        );
+      };
+
+      const appendRow: AppendTableRowFn<Record<string, unknown>> = (newRow) => {
+        const updatedArr = [...arrayValue, newRow];
+        formData.mutateFormData(
+          tableFormSource,
+          updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
+        );
+      };
+
+      const headers = t.columns.map(
+        ({ label, tooltip, compact, required, source }): FieldLabelProps => ({
+          label,
+          tooltip,
+          compact,
+          required: isFieldRequired(
+            `${t.source}.0.${source}` as FormFieldProps<TData>["source"],
+            required
+          ),
+        })
+      );
+
+      // generate rows and cell fields from columns and array items
+      const rows = arrayValue.map((_, index): BuiltFormTableRow => {
+        const rowSource = `${t.source}.${index}`;
+        const cells = (t.columns ?? [])
+          .map(({ source, ...cell }) => {
+            const cellSource = `${rowSource}.${source}`;
+            const cellField = {
+              ...cell,
+              source: cellSource,
+              id: cellSource,
+            };
+
+            if (isFormCustomField<TData>(cellField))
+              return buildCustomFieldProps(cellField);
+
+            if (isFormField<TData>(cellField))
+              return buildFieldProps(cellField);
+
+            logger.error(`Invalid table cell for source ${cellSource}`);
+            return null;
+          })
+          .filter(
+            (cell): cell is BuiltFormTableRow["cells"][number] => !isNull(cell)
+          );
+
+        return {
+          cells,
+          id: rowSource,
+        };
+      });
+
+      const tableId = builtFormTableId(String(t.source), contentIndex);
+
+      const errorProps = getFieldErrorProps(
+        tableFormSource,
+        t.error,
+        t.errorText
+      );
+
+      if (!errorProps.error) {
+        // check for nested errors if none on top level
+        const containsNestedErrors = rows.some(({ cells }) =>
+          cells.some(({ error }) => error)
+        );
+        errorProps.error = errorProps.error || containsNestedErrors;
+        errorProps.errorText = errorProps.errorText ?? tl.validation.invalid();
+      }
+
+      return {
+        kind: "table",
+        stableId: tableId,
+        rows,
+        headers,
+        layout: formLayout.buildFormFieldLayout({
+          ...(t.layout ?? {}),
+          size: formLayout.columns,
+        }),
+        label: t.label,
+        assistiveText: t.assistiveText,
+        required: isFieldRequired(tableFormSource, t.required),
+        ...errorProps,
+        modifiers: {
+          deletable: t?.deletable ?? false,
+          swappable: t?.swappable ?? false,
+        },
+        deleteRow,
+        appendRow,
+        footer: t?.footer ?? null,
+        columnsCount: t.columns?.length ?? 0,
+        EmptyCard: t.EmptyCard ?? null,
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      getFieldValue,
+      getFieldErrorProps,
+      formLayout,
+      isFieldRequired,
+      formData,
+      logger,
+      buildCustomFieldProps,
+      buildFieldProps,
+      tl.validation,
+    ]
+  );
+
+  /**
+   * The built content props ({@link BuiltFormContent})
+   *
+   * Generated using:
+   * - {@link buildFormText}
+   * - {@link buildCustomFieldProps}
+   * - {@link buildFormTable}
+   * - {@link buildFieldProps}
    */
   return useMemo<BuiltFormContent<InputType>[]>(() => {
     if (!content || !content.length) return [];
-    return content.map((content) => {
+    return content.map((content, contentIndex) => {
       if (isFormDivider(content) || isFormCustomContent(content))
         return content;
       if (isFormText(content)) return buildFormText(content);
       if (isFormCustomField(content)) return buildCustomFieldProps(content);
+      if (isFormTable(content)) return buildFormTable(content, contentIndex);
       return buildFieldProps(content);
     });
-  }, [buildCustomFieldProps, buildFieldProps, content]);
+  }, [buildCustomFieldProps, buildFieldProps, buildFormTable, content]);
+};
+
+/**
+ * Custom form hook
+ * Keeps track of all form tables and the order of their (possibly swapped) rows.
+ *
+ * @template {object} TData - The form data type
+ *
+ * @param {BuiltFormContent<InputType>} content - The whole built form content
+ * @returns {UseFormTablesReturn<TData>} - Data and utility functions pertaining to form tables
+ */
+const useFormTables = <TData extends object>(
+  content: BuiltFormContent<InputType>[]
+): UseFormTablesReturn<TData> => {
+  const tables = useMemo(() => content.filter(isBuiltFormTable), [content]);
+
+  const tableRowIndexMap = useRef<FormTableRowIndexMap>(
+    new Map(
+      tables.map(({ stableId, rows }): [StableFormTableId, number[]] => [
+        stableId,
+        rows.map((_, initialIndex) => initialIndex),
+      ])
+    )
+  );
+
+  const changeTableRowIndexMap = useCallback(
+    (tableId: StableFormTableId, rowIndexMap: number[]) => {
+      tableRowIndexMap.current.set(tableId, rowIndexMap);
+    },
+    []
+  );
+
+  useEffect(() => {
+    for (const { stableId, rows } of tables) {
+      if (stableId in tableRowIndexMap.current) continue;
+      changeTableRowIndexMap(
+        stableId,
+        rows.map((_, initialIndex) => initialIndex)
+      );
+    }
+  }, [tables, changeTableRowIndexMap]);
+
+  const getTableRowIndexMap = useCallback<GetFormTableRowIndexMapFn>(
+    () => tableRowIndexMap.current,
+    []
+  );
+
+  const getSpecificTableRowIndexMapCopy = useCallback(
+    (tableId: StableFormTableId): number[] => [
+      ...(tableRowIndexMap.current.get(tableId) ?? []),
+    ],
+    []
+  );
+
+  const updateTableRowIndexMap = useCallback<UpdateFormTableRowIndexMapFn>(
+    (tableId: StableFormTableId, stableRows: StableFormTableRow[]) => {
+      const copy = getSpecificTableRowIndexMapCopy(tableId);
+      for (
+        let dynamicIndex = 0;
+        dynamicIndex < stableRows.length;
+        dynamicIndex++
+      ) {
+        const { initialIndex } = stableRows[dynamicIndex];
+        copy[initialIndex] = dynamicIndex;
+      }
+      changeTableRowIndexMap(tableId, copy);
+    },
+    [getSpecificTableRowIndexMapCopy, changeTableRowIndexMap]
+  );
+
+  /**
+   * @see {@link ReoderAllTableRowsIfNeededFn}
+   */
+  const reorderAllTablesIfNeeded = useCallback<
+    ReoderAllTableRowsIfNeededFn<TData>
+  >(
+    (dataToSubmit) => {
+      // firsly copy original data to avoid mutating it
+      let copy = { ...dataToSubmit };
+      // iterate over all tables and their indices in the row index map
+      for (const [tableId, indices] of getTableRowIndexMap().entries()) {
+        // skip if no items were reordered
+        const noReorder = indices.every(
+          (dynamicIndex, initialIndex) => dynamicIndex === initialIndex
+        );
+        if (noReorder) continue;
+        // extract table source from id
+        // FIXME: find a way to remove excessive casts
+        const tableSource = tableId.split("-")[0] as DeepKeyOfType<
+          TData,
+          Record<string, unknown>[]
+        >;
+        // extract table data from source
+        const tableData = deepValueOf(copy, tableSource, true);
+        // skip if no data was found
+        if (!tableData || !isArray(tableData)) continue;
+        // actual reorder of a table's rows
+        const reordered: Record<string, unknown>[] = [];
+        indices.forEach((dynamicIndex, rowIndex) => {
+          reordered[dynamicIndex] = (tableData as Record<string, unknown>[])[
+            rowIndex
+          ];
+        });
+        copy = setObjectValue(copy, tableSource, reordered as typeof tableData);
+      }
+
+      return copy;
+    },
+    [getTableRowIndexMap]
+  );
+
+  return {
+    updateTableRowIndexMap,
+    getTableRowIndexMap,
+    reorderAllTablesIfNeeded,
+  };
 };
 
 /**
@@ -520,6 +833,7 @@ const useFormContent = <TData extends object>(
  */
 const useFormSubmission = <TData extends object>(
   formData: UseFormDataReturn<TData>,
+  formTables: UseFormTablesReturn<TData>,
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
   editState: UseFormEditStateReturn,
@@ -573,6 +887,14 @@ const useFormSubmission = <TData extends object>(
         dataToSubmit = parsed.data as TData;
       }
 
+      // reorder any table rows based on index map
+      reorderTableRows: {
+        const hasTableRows = formTables.getTableRowIndexMap().size > 0;
+        if (!hasTableRows) break reorderTableRows;
+
+        dataToSubmit = formTables.reorderAllTablesIfNeeded(dataToSubmit);
+      }
+
       try {
         setIsSubmitting(true);
         const result = await onSubmit(dataToSubmit);
@@ -602,13 +924,16 @@ const useFormSubmission = <TData extends object>(
       }
     },
     [
-      modifiers,
+      modifiers.disabled,
+      modifiers.readonly,
+      modifiers.validateOnSubmit,
+      editState,
       onSubmit,
-      onSubmitError,
       validation,
       logger,
       formData,
-      editState,
+      formTables,
+      onSubmitError,
     ]
   );
 
@@ -679,7 +1004,7 @@ const useFormEditState = (modifiers: FormModifers): UseFormEditStateReturn => {
  * @param {Logger} logger - the logger object
  * @return {FormContext<TData>} - the form context object
  *
- * @see {@link useFormData}, {@link useFormValidation}, {@link useFormEditState} {@link useFormModifiers}, {@link useFormContent}, {@link useFormSubmission}
+ * @see {@link useFormData}, {@link useFormValidation}, {@link useFormEditState} {@link useFormModifiers}, {@link useFormContent}, {@link useFormSubmission}, {@link useFormTables}
  */
 export const useForm = <TData extends object>(
   { columns, asModal, ...props }: FormDefaultProps<TData>,
@@ -699,10 +1024,13 @@ export const useForm = <TData extends object>(
     formValidation,
     formModifiers,
     formLayout,
+    logger,
     props.content
   );
+  const formTables = useFormTables<TData>(content);
   const formSubmission = useFormSubmission(
     formData,
+    formTables,
     formValidation,
     formModifiers,
     formEditState,
@@ -719,6 +1047,7 @@ export const useForm = <TData extends object>(
     ...formEditState,
     ...formModifiers,
     ...formLayout,
+    ...formTables,
     content,
   };
 };
@@ -749,6 +1078,9 @@ const defaultFormContext: FormContext<object> = {
     size: 1,
     columnEnd: "span 1",
   }),
+  updateTableRowIndexMap: () => {},
+  getTableRowIndexMap: () => new Map(),
+  reorderAllTablesIfNeeded: () => ({}),
 };
 
 const InternalFormContext =
@@ -768,6 +1100,15 @@ export const useFormContext = <TData extends object>(): FormContext<TData> => {
   ) as unknown as FormContext<TData>;
 };
 
+/**
+ * The context provider for the form.
+ *
+ * @template {object} TData - The type of the form data.
+ * @param {FormDefaultProps<TData> & { children: ReactNode }} props - The props object.
+ * @param {FormDefaultProps<TData>} props - The form default props.
+ * @param {ReactNode} props.children - The children components to be wrapped by the provider.
+ * @returns {JSX.Element} The provider component wrapping the children components.
+ */
 export const FormProvider = <TData extends object>(
   props: FormDefaultProps<TData> & { children: ReactNode }
 ): JSX.Element => {

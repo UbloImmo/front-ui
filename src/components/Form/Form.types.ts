@@ -1,6 +1,7 @@
+import type { ButtonProps } from "../Button";
 import type { BadgeProps } from "@/components/Badge";
 import type { DividerProps } from "@/components/Divider";
-import type { FieldProps } from "@/components/Field";
+import type { FieldLabelProps, FieldProps } from "@/components/Field";
 import type { IconName } from "@/components/Icon";
 import type {
   InputOnChangeFn,
@@ -8,9 +9,11 @@ import type {
   SpecificInputProps,
   InputValue,
   CommonInputProps,
+  SelectInputProps,
 } from "@/components/Input";
-import type { ModalProps } from "@/components/Modal";
-import type { GridEndPosition } from "@layouts";
+import type { InputAssistiveTextProps } from "@/components/InputAssistiveText";
+import type { ModalProps, ModalSize } from "@/components/Modal";
+import type { GridEndPosition, TableLayout } from "@layouts";
 import type {
   ColorKey,
   StyleOverrideProps,
@@ -230,6 +233,183 @@ export type BuiltFieldProps<TType extends InputType> = FieldProps<TType> &
   BuiltFormFieldLayoutProps &
   TestIdProps;
 
+// -------------------------------- TABLE -----------------------------------
+
+export type FormTableModifiers = {
+  /**
+   * Enables row deletion if provided
+   *
+   * @type {boolean}
+   * @default false
+   */
+  deletable?: boolean;
+  /**
+   * Enables row swapping if provided.
+   *
+   * @remarks This is only a visual feature. It does not affect the data's order.
+   *
+   * @type {boolean}
+   * @default false
+   */
+  swappable?: boolean;
+};
+
+export type FormTableCustomFooterProps<
+  TRowValue extends Record<string, unknown>
+> = {
+  /**
+   * Appends a new row at the end of the table
+   *
+   * @type {AppendTableRowFn<TRowValue>}
+   */
+  appendRow: AppendTableRowFn<TRowValue>;
+  /**
+   * Whether the form's table is disabled
+   */
+  disabled?: boolean;
+};
+
+export type FormTableButtonFooter<TRowValue extends Record<string, unknown>> = {
+  kind: "button";
+  newRow?: Partial<TRowValue> | GenericFn<[], Partial<TRowValue>>;
+} & Pick<ButtonProps, "label" | "icon">;
+
+export type FormTableSelectFooter<TRowValue extends Record<string, unknown>> = {
+  kind: "select";
+} & Omit<SelectInputProps<Partial<TRowValue>>, "onChange" | "value">;
+
+export type FormTableCustomFooter<TRowValue extends Record<string, unknown>> = {
+  kind: "custom";
+  CustomFooter: FC<FormTableCustomFooterProps<TRowValue>>;
+};
+
+export type AnyFormTableFooter<TRowValue extends Record<string, unknown>> =
+  | FormTableButtonFooter<TRowValue>
+  | FormTableSelectFooter<TRowValue>
+  | FormTableCustomFooter<TRowValue>;
+
+export type FormTableColumn<TRowValue extends Record<string, unknown>> =
+  | FormFieldProps<TRowValue>
+  | FormCustomFieldProps<TRowValue>;
+
+export type FormTableProps<TData extends object> = {
+  [TSource in FormFieldSource<TData, InputType>]: DeepValueOf<
+    CompleteFormData<TData>,
+    TSource
+  > extends infer TFieldValue
+    ? TFieldValue extends Record<string, unknown>[]
+      ? TFieldValue[number] extends infer TRowValue
+        ? TRowValue extends Record<string, unknown>
+          ? {
+              /**
+               * The source of the table's data. Must point to an array of objects
+               *
+               * @type {TSource}
+               * @required
+               */
+              source: TSource;
+              /**
+               * The kind of this table.
+               *
+               * @remarks Is needed in order to identify the field as a table and render it accordingly
+               *
+               * @required
+               * @type {"table"}
+               */
+              kind: "table";
+              /**
+               * The columns of the table. A list of fields that get translated to table columns.
+               *
+               * @remarks Field labels will be used as the column headers while their inputs will be used as the cells
+               *
+               * @type {Omit<FormFieldProps<TRowValue>, "table">[]}
+               */
+              columns: FormTableColumn<NoInfer<TRowValue>>[];
+              /**
+               * The table's footer. Provides multiple variants to add new rows to the table
+               *
+               * @remarks Not providing this property will not allow for creating new rows
+               * @type {AnyFormTableFooter<TRowValue>}
+               */
+              footer?: AnyFormTableFooter<TRowValue>;
+              EmptyCard?: FC;
+              /**
+               * The table's native layout
+               *
+               * @default "auto"
+               * @type {TableLayout}
+               */
+              tableLayout?: TableLayout;
+            } & FieldLabelProps &
+              InputAssistiveTextProps &
+              FormFieldLayoutProps &
+              FormTableModifiers
+          : never
+        : never
+      : never
+    : never;
+}[FormFieldSource<TData, InputType>];
+
+export type BuiltFormTableRow = {
+  /**
+   * The cells of the row
+   */
+  cells: (BuiltFormCustomFieldProps | BuiltFieldProps<InputType>)[];
+  /**
+   * The id of the row. Computed from the cell's combined sources if absent
+   */
+  id: string;
+};
+
+/**
+ * A stable table id
+ * Created from a table's source and its index in the form content array
+ */
+export type StableFormTableId = `${string}-${number}`;
+
+/**
+ * A map of stable table ids to their row indexes (initial indexes and dynamic indexes)
+ */
+export type FormTableRowIndexMap = Map<StableFormTableId, number[]>;
+
+export type StableFormTableRow = BuiltFormTableRow & {
+  /**
+   * The stable id of the row. Used to identify the row regardless of its index
+   */
+  stableId: string;
+  /**
+   * The index of the row prior to any reordering
+   */
+  initialIndex: number;
+};
+
+export type BuiltFormTableCallbacks = {
+  deleteRow: DeleteTableRowFn;
+  appendRow: AppendTableRowFn<Record<string, unknown>>;
+};
+
+/**
+ * Props consumed by the internal `FormTableFooter` component
+ */
+export type FormTableFooterProps = {
+  footer: AnyFormTableFooter<Record<string, unknown>>;
+  columnsCount: number;
+} & Pick<BuiltFormTableCallbacks, "appendRow">;
+
+export type BuiltFormTableProps = {
+  kind: "table";
+  stableId: StableFormTableId;
+  headers: FieldLabelProps[];
+  rows: BuiltFormTableRow[];
+  modifiers: Required<FormTableModifiers>;
+  columnsCount: number;
+  footer: Nullable<AnyFormTableFooter<Record<string, unknown>>>;
+  EmptyCard: Nullable<FC>;
+} & BuiltFormTableCallbacks &
+  InputAssistiveTextProps &
+  BuiltFormFieldLayoutProps &
+  FieldLabelProps;
+
 // ------------------------------- DIVIDER ----------------------------------
 
 export type FormDividerProps =
@@ -260,8 +440,16 @@ export type BuiltFormTextProps = Omit<TextProps, keyof StyleOverrideProps> & {
  */
 export type FormCustomContentProps =
   | {
-      content: ReactNode | FC;
+      /**
+       * The content item's identifier
+       */
       kind: "content";
+      /**
+       * The custom content
+       *
+       * @type {ReactNode | FC}
+       */
+      content: ReactNode | FC;
     }
   | FC;
 
@@ -295,14 +483,21 @@ export type CustomFormInputProps<TValue extends NullishPrimitives> =
      * @default null
      */
     name?: Nullable<string>;
+    /**
+     * The custom field's row index
+     *
+     * @remarks only provided when rendered as part of a table
+     */
+    rowIndex?: Nullable<number>;
   };
 
 type PreservedFieldProps = Omit<
   FieldProps<InputType>,
-  Exclude<
-    keyof CustomFormInputProps<NullishPrimitives>,
-    "onChange" | "disabled" | "error" | "required"
-  >
+  | Exclude<
+      keyof CustomFormInputProps<NullishPrimitives>,
+      "onChange" | "disabled" | "error" | "required"
+    >
+  | "type"
 >;
 
 export type FormCustomFieldProps<TData extends object> = {
@@ -330,7 +525,15 @@ export type BuiltFormCustomFieldProps = PreservedFieldProps &
 // ------------------------------- CONTENT ----------------------------------
 
 /**
- * A single form field or divider to display inside the form
+ * A single content item to be displayed inside the form
+ *
+ * One of:
+ * - {@link FormFieldProps}
+ * - {@link FormCustomFieldProps}
+ * - {@link FormTableProps}
+ * - {@link FormDividerProps}
+ * - {@link FormTextProps}
+ * - {@link FormCustomContentProps}
  *
  * @template {object} TData - The type of the {@link FormData}
  *
@@ -339,18 +542,26 @@ export type BuiltFormCustomFieldProps = PreservedFieldProps &
 export type FormContent<TData extends object> =
   | FormFieldProps<TData>
   | FormCustomFieldProps<TData>
+  | FormTableProps<TData>
   | FormDividerProps
   | FormTextProps
   | FormCustomContentProps;
 
 /**
- * Either a single {@link BuiltFieldProps} object or {@link FormDividerProps}
+ * One of:
+ * - {@link BuiltFieldProps}
+ * - {@link BuiltFormCustomFieldProps}
+ * - {@link BuiltFormTableProps}
+ * - {@link FormTextProps}
+ * - {@link FormCustomContentProps}
+ * - {@link FormDividerProps}
  *
  * @template {InputType} TType - The field's input type
  */
 export type BuiltFormContent<TType extends InputType> =
   | BuiltFieldProps<TType>
   | BuiltFormCustomFieldProps
+  | BuiltFormTableProps
   | FormDividerProps
   | FormCustomContentProps
   | BuiltFormTextProps;
@@ -737,6 +948,21 @@ export type BuildCustomFieldPropsFn<TData extends object> = (
 ) => BuiltFormCustomFieldProps;
 
 /**
+ * Builds a {@link BuiltFormTableProps} object from a {@link FormTableProps} object
+ * links its `value`, `onChange`, `disabled`, `required`, `error` and `errorText` properties with each cell
+ *
+ * @template {object} TData - The type of the {@link FormData}
+ *
+ * @param {FormCustomFieldProps<TData>} formCustomField - The {@link FormCustomFieldProps}
+ *
+ * @returns {BuiltFormCustomFieldProps<TData>} The built and linked {@link BuiltFormCustomFieldProps}
+ */
+export type BuildFormTablePropsFn<TData extends object> = (
+  formTable: FormTableProps<TData>,
+  index: number
+) => BuiltFormTableProps;
+
+/**
  * Retrieves the value of a {@link FormField} from the internal {@link FormData} using its `source`.
  *
  * @template {object} TData - The type of the {@link FormData}
@@ -820,9 +1046,45 @@ export type IsFieldRequiredFn<TData extends object> = (
  */
 export type ComputeFormValidationFn = GenericFn<[], FormValidation>;
 
+/**
+ * Builts a {@link BuiltFormFieldLayout} object
+ * based its containing form's {@link FormLayoutProps} as well as its own {@link FormFieldLayout}
+ *
+ * @param {Optional<FormFieldLayout>} [layout] - The optional {@link FormFieldLayout}
+ * @return {BuiltFormFieldLayoutProps["layout"]} - The built {@link BuiltFormFieldLayout}
+ */
 export type BuildFormFieldLayoutFn = GenericFn<
   [Optional<FormFieldLayout>],
   BuiltFormFieldLayoutProps["layout"]
+>;
+
+export type DeleteTableRowFn = VoidFn<[number]>;
+
+export type AppendTableRowFn<TRowValue extends Record<string, unknown>> =
+  VoidFn<[Partial<TRowValue>]>;
+
+export type UpdateFormTableRowIndexMapFn = VoidFn<
+  [StableFormTableId, StableFormTableRow[]]
+>;
+
+/**
+ * Retrieves the form's table row index map:
+ *
+ * @returns {FormTableRowIndexMap} The form's table row index map
+ */
+export type GetFormTableRowIndexMapFn = GenericFn<[], FormTableRowIndexMap>;
+
+/**
+ * Reorders all table rows in the form if they have been reordered
+ *
+ * @template {object} TData - The form data
+ *
+ * @param {TData} data - The form data
+ * @returns {TData} The form data with all table rows reordered
+ */
+export type ReoderAllTableRowsIfNeededFn<TData extends object> = GenericFn<
+  [TData],
+  TData
 >;
 
 // -------------------------- DISPLAY TRANSFORMS -----------------------------
@@ -997,6 +1259,12 @@ export type UseFormLayoutReturn = {
   buildFormFieldLayout: BuildFormFieldLayoutFn;
 };
 
+export type UseFormTablesReturn<TData extends object> = {
+  updateTableRowIndexMap: UpdateFormTableRowIndexMapFn;
+  getTableRowIndexMap: GetFormTableRowIndexMapFn;
+  reorderAllTablesIfNeeded: ReoderAllTableRowsIfNeededFn<TData>;
+};
+
 // ------------------------------- CONTEXT ---------------------------------
 
 /**
@@ -1013,7 +1281,8 @@ export type FormContext<TData extends object> = UseFormDataReturn<TData> &
   UseFormSubmissionReturn &
   FormModifers &
   UseFormEditStateReturn &
-  UseFormLayoutReturn & {
+  UseFormLayoutReturn &
+  UseFormTablesReturn<TData> & {
     /**
      * An array of {@link BuiltFieldProps},
      * used to render the form's fields
@@ -1028,7 +1297,10 @@ export type FormContext<TData extends object> = UseFormDataReturn<TData> &
 
 export type FormContainerStyleProps = StyleProps<
   Pick<FormModifers, "readonly" | "disabled"> &
-    Pick<UseFormEditStateReturn, "isEditing">
+    Pick<UseFormEditStateReturn, "isEditing"> & {
+      size?: ModalSize;
+      asModal?: boolean;
+    }
 >;
 
 export type FormEditButtonStyleProps = StyleProps<{ hidden?: boolean }>;

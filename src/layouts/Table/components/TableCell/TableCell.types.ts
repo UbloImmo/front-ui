@@ -1,4 +1,4 @@
-import type { StyleProps } from "@types";
+import type { StyleOverrideProps, StyleProps } from "@types";
 import type { ReactNode } from "react";
 
 export type TableCellProps = {
@@ -21,7 +21,7 @@ export type TableCellProps = {
    * @default false
    */
   padded?: boolean;
-};
+} & StyleOverrideProps;
 
 export type TableCellDefaultProps = Required<TableCellProps>;
 
