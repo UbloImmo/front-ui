@@ -1,5 +1,5 @@
 import { isString } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { useCallback, useMemo, type MouseEventHandler } from "react";
 import styled from "styled-components";
 
 import { contextMenuItemStyles } from "./ContextMenuItem.styles";
@@ -28,7 +28,7 @@ const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
 /**
  * Renders a single button or action in a ContextMenu
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ContextMenuItemProps & TestIdProps} props - ContextMenu component props
  * @returns {JSX.Element}
@@ -46,6 +46,15 @@ const ContextMenuItem = (
   const testId = useTestId("context-menu-item", props);
 
   const onClick = useHtmlAttribute(mergedProps.onClick);
+
+  const onSmallItemClick = useCallback<MouseEventHandler>(
+    (event) => {
+      event?.stopPropagation();
+      event.preventDefault();
+      if (onClick) onClick();
+    },
+    [onClick]
+  );
 
   debug(mergedProps);
 
@@ -77,7 +86,7 @@ const ContextMenuItem = (
     <ContextMenuItemContainer
       data-testid={testId}
       disabled={disabled}
-      onClick={onClick}
+      onClick={onSmallItemClick}
       tabIndex={tabIndex}
     >
       <Text

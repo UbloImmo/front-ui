@@ -87,7 +87,12 @@ export type FormData<TData extends object> = DeepPartial<TData>;
 
 // --------------------------------- FIELD ----------------------------------
 
-export type FormFieldLayoutHiddenFn = GenericFn<[], boolean>;
+/**
+ * Callback that returns whether the field should be hidden in edit mode
+ *
+ * @param {boolean} isEditing - Whether the form is in edit mode
+ */
+export type FormFieldLayoutHiddenFn = GenericFn<[boolean], boolean>;
 
 export type FormFieldLayout = {
   /**
@@ -106,7 +111,9 @@ export type FormFieldLayout = {
    */
   readonly?: boolean;
   /**
-   * Whether to hide the field in both display AND edit modes
+   * Whether to hide the field in both display AND edit modes.
+   *
+   * Either a boolean or a function that returns a boolean based on the form's edit state
    *
    * @type {boolean | FormFieldLayoutHiddenFn}
    * @default false
