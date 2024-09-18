@@ -7,15 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.32.0 - 2024-09-18
 ### Added
-
 - New dependencies
   - `@dnd-kit/core`: `^6.1.0`
   - `@dnd-kit/modifiers`: `^7.0.0`
   - `@dnd-kit/sortable`: `^8.0.0`
   - `@dnd-kit/utilities`: `^3.2.2`
   - `uuid`: `^10.0.0`
-
 - `v0.0.4` Form component
   - Added support for reactive, editable, deletable, swappable tables
   - Various interal Form table components
@@ -31,26 +30,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Complete with validation, various apis to add / reorder and remove data
   - Supports all available form field variants as well as custom fields
 
-### Fixed
+### Changed
+- `v0.0.2` Table layout
+  - Added `forwardRef` and `onClick` prop to TableRow
+- `v0.0.10` ComboBox component
+  - Remove warn when `multi` and `!showIcon`
 
+### Fixed
 - `v0.0.2` FormDebug internal component
   - Replace duplicate display of `data` with one for `initialData`
   - Remove duplicate `Mode` debug block
   - Add responsive behavior & layout based on container size
-
 - `v0.0.7` Field component
   - Make sure a field takes 100% available width
-
 - `v0.0.2` Table layout
   - Various css fixes so as to not impact nested tables (e.g. Calendar)
-
-### Changed
-
-- `v0.0.2` Table layout
-  - Added `forwardRef` and `onClick` prop to TableRow
-
-- `v0.0.10` ComboBox component
-  - Remove warn when `multi` and `!showIcon`
 
 ## 0.31.2 - 2024-09-10
 ### Fixed
