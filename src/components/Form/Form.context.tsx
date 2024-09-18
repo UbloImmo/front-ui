@@ -79,6 +79,7 @@ import type {
   FormFieldLayout,
   FormFieldLayoutHiddenFn,
   FormFieldProps,
+  FormLayoutProps,
   FormModifers,
   FormModifierProps,
   FormOnSubmitErrorFn,
@@ -325,7 +326,8 @@ const useFormValidation = <TData extends object>(
 };
 
 const useFormLayout = (
-  formLayout: DefaultFormLayoutProps
+  formLayout: DefaultFormLayoutProps,
+  formEditState: UseFormEditStateReturn
 ): UseFormLayoutReturn => {
   /**
    * The number of columns in the form. Only even column counts <= 2 are allowed.
@@ -350,7 +352,7 @@ const useFormLayout = (
       const defaultSize = Math.max(1, Math.round(columns / 2));
 
       const hidden = isFunction<FormFieldLayoutHiddenFn>(fieldLayout?.hidden)
-        ? fieldLayout.hidden()
+        ? fieldLayout.hidden(formEditState.isEditing)
         : isBoolean(fieldLayout?.hidden)
         ? fieldLayout.hidden
         : false;
@@ -367,7 +369,7 @@ const useFormLayout = (
         readonly: fieldLayout?.readonly ?? false,
       };
     },
-    [columns]
+    [columns, formEditState]
   );
 
   return {
@@ -976,13 +978,13 @@ const useFormSubmission = <TData extends object>(
  */
 const useFormEditState = (
   modifiers: FormModifers,
-  layout: UseFormLayoutReturn
+  asModal: FormLayoutProps["asModal"]
 ): UseFormEditStateReturn => {
   const { closeDialog, isDialogRegistered, isDialogOpen } = useDialogManager();
 
   const dialogRef = useMemo(
-    () => layout.asModal?.reference ?? "",
-    [layout.asModal?.reference]
+    () => asModal?.reference ?? "",
+    [asModal?.reference]
   );
 
   const [isEditing, setIsEditing] = useState(
@@ -1051,8 +1053,8 @@ export const useForm = <TData extends object>(
     formData.data,
     formModifiers
   );
-  const formLayout = useFormLayout({ columns, asModal });
-  const formEditState = useFormEditState(formModifiers, formLayout);
+  const formEditState = useFormEditState(formModifiers, asModal);
+  const formLayout = useFormLayout({ columns, asModal }, formEditState);
   const content = useFormContent(
     formData,
     formValidation,

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.7` Form component
+  - Pass form edit state to `layout.hidden()` function
+
 ### Fixed
 
 - `v0.0.3` Action component
