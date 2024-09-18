@@ -49,7 +49,7 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
 /**
  * A single clickable option in a ComboBox
  *
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
  * @returns {JSX.Element}
@@ -105,10 +105,6 @@ const ComboBoxButton = (
       ? "CheckCircleFill"
       : "Circle";
   }, [multi, active]);
-
-  if (multi && !showIcon) {
-    warn("Multi mode requires showIcon to be true");
-  }
 
   const textProps = useMemo<TextProps>(
     () => ({
