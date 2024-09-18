@@ -7,13 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.32.1 - 2024-09-18
 ### Changed
-
 - `v0.0.5` Form component
   - Improve `asModal` property
     - Render a "close" button while editing
     - Link `cancelEditing` internal callback with closing the containing modal
-
 - `v0.0.2` Dialog component
   - Add `Esc` keyboard shortcut to close dialog
 
