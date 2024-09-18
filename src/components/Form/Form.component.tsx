@@ -48,7 +48,7 @@ const defaultFormProps: FormDefaultProps<object> = {
 /**
  * A flexible yet expressive form renderer.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @template {object} TData - The type of the form data
  *
@@ -85,7 +85,8 @@ export { Form };
 const InnerForm = <TData extends object>(
   props: FormDefaultProps<TData> & TestIdProps
 ): JSX.Element => {
-  const { isEditing, readonly, disabled, submitForm } = useFormContext<TData>();
+  const { isEditing, readonly, disabled, submitForm, asModal } =
+    useFormContext<TData>();
   const testId = useTestId("form", props);
 
   const styleProps = useStyleProps({ isEditing, readonly, disabled });
@@ -97,9 +98,9 @@ const InnerForm = <TData extends object>(
         onSubmit={submitForm}
         {...styleProps}
         $size={props.asModal?.size ?? "m"}
-        $asModal={!!props.asModal}
+        $asModal={!!asModal}
       >
-        <FormHeader {...props} asModal={!!props.asModal} />
+        <FormHeader {...props} />
         <FormFieldRenderer />
         <FormDebug />
         <FormEditBanner
@@ -108,7 +109,7 @@ const InnerForm = <TData extends object>(
         />
       </FormContainer>
     ),
-    [props, styleProps, submitForm, testId]
+    [asModal, props, styleProps, submitForm, testId]
   );
 
   if (props.asModal) {

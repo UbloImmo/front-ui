@@ -309,7 +309,8 @@ const buttonModifierStyles = ({
       transition: color 300ms var(--bezier) 0s,
         background-color 300ms var(--bezier) 0s,
         border-color 300ms var(--bezier) 0s, padding 300ms var(--bezier) 0s,
-        width 300ms var(--bezier) 0s;
+        width 300ms var(--bezier) 0s, opacity 300ms var(--bezier) 0s,
+        scale 300ms var(--bezier) 0s;
       justify-content: flex-start;
 
       pointer-events: all;

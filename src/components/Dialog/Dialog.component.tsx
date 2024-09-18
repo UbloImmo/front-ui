@@ -34,7 +34,7 @@ const defaultDialogProps: DefaultDialogProps = {
  *
  * Controlled by a parent `DialogProvider`.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {DialogProps & TestIdProps} props - the properties for the Dialog component
  * @returns {Nullable<JSX.Element>} the rendered dialog or null if closed
@@ -72,6 +72,17 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
     isOpenRef.current = isOpen;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
+
+  /**
+   * Effect to close the dialog when the escape key is pressed
+   */
+  useEffect(() => {
+    const closeOnEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) close();
+    };
+    window.addEventListener("keydown", closeOnEsc);
+    return () => window.removeEventListener("keydown", closeOnEsc);
+  }, [close, isOpen]);
 
   if (!reference) {
     error("No reference provided");

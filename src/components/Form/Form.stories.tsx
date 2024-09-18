@@ -446,9 +446,8 @@ export const AsModal = (props: FormStoryProps) => {
         {...mergedProps}
         title="Form in a modal"
         asModal={{ reference: formModalRef }}
-        onCancelled={close}
+        defaultEditing="force"
         onSubmit={close}
-        defaultEditing
       />
       <Button onClick={open} label="Open form in modal" />
     </>
