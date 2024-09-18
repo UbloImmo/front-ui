@@ -780,7 +780,7 @@ export type FormModifierProps = {
    * @type {boolean}
    * @default false
    */
-  defaultEditing?: boolean;
+  defaultEditing?: boolean | "force";
   /**
    * Whether to validate form data on each change
    *
@@ -1257,6 +1257,7 @@ export type UseFormEditStateReturn = {
 export type UseFormLayoutReturn = {
   columns: number;
   buildFormFieldLayout: BuildFormFieldLayoutFn;
+  asModal: FormLayoutProps["asModal"];
 };
 
 export type UseFormTablesReturn<TData extends object> = {

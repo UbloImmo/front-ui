@@ -73,6 +73,17 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
+  /**
+   * Effect to close the dialog when the escape key is pressed
+   */
+  useEffect(() => {
+    const closeOnEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) close();
+    };
+    window.addEventListener("keydown", closeOnEsc);
+    return () => window.removeEventListener("keydown", closeOnEsc);
+  }, [close, isOpen]);
+
   if (!reference) {
     error("No reference provided");
     return null;

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import styled from "styled-components";
 
 import { FormEditButton } from "./FormEditButton.component";
+import { useFormContext } from "../Form.context";
 import { formHeaderStyles } from "../Form.styles";
 
 import { Badge } from "@/components/Badge";
@@ -13,22 +14,22 @@ import { useMergedProps } from "@utils";
 import type { FormHeaderProps } from "../Form.types";
 import type { HeadingSize } from "@types";
 
-const defaultFormHeaderProps: Required<
-  FormHeaderProps & { asModal?: boolean }
-> = {
+const defaultFormHeaderProps: Required<FormHeaderProps> = {
   title: "Form",
   badge: null,
   icon: null,
-  asModal: false,
 };
 
-export const FormHeader = (props: FormHeaderProps & { asModal?: boolean }) => {
+/**
+ * Renders a form's header (title, badge & buttons)
+ * @param {FormHeaderProp} props - The header's props
+ * @returns {JSX.Element} - The rendered form header
+ */
+export const FormHeader = (props: FormHeaderProps): JSX.Element => {
+  const { asModal } = useFormContext();
   const mergedProps = useMergedProps(defaultFormHeaderProps, props);
 
-  const size = useMemo<HeadingSize>(
-    () => (mergedProps.asModal ? "h2" : "h4"),
-    [mergedProps.asModal]
-  );
+  const size = useMemo<HeadingSize>(() => (asModal ? "h2" : "h4"), [asModal]);
 
   return (
     <Header data-testid="form-header">

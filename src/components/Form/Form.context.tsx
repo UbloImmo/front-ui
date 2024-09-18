@@ -45,7 +45,12 @@ import {
   setObjectValue,
 } from "./Form.utils";
 
-import { useLogger, useMergedProps, useUikitTranslation } from "@utils";
+import {
+  isEmptyString,
+  useLogger,
+  useMergedProps,
+  useUikitTranslation,
+} from "@utils";
 
 import type { FieldLabelProps } from "../Field";
 import type { InputOnChangeFn, InputType } from "../Input";
@@ -102,6 +107,7 @@ import type {
   UseFormValidationReturn,
 } from "./Form.types";
 import type { GridEndPosition } from "@layouts";
+import { useDialogManager } from "../Dialog";
 
 /**
  * Custom form hook
@@ -367,6 +373,7 @@ const useFormLayout = (
   return {
     columns,
     buildFormFieldLayout,
+    asModal: formLayout.asModal,
   };
 };
 
@@ -967,8 +974,20 @@ const useFormSubmission = <TData extends object>(
  *   - startEditing: A function that switches the form into edit mode.
  *   - stopEditing: A function that switches the form out of edit mode.
  */
-const useFormEditState = (modifiers: FormModifers): UseFormEditStateReturn => {
-  const [isEditing, setIsEditing] = useState(modifiers.defaultEditing || false);
+const useFormEditState = (
+  modifiers: FormModifers,
+  layout: UseFormLayoutReturn
+): UseFormEditStateReturn => {
+  const { closeDialog, isDialogRegistered, isDialogOpen } = useDialogManager();
+
+  const dialogRef = useMemo(
+    () => layout.asModal?.reference ?? "",
+    [layout.asModal?.reference]
+  );
+
+  const [isEditing, setIsEditing] = useState(
+    !!modifiers.defaultEditing || false
+  );
 
   /**
    * Switches the form into edit mode
@@ -984,8 +1003,23 @@ const useFormEditState = (modifiers: FormModifers): UseFormEditStateReturn => {
    * @remarks use {@link cancelEdition} to go back to view mode and reset the form's data to its initial state
    */
   const stopEditing = useCallback<VoidFn>(() => {
-    setIsEditing(false);
-  }, []);
+    if (modifiers.defaultEditing !== "force") {
+      setIsEditing(false);
+    }
+    if (
+      !isEmptyString(dialogRef) &&
+      isDialogRegistered(dialogRef) &&
+      isDialogOpen(dialogRef)
+    ) {
+      closeDialog(dialogRef);
+    }
+  }, [
+    modifiers.defaultEditing,
+    dialogRef,
+    isDialogRegistered,
+    isDialogOpen,
+    closeDialog,
+  ]);
 
   return {
     isEditing,
@@ -1017,8 +1051,8 @@ export const useForm = <TData extends object>(
     formData.data,
     formModifiers
   );
-  const formEditState = useFormEditState(formModifiers);
   const formLayout = useFormLayout({ columns, asModal });
+  const formEditState = useFormEditState(formModifiers, formLayout);
   const content = useFormContent(
     formData,
     formValidation,
@@ -1081,6 +1115,7 @@ const defaultFormContext: FormContext<object> = {
   updateTableRowIndexMap: () => {},
   getTableRowIndexMap: () => new Map(),
   reorderAllTablesIfNeeded: () => ({}),
+  asModal: null,
 };
 
 const InternalFormContext =
