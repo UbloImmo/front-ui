@@ -1,5 +1,5 @@
 import { VoidFn, isFunction, type Nullable } from "@ubloimmo/front-util";
-import { useCallback, useMemo, useState } from "react";
+import { MouseEventHandler, useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 
 import { actionContainerStyles } from "./Action.styles";
@@ -51,7 +51,7 @@ const defaultActionProps: DefaultActionProps = {
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -73,10 +73,15 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
 
   const [isHovering, setIsHovering] = useState(false);
 
-  const onClick = useCallback(() => {
-    if (isFunction<VoidFn>(mergedProps.onClick) && !mergedProps.disabled)
-      mergedProps.onClick();
-  }, [mergedProps]);
+  const onClick = useCallback<MouseEventHandler>(
+    (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (isFunction<VoidFn>(mergedProps.onClick) && !mergedProps.disabled)
+        mergedProps.onClick();
+    },
+    [mergedProps]
+  );
 
   const staticIconProps = useMemo<StaticIconProps>(() => {
     const color: ColorKeyOrWhite = mergedProps.disabled
