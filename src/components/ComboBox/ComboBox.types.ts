@@ -146,13 +146,29 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = {
    */
   onCreate?: Nullable<VoidFn>;
   /**
-   * Callback that fires when an option is edited
+   * Callback that fires when an option is to be edited
+   * @type {((value: TOptionValue) => void) | null};
    */
   onOptionEdit?: Nullable<ComboBoxOptionCallback<TOptionValue>>;
+  /**
+   * Callback that fires when an option is to be deleted
+   * @type {((value: TOptionValue) => void) | null};
+   */
   onOptionDelete?: Nullable<ComboBoxOptionCallback<TOptionValue>>;
-
-  optionEditLabel?: null;
-  optionDeleteLabel?: null;
+  /**
+   * Label for the option "edit" context menu item
+   *
+   * @type {Nullable<string>}
+   * @default tl.action.edit
+   */
+  optionEditLabel?: Nullable<string>;
+  /**
+   * Label for the option "delete" context menu item
+   *
+   * @type {Nullable<string>}
+   * @default tl.action.delete
+   */
+  optionDeleteLabel?: Nullable<string>;
 };
 
 export type ComboBoxDefaultProps<TOptionValue extends NullishPrimitives> =
