@@ -34,7 +34,7 @@ const defaultDialogProps: DefaultDialogProps = {
  *
  * Controlled by a parent `DialogProvider`.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {DialogProps & TestIdProps} props - the properties for the Dialog component
  * @returns {Nullable<JSX.Element>} the rendered dialog or null if closed
