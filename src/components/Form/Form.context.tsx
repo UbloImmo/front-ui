@@ -44,6 +44,7 @@ import {
   isSchemaFieldRequired,
   setObjectValue,
 } from "./Form.utils";
+import { useDialogManager } from "../Dialog";
 
 import {
   isEmptyString,
@@ -107,7 +108,6 @@ import type {
   UseFormValidationReturn,
 } from "./Form.types";
 import type { GridEndPosition } from "@layouts";
-import { useDialogManager } from "../Dialog";
 
 /**
  * Custom form hook
