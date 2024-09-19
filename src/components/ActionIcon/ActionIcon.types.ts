@@ -2,10 +2,10 @@ import type { IconName } from "../Icon";
 import type { ColorKey, StyleOverrideProps, StyleProps } from "@types";
 import type { Enum, Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
 
-const actionIconSizes = ["l", "m", "s"];
+const actionIconSizes = ["l", "m", "s"] as const;
 export type ActionIconSize = Enum<typeof actionIconSizes>;
 
-export type ActionIconColor = Extract<ColorKey, "primary" | "error">;
+export type ActionIconColor = Extract<ColorKey, "primary" | "error"> | "white";
 
 export type ActionIconProps = StyleOverrideProps & {
   /**
