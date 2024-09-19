@@ -229,8 +229,8 @@ export const useSelectValue = <
   useEffect(() => {
     if (
       isOpen &&
-      isQuerying &&
       isString(autoCompleteQuery) &&
+      mergedProps.searchable &&
       (autoCompleteQuery !== activeOption?.label || !activeOption)
     ) {
       refetchOptions(
@@ -238,7 +238,7 @@ export const useSelectValue = <
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoCompleteQuery, isQuerying]);
+  }, [autoCompleteQuery]);
 
   const activeOption = useMemo(() => {
     return (
