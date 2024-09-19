@@ -1,4 +1,4 @@
-import { isFunction } from "@ubloimmo/front-util";
+import { isFunction, isNull, type Nullable } from "@ubloimmo/front-util";
 import { useMemo, type FC, type ReactNode } from "react";
 
 import { FormFieldGridItem } from "./FormFieldGridItem.component";
@@ -14,7 +14,7 @@ import type { BuiltFormCustomContentProps } from "../Form.types";
  */
 export const FormCustomContent = ({
   content,
-}: BuiltFormCustomContentProps): JSX.Element => {
+}: BuiltFormCustomContentProps): Nullable<JSX.Element> => {
   const renderedContent = useMemo<ReactNode>(() => {
     if (isFunction<FC>(content)) {
       const ContentFc = content;
@@ -22,6 +22,9 @@ export const FormCustomContent = ({
     }
     return content;
   }, [content]);
+
+  // do not render anything if renderedContent doesn't
+  if (isNull(renderedContent)) return null;
 
   return (
     <FormFieldGridItem columnStart={1} columnEnd={-1} fill>

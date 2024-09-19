@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.8` Form component
+  - Do not render custom content if it itself doesn't (returns `null`)
+
 ### Changed
 
 - `v0.0.4` ActionIcon component
