@@ -11,6 +11,7 @@ import type {
   ComboBoxInputProps,
 } from "./ComboBoxInput.types";
 import type { TestIdProps } from "@types";
+import { useInputId } from "../Input.utils";
 
 const defaultComboBoxInputProps: ComboBoxInputDefaultProps<NullishPrimitives> =
   {
@@ -30,7 +31,7 @@ const defaultComboBoxInputProps: ComboBoxInputDefaultProps<NullishPrimitives> =
  *
  * @remarks Use {@link ComboBox} if you need a combobox, instead of this component.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ComboBoxInputProps & TestIdProps} props - ComboBoxInput component props
  * @returns {JSX.Element}
@@ -55,6 +56,8 @@ const ComboBoxInput = <
     [multi, onChange]
   );
 
+  const id = useInputId(mergedProps);
+
   return (
     <ComboBox
       {...mergedProps}
@@ -62,6 +65,7 @@ const ComboBoxInput = <
       onChange={onComboBoxChange}
       testId={testId}
       overrideTestId
+      id={id}
     />
   );
 };
