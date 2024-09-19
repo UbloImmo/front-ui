@@ -135,14 +135,14 @@ describe("Icon", () => {
     expect(icons).toBeArrayOfSize(3);
   });
 
-  it("should return null if provided with an unknown icon name", async () => {
+  it("should return null or render a fallback if provided with an unknown icon name", async () => {
     // mock global console object to list to calls
     global.console.warn = mock(warnCopy);
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     /* @ts-ignore Need to ignore in order to test missing prop */
     const { findByTestId } = render(<Icon name="UNSUPPORTED ICON" />);
 
-    expect(async () => await findByTestId("icon")).toThrow();
+    expect(await findByTestId("icon-fallback")).not.toBeNull();
   });
 
   objectKeys(generated).forEach((iconName) => {

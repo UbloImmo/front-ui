@@ -139,7 +139,7 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
     return (
       <ContextMenuActionIcon
         icon={icon}
-        color="primary"
+        color="white"
         $open={open}
         disabled={disabled}
         testId="context-menu-trigger"

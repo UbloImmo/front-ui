@@ -2,7 +2,10 @@ import { isFunction } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
-import { actionIconContainerStyles } from "./ActionIcon.styles";
+import {
+  actionIconContainerStyles,
+  actionIconIconColorMap,
+} from "./ActionIcon.styles";
 import { Icon } from "../Icon";
 
 import {
@@ -25,7 +28,7 @@ import type { VoidFn } from "@ubloimmo/front-util";
 const defaultActionIconProps: DefaultActionIconProps = {
   icon: "Square",
   size: "l",
-  color: "primary",
+  color: "white",
   onClick: null,
   disabled: false,
   title: "[Action title]",
@@ -37,7 +40,7 @@ const defaultActionIconProps: DefaultActionIconProps = {
  *
  * No label, no tags, just an icon.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {ActionIconProps & TestIdProps} props - The properties for the action icon
  * @return {JSX.Element} The rendered action icon component
@@ -64,16 +67,14 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
   }
 
   const iconProps = useMemo<IconProps>(() => {
-    const isSmall = mergedProps.size === "s";
-    const color: PaletteColor = mergedProps.disabled
-      ? "gray-600"
-      : isSmall
-      ? `${mergedProps.color}-base`
-      : "gray-800";
-    const size = isSmall ? "s-3" : "s-5";
+    const isLarge = mergedProps.size === "l";
+    const disabledColor: PaletteColor = isLarge ? "gray-400" : "gray-500";
+    const color = mergedProps.disabled
+      ? disabledColor
+      : actionIconIconColorMap[mergedProps.size][mergedProps.color];
     return {
       name: mergedProps.icon,
-      size,
+      size: "s-5",
       color,
     };
   }, [mergedProps]);

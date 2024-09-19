@@ -44,7 +44,7 @@ const meta = {
       defaultValue: ActionIcon.defaultProps.size,
     },
     color: {
-      options: ["primary", "error"],
+      options: ["primary", "error", "white"],
       defaultValue: ActionIcon.defaultProps.color,
     },
     title: {
@@ -81,7 +81,6 @@ export const Sizes = (props: ActionIconProps) => {
       for="size"
       of={ActionIcon}
       defaults={defaults}
-      scaling={1.5}
       propLabels
       align="center"
     />
@@ -98,7 +97,7 @@ const SizeRenderer = (props: ActionIconProps) => {
   );
 };
 
-const colors: ActionIconColor[] = ["primary", "error"];
+const colors: ActionIconColor[] = ["white", "primary", "error"];
 export const Colors = (props: ActionIconProps) => {
   const defaults = useMergedProps(ActionIcon.defaultProps, props);
   return (

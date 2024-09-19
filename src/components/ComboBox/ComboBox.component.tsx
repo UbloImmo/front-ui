@@ -164,6 +164,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
         role="combobox"
         testId={testId}
         overrideTestId
+        id={mergedProps.id}
       >
         {(options ?? []).map((option, index) => (
           <GridItem
