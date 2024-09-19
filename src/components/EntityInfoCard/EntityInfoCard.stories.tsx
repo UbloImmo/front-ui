@@ -459,7 +459,7 @@ const actionIcons: Nullable<ActionIconProps>[] = [
   {
     title: "Duplicate",
     icon: "Copy",
-    color: "primary",
+    color: "white",
   },
 ];
 export const ActionIcon = (props: EntityInfoCardProps) => {
