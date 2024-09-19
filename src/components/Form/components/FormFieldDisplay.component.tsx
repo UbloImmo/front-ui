@@ -49,6 +49,7 @@ export const FormFieldDisplay = <TType extends InputType>(
       overrideTestId
       gap="s-2"
       fill
+      id={props.id}
     >
       <InputLabel
         label={label}
