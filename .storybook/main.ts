@@ -17,6 +17,10 @@ const config: StorybookConfig = {
     "@storybook/addon-outline",
     "@storybook/addon-viewport",
     "@storybook/addon-themes",
+    {
+      name: "@storybook/addon-docs",
+      options: { transcludeMarkdown: true },
+    },
   ],
 
   framework: {
@@ -61,6 +65,7 @@ const config: StorybookConfig = {
         extensions: [".mdx", ".mjs", ".js", ".ts", ".tsx"],
         alias,
       },
+      assetsInclude: ["**/*.md"],
     });
   },
 

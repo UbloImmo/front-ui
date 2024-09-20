@@ -1,0 +1,24 @@
+import { Meta, Markdown } from "@storybook/blocks";
+import { HeaderInfo, Text } from "../../blocks";
+import { Content, Header } from "../../containers";
+import gettingStarted from "../../../GETTING_STARTED.md?raw";
+
+
+<Meta title="Documentation/Getting started"/>
+
+<Header>
+  <HeaderInfo title="Getting started" parent="Documentation">
+    <Text size="m" color="primary-dark">Use the uikit in your own projects</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+<Markdown>{(() => {
+  const contentIndex = gettingStarted.indexOf("##");
+  return gettingStarted
+    .substring(contentIndex)
+    .replaceAll("https://ublo.ublo.org/design-system", "")
+})()}</Markdown>
+
+</Content>

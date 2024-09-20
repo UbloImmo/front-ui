@@ -28,6 +28,10 @@ export const collapsibleContainerStyles = ({
 export const caretContainerStyles = (): RuleSet => {
   return css`
     // padding set to expand caret clickable area
+    display: flex;
+    max-height: var(--s-5);
+    align-items: center;
+    justify-content: center;
     padding: var(--s-2) var(--s-2) var(--s-2) 0;
     border: none;
     background: none;

@@ -32,6 +32,7 @@ const preview: Preview = {
         const isOverview = (item) => isDocs(item) && contains("overview")(item);
 
         const isFoundations = contains("foundations");
+        const isDocumentation = contains("documentation");
 
         const compare = (compareFn) => (itemA, itemB) => {
           if (compareFn(itemA) && !compareFn(itemB)) return -1;
@@ -40,6 +41,8 @@ const preview: Preview = {
         const match = (matchFn) => (itemA, itemB) => {
           return matchFn(itemA) || matchFn(itemB);
         };
+
+        if (match(isDocumentation)(a, b)) return compare(isDocumentation)(a, b);
 
         if (match(isFoundations)(a, b)) return compare(isFoundations)(a, b);
 
