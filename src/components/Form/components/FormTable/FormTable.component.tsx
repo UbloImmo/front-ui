@@ -119,7 +119,6 @@ export const FormTable = ({
   );
 
   const errorTooltip = useMemo<Nullable<TooltipProps>>(() => {
-    // console.log(error, errorText);
     if (!error || !errorText) return null;
     return {
       children: (
