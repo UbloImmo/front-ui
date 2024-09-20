@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-  - **`DOCS`** Changelog in docs
+
+- **`DOCS`** Changelog in docs
 
 ### Fixed
 
