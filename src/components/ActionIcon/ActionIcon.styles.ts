@@ -76,7 +76,6 @@ export const actionIconContainerStyles = ({
   $color,
   $size,
 }: ActionIconStyleProps) => {
-  console.log($color);
   const isMedium = $size === "m";
   const normalizedColor: ColorKey = $color === "white" ? "primary" : $color;
   const iconHoverColor = cssVarUsage(`${normalizedColor}-base`);
