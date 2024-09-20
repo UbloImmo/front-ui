@@ -49,7 +49,7 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
 /**
  * A single clickable option in a ComboBox
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
  * @returns {JSX.Element}

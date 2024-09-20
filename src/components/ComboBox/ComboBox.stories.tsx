@@ -48,6 +48,12 @@ const meta = {
     columns: {
       type: "number",
     },
+    creatable: {
+      type: "boolean",
+    },
+    disabled: {
+      type: "boolean",
+    },
   },
   parameters: {
     docs: componentSource(),

@@ -52,7 +52,7 @@ export const ComboBoxButtonWrapperStyles = ({
     --combobox-button-border-color: var(--gray-300);
   }
 
-  &:not(button[data-testid="${$testId}"]:disabled:first-child):hover {
+  &:not(:has([data-testid="${$testId}"]:disabled:first-child)):hover {
     --combobox-button-border-color: var(--primary-base);
   }
 
@@ -104,6 +104,10 @@ export const ComboBoxButtonStyles = (): RuleSet => {
     div[data-testid="combo-box-button-content"] {
       flex: 1;
       overflow: hidden;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
     }
   `;
 };

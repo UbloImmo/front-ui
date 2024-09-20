@@ -14,11 +14,16 @@ import {
   type ComboBoxOption,
   type ComboBoxOnChangeFn,
 } from "./ComboBox.types";
-import { ActionIcon } from "../ActionIcon";
+import { ActionIcon, ActionIconProps } from "../ActionIcon";
 import { ComboBoxButton } from "../ComboBoxButton";
 
 import { FlexLayout, GridItem, GridLayout } from "@layouts";
-import { useTestId, useMergedProps, useLogger } from "@utils";
+import {
+  useTestId,
+  useMergedProps,
+  useLogger,
+  useUikitTranslation,
+} from "@utils";
 
 import type { TestIdProps } from "@types";
 
@@ -44,7 +49,7 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
 /**
  * A group of ComboBoxButtons that act as a select or radio input.
  *
- * @version 0.0.11
+ * @version 0.0.12
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -60,6 +65,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
   const { options, multi, onChange, disabled, direction, showIcon, readonly } =
     mergedProps;
   const testId = useTestId("combo-box", props);
+  const { action } = useUikitTranslation();
 
   const valueToSelection = useCallback(
     (value: Nullable<TOptionValue | TOptionValue[]>): TOptionValue[] => {
@@ -155,6 +161,18 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     return mergedProps.creatable;
   }, [disabled, readonly, mergedProps.creatable]);
 
+  const actionIconProps = useMemo<ActionIconProps>(
+    () => ({
+      size: "m",
+      color: "white",
+      icon: "PlusLg",
+      onClick: mergedProps.onCreate,
+      disabled,
+      title: action.create(),
+    }),
+    [action, disabled, mergedProps.onCreate]
+  );
+
   if (isNumber(mergedProps.columns)) {
     return (
       <GridLayout
@@ -198,12 +216,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
             fill="force"
             key={"create-button"}
           >
-            <ActionIcon
-              size="m"
-              color="white"
-              icon="PlusLg"
-              onClick={mergedProps.onCreate}
-            />
+            <ActionIcon {...actionIconProps} />
           </GridItem>
         )}
       </GridLayout>
@@ -238,14 +251,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
           deleteLabel={mergedProps.optionDeleteLabel}
         />
       ))}
-      {creatable && (
-        <ActionIcon
-          size="m"
-          color="primary"
-          icon="PlusLg"
-          onClick={mergedProps.onCreate}
-        />
-      )}
+      {creatable && <ActionIcon {...actionIconProps} />}
     </FlexLayout>
   );
 };
