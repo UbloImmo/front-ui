@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.11` ComboBox component
+  - Update `creatable` ActionIcon color based on previous changes
+
+- `v0.0.2` Collapsible component
+  - Clamp arrow button height to match design
+
 ## 0.32.5 - 2024-09-19
 ### Changed
 - `v0.0.4` ActionIcon component

@@ -29,7 +29,7 @@ const defaultCollapsibleProps: CollapsibleDefaultProps = {
 /**
  * An expandable component that allow users to reveal or hide sub content on click.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {CollapsibleProps & TestIdProps} props - Collapsible component props
  * @returns {JSX.Element}
