@@ -7,11 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.32.7 - 2024-09-20
 ### Fixed
-
 - `v0.0.12` ComboBox component
   - Update `creatable` ActionIcon props based on previous changes
-
 - `v0.0.9` ComboBoxButton component
   - Fix disabled hover border-color & cursor
 
