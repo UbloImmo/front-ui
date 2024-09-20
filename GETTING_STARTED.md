@@ -4,7 +4,7 @@
 
 ## Requirements
 
-We are a React house, so its requirements are pretty straight forward.
+We are a React house, so the uikit's requirements are pretty straight forward.
 
 - A working [React](https://react.dev) project
 
