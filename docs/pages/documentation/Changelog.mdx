@@ -1,13 +1,13 @@
 import { Meta, Markdown } from "@storybook/blocks";
-import { HeaderInfo, Text } from "./blocks";
-import { Content, Header } from "./containers";
-import changelog from "../CHANGELOG.md?raw";
+import { HeaderInfo, Text } from "../../blocks";
+import { Content, Header } from "../../containers";
+import changelog from "../../../CHANGELOG.md?raw";
 
 
 <Meta title="Documentation/Changelog"/>
 
 <Header>
-  <HeaderInfo title="Changelog">
+  <HeaderInfo title="Changelog" parent="Documentation">
     <Text size="m" color="primary-dark">
     <Markdown>{`All notable changes to the library will be documented in this file.
 
