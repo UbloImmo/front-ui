@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.32.9 - 2024-09-23
 ### Changed
-
 - `v0.0.2` IconPicker component
   - Added `IconName[][]` property support to render multiple rows
   - Added horizontal overflow on root container
