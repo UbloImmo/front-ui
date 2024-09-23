@@ -7,9 +7,13 @@ type IconPickerOnChangeFn = VoidFn<[IconName | null]>;
 export type IconPickerProps = {
   /**
    * The set of icons to display in IconPicker
-   * @type {IconName[]}
+   *
+   * @remarks if a 2D array is passed, each inner array represents a row of icons
+   *
+   * @type {IconName[] | IconName[][]}
+   * @default []
    */
-  icons?: IconName[];
+  icons?: IconName[] | IconName[][];
 
   /**
    * The currently selected icon

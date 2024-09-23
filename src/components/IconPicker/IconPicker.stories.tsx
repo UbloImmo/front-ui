@@ -48,3 +48,53 @@ export const Required: Story = {
     required: true,
   },
 };
+
+export const Icons: Story = {
+  args: {
+    icons: [
+      "CircleDashed",
+      "Circle",
+      "Circle2NdHalf",
+      "CircleFill",
+      "CircleHalf",
+    ],
+    value: "CircleDashed",
+  },
+};
+
+export const Rows: Story = {
+  args: {
+    icons: [
+      [
+        "Box",
+        "Buildings",
+        "Building",
+        "Houses",
+        "HouseDoor",
+        "House",
+        "PSquare",
+        "HSquare",
+        "Hospital",
+        "Suitcase",
+        "Luggage",
+        "Tree",
+        "Cart3",
+      ],
+      [
+        "BoxFill",
+        "BuildingsFill",
+        "BuildingFill",
+        "HousesFill",
+        "HouseDoorFill",
+        "HouseFill",
+        "PSquareFill",
+        "HSquareFill",
+        "HospitalFill",
+        "SuitcaseFill",
+        "LuggageFill",
+        "TreeFill",
+        "BroadcastPin",
+      ],
+    ],
+  },
+};
