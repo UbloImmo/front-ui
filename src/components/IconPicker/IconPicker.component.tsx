@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { isArray } from "@ubloimmo/front-util";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import styled from "styled-components";
 
 import { IconName } from "../Icon/Icon.types";
 import { IconPickerItem } from "./components/IconPickerItem/IconPickerItem.component";
+import { iconPickerContainerStyles } from "./IconPicker.styles";
 
 import { FlexLayout } from "@layouts";
 import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
@@ -25,7 +28,7 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
 /**
  * Allows users to pick an icon from a subset, like a radio input for icons.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {IconPickerProps & TestIdProps} props - IconPicker component props
  * @returns {JSX.Element}
@@ -72,26 +75,51 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
     warn(`Missing icons`);
   }
 
+  const hasRows = useMemo(
+    () => isArray(mergedProps.icons[0]),
+    [mergedProps.icons]
+  );
+
   return (
-    <FlexLayout
+    <IconPickerContainer
+      direction={hasRows ? "column" : "row"}
       testId={testId}
       gap="s-2"
       className={className}
       overrideTestId
+      fill
       id={mergedProps.id}
     >
-      {mergedProps.icons.map((icon) => (
-        <IconPickerItem
-          key={icon}
-          name={icon}
-          active={selection === icon}
-          disabled={mergedProps.disabled}
-          onClick={updateSelection(icon)}
-        />
-      ))}
-    </FlexLayout>
+      {mergedProps.icons.map((iconOrRow, index) =>
+        isArray(iconOrRow) ? (
+          <FlexLayout key={`row-${index}`} fill gap="s-2">
+            {iconOrRow.map((icon, rowIndex) => (
+              <IconPickerItem
+                key={["row", index, rowIndex].join("-")}
+                name={icon}
+                active={selection === icon}
+                disabled={mergedProps.disabled}
+                onClick={updateSelection(icon)}
+              />
+            ))}
+          </FlexLayout>
+        ) : (
+          <IconPickerItem
+            key={[iconOrRow, index].join("-")}
+            name={iconOrRow}
+            active={selection === iconOrRow}
+            disabled={mergedProps.disabled}
+            onClick={updateSelection(iconOrRow)}
+          />
+        )
+      )}
+    </IconPickerContainer>
   );
 };
 IconPicker.defaultProps = defaultIconPickerProps;
+
+const IconPickerContainer = styled(FlexLayout)`
+  ${iconPickerContainerStyles}
+`;
 
 export { IconPicker };

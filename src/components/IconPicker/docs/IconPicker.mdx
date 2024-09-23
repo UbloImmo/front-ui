@@ -17,6 +17,20 @@ import * as IconPickerStories from "../IconPicker.stories.tsx";
 
 <Canvas of={IconPickerStories.Default} />
 
+#### Choosing icons
+
+By providing a list of `IconName`s to the `icons` property, one can customize which icons are avaiable to users.
+
+<Canvas of={IconPickerStories.Icons} />
+
+#### Rendering multiple rows.
+
+The `icons` property also allows for a 2D array (`IconName[][]`) to be provided.
+
+> Each inner list will be rendered as a row in the `IconPicker`.
+
+<Canvas of={IconPickerStories.Rows} />
+
 ### Required
 
 By default, users can clear their selection. To prevent this and make a selection mandatory, set the `required` property to `true`.
@@ -30,5 +44,6 @@ By default, users can clear their selection. To prevent this and make a selectio
 To disable user interaction with `IconPicker`, set the optional `disabled` property to `true`. This will prevent user from selecting an option or modifying an existing selection.
 
 <Canvas of={IconPickerStories.Disabled} />
+
 
 </Content>
