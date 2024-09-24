@@ -7,11 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.32.10 - 2024-09-24
 ### Added
-
 - `v0.0.9` Form component
   - Added ability to filter table values based on table data
-
 - `v0.0.5` SelectInput component
   - Added new `filterOption` callback property that allows for filtering options based on external criteria
 
