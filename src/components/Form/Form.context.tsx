@@ -671,6 +671,7 @@ const useFormContent = <TData extends object>(
         },
         deleteRow,
         appendRow,
+        data: arrayValue,
         footer: t?.footer ?? null,
         columnsCount: t.columns?.length ?? 0,
         EmptyCard: t.EmptyCard ?? null,
