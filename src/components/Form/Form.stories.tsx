@@ -619,6 +619,8 @@ const tableFormProps: FormProps<IdentityTable> = {
         kind: "select",
         searchable: true,
         controlIcon: "Search",
+        unique: ["name"],
+        filterOption: ({ value }) => !value?.name?.includes("HSBC") ?? false,
         options: [
           {
             label: "Credit agricole",
@@ -630,6 +632,12 @@ const tableFormProps: FormProps<IdentityTable> = {
             label: "Bank of america",
             value: {
               name: "Bank of america",
+            },
+          },
+          {
+            label: "HSBC",
+            value: {
+              name: "HSBC France",
             },
           },
         ],

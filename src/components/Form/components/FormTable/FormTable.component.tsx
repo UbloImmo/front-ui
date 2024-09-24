@@ -51,6 +51,7 @@ export const FormTable = ({
   deleteRow,
   appendRow,
   EmptyCard,
+  data,
 }: BuiltFormTableProps) => {
   const { isEditing, updateTableRowIndexMap } = useFormContext();
 
@@ -197,6 +198,7 @@ export const FormTable = ({
           {footer && isEditing && (
             <FormTableFooter
               footer={footer}
+              tableData={data}
               appendRow={appendRow}
               columnsCount={columnsCount}
             />

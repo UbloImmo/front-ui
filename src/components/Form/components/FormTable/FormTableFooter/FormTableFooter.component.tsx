@@ -13,6 +13,7 @@ export const FormTableFooter = ({
   footer,
   columnsCount,
   appendRow,
+  tableData,
 }: FormTableFooterProps) => {
   const { isEditing, disabled } = useFormContext();
 
@@ -29,7 +30,13 @@ export const FormTableFooter = ({
       return <FormTableFooterButton footer={footer} {...commonProps} />;
 
     if (footer.kind === "select")
-      return <FormTableFooterSelect footer={footer} {...commonProps} />;
+      return (
+        <FormTableFooterSelect
+          tableData={tableData}
+          footer={footer}
+          {...commonProps}
+        />
+      );
 
     if (footer.kind === "custom") {
       const { CustomFooter } = footer;
@@ -37,7 +44,7 @@ export const FormTableFooter = ({
     }
 
     return null;
-  }, [footer, appendRow, footerDisabled]);
+  }, [appendRow, footerDisabled, footer, tableData]);
 
   return (
     <TableFooter>

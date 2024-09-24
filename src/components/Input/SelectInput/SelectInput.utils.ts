@@ -36,6 +36,7 @@ export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives>
     onChange: null,
     name: null,
     options: [],
+    filterOption: null,
     placeholder: "",
     searchable: false,
     Option: null,
@@ -218,8 +219,10 @@ export const useSelectValue = <
   );
 
   const allFlattenOptions = useMemo(() => {
-    return flattenSelectOptions(options);
-  }, [options]);
+    const allOptions = flattenSelectOptions(options);
+    if (!mergedProps.filterOption) return allOptions;
+    return allOptions.filter(mergedProps.filterOption);
+  }, [mergedProps.filterOption, options]);
 
   const isQuerying = useMemo(
     () => isString(autoCompleteQuery) && isNonEmptyString(autoCompleteQuery),

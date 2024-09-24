@@ -2,6 +2,7 @@ import { type NullishPrimitives } from "@ubloimmo/front-util";
 import { useCallback } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
+import { useInputId } from "../Input.utils";
 
 import { ComboBox, type ComboBoxOnChangeFn } from "@/components/ComboBox";
 import { useMergedProps, useTestId } from "@utils";
@@ -11,7 +12,6 @@ import type {
   ComboBoxInputProps,
 } from "./ComboBoxInput.types";
 import type { TestIdProps } from "@types";
-import { useInputId } from "../Input.utils";
 
 const defaultComboBoxInputProps: ComboBoxInputDefaultProps<NullishPrimitives> =
   {

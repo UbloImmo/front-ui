@@ -69,6 +69,19 @@ export type CustomOptionComponent<
 > = FC<SelectOption<TValue, TExtraData>>;
 
 /**
+ * A function used to filter options based on external creteria.
+ *
+ * @template {NullishPrimitives} TValue - The type of the value.
+ * @template {NullishPrimitives} TExtraData - The type of the extra data.
+ * @param {SelectOption<TValue, TExtraData>} option - The option to be filtered.
+ * @returns {boolean} - Whether the option should be displayed in the list.
+ */
+export type FilterSelectOptionFn<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives
+> = GenericFn<[SelectOption<TValue, TExtraData>], boolean>;
+
+/**
  * The custom component to render the selected option
  */
 export type CustomSelectedOptionComponent<TValue extends NullishPrimitives> =
@@ -103,6 +116,14 @@ export type SelectInputProps<
    * @default null
    */
   options?: SelectOptionsQuery<TValue, TExtraData>;
+  /**
+   * A function used to filter options based on external creteria
+   *
+   * @default null
+   *
+   * @type {Nullable<FilterSelectOptionFn<TValue, TExtraData>>}
+   */
+  filterOption?: Nullable<FilterSelectOptionFn<TValue, TExtraData>>;
 
   /**
    * Whether the user can search for an option by typing

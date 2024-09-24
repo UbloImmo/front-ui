@@ -29,6 +29,7 @@ import type {
   DeepRequired,
   DeepValueOf,
   GenericFn,
+  KeyOf,
   MaybeAsyncFn,
   Nullable,
   Nullish,
@@ -283,6 +284,35 @@ export type FormTableButtonFooter<TRowValue extends Record<string, unknown>> = {
 
 export type FormTableSelectFooter<TRowValue extends Record<string, unknown>> = {
   kind: "select";
+  /**
+   * A list of keys to de-duplicate options based on table data.
+   *
+   * @remarks Options provided to selected footer will filtered not to include any value that already exists in the table.
+   *
+   * @example
+   * // type of a row
+   * type Row = {
+   *  id: string;
+   *  name: string;
+   * };
+   * // option values
+   * const optionsValues = [
+   *  { id: "1", name: "John" },
+   *  { id: "2", name: "Jane" },
+   *  { id: "3", name: "John" },
+   * ];
+   * // select options
+   * const options: SelectOption<Partial<Row>>[] = optionsValues.map((row) => ({ label: row.name, value: row }));
+   * //
+   * const selectFooter = {
+   *  kind: "footer",
+   *  options,
+   *  unique: ["id"],
+   *
+   * @type {KeyOf<TRowValue, string>[]}
+   * @default []
+   */
+  unique?: KeyOf<TRowValue, string>[];
 } & Omit<SelectInputProps<Partial<TRowValue>>, "onChange" | "value">;
 
 export type FormTableCustomFooter<TRowValue extends Record<string, unknown>> = {
@@ -401,6 +431,7 @@ export type BuiltFormTableCallbacks = {
 export type FormTableFooterProps = {
   footer: AnyFormTableFooter<Record<string, unknown>>;
   columnsCount: number;
+  tableData: Record<string, unknown>[];
 } & Pick<BuiltFormTableCallbacks, "appendRow">;
 
 export type BuiltFormTableProps = {
@@ -408,6 +439,7 @@ export type BuiltFormTableProps = {
   stableId: StableFormTableId;
   headers: FieldLabelProps[];
   rows: BuiltFormTableRow[];
+  data: Record<string, unknown>[];
   modifiers: Required<FormTableModifiers>;
   columnsCount: number;
   footer: Nullable<AnyFormTableFooter<Record<string, unknown>>>;
