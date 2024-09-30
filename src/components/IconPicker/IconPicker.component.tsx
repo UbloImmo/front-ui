@@ -28,13 +28,13 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
 /**
  * Allows users to pick an icon from a subset, like a radio input for icons.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {IconPickerProps & TestIdProps} props - IconPicker component props
  * @returns {JSX.Element}
  */
 const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
-  const { warn } = useLogger("IconPicker");
+  const { warn, debug } = useLogger("IconPicker");
   const mergedProps = useMergedProps(defaultIconPickerProps, props);
   const testId = useTestId("icon-picker", props);
   const className = useClassName(mergedProps);
@@ -45,31 +45,23 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
     (icon: IconName) => () => {
       if (mergedProps.disabled) return;
 
-      if (icon === selection && !mergedProps.required) {
-        setSelection(null);
-      } else {
-        setSelection(icon);
+      const newIcon = icon === selection && !mergedProps.required ? null : icon;
+      setSelection(newIcon);
+      if (mergedProps.onChange && newIcon !== mergedProps.value) {
+        debug(["propagate change", newIcon]);
+        mergedProps.onChange(newIcon);
       }
     },
-    [mergedProps, selection]
+    [debug, mergedProps, selection]
   );
 
   useEffect(() => {
     if (mergedProps.value === selection) return;
-
+    debug(["update selection from prop", mergedProps.value]);
     setSelection(mergedProps.value);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedProps.value]);
-
-  useEffect(() => {
-    if (!mergedProps.onChange) return;
-    if (mergedProps.value === selection) return;
-
-    mergedProps.onChange(selection);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mergedProps.onChange, selection]);
 
   if (!mergedProps.icons.length) {
     warn(`Missing icons`);

@@ -8,7 +8,7 @@ import { Button } from "../Button";
 import { Callout } from "../Callout";
 import { DialogProvider, useDialog } from "../Dialog";
 import { Heading } from "../Heading";
-import { Icon } from "../Icon";
+import { Icon, type IconName } from "../Icon";
 import { Input } from "../Input";
 import { Tooltip } from "../Tooltip";
 import { isFormField } from "./Form.utils";
@@ -676,6 +676,84 @@ export const CreatableForm = (props: FormStoryProps) => {
 };
 CreatableForm.parameters = {
   docs: componentSource([creatableFormProps]),
+};
+
+type UnitGroupData = {
+  name: string;
+  customReference: string;
+  icon: IconName;
+};
+
+const unitGroupIcons: IconName[][] = [
+  [
+    "BuildingBlocks",
+    "LayoutWtf",
+    "ColumnsGap",
+    "Grid",
+    "Grid3X2Gap",
+    "Buildings",
+    "Building",
+    "Houses",
+    "House",
+    "Layers",
+    "Mailbox",
+    "PinMap",
+    "Geo",
+  ],
+  [
+    "BuildingBlocksFill",
+    "Shelves",
+    "BorderOuter",
+    "GridFill",
+    "Grid3X2GapFill",
+    "BuildingsFill",
+    "BuildingFill",
+    "HousesFill",
+    "HouseFill",
+    "LayersFill",
+    "Mailbox2",
+    "PinMapFill",
+    "GeoFill",
+  ],
+];
+
+const layout = {
+  size: 2,
+};
+
+const unitGroupFormProps: FormProps<UnitGroupData> = {
+  title: "Unit group",
+  content: [
+    {
+      source: "name",
+      label: `Nom du groupe`,
+      type: "text",
+      layout,
+    },
+    {
+      source: "customReference",
+      label: `Réference du groupe`,
+      type: "text",
+      assistiveText: `7 caracères`,
+      layout,
+    },
+    {
+      source: "icon",
+      type: "icon-picker",
+      label: `Icône`,
+      icons: unitGroupIcons,
+      layout,
+    },
+  ],
+  query: () => ({
+    icon: "Building",
+  }),
+};
+
+export const UnitGroupExample = (props: FormStoryProps) => {
+  const mergedProps = useMergedProps(unitGroupFormProps, props);
+
+  return <Form {...mergedProps} />;
 };
 
 export const Steps = () => {
