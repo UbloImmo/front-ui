@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.3` IconPicker component
+  - Infinite useEffect when used inside form with query
+
 ## 0.32.10 - 2024-09-24
 ### Added
 - `v0.0.9` Form component
