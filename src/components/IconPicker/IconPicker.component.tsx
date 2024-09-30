@@ -34,7 +34,9 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
  * @returns {JSX.Element}
  */
 const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
-  const { warn, debug } = useLogger("IconPicker");
+  const { warn, debug } = useLogger("IconPicker", {
+    hideDebug: true,
+  });
   const mergedProps = useMergedProps(defaultIconPickerProps, props);
   const testId = useTestId("icon-picker", props);
   const className = useClassName(mergedProps);
