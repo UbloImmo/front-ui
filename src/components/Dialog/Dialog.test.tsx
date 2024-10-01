@@ -94,6 +94,7 @@ testDialog({ ...props, open: true })(
 );
 
 global.console.error = mock(() => {});
+global.console.debug = mock(() => {});
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore need this to check for unhandled props
@@ -165,12 +166,12 @@ const testUseGlobalDialogContext = () => {
   testDefaultContext(
     "should error when registering multiple times",
     (result, _params, { getResult }) => {
-      (global.console.error as Mock<VoidFn>).mockReset();
+      (global.console.debug as Mock<VoidFn>).mockReset();
       act(() => result.registerDialog("duplicate", false));
       result = getResult();
       act(() => result.registerDialog("duplicate", false));
-      expect(global.console.error).toHaveBeenCalled();
-      (global.console.error as Mock<VoidFn>).mockReset();
+      expect(global.console.debug).toHaveBeenCalled();
+      (global.console.debug as Mock<VoidFn>).mockReset();
     },
     {
       skip: true,
