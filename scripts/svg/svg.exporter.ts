@@ -14,7 +14,7 @@ const logger = Logger();
  * @param {FileDescription} file - The description of the file to write
  * @param {string} file.path - The path of the file to write to.
  * @param {string} file.data - The data to write to the file.
- * @param [dryRun = false] - Whether to not do anytg
+ * @param {boolean} [dryRun = false] - Whether to not do anytg
  * @return {Promise<void>} A promise that resolves when the data has been written to the file.
  */
 const writeFile = async (

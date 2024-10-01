@@ -5,6 +5,8 @@ import { objectFromEntries } from "@ubloimmo/front-util";
 import { getDynamicThemeSlugs, ThemeProvider } from "@/themes";
 import { UikitTranslationProvider } from "@/utils";
 
+import { DialogProvider } from "@components";
+
 import type { DynamicColorPaletteKey } from "@types";
 import type { ReactNode } from "react";
 
@@ -31,7 +33,9 @@ export const StorybookThemeProvider = ({
     _forceTheme={theme.client}
     faviconLinkSelectors={{ x16: 'link[rel="icon"]' }}
   >
-    <UikitTranslationProvider>{children}</UikitTranslationProvider>
+    <UikitTranslationProvider>
+      <DialogProvider portalRoot="#dialog-root">{children}</DialogProvider>
+    </UikitTranslationProvider>
   </ThemeProvider>
 );
 

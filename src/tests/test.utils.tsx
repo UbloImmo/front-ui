@@ -6,6 +6,17 @@ import { describe, expect, it } from "bun:test";
 import type { GenericFn, MaybeAsyncFn, VoidFn } from "@ubloimmo/front-util";
 import type { FC, ReactNode } from "react";
 
+type TestHookUtils<THookReturn> = {
+  rerender: VoidFn;
+  unmount: VoidFn;
+  getResult: GenericFn<[], THookReturn>;
+};
+
+type TestOptions = {
+  skip?: boolean;
+  todo?: boolean;
+};
+
 /**
  *
  * Generates a test factory for a hook.
@@ -28,7 +39,11 @@ export const testHookFactory = <
   hook: THook,
   staticTests?: {
     params: THookParams;
-    tests: { name: string; test: VoidFn<[THookReturn]> }[];
+    tests: {
+      name: string;
+      test: VoidFn<[THookReturn]>;
+      options?: TestOptions;
+    }[];
   }
 ) => {
   describe(hookName, () => {
@@ -47,10 +62,14 @@ export const testHookFactory = <
     }
   });
 
-  return (
-      ...params: THookParams
-    ): VoidFn<[string, VoidFn<[THookReturn, THookParams]>]> =>
-    (testName: string, tests: VoidFn<[THookReturn, THookParams]>) => {
+  return (...params: THookParams) =>
+    (
+      testName: string,
+      tests: MaybeAsyncFn<
+        [THookReturn, THookParams, TestHookUtils<THookReturn>]
+      >,
+      options?: TestOptions
+    ) => {
       describe(hookName, () => {
         const paramsStr =
           params && params.length > 0
@@ -61,9 +80,17 @@ export const testHookFactory = <
                 .join(", ")
             : "no params";
         const testlabel = `${testName} with params ${paramsStr}"`;
-        it(testlabel, () => {
-          const { result } = renderHook(() => hook(...(params ?? [])));
-          tests(result.current, params ?? []);
+        const testFn = options?.skip ? it.skip : options?.todo ? it.todo : it;
+        testFn(testlabel, async () => {
+          const { result, unmount, rerender } = renderHook(() =>
+            hook(...(params ?? []))
+          );
+          const utils: TestHookUtils<THookReturn> = {
+            rerender: () => rerender(...params),
+            unmount,
+            getResult: () => result.current,
+          };
+          await tests(result.current, params ?? [], utils);
           cleanup();
         });
       });
