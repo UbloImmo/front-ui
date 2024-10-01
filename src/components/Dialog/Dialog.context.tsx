@@ -38,9 +38,7 @@ const DEFAULT_PORTAL_ROOT = "#dialog-root";
 export const useGlobalDialogContext = (
   params: DialogContextProps
 ): GlobalDialogContext => {
-  const { error, log, warn, debug } = useLogger("Dialog Manager", {
-    hideLogs: false,
-  });
+  const { error, warn, debug } = useLogger("Dialog Manager");
 
   /**
    * Internal counter that tracks the number of registred dialogs.
@@ -193,18 +191,20 @@ export const useGlobalDialogContext = (
    */
   const unregisterDialog = useCallback(
     (reference: DialogReference) => {
-      log(`Unregistering dialog ${reference}...`);
+      debug(`Unregistering dialog ${reference}...`);
       executeIfDialogIsRegistered(
         reference,
         () => {
           dispatchDialogState({ reference, type: "unregister" });
           registerCounter.current--;
-          log(`Dialog ${reference} unregistered`);
+          debug(
+            `Dialog ${reference} unregistered, ${registerCounter.current} remaining`
+          );
         },
         "Already unregistered dialog"
       );
     },
-    [log, executeIfDialogIsRegistered]
+    [debug, executeIfDialogIsRegistered]
   );
 
   /**
