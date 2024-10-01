@@ -13,7 +13,18 @@ export type DialogReference = Exclude<string, ``>;
 /**
  * Internal map used to track each dialog's state
  */
-export type InternalDialogStateMap = Record<DialogReference, Nullable<boolean>>;
+export type InternalDialogStateMap = Map<DialogReference, boolean>;
+
+/**
+ * Internal action used to update the dialog state map
+ */
+export type InternalDialogStateAction =
+  | { reference: DialogReference; type: "register"; open?: Nullable<boolean> }
+  | { reference: DialogReference; type: "unregister" }
+  | { reference: DialogReference; type: "set"; open: boolean }
+  | { reference: DialogReference; type: "toggle" }
+  | { reference: DialogReference; type: "open" }
+  | { reference: DialogReference; type: "close" };
 
 export type GlobalDialogContext = {
   /**

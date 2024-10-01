@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- `v0.0.3` Dialog component
+  - Rewrite internal state management using useReducer hook
+  - Should fix issues with uncontrolled dialogs not being closed and registration issues
+
 ## 0.32.11 - 2024-09-30
 ### Fixed
 - `v0.0.3` IconPicker component

@@ -144,7 +144,7 @@ const children: Record<DialogReference, JSX.Element> = {
       alt="example image"
     />
   ),
-  input: <TextInput />,
+  input: <TextInput uncontrolled />,
   nested: <NestedDialog />,
 };
 

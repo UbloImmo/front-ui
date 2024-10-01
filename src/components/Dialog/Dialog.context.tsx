@@ -4,14 +4,15 @@ import {
   isString,
   type Nullable,
   type Optional,
+  type VoidFn,
 } from "@ubloimmo/front-util";
 import {
   createContext,
   useCallback,
   useContext,
   useMemo,
+  useReducer,
   useRef,
-  useState,
 } from "react";
 
 import { isEmptyString, isNonEmptyString, useLogger } from "@utils";
@@ -23,6 +24,7 @@ import type {
   DialogContextProviderProps,
   InternalDialogStateMap,
   GlobalDialogContext,
+  InternalDialogStateAction,
 } from "./Dialog.types";
 
 const DEFAULT_PORTAL_ROOT = "#dialog-root";
@@ -37,24 +39,65 @@ export const useGlobalDialogContext = (
   params: DialogContextProps
 ): GlobalDialogContext => {
   const { error, log, warn, debug } = useLogger("Dialog Manager", {
-    hideLogs: true,
-    hideDebug: true,
+    hideLogs: false,
   });
+
   /**
    * Internal counter that tracks the number of registred dialogs.
    * Used for logging.
    */
   const registerCounter = useRef<number>(0);
+
   /**
    * Contains all registred dialog states and holds data in case of concurrent changes / dialog registrations
+   * and handles all dialog state changes through actions.
+   *
+   * Used to trigger re-renders and to sync with prop changes.
    */
-  const dialogStateMapRef = useRef<InternalDialogStateMap>({});
-  /**
-   * Mirrors {@link dialogStateMapRef}
-   * Used exclusively to trigger re-renders and to sync with prop changes.
-   */
-  const [_, setDialogStateMap] = useState<InternalDialogStateMap>({});
+  const [dialogStateMap, dispatchDialogState] = useReducer(
+    (
+      map: InternalDialogStateMap,
+      action: InternalDialogStateAction
+    ): InternalDialogStateMap => {
+      const copy: InternalDialogStateMap = new Map(map.entries());
+      switch (action.type) {
+        case "register": {
+          copy.set(action.reference, action.open ?? false);
+          return copy;
+        }
+        case "unregister": {
+          copy.delete(action.reference);
+          return copy;
+        }
+        case "set": {
+          copy.set(action.reference, action.open);
+          return copy;
+        }
+        case "open": {
+          copy.set(action.reference, true);
+          return copy;
+        }
+        case "close": {
+          copy.set(action.reference, false);
+          return copy;
+        }
+        case "toggle": {
+          const state = copy.get(action.reference);
+          if (!isBoolean(state)) return copy;
+          copy.set(action.reference, !state);
+          return copy;
+        }
+        default:
+          return copy;
+      }
+    },
+    new Map<DialogReference, boolean>()
+  );
 
+  /**
+   * The portal root is the element to which the dialogs will be appended to.
+   * If no portal root is provided, the default portal root is used.
+   */
   const portalRoot = useMemo(() => {
     if (!params || !params?.portalRoot) return DEFAULT_PORTAL_ROOT;
     if (!isNonEmptyString(params?.portalRoot)) {
@@ -72,36 +115,9 @@ export const useGlobalDialogContext = (
    */
   const findDialogState = useCallback(
     (reference: DialogReference): Nullable<boolean> => {
-      return dialogStateMapRef.current[reference] ?? null;
+      return dialogStateMap.get(reference) ?? null;
     },
-    []
-  );
-
-  /**
-   * Upates both the {@link dialogStateMapRef} and {@link dialogStateMap}
-   * and keeps them in sync with each other.
-   *
-   * Used to update, registrer and unregister dialogs.
-   *
-   * @param {DialogReference} reference - The dialog reference
-   * @param {Nullable<boolean>} state - The dialog state
-   *
-   * @remarks
-   * This is the only method that should mutate the dialog state map.
-   */
-  const changeDialogState = useCallback(
-    (reference: DialogReference, state: Nullable<boolean>) => {
-      dialogStateMapRef.current = {
-        ...dialogStateMapRef.current,
-        [reference]: state,
-      };
-      setDialogStateMap({
-        ...dialogStateMapRef.current,
-        [reference]: state,
-      });
-      log(`Dialog ${reference} ${state ? "opened" : "closed"}`);
-    },
-    [log]
+    [dialogStateMap]
   );
 
   /**
@@ -109,9 +125,9 @@ export const useGlobalDialogContext = (
    */
   const isDialogRegistered = useCallback(
     (reference: DialogReference) => {
-      return isBoolean(findDialogState(reference));
+      return dialogStateMap.has(reference);
     },
-    [findDialogState]
+    [dialogStateMap]
   );
 
   /**
@@ -137,13 +153,37 @@ export const useGlobalDialogContext = (
         error(`Dialog ${reference} already registered`);
         return;
       }
-      changeDialogState(reference, open ?? false);
+      dispatchDialogState({ reference, type: "register", open: open ?? false });
       registerCounter.current++;
       log(
         `Dialog ${reference} registered. ${registerCounter.current} currently registered`
       );
     },
-    [log, isDialogRegistered, changeDialogState, error]
+    [log, isDialogRegistered, dispatchDialogState, error]
+  );
+
+  /**
+   * Executes a callback if a dialog is registered.
+   *
+   * @param {DialogReference} reference - The dialog reference
+   * @param {VoidFn<[boolean]>} callback - The callback to execute
+   * @param {string} [errorMessage] - The error message to log if the dialog is not registered
+   */
+  const executeIfDialogIsRegistered = useCallback(
+    (
+      reference: DialogReference,
+      callback: VoidFn<[boolean]>,
+      errorMessage?: string
+    ) => {
+      const state = findDialogState(reference);
+      const message = errorMessage ?? `Unable to execute action for dialog`;
+      if (isNull(state)) {
+        warn(`${message} ${reference}. Unknown reference.`);
+        return;
+      }
+      callback(state);
+    },
+    [findDialogState, warn]
   );
 
   /**
@@ -154,15 +194,17 @@ export const useGlobalDialogContext = (
   const unregisterDialog = useCallback(
     (reference: DialogReference) => {
       log(`Unregistering dialog ${reference}...`);
-      if (!isDialogRegistered(reference)) {
-        warn("Dialog already unregistered");
-        return;
-      }
-      changeDialogState(reference, null);
-      registerCounter.current--;
-      log(`Dialog ${reference} unregistered`);
+      executeIfDialogIsRegistered(
+        reference,
+        () => {
+          dispatchDialogState({ reference, type: "unregister" });
+          registerCounter.current--;
+          log(`Dialog ${reference} unregistered`);
+        },
+        "Already unregistered dialog"
+      );
     },
-    [warn, log, isDialogRegistered, changeDialogState]
+    [log, executeIfDialogIsRegistered]
   );
 
   /**
@@ -170,15 +212,16 @@ export const useGlobalDialogContext = (
    */
   const openDialog = useCallback(
     (reference: DialogReference) => {
-      const dialogState = findDialogState(reference);
-      if (isNull(dialogState)) {
-        warn(`Unable to open dialog ${reference}. Unknown reference.`);
-        return;
-      }
-      changeDialogState(reference, true);
-      debug(`Dialog ${reference} opened`);
+      executeIfDialogIsRegistered(
+        reference,
+        () => {
+          dispatchDialogState({ reference, type: "open" });
+          debug(`Dialog ${reference} opened`);
+        },
+        "Unable to open dialog"
+      );
     },
-    [changeDialogState, debug, findDialogState, warn]
+    [debug, executeIfDialogIsRegistered]
   );
 
   /**
@@ -186,15 +229,16 @@ export const useGlobalDialogContext = (
    */
   const closeDialog = useCallback(
     (reference: DialogReference) => {
-      const dialogState = findDialogState(reference);
-      if (isNull(dialogState)) {
-        warn(`Unable to close dialog ${reference}. Unknown reference.`);
-        return;
-      }
-      changeDialogState(reference, false);
-      debug(`Dialog ${reference} closed`);
+      executeIfDialogIsRegistered(
+        reference,
+        () => {
+          dispatchDialogState({ reference, type: "close" });
+          debug(`Dialog ${reference} closed`);
+        },
+        "Unable to close dialog"
+      );
     },
-    [changeDialogState, debug, findDialogState, warn]
+    [debug, executeIfDialogIsRegistered]
   );
 
   /**
@@ -203,16 +247,19 @@ export const useGlobalDialogContext = (
   const toggleDialog = useCallback(
     // TODO: test function
     (reference: DialogReference) => {
-      const state = findDialogState(reference);
-      if (isNull(state)) {
-        warn(`Unable to toggle dialog ${reference}. Unknown reference.`);
-        return;
-      }
-      const newState = !state;
-      changeDialogState(reference, newState);
-      debug(`Dialog ${reference} toggled to ${newState ? "open" : "closed"}`);
+      executeIfDialogIsRegistered(
+        reference,
+        (state) => {
+          const newState = !state;
+          dispatchDialogState({ reference, type: "toggle" });
+          debug(
+            `Dialog ${reference} toggled to ${newState ? "open" : "closed"}`
+          );
+        },
+        "Unable to toggle dialog"
+      );
     },
-    [changeDialogState, debug, findDialogState, warn]
+    [debug, executeIfDialogIsRegistered]
   );
 
   /**
@@ -221,15 +268,13 @@ export const useGlobalDialogContext = (
   const setDialogState = useCallback(
     // TODO: test function
     (reference: DialogReference, open: boolean) => {
-      if (!isDialogRegistered(reference)) {
-        warn(
-          `Unable to set dialog ${reference}'s open state. Unknown reference.`
-        );
-        return;
-      }
-      changeDialogState(reference, open);
+      executeIfDialogIsRegistered(
+        reference,
+        () => dispatchDialogState({ reference, type: "set", open }),
+        "Unable to set open state for dialog"
+      );
     },
-    [changeDialogState, warn, isDialogRegistered]
+    [executeIfDialogIsRegistered]
   );
 
   /**

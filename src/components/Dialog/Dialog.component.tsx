@@ -34,7 +34,7 @@ const defaultDialogProps: DefaultDialogProps = {
  *
  * Controlled by a parent `DialogProvider`.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {DialogProps & TestIdProps} props - the properties for the Dialog component
  * @returns {Nullable<JSX.Element>} the rendered dialog or null if closed
@@ -52,13 +52,16 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
   const isOpenRef = useRef<boolean>(open);
 
   useEffect(() => {
-    if (isRegistered) return unregister;
+    if (isRegistered) {
+      return unregister;
+    }
     register(open);
     return unregister;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    // console.log("try setting dialog state", open, reference);
     if (open !== isOpen && isBoolean(open) && isRegistered) {
       set(open);
     }
