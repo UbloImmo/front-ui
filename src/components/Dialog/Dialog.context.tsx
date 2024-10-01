@@ -38,9 +38,7 @@ const DEFAULT_PORTAL_ROOT = "#dialog-root";
 export const useGlobalDialogContext = (
   params: DialogContextProps
 ): GlobalDialogContext => {
-  const { error, log, warn, debug } = useLogger("Dialog Manager", {
-    hideLogs: false,
-  });
+  const { error, warn, debug } = useLogger("Dialog Manager");
 
   /**
    * Internal counter that tracks the number of registred dialogs.
@@ -138,7 +136,7 @@ export const useGlobalDialogContext = (
    */
   const registerDialog = useCallback(
     (reference: DialogReference, open?: Optional<boolean>) => {
-      log(
+      debug(
         `Registering dialog ${reference}... (${registerCounter.current} already registered)`
       );
       if (!isString(reference)) {
@@ -150,16 +148,16 @@ export const useGlobalDialogContext = (
         return;
       }
       if (isDialogRegistered(reference)) {
-        error(`Dialog ${reference} already registered`);
+        debug(`Dialog ${reference} already registered`);
         return;
       }
       dispatchDialogState({ reference, type: "register", open: open ?? false });
       registerCounter.current++;
-      log(
+      debug(
         `Dialog ${reference} registered. ${registerCounter.current} currently registered`
       );
     },
-    [log, isDialogRegistered, dispatchDialogState, error]
+    [debug, isDialogRegistered, error]
   );
 
   /**
@@ -193,18 +191,20 @@ export const useGlobalDialogContext = (
    */
   const unregisterDialog = useCallback(
     (reference: DialogReference) => {
-      log(`Unregistering dialog ${reference}...`);
+      debug(`Unregistering dialog ${reference}...`);
       executeIfDialogIsRegistered(
         reference,
         () => {
           dispatchDialogState({ reference, type: "unregister" });
           registerCounter.current--;
-          log(`Dialog ${reference} unregistered`);
+          debug(
+            `Dialog ${reference} unregistered, ${registerCounter.current} remaining`
+          );
         },
         "Already unregistered dialog"
       );
     },
-    [log, executeIfDialogIsRegistered]
+    [debug, executeIfDialogIsRegistered]
   );
 
   /**
