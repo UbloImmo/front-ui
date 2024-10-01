@@ -138,7 +138,7 @@ export const useGlobalDialogContext = (
    */
   const registerDialog = useCallback(
     (reference: DialogReference, open?: Optional<boolean>) => {
-      log(
+      debug(
         `Registering dialog ${reference}... (${registerCounter.current} already registered)`
       );
       if (!isString(reference)) {
@@ -150,16 +150,16 @@ export const useGlobalDialogContext = (
         return;
       }
       if (isDialogRegistered(reference)) {
-        error(`Dialog ${reference} already registered`);
+        debug(`Dialog ${reference} already registered`);
         return;
       }
       dispatchDialogState({ reference, type: "register", open: open ?? false });
       registerCounter.current++;
-      log(
+      debug(
         `Dialog ${reference} registered. ${registerCounter.current} currently registered`
       );
     },
-    [log, isDialogRegistered, dispatchDialogState, error]
+    [debug, isDialogRegistered, error]
   );
 
   /**

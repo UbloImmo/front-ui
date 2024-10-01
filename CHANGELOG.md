@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- `v0.0.4` Dialog component
+  - Always try to register on mount
+
 ## 0.32.12 - 2024-10-01
 ### Changed
 - `v0.0.3` Dialog component
