@@ -12,6 +12,7 @@ import { Icon, type IconName } from "../Icon";
 import { Input } from "../Input";
 import { Tooltip } from "../Tooltip";
 import { isFormField } from "./Form.utils";
+import { Hypertext } from "../Hypertext";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
@@ -802,7 +803,7 @@ Steps.parameters = {
   docs: {
     source: {
       language: "tsx",
-      code: `export const Steps = () => {
+      code: `const Steps = () => {
   const { content, ...mergedProps } = tableFormProps;
   const steps = useStatic<FormContent<IdentityTable>[][]>(
     isArray(content)
@@ -843,4 +844,31 @@ Steps.parameters = {
 }`,
     },
   },
+};
+
+const infoBannerFormProps: FormProps<object> = {
+  title: "Form with banner information",
+  content: [
+    {
+      kind: "text",
+      content:
+        "This form as contains information in place of a cancel button in its edit banner",
+    },
+  ],
+  bannerInfo: (
+    <>
+      This information can contain any element, even&nbsp;
+      <Hypertext href="#">hypertexts</Hypertext>. It can be a lengthy
+      explanation of the form&apos;s purpose, instructions on how to fill it
+      out, or any other relevant details.
+    </>
+  ),
+  defaultEditing: true,
+};
+
+export const InfoBanner = () => {
+  return <Form {...infoBannerFormProps} />;
+};
+InfoBanner.parameters = {
+  docs: componentSource([infoBannerFormProps]),
 };

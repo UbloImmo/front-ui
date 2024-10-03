@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.10` Form component
+  - `v0.0.4` FormEditBanner component
+    - `bannerInfo` property to render information in place of a cancel button
+    - `submitButtonStyle` & `cancelButtonStyle` properties to style the submit and cancel buttons
+
 ## 0.32.14 - 2024-10-03
 ### Changed
 - `v0.0.10` Form component
