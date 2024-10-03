@@ -7,14 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.32.14 - 2024-10-03
 ### Changed
-
 - `v0.0.10` Form component
   - `v0.0.3` FormEditBanner component
     - `submitLabel` & `cancelLabel` properties now accept string as well as translation keys
 
 ### Fixed
-
 - `v0.0.5` Dialog component
   - `register` effect now only unregisters on unmount if dialog is registered (fixes behavior in strict mode)
 
