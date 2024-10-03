@@ -11,6 +11,7 @@ import {
   useStatic,
   useStyleProps,
   useUikitTranslation,
+  type TranslationKey,
 } from "@utils";
 
 import type {
@@ -27,7 +28,7 @@ const defaultFormEditBannerProps: DefaultFormEditBannerProps = {
 /**
  * Renders the form's edit banner, hiding it if the form is not in edit mode.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @return {JSX.Element} The rendered FormEditBanner component.
  */
@@ -45,8 +46,16 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
   const tl = useUikitTranslation();
   const mergedProps = useMergedProps(defaultFormEditBannerProps, props);
 
-  const cancelLabel = useStatic(tl.action[mergedProps.cancelLabel]);
-  const submitLabel = useStatic(tl.action[mergedProps.submitLabel]);
+  const cancelLabel = useStatic(() =>
+    mergedProps.cancelLabel in tl.action
+      ? tl.action[mergedProps.cancelLabel as TranslationKey<"action">]()
+      : mergedProps.cancelLabel
+  );
+  const submitLabel = useStatic(() =>
+    mergedProps.submitLabel in tl.action
+      ? tl.action[mergedProps.submitLabel as TranslationKey<"action">]()
+      : mergedProps.submitLabel
+  );
 
   const submitDisabled = useMemo<boolean>(() => {
     return isLoading || !isEditing || !isValid || disabled;

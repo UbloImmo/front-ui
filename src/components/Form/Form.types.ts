@@ -856,17 +856,17 @@ export type FormEditBannerProps = {
   /**
    * Label of the submit button
    *
-   * @type {TranslationKey<"action">}
+   * @type {TranslationKey<"action"> | string}
    * @default "save"
    */
-  submitLabel?: TranslationKey<"action">;
+  submitLabel?: TranslationKey<"action"> | string;
   /**
    * Label of the cancel button
    *
-   * @type {TranslationKey<"action">}
+   * @type {TranslationKey<"action"> | string}
    * @default "cancel"
    */
-  cancelLabel?: TranslationKey<"action">;
+  cancelLabel?: TranslationKey<"action"> | string;
 };
 
 export type DefaultFormEditBannerProps = Required<FormEditBannerProps>;
