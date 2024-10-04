@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.32.15 - 2024-10-04
 ### Fixed
-
 - `v0.0.7` PhoneInput component
   - Do not break layout when used inside a flex container
 
