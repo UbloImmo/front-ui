@@ -7,12 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.32.16 - 2024-10-04
 ### Added
-
 - `v0.0.1` Avatar component
   - Added organization avatar styles
   - Added `l` size
-
 - `v0.0.10` Form component
   - `v0.0.4` FormEditBanner component
     - `bannerInfo` property to render information in place of a cancel button
