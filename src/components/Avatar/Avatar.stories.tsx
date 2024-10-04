@@ -12,7 +12,7 @@ const componentSource = componentSourceFactory<AvatarProps>(
   Avatar.defaultProps
 );
 
-const sizes: AvatarSize[] = ["m", "xl"];
+const sizes: AvatarSize[] = ["m", "l", "xl"];
 
 const meta = {
   component: Avatar,
@@ -28,6 +28,7 @@ const meta = {
   },
   argTypes: {
     size: {
+      control: "select",
       options: sizes,
     },
     name: {
@@ -41,6 +42,9 @@ const meta = {
     },
     avatarUrl: {
       control: "text",
+    },
+    organization: {
+      type: "boolean",
     },
   },
 } satisfies Meta<typeof Avatar>;
@@ -147,6 +151,22 @@ export const Sizes = (props: Partial<AvatarProps>) => {
       defaults={mergedProps}
       variants={sizes}
       for="size"
+      of={Avatar}
+      align="center"
+      propLabels
+    />
+  );
+};
+
+const bools = [false, true];
+
+export const Organization = (props: Partial<AvatarProps>) => {
+  const mergedProps = useMergedProps(Avatar.defaultProps, props);
+  return (
+    <ComponentVariants
+      defaults={mergedProps}
+      variants={bools}
+      for="organization"
       of={Avatar}
       align="center"
       propLabels

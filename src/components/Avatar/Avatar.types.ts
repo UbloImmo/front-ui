@@ -2,9 +2,9 @@ import type { RequiredNonNever } from "@/types/global/object.types";
 import type { ExtendedComponentSize } from "@/types/themes/sizes/sizes.types";
 import type { Nullable } from "@ubloimmo/front-util";
 
-export type AvatarSize = Extract<ExtendedComponentSize, "m" | "xl">;
+export type AvatarSize = Extract<ExtendedComponentSize, "m" | "l" | "xl">;
 
-export type AvatarPropsFullName = {
+type CommonAvatarProps = {
   /**
    * The size of the Avatar
    *
@@ -12,7 +12,18 @@ export type AvatarPropsFullName = {
    * @default "m"
    */
   size?: AvatarSize;
+  /**
+   * Whether the Avatar is for an organization
+   *
+   * @remarks Organization avatars render as squircles
+   *
+   * @type {boolean}
+   * @default false
+   */
+  organization?: boolean;
+};
 
+export type AvatarPropsFullName = CommonAvatarProps & {
   /**
    * The full name of the user (Name variant)
    *
@@ -45,15 +56,7 @@ export type AvatarPropsFullName = {
   avatarUrl?: Nullable<string>;
 };
 
-export type AvatarPropsFirstLastName = {
-  /**
-   * The size of the Avatar
-   *
-   * @type {AvatarSize}
-   * @default "m"
-   */
-  size?: AvatarSize;
-
+export type AvatarPropsFirstLastName = CommonAvatarProps & {
   /**
    * The full name of the user (Name variant)
    */
@@ -88,15 +91,7 @@ export type AvatarPropsFirstLastName = {
   avatarUrl?: Nullable<string>;
 };
 
-export type AvatarPropsCount = {
-  /**
-   * The size of the Avatar
-   *
-   * @type {AvatarSize}
-   * @default "m"
-   */
-  size?: AvatarSize;
-
+export type AvatarPropsCount = CommonAvatarProps & {
   /**
    * The full name of the user (Name variant)
    */

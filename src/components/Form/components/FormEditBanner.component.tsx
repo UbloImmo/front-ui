@@ -5,6 +5,9 @@ import { useFormContext } from "../Form.context";
 import { formEditBannerStyles } from "../Form.styles";
 
 import { Button } from "@/components/Button";
+import { Icon } from "@/components/Icon";
+import { Text } from "@/components/Text";
+import { cssDimensions } from "@/utils/styles.utils";
 import { FlexRowLayout } from "@layouts";
 import {
   useMergedProps,
@@ -23,12 +26,15 @@ import type {
 const defaultFormEditBannerProps: DefaultFormEditBannerProps = {
   submitLabel: "save",
   cancelLabel: "cancel",
+  submitButtonStyle: {},
+  cancelButtonStyle: {},
+  bannerInfo: null,
 };
 
 /**
  * Renders the form's edit banner, hiding it if the form is not in edit mode.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @return {JSX.Element} The rendered FormEditBanner component.
  */
@@ -70,18 +76,35 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
       overrideTestId
       {...styleProps}
     >
-      <Button
-        label={cancelLabel}
-        onClick={cancelEdition}
-        icon="ArrowReturnLeft"
-        secondary
-        color="clear"
-      />
+      {mergedProps.bannerInfo ? (
+        <FlexRowLayout
+          align="center"
+          gap="s-2"
+          justify="start"
+          testId="form-edit-banner-info"
+          overrideTestId
+        >
+          <Icon name="InfoCircle" color="gray-600" size="s-4" />
+          <Text color="gray-800" weight="medium" size="s">
+            {mergedProps.bannerInfo}
+          </Text>
+        </FlexRowLayout>
+      ) : (
+        <Button
+          label={cancelLabel}
+          onClick={cancelEdition}
+          icon="ArrowReturnLeft"
+          secondary
+          color="clear"
+          {...mergedProps.cancelButtonStyle}
+        />
+      )}
       <Button
         label={submitLabel}
         type="submit"
         disabled={submitDisabled}
         loading={isSubmitting}
+        {...mergedProps.submitButtonStyle}
       />
     </Banner>
   );
@@ -89,4 +112,8 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
 
 const Banner = styled(FlexRowLayout)<FormEditBannerStyleProps>`
   ${formEditBannerStyles}
+
+  svg[data-testid="icon"] {
+    ${cssDimensions("s-4", "s-4", true)}
+  }
 `;
