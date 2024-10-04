@@ -5,6 +5,8 @@ import { breakpointsPx } from "@/sizes";
 export const phoneInputContainerStyles = css`
   max-width: 100%;
   width: 100%;
+  // needed not to break layout when used inside a flex container
+  display: flex;
   &:has(
       input[data-testid="input-phone"]:focus,
       button.react-international-phone-country-selector-button--active

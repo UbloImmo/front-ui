@@ -43,7 +43,7 @@ const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
  * Renders a international phone input component.
  * Does international phone formatting on the input value.
  *
- * @version 0.0.6
+ * @version 0.0.7
  * @param {InputProps<"phone">} props - The input props.
  * @return {JSX.Element} The rendered phone input component.
  */
