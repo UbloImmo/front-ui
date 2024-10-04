@@ -1,30 +1,42 @@
 import { ValueMap } from "@ubloimmo/front-util";
 import { RuleSet, css } from "styled-components";
 
-import { AvatarDefaultProps, AvatarSize } from "./Avatar.types";
 import { isAvatarPropsCount } from "./Avatar.utils";
 
-import { CssPx, StyleProps } from "@types";
 import { cssPxToCssRem, cssVarUsage, fromStyleProps } from "@utils";
+
+import type { AvatarDefaultProps, AvatarSize } from "./Avatar.types";
+import type { CssPx, StyleProps, CssLength } from "@types";
 
 const avatarSizeMap: ValueMap<AvatarSize, CssPx> = {
   m: "28px",
+  l: "44px",
   xl: "120px",
 };
 
-export const avatarStyles = (
-  props: StyleProps<AvatarDefaultProps>
-): RuleSet => {
-  const mergedProps = fromStyleProps(props);
+const avatarBorderRadiusMap: ValueMap<AvatarSize, CssPx> = {
+  m: "4px",
+  l: "8px",
+  xl: "24px",
+};
 
-  const containerSizePx = avatarSizeMap[mergedProps.size];
+export const avatarStyles = (
+  styleProps: StyleProps<AvatarDefaultProps>
+): RuleSet => {
+  const props = fromStyleProps(styleProps);
+
+  const containerSizePx = avatarSizeMap[props.size];
 
   const containerSize = cssPxToCssRem(containerSizePx);
 
-  const isCount = isAvatarPropsCount(mergedProps);
+  const borderRadius: CssLength = props.organization
+    ? cssPxToCssRem(avatarBorderRadiusMap[props.size])
+    : "50%";
+
+  const isCount = isAvatarPropsCount(props);
 
   return css`
-    border-radius: 50%;
+    border-radius: ${borderRadius};
     overflow: hidden;
     min-width: ${containerSize};
     width: ${containerSize};

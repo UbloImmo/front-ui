@@ -22,13 +22,14 @@ const defaultAvatarProps: AvatarDefaultProps = {
   firstName: "",
   lastName: "",
   avatarUrl: null,
+  organization: false,
 };
 
 /**
  *
  * A visual reference for the user's profile, using its image or its initials.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {AvatarProps & TestIdProps} props - Avatar component props
  * @returns {Nullable<JSX.Element>}
@@ -96,7 +97,7 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
         </Text>
       ) : (
         <Heading
-          size="h1"
+          size={mergedProps.size === "l" ? "h3" : "h1"}
           weight="bold"
           testId="avatar-text"
           overrideTestId
