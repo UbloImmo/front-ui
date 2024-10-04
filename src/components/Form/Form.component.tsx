@@ -43,6 +43,9 @@ const defaultFormProps: FormDefaultProps<object> = {
   columns: 2,
   submitLabel: "save",
   cancelLabel: "cancel",
+  cancelButtonStyle: {},
+  submitButtonStyle: {},
+  bannerInfo: null,
 };
 
 /**
@@ -106,6 +109,9 @@ const InnerForm = <TData extends object>(
         <FormEditBanner
           submitLabel={props.submitLabel}
           cancelLabel={props.cancelLabel}
+          cancelButtonStyle={props.cancelButtonStyle}
+          submitButtonStyle={props.submitButtonStyle}
+          bannerInfo={props.bannerInfo}
         />
       </FormContainer>
     ),

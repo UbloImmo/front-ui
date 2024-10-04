@@ -867,6 +867,25 @@ export type FormEditBannerProps = {
    * @default "cancel"
    */
   cancelLabel?: TranslationKey<"action"> | string;
+  /**
+   * Custom styles for the submit button
+   *
+   * @type {Partial<Omit<ButtonProps, "label">>}
+   */
+  submitButtonStyle?: Partial<Omit<ButtonProps, "label">>;
+  /**
+   * Custom styles for the cancel button
+   *
+   * @type {Partial<Omit<ButtonProps, "label">>}
+   */
+  cancelButtonStyle?: Partial<Omit<ButtonProps, "label">>;
+  /**
+   * Optional information text to display in place of the cancel button
+   *
+   * @type {string | ReactNode}
+   * @default null
+   */
+  bannerInfo?: string | ReactNode;
 };
 
 export type DefaultFormEditBannerProps = Required<FormEditBannerProps>;
