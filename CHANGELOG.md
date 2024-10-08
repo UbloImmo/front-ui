@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Update `@ubloimmo/front-tokens` to `0.1.24`
+  - Regen icons
+
+
 ## 0.32.17 - 2024-10-07
+- Update `@ubloimmo/front-tokens` to `0.1.23`
+  - Regen icons
 
 ## 0.32.16 - 2024-10-04
 ### Added
