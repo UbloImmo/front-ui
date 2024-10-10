@@ -156,6 +156,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
   combobox: displayComboBoxValue,
   "icon-picker": displayIconPickerValue,
   search: displaySearchValue,
+  "type-search": String,
 };
 
 /**
