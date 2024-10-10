@@ -1,20 +1,20 @@
 import { describe, expect, mock } from "bun:test";
 
-import { TypeSearchInput } from "./TypeSearchInput.component";
+import { SearchTextInput } from "./SearchTextInput.component";
 
 import { testComponentFactory } from "@/tests";
 
 import type { InputProps } from "../Input.types";
 import type { Nullable } from "@ubloimmo/front-util";
 
-const testId = "input-type-search";
+const testId = "input-search-text";
 
 describe("Input", () => {
-  const testTypeSearchInput = testComponentFactory<InputProps<"type-search">>(
-    "TypeSearchInput",
-    TypeSearchInput,
+  const testSearchTextInput = testComponentFactory<InputProps<"search-text">>(
+    "SearchTextInput",
+    SearchTextInput,
     {
-      props: TypeSearchInput.defaultProps,
+      props: SearchTextInput.defaultProps,
       tests: [
         {
           name: "should render",
@@ -28,7 +28,7 @@ describe("Input", () => {
 
   const onChange = mock((_value: Nullable<string>) => {});
 
-  testTypeSearchInput({
+  testSearchTextInput({
     value: "test",
   })("should hold a given value", async ({ findByTestId }) => {
     const input = (await findByTestId(testId)) as HTMLInputElement;
@@ -36,7 +36,7 @@ describe("Input", () => {
     expect(input.value).toBe("test");
   });
 
-  testTypeSearchInput({
+  testSearchTextInput({
     onChange,
   })(
     "should trigger onChange",

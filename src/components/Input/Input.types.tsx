@@ -161,7 +161,7 @@ export type InputTypeMap<
   combobox: TGenericValue | TGenericValue[];
   "icon-picker": IconName;
   search: TGenericValue;
-  "type-search": string;
+  "search-text": string;
 };
 
 /**

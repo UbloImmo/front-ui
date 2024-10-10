@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `v0.0.1` TypeSearchInput component
+- `v0.0.1` SearchTextInput component
+  - A text input component with a search icon
 
 ## 0.32.18 - 2024-10-08
 

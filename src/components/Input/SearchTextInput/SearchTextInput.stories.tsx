@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import { TypeSearchInput } from "./TypeSearchInput.component";
+import { SearchTextInput } from "./SearchTextInput.component";
 
 import { Divider } from "@/components/Divider";
 import { StateIndicator } from "@/components/StateIndicator";
@@ -11,12 +11,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {
-  component: TypeSearchInput,
-  title: "Components/Input/TypeSearchInput/Stories",
+  component: SearchTextInput,
+  title: "Components/Input/SearchTextInput/Stories",
   args: {
     uncontrolled: true,
   },
-} satisfies Meta<typeof TypeSearchInput>;
+} satisfies Meta<typeof SearchTextInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -44,7 +44,7 @@ export const Query = () => {
 
   return (
     <FlexColumnLayout gap="s-3">
-      <TypeSearchInput
+      <SearchTextInput
         value={typeQuery}
         onChange={handleChange}
         placeholder="Search..."

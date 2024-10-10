@@ -1,0 +1,25 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as SearchTextInputStories from "../SearchTextInput.stories.tsx";
+
+<Meta title="Components/Input/SearchTextInput/Usage" />
+
+<ComponentInfo of={SearchTextInputStories} />
+
+<Content>
+
+## Usage
+
+`SearchTextInput` component is an interactive single-line text-field, a specific type of [Input](?path=/docs/components-input-usage--docs).
+It is mainly used to search and filter elements by typing a query in the input.
+
+<Canvas of={SearchTextInputStories.Query} />
+
+### Value
+
+`SearchTextInput` is initialized without a value, enabling users to enter their query. It inherits from [TextInput](?path=/docs/components-input-textinput-usage--docs) and accepts all characters as text value.
+
+<Canvas of={SearchTextInputStories.Default} />
+
+</Content>

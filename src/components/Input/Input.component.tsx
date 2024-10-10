@@ -10,10 +10,10 @@ import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput";
 import { PhoneInput } from "./PhoneInput";
 import { SearchInput } from "./SearchInput";
+import { SearchTextInput } from "./SearchTextInput";
 import { SelectInput } from "./SelectInput";
 import { TextAreaInput } from "./TextAreaInput";
 import { TextInput } from "./TextInput";
-import { TypeSearchInput } from "./TypeSearchInput";
 
 import { useLogger, useStatic } from "@utils";
 
@@ -42,7 +42,7 @@ const inputComponentMap = <
   combobox: ComboBoxInput<TGenericValue>,
   "icon-picker": IconPickerInput,
   search: SearchInput<TGenericValue>,
-  "type-search": TypeSearchInput,
+  "search-text": SearchTextInput,
 });
 
 /**

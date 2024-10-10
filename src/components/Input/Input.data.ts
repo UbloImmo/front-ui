@@ -16,5 +16,5 @@ export const inputTypes = [
   "combobox",
   "icon-picker",
   "search",
-  "type-search",
+  "search-text",
 ] as const;

@@ -20,7 +20,7 @@ import { useTestId, useMergedProps, useHtmlAttribute } from "@utils";
 import type { DefaultInputProps, InputProps } from "../Input.types";
 import type { TestIdProps } from "@types";
 
-const defaultTypeSearchInputProps: DefaultInputProps<"type-search"> = {
+const defaultSearchTextInputProps: DefaultInputProps<"search-text"> = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
@@ -32,26 +32,26 @@ const defaultTypeSearchInputProps: DefaultInputProps<"type-search"> = {
  *
  * @version 0.0.1
  *
- * @param {InputProps<"type-search">} props - TypeSearchInput component props
+ * @param {InputProps<"search-text">} props - SearchTextInput component props
  * @returns {JSX.Element}
  */
-const TypeSearchInput = (
-  props: InputProps<"type-search"> & TestIdProps
+const SearchTextInput = (
+  props: InputProps<"search-text"> & TestIdProps
 ): JSX.Element => {
-  const mergedProps = useMergedProps(defaultTypeSearchInputProps, props);
+  const mergedProps = useMergedProps(defaultSearchTextInputProps, props);
 
-  const onChange = useInputOnChange<"type-search">(
+  const onChange = useInputOnChange<"search-text">(
     (nativeValue) => isString(nativeValue),
     (nativeValue) => (isString(nativeValue) ? nativeValue : null),
     mergedProps.onChange,
     mergedProps.onChangeNative
   );
 
-  const value = useInputValue<"type-search">(mergedProps.value, props);
+  const value = useInputValue<"search-text">(mergedProps.value, props);
 
   const inputStyles = useInputStyles(mergedProps);
 
-  const testId = useTestId("input-type-search", props);
+  const testId = useTestId("input-search-text", props);
 
   const { forwardRef } = useInputRef(mergedProps);
 
@@ -82,6 +82,6 @@ const TypeSearchInput = (
     </StyledInputContainer>
   );
 };
-TypeSearchInput.defaultProps = defaultTypeSearchInputProps;
+SearchTextInput.defaultProps = defaultSearchTextInputProps;
 
-export { TypeSearchInput };
+export { SearchTextInput };

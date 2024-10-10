@@ -25,7 +25,7 @@ type SpecificInputPropsMap<
   combobox: ComboBoxInputProps<TGenericValue>;
   "icon-picker": IconPickerInputProps;
   search: SearchInputProps<TGenericValue>;
-  "type-search": InputProps<"type-search">;
+  "search-text": InputProps<"search-text">;
 };
 
 export type SpecificInputProps<
