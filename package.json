@@ -136,7 +136,6 @@
     "test:all": "bun test:lint && bun test:types && bun test:deps:circular && bun test:unit",
     "prepare": "husky",
     "pre-push": "bun test:all",
-    "pre-commit": "bun test:unit",
     "icons:generate": "bun scripts/svg/index.ts && bun test:lint:fix",
     "prepublishOnly": "bun lib:build",
     "uninstall": "rm -rf node_modules",
