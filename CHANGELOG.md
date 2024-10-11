@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.11` Form component
+  - `embedded` property to render a form inside another legacy form without triggering the outer form's submission
+
 ## 0.32.19 - 2024-10-10
 ### Added
 - `v0.0.1` SearchTextInput component
