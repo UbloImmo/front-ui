@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import styled from "styled-components";
 
 import {
@@ -16,6 +16,7 @@ import { useTestId, useMergedProps, useStyleProps } from "@utils";
 import type {
   FormContainerStyleProps,
   FormDefaultProps,
+  FormLayoutProps,
   FormProps,
 } from "./Form.types";
 import type { TestIdProps } from "@types";
@@ -46,6 +47,7 @@ const defaultFormProps: FormDefaultProps<object> = {
   cancelButtonStyle: {},
   submitButtonStyle: {},
   bannerInfo: null,
+  embedded: false,
 };
 
 /**
@@ -88,21 +90,9 @@ export { Form };
 const InnerForm = <TData extends object>(
   props: FormDefaultProps<TData> & TestIdProps
 ): JSX.Element => {
-  const { isEditing, readonly, disabled, submitForm, asModal } =
-    useFormContext<TData>();
-  const testId = useTestId("form", props);
-
-  const styleProps = useStyleProps({ isEditing, readonly, disabled });
-
   const InnerContent = useMemo(
     (): JSX.Element => (
-      <FormContainer
-        data-testid={testId}
-        onSubmit={submitForm}
-        {...styleProps}
-        $size={props.asModal?.size ?? "m"}
-        $asModal={!!asModal}
-      >
+      <InnerFormContainer {...props}>
         <FormHeader {...props} />
         <FormFieldRenderer />
         <FormDebug />
@@ -112,10 +102,11 @@ const InnerForm = <TData extends object>(
           cancelButtonStyle={props.cancelButtonStyle}
           submitButtonStyle={props.submitButtonStyle}
           bannerInfo={props.bannerInfo}
+          embedded={props.embedded}
         />
-      </FormContainer>
+      </InnerFormContainer>
     ),
-    [asModal, props, styleProps, submitForm, testId]
+    [props]
   );
 
   if (props.asModal) {
@@ -130,6 +121,50 @@ const InnerForm = <TData extends object>(
   return InnerContent;
 };
 
+/**
+ * Renders the inner form container component.
+ *
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The child elements to render inside the container.
+ * @param {boolean} props.embedded - Whether the form is embedded or not.
+ * @param {FormLayoutProps & TestIdProps} props.props - Additional props for layout and testing.
+ * @returns {JSX.Element} The rendered form container.
+ */
+const InnerFormContainer = ({
+  children,
+  embedded,
+  ...props
+}: FormLayoutProps & TestIdProps & { children: ReactNode }): JSX.Element => {
+  const { isEditing, readonly, disabled, submitForm, asModal } =
+    useFormContext();
+  const testId = useTestId("form", props);
+
+  const styleProps = useStyleProps({
+    isEditing,
+    readonly,
+    disabled,
+    asModal: !!asModal,
+    size: asModal?.size ?? "m",
+  });
+  if (embedded) {
+    return (
+      <EmbeddedFormContainer data-testid={testId} {...styleProps}>
+        {children}
+      </EmbeddedFormContainer>
+    );
+  }
+
+  return (
+    <FormContainer data-testid={testId} onSubmit={submitForm} {...styleProps}>
+      {children}
+    </FormContainer>
+  );
+};
+
 const FormContainer = styled.form<FormContainerStyleProps>`
+  ${formContainerStyles}
+`;
+
+const EmbeddedFormContainer = styled.div<FormContainerStyleProps>`
   ${formContainerStyles}
 `;

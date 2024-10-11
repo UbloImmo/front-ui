@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
 import { useFormContext } from "../Form.context";
@@ -29,6 +29,7 @@ const defaultFormEditBannerProps: DefaultFormEditBannerProps = {
   submitButtonStyle: {},
   cancelButtonStyle: {},
   bannerInfo: null,
+  embedded: false,
 };
 
 /**
@@ -46,6 +47,7 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
     cancelEdition,
     disabled,
     isValid,
+    submitForm,
   } = useFormContext();
   const styleProps = useStyleProps({ isEditing, isLoading, isSubmitting });
 
@@ -66,6 +68,17 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
   const submitDisabled = useMemo<boolean>(() => {
     return isLoading || !isEditing || !isValid || disabled;
   }, [isLoading, isEditing, isValid, disabled]);
+
+  const submitButtonType = useMemo(
+    () => (mergedProps.embedded ? "button" : "submit"),
+    [mergedProps.embedded]
+  );
+
+  const submitOnClickIfEmbedded = useCallback(() => {
+    if (submitDisabled) return;
+    if (!mergedProps.embedded) return;
+    submitForm();
+  }, [submitDisabled, submitForm, mergedProps.embedded]);
 
   return (
     <Banner
@@ -101,7 +114,8 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
       )}
       <Button
         label={submitLabel}
-        type="submit"
+        type={submitButtonType}
+        onClick={submitOnClickIfEmbedded}
         disabled={submitDisabled}
         loading={isSubmitting}
         {...mergedProps.submitButtonStyle}

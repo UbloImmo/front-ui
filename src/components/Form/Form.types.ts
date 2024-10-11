@@ -39,7 +39,7 @@ import type {
   VoidFn,
 } from "@ubloimmo/front-util";
 import type { TranslationKey } from "@utils";
-import type { FC, FormEventHandler, ReactNode } from "react";
+import type { FC, FormEvent, ReactNode } from "react";
 import type { ZodIssue, ZodObject, ZodType, ZodTypeAny } from "zod";
 
 // -------------------------------- GLOBALS ----------------------------------
@@ -718,7 +718,20 @@ export type FormGridProps = {
   columns?: number;
 };
 
-export type FormLayoutProps = FormGridProps & FormModalProps;
+export type FormEmbeddedProps = {
+  /**
+   * Whether to render the form in an embedded fashion
+   * Used when an existing page already contains a form and you want to embed the current form inside it
+   *
+   * @type {boolean}
+   * @default false
+   */
+  embedded?: boolean;
+};
+
+export type FormLayoutProps = FormGridProps &
+  FormModalProps &
+  FormEmbeddedProps;
 
 export type DefaultFormGridProps = Required<FormGridProps>;
 
@@ -886,7 +899,7 @@ export type FormEditBannerProps = {
    * @default null
    */
   bannerInfo?: string | ReactNode;
-};
+} & FormEmbeddedProps;
 
 export type DefaultFormEditBannerProps = Required<FormEditBannerProps>;
 
@@ -1267,7 +1280,7 @@ export type UseFormSubmissionReturn = {
    *
    * @type {FormEventHandler<HTMLFormElement>}
    */
-  submitForm: FormEventHandler<HTMLFormElement>;
+  submitForm: (event?: FormEvent<HTMLFormElement>) => void;
   /**
    * Flag indicating if the form is currently submitting
    *
