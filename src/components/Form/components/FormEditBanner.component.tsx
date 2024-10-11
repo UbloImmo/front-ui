@@ -109,6 +109,8 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
           icon="ArrowReturnLeft"
           secondary
           color="clear"
+          testId="form-cancel-button"
+          overrideTestId
           {...mergedProps.cancelButtonStyle}
         />
       )}
@@ -117,6 +119,8 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
         type={submitButtonType}
         onClick={submitOnClickIfEmbedded}
         disabled={submitDisabled}
+        testId="form-submit-button"
+        overrideTestId
         loading={isSubmitting}
         {...mergedProps.submitButtonStyle}
       />

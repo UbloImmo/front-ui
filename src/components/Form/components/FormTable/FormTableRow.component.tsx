@@ -81,6 +81,8 @@ export const FormTableRow = ({
       {...attributes}
       ref={setNodeRef}
       style={style}
+      data-testid="form-table-row"
+      data-row-index={dynamicIndex}
     >
       {cells.map((cell, cellIndex) => {
         const cellKey = `table-cell-${cellIndex}`;
@@ -96,7 +98,11 @@ export const FormTableRow = ({
         return <FormTableFieldCell {...cell} key={cellKey} />;
       })}
       {mods.swappable && (
-        <RowDragHandle {...listeners} ref={setActivatorNodeRef}>
+        <RowDragHandle
+          {...listeners}
+          ref={setActivatorNodeRef}
+          data-testid="form-table-row-drag-handle"
+        >
           <Icon name="Grab" size="s-5" color="primary-dark" />
         </RowDragHandle>
       )}
@@ -107,6 +113,7 @@ export const FormTableRow = ({
           title={deleteTitle}
           aria-label={deleteTitle}
           type="button"
+          data-testid="form-table-row-delete-button"
         >
           <Icon name="XLg" size="s-5" color="primary-dark" />
         </RowDeleteButton>

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Test ids in various form sub-components
+
 ## 0.32.20 - 2024-10-11
 ### Added
 - `v0.0.11` Form component
