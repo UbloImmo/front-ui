@@ -27,7 +27,7 @@ import {
   useRef,
   useState,
   type Context,
-  type FormEventHandler,
+  type FormEvent,
   type ReactNode,
 } from "react";
 
@@ -859,10 +859,10 @@ const useFormSubmission = <TData extends object>(
    *
    * @see {@link UseFormSubmissionReturn["submitForm"]}
    */
-  const submitForm = useCallback<FormEventHandler<HTMLFormElement>>(
-    async (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+  const submitForm = useCallback(
+    async (event?: FormEvent<HTMLFormElement>) => {
+      event?.preventDefault();
+      event?.stopPropagation();
       if (modifiers.disabled || modifiers.readonly || !editState.isEditing)
         return;
 
@@ -1044,7 +1044,7 @@ const useFormEditState = (
  * @see {@link useFormData}, {@link useFormValidation}, {@link useFormEditState} {@link useFormModifiers}, {@link useFormContent}, {@link useFormSubmission}, {@link useFormTables}
  */
 export const useForm = <TData extends object>(
-  { columns, asModal, ...props }: FormDefaultProps<TData>,
+  { columns, asModal, embedded, ...props }: FormDefaultProps<TData>,
   logger: Logger
 ): FormContext<TData> => {
   const formData = useFormData<TData>(props, logger);
@@ -1055,7 +1055,10 @@ export const useForm = <TData extends object>(
     formModifiers
   );
   const formEditState = useFormEditState(formModifiers, asModal);
-  const formLayout = useFormLayout({ columns, asModal }, formEditState);
+  const formLayout = useFormLayout(
+    { columns, asModal, embedded },
+    formEditState
+  );
   const content = useFormContent(
     formData,
     formValidation,
