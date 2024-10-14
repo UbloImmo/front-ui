@@ -165,6 +165,7 @@ describe("typography", () => {
           className: null,
           ellipsis: false,
           align: "left",
+          fill: true,
         };
         expect(sanitizeTypographyProps(defaultProps, validProps)).toEqual(
           validProps
