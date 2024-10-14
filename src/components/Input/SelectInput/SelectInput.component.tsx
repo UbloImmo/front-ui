@@ -204,7 +204,8 @@ const SelectInput = <
     <SelectInputWrapper
       reverse
       ref={wrapperRef}
-      data-testid={`${testId}-wrapper`}
+      testId={`${testId}-wrapper`}
+      overrideTestId
     >
       {isOpen && (
         <SelectOptionsContainer
