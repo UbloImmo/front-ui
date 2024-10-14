@@ -1,5 +1,5 @@
 import type { IconName } from "../Icon/Icon.types";
-import type { Direction, StyleProps } from "@types";
+import type { Direction, PaletteColor, StyleProps } from "@types";
 import type {
   Enum,
   GenericFn,
@@ -49,6 +49,12 @@ export type TooltipProps = {
    * @default "QuestionCircleFill"
    */
   icon?: IconName;
+  /**
+   * The color of the default icon
+   * @type {PaletteColor}
+   * @default "gray-700"
+   */
+  iconColor?: PaletteColor;
   /**
    * Intersection root to compare against when positioning tooltip
    * @remarks defaults to viewport

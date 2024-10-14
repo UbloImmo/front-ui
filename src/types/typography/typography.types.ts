@@ -109,6 +109,12 @@ export type TypographyProps = {
    */
   align?: TypographyAlignment;
   /**
+   * Whether or not the text contents should take the full width of the container.
+   *
+   * @default false
+   */
+  fill?: boolean;
+  /**
    * Any valid react children.
    *
    * @default undefined

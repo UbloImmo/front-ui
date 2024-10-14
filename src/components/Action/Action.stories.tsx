@@ -10,6 +10,7 @@ import type { ActionProps, ActionSize } from "./Action.types";
 import type { IconName } from "../Icon";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
+import type { TooltipProps } from "../Tooltip";
 
 const meta = {
   component: Action,
@@ -134,6 +135,33 @@ export const Icons = (props: ActionProps) => {
       scaling={1}
       columns={2}
       propLabels
+    />
+  );
+};
+
+const tooltips: Omit<TooltipProps, "children">[] = [
+  {
+    content: "A tooltip on an action",
+    direction: "top",
+  },
+  {
+    content: "A customized tooltip on an action",
+    icon: "BoxArrowInUpRight",
+    iconColor: "primary-base",
+  },
+];
+
+export const Tooltip = (props: ActionProps) => {
+  const defaults = useMergedProps(Action.defaultProps, props);
+  return (
+    <ComponentVariants
+      variants={tooltips}
+      for="iconTooltip"
+      defaults={defaults}
+      scaling={1}
+      columns={2}
+      propLabels
+      of={Action}
     />
   );
 };

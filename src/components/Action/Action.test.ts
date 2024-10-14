@@ -45,4 +45,14 @@ testDefaultAction(
   }
 );
 
+testAction({
+  ...Action.defaultProps,
+  iconTooltip: {
+    content: "A tooltip on an action",
+  },
+})("should render a tooltip", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(queryByTestId(`tooltip`)).not.toBeNull();
+});
+
 afterEach(cleanup);

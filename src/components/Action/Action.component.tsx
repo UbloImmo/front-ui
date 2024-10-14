@@ -2,12 +2,16 @@ import { VoidFn, isFunction, type Nullable } from "@ubloimmo/front-util";
 import { MouseEventHandler, useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 
-import { actionContainerStyles } from "./Action.styles";
+import {
+  actionContainerStyles,
+  actionLabelContainerStyles,
+} from "./Action.styles";
 import { Badge, type BadgeProps } from "../Badge";
 import { StaticIcon } from "../StaticIcon";
 import { Text } from "../Text";
+import { Tooltip, TooltipProps } from "../Tooltip";
 
-import { FlexLayout, FlexLayoutProps } from "@/layouts";
+import { FlexLayout, FlexLayoutProps, FlexRowLayout } from "@/layouts";
 import {
   TextProps,
   type ColorKeyOrWhite,
@@ -46,12 +50,13 @@ const defaultActionProps: DefaultActionProps = {
   badgeLabel: null,
   onClick: null,
   title: null,
+  iconTooltip: null,
 };
 
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -134,6 +139,18 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     };
   }, [mergedProps]);
 
+  const iconTooltipProps = useMemo<Nullable<TooltipProps>>(() => {
+    if (!mergedProps.iconTooltip) return null;
+
+    return {
+      ...mergedProps.iconTooltip,
+      children: null,
+      iconColor: mergedProps.disabled
+        ? "gray-400"
+        : mergedProps.iconTooltip.iconColor,
+    };
+  }, [mergedProps]);
+
   return (
     <ActionContainer
       data-testid={testId}
@@ -147,10 +164,26 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     >
       <StaticIcon {...staticIconProps} />
       <FlexLayout {...layoutProps} fill>
-        <Text {...textProps} testId="action-label">
-          {mergedProps.label}
-        </Text>
+        <ActionLabelContainer
+          align="center"
+          justify="start"
+          fill
+          gap="s-1"
+          testId="action-label-container"
+          overrideTestId
+        >
+          <Text {...textProps} testId="action-label">
+            {mergedProps.label}
+          </Text>
+          {iconTooltipProps && mergedProps.size === "large" && (
+            <Tooltip {...iconTooltipProps} />
+          )}
+        </ActionLabelContainer>
+
         {badgeProps && <Badge {...badgeProps} testId="action-badge" />}
+        {iconTooltipProps && mergedProps.size === "default" ? (
+          <Tooltip {...iconTooltipProps} />
+        ) : null}
       </FlexLayout>
     </ActionContainer>
   );
@@ -162,4 +195,8 @@ export { Action };
 
 const ActionContainer = styled.button<StyleProps<DefaultActionProps>>`
   ${actionContainerStyles}
+`;
+
+const ActionLabelContainer = styled(FlexRowLayout)`
+  ${actionLabelContainerStyles}
 `;

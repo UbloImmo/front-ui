@@ -98,6 +98,7 @@ export const sanitizeTypographyProps = (
     ellipsis: props.ellipsis ?? false,
     align: props.align ?? "left",
     className: null,
+    fill: props.fill ?? false,
   };
 };
 
@@ -174,6 +175,7 @@ export const buildTypographyStyle = (
       ellipsis,
       uppercase,
       align,
+      fill,
     } = sanitizeTypographyProps(defaults, fromStyleProps(props));
     const dekstopStyle = extractTypographyStyle("desktop", size, weight);
     const mobileStyle = extractTypographyStyle("mobile", size, weight);
@@ -216,6 +218,10 @@ export const buildTypographyStyle = (
         max-width: ${apply("100%")};
         flex: 1;
       `}
+      ${fill &&
+      css`
+        width: ${apply("100%")};
+      `}
     `;
   };
 };
@@ -233,4 +239,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   align: "left",
   children: null,
   className: null,
+  fill: false,
 } as const;

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- `v0.0.6` Tooltip component
+  - `iconColor` property to change the color of the default icon
+
+- `v0.0.4` Action component
+  - `iconTooltip` property to display a tooltip around an icon at the end of the icon
+
 ## 0.32.22 - 2024-10-14
 ### Fixed
 - `v0.0.6` SelectInput component
