@@ -1,6 +1,6 @@
 import type { IconName } from "../Icon";
-import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { TooltipProps } from "../Tooltip";
+import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 const actionSizes = ["default", "large"] as const;
 

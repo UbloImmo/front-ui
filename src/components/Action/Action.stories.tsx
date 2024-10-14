@@ -8,9 +8,9 @@ import { useMergedProps } from "@utils";
 
 import type { ActionProps, ActionSize } from "./Action.types";
 import type { IconName } from "../Icon";
+import type { TooltipProps } from "../Tooltip";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
-import type { TooltipProps } from "../Tooltip";
 
 const meta = {
   component: Action,
