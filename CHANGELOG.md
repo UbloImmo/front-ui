@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.4` Action component
   - `iconTooltip` property to display a tooltip around an icon at the end of the icon
 
+- `v0.0.5` Text component & `v0.0.4` Heading component
+  - `fill` property to make the text fill the available width
+
 ## 0.32.22 - 2024-10-14
 ### Fixed
 - `v0.0.6` SelectInput component
