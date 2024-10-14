@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.6` SelectInput component
+  - Fix `optionGroup` display (remove max-height)
+  - Add testid to option group label
+  - Add testid to component wrapper
+
 ## 0.32.21 - 2024-10-14
 ### Added
 - Test ids in various form sub-components

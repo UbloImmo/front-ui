@@ -178,7 +178,6 @@ export const groupOptionLabelStyles = (): RuleSet => {
     padding: var(--s-1) var(--s-2);
     height: var(--s-6);
     min-height: var(--s-6);
-    max-height: var(--s-6);
     position: relative;
     display: flex;
     align-items: center;
