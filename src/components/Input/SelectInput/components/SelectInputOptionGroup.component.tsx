@@ -24,7 +24,10 @@ export const SelectInputOptionGroup = <
 }: SelectInputOptionGroupProps<TValue, TExtraData>): JSX.Element => {
   return (
     <>
-      <GroupOptionLabel tabIndex={-1}>
+      <GroupOptionLabel
+        tabIndex={-1}
+        data-testid="input-select-option-group-label"
+      >
         <Text color="gray-600" weight="bold" size="s" uppercase>
           {label}
         </Text>

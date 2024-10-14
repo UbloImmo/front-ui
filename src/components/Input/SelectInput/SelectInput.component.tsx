@@ -47,7 +47,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -201,7 +201,11 @@ const SelectInput = <
   }, [isLoading, query, searchable]);
 
   return (
-    <SelectInputWrapper reverse ref={wrapperRef}>
+    <SelectInputWrapper
+      reverse
+      ref={wrapperRef}
+      data-testid={`${testId}-wrapper`}
+    >
       {isOpen && (
         <SelectOptionsContainer
           role="listbox"
