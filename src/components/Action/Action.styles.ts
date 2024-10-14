@@ -76,11 +76,11 @@ export const actionContainerStyles = ({
       min-width: max-content;
       white-space: nowrap;
     }
-
+    /* 
     div[data-testid="flex"] {
       height: 100%;
       overflow: hidden;
-    }
+    } */
 
     &:hover:not(:disabled) {
       transition-duration: 150ms;
@@ -94,3 +94,11 @@ export const actionContainerStyles = ({
     }
   `;
 };
+
+export const actionLabelContainerStyles = () => css`
+  overflow: hidden;
+  flex: 1;
+  height: min-content;
+  width: unset;
+  flex: unset;
+`;

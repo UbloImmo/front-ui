@@ -44,6 +44,7 @@ const defaultTooltipProps: DefaultTooltipProps = {
   content: "[Tooltip content]",
   direction: "top",
   icon: "QuestionCircleFill",
+  iconColor: "gray-700",
   intersectionRoot: null,
   cursor: "help",
 };
@@ -53,7 +54,7 @@ const THRESHOLDS = generateThresholds(THRESHOLD_COUNT);
 /**
  * Text popup box that appears when the user hovers over an element
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {TooltipProps & TestIdProps} props - The tooltip's props
  * @returns {JSX.Element} The rendered tooltip
@@ -63,7 +64,8 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultTooltipProps, props);
   const testId = useTestId("tooltip", props);
 
-  const { children, content, direction, icon, intersectionRoot } = mergedProps;
+  const { children, content, direction, icon, intersectionRoot, iconColor } =
+    mergedProps;
 
   const [tooltipDirection, setTooltipDirection] =
     useState<Direction>(direction);
@@ -152,7 +154,7 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
     }
     if (isString(content) || isNumber(content)) {
       return (
-        <Text color="gray-50" size="s">
+        <Text color="gray-50" size="s" fill>
           {content}
         </Text>
       );
@@ -166,10 +168,10 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
    */
   const RenderedChildren = useCallback(() => {
     if (!children || (isString(children) && isEmptyString(children))) {
-      return <Icon name={icon} size="s-4" color="gray-700" />;
+      return <Icon name={icon} size="s-4" color={iconColor} />;
     }
     return children;
-  }, [children, icon]);
+  }, [children, icon, iconColor]);
 
   return (
     <TooltipWrapper

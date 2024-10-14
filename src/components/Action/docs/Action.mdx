@@ -21,7 +21,7 @@ Action provides 2 sizes (`default` & `large`) to help users differenciate betwee
 
 <Canvas of={ActionStories.Sizes} />
 
-### Labels & Icon
+### Basic customization
 
 Action buttons can have their `label`, `icon` and `badgeLabel` properties customized to fit most needs.
 
@@ -42,13 +42,24 @@ As such, they can take any valid `IconName`.
 
 <Canvas of={ActionStories.Icons} />
 
+### Further customization
+
 #### Badge
 
-Provide a `badgeLabel` to display alongside the Action's label.
+Provide a `badgeLabel` to display a [Badge](?path=/docs/components-badge-usage--docs) alongside the Action's label.
+Its color will change between `primary` and `gray` depending on the Actions's `disabled` property.
 
 > No `Badge` will be rendered if `badgeLabel` is an empty string or missing.
 
 <Canvas of={ActionStories.BadgeLabels} />
+
+#### Tooltips
+
+Add a [Tooltips's properties object](?path=/docs/components-tooltip-properties--docs) as its `iconTooltip` property to display a tooltip inside the action.
+
+> Any children passed to the `iconTooltip` property will be ignored so as to always render an icon
+
+<Canvas of={ActionStories.Tooltip} />
 
 ### Disabled
 

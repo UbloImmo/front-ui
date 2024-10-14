@@ -1,4 +1,5 @@
 import type { IconName } from "../Icon";
+import type { TooltipProps } from "../Tooltip";
 import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 const actionSizes = ["default", "large"] as const;
@@ -62,6 +63,13 @@ export type ActionProps = {
    * @default string;
    */
   title?: Nullable<string>;
+  /**
+   * The tooltip to display when hovering over the Action button.
+   *
+   * @type {Nullable<TooltipProps>}
+   * @default null
+   */
+  iconTooltip?: Nullable<Omit<TooltipProps, "children">>;
 };
 
 export type DefaultActionProps = Required<ActionProps>;
