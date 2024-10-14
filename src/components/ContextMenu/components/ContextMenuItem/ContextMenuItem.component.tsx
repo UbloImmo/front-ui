@@ -23,6 +23,7 @@ const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
   title: null,
   badgeLabel: null,
   index: 0,
+  iconTooltip: null,
 };
 
 /**
