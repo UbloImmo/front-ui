@@ -6,6 +6,7 @@ import { DateInput } from "./DateInput";
 import { EmailInput } from "./EmailInput";
 import { IconPickerInput } from "./IconPickerInput";
 import { inputTypes } from "./Input.data";
+import { MultiSelectInput } from "./MultiSelectInput";
 import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput";
 import { PhoneInput } from "./PhoneInput";
@@ -43,6 +44,7 @@ const inputComponentMap = <
   "icon-picker": IconPickerInput,
   search: SearchInput<TGenericValue>,
   "search-text": SearchTextInput,
+  "multi-select": MultiSelectInput<TGenericValue>,
 });
 
 /**

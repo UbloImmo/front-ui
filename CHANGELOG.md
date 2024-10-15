@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `v0.0.1` MultiSelectInput component
+  - A multi select input component
+  - Based on SelectInput component
+  - Integrated with `Input`, `Field` and `Form` components
+
 - `useAsyncData` hook
   - A hook for handling simple asynchronous data loading without having to import `react-query` or similar
 

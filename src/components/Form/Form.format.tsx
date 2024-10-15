@@ -1,11 +1,17 @@
 import { isArray, isNullish } from "@ubloimmo/front-util";
 import { type ReactNode } from "react";
 
+import { Badge } from "../Badge";
+
 import { ComboBox } from "@/components/ComboBox";
 import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
 import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
-import { flattenSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
+import {
+  flattenSelectOptions,
+  useSelectOptions,
+} from "@/components/Input/SelectInput/SelectInput.utils";
+import { FlexRowLayout } from "@layouts";
 import { arrayOf } from "@utils";
 
 import type {
@@ -143,6 +149,33 @@ const displaySearchValue: FormDisplayValueFormatterFn<"search", ReactNode> = (
   return <SelectedOption value={fieldValue} disabled={disabled} />;
 };
 
+const DisplayMultiSelectValue: FormDisplayValueFormatterFn<
+  "multi-select",
+  ReactNode
+> = (fieldValue, { options }) => {
+  const { flattenedOptions } = useSelectOptions({
+    options,
+    filterOption: null,
+  });
+  if (!fieldValue) return noValue;
+  const activeOptions = flattenedOptions.filter(({ value }) =>
+    fieldValue.includes(value)
+  );
+
+  return (
+    <FlexRowLayout wrap fill gap="s-1">
+      {activeOptions.map(({ label, value, icon }) => (
+        <Badge
+          key={`multi-select-badge-${value}`}
+          icon={icon}
+          label={label}
+          color="primary"
+        />
+      ))}
+    </FlexRowLayout>
+  );
+};
+
 const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
   text: String,
   number: String,
@@ -157,6 +190,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
   "icon-picker": displayIconPickerValue,
   search: displaySearchValue,
   "search-text": String,
+  "multi-select": DisplayMultiSelectValue,
 };
 
 /**

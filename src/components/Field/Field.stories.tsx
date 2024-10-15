@@ -92,8 +92,11 @@ export const Types = (props: FieldProps<InputType>) => {
   );
   return (
     <ComponentVariants
-      variants={inputTypes}
-      for="type"
+      variants={inputTypes.map((type) => ({
+        type,
+        label: `A ${type} field`,
+        __propVariantLabel: `type:${type}`,
+      }))}
       of={Field}
       defaults={defaults}
       propLabels

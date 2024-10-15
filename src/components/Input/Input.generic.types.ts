@@ -3,6 +3,7 @@ import type { CurrencyInputProps } from "./CurrencyInput";
 import type { DateInputProps } from "./DateInput/DateInput.types";
 import type { IconPickerInputProps } from "./IconPickerInput";
 import type { InputType, InputProps } from "./Input.types";
+import type { MultiSelectInputProps } from "./MultiSelectInput/MultiSelectInput.types";
 import type { NumberInputProps } from "./NumberInput/NumberInput.types";
 import type { PasswordInputProps } from "./PasswordInput/PasswordInput.types";
 import type { SearchInputProps } from "./SearchInput";
@@ -26,6 +27,7 @@ type SpecificInputPropsMap<
   "icon-picker": IconPickerInputProps;
   search: SearchInputProps<TGenericValue>;
   "search-text": InputProps<"search-text">;
+  "multi-select": MultiSelectInputProps<TGenericValue>;
 };
 
 export type SpecificInputProps<
