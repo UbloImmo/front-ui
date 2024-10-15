@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `useAsyncData` hook
+  - A hook for handling simple asynchronous data loading without having to import `react-query` or similar
+
 ### Changed
 
 - `v0.0.7` SelectInput component

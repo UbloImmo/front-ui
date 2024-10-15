@@ -6,4 +6,5 @@ export * from "./props.utils.ts";
 export * from "./string.utils.ts";
 export * from "./component.utils.ts";
 export * from "./array.utils.ts";
+export * from "./data.utils.ts";
 export * from "./translation";
