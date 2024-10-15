@@ -2,7 +2,7 @@ import { css, type RuleSet } from "styled-components";
 
 import { commonInputStyles } from "../Input.styles";
 
-import type { CommonInputStyleProps } from "dist";
+import type { CommonInputStyleProps } from "../Input.types";
 
 export const multiSelectInputElementStyles = (
   props: CommonInputStyleProps
