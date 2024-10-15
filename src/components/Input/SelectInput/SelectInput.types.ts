@@ -134,7 +134,7 @@ export type SelectInputProps<
   searchable?: boolean;
 
   /**
-   * The custom Option component that gets rendered for each option
+   * An optional custom Option component that gets rendered for each option
    *
    * @type {Nullable<CustomOptionComponent<TValue, TExtraData>>}
    */

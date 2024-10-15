@@ -5,10 +5,19 @@ import {
   isNull,
   isObject,
   isString,
+  type GenericFn,
   type Nullish,
   type NullishPrimitives,
+  type VoidFn,
 } from "@ubloimmo/front-util";
-import { useState, useCallback, useEffect, useMemo } from "react";
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+  type RefObject,
+  useLayoutEffect,
+} from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
 
@@ -48,7 +57,7 @@ export const useSelectOptions = <
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives
 >(
-  props: SelectInputProps<TValue, TExtraData>
+  props: Pick<SelectInputProps<TValue, TExtraData>, "options" | "filterOption">
 ) => {
   const logger = useLogger("SelectInput");
 
@@ -110,6 +119,12 @@ export const useSelectOptions = <
     [mergedProps, logger]
   );
 
+  const flattenedOptions = useMemo(() => {
+    const allOptions = flattenSelectOptions(options);
+    if (!mergedProps.filterOption) return allOptions;
+    return allOptions.filter(mergedProps.filterOption);
+  }, [mergedProps.filterOption, options]);
+
   /**
    * Effect used for loading initial select options if it is a function
    */
@@ -123,6 +138,7 @@ export const useSelectOptions = <
     isLoading,
     refetchOptions: loadOptions,
     mergedProps,
+    flattenedOptions,
   };
 };
 
@@ -145,33 +161,34 @@ export const isSelectOptionGroup = <
 };
 
 /**
- * Assigns the "active" property to each SelectOption or SelectOptionGroup in the options array based on the provided value.
+ * Assigns an 'active' property to each option in the given array of options or option groups.
  *
- * @template TValue - The type of the value.
- * @param {SelectOptionOrGroup<TValue>[]} options - The array of SelectOption or SelectOptionGroup objects.
- * @param {TValue} value - The value to compare against.
- * @return {SelectOptionOrGroup<TValue>[]} - The modified array of SelectOption or SelectOptionGroup objects.
+ * @template TValue - The type of the option value, extending NullishPrimitives.
+ * @template TExtraData - The type of extra data associated with the option, extending NullishPrimitives.
+ * @param {SelectOptionOrGroup<TValue, TExtraData>[]} options - The array of options or option groups to process.
+ * @param {(value: Nullable<TValue>) => boolean} isOptionActive - A function that determines if an option is active based on its value.
+ * @returns {SelectOptionOrGroup<TValue, TExtraData>[]} The processed array with 'active' properties assigned.
  */
-const assignActiveOption = <
+export const assignActiveOptions = <
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives
 >(
   options: SelectOptionOrGroup<TValue, TExtraData>[],
-  value: Nullable<TValue>
+  isOptionActive: GenericFn<[Nullable<TValue>], boolean>
 ): SelectOptionOrGroup<TValue, TExtraData>[] => {
   return options.map(
     (optionOrGroup): SelectOptionOrGroup<TValue, TExtraData> => {
       if (isSelectOption(optionOrGroup))
         return {
           ...optionOrGroup,
-          active: optionOrGroup.value === value,
+          active: isOptionActive(optionOrGroup.value),
         };
 
       return {
         ...optionOrGroup,
         options: optionOrGroup.options.map((groupOption) => ({
           ...groupOption,
-          active: groupOption.value === value,
+          active: isOptionActive(groupOption.value),
         })),
       };
     }
@@ -199,6 +216,7 @@ export const useSelectValue = <
 >(
   mergedProps: DefaultSelectInputProps<TValue, TExtraData>,
   options: SelectOptionOrGroup<TValue, TExtraData>[],
+  flattenedOptions: SelectOption<TValue, TExtraData>[],
   refetchOptions: RefetchSelectOptionsFn,
   isOpen: boolean
 ) => {
@@ -217,12 +235,6 @@ export const useSelectValue = <
   const [autoCompleteQuery, setAutoCompleteQuery] = useState<Nullish<string>>(
     mergedProps.searchable ? "" : null
   );
-
-  const allFlattenOptions = useMemo(() => {
-    const allOptions = flattenSelectOptions(options);
-    if (!mergedProps.filterOption) return allOptions;
-    return allOptions.filter(mergedProps.filterOption);
-  }, [mergedProps.filterOption, options]);
 
   const isQuerying = useMemo(
     () => isString(autoCompleteQuery) && isNonEmptyString(autoCompleteQuery),
@@ -245,30 +257,30 @@ export const useSelectValue = <
 
   const activeOption = useMemo(() => {
     return (
-      allFlattenOptions.find(({ value }) => value === internalValue) ?? null
+      flattenedOptions.find(({ value }) => value === internalValue) ?? null
     );
-  }, [allFlattenOptions, internalValue]);
+  }, [flattenedOptions, internalValue]);
 
   const filteredOptions = useMemo(() => {
     if (!mergedProps.searchable) {
-      return allFlattenOptions;
+      return flattenedOptions;
     }
     if (
       isString(autoCompleteQuery) &&
       isObject(activeOption) &&
       autoCompleteQuery === activeOption?.label
     ) {
-      return allFlattenOptions;
+      return flattenedOptions;
     }
 
-    return allFlattenOptions.filter((option) => {
+    return flattenedOptions.filter((option) => {
       return option.label
         .toLowerCase()
         .includes(autoCompleteQuery?.toLowerCase() ?? "");
     });
   }, [
     activeOption,
-    allFlattenOptions,
+    flattenedOptions,
     autoCompleteQuery,
     mergedProps.searchable,
   ]);
@@ -276,9 +288,12 @@ export const useSelectValue = <
   const displayOptions = useMemo<
     SelectOptionOrGroup<TValue, TExtraData>[]
   >(() => {
-    const rootOptions = isQuerying ? filteredOptions : allFlattenOptions;
+    const rootOptions = isQuerying ? filteredOptions : flattenedOptions;
 
-    return assignActiveOption(options, internalValue)
+    return assignActiveOptions(
+      options,
+      (optionValue) => optionValue === internalValue
+    )
       .map((optionOrGroup) => {
         if (isSelectOption(optionOrGroup)) {
           return rootOptions.find(
@@ -302,7 +317,7 @@ export const useSelectValue = <
         };
       })
       .filter((optionOrGroup) => !isNull(optionOrGroup));
-  }, [isQuerying, filteredOptions, allFlattenOptions, options, internalValue]);
+  }, [isQuerying, filteredOptions, flattenedOptions, options, internalValue]);
 
   useEffect(() => {
     if (
@@ -336,4 +351,33 @@ export const useSelectValue = <
     activeOption,
     displayOptions,
   };
+};
+
+export const useSelectInputKeyboardEvents = (
+  wrapperRef: RefObject<Nullable<HTMLDivElement>>,
+  inputId: string,
+  closeOptions: VoidFn
+) => {
+  useLayoutEffect(() => {
+    const onPointerDown = (e: PointerEvent) => {
+      if (!e.target) return;
+      if ("id" in e.target && e.target.id === inputId) return;
+      if (!wrapperRef.current) return;
+      if (wrapperRef.current.contains(e.target as HTMLElement)) return;
+
+      closeOptions();
+    };
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeOptions();
+      }
+    };
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, [closeOptions, inputId, wrapperRef]);
 };

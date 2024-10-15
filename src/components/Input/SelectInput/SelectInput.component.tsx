@@ -1,12 +1,5 @@
 import { NullishPrimitives, isString } from "@ubloimmo/front-util";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { SelectInputOption } from "./components/SelectInputOption.component";
@@ -20,6 +13,7 @@ import {
 import {
   defaultSelectInputProps,
   isSelectOptionGroup,
+  useSelectInputKeyboardEvents,
   useSelectOptions,
   useSelectValue,
 } from "./SelectInput.utils";
@@ -47,7 +41,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -59,8 +53,8 @@ const SelectInput = <
   props: SelectInputProps<TValue, TExtraData> & TestIdProps
 ): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
-  const { options, mergedProps, refetchOptions, isLoading } =
-    useSelectOptions(props);
+  const { options, flattenedOptions, mergedProps, refetchOptions, isLoading } =
+    useSelectOptions<TValue, TExtraData>(props);
 
   const {
     displayOptions,
@@ -69,7 +63,13 @@ const SelectInput = <
     autoCompleteQuery,
     setAutoCompleteQuery,
     isQuerying,
-  } = useSelectValue(mergedProps, options, refetchOptions, isOpen);
+  } = useSelectValue(
+    mergedProps,
+    options,
+    flattenedOptions,
+    refetchOptions,
+    isOpen
+  );
   const inputStyles = useInputStyles(mergedProps);
 
   const { placeholder, disabled, searchable } = mergedProps;
@@ -103,11 +103,8 @@ const SelectInput = <
   }, [isOpen, inputRef.current]);
 
   const toggleOptionList = useCallback(() => {
-    if (!isOpen) {
-      openOptions();
-    } else {
-      closeOptions();
-    }
+    if (isOpen) return closeOptions();
+    openOptions();
   }, [closeOptions, openOptions, isOpen]);
 
   const selectOptionAndClose = useCallback(
@@ -149,28 +146,7 @@ const SelectInput = <
 
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
 
-  useLayoutEffect(() => {
-    const onPointerDown = (e: PointerEvent) => {
-      if (!e.target) return;
-      if ("id" in e.target && e.target.id === inputId) return;
-      if (!wrapperRef.current) return;
-      if (wrapperRef.current.contains(e.target as HTMLElement)) return;
-
-      setIsOpen(false);
-    };
-
-    const onKeyUp = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closeOptions();
-      }
-    };
-    window.addEventListener("pointerdown", onPointerDown);
-    window.addEventListener("keyup", onKeyUp);
-    return () => {
-      window.removeEventListener("pointerdown", onPointerDown);
-      window.removeEventListener("keyup", onKeyUp);
-    };
-  }, [closeOptions, inputId, testId]);
+  useSelectInputKeyboardEvents(wrapperRef, inputId, closeOptions);
 
   const OptionComponent = useMemo(
     () => mergedProps.Option ?? null,
