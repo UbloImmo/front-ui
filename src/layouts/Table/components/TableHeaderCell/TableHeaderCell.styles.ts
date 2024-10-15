@@ -8,8 +8,12 @@ export const tableHeaderCellStyles = (): RuleSet => css`
     background-color: var(--primary-light);
     width: 100%;
     padding: var(--s-1) var(--s-2);
+    min-height: var(--s-8);
     height: max-content;
     border: 1px solid var(--primary-medium);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   &:not(:first-child) > div,

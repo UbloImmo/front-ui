@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add `disabled` property to make a chip undeletable
   - Update docs
 
+- `v0.0.2` TableHeaderCell layout
+  - Tweak styles to match design (min-height, padding)
+
+
 ## 0.32.23 - 2024-10-14
 ### Added
 - `v0.0.6` Tooltip component

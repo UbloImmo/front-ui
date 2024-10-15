@@ -14,6 +14,8 @@ const defaultTableHeaderCellProps: TableCellProps = {
 /**
  * A table header cell component to label the corresponding column, used in `TableHeader`.
  *
+ * @version 0.0.2
+ *
  * @param {CellProps} props - The props for the component.
  * @return {JSX.Element} The rendered table header cell.
  */
