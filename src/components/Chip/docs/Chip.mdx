@@ -30,7 +30,7 @@ By default, the icon in a `Chip` is positioned on the left of its label. You can
 
 <Canvas of={ChipStories.Placement} />
 
-### Delete button
+### Deleting a chip
 
 To use the interactivity of the `Chip`, you can provide your desired callback function in the optional `onDelete` property. This will be triggered when the button on the right of the `Chip` is clicked.
 This allows you to implement your trigger action to remove the selected `Chip`.
@@ -38,5 +38,12 @@ This allows you to implement your trigger action to remove the selected `Chip`.
 > Give it a try and delete those chips below !
 
 <Canvas of={ChipStories.WithDelete} />
+
+#### Make a chip undeletable
+
+Sometimes chip should not be deletable.
+You can disable the interaction and hide the delete button by setting the `disabled` property to `true`.
+
+<Canvas of={ChipStories.Disabled} />
 
 </Content>

@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.7` SelectInput component
   - Update some utility functions to use in new MultiSelectInput component
   - Tweak some styles
+  - Update docs
+
+- `v0.0.6` Chip component
+  - Add `disabled` property to make a chip undeletable
+  - Update docs
 
 ## 0.32.23 - 2024-10-14
 ### Added

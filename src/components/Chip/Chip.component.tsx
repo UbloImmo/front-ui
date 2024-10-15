@@ -26,12 +26,13 @@ const defaultChipProps: DefaultChipProps = {
   iconPlacement: "left",
   onDelete: null,
   deleteButtonTitle: null,
+  disabled: false,
 };
 
 /**
  * An interactive `Badge` with a remove button, can be used as a filter tag.
  *
- * @version 0.0.5
+ * @version 0.0.6
  * @param {ChipProps} props - the props for the Chip component
  * @returns {JSX.Element} - the Chip component
  */
@@ -40,7 +41,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("chip", props);
 
-  const { label, icon, color, deleteButtonTitle } = mergedProps;
+  const { label, icon, color, deleteButtonTitle, disabled } = mergedProps;
   const { warn } = useLogger("Chip");
 
   const tl = useUikitTranslation();
@@ -77,16 +78,18 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
         </Text>
       </ChipContainer>
 
-      <ChipButton
-        {...styledProps}
-        onClick={onDelete}
-        onMouseDown={onDelete}
-        data-testid="chip-button"
-        title={deleteLabel}
-        aria-label={deleteLabel}
-      >
-        <Icon name="X" size="s-4" color={iconColorStyle} />
-      </ChipButton>
+      {!disabled && (
+        <ChipButton
+          {...styledProps}
+          onClick={onDelete}
+          onMouseDown={onDelete}
+          data-testid="chip-button"
+          title={deleteLabel}
+          aria-label={deleteLabel}
+        >
+          <Icon name="X" size="s-4" color={iconColorStyle} />
+        </ChipButton>
+      )}
     </FlexRowLayout>
   );
 };
