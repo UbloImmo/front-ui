@@ -7,45 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Fixed
-
-- `v0.0.2` SmallLoader component
-  - Fix props merging
-  - Add support for `className` property
-
-- `v0.0.3` SearchInput component
-  - Fix value update while options are loading
-
+## 0.33.0 - 2024-10-16
 ### Added
-
 - `v0.0.1` MultiSelectInput component
   - A multi select input component
   - Based on SelectInput component
   - Integrated with `Input`, `Field` and `Form` components
-
 - `useAsyncData` hook
   - A hook for handling simple asynchronous data loading without having to import `react-query` or similar
-
 - `delay`, `delayedResponse` & `createDelayedResponse` helpers
   - Creates & manages delayed responses to simulate loading times
-
 - `v0.0.12` Form component
   - Add support for Skeleton rendering in view mode while field data is loading (select, search, multi-select)
 
 ### Changed
-
 - `v0.0.7` SelectInput component
   - Update some utility functions to use in new MultiSelectInput component
   - Tweak some styles
   - Update docs
-
 - `v0.0.6` Chip component
   - Add `disabled` property to make a chip undeletable
   - Update docs
-
 - `v0.0.2` TableHeaderCell layout
   - Tweak styles to match design (min-height, padding)
 
+### Fixed
+- `v0.0.2` SmallLoader component
+  - Fix props merging
+  - Add support for `className` property
+- `v0.0.3` SearchInput component
+  - Fix value update while options are loading
 
 ## 0.32.23 - 2024-10-14
 ### Added
