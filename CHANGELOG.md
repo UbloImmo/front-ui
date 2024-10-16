@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.2` SmallLoader component
+  - Fix props merging
+  - Add support for `className` property
+
+- `v0.0.3` SearchInput component
+  - Fix value update while options are loading
+
 ### Added
 
 - `v0.0.1` MultiSelectInput component

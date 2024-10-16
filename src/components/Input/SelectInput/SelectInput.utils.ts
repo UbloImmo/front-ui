@@ -116,7 +116,8 @@ export const useSelectOptions = <
       }
       setIsLoading(false);
     },
-    [mergedProps, logger]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [mergedProps.options, logger]
   );
 
   const flattenedOptions = useMemo(() => {
@@ -130,7 +131,7 @@ export const useSelectOptions = <
    */
   useEffect(() => {
     loadOptions(null);
-  }, [mergedProps.options, loadOptions]);
+  }, [loadOptions, mergedProps.options]);
 
   return {
     options,
@@ -336,7 +337,7 @@ export const useSelectValue = <
 
     if (activeOption) {
       mergedProps.onChange(activeOption.value);
-    } else {
+    } else if (internalValue !== mergedProps.value) {
       mergedProps.onChange(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
