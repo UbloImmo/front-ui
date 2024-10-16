@@ -8,6 +8,7 @@ import type { CommonInputStyleProps } from "../Input.types";
 export const multiSelectWrapperStyles = (): RuleSet => css`
   ${selectInputWrapperStyles}
   position: relative;
+  width: 100%;
 
   &:has([aria-expanded="true"]) {
     &,
