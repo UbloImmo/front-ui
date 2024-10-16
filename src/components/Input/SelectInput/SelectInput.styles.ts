@@ -31,6 +31,7 @@ export const selectInputWrapperStyles = (): RuleSet => css`
   position: relative;
   --input-height: var(--s-8);
   max-height: fit-content;
+  width: 100%;
 
   @media screen and (max-width: ${breakpointsPx.XS}) {
     --input-height: var(--s-10);

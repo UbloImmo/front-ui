@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.8` SelectInput, `v0.0.2` MultiSelectInput & `v0.0.4` SearchInput
+  - Set width to 100%
+
 ## 0.33.0 - 2024-10-16
 ### Added
 - `v0.0.1` MultiSelectInput component
