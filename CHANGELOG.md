@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `useAsyncData` hook
   - A hook for handling simple asynchronous data loading without having to import `react-query` or similar
 
+- `delay`, `delayedResponse` & `createDelayedResponse` helpers
+  - Creates & manages delayed responses to simulate loading times
+
 - `v0.0.12` Form component
   - Add support for Skeleton rendering in view mode while field data is loading (select, search, multi-select)
 

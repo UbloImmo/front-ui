@@ -1,6 +1,7 @@
 import {
   isFunction,
-  Optional,
+  type Optional,
+  type AsyncFn,
   type MaybeAsyncFn,
   type Nullable,
   type NullishPrimitives,
@@ -147,3 +148,41 @@ export const useAsyncData = <TData extends NullishPrimitives>(
 
   return { data, isLoading, error, refetch: loadData };
 };
+
+/**
+ * Creates a Promise that resolves after a specified delay.
+ * @param {number} ms - The delay in milliseconds.
+ * @returns {Promise<void>} A Promise that resolves after the specified delay.
+ */
+export const delay = (ms: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Creates a delayed response by waiting for a specified time before returning the given data.
+ *
+ * @template TData The type of the response data.
+ * @param {TData} response The data to be returned after the delay.
+ * @param {number} ms The delay in milliseconds.
+ * @returns {Promise<TData>} A Promise that resolves with the response data after the specified delay.
+ */
+export const delayedResponse = async <TData>(
+  response: TData,
+  ms: number
+): Promise<TData> => {
+  await delay(ms);
+  return response;
+};
+
+/**
+ * Creates a function that returns a delayed response.
+ *
+ * @template TData The type of the response data.
+ * @param {TData} response The data to be returned after the delay.
+ * @param {number} ms The delay in milliseconds.
+ * @returns {AsyncFn<[], TData>} An asynchronous function that, when called, returns a Promise resolving to the response data after the specified delay.
+ */
+export const createDelayedResponse =
+  <TData>(response: TData, ms: number): AsyncFn<[], TData> =>
+  async (): Promise<TData> => {
+    return await delayedResponse(response, ms);
+  };
