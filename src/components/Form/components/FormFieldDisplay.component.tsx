@@ -1,14 +1,15 @@
-import { isString, type Nullable } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { isFunction, isString, type Nullable } from "@ubloimmo/front-util";
+import { useMemo, type FC } from "react";
 import styled from "styled-components";
 
-import { computeFieldDisplayContent } from "../Form.format";
+import {
+  computeFieldDisplayContent,
+  FormFieldDisplayValue,
+} from "../Form.format";
 
 import { Icon } from "@/components/Icon";
 import { InputLabel } from "@/components/InputLabel";
-import { Text } from "@/components/Text";
-import { breakpointsPx } from "@/sizes";
-import { FlexColumnLayout, FlexLayout, FlexRowLayout } from "@layouts";
+import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 
 import type { BuiltFieldProps } from "../Form.types";
 import type { InputType } from "@/components/Input";
@@ -29,6 +30,10 @@ export const FormFieldDisplay = <TType extends InputType>(
   const displayContent = useMemo(() => {
     const content = computeFieldDisplayContent(type, props);
     if (isString(content)) return <FormFieldDisplayValue value={content} />;
+    if (isFunction<FC>(content)) {
+      const DisplayContent = content;
+      return <DisplayContent />;
+    }
 
     return content;
   }, [props, type]);
@@ -72,39 +77,11 @@ export const FormFieldDisplay = <TType extends InputType>(
   );
 };
 
-/**
- * A component that displays a form field's value in a Text component.
- *
- * @param {{ value: string }} props - The props of the component.
- * @returns {JSX.Element} The rendered component.
- */
-const FormFieldDisplayValue = ({ value }: { value: string }) => {
-  return (
-    <FieldDisplayValueContainer justify="start" align="center">
-      <Text color="gray-800" weight="medium">
-        {value}
-      </Text>
-    </FieldDisplayValueContainer>
-  );
-};
-
 const FieldDisplayContainer = styled(FlexColumnLayout)`
   input,
   textarea,
   select,
   label {
     width: 100%;
-  }
-`;
-
-const FieldDisplayValueContainer = styled(FlexLayout)`
-  max-height: var(--s-8);
-  height: var(--s-8);
-  min-height: var(--s-8);
-
-  @media screen and (max-width: ${breakpointsPx.XS}) {
-    max-height: var(--s-10);
-    height: var(--s-10);
-    min-height: var(--s-10);
   }
 `;

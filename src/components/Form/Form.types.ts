@@ -1174,7 +1174,7 @@ export type ReoderAllTableRowsIfNeededFn<TData extends object> = GenericFn<
  */
 export type FormDisplayValueFormatterFn<
   TType extends InputType,
-  TTransformedValue extends ReactNode = string
+  TTransformedValue extends ReactNode | FC = string
 > = GenericFn<
   [InputValue<TType>, SpecificInputProps<TType>],
   TTransformedValue
@@ -1184,7 +1184,7 @@ export type FormDisplayValueFormatterFn<
  * Mapping of {@link InputType} to {@link FormDisplayValueFormatterFn}
  */
 export type FormDisplayValueFormatterMap<
-  TTransformedValue extends ReactNode = string
+  TTransformedValue extends ReactNode | FC = string
 > = {
   [TType in InputType]: FormDisplayValueFormatterFn<TType, TTransformedValue>;
 };

@@ -1,17 +1,22 @@
-import { isArray, isNullish } from "@ubloimmo/front-util";
-import { type ReactNode } from "react";
+import {
+  isArray,
+  isNullish,
+  type NullishPrimitives,
+} from "@ubloimmo/front-util";
+import { type FC, type ReactNode } from "react";
+import styled from "styled-components";
 
 import { Badge } from "../Badge";
+import { FieldSkeleton } from "./components";
+import { Text } from "../Text";
 
 import { ComboBox } from "@/components/ComboBox";
 import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
 import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
-import {
-  flattenSelectOptions,
-  useSelectOptions,
-} from "@/components/Input/SelectInput/SelectInput.utils";
-import { FlexRowLayout } from "@layouts";
+import { useSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
+import { breakpointsPx } from "@/sizes";
+import { FlexLayout, FlexRowLayout } from "@layouts";
 import { arrayOf } from "@utils";
 
 import type {
@@ -21,29 +26,41 @@ import type {
 import type {
   InputType,
   InputValue,
+  SelectInputProps,
   SpecificInputProps,
+  MultiSelectInputProps,
+  SearchInputProps,
 } from "@/components/Input";
 
 const noValue = "—";
 
 /**
- * A {@link FormDisplayValueFormatterFn} that displays an `select` field's value.
+ * Displays the selected value for a select input field.
  *
- * @param {InputValue} fieldValue - The value of the field to display.
- * @param {{ options: SelectOptionOrGroup[], SelectedOption: ReactNode, disabled: boolean }}
- *   props - The props object containing the options, the SelectedOption
- *   component, and the disabled status.
- * @returns {ReactNode} A ReactNode that displays the label of the
- *   corresponding option, or the value itself if no option matches.
+ * @param {Object} params - The parameters for the component.
+ * @param {NullishPrimitives} params.fieldValue - The current value of the select field.
+ * @param {Object} params.props - The props for the select input.
+ * @param {Array} params.props.options - The options for the select input.
+ * @param {Function} [params.props.SelectedOption] - Optional custom component to render the selected option.
+ * @param {boolean} params.props.disabled - Whether the select input is disabled.
+ * @param {Function} [params.props.filterOption] - Optional function to filter the options.
+ * @returns {ReactNode} The rendered display of the selected value.
  */
-const displaySelectValue: FormDisplayValueFormatterFn<"select", ReactNode> = (
+const DisplaySelectValue = ({
   fieldValue,
-  { options, SelectedOption, disabled }
-) => {
-  const option = isArray(options)
-    ? flattenSelectOptions(options).find(({ value }) => value === fieldValue) ??
-      null
-    : null;
+  props: { options, SelectedOption, disabled, filterOption },
+}: {
+  fieldValue: NullishPrimitives;
+  props: SelectInputProps<NullishPrimitives>;
+}): ReactNode => {
+  const { flattenedOptions, isLoading } = useSelectOptions({
+    options,
+    filterOption,
+  });
+  if (!fieldValue) return noValue;
+  if (isLoading) return <FieldSkeleton />;
+  const option =
+    flattenedOptions.find(({ value }) => value === fieldValue) ?? null;
 
   const optionValue = option?.value ?? fieldValue;
 
@@ -52,7 +69,7 @@ const displaySelectValue: FormDisplayValueFormatterFn<"select", ReactNode> = (
   if (SelectedOption)
     return <SelectedOption value={optionValue} disabled={disabled} />;
 
-  return option?.label ?? String(fieldValue);
+  return <FormFieldDisplayValue value={option?.label ?? String(optionValue)} />;
 };
 
 /**
@@ -133,37 +150,60 @@ const displayIconPickerValue: FormDisplayValueFormatterFn<
   return <IconPickerItem name={value} active readonly />;
 };
 
-/**
- * A {@link FormDisplayValueFormatterFn} that displays a `search` field's value.
- *
- * @param {InputValue} fieldValue - The value of the field to display.
- * @param {{ disabled: boolean, SelectedOption: ReactNode }} props - An object containing the disabled status and the SelectedOption component.
- * @returns {ReactNode} If the value is invalid, an empty string is returned. If the SelectedOption is not provided, the value is returned as a string. Otherwise, the SelectedOption is rendered with the value and the disabled prop set to true.
- */
-const displaySearchValue: FormDisplayValueFormatterFn<"search", ReactNode> = (
+const DisplaySearchValue = ({
   fieldValue,
-  { disabled, SelectedOption }
-) => {
-  if (!fieldValue) return noValue;
-  if (!SelectedOption) return String(fieldValue);
-  return <SelectedOption value={fieldValue} disabled={disabled} />;
+  props: { disabled, SelectedOption, results },
+}: {
+  fieldValue: NullishPrimitives;
+  props: SearchInputProps<NullishPrimitives>;
+}) => {
+  const { flattenedOptions, isLoading } = useSelectOptions({
+    options: results ?? undefined,
+    filterOption: null,
+  });
+  if (!fieldValue) return <FormFieldDisplayValue value={noValue} />;
+  if (isLoading) return <FieldSkeleton />;
+
+  const result =
+    flattenedOptions.find(({ value }) => value === fieldValue) ?? null;
+  const resultValue = result?.value ?? fieldValue;
+
+  if (!resultValue) return <FormFieldDisplayValue value={noValue} />;
+
+  if (SelectedOption)
+    return <SelectedOption value={resultValue} disabled={disabled} />;
+
+  return <FormFieldDisplayValue value={result?.label ?? String(resultValue)} />;
 };
 
-const DisplayMultiSelectValue: FormDisplayValueFormatterFn<
-  "multi-select",
-  ReactNode
-> = (fieldValue, { options }) => {
-  const { flattenedOptions } = useSelectOptions({
+/**
+ * Displays the selected values for a multi-select input field.
+ *
+ * @param {Object} props - The component props.
+ * @param {NullishPrimitives[]} props.fieldValue - The array of selected values.
+ * @param {Object} props.props - The props passed to the MultiSelectInput component.
+ * @param {MultiSelectInputProps<NullishPrimitives>['options']} props.props.options - The options for the multi-select input.
+ * @returns {ReactNode} A FlexRowLayout of Badge components for each selected option, or a no-value placeholder.
+ */
+const DisplayMultiSelectValue = ({
+  fieldValue,
+  props: { options },
+}: {
+  fieldValue: NullishPrimitives[];
+  props: MultiSelectInputProps<NullishPrimitives>;
+}): ReactNode => {
+  const { flattenedOptions, isLoading } = useSelectOptions({
     options,
     filterOption: null,
   });
-  if (!fieldValue) return noValue;
+  if (!fieldValue) return <FormFieldDisplayValue value={noValue} />;
+  if (isLoading) return <FieldSkeleton />;
   const activeOptions = flattenedOptions.filter(({ value }) =>
     fieldValue.includes(value)
   );
 
   return (
-    <FlexRowLayout wrap fill gap="s-1">
+    <FlexRowLayout wrap fill gap="s-1" align="center">
       {activeOptions.map(({ label, value, icon }) => (
         <Badge
           key={`multi-select-badge-${value}`}
@@ -176,7 +216,7 @@ const DisplayMultiSelectValue: FormDisplayValueFormatterFn<
   );
 };
 
-const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
+const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   text: String,
   number: String,
   email: String,
@@ -184,13 +224,16 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
   password: displayPasswordValue,
   phone: String,
   textarea: String,
-  select: displaySelectValue,
+  select: (fieldValue, props) => () =>
+    <DisplaySelectValue fieldValue={fieldValue} props={props} />,
   date: displayDateValue,
   combobox: displayComboBoxValue,
   "icon-picker": displayIconPickerValue,
-  search: displaySearchValue,
+  search: (fieldValue, props) => () =>
+    <DisplaySearchValue fieldValue={fieldValue} props={props} />,
   "search-text": String,
-  "multi-select": DisplayMultiSelectValue,
+  "multi-select": (fieldValue, props) => () =>
+    <DisplayMultiSelectValue fieldValue={fieldValue} props={props} />,
 };
 
 /**
@@ -207,14 +250,41 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode> = {
  *
  * @param {TType} type - The type of the form field.
  * @param {SpecificInputProps<TType>} props - The props of the form field.
- * @returns {ReactNode} The computed display content.
+ * @returns {ReactNode | FC} The computed display content or a component that, upon rendererd, displays the field's value.
  */
 export const computeFieldDisplayContent = <TType extends InputType>(
   type: TType,
   props: SpecificInputProps<TType>
-): ReactNode => {
-  const content: ReactNode = !isNullish(props.value)
-    ? valueFormatters[type](props.value as InputValue<TType>, props)
-    : noValue;
-  return content;
+): ReactNode | FC => {
+  return isNullish(props.value)
+    ? noValue
+    : valueFormatters[type](props.value as InputValue<TType>, props);
 };
+
+/**
+ * A component that displays a form field's value in a Text component.
+ *
+ * @param {{ value: string }} props - The props of the component.
+ * @returns {JSX.Element} The rendered component.
+ */
+export const FormFieldDisplayValue = ({ value }: { value: string }) => {
+  return (
+    <FieldDisplayValueContainer justify="start" align="center">
+      <Text color="gray-800" weight="medium">
+        {value}
+      </Text>
+    </FieldDisplayValueContainer>
+  );
+};
+
+const FieldDisplayValueContainer = styled(FlexLayout)`
+  max-height: var(--s-8);
+  height: var(--s-8);
+  min-height: var(--s-8);
+
+  @media screen and (max-width: ${breakpointsPx.XS}) {
+    max-height: var(--s-10);
+    height: var(--s-10);
+    min-height: var(--s-10);
+  }
+`;
