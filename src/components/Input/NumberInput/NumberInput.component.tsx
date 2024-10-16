@@ -1,4 +1,4 @@
-import { isNumber } from "@ubloimmo/front-util";
+import { isNumber, isString } from "@ubloimmo/front-util";
 import { useCallback, useMemo, type KeyboardEventHandler } from "react";
 
 import { StyledNumberInput } from "./NumberInput.styles";
@@ -18,7 +18,13 @@ import {
 import { scaleNumber, transformNumber } from "./NumberInput.utils";
 
 import { Icon } from "@/components/Icon";
-import { clamp, useHtmlAttribute, useMergedProps, useTestId } from "@utils";
+import {
+  clamp,
+  isEmptyString,
+  useHtmlAttribute,
+  useMergedProps,
+  useTestId,
+} from "@utils";
 
 import type {
   DefaultNumberInputProps,
@@ -35,6 +41,7 @@ const defaultNumberInputProps: DefaultNumberInputProps = {
   step: 1,
   name: null,
   scale: 0,
+  precision: 2,
 };
 
 /**
@@ -55,9 +62,23 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
     [mergedProps.scale]
   );
 
+  const safePrecision = useMemo(() => {
+    if (!isNumber(mergedProps.precision)) return safeScale;
+    return Math.max(mergedProps.precision, 0) - safeScale;
+  }, [mergedProps.precision, safeScale]);
+
   const value = useInputValue<"number">(
     scaleNumber(mergedProps.value, -safeScale),
-    props
+    props,
+    (scaledValue) => {
+      const previousNativeValue = inputRef.current?.value;
+      const previousParsed = transformNumber(previousNativeValue);
+
+      return previousParsed?.toFixed(safePrecision) ===
+        scaledValue.toFixed(safePrecision)
+        ? previousNativeValue
+        : scaledValue;
+    }
   );
 
   const testId = useTestId("input-number", props);
@@ -69,7 +90,8 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
    * @returns {boolean} Whether the input is valid.
    */
   const onChange = useInputOnChange<"number">(
-    (_, validity) => {
+    (nativeValue, validity) => {
+      if (isString(nativeValue) && isEmptyString(nativeValue)) return true;
       return validity.valid;
     },
     /**
@@ -174,8 +196,12 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
   const id = useInputId(mergedProps);
 
   const pattern = useMemo(() => {
-    return `(-\\s?)?[0-9]+([\\.,][0-9]+)?`;
-  }, []);
+    return `(-\\s?)?[0-9]{{0,${
+      safePrecision - safeScale
+    }}([\\.,][0-9]{0, ${safeScale}})?`;
+  }, [safePrecision, safeScale]);
+
+  console.log({ pattern, safePrecision, safeScale });
 
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-number-container">

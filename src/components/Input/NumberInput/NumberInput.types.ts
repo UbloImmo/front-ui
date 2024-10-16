@@ -1,4 +1,5 @@
 import type { InputProps } from "../Input.types";
+import type { Nullable } from "@ubloimmo/front-util";
 
 export type NumberInputProps = InputProps<"number"> & {
   /**
@@ -28,6 +29,14 @@ export type NumberInputProps = InputProps<"number"> & {
    * @default 0
    */
   scale?: number;
+  /**
+   * The number's precision.
+   * Limits the number of decimal digits
+   *
+   * @type {Nullable<number>}
+   * @default 2
+   */
+  precision?: Nullable<number>;
 };
 
 export type DefaultNumberInputProps = Required<NumberInputProps>;
