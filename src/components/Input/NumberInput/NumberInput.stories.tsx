@@ -10,6 +10,14 @@ const meta = {
   args: {
     uncontrolled: true,
   },
+  argTypes: {
+    value: {
+      type: "number",
+    },
+    scale: {
+      type: "number",
+    },
+  },
 } satisfies Meta<typeof NumberInput>;
 
 export default meta;

@@ -46,6 +46,13 @@ export const useInputOnChange = <TType extends InputType>(
 ) => {
   return useCallback<NativeInputOnChangeFn>(
     (e) => {
+      console.log({
+        ariaText: e.target.ariaValueText,
+        value: e.target.value,
+        asNumber: e.target.valueAsNumber,
+        ariaNow: e.target.ariaValueNow,
+        nodeValue: e.target.nodeValue,
+      });
       if (isFunction<NativeInputOnChangeFn>(onChangeNative)) onChangeNative(e);
       if (isArray(onChangeNative) && onChangeNative.length > 0) {
         onChangeNative
@@ -53,7 +60,7 @@ export const useInputOnChange = <TType extends InputType>(
           .forEach((listener) => listener(e));
       }
       if (
-        condition(e.target.value) &&
+        condition(e.target.value, e.target.validity) &&
         isFunction<InputOnChangeFn<TType>>(onChange)
       ) {
         onChange(valueTransformer(e.target.value));

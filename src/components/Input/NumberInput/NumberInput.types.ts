@@ -5,15 +5,15 @@ export type NumberInputProps = InputProps<"number"> & {
   /**
    * The input's minimum value.
    *
-   * @default undefined
+   * @default -Infinity
    */
-  min?: Nullable<number>;
+  min?: number;
   /**
    * The input's maximum value.
    *
-   * @default undefined
+   * @default Infinity
    */
-  max?: Nullable<number>;
+  max?: number;
   /**
    * The input step size.
    * Affects the value increment/decrement when using the arrow keys and controls
@@ -23,6 +23,20 @@ export type NumberInputProps = InputProps<"number"> & {
    * @default 1
    */
   step?: number;
+  /**
+   * The number's scale.
+   * Will multiply the number's precision by 10^scale
+   * @default 0
+   */
+  scale?: number;
+  /**
+   * The number's precision.
+   * Limits the number of decimal digits
+   *
+   * @type {Nullable<number>}
+   * @default 2
+   */
+  precision?: Nullable<number>;
 };
 
 export type DefaultNumberInputProps = Required<NumberInputProps>;

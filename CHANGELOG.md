@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.6` NumberInput component
+  - Rewrite component around text input instead of number input
+  - Add `scale` property to convert between decimal & integer notation
+  - Add `precision` property to handle floating point irregularities
+  - Fix bug where typing a dot would yield `null`
+
 ## 0.33.1 - 2024-10-16
 ### Fixed
 - `v0.0.8` SelectInput, `v0.0.2` MultiSelectInput & `v0.0.4` SearchInput
