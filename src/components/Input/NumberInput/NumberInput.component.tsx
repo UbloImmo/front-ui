@@ -1,5 +1,5 @@
-import { isNumber, isString, type Nullable } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { isNumber } from "@ubloimmo/front-util";
+import { useCallback, useMemo, type KeyboardEventHandler } from "react";
 
 import { StyledNumberInput } from "./NumberInput.styles";
 import {
@@ -15,15 +15,15 @@ import {
   useInputRef,
   useInputId,
 } from "../Input.utils";
+import { scaleNumber, transformNumber } from "./NumberInput.utils";
 
 import { Icon } from "@/components/Icon";
-import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
+import { clamp, useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type {
   DefaultNumberInputProps,
   NumberInputProps,
 } from "./NumberInput.types";
-import type { NativeInputValue } from "../Input.types";
 import type { TestIdProps } from "@types";
 
 const defaultNumberInputProps: DefaultNumberInputProps = {
@@ -34,17 +34,14 @@ const defaultNumberInputProps: DefaultNumberInputProps = {
   max: Infinity,
   step: 1,
   name: null,
-};
-
-const transformNumber = (nativeValue: NativeInputValue): Nullable<number> => {
-  if (!isString(nativeValue) || nativeValue.length === 0) return null;
-  return parseFloat(nativeValue);
+  scale: 0,
 };
 
 /**
  * Renders a number input component.
  *
- * @version 0.0.5
+ * @version 0.0.6
+ *
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
  */
@@ -53,40 +50,72 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
 
   const { inputRef, forwardRef } = useInputRef(mergedProps);
 
-  const value = useInputValue<"number">(mergedProps.value, props);
+  const safeScale = useMemo(
+    () => Math.max(mergedProps.scale, 0),
+    [mergedProps.scale]
+  );
+
+  const value = useInputValue<"number">(
+    scaleNumber(mergedProps.value, -safeScale),
+    props
+  );
 
   const testId = useTestId("input-number", props);
 
+  /**
+   * Handles the onChange event for the input.
+   * @param {React.ChangeEvent<HTMLInputElement>} _ - The change event (unused).
+   * @param {ValidityState} validity - The validity state of the input.
+   * @returns {boolean} Whether the input is valid.
+   */
   const onChange = useInputOnChange<"number">(
-    (_) => true,
-    transformNumber,
+    (_, validity) => {
+      return validity.valid;
+    },
+    /**
+     * Transforms and clamps the input value.
+     * @param {NativeInputValue} nativeValue - The raw input value.
+     * @returns {Nullable<number>} The transformed and clamped value, or null if invalid.
+     */
+    (nativeValue) => {
+      const parsed = transformNumber(nativeValue);
+      if (!isNumber(parsed)) return null;
+      const clamped = clamp(parsed, mergedProps.min, mergedProps.max);
+      if (clamped !== parsed && inputRef.current) {
+        inputRef.current.value = String(clamped);
+      }
+      return scaleNumber(clamped, safeScale);
+    },
     mergedProps.onChange,
     mergedProps.onChangeNative
   );
 
+  /**
+   * Clamps the value and propagates the change.
+   * @param {number} value - The value to clamp and propagate.
+   */
   const clampAndPropagate = useCallback(
     (value: number) => {
       if (!inputRef.current) return;
-      value = isNumber(mergedProps.max)
-        ? Math.min(value, mergedProps.max)
-        : value;
-      value = isNumber(mergedProps.min)
-        ? Math.max(value, mergedProps.min)
-        : value;
+      const clamped = clamp(value, mergedProps.min, mergedProps.max);
 
-      const valueStr = String(value);
+      const valueStr = String(clamped);
       if (inputRef.current) {
         inputRef.current.value = valueStr;
       }
-      if (mergedProps.onChange) mergedProps.onChange(value);
+      if (mergedProps.onChange)
+        mergedProps.onChange(scaleNumber(value, safeScale));
     },
-    [inputRef, mergedProps]
+    [inputRef, mergedProps, safeScale]
   );
 
+  /**
+   * Increments the current value by the step amount.
+   */
   const incrementValue = useCallback(() => {
     if (!inputRef.current || mergedProps.disabled) return;
     const currentValue = transformNumber(inputRef.current?.value ?? value) ?? 0;
-    const incremented = currentValue + mergedProps.step;
+    const incremented = Math.round(currentValue + mergedProps.step);
     clampAndPropagate(incremented);
   }, [
     inputRef,
@@ -96,10 +125,13 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
     mergedProps.disabled,
   ]);
 
+  /**
+   * Decrements the current value by the step amount.
+   */
   const decrementValue = useCallback(() => {
     if (!inputRef.current || mergedProps.disabled) return;
     const currentValue = transformNumber(inputRef.current?.value ?? value) ?? 0;
-    const decremented = currentValue - mergedProps.step;
+    const decremented = Math.round(currentValue - mergedProps.step);
     clampAndPropagate(decremented);
   }, [
     inputRef,
@@ -108,6 +140,25 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
     clampAndPropagate,
     mergedProps.disabled,
   ]);
+
+  /**
+   * Handles keyboard events for incrementing or decrementing the value.
+   * @param {React.KeyboardEvent<HTMLInputElement>} e - The keyboard event.
+   */
+  const incrementOrDecrementOnArrow = useCallback<
+    KeyboardEventHandler<HTMLInputElement>
+  >(
+    (e) => {
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        incrementValue();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        decrementValue();
+      }
+    },
+    [incrementValue, decrementValue]
+  );
 
   const inputStyles = useInputStyles(mergedProps);
 
@@ -122,14 +173,19 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
   const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
   const id = useInputId(mergedProps);
 
+  const pattern = useMemo(() => {
+    return `(-\\s?)?[0-9]+([\\.,][0-9]+)?`;
+  }, []);
+
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-number-container">
       <StyledNumberInput
         data-testid={testId}
         value={value}
         onChange={onChange}
+        onKeyDown={incrementOrDecrementOnArrow}
         onBlur={onBlur}
-        type="number"
+        type="text"
         min={mergedProps.min ?? undefined}
         max={mergedProps.max ?? undefined}
         step={mergedProps.step}
@@ -138,6 +194,8 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
         disabled={mergedProps.disabled}
         ref={forwardRef}
         autoComplete={autoComplete}
+        pattern={pattern}
+        inputMode="decimal"
         id={id}
         {...inputStyles}
       />

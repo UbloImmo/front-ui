@@ -56,7 +56,10 @@ export type InputOnChangeValueTransformerFn<TType extends InputType> =
  * Callback function used by the {@link useInputOnChange} hook
  * if the native input value should be passed to the {@link InputOnChangeValueTransformerFn}.
  */
-export type InputOnChangeConditionFn = GenericFn<[NativeInputValue], boolean>;
+export type InputOnChangeConditionFn = GenericFn<
+  [NativeInputValue, ValidityState],
+  boolean
+>;
 
 /**
  * Common props shared by all Input components
