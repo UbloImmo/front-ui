@@ -16,7 +16,12 @@ import { Hypertext } from "../Hypertext";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
-import { clamp, useMergedProps, useStatic } from "@utils";
+import {
+  clamp,
+  createDelayedResponse,
+  useMergedProps,
+  useStatic,
+} from "@utils";
 
 import type {
   FormProps,
@@ -938,7 +943,7 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       label: "Select",
       source: "select",
       type: "select",
-      options: sharedOptions,
+      options: createDelayedResponse(sharedOptions, 200),
     },
     {
       label: "Date",
@@ -961,7 +966,7 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       label: "Multi select",
       type: "multi-select",
       source: "multiSelect",
-      options: sharedOptions,
+      options: createDelayedResponse(sharedOptions, 100),
     },
     {
       label: "Phone",
@@ -992,7 +997,7 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       label: "Search",
       type: "search",
       source: "search",
-      results: () => sharedOptions,
+      results: createDelayedResponse(sharedOptions, 1000),
     },
     {
       label: "Search Text",
@@ -1005,6 +1010,10 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       source: "textarea",
     },
   ],
+  onSubmit: (...args) => {
+    fn()(args);
+  },
+  debug: true,
 };
 
 export const AllFields = () => {
