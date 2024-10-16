@@ -16,13 +16,15 @@ import styled from "styled-components";
 
 import { defaultCommonInputProps, StyledInputControl } from "../Input.common";
 import { useInputId, useInputRef, useInputStyles } from "../Input.utils";
-import { multiSelectInputElementStyles } from "./MultiSelectInput.styles";
+import {
+  multiSelectInputElementStyles,
+  multiSelectWrapperStyles,
+} from "./MultiSelectInput.styles";
 import { useMultiSelectValue } from "./MultiSelectInput.utils";
 import { SelectInputOption } from "../SelectInput/components/SelectInputOption.component";
 import { SelectInputOptionGroup } from "../SelectInput/components/SelectInputOptionGroup.component";
 import {
   selectInputContainerStyles,
-  selectInputWrapperStyles,
   selectOptionContainerStyles,
 } from "../SelectInput/SelectInput.styles";
 import {
@@ -337,7 +339,7 @@ MultiSelectInput.defaultProps = defaultMultiSelectInputProps;
 export { MultiSelectInput };
 
 const MultiSelectInputWrapper = styled(FlexColumnLayout)`
-  ${selectInputWrapperStyles}
+  ${multiSelectWrapperStyles}
 `;
 
 const MultiSelectOptionsContainer = styled(FlexColumnLayout)`

@@ -1,8 +1,21 @@
 import { css, type RuleSet } from "styled-components";
 
 import { commonInputStyles } from "../Input.styles";
+import { selectInputWrapperStyles } from "../SelectInput/SelectInput.styles";
 
 import type { CommonInputStyleProps } from "../Input.types";
+
+export const multiSelectWrapperStyles = (): RuleSet => css`
+  ${selectInputWrapperStyles}
+  position: relative;
+
+  &:has([aria-expanded="true"]) {
+    &,
+    & [aria-expanded="true"] {
+      z-index: 2;
+    }
+  }
+`;
 
 export const multiSelectInputElementStyles = (
   props: CommonInputStyleProps
