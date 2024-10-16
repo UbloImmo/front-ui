@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.33.2 - 2024-10-16
 ### Fixed
-
 - `v0.0.6` NumberInput component
   - Rewrite component around text input instead of number input
   - Add `scale` property to convert between decimal & integer notation
