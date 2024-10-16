@@ -7,8 +7,8 @@ import { type FC, type ReactNode } from "react";
 import styled from "styled-components";
 
 import { Badge } from "../Badge";
-import { FieldSkeleton } from "./components";
 import { Text } from "../Text";
+import { FieldSkeleton } from "./components/FieldSkeleton.component";
 
 import { ComboBox } from "@/components/ComboBox";
 import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
