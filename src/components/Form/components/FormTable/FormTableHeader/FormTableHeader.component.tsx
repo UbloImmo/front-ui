@@ -1,9 +1,9 @@
-import { isString } from "@ubloimmo/front-util";
+import { isString, type Optional } from "@ubloimmo/front-util";
 
 import { useFormContext } from "../../../Form.context";
 
 import { InputLabelText } from "@/components/InputLabel";
-import { Tooltip } from "@/components/Tooltip";
+import { Tooltip, type TooltipProps } from "@/components/Tooltip";
 import { FlexRowLayout, TableHeader, TableHeaderCell } from "@layouts";
 import { isEmptyString } from "@utils";
 
@@ -19,12 +19,20 @@ export const FormTableHeader = ({ headers }: FormTableHeaderProps) => {
         const key = `table-header-${index}-${label}`;
         const justify = compact ? "start" : "space-between";
 
+        const headerTooltip: Optional<TooltipProps> = tooltip
+          ? {
+              ...tooltip,
+              iconColor: "primary-medium",
+              children: null,
+            }
+          : undefined;
+
         const headerLabel =
           !isString(label) || isEmptyString(label) ? <>&nbsp;</> : label;
 
         return (
           <TableHeaderCell key={key}>
-            <FlexRowLayout align="center" gap="s-2" justify={justify}>
+            <FlexRowLayout align="center" gap="s-2" justify={justify} fill>
               <InputLabelText
                 color="primary-dark"
                 size="m"
@@ -34,7 +42,7 @@ export const FormTableHeader = ({ headers }: FormTableHeaderProps) => {
               >
                 {headerLabel}
               </InputLabelText>
-              {tooltip && isEditing && <Tooltip {...tooltip} />}
+              {headerTooltip && <Tooltip {...headerTooltip} />}
             </FlexRowLayout>
           </TableHeaderCell>
         );

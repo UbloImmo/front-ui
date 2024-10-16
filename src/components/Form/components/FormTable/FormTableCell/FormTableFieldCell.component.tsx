@@ -1,5 +1,5 @@
-import { isString } from "@ubloimmo/front-util";
-import { useMemo, type ReactNode } from "react";
+import { isFunction, isString } from "@ubloimmo/front-util";
+import { useMemo, type FC, type ReactNode } from "react";
 import styled from "styled-components";
 
 import { useFormContext } from "@/components/Form/Form.context";
@@ -36,6 +36,10 @@ export const FormTableFieldCell = ({
           {content}
         </Text>
       );
+    if (isFunction<FC>(content)) {
+      const DisplayContent = content;
+      return <DisplayContent />;
+    }
     return content;
   }, [props]);
 

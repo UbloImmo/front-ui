@@ -133,9 +133,7 @@ export const selectOptionStyles = (): RuleSet => {
 
     padding: var(--s-2);
     height: var(--s-8);
-    min-height: var(--s-8);
-    max-height: var(--s-8);
-    width: 100%;
+    ${cssDimensions("100%", "--s-8", true)}
     transition: background-color 300ms ease-out;
     display: flex;
     align-items: center;
@@ -170,6 +168,10 @@ export const selectOptionStyles = (): RuleSet => {
       transition-duration: 150ms;
       background-color: var(--primary-light);
     }
+
+    @media screen and (max-width: ${breakpointsPx.XS}) {
+      ${cssDimensions("100%", "--s-10", true)}
+    }
   `;
 };
 
@@ -182,6 +184,7 @@ export const groupOptionLabelStyles = (): RuleSet => {
     display: flex;
     align-items: center;
     border-top: 1px solid var(--primary-light);
+    width: 100%;
 
     span[data-testid="text"] {
       position: relative;

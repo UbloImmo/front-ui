@@ -162,6 +162,7 @@ export type InputTypeMap<
   "icon-picker": IconName;
   search: TGenericValue;
   "search-text": string;
+  "multi-select": TGenericValue[];
 };
 
 /**

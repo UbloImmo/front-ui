@@ -17,4 +17,5 @@ export const inputTypes = [
   "icon-picker",
   "search",
   "search-text",
+  "multi-select",
 ] as const;

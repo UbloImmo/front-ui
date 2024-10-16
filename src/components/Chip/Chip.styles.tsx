@@ -10,7 +10,7 @@ import type { PaletteColor, StyleProps } from "@types";
 export const buildChipContainerStyles = (
   props: StyleProps<ChipProps>
 ): RuleSet => {
-  const { iconPlacement, color } = fromStyleProps(props);
+  const { iconPlacement, color, disabled } = fromStyleProps(props);
 
   const borderColorShade = isGrayColor(color) ? "300" : "medium";
   const borderColor = `${color}-${borderColorShade}` as PaletteColor;
@@ -23,6 +23,10 @@ export const buildChipContainerStyles = (
     border: 1px solid var(--${borderColor});
     background-color: var(--${background});
     border-radius: var(--s-1) 0 0 var(--s-1);
+    ${disabled &&
+    css`
+      border-radius: var(--s-1);
+    `}
   `;
 };
 

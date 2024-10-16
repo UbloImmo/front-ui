@@ -40,6 +40,13 @@ export type ChipProps = {
    * @type {Nullable<string>}
    */
   deleteButtonTitle?: Nullable<string>;
+  /**
+   * Whether the Chip is disabled
+   * @remarks Setting to `true` will hide the delete button
+   *
+   * @default false
+   */
+  disabled?: boolean;
 };
 
 export type DefaultChipProps = Required<ChipProps>;

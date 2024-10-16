@@ -48,7 +48,7 @@ export const ProgressBarStyle: StyleFunction<
 
     &:after {
       content: "";
-      height: var(--s-1);
+      height: 100%;
       background: ${cssVarUsage($color)};
       border-radius: var(--s-2);
       position: absolute;

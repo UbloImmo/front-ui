@@ -16,7 +16,12 @@ import { Hypertext } from "../Hypertext";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
-import { clamp, useMergedProps, useStatic } from "@utils";
+import {
+  clamp,
+  createDelayedResponse,
+  useMergedProps,
+  useStatic,
+} from "@utils";
 
 import type {
   FormProps,
@@ -871,4 +876,149 @@ export const InfoBanner = () => {
 };
 InfoBanner.parameters = {
   docs: componentSource([infoBannerFormProps]),
+};
+
+const allFieldsSchema = z.object({
+  text: z.string(),
+  select: z.string(),
+  date: z.string(),
+  iconPicker: z.enum(["Square", "Triangle", "Circle"]),
+  comboBox: z.string(),
+  multiSelect: z.array(z.string()),
+  phone: z.string(),
+  password: z.string(),
+  number: z.number(),
+  currency: z.number().int(),
+  email: z.string(),
+  textarea: z.string(),
+  search: z.string(),
+  searchText: z.string(),
+});
+
+type AllFieldsData = z.input<typeof allFieldsSchema>;
+
+const sharedOptions = [
+  {
+    label: "Option 1",
+    value: "option1",
+  },
+  {
+    label: "Option 2",
+    value: "option2",
+  },
+  {
+    label: "Option 3",
+    value: "option3",
+  },
+];
+
+const allFieldsIcons: IconName[] = ["Square", "Triangle", "Circle"];
+
+const allFieldsFormProps: FormProps<AllFieldsData> = {
+  title: "All fields",
+  schema: allFieldsSchema,
+  defaultValues: {
+    text: "Text",
+    select: sharedOptions[0].value,
+    date: "2024-01-01",
+    iconPicker: "Square",
+    comboBox: "option1",
+    multiSelect: sharedOptions.slice(0, 2).map(({ value }) => value),
+    phone: "06 06 06 06 06",
+    password: "Password",
+    number: 100,
+    currency: 100,
+    email: "email@email.com",
+    textarea: "Textarea",
+    search: sharedOptions[0].value,
+    searchText: "Search",
+  },
+  content: [
+    {
+      label: "Text",
+      source: "text",
+      type: "text",
+    },
+    {
+      label: "Select",
+      source: "select",
+      type: "select",
+      options: createDelayedResponse(sharedOptions, 200),
+    },
+    {
+      label: "Date",
+      type: "date",
+      source: "date",
+    },
+    {
+      label: "Icon Picker",
+      type: "icon-picker",
+      source: "iconPicker",
+      icons: allFieldsIcons,
+    },
+    {
+      label: "Combo Box",
+      type: "combobox",
+      source: "comboBox",
+      options: sharedOptions,
+    },
+    {
+      label: "Multi select",
+      type: "multi-select",
+      source: "multiSelect",
+      options: createDelayedResponse(sharedOptions, 100),
+    },
+    {
+      label: "Phone",
+      type: "phone",
+      source: "phone",
+    },
+    {
+      label: "Password",
+      type: "password",
+      source: "password",
+    },
+    {
+      label: "Number",
+      type: "number",
+      source: "number",
+    },
+    {
+      label: "Currency",
+      type: "currency",
+      source: "currency",
+    },
+    {
+      label: "Email",
+      type: "email",
+      source: "email",
+    },
+    {
+      label: "Search",
+      type: "search",
+      source: "search",
+      results: createDelayedResponse(sharedOptions, 1000),
+    },
+    {
+      label: "Search Text",
+      type: "search-text",
+      source: "searchText",
+    },
+    {
+      label: "Textarea",
+      type: "textarea",
+      source: "textarea",
+    },
+  ],
+  onSubmit: (...args) => {
+    fn()(args);
+  },
+  debug: true,
+};
+
+export const AllFields = () => {
+  return <Form {...allFieldsFormProps} />;
+};
+AllFields.parameters = {
+  docs: componentSource([allFieldsFormProps as FormStoryProps]),
 };

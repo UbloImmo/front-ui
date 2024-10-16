@@ -10,23 +10,42 @@ import type {
 
 export const commonInputContainerStyles = ({
   $error,
+  $disabled,
 }: CommonInputStyleProps): RuleSet => css`
   position: relative;
   height: max-content;
   width: 100%;
   max-width: 100%;
-
   --control-color: var(--${$error ? "error-dark" : "gray-600"});
-  &:has(input:focus:not(:disabled)) {
+
+  &:has(input:focus:not(:disabled)),
+  &:has([aria-expanded="true"]),
+  &[aria-expanded="true"] {
     --control-color: var(--${$error ? "error-base" : "primary-base"});
   }
+
   &:has(input:disabled) {
     --control-color: var(--gray-400);
+
+    * {
+      cursor: not-allowed;
+    }
   }
 
-  &:has(input:disabled) * {
-    cursor: not-allowed;
-  }
+  ${$disabled &&
+  css`
+    --control-color: var(--gray-400);
+    * {
+      cursor: not-allowed;
+    }
+  `}
+
+  ${!$disabled &&
+  css`
+    &:hover > *:first-child {
+      box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
+    }
+  `}
 
   &:hover input:not(:disabled) {
     box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
@@ -98,9 +117,22 @@ export const inputGroupedControlStyles = ({
   cursor: ${!onClick ? "default" : props.$disabled ? "not-allowed" : "pointer"};
 `;
 
+const commonInputDisabledStyles = ({
+  $error,
+}: Pick<CommonInputStyleProps, "$error">): RuleSet => css`
+  background: var(--gray-50);
+  color: var(--gray-600);
+  box-shadow: var(--shadow-input-${$error ? "error-default" : "disabled"});
+
+  &::placeholder {
+    color: var(--gray-400);
+  }
+`;
+
 export const commonInputStyles = ({
   $error,
   $table,
+  $disabled,
 }: CommonInputStyleProps): RuleSet => css`
   max-height: var(--s-8);
   height: var(--s-8);
@@ -129,28 +161,32 @@ export const commonInputStyles = ({
     transition-delay: 0s;
   }
 
-  &:focus:not(:disabled) {
-    color: var(--gray-800);
-    box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
-    outline: 1px solid var(--${$error ? "error" : "primary"}-base-25);
-  }
+  // wrap in js prop for non-input markup
+  ${!$disabled &&
+  css`
+    &:focus:not(:disabled),
+    &[aria-expanded="true"]:not(:disabled) {
+      color: var(--gray-800);
+      box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
+      outline: 1px solid var(--${$error ? "error" : "primary"}-base-25);
+    }
 
-  &:hover:not(:disabled) {
-    box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
-  }
+    &:hover:not(:disabled) {
+      box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
+    }
+  `}
 
   &::placeholder {
     color: var(--gray-400);
   }
 
-  &:disabled {
-    background: var(--gray-50);
-    color: var(--gray-600);
-    box-shadow: var(--shadow-input-${$error ? "error-default" : "disabled"});
-  }
+  ${$disabled &&
+  css`
+    ${commonInputDisabledStyles({ $error })}
+  `}
 
-  &:disabled::placeholder {
-    color: var(--gray-300);
+  &:disabled {
+    ${commonInputDisabledStyles({ $error })}
   }
 
   &:hover,

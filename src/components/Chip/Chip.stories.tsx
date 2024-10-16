@@ -129,6 +129,20 @@ Placement.parameters = {
   ),
 };
 
+export const Disabled = (props: Partial<ChipProps>) => {
+  const mergedProps = useMergedProps(Chip.defaultProps, props);
+  return (
+    <ComponentVariants
+      defaults={mergedProps}
+      variants={[false, true]}
+      for="disabled"
+      of={Chip}
+      align="center"
+      propLabels
+    />
+  );
+};
+
 export const WithDelete = (props: Partial<ChipProps>) => {
   const [labels, setLabels] = useState(["Delete me ...", "... or Delete me!"]);
 
