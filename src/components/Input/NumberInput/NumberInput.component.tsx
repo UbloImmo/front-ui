@@ -201,8 +201,6 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
     }}([\\.,][0-9]{0, ${safeScale}})?`;
   }, [safePrecision, safeScale]);
 
-  console.log({ pattern, safePrecision, safeScale });
-
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-number-container">
       <StyledNumberInput

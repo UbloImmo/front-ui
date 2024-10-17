@@ -62,7 +62,6 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
   }, []);
 
   useEffect(() => {
-    // console.log("try setting dialog state", open, reference);
     if (open !== isOpen && isBoolean(open) && isRegistered) {
       set(open);
     }
