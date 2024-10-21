@@ -29,6 +29,7 @@ import { Icon } from "@/components/Icon";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { InputLabel } from "@/components/InputLabel";
 import { Table, TableBody } from "@layouts";
+import { isEmptyString } from "@utils";
 
 import type { TooltipProps } from "@/components/Tooltip";
 import type { Nullable } from "@ubloimmo/front-util";
@@ -38,6 +39,8 @@ export const FormTable = ({
   rows,
   layout,
   headers,
+  colSpans,
+  tableLayout,
   assistiveText,
   errorText,
   error,
@@ -134,6 +137,10 @@ export const FormTable = ({
     [isEditing, errorTooltip, tooltip]
   );
 
+  const hasLabel = useMemo(() => {
+    return label && !isEmptyString(label);
+  }, [label]);
+
   if (layout.hidden) return null;
 
   return (
@@ -151,16 +158,18 @@ export const FormTable = ({
         gap="s-2"
         fill
       >
-        <InputLabel
-          label={label}
-          required={isEditing ? required : false}
-          tooltip={labelTooltip}
-          compact={!isEditing || compact}
-          testId="field-label"
-          overrideTestId
-        />
-        <Table>
-          <FormTableHeader headers={headers} />
+        {hasLabel && (
+          <InputLabel
+            label={label}
+            required={isEditing ? required : false}
+            tooltip={labelTooltip}
+            compact={!isEditing || compact}
+            testId="field-label"
+            overrideTestId
+          />
+        )}
+        <Table layout={tableLayout}>
+          <FormTableHeader headers={headers} colSpans={colSpans} />
           <TableBody>
             {stableRows.length ? (
               <DndContext
@@ -182,6 +191,7 @@ export const FormTable = ({
                           index={initialIndex}
                           dynamicIndex={dynamicIndex}
                           deleteRow={deleteRow}
+                          colSpans={colSpans}
                         />
                       );
                     }

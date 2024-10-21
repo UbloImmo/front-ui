@@ -30,6 +30,7 @@ type FormTableRowProps = BuiltFormTableRow & {
   dynamicIndex: number;
   modifiers: Required<FormTableModifiers>;
   deleteRow: DeleteTableRowFn;
+  colSpans: number[];
 };
 
 export const FormTableRow = ({
@@ -39,6 +40,7 @@ export const FormTableRow = ({
   dynamicIndex,
   id,
   deleteRow,
+  colSpans,
 }: FormTableRowProps) => {
   const { isEditing } = useFormContext();
 
@@ -86,16 +88,18 @@ export const FormTableRow = ({
     >
       {cells.map((cell, cellIndex) => {
         const cellKey = `table-cell-${cellIndex}`;
+        const colSpan = colSpans[cellIndex] ?? 1;
         if (isBuiltCustomFormField(cell)) {
           return (
             <FormTableCustomFieldCell
               {...cell}
               key={cellKey}
               rowIndex={dynamicIndex}
+              colSpan={colSpan}
             />
           );
         }
-        return <FormTableFieldCell {...cell} key={cellKey} />;
+        return <FormTableFieldCell colSpan={colSpan} {...cell} key={cellKey} />;
       })}
       {mods.swappable && (
         <RowDragHandle

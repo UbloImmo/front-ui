@@ -17,8 +17,14 @@ import type { FormEditButtonStyleProps } from "../Form.types";
  * @return {JSX.Element} The rendered form edit button component.
  */
 export const FormEditButton = (): JSX.Element => {
-  const { isEditing, startEditing, readonly, cancelEdition, asModal } =
-    useFormContext();
+  const {
+    isEditing,
+    startEditing,
+    readonly,
+    cancelEdition,
+    asModal,
+    isLoading,
+  } = useFormContext();
   const tl = useUikitTranslation();
 
   const label = useStatic(tl.action.edit);
@@ -29,6 +35,7 @@ export const FormEditButton = (): JSX.Element => {
       <EditButton
         $hidden={isEditing || readonly}
         onClick={startEditing}
+        disabled={isLoading}
         icon="Pen"
         title={label}
         testId="form-edit"

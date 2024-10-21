@@ -11,10 +11,18 @@ import {
   type KeyOf,
   type NullishPrimitives,
   type Optional,
+  type ValueMap,
   type VoidFn,
 } from "@ubloimmo/front-util";
 import { type FC } from "react";
-import { ZodNull, ZodNullable, ZodOptional, ZodUnion, type ZodType } from "zod";
+import {
+  ZodNull,
+  ZodNullable,
+  ZodOptional,
+  ZodUnion,
+  type ZodIssueCode,
+  type ZodType,
+} from "zod";
 
 import type {
   BuiltFieldProps,
@@ -27,6 +35,7 @@ import type {
   FormCustomContentProps,
   FormCustomFieldProps,
   FormDividerProps,
+  FormError,
   FormFieldProps,
   FormSchema,
   FormSource,
@@ -35,6 +44,7 @@ import type {
   StableFormTableId,
 } from "./Form.types";
 import type { InputType } from "@/components/Input";
+import type { TranslationContext } from "@utils";
 
 /**
  * Checks if the given key is a valid array index key.
@@ -449,3 +459,39 @@ export const builtFormTableId = (
   tableSource: string,
   contentIndex: number
 ): StableFormTableId => `${tableSource}-${contentIndex}`;
+
+const zodIssueTranslationMap: ValueMap<
+  Exclude<ZodIssueCode, "custom">,
+  KeyOf<TranslationContext["validation"]>
+> = {
+  invalid_arguments: "invalid",
+  invalid_date: "invalid",
+  invalid_enum_value: "notAllowed",
+  invalid_intersection_types: "notAllowed",
+  invalid_literal: "notAllowed",
+  invalid_return_type: "invalid",
+  invalid_string: "patternMismatch",
+  invalid_type: "typeMismatch",
+  invalid_union: "typeMismatch",
+  invalid_union_discriminator: "typeMismatch",
+  not_finite: "patternMismatch",
+  not_multiple_of: "patternMismatch",
+  too_big: "tooBig",
+  too_small: "tooSmall",
+  unrecognized_keys: "notAllowed",
+};
+
+/**
+ * Translates a FormError into a localized error message.
+ *
+ * @param {FormError} error - The form error to translate.
+ * @param {TranslationContext} tl - The translation context.
+ * @return {string} The localized error message.
+ */
+export const formErrorTranslation = (
+  error: FormError,
+  tl: TranslationContext
+): string => {
+  if (error.code === "custom") return error.message;
+  return tl.validation[zodIssueTranslationMap[error.code]]();
+};

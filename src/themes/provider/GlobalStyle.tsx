@@ -169,6 +169,18 @@ export const cssReset = (): RuleSet => css`
 `;
 
 /**
+ * Generates a CSS rule to make icons overflow their containers.
+ * This is useful for icons that have visual elements extending beyond their bounding box.
+ *
+ * @return {RuleSet} A CSS rule set that sets overflow to visible for SVG icons.
+ */
+export const iconOverflow = (): RuleSet => css`
+  svg[data-testid="icon"] {
+    overflow: visible;
+  }
+`;
+
+/**
  * Generates CSS variables and media queries for unthemed global style aspects (spacings & text sizes).
  *
  * @return {{vars: CssVar<CssRem | `${number}`>[][], mediaQueries: RuleSet[]}} An object containing CSS variables and media queries.
@@ -267,8 +279,9 @@ const appendGlobalStyle = ({
   mediaQueries,
 }: GlobaStyleInnerProps): RuleSet => {
   return css`
-    ${linkFontFace()}
-    ${cssReset()}
+    ${linkFontFace}
+    ${cssReset}
+    ${iconOverflow}
     :root {
       --bezier: cubic-bezier(0.38, 0, 0.21, 0.98);
       ${defaultCssVarsStr}

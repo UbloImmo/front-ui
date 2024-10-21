@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import {
   isNonEmptyString,
@@ -11,6 +11,7 @@ import {
 } from "../../utils";
 import { Text } from "../Text/Text.component";
 import { Tooltip } from "../Tooltip";
+import { inputLabelStyles, inputLabelTextStyles } from "./InputLabel.styles";
 
 import { FlexRowLayout } from "@layouts";
 
@@ -85,27 +86,11 @@ InputLabel.defaultProps = defaultInputLabelProps;
 export { InputLabel };
 
 const InnerInputLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-2);
-
-  & span[data-testid="text input-label-text"] {
-    transition: color 150ms ease-out 0s;
-  }
-
-  &:has(input:focus, textarea:focus, select:focus)
-    span[data-testid="text input-label-text"] {
-    color: var(--gray-800);
-  }
+  ${inputLabelStyles}
 `;
 
-export const InputLabelText = styled(Text)<StyleProps<InputLabelProps>>`
-  ${(props) =>
-    props.$required &&
-    css`
-      &::after {
-        content: " *";
-        color: var(--warning-base);
-      }
-    `}
+export const InputLabelText = styled(Text)<
+  StyleProps<Pick<InputLabelProps, "required">>
+>`
+  ${inputLabelTextStyles}
 `;

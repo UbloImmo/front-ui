@@ -1,5 +1,5 @@
 import type { TooltipProps } from "../Tooltip";
-import type { StyleOverrideProps } from "@types";
+import type { StyleOverrideProps, StyleProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -43,3 +43,7 @@ export type InputLabelProps = {
 } & StyleOverrideProps;
 
 export type DefaultInputLabelProps = Required<InputLabelProps>;
+
+export type InputLabelTextStyleProps = StyleProps<
+  Pick<InputLabelProps, "required">
+>;

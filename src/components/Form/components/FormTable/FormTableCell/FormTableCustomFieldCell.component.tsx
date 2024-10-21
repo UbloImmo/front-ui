@@ -7,6 +7,11 @@ import { TableCell } from "@layouts";
 
 import type { BuiltFormCustomFieldProps } from "../../../Form.types";
 
+type FormTableCustomFieldCellProps = BuiltFormCustomFieldProps & {
+  rowIndex: number;
+  colSpan: number;
+};
+
 /**
  * Renders a custom form field inside a table cell, depending on the form mode.
  *
@@ -27,8 +32,9 @@ import type { BuiltFormCustomFieldProps } from "../../../Form.types";
 export const FormTableCustomFieldCell = ({
   CustomInput,
   rowIndex,
+  colSpan,
   ...props
-}: BuiltFormCustomFieldProps & { rowIndex: number }): JSX.Element => {
+}: FormTableCustomFieldCellProps): JSX.Element => {
   const { isEditing } = useFormContext();
 
   const customFieldProps = useMemo(() => {
@@ -42,7 +48,7 @@ export const FormTableCustomFieldCell = ({
   const inputId = useInputId(props);
 
   return (
-    <TableCell>
+    <TableCell colSpan={colSpan}>
       <CustomInput {...customFieldProps} id={inputId} rowIndex={rowIndex} />
     </TableCell>
   );
