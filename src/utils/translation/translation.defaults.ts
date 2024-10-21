@@ -48,7 +48,8 @@ const validation: CompleteTranslationMap<"validation"> = {
   required: "Required",
   invalid: "Invalid",
   valid: "Valid",
-  patternMismatch: (pattern) => `Pattern (${pattern}) does not match`,
+  patternMismatch: (pattern) =>
+    `Pattern ${pattern ? `(${pattern}) ` : ""}does not match`,
   tooShort: "Value is too short",
   tooLong: "Value is too long",
   tooLow: "Value is too low",

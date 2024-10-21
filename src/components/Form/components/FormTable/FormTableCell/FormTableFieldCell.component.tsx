@@ -11,6 +11,10 @@ import { TableCell } from "@layouts";
 
 import type { BuiltFieldProps } from "@/components/Form/Form.types";
 
+type FormTableFieldCellProps = BuiltFieldProps<InputType> & {
+  colSpan: number;
+};
+
 /**
  * Renders a form field inside a table cell, depending on the form mode.
  *
@@ -25,8 +29,9 @@ import type { BuiltFieldProps } from "@/components/Form/Form.types";
  */
 export const FormTableFieldCell = ({
   layout,
+  colSpan,
   ...props
-}: BuiltFieldProps<InputType>): JSX.Element => {
+}: FormTableFieldCellProps): JSX.Element => {
   const { isEditing } = useFormContext();
   const displayContent = useMemo<ReactNode>(() => {
     const content = computeFieldDisplayContent(props.type, props);
@@ -51,7 +56,7 @@ export const FormTableFieldCell = ({
   const inputId = useInputId(props);
 
   return (
-    <TableCell padded={isDisplay}>
+    <TableCell padded={isDisplay} colSpan={colSpan}>
       {isDisplay ? (
         <FormTableDisplayCellInner>{displayContent}</FormTableDisplayCellInner>
       ) : (

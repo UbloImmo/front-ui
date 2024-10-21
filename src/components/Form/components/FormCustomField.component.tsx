@@ -7,6 +7,7 @@ import { FieldContainer } from "@/components/Field";
 import { useInputId } from "@/components/Input";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { InputLabel } from "@/components/InputLabel";
+import { isEmptyString } from "@utils";
 
 import type { BuiltFormCustomFieldProps } from "../Form.types";
 import type { Nullable } from "@ubloimmo/front-util";
@@ -53,6 +54,11 @@ export const FormCustomField = (
     };
   }, [isEditing, fieldProps, error]);
 
+  const noLabel = useMemo(
+    () => !fieldProps.label || isEmptyString(fieldProps.label),
+    [fieldProps.label]
+  );
+
   const inputId = useInputId(fieldProps);
 
   if (layout.hidden) return null;
@@ -71,14 +77,18 @@ export const FormCustomField = (
         data-field-type="custom"
         gap="s-1"
       >
-        <InputLabel
-          {...customFieldProps}
-          testId="field-label"
-          overrideTestId
-          htmlFor={inputId}
-        >
+        {noLabel ? (
           <CustomInput {...customFieldProps} id={inputId} />
-        </InputLabel>
+        ) : (
+          <InputLabel
+            {...customFieldProps}
+            testId="field-label"
+            overrideTestId
+            htmlFor={inputId}
+          >
+            <CustomInput {...customFieldProps} id={inputId} />
+          </InputLabel>
+        )}
         {shoulDisplayAssistiveText && (
           <InputAssistiveText
             assistiveText={assistiveText}

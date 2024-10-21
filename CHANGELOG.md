@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.3` TableHeaderCell component, `v0.0.2` TableHeader component, `v0.0.3` TableCell component, `v0.0.2` TableBody component, `v0.0.2` TableFooter component, `v0.0.2` TableRow component, `v0.0.2` TableScrollView component
+  - Implement custom testid & className support
+
+- `v0.0.13` Form component
+  - Wait until data is loaded before displaying fields
+  - Add support for empty or null labels in form tables & custom fields
+  - Map schema errors to uikit translations
+  - Table fields
+    - Add support for bespoke colSpan per column using `layout.size` property
+    - Add support for `tableLayout` property, supporting values `auto` (default) and `fixed`
+
+### Fixed
+
+- Global style override
+  - Set every icon's overflow to `visible`
+
 ## 0.33.3 - 2024-10-17
 ### Changed
 - Mute console logs

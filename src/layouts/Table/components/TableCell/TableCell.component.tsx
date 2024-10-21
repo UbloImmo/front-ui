@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 import { tableCellStyles } from "./TableCell.styles";
 
-import { useClassName, useMergedProps, useStyleProps } from "@utils";
+import { useClassName, useMergedProps, useStyleProps, useTestId } from "@utils";
 
 import type { TableCellProps, TableCellStyleProps } from "./TableCell.types";
+import type { TestIdProps } from "@types";
 
 const defaultTableCellProps: TableCellProps = {
   children: null,
@@ -15,20 +16,24 @@ const defaultTableCellProps: TableCellProps = {
 /**
  * A table cell component. Used in `TableRow`.
  *
+ * @version 0.0.2
+ *
  * @param {CellProps} props - The props for the component.
  * @return {JSX.Element} The rendered table cell.
  */
-const TableCell = (props: TableCellProps): JSX.Element => {
+const TableCell = (props: TableCellProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultTableCellProps, props);
 
   const styleProps = useStyleProps(mergedProps);
 
   const className = useClassName(props);
 
+  const testId = useTestId("table-cell", props);
+
   return (
     <StyledTableCell
       colSpan={mergedProps.colSpan}
-      data-testid="table-cell"
+      data-testid={testId}
       className={className}
       {...styleProps}
     >

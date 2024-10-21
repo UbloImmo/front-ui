@@ -34,6 +34,7 @@ import {
 import {
   buildFormText,
   builtFormTableId,
+  formErrorTranslation,
   isBuiltFormTable,
   isFormCustomContent,
   isFormCustomField,
@@ -109,6 +110,8 @@ import type {
   UseFormValidationReturn,
 } from "./Form.types";
 import type { GridEndPosition } from "@layouts";
+
+const FORM_DEBUG_FLAG = "FORM_DEBUG_ENABLED" as const;
 
 /**
  * Custom form hook
@@ -250,9 +253,23 @@ export const useFormModifiers = <TData extends object>(
   /**
    * All form modifiers with their default values if missing
    */
-  return useMergedProps<FormModifers, FormModifierProps>(
+  const mergedMods = useMergedProps<FormModifers, FormModifierProps>(
     defaultFormModifiers,
     props
+  );
+
+  const debug = useMemo(() => {
+    if (mergedMods.debug) return true;
+    if (FORM_DEBUG_FLAG in window && window[FORM_DEBUG_FLAG]) return true;
+    return false;
+  }, [mergedMods]);
+
+  return useMemo(
+    () => ({
+      ...mergedMods,
+      debug,
+    }),
+    [mergedMods, debug]
   );
 };
 
@@ -272,7 +289,7 @@ const defaultFormValidation: FormValidation = {
  */
 const useFormValidation = <TData extends object>(
   formSchema: Nullish<FormSchema<TData>>,
-  data: FormData<TData>,
+  formData: UseFormDataReturn<TData>,
   modifiers: FormModifers
 ): UseFormValidationReturn<TData> => {
   const schema = useMemo(() => formSchema ?? null, [formSchema]);
@@ -285,17 +302,18 @@ const useFormValidation = <TData extends object>(
   const computeFormValidation = useCallback<ComputeFormValidationFn>(() => {
     if (!schema) return defaultFormValidation;
 
-    const validation = schema.safeParse(data);
+    const validation = schema.safeParse(formData.data);
     if (!validation.error?.errors || !validation.error.errors.length)
       return defaultFormValidation;
+    const formErrors = validation.error.errors.map(({ path, ...error }) => ({
+      ...error,
+      path: path.join("."),
+    }));
     return {
-      errors: validation.error.errors.map(({ path, ...error }) => ({
-        ...error,
-        path: path.join("."),
-      })),
+      errors: formData.isLoading ? [] : formErrors,
       isValid: validation.success,
     };
-  }, [schema, data]);
+  }, [schema, formData.data, formData.isLoading]);
 
   /**
    * Form validation object
@@ -315,7 +333,7 @@ const useFormValidation = <TData extends object>(
       triggerFormValidation();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, triggerFormValidation]);
+  }, [formData.data, triggerFormValidation]);
 
   return {
     ...formValidation,
@@ -399,6 +417,8 @@ const useFormContent = <TData extends object>(
   logger: Logger,
   content?: FormContent<TData>[]
 ): BuiltFormContent<InputType>[] => {
+  const tl = useUikitTranslation();
+
   /**
    * @see {@link GetFieldValueFn}
    */
@@ -436,12 +456,14 @@ const useFormContent = <TData extends object>(
       if (validation.isValid || !validation.errors.length) return validProps;
       const error = validation.errors.find((err) => err.path === source);
       if (!error) return validProps;
+
+      const errorTranslation = formErrorTranslation(error, tl);
       return {
         error: baseError ?? true,
-        errorText: baseErrorText ?? error.message,
+        errorText: baseErrorText ?? errorTranslation,
       };
     },
-    [validation]
+    [validation, tl]
   );
 
   /**
@@ -547,8 +569,6 @@ const useFormContent = <TData extends object>(
     ]
   );
 
-  const tl = useUikitTranslation();
-
   /**
    * @see {@link BuildFormTablePropsFn}
    */
@@ -604,6 +624,8 @@ const useFormContent = <TData extends object>(
         })
       );
 
+      const colSpans = t.columns?.map(({ layout }) => layout?.size ?? 1) ?? [];
+
       // generate rows and cell fields from columns and array items
       const rows = arrayValue.map((_, index): BuiltFormTableRow => {
         const rowSource = `${t.source}.${index}`;
@@ -657,6 +679,7 @@ const useFormContent = <TData extends object>(
         stableId: tableId,
         rows,
         headers,
+        colSpans,
         layout: formLayout.buildFormFieldLayout({
           ...(t.layout ?? {}),
           size: formLayout.columns,
@@ -675,6 +698,7 @@ const useFormContent = <TData extends object>(
         footer: t?.footer ?? null,
         columnsCount: t.columns?.length ?? 0,
         EmptyCard: t.EmptyCard ?? null,
+        tableLayout: t.tableLayout ?? "auto",
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1051,7 +1075,7 @@ export const useForm = <TData extends object>(
   const formModifiers = useFormModifiers(props);
   const formValidation = useFormValidation<TData>(
     props.schema,
-    formData.data,
+    formData,
     formModifiers
   );
   const formEditState = useFormEditState(formModifiers, asModal);

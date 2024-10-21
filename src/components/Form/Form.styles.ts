@@ -113,9 +113,25 @@ export const formEditBannerStyles = ({
   `;
 };
 
-export const formFieldListContainerStyles = (): RuleSet => {
+export const formFieldListContainerStyles = ({
+  $isLoading,
+}: {
+  $isLoading: boolean;
+}): RuleSet => {
   return css`
     padding: 0 var(--s-8) var(--s-8);
+    transition: opacity 300ms var(--bezier) 0s;
+    opacity: 1;
+
+    ${$isLoading &&
+    css`
+      opacity: 0;
+
+      &,
+      & * {
+        cursor: wait;
+      }
+    `}
   `;
 };
 

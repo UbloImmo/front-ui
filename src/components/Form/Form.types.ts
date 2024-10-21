@@ -373,8 +373,8 @@ export type FormTableProps<TData extends object> = {
               /**
                * The table's native layout
                *
-               * @default "auto"
                * @type {TableLayout}
+               * @default "auto"
                */
               tableLayout?: TableLayout;
             } & FieldLabelProps &
@@ -444,6 +444,17 @@ export type BuiltFormTableProps = {
   columnsCount: number;
   footer: Nullable<AnyFormTableFooter<Record<string, unknown>>>;
   EmptyCard: Nullable<FC>;
+  /**
+   * A list of column widths, extracted from each column's `layout.size` property
+   */
+  colSpans: number[];
+  /**
+   * The table's native layout
+   *
+   * @type {TableLayout}
+   * @default "auto"
+   */
+  tableLayout: TableLayout;
 } & BuiltFormTableCallbacks &
   InputAssistiveTextProps &
   BuiltFormFieldLayoutProps &

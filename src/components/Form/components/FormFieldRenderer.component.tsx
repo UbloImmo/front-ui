@@ -25,7 +25,7 @@ import type { BuiltFormCustomContentProps } from "../Form.types";
 import type { DividerProps } from "@/components/Divider";
 
 export const FormFieldRenderer = <TData extends object>() => {
-  const { content, columns } = useFormContext<TData>();
+  const { content, columns, isLoading } = useFormContext<TData>();
 
   const renderedContent = useMemo<Nullable<JSX.Element>[]>(() => {
     return content.map((contentItem, index) => {
@@ -74,12 +74,13 @@ export const FormFieldRenderer = <TData extends object>() => {
       gap="s-6"
       testId="form-field-list"
       overrideTestId
+      $isLoading={isLoading}
     >
       {renderedContent}
     </FieldListContainer>
   );
 };
 
-const FieldListContainer = styled(GridLayout)`
+const FieldListContainer = styled(GridLayout)<{ $isLoading: boolean }>`
   ${formFieldListContainerStyles}
 `;

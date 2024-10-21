@@ -518,6 +518,7 @@ const tableFormProps: FormProps<IdentityTable> = {
     {
       kind: "table",
       source: "profiles",
+      // label: null,
       label:
         "Renseignez le(s) propriétaire(s) du lot dans le tableau ci-dessous",
       assistiveText: "assistive text",
@@ -549,6 +550,9 @@ const tableFormProps: FormProps<IdentityTable> = {
           errorText: "Test",
           tooltip: {
             content: "Je suis un tooltip",
+          },
+          layout: {
+            size: 2,
           },
         },
         {
@@ -912,27 +916,30 @@ const sharedOptions = [
   },
 ];
 
+const queryData: FormData<AllFieldsData> = {
+  text: "Text",
+  select: sharedOptions[0].value,
+  date: "2024-01-01",
+  iconPicker: "Square",
+  comboBox: "option1",
+  multiSelect: sharedOptions.slice(0, 2).map(({ value }) => value),
+  phone: "06 06 06 06 06",
+  password: "Password",
+  // number: 100,
+  // currency: 100,
+  email: "email@email.com",
+  textarea: "Textarea",
+  search: sharedOptions[0].value,
+  searchText: "Search",
+};
+
 const allFieldsIcons: IconName[] = ["Square", "Triangle", "Circle"];
 
 const allFieldsFormProps: FormProps<AllFieldsData> = {
   title: "All fields",
   schema: allFieldsSchema,
-  defaultValues: {
-    text: "Text",
-    select: sharedOptions[0].value,
-    date: "2024-01-01",
-    iconPicker: "Square",
-    comboBox: "option1",
-    multiSelect: sharedOptions.slice(0, 2).map(({ value }) => value),
-    phone: "06 06 06 06 06",
-    password: "Password",
-    number: 100,
-    currency: 100,
-    email: "email@email.com",
-    textarea: "Textarea",
-    search: sharedOptions[0].value,
-    searchText: "Search",
-  },
+  // defaultValues: ,
+  query: createDelayedResponse(queryData, 5000),
   content: [
     {
       label: "Text",
@@ -1013,7 +1020,6 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
   onSubmit: (...args) => {
     fn()(args);
   },
-  debug: true,
 };
 
 export const AllFields = () => {
