@@ -53,7 +53,7 @@ const defaultCalendarProps: CalendarDefaultProps = {
 /**
  * A simple, customizable calendar. Based on [react-day-picker](https://github.com/gpbl/react-day-picker)
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {CalendarProps & TestIdProps} props - Calendar component props
  * @returns {JSX.Element}
