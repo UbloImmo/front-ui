@@ -31,5 +31,6 @@ export const scaleNumber = (
   scale: number
 ): Nullable<number> => {
   if (!isNumber(value)) return null;
+  if (!scale) return value;
   return value * Math.pow(10, scale);
 };

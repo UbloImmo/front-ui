@@ -31,6 +31,8 @@ import type {
   MultiSelectInputProps,
   SearchInputProps,
 } from "@/components/Input";
+import type { NumberInputProps } from "../Input/NumberInput/NumberInput.types";
+import { scaleNumber } from "../Input/NumberInput/NumberInput.utils";
 
 const noValue = "—";
 
@@ -216,9 +218,57 @@ const DisplayMultiSelectValue = ({
   );
 };
 
+/**
+ * Formats a number value according to the provided NumberInputProps.
+ *
+ * @param {number} value - The number to be formatted.
+ * @param {NumberInputProps} props - The props object containing formatting options.
+ * @returns {string} The formatted number as a string.
+ */
+const formatNumberValue = (value: number, props: NumberInputProps) => {
+  const safeScale = Math.max(props.scale ?? 0, 0);
+  const inverseScaled = scaleNumber(value, -safeScale);
+  if (!inverseScaled) return noValue;
+  const finalNumber = safeScale
+    ? inverseScaled.toFixed(safeScale)
+    : inverseScaled;
+
+  const numberStr = String(finalNumber);
+  const [intStr, decimalStr] = numberStr.split(/[.,]/g);
+  let i = 0;
+  const intStrWithSpaces = intStr
+    .split("")
+    .reverse()
+    .map((digit, index) => {
+      i++;
+      if (i % 3 === 0 && index !== 0) {
+        return ` ${digit}`;
+      }
+      return digit;
+    })
+    .reverse()
+    .join("");
+
+  if (!decimalStr?.length) return intStrWithSpaces.trim();
+  let flag = false;
+  const trimmedDecimalStr = decimalStr
+    .slice(0, safeScale)
+    .trim()
+    .split("")
+    .reverse()
+    .reduce((acc, char) => {
+      if (char !== "0" || flag) {
+        flag = true;
+        return `${char}${acc}`;
+      }
+      return acc;
+    });
+  return [intStrWithSpaces, trimmedDecimalStr].join(",").trim();
+};
+
 const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   text: String,
-  number: String,
+  number: formatNumberValue,
   email: String,
   currency: formatCurrencyInt,
   password: displayPasswordValue,

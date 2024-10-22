@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.7` NumberInput component
+  - Fix input regex pattern
+  - Fix display in read-mode form
+
 ## 0.33.5 - 2024-10-22
 ### Added
 - `v0.0.2` SearchTextInput component
