@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.33.6 - 2024-10-22
 ### Fixed
-
 - `v0.0.7` NumberInput component
   - Fix input regex pattern
   - Fix display in read-mode form
