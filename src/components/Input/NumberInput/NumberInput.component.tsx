@@ -41,13 +41,13 @@ const defaultNumberInputProps: DefaultNumberInputProps = {
   step: 1,
   name: null,
   scale: 0,
-  precision: 2,
+  precision: 7,
 };
 
 /**
  * Renders a number input component.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
@@ -126,7 +126,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
         inputRef.current.value = valueStr;
       }
       if (mergedProps.onChange)
-        mergedProps.onChange(scaleNumber(value, safeScale));
+        mergedProps.onChange(scaleNumber(clamped, safeScale));
     },
     [inputRef, mergedProps, safeScale]
   );
@@ -196,9 +196,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
   const id = useInputId(mergedProps);
 
   const pattern = useMemo(() => {
-    return `(-\\s?)?[0-9]{{0,${
-      safePrecision - safeScale
-    }}([\\.,][0-9]{0, ${safeScale}})?`;
+    return `(-\\s?)?[0-9]{0,${safePrecision}}([\\.,][0-9]{0,${safeScale}})?`;
   }, [safePrecision, safeScale]);
 
   return (

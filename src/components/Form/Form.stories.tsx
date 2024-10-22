@@ -925,8 +925,8 @@ const queryData: FormData<AllFieldsData> = {
   multiSelect: sharedOptions.slice(0, 2).map(({ value }) => value),
   phone: "06 06 06 06 06",
   password: "Password",
-  // number: 100,
-  // currency: 100,
+  number: 10013,
+  currency: 100,
   email: "email@email.com",
   textarea: "Textarea",
   search: sharedOptions[0].value,
@@ -939,7 +939,7 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
   title: "All fields",
   schema: allFieldsSchema,
   // defaultValues: ,
-  query: createDelayedResponse(queryData, 5000),
+  query: createDelayedResponse(queryData, 100),
   content: [
     {
       label: "Text",
@@ -989,6 +989,8 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       label: "Number",
       type: "number",
       source: "number",
+      // scale: 2,
+      precision: 7,
     },
     {
       label: "Currency",
@@ -1020,6 +1022,7 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
   onSubmit: (...args) => {
     fn()(args);
   },
+  debug: true,
 };
 
 export const AllFields = () => {
