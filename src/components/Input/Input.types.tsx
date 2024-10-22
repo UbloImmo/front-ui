@@ -196,7 +196,7 @@ export type InputOnChangeFn<
 
 /**
  * @extends {CommonInputProps}
- * Genric props used by all Input components.
+ * Generic props used by all Input components.
  * `value` & `onChange` type signatures depend on the input's {@link InputType}
  * @template {InputType} TType - The input's type
  *

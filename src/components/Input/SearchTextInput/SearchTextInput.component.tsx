@@ -17,26 +17,30 @@ import {
 import { Icon } from "@/components/Icon";
 import { useTestId, useMergedProps, useHtmlAttribute } from "@utils";
 
-import type { DefaultInputProps, InputProps } from "../Input.types";
+import type {
+  DefaultSearchTextInputProps,
+  SearchTextInputProps,
+} from "./SearchTextInput.types";
 import type { TestIdProps } from "@types";
 
-const defaultSearchTextInputProps: DefaultInputProps<"search-text"> = {
+const defaultSearchTextInputProps: DefaultSearchTextInputProps = {
   ...defaultCommonInputProps,
   value: null,
   onChange: null,
   name: null,
+  controlIcon: "Search",
 };
 
 /**
  * Renders a text input component with a search icon.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
- * @param {InputProps<"search-text">} props - SearchTextInput component props
+ * @param {SearchTextInputProps} props - SearchTextInput component props
  * @returns {JSX.Element}
  */
 const SearchTextInput = (
-  props: InputProps<"search-text"> & TestIdProps
+  props: SearchTextInputProps & TestIdProps
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultSearchTextInputProps, props);
 
@@ -77,7 +81,7 @@ const SearchTextInput = (
         {...inputStyles}
       />
       <StyledInputControl {...inputStyles}>
-        <Icon name="Search" />
+        <Icon name={mergedProps.controlIcon} />
       </StyledInputControl>
     </StyledInputContainer>
   );

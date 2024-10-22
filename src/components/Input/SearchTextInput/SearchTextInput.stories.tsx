@@ -3,8 +3,10 @@ import { useMemo, useState } from "react";
 import { SearchTextInput } from "./SearchTextInput.component";
 
 import { Divider } from "@/components/Divider";
+import { IconName } from "@/components/Icon";
 import { StateIndicator } from "@/components/StateIndicator";
 import { Text } from "@/components/Text";
+import { ComponentVariants } from "@docs/blocks";
 import { FlexColumnLayout, GridLayout } from "@layouts";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -15,17 +17,25 @@ const meta = {
   title: "Components/Input/SearchTextInput/Stories",
   args: {
     uncontrolled: true,
+    placeholder: "Type to search...",
+  },
+  argTypes: {
+    error: {
+      type: "boolean",
+    },
+    disabled: {
+      type: "boolean",
+    },
+    required: {
+      type: "boolean",
+    },
   },
 } satisfies Meta<typeof SearchTextInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    placeholder: "Type to search...",
-  },
-};
+export const Default: Story = {};
 
 const queries = ["Paris", "London", "New York", "Tokyo"];
 
@@ -63,5 +73,20 @@ export const Query = () => {
         )}
       </GridLayout>
     </FlexColumnLayout>
+  );
+};
+
+const controlIcons: IconName[] = ["Search", "BuildingBlocks"];
+
+export const ControlIcon = () => {
+  return (
+    <ComponentVariants
+      defaults={meta.args}
+      variants={controlIcons}
+      of={SearchTextInput}
+      for="controlIcon"
+      propLabels
+      columns={2}
+    />
   );
 };
