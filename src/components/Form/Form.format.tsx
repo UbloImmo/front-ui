@@ -262,7 +262,7 @@ const formatNumberValue = (value: number, props: NumberInputProps) => {
         return `${char}${acc}`;
       }
       return acc;
-    });
+    }, "");
   return [intStrWithSpaces, trimmedDecimalStr].join(",").trim();
 };
 
