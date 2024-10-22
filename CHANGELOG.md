@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.33.7 - 2024-10-22
 ### Fixed
-
 - Crash when displaying an empty number field in a read-mode form
 
 ## 0.33.6 - 2024-10-22
