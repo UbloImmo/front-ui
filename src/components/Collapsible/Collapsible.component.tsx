@@ -19,6 +19,7 @@ import type { TestIdProps } from "@types";
 
 const defaultCollapsibleProps: CollapsibleDefaultProps = {
   open: false,
+  defaultOpen: false,
   onOpenChange: null,
   disabled: false,
   compact: false,
@@ -29,7 +30,7 @@ const defaultCollapsibleProps: CollapsibleDefaultProps = {
 /**
  * An expandable component that allow users to reveal or hide sub content on click.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {CollapsibleProps & TestIdProps} props - Collapsible component props
  * @returns {JSX.Element}
@@ -38,7 +39,9 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultCollapsibleProps, props);
   const { disabled, subCollapsibles, compact, children, onOpenChange } =
     mergedProps;
-  const [isOpen, setIsOpen] = useState(mergedProps.open);
+  const [isOpen, setIsOpen] = useState(
+    mergedProps.defaultOpen || mergedProps.open
+  );
   const testId = useTestId("collapsible", props);
 
   const iconColor = useMemo(() => {

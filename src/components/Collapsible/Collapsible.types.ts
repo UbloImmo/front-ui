@@ -5,10 +5,21 @@ import type { ReactNode } from "react";
 export type CollapsibleProps = {
   /**
    * The open/close state of the collapsible
+   * @remarks Is reactive
+   *
    * @default false
    * @type {boolean}
    */
   open?: boolean;
+
+  /**
+   * Whether the collapsible should be open by default
+   * @remarks Only matters on initial render, not reactive
+   *
+   * @default false
+   * @type {boolean}
+   */
+  defaultOpen?: boolean;
 
   /**
    * Whether to call a function when the state changes
