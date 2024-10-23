@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.33.9 - 2024-10-23
 ### Added
-
 - `v0.0.3` Collapsible component
   - `defaultOpen` property to set the open state on initial render
 
