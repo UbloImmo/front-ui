@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { Badge } from "../Badge";
 import { Text } from "../Text";
 import { FieldSkeleton } from "./components/FieldSkeleton.component";
+import { scaleNumber } from "../Input/NumberInput/NumberInput.utils";
 
 import { ComboBox } from "@/components/ComboBox";
 import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
@@ -23,6 +24,7 @@ import type {
   FormDisplayValueFormatterFn,
   FormDisplayValueFormatterMap,
 } from "./Form.types";
+import type { NumberInputProps } from "../Input/NumberInput/NumberInput.types";
 import type {
   InputType,
   InputValue,
@@ -31,8 +33,6 @@ import type {
   MultiSelectInputProps,
   SearchInputProps,
 } from "@/components/Input";
-import type { NumberInputProps } from "../Input/NumberInput/NumberInput.types";
-import { scaleNumber } from "../Input/NumberInput/NumberInput.utils";
 
 const noValue = "—";
 
