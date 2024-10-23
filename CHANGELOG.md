@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## Fixed
+### Fixed
 
+- `v0.0.4` Switch component
+  - Fix uncontrolled initial active state
 - `v0.0.2` Calendar component
   - Translate assistive texts to French
 

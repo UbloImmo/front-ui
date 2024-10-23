@@ -33,7 +33,7 @@ const defaultSwitchProps: SwitchDefaultProps = {
 /**
  * A toggable component to use when we want the user to enable or disable an option or a feature
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {SwitchProps & TestIdProps} props - Switch component props
  * @returns {JSX.Element}
@@ -44,13 +44,13 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("switch", props);
 
-  const [isActive, setIsActive] = useState(props.active ?? false);
+  const [isActive, setIsActive] = useState(active);
 
   useEffect(() => {
-    if (isBoolean(props.active) && active !== props.active) {
-      setIsActive(props.active);
-    }
-  }, [active, props.active]);
+    if (isBoolean(active) && active !== isActive) setIsActive(active);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
 
   const propagateOnChange = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
