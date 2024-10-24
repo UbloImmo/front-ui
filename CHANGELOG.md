@@ -7,15 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Fixed
-
-- `v0.0.11` Form component
-  - Do not diplay required indicator on custom field's label & input while form is in read-mode
-
+## 0.33.10 - 2024-10-24
 ### Changed
-
 - `v0.0.5` EntityInfoCard component
   - Add `content` property to render custom content in status rows
+
+### Fixed
+- `v0.0.11` Form component
+  - Do not diplay required indicator on custom field's label & input while form is in read-mode
 
 ## 0.33.9 - 2024-10-23
 ### Added
