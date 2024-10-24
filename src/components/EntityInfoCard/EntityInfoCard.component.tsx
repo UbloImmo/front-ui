@@ -55,7 +55,7 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
@@ -170,7 +170,11 @@ const EntityInfoCard = (
                   <Text size="m" color="gray-800" weight="medium">
                     {statusRow.label}
                   </Text>
-                  <Badge {...statusRow.badge} />
+                  {statusRow.content ? (
+                    statusRow.content
+                  ) : statusRow.badge ? (
+                    <Badge {...statusRow.badge} />
+                  ) : null}
                 </EntityCardStatusRowContainer>
               );
             })}

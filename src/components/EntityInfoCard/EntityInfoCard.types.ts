@@ -16,7 +16,8 @@ export type EntityAction = Omit<ActionProps, "size">;
 
 export type EntityStatusRow = {
   label: string;
-  badge: BadgeProps;
+  badge?: BadgeProps;
+  content?: ReactNode;
 };
 
 export type EntityInfoCardProps = {
