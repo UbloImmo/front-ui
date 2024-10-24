@@ -54,6 +54,14 @@ export const FormCustomField = (
     };
   }, [isEditing, fieldProps, error]);
 
+  const inputLabelProps = useMemo(() => {
+    const required = isEditing ? customFieldProps.required : false;
+    return {
+      ...customFieldProps,
+      required,
+    };
+  }, [isEditing, customFieldProps]);
+
   const noLabel = useMemo(
     () => !fieldProps.label || isEmptyString(fieldProps.label),
     [fieldProps.label]
@@ -81,7 +89,7 @@ export const FormCustomField = (
           <CustomInput {...customFieldProps} id={inputId} />
         ) : (
           <InputLabel
-            {...customFieldProps}
+            {...inputLabelProps}
             testId="field-label"
             overrideTestId
             htmlFor={inputId}
