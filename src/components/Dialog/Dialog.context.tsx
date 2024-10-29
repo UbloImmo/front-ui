@@ -211,7 +211,10 @@ export const useGlobalDialogContext = (
    * See {@link GlobalDialogContext.openDialog}
    */
   const openDialog = useCallback(
-    (reference: DialogReference) => {
+    (reference: DialogReference, forceOpen?: boolean) => {
+      if (forceOpen) {
+        registerDialog(reference, true);
+      }
       executeIfDialogIsRegistered(
         reference,
         () => {
@@ -221,7 +224,7 @@ export const useGlobalDialogContext = (
         "Unable to open dialog"
       );
     },
-    [debug, executeIfDialogIsRegistered]
+    [debug, executeIfDialogIsRegistered, registerDialog]
   );
 
   /**
@@ -340,7 +343,7 @@ export const useDialog = (reference: DialogReference) => {
       portalRoot: context.portalRoot,
       isOpen: context.isDialogOpen(reference),
       isRegistered: context.isDialogRegistered(reference),
-      open: () => context.openDialog(reference),
+      open: (forceOpen = false) => context.openDialog(reference, forceOpen),
       close: () => context.closeDialog(reference),
       toggle: () => context.toggleDialog(reference),
       register: (open?: boolean) => context.registerDialog(reference, open),
