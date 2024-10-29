@@ -480,9 +480,9 @@ const identityTableSchema = z.object({
         lastName: true,
         professionalInfo: true,
         dateOfBirth: true,
+        numberOfChildren: true,
       })
     )
-    .min(2)
     .max(5),
   bankAccounts: z
     .array(
@@ -551,9 +551,6 @@ const tableFormProps: FormProps<IdentityTable> = {
           tooltip: {
             content: "Je suis un tooltip",
           },
-          layout: {
-            size: 2,
-          },
         },
         {
           type: "text",
@@ -589,6 +586,12 @@ const tableFormProps: FormProps<IdentityTable> = {
           source: "dateOfBirth",
           label: "Date of birth",
           placeholder: "Date of birth",
+        },
+        {
+          type: "number",
+          source: "numberOfChildren",
+          label: "Number of children",
+          scale: 2,
         },
       ],
     },
@@ -925,7 +928,7 @@ const queryData: FormData<AllFieldsData> = {
   multiSelect: sharedOptions.slice(0, 2).map(({ value }) => value),
   phone: "06 06 06 06 06",
   password: "Password",
-  number: 10013,
+  number: 1237,
   currency: 100,
   email: "email@email.com",
   textarea: "Textarea",
@@ -989,7 +992,7 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       label: "Number",
       type: "number",
       source: "number",
-      // scale: 2,
+      scale: 2,
       precision: 7,
     },
     {
