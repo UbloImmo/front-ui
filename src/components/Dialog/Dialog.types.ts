@@ -16,6 +16,19 @@ export type DialogReference = Exclude<string, ``>;
 export type InternalDialogStateMap = Map<DialogReference, boolean>;
 
 /**
+ * A function that opens a dialog based on its reference
+ */
+type OpenGlobalDialogFn = (
+  reference: DialogReference,
+  forceOpen?: boolean
+) => void;
+
+/**
+ * A function that opens a dialog
+ */
+type OpenDialogFn = (forceOpen?: boolean) => void;
+
+/**
  * Internal action used to update the dialog state map
  */
 export type InternalDialogStateAction =
@@ -57,10 +70,11 @@ export type GlobalDialogContext = {
    * Opens a dialog if not already open
    *
    * @param {DialogReference} reference - the dialog's reference
+   * @param {Optional<boolean>} [forceOpen = false] - whether to force the dialog to open
    *
-   * @type {VoidFn<[DialogReference]>}
+   * @type {OpenGlobalDialogFn}
    */
-  openDialog: VoidFn<[DialogReference]>;
+  openDialog: OpenGlobalDialogFn;
   /**
    * Closes a dialog if currently open
    *
@@ -126,7 +140,7 @@ export type DialogContext = {
    *
    * @type {VoidFn}
    */
-  open: VoidFn;
+  open: OpenDialogFn;
   /**
    * Closes a specific dialog if currently open
    *
