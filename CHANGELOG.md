@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- `v0.0.8` NumberInput component
+  - Fix precision handling & display (no extra comma when not needed)
+
 ## 0.33.11 - 2024-10-29
 ### Fixed
 - `v0.0.6` Dialog component

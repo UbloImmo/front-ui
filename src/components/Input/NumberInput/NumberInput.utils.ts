@@ -28,9 +28,16 @@ export const transformNumber = (
  */
 export const scaleNumber = (
   value: Nullable<number>,
-  scale: number
+  scale: number,
+  precision: Nullable<number> = 7
 ): Nullable<number> => {
   if (!isNumber(value)) return null;
   if (!scale) return value;
-  return value * Math.pow(10, scale);
+  const safePrecision = Math.max(
+    isNumber(precision) ? precision - scale : 7,
+    7
+  );
+  return parseFloat(
+    parseFloat(String(value * Math.pow(10, scale))).toPrecision(safePrecision)
+  );
 };

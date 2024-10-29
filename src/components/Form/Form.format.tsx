@@ -18,7 +18,7 @@ import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
 import { useSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
 import { breakpointsPx } from "@/sizes";
 import { FlexLayout, FlexRowLayout } from "@layouts";
-import { arrayOf } from "@utils";
+import { arrayOf, isEmptyString } from "@utils";
 
 import type {
   FormDisplayValueFormatterFn,
@@ -227,7 +227,7 @@ const DisplayMultiSelectValue = ({
  */
 const formatNumberValue = (value: number, props: NumberInputProps) => {
   const safeScale = Math.max(props.scale ?? 0, 0);
-  const inverseScaled = scaleNumber(value, -safeScale);
+  const inverseScaled = scaleNumber(value, -safeScale, props.precision);
   if (!inverseScaled) return noValue;
   const finalNumber = safeScale
     ? inverseScaled.toFixed(safeScale)
@@ -263,7 +263,10 @@ const formatNumberValue = (value: number, props: NumberInputProps) => {
       }
       return acc;
     }, "");
-  return [intStrWithSpaces, trimmedDecimalStr].join(",").trim();
+  return [intStrWithSpaces, trimmedDecimalStr]
+    .filter((str) => !isEmptyString(str))
+    .join(",")
+    .trim();
 };
 
 const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
