@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.33.11 - 2024-10-29
 ### Fixed
 - `v0.0.6` Dialog component
   - Add a `forceOpen` property to open a dialog regardless of its current registration. Will register the dialog if not already registered.
