@@ -33,6 +33,8 @@ export const buildActiveIconContainerStyles = ({
   $active,
 }: StyleProps<CheckboxDefaultProps>): RuleSet => {
   return css`
+    max-height: 0;
+
     svg[data-testid="icon"] {
       overflow: visible;
       position: absolute;

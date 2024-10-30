@@ -107,7 +107,7 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
       </SwitchContainer>
 
       {withHelper && (
-        <Text weight="bold" color={textColor}>
+        <Text weight="bold" color={textColor} uppercase>
           {helperText}
         </Text>
       )}
