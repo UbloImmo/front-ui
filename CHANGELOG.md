@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fix bugs where query data was always merged with form data when updated by adding a new `shouldMergeQueryData` modifier, set to `true` by default.
   - Fix visual bug where readonly form table cells would sometimes have height too large
   - Fixed an oversight where custom fields would not display their error tooltip in read-mode
+  - Fix visual bug where a table's footer was not sized correctly when using custom-sized columns
 
 ## 0.33.12 - 2024-10-29
 ### Fixed
