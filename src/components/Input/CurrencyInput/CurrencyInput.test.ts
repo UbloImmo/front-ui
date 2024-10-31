@@ -16,8 +16,8 @@ import {
 
 import { testComponentFactory } from "@/tests";
 
-import type { VoidFn } from "@ubloimmo/front-util";
 import type { CurrencyFloat, CurrencyInt } from "@types";
+import type { VoidFn } from "@ubloimmo/front-util";
 
 const testId = "input-currency";
 
