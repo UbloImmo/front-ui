@@ -30,6 +30,10 @@ export const SwitchContainerStyles = (): RuleSet => {
         background-color: var(--gray-500);
       }
     }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   `;
 };
 

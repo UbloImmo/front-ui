@@ -25,9 +25,14 @@ type TogglableVariants = {
    * Optional callback called when the switch/checkbox is toggled
    *
    * @type {VoidFn<[boolean]>}
-   * @default () => {}
    */
   onChange?: VoidFn<[boolean]>;
+  /**
+   * The variants of the feature switch, can be `switch`, `checkbox`
+   *
+   * @type {Exclude<FeatureSwitchVariant, "select">}
+   */
+  variant: Exclude<FeatureSwitchVariant, "select">;
 };
 
 /**
@@ -36,22 +41,18 @@ type TogglableVariants = {
  * @see {@link SelectInputProps}
  */
 type OptionsVariant<TValue extends NullishPrimitives> =
-  SelectInputProps<TValue>;
+  SelectInputProps<TValue> & {
+    variant: "select";
+  };
 
-export type FeatureSwitchProps = {
-  icon: IconName;
+export type FeatureSwitchProps<TValue extends NullishPrimitives> = {
+  icon?: Nullable<IconName>;
   name: string;
-  description: string;
+  description?: Nullable<string>;
   compact?: boolean;
   disabled?: boolean;
   tooltipText?: Nullable<string>;
-  variant: FeatureSwitchVariant;
-};
-
-type FeatureSwitchVariantType<TValue extends NullishPrimitives> =
-  FeatureSwitchProps["variant"] extends "select"
-    ? OptionsVariant<TValue>
-    : TogglableVariants;
+} & (TogglableVariants | OptionsVariant<TValue>);
 
 export type FeatureSwitchDefaultProps<TValue extends NullishPrimitives> =
-  Required<FeatureSwitchProps> & FeatureSwitchVariantType<TValue>;
+  Required<FeatureSwitchProps<TValue>>;

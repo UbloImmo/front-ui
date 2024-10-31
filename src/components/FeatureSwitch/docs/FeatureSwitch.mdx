@@ -11,6 +11,52 @@ import * as FeatureSwitchStories from "../FeatureSwitch.stories.tsx";
 
 ## Usage
 
-TODO
+`FeatureSwitch` is a component that allows you to toggle a feature on or off, or to select an option from a list corresponding to this feature.
+
+## Variants
+
+`FeatureSwitch` has 3 variants for the underlying input and the selection: `checkbox`, `switch`, `select`.
+
+`FeatureSwitch`'s `variant` property is set to `switch` by default.
+
+Each variant uses a different component and its properties under the hood:
+
+- `checkbox` uses [Checkbox](?path=/docs/components-checkbox-usage--docs)
+- `switch` uses [Switch](?path=/docs/components-switch-usage--docs)
+- `select` uses [SelectInput](?path=/docs/components-input-selectinput-usage--docs)
+
+<Canvas of={FeatureSwitchStories.Variants} />
+
+## Disabled
+
+`FeatureSwitch`'s `disabled` property is set to `false` by default.
+
+<Canvas of={FeatureSwitchStories.Disabled} />
+
+## Additionnal properties, layout and content
+
+### Compact layout
+
+You can change the display of `FeatureSwitch` to a compact layout by setting the optional `compact` property.
+
+<Canvas of={FeatureSwitchStories.Compact} />
+
+### Description
+
+To provide more information about your `FeatureSwitch`, you can use the optional `description` property.
+
+<Canvas of={FeatureSwitchStories.Description} />
+
+### Tooltip
+
+To provide help and tips about the feature to the user, you can use the optional `tooltipText` property.
+
+<Canvas of={FeatureSwitchStories.Tooltip} />
+
+### Icon
+
+To give a visual representation to your `FeatureSwitch`, you can use the optional `icon` property.
+
+<Canvas of={FeatureSwitchStories.Icon} />
 
 </Content>

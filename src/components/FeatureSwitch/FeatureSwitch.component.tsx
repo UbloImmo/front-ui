@@ -1,6 +1,8 @@
 import { useMemo } from "react";
+import styled from "styled-components";
 
 import { Checkbox, type CheckboxStatus } from "../Checkbox";
+import { SelectInput } from "../Input";
 import { StaticIcon } from "../StaticIcon";
 import { Switch } from "../Switch";
 import { Text } from "../Text";
@@ -13,20 +15,21 @@ import {
   type FlexAlignment,
   type FlexDirection,
 } from "@layouts";
-import { useTestId, useMergedProps } from "@utils";
+import { useTestId, useMergedProps, useUikitTranslation } from "@utils";
 
 import type {
   FeatureSwitchProps,
   FeatureSwitchDefaultProps,
+  FeatureSwitchVariant,
 } from "./FeatureSwitch.types";
 import type { ColorKey, TestIdProps } from "@types";
-import type { NullishPrimitives } from "@ubloimmo/front-util";
+import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const defaultFeatureSwitchProps: FeatureSwitchDefaultProps<NullishPrimitives> =
   {
-    icon: "Square",
+    icon: null,
     name: "[Feature]",
-    description: "[Feature description]",
+    description: null,
     compact: false,
     disabled: false,
     tooltipText: null,
@@ -36,19 +39,21 @@ const defaultFeatureSwitchProps: FeatureSwitchDefaultProps<NullishPrimitives> =
   };
 
 /**
- * FeatureSwitch component
  *
- * TODO description
+ * Provides informations about a feature and user can enable or disable it.
  *
  * @version 0.0.1
  *
  * @param {FeatureSwitchProps & TestIdProps} props - FeatureSwitch component props
  * @returns {JSX.Element}
  */
-const FeatureSwitch = (
-  props: FeatureSwitchProps & TestIdProps
+const FeatureSwitch = <TValue extends NullishPrimitives>(
+  props: FeatureSwitchProps<TValue> & TestIdProps
 ): JSX.Element => {
-  const mergedProps = useMergedProps(defaultFeatureSwitchProps, props);
+  const mergedProps = useMergedProps(
+    defaultFeatureSwitchProps,
+    props as unknown as typeof defaultFeatureSwitchProps
+  );
   const {
     icon,
     name,
@@ -59,8 +64,11 @@ const FeatureSwitch = (
     onChange,
     active,
     variant,
+    ...selectProps
   } = mergedProps;
-  const testId = useTestId("feature-switch", props);
+  const testId = useTestId<FeatureSwitchProps<TValue>>("feature-switch", props);
+
+  const tl = useUikitTranslation();
 
   const isCompactLayout = useMemo(() => {
     const compactDirection = compact ? "row" : ("column" as FlexDirection);
@@ -72,45 +80,60 @@ const FeatureSwitch = (
     return disabled ? "gray" : "primary";
   }, [disabled]);
 
+  const FeatureSwitchVariant = useMemo<Nullable<JSX.Element>>(() => {
+    if (variant === ("select" as FeatureSwitchVariant)) {
+      return <SelectInput disabled={disabled} {...selectProps} />;
+    }
+    if (variant === "checkbox") {
+      return (
+        <Checkbox
+          active={active}
+          disabled={disabled}
+          onChange={(status: CheckboxStatus) => onChange?.(Boolean(status))}
+        />
+      );
+    }
+    if (variant === "switch") {
+      return (
+        <SwitchContainer>
+          <Switch
+            withHelper
+            inactiveHelperText={tl.status.inactive()}
+            activeHelperText={tl.status.active()}
+            active={active}
+            disabled={disabled}
+            onChange={onChange}
+          />
+        </SwitchContainer>
+      );
+    }
+    return null;
+  }, [variant, disabled, active, onChange, selectProps, tl]);
+
   return (
     <FlexRowLayout
       data-testid={testId}
       align="center"
       justify="space-between"
-      gap="s-2"
+      gap="s-10"
       fill
     >
       <FlexLayout gap="s-2" justify="start" {...isCompactLayout}>
-        <StaticIcon name={icon} color={disabledStaticIconColor} />
+        {icon && <StaticIcon name={icon} color={disabledStaticIconColor} />}
         <FlexColumnLayout>
           <Text weight="medium" size="m">
             {name}
           </Text>
-          <Text color="gray-600" size="s">
-            {description}
-          </Text>
+          {description && (
+            <Text color="gray-600" size="s">
+              {description}
+            </Text>
+          )}
         </FlexColumnLayout>
       </FlexLayout>
       <FlexRowLayout align="center" gap="s-2">
         {tooltipText && <Tooltip content={tooltipText} />}
-        {variant === "switch" && (
-          <Switch
-            withHelper
-            inactiveHelperText="Désactivé"
-            activeHelperText="Activé"
-            active={active}
-            disabled={disabled}
-            onChange={onChange}
-          />
-        )}
-        {variant === "checkbox" && (
-          <Checkbox
-            active={active}
-            disabled={disabled}
-            onChange={(status: CheckboxStatus) => onChange?.(Boolean(status))}
-          />
-        )}
-        {/* {variant === "select" && <SelectInput disabled={disabled} />} */}
+        {FeatureSwitchVariant}
       </FlexRowLayout>
     </FlexRowLayout>
   );
@@ -118,3 +141,7 @@ const FeatureSwitch = (
 FeatureSwitch.defaultProps = defaultFeatureSwitchProps;
 
 export { FeatureSwitch };
+
+const SwitchContainer = styled.div`
+  min-width: 8.25rem;
+`;
