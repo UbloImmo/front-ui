@@ -120,11 +120,13 @@ const FORM_DEBUG_FLAG = "FORM_DEBUG_ENABLED" as const;
  * @template TData - The type of the form data.
  * @param {FormProps<TData>} props - The props object containing the form data query, default values, and other form properties.
  * @param {Logger} logger - The logger used for logging warnings.
+ * @param {FormModifers} modifiers - The form modifiers.
  * @returns {UseFormDataReturn<TData>} - An object containing the form data, initial data, and methods for mutating and setting form data.
  */
 const useFormData = <TData extends object>(
   props: FormProps<TData>,
-  logger: Logger
+  logger: Logger,
+  modifiers: FormModifers
 ): UseFormDataReturn<TData> => {
   /**
    * Initial form data derived from the query or default values
@@ -187,7 +189,8 @@ const useFormData = <TData extends object>(
    * Effect used for loading initial form data if query is a function
    */
   useEffect(() => {
-    loadFormData(true);
+    loadFormData(modifiers.shouldMergeQueryData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.query, loadFormData]);
 
   /**
@@ -238,6 +241,7 @@ const defaultFormModifiers: FormModifers = {
   validateOnChange: true,
   validateOnSubmit: true,
   debug: false,
+  shouldMergeQueryData: true,
 };
 
 /**
@@ -674,6 +678,8 @@ const useFormContent = <TData extends object>(
         errorProps.errorText = errorProps.errorText ?? tl.validation.invalid();
       }
 
+      const columnsCount = colSpans.reduce((acc, curr) => acc + curr, 0);
+
       return {
         kind: "table",
         stableId: tableId,
@@ -696,7 +702,7 @@ const useFormContent = <TData extends object>(
         appendRow,
         data: arrayValue,
         footer: t?.footer ?? null,
-        columnsCount: t.columns?.length ?? 0,
+        columnsCount,
         EmptyCard: t.EmptyCard ?? null,
         tableLayout: t.tableLayout ?? "auto",
       };
@@ -1071,8 +1077,8 @@ export const useForm = <TData extends object>(
   { columns, asModal, embedded, ...props }: FormDefaultProps<TData>,
   logger: Logger
 ): FormContext<TData> => {
-  const formData = useFormData<TData>(props, logger);
   const formModifiers = useFormModifiers(props);
+  const formData = useFormData<TData>(props, logger, formModifiers);
   const formValidation = useFormValidation<TData>(
     props.schema,
     formData,
