@@ -331,13 +331,19 @@ export const FormFieldDisplayValue = ({ value }: { value: string }) => {
 };
 
 const FieldDisplayValueContainer = styled(FlexLayout)`
-  max-height: var(--s-8);
-  height: var(--s-8);
-  min-height: var(--s-8);
+  --container-height: var(--s-8);
+  --container-height-mobile: calc(var(--container-height) + var(--s-2));
+
+  td:has(&) & {
+    --container-height: var(--s-6);
+  }
+  max-height: var(--container-height);
+  height: var(--container-height);
+  min-height: var(--container-height);
 
   @media screen and (max-width: ${breakpointsPx.XS}) {
-    max-height: var(--s-10);
-    height: var(--s-10);
-    min-height: var(--s-10);
+    max-height: var(--container-height-mobile);
+    height: var(--container-height-mobile);
+    min-height: var(--container-height-mobile);
   }
 `;

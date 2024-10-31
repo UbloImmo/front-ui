@@ -633,7 +633,7 @@ const tableFormProps: FormProps<IdentityTable> = {
         searchable: true,
         controlIcon: "Search",
         unique: ["name"],
-        filterOption: ({ value }) => !value?.name?.includes("HSBC") ?? false,
+        filterOption: ({ value }) => !value?.name?.includes("HSBC"),
         options: [
           {
             label: "Credit agricole",

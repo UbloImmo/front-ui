@@ -39,6 +39,7 @@ const defaultFormProps: FormDefaultProps<object> = {
   validateOnBlur: false,
   validateOnChange: true,
   validateOnSubmit: true,
+  shouldMergeQueryData: true,
   debug: false,
   asModal: null,
   columns: 2,
@@ -53,7 +54,7 @@ const defaultFormProps: FormDefaultProps<object> = {
 /**
  * A flexible yet expressive form renderer.
  *
- * @version 0.0.13
+ * @version 0.0.14
  *
  * @template {object} TData - The type of the form data
  *
