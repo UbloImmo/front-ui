@@ -871,6 +871,13 @@ export type FormModifierProps = {
    * @default false
    */
   debug?: boolean;
+  /**
+   * Whether to merge the query data with the current form data
+   * This impacts how the form's internal data is initially loaded and updated based on changes to the `query` and `defaultValues properties`
+   *
+   * @default true
+   */
+  shouldMergeQueryData?: boolean;
 };
 
 /**
