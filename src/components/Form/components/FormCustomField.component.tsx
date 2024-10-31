@@ -4,12 +4,14 @@ import { FormFieldGridItem } from "./FormFieldGridItem.component";
 import { useFormContext } from "../Form.context";
 
 import { FieldContainer } from "@/components/Field";
+import { Icon } from "@/components/Icon";
 import { useInputId } from "@/components/Input";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
-import { InputLabel } from "@/components/InputLabel";
+import { InputLabel, InputLabelProps } from "@/components/InputLabel";
 import { isEmptyString } from "@utils";
 
 import type { BuiltFormCustomFieldProps } from "../Form.types";
+import type { TooltipProps } from "@/components/Tooltip";
 import type { Nullable } from "@ubloimmo/front-util";
 
 /**
@@ -51,16 +53,29 @@ export const FormCustomField = (
       ...fieldProps,
       disabled,
       error,
+      errorText,
     };
-  }, [isEditing, fieldProps, error]);
+  }, [isEditing, fieldProps, error, errorText]);
 
-  const inputLabelProps = useMemo(() => {
+  const errorTooltip = useMemo<Nullable<TooltipProps>>(() => {
+    if (!error || !errorText || isEditing) return null;
+    return {
+      children: (
+        <Icon name="ExclamationCircleFill" color="error-medium" size="s-4" />
+      ),
+      content: errorText,
+    };
+  }, [error, errorText, isEditing]);
+
+  const inputLabelProps = useMemo<InputLabelProps>(() => {
     const required = isEditing ? customFieldProps.required : false;
+    const tooltip = errorTooltip ?? customFieldProps.tooltip;
     return {
       ...customFieldProps,
       required,
+      tooltip,
     };
-  }, [isEditing, customFieldProps]);
+  }, [isEditing, customFieldProps, errorTooltip]);
 
   const noLabel = useMemo(
     () => !fieldProps.label || isEmptyString(fieldProps.label),
