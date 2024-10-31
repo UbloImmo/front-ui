@@ -63,7 +63,8 @@ export const currencyFloatToInt = (
       `currencyFloat must be a number, received ${currencyFloat}`
     );
 
-  const int = toFixed(currencyFloat * CURRENCY_FACTOR, 0);
+  const int = Math.round(toFixed(currencyFloat * CURRENCY_FACTOR * 10, 0) / 10);
+
   // FIXME: handle big integer values
   if (int > Number.MAX_SAFE_INTEGER || int < Number.MIN_SAFE_INTEGER) {
     console.warn(
@@ -156,7 +157,7 @@ export const currencyStrToInt = (
  * @param {NativeInputValue} nativeCurrencyValue - The native currency value to convert.
  * @return {Nullable<CurrencyInt>} The nullable integer value of the currency, or null if the input is not a valid number.
  */
-export const nativeCurrencyValueToFloat = (
+export const nativeCurrencyValueToInt = (
   nativeCurrencyValue: NativeInputValue
 ): Nullable<CurrencyInt> => {
   if (isNullish(nativeCurrencyValue)) {
@@ -313,7 +314,7 @@ const convertNativeCurrencyValueToCurrencyInt = (
     ? sanitizeCurrencyInputValue(nativeValue)
     : nativeValue;
 
-  const processedValue = nativeCurrencyValueToFloat(sanizitedNativeValue);
+  const processedValue = nativeCurrencyValueToInt(sanizitedNativeValue);
 
   return processedValue;
 };
