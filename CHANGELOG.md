@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- `v0.0.14` Form component
+  - Fix bugs where query data was always merged with form data when updated by adding a new `shouldMergeQueryData` modifier, set to `true` by default.
+  - Fix visual bug where readonly form table cells would sometimes have height too large
+
 ## 0.33.12 - 2024-10-29
 ### Fixed
 - `v0.0.8` NumberInput component
