@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.4` CurrencyInput component
+  - Add support for floating point precision by multiplying by 1000, removing decimals, then dividing by 10 and rounding to the nearest integer
+
 ## 0.33.13 - 2024-10-31
 ### Fixed
 - `v0.0.14` Form component

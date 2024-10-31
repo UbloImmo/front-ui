@@ -11,11 +11,12 @@ import {
   currencyNumberToStr,
   currencyStrToInt,
   formatCurrencyInt,
-  nativeCurrencyValueToFloat,
+  nativeCurrencyValueToInt,
 } from "./CurrencyInput.utils";
 
 import { testComponentFactory } from "@/tests";
 
+import type { CurrencyFloat, CurrencyInt } from "@types";
 import type { VoidFn } from "@ubloimmo/front-util";
 
 const testId = "input-currency";
@@ -73,6 +74,22 @@ describe("Input", () => {
       it("should convert a currency float to an int without rounding", () => {
         expect(currencyFloatToInt(4564.56)).toBe(456456);
         expect(currencyFloatToInt(4564.5689)).toBe(456456);
+      });
+
+      it("should not suffer from precision errors", () => {
+        const testValues: [CurrencyFloat, CurrencyInt][] = [
+          [130.39, 13039],
+          [2.04, 204],
+          [1, 100],
+          [0.1, 10],
+          [0.03, 3],
+          [7.06, 706],
+          [0.45699, 45],
+          [0.9, 90],
+        ];
+        testValues.forEach(([value, expected]) => {
+          expect(currencyFloatToInt(value)).toBe(expected);
+        });
       });
 
       global.console.warn = mock(() => {});
@@ -177,35 +194,35 @@ describe("Input", () => {
 
     describe("nativeCurrencyValueToFloat", () => {
       it("should be a function", () => {
-        expect(nativeCurrencyValueToFloat).toBeFunction();
+        expect(nativeCurrencyValueToInt).toBeFunction();
       });
 
       it("should not throw", () => {
-        expect(nativeCurrencyValueToFloat).not.toThrow();
+        expect(nativeCurrencyValueToInt).not.toThrow();
       });
 
       it("should return null if provided with a nullish value or an empty string", () => {
         // @ts-expect-error needed to make it return null
-        expect(nativeCurrencyValueToFloat(null)).toBe(null);
-        expect(nativeCurrencyValueToFloat(undefined)).toBe(null);
-        expect(nativeCurrencyValueToFloat("")).toBe(null);
+        expect(nativeCurrencyValueToInt(null)).toBe(null);
+        expect(nativeCurrencyValueToInt(undefined)).toBe(null);
+        expect(nativeCurrencyValueToInt("")).toBe(null);
         // @ts-expect-error needed to make it return null
-        expect(nativeCurrencyValueToFloat({})).toBe(null);
+        expect(nativeCurrencyValueToInt({})).toBe(null);
       });
 
       it("should normalize strings, floats and ints to currency floats", () => {
-        expect(nativeCurrencyValueToFloat("0")).toBe(0);
-        expect(nativeCurrencyValueToFloat("12")).toBe(1200);
-        expect(nativeCurrencyValueToFloat("0.0")).toBe(0);
-        expect(nativeCurrencyValueToFloat("0.456")).toBe(45);
-        expect(nativeCurrencyValueToFloat("4564.56")).toBe(456456);
-        expect(nativeCurrencyValueToFloat("4564.5689")).toBe(456456);
-        expect(nativeCurrencyValueToFloat(0)).toBe(0);
-        expect(nativeCurrencyValueToFloat(12)).toBe(1200);
-        expect(nativeCurrencyValueToFloat(0.0)).toBe(0);
-        expect(nativeCurrencyValueToFloat(0.456)).toBe(45);
-        expect(nativeCurrencyValueToFloat(4564.56)).toBe(456456);
-        expect(nativeCurrencyValueToFloat(4564.5689)).toBe(456456);
+        expect(nativeCurrencyValueToInt("0")).toBe(0);
+        expect(nativeCurrencyValueToInt("12")).toBe(1200);
+        expect(nativeCurrencyValueToInt("0.0")).toBe(0);
+        expect(nativeCurrencyValueToInt("0.456")).toBe(45);
+        expect(nativeCurrencyValueToInt("4564.56")).toBe(456456);
+        expect(nativeCurrencyValueToInt("4564.5689")).toBe(456456);
+        expect(nativeCurrencyValueToInt(0)).toBe(0);
+        expect(nativeCurrencyValueToInt(12)).toBe(1200);
+        expect(nativeCurrencyValueToInt(0.0)).toBe(0);
+        expect(nativeCurrencyValueToInt(0.456)).toBe(45);
+        expect(nativeCurrencyValueToInt(4564.56)).toBe(456456);
+        expect(nativeCurrencyValueToInt(4564.5689)).toBe(456456);
       });
     });
 

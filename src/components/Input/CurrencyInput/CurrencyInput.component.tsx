@@ -43,7 +43,7 @@ const defaultCurrencyInputProps: CurrencyInputDefaultProps = {
  *
  * Does some rudimentary monetary like number formatting.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {CurrencyInputProps & TestIdProps} props - CurrencyInput component props
  * @returns {JSX.Element}
