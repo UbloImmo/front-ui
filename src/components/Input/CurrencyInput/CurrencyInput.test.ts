@@ -84,6 +84,8 @@ describe("Input", () => {
           [0.1, 10],
           [0.03, 3],
           [7.06, 706],
+          [0.45699, 45],
+          [0.9, 90],
         ];
         testValues.forEach(([value, expected]) => {
           expect(currencyFloatToInt(value)).toBe(expected);

@@ -62,8 +62,9 @@ export const currencyFloatToInt = (
     throw new Error(
       `currencyFloat must be a number, received ${currencyFloat}`
     );
-
-  const int = Math.round(toFixed(currencyFloat * CURRENCY_FACTOR * 10, 0) / 10);
+  // remove extra decimals
+  const trimmedFloat = toFixed(currencyFloat, CURRENCY_DECIMALS);
+  const int = Math.round(toFixed(trimmedFloat * CURRENCY_FACTOR * 10, 0) / 10);
 
   // FIXME: handle big integer values
   if (int > Number.MAX_SAFE_INTEGER || int < Number.MIN_SAFE_INTEGER) {
