@@ -44,7 +44,7 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("switch", props);
 
-  const [isActive, setIsActive] = useState(active);
+  const [isActive, setIsActive] = useState(active ?? false);
 
   useEffect(() => {
     if (isBoolean(active) && active !== isActive) setIsActive(active);

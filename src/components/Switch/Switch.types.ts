@@ -7,7 +7,7 @@ export type SwitchProps = {
    * The Switch's state, active or inactive
    * @default false
    **/
-  active?: boolean;
+  active?: Nullable<boolean>;
 
   /**
    * Whether the switch is disabled (cannot be toggled then)

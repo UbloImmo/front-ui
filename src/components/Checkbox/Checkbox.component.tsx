@@ -10,12 +10,16 @@ import { Icon } from "../Icon";
 import { StyleProps, type TestIdProps } from "@types";
 import { useTestId, useMergedProps, useStyleProps } from "@utils";
 
-import type { CheckboxProps, CheckboxDefaultProps } from "./Checkbox.types";
+import type {
+  CheckboxProps,
+  CheckboxDefaultProps,
+  CheckboxStatus,
+} from "./Checkbox.types";
 
 const defaultCheckboxProps: CheckboxDefaultProps = {
   active: false,
   disabled: false,
-  onChange: () => {},
+  onChange: null,
 };
 
 /**
@@ -32,11 +36,13 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("checkbox", props);
 
-  const [isActive, setIsActive] = useState(mergedProps.active);
+  const [isActive, setIsActive] = useState<CheckboxStatus>(
+    mergedProps.active ?? false
+  );
 
   useEffect(() => {
     if (mergedProps.active !== isActive) {
-      setIsActive(mergedProps.active);
+      setIsActive(mergedProps.active ?? false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedProps.active]);
