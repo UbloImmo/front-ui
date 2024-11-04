@@ -21,7 +21,7 @@ const defaultCheckboxProps: CheckboxDefaultProps = {
 /**
  * A simple checkbox that let users select multiple options from a set of items, or mark one individual item as selected
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {CheckboxProps & TestIdProps} props - Checkbox component props
  * @returns {JSX.Element}
@@ -71,12 +71,10 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
       aria-checked={isActive}
       aria-disabled={disabled}
     >
-      {isActive && (
-        <ActiveIconContainer {...styleProps} $active={isActive}>
-          <Icon name="CheckSquareFill" color={iconColor} />
-          <Icon name="DashSquareFill" color={iconColor} />
-        </ActiveIconContainer>
-      )}
+      <ActiveIconContainer {...styleProps} $active={isActive}>
+        <Icon name="CheckSquareFill" color={iconColor} />
+        <Icon name="DashSquareFill" color={iconColor} />
+      </ActiveIconContainer>
 
       <input
         type="checkbox"
@@ -85,6 +83,7 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
         aria-disabled={disabled}
         checked={!!isActive}
         disabled={disabled}
+        onChange={() => {}}
       />
       <Icon name="Square" color={iconColor} />
     </CheckboxContainer>
