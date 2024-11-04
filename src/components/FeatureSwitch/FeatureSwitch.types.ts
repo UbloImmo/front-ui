@@ -8,7 +8,7 @@ import type { Enum, Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 const featureSwitchVariants = ["checkbox", "switch", "select"] as const;
 export type FeatureSwitchVariant = Enum<typeof featureSwitchVariants>;
 
-type FeatureSwitchCommonProps = {
+export type FeatureSwitchCommonProps = {
   /**
    * The icon to display in the FeatureSwitch
    *
@@ -22,7 +22,7 @@ type FeatureSwitchCommonProps = {
    *
    * @type {string}
    */
-  name: string;
+  label: string;
 
   /**
    * The description to be displayed in the FeatureSwitch

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 
 import { Checkbox } from "../Checkbox";
@@ -32,7 +32,7 @@ import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const defaultFeatureSwitchProps: FeatureSwitchDefaultProps = {
   icon: null,
-  name: "[Feature]",
+  label: "[Feature]",
   description: null,
   compact: false,
   disabled: false,
@@ -53,7 +53,7 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
   props: FeatureSwitchProps<TValue> & TestIdProps
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultFeatureSwitchProps, props);
-  const { icon, name, description, tooltip, compact, disabled, variant } =
+  const { icon, label, description, tooltip, compact, disabled, variant } =
     mergedProps;
   const testId = useTestId<TestIdProps>("feature-switch", props);
 
@@ -73,7 +73,7 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
     return { ...props, variant } as AnyFeatureSwitchVariant<TValue>;
   }, [props, variant]);
 
-  const FeatureSwitchVariant = useCallback((): Nullable<JSX.Element> => {
+  const FeatureSwitchVariant = useMemo<Nullable<JSX.Element>>(() => {
     if (isFeatureSwitchOptionVariant(propsWithVariant)) {
       return <SelectInput {...propsWithVariant} />;
     }
@@ -107,7 +107,7 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
         {icon && <StaticIcon name={icon} color={disabledStaticIconColor} />}
         <FlexColumnLayout>
           <Text weight="medium" size="m">
-            {name}
+            {label}
           </Text>
           {description && (
             <Text color="gray-600" size="s">
@@ -118,7 +118,7 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
       </FlexLayout>
       <FlexRowLayout align="center" gap="s-2">
         {tooltip && <Tooltip {...tooltip} />}
-        <FeatureSwitchVariant />
+        {FeatureSwitchVariant}
       </FlexRowLayout>
     </FlexRowLayout>
   );

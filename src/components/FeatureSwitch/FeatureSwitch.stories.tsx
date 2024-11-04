@@ -25,9 +25,7 @@ const meta = {
   title: "Components/FeatureSwitch/Stories",
   args: {
     ...FeatureSwitch.defaultProps,
-    icon: "Square",
-    onChange: fn(),
-    variant: "switch",
+    // onChange: fn(),
   },
   parameters: {
     docs: componentSource(),
@@ -54,7 +52,7 @@ const meta = {
         type: "text",
       },
     },
-    name: {
+    label: {
       control: {
         type: "text",
       },
