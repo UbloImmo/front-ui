@@ -39,6 +39,7 @@ import {
   isFormCustomContent,
   isFormCustomField,
   isFormDivider,
+  isFormFeatureSwitch,
   isFormField,
   isFormTable,
   isFormText,
@@ -60,11 +61,13 @@ import type {
   AppendTableRowFn,
   BuildCustomFieldPropsFn,
   BuildFieldPropsFn,
+  BuildFormFeatureSwitchFn,
   BuildFormFieldLayoutFn,
   BuildFormTablePropsFn,
   BuiltFieldProps,
   BuiltFormContent,
   BuiltFormCustomFieldProps,
+  BuiltFormFeatureSwitchProps,
   BuiltFormFieldLayoutProps,
   BuiltFormTableProps,
   BuiltFormTableRow,
@@ -77,6 +80,7 @@ import type {
   FormCustomFieldProps,
   FormData,
   FormDefaultProps,
+  FormFeatureSwitchProps,
   FormFieldLayout,
   FormFieldLayoutHiddenFn,
   FormFieldProps,
@@ -721,6 +725,66 @@ const useFormContent = <TData extends object>(
     ]
   );
 
+  const buildFormFeatureSwitch = useCallback<BuildFormFeatureSwitchFn<TData>>(
+    (featureSwitch) => {
+      const f = featureSwitch as FormFeatureSwitchProps<{ data: string }>;
+      const {
+        kind,
+        source,
+        variant,
+        onChange: baseOnChange,
+        disabled: baseDisabled,
+        required: baseRequired,
+        error,
+        ...rest
+      } = f;
+
+      const disabled = baseDisabled || modifiers.disabled;
+      const required = isFieldRequired(
+        source as FormSource<TData>,
+        baseRequired
+      );
+      const layout = formLayout.buildFormFieldLayout({
+        ...(f.layout ?? {}),
+        size: formLayout.columns,
+      });
+
+      const value = getFieldValue(source as DeepKeyOf<FormData<TData>>);
+      const onChange = propagateChange(
+        source as FormSource<TData>,
+        baseOnChange as Nullable<InputOnChangeFn<InputType>>
+      );
+      const baseProps = {
+        ...rest,
+        variant,
+        kind,
+        onChange: onChange,
+        disabled,
+        required,
+        ...getFieldErrorProps(source as FormSource<TData>, error),
+        layout,
+      };
+      if (variant === "select") {
+        return {
+          ...baseProps,
+          value,
+        } as BuiltFormFeatureSwitchProps;
+      }
+      return {
+        ...baseProps,
+        active: value,
+      } as BuiltFormFeatureSwitchProps;
+    },
+    [
+      formLayout,
+      getFieldErrorProps,
+      getFieldValue,
+      isFieldRequired,
+      modifiers.disabled,
+      propagateChange,
+    ]
+  );
+
   /**
    * The built content props ({@link BuiltFormContent})
    *
@@ -729,6 +793,7 @@ const useFormContent = <TData extends object>(
    * - {@link buildCustomFieldProps}
    * - {@link buildFormTable}
    * - {@link buildFieldProps}
+   * - {@link buildFormFeatureSwitch}
    */
   return useMemo<BuiltFormContent<InputType>[]>(() => {
     if (!content || !content.length) return [];
@@ -738,9 +803,16 @@ const useFormContent = <TData extends object>(
       if (isFormText(content)) return buildFormText(content);
       if (isFormCustomField(content)) return buildCustomFieldProps(content);
       if (isFormTable(content)) return buildFormTable(content, contentIndex);
+      if (isFormFeatureSwitch(content)) return buildFormFeatureSwitch(content);
       return buildFieldProps(content);
     });
-  }, [buildCustomFieldProps, buildFieldProps, buildFormTable, content]);
+  }, [
+    buildCustomFieldProps,
+    buildFieldProps,
+    buildFormTable,
+    buildFormFeatureSwitch,
+    content,
+  ]);
 };
 
 /**
