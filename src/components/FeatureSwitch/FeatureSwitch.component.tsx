@@ -1,12 +1,22 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
-import { Checkbox, type CheckboxStatus } from "../Checkbox";
+import { Checkbox } from "../Checkbox";
 import { SelectInput } from "../Input";
 import { StaticIcon } from "../StaticIcon";
 import { Switch } from "../Switch";
 import { Text } from "../Text";
 import { Tooltip } from "../Tooltip";
+import {
+  type FeatureSwitchProps,
+  type FeatureSwitchDefaultProps,
+  AnyFeatureSwitchVariant,
+} from "./FeatureSwitch.types";
+import {
+  isFeatureSwitchCheckboxVariant,
+  isFeatureSwitchOptionVariant,
+  isFeatureSwitchSwitchVariant,
+} from "./FeatureSwitch.utils";
 
 import {
   FlexColumnLayout,
@@ -17,30 +27,22 @@ import {
 } from "@layouts";
 import { useTestId, useMergedProps, useUikitTranslation } from "@utils";
 
-import type {
-  FeatureSwitchProps,
-  FeatureSwitchDefaultProps,
-  FeatureSwitchVariant,
-} from "./FeatureSwitch.types";
 import type { ColorKey, TestIdProps } from "@types";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
-const defaultFeatureSwitchProps: FeatureSwitchDefaultProps<NullishPrimitives> =
-  {
-    icon: null,
-    name: "[Feature]",
-    description: null,
-    compact: false,
-    disabled: false,
-    tooltipText: null,
-    variant: "switch",
-    active: false,
-    onChange: () => {},
-  };
+const defaultFeatureSwitchProps: FeatureSwitchDefaultProps = {
+  icon: null,
+  name: "[Feature]",
+  description: null,
+  compact: false,
+  disabled: false,
+  tooltip: null,
+  variant: "switch",
+};
 
 /**
  *
- * Provides informations about a feature and user can enable or disable it.
+ * Provides informations about a feature that the user can activate, deactivate or select an option from a list.
  *
  * @version 0.0.1
  *
@@ -50,23 +52,10 @@ const defaultFeatureSwitchProps: FeatureSwitchDefaultProps<NullishPrimitives> =
 const FeatureSwitch = <TValue extends NullishPrimitives>(
   props: FeatureSwitchProps<TValue> & TestIdProps
 ): JSX.Element => {
-  const mergedProps = useMergedProps(
-    defaultFeatureSwitchProps,
-    props as unknown as typeof defaultFeatureSwitchProps
-  );
-  const {
-    icon,
-    name,
-    description,
-    tooltipText,
-    compact,
-    disabled,
-    onChange,
-    active,
-    variant,
-    ...selectProps
-  } = mergedProps;
-  const testId = useTestId<FeatureSwitchProps<TValue>>("feature-switch", props);
+  const mergedProps = useMergedProps(defaultFeatureSwitchProps, props);
+  const { icon, name, description, tooltip, compact, disabled, variant } =
+    mergedProps;
+  const testId = useTestId<TestIdProps>("feature-switch", props);
 
   const tl = useUikitTranslation();
 
@@ -80,35 +69,31 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
     return disabled ? "gray" : "primary";
   }, [disabled]);
 
-  const FeatureSwitchVariant = useMemo<Nullable<JSX.Element>>(() => {
-    if (variant === ("select" as FeatureSwitchVariant)) {
-      return <SelectInput disabled={disabled} {...selectProps} />;
+  const propsWithVariant = useMemo<AnyFeatureSwitchVariant<TValue>>(() => {
+    return { ...props, variant } as AnyFeatureSwitchVariant<TValue>;
+  }, [props, variant]);
+
+  const FeatureSwitchVariant = useCallback((): Nullable<JSX.Element> => {
+    if (isFeatureSwitchOptionVariant(propsWithVariant)) {
+      return <SelectInput {...propsWithVariant} />;
     }
-    if (variant === "checkbox") {
-      return (
-        <Checkbox
-          active={active}
-          disabled={disabled}
-          onChange={(status: CheckboxStatus) => onChange?.(Boolean(status))}
-        />
-      );
+    if (isFeatureSwitchCheckboxVariant(propsWithVariant)) {
+      return <Checkbox {...propsWithVariant} />;
     }
-    if (variant === "switch") {
+    if (isFeatureSwitchSwitchVariant(propsWithVariant)) {
       return (
         <SwitchContainer>
           <Switch
             withHelper
-            inactiveHelperText={tl.status.inactive()}
-            activeHelperText={tl.status.active()}
-            active={active}
-            disabled={disabled}
-            onChange={onChange}
+            inactiveHelperText={tl.status.deactivated()}
+            activeHelperText={tl.status.activated()}
+            {...propsWithVariant}
           />
         </SwitchContainer>
       );
     }
     return null;
-  }, [variant, disabled, active, onChange, selectProps, tl]);
+  }, [propsWithVariant, tl]);
 
   return (
     <FlexRowLayout
@@ -132,8 +117,8 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
         </FlexColumnLayout>
       </FlexLayout>
       <FlexRowLayout align="center" gap="s-2">
-        {tooltipText && <Tooltip content={tooltipText} />}
-        {FeatureSwitchVariant}
+        {tooltip && <Tooltip {...tooltip} />}
+        <FeatureSwitchVariant />
       </FlexRowLayout>
     </FlexRowLayout>
   );

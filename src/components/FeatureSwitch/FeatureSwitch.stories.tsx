@@ -2,13 +2,17 @@ import { fn } from "@storybook/test";
 
 import { FeatureSwitch } from "./FeatureSwitch.component";
 import { type FeatureSwitchProps } from "./FeatureSwitch.types";
+import { StaticIcon } from "../StaticIcon";
+import { Text } from "../Text";
 
 import { ComponentVariants, type DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
+import { FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
+import type { TooltipProps } from "../Tooltip";
 import type { Meta, StoryObj } from "@storybook/react";
-import type { NullishPrimitives } from "@ubloimmo/front-util";
+import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   FeatureSwitchProps<NullishPrimitives>
@@ -23,6 +27,7 @@ const meta = {
     ...FeatureSwitch.defaultProps,
     icon: "Square",
     onChange: fn(),
+    variant: "switch",
   },
   parameters: {
     docs: componentSource(),
@@ -42,11 +47,6 @@ const meta = {
     compact: {
       control: {
         type: "boolean",
-      },
-    },
-    tooltipText: {
-      control: {
-        type: "text",
       },
     },
     icon: {
@@ -82,6 +82,8 @@ const variants: DetailConfigVariants<FeatureSwitchProps<NullishPrimitives>> = [
     variant: "switch",
     onChange: fn(),
     __propVariantLabel: "Switch",
+    inactiveHelperText: "Désactivé",
+    activeHelperText: "Activé",
   },
   {
     variant: "select",
@@ -158,6 +160,22 @@ export const Description = () => {
   );
 };
 
+const tooltipVariants: Nullable<TooltipProps>[] = [
+  null,
+  {
+    content: (
+      <FlexRowLayout gap="s-2" align="center" fill key="content">
+        <StaticIcon name="Square" size="xs" stroke />
+        <Text color="gray-50">
+          Press Down, Y, X, Right shift, Right, Left shift, Left, B to turn on
+          Invulnerability.
+        </Text>
+      </FlexRowLayout>
+    ),
+    children: null,
+  },
+];
+
 export const Tooltip = () => {
   const props = useMergedProps(meta.args, {
     name: "Cheat Code",
@@ -166,13 +184,10 @@ export const Tooltip = () => {
   return (
     <ComponentVariants
       of={FeatureSwitch}
-      for="tooltipText"
+      for="tooltip"
       defaults={props}
       columns={1}
-      variants={[
-        null,
-        "Press Down, Y, X, Right shift, Right, Left shift, Left, B to turn on Invulnerability.",
-      ]}
+      variants={tooltipVariants}
       propLabels
     />
   );

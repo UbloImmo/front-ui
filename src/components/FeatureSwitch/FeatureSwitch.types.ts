@@ -1,58 +1,114 @@
+import type { CheckboxProps } from "../Checkbox";
 import type { IconName } from "../Icon";
 import type { SelectInputProps } from "../Input";
-import type {
-  Enum,
-  Nullable,
-  NullishPrimitives,
-  VoidFn,
-} from "@ubloimmo/front-util";
+import type { SwitchProps } from "../Switch";
+import type { TooltipProps } from "../Tooltip";
+import type { Enum, Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const featureSwitchVariants = ["checkbox", "switch", "select"] as const;
 export type FeatureSwitchVariant = Enum<typeof featureSwitchVariants>;
 
-/**
- * Props related to the togglable variants, like `switch` and `checkbox`
- */
-type TogglableVariants = {
+type FeatureSwitchCommonProps = {
   /**
-   * Whether the switch/checkbox is active or not
+   * The icon to display in the FeatureSwitch
+   *
+   * @type {Nullable<IconName>}
+   * @default {"Square"}
+   */
+  icon?: Nullable<IconName>;
+
+  /**
+   * The name to be displayed in the FeatureSwitch
+   *
+   * @type {string}
+   */
+  name: string;
+
+  /**
+   * The description to be displayed in the FeatureSwitch
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
+  description?: Nullable<string>;
+
+  /**
+   * Whether the FeatureSwitch's layout is compact
    *
    * @type {boolean}
    * @default false
    */
-  active?: boolean;
+  compact?: boolean;
+
   /**
-   * Optional callback called when the switch/checkbox is toggled
+   * Whether the FeatureSwitch is disabled
    *
-   * @type {VoidFn<[boolean]>}
+   * @type {boolean}
+   * @default false
    */
-  onChange?: VoidFn<[boolean]>;
+  disabled?: boolean;
+
   /**
-   * The variants of the feature switch, can be `switch`, `checkbox`
+   * The optional tooltip of FeatureSwitch
    *
-   * @type {Exclude<FeatureSwitchVariant, "select">}
+   * @type {Nullable<TooltipProps>}
+   * @default null
    */
-  variant: Exclude<FeatureSwitchVariant, "select">;
+  tooltip?: Nullable<TooltipProps>;
 };
 
 /**
- * Properties related to the `select` variant
+ * Properties related to the `checkbox` variant of FeatureSwitch
+ *
+ * @see {@link CheckboxProps}
+ */
+export type FeatureSwitchCheckboxVariant = FeatureSwitchCommonProps &
+  CheckboxProps & {
+    variant: "checkbox";
+  };
+
+/**
+ * Properties related to the `switch` variant of FeatureSwitch
+ *
+ * @see {@link SwitchProps}
+ */
+export type FeatureSwitchSwitchVariant = FeatureSwitchCommonProps &
+  SwitchProps & {
+    variant: "switch";
+  };
+
+/**
+ * Properties related to the `select` variant of FeatureSwitch
  *
  * @see {@link SelectInputProps}
  */
-type OptionsVariant<TValue extends NullishPrimitives> =
-  SelectInputProps<TValue> & {
-    variant: "select";
+export type FeatureSwitchOptionsVariant<TValue extends NullishPrimitives> =
+  FeatureSwitchCommonProps &
+    SelectInputProps<TValue> & {
+      variant: "select";
+    };
+
+export type FeatureSwitchProps<TValue extends NullishPrimitives> =
+  | FeatureSwitchCheckboxVariant
+  | FeatureSwitchSwitchVariant
+  | FeatureSwitchOptionsVariant<TValue>;
+
+/**
+ * A more generic FeatureSwitch type that combines the common properties of all feature switch variants with a variant type
+ *
+ * @template TValue - The type of value that can be selected
+ * @see {@link FeatureSwitchProps}
+ */
+export type AnyFeatureSwitchVariant<TValue extends NullishPrimitives> =
+  FeatureSwitchProps<TValue> & {
+    variant: FeatureSwitchVariant;
   };
 
-export type FeatureSwitchProps<TValue extends NullishPrimitives> = {
-  icon?: Nullable<IconName>;
-  name: string;
-  description?: Nullable<string>;
-  compact?: boolean;
-  disabled?: boolean;
-  tooltipText?: Nullable<string>;
-} & (TogglableVariants | OptionsVariant<TValue>);
-
-export type FeatureSwitchDefaultProps<TValue extends NullishPrimitives> =
-  Required<FeatureSwitchProps<TValue>>;
+export type FeatureSwitchDefaultProps = Required<FeatureSwitchCommonProps> & {
+  /**
+   * The variants of the feature switch
+   *
+   * @type {FeatureSwitchVariant}
+   */
+  variant: FeatureSwitchVariant;
+};
