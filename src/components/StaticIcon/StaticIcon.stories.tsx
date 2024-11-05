@@ -1,13 +1,20 @@
-import { useMemo } from "react";
-
 import { StaticIcon } from "./StaticIcon.component";
 import { FlexRowLayout } from "../../layouts";
 
 import { ComponentVariants } from "@docs/blocks";
+import { componentSourceFactory } from "@docs/docs.utils";
+import { useMergedProps } from "@utils";
 
-import type { StaticIconProps, StaticIconSize } from "./StaticIcon.types";
+import type {
+  StaticIconIndicator,
+  StaticIconProps,
+  StaticIconSize,
+} from "./StaticIcon.types";
+import type { IconName } from "../Icon";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ColorKeyOrWhite } from "@types";
+
+const componentSource = componentSourceFactory("StaticIcon", undefined);
 
 const meta: Meta<typeof StaticIcon> = {
   title: "Components/StaticIcon/Stories",
@@ -19,6 +26,11 @@ const meta: Meta<typeof StaticIcon> = {
       </FlexRowLayout>
     ),
   ],
+  argTypes: {
+    size: {
+      options: ["xs", "s", "m", "l"],
+    },
+  },
 } satisfies Meta<typeof StaticIcon>;
 
 export default meta;
@@ -38,12 +50,7 @@ const colors: ColorKeyOrWhite[] = [
   "white",
 ];
 export const Colors = (props: Partial<StaticIconProps>) => {
-  const defaultProps = useMemo(() => {
-    return {
-      ...StaticIcon.defaultProps,
-      ...props,
-    };
-  }, [props]);
+  const defaultProps = useMergedProps(StaticIcon.defaultProps, props);
 
   return (
     <ComponentVariants
@@ -59,15 +66,13 @@ Colors.args = {
   name: "Square",
   size: "s",
 };
+Colors.parameters = {
+  docs: componentSource(colors.map((color) => ({ color }))),
+};
 
+const sizes: StaticIconSize[] = ["xs", "s", "m", "l"];
 export const Sizes = (props: Partial<StaticIconProps>) => {
-  const sizes: StaticIconSize[] = ["xs", "s", "m", "l"];
-  const defaultProps = useMemo(() => {
-    return {
-      ...StaticIcon.defaultProps,
-      ...props,
-    };
-  }, [props]);
+  const defaultProps = useMergedProps(StaticIcon.defaultProps, props);
 
   return (
     <ComponentVariants
@@ -83,14 +88,30 @@ Sizes.args = {
   name: "Square",
   size: "s",
 };
+Sizes.parameters = {
+  docs: componentSource(sizes.map((size) => ({ size }))),
+};
+
+const icons: IconName[] = ["Abacus", "BusinessUnit", "Building", "Alphabet"];
+export const Icons = (props: Partial<StaticIconProps>) => {
+  const defaultProps = useMergedProps(StaticIcon.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={icons}
+      for="name"
+      of={StaticIcon}
+      propLabels
+    />
+  );
+};
+Icons.parameters = {
+  docs: componentSource(icons.map((icon) => ({ name: icon }))),
+};
 
 export const Stroke = (props: Partial<StaticIconProps>) => {
-  const defaultProps = useMemo(() => {
-    return {
-      ...StaticIcon.defaultProps,
-      ...props,
-    };
-  }, [props]);
+  const defaultProps = useMergedProps(StaticIcon.defaultProps, props);
 
   return (
     <ComponentVariants
@@ -106,4 +127,37 @@ export const Stroke = (props: Partial<StaticIconProps>) => {
 Stroke.args = {
   name: "Square",
   size: "s",
+};
+Stroke.parameters = {
+  docs: componentSource([{ stroke: false }, { stroke: true }]),
+};
+
+const indicators: StaticIconIndicator[] = [
+  {
+    name: "Circle2NdHalf",
+    color: "pending-base",
+  },
+  {
+    name: "HexagonArrowDown",
+    tooltip: {
+      content: "Tooltip content",
+    },
+  },
+];
+export const Indicators = (props: Partial<StaticIconProps>) => {
+  const defaults = useMergedProps(StaticIcon.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      defaults={defaults}
+      variants={indicators}
+      for="indicator"
+      of={StaticIcon}
+      align="center"
+      propLabels
+    />
+  );
+};
+Indicators.parameters = {
+  docs: componentSource(indicators.map((indicator) => ({ indicator }))),
 };
