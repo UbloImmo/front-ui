@@ -1,5 +1,6 @@
-import { css } from "styled-components";
+import { css, type RuleSet } from "styled-components";
 
+import { cssDimensions } from "@/utils/styles.utils";
 import { cssVarUsage, fromStyleProps } from "@utils";
 
 import type {
@@ -56,6 +57,10 @@ export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
       : cssVarUsage(`${color}-${backgroundColorShade}`);
 
   return css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
     border-radius: var(--${borderRadius});
     border: ${stroke
       ? `1px solid var(--${borderColor})`
@@ -70,3 +75,13 @@ export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
     transition: background 150ms ease-out 0s;
   `;
 };
+
+export const staticIconIndicatorContainerStyle = (): RuleSet => css`
+  ${cssDimensions("10px", "10px", true)}
+  position: absolute;
+  top: calc(var(--s-3) * -0.5);
+  right: calc(var(--s-3) * -0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
