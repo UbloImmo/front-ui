@@ -106,7 +106,7 @@ export type AnyFeatureSwitchVariant<TValue extends NullishPrimitives> =
 
 export type FeatureSwitchDefaultProps = Required<FeatureSwitchCommonProps> & {
   /**
-   * The variants of the feature switch
+   * The variants of FeatureSwitch
    *
    * @type {FeatureSwitchVariant}
    */
