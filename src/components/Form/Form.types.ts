@@ -1,6 +1,12 @@
 import type { ButtonProps } from "../Button";
 import type { BadgeProps } from "@/components/Badge";
 import type { DividerProps } from "@/components/Divider";
+import type {
+  FeatureSwitchCheckboxVariant,
+  FeatureSwitchOptionsVariant,
+  FeatureSwitchProps,
+  FeatureSwitchSwitchVariant,
+} from "@/components/FeatureSwitch";
 import type { FieldLabelProps, FieldProps } from "@/components/Field";
 import type { IconName } from "@/components/Icon";
 import type {
@@ -572,6 +578,51 @@ export type BuiltFormCustomFieldProps = PreservedFieldProps &
     CustomInput: FC<CustomFormInputProps<NullishPrimitives>>;
   };
 
+// ---------------------------- FEATURE SWITCH ------------------------------
+
+/**
+ * A {@link FeatureSwithProps} variant based off a source in the form's data
+ *
+ * Either {@link FeatureSwitchCheckboxVariant} (checkbox) or {@link FeatureSwitchSwitchVariant} (switch) if data extends `boolean`,
+ * or a generic {@link FeatureSwitchOptionsVariant} (select) otherwise
+ */
+export type FormFeatureSwitchProps<TData extends object> = {
+  [TSource in FormSource<TData>]: DeepValueOf<
+    CompleteFormData<TData>,
+    TSource
+  > extends infer TFieldValue
+    ? TFieldValue extends boolean
+      ? FormFieldLayoutProps &
+          (
+            | Omit<
+                FeatureSwitchCheckboxVariant | FeatureSwitchSwitchVariant,
+                "active"
+              >
+            | Omit<FeatureSwitchOptionsVariant<boolean>, "value">
+          ) & {
+            kind: "feature-switch";
+            source: TSource;
+          }
+      : TFieldValue extends NullishPrimitives
+      ? FormFieldLayoutProps &
+          Omit<FeatureSwitchOptionsVariant<TFieldValue>, "value"> & {
+            kind: "feature-switch";
+            source: TSource;
+          }
+      : never
+    : never;
+}[FormSource<TData>];
+
+/**
+ * A built {@link FormFeatureSwitchProps}
+ */
+export type BuiltFormFeatureSwitchProps =
+  FeatureSwitchProps<NullishPrimitives> &
+    BuiltFormFieldLayoutProps &
+    Pick<FieldProps<InputType>, "error" | "errorText"> & {
+      kind: "feature-switch";
+    };
+
 // ------------------------------- CONTENT ----------------------------------
 
 /**
@@ -580,6 +631,7 @@ export type BuiltFormCustomFieldProps = PreservedFieldProps &
  * One of:
  * - {@link FormFieldProps}
  * - {@link FormCustomFieldProps}
+ * - {@link FormFeatureSwitchProps}
  * - {@link FormTableProps}
  * - {@link FormDividerProps}
  * - {@link FormTextProps}
@@ -592,15 +644,19 @@ export type BuiltFormCustomFieldProps = PreservedFieldProps &
 export type FormContent<TData extends object> =
   | FormFieldProps<TData>
   | FormCustomFieldProps<TData>
+  | FormFeatureSwitchProps<TData>
   | FormTableProps<TData>
   | FormDividerProps
   | FormTextProps
   | FormCustomContentProps;
 
 /**
+
  * One of:
  * - {@link BuiltFieldProps}
  * - {@link BuiltFormCustomFieldProps}
+ * - {@link BuiltFormFeatur
+eSwitchProps}
  * - {@link BuiltFormTableProps}
  * - {@link FormTextProps}
  * - {@link FormCustomContentProps}
@@ -611,6 +667,7 @@ export type FormContent<TData extends object> =
 export type BuiltFormContent<TType extends InputType> =
   | BuiltFieldProps<TType>
   | BuiltFormCustomFieldProps
+  | BuiltFormFeatureSwitchProps
   | BuiltFormTableProps
   | FormDividerProps
   | FormCustomContentProps
@@ -1052,15 +1109,19 @@ export type BuildFormTablePropsFn<TData extends object> = (
 ) => BuiltFormTableProps;
 
 /**
- * Retrieves the value of a {@link FormField} from the internal {@link FormData} using its `source`.
+ * Builds a {@link BuiltFormFeatureSwitchProps} object from a {@link FormFeatureSwitchProps} object
+ * links its `value`, `onChange`, `disabled`, `required`, `error` and `errorText` properties
  *
  * @template {object} TData - The type of the {@link FormData}
- * @template {DeepKeyOf<FormData<TData>>} TSource - The key of the {@link FormField}
  *
- * @param {TSource} source - The source of the {@link FormField}
+ * @param {FormFeatureSwitchProps<TData>} featureSwitch - The {@link FormFeatureSwitchProps}
  *
- * @returns {Nullable<DeepValueOf<FormData<TData>, TSource>>} The value of the {@link FieldProps} at the specified path
+ * @returns {BuiltFormFeatureSwitchProps} The built and linked {@link BuiltFormFeatureSwitchProps}
  */
+export type BuildFormFeatureSwitchFn<TData extends object> = (
+  featureSwitch: FormFeatureSwitchProps<TData>
+) => BuiltFormFeatureSwitchProps;
+
 export type GetFieldValueFn<TData extends object> = <
   TSource extends DeepKeyOf<FormData<TData>>
 >(

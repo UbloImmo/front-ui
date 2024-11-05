@@ -64,6 +64,8 @@ const validation: CompleteTranslationMap<"validation"> = {
 const status: CompleteTranslationMap<"status"> = {
   active: "Active",
   inactive: "Inactive",
+  activated: "Activated",
+  deactivated: "Deactivated",
   pending: "Pending",
   loading: "Loading",
   success: "Success",

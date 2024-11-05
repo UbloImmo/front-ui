@@ -58,6 +58,8 @@ const validationTranslationKeys = [
 const statusTranslationKeys = [
   "active",
   "inactive",
+  "activated",
+  "deactivated",
   "pending",
   "loading",
   "success",

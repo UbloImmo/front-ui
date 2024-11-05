@@ -21,6 +21,8 @@ export const buildCheckboxContainerStyles = (): RuleSet => {
 
     input[type="checkbox"] {
       appearance: none;
+      height: 0;
+      width: 0;
     }
 
     &[aria-disabled="true"] {
@@ -36,6 +38,7 @@ export const buildActiveIconContainerStyles = ({
     svg[data-testid="icon"] {
       overflow: visible;
       position: absolute;
+      inset: 0;
 
       &:first-child {
         opacity: ${$active === true ? 1 : 0};

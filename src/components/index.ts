@@ -17,6 +17,7 @@ export * from "./Dialog";
 export * from "./Divider";
 export * from "./EnergyLabel";
 export * from "./EntityInfoCard";
+export * from "./FeatureSwitch";
 export * from "./Field";
 export * from "./Form";
 export * from "./Heading";

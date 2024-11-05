@@ -7,6 +7,7 @@ import { Form } from "./Form.component";
 import { Button } from "../Button";
 import { Callout } from "../Callout";
 import { DialogProvider, useDialog } from "../Dialog";
+import { FeatureSwitch } from "../FeatureSwitch";
 import { Heading } from "../Heading";
 import { Icon, type IconName } from "../Icon";
 import { Input } from "../Input";
@@ -43,6 +44,7 @@ const addressSchema = z.object({
       longitude: z.number(),
     })
     .nullish(),
+  active: z.boolean().nullish(),
 });
 
 type Address = z.infer<typeof addressSchema>;
@@ -420,13 +422,50 @@ const CustomInput = (props: CustomFormInputProps<string>) => {
   );
 };
 
-const customIdentityContents: FormContent<Address>[] = [
+const featureSwitchOptions = [
+  {
+    label: "Option 1",
+    value: true,
+  },
+  {
+    label: "Option 2",
+    value: false,
+  },
+];
+
+const customInputFeatureSwitch = ({
+  value,
+  onChange,
+  disabled,
+}: CustomFormInputProps<boolean>) => (
+  <FeatureSwitch
+    onChange={onChange}
+    value={value}
+    disabled={disabled}
+    variant="select"
+    options={featureSwitchOptions}
+  />
+);
+
+const customAddressContents: FormContent<Address>[] = [
   {
     kind: "custom-field",
     source: "street",
     label: "Custom Fist name input",
     assistiveText: "This input was rendered using a custom field",
     CustomInput,
+  },
+  {
+    kind: "custom-field",
+    source: "active",
+    label: "",
+    CustomInput: customInputFeatureSwitch,
+  },
+  {
+    kind: "feature-switch",
+    source: "active",
+    label: "Feature switch",
+    variant: "switch",
   },
   ...(addressFormProps.content ?? []).slice(1),
 ];
@@ -436,7 +475,7 @@ export const CustomFields = (props: FormStoryProps) => {
   return (
     <Form
       {...mergedProps}
-      content={customIdentityContents}
+      content={customAddressContents}
       title="Form with custom field"
     />
   );

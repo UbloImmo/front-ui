@@ -1,4 +1,4 @@
-import { VoidFn } from "@ubloimmo/front-util";
+import { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 export type CheckboxStatus = boolean | "mixed";
 
@@ -8,20 +8,19 @@ export type CheckboxProps = {
    * @type {CheckboxStatus}
    * @default false
    */
-  active?: CheckboxStatus;
+  active?: Nullable<CheckboxStatus>;
   /**
    * Whether the checkbox is disabled.
    * @type {boolean}
    * @default false
    */
   disabled?: boolean;
-
   /**
    * The Checkbox callback when the active status changes.
    * @type {VoidFn<[CheckboxStatus]>}
    * @default undefined
    */
-  onChange?: VoidFn<[CheckboxStatus]>;
+  onChange?: Nullable<VoidFn<[boolean]>>;
 };
 
 export type CheckboxDefaultProps = Required<CheckboxProps>;

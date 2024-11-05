@@ -10,18 +10,22 @@ import { Icon } from "../Icon";
 import { StyleProps, type TestIdProps } from "@types";
 import { useTestId, useMergedProps, useStyleProps } from "@utils";
 
-import type { CheckboxProps, CheckboxDefaultProps } from "./Checkbox.types";
+import type {
+  CheckboxProps,
+  CheckboxDefaultProps,
+  CheckboxStatus,
+} from "./Checkbox.types";
 
 const defaultCheckboxProps: CheckboxDefaultProps = {
   active: false,
   disabled: false,
-  onChange: () => {},
+  onChange: null,
 };
 
 /**
  * A simple checkbox that let users select multiple options from a set of items, or mark one individual item as selected
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {CheckboxProps & TestIdProps} props - Checkbox component props
  * @returns {JSX.Element}
@@ -32,11 +36,13 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("checkbox", props);
 
-  const [isActive, setIsActive] = useState(mergedProps.active);
+  const [isActive, setIsActive] = useState<CheckboxStatus>(
+    mergedProps.active ?? false
+  );
 
   useEffect(() => {
     if (mergedProps.active !== isActive) {
-      setIsActive(mergedProps.active);
+      setIsActive(mergedProps.active ?? false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedProps.active]);
@@ -71,12 +77,10 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
       aria-checked={isActive}
       aria-disabled={disabled}
     >
-      {isActive && (
-        <ActiveIconContainer {...styleProps} $active={isActive}>
-          <Icon name="CheckSquareFill" color={iconColor} />
-          <Icon name="DashSquareFill" color={iconColor} />
-        </ActiveIconContainer>
-      )}
+      <ActiveIconContainer {...styleProps} $active={isActive}>
+        <Icon name="CheckSquareFill" color={iconColor} />
+        <Icon name="DashSquareFill" color={iconColor} />
+      </ActiveIconContainer>
 
       <input
         type="checkbox"
@@ -85,6 +89,7 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
         aria-disabled={disabled}
         checked={!!isActive}
         disabled={disabled}
+        onChange={() => {}}
       />
       <Icon name="Square" color={iconColor} />
     </CheckboxContainer>

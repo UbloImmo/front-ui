@@ -28,6 +28,7 @@ import type {
   BuiltFieldProps,
   BuiltFormContent,
   BuiltFormCustomFieldProps,
+  BuiltFormFeatureSwitchProps,
   BuiltFormTableProps,
   BuiltFormTextProps,
   CustomFormInputProps,
@@ -36,6 +37,7 @@ import type {
   FormCustomFieldProps,
   FormDividerProps,
   FormError,
+  FormFeatureSwitchProps,
   FormFieldProps,
   FormSchema,
   FormSource,
@@ -307,7 +309,8 @@ export const isFormField = <TData extends object>(
     isFormDivider(content) ||
     isFormText(content) ||
     isFormCustomContent(content) ||
-    isFormCustomField(content)
+    isFormCustomField(content) ||
+    isFormFeatureSwitch(content)
   )
     return false;
   return (
@@ -359,6 +362,28 @@ export const isFormTable = <TData extends object>(
   );
 };
 
+export const isFormFeatureSwitch = <TData extends object>(
+  content: FormContent<TData>
+): content is FormFeatureSwitchProps<TData> => {
+  if (
+    isFormCustomContent(content) ||
+    isFormCustomField(content) ||
+    isFormText(content) ||
+    isFormDivider(content)
+  )
+    return false;
+  return (
+    isObject(content) &&
+    "variant" in content &&
+    isString(content.variant) &&
+    "kind" in content &&
+    "source" in content &&
+    isString("source") &&
+    isString(content.kind) &&
+    (content as unknown as { kind: string }).kind === "feature-switch"
+  );
+};
+
 /**
  * Checks if the given `content` is a `BuiltFormTableProps` object.
  *
@@ -397,12 +422,12 @@ export const isBuiltFormText = <TData extends object>(
 };
 
 /**
- * Checks if the given `fieldOrDivider` is a built form field.
+ * Checks if the given `content` is a built form field.
  *
  * @template {InputType} TType - The type of the input.
  *
  * @param {BuiltFormContent<TType>} content - The object to check.
- * @return {fieldOrDivider is BuiltFieldProps<TType>} Returns `true` if `fieldOrDivider` is a built form field, otherwise `false`.
+ * @return {content is BuiltFieldProps<TType>} Returns `true` if `fieldOrDivider` is a built form field, otherwise `false`.
  */
 export const isBuiltFormField = <TType extends InputType>(
   content: BuiltFormContent<TType>
@@ -412,7 +437,8 @@ export const isBuiltFormField = <TType extends InputType>(
     !isBuiltFormText(content) &&
     !isFormCustomContent(content) &&
     !isBuiltCustomFormField(content) &&
-    !isBuiltFormTable(content)
+    !isBuiltFormTable(content) &&
+    !isBuiltFormFeatureSwitch(content)
   );
 };
 
@@ -430,6 +456,14 @@ export const isBuiltCustomFormField = (
     "CustomInput" in content &&
     !("source" in content) &&
     isFunction<FC<CustomFormInputProps<NullishPrimitives>>>(content.CustomInput)
+  );
+};
+
+export const isBuiltFormFeatureSwitch = (
+  content: BuiltFormContent<InputType>
+): content is BuiltFormFeatureSwitchProps => {
+  return (
+    isObject(content) && "kind" in content && content.kind === "feature-switch"
   );
 };
 

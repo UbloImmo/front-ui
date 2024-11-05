@@ -5,12 +5,14 @@ import styled from "styled-components";
 import { FormCustomContent } from "./FormCustomContent.component";
 import { FormCustomField } from "./FormCustomField.component";
 import { FormDivider } from "./FormDivider.component";
+import { FormFeatureSwitch } from "./FormFeatureSwitch.component";
 import { FormField } from "./FormField.component";
 import { FormText } from "./FormText.component";
 import { useFormContext } from "../Form.context";
 import { formFieldListContainerStyles } from "../Form.styles";
 import {
   isBuiltCustomFormField,
+  isBuiltFormFeatureSwitch,
   isBuiltFormField,
   isBuiltFormTable,
   isBuiltFormText,
@@ -31,6 +33,11 @@ export const FormFieldRenderer = <TData extends object>() => {
     return content.map((contentItem, index) => {
       if (isBuiltFormField(contentItem)) {
         return <FormField {...contentItem} key={`form-field-${index}`} />;
+      }
+      if (isBuiltFormFeatureSwitch(contentItem)) {
+        return (
+          <FormFeatureSwitch {...contentItem} key={`form-feature-switch`} />
+        );
       }
       if (isBuiltCustomFormField(contentItem)) {
         return (
