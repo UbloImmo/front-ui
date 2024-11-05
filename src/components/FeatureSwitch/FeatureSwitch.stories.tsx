@@ -1,8 +1,9 @@
 import { fn } from "@storybook/test";
+import styled from "styled-components";
 
 import { FeatureSwitch } from "./FeatureSwitch.component";
 import { type FeatureSwitchProps } from "./FeatureSwitch.types";
-import { StaticIcon } from "../StaticIcon";
+import { Badge } from "../Badge";
 import { Text } from "../Text";
 
 import { ComponentVariants, type DetailConfigVariants } from "@docs/blocks";
@@ -25,7 +26,7 @@ const meta = {
   title: "Components/FeatureSwitch/Stories",
   args: {
     ...FeatureSwitch.defaultProps,
-    // onChange: fn(),
+    icon: "Square",
   },
   parameters: {
     docs: componentSource(),
@@ -70,6 +71,25 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+const options = [
+  {
+    label: "First option",
+    value: "option-1",
+  },
+  {
+    label: "Second option",
+    value: "option-2",
+  },
+  {
+    label: "Third option",
+    value: "option-3",
+  },
+];
+
+const Container = styled(FlexRowLayout)`
+  margin: var(--s-2);
+`;
+
 const variants: DetailConfigVariants<FeatureSwitchProps<NullishPrimitives>> = [
   {
     variant: "checkbox",
@@ -86,20 +106,18 @@ const variants: DetailConfigVariants<FeatureSwitchProps<NullishPrimitives>> = [
   {
     variant: "select",
     placeholder: "Select an option",
-    options: [
-      {
-        label: "Option 1",
-        value: "option-1",
-      },
-      {
-        label: "Option 2",
-        value: "option-2",
-      },
-      {
-        label: "Option 3",
-        value: "option-3",
-      },
-    ],
+    options,
+    __propVariantLabel: "Select",
+  },
+  {
+    variant: "select",
+    placeholder: "Select an option",
+    options,
+    Option: (option) => (
+      <Container gap="s-2" align="center" justify="space-between">
+        <Text>{option.label}</Text> <Badge label="State" />
+      </Container>
+    ),
     __propVariantLabel: "Select",
   },
 ];
@@ -162,13 +180,12 @@ const tooltipVariants: Nullable<TooltipProps>[] = [
   null,
   {
     content: (
-      <FlexRowLayout gap="s-2" align="center" fill key="content">
-        <StaticIcon name="Square" size="xs" stroke />
+      <Container gap="s-2" align="center" fill key="content">
         <Text color="gray-50">
           Press Down, Y, X, Right shift, Right, Left shift, Left, B to turn on
           Invulnerability.
         </Text>
-      </FlexRowLayout>
+      </Container>
     ),
     children: null,
   },
