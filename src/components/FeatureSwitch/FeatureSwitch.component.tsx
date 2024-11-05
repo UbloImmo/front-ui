@@ -97,11 +97,12 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
 
   return (
     <FlexRowLayout
-      data-testid={testId}
+      testId={testId}
       align="center"
       justify="space-between"
       gap="s-10"
       fill
+      overrideTestId
     >
       <FlexLayout gap="s-2" justify="start" {...isCompactLayout}>
         {icon && <StaticIcon name={icon} color={disabledStaticIconColor} />}
