@@ -2,10 +2,12 @@ import { useMemo } from "react";
 import styled from "styled-components";
 
 import {
+  staticIconIndicatorContainerStyle,
   staticIconSizeToIconSizeMap,
   staticIconStyle,
 } from "./StaticIcon.styles";
 import { Icon, type IconProps } from "../Icon";
+import { Tooltip } from "../Tooltip";
 
 import {
   useHtmlAttribute,
@@ -26,12 +28,13 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
   stroke: false,
   name: Icon.defaultProps.name,
   className: null,
+  indicator: null,
 };
 
 /**
  * Wraps an `Icon` in a container of the same color, a shade lighter.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {StaticIconProps & TestIdProps} props - The props for the static icon.
  * @return {JSX.Element} The static icon component.
@@ -39,7 +42,7 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
 const StaticIcon = (props: StaticIconProps & TestIdProps) => {
   const mergedProps = useMergedProps(defaultStaticIconProps, props);
 
-  const { color, size, name } = mergedProps;
+  const { color, size, name, indicator } = mergedProps;
   const styledProps = useStyleProps(mergedProps);
   const iconProps = useMemo<Pick<IconProps, "color" | "size">>(() => {
     const iconSize = staticIconSizeToIconSizeMap[size];
@@ -67,6 +70,17 @@ const StaticIcon = (props: StaticIconProps & TestIdProps) => {
       {...styledProps}
     >
       <Icon name={name} {...iconProps} />
+      {indicator && (
+        <StaticIconIndicatorContainer data-testid="static-icon-indicator">
+          {indicator.tooltip ? (
+            <Tooltip {...indicator.tooltip}>
+              <Icon name={indicator.name} color={indicator.color} size="10px" />
+            </Tooltip>
+          ) : (
+            <Icon name={indicator.name} color={indicator.color} size="10px" />
+          )}
+        </StaticIconIndicatorContainer>
+      )}
     </StaticIconContainer>
   );
 };
@@ -76,8 +90,9 @@ StaticIcon.defaultProps = defaultStaticIconProps;
 export { StaticIcon };
 
 const StaticIconContainer = styled.div<StyleProps<DefaultStaticIconProps>>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   ${staticIconStyle}
+`;
+
+const StaticIconIndicatorContainer = styled.div`
+  ${staticIconIndicatorContainerStyle}
 `;

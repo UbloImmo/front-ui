@@ -10,7 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `v0.0.1` FeatureSwitch component
-  - A component that can that allows the user to activate, deactivate or select an option from a list for a feature
+
+  - A component that allows the user to activate, deactivate or select an option from a list for a feature
+
+- `v0.0.5` StaticIcon component
+  - `indicator` property to render an indicator on the top right corner of the container
+  - update documentation
 
 ### Fixed
 

@@ -1,9 +1,20 @@
-import type { IconName } from "../Icon/Icon.types";
+import type { IconName, IconProps } from "../Icon/Icon.types";
+import type { TooltipProps } from "../Tooltip";
 import type { SpacingLabel, ColorKeyOrWhite, StyleOverrideProps } from "@types";
-import type { Enum } from "@ubloimmo/front-util";
+import type { Enum, Nullable } from "@ubloimmo/front-util";
 
 const staticIconSizes = ["xs", "s", "m", "l"] as const;
 export type StaticIconSize = Enum<typeof staticIconSizes>;
+
+export type StaticIconIndicator = Pick<IconProps, "color" | "name"> & {
+  /**
+   * An optional tooltip to render when hovering the indicator
+   *
+   * @type {Nullable<Omit<TooltipProps, "children">>}
+   * @default null
+   */
+  tooltip?: Nullable<Omit<TooltipProps, "children">>;
+};
 
 export type StaticIconProps = StyleOverrideProps & {
   /**
@@ -37,6 +48,13 @@ export type StaticIconProps = StyleOverrideProps & {
    * @default undefined
    */
   name: IconName;
+  /**
+   * An additional to render on the top right corner of the static icon
+   *
+   * @type {Nullable<StaticIconIndicator>}
+   * @default null
+   */
+  indicator?: Nullable<StaticIconIndicator>;
 };
 
 export type DefaultStaticIconProps = Required<StaticIconProps>;
