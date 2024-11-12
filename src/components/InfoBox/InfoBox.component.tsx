@@ -6,7 +6,13 @@ import { Icon } from "../Icon";
 import { Text } from "../Text";
 
 import { FlexColumnLayout } from "@layouts";
-import { useLogger, useTestId, useMergedProps, isNonEmptyString } from "@utils";
+import {
+  useLogger,
+  useTestId,
+  useMergedProps,
+  isNonEmptyString,
+  useUikitTranslation,
+} from "@utils";
 
 import type { InfoBoxProps, InfoBoxDefaultProps } from "./InfoBox.types";
 import type { TextProps, TestIdProps } from "@types";
@@ -20,7 +26,7 @@ const defaultInfoBoxProps: InfoBoxDefaultProps = {
 /**
  * A small card to display contextual data.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {InfoBoxProps & TestIdProps} props - InfoBox component props
  * @returns {JSX.Element}
@@ -29,6 +35,7 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("InfoBox");
   const mergedProps = useMergedProps(defaultInfoBoxProps, props);
   const { icon, label, info } = mergedProps;
+  const tl = useUikitTranslation();
   const testId = useTestId("info-box", props);
 
   const stateColor = useMemo(() => {
@@ -39,8 +46,8 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
     if (isNonEmptyString(info)) {
       return info;
     }
-    return `Non renseignée(s)`;
-  }, [info]);
+    return tl.status.unspecified();
+  }, [info, tl.status]);
 
   const textProps = useMemo<TextProps>(() => {
     return {
