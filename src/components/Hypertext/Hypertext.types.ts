@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 
+import type { ColorKey } from "@types";
+
 export type HypertextProps = {
   /**
    * The Hypertext's rendered text.
@@ -19,6 +21,12 @@ export type HypertextProps = {
    * @required
    */
   title: string;
+  /**
+   * The Hypertext's main color.
+   * @type {ColorKey}
+   * @default "primary"
+   */
+  color?: ColorKey;
 };
 
 export type DefaultHypertextProps = Required<HypertextProps>;
