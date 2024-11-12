@@ -4,6 +4,7 @@ import { FormFieldGridItem } from "./FormFieldGridItem.component";
 import { useFormContext } from "../Form.context";
 
 import { FieldContainer } from "@/components/Field";
+import { useFieldAssistiveText } from "@/components/Field/Field.utils";
 import { Icon } from "@/components/Icon";
 import { useInputId } from "@/components/Input";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
@@ -43,10 +44,6 @@ export const FormCustomField = (
 
   const { isEditing } = useFormContext();
 
-  const shoulDisplayAssistiveText = useMemo(() => {
-    return isEditing && !!(assistiveText || (errorText && error));
-  }, [isEditing, assistiveText, errorText, error]);
-
   const customFieldProps = useMemo(() => {
     const disabled = isEditing ? fieldProps.disabled : true;
     return {
@@ -84,6 +81,11 @@ export const FormCustomField = (
 
   const inputId = useInputId(fieldProps);
 
+  const fieldAssistiveText = useFieldAssistiveText(
+    { assistiveText },
+    customFieldProps.value
+  );
+
   if (layout.hidden) return null;
 
   return (
@@ -112,9 +114,9 @@ export const FormCustomField = (
             <CustomInput {...customFieldProps} id={inputId} />
           </InputLabel>
         )}
-        {shoulDisplayAssistiveText && (
+        {fieldAssistiveText.shouldDisplay && isEditing && (
           <InputAssistiveText
-            assistiveText={assistiveText}
+            assistiveText={fieldAssistiveText.assistiveText}
             errorText={errorText}
             error={error}
             testId="field-assistive-text"

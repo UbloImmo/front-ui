@@ -7,7 +7,11 @@ import type {
   FeatureSwitchProps,
   FeatureSwitchSwitchVariant,
 } from "@/components/FeatureSwitch";
-import type { FieldLabelProps, FieldProps } from "@/components/Field";
+import type {
+  FieldAssistiveTextProps,
+  FieldLabelProps,
+  FieldProps,
+} from "@/components/Field";
 import type { IconName } from "@/components/Icon";
 import type {
   InputOnChangeFn,
@@ -17,7 +21,6 @@ import type {
   CommonInputProps,
   SelectInputProps,
 } from "@/components/Input";
-import type { InputAssistiveTextProps } from "@/components/InputAssistiveText";
 import type { ModalProps, ModalSize } from "@/components/Modal";
 import type { GridEndPosition, TableLayout } from "@layouts";
 import type {
@@ -384,7 +387,7 @@ export type FormTableProps<TData extends object> = {
                */
               tableLayout?: TableLayout;
             } & FieldLabelProps &
-              InputAssistiveTextProps &
+              FieldAssistiveTextProps &
               FormFieldLayoutProps &
               FormTableModifiers
           : never
@@ -462,7 +465,7 @@ export type BuiltFormTableProps = {
    */
   tableLayout: TableLayout;
 } & BuiltFormTableCallbacks &
-  InputAssistiveTextProps &
+  FieldAssistiveTextProps &
   BuiltFormFieldLayoutProps &
   FieldLabelProps;
 
