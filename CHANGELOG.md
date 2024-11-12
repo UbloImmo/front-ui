@@ -7,16 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.34.0 - 2024-11-12
 ### Changed
-
 - `v0.0.8` Field component
   - Allow assistive text to be changed based on value
-
 - `v0.0.16` Form component
   - Allow assistive text to be changed based on value for custom fields and tables
 
 ### Fixed
-
 - Storybook Build: dockerfile
 
 ## 0.33.15 - 2024-11-12
