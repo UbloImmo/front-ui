@@ -82,7 +82,7 @@ export const FormCustomField = (
   const inputId = useInputId(fieldProps);
 
   const fieldAssistiveText = useFieldAssistiveText(
-    { assistiveText },
+    { assistiveText, error, errorText },
     customFieldProps.value
   );
 
