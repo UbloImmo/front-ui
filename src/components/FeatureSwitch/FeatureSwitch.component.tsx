@@ -25,7 +25,12 @@ import {
   type FlexAlignment,
   type FlexDirection,
 } from "@layouts";
-import { useTestId, useMergedProps, useUikitTranslation } from "@utils";
+import {
+  useTestId,
+  useMergedProps,
+  useUikitTranslation,
+  useLogger,
+} from "@utils";
 
 import type { ColorKey, TestIdProps } from "@types";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
@@ -44,7 +49,7 @@ const defaultFeatureSwitchProps: FeatureSwitchDefaultProps = {
  *
  * Provides informations about a feature that the user can activate, deactivate or select an option from a list.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {FeatureSwitchProps & TestIdProps} props - FeatureSwitch component props
  * @returns {JSX.Element}
@@ -56,6 +61,7 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
   const { icon, label, description, tooltip, compact, disabled, variant } =
     mergedProps;
   const testId = useTestId<TestIdProps>("feature-switch", props);
+  const { warn } = useLogger("FeatureSwitch");
 
   const tl = useUikitTranslation();
 
@@ -94,6 +100,18 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
     }
     return null;
   }, [propsWithVariant, tl]);
+
+  if (!props.label) {
+    warn(
+      `Missing required label, defaulting to ${defaultFeatureSwitchProps.label}`
+    );
+  }
+
+  if (!props.variant) {
+    warn(
+      `Missing required variant, defaulting to ${defaultFeatureSwitchProps.variant}`
+    );
+  }
 
   return (
     <FlexRowLayout
