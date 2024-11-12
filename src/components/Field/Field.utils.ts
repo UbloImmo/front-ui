@@ -1,7 +1,11 @@
-import { objectEntries } from "@ubloimmo/front-util";
+import { isFunction, isNullish, objectEntries } from "@ubloimmo/front-util";
 import { useMemo, useReducer } from "react";
 
-import type { FieldDefaultProps } from "./Field.types";
+import type {
+  FieldAssistiveTextFn,
+  FieldAssistiveTextProps,
+  FieldDefaultProps,
+} from "./Field.types";
 import type { InputType } from "../Input";
 import type { Nullable, ValueMap } from "@ubloimmo/front-util";
 
@@ -82,5 +86,33 @@ export const useFieldValidity = (mergedProps: FieldDefaultProps<InputType>) => {
     errorText,
     setValidityState,
     validityState,
+  };
+};
+
+/**
+ * Custom hook that computes a field's assistive text based on its props and current value
+ *
+ * @param {FieldAssistiveTextProps} props - The field's assistive text props
+ * @param {unknown} value - The field's current value
+ * @returns {{assistiveText: Nullable<string>, shouldDisplay: boolean}} The computed assistive text or null if none, and a boolean to determine whether to display the assistive text
+ */
+export const useFieldAssistiveText = (
+  { assistiveText, errorText, error }: FieldAssistiveTextProps,
+  value: unknown
+) => {
+  const text = useMemo<Nullable<string>>(() => {
+    if (isNullish(assistiveText)) return null;
+    if (isFunction<FieldAssistiveTextFn>(assistiveText)) {
+      return assistiveText(value);
+    }
+    return assistiveText;
+  }, [assistiveText, value]);
+
+  const shouldDisplay = useMemo(() => {
+    return !!(text || (errorText && error));
+  }, [text, errorText, error]);
+  return {
+    assistiveText: text,
+    shouldDisplay,
   };
 };

@@ -25,6 +25,7 @@ import { StableFormTableRow, type BuiltFormTableProps } from "../../Form.types";
 import { FormTableFooter } from "./FormTableFooter/FormTableFooter.component";
 
 import { FieldContainer } from "@/components/Field";
+import { useFieldAssistiveText } from "@/components/Field/Field.utils";
 import { Icon } from "@/components/Icon";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { InputLabel } from "@/components/InputLabel";
@@ -58,9 +59,7 @@ export const FormTable = ({
 }: BuiltFormTableProps) => {
   const { isEditing, updateTableRowIndexMap } = useFormContext();
 
-  const shoulDisplayAssistiveText = useMemo(() => {
-    return isEditing && !!(assistiveText || (errorText && error));
-  }, [isEditing, assistiveText, errorText, error]);
+  const tableAssistiveText = useFieldAssistiveText({ assistiveText }, data);
 
   const generateRowId = useCallback(() => uuidv4(), []);
 
@@ -214,9 +213,9 @@ export const FormTable = ({
             />
           )}
         </Table>
-        {shoulDisplayAssistiveText && (
+        {tableAssistiveText.shouldDisplay && isEditing && (
           <InputAssistiveText
-            assistiveText={assistiveText}
+            assistiveText={tableAssistiveText.assistiveText}
             errorText={errorText}
             error={error}
             testId="field-assistive-text"

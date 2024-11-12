@@ -2,7 +2,7 @@ import { isFunction } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
-import { useFieldValidity } from "./Field.utils";
+import { useFieldAssistiveText, useFieldValidity } from "./Field.utils";
 import { NativeInputOnChangeFn, useInputId } from "../Input";
 import { defaultCommonInputProps } from "../Input/Input.common";
 import { Input } from "../Input/Input.component";
@@ -35,7 +35,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
@@ -76,9 +76,10 @@ const Field = <TType extends InputType>(
     [mergedProps, setValidityState]
   );
 
-  const shoulDisplayAssistiveText = useMemo(() => {
-    return !!(mergedProps.assistiveText || (errorText && error));
-  }, [mergedProps, errorText, error]);
+  const fieldAssistiveText = useFieldAssistiveText(
+    mergedProps,
+    mergedProps.value
+  );
 
   if (!mergedProps.type || !inputTypes?.includes(mergedProps.type)) {
     logger.error(`Invalid type (${mergedProps.type}) provided.`);
@@ -108,9 +109,9 @@ const Field = <TType extends InputType>(
           error={error}
         />
       </InputLabel>
-      {shoulDisplayAssistiveText && (
+      {fieldAssistiveText.shouldDisplay && (
         <InputAssistiveText
-          assistiveText={mergedProps.assistiveText}
+          assistiveText={fieldAssistiveText.assistiveText}
           errorText={errorText}
           error={error}
           testId="field-assistive-text"
