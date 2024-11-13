@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.9` SelectInput component
+  - Add `clearable` property to allow clearing the selected option
+
+- `v0.0.9` Button component
+  - Add `embedded` property to render a button inside another button element
+
 ### Fixed
 
 - `v0.0.17` Form component
