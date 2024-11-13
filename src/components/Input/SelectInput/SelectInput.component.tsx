@@ -27,12 +27,19 @@ import {
   useInputValue,
 } from "../Input.utils";
 
+import { Button } from "@/components/Button";
 import { Icon } from "@/components/Icon";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
+import { cssDimensions } from "@/utils/styles.utils";
 import { FlexColumnLayout } from "@layouts";
-import { useHtmlAttribute, useTestId } from "@utils";
+import {
+  useHtmlAttribute,
+  useStatic,
+  useTestId,
+  useUikitTranslation,
+} from "@utils";
 
 import type { SelectInputProps, SelectOption } from "./SelectInput.types";
 import type { CommonInputStyleProps, InputProps } from "../Input.types";
@@ -41,7 +48,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -176,6 +183,15 @@ const SelectInput = <
       : "No options available.";
   }, [isLoading, query, searchable]);
 
+  const tl = useUikitTranslation();
+
+  const clearLabel = useStatic(tl.action.unselect);
+
+  const clearSelectedOption = useCallback(() => {
+    if (disabled || !activeOption || !mergedProps.clearable || isOpen) return;
+    setInternalValue(null);
+  }, [activeOption, disabled, isOpen, mergedProps.clearable, setInternalValue]);
+
   return (
     <SelectInputWrapper
       reverse
@@ -262,7 +278,7 @@ const SelectInput = <
                       size="s-3"
                     />
                   )}
-                  <Text weight="medium" color={valueTextColor} ellipsis>
+                  <Text weight="medium" color={valueTextColor} ellipsis fill>
                     {activeOption.label}
                   </Text>
                 </SelectedOptionContainer>
@@ -283,9 +299,21 @@ const SelectInput = <
             )}
           </StyledSelectInput>
         )}
-        <StyledInputControl {...inputStyles} data-testid={`${testId}-control`}>
+        <StyledInputControl
+          {...inputStyles}
+          data-testid={`${testId}-control`}
+          onClick={activeOption ? clearSelectedOption : undefined}
+        >
           {isOpen && isLoading ? (
             <Loading animation="BouncingBalls" size="s-4" />
+          ) : !isOpen && mergedProps.clearable && activeOption && !disabled ? (
+            <ClearButton
+              color="clear"
+              secondary
+              icon="XLg"
+              embedded
+              title={clearLabel}
+            />
           ) : (
             <Icon name={mergedProps.controlIcon} />
           )}
@@ -320,6 +348,16 @@ const SelectedOptionContainer = styled.div`
   ${selectInputStyles}
   padding: var(--s-2);
   padding-right: var(--s-8);
+`;
+
+const ClearButton = styled(Button)`
+  padding: 0 !important;
+  ${cssDimensions("min-content", "min-content", true, true)};
+
+  &:hover svg,
+  &:hover svg path {
+    fill: var(--error-medium) !important;
+  }
 `;
 
 const CustomSelectedOptionContainer = styled.div`

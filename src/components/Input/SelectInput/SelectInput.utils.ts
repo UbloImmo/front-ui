@@ -51,6 +51,7 @@ export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives>
     Option: null,
     SelectedOption: null,
     controlIcon: "CaretDownFill",
+    clearable: false,
   };
 
 export const useSelectOptions = <

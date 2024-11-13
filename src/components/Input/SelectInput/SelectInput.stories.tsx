@@ -62,6 +62,9 @@ const meta = {
     required: {
       type: "boolean",
     },
+    clearable: {
+      type: "boolean",
+    },
     controlIcon: {
       options: allIconNames,
     },
@@ -305,4 +308,25 @@ export const ControlIcon = () => {
       propLabels
     />
   );
+};
+
+export const Clearable: Story = {
+  args: {
+    clearable: true,
+    placeholder: "Try clearing the selection",
+    options: [
+      {
+        label: "First option",
+        value: "option-1",
+      },
+      {
+        label: "Second option",
+        value: "option-2",
+      },
+      {
+        label: "Third option",
+        value: "option-3",
+      },
+    ],
+  },
 };
