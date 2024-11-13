@@ -13,16 +13,19 @@ import type { CssLength, CssVarName } from "@types";
  * @param {CssLength | CssVarName | "auto"} width - The width value, can be a string with a unit (e.g. '100px', '50%') or a number (e.g. 100, 50)
  * @param {CssLength | CssVarName | "auto"} height - The height value, can be a string with a unit (e.g. '100px', '50%') or a number (e.g. 100, 50)
  * @param {boolean} [includeMinMax=false] - If true, will also generate min-width, max-width, min-height and max-height rules.
+ * @param {boolean} [important=false] - If true, will add !important to the length values.
  * @returns {RuleSet} The generated CSS rule set.
  */
 export const cssDimensions = (
   width: CssLength | CssVarName | "auto",
   height: CssLength | CssVarName | "auto",
-  includeMinMax = false
+  includeMinMax = false,
+  important = false
 ): RuleSet => {
   const parsedSize = transformObject({ width, height }, (length) => {
     if (isFixedCssLength(length)) return parseFixedLength(length);
     if (isCssVarName(length)) return cssVarUsage(length.substring(2));
+    if (important) return `${length} !important`;
     return length;
   });
 
