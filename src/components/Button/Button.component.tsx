@@ -28,6 +28,7 @@ const defaultButtonProps: DefaultButtonProps = {
   title: "",
   role: "button",
   icon: null,
+  embedded: false,
   iconPlacement: "left",
   secondary: false,
   disabled: false,
@@ -42,7 +43,7 @@ const defaultButtonProps: DefaultButtonProps = {
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {ButtonProps} props - the button's props
  * @returns {JSX.Element} the rendered button
@@ -67,8 +68,16 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
     [mergedProps]
   );
 
-  const { icon, disabled, title, role, type, expandOnHover, fullWidth } =
-    mergedProps;
+  const {
+    icon,
+    disabled,
+    title,
+    role,
+    type,
+    expandOnHover,
+    fullWidth,
+    embedded,
+  } = mergedProps;
   let { label } = mergedProps;
 
   const ariaTitle = useMemo(() => {
@@ -101,29 +110,50 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
     label = "[Label]";
   }
 
+  const commonProps = useMemo(
+    () => ({
+      ...styledProps,
+      "data-testid": testId,
+      "data-expandable": expandable,
+      className,
+      disabled,
+      "aria-disabled": disabled,
+      title: ariaTitle,
+      "aria-label": ariaTitle,
+      role: ariaRole,
+    }),
+    [ariaRole, ariaTitle, className, disabled, expandable, styledProps, testId]
+  );
+
+  const buttonContent = useMemo(() => {
+    return (
+      <>
+        {icon && <Icon name={icon} size="1rem" />}
+        {label && label.length > 0 && (
+          <Text size="m" weight="medium">
+            {label}
+          </Text>
+        )}
+        <StyledButtonLoadingContainer {...styledProps}>
+          <Loading animation="BouncingBalls" size="s-3" />
+        </StyledButtonLoadingContainer>
+      </>
+    );
+  }, [icon, label, styledProps]);
+
+  if (embedded)
+    return (
+      <StyledEmbeddedButton
+        {...commonProps}
+        onClick={onClick as unknown as MouseEventHandler<HTMLDivElement>}
+      >
+        {buttonContent}
+      </StyledEmbeddedButton>
+    );
+
   return (
-    <StyledButton
-      {...styledProps}
-      type={type}
-      data-testid={testId}
-      data-expandable={expandable}
-      className={className}
-      onClick={onClick}
-      disabled={disabled}
-      aria-disabled={disabled}
-      title={ariaTitle}
-      aria-label={ariaTitle}
-      role={ariaRole}
-    >
-      {icon && <Icon name={icon} size="1rem" />}
-      {label && label.length > 0 && (
-        <Text size="m" weight="medium">
-          {label}
-        </Text>
-      )}
-      <StyledButtonLoadingContainer {...styledProps}>
-        <Loading animation="BouncingBalls" size="s-3" />
-      </StyledButtonLoadingContainer>
+    <StyledButton {...commonProps} onClick={onClick} type={type}>
+      {buttonContent}
     </StyledButton>
   );
 };
@@ -131,6 +161,10 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
 Button.defaultProps = defaultButtonProps;
 
 export { Button };
+
+const StyledEmbeddedButton = styled.div<StyleProps<DefaultButtonProps>>`
+  ${buildButtonStyles}
+`;
 
 const StyledButton = styled.button<StyleProps<DefaultButtonProps>>`
   ${buildButtonStyles}

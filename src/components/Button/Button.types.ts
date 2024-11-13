@@ -133,6 +133,15 @@ export type ButtonProps = StyleOverrideProps & {
    * @default false
    */
   expandOnHover?: boolean;
+  /**
+   * Whether the button is nested directly inside another button element.
+   *
+   * @remarks Will render the element as a `div` instead of a `button`.
+   *
+   * @type {boolean}
+   * @default false
+   */
+  embedded?: boolean;
 } & RequireAtLeastOne<{
     /**
      * The label of the button.
