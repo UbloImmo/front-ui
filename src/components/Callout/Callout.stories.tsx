@@ -182,6 +182,7 @@ export const WithTitle: Story = {
 export const WithHypertext: Story = {
   args: {
     ...Callout.defaultProps,
+    size: "l",
     hyperText: { href: "/", title: "Go to link", children: "Go to link" },
   },
 };

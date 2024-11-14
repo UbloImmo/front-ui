@@ -115,7 +115,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
             {children}
           </Text>
         </FlexColumnLayout>
-        {hyperText && (
+        {hyperText && size === "l" && (
           <div>
             <Hypertext {...hyperText} color={color} />
           </div>
