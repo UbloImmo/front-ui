@@ -22,6 +22,7 @@ const defaultSearchInputProps: SearchInputDefaultProps<NullishPrimitives> = {
   Option: null,
   filterOption: null,
   SelectedOption: null,
+  clearable: false,
   controlIcon: "Search",
 };
 
