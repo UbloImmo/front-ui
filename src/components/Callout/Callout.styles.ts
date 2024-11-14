@@ -2,11 +2,9 @@ import { css, RuleSet } from "styled-components";
 
 import { IconName } from "../Icon";
 
-import type {
-  CalloutColor,
-  CalloutStyleColors,
-  CalloutStyleProps,
-} from "./Callout.types";
+import { cssVarUsage } from "@utils";
+
+import type { CalloutColor, CalloutStyleProps } from "./Callout.types";
 
 export const computeCalloutIconNames: Record<CalloutColor, IconName> = {
   primary: "InfoSquareFill",
@@ -16,43 +14,49 @@ export const computeCalloutIconNames: Record<CalloutColor, IconName> = {
   error: "ExclamationSquareFill",
 };
 
-export const computeCalloutColors = (
-  color: CalloutColor
-): CalloutStyleColors => {
-  if (color === "gray") {
-    return {
-      background: "gray-50",
-      borderLeft: "gray-600",
-      icon: "gray-600",
-      text: "gray-700",
-    };
-  }
+export const calloutStyle = ({ $color, $size }: CalloutStyleProps): RuleSet => {
+  const background =
+    $size === "l"
+      ? "white"
+      : cssVarUsage($color === "gray" ? "gray-50" : `${$color}-light`);
 
-  return {
-    background: `${color}-light`,
-    borderLeft: `${color}-base`,
-    icon: `${color}-base`,
-    text: `${color}-dark`,
-  };
-};
+  const borderColor = cssVarUsage(
+    $color === "gray"
+      ? "gray-600"
+      : $size === "l"
+      ? `${$color}-medium`
+      : `${$color}-base`
+  );
 
-export const calloutStyle = ({
-  $background,
-  $borderLeft,
-}: CalloutStyleProps): RuleSet => {
+  const flexLayout =
+    $size === "l"
+      ? css`
+          flex-direction: column;
+          align-items: start;
+          padding: var(--s-8) var(--s-7);
+        `
+      : css`
+          flex-direction: row;
+          align-items: center;
+          padding: var(--s-3) var(--s-4);
+        `;
+
   return css`
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    ${flexLayout}
     gap: var(--s-3);
-    padding: var(--s-3) var(--s-4);
     min-height: var(--s-10);
     width: 100%;
     max-width: 100%;
     min-width: 0;
     border-radius: var(--s-1);
-    background-color: var(--${$background});
-    border-left: var(--s-1) solid var(--${$borderLeft});
+    background-color: ${background};
+
+    ${$size === "l" &&
+    css`
+      border: 1px solid ${borderColor};
+    `}
+    border-left: var(--s-1) solid ${borderColor};
 
     svg {
       min-width: var(--s-4);

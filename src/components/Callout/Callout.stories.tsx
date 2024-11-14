@@ -1,12 +1,16 @@
 import { Callout } from "./Callout.component";
 import { Hypertext } from "../Hypertext";
+import {
+  calloutSizes,
+  type CalloutColor,
+  type CalloutProps,
+} from "./Callout.types";
 import { allIconNames } from "../Icon/Icon.types";
 
 import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
-import type { CalloutColor, CalloutProps } from "./Callout.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<CalloutProps>(
@@ -42,6 +46,10 @@ const meta = {
       type: "string",
       defaultValue: Callout.defaultProps.title,
     },
+    size: {
+      options: calloutSizes,
+      defaultValue: Callout.defaultProps.size,
+    },
   },
   parameters: {
     docs: componentSource(),
@@ -69,7 +77,7 @@ export const Colors = () => {
 
 Colors.parameters = {
   docs: componentSource(
-    calloutColors.map((color) => ({ ...Callout.defaultProps, color }))
+    calloutColors.map((color) => ({ ...meta.args, color }))
   ),
 };
 
@@ -169,4 +177,40 @@ Labels.parameters = {
 
 export const WithTitle: Story = {
   args: { ...Callout.defaultProps, title: "This is the callout's title" },
+};
+
+export const WithHypertext: Story = {
+  args: {
+    ...Callout.defaultProps,
+    hyperText: { href: "/", title: "Go to link", children: "Go to link" },
+  },
+};
+
+export const Sizes = () => {
+  const defaultProps = useMergedProps(Callout.defaultProps, {
+    title: "This is the callout's title",
+    children: "This is the callout's content",
+    hyperText: { href: "/", title: "Go to link", children: "Go to link" },
+  });
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={calloutSizes}
+      for="size"
+      of={Callout}
+      columns={1}
+      propLabels
+    />
+  );
+};
+
+Sizes.args = {
+  title: "This is the callout's title",
+  children: "This is the callout's content",
+  href: { href: "/", title: "Go to link", children: "Go to link" },
+};
+
+Sizes.parameters = {
+  docs: componentSource(calloutSizes.map((size) => ({ ...Sizes.args, size }))),
 };
