@@ -153,6 +153,14 @@ export type SelectInputProps<
    * @default "CaretDownFill"
    */
   controlIcon?: IconName;
+
+  /**
+   * Whether the user can clear the selected option
+   *
+   * @type {boolean}
+   * @default false
+   */
+  clearable?: boolean;
 };
 
 export type DefaultSelectInputProps<

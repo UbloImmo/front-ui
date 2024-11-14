@@ -59,7 +59,10 @@ export const FormTable = ({
 }: BuiltFormTableProps) => {
   const { isEditing, updateTableRowIndexMap } = useFormContext();
 
-  const tableAssistiveText = useFieldAssistiveText({ assistiveText }, data);
+  const tableAssistiveText = useFieldAssistiveText(
+    { assistiveText, error, errorText },
+    data
+  );
 
   const generateRowId = useCallback(() => uuidv4(), []);
 
