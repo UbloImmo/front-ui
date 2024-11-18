@@ -5,12 +5,13 @@ import {
   type CalloutColor,
   type CalloutProps,
 } from "./Callout.types";
+import { Icon } from "../Icon";
 import { allIconNames } from "../Icon/Icon.types";
 import { Text } from "../Text";
 
 import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -181,22 +182,26 @@ export const WithTitle: Story = {
   args: { ...Callout.defaultProps, title: "This is the callout's title" },
 };
 
-export const WithHypertext: Story = {
+const customChildren = (
+  <FlexColumnLayout gap="s-2" fill>
+    <FlexRowLayout gap="s-2" fill align="center">
+      <Icon name="ArrowRight" />
+      <Text weight="medium" color="gray-900">
+        This callout&apos;s content is custom :
+      </Text>
+    </FlexRowLayout>
+    <div>
+      <Hypertext href="#" title="This is a Hypertext in a callout">
+        Custom content
+      </Hypertext>
+    </div>
+  </FlexColumnLayout>
+);
+
+export const WithCustomChildren: Story = {
   args: {
     ...Callout.defaultProps,
-    children: (
-      <FlexColumnLayout gap="s-2">
-        <Text>This callout has a Hypertext used below: </Text>
-        <div>
-          <Hypertext
-            href="/?path=/docs/components-hypertext-usage--docs"
-            title="Go to component"
-          >
-            Go to Hypertext documentation
-          </Hypertext>
-        </div>
-      </FlexColumnLayout>
-    ),
+    children: customChildren,
   },
 };
 
