@@ -22,9 +22,8 @@ const options = [
 
 testFeatureSwitch(FeatureSwitch.defaultProps)(
   "should render",
-  ({ queryByTestId, debug }) => {
-    debug();
-    expect(queryByTestId(testId)).not.toBeNull();
+  ({ queryByTestId }) => {
+    expect(queryByTestId("feature-switch")).not.toBeNull();
   }
 );
 
