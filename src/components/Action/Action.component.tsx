@@ -51,12 +51,13 @@ const defaultActionProps: DefaultActionProps = {
   onClick: null,
   title: null,
   iconTooltip: null,
+  description: null,
 };
 
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -151,6 +152,10 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     };
   }, [mergedProps]);
 
+  const canDisplayDescription = useMemo(() => {
+    return mergedProps.description && mergedProps.size === "large";
+  }, [mergedProps]);
+
   return (
     <ActionContainer
       data-testid={testId}
@@ -169,18 +174,28 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
           justify="start"
           fill
           gap="s-1"
-          testId="action-label-container"
-          overrideTestId
+          testId={`${testId}-label-container`}
         >
-          <Text {...textProps} testId="action-label">
+          <Text {...textProps} testId={`${testId}-label`}>
             {mergedProps.label}
           </Text>
           {iconTooltipProps && mergedProps.size === "large" && (
             <Tooltip {...iconTooltipProps} />
           )}
+          {canDisplayDescription && badgeProps && (
+            <Badge {...badgeProps} testId={`${testId}-badge`} />
+          )}
         </ActionLabelContainer>
 
-        {badgeProps && <Badge {...badgeProps} testId="action-badge" />}
+        {!canDisplayDescription && badgeProps && (
+          <Badge {...badgeProps} testId={`${testId}-badge`} />
+        )}
+
+        {canDisplayDescription && (
+          <Text testId={`${testId}-description`} overrideTestId>
+            {mergedProps.description}
+          </Text>
+        )}
         {iconTooltipProps && mergedProps.size === "default" ? (
           <Tooltip {...iconTooltipProps} />
         ) : null}

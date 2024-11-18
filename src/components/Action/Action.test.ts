@@ -55,4 +55,21 @@ testAction({
   expect(queryByTestId(`tooltip`)).not.toBeNull();
 });
 
+testAction({
+  ...Action.defaultProps,
+  description: "A description",
+  size: "large",
+})("should render a description with a large size", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(queryByTestId(`${testId}-description`)).not.toBeNull();
+});
+
+testAction({
+  ...Action.defaultProps,
+  description: "A description",
+})("should not render a description with a small size", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(queryByTestId(`${testId}-description`)).toBeNull();
+});
+
 afterEach(cleanup);
