@@ -62,11 +62,13 @@ The `l` size is used to display a warning or an information that needs more atte
 
 <Canvas of={CalloutStories.Sizes} />
 
-## Hypertext
+## Content
 
-You can add a [Hypertext](?path=/docs/components-hypertext-usage--docs) to the `Callout` by setting the `hyperText` property.
+The `children` property accepts both simple text strings and other content, including components from this library, HTML elements, or custom components.
 
-This property is only available for the `l` size.
+This allows you to create entirely custom content within `Callout`.
+
+> The example below uses [Hypertext](?path=/docs/components-hypertext-usage--docs) and [FlexBox](?path=/docs/layouts-flex-usage--docs) components as a content.
 
 <Canvas of={CalloutStories.WithHypertext} />
 

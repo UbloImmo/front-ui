@@ -1,4 +1,3 @@
-import type { HypertextProps } from "../Hypertext";
 import type { IconName } from "../Icon";
 import type { ColorKey, StyleOverrideProps, StyleProps } from "@types";
 import type { Enum, Nullable } from "@ubloimmo/front-util";
@@ -47,16 +46,6 @@ export type CalloutProps = StyleOverrideProps & {
    * @default null
    */
   title?: Nullable<string>;
-
-  /**
-   * The callout's link to another page/content
-   *
-   * @type {Nullable<Omit<HypertextProps, "color">>}
-   * @see {Hypertext}
-   * @default null
-   */
-  hyperText?: Nullable<Omit<HypertextProps, "color">>;
-
   /**
    * The callout's size
    *

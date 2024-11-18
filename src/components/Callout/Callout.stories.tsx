@@ -6,9 +6,11 @@ import {
   type CalloutProps,
 } from "./Callout.types";
 import { allIconNames } from "../Icon/Icon.types";
+import { Text } from "../Text";
 
 import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
+import { FlexColumnLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -182,8 +184,19 @@ export const WithTitle: Story = {
 export const WithHypertext: Story = {
   args: {
     ...Callout.defaultProps,
-    size: "l",
-    hyperText: { href: "/", title: "Go to link", children: "Go to link" },
+    children: (
+      <FlexColumnLayout gap="s-2">
+        <Text>This callout has a Hypertext used below: </Text>
+        <div>
+          <Hypertext
+            href="/?path=/docs/components-hypertext-usage--docs"
+            title="Go to component"
+          >
+            Go to Hypertext documentation
+          </Hypertext>
+        </div>
+      </FlexColumnLayout>
+    ),
   },
 };
 
@@ -191,7 +204,6 @@ export const Sizes = () => {
   const defaultProps = useMergedProps(Callout.defaultProps, {
     title: "This is the callout's title",
     children: "This is the callout's content",
-    hyperText: { href: "/", title: "Go to link", children: "Go to link" },
   });
 
   return (
@@ -209,7 +221,6 @@ export const Sizes = () => {
 Sizes.args = {
   title: "This is the callout's title",
   children: "This is the callout's content",
-  href: { href: "/", title: "Go to link", children: "Go to link" },
 };
 
 Sizes.parameters = {
