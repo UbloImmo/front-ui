@@ -2,7 +2,7 @@ import { css, RuleSet } from "styled-components";
 
 import { IconName } from "../Icon";
 
-import { cssVarUsage, isGrayColor } from "@utils";
+import { cssVarUsage } from "@utils";
 
 import type { CalloutColor, CalloutStyleProps } from "./Callout.types";
 
@@ -12,23 +12,6 @@ export const computeCalloutIconNames: Record<CalloutColor, IconName> = {
   pending: "HourglassSplit",
   gray: "SlashSquareFill",
   error: "ExclamationSquareFill",
-};
-
-const calloutIconStyle = ({
-  $color,
-  $size,
-}: Pick<CalloutStyleProps, "$color" | "$size">): RuleSet => {
-  const iconSize = cssVarUsage($size === "l" ? "s-6" : "s-4");
-
-  return css`
-    fill: ${cssVarUsage(isGrayColor($color) ? "gray-600" : `${$color}-base`)};
-    min-width: ${iconSize};
-    width: ${iconSize};
-    max-width: ${iconSize};
-    min-height: ${iconSize};
-    height: ${iconSize};
-    max-height: ${iconSize};
-  `;
 };
 
 export const calloutStyle = ({ $color, $size }: CalloutStyleProps): RuleSet => {
@@ -74,25 +57,5 @@ export const calloutStyle = ({ $color, $size }: CalloutStyleProps): RuleSet => {
       border: 1px solid ${borderColor};
     `}
     border-left: var(--s-1) solid ${borderColor};
-
-    & > svg[data-testid="icon"] {
-      ${calloutIconStyle({ $color, $size })}
-    }
-  `;
-};
-
-export const calloutTitleStyle = ({
-  $color,
-  $size,
-}: CalloutStyleProps): RuleSet => {
-  return css`
-    color: ${cssVarUsage(
-      isGrayColor($color)
-        ? "gray-700"
-        : $size === "l"
-        ? `${$color}-base`
-        : `${$color}-dark`
-    )};
-    font-weight: var(--text-weight-${$size === "l" ? "bold" : "medium"});
   `;
 };

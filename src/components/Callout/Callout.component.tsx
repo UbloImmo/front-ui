@@ -2,11 +2,7 @@ import { isNull } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled from "styled-components";
 
-import {
-  calloutStyle,
-  calloutTitleStyle,
-  computeCalloutIconNames,
-} from "./Callout.styles";
+import { calloutStyle, computeCalloutIconNames } from "./Callout.styles";
 import {
   type CalloutProps,
   type CalloutDefaultProps,
@@ -17,13 +13,19 @@ import { Icon } from "../Icon";
 import { Text } from "../Text";
 
 import { FlexColumnLayout } from "@layouts";
-import { PaletteColor, type TestIdProps } from "@types";
+import {
+  PaletteColor,
+  type SpacingLabel,
+  type TestIdProps,
+  type TypographyWeight,
+} from "@types";
 import {
   useLogger,
   useTestId,
   useMergedProps,
   useStyleProps,
   useClassName,
+  isGrayColor,
 } from "@utils";
 
 const defaultCalloutProps: CalloutDefaultProps = {
@@ -33,6 +35,26 @@ const defaultCalloutProps: CalloutDefaultProps = {
   title: null,
   size: "m",
   className: null,
+};
+
+const CalloutIcon = ({ size, color, icon }: CalloutDefaultProps) => {
+  const iconSize = useMemo<SpacingLabel>(
+    () => (size === "l" ? "s-6" : "s-4"),
+    [size]
+  );
+  const iconColor = useMemo<PaletteColor>(
+    () => (isGrayColor(color) ? "gray-600" : `${color}-base`),
+    [color]
+  );
+
+  const iconName = useMemo(() => {
+    if (isNull(icon)) return null;
+    return icon === "auto" ? computeCalloutIconNames[color] : icon;
+  }, [icon, color]);
+
+  return (
+    <Icon name={iconName ?? undefined} color={iconColor} size={iconSize} />
+  );
 };
 
 /**
@@ -47,18 +69,25 @@ const defaultCalloutProps: CalloutDefaultProps = {
 const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("Callout");
   const mergedProps = useMergedProps(defaultCalloutProps, props);
-  const { icon, children, color, title } = mergedProps;
+  const { color, size, title, icon, children } = mergedProps;
   const testId = useTestId("callout", props);
   const className = useClassName(mergedProps);
-
-  const iconName = useMemo(() => {
-    if (isNull(icon)) return null;
-    return icon === "auto" ? computeCalloutIconNames[color] : icon;
-  }, [icon, color]);
 
   const textColor = useMemo<PaletteColor>(() => {
     return color === "gray" ? "gray-700" : `${color}-dark`;
   }, [color]);
+
+  const titleColor = useMemo<PaletteColor>(() => {
+    return isGrayColor(color)
+      ? "gray-700"
+      : size === "l"
+      ? `${color}-base`
+      : `${color}-dark`;
+  }, [color, size]);
+
+  const titleWeight = useMemo<TypographyWeight>(() => {
+    return size === "l" ? "bold" : "medium";
+  }, [size]);
 
   const styleProps = useStyleProps(mergedProps);
 
@@ -74,13 +103,13 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
       data-testid={testId}
       className={className}
     >
-      {icon && <Icon name={iconName ?? undefined} />}
+      {icon && <CalloutIcon {...mergedProps} />}
       <FlexColumnLayout fill gap="s-3">
         <FlexColumnLayout fill>
           {title && (
-            <CalloutTitle size="h4" {...styleProps}>
+            <Heading size="h4" color={titleColor} weight={titleWeight}>
               {title}
-            </CalloutTitle>
+            </Heading>
           )}
           <Text weight="medium" color={textColor}>
             {children}
@@ -96,8 +125,4 @@ export { Callout };
 
 const CalloutContainer = styled.div<CalloutStyleProps>`
   ${calloutStyle}
-`;
-
-const CalloutTitle = styled(Heading)<CalloutStyleProps>`
-  ${calloutTitleStyle}
 `;
