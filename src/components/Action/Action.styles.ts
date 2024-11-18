@@ -34,6 +34,11 @@ export const actionContainerStyles = ({
   const height = heights[$size];
   const borderRadius = borderRadii[$size];
   const background = $disabled ? cssVarUsage("gray-50") : "#fff";
+  const disabledShadow =
+    $size === "large"
+      ? cssVarUsage("shadow-card-elevation-medium")
+      : cssVarUsage("shadow-button");
+
   return css`
     cursor: pointer;
     height: ${height};
@@ -76,11 +81,6 @@ export const actionContainerStyles = ({
       min-width: max-content;
       white-space: nowrap;
     }
-    /* 
-    div[data-testid="flex"] {
-      height: 100%;
-      overflow: hidden;
-    } */
 
     &:hover:not(:disabled) {
       transition-duration: 150ms;
@@ -90,7 +90,7 @@ export const actionContainerStyles = ({
 
     &:disabled {
       cursor: not-allowed;
-      box-shadow: var(--shadow-card-default);
+      box-shadow: ${disabledShadow};
     }
   `;
 };
