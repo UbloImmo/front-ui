@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `v0.0.1` Infobox component
+- `v0.0.2` Infobox component
   - use translation kit for `info` property when not provided
 
 ## 0.34.1 - 2024-11-14
