@@ -1,13 +1,17 @@
 import type { IconName } from "../Icon";
-import type { ColorKey, PaletteColor, StyleProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
+import type { ColorKey, StyleOverrideProps, StyleProps } from "@types";
+import type { Enum, Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 export type CalloutColor = Exclude<ColorKey, "success">;
 
 export type CalloutIcon = IconName | "auto";
 
-export type CalloutProps = {
+export const calloutSizes = ["m", "l"] as const;
+
+export type CalloutSize = Enum<typeof calloutSizes>;
+
+export type CalloutProps = StyleOverrideProps & {
   /**
    * The callout's text message
    *
@@ -42,17 +46,15 @@ export type CalloutProps = {
    * @default null
    */
   title?: Nullable<string>;
+  /**
+   * The callout's size
+   *
+   * @type {CalloutSize}
+   * @default "m"
+   */
+  size?: CalloutSize;
 };
 
 export type CalloutDefaultProps = Required<CalloutProps>;
 
-export type CalloutStyleColors = {
-  background: PaletteColor;
-  borderLeft: PaletteColor;
-  icon: PaletteColor;
-  text: PaletteColor;
-};
-
-export type CalloutStyleProps = StyleProps<
-  Omit<CalloutStyleColors, "icon" | "text">
->;
+export type CalloutStyleProps = StyleProps<CalloutDefaultProps>;

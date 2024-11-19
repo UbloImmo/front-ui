@@ -1,12 +1,19 @@
 import { Callout } from "./Callout.component";
 import { Hypertext } from "../Hypertext";
+import {
+  calloutSizes,
+  type CalloutColor,
+  type CalloutProps,
+} from "./Callout.types";
+import { Icon } from "../Icon";
 import { allIconNames } from "../Icon/Icon.types";
+import { Text } from "../Text";
 
 import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
+import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
-import type { CalloutColor, CalloutProps } from "./Callout.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<CalloutProps>(
@@ -42,6 +49,10 @@ const meta = {
       type: "string",
       defaultValue: Callout.defaultProps.title,
     },
+    size: {
+      options: calloutSizes,
+      defaultValue: Callout.defaultProps.size,
+    },
   },
   parameters: {
     docs: componentSource(),
@@ -69,7 +80,7 @@ export const Colors = () => {
 
 Colors.parameters = {
   docs: componentSource(
-    calloutColors.map((color) => ({ ...Callout.defaultProps, color }))
+    calloutColors.map((color) => ({ ...meta.args, color }))
   ),
 };
 
@@ -169,4 +180,54 @@ Labels.parameters = {
 
 export const WithTitle: Story = {
   args: { ...Callout.defaultProps, title: "This is the callout's title" },
+};
+
+const customChildren = (
+  <FlexColumnLayout gap="s-2" fill>
+    <FlexRowLayout gap="s-2" fill align="center">
+      <Icon name="ArrowRight" />
+      <Text weight="medium" color="gray-900">
+        This callout&apos;s content is custom :
+      </Text>
+    </FlexRowLayout>
+    <div>
+      <Hypertext href="#" title="This is a Hypertext in a callout">
+        Custom content
+      </Hypertext>
+    </div>
+  </FlexColumnLayout>
+);
+
+export const WithCustomChildren: Story = {
+  args: {
+    ...Callout.defaultProps,
+    children: customChildren,
+  },
+};
+
+export const Sizes = () => {
+  const defaultProps = useMergedProps(Callout.defaultProps, {
+    title: "This is the callout's title",
+    children: "This is the callout's content",
+  });
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={calloutSizes}
+      for="size"
+      of={Callout}
+      columns={1}
+      propLabels
+    />
+  );
+};
+
+Sizes.args = {
+  title: "This is the callout's title",
+  children: "This is the callout's content",
+};
+
+Sizes.parameters = {
+  docs: componentSource(calloutSizes.map((size) => ({ ...Sizes.args, size }))),
 };

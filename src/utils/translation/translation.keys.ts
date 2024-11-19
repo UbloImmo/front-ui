@@ -70,6 +70,7 @@ const statusTranslationKeys = [
   "archived",
   "hidden",
   "empty",
+  "unspecified",
 ] as const;
 
 export const translationKeys = {

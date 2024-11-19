@@ -76,6 +76,7 @@ const status: CompleteTranslationMap<"status"> = {
   archived: "Archived",
   hidden: "Hidden",
   empty: "Empty",
+  unspecified: "Not specified",
 };
 
 export const defaultTranslations: DefaultTranslationMaps = {

@@ -8,6 +8,8 @@ import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
+import type { ColorKey } from "@types";
+
 const componentSource = componentSourceFactory<HypertextProps>(
   "Hypertext",
   Hypertext.defaultProps
@@ -86,6 +88,14 @@ export const HypertextInText = (props: HypertextProps) => {
     />
   );
 };
+HypertextInText.parameters = {
+  docs: componentSource(
+    texts.map((text) => ({
+      ...Hypertext.defaultProps,
+      children: text,
+    }))
+  ),
+};
 
 const urls = ["https://www.ublo.immo/", "https://www.google.com/"];
 
@@ -106,4 +116,43 @@ export const Redirection = (props: HypertextProps) => {
 Redirection.args = {
   children: "[Hypertext]",
   title: "Redirects to another page",
+};
+Redirection.parameters = {
+  docs: componentSource(
+    urls.map((url) => ({
+      ...Hypertext.defaultProps,
+      href: url,
+    }))
+  ),
+};
+
+const colors: ColorKey[] = [
+  "primary",
+  "pending",
+  "warning",
+  "success",
+  "error",
+  "gray",
+];
+
+export const Colors = (props: HypertextProps) => {
+  const defaultProps = useMergedProps(Hypertext.defaultProps, props);
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={colors}
+      for="color"
+      of={Hypertext}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+Colors.parameters = {
+  docs: componentSource(
+    colors.map((color) => ({
+      ...Hypertext.defaultProps,
+      color,
+    }))
+  ),
 };

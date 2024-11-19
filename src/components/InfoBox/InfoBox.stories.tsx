@@ -61,6 +61,15 @@ export const Info = (props: InfoBoxProps) => {
   );
 };
 
+Info.parameters = {
+  docs: componentSource(
+    infos.map((info) => ({
+      ...InfoBox.defaultProps,
+      info,
+    }))
+  ),
+};
+
 const examples: DetailConfigVariants<InfoBoxProps> = [
   {
     icon: "Heart",
@@ -91,4 +100,13 @@ export const Examples = () => {
       columns={examples.length}
     />
   );
+};
+
+Examples.parameters = {
+  docs: componentSource(
+    examples.map((example) => ({
+      ...InfoBox.defaultProps,
+      ...example,
+    }))
+  ),
 };

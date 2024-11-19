@@ -4,8 +4,6 @@ import styled from "styled-components";
 
 import { Markdown } from "./Markdown";
 
-import { computeCalloutColors } from "@/components/Callout/Callout.styles";
-
 import { type CalloutProps, Callout as UikitCallout } from "@components";
 
 export const Callout = ({
@@ -13,10 +11,6 @@ export const Callout = ({
   color = "primary",
   ...props
 }: CalloutProps) => {
-  const { text: textColor } = useMemo(
-    () => computeCalloutColors(color),
-    [color]
-  );
   const content = useMemo(() => {
     if (
       isObject(children) &&
@@ -31,11 +25,7 @@ export const Callout = ({
   return (
     <CalloutStyleOverrides>
       <UikitCallout {...props} color={color}>
-        {isString(content) ? (
-          <Markdown color={textColor}>{content}</Markdown>
-        ) : (
-          content ?? ""
-        )}
+        {isString(content) ? <Markdown>{content}</Markdown> : content ?? ""}
       </UikitCallout>
     </CalloutStyleOverrides>
   );

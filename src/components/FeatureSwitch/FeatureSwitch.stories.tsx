@@ -11,6 +11,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
+import type { IconName } from "../Icon";
 import type { TooltipProps } from "../Tooltip";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
@@ -147,6 +148,15 @@ export const Disabled = () => {
   );
 };
 
+Disabled.parameters = {
+  docs: componentSource(
+    booleans.map((disabled) => ({
+      ...meta.args,
+      disabled,
+    }))
+  ),
+};
+
 export const Compact = () => {
   return (
     <ComponentVariants
@@ -160,6 +170,20 @@ export const Compact = () => {
   );
 };
 
+Compact.parameters = {
+  docs: componentSource(
+    booleans.map((compact) => ({
+      ...meta.args,
+      compact,
+    }))
+  ),
+};
+
+const descriptionVariants = [
+  null,
+  "This Feature Switch has a description, it can be used to provide more information about the feature.",
+];
+
 export const Description = () => {
   return (
     <ComponentVariants
@@ -167,13 +191,19 @@ export const Description = () => {
       for="description"
       defaults={meta.args}
       columns={1}
-      variants={[
-        null,
-        "This Feature Switch has a description, it can be used to provide more information about the feature.",
-      ]}
+      variants={descriptionVariants}
       propLabels
     />
   );
+};
+
+Description.parameters = {
+  docs: componentSource(
+    descriptionVariants.map((description) => ({
+      ...meta.args,
+      description,
+    }))
+  ),
 };
 
 const tooltipVariants: Nullable<TooltipProps>[] = [
@@ -208,6 +238,13 @@ export const Tooltip = () => {
   );
 };
 
+const iconVariants: Nullable<IconName>[] = [
+  null,
+  "Square",
+  "ArchiveFill",
+  "EmojiHeartEyes",
+];
+
 export const Icon = () => {
   return (
     <ComponentVariants
@@ -215,8 +252,16 @@ export const Icon = () => {
       for="icon"
       defaults={meta.args}
       columns={1}
-      variants={[null, "Square", "ArchiveFill", "EmojiHeartEyes"]}
+      variants={iconVariants}
       propLabels
     />
   );
+};
+Icon.parameters = {
+  docs: componentSource(
+    iconVariants.map((icon) => ({
+      ...meta.args,
+      icon,
+    }))
+  ),
 };
