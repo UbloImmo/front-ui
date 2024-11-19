@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `v0.0.5` Action component
+
+  - Add `description` property to display a text underneath the action's label
+
 - `v0.0.2` Callout component
 
   - Add `size` property (m, l), defaulting to `m`
