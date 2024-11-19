@@ -24,6 +24,8 @@ export const CalloutIcon = ({ size, color, icon }: CalloutDefaultProps) => {
     return icon === "auto" ? computeCalloutIconNames[color] : icon;
   }, [icon, color]);
 
+  if (!iconName) return null;
+
   return (
     <Icon name={iconName ?? undefined} color={iconColor} size={iconSize} />
   );
