@@ -81,7 +81,12 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
       <FlexColumnLayout fill gap="s-3">
         <FlexColumnLayout fill>
           {title && (
-            <Heading size="h4" color={titleColor} weight={titleWeight}>
+            <Heading
+              size="h4"
+              color={titleColor}
+              weight={titleWeight}
+              important
+            >
               {title}
             </Heading>
           )}
