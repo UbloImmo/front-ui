@@ -20,6 +20,18 @@ const borderRadii: Record<ActionSize, SpacingLabel> = {
   large: "s-3",
 };
 
+export const actionTextWrappingStyles = () => css`
+  overflow-y: hidden;
+  overflow-wrap: break-word;
+  display: block;
+  display: -moz-box;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  -moz-line-clamp: 2;
+`;
+
 /**
  * Generates the styles for the action component container button.
  *
@@ -65,15 +77,7 @@ export const actionContainerStyles = ({
       text-overflow: ellipsis;
       max-height: 100%;
       max-width: fit-content;
-      overflow-y: hidden;
-      overflow-wrap: break-word;
-      display: block;
-      display: -moz-box;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -moz-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      -moz-line-clamp: 2;
+      ${actionTextWrappingStyles}
     }
 
     *[data-testid="badge action-badge"] span {

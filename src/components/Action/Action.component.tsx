@@ -5,6 +5,7 @@ import styled from "styled-components";
 import {
   actionContainerStyles,
   actionLabelContainerStyles,
+  actionTextWrappingStyles,
 } from "./Action.styles";
 import { Badge, type BadgeProps } from "../Badge";
 import { StaticIcon } from "../StaticIcon";
@@ -198,13 +199,14 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
         )}
 
         {canDisplayDescription && (
-          <Text
+          <ActionDescription
             color="gray-600"
+            fill
+            size="s"
             testId={`${testId}-description`}
-            overrideTestId
           >
             {mergedProps.description}
-          </Text>
+          </ActionDescription>
         )}
         {iconTooltipProps && mergedProps.size === "default" ? (
           <Tooltip {...iconTooltipProps} />
@@ -224,4 +226,8 @@ const ActionContainer = styled.button<StyleProps<DefaultActionProps>>`
 
 const ActionLabelContainer = styled(FlexRowLayout)`
   ${actionLabelContainerStyles}
+`;
+
+const ActionDescription = styled(Text)`
+  ${actionTextWrappingStyles}
 `;
