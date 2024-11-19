@@ -77,6 +77,12 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     warn(`Missing required icon, defaulting to ${defaultActionProps.label}`);
   }
 
+  if (props.description && props.size === "default") {
+    warn(
+      `Description is not available for default size. Set size to "large" to display it.`
+    );
+  }
+
   const [isHovering, setIsHovering] = useState(false);
 
   const onClick = useCallback<MouseEventHandler>(
@@ -173,7 +179,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
           align="center"
           justify="start"
           fill
-          gap="s-1"
+          gap="s-2"
           testId={`${testId}-label-container`}
         >
           <Text {...textProps} testId={`${testId}-label`}>
@@ -192,7 +198,11 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
         )}
 
         {canDisplayDescription && (
-          <Text testId={`${testId}-description`} overrideTestId>
+          <Text
+            color="gray-600"
+            testId={`${testId}-description`}
+            overrideTestId
+          >
             {mergedProps.description}
           </Text>
         )}

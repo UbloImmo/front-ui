@@ -36,7 +36,7 @@ export const actionContainerStyles = ({
   const background = $disabled ? cssVarUsage("gray-50") : "#fff";
   const disabledShadow =
     $size === "large"
-      ? cssVarUsage("shadow-card-elevation-medium")
+      ? cssVarUsage("shadow-card-elevation-low")
       : cssVarUsage("shadow-button");
 
   return css`
