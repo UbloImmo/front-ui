@@ -170,9 +170,8 @@ export const Tooltip = (props: ActionProps) => {
 };
 
 const descriptions: Nullable<string>[] = [
-  null,
-  "A description",
-  "A really long description that could be multilin, like, really a very long looooong description",
+  "A short description",
+  "A much longer description that could be multiline, to show how its displayed",
 ];
 export const Description = (props: ActionProps) => {
   const defaults = useMergedProps(Action.defaultProps, {
