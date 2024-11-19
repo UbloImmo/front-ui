@@ -1,24 +1,18 @@
-import { isNull } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled from "styled-components";
 
-import { calloutStyle, computeCalloutIconNames } from "./Callout.styles";
+import { calloutStyle } from "./Callout.styles";
 import {
   type CalloutProps,
   type CalloutDefaultProps,
   CalloutStyleProps,
 } from "./Callout.types";
 import { Heading } from "../Heading";
-import { Icon } from "../Icon";
 import { Text } from "../Text";
+import { CalloutIcon } from "./components/CalloutIcon.component";
 
 import { FlexColumnLayout } from "@layouts";
-import {
-  PaletteColor,
-  type SpacingLabel,
-  type TestIdProps,
-  type TypographyWeight,
-} from "@types";
+import { PaletteColor, type TestIdProps, type TypographyWeight } from "@types";
 import {
   useLogger,
   useTestId,
@@ -35,26 +29,6 @@ const defaultCalloutProps: CalloutDefaultProps = {
   title: null,
   size: "m",
   className: null,
-};
-
-const CalloutIcon = ({ size, color, icon }: CalloutDefaultProps) => {
-  const iconSize = useMemo<SpacingLabel>(
-    () => (size === "l" ? "s-6" : "s-4"),
-    [size]
-  );
-  const iconColor = useMemo<PaletteColor>(
-    () => (isGrayColor(color) ? "gray-600" : `${color}-base`),
-    [color]
-  );
-
-  const iconName = useMemo(() => {
-    if (isNull(icon)) return null;
-    return icon === "auto" ? computeCalloutIconNames[color] : icon;
-  }, [icon, color]);
-
-  return (
-    <Icon name={iconName ?? undefined} color={iconColor} size={iconSize} />
-  );
 };
 
 /**
