@@ -46,10 +46,9 @@ export const actionContainerStyles = ({
   const height = heights[$size];
   const borderRadius = borderRadii[$size];
   const background = $disabled ? cssVarUsage("gray-50") : "#fff";
-  const disabledShadow =
-    $size === "large"
-      ? cssVarUsage("shadow-card-elevation-low")
-      : cssVarUsage("shadow-button");
+  const disabledShadow = cssVarUsage(
+    $size === "large" ? "shadow-card-elevation-low" : "shadow-button"
+  );
 
   return css`
     cursor: pointer;
