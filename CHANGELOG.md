@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New icons (`@ubloimmo/front-tokens@0.1.26`)
+  - FolderSparkle
+
 - `v0.0.5` Action component
 
   - Add `description` property to display a text underneath the action's label
