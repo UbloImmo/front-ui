@@ -5,6 +5,9 @@ import { Action } from "./Action.component";
 
 import { testComponentFactory } from "@/tests";
 
+import type { VoidFn } from "@ubloimmo/front-util";
+import type { Mock } from "bun:test";
+
 const testId = "action";
 const labelTestId = "text action-label";
 const badgeTestId = "badge action-badge";
@@ -54,5 +57,63 @@ testAction({
   expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId(`tooltip`)).not.toBeNull();
 });
+
+testAction({
+  ...Action.defaultProps,
+  description: "A description",
+  size: "large",
+})("should render a description with a large size", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(queryByTestId(`text ${testId}-description`)).not.toBeNull();
+});
+
+testAction({
+  ...Action.defaultProps,
+  description: "A description",
+})(
+  "should not render a description with a default size",
+  ({ queryByTestId }) => {
+    expect(queryByTestId(testId)).not.toBeNull();
+    expect(queryByTestId(`text ${testId}-description`)).toBeNull();
+  }
+);
+
+global.console.warn = mock(() => {});
+
+testAction({
+  ...Action.defaultProps,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore need this to check for unhandled props
+  icon: null,
+})("should warn if missing required icon", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(global.console.warn).toHaveBeenCalled();
+  (global.console.warn as Mock<VoidFn>).mockReset();
+});
+
+testAction({
+  ...Action.defaultProps,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore need this to check for unhandled props
+  label: null,
+})("should warn if missing required label", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(global.console.warn).toHaveBeenCalled();
+  (global.console.warn as Mock<VoidFn>).mockReset();
+});
+
+testAction({
+  ...Action.defaultProps,
+  description: "A description",
+  size: "default",
+})(
+  "should warn if description is set with default size",
+  ({ queryByTestId }) => {
+    expect(queryByTestId(testId)).not.toBeNull();
+    expect(queryByTestId(`text ${testId}-description`)).toBeNull();
+    expect(global.console.warn).toHaveBeenCalled();
+    (global.console.warn as Mock<VoidFn>).mockReset();
+  }
+);
 
 afterEach(cleanup);

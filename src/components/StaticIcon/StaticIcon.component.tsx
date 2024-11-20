@@ -73,7 +73,10 @@ const StaticIcon = (props: StaticIconProps & TestIdProps) => {
       {indicator && (
         <StaticIconIndicatorContainer data-testid="static-icon-indicator">
           {indicator.tooltip ? (
-            <Tooltip {...indicator.tooltip}>
+            <Tooltip
+              {...indicator.tooltip}
+              testId="static-icon-indicator-tooltip"
+            >
               <Icon name={indicator.name} color={indicator.color} size="10px" />
             </Tooltip>
           ) : (

@@ -20,6 +20,18 @@ const borderRadii: Record<ActionSize, SpacingLabel> = {
   large: "s-3",
 };
 
+export const actionTextWrappingStyles = () => css`
+  overflow-y: hidden;
+  overflow-wrap: break-word;
+  display: block;
+  display: -moz-box;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  -moz-line-clamp: 2;
+`;
+
 /**
  * Generates the styles for the action component container button.
  *
@@ -34,6 +46,10 @@ export const actionContainerStyles = ({
   const height = heights[$size];
   const borderRadius = borderRadii[$size];
   const background = $disabled ? cssVarUsage("gray-50") : "#fff";
+  const disabledShadow = cssVarUsage(
+    $size === "large" ? "shadow-card-elevation-low" : "shadow-button"
+  );
+
   return css`
     cursor: pointer;
     height: ${height};
@@ -60,15 +76,7 @@ export const actionContainerStyles = ({
       text-overflow: ellipsis;
       max-height: 100%;
       max-width: fit-content;
-      overflow-y: hidden;
-      overflow-wrap: break-word;
-      display: block;
-      display: -moz-box;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -moz-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      -moz-line-clamp: 2;
+      ${actionTextWrappingStyles}
     }
 
     *[data-testid="badge action-badge"] span {
@@ -76,11 +84,6 @@ export const actionContainerStyles = ({
       min-width: max-content;
       white-space: nowrap;
     }
-    /* 
-    div[data-testid="flex"] {
-      height: 100%;
-      overflow: hidden;
-    } */
 
     &:hover:not(:disabled) {
       transition-duration: 150ms;
@@ -90,7 +93,7 @@ export const actionContainerStyles = ({
 
     &:disabled {
       cursor: not-allowed;
-      box-shadow: var(--shadow-card-default);
+      box-shadow: ${disabledShadow};
     }
   `;
 };

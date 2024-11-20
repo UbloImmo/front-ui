@@ -38,6 +38,9 @@ const meta = {
     disabled: {
       control: "boolean",
     },
+    description: {
+      control: "text",
+    },
   },
 } satisfies Meta<typeof Action>;
 
@@ -162,6 +165,29 @@ export const Tooltip = (props: ActionProps) => {
       columns={2}
       propLabels
       of={Action}
+    />
+  );
+};
+
+const descriptions: Nullable<string>[] = [
+  "A short description",
+  "A much longer description that could be multiline, to show how its displayed",
+];
+export const Description = (props: ActionProps) => {
+  const defaults = useMergedProps(Action.defaultProps, {
+    ...props,
+    badgeLabel: "New",
+    size: "large",
+  });
+  return (
+    <ComponentVariants
+      variants={descriptions}
+      for="description"
+      of={Action}
+      defaults={defaults}
+      scaling={1}
+      columns={2}
+      propLabels
     />
   );
 };

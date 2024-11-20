@@ -5,6 +5,7 @@ import styled from "styled-components";
 import {
   actionContainerStyles,
   actionLabelContainerStyles,
+  actionTextWrappingStyles,
 } from "./Action.styles";
 import { Badge, type BadgeProps } from "../Badge";
 import { StaticIcon } from "../StaticIcon";
@@ -51,12 +52,13 @@ const defaultActionProps: DefaultActionProps = {
   onClick: null,
   title: null,
   iconTooltip: null,
+  description: null,
 };
 
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -74,6 +76,12 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
 
   if (!props.label) {
     warn(`Missing required icon, defaulting to ${defaultActionProps.label}`);
+  }
+
+  if (props.description && props.size === "default") {
+    warn(
+      `Description is not available for default size. Set size to "large" to display it.`
+    );
   }
 
   const [isHovering, setIsHovering] = useState(false);
@@ -151,6 +159,10 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     };
   }, [mergedProps]);
 
+  const canDisplayDescription = useMemo(() => {
+    return mergedProps.description && mergedProps.size === "large";
+  }, [mergedProps]);
+
   return (
     <ActionContainer
       data-testid={testId}
@@ -168,19 +180,34 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
           align="center"
           justify="start"
           fill
-          gap="s-1"
-          testId="action-label-container"
-          overrideTestId
+          gap="s-2"
+          testId={`${testId}-label-container`}
         >
-          <Text {...textProps} testId="action-label">
+          <Text {...textProps} testId={`${testId}-label`}>
             {mergedProps.label}
           </Text>
           {iconTooltipProps && mergedProps.size === "large" && (
             <Tooltip {...iconTooltipProps} />
           )}
+          {canDisplayDescription && badgeProps && (
+            <Badge {...badgeProps} testId={`${testId}-badge`} />
+          )}
         </ActionLabelContainer>
 
-        {badgeProps && <Badge {...badgeProps} testId="action-badge" />}
+        {!canDisplayDescription && badgeProps && (
+          <Badge {...badgeProps} testId={`${testId}-badge`} />
+        )}
+
+        {canDisplayDescription && (
+          <ActionDescription
+            color="gray-600"
+            fill
+            size="s"
+            testId={`${testId}-description`}
+          >
+            {mergedProps.description}
+          </ActionDescription>
+        )}
         {iconTooltipProps && mergedProps.size === "default" ? (
           <Tooltip {...iconTooltipProps} />
         ) : null}
@@ -199,4 +226,8 @@ const ActionContainer = styled.button<StyleProps<DefaultActionProps>>`
 
 const ActionLabelContainer = styled(FlexRowLayout)`
   ${actionLabelContainerStyles}
+`;
+
+const ActionDescription = styled(Text)`
+  ${actionTextWrappingStyles}
 `;

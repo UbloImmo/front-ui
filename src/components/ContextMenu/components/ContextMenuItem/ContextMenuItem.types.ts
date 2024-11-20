@@ -4,7 +4,10 @@ import type { Nullable } from "@ubloimmo/front-util";
 
 export type ContextMenuItemSize = "s" | "m";
 
-export type ContextMenuItemProps = Omit<ActionProps, "size" | "icon"> & {
+export type ContextMenuItemProps = Omit<
+  ActionProps,
+  "size" | "icon" | "description"
+> & {
   /**
    * The item's size
    *

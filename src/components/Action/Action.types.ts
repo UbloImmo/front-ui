@@ -70,6 +70,13 @@ export type ActionProps = {
    * @default null
    */
   iconTooltip?: Nullable<Omit<TooltipProps, "children">>;
+  /**
+   * The description to display below the Action's label.
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
+  description?: Nullable<string>;
 };
 
 export type DefaultActionProps = Required<ActionProps>;
