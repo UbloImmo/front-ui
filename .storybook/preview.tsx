@@ -53,7 +53,9 @@ const preview: Preview = {
       },
     },
   },
+
   decorators: StoryDecorator,
+  tags: ["autodocs"]
 };
 
 export default preview;

@@ -28,10 +28,6 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  core: {
-    builder: "@storybook/builder-vite",
-  },
-
   docs: {},
 
   async viteFinal(config, { configType }) {
@@ -84,6 +80,6 @@ const config: StorybookConfig = {
 
   typescript: {
     reactDocgen: "react-docgen",
-  },
+  }
 };
 export default config;

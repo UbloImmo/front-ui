@@ -37,6 +37,7 @@ export { Figma } from "./Figma.icon";
 export { FigmaFill } from "./FigmaFill.icon";
 export { Fire } from "./Fire.icon";
 export { FireFill } from "./FireFill.icon";
+export { FolderSparkle } from "./FolderSparkle.icon";
 export { Grab } from "./Grab.icon";
 export { GrabHorizontal } from "./GrabHorizontal.icon";
 export { Hand } from "./Hand.icon";
