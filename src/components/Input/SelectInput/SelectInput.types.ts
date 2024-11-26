@@ -3,6 +3,7 @@ import { InputProps, InputValue } from "../Input.types";
 import { IconName } from "@/components/Icon";
 import { StyleProps } from "@types";
 
+import type { TestIdProps } from "@types";
 import type {
   NullishPrimitives,
   MaybeAsyncFn,
@@ -24,7 +25,7 @@ export type SelectOption<
   icon?: IconName;
   active?: boolean;
   extraData?: TExtraData;
-};
+} & TestIdProps;
 
 export type SelectOptionItemStyleProps = StyleProps<
   SelectOption<NullishPrimitives>

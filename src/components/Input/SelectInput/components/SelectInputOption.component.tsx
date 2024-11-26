@@ -15,7 +15,7 @@ import {
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
 import { FlexRowLayout } from "@layouts";
-import { useStyleProps } from "@utils";
+import { useStyleProps, useTestId } from "@utils";
 
 import type {
   SelectOptionItemStyleProps,
@@ -66,6 +66,8 @@ const SelectInputOption = <
     [contentColor, option]
   );
 
+  const testId = useTestId("input-select-option", option);
+
   if (Option)
     return (
       <CustomSelectOptionContainer
@@ -73,7 +75,7 @@ const SelectInputOption = <
         onClick={propagateSelection}
         aria-selected={option.active}
         data-active={option.active}
-        data-testid="input-select-option"
+        data-testid={testId}
         aria-disabled={option.disabled}
         {...styleProps}
         tabIndex={option.disabled ? -1 : 0}
@@ -88,7 +90,7 @@ const SelectInputOption = <
       onClick={propagateSelection}
       aria-selected={option.active}
       data-active={option.active}
-      data-testid="input-select-option"
+      data-testid={testId}
       aria-disabled={option.disabled}
       {...styleProps}
       tabIndex={option.disabled ? -1 : 0}

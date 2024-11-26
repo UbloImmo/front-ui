@@ -454,6 +454,8 @@ const customAddressContents: FormContent<Address>[] = [
     kind: "custom-field",
     source: "street",
     label: "Custom Fist name input",
+    testId: "custom-field-test-id",
+    overrideTestId: true,
     assistiveText: "This input was rendered using a custom field",
     CustomInput,
   },
@@ -602,9 +604,13 @@ const tableFormProps: FormProps<IdentityTable> = {
         {
           type: "select",
           source: "professionalInfo.role",
+          testId: "job-title-test-id",
+          overrideTestId: true,
           label: "Job title",
           options: [
             {
+              testId: "developer-test-id",
+              overrideTestId: true,
               label: "Developer",
               value: "dev",
             },
@@ -674,9 +680,13 @@ const tableFormProps: FormProps<IdentityTable> = {
         searchable: true,
         controlIcon: "Search",
         unique: ["name"],
+        testId: "bank-accounts-footer-test-id",
+        overrideTestId: true,
         filterOption: ({ value }) => !value?.name?.includes("HSBC"),
         options: [
           {
+            testId: "credit-agricole-test-id",
+            overrideTestId: true,
             label: "Credit agricole",
             value: {
               name: "Credit agricole",
