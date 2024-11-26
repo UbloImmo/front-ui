@@ -59,9 +59,8 @@ const onChange = mock<VoidFn>(() => {});
 
 testComboBox({ ...ComboBox.defaultProps, options, onChange })(
   "should select option on click",
-  async ({ queryAllByTestId, debug }, { click }) => {
+  async ({ queryAllByTestId }, { click }) => {
     const comboBoxButton = await queryAllByTestId("combo-box-button");
-    debug(comboBoxButton);
     await click(comboBoxButton[0]);
     expect(onChange).toHaveBeenCalled();
     expect(onChange).toHaveBeenCalledWith(["option-1"]);
@@ -71,9 +70,8 @@ testComboBox({ ...ComboBox.defaultProps, options, onChange })(
 
 testComboBox({ ...ComboBox.defaultProps, options, onChange, multi: true })(
   "should select multiple options on click",
-  async ({ queryAllByTestId, debug }, { click }) => {
+  async ({ queryAllByTestId }, { click }) => {
     const comboBoxButton = await queryAllByTestId("combo-box-button");
-    debug(comboBoxButton);
     await click(comboBoxButton[0]);
     expect(onChange).toHaveBeenCalled();
     expect(onChange).toHaveBeenCalledWith(["option-1"]);
@@ -94,9 +92,8 @@ testComboBox({
   multi: true,
 })(
   "should deselect option on click on multiple selection",
-  async ({ queryAllByTestId, debug }, { click }) => {
+  async ({ queryAllByTestId }, { click }) => {
     const comboBoxButton = await queryAllByTestId("combo-box-button");
-    debug(comboBoxButton);
     await click(comboBoxButton[0]);
     expect(onChange).toHaveBeenCalled();
     expect(onChange).toHaveBeenCalledWith(["option-2"]);
@@ -115,9 +112,8 @@ testComboBox({
   onChange,
 })(
   "should deselect option on click on single selection",
-  async ({ queryAllByTestId, debug }, { click }) => {
+  async ({ queryAllByTestId }, { click }) => {
     const comboBoxButton = await queryAllByTestId("combo-box-button");
-    debug(comboBoxButton);
 
     await click(comboBoxButton[0]);
     expect(onChange).toHaveBeenCalled();
@@ -171,8 +167,7 @@ testComboBox({
   ...ComboBox.defaultProps,
   options,
   columns: 2,
-})("should display options in columns", async ({ debug, queryByTestId }) => {
-  debug();
+})("should display options in columns", async ({ queryByTestId }) => {
   const grid = queryByTestId("grid combo-box");
   expect(grid).not.toBeNull();
 });
