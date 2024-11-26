@@ -195,7 +195,8 @@ export type FormFieldPropsLax<TData extends object> = {
           >,
           OmittedFieldKeys
         > &
-        FormFieldLayoutProps;
+        FormFieldLayoutProps &
+        TestIdProps;
 }[InputType];
 
 /**
@@ -233,7 +234,8 @@ export type FormFieldProps<TData extends object> = {
             >,
             OmittedFieldKeys
           > &
-          FormFieldLayoutProps
+          FormFieldLayoutProps &
+          TestIdProps
       : FormFieldPropsLax<TData>
     : never;
 }[FormFieldSource<TData, InputType>];

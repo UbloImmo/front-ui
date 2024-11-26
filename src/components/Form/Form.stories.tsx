@@ -72,6 +72,8 @@ const addressFormProps: FormProps<Address> = {
       type: "text",
       source: "street",
       label: "Street",
+      testId: "street-input",
+      overrideTestId: true,
     },
     {
       type: "number",
