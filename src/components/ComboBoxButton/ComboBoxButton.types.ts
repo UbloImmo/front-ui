@@ -102,5 +102,5 @@ export type ComboBoxButtonContainerStyleProps =
 
 export type ComboButtonIconContainerStyleProps = Pick<
   ComboBoxButtonContainerStyleProps,
-  "$active"
+  "$active" | "$disabled"
 >;
