@@ -63,6 +63,20 @@ describe("Input", async () => {
   testNumberInput({
     onChange,
     value: 15,
+  })(
+    "should increment on arrow up (keyboard)",
+    async ({ findByTestId }, { click, keyboard }) => {
+      const input = (await findByTestId(testId)) as HTMLInputElement;
+
+      await click(input);
+      await keyboard("[ArrowUp]");
+      expect(input.value).toBe("16");
+    }
+  );
+
+  testNumberInput({
+    onChange,
+    value: 15,
   })("should decrement", async ({ findByTestId }, { click }) => {
     const input = (await findByTestId(testId)) as HTMLInputElement;
     const button = (await findByTestId(
@@ -70,5 +84,28 @@ describe("Input", async () => {
     )) as HTMLDivElement;
     await click(button);
     expect(input.value).toBe("14");
+  });
+
+  testNumberInput({
+    onChange,
+    value: 15,
+  })(
+    "should decrement on arrow down (keyboard)",
+    async ({ findByTestId }, { click, keyboard }) => {
+      const input = (await findByTestId(testId)) as HTMLInputElement;
+
+      await click(input);
+      await keyboard("[ArrowDown]");
+      expect(input.value).toBe("14");
+    }
+  );
+
+  testNumberInput({
+    onChange,
+    value: 15,
+    scale: 3,
+  })("should scale value", async ({ findByTestId }) => {
+    const input = (await findByTestId(testId)) as HTMLInputElement;
+    expect(input.value).toBe("0.015");
   });
 });

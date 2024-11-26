@@ -221,7 +221,9 @@ export const computeCurrencySign = (
  * @param {string} nativeStringValue - The input value to be sanitized.
  * @return {string} The sanitized currency input value.
  */
-const sanitizeCurrencyInputValue = (nativeStringValue: string): string => {
+export const sanitizeCurrencyInputValue = (
+  nativeStringValue: string
+): string => {
   return (
     nativeStringValue
       // remove start spaces
@@ -235,7 +237,7 @@ const sanitizeCurrencyInputValue = (nativeStringValue: string): string => {
       // only allow one consecutive negative sign
       // eslint-disable-next-line no-useless-escape
       .replaceAll(/\-+/g, "-")
-      // only allow a signe negative sign at the beginning
+      // only allow a negative sign at the beginning
       // eslint-disable-next-line no-useless-escape
       .replaceAll(/(\-[\d.,\s]*)(-)/g, "$1")
       // replace consective spaces with a single space
@@ -249,7 +251,7 @@ const sanitizeCurrencyInputValue = (nativeStringValue: string): string => {
  * @param {NativeInputValue} nativeValue - The input value to be formatted.
  * @return {GenericFn<[CurrencyInt], string>} - A function that takes a currency integer and returns the formatted currency input value.
  */
-const formatCurrencyInputValue =
+export const formatCurrencyInputValue =
   (nativeValue: NativeInputValue): GenericFn<[CurrencyInt], string> =>
   (currencyInt: CurrencyInt): string => {
     const floatValue = currencyIntToFloat(currencyInt);

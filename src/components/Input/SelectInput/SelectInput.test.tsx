@@ -3,7 +3,12 @@ import { describe, expect, mock } from "bun:test";
 
 import { SelectInput } from "./SelectInput.component";
 
+import { Badge } from "@/components/Badge";
+import { Text } from "@/components/Text";
 import { testComponentFactory } from "@/tests";
+import { FlexLayout } from "@layouts";
+
+import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const testId = "input-select";
 const testSelectInput = testComponentFactory("SelectInput", SelectInput);
@@ -17,11 +22,7 @@ const options = [
 const groupOptions = [
   {
     label: "Group 1",
-    options: [
-      { label: "Option 1", value: "1" },
-      { label: "Option 2", value: "2" },
-      { label: "Option 3", value: "3", disabled: true },
-    ],
+    options: options,
   },
 ];
 
@@ -55,6 +56,67 @@ describe("Input", () => {
       expect(optionsDropdown).not.toBeNull();
 
       expect(inputSelect.getAttribute("aria-expanded")).toBe("true");
+    }
+  );
+
+  testSelectInput({
+    options: options,
+    Option: (option) => (
+      <FlexLayout>
+        <Text>{option.label}</Text>
+        <Badge label={option.label} />
+      </FlexLayout>
+    ),
+  })(
+    "should render options in custom component",
+    async ({ queryByTestId, queryAllByTestId }, { click }) => {
+      const inputSelect = queryByTestId(
+        `${testId}-button`
+      ) as HTMLButtonElement;
+
+      await click(inputSelect);
+
+      expect(inputSelect).not.toBeNull();
+
+      expect(queryAllByTestId(`${testId}-option`)).not.toBeNull();
+    }
+  );
+
+  testSelectInput({
+    options: options,
+    Option: (option) => (
+      <FlexLayout>
+        <Text>{option.label}</Text>
+        <Badge label={option.label} />
+      </FlexLayout>
+    ),
+    SelectedOption: ({
+      value,
+    }: {
+      value: Nullable<NullishPrimitives>;
+      disabled?: boolean;
+    }) => {
+      const selectedOption = options.find((option) => option.value === value);
+      return selectedOption ? (
+        <Text>Selected: {selectedOption.label}</Text>
+      ) : null;
+    },
+  })(
+    "should render selected option in custom component",
+    async ({ queryByTestId, queryAllByTestId }, { click }) => {
+      const inputSelect = queryByTestId(
+        `${testId}-button`
+      ) as HTMLButtonElement;
+
+      await click(inputSelect);
+
+      expect(inputSelect).not.toBeNull();
+
+      expect(queryAllByTestId(`${testId}-option`)).not.toBeNull();
+
+      await click(queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement);
+
+      expect(inputSelect.textContent).toBe("Selected: Option 1");
     }
   );
 
@@ -97,25 +159,21 @@ describe("Input", () => {
     }
   );
 
+  const onBlur = mock(() => {});
+
   testSelectInput({
     options: options,
+    onBlur,
   })(
     "should select an option and show the selected value in the select",
-    async ({ queryByTestId }, { click }) => {
+    async ({ queryByTestId, queryAllByTestId }, { click }) => {
       const inputSelect = queryByTestId(
         `${testId}-button`
       ) as HTMLButtonElement;
 
       await click(inputSelect);
 
-      const optionsDropdown = queryByTestId(`${testId}-options`);
-      const optionsList = optionsDropdown?.querySelectorAll(
-        "[data-testid='input-select-option']"
-      );
-      expect(optionsDropdown).not.toBeNull();
-      expect(optionsList?.length).toBe(3);
-
-      await click(optionsList?.[0] as HTMLDivElement);
+      await click(queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement);
 
       expect(inputSelect.getAttribute("aria-expanded")).toBe("false");
       expect(inputSelect?.textContent).toBe("Option 1");
@@ -129,21 +187,14 @@ describe("Input", () => {
     onChange,
   })(
     "should trigger onChange with param when an option is selected",
-    async ({ queryByTestId }, { click }) => {
+    async ({ queryByTestId, queryAllByTestId }, { click }) => {
       const inputSelect = queryByTestId(
         `${testId}-button`
       ) as HTMLButtonElement;
 
       await click(inputSelect);
 
-      const optionsDropdown = queryByTestId(`${testId}-options`);
-      const optionsList = optionsDropdown?.querySelectorAll(
-        "[data-testid='input-select-option']"
-      );
-      expect(optionsDropdown).not.toBeNull();
-      expect(optionsList?.length).toBe(3);
-
-      await click(optionsList?.[0] as HTMLDivElement);
+      await click(queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement);
 
       expect(inputSelect.getAttribute("aria-expanded")).toBe("false");
       expect(inputSelect?.textContent).toBe("Option 1");
@@ -169,6 +220,23 @@ describe("Input", () => {
       await click(searchableInput);
       await keyboard("test");
       expect(searchableInput.value).toBe("test");
+    }
+  );
+
+  testSelectInput({ options: options, clearable: true, value: "1" })(
+    "should clear the selected option when clearable is true",
+    async ({ queryByTestId }, { click }) => {
+      const inputSelect = queryByTestId(
+        `${testId}-button`
+      ) as HTMLButtonElement;
+
+      expect(inputSelect.textContent).toBe("Option 1");
+
+      const clearButton = queryByTestId(`${testId}-clear`) as HTMLDivElement;
+      expect(clearButton).not.toBeNull();
+      await click(clearButton);
+
+      expect(inputSelect.textContent).toBe("");
     }
   );
 });

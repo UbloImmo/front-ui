@@ -13,6 +13,11 @@ const sampleIcons: IconName[] = [
   "EmojiNeutral",
 ];
 
+const sampleIconsSubSets: IconName[][] = [
+  ["EmojiHeartEyes", "EmojiSmile", "EmojiNeutral"],
+  ["EmojiHeartEyes", "EmojiSmile", "EmojiNeutral"],
+];
+
 const testIconPicker = testComponentFactory("IconPicker", IconPicker);
 
 testIconPicker(IconPicker.defaultProps)(
@@ -31,6 +36,17 @@ testIconPicker({
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryAllByTestId(`${testId}-item`)).not.toBeNull();
     expect(queryAllByTestId(`${testId}-item`)).toHaveLength(3);
+  }
+);
+
+testIconPicker({
+  ...IconPicker.defaultProps,
+  icons: sampleIconsSubSets,
+})(
+  "should render with a sub-set of icons",
+  ({ queryByTestId, queryAllByTestId }) => {
+    expect(queryByTestId(testId)).not.toBeNull();
+    expect(queryAllByTestId(`${testId}-item`)).not.toBeNull();
   }
 );
 

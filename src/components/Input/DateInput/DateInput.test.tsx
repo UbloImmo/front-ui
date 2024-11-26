@@ -106,6 +106,22 @@ describe("Input", () => {
     }
   );
 
+  testDefaultProps(
+    "should toggle calendar with keyboards",
+    async ({ findByTestId, queryByTestId }, { keyboard, click }) => {
+      const input = await findByTestId(testId);
+      expect(input).not.toBeNull();
+      await click(input);
+      await keyboard("[Space]");
+      const calendar = await findByTestId(calendarTestId);
+      expect(calendar).not.toBeNull();
+
+      await keyboard("[Escape]");
+      const closedCalendar = await queryByTestId(calendarTestId);
+      expect(closedCalendar).toBeNull();
+    }
+  );
+
   const onChange = mock(() => {});
 
   const testControlled = testDateInput({

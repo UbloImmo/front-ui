@@ -36,10 +36,7 @@ testModal({ open: false })(
   }
 );
 
-testModal({ open: true })(
-  "should not render if closed",
-  async ({ findByTestId }) => {
-    const res = await findByTestId(testId);
-    expect(res).not.toBeNull();
-  }
-);
+testModal({ open: true })("should render if open", async ({ findByTestId }) => {
+  const res = await findByTestId(testId);
+  expect(res).not.toBeNull();
+});
