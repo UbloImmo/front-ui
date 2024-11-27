@@ -14,9 +14,9 @@ const testId = "input-select";
 const testSelectInput = testComponentFactory("SelectInput", SelectInput);
 
 const options = [
-  { label: "Option 1", value: "1" },
-  { label: "Option 2", value: "2" },
-  { label: "Option 3", value: "3", disabled: true },
+  { label: "Apple", value: "1" },
+  { label: "Banana", value: "2" },
+  { label: "Cherry", value: "3", disabled: true },
 ];
 
 const groupOptions = [
@@ -116,7 +116,7 @@ describe("Input", () => {
 
       await click(queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement);
 
-      expect(inputSelect.textContent).toBe("Selected: Option 1");
+      expect(inputSelect.textContent).toBe("Selected: Apple");
     }
   );
 
@@ -176,7 +176,7 @@ describe("Input", () => {
       await click(queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement);
 
       expect(inputSelect.getAttribute("aria-expanded")).toBe("false");
-      expect(inputSelect?.textContent).toBe("Option 1");
+      expect(inputSelect?.textContent).toBe("Apple");
     }
   );
 
@@ -197,7 +197,7 @@ describe("Input", () => {
       await click(queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement);
 
       expect(inputSelect.getAttribute("aria-expanded")).toBe("false");
-      expect(inputSelect?.textContent).toBe("Option 1");
+      expect(inputSelect?.textContent).toBe("Apple");
 
       expect(onChange).toHaveBeenCalled();
       expect(onChange).toHaveBeenCalledWith("1");
@@ -223,6 +223,31 @@ describe("Input", () => {
     }
   );
 
+  testSelectInput({ options: groupOptions, searchable: true })(
+    "should filter out options when typing in the search input",
+    async ({ queryByTestId, queryAllByTestId }, { click, keyboard }) => {
+      const inputSelect = queryByTestId(
+        `${testId}-button`
+      ) as HTMLButtonElement;
+      await click(inputSelect);
+      const searchableInput = queryByTestId(
+        `${testId}-query`
+      ) as HTMLInputElement;
+
+      const options = queryAllByTestId(`${testId}-option`);
+      expect(options).toHaveLength(3);
+
+      expect(searchableInput).not.toBeNull();
+
+      await click(searchableInput);
+      await keyboard("Banana");
+      expect(searchableInput.value).toBe("Banana");
+
+      const filteredOptions = queryAllByTestId(`${testId}-option`);
+      expect(filteredOptions).toHaveLength(1);
+    }
+  );
+
   testSelectInput({ options: options, clearable: true, value: "1" })(
     "should clear the selected option when clearable is true",
     async ({ queryByTestId }, { click }) => {
@@ -230,7 +255,7 @@ describe("Input", () => {
         `${testId}-button`
       ) as HTMLButtonElement;
 
-      expect(inputSelect.textContent).toBe("Option 1");
+      expect(inputSelect.textContent).toBe("Apple");
 
       const clearButton = queryByTestId(`${testId}-clear`) as HTMLDivElement;
       expect(clearButton).not.toBeNull();
