@@ -181,7 +181,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
         fill
         role="combobox"
         testId={testId}
-        overrideTestId
+        // overrideTestId
         id={mergedProps.id}
       >
         {(options ?? []).map((option, index) => (
@@ -216,7 +216,11 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
             fill="force"
             key={"create-button"}
           >
-            <ActionIcon {...actionIconProps} />
+            <ActionIcon
+              {...actionIconProps}
+              testId={`${testId}-create-button`}
+              overrideTestId
+            />
           </GridItem>
         )}
       </GridLayout>
@@ -251,7 +255,13 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
           deleteLabel={mergedProps.optionDeleteLabel}
         />
       ))}
-      {creatable && <ActionIcon {...actionIconProps} />}
+      {creatable && (
+        <ActionIcon
+          {...actionIconProps}
+          testId={`${testId}-create-button`}
+          overrideTestId
+        />
+      )}
     </FlexLayout>
   );
 };

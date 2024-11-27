@@ -1,3 +1,5 @@
+import { fn } from "@storybook/test";
+
 import { ComboBox } from "./ComboBox.component";
 
 import { ComponentVariants } from "@docs/blocks";
@@ -34,6 +36,7 @@ const meta = {
     options,
     direction: "column",
     multi: false,
+    onChange: fn(),
   },
   argTypes: {
     multi: {
@@ -134,4 +137,38 @@ export const ShowIcon = () => {
       propLabels
     />
   );
+};
+
+export const Creatable: Story = {
+  args: {
+    creatable: true,
+    multi: true,
+    showIcon: false,
+    onCreate: fn(),
+  },
+};
+
+export const EditingAndDeletingOptions: Story = {
+  args: {
+    options: [
+      {
+        label: "Option 1",
+        value: "option-1",
+        editable: true,
+        deletable: true,
+      },
+      {
+        label: "Option 2",
+        value: "option-2",
+        editable: true,
+        deletable: true,
+      },
+    ],
+    creatable: true,
+    onOptionDelete: fn(),
+    onOptionEdit: fn(),
+    direction: "row",
+    optionDeleteLabel: "Delete me !",
+    optionEditLabel: "Edit me!",
+  },
 };
