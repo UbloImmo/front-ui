@@ -1,8 +1,9 @@
 import { describe, expect, mock } from "bun:test";
 
 import { MultiSelectInput } from "./MultiSelectInput.component";
+import { useMultiSelectValue } from "./MultiSelectInput.utils";
 
-import { testComponentFactory } from "@/tests";
+import { testComponentFactory, testHookFactory } from "@/tests";
 
 const testId = "input-multi-select";
 const testMultiSelectInput = testComponentFactory(
@@ -171,3 +172,29 @@ testMultiSelectInput({
     onChange.mockReset();
   }
 );
+
+const testUseMultiSelectValue = () => {
+  type Hook = typeof useMultiSelectValue;
+  const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
+    "useMultiSelectValue",
+    useMultiSelectValue
+  );
+
+  testHook(
+    {
+      ...MultiSelectInput.defaultProps,
+      onChange,
+    },
+    [],
+    []
+  )("should handle null options", (result) => {
+    expect(result.internalValue.size).toBe(0);
+
+    result.selectOption(null);
+    expect(result.internalValue.size).toBe(0);
+  });
+};
+
+describe("useMultiSelectValue", () => {
+  testUseMultiSelectValue();
+});
