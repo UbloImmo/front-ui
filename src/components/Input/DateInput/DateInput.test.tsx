@@ -129,7 +129,7 @@ describe("Input", () => {
 
   testDateInput({ onChange })(
     "should select a date from the calendar",
-    async ({ findByTestId, debug }, { click }) => {
+    async ({ findByTestId }, { click }) => {
       const input = (await findByTestId(testId)) as HTMLInputElement;
       expect(input).not.toBeNull();
 
@@ -156,8 +156,6 @@ describe("Input", () => {
 
       const expectedDate = dateISOToDateStr(dateToDateISO(new Date())) ?? "";
       expect(input.value).toBe(expectedDate);
-
-      debug();
     }
   );
 
