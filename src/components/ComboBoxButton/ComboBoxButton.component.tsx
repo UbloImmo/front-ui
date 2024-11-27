@@ -213,7 +213,10 @@ const ComboBoxButton = (
           onOpenChange={setMenuOpen}
           items={contextMenuItems}
         >
-          <ComboBoxContextMenuTrigger type="button">
+          <ComboBoxContextMenuTrigger
+            type="button"
+            data-testid={`${testId}-context-menu`}
+          >
             <Icon name="ThreeDotsVertical" color={iconProps.color} />
           </ComboBoxContextMenuTrigger>
         </ContextMenu>
