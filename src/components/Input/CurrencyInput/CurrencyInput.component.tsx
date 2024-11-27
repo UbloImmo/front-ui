@@ -102,7 +102,12 @@ const CurrencyInput = (
         {...inputStyles}
       />
       {mergedProps.showSign && (
-        <SignControl {...inputStyles} $anchor="left" onClick={toggleSign}>
+        <SignControl
+          data-testid={`${testId}-sign-control`}
+          {...inputStyles}
+          $anchor="left"
+          onClick={toggleSign}
+        >
           <Icon name={signIcon} />
         </SignControl>
       )}

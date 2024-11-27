@@ -19,7 +19,7 @@ import {
 import { testComponentFactory } from "@/tests";
 
 import type { CurrencyFloat, CurrencyInt } from "@types";
-import type { VoidFn } from "@ubloimmo/front-util";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 const testId = "input-currency";
 
@@ -38,6 +38,62 @@ describe("Input", () => {
   testInput({})("should render", async ({ findByTestId }) => {
     expect(await findByTestId(testId)).not.toBeNull();
   });
+
+  const onChange = mock((_value: Nullable<number>) => {});
+
+  testInput({ onChange })(
+    "should format the value while typing",
+    async ({ queryByTestId }, { click, keyboard }) => {
+      const input = queryByTestId(testId) as HTMLInputElement;
+
+      await click(input);
+      await keyboard("12.000");
+
+      expect(onChange).toHaveBeenCalledWith(1200);
+      expect(input.value).toBe("12,00");
+      onChange.mockReset();
+    }
+  );
+
+  testInput({ onChange, showSign: true, value: 1200, min: -2000 })(
+    "should revert the value when clicking the plus/minus button",
+    async ({ queryByTestId }, { click }) => {
+      const signButton = queryByTestId(
+        `${testId}-sign-control`
+      ) as HTMLDivElement;
+      expect(signButton).not.toBeNull();
+      await click(signButton);
+
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith(-1200);
+      onChange.mockReset();
+    }
+  );
+
+  testInput({
+    onChange,
+    showSign: true,
+    defaultSign: "-",
+    value: -120,
+    min: -2000,
+  })(
+    "should still trigger negative values onChange when typing if the control is negative",
+    async ({ queryByTestId }, { click, keyboard }) => {
+      const input = queryByTestId(testId) as HTMLInputElement;
+      const signButton = queryByTestId(
+        `${testId}-sign-control`
+      ) as HTMLDivElement;
+      expect(signButton).not.toBeNull();
+
+      await click(input);
+      await keyboard("[Backspace][Backspace][Backspace][Backspace][Backspace]");
+      await keyboard("12.00");
+
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith(-120);
+      onChange.mockReset();
+    }
+  );
 
   describe("CurrencyInput", () => {
     describe("currencyIntToFloat", () => {
