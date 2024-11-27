@@ -1,3 +1,5 @@
+import { fn } from "@storybook/test";
+
 import { DateInput } from "./DateInput.component";
 import { DateInputProps } from "./DateInput.types";
 import {
@@ -16,6 +18,7 @@ const meta = {
   component: DateInput,
   args: {
     uncontrolled: true,
+    onChange: fn(),
   },
   argTypes: {
     value: {

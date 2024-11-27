@@ -3,6 +3,9 @@ import { describe, expect, it, mock } from "bun:test";
 
 import { DateInput } from "./DateInput.component";
 import {
+  dateISOToDateNativeStr,
+  dateISOToDateStr,
+  dateToDateISO,
   isValidDate,
   isValidDateISO,
   isValidDateNativeStr,
@@ -123,6 +126,40 @@ describe("Input", () => {
   );
 
   const onChange = mock(() => {});
+
+  testDateInput({ onChange })(
+    "should select a date from the calendar",
+    async ({ findByTestId, debug }, { click }) => {
+      const input = (await findByTestId(testId)) as HTMLInputElement;
+      expect(input).not.toBeNull();
+
+      const control = await findByTestId(controlTestId);
+      expect(control).not.toBeNull();
+      await click(control);
+
+      const dateToSelect = dateISOToDateNativeStr(dateToDateISO(new Date()));
+
+      const dayCell = await findByTestId(calendarTestId).then((calendar) => {
+        return calendar.querySelector(
+          `td[role="gridcell"][data-day="${dateToSelect}"]`
+        );
+      });
+      expect(dayCell).not.toBeNull();
+
+      const dayButton = dayCell?.querySelector(
+        "button.rdp-day_button"
+      ) as HTMLElement;
+      expect(dayButton).not.toBeNull();
+
+      await click(dayButton);
+      expect(onChange).toHaveBeenCalled();
+
+      const expectedDate = dateISOToDateStr(dateToDateISO(new Date())) ?? "";
+      expect(input.value).toBe(expectedDate);
+
+      debug();
+    }
+  );
 
   const testControlled = testDateInput({
     value: dateFormats.ISO,
