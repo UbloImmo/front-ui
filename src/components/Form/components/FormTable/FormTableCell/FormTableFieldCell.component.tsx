@@ -2,6 +2,11 @@ import { isFunction, isString } from "@ubloimmo/front-util";
 import { useMemo, type FC, type ReactNode } from "react";
 import styled from "styled-components";
 
+import {
+  FormTableCellControls,
+  type FormTableCellControlsProps,
+} from "./FormTableCellControls.component";
+
 import { useFormContext } from "@/components/Form/Form.context";
 import { computeFieldDisplayContent } from "@/components/Form/Form.format";
 import { Input, useInputId, type InputType } from "@/components/Input";
@@ -11,9 +16,10 @@ import { TableCell } from "@layouts";
 
 import type { BuiltFieldProps } from "@/components/Form/Form.types";
 
-type FormTableFieldCellProps = BuiltFieldProps<InputType> & {
-  colSpan: number;
-};
+type FormTableFieldCellProps = BuiltFieldProps<InputType> &
+  FormTableCellControlsProps & {
+    colSpan: number;
+  };
 
 /**
  * Renders a form field inside a table cell, depending on the form mode.
@@ -30,6 +36,9 @@ type FormTableFieldCellProps = BuiltFieldProps<InputType> & {
 export const FormTableFieldCell = ({
   layout,
   colSpan,
+  controls,
+  isFirst,
+  isLast,
   ...props
 }: FormTableFieldCellProps): JSX.Element => {
   const { isEditing } = useFormContext();
@@ -56,15 +65,24 @@ export const FormTableFieldCell = ({
   const inputId = useInputId(props);
 
   return (
-    <TableCell padded={isDisplay} colSpan={colSpan}>
+    <FormTableCell padded={isDisplay} colSpan={colSpan}>
+      <FormTableCellControls
+        controls={controls}
+        isFirst={isFirst}
+        isLast={isLast}
+      />
       {isDisplay ? (
         <FormTableDisplayCellInner>{displayContent}</FormTableDisplayCellInner>
       ) : (
         <Input {...props} table id={inputId} />
       )}
-    </TableCell>
+    </FormTableCell>
   );
 };
+
+const FormTableCell = styled(TableCell)`
+  position: relative;
+`;
 
 const FormTableDisplayCellInner = styled.div`
   min-height: var(--s-6);

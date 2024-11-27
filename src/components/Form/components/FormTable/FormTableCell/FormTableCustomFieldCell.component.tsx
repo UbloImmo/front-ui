@@ -1,5 +1,10 @@
 import { useMemo } from "react";
+import styled from "styled-components";
 
+import {
+  FormTableCellControls,
+  type FormTableCellControlsProps,
+} from "./FormTableCellControls.component";
 import { useFormContext } from "../../../Form.context";
 
 import { useInputId } from "@/components/Input";
@@ -7,10 +12,11 @@ import { TableCell } from "@layouts";
 
 import type { BuiltFormCustomFieldProps } from "../../../Form.types";
 
-type FormTableCustomFieldCellProps = BuiltFormCustomFieldProps & {
-  rowIndex: number;
-  colSpan: number;
-};
+type FormTableCustomFieldCellProps = BuiltFormCustomFieldProps &
+  FormTableCellControlsProps & {
+    rowIndex: number;
+    colSpan: number;
+  };
 
 /**
  * Renders a custom form field inside a table cell, depending on the form mode.
@@ -33,6 +39,9 @@ export const FormTableCustomFieldCell = ({
   CustomInput,
   rowIndex,
   colSpan,
+  isLast,
+  isFirst,
+  controls,
   ...props
 }: FormTableCustomFieldCellProps): JSX.Element => {
   const { isEditing } = useFormContext();
@@ -48,8 +57,17 @@ export const FormTableCustomFieldCell = ({
   const inputId = useInputId(props);
 
   return (
-    <TableCell colSpan={colSpan}>
+    <FormTableCell colSpan={colSpan}>
+      <FormTableCellControls
+        controls={controls}
+        isFirst={isFirst}
+        isLast={isLast}
+      />
       <CustomInput {...customFieldProps} id={inputId} rowIndex={rowIndex} />
-    </TableCell>
+    </FormTableCell>
   );
 };
+
+const FormTableCell = styled(TableCell)`
+  position: relative;
+`;
