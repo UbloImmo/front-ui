@@ -1,4 +1,4 @@
-import { describe, expect } from "bun:test";
+import { describe, expect, mock } from "bun:test";
 
 import { MultiSelectInput } from "./MultiSelectInput.component";
 
@@ -103,8 +103,11 @@ describe("Input", () => {
   );
 });
 
+const onChange = mock(() => {});
+
 testMultiSelectInput({
   options: options,
+  onChange,
 })(
   "should select an option on click",
   async ({ queryByTestId, queryAllByTestId }, { click }) => {
@@ -118,11 +121,14 @@ testMultiSelectInput({
 
     expect(inputSelect.getAttribute("aria-expanded")).toBe("false");
     expect(inputSelect.textContent).toBe("Option 2");
+    expect(onChange).toHaveBeenCalledWith(["2"]);
+    onChange.mockReset();
   }
 );
 
 testMultiSelectInput({
   options: options,
+  onChange,
 })(
   "should select multiple options",
   async ({ queryByTestId, queryAllByTestId }, { click }) => {
@@ -137,12 +143,15 @@ testMultiSelectInput({
 
     expect(inputSelect.textContent).toContain("Option 1");
     expect(inputSelect.textContent).toContain("Option 2");
+    expect(onChange).toHaveBeenCalledWith(["1", "2"]);
+    onChange.mockReset();
   }
 );
 
 testMultiSelectInput({
   options: options,
   value: ["1", "2"],
+  onChange,
 })(
   "should unselect option",
   async ({ queryByTestId, queryAllByTestId }, { click }) => {
@@ -158,5 +167,7 @@ testMultiSelectInput({
 
     expect(inputSelect.textContent).not.toContain("Option 1");
     expect(inputSelect.textContent).toBe("Option 2");
+    expect(onChange).toHaveBeenCalledWith(["2"]);
+    onChange.mockReset();
   }
 );
