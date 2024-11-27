@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- `v0.0.19` Form component
+  - Rework FormTable controls markup and styles to fix css bug in Safari
+
 ## 0.35.2 - 2024-11-26
 
 ## 0.35.1 - 2024-11-26
