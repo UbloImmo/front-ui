@@ -248,6 +248,26 @@ describe("Input", () => {
     }
   );
 
+  testSelectInput({ options: options, searchable: true, value: "1" })(
+    "should not filter options on the dropdown while query is equal to the selected value",
+    async ({ queryByTestId, queryAllByTestId }, { click }) => {
+      const inputSelect = queryByTestId(
+        `${testId}-button`
+      ) as HTMLButtonElement;
+      await click(inputSelect);
+      const searchableInput = queryByTestId(
+        `${testId}-query`
+      ) as HTMLInputElement;
+
+      expect(searchableInput).not.toBeNull();
+
+      await click(searchableInput);
+
+      const options = queryAllByTestId(`${testId}-option`);
+      expect(options).toHaveLength(3);
+    }
+  );
+
   testSelectInput({ options: options, clearable: true, value: "1" })(
     "should clear the selected option when clearable is true",
     async ({ queryByTestId }, { click }) => {
