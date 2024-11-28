@@ -154,14 +154,10 @@ export const EditingAndDeletingOptions: Story = {
       {
         label: "Option 1",
         value: "option-1",
-        editable: true,
-        deletable: true,
       },
       {
         label: "Option 2",
         value: "option-2",
-        editable: true,
-        deletable: true,
       },
     ],
     creatable: true,

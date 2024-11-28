@@ -17,13 +17,19 @@ A single button in a [ComboBox](?path=/docs/components-combobox-usage--docs).
 
 #### Active state
 
+The activation/deactivation of the button is handled by the `active` property.
+
 <Canvas of={ComboBoxButtonStories.Active} />
 
 #### Disabled
 
+As a button, `ComboBoxButton` can be disabled, by setting the `disabled` property.
+
 <Canvas of={ComboBoxButtonStories.Disabled} />
 
 ### Selection modes
+
+To enable the selection of multiple options, set the `multiple` property to `true`.
 
 <Canvas of={ComboBoxButtonStories.Multi} />
 
@@ -35,8 +41,23 @@ A single button in a [ComboBox](?path=/docs/components-combobox-usage--docs).
 
 #### Description
 
+To complement the label, you can provide a description, using the `description` property.
+
 <Canvas of={ComboBoxButtonStories.Description} />
 
+#### Editing and Deleting options
 
+`ComboBoxButton` can display editing and deleting options in a menu. Use the following properties to set those options:
+
+- _editable_: enable the editing option
+- _deletable_: enable the deleting option
+- _optionEditLabel_: customize the label of the editing option
+- _optionDeleteLabel_: customize the label of the deleting option
+- _onEdit_: set the callback for the editing option
+- _onDelete_: set the callback for the deleting option
+
+> An [ActionIcon](?path=/docs/components-actionicon-usage--docs) will be displayed at the right of `ComboBoxButton`, triggering a [ContextMenu](?path=/docs/components-contextmenu-usage--docs) with your set of options.
+
+<Canvas of={ComboBoxButtonStories.WithMenu} />
 
 </Content>

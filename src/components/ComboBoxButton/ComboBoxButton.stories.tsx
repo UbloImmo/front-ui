@@ -117,10 +117,13 @@ export const Label = (props: ComboBoxButtonProps) => {
   );
 };
 
-export const Editable: Story = {
+export const WithMenu: Story = {
   args: {
     editable: true,
     onEdit: fn(),
-    editLabel: "Edit",
+    editLabel: "Edit me!",
+    deletable: true,
+    onDelete: fn(),
+    deleteLabel: "Delete me!",
   },
 };
