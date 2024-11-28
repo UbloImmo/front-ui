@@ -116,12 +116,11 @@ describe("Input", () => {
       expect(input).not.toBeNull();
       await click(input);
       await keyboard("[Space]");
-      const calendar = await findByTestId(calendarTestId);
-      expect(calendar).not.toBeNull();
+
+      expect(await findByTestId(calendarTestId)).not.toBeNull();
 
       await keyboard("[Escape]");
-      const closedCalendar = await queryByTestId(calendarTestId);
-      expect(closedCalendar).toBeNull();
+      expect(await queryByTestId(calendarTestId)).toBeNull();
     }
   );
 

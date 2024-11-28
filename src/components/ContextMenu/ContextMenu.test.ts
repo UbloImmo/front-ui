@@ -111,7 +111,6 @@ testContextMenu({
     const item = await findByTestId(`${testId}-item`);
     await click(item);
 
-    const closedPopover = await queryByTestId(testId);
-    expect(closedPopover).toBeNull();
+    expect(await queryByTestId(testId)).toBeNull();
   }
 );
