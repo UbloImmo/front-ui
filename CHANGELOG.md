@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   - Fix icon color when it is active and disabled
 
-- Add missing unit tests
+- Add unit tests for components with low code coverage
 
 ## 0.35.4 - 2024-11-28
 
