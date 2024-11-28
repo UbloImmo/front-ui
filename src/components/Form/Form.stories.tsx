@@ -419,7 +419,12 @@ const CustomInput = (props: CustomFormInputProps<string>) => {
   return (
     <FlexRowLayout gap="s-1" align="center" fill>
       <Icon name="Gear" />
-      <Input type="text" {...props} />
+      <Input
+        testId="custom-input-test-id"
+        overrideTestId
+        type="text"
+        {...props}
+      />
     </FlexRowLayout>
   );
 };
@@ -602,9 +607,13 @@ const tableFormProps: FormProps<IdentityTable> = {
         {
           type: "select",
           source: "professionalInfo.role",
+          testId: "job-title-test-id",
+          overrideTestId: true,
           label: "Job title",
           options: [
             {
+              testId: "developer-test-id",
+              overrideTestId: true,
               label: "Developer",
               value: "dev",
             },
@@ -674,9 +683,13 @@ const tableFormProps: FormProps<IdentityTable> = {
         searchable: true,
         controlIcon: "Search",
         unique: ["name"],
+        testId: "bank-accounts-footer-test-id",
+        overrideTestId: true,
         filterOption: ({ value }) => !value?.name?.includes("HSBC"),
         options: [
           {
+            testId: "credit-agricole-test-id",
+            overrideTestId: true,
             label: "Credit agricole",
             value: {
               name: "Credit agricole",

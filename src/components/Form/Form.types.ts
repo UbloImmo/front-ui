@@ -298,7 +298,7 @@ export type FormTableSelectFooter<TRowValue extends Record<string, unknown>> = {
   /**
    * A list of keys to de-duplicate options based on table data.
    *
-   * @remarks Options provided to selected footer will filtered not to include any value that already exists in the table.
+   * @remarks Options provided to selected footer will be filtered not to include any value that already exists in the table.
    *
    * @example
    * // type of a row
@@ -324,7 +324,8 @@ export type FormTableSelectFooter<TRowValue extends Record<string, unknown>> = {
    * @default []
    */
   unique?: KeyOf<TRowValue, string>[];
-} & Omit<SelectInputProps<Partial<TRowValue>>, "onChange" | "value">;
+} & Omit<SelectInputProps<Partial<TRowValue>>, "onChange" | "value"> &
+  TestIdProps;
 
 export type FormTableCustomFooter<TRowValue extends Record<string, unknown>> = {
   kind: "custom";

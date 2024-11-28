@@ -6,7 +6,7 @@ import {
   SelectInput,
   type SelectInputProps,
 } from "@/components/Input";
-import { useUikitTranslation } from "@utils";
+import { useTestId, useUikitTranslation } from "@utils";
 
 import type {
   BuiltFormTableCallbacks,
@@ -80,11 +80,13 @@ export const FormTableFooterSelect = ({
     [footerSelectProps, action, filterSelectOption, disabled, appendRow]
   );
 
+  const testId = useTestId("form-table-footer-select", footerSelectProps);
+
   return (
     <SelectInput
       {...selectProps}
       name="form-table-footer-select"
-      testId="form-table-footer-select"
+      testId={testId}
       overrideTestId
     />
   );
