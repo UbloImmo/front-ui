@@ -684,6 +684,15 @@ const useFormContent = <TData extends object>(
 
       const columnsCount = colSpans.reduce((acc, curr) => acc + curr, 0);
 
+      // Extract test ID props from the footer if it's a select variant
+      const footerWithTestId =
+        t?.footer && t.footer.kind === "select"
+          ? {
+              ...t.footer,
+              testId: t.footer.testId,
+            }
+          : t?.footer;
+
       return {
         kind: "table",
         stableId: tableId,
@@ -705,7 +714,7 @@ const useFormContent = <TData extends object>(
         deleteRow,
         appendRow,
         data: arrayValue,
-        footer: t?.footer ?? null,
+        footer: footerWithTestId ?? null,
         columnsCount,
         EmptyCard: t.EmptyCard ?? null,
         tableLayout: t.tableLayout ?? "auto",

@@ -574,7 +574,7 @@ export type FormCustomFieldProps<TData extends object> = {
           CustomInput: FC<
             CustomFormInputProps<TFieldValue & NullishPrimitives>
           >;
-        } & TestIdProps
+        }
     : never;
 }[FormSource<TData>];
 
@@ -582,7 +582,7 @@ export type BuiltFormCustomFieldProps = PreservedFieldProps &
   BuiltFormFieldLayoutProps &
   CustomFormInputProps<NullishPrimitives> & {
     CustomInput: FC<CustomFormInputProps<NullishPrimitives>>;
-  } & TestIdProps;
+  };
 
 // ---------------------------- FEATURE SWITCH ------------------------------
 

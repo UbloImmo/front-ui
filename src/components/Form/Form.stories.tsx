@@ -419,7 +419,12 @@ const CustomInput = (props: CustomFormInputProps<string>) => {
   return (
     <FlexRowLayout gap="s-1" align="center" fill>
       <Icon name="Gear" />
-      <Input type="text" {...props} />
+      <Input
+        testId="custom-input-test-id"
+        overrideTestId
+        type="text"
+        {...props}
+      />
     </FlexRowLayout>
   );
 };
@@ -454,8 +459,6 @@ const customAddressContents: FormContent<Address>[] = [
     kind: "custom-field",
     source: "street",
     label: "Custom Fist name input",
-    testId: "custom-field-test-id",
-    overrideTestId: true,
     assistiveText: "This input was rendered using a custom field",
     CustomInput,
   },
