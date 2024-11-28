@@ -502,6 +502,8 @@ const useFormContent = <TData extends object>(
         required,
         layout,
         type,
+        testId,
+        overrideTestId,
         ...rest
       } = formField;
 
@@ -519,6 +521,8 @@ const useFormContent = <TData extends object>(
         disabled: disabled || modifiers.disabled,
         required: isFieldRequired(source, required),
         layout: formLayout.buildFormFieldLayout(layout),
+        testId,
+        overrideTestId,
       };
     },
     [
@@ -690,6 +694,7 @@ const useFormContent = <TData extends object>(
           ? {
               ...t.footer,
               testId: t.footer.testId,
+              overrideTestId: t.footer.overrideTestId,
             }
           : t?.footer;
 
