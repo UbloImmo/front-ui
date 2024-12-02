@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- New icons (`@ubloimmo/front-tokens@0.1.28`)
+
 ### Fixed
 
 - `v0.0.10` ComboBoxButton component
