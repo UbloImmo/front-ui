@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New icons (`@ubloimmo/front-tokens@0.1.28`)
+- New icons (`@ubloimmo/front-tokens@0.1.29`)
 
 ### Fixed
 
