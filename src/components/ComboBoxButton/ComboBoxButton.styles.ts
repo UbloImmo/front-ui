@@ -114,7 +114,6 @@ export const ComboBoxButtonStyles = (): RuleSet => {
 
 export const ComboBoxIconContainerStyle = ({
   $active,
-  $disabled,
 }: ComboButtonIconContainerStyleProps) => {
   return css`
     position: relative;
@@ -126,14 +125,10 @@ export const ComboBoxIconContainerStyle = ({
 
       &:first-child {
         opacity: ${$active ? 1 : 0};
-        fill: cssVarUsage(
-          ${$active ? ($disabled ? "gray-400" : "primary-base") : "gray-800"}
-        );
       }
 
       &:last-child {
         opacity: ${$active ? 0 : 1};
-        fill: cssVarUsage(${$active ? "primary-base" : "gray-800"});
       }
     }
   `;

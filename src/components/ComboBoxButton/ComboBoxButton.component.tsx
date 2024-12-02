@@ -177,10 +177,7 @@ const ComboBoxButton = (
         aria-disabled={mergedProps.disabled}
       >
         {showIcon && (
-          <ComboBoxIconContainer
-            $active={active ?? false}
-            $disabled={mergedProps.disabled}
-          >
+          <ComboBoxIconContainer $active={active ?? false}>
             <Icon {...iconProps} />
             <Icon {...iconProps} />
           </ComboBoxIconContainer>
