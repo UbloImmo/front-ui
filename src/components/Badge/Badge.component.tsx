@@ -32,7 +32,7 @@ const defaultBadgeProps: DefaultBadgeProps = {
  *
  * @remarks Badge shades are based on two sets of colors, light and dark, depending on the shade prop.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {BadgeProps} props - the props for the Badge component
  * @return {Nullable<JSX.Element>} the Badge component

@@ -16,6 +16,7 @@ import {
   isSameShade,
   isValidHexStr,
   isValidRgbaStr,
+  normalizeToColorKey,
   rgbaColorConverter,
 } from "@utils";
 
@@ -345,5 +346,32 @@ describe("color comparison", () => {
     testColorComparison("blue", "blue", isSameShade, true);
     testColorComparison("blue", "red", isSameShade, false);
     testColorComparison("blue", "green", isSameShade, false);
+  });
+});
+
+describe("color normalization", () => {
+  describe("normalizeToColorKey", () => {
+    it("should extract color keys from palette colors", () => {
+      expect(normalizeToColorKey("gray-50")).toEqual("gray");
+      expect(normalizeToColorKey("success-base")).toEqual("success");
+      expect(normalizeToColorKey("warning-dark")).toEqual("warning");
+    });
+    it("should preserve color keys", () => {
+      expect(normalizeToColorKey("gray")).toEqual("gray");
+      expect(normalizeToColorKey("success")).toEqual("success");
+      expect(normalizeToColorKey("warning")).toEqual("warning");
+    });
+    it("should return the default color key if the color is not a valid color key or palette color", () => {
+      // @ts-expect-error needed to test the default case
+      expect(normalizeToColorKey("hello")).toEqual("gray");
+      // @ts-expect-error needed to test the default case
+      expect(normalizeToColorKey("grey", "primary")).toEqual("primary");
+      // @ts-expect-error needed to test the default case
+      expect(normalizeToColorKey(123, "primary")).toEqual("primary");
+      // @ts-expect-error needed to test the default case
+      expect(normalizeToColorKey("primaried-main", "warning")).toEqual(
+        "warning"
+      );
+    });
   });
 });

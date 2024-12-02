@@ -5,8 +5,24 @@ import {
   type MaybeAsyncFn,
   type Nullable,
   type NullishPrimitives,
+  isArray,
+  type VoidFn,
+  type GenericFn,
 } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type SetStateAction } from "react";
+
+import type {
+  DataArrayAtFn,
+  DataArrayFilterFn,
+  DataArrayFindFn,
+  DataArrayFindIndexFn,
+  DataArrayPushFn,
+  DataArrayRemoveFn,
+  DataArrayUnshiftFn,
+  DataArrayUpdateItemWhereFn,
+  UseDataArray,
+  UseDataArrayReturn,
+} from "@/types";
 
 type UseAsyncDataOnSuccessFn<TData extends NullishPrimitives> = MaybeAsyncFn<
   [TData]
@@ -15,6 +31,7 @@ type UseAsyncDataOnSuccessFn<TData extends NullishPrimitives> = MaybeAsyncFn<
 type UseAsyncDataOnErrorFn = MaybeAsyncFn<[Error]>;
 
 type UseAsyncDataOptions<TData extends NullishPrimitives> = {
+  defaultValue?: TData;
   onSuccess?: UseAsyncDataOnSuccessFn<TData>;
   onError?: UseAsyncDataOnErrorFn;
 };
@@ -140,11 +157,11 @@ export const useAsyncData = <TData extends NullishPrimitives>(
     [data, dataOrLoadingFn, error, isLoading, triggerLoadCallbacks]
   );
 
-  // trigger load on mount or if dataOrLoadingFn or options change
+  // trigger load on mount
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataOrLoadingFn, options]);
+  }, []);
 
   return { data, isLoading, error, refetch: loadData };
 };
@@ -186,3 +203,205 @@ export const createDelayedResponse =
   async (): Promise<TData> => {
     return await delayedResponse(response, ms);
   };
+
+/**
+ * Loads data from either a static array or an async function.
+ * If given an array, returns it directly.
+ * If given an async function, executes it and returns the result.
+ * Returns empty array if async function throws an error.
+ *
+ * @template TData The type of data elements
+ * @param {TData[] | AsyncFn<[], TData[]>} dataToLoad - Array of data or async function that returns array of data
+ * @returns {Promise<TData[]>} Promise that resolves to the loaded data array
+ */
+const loadData = async <TData>(
+  dataToLoad: TData[] | AsyncFn<[], TData[]>
+): Promise<TData[]> => {
+  if (isArray(dataToLoad)) return dataToLoad;
+  try {
+    return await dataToLoad();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+/**
+ * A custom React hook for managing an array of data that can be loaded asynchronously.
+ * Provides array manipulation methods and handles loading states.
+ *
+ * @template TData The type of elements in the array
+ *
+ * @param {TData[] | AsyncFn<[], TData[]>} rootData - Initial array data or async function that returns array data
+ * @param {boolean} [reactive=false] - Whether to reload data when rootData reference changes
+ *
+ * @returns {UseDataArrayReturn<TData>} An object containing the data array, loading state, and array manipulation methods
+ */
+export const useDataArray: UseDataArray = <TData>(
+  rootData: TData[] | AsyncFn<[], TData[]>,
+  reactive = false,
+  onDataChange?: VoidFn<[newData: TData[]]>
+): UseDataArrayReturn<TData> => {
+  const [data, setData] = useState<TData[]>(isArray(rootData) ? rootData : []);
+
+  const updateData = useCallback(
+    (newData: SetStateAction<TData[]>) => {
+      let updatedData: TData[];
+      setData((prev) => {
+        if (isFunction<GenericFn<[TData[]], TData[]>>(newData)) {
+          updatedData = newData(prev);
+        } else {
+          updatedData = newData;
+        }
+        if (onDataChange) onDataChange(updatedData);
+        return updatedData;
+      });
+    },
+    [onDataChange]
+  );
+
+  const [isLoading, setIsLoading] = useState<boolean>(!isArray(rootData));
+
+  useEffect(() => {
+    const loadAsyncData = async () => {
+      setIsLoading(true);
+      const loadedData = await loadData(rootData);
+      updateData(loadedData);
+      setIsLoading(false);
+    };
+    loadAsyncData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const refreshData = async () => {
+      if (!reactive) return;
+      setIsLoading(true);
+      const loadedData = await loadData(rootData);
+      const isDifferent = JSON.stringify(loadedData) !== JSON.stringify(data);
+      if (isDifferent) updateData(loadedData);
+      setIsLoading(false);
+    };
+
+    refreshData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reactive, rootData]);
+
+  const updateItemWhere = useCallback<DataArrayUpdateItemWhereFn<TData>>(
+    (predicate, updater) => {
+      updateData((prev) =>
+        prev.map((item, index) => {
+          if (predicate(item, index)) return updater(item, index);
+          return item;
+        })
+      );
+    },
+    [updateData]
+  );
+
+  /**
+   * Finds the first element in the array that satisfies the provided predicate function.
+   *
+   * @param {DataArrayItemPredicate<TData>} predicate - Function to test each element, taking the element and its index
+   * @returns {Optional<TData>} The first matching element, or undefined if no match is found
+   */
+  const find = useCallback<DataArrayFindFn<TData>>(
+    (predicate) => {
+      return data.find(predicate);
+    },
+    [data]
+  );
+
+  /**
+   * Returns the index of the first element in the array that satisfies the provided predicate function.
+   *
+   * @param {DataArrayItemPredicate<TData>} predicate - Function to test each element, taking the element and its index
+   * @returns {number} The index of the first matching element, or -1 if no match is found
+   */
+  const findIndex = useCallback<DataArrayFindIndexFn<TData>>(
+    (predicate) => {
+      return data.findIndex(predicate);
+    },
+    [data]
+  );
+
+  /**
+   * Adds a new item to the end of the array.
+   *
+   * @param {TData} newItem - The item to add to the end of the array
+   */
+  const push = useCallback<DataArrayPushFn<TData>>(
+    (newItem) => {
+      updateData((prev) => [...prev, newItem]);
+    },
+    [updateData]
+  );
+
+  /**
+   * Removes all elements from the array that satisfy the provided predicate function.
+   *
+   * @param {DataArrayItemPredicate<TData>} predicate - Function to test each element, taking the element and its index
+   */
+  const remove = useCallback<DataArrayRemoveFn<TData>>(
+    (predicate) => {
+      updateData((prev) =>
+        prev.filter((item, index) => !predicate(item, index))
+      );
+    },
+    [updateData]
+  );
+
+  /**
+   * Adds a new item to the beginning of the array.
+   *
+   * @param {TData} newItem - The item to add to the beginning of the array
+   */
+  const unshift = useCallback<DataArrayUnshiftFn<TData>>(
+    (newItem) => {
+      updateData((prev) => [newItem, ...prev]);
+    },
+    [updateData]
+  );
+
+  /**
+   * Returns the element at the specified index in the array, or the default value if the index is out of bounds.
+   *
+   * @param {number} index - The index of the element to retrieve
+   * @param {TData} defaultValue - The value to return if the index is out of bounds
+   * @returns {TData} The element at the specified index, or the default value if the index is out of bounds
+   */
+  const at = useCallback<DataArrayAtFn<TData>>(
+    (index, defaultValue) => {
+      if (index < 0 || index >= data.length) return defaultValue;
+      return data[index] ?? defaultValue;
+    },
+    [data]
+  );
+
+  /**
+   * Filters the array based on the provided predicate function.
+   *
+   * @param {DataArrayItemPredicate<TData>} predicate - Function to test each element, taking the element and its index
+   * @returns {TData[]} A new array containing all elements that satisfy the predicate
+   */
+  const filter = useCallback<DataArrayFilterFn<TData>>(
+    (predicate) => {
+      return [...data].filter(predicate);
+    },
+    [data]
+  );
+
+  return {
+    data,
+    isLoading,
+    push,
+    remove,
+    updateItemWhere,
+    unshift,
+    setData,
+    find,
+    findIndex,
+    at,
+    filter,
+  };
+};

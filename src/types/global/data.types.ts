@@ -1,3 +1,10 @@
+import type {
+  AsyncFn,
+  GenericFn,
+  Optional,
+  VoidFn,
+} from "@ubloimmo/front-util";
+
 /**
  * A very basic email string type alias
  * Used to differentiate between emails and regular strings
@@ -35,3 +42,72 @@ export type FormattedCurrencyStr =
   | `${string},00`;
 
 export type FormattedCurrencyStrWithSymbol = `${FormattedCurrencyStr} €`;
+
+export type DataArrayItemPredicate<TData> = GenericFn<
+  [item: TData, index: number],
+  boolean
+>;
+export type DataArrayItemUpdater<TData> = GenericFn<
+  [item: TData, index: number],
+  TData
+>;
+export type DataArrayPushFn<TData> = VoidFn<[newItem: TData]>;
+export type DataArrayUnshiftFn<TData> = DataArrayPushFn<TData>;
+export type DataArrayAtFn<TData> = GenericFn<
+  [index: number, defaultValue: TData],
+  TData
+>;
+export type DataArrayFilterFn<TData> = GenericFn<
+  [predicate: DataArrayItemPredicate<TData>],
+  TData[]
+>;
+export type DataArrayRemoveFn<TData> = VoidFn<
+  [predicate: DataArrayItemPredicate<TData>]
+>;
+export type DataArrayUpdateItemWhereFn<TData> = VoidFn<
+  [
+    predicate: DataArrayItemPredicate<TData>,
+    updater: DataArrayItemUpdater<TData>
+  ]
+>;
+export type DataArrayFindFn<TData> = GenericFn<
+  [predicate: DataArrayItemPredicate<TData>],
+  Optional<TData>
+>;
+export type DataArrayFindIndexFn<TData> = GenericFn<
+  [predicate: DataArrayItemPredicate<TData>],
+  number
+>;
+
+export type UseDataArrayReturn<TData> = {
+  data: TData[];
+  isLoading: boolean;
+  setData: VoidFn<[newData: TData[]]>;
+  push: DataArrayPushFn<TData>;
+  remove: DataArrayRemoveFn<TData>;
+  updateItemWhere: DataArrayUpdateItemWhereFn<TData>;
+  unshift: DataArrayUnshiftFn<TData>;
+  at: DataArrayAtFn<TData>;
+  filter: DataArrayFilterFn<TData>;
+  find: DataArrayFindFn<TData>;
+  findIndex: DataArrayFindIndexFn<TData>;
+};
+
+export type UseDataArray = <TData>(
+  /**
+   * The data to load
+   * Either an array of data or a function that returns an array of data
+   *
+   * @type {TData[] | AsyncFn<[], TData[]>}
+   */
+  rootData: TData[] | AsyncFn<[], TData[]>,
+  /**
+   * Whether the data should be reactive
+   * @default false
+   */
+  reactive?: boolean,
+  /**
+   * A callback function that is called when the data changes
+   */
+  onDataChange?: VoidFn<[newData: TData[]]>
+) => UseDataArrayReturn<TData>;

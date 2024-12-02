@@ -1,0 +1,47 @@
+import { css } from "styled-components";
+
+import { cssDimensions } from "@/utils/styles.utils";
+import { cssVarName, normalizeToPaletteColor } from "@utils";
+
+import type { ListFilterPresetStyleProps } from "./ListFilterPreset.types";
+import type { PaletteColor } from "@types";
+import type { RuleSet } from "styled-components";
+
+export const listFilterPresetButtonStyles = ({
+  $active,
+  $disabled,
+  $colorKey,
+}: ListFilterPresetStyleProps): RuleSet => {
+  const backgroundColor: PaletteColor = $disabled ? "gray-100" : "gray-50";
+  const borderColor: PaletteColor = $active
+    ? normalizeToPaletteColor($colorKey, "medium")
+    : backgroundColor;
+  return css`
+    ${cssDimensions("fit-content", cssVarName("input-height"), true)};
+    flex-wrap: nowrap;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+
+    background: var(--gray-50);
+    padding: var(--s-3);
+    padding-left: var(--s-4);
+    border-radius: var(--s-1);
+    border: 1px solid var(--${borderColor});
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-2);
+    box-shadow: var(--shadow-button);
+
+    transition-property: background, border;
+    transition-duration: 300ms;
+    transition-timing-function: var(--bezier);
+
+    &:hover:not(:disabled) {
+      background: white;
+      transition-duration: 150ms;
+    }
+  `;
+};

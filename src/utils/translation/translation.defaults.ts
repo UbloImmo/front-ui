@@ -41,6 +41,7 @@ const action: CompleteTranslationMap<"action"> = {
   show: "Show",
   hide: "Hide",
   giveUp: "Give up",
+  filterBy: "Filter by",
 } as const;
 
 const validation: CompleteTranslationMap<"validation"> = {
@@ -77,6 +78,7 @@ const status: CompleteTranslationMap<"status"> = {
   hidden: "Hidden",
   empty: "Empty",
   unspecified: "Not specified",
+  all: "All",
 };
 
 export const defaultTranslations: DefaultTranslationMaps = {

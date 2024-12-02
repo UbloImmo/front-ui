@@ -10,7 +10,7 @@ import {
   type Optional,
   type Primitives,
 } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { useMemo, useRef, type MutableRefObject } from "react";
 
 import { isNonEmptyString } from "./string.utils";
 
@@ -26,6 +26,7 @@ import type {
  *
  * @param {TDefaultProps} defaultProps - the default properties to be merged
  * @param {TProps} [props = {}] - the properties to merge with the default props
+ * @param {boolean} [pruneExtraProps = false] - whether to only keep the props that are present in the default props
  * @return {TDefaultProps} the merged default props with the given props
  */
 export const mergeDefaultProps = <
@@ -33,16 +34,19 @@ export const mergeDefaultProps = <
   TProps extends Partial<TDefaultProps>
 >(
   defaultProps: TDefaultProps,
-  props: TProps = {} as TProps
+  props: TProps = {} as TProps,
+  pruneExtraProps = false
 ): TDefaultProps => {
+  const mergedProps = objectFromEntries(
+    objectEntries(defaultProps).map(([key, value]) => [
+      key,
+      isUndefined(props[key]) ? value : props[key],
+    ])
+  ) as TDefaultProps;
+  if (pruneExtraProps) return mergedProps;
   return {
     ...props,
-    ...(objectFromEntries(
-      objectEntries(defaultProps).map(([key, value]) => [
-        key,
-        isUndefined(props[key]) ? value : props[key],
-      ])
-    ) as TDefaultProps),
+    ...mergedProps,
   };
 };
 
@@ -166,12 +170,24 @@ export const useStyleProps = <TProps extends Record<string, unknown>>(
  *   )
  * }
  */
-export const useStatic = <TData>(data: TData | GenericFn<[], TData>) => {
+export const useStatic = <TData>(data: TData | GenericFn<[], TData>): TData => {
   return useMemo<TData>(
     () => (isFunction<GenericFn<[], TData>>(data) ? data() : data),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+};
+/**
+ * Returns a memoized, static version of the input data.
+ *
+ * @template {unknown} TData - The type of the input data.
+ * @param {TData | GenericFn<[], TData>} data - The input data to be memoized.
+ * @return {MutableRefObject<TData>} The memoized version of the input data.
+ */
+export const useStaticRef = <TData>(
+  data: TData | GenericFn<[], TData>
+): MutableRefObject<TData> => {
+  return useRef<TData>(isFunction<GenericFn<[], TData>>(data) ? data() : data);
 };
 
 /**

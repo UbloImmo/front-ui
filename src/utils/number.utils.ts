@@ -68,3 +68,24 @@ export const isPositive = (num: number): boolean => {
 export const isZero = (num: number): boolean => {
   return num === 0;
 };
+
+/**
+ * Checks if a number is between two values.
+ *
+ * @param {number} num - The number to check
+ * @param {number} min - The minimum value to compare against
+ * @param {number} max - The maximum value to compare against
+ * @param {boolean} [exclusive=false] - If true, checks exclusive bounds (num > min && num < max). Else, checks inclusive bounds (num >= min && num <= max)
+ * @returns {boolean} Returns true if the number is between min and max (inclusive or exclusive), false otherwise
+ */
+export const isBetween = (
+  num: number,
+  min: number,
+  max: number,
+  exclusive = false
+): boolean => {
+  if (exclusive) {
+    return num > min && num < max;
+  }
+  return num >= min && num <= max;
+};

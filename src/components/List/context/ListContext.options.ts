@@ -1,0 +1,110 @@
+import { useCallback, useEffect } from "react";
+
+import { BooleanOperators } from "../List.enums";
+import {
+  type DataProviderFilterParam,
+  type FilterOptionData,
+  type IDataProvider,
+} from "../modules";
+
+import { useDataArray } from "@utils";
+
+import type {
+  GetOptionBySignatureFn,
+  ListContextConfig,
+  UpdateOptionSelectionFn,
+  UseListOptions,
+  UseListOptionsReturn,
+} from "./ListContext.types";
+
+export const useListOptions: UseListOptions = <TItem extends object>(
+  config: Pick<ListContextConfig<TItem>, "options" | "filters" | "operator">,
+  dataProvider: IDataProvider<TItem>
+): UseListOptionsReturn<TItem> => {
+  const updateFiltersOnChange = useCallback(
+    (updatedOptions: FilterOptionData<TItem>[]) => {
+      console.log(updatedOptions.filter(({ selected }) => selected));
+      const filters = config.filters?.map(
+        ({ optionSignatures, operator }): DataProviderFilterParam<TItem> => {
+          const selectedOptions = updatedOptions.filter(
+            ({ signature, selected }) =>
+              optionSignatures.includes(signature) && selected
+          );
+          return {
+            operator,
+            selectedOptions,
+          };
+        }
+      );
+      const operator = config.operator ?? BooleanOperators.AND;
+      if (filters) {
+        dataProvider.filter({
+          filters,
+          operator,
+        });
+        return;
+      }
+      dataProvider.filter({
+        options: updatedOptions,
+        operator: BooleanOperators.AND,
+      });
+    },
+    [dataProvider, config.filters, config.operator]
+  );
+
+  const options = useDataArray(config.options ?? [], true);
+
+  useEffect(() => {
+    console.log("runs");
+    if (!dataProvider.loading) updateFiltersOnChange(options.data);
+    // updateFiltersOnChange(options.data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options.data, dataProvider.loading]);
+
+  const updateOptionSelection = useCallback<UpdateOptionSelectionFn>(
+    (
+      optionSignature,
+      selected,
+      multi = false,
+      isFilterOption = () => false
+    ) => {
+      const isTargetOption = ({ signature }: FilterOptionData<TItem>) =>
+        signature === optionSignature;
+      // Update the target option
+      options.updateItemWhere(isTargetOption, (option) => {
+        if (option.disabled) return option;
+        return {
+          ...option,
+          selected: selected || option.fixed,
+        };
+      });
+      if (multi) return;
+      // Update the filter's other options
+      options.updateItemWhere(
+        (option) => !isTargetOption(option) && isFilterOption(option.signature),
+        (option) => {
+          return {
+            ...option,
+            selected: option.fixed,
+          };
+        }
+      );
+    },
+    [options]
+  );
+
+  const getOptionBySignature = useCallback<GetOptionBySignatureFn<TItem>>(
+    (optionSignature) => {
+      return (
+        options.find(({ signature }) => signature === optionSignature) ?? null
+      );
+    },
+    [options]
+  );
+
+  return {
+    options,
+    updateOptionSelection,
+    getOptionBySignature,
+  };
+};
