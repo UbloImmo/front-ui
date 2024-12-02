@@ -49,7 +49,7 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
 /**
  * A single clickable option in a ComboBox
  *
- * @version 0.0.9
+ * @version 0.0.10
  *
  * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
  * @returns {JSX.Element}
@@ -210,7 +210,10 @@ const ComboBoxButton = (
           onOpenChange={setMenuOpen}
           items={contextMenuItems}
         >
-          <ComboBoxContextMenuTrigger type="button">
+          <ComboBoxContextMenuTrigger
+            type="button"
+            data-testid={`${testId}-context-menu`}
+          >
             <Icon name="ThreeDotsVertical" color={iconProps.color} />
           </ComboBoxContextMenuTrigger>
         </ContextMenu>

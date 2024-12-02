@@ -1,3 +1,5 @@
+import { fn } from "@storybook/test";
+
 import { ComboBoxButton } from "./ComboBoxButton.component";
 
 import { ComponentVariants } from "@docs/blocks";
@@ -17,6 +19,9 @@ const meta = {
   args: {
     label: "[ComboBox option]",
     multi: false,
+    onSelect: fn(),
+    onEdit: fn(),
+    onDelete: fn(),
   },
   argTypes: {
     multi: {
@@ -110,4 +115,15 @@ export const Label = (props: ComboBoxButtonProps) => {
       columns={2}
     />
   );
+};
+
+export const WithMenu: Story = {
+  args: {
+    editable: true,
+    onEdit: fn(),
+    editLabel: "Edit me!",
+    deletable: true,
+    onDelete: fn(),
+    deleteLabel: "Delete me!",
+  },
 };

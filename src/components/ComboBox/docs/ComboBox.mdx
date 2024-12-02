@@ -30,7 +30,7 @@ When needed, options can be displayed in a grid. To do so, provide the `columns`
 
 > Options will be displayed in a grid with the specified number of columns.
 
-<Canvas of={ComboBoxStories.Columns} /> 
+<Canvas of={ComboBoxStories.Columns} />
 
 ### Disabling the options
 
@@ -43,5 +43,25 @@ To prevent the user from selecting an option, you can set the optional `disabled
 By default, the check icon displaying the selected option is visible. However, if you need a more compact layout of the `ComboBox` options, you can hide this icon by setting the `showIcon` property to false.
 
 <Canvas of={ComboBoxStories.ShowIcon} />
+
+### Creating more options
+
+To enable the creation of new options, set the `creatable` property to `true`. An [ActionIcon](?path=/docs/components-actionicon-usage--docs) will be displayed after the comboboxes.
+
+You can also provide the desired callback for the creation of new options in the `onCreate` property.
+
+<Canvas of={ComboBoxStories.Creatable} />
+
+### Editing and deleting options
+
+You can also enable the editing and deleting of options, by setting the `editable` and `deletable` properties to `true` for the desired options.
+
+A [ContextMenu](?path=/docs/components-contextmenu-usage--docs) will be displayed at the right of each option.
+
+To customize the labels of the context menu items, you can provide the `optionEditLabel` and `optionDeleteLabel` properties.
+
+As for the callbacks, use the `onOptionEdit` and `onOptionDelete` properties.
+
+<Canvas of={ComboBoxStories.EditingAndDeletingOptions} />
 
 </Content>

@@ -10,14 +10,16 @@ import {
   currencyIntToStr,
   currencyNumberToStr,
   currencyStrToInt,
+  formatCurrencyInputValue,
   formatCurrencyInt,
   nativeCurrencyValueToInt,
+  sanitizeCurrencyInputValue,
 } from "./CurrencyInput.utils";
 
 import { testComponentFactory } from "@/tests";
 
 import type { CurrencyFloat, CurrencyInt } from "@types";
-import type { VoidFn } from "@ubloimmo/front-util";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 const testId = "input-currency";
 
@@ -36,6 +38,62 @@ describe("Input", () => {
   testInput({})("should render", async ({ findByTestId }) => {
     expect(await findByTestId(testId)).not.toBeNull();
   });
+
+  const onChange = mock((_value: Nullable<number>) => {});
+
+  testInput({ onChange })(
+    "should format the value while typing",
+    async ({ queryByTestId }, { click, keyboard }) => {
+      const input = queryByTestId(testId) as HTMLInputElement;
+
+      await click(input);
+      await keyboard("12.000");
+
+      expect(onChange).toHaveBeenCalledWith(1200);
+      expect(input.value).toBe("12,00");
+      onChange.mockReset();
+    }
+  );
+
+  testInput({ onChange, showSign: true, value: 1200, min: -2000 })(
+    "should revert the value when clicking the plus/minus button",
+    async ({ queryByTestId }, { click }) => {
+      const signButton = queryByTestId(
+        `${testId}-sign-control`
+      ) as HTMLDivElement;
+      expect(signButton).not.toBeNull();
+      await click(signButton);
+
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith(-1200);
+      onChange.mockReset();
+    }
+  );
+
+  testInput({
+    onChange,
+    showSign: true,
+    defaultSign: "-",
+    value: -120,
+    min: -2000,
+  })(
+    "should still trigger negative values onChange when typing if the control is negative",
+    async ({ queryByTestId }, { click, keyboard }) => {
+      const input = queryByTestId(testId) as HTMLInputElement;
+      const signButton = queryByTestId(
+        `${testId}-sign-control`
+      ) as HTMLDivElement;
+      expect(signButton).not.toBeNull();
+
+      await click(input);
+      await keyboard("[Backspace][Backspace][Backspace][Backspace][Backspace]");
+      await keyboard("12.00");
+
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith(-120);
+      onChange.mockReset();
+    }
+  );
 
   describe("CurrencyInput", () => {
     describe("currencyIntToFloat", () => {
@@ -257,12 +315,87 @@ describe("Input", () => {
         expect(formatCurrencyInt).toThrow();
       });
 
+      it("should handle empty strings", () => {
+        expect(sanitizeCurrencyInputValue("")).toBe("");
+      });
+
       it("should return a currency string with a symbol", () => {
         expect(formatCurrencyInt(123456)).toBe("1 234,56 €");
         expect(formatCurrencyInt(0)).toBe("0,00 €");
         expect(formatCurrencyInt(-123456)).toBe("-1 234,56 €");
         expect(formatCurrencyInt(12345)).toBe("123,45 €");
         expect(formatCurrencyInt(99999999999)).toBe("999 999 999,99 €");
+      });
+    });
+
+    describe("sanitizeCurrencyInputValue", () => {
+      it("should remove start spaces", () => {
+        expect(sanitizeCurrencyInputValue(" 123,45")).toBe("123,45");
+        expect(sanitizeCurrencyInputValue("   123,45")).toBe("123,45");
+      });
+
+      it("should allow numbers, a decimal point, negative sign and spaces", () => {
+        expect(sanitizeCurrencyInputValue("abc123$%^&,45")).toBe("123,45");
+        expect(sanitizeCurrencyInputValue("abc123,45def")).toBe("123,45");
+      });
+
+      it("should only allow one decimal point", () => {
+        expect(sanitizeCurrencyInputValue("123...45")).toBe("123,45");
+        expect(sanitizeCurrencyInputValue("123,,,45")).toBe("123,45");
+        expect(sanitizeCurrencyInputValue("123.,.45")).toBe("123,45");
+      });
+
+      it("should only allow one consecutive negative sign", () => {
+        expect(sanitizeCurrencyInputValue("--123,45")).toBe("-123,45");
+        expect(sanitizeCurrencyInputValue("---123,45")).toBe("-123,45");
+      });
+
+      it("should only allow a negative sign at the beginning", () => {
+        expect(sanitizeCurrencyInputValue("-123,45")).toBe("-123,45");
+        expect(sanitizeCurrencyInputValue("+123,45")).toBe("123,45");
+      });
+
+      it("should handle complex combinations", () => {
+        expect(sanitizeCurrencyInputValue("  --123...45   €")).toBe("-123,45 ");
+        expect(sanitizeCurrencyInputValue("abc-123,45-def")).toBe("-123,45");
+      });
+
+      it("should replace multiple spaces with a single space", () => {
+        expect(sanitizeCurrencyInputValue("123   456,78")).toBe("123 456,78");
+        expect(sanitizeCurrencyInputValue("123,45  ")).toBe("123,45 ");
+      });
+    });
+
+    describe("formatCurrencyInputValue", () => {
+      it("should be a function", () => {
+        expect(formatCurrencyInputValue).toBeFunction();
+      });
+
+      it("should handle non-string native values", () => {
+        const formatter = formatCurrencyInputValue(123);
+        expect(formatter(123400)).toBe("1234,00");
+      });
+
+      it("should preserve spaces from native input", () => {
+        const formatter = formatCurrencyInputValue("1 234");
+        expect(formatter(123400)).toBe("1 234");
+      });
+
+      it("should handle negative values", () => {
+        const formatter = formatCurrencyInputValue("-1 234");
+        expect(formatter(-123400)).toBe("-1 234");
+      });
+
+      it("should preserve multiple spaces", () => {
+        const formatter = formatCurrencyInputValue("1 234 567");
+        const result = formatter(-123456700);
+        expect(result).toBe("-1 234 567");
+      });
+
+      it("should handle input with trailing space", () => {
+        const formatter = formatCurrencyInputValue("1 234 ");
+        const result = formatter(-123400);
+        expect(result).toBe("-1 234 ");
       });
     });
   });

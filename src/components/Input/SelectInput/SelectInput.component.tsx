@@ -313,6 +313,8 @@ const SelectInput = <
               icon="XLg"
               embedded
               title={clearLabel}
+              testId={`${testId}-clear`}
+              overrideTestId
             />
           ) : (
             <Icon name={mergedProps.controlIcon} />

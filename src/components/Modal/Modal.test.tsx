@@ -8,6 +8,7 @@ import { testComponentFactory } from "@/tests";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const testId = "modal";
+const TEST_MODAL_REF = "TEST_MODAL_REF";
 
 const testModal = testComponentFactory(
   "Modal",
@@ -36,10 +37,24 @@ testModal({ open: false })(
   }
 );
 
-testModal({ open: true })(
-  "should not render if closed",
-  async ({ findByTestId }) => {
-    const res = await findByTestId(testId);
-    expect(res).not.toBeNull();
+testModal({ open: true })("should render if open", async ({ findByTestId }) => {
+  const res = await findByTestId(testId);
+  expect(res).not.toBeNull();
+});
+
+testModal({ open: true, reference: TEST_MODAL_REF })(
+  "should close on click",
+  async ({ debug, queryByTestId }) => {
+    expect(queryByTestId(testId)).not.toBeNull();
+
+    const closeButton = queryByTestId(
+      "modal-close-button"
+    ) as HTMLButtonElement;
+    expect(closeButton).not.toBeNull();
+
+    await closeButton.click();
+    expect(queryByTestId(testId)).toBeNull();
+
+    debug();
   }
 );

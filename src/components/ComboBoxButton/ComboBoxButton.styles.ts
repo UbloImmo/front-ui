@@ -125,16 +125,10 @@ export const ComboBoxIconContainerStyle = ({
 
       &:first-child {
         opacity: ${$active ? 1 : 0};
-        fill: ${$active
-          ? cssVarUsage("primary-base")
-          : cssVarUsage("gray-800")};
       }
 
       &:last-child {
         opacity: ${$active ? 0 : 1};
-        fill: ${$active
-          ? cssVarUsage("primary-base")
-          : cssVarUsage("gray-800")};
       }
     }
   `;
