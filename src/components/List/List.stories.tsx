@@ -1,4 +1,4 @@
-import { PokemonListExample } from "./examples";
+import { BalanceJournalExample, PokemonListExample } from "./examples";
 import { List } from "./List.component";
 
 import { componentSourceFactory } from "@docs/docs.utils";
@@ -26,3 +26,5 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const PokeApiList = () => <PokemonListExample />;
+
+export const BalanceJournal = () => <BalanceJournalExample />;
