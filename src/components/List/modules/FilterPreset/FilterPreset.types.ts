@@ -1,10 +1,14 @@
-import type { FilterOptionData } from "../FilterOption";
+import type {
+  FilterOptionData,
+  FilterOptionOrSignature,
+} from "../FilterOption";
 import type {
   FilterBooleanOperator,
   FilterPresetVisualData,
   FilterSignature,
 } from "../shared.types";
 import type { ColorKey, PaletteColor } from "@/types/themes";
+import type { MaybePromise } from "@types";
 import type {
   AsyncFn,
   GenericFn,
@@ -158,8 +162,8 @@ export type ListConfigFilterPresetFn<TItem extends object> = GenericFn<
 
 export type ListConfigAsyncFilterPresetFnParams<TItem extends object> = [
   label: string,
-  optionsOrSignaturesPromise: Promise<
-    (FilterOptionData<TItem> | FilterSignature)[]
+  optionsOrSignaturesPromise: MaybePromise<
+    MaybePromise<FilterOptionOrSignature<TItem>>[]
   >,
   config?: FilterPresetConfig
 ];

@@ -138,6 +138,12 @@ export type UseListFiltersReturn<TItem extends object> = {
    */
   filters: IFilter<TItem>[];
   /**
+   * Whether the list's filters are loading
+   *
+   * @type {boolean}
+   */
+  filtersLoading: boolean;
+  /**
    * Gets a filter by its id
    *
    * @type {GetFilterByIdFn<TItem>}
@@ -219,6 +225,13 @@ export type UseListFilterPresetsReturn<TItem extends object> = {
    */
   filterPresets: FilterPreset<TItem>[];
   /**
+   * Whether the list's filter presets are loading
+   * Could be the case if some are async or while fetching their counts
+   *
+   * @type {boolean}
+   */
+  filterPresetsLoading: boolean;
+  /**
    * Updates a filter preset's selection
    * by selecting / unselecting its options
    *
@@ -277,6 +290,12 @@ export type ListContextValue<TItem extends object> = {
    * @type {boolean}
    */
   loading: boolean;
+  /**
+   * Whether the list's configuration (options, filters, filter presets) is loading
+   *
+   * @type {boolean}
+   */
+  configLoading: boolean;
   /**
    * Whether the list context is missing
    *

@@ -13,6 +13,7 @@ import type {
   FilterOptionBehavior,
   FilterOptionData,
   FilterOptionMatch,
+  ListConfigMatchFnParams,
   ListConfigOptionFnParams,
 } from "./FilterOption.types";
 import type { FilterOptionVisualData } from "../shared.types";
@@ -76,5 +77,25 @@ export const filterOptionData = <TItem extends object>(
     // behavior data
     ...behavior,
     selected,
+  };
+};
+
+/**
+ * Creates a filter option match from the given parameters
+ *
+ * @template TItem - The type of item being filtered
+ * @param {...ListConfigMatchFnParams<TItem>} params - Either a single FilterOptionMatch object, or a property, comparison operator and value
+ * @returns {FilterOptionMatch<TItem>} The filter option match
+ * @throws {Error} If invalid number of arguments provided
+ */
+export const filterOptionMatch = <TItem extends object>(
+  ...params: ListConfigMatchFnParams<TItem>
+): FilterOptionMatch<TItem> => {
+  if (params.length === 1) return params[0];
+  if (params.length !== 3) throw new Error("Invalid number of arguments");
+  return {
+    property: params[0],
+    comparison: params[1],
+    value: params[2],
   };
 };

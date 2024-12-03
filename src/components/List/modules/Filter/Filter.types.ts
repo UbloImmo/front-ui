@@ -1,6 +1,8 @@
+import type { MaybePromise } from "@types";
 import type {
   IFilterOption,
   FilterOptionData,
+  FilterOptionOrSignature,
 } from "../FilterOption/FilterOption.types";
 import type {
   FilterSignature,
@@ -159,8 +161,8 @@ export type ListConfigFilterFn<TItem extends object> = GenericFn<
 
 export type ListConficAsyncFilterDataFnParams<TItem extends object> = [
   label: string,
-  optionsOrSignaturesPromise: Promise<
-    (FilterSignature | FilterOptionData<TItem>)[]
+  optionsOrSignaturesPromise: MaybePromise<
+    MaybePromise<FilterOptionOrSignature<TItem>>[]
   >,
   config?: FilterConfig
 ];

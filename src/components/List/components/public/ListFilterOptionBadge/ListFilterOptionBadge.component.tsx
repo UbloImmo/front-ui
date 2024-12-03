@@ -9,6 +9,7 @@ import {
 import { useUikitTranslation } from "@utils";
 
 import type { ListFilterOptionBadgeProps } from "./ListFilterOptionBadge.types";
+import type { FilterOptionData } from "@/components/List/modules";
 
 /**
  * Displays a badge based on a list item's property and the list's options.
@@ -32,16 +33,33 @@ export const ListFilterOptionBadge = <TItem extends object>({
       color: "gray",
     };
     if (!property) return emptyBadge;
-    const matchingOption = options.find(
-      (option) =>
-        option.matches[arrayComparison(option.operator)](
+    const propertyOptions = options.filter((option) =>
+      option.matches[arrayComparison(option.operator)](
+        (match) => match.property === property
+      )
+    );
+
+    if (!propertyOptions.length) return emptyBadge;
+
+    const refinedOptions = propertyOptions.map(
+      (option): FilterOptionData<TItem> => {
+        const matches = option.matches.filter(
           (match) => match.property === property
-        ) &&
-        itemMatchesOption(item, {
+        );
+        return {
           ...option,
           selected: true,
-        })
+          matches,
+        };
+      }
     );
+
+    if (!refinedOptions.length) return emptyBadge;
+
+    const matchingOption = refinedOptions.find((option) =>
+      itemMatchesOption(item, option)
+    );
+
     if (!matchingOption) return emptyBadge;
 
     return {

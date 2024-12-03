@@ -271,3 +271,7 @@ export type FilterOptionMap<TItem extends object> = Map<
 >;
 
 export type FilterDataMap = Map<FilterSignature, FilterData>;
+
+export type FilterOptionOrSignature<TItem extends object> =
+  | FilterOptionData<TItem>
+  | FilterSignature;

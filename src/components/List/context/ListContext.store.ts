@@ -27,6 +27,16 @@ export const useListContextStore = <TItem extends object>({
     ...optionMethods
   } = options;
 
+  const configLoading = useMemo(
+    () => filters.filtersLoading || filterPresets.filterPresetsLoading,
+    [filterPresets.filterPresetsLoading, filters.filtersLoading]
+  );
+
+  const loading = useMemo(
+    () => dataProvider.loading || configLoading,
+    [dataProvider.loading, configLoading]
+  );
+
   return {
     ...filterPresets,
     options: optionsArray,
@@ -35,7 +45,8 @@ export const useListContextStore = <TItem extends object>({
     data,
     itemCount,
     dataProvider,
-    loading: dataProvider.loading,
+    loading,
+    configLoading,
     contextMissing: false,
   };
 };

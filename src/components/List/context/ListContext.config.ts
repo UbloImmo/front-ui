@@ -4,6 +4,7 @@ import { BooleanOperators } from "../List.enums";
 import {
   filterData,
   filterOptionData,
+  filterOptionMatch,
   filterPresetData,
   type FilterBooleanOperator,
   type FilterComparisonOperator,
@@ -14,12 +15,12 @@ import {
   type FilterOptionData,
   type FilterOptionMap,
   type FilterOptionMatch,
+  type FilterOptionOrSignature,
   type FilterOptionValue,
   type FilterPresetConfig,
   type FilterPresetData,
   type FilterPresetMap,
   type FilterProperty,
-  type FilterSignature,
   type ListConfigAsyncFilterFn,
   type ListConfigAsyncFilterPresetFn,
   type ListConfigAsyncOptionsFn,
@@ -48,6 +49,7 @@ import type {
   UseListConfigFilterReducerAction,
   UseListConfigReturn,
 } from "./ListContext.types";
+import type { MaybePromise } from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
@@ -83,11 +85,22 @@ const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
     [logger, match, registerOption]
   );
 
+  const awaitAsyncOptions = useCallback(
+    async (
+      optionsOrSignatures: MaybePromise<
+        MaybePromise<FilterOptionOrSignature<TItem>>[]
+      >
+    ): Promise<FilterOptionOrSignature<TItem>[]> => {
+      return await Promise.all(await optionsOrSignatures);
+    },
+    []
+  );
+
   const filter = useCallback<ListConfigAsyncFilterFn<TItem>>(
     async (
       label: string,
-      optionsOrSignaturesPromise: Promise<
-        (FilterSignature | FilterOptionData<TItem>)[]
+      optionsOrSignaturesPromise: MaybePromise<
+        MaybePromise<FilterOptionOrSignature<TItem>>[]
       >,
       config?: FilterConfig
     ): Promise<Nullable<FilterData>> => {
@@ -97,7 +110,9 @@ const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
         const tempFilterData = filterData<TItem>(label, [], hydrated, true);
         registerFilter(tempFilterData);
         // wait for options to load
-        const optionsOrSignatures = await optionsOrSignaturesPromise;
+        const optionsOrSignatures = await awaitAsyncOptions(
+          optionsOrSignaturesPromise
+        );
         // create new filter data based on loaded options and config
         const data = filterData<TItem>(label, optionsOrSignatures, hydrated);
         // update filter data with loaded options
@@ -108,14 +123,20 @@ const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
         return null;
       }
     },
-    [hydrateFilterConfig, logger, registerFilter, updateFilter]
+    [
+      awaitAsyncOptions,
+      hydrateFilterConfig,
+      logger,
+      registerFilter,
+      updateFilter,
+    ]
   );
 
   const filterPreset = useCallback<ListConfigAsyncFilterPresetFn<TItem>>(
     async (
       label: string,
-      optionsOrSignaturesPromise: Promise<
-        (FilterOptionData<TItem> | FilterSignature)[]
+      optionsOrSignaturesPromise: MaybePromise<
+        MaybePromise<FilterOptionOrSignature<TItem>>[]
       >,
       config?: FilterPresetConfig
     ): Promise<Nullable<FilterPresetData>> => {
@@ -129,7 +150,9 @@ const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
         );
         registerFilterPreset(tempFilterPresetData);
         // wait for options to load
-        const optionsOrSignatures = await optionsOrSignaturesPromise;
+        const optionsOrSignatures = await awaitAsyncOptions(
+          optionsOrSignaturesPromise
+        );
         // create new filter preset data based on loaded options and config
         const data = filterPresetData<TItem>(
           label,
@@ -143,7 +166,7 @@ const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
         return null;
       }
     },
-    [logger, registerFilterPreset, updateFilterPreset]
+    [awaitAsyncOptions, logger, registerFilterPreset, updateFilterPreset]
   );
 
   return {
@@ -271,13 +294,7 @@ export const useListConfig: UseListConfig = <TItem extends object>(
 
   const match = useCallback<ListConfigMatchFn<TItem>>(
     (...params: ListConfigMatchFnParams<TItem>): FilterOptionMatch<TItem> => {
-      if (params.length === 1) return params[0];
-      if (params.length !== 3) throw new Error("Invalid number of arguments");
-      return {
-        property: params[0],
-        comparison: params[1],
-        value: params[2],
-      };
+      return filterOptionMatch(...params);
     },
     []
   );

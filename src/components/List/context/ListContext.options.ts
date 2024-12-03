@@ -23,7 +23,6 @@ export const useListOptions: UseListOptions = <TItem extends object>(
 ): UseListOptionsReturn<TItem> => {
   const updateFiltersOnChange = useCallback(
     (updatedOptions: FilterOptionData<TItem>[]) => {
-      console.log(updatedOptions.filter(({ selected }) => selected));
       const filters = config.filters?.map(
         ({ optionSignatures, operator }): DataProviderFilterParam<TItem> => {
           const selectedOptions = updatedOptions.filter(
@@ -55,7 +54,6 @@ export const useListOptions: UseListOptions = <TItem extends object>(
   const options = useDataArray(config.options ?? [], true);
 
   useEffect(() => {
-    console.log("runs");
     if (!dataProvider.loading) updateFiltersOnChange(options.data);
     // updateFiltersOnChange(options.data);
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -43,6 +43,8 @@ export type FormattedCurrencyStr =
 
 export type FormattedCurrencyStrWithSymbol = `${FormattedCurrencyStr} €`;
 
+export type MaybePromise<T> = T | Promise<T>;
+
 export type DataArrayItemPredicate<TData> = GenericFn<
   [item: TData, index: number],
   boolean

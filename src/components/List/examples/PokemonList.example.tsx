@@ -17,7 +17,6 @@ import {
   type UseDataProviderFn,
 } from "../modules";
 
-import { Button } from "@/components/Button";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import { FlexLayout, GridItem, GridLayout } from "@layouts";
@@ -298,6 +297,7 @@ const usePokemonListConfig = () => {
         config: {
           color: "primary-dark",
           icon: "Cloud",
+          default: true,
         },
       },
       {
@@ -323,7 +323,9 @@ const usePokemonListConfig = () => {
       );
     });
     // build & register the type filter
-    filter("Type", typeOptions, {});
+    filter("Type", typeOptions, {
+      operator: BooleanOperators.AND,
+    });
 
     // build & register a filter option for heavy weight
 
@@ -405,10 +407,15 @@ const Renderer = () => {
             <FlexLayout direction="row" gap="s-1">
               <ListFilterOptionBadge
                 item={pokemon}
-                property={"types.0.type.name"}
+                property="types.0.type.name"
               />
+              {pokemon.types[1] && (
+                <ListFilterOptionBadge
+                  item={pokemon}
+                  property="types.1.type.name"
+                />
+              )}
             </FlexLayout>
-            {/* <Text>{JSON.stringify(pokemon.types)}</Text> */}
           </GridItem>
           <GridItem>
             <ListFilterOptionBadge item={pokemon} property="weight" />
@@ -428,7 +435,6 @@ export const PokemonListExample = () => {
         <SideView direction="column" fill gap="s-3">
           <ListSideHeader title="Pokedex" />
           <ListFilterCollection title="Attributes" />
-          <Button label="coucou" />
         </SideView>
         <FlexLayout fill direction="column" gap="s-2">
           <ListFilterPresetCollection />

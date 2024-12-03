@@ -88,9 +88,15 @@ export const useListFilterPresets: UseListFilterPresets = <
     const counts = await Promise.all(
       (config.filterPresets ?? []).map(
         async ({ signature, operator }): Promise<[FilterSignature, number]> => {
-          const filterPresetOptions = filterPresetsOptionsMap[signature] ?? [];
+          // Clone the options to avoid mutating the original data
+          // and select them so that they are taken into account when filtering
+          const filterPresetOptions = (
+            filterPresetsOptionsMap[signature] ?? []
+          )?.map((option) => ({
+            ...option,
+            selected: true,
+          }));
           try {
-            // return [signature, 0];
             const count = await dataProvider.fetchCount({
               options: filterPresetOptions,
               operator,
@@ -144,17 +150,19 @@ export const useListFilterPresets: UseListFilterPresets = <
         count,
       };
     },
-    [
-      filterPresetCounts.data,
-      filterPresetCounts.isLoading,
-      filterPresetsOptionsMap,
-      updateFilterPresetSelection,
-    ]
+    [filterPresetCounts, filterPresetsOptionsMap, updateFilterPresetSelection]
   );
 
   const filterPresets = useMemo<FilterPreset<TItem>[]>(() => {
     return filterPresetDatas.data.map(buildFilterPreset);
   }, [buildFilterPreset, filterPresetDatas.data]);
+
+  const filterPresetsLoading = useMemo(
+    () =>
+      filterPresetDatas.data.some(({ loading }) => loading) ||
+      filterPresetCounts.isLoading,
+    [filterPresetCounts.isLoading, filterPresetDatas.data]
+  );
 
   const getFilterPresetBySignature = useCallback<
     GetFilterPresetBySignatureFn<TItem>
@@ -171,6 +179,7 @@ export const useListFilterPresets: UseListFilterPresets = <
 
   return {
     filterPresets,
+    filterPresetsLoading,
     updateFilterPresetSelection,
     getFilterPresetBySignature,
   };

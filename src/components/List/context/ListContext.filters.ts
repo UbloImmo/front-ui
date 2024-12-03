@@ -78,14 +78,26 @@ export const useListFilters: UseListFilters = <TItem extends object>(
     [options, buildFilterOption]
   );
 
+  const clearFilter = useCallback(
+    (filterData: FilterData) => {
+      options.updateItemWhere(
+        ({ signature }) => filterData.optionSignatures.includes(signature),
+        (option) => ({
+          ...option,
+          selected: option.fixed || option.default,
+        })
+      );
+    },
+    [options]
+  );
+
   const buildFilter = useCallback(
     (filterData: FilterData): IFilter<TItem> => {
       const filterOptions = buildFilterOptions(filterData);
       const selectedOptions = filterOptions.filter((option) => option.selected);
       const active = !!selectedOptions.length;
 
-      const clear = () =>
-        selectedOptions.forEach((option) => option.unselect());
+      const clear = () => clearFilter(filterData);
 
       const selectAll = () =>
         selectedOptions.forEach((option) => option.select());
@@ -99,8 +111,12 @@ export const useListFilters: UseListFilters = <TItem extends object>(
         selectAll,
       };
     },
-    [buildFilterOptions]
+    [buildFilterOptions, clearFilter]
   );
+
+  const filtersLoading = useMemo(() => {
+    return filterDatas.data.some(({ loading }) => loading);
+  }, [filterDatas]);
 
   const filters = useMemo(() => {
     return filterDatas.data.map((item): IFilter<TItem> => {
@@ -131,6 +147,7 @@ export const useListFilters: UseListFilters = <TItem extends object>(
 
   return {
     filters,
+    filtersLoading,
     getFilterById,
     getFilterBySignature,
     clearAllFilters,
