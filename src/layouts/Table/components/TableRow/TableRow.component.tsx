@@ -3,20 +3,21 @@ import styled from "styled-components";
 
 import { tableRowStyles } from "./TableRow.styles";
 
-import { useClassName, useTestId } from "@utils";
+import { useClassName, useStyleProps, useTestId } from "@utils";
 
-import type { TableRowProps } from "./TableRow.types";
+import type { TableRowProps, TableRowStyleProps } from "./TableRow.types";
 import type { TestIdProps } from "@types";
 
 /**
  * A table row component, to be used in `TableBody`.
  *
- * @version 0.0.2
+ * @version 0.0.3
  */
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps & TestIdProps>(
-  ({ className, children, onClick, testId, ...props }, ref) => {
+  ({ className, children, onClick, testId, style = "form", ...props }, ref) => {
     const cn = useClassName({ className });
     const tid = useTestId("table-row", { testId });
+    const styleProps = useStyleProps({ style });
     return (
       <StyledTableRow
         ref={ref}
@@ -24,6 +25,7 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps & TestIdProps>(
         className={cn}
         onClick={onClick}
         {...props}
+        {...styleProps}
       >
         {children}
       </StyledTableRow>
@@ -33,6 +35,10 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps & TestIdProps>(
 
 export { TableRow };
 
-const StyledTableRow = styled.tr<{ ref: ForwardedRef<HTMLTableRowElement> }>`
+const StyledTableRow = styled.tr<
+  TableRowStyleProps & {
+    ref: ForwardedRef<HTMLTableRowElement>;
+  }
+>`
   ${tableRowStyles}
 `;
