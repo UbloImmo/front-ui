@@ -14,7 +14,7 @@ import type { AsyncFn, GenericFn, VoidFn } from "@ubloimmo/front-util";
  *
  * @type {string | number | boolean | Date | null}
  */
-export type FilterOptionValue = string | number | boolean | Date;
+export type FilterOptionValue = string | number | boolean | Date | null;
 
 export type FilterOptionSubscription<TItem extends object> = VoidFn<
   [IFilterOption<TItem>]
