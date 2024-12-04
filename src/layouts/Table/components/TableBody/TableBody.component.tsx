@@ -30,6 +30,6 @@ export const TableBody = ({
   );
 };
 
-const StyledTableBody = styled(TableBody)<TableBodyStyleProps>`
+const StyledTableBody = styled.tbody<TableBodyStyleProps>`
   ${tableBodyStyles}
 `;

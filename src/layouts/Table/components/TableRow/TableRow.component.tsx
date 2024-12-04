@@ -17,7 +17,7 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps & TestIdProps>(
   ({ className, children, onClick, testId, style = "form", ...props }, ref) => {
     const cn = useClassName({ className });
     const tid = useTestId("table-row", { testId });
-    const styleProps = useStyleProps({ style });
+    const styleProps = useStyleProps({ style, clickable: !!onClick });
     return (
       <StyledTableRow
         ref={ref}

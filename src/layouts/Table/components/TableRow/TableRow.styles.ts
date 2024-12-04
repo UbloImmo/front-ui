@@ -22,24 +22,40 @@ const tableRowFormStyles = () => css`
   }
 `;
 
-const tableRowListStyles = () => css`
-  padding: var(--s-2) 0;
-  background: white;
+const tableRowListStyles = ({ $clickable }: TableRowStyleProps) => css`
+  & > td {
+    padding-top: var(--s-2);
+    padding-bottom: var(--s-2);
+    min-height: var(--s-12);
+    height: var(--s-12);
+    vertical-align: middle;
+    background: white;
+    transition: background 150ms var(--bezier);
+  }
 
-  &:nth-child(even) {
+  &:nth-child(even) > td {
     background: var(--gray-50);
   }
 
-  &:not(:last-child) {
+  &:not(:last-child) > td {
     box-shadow: var(--border-bottom);
   }
+
+  ${$clickable &&
+  css`
+    cursor: pointer;
+    &:hover > td {
+      background: var(--primary-light);
+    }
+  `}
 `;
 
-export const tableRowStyles = ({ $style }: TableRowStyleProps): RuleSet => {
-  const baseStyle = $style === "list" ? tableRowListStyles : tableRowFormStyles;
+export const tableRowStyles = (props: TableRowStyleProps): RuleSet => {
+  const baseStyle =
+    props.$style === "list" ? tableRowListStyles : tableRowFormStyles;
 
   return css`
-    ${baseStyle}
+    ${baseStyle(props)}
 
     tbody > &:first-child > td:first-child {
       border-top-left-radius: var(--s-1);

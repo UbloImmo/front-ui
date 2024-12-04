@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- `v0.0.3` TableBody layout
+  - Add `style` property to allow for bespoke styles when used in a list or a form
+
+- `v0.0.3` TableHeader layout
+  - Add optional `sticky` and `top` properties to make the header sticky and offset it from the top of the viewport / container
+
+- `v0.0.4` TableHeaderCell layout
+  - Convert component to forwardRef to allow parents to access the element
+
+- `v0.0.3` TableRow layout
+  - Add `style` property to allow for bespoke styles when used in a list or a for
+
 ## 1.0.3 - 2025-01-16
 ### Added
 - **DOCS**
@@ -22,6 +34,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
   - Run `docs:generate` script in the dockerfile before building the storybook
 - Rearrange components & layouts display in storybook by parent groups: `Actions`, `Feedbacks`, `Dialogs`, `Groups`, ...
+
+## 1.0.2 - 2025-01-08
+
+## 1.0.1 - 2025-01-06
 
 ### Fixed
 - `v0.0.2` AccountBalance component
@@ -68,13 +84,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.21` Form component
   - Improved form table cell for proper ellipsis behavior
 
+
 ## 0.35.5 - 2024-12-02
 ### Added
 - New icons (`@ubloimmo/front-tokens@0.1.29`)
 
 ### Fixed
 - `v0.0.10` ComboBoxButton component
+<<<<<<< HEAD
   
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 9ec322ba (feat: update table layouts)
+>>>>>>> 99666478 (feat: update table layouts)
   - Fix icon color when it is active and disabled
 - Add unit tests for components with low code coverage
 

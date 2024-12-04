@@ -26,5 +26,7 @@ export type TableRowProps = {
 } & StyleOverrideProps;
 
 export type TableRowStyleProps = StyleProps<
-  Required<Pick<TableRowProps, "style">>
+  Required<Pick<TableRowProps, "style">> & {
+    clickable?: boolean;
+  }
 >;
