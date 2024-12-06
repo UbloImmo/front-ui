@@ -91,6 +91,11 @@ const FormTableDisplayCellInner = styled.div`
   justify-content: flex-start;
   width: 100%;
 
+  > * {
+    min-width: 0;
+    width: 100%;
+  }
+
   @media only screen and (max-width: ${breakpointsPx.XS}) {
     min-height: var(--s-8);
   }
