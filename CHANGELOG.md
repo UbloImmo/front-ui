@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Improved table cell display in read mode (added fill and ellipsis)
+- `v0.0.21` Form component
+  - Improved form table cell for proper ellipsis behavior
 
 ## 0.35.5 - 2024-12-02
 
