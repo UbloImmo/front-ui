@@ -552,7 +552,7 @@ const tableFormProps: FormProps<IdentityTable> = {
   defaultValues: {
     profiles: [
       {
-        firstName: "John",
+        firstName: "John has a very very very long name",
         lastName: "Doe",
       },
       {

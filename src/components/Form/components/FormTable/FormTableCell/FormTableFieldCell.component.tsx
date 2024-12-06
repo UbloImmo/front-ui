@@ -46,7 +46,7 @@ export const FormTableFieldCell = ({
     const content = computeFieldDisplayContent(props.type, props);
     if (isString(content))
       return (
-        <Text color="gray-800" weight="medium">
+        <Text color="gray-800" weight="medium" fill ellipsis>
           {content}
         </Text>
       );
