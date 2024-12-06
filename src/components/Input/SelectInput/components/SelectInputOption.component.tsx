@@ -71,6 +71,7 @@ const SelectInputOption = <
   if (Option)
     return (
       <CustomSelectOptionContainer
+        title={option.label}
         role="option"
         onClick={propagateSelection}
         aria-selected={option.active}
@@ -94,6 +95,7 @@ const SelectInputOption = <
       aria-disabled={option.disabled}
       {...styleProps}
       tabIndex={option.disabled ? -1 : 0}
+      title={option.label}
     >
       <SelectOptionValueContainer
         {...styleProps}
