@@ -323,7 +323,7 @@ export const computeFieldDisplayContent = <TType extends InputType>(
 export const FormFieldDisplayValue = ({ value }: { value: string }) => {
   return (
     <FieldDisplayValueContainer justify="start" align="center">
-      <Text color="gray-800" weight="medium">
+      <Text color="gray-800" weight="medium" fill ellipsis>
         {value}
       </Text>
     </FieldDisplayValueContainer>
