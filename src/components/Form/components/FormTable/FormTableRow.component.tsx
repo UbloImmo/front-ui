@@ -166,6 +166,10 @@ type StyledTableRowProps = StyleProps<
 const StyledTableRow = styled(TableRow)<StyledTableRowProps>`
   position: relative;
 
+  & > td {
+    max-width: 0; /* allow cells to shrink */
+  }
+
   ${({ $deletable, $dragging }) =>
     $deletable &&
     !$dragging &&
