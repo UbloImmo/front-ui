@@ -90,9 +90,11 @@ const FormTableDisplayCellInner = styled.div`
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+  > * {
+    min-width: 0;
+    width: 100%;
+  }
 
   @media only screen and (max-width: ${breakpointsPx.XS}) {
     min-height: var(--s-8);
