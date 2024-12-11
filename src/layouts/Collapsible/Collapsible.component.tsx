@@ -10,10 +10,11 @@ import {
   type CollapsibleDefaultProps,
   type CollapsibleContainerStyleProps,
 } from "./Collapsible.types";
-import { Icon } from "../Icon";
 
 import { FlexRowLayout } from "@layouts";
 import { useTestId, useMergedProps } from "@utils";
+
+import { Icon } from "@components";
 
 import type { TestIdProps } from "@types";
 
@@ -28,7 +29,7 @@ const defaultCollapsibleProps: CollapsibleDefaultProps = {
 };
 
 /**
- * An expandable component that allow users to reveal or hide sub content on click.
+ * An expandable layout that allow users to reveal or hide sub content on click.
  *
  * @version 0.0.3
  *
