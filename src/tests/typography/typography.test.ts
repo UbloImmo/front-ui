@@ -21,7 +21,7 @@ describe("typography", () => {
       expect(typographyFontFace).toBeDefined();
       expect(typographyFontFace).toBeFunction();
       expect(() => typographyFontFace()).not.toThrow();
-      expect(typographyFontFace()).toBeObject();
+      expect(typographyFontFace()).toBeString();
     });
 
     it("should link font face", () => {
@@ -166,6 +166,7 @@ describe("typography", () => {
           ellipsis: false,
           align: "left",
           fill: true,
+          noWrap: true,
         };
         expect(sanitizeTypographyProps(defaultProps, validProps)).toEqual(
           validProps

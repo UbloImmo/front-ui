@@ -6,3 +6,4 @@ export * from "./ListFilterOptionChip";
 export * from "./ListFilterPresetCollection";
 export * from "./ListFilterPreset";
 export * from "./ListFilterOptionBadge";
+export * from "./ListTableHeaderFilter";

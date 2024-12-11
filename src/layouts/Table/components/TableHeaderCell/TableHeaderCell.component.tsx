@@ -21,7 +21,7 @@ const defaultTableHeaderCellProps: TableCellProps = {
  * @param {CellProps} props - The props for the component.
  * @return {JSX.Element} The rendered table header cell.
  */
-const TableHeaderCell = forwardRef<
+export const TableHeaderCell = forwardRef<
   HTMLTableCellElement,
   TableCellProps & TestIdProps
 >((props: TableCellProps & TestIdProps, ref): JSX.Element => {
@@ -46,5 +46,3 @@ const StyledTableHeaderCell = styled.th<{
 }>`
   ${tableHeaderCellStyles}
 `;
-
-export { TableHeaderCell };

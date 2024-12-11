@@ -1,6 +1,5 @@
 import {
   deepValueOf,
-  isNullish,
   isNumber,
   isObject,
   isString,
@@ -40,8 +39,8 @@ const compareItemValue = <TItem extends object>(
   item: TItem,
   match: FilterOptionMatch<TItem>
 ): boolean => {
-  const itemValue = deepValueOf(item, match.property, true);
-  if (isNullish(itemValue) || isNullish(match.value)) return false;
+  // collapse nullish values to null
+  const itemValue = deepValueOf(item, match.property, true) ?? null;
   switch (match.comparison) {
     case ComparisonOperators.neq:
       return itemValue !== match.value;

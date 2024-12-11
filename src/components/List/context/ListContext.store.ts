@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { useListFilterPresets } from "./ListContext.filterPresets";
 import { useListFilters } from "./ListContext.filters";
 import { useListOptions } from "./ListContext.options";
+import { useListContextSearchParams } from "./ListContext.searchParams";
 
 import type { ListContextConfig, ListContextValue } from "./ListContext.types";
 
@@ -32,17 +33,24 @@ export const useListContextStore = <TItem extends object>({
     [filterPresets.filterPresetsLoading, filters.filtersLoading]
   );
 
+  useListContextSearchParams(config, options, configLoading);
+
   const loading = useMemo(
     () => dataProvider.loading || configLoading,
     [dataProvider.loading, configLoading]
   );
+
+  const displayData = useMemo(() => {
+    if (loading) return [];
+    return data;
+  }, [loading, data]);
 
   return {
     ...filterPresets,
     options: optionsArray,
     ...optionMethods,
     ...filters,
-    data,
+    data: displayData,
     itemCount,
     dataProvider,
     loading,

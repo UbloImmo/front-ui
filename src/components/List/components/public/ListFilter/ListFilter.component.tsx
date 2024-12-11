@@ -11,6 +11,7 @@ import {
 import { ListFilterOptionChip } from "../ListFilterOptionChip/ListFilterOptionChip.component";
 import { ListFilterOptionItem } from "../ListFilterOptionItem";
 import { useListFilter } from "./ListFilter.utils";
+import { ListFilterOptionDivider } from "../ListFilterOptionDivider/ListFilterOptionDivider.component";
 
 import { Icon } from "@/components/Icon";
 import { Input } from "@/components/Input";
@@ -42,6 +43,8 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
     openOptions,
     closeOptions,
     selectOptionOnEnter,
+    getOptionDivider,
+    isQuerying,
   } = useListFilter(props);
 
   const openOptionsOnClick = useCallback(
@@ -138,15 +141,21 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
         {filteredOptions.map((option, index) => {
           const key = [option.signature, index, option.selected].join("-");
           const highlighted = option.signature === highlightSignature;
+          const divider = getOptionDivider(option.signature);
           return (
-            <ListFilterOptionItem
-              option={option}
-              multi={filter.multi}
-              filterSignature={filter.signature}
-              key={key}
-              closeFilter={closeOptions}
-              highlighted={highlighted}
-            />
+            <>
+              {divider && !isQuerying && (
+                <ListFilterOptionDivider label={divider.label} />
+              )}
+              <ListFilterOptionItem
+                option={option}
+                multi={filter.multi}
+                filterSignature={filter.signature}
+                key={key}
+                closeFilter={closeOptions}
+                highlighted={highlighted}
+              />
+            </>
           );
         })}
       </ListFilterOptionsList>

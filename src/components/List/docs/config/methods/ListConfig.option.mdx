@@ -1,0 +1,82 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Option" />
+
+<Header>
+  <HeaderInfo title="option()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Builds and registers a _filter option_ from matches.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Options consist of a label, one or more matches and additional configuration.
+
+```typescript
+const { match, option } = useListConfig<Pokemon>(usePokemonData);
+useStatic(() => {
+  const isNamedPikachu = match("name", "=", "Pikachu");
+  const isPikachu = option("Pikachu", isNamedPikachu);
+  /**
+   * {
+   *   label: "Pikachu",
+   *   matches: [
+   *     { property: "name", comparison: "=", value: "Pikachu" },
+   *   ],
+   *   operator: "AND",
+   *   signature: "Pickachu-name_=_Pickachu",
+   *   paletteColor: "gray-600",
+   *   colorKey: "gray-600",
+   *   icon: "Circle",
+   *   selected: false,
+   *   default: false,
+   *   initial: false,
+   *   fixed: false,
+   *   disabled: false,
+   *   hidden: false,
+   * }
+  */
+})
+
+```
+
+## Type definition
+
+```typescript
+type ListConfigMatchesFn<TItem extends object> = (
+  property: FilterProperty<TItem>,
+  comparison: FilterComparisonOperator,
+  values: FilterOptionValue[]
+) => FilterOptionMatch<TItem>[];
+```
+
+## Arguments
+
+#### `matches(property, comparison, values)`
+
+- `property: FilterProperty<TItem>`: a single (possibly nested) string or number property of the item to match against
+- `comparison: FilterComparisonOperator`: a single comparison operator (either `=`, `!=`, `>`, `<`, `>=` or `<=`)
+- `values: FilterOptionValue[]`: a list of property values to match against
+
+## Returns
+
+`FilterOptionMatch<TItem>[]`: a list containing one `FilterOptionMatch` object for each value passed in the `values` parameter.
+
+> All the matches are hold the same property and comparison, but different values.
+
+## Example
+
+```typescript
+// Retrieve the method from the useListConfig hook
+const { matches } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const [isNamedPikachu, isNamedRaichu] = matches("name", "=", ["Pikachu", "Raichu"]);
+})
+```
+
+</Content>

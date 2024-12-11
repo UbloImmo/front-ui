@@ -1,6 +1,6 @@
 import type {
   FilterOptionData,
-  FilterOptionOrSignature,
+  FilterOptionDataOrSignature,
 } from "../FilterOption";
 import type {
   FilterBooleanOperator,
@@ -163,7 +163,7 @@ export type ListConfigFilterPresetFn<TItem extends object> = GenericFn<
 export type ListConfigAsyncFilterPresetFnParams<TItem extends object> = [
   label: string,
   optionsOrSignaturesPromise: MaybePromise<
-    MaybePromise<FilterOptionOrSignature<TItem>>[]
+    MaybePromise<FilterOptionDataOrSignature<TItem>>[]
   >,
   config?: FilterPresetConfig
 ];

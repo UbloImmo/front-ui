@@ -1,9 +1,11 @@
+import { isObject, type VoidFn } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 
 import { useDataArray } from "@utils";
 
 import type {
   GetFilterByIdFn,
+  GetFilterByLabelFn,
   GetFilterBySignatureFn,
   ListContextConfig,
   UseListFilters,
@@ -15,10 +17,9 @@ import type {
   FilterOptionData,
   FilterSignature,
   IFilter,
-  IFilterOption,
+  FilterOption,
   IsFilterOptionFn,
 } from "../modules";
-import type { VoidFn } from "@ubloimmo/front-util";
 
 export const useListFilters: UseListFilters = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "filters">,
@@ -32,7 +33,7 @@ export const useListFilters: UseListFilters = <TItem extends object>(
       multi = false,
       isFilterOption: IsFilterOptionFn = () => false,
       isFilterDisabled = false
-    ): IFilterOption<TItem> => {
+    ): FilterOption<TItem> => {
       const select = () =>
         updateOptionSelection(
           optionData.signature,
@@ -58,21 +59,27 @@ export const useListFilters: UseListFilters = <TItem extends object>(
   );
 
   const buildFilterOptions = useCallback(
-    (filterData: FilterData): IFilterOption<TItem>[] => {
+    (filterData: FilterData): FilterOption<TItem>[] => {
       const isFilterOption = (optionSignature: FilterSignature) =>
         filterData.optionSignatures.includes(optionSignature);
 
-      return options
-        .filter(({ signature }) =>
-          filterData.optionSignatures.includes(signature)
-        )
-        .map((optionData) =>
-          buildFilterOption(
+      // not really efficient since a single `options.filter` could suffice
+      // but needed to ensure order
+      return filterData.optionSignatures
+        .map((optionSignature) => {
+          const optionData = options.find(
+            ({ signature }) => signature === optionSignature
+          );
+          if (!optionData) return null;
+          return buildFilterOption(
             optionData,
             filterData.multi,
             isFilterOption,
             filterData.disabled
-          )
+          );
+        })
+        .filter((maybeOption): maybeOption is FilterOption<TItem> =>
+          isObject(maybeOption)
         );
     },
     [options, buildFilterOption]
@@ -105,6 +112,7 @@ export const useListFilters: UseListFilters = <TItem extends object>(
       return {
         ...filterData,
         options: filterOptions,
+        optionDividers: filterData.optionDividers ?? [],
         active,
         selectedOptions,
         clear,
@@ -140,6 +148,13 @@ export const useListFilters: UseListFilters = <TItem extends object>(
     [filters]
   );
 
+  const getFilterByLabel = useCallback<GetFilterByLabelFn<TItem>>(
+    (filterLabel: string) => {
+      return filters.find(({ label }) => label === filterLabel) ?? null;
+    },
+    [filters]
+  );
+
   const clearAllFilters = useCallback<VoidFn>(
     () => filters.forEach((filter) => filter.clear()),
     [filters]
@@ -150,6 +165,7 @@ export const useListFilters: UseListFilters = <TItem extends object>(
     filtersLoading,
     getFilterById,
     getFilterBySignature,
+    getFilterByLabel,
     clearAllFilters,
   };
 };

@@ -1,4 +1,4 @@
-import { isString, type Nullable, type Nullish } from "@ubloimmo/front-util";
+import { isString, type Nullable } from "@ubloimmo/front-util";
 import styled from "styled-components";
 
 import {
@@ -7,7 +7,7 @@ import {
   ListFilterPresetCollection,
   ListSideHeader,
 } from "../components";
-import { useListConfig, useListContext } from "../context";
+import { ListContextProvider, useListConfig, useListContext } from "../context";
 import { List } from "../List.component";
 import { BooleanOperators } from "../List.enums";
 import {
@@ -19,7 +19,15 @@ import {
 
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
-import { FlexLayout, GridItem, GridLayout } from "@layouts";
+import {
+  FlexLayout,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from "@layouts";
 import { arrayOf, capitalize, delay, useStatic } from "@utils";
 
 type Pokemon = {
@@ -27,40 +35,11 @@ type Pokemon = {
   name: string;
   is_main_series: boolean;
   generation: string;
-  businessUnitId?: Nullish<string>;
-  // names: {
-  //   name: string;
-  //   language: {
-  //     id: number;
-  //     name: string;
-  //     official: boolean;
-  //   };
-  // }[];
   base_experience: number;
   height: number;
   is_default: boolean;
   order: number;
   weight: number;
-  // abilities: unknown[];
-  // forms: unknown[];
-  // game_indices: unknown[];
-  // held_items: unknown[];
-  location_area_encounters: string;
-  // moves: unknown[];
-  // past_types: unknown[];
-  // sprites: {
-  //   front_default: string;
-  //   front_shiny: string;
-  //   front_female: string;
-  //   front_shiny_female: string;
-  //   back_default: string;
-  //   back_shiny: string;
-  //   back_female: string;
-  //   back_shiny_female: string;
-  // };
-  // cries: unknown;
-  // species: unknown;
-  // stats: unknown[];
   types: {
     slot: number;
     type: {
@@ -80,10 +59,6 @@ type PokemonListResponse = {
   previous: Nullable<string>;
 };
 
-const MOCK_BU_ID = "1234567890";
-const MOCK_OTHER_BU_ID = "0987654321";
-const THIRD_BU_ID = "9876543210";
-
 const DEFAULT_POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon";
 const LIMIT = 100;
 
@@ -95,9 +70,6 @@ const fetchPokemonData = async (): Promise<Pokemon[]> => {
       data.results.map(async ({ url }) => {
         const singleResponse = await fetch(url);
         const singleData = (await singleResponse.json()) as Pokemon;
-        if (Math.random() < 0.1) singleData.businessUnitId = MOCK_BU_ID;
-        if (Math.random() < 0.1) singleData.businessUnitId = MOCK_OTHER_BU_ID;
-        if (Math.random() < 0.1) singleData.businessUnitId = THIRD_BU_ID;
         return singleData;
       })
     );
@@ -129,10 +101,12 @@ const usePokemonListConfig = () => {
     options,
     filterPreset,
     async,
+    configureSearchParams,
   } = useListConfig(usePokemonData);
 
   // build & register the name filter once
   const filters = useStatic(() => {
+    configureSearchParams({ sync: "read" });
     // build & register a filter option for clefairy
     const clefairy = option("Clefairy", match("name", "=", "clefairy"), {
       color: "primary",
@@ -384,45 +358,49 @@ const LoadingFill = styled(Loading)`
 
 const Renderer = () => {
   const { data, loading } = useListContext<Pokemon>();
+
   if (loading) return <LoadingFill animation="ProgressBar" />;
   return (
-    <FlexLayout direction="column" fill gap="s-3">
-      <GridLayout columns={3} fill>
-        <GridItem>
-          <Text weight="bold">Name</Text>
-        </GridItem>
-        <GridItem>
-          <Text weight="bold">Type</Text>
-        </GridItem>
-        <GridItem>
-          <Text weight="bold">Weight</Text>
-        </GridItem>
-      </GridLayout>
-      {data.map((pokemon) => (
-        <GridLayout columns={3} key={String(pokemon.id)} fill>
-          <GridItem>
-            <Text weight="medium">{capitalize(pokemon.name)}</Text>
-          </GridItem>
-          <GridItem>
-            <FlexLayout direction="row" gap="s-1">
-              <ListFilterOptionBadge
-                item={pokemon}
-                property="types.0.type.name"
-              />
-              {pokemon.types[1] && (
+    <Table layout="fixed">
+      <TableHeader sticky top="s-2">
+        <TableHeaderCell>
+          <Text>Name</Text>
+        </TableHeaderCell>
+
+        <TableHeaderCell>
+          <Text>Type</Text>
+        </TableHeaderCell>
+        <TableHeaderCell>
+          <Text>Weight</Text>
+        </TableHeaderCell>
+      </TableHeader>
+      <TableBody style="list">
+        {data.map((pokemon) => (
+          <TableRow style="list" key={String(pokemon.id)}>
+            <TableCell padded>
+              <Text weight="medium">{capitalize(pokemon.name)}</Text>
+            </TableCell>
+            <TableCell padded>
+              <FlexLayout direction="row" gap="s-1">
                 <ListFilterOptionBadge
                   item={pokemon}
-                  property="types.1.type.name"
+                  property="types.0.type.name"
                 />
-              )}
-            </FlexLayout>
-          </GridItem>
-          <GridItem>
-            <ListFilterOptionBadge item={pokemon} property="weight" />
-          </GridItem>
-        </GridLayout>
-      ))}
-    </FlexLayout>
+                {pokemon.types[1] && (
+                  <ListFilterOptionBadge
+                    item={pokemon}
+                    property="types.1.type.name"
+                  />
+                )}
+              </FlexLayout>
+            </TableCell>
+            <TableCell padded>
+              <ListFilterOptionBadge item={pokemon} property="weight" />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -430,18 +408,20 @@ export const PokemonListExample = () => {
   const { config } = usePokemonListConfig();
 
   return (
-    <FlexLayout direction="row" fill gap="s-3">
-      <List config={config}>
-        <SideView direction="column" fill gap="s-3">
-          <ListSideHeader title="Pokedex" />
-          <ListFilterCollection title="Attributes" />
-        </SideView>
-        <FlexLayout fill direction="column" gap="s-2">
-          <ListFilterPresetCollection />
-          <Renderer />
-        </FlexLayout>
-      </List>
-    </FlexLayout>
+    <ListContextProvider config={config}>
+      <FlexLayout direction="row" fill gap="s-3">
+        <List>
+          <SideView direction="column" fill gap="s-3">
+            <ListSideHeader title="Pokedex" />
+            <ListFilterCollection title="Attributes" />
+          </SideView>
+          <FlexLayout fill direction="column" gap="s-2">
+            <ListFilterPresetCollection />
+            <Renderer />
+          </FlexLayout>
+        </List>
+      </FlexLayout>
+    </ListContextProvider>
   );
 };
 

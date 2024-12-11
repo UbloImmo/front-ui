@@ -12,8 +12,6 @@ const defaultListProps: ListDefaultProps<object> = {
 /**
  * Highly customizable list component
  *
- * Renders a list of items and provides a context for its children
- *
  * @version 0.0.1
  *
  * @param {ListProps} props - List component props

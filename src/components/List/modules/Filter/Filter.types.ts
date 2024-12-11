@@ -1,14 +1,18 @@
-import type { MaybePromise } from "@types";
 import type {
-  IFilterOption,
+  FilterOption,
   FilterOptionData,
-  FilterOptionOrSignature,
+  FilterOptionDataOrSignature,
 } from "../FilterOption/FilterOption.types";
+import type {
+  FilterOptionDivider,
+  FilterOptionDividerData,
+} from "../FilterOptionDivider";
 import type {
   FilterSignature,
   FilterBooleanOperator,
   FilterVisualData,
 } from "../shared.types";
+import type { MaybePromise } from "@types";
 import type { AsyncFn, GenericFn, Nullable } from "@ubloimmo/front-util";
 
 export type FilterBehavior = {
@@ -50,6 +54,8 @@ export type FilterBehavior = {
   // select all if empty
 };
 
+export type FilterOptionsSort = "asc" | "desc" | "none";
+
 export type FilterConfig = FilterBehavior & {
   /**
    * The comparison operator, used to combine options
@@ -90,11 +96,16 @@ export type FilterConfig = FilterBehavior & {
    * @type {number}
    */
   index?: number;
+  /**
+   * The sort order of the filter options
+   *
+   * @type {FilterOptionsSort}
+   * @default "none"
+   */
+  optionsSort?: FilterOptionsSort;
 };
 
-export type FilterData = Required<
-  FilterConfig & FilterBehavior & FilterVisualData
-> & {
+export type FilterData = Required<FilterConfig & FilterVisualData> & {
   /**
    * The signature of the filter
    * Used to identify a filter when comparing them
@@ -111,12 +122,19 @@ export type FilterData = Required<
   /**
    * The options of the filter
    *
-   * @type {IFilterOption[]}
+   * @type {FilterSignature[]}
    */
   optionSignatures: FilterSignature[];
+  /**
+   * The dividers of the filter options
+   *
+   * @type {FilterOptionDivider[]}
+   * @default []
+   */
+  optionDividers?: FilterOptionDivider[];
 };
 
-export interface IFilter<TItem extends object> extends FilterData {
+export interface IFilter<TItem extends object> extends Required<FilterData> {
   /**
    * Whether the filter is active (e.g. has at least one selected options)
    *
@@ -126,9 +144,9 @@ export interface IFilter<TItem extends object> extends FilterData {
   /**
    * The options of the filter
    *
-   * @type {IFilterOption[]}
+   * @type {FilterOption[]}
    */
-  options: IFilterOption<TItem>[];
+  options: FilterOption<TItem>[];
   /**
    * Unselects all options
    */
@@ -142,18 +160,29 @@ export interface IFilter<TItem extends object> extends FilterData {
   /**
    * The selected options
    *
-   * @type {IFilterOption<TItem>[]}
+   * @type {FilterOption<TItem>[]}
    */
-  selectedOptions: IFilterOption<TItem>[];
+  selectedOptions: FilterOption<TItem>[];
 }
 
 export type ListConfigFilterFnParams<TItem extends object> = [
   label: string,
-  optionsOrSignatures: (FilterSignature | FilterOptionData<TItem>)[],
+  optionsOrDividers: (
+    | FilterSignature
+    | FilterOptionData<TItem>
+    | FilterOptionDividerData
+  )[],
   config?: FilterConfig,
   loading?: boolean
 ];
 
+/**
+ * @param {string} label - The label of the filter
+ * @param {(FilterSignature | FilterOptionData<TItem> | FilterOptionDividerData)[]} optionsOrDividers - The options or dividers of the filter
+ * @param {FilterConfig} config - The configuration of the filter
+ * @param {boolean} loading - Whether the filter is loading
+ * @returns {FilterData} The data of the filter
+ */
 export type ListConfigFilterFn<TItem extends object> = GenericFn<
   ListConfigFilterFnParams<TItem>,
   FilterData
@@ -162,7 +191,7 @@ export type ListConfigFilterFn<TItem extends object> = GenericFn<
 export type ListConficAsyncFilterDataFnParams<TItem extends object> = [
   label: string,
   optionsOrSignaturesPromise: MaybePromise<
-    MaybePromise<FilterOptionOrSignature<TItem>>[]
+    MaybePromise<FilterOptionDataOrSignature<TItem> | FilterOptionDividerData>[]
   >,
   config?: FilterConfig
 ];

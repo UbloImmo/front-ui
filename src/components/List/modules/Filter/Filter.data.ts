@@ -1,6 +1,7 @@
-import { isObject } from "@ubloimmo/front-util";
-
-import { computeFilterDataSignature } from "./Filter.utils";
+import {
+  computeFilterDataSignature,
+  separateOptionsAndDividers,
+} from "./Filter.utils";
 import { BooleanOperators } from "../../List.enums";
 
 import { mergeDefaultProps } from "@utils";
@@ -20,6 +21,7 @@ const defaultStaticFilterConfig: Required<Omit<FilterConfig, "testId" | "id">> =
     emptyLabel: null,
     allowCompleteSelection: false,
     index: 0,
+    optionsSort: "none",
   };
 
 /**
@@ -27,7 +29,7 @@ const defaultStaticFilterConfig: Required<Omit<FilterConfig, "testId" | "id">> =
  *
  * @template {object} TItem - The type of items being filtered
  * @param {string} [label="[MISSING FILTER LABEL]"] - The label of the filter
- * @param {(FilterSignature | FilterOptionData<TItem>)[]} optionOrSignatures - The filter options or their signatures
+ * @param {(FilterSignature | FilterOptionData<TItem> | FilterOptionDividerData)[]} optionOrSignatures - The filter options or their signatures
  * @param {FilterConfig} [config={}] - Configuration options for the filter
  * @param {boolean} [loading=false] - Whether the filter is in a loading state
  * @returns {FilterData} The constructed filter data object
@@ -43,10 +45,8 @@ export const filterData = <TItem extends object>(
   const staticConfig = mergeDefaultProps(defaultStaticFilterConfig, config);
 
   const operator = config.operator ?? BooleanOperators.OR;
-  const optionSignatures = optionOrSignatures.map((option) => {
-    if (isObject(option) && "signature" in option) return option.signature;
-    return option;
-  });
+  const { optionSignatures, optionDividers } =
+    separateOptionsAndDividers(optionOrSignatures);
   const signature = computeFilterDataSignature(
     label,
     optionSignatures,
@@ -57,6 +57,7 @@ export const filterData = <TItem extends object>(
   return {
     label,
     optionSignatures,
+    optionDividers,
     signature,
     id,
     testId,

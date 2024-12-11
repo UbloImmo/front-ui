@@ -1,10 +1,14 @@
-import { BalanceJournalExample, PokemonListExample } from "./examples";
+import {
+  BalanceJournalExample,
+  DefaultExample,
+  PokemonListExample,
+} from "./examples";
 import { List } from "./List.component";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { ListProps } from "./List.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 const componentSource = componentSourceFactory<ListProps<object>>(
   "List",
@@ -21,9 +25,8 @@ const meta = {
 } satisfies Meta<typeof List>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default = () => <DefaultExample />;
 
 export const PokeApiList = () => <PokemonListExample />;
 

@@ -113,3 +113,69 @@ export type UseDataArray = <TData>(
    */
   onDataChange?: VoidFn<[newData: TData[]]>
 ) => UseDataArrayReturn<TData>;
+
+/**
+ * Hook options.
+ * @template T - The type of the value.
+ */
+export type UseDebounceValueOptions<T> = {
+  /**
+   * Determines whether the function should be invoked on the leading edge of the timeout.
+   * @default false
+   */
+  leading?: boolean;
+  /**
+   * Determines whether the function should be invoked on the trailing edge of the timeout.
+   * @default false
+   */
+  trailing?: boolean;
+  /**
+   * The maximum time the specified function is allowed to be delayed before it is invoked.
+   */
+  maxWait?: number;
+  /** A function to determine if the value has changed. Defaults to a function that checks if the value is strictly equal to the previous value. */
+  equalityFn?: (left: T, right: T) => boolean;
+};
+
+/** Configuration options for controlling the behavior of the debounced function. */
+export type UseeDebounceOptions = {
+  /**
+   * Determines whether the function should be invoked on the leading edge of the timeout.
+   * @default false
+   */
+  leading?: boolean;
+  /**
+   * Determines whether the function should be invoked on the trailing edge of the timeout.
+   * @default false
+   */
+  trailing?: boolean;
+  /**
+   * The maximum time the specified function is allowed to be delayed before it is invoked.
+   */
+  maxWait?: number;
+};
+
+/** Functions to manage a debounced callback. */
+export type UseDebounceControlFunctions = {
+  /** Cancels pending function invocations. */
+  cancel: () => void;
+  /** Immediately invokes pending function invocations. */
+  flush: () => void;
+  /**
+   * Checks if there are any pending function invocations.
+   * @returns `true` if there are pending invocations, otherwise `false`.
+   */
+  isPending: () => boolean;
+};
+
+/**
+ * Represents the state and control functions of a debounced callback.
+ * Subsequent calls to the debounced function return the result of the last invocation.
+ * Note: If there are no previous invocations, the result will be undefined.
+ * Ensure proper handling in your code.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type DebouncedState<T extends (...args: any) => ReturnType<T>> = ((
+  ...args: Parameters<T>
+) => ReturnType<T> | undefined) &
+  UseDebounceControlFunctions;

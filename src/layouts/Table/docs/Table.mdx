@@ -29,6 +29,13 @@ To label your columns and inform users of their type, use `TableHeader` and `Tab
 
 <Canvas of={TableStories.WithPadding} />
 
+## Styling the Table
+
+Both `TableBody` and `TableRow` have an optional `style` property that you set to `list` to render them in a list style.
+Defaults to `form` otherwise.
+
+<Canvas of={TableStories.ListStyle} />
+
 ## Spanning the columns
 
 You can use the optional property `colSpan` on `TableHeaderCell` and `TableCell` to define the number of columns to be spanned in your table

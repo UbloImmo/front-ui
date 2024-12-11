@@ -13,5 +13,10 @@ export const tableHeaderStyles = ({
   return css`
     position: sticky;
     top: ${top};
+    z-index: 1;
+
+    & > tr > th > div {
+      box-shadow: var(--shadow-card-elevation-low);
+    }
   `;
 };

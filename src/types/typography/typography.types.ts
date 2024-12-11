@@ -115,6 +115,12 @@ export type TypographyProps = {
    */
   fill?: boolean;
   /**
+   * Setting this to true will enable `white-space: nowrap` on the text contents.
+   *
+   * @default false
+   */
+  noWrap?: boolean;
+  /**
    * Any valid react children.
    *
    * @default undefined

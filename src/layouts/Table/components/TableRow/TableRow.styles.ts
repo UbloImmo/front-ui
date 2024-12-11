@@ -38,7 +38,7 @@ const tableRowListStyles = ({ $clickable }: TableRowStyleProps) => css`
   }
 
   &:not(:last-child) > td {
-    box-shadow: var(--border-bottom);
+    border-bottom: 1px solid var(--primary-light);
   }
 
   ${$clickable &&

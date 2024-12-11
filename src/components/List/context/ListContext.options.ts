@@ -21,7 +21,9 @@ export const useListOptions: UseListOptions = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "options" | "filters" | "operator">,
   dataProvider: IDataProvider<TItem>
 ): UseListOptionsReturn<TItem> => {
-  const updateFiltersOnChange = useCallback(
+  const options = useDataArray(config.options ?? [], true);
+
+  const filterDataOnChange = useCallback(
     (updatedOptions: FilterOptionData<TItem>[]) => {
       const filters = config.filters?.map(
         ({ optionSignatures, operator }): DataProviderFilterParam<TItem> => {
@@ -51,11 +53,8 @@ export const useListOptions: UseListOptions = <TItem extends object>(
     [dataProvider, config.filters, config.operator]
   );
 
-  const options = useDataArray(config.options ?? [], true);
-
   useEffect(() => {
-    if (!dataProvider.loading) updateFiltersOnChange(options.data);
-    // updateFiltersOnChange(options.data);
+    if (!dataProvider.loading) filterDataOnChange(options.data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options.data, dataProvider.loading]);
 

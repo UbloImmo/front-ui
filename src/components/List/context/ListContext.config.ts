@@ -4,6 +4,7 @@ import { BooleanOperators } from "../List.enums";
 import {
   filterData,
   filterOptionData,
+  filterOptionDividerData,
   filterOptionMatch,
   filterPresetData,
   type FilterBooleanOperator,
@@ -13,9 +14,10 @@ import {
   type FilterDataMap,
   type FilterOptionConfig,
   type FilterOptionData,
+  type FilterOptionDataOrSignature,
+  type FilterOptionDividerData,
   type FilterOptionMap,
   type FilterOptionMatch,
-  type FilterOptionOrSignature,
   type FilterOptionValue,
   type FilterPresetConfig,
   type FilterPresetData,
@@ -31,17 +33,21 @@ import {
   type ListConfigMatchesFn,
   type ListConfigMatchFn,
   type ListConfigMatchFnParams,
+  type ListConfigNotFn,
   type ListConfigOptionFn,
   type ListConfigOptionFnParams,
   type ListConfigOptionLabeledValue,
   type ListConfigOptionsFn,
   type UseDataProviderFn,
 } from "../modules";
+import { invertMatchComparison } from "../modules/FilterOption/FilterOption.utils";
 
 import { mergeDefaultProps, useLogger, useUikitTranslation } from "@utils";
 
 import type {
   HydrateFilterConfigFn,
+  ListConfigOptionDividerFn,
+  ListConfigSearchParams,
   ListContextConfig,
   UseListConfig,
   UseListConfigAsync,
@@ -86,11 +92,9 @@ const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
   );
 
   const awaitAsyncOptions = useCallback(
-    async (
-      optionsOrSignatures: MaybePromise<
-        MaybePromise<FilterOptionOrSignature<TItem>>[]
-      >
-    ): Promise<FilterOptionOrSignature<TItem>[]> => {
+    async <TPayload>(
+      optionsOrSignatures: MaybePromise<MaybePromise<TPayload>[]>
+    ): Promise<TPayload[]> => {
       return await Promise.all(await optionsOrSignatures);
     },
     []
@@ -100,7 +104,9 @@ const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
     async (
       label: string,
       optionsOrSignaturesPromise: MaybePromise<
-        MaybePromise<FilterOptionOrSignature<TItem>>[]
+        MaybePromise<
+          FilterOptionDataOrSignature<TItem> | FilterOptionDividerData
+        >[]
       >,
       config?: FilterConfig
     ): Promise<Nullable<FilterData>> => {
@@ -110,11 +116,11 @@ const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
         const tempFilterData = filterData<TItem>(label, [], hydrated, true);
         registerFilter(tempFilterData);
         // wait for options to load
-        const optionsOrSignatures = await awaitAsyncOptions(
-          optionsOrSignaturesPromise
-        );
+        const optionsOrDividers = await awaitAsyncOptions<
+          FilterOptionDataOrSignature<TItem> | FilterOptionDividerData
+        >(optionsOrSignaturesPromise);
         // create new filter data based on loaded options and config
-        const data = filterData<TItem>(label, optionsOrSignatures, hydrated);
+        const data = filterData<TItem>(label, optionsOrDividers, hydrated);
         // update filter data with loaded options
         updateFilter(data);
         return data;
@@ -136,7 +142,7 @@ const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
     async (
       label: string,
       optionsOrSignaturesPromise: MaybePromise<
-        MaybePromise<FilterOptionOrSignature<TItem>>[]
+        MaybePromise<FilterOptionDataOrSignature<TItem>>[]
       >,
       config?: FilterPresetConfig
     ): Promise<Nullable<FilterPresetData>> => {
@@ -310,6 +316,21 @@ export const useListConfig: UseListConfig = <TItem extends object>(
     [match]
   );
 
+  const not = useCallback<ListConfigNotFn<TItem>>(
+    ({
+      value,
+      property,
+      comparison,
+    }: FilterOptionMatch<TItem>): FilterOptionMatch<TItem> => {
+      return {
+        value,
+        property,
+        comparison: invertMatchComparison(comparison),
+      };
+    },
+    []
+  );
+
   const option = useCallback<ListConfigOptionFn<TItem>>(
     (...params: ListConfigOptionFnParams<TItem>): FilterOptionData<TItem> => {
       const optionData = filterOptionData<TItem>(...params);
@@ -319,13 +340,17 @@ export const useListConfig: UseListConfig = <TItem extends object>(
     []
   );
 
+  const divider = useCallback<ListConfigOptionDividerFn>((label: string) => {
+    return filterOptionDividerData(label);
+  }, []);
+
   const options = useCallback<ListConfigOptionsFn<TItem>>(
     (
       property: FilterProperty<TItem>,
       comparison: FilterComparisonOperator,
       labeledValues: ListConfigOptionLabeledValue[],
       sharedConfig: FilterOptionConfig = {}
-    ) => {
+    ): FilterOptionData<TItem>[] => {
       return labeledValues.map(({ label, value, config }) => {
         return option(
           label,
@@ -368,6 +393,13 @@ export const useListConfig: UseListConfig = <TItem extends object>(
     hydrateFilterConfig
   );
 
+  const [searchParams, configureSearchParams] =
+    useState<ListConfigSearchParams>({
+      sync: false,
+      readParams: null,
+      writeParams: null,
+    });
+
   const config = useMemo<ListContextConfig<TItem>>(() => {
     const optionsList = Array.from(optionsMap.values());
     const filtersList = Array.from(filtersMap.values()).sort(
@@ -379,20 +411,31 @@ export const useListConfig: UseListConfig = <TItem extends object>(
       filters: filtersList,
       options: optionsList,
       filterPresets: filterPresetsList,
+      searchParams,
       useDataProvider: dataProvider,
       operator,
     };
-  }, [filtersMap, optionsMap, filterPresetsMap, dataProvider, operator]);
+  }, [
+    optionsMap,
+    filtersMap,
+    filterPresetsMap,
+    searchParams,
+    dataProvider,
+    operator,
+  ]);
 
   return {
     config,
     async,
     match,
     matches,
+    not,
+    divider,
     option,
     options,
     filter,
     filterPreset,
     setOperator,
+    configureSearchParams,
   };
 };

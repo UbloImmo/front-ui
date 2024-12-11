@@ -40,6 +40,7 @@ const Table = (props: TableProps & TestIdProps): JSX.Element => {
   );
 };
 Table.defaultProps = defaultTableProps;
+Table.displayName = "Table";
 
 export { Table };
 

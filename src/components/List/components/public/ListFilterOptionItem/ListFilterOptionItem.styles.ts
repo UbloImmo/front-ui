@@ -20,6 +20,7 @@ export const listFilterOptionItemStyles = (
     background: var(--gray-50-00);
     cursor: pointer;
     outline: 1px solid var(--primary-medium-00);
+    margin: 0;
 
     transition: background 150ms var(--bezier), outline 50ms var(--bezier);
 

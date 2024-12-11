@@ -39,6 +39,7 @@ export const listFilterContainerStyles = (
     background: ${background};
     border-radius: ${borderRadius};
     min-height: var(--filter-header-height);
+    min-width: 17rem !important;
     max-height: ${maxHeight};
     transition-property: background, box-shadow, max-height, height, margin-top,
       margin-bottom;

@@ -3,6 +3,7 @@ import type {
   FilterConfig,
   FilterData,
   FilterOptionData,
+  FilterOptionDividerData,
   FilterPreset,
   FilterPresetData,
   FilterSignature,
@@ -16,6 +17,7 @@ import type {
   ListConfigFilterPresetFn,
   ListConfigMatchFn,
   ListConfigMatchesFn,
+  ListConfigNotFn,
   ListConfigOptionFn,
   ListConfigOptionsFn,
   UseDataProviderFn,
@@ -28,6 +30,71 @@ import type {
   VoidFn,
 } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
+
+// LIST SEARCH PARAMS ---------------------------------------------------------------------------
+
+export type UseListContextSearchParams = <TItem extends object>(
+  config: Pick<ListContextConfig<TItem>, "searchParams">,
+  options: UseListOptionsReturn<TItem>,
+  configLoading: boolean
+) => void;
+
+export type ListConfigSearchParamsReadParamsFn = GenericFn<[], URLSearchParams>;
+
+export type ListConfigSearchParamsWriteParamsFn = VoidFn<
+  [searchParams: URLSearchParams]
+>;
+/**
+ * The list's search params sync configuration
+ *
+ *
+ * - `true` or `"read-write"` will sync both read and write
+ * - `false` will disable syncing
+ * - `"read"` will only read from the url
+ * - `"write"` will only write to the url
+ *
+ * @type {boolean | "read" | "write"}
+ */
+export type ListConfigSearchParamsSync =
+  | boolean
+  | "read"
+  | "write"
+  | "read-write";
+
+export type ListConfigSearchParams = {
+  /**
+   * Whether the list should sync its search params with the url
+   *
+   * @type {ListConfigSearchParamsSync}
+   * @default false
+   */
+  sync?: ListConfigSearchParamsSync;
+  /**
+   * A callback that reads the current search parameters from the URL
+   * Adds support for various browser / router packages (e.g. react-router)
+   *
+   * @remarks Useful to customize the search params read behavior
+   *
+   * @type {Nullable<ListConfigSearchParamsReadParamsFn>}
+   * @default null
+   */
+  readParams?: Nullable<ListConfigSearchParamsReadParamsFn>;
+  /**
+   * A callback that writes to the URL search parameters
+   *
+   * Adds support for various browser / router packages (e.g. react-router)
+   *
+   * @remarks Useful to customize the search params read behavior
+   *
+   * @type {Nullable<ListConfigSearchParamsWriteParamsFn>}
+   * @default null
+   */
+  writeParams?: Nullable<ListConfigSearchParamsWriteParamsFn>;
+};
+
+export type ListConfigConfigureSearchParamsFn = VoidFn<
+  [sync: ListConfigSearchParams]
+>;
 
 // LIST CONFIG ----------------------------------------------------------------------------------
 
@@ -69,20 +136,32 @@ export type ListContextConfig<TItem extends object> = {
    * @default BooleanOperators.AND
    */
   operator?: FilterBooleanOperator;
+  /**
+   * The list's search params configuration
+   *
+   * @type {ListConfigSearchParams}
+   * @default { sync: false }
+   */
+  searchParams?: ListConfigSearchParams;
 };
 
 type ListConfigSetOperatorFn = VoidFn<[operator: FilterBooleanOperator]>;
+
+export type HydrateFilterConfigFn = GenericFn<
+  [config?: FilterConfig],
+  FilterConfig
+>;
+
+export type ListConfigOptionDividerFn = GenericFn<
+  [label: string],
+  FilterOptionDividerData
+>;
 
 export type UseListConfigAsyncReturn<TItem extends object> = {
   options: ListConfigAsyncOptionsFn<TItem>;
   filter: ListConfigAsyncFilterFn<TItem>;
   filterPreset: ListConfigAsyncFilterPresetFn<TItem>;
 };
-
-export type HydrateFilterConfigFn = GenericFn<
-  [config?: FilterConfig],
-  FilterConfig
->;
 
 export type UseListConfigAsync = <TItem extends object>(
   match: ListConfigMatchFn<TItem>,
@@ -98,12 +177,15 @@ export type UseListConfigReturn<TItem extends object> = {
   config: ListContextConfig<TItem>;
   async: UseListConfigAsyncReturn<TItem>;
   match: ListConfigMatchFn<TItem>;
+  not: ListConfigNotFn<TItem>;
+  divider: ListConfigOptionDividerFn;
   matches: ListConfigMatchesFn<TItem>;
   option: ListConfigOptionFn<TItem>;
   options: ListConfigOptionsFn<TItem>;
   filter: ListConfigFilterFn<TItem>;
   filterPreset: ListConfigFilterPresetFn<TItem>;
   setOperator: ListConfigSetOperatorFn;
+  configureSearchParams: ListConfigConfigureSearchParamsFn;
 };
 
 export type UseListConfig = <TItem extends object>(
@@ -121,12 +203,17 @@ export type UseListConfigFilterPresetReducerAction =
 // LIST FILTERS ---------------------------------------------------------------------------------
 
 export type GetFilterByIdFn<TItem extends object> = GenericFn<
-  [string],
+  [id: string],
   Nullable<IFilter<TItem>>
 >;
 
 export type GetFilterBySignatureFn<TItem extends object> = GenericFn<
-  [FilterSignature],
+  [signature: FilterSignature],
+  Nullable<IFilter<TItem>>
+>;
+
+export type GetFilterByLabelFn<TItem extends object> = GenericFn<
+  [label: string],
   Nullable<IFilter<TItem>>
 >;
 
@@ -155,6 +242,12 @@ export type UseListFiltersReturn<TItem extends object> = {
    * @type {GetFilterBySignatureFn<TItem>}
    */
   getFilterBySignature: GetFilterBySignatureFn<TItem>;
+  /**
+   * Gets a filter by its label
+   *
+   * @type {GetFilterByLabelFn<TItem>}
+   */
+  getFilterByLabel: GetFilterByLabelFn<TItem>;
   /**
    * Clears all filters
    *

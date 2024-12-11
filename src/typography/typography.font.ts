@@ -7,8 +7,8 @@ import type { RuleSet } from "styled-components";
 export const fontFamilySets = {
   sans: `"Gilroy", "Helvetica", "Inter", "Arial", "Calibri",
   "Segoe UI", sans-serif`,
-  code: `"Menlo", "Inconsolata", "Fira Code", "Fira Code", "Source Mono",
-  "Consolas", monospace`,
+  code: `"Fira Code", "Menlo", "Inconsolata", "Source Mono",
+  "Consolas", ui-monospace, monospace`,
 } as const;
 
 /**
@@ -20,8 +20,9 @@ export const fontFamilySets = {
  */
 export const typographyFontFace = (important?: boolean): RuleSet => {
   const $important = important ? " !important" : "";
+  const font = `${fontFamilySets.sans}${$important};`;
   return css`
-    font-family: ${fontFamilySets.sans}${$important};
+    font-family: ${font};
   `;
 };
 
@@ -65,7 +66,7 @@ export const linkFontFace = (): RuleSet => {
     pre *,
     pre div,
     pre span {
-      ${codeFontFace()};
+      ${codeFontFace(true)};
       font-size: inherit;
       letter-spacing: 0;
     }

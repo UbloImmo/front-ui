@@ -1,6 +1,10 @@
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
-import { objectKeys, transformObject } from "@ubloimmo/front-util";
-import { css, type StyleFunction, type RuleSet } from "styled-components";
+import {
+  objectKeys,
+  transformObject,
+  type GenericFn,
+} from "@ubloimmo/front-util";
+import { css, type RuleSet } from "styled-components";
 
 import { typographyWeightMap } from "./typogaphy.weight";
 import { typographyFontFace } from "./typography.font";
@@ -8,8 +12,6 @@ import { breakpointsPx } from "../sizes";
 import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "../utils";
 
 import type {
-  HeadingProps,
-  TextProps,
   TypographyProps,
   TypographyWeight,
   AnyTypographyProps,
@@ -94,11 +96,12 @@ export const sanitizeTypographyProps = (
     lineThrough: props.lineThrough ?? defaults.lineThrough,
     uppercase: props.uppercase ?? defaults.uppercase,
     children: props.children ?? null,
-    important: props.important ?? false,
-    ellipsis: props.ellipsis ?? false,
-    align: props.align ?? "left",
-    className: null,
-    fill: props.fill ?? false,
+    important: props.important ?? defaults.important,
+    ellipsis: props.ellipsis ?? defaults.ellipsis,
+    align: props.align ?? defaults.align,
+    className: props.className ?? defaults.className,
+    noWrap: props.noWrap ?? defaults.noWrap,
+    fill: props.fill ?? defaults.fill,
   };
 };
 
@@ -161,7 +164,7 @@ const baseTypographyStyle = (
  */
 export const buildTypographyStyle = (
   defaults: Required<AnyTypographyProps>
-): StyleFunction<StyleProps<TextProps | HeadingProps>> => {
+): GenericFn<[StyleProps<AnyTypographyProps>], RuleSet> => {
   return (props) => {
     const {
       size,
@@ -176,6 +179,7 @@ export const buildTypographyStyle = (
       uppercase,
       align,
       fill,
+      noWrap,
     } = sanitizeTypographyProps(defaults, fromStyleProps(props));
     const dekstopStyle = extractTypographyStyle("desktop", size, weight);
     const mobileStyle = extractTypographyStyle("mobile", size, weight);
@@ -193,7 +197,7 @@ export const buildTypographyStyle = (
     const apply = applyRule(important);
     const textOverflow = ellipsis ? "ellipsis" : dekstopStyle.textOverflow;
     return css`
-      ${typographyFontFace()}
+      ${typographyFontFace(important)}
       ${baseTypographyStyle(dekstopStyle, important)}
       font-size: ${apply(fontSize)};
       font-style: ${apply(fontStyle)};
@@ -211,10 +215,14 @@ export const buildTypographyStyle = (
         ${baseTypographyStyle(mobileStyle, important)}
       }
 
+      ${(noWrap || ellipsis) &&
+      css`
+        white-space: ${apply("nowrap")};
+      `}
+
       ${ellipsis &&
       css`
         overflow: ${apply("hidden")};
-        white-space: ${apply("nowrap")};
         max-width: ${apply("100%")};
         flex: 1;
       `}
@@ -240,4 +248,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   children: null,
   className: null,
   fill: false,
+  noWrap: false,
 } as const;

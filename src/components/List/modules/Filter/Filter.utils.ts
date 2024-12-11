@@ -1,3 +1,11 @@
+import { extractFilterOptionSignature } from "../FilterOption/FilterOption.utils";
+import { isFilterOptionDividerData } from "../FilterOptionDivider/FilterOptionDivider.utils";
+
+import type { FilterOptionData } from "../FilterOption";
+import type {
+  FilterOptionDivider,
+  FilterOptionDividerData,
+} from "../FilterOptionDivider";
 import type { FilterBooleanOperator, FilterSignature } from "../shared.types";
 
 /**
@@ -14,4 +22,53 @@ export const computeFilterDataSignature = (
   operator: FilterBooleanOperator
 ): FilterSignature => {
   return [label, optionSignatures.join(operator)].join("-");
+};
+
+/**
+ * Separates an array of filter options or dividers into separate arrays of option signatures and dividers
+ *
+ * @template TItem - The type of items being filtered
+ * @param {(FilterOptionData<TItem> | FilterSignature | FilterOptionDividerData)[]} optionsOrDividers - Array of filter options or dividers
+ * @returns {{
+ *   optionSignatures: FilterSignature[],
+ *   dividers: FilterOptionDivider[]
+ * }} Object containing separated option signatures and dividers
+ */
+export const separateOptionsAndDividers = <TItem extends object>(
+  optionsOrDividers: (
+    | FilterOptionData<TItem>
+    | FilterSignature
+    | FilterOptionDividerData
+  )[]
+): {
+  optionSignatures: FilterSignature[];
+  optionDividers: FilterOptionDivider[];
+} => {
+  const optionSignatures: FilterSignature[] = [];
+  const optionDividers: FilterOptionDivider[] = [];
+
+  for (let i = 0; i < optionsOrDividers.length; i++) {
+    const optionOrDivider = optionsOrDividers[i];
+    if (!optionOrDivider) break;
+    if (isFilterOptionDividerData(optionOrDivider)) {
+      const nextItem = optionsOrDividers[i + 1];
+      // only add dividers if not the last item the next item is not a divided
+      if (!nextItem || isFilterOptionDividerData(nextItem)) {
+        continue;
+      }
+      const nextSignature = extractFilterOptionSignature(nextItem);
+      optionDividers.push({
+        ...optionOrDivider,
+        beforeSignature: nextSignature,
+      });
+      continue;
+    }
+
+    optionSignatures.push(extractFilterOptionSignature(optionOrDivider));
+  }
+
+  return {
+    optionSignatures,
+    optionDividers,
+  };
 };

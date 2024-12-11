@@ -1,6 +1,6 @@
-import type { IFilterOption } from "@/components/List/modules";
+import type { FilterOption } from "@/components/List/modules";
 
 export type ListFilterOptionChipProps<TItem extends object> = {
-  filterOption: IFilterOption<TItem>;
+  filterOption: FilterOption<TItem>;
   filterDisabled?: boolean;
 };

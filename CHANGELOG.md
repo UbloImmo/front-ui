@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
 - `v0.0.3` TableBody layout
   - Add `style` property to allow for bespoke styles when used in a list or a form
 
@@ -18,6 +20,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.3` TableRow layout
   - Add `style` property to allow for bespoke styles when used in a list or a for
+
+- **`DOCS`**
+  - Improve story code snippet generation
+    - Recursively generate code snippets for children
+  - Improve changelog display
+    - Add horizontal rules between sections
+    - Normalize heading & content styles
+
+### Added
+
+- `v0.0.6` Text component & `v0.0.5` Heading component
+  - Add `noWrap` property to make the text not wrap
 
 ## 1.0.3 - 2025-01-16
 ### Added
@@ -72,6 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.6` Action component
   - Add `indicator` property to render an indicator on the top right corner of the static icon
 
+
 ## 0.36.0 - 2024-12-13
 ### Added
 - `v0.0.1` AccountBalance component
@@ -83,6 +98,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - `v0.0.21` Form component
   - Improved form table cell for proper ellipsis behavior
+
 
 
 ## 0.35.5 - 2024-12-02
@@ -111,8 +127,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - `v0.0.19` Form component
   - Rework FormTable controls markup and styles to fix css bug in Safari
-
-## 0.35.2 - 2024-11-26
 
 ## 0.35.1 - 2024-11-26
 ### Added
@@ -571,8 +585,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.3` Divider component
   - Only render Heading if divider label is provided
 
-## 0.29.1 - 2024-09-04
-
 ## 0.29.0 - 2024-09-03
 ### Added
 - `v0.0.1` Collapsible component
@@ -599,8 +611,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - `v0.0.5` Tooltip component
   - Add support for usage inside other uikit components by checking aborting if IntersectionObserver is defined in global context
-
-## 0.27.1 - 2024-08-29
 
 ## 0.27.0 - 2024-08-29
 ### Added
@@ -1070,12 +1080,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Phone input foreign styles
 
-## 0.4.3 - 2024-05-21
-
-## 0.4.2 - 2024-05-21
-
-## 0.4.1 - 2024-05-21
-
 ## 0.4.0 - 2024-05-20
 ### Added
 - `v.0.0.1` PhoneInput component
@@ -1115,8 +1119,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Text & Heading stories text content
 
-## 0.1.2 - 2024-04-25
-
 ## 0.1.1 - 2024-04-17
 ### Fixed
 - `v0.0.3` Static Icon component
@@ -1153,8 +1155,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Text size after font style overhaul
 - `v0.0.2` InputAssistiveText
   - Text size after font style overhaul
-
-## 0.1.0-beta.0 - 2024-04-11
 
 ## 0.0.2-beta.0 - 2024-04-11
 ### Added

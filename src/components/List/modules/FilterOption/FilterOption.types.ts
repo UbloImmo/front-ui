@@ -16,15 +16,11 @@ import type { AsyncFn, GenericFn, VoidFn } from "@ubloimmo/front-util";
  */
 export type FilterOptionValue = string | number | boolean | Date | null;
 
-export type FilterOptionSubscription<TItem extends object> = VoidFn<
-  [IFilterOption<TItem>]
->;
-
 /**
- * The data of a filter option
- * Used to match the value against the property
+ * The functional data of a filter option match
+ * Used to match against an item's value
  */
-export type FilterOptionMatchInput<TItem extends object> = {
+export type FilterOptionMatch<TItem extends object> = {
   /**
    * The option's value
    *
@@ -35,27 +31,34 @@ export type FilterOptionMatchInput<TItem extends object> = {
    * The comparison operator, used to match the value against the property
    *
    * @type {FilterComparisonOperator}
-   * @default "="
    */
-  comparison?: FilterComparisonOperator;
+  comparison: FilterComparisonOperator;
   /**
    * The property to filter on if different than the containing filter's property
    *
    * @type {FilterProperty}
    */
-  property?: FilterProperty<TItem>;
+  property: FilterProperty<TItem>;
 };
-/**
- * The data of a filter option
- */
-export type FilterOptionMatch<TItem extends object> = Required<
-  FilterOptionMatchInput<TItem>
->;
 
+/**
+ * The parameters of the match function
+ * - Either a single {@link FilterOptionMatch} object
+ * - Or a {@link FilterProperty property}, {@link FilterComparisonOperator comparison} and {@link FilterOptionValue value}
+ */
 export type ListConfigMatchFnParams<TItem extends object> =
   | [FilterOptionMatch<TItem>]
   | [FilterProperty<TItem>, FilterComparisonOperator, FilterOptionValue];
 
+/**
+ * A function that creates a filter option match from {@link ListConfigMatchFnParams its parameters}
+ *
+ * @throws If the number of parameters are invalid
+ *
+ * @template {object} TItem - The type of the items to filter on
+ *
+ * @returns {FilterOptionMatch<TItem>} The created filter option match
+ */
 export interface ListConfigMatchFn<TItem extends object> {
   (match: FilterOptionMatch<TItem>): FilterOptionMatch<TItem>;
   (
@@ -65,6 +68,13 @@ export interface ListConfigMatchFn<TItem extends object> {
   ): FilterOptionMatch<TItem>;
 }
 
+/**
+ * A function that multiple matches for the same property and comparison but multiple values
+ *
+ * @template {object} TItem - The type of the items to filter on
+ *
+ * @returns {FilterOptionMatch<TItem>[]} The created filter option matches
+ */
 export type ListConfigMatchesFn<TItem extends object> = GenericFn<
   [
     property: FilterProperty<TItem>,
@@ -112,53 +122,27 @@ export type FilterOptionBehavior = {
   hidden?: boolean;
 };
 
-/**
- * A filter option with a single value
- */
-export type FilterSingleOptionInput<TItem extends object> =
-  FilterOptionVisualData &
-    FilterOptionBehavior & {
-      /**
-       * The data of the filter option
-       *
-       * @type {FilterOptionMatchInput}
-       */
-      match: FilterOptionMatchInput<TItem>;
-    };
-
-/**
- * A filter option with a combined value
- */
-export type FilterCombinedOptionInput<TItem extends object> =
-  FilterOptionVisualData &
-    FilterOptionBehavior & {
-      /**
-       * The data of the filter option
-       *
-       * @type {FilterOptionMatchInput[]}
-       */
-      matches: FilterOptionMatchInput<TItem>[];
-      /**
-       * A boolean operator used to combine matches
-       *
-       * @type {FilterBooleanOperator}
-       * @default "AND"
-       */
-      operator?: FilterBooleanOperator;
-    };
-
 export type FilterOptionConfig = Omit<FilterOptionVisualData, "label"> &
   FilterOptionBehavior & {
+    /**
+     * The boolean operator used to combine matches
+     *
+     * @type {FilterBooleanOperator}
+     * @default "AND"
+     */
     operator?: FilterBooleanOperator;
   };
 
+/**
+ * The data of a filter option
+ */
 export type FilterOptionData<TItem extends object> = Required<
   FilterOptionVisualData & FilterOptionBehavior
 > & {
   /**
    * The data of the filter option
    *
-   * @type {FilterOptionMatchInput[]}
+   * @type {FilterOptionMatch<TItem>[]}
    */
   matches: FilterOptionMatch<TItem>[];
   /**
@@ -195,6 +179,9 @@ export type FilterOptionData<TItem extends object> = Required<
   selected: boolean;
 };
 
+/**
+ * The callbacks of a filter option
+ */
 export type FilterOptionModuleCallbacks = {
   /**
    * Select the filter option
@@ -206,37 +193,122 @@ export type FilterOptionModuleCallbacks = {
   unselect: VoidFn;
 };
 
-export interface IFilterOption<TItem extends object>
-  extends FilterOptionData<TItem>,
-    FilterOptionModuleCallbacks {}
+/**
+ * A filter option with the callbacks
+ */
+export type FilterOption<TItem extends object> = FilterOptionData<TItem> &
+  FilterOptionModuleCallbacks;
 
 export type ListConfigOptionFnParams<TItem extends object> = [
+  /**
+   * The label of the generated filter option
+   *
+   * @type {string}
+   * @required
+   */
   label: string,
+  /**
+   * The match or matches to create the filter option from
+   *
+   * @type {FilterOptionMatch<TItem> | FilterOptionMatch<TItem>[]}
+   * @required
+   */
   matchOrMatches: FilterOptionMatch<TItem> | FilterOptionMatch<TItem>[],
+  /**
+   * The config of the generated filter option
+   *
+   * @type {FilterOptionConfig}
+   * @default {}
+   */
   config?: FilterOptionConfig
 ];
 
+/**
+ * A function that creates a filter option from the provided data
+ *
+ * @param {string} label - The label of the generated filter option
+ * @param {FilterOptionMatch<TItem> | FilterOptionMatch<TItem>[]} matchOrMatches - The match or matches to create the filter option from
+ * @param {FilterOptionConfig} [config = {}] - The config of the generated filter option, gets merged with the shared config
+ * @returns {FilterOptionData<TItem>} The created filter option
+ */
 export type ListConfigOptionFn<TItem extends object> = GenericFn<
   ListConfigOptionFnParams<TItem>,
   FilterOptionData<TItem>
 >;
 
+/**
+ * A labeled filter option value, used to create filter a filter option
+ */
 export type ListConfigOptionLabeledValue = {
+  /**
+   * The label of the generated filter option
+   *
+   * @type {string}
+   * @required
+   */
   label: string;
+  /**
+   * The value the generated filter option will match against
+   *
+   * @type {FilterOptionValue}
+   * @required
+   */
   value: FilterOptionValue;
+  /**
+   * The config of the generated filter option, gets merged with the shared config
+   *
+   * @type {FilterOptionConfig}
+   * @default {}
+   */
   config?: FilterOptionConfig;
 };
 
+/**
+ * A function that creates a filter option from every labeled value it receives
+ *
+ * @param {FilterProperty<TItem>} property - The property to filter on
+ * @param {FilterComparisonOperator} comparison - The comparison operator to use for the filter option
+ * @param {ListConfigOptionLabeledValue[]} labeledValues - The labeled values to create filter options from
+ * @param {FilterOptionConfig} sharedConfig - The shared config for the filter options
+ * @returns {FilterOptionData<TItem>[]} The created filter options
+ */
 export type ListConfigOptionsFn<TItem extends object> = GenericFn<
   [
+    /**
+     * The property the generated options will filter on
+     *
+     * @type {FilterProperty<TItem>}
+     */
     property: FilterProperty<TItem>,
+    /**
+     * The comparison operator to use for the generated options
+     *
+     * @type {FilterComparisonOperator}
+     */
     comparison: FilterComparisonOperator,
+    /**
+     * The labeled values to create filter options from
+     *
+     * @type {ListConfigOptionLabeledValue[]}
+     */
     labeledValues: ListConfigOptionLabeledValue[],
+    /**
+     * The shared config for the generated options
+     * Gets merged with the labeled value's config
+     *
+     * @type {FilterOptionConfig}
+     * @default {}
+     */
     sharedConfig?: FilterOptionConfig
   ],
   FilterOptionData<TItem>[]
 >;
 
+/**
+ * A function that returns the labeled values for the async options
+ *
+ * @returns {ListConfigOptionLabeledValue[]} The labeled values
+ */
 export type ListConfigAsyncOptionsGetLabeledValuesFn = AsyncFn<
   [],
   ListConfigOptionLabeledValue[]
@@ -252,8 +324,23 @@ export type ListConfigAsyncOptionsFnParams<TItem extends object> = [
    * @type {string}
    */
   property: FilterProperty<TItem>,
+  /**
+   * The comparison operator to use for the async options
+   *
+   * @type {FilterComparisonOperator}
+   */
   comparison: FilterComparisonOperator,
+  /**
+   * A function that returns the labeled values for the async options
+   *
+   * @type {ListConfigAsyncOptionsGetLabeledValuesFn}
+   */
   labeledValuesGetter: ListConfigAsyncOptionsGetLabeledValuesFn,
+  /**
+   * The shared config for the async options
+   *
+   * @type {FilterOptionConfig}
+   */
   sharedConfig?: FilterOptionConfig
 ];
 
@@ -265,6 +352,19 @@ export type ListConfigAsyncOptionsFn<TItem extends object> = AsyncFn<
   FilterOptionData<TItem>[]
 >;
 
+/**
+ * A function that negates a match
+ *
+ * @type {GenericFn<[match: FilterOptionMatch<TItem>], FilterOptionMatch<TItem>>}
+ *
+ * @param {FilterOptionMatch<TItem>} match - The match to negate
+ * @returns {FilterOptionMatch<TItem>} The negated match
+ */
+export type ListConfigNotFn<TItem extends object> = GenericFn<
+  [match: FilterOptionMatch<TItem>],
+  FilterOptionMatch<TItem>
+>;
+
 export type FilterOptionMap<TItem extends object> = Map<
   FilterSignature,
   FilterOptionData<TItem>
@@ -272,6 +372,6 @@ export type FilterOptionMap<TItem extends object> = Map<
 
 export type FilterDataMap = Map<FilterSignature, FilterData>;
 
-export type FilterOptionOrSignature<TItem extends object> =
+export type FilterOptionDataOrSignature<TItem extends object> =
   | FilterOptionData<TItem>
   | FilterSignature;

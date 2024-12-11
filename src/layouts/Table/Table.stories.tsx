@@ -105,6 +105,20 @@ const ScrollViewExample: ReactNode = (
   </TableBody>
 );
 
+const ListStyleExample: ReactNode = (
+  <TableBody style="list">
+    {arrayOf(2, (index) => (
+      <TableRow style="list" key={index}>
+        {arrayOf(10, (index) => (
+          <TableCell padded key={index}>
+            Data {index + 1}
+          </TableCell>
+        ))}
+      </TableRow>
+    ))}
+  </TableBody>
+);
+
 const componentSource = componentSourceFactory<TableProps>(
   "Table",
   Table.defaultProps
@@ -130,11 +144,17 @@ export const WithHeader: Story = {
   args: {
     children: [HeaderExample, DefaultExample],
   },
+  parameters: {
+    docs: componentSource([{ children: [HeaderExample, DefaultExample] }]),
+  },
 };
 
 export const WithPadding: Story = {
   args: {
     children: PaddingExample,
+  },
+  parameters: {
+    docs: componentSource([{ children: PaddingExample }]),
   },
 };
 
@@ -142,11 +162,19 @@ export const CustomContent: Story = {
   args: {
     children: [HeaderExample, CustomContentExample],
   },
+  parameters: {
+    docs: componentSource([
+      { children: [HeaderExample, CustomContentExample] },
+    ]),
+  },
 };
 
 export const ColSpan: Story = {
   args: {
     children: SpanExample,
+  },
+  parameters: {
+    docs: componentSource([{ children: SpanExample }]),
   },
 };
 
@@ -163,4 +191,16 @@ export const ScrollView: Story = {
       </div>
     ),
   ],
+  parameters: {
+    docs: componentSource([{ children: ScrollViewExample }]),
+  },
+};
+
+export const ListStyle: Story = {
+  args: {
+    children: ListStyleExample,
+  },
+  parameters: {
+    docs: componentSource([{ children: ListStyleExample }]),
+  },
 };

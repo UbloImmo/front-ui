@@ -31,8 +31,8 @@ export const Callout = ({
   );
 };
 
-const CalloutStyleOverrides = styled.span`
-  margin: var(--s-2) 0 var(--s-4);
+const CalloutStyleOverrides = styled.div`
+  margin: var(--s-2) 0 var(--s-4) !important;
 
   [data-testid="callout"] span[data-testid="text"] {
     margin: 0 !important;

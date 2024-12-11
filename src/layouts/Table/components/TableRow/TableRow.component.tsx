@@ -13,27 +13,26 @@ import type { TestIdProps } from "@types";
  *
  * @version 0.0.3
  */
-const TableRow = forwardRef<HTMLTableRowElement, TableRowProps & TestIdProps>(
-  ({ className, children, onClick, testId, style = "form", ...props }, ref) => {
-    const cn = useClassName({ className });
-    const tid = useTestId("table-row", { testId });
-    const styleProps = useStyleProps({ style, clickable: !!onClick });
-    return (
-      <StyledTableRow
-        ref={ref}
-        data-testid={tid}
-        className={cn}
-        onClick={onClick}
-        {...props}
-        {...styleProps}
-      >
-        {children}
-      </StyledTableRow>
-    );
-  }
-);
-
-export { TableRow };
+export const TableRow = forwardRef<
+  HTMLTableRowElement,
+  TableRowProps & TestIdProps
+>(({ className, children, onClick, testId, style = "form", ...props }, ref) => {
+  const cn = useClassName({ className });
+  const tid = useTestId("table-row", { testId });
+  const styleProps = useStyleProps({ style, clickable: !!onClick });
+  return (
+    <StyledTableRow
+      ref={ref}
+      data-testid={tid}
+      className={cn}
+      onClick={onClick}
+      {...props}
+      {...styleProps}
+    >
+      {children}
+    </StyledTableRow>
+  );
+});
 
 const StyledTableRow = styled.tr<
   TableRowStyleProps & {

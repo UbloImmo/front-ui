@@ -21,10 +21,14 @@ import changelog from "../../../CHANGELOG.md?raw";
 
 <Markdown>{(() => {
   const contentIndex = changelog.indexOf("##");
+
+  const headingRegex = /^##\s[\w\s\d.-]+\S$/gim;
+  const hr = "<hr />";
   return changelog
     .substring(contentIndex)
     .replaceAll("https://ublo.ublo.org/design-system", "")
-    .replace("Unreleased", "_Unreleased_")
+    .replaceAll("###", "####")
+    .replaceAll(headingRegex, (match) => `${match}\n${hr}`);
 })()}</Markdown>
 
 </Content>

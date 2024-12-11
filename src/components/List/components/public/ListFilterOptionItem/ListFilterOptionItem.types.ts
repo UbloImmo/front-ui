@@ -1,4 +1,4 @@
-import type { FilterSignature, IFilterOption } from "@/components/List/modules";
+import type { FilterSignature, FilterOption } from "@/components/List/modules";
 import type { StyleProps } from "@types";
 import type { VoidFn } from "@ubloimmo/front-util";
 
@@ -7,7 +7,7 @@ type HighlightProps = {
 };
 
 export type ListFilterOptionItemProps<TItem extends object = object> = {
-  option: IFilterOption<TItem>;
+  option: FilterOption<TItem>;
   filterSignature: FilterSignature;
   multi?: boolean;
   closeFilter?: VoidFn;

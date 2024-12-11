@@ -21,7 +21,7 @@ import {
   filterData,
   type FilterSignature,
   type IFilter,
-  type IFilterOption,
+  type FilterOption,
 } from "@/components/List/modules";
 import { useClearFilterOption } from "@/components/List/modules/FilterOption/useFilterOption.hook";
 import {
@@ -64,6 +64,7 @@ const useSatitizedFilter = (
       active: false,
       selectedOptions: [],
       options: [],
+      optionDividers: [],
       clear: () => {},
       selectAll: () => {},
     };
@@ -102,37 +103,48 @@ const useFilterQuery = () => {
 const useFilteredOptions = (
   filter: IFilter<Record<string, unknown>>,
   query: Nullable<string>
-): IFilterOption<Record<string, unknown>>[] => {
+): FilterOption<Record<string, unknown>>[] => {
   const clearFilterOption = useClearFilterOption(filter);
 
-  const filteredOptions = useMemo(
-    () =>
-      filter.options
-        .filter(({ label }) => {
-          if (!isString(query) || isEmptyString(query)) return true;
-          return label
-            .trim()
-            .toLowerCase()
-            .includes(`${query}`.trim().toLocaleLowerCase());
-        })
-        .sort((a, b) => a.label.localeCompare(b.label)),
-    [filter.options, query]
-  );
+  const filteredOptions = useMemo(() => {
+    const options = filter.options.filter(({ label }) => {
+      if (!isString(query) || isEmptyString(query)) return true;
+      return label
+        .trim()
+        .toLowerCase()
+        .includes(`${query}`.trim().toLocaleLowerCase());
+    });
+    if (filter.optionsSort === "asc")
+      return options.sort((a, b) => a.label.localeCompare(b.label));
+    if (filter.optionsSort === "desc")
+      return options.sort((a, b) => b.label.localeCompare(a.label));
+    return options;
+  }, [filter.options, query, filter.optionsSort]);
 
   return useMemo(
-    () =>
-      filter.multi ? [...filteredOptions, clearFilterOption] : filteredOptions,
-    [filter.multi, filteredOptions, clearFilterOption]
+    () => [...filteredOptions, clearFilterOption],
+    [filteredOptions, clearFilterOption]
   );
 };
 
 type WalkHighlightFn = GenericFn<[delta: 1 | -1]>;
 
 const useFilterHighlight = (
-  filteredOptions: IFilterOption<Record<string, unknown>>[]
+  filteredOptions: FilterOption<Record<string, unknown>>[]
 ): [Nullable<FilterSignature>, WalkHighlightFn, VoidFn] => {
   const [highlightSignature, setHighlightSignature] =
     useState<Nullable<FilterSignature>>(null);
+
+  const scrollToHighlightedOption = useCallback(
+    (signature: Nullable<FilterSignature>) => {
+      if (!signature) return;
+      const selector = `[data-option-signature="${signature}"]`;
+      const optionElement = document.querySelector(selector);
+      if (!optionElement) return;
+      optionElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    },
+    []
+  );
 
   const walkHighlight = useCallback<WalkHighlightFn>(
     (delta) => {
@@ -168,8 +180,9 @@ const useFilterHighlight = (
       const nextOptionSignature =
         filteredOptions[currentOptionIndex]?.signature ?? null;
       setHighlightSignature(nextOptionSignature);
+      scrollToHighlightedOption(nextOptionSignature);
     },
-    [filteredOptions, highlightSignature]
+    [filteredOptions, highlightSignature, scrollToHighlightedOption]
   );
 
   const resetHighlight = useCallback(() => {
@@ -277,17 +290,32 @@ export const useListFilter = (props: ListFilterProps) => {
 
   useFilterKeyboardEvents(walkHighlight, closeOptions, queryInputRef, open);
 
+  const getOptionDivider = (signature: FilterSignature) => {
+    return (
+      filter.optionDividers.find(
+        ({ beforeSignature }) => beforeSignature === signature
+      ) ?? null
+    );
+  };
+
+  const isQuerying = useMemo(
+    () => isString(query) && !isEmptyString(query),
+    [query]
+  );
+
   return {
     filter,
     styleProps,
     renderMulti,
     queryInputRef,
     setQuery,
+    isQuerying,
     filteredOptions,
     highlightSignature,
     openOptions,
     closeOptions,
     selectOptionOnEnter,
     open,
+    getOptionDivider,
   };
 };

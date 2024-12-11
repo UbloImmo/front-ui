@@ -5,23 +5,14 @@ import {
   type MaybeAsyncFn,
   type Nullable,
   type NullishPrimitives,
-  isArray,
-  type VoidFn,
-  type GenericFn,
 } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useState, type SetStateAction } from "react";
+import { debounce } from "lodash";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type {
-  DataArrayAtFn,
-  DataArrayFilterFn,
-  DataArrayFindFn,
-  DataArrayFindIndexFn,
-  DataArrayPushFn,
-  DataArrayRemoveFn,
-  DataArrayUnshiftFn,
-  DataArrayUpdateItemWhereFn,
-  UseDataArray,
-  UseDataArrayReturn,
+  DebouncedState,
+  UseDebounceValueOptions,
+  UseeDebounceOptions,
 } from "@/types";
 
 type UseAsyncDataOnSuccessFn<TData extends NullishPrimitives> = MaybeAsyncFn<
@@ -205,203 +196,136 @@ export const createDelayedResponse =
   };
 
 /**
- * Loads data from either a static array or an async function.
- * If given an array, returns it directly.
- * If given an async function, executes it and returns the result.
- * Returns empty array if async function throws an error.
+ * Custom hook that creates a debounced version of a callback function.
+ * @template T - Type of the original callback function.
+ * @param {T} func - The callback function to be debounced.
+ * @param {number} delay - The delay in milliseconds before the callback is invoked (default is `500` milliseconds).
+ * @param {DebounceOptions} [options] - Options to control the behavior of the debounced function.
+ * @returns {DebouncedState<T>} A debounced version of the original callback along with control functions.
+ * @public
+ * @see [Documentation](https://usehooks-ts.com/react-hook/use-debounce-callback)
+ * @example
+ * ```tsx
+ * const debouncedCallback = useDebounceCallback(
+ *   (searchTerm) => {
+ *     // Perform search after user stops typing for 500 milliseconds
+ *     searchApi(searchTerm);
+ *   },
+ *   500
+ * );
  *
- * @template TData The type of data elements
- * @param {TData[] | AsyncFn<[], TData[]>} dataToLoad - Array of data or async function that returns array of data
- * @returns {Promise<TData[]>} Promise that resolves to the loaded data array
+ * // Later in the component
+ * debouncedCallback('react hooks'); // Will invoke the callback after 500 milliseconds of inactivity.
+ * ```
  */
-const loadData = async <TData>(
-  dataToLoad: TData[] | AsyncFn<[], TData[]>
-): Promise<TData[]> => {
-  if (isArray(dataToLoad)) return dataToLoad;
-  try {
-    return await dataToLoad();
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
 
 /**
- * A custom React hook for managing an array of data that can be loaded asynchronously.
- * Provides array manipulation methods and handles loading states.
- *
- * @template TData The type of elements in the array
- *
- * @param {TData[] | AsyncFn<[], TData[]>} rootData - Initial array data or async function that returns array data
- * @param {boolean} [reactive=false] - Whether to reload data when rootData reference changes
- *
- * @returns {UseDataArrayReturn<TData>} An object containing the data array, loading state, and array manipulation methods
+ * Custom hook that runs a cleanup function when the component is unmounted.
+ * @param {() => void} func - The cleanup function to be executed on unmount.
+ * @public
+ * @see [Documentation](https://usehooks-ts.com/react-hook/use-unmount)
+ * @example
+ * ```tsx
+ * useUnmount(() => {
+ *   // Cleanup logic here
+ * });
+ * ```
  */
-export const useDataArray: UseDataArray = <TData>(
-  rootData: TData[] | AsyncFn<[], TData[]>,
-  reactive = false,
-  onDataChange?: VoidFn<[newData: TData[]]>
-): UseDataArrayReturn<TData> => {
-  const [data, setData] = useState<TData[]>(isArray(rootData) ? rootData : []);
+export function useUnmount(func: () => void) {
+  const funcRef = useRef(func);
 
-  const updateData = useCallback(
-    (newData: SetStateAction<TData[]>) => {
-      let updatedData: TData[];
-      setData((prev) => {
-        if (isFunction<GenericFn<[TData[]], TData[]>>(newData)) {
-          updatedData = newData(prev);
-        } else {
-          updatedData = newData;
-        }
-        if (onDataChange) onDataChange(updatedData);
-        return updatedData;
-      });
+  funcRef.current = func;
+
+  useEffect(
+    () => () => {
+      funcRef.current();
     },
-    [onDataChange]
+    []
   );
+}
 
-  const [isLoading, setIsLoading] = useState<boolean>(!isArray(rootData));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
+  func: T,
+  delay = 500,
+  options?: UseeDebounceOptions
+): DebouncedState<T> {
+  const debouncedFunc = useRef<ReturnType<typeof debounce>>();
 
-  useEffect(() => {
-    const loadAsyncData = async () => {
-      setIsLoading(true);
-      const loadedData = await loadData(rootData);
-      updateData(loadedData);
-      setIsLoading(false);
-    };
-    loadAsyncData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useUnmount(() => {
+    if (debouncedFunc.current) {
+      debouncedFunc.current.cancel();
+    }
+  });
 
-  useEffect(() => {
-    const refreshData = async () => {
-      if (!reactive) return;
-      setIsLoading(true);
-      const loadedData = await loadData(rootData);
-      const isDifferent = JSON.stringify(loadedData) !== JSON.stringify(data);
-      if (isDifferent) updateData(loadedData);
-      setIsLoading(false);
+  const debounced = useMemo(() => {
+    const debouncedFuncInstance = debounce(func, delay, options);
+
+    const wrappedFunc: DebouncedState<T> = (...args: Parameters<T>) => {
+      return debouncedFuncInstance(...args);
     };
 
-    refreshData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reactive, rootData]);
+    wrappedFunc.cancel = () => {
+      debouncedFuncInstance.cancel();
+    };
 
-  const updateItemWhere = useCallback<DataArrayUpdateItemWhereFn<TData>>(
-    (predicate, updater) => {
-      updateData((prev) =>
-        prev.map((item, index) => {
-          if (predicate(item, index)) return updater(item, index);
-          return item;
-        })
-      );
-    },
-    [updateData]
+    wrappedFunc.isPending = () => {
+      return !!debouncedFunc.current;
+    };
+
+    wrappedFunc.flush = () => {
+      return debouncedFuncInstance.flush();
+    };
+
+    return wrappedFunc;
+  }, [func, delay, options]);
+
+  // Update the debounced function ref whenever func, wait, or options change
+  useEffect(() => {
+    debouncedFunc.current = debounce(func, delay, options);
+  }, [func, delay, options]);
+
+  return debounced;
+}
+
+/**
+ * Custom hook that returns a debounced version of the provided value, along with a function to update it.
+ * @template T - The type of the value.
+ * @param {T | (() => T)} initialValue - The value to be debounced.
+ * @param {number} delay - The delay in milliseconds before the value is updated (default is 500ms).
+ * @param {object} [options] - Optional configurations for the debouncing behavior.
+ * @returns {[T, DebouncedState<(value: T) => void>]} An array containing the debounced value and the function to update it.
+ * @public
+ * @see [Documentation](https://usehooks-ts.com/react-hook/use-debounce-value)
+ * @example
+ * ```tsx
+ * const [debouncedValue, updateDebouncedValue] = useDebounceValue(inputValue, 500, { leading: true });
+ * ```
+ */
+export function useDebounceValue<T>(
+  initialValue: T | (() => T),
+  delay: number,
+  options?: UseDebounceValueOptions<T>
+): [T, DebouncedState<(value: T) => void>] {
+  const eq = options?.equalityFn ?? ((left: T, right: T) => left === right);
+  const unwrappedInitialValue =
+    initialValue instanceof Function ? initialValue() : initialValue;
+  const [debouncedValue, setDebouncedValue] = useState<T>(
+    unwrappedInitialValue
+  );
+  const previousValueRef = useRef<T | undefined>(unwrappedInitialValue);
+
+  const updateDebouncedValue = useDebounceCallback(
+    setDebouncedValue,
+    delay,
+    options
   );
 
-  /**
-   * Finds the first element in the array that satisfies the provided predicate function.
-   *
-   * @param {DataArrayItemPredicate<TData>} predicate - Function to test each element, taking the element and its index
-   * @returns {Optional<TData>} The first matching element, or undefined if no match is found
-   */
-  const find = useCallback<DataArrayFindFn<TData>>(
-    (predicate) => {
-      return data.find(predicate);
-    },
-    [data]
-  );
+  // Update the debounced value if the initial value changes
+  if (!eq(previousValueRef.current as T, unwrappedInitialValue)) {
+    updateDebouncedValue(unwrappedInitialValue);
+    previousValueRef.current = unwrappedInitialValue;
+  }
 
-  /**
-   * Returns the index of the first element in the array that satisfies the provided predicate function.
-   *
-   * @param {DataArrayItemPredicate<TData>} predicate - Function to test each element, taking the element and its index
-   * @returns {number} The index of the first matching element, or -1 if no match is found
-   */
-  const findIndex = useCallback<DataArrayFindIndexFn<TData>>(
-    (predicate) => {
-      return data.findIndex(predicate);
-    },
-    [data]
-  );
-
-  /**
-   * Adds a new item to the end of the array.
-   *
-   * @param {TData} newItem - The item to add to the end of the array
-   */
-  const push = useCallback<DataArrayPushFn<TData>>(
-    (newItem) => {
-      updateData((prev) => [...prev, newItem]);
-    },
-    [updateData]
-  );
-
-  /**
-   * Removes all elements from the array that satisfy the provided predicate function.
-   *
-   * @param {DataArrayItemPredicate<TData>} predicate - Function to test each element, taking the element and its index
-   */
-  const remove = useCallback<DataArrayRemoveFn<TData>>(
-    (predicate) => {
-      updateData((prev) =>
-        prev.filter((item, index) => !predicate(item, index))
-      );
-    },
-    [updateData]
-  );
-
-  /**
-   * Adds a new item to the beginning of the array.
-   *
-   * @param {TData} newItem - The item to add to the beginning of the array
-   */
-  const unshift = useCallback<DataArrayUnshiftFn<TData>>(
-    (newItem) => {
-      updateData((prev) => [newItem, ...prev]);
-    },
-    [updateData]
-  );
-
-  /**
-   * Returns the element at the specified index in the array, or the default value if the index is out of bounds.
-   *
-   * @param {number} index - The index of the element to retrieve
-   * @param {TData} defaultValue - The value to return if the index is out of bounds
-   * @returns {TData} The element at the specified index, or the default value if the index is out of bounds
-   */
-  const at = useCallback<DataArrayAtFn<TData>>(
-    (index, defaultValue) => {
-      if (index < 0 || index >= data.length) return defaultValue;
-      return data[index] ?? defaultValue;
-    },
-    [data]
-  );
-
-  /**
-   * Filters the array based on the provided predicate function.
-   *
-   * @param {DataArrayItemPredicate<TData>} predicate - Function to test each element, taking the element and its index
-   * @returns {TData[]} A new array containing all elements that satisfy the predicate
-   */
-  const filter = useCallback<DataArrayFilterFn<TData>>(
-    (predicate) => {
-      return [...data].filter(predicate);
-    },
-    [data]
-  );
-
-  return {
-    data,
-    isLoading,
-    push,
-    remove,
-    updateItemWhere,
-    unshift,
-    setData,
-    find,
-    findIndex,
-    at,
-    filter,
-  };
-};
+  return [debouncedValue, updateDebouncedValue];
+}

@@ -1,4 +1,9 @@
-import { isArray, isBoolean, objectValues } from "@ubloimmo/front-util";
+import {
+  isArray,
+  isBoolean,
+  isObject,
+  objectValues,
+} from "@ubloimmo/front-util";
 
 import { computeFilterOptionSignature } from "./FilterOption.utils";
 import { BooleanOperators } from "../../List.enums";
@@ -32,6 +37,15 @@ const defaultFilterOptionVisualData: Required<FilterOptionVisualData> = {
   color: "gray-600",
 };
 
+/**
+ * Creates a filter option data object with visual, logic, and behavior properties
+ *
+ * @template TItem - The type of items being filtered
+ * @param {string} label - The label for the filter option
+ * @param {FilterOptionMatch<TItem> | FilterOptionMatch<TItem>[]} matchOrMatches - Single match or array of matches to filter by
+ * @param {Partial<FilterOptionBehavior & FilterOptionVisualData>} [config={}] - Optional configuration for behavior and visual properties
+ * @returns {FilterOptionData<TItem>} The complete filter option data object
+ */
 export const filterOptionData = <TItem extends object>(
   ...[label, matchOrMatches, config = {}]: ListConfigOptionFnParams<TItem>
 ): FilterOptionData<TItem> => {
@@ -91,7 +105,10 @@ export const filterOptionData = <TItem extends object>(
 export const filterOptionMatch = <TItem extends object>(
   ...params: ListConfigMatchFnParams<TItem>
 ): FilterOptionMatch<TItem> => {
-  if (params.length === 1) return params[0];
+  if (params.length === 1) {
+    if (!isObject(params[0])) throw new Error("Invalid match object");
+    return params[0];
+  }
   if (params.length !== 3) throw new Error("Invalid number of arguments");
   return {
     property: params[0],

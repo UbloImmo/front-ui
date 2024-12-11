@@ -1,4 +1,4 @@
-import { Canvas as SBCanvas } from "@storybook/blocks";
+import { Canvas as SBCanvas, Unstyled } from "@storybook/blocks";
 import styled, { css } from "styled-components";
 
 import { typographyFontFace } from "@/typography";
@@ -19,9 +19,11 @@ type CanvasProps = SBCanvasProps & CanvasLayoutProps;
 export const Canvas = (props: CanvasProps) => {
   const styleProps = useStyleProps(props);
   return (
-    <CanvasStyle {...styleProps}>
-      <SBCanvas {...props} />
-    </CanvasStyle>
+    <Unstyled>
+      <CanvasStyle {...styleProps}>
+        <SBCanvas {...props} />
+      </CanvasStyle>
+    </Unstyled>
   );
 };
 

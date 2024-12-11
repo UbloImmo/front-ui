@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import {
   DataProviderFetchCountFn,
@@ -45,6 +45,11 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
     },
     []
   );
+
+  useEffect(() => {
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialData]);
 
   return {
     data: reactiveData.data ?? [],

@@ -1,19 +1,22 @@
 import {
   isArray,
+  isBoolean,
+  isFunction,
+  isNullish,
+  isObject,
   isString,
+  isUndefined,
   objectEntries,
+  objectFromEntries,
   type Nullable,
   type NullishPrimitives,
-  isBoolean,
-  objectFromEntries,
-  isNullish,
+  type Optional,
   type Primitives,
-  isUndefined,
-  isObject,
 } from "@ubloimmo/front-util";
+import { isValidElement } from "react";
 
 import { SPACING_PREFIX } from "@types";
-import { capitalize, isColorKey, isPaletteColor } from "@utils";
+import { capitalize, isColorKey, isEmptyString, isPaletteColor } from "@utils";
 
 import type {
   DocgenPropDef,
@@ -350,16 +353,26 @@ const tagFactory =
     const spaces = tagIndentation(indentation);
     const childrenStr = String(children);
     const hasChildren = childrenStr.length > 0;
+
     const childrenUsage = hasChildren
-      ? `\n${tagIndentation(indentation + 1)}${children}\n${spaces}`
+      ? [
+          "\n",
+          ...childrenStr
+            .split("\n")
+            .map((line) => `${tagIndentation(indentation + 1)}${line}`)
+            .join("\n"),
+          "\n",
+          spaces,
+        ].join("")
       : "";
+
     const propMappings = tagProperties(properties);
     const hasProps = propMappings.length > 0;
     const leftTagPrefix = `${spaces}<${tagName}`;
     const propsOneLine = propMappings.join(" ");
     const leftTagOneLineSuffix = hasChildren ? ">" : "/>";
     const leftTagOneLine = `${leftTagPrefix}${
-      hasProps ? ` ${propsOneLine} ` : ""
+      hasProps ? ` ${propsOneLine}` : ""
     }${leftTagOneLineSuffix}`;
     const leftTagMultilineSuffix = hasChildren
       ? `\n${spaces}>`
@@ -375,8 +388,58 @@ const tagFactory =
 
     const rightTag = hasChildren ? `</${tagName}>` : "";
 
-    return `${leftTag}${childrenUsage}${rightTag}`;
+    const tag = `${leftTag}${childrenUsage}${rightTag}`;
+
+    return tag;
   };
+
+const componentChildrenSourceString = (
+  { children }: Record<string, unknown>,
+  printWidth = 80,
+  indentation = 0
+): Optional<string> => {
+  if (isNullish(children)) return undefined;
+  const componentChildren = isArray(children) ? children : [children];
+  if (!componentChildren.length) return undefined;
+  const childrenStr = componentChildren
+    .map((child) => {
+      if (isNullish(child)) return undefined;
+      if (isString(child)) return child;
+      if (isValidElement(child)) {
+        const childName = isString(child.type)
+          ? child.type
+          : (isObject(child.type) || isFunction(child.type)) &&
+            "name" in child.type &&
+            isString(child.type.name)
+          ? child.type.name
+          : isObject(child.type) &&
+            "__docgenInfo" in child.type &&
+            isObject(child.type.__docgenInfo) &&
+            "displayName" in child.type.__docgenInfo &&
+            isString(child.type.__docgenInfo.displayName)
+          ? child.type.__docgenInfo.displayName
+          : "displayName" in child && isString(child.displayName)
+          ? child.displayName
+          : "UnknownElement";
+        const childProps: Record<string, unknown> = isObject(child.props)
+          ? (child.props as Record<string, unknown>)
+          : {};
+
+        return componentSourceString(
+          childName,
+          childProps,
+          undefined,
+          printWidth,
+          indentation
+        );
+      }
+      return undefined;
+    })
+    .filter(isString)
+    .join("\n");
+  if (isEmptyString(childrenStr)) return undefined;
+  return childrenStr;
+};
 
 /**
  * Generates the source string for a component with specified properties.
@@ -385,31 +448,47 @@ const tagFactory =
  * @param {Record<string, unknown>} componentProperties - The properties of the component.
  * @param {Record<string, unknown>} [defaultProps] - The default properties of the component (optional). Serves as a mask for the properties.
  * @param {number} [printWidth=80] - The maximum width for printing the properties.
+ * @param {number} [indentation=0] - The indentation level for the component.
  * @return {string} The source string for the component with properties.
  */
 export const componentSourceString = (
   componentName: string,
   componentProperties: Record<string, unknown>,
   defaultProps?: Record<string, unknown>,
-  printWidth = 80
+  printWidth = 80,
+  indentation = 0
 ) => {
   const { children, ...restProps } = componentProperties;
 
   const properties = objectFromEntries(
     objectEntries(restProps).filter(([name, value]) => {
+      if (isUndefined(value)) return false;
+      if (isString(value) && isEmptyString(value)) return false;
       if (!defaultProps) return true;
       if (!(name in defaultProps)) return false;
       return value !== defaultProps[name];
     })
   );
 
-  const tagChildren = isNullish(children)
-    ? undefined
-    : isString(children)
-    ? children
-    : `{${children}}`;
+  const reactChildren = componentChildrenSourceString(
+    { children },
+    printWidth,
+    indentation
+  );
 
-  return tagFactory(componentName, 0, printWidth)(properties, tagChildren);
+  const tagChildren =
+    reactChildren ??
+    (isNullish(children)
+      ? undefined
+      : isString(children)
+      ? children
+      : `{${children}}`);
+
+  return tagFactory(
+    componentName,
+    indentation,
+    printWidth
+  )(properties, tagChildren);
 };
 
 /**
