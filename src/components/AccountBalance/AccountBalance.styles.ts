@@ -1,10 +1,5 @@
 import { css } from "styled-components";
 
-// import { AccountBalanceProps } from "./AccountBalance.types";
-
-// import { StyleProps } from "@types";
-
-// export const accountBalanceStyle = (props: StyleProps<AccountBalanceProps>) => {
 export const accountBalanceStyle = () => {
   return css`
     width: 356px;
