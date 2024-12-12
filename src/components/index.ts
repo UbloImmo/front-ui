@@ -8,7 +8,6 @@ export * from "./Calendar";
 export * from "./Callout";
 export * from "./Checkbox";
 export * from "./Chip";
-export * from "./Collapsible";
 export * from "./ComboBox";
 export * from "./ComboBoxButton";
 export * from "./ContextLine";
