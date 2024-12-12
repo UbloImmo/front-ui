@@ -1,34 +1,141 @@
 import { Content, Header } from "@docs/containers";
-import { HeaderInfo, Text} from "@docs/blocks";
-import { ComponentList } from "@docs/blocks/ComponentList/ComponentList.block"
+import { HeaderInfo, Text } from "@docs/blocks";
+import { ComponentList } from "@docs/blocks/ComponentList/ComponentList.block";
 import { Meta } from "@storybook/blocks";
 import * as componentsIndexRaw from "@components";
 
-<Meta title="Components/Overview"/>
+<Meta title="Components/Overview" />
 
 <Header>
   <HeaderInfo title="Overview" parent="Components">
-    <Text color="primary-dark">Meet your uikit. Discover all available components.</Text>
+    <Text color="primary-dark">
+      Meet your uikit. Discover all available components.
+    </Text>
   </HeaderInfo>
 </Header>
 
 <Content>
 
+## Actions
+
 <ComponentList
   index={componentsIndexRaw}
-  randomSize
-  exclude={[
-    "EmailInput",
-    "PhoneInput",
-    "PasswordInput",
-    "CurrencyInput",
-    "TextInput",
-    "NumberInput",
-    "TextAreaInput",
-    "DialogProvider",
-    "SelectInput",
-    "ComboBoxInput",
+  include={[
+    "Action",
+    "ActionIcon",
+    "Hypertext",
+    "Button",
+    "Chip",
+    "ContextMenu",
   ]}
+  parent="Actions"
+  randomSize
 />
 
+---
+
+## Entity
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={[
+    "EntityInfoCard",
+    "CopyClipboardInfoCard",
+    "ContextLine",
+    "InfoBox",
+  ]}
+  parent="Entity"
+  randomSize
+/>
+
+---
+
+## Forms
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={[
+    "Calendar",
+    "Checkbox",
+    "Switch",
+    "Input",
+    "ComboBox",
+    "ComboBoxButton",
+    "FeatureSwitch",
+    "Field",
+    "Form",
+    "IconPicker",
+    "InputAssistiveText",
+    "InputLabel",
+  ]}
+  exclude={["IconPickerInput", "ComboboxInput"]}
+  parent="Forms"
+  randomSize
+/>
+
+---
+
+## Typography
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Text", "Heading"]}
+  parent="Typography"
+  randomSize
+/>
+
+---
+
+## Iconography
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Icon", "StaticIcon"]}
+  parent="Iconography"
+  randomSize
+/>
+
+---
+
+## Feedback
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Callout", "Loading", "SmallLoader", "Tooltip"]}
+  parent="Feedbacks"
+  randomSize
+/>
+
+---
+
+## Dialogs
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Dialog", "Modal"]}
+  parent="Dialogs"
+  randomSize
+/>
+
+---
+
+## States
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["StateIndicator", "EnergyLabel", "Badge"]}
+  parent="States"
+  randomSize
+/>
+
+---
+
+## Commons
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Avatar", "Divider"]}
+  parent="Commons"
+  randomSize
+/>
 </Content>

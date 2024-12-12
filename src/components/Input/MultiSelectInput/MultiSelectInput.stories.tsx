@@ -25,7 +25,7 @@ const componentSource = componentSourceFactory<
 
 const meta = {
   component: MultiSelectInput,
-  title: "Components/Input/MultiSelectInput/Stories",
+  title: "Components/Forms/Input/MultiSelectInput/Stories",
   args: {
     placeholder: "Select an option",
     options: [

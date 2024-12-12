@@ -31,7 +31,7 @@ const options: ComboBoxOption<NullishPrimitives>[] = [
 
 const meta = {
   component: ComboBox,
-  title: "Components/ComboBox/Stories",
+  title: "Components/Forms/ComboBox/Stories",
   args: {
     options,
     direction: "column",

@@ -21,7 +21,7 @@ const checkboxStatus: CheckboxStatus[] = [true, "mixed", false];
 
 const meta = {
   component: Checkbox,
-  title: "Components/Checkbox/Stories",
+  title: "Components/Forms/Checkbox/Stories",
   args: {
     active: false,
     disabled: false,

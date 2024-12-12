@@ -83,6 +83,15 @@ export const ComponentCard = <
         ? { name: "Mathilde Carbonet" }
         : name === "EntityInfoCard"
         ? { name: "Entity" }
+        : name === "IconPicker"
+        ? { icons: ["Square", "Circle", "Triangle", "Star"] }
+        : name === "ComboBox"
+        ? {
+            options: [
+              { label: "Option 1", value: "Option 1" },
+              { label: "Option 2", value: "Option 2" },
+            ],
+          }
         : {};
 
     return {

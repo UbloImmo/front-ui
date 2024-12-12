@@ -14,7 +14,7 @@ import { useStatic } from "@utils";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/Input/DateInput/Stories",
+  title: "Components/Forms/Input/DateInput/Stories",
   component: DateInput,
   args: {
     uncontrolled: true,

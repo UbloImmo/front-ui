@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {
-  title: "Components/Input/EmailInput/Stories",
+  title: "Components/Forms/Input/EmailInput/Stories",
   component: EmailInput,
   args: {
     uncontrolled: true,

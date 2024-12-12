@@ -3,7 +3,7 @@ import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as DateInputStories from "../DateInput.stories.tsx";
 
-<Meta title="Components/Input/DateInput/Usage" />
+<Meta title="Components/Forms/Input/DateInput/Usage" />
 
 <ComponentInfo of={DateInputStories} figmaId="76%3A6562" />
 
@@ -17,9 +17,10 @@ It is commonly used in form layouts to prompt users for a date address.
 ### Value & Formatting
 
 `DateInput` is initialized without a value. It accepts the following formats:
- - `ISO`
- - `yyyy-MM-dd`
- - `dd/MM/yyyy`
+
+- `ISO`
+- `yyyy-MM-dd`
+- `dd/MM/yyyy`
 
 But always reports changes to its value as `ISO`.
 
@@ -51,6 +52,5 @@ Clicking on the calendar icon opens a calendar popover. Select a date on it and 
 > Show more months side by side by providing the `numberOfMonths` property (max. 3).
 
 <Canvas of={DateInputStories.Default} />
-
 
 </Content>

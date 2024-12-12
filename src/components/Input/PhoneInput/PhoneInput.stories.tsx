@@ -5,7 +5,7 @@ import { PhoneInput } from "./PhoneInput.component";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/Input/PhoneInput/Stories",
+  title: "Components/Forms/Input/PhoneInput/Stories",
   component: PhoneInput,
   args: {
     uncontrolled: true,

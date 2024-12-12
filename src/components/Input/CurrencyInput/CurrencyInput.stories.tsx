@@ -45,7 +45,7 @@ const decorators: Meta<typeof CurrencyInput>["decorators"] = (
 
 const meta = {
   component: CurrencyInput,
-  title: "Components/Input/CurrencyInput/Stories",
+  title: "Components/Forms/Input/CurrencyInput/Stories",
   args: {
     ...CurrencyInput.defaultProps,
     onChange: fn(),

@@ -21,7 +21,7 @@ const componentSource = componentSourceFactory<CalendarProps>(
 
 const meta = {
   component: Calendar,
-  title: "Components/Calendar/Stories",
+  title: "Components/Forms/Calendar/Stories",
   args: {
     onChange: fn(),
   },

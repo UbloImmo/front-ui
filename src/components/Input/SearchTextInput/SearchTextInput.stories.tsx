@@ -14,7 +14,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {
   component: SearchTextInput,
-  title: "Components/Input/SearchTextInput/Stories",
+  title: "Components/Forms/Input/SearchTextInput/Stories",
   args: {
     uncontrolled: true,
     placeholder: "Type to search...",

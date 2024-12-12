@@ -33,7 +33,7 @@ const getResults = () => {
 
 const meta = {
   component: SearchInput,
-  title: "Components/Input/SearchInput/Stories",
+  title: "Components/Forms/Input/SearchInput/Stories",
   args: {
     placeholder: "Type your query...",
     results: getResults,

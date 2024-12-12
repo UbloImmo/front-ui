@@ -5,7 +5,7 @@ import { NumberInput } from "./NumberInput.component";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/Input/NumberInput/Stories",
+  title: "Components/Forms/Input/NumberInput/Stories",
   component: NumberInput,
   args: {
     uncontrolled: true,

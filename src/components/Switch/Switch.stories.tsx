@@ -15,7 +15,7 @@ const componentSource = componentSourceFactory<SwitchProps>(
 
 const meta = {
   component: Switch,
-  title: "Components/Switch/Stories",
+  title: "Components/Forms/Switch/Stories",
   args: {
     disabled: false,
     active: false,
