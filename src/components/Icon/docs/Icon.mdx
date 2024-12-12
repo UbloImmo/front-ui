@@ -1,12 +1,12 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas, IconSearch } from "@docs/blocks"
-import { Content } from "@docs/containers"
+import { ComponentInfo, Canvas, IconSearch } from "@docs/blocks";
+import { Content } from "@docs/containers";
 import * as IconStories from "../Icon.stories.tsx";
 import * as BootstrapIcons from "../__generated__/bootstrap";
 import * as CustomIcons from "../__generated__/custom";
 import { objectKeys } from "@ubloimmo/front-util";
 
-<Meta title="Components/Icon/Usage" />
+<Meta title="Components/Iconography/Icon/Usage" />
 
 <ComponentInfo of={IconStories} />
 
@@ -20,7 +20,7 @@ Icons can take any CSS lenghts as their `size` property, as well as spacing labe
 
 > All sizes get converted to css `rem` values before being passed to the underlying `SVG` element.
 
-<Canvas of={IconStories.Sizes}/>
+<Canvas of={IconStories.Sizes} />
 
 ### Customizing colors
 
@@ -33,12 +33,10 @@ Icons can take any standard theme color as their `color` property. Here are a co
 All icons are generated to be able to keep up with new additions quickly.
 
 Icons are selected using the `name` property. Each name corresponds to an unique Icon apart of :
- - {objectKeys(BootstrapIcons).length} Bootstrap icons 
- - {objectKeys(CustomIcons).length} Custom icons
 
+- {objectKeys(BootstrapIcons).length} Bootstrap icons
+- {objectKeys(CustomIcons).length} Custom icons
 
 > Head over to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list.
 
 </Content>
-
-

@@ -17,7 +17,7 @@ import type { ColorKeyOrWhite } from "@types";
 const componentSource = componentSourceFactory("StaticIcon", undefined);
 
 const meta: Meta<typeof StaticIcon> = {
-  title: "Components/StaticIcon/Stories",
+  title: "Components/Iconography/StaticIcon/Stories",
   component: StaticIcon,
   decorators: [
     (Story) => (
