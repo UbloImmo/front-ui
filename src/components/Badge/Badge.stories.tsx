@@ -18,7 +18,7 @@ const args = {
 };
 
 const meta = {
-  title: "Components/Badge/Stories",
+  title: "Components/States/Badge/Stories",
   component: Badge,
   args,
   decorators: [
