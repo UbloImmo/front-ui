@@ -3,7 +3,7 @@ import { ComponentInfo } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as DialogStories from "../Dialog.stories.tsx";
 
-<Meta title="Components/Dialog/API Reference" />
+<Meta title="Components/Dialogs/Dialog/API Reference" />
 
 <ComponentInfo of={DialogStories} />
 
@@ -21,37 +21,38 @@ import { DialogProvider, Dialog, useDialog } from "@ubloimmo/uikit";
 
 const App = () => {
   // Wrap your app's content with the Provider
-    return (
-        <>
-            <DialogProvider portalRoot="#dialog-root">
-                <Page />
-            </DialogProvider>
-            {/* This is where any open dialog inside your app will render */}
-            <div id="dialog-root" />
-        </>
-    )
-}
+  return (
+    <>
+      <DialogProvider portalRoot="#dialog-root">
+        <Page />
+      </DialogProvider>
+      {/* This is where any open dialog inside your app will render */}
+      <div id="dialog-root" />
+    </>
+  );
+};
 
 /**
  * Any page / component where you want to instanciate a dialog
- */ 
+ */
 const Page = () => {
-    // The dialog reference is used to control any rendered dialog
-    // from anywhere else inside your app
-    const dialogReference = "my-dialog";
-    // Pass the reference to the useDialog hook to access
-    // specific methods for controlling a single dialog
-    const { open } = useDialog(dialogReference)
-    return (
-        <>
-            <button title="open dialog" onClick={open}>Open</button>
-            <Dialog reference={dialogReference}>
-                <div>Dialog content</div>
-            </Dialog>
-        </>
-    )
-}
-
+  // The dialog reference is used to control any rendered dialog
+  // from anywhere else inside your app
+  const dialogReference = "my-dialog";
+  // Pass the reference to the useDialog hook to access
+  // specific methods for controlling a single dialog
+  const { open } = useDialog(dialogReference);
+  return (
+    <>
+      <button title="open dialog" onClick={open}>
+        Open
+      </button>
+      <Dialog reference={dialogReference}>
+        <div>Dialog content</div>
+      </Dialog>
+    </>
+  );
+};
 ```
 
 ### Setup
@@ -67,22 +68,22 @@ This root can be declared anywhere inside your app, though it is recommended to 
 ```html
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>My app</title>
-    </head>
-    <body>
-        <div id="app"/>
-        <div id="dialog-root"/>
-    </body>
+  <head>
+    <title>My app</title>
+  </head>
+  <body>
+    <div id="app" />
+    <div id="dialog-root" />
+  </body>
 </html>
-
 ```
 
 #### Context & Provider
 
 Our Dialog component expects to be used within a parent `DialogProvider`.
 It should to be rendered near the root of your DOM tree, preferably inside App.tsx.
-<br/>
+
+<br />
 **Import it and wrap your content in it.**
 
 > Alternatively, use `DialogProvider` to wrap a single component if you feel like it.
@@ -91,12 +92,12 @@ It should to be rendered near the root of your DOM tree, preferably inside App.t
 import { DialogProvider } from "@ubloimmo/uikit";
 
 const App = () => {
-    return (
-        <DialogProvider portalRoot="#dialog-root">
-            {/* Your app's content */}
-        </DialogProvider>
-  )
-}
+  return (
+    <DialogProvider portalRoot="#dialog-root">
+      {/* Your app's content */}
+    </DialogProvider>
+  );
+};
 ```
 
 > All following examples assume the `Dialog` components are being rendered inside a `DialogProvider`.
@@ -117,14 +118,14 @@ import { useState } from "react";
 import { Dialog } from "@ubloimmo/uikit";
 
 const Parent = () => {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    return (
-        <Dialog open={isOpen} reference="my-dialog">
-            my dialog
-        </Dialog>
-    )
-}
+  return (
+    <Dialog open={isOpen} reference="my-dialog">
+      my dialog
+    </Dialog>
+  );
+};
 ```
 
 #### Through the `useDialog` hook
@@ -132,43 +133,43 @@ const Parent = () => {
 The `useDialog` hook exposes a single Dialog's state and control methods.
 Use it to control a dialog from sibling or children components.
 
-> Exposed methods include controls (`open()`, `close()`, `toggle()`) as well as lifecycle functions (`register()`, `unregister()`). 
+> Exposed methods include controls (`open()`, `close()`, `toggle()`) as well as lifecycle functions (`register()`, `unregister()`).
 
 ```tsx
 import { Dialog, useDialog } from "@ubloimmo/uikit";
 
 const Page = () => {
-    return (
-        <main>
-            <Dialog reference="my-dialog">
-                <Modal />
-            </Dialog>
-            <SideControls />
-        </main>
-    )
-}
+  return (
+    <main>
+      <Dialog reference="my-dialog">
+        <Modal />
+      </Dialog>
+      <SideControls />
+    </main>
+  );
+};
 
 const Modal = () => {
-    const { close } = useDialog("my-dialog");
+  const { close } = useDialog("my-dialog");
 
-    return (
-        <div>
-            <button onClick={close} >Close me</button>
-        </div>
-    )
-}
+  return (
+    <div>
+      <button onClick={close}>Close me</button>
+    </div>
+  );
+};
 
 const SideControls = () => {
-    const { open, close, toggle } = useDialog("my-dialog");
+  const { open, close, toggle } = useDialog("my-dialog");
 
-    return (
-        <aside>
-            <button onClick={open} >Open dialog</button>
-            <button onClick={close} >Close dialog</button>
-            <button onClick={toggle} >Toggle dialog</button>
-        </aside>
-    )
-}
+  return (
+    <aside>
+      <button onClick={open}>Open dialog</button>
+      <button onClick={close}>Close dialog</button>
+      <button onClick={toggle}>Toggle dialog</button>
+    </aside>
+  );
+};
 ```
 
 ### Controlling multiple dialogs
@@ -182,85 +183,75 @@ import { useEffect } from "react";
 import { useDialogManager, DialogProvider, Dialog } from "@ubloimmo/uikit";
 
 const AnnouncementDialog = () => (
-    <Dialog reference="announcement" >
-        {/* Content */}
-    </Dialog>
-)
+  <Dialog reference="announcement">{/* Content */}</Dialog>
+);
 
-const LogoutDialog = () => (
-    <Dialog reference="logout" >
-        {/* Content */}
-    </Dialog>
-)
+const LogoutDialog = () => <Dialog reference="logout">{/* Content */}</Dialog>;
 
 const Dialogs = () => (
-    <>
-        <AnnouncementDialog />
-        <LogoutDialog />
-    </>
-)
+  <>
+    <AnnouncementDialog />
+    <LogoutDialog />
+  </>
+);
 
 const App = () => (
-    <DialogProvider portalRoot="#modal-root" >
-        <Dialogs />
-    </DialogProvider>
-)
+  <DialogProvider portalRoot="#modal-root">
+    <Dialogs />
+  </DialogProvider>
+);
 
 const Page = () => {
-    const {openDialog} = useDialogManager();
+  const { openDialog } = useDialogManager();
 
-    useEffect(() => {
-        openDialog("announcement");
-    }, [])
+  useEffect(() => {
+    openDialog("announcement");
+  }, []);
 
-    return (
-        <main>
-            <h2>My account</h2>
-            {/* Content */}
-            <button onClick={() => openDialog("logout")}>Log out</button>
-        </main>
-    )
-}
-
-
+  return (
+    <main>
+      <h2>My account</h2>
+      {/* Content */}
+      <button onClick={() => openDialog("logout")}>Log out</button>
+    </main>
+  );
+};
 ```
 
 ### Listening for changes
 
 Provide a callback function to the `onOpened` and / or `onClosed` properties to listen to a dialog's state changes.
 
-> These callbacks are called ***after*** the state changes.
+> These callbacks are called **_after_** the state changes.
 
 ```tsx
 import { useState, useCallback } from "react";
 import { Dialog, useDialog } from "@ubloimmo/uikit";
 
 const Page = () => {
-    const { open } = useDialog("my-dialog");
+  const { open } = useDialog("my-dialog");
 
-    const onDialogVisibilityChanged = useCallback((opened: boolean) => {
-        console.log(`Dialog is ${opened ? "open" : "closed"}`);
-    }, [])
+  const onDialogVisibilityChanged = useCallback((opened: boolean) => {
+    console.log(`Dialog is ${opened ? "open" : "closed"}`);
+  }, []);
 
-    return (
-        <main>
-            <button onClick={open} >Open dialog</button>
-            <Dialog
-                reference="my-dialog"
-                onOpened={() => onDialogVisibilityChanged(true)}
-                onClosed={() => onDialogVisibilityChanged(false)}
-            >
-                <Modal />
-            </Dialog>
-        </main>
-    )
-}
+  return (
+    <main>
+      <button onClick={open}>Open dialog</button>
+      <Dialog
+        reference="my-dialog"
+        onOpened={() => onDialogVisibilityChanged(true)}
+        onClosed={() => onDialogVisibilityChanged(false)}
+      >
+        <Modal />
+      </Dialog>
+    </main>
+  );
+};
 
 const Modal = () => {
-    return (
-        <div>Modal content</div>
-    )
-}
+  return <div>Modal content</div>;
+};
 ```
 
 </Content>

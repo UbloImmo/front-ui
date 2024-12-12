@@ -3,8 +3,7 @@ import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as DialogStories from "../Dialog.stories.tsx";
 
-
-<Meta title="Components/Dialog/Usage" />
+<Meta title="Components/Dialogs/Dialog/Usage" />
 
 <ComponentInfo of={DialogStories} />
 
@@ -27,13 +26,13 @@ As long as it is within the `DialogProvider`'s children,
 any component can call `useDialog("ref").open()` to open a dialog,
 be it above, below or inside the `Dialog` in the DOM.
 
-*Every example here uses this method.*
+_Every example here uses this method._
 
 > Refer to the component's and context's [API reference](?path=/docs/components-dialog-api-reference--docs) for more details.
 
 <Canvas of={DialogStories.Default} />
 
-###  Closing a dialog
+### Closing a dialog
 
 #### With its overlay
 
@@ -52,7 +51,6 @@ This feature enables the creation of bespoke "Close" buttons.
 Pressing the `esc` key will close the dialog.
 
 > Hurray for accessibility!
-
 
 ### Content
 
