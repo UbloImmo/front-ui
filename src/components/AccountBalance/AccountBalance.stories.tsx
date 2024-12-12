@@ -42,6 +42,7 @@ export const Title = (props: AccountBalanceProps) => {
       variants={["Titre", "Solde locataire"]}
       for="title"
       of={AccountBalance}
+      columns={2}
     />
   );
 };
@@ -88,6 +89,7 @@ export const Value = (props: AccountBalanceProps) => {
       defaults={mergedProps}
       variants={valueVariants}
       of={AccountBalance}
+      columns={2}
     />
   );
 };

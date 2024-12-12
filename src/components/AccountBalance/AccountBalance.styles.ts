@@ -2,7 +2,8 @@ import { css } from "styled-components";
 
 export const accountBalanceStyle = () => {
   return css`
-    width: 356px;
+    max-width: 356px;
+    width: 100%;
     height: var(--s-10);
     display: flex;
     justify-content: space-between;
