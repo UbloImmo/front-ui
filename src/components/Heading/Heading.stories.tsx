@@ -28,7 +28,7 @@ const componentSource = componentSourceFactory<HeadingProps>(
 
 const meta = {
   component: Heading,
-  title: "Components/Heading/Stories",
+  title: "Components/Typography/Heading/Stories",
   args: {
     children: lorem,
   },

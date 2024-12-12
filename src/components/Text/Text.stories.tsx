@@ -29,7 +29,7 @@ const componentSource = componentSourceFactory<TextProps>(
 
 const meta = {
   component: Text,
-  title: "Components/Text/Stories",
+  title: "Components/Typography/Text/Stories",
   args: {
     children: lorem,
   },
