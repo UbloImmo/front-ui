@@ -1,0 +1,28 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as AccountBalanceStories from "../AccountBalance.stories.tsx";
+
+<Meta title="Components/AccountBalance/Usage" />
+
+<ComponentInfo of={AccountBalanceStories} figmaId="3548-20300" />
+
+<Content>
+
+## Usage
+
+### Title
+
+The `title` property is used to display a title in the AccountBalance component.
+
+<Canvas of={AccountBalanceStories.Title} />
+
+### Value
+
+The `value` property is used to display a value in the AccountBalance component with a currency format.
+
+<Canvas of={AccountBalanceStories.Value} />
+
+</Content>
+
