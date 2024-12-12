@@ -20,7 +20,7 @@ const componentSource = componentSourceFactory<InfoBoxProps>(
 
 const meta = {
   component: InfoBox,
-  title: "Components/InfoBox/Stories",
+  title: "Components/Entity/InfoBox/Stories",
   args: {
     icon: "Square",
     label: "[Label]",

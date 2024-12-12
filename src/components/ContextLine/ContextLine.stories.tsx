@@ -28,7 +28,7 @@ const meta = {
     },
   },
   component: ContextLine,
-  title: "Components/ContextLine/Stories",
+  title: "Components/Entity/ContextLine/Stories",
   args: {
     label: "[label]",
   },

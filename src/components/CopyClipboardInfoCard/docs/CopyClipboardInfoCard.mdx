@@ -1,11 +1,10 @@
-
 import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
-import { Icon, Input } from "@components"
+import { Icon, Input } from "@components";
 import { Content } from "@docs/containers";
 import * as CopyClipboardInfoCardStories from "../CopyClipboardInfoCard.stories.tsx";
 
-<Meta title="Components/CopyClipboardInfoCard/Usage" />
+<Meta title="Components/Entity/CopyClipboardInfoCard/Usage" />
 
 <ComponentInfo of={CopyClipboardInfoCardStories} />
 
@@ -50,7 +49,7 @@ If you need to format it before copying or simply want to override the data to b
 
 <Canvas of={CopyClipboardInfoCardStories.CopyData} />
 
-<Input type="text" uncontrolled placeholder="Try pasting here"/>
+<Input type="text" uncontrolled placeholder="Try pasting here" />
 
 ### Empty state
 
@@ -60,4 +59,3 @@ There are times when the information you want to display is not yet available or
 <Canvas of={CopyClipboardInfoCardStories.Empty} />
 
 </Content>
-

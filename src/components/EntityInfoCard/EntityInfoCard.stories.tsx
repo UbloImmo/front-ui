@@ -176,7 +176,7 @@ const agencEntityCardProps: EntityInfoCardProps = {
 
 const meta = {
   component: EntityInfoCard,
-  title: "Components/EntityInfoCard/Stories",
+  title: "Components/Entity/EntityInfoCard/Stories",
   parameters: {
     docs: componentSource(),
   },
