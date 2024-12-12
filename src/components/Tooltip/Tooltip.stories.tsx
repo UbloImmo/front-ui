@@ -23,7 +23,7 @@ const Container = styled.div`
 `;
 
 const meta: Meta<typeof Tooltip> = {
-  title: "Components/Tooltip/Stories",
+  title: "Components/Feedbacks/Tooltip/Stories",
   component: Tooltip,
   argTypes: {
     direction: {

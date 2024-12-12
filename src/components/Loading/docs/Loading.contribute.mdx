@@ -1,9 +1,9 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Markdown, HeaderInfo } from "@docs/blocks"
-import { Content, Header } from "@docs/containers"
+import { ComponentInfo, Markdown, HeaderInfo } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
 import * as LoadingStories from "../Loading.stories.tsx";
 
-<Meta title="Components/Loading/Contributing"/>
+<Meta title="Components/Feedbacks/Loading/Contributing" />
 
 <Header>
   <HeaderInfo title="Contributing" parent="Components/Loading">
@@ -24,7 +24,7 @@ Additional animations can be created by creating a new directory under `src/comp
 It must comply with the following structure.
 
 ```
-[Anim] 
+[Anim]
 ├── [Anim].animation.tsx
 ├── [Anim].styles.ts
 └── index.ts
@@ -44,7 +44,6 @@ Make sure to include the `data-testid="loading-indicator"` attribute in your mar
 > This file should **only** export your animation component.
 >
 > This is crucial for the dynamic types to work.
-
 
 ##### Example
 
@@ -127,7 +126,7 @@ Your `index.ts` file should then only need to contain the following
 ```tsx
 // [Anim]/index.ts
 
-export * from "./Anim.animation"
+export * from "./Anim.animation";
 ```
 
 ## Registering a new animation.
@@ -146,7 +145,7 @@ and add a new export pointing to your freshly made animation's directory.
 export * from "./BouncingBalls";
 export * from "./Spinner";
 // a new export
-export * from "./Anim"
+export * from "./Anim";
 ```
 
 **That's it!**
