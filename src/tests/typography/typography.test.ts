@@ -21,7 +21,7 @@ describe("typography", () => {
       expect(typographyFontFace).toBeDefined();
       expect(typographyFontFace).toBeFunction();
       expect(() => typographyFontFace()).not.toThrow();
-      expect(typographyFontFace()).toBeString();
+      expect(typographyFontFace()).toBeObject();
     });
 
     it("should link font face", () => {
