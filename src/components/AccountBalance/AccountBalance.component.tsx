@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import styled from "styled-components";
 
 import { accountBalanceStyle } from "./AccountBalance.styles";
@@ -29,34 +30,32 @@ const defaultAccountBalanceProps: AccountBalanceDefaultProps = {
 const AccountBalance = (
   props: AccountBalanceProps & TestIdProps
 ): JSX.Element => {
-  const { log, warn } = useLogger("AccountBalance", { hideLogs: true });
+  const { warn } = useLogger("AccountBalance", { hideLogs: true });
   const mergedProps = useMergedProps(defaultAccountBalanceProps, props);
   const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("account-balance", props);
 
-  log(mergedProps);
-
   if (!props.title) warn("Missing title prop");
   if (!props.value) warn("Missing value prop");
 
+  const formattedValue = useMemo(
+    () => formatAmount(mergedProps.value),
+    [mergedProps.value]
+  );
+
   return (
     <AccountBalanceContainer data-testid={testId} {...styledProps}>
-      <Text
-        size="m"
-        color="gray-800"
-        testId="account-balance-title"
-        overrideTestId
-      >
+      <Text size="m" color="gray-800" testId={`${testId}-title`} overrideTestId>
         {mergedProps.title} :
       </Text>
       <Heading
         size="h3"
         weight="bold"
         color="gray-800"
-        testId="account-balance-value"
+        testId={`${testId}-value`}
         overrideTestId
       >
-        {formatAmount(mergedProps.value)}€
+        {formattedValue}
       </Heading>
     </AccountBalanceContainer>
   );

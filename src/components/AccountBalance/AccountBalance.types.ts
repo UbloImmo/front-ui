@@ -5,9 +5,9 @@ export type AccountBalanceProps = {
    * The title of the account balance
    *
    * @type {string}
-   * @default null
+   * @required
    */
-  title: Nullable<string>;
+  title: string;
 
   /**
    * The amount of the account balance
@@ -15,7 +15,7 @@ export type AccountBalanceProps = {
    * @type {number}
    * @default null
    */
-  value: Nullable<number | undefined>;
+  value?: Nullable<number>;
 };
 
 export type AccountBalanceDefaultProps = Required<AccountBalanceProps>;

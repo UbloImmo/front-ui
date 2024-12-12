@@ -26,6 +26,9 @@ const meta = {
   parameters: {
     docs: componentSource(),
   },
+  args: {
+    value: 999_999,
+  },
 } satisfies Meta<typeof AccountBalance>;
 
 export default meta;
@@ -35,20 +38,32 @@ export const Default: Story = {
   args,
 };
 
+const titleVariants = [
+  {
+    __propVariantLabel: "For default title",
+    title: "Titre",
+  },
+  {
+    __propVariantLabel: "For tenant balance title",
+    title: "Solde locataire",
+  },
+];
+
 export const Title = (props: AccountBalanceProps) => {
   return (
     <ComponentVariants
       defaults={props}
-      variants={["Titre", "Solde locataire"]}
-      for="title"
+      variants={titleVariants}
       of={AccountBalance}
       columns={2}
     />
   );
 };
 
-Title.args = {
-  value: 999_999,
+Title.parameters = {
+  docs: componentSource(
+    titleVariants.map((variant) => ({ ...args, ...variant }))
+  ),
 };
 
 const valueVariants = [
@@ -62,23 +77,23 @@ const valueVariants = [
   },
   {
     __propVariantLabel: "For amount <100k",
-    value: 99_999.99,
+    value: 99_999_99,
   },
   {
     __propVariantLabel: "For amount between 100,00 k€ and 999,99 k€",
-    value: 999_999.99,
+    value: 999_999_99,
   },
   {
     __propVariantLabel: "For amount between 1,00 M€ and 999,99 M€",
-    value: 999_999_999.99,
+    value: 999_999_999_99,
   },
   {
     __propVariantLabel: "For amount between 1,00 G€ and 999,99 G€",
-    value: 999_999_999_999.99,
+    value: 999_999_999_999_99,
   },
   {
     __propVariantLabel: "For negative amount",
-    value: -999_999_999_999.99,
+    value: -999_999_999_999_99,
   },
 ];
 
@@ -92,4 +107,10 @@ export const Value = (props: AccountBalanceProps) => {
       columns={2}
     />
   );
+};
+
+Value.parameters = {
+  docs: componentSource(
+    valueVariants.map((variant) => ({ ...args, ...variant }))
+  ),
 };
