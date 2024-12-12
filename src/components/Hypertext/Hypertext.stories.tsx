@@ -16,7 +16,7 @@ const componentSource = componentSourceFactory<HypertextProps>(
 );
 
 const meta = {
-  title: "Components/Hypertext/Stories",
+  title: "Components/Actions/Hypertext/Stories",
   component: Hypertext,
   args: {
     children: "[Hypertext]",

@@ -40,7 +40,7 @@ const colors: ColorKey[] = [
 const placements: DirectionHorizontal[] = ["left", "right"];
 
 const meta = {
-  title: "Components/Chip/Stories",
+  title: "Components/Actions/Chip/Stories",
   component: Chip,
   args: {
     ...defaultMockProps,

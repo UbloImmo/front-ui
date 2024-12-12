@@ -15,7 +15,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {
   component: Action,
-  title: "Components/Action/Stories",
+  title: "Components/Actions/Action/Stories",
   args: {
     ...Action.defaultProps,
     onClick: fn(),

@@ -3,7 +3,7 @@ import { ComponentInfo, ComponentProps, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as ActionIconStories from "../ActionIcon.stories.tsx";
 
-<Meta title="Components/ActionIcon/Usage" />
+<Meta title="Components/Actions/ActionIcon/Usage" />
 <ComponentInfo of={ActionIconStories} figmaId="30-7722" />
 
 <Content>
@@ -12,7 +12,7 @@ import * as ActionIconStories from "../ActionIcon.stories.tsx";
 
 `ActionIcon` is the smallest counterpart to our [Action](?path=/docs/components-action-usage--docs) component.
 
-> Use it when offering "classic", *easily recognizable* actions to our users (e.g. delete, copy, archive).
+> Use it when offering "classic", _easily recognizable_ actions to our users (e.g. delete, copy, archive).
 
 ### Accessibility
 
@@ -24,7 +24,6 @@ As with most other customizable components, ActionIcon's `icon` property directl
 
 <Canvas of={ActionIconStories.Icons} />
 
-
 #### Titles
 
 This button does not display a text label. Therefore, its `title` property is **required**.
@@ -32,8 +31,6 @@ This button does not display a text label. Therefore, its `title` property is **
 > Hover over the following examples to see their accessible titles.
 
 <Canvas of={ActionIconStories.Titles} />
-
-
 
 ### Sizing
 
@@ -43,17 +40,17 @@ Set the `size` property to `s` to display an even smaller variant of ActionIcon.
 
 <Canvas of={ActionIconStories.Sizes} />
 
-
 ### Differentiating actions
 
 Readability and recognition are essential when presenting our users with an unlabed action.
-<br/>
-Inform them about a potentially *risky* action by setting its `color` property to `error`.
-<br/>
+
+<br />
+Inform them about a potentially *risky* action by setting its `color` property to
+`error`.
+<br />
 Highlight an action by setting its `color` property to `primary`.
 
 It defaults to `white` otherwise.
-
 
 > Hover over each variant to experience the differences.
 
@@ -68,4 +65,3 @@ Set its `disabled` property to `true` to do just that.
 <Canvas of={ActionIconStories.Disabled} />
 
 </Content>
-

@@ -1,12 +1,11 @@
-
 import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as ContextMenuStories from "../ContextMenu.stories.tsx";
 
-<Meta title="Components/ContextMenu/Usage" />
+<Meta title="Components/Actions/ContextMenu/Usage" />
 
-<ComponentInfo of={ContextMenuStories} />
+<ComponentInfo of={ContextMenuStories} figmaId="756-3639" />
 
 <Content>
 
@@ -17,11 +16,10 @@ ContextMenu is a simple menu wrapped in a [Popover](?path=/docs/layouts-popover-
 ### Items
 
 To customize what items (e.g. actions) are available in the context menu, use the `items` property.
-<br/>
-Each item holds:
-- a required `label`
-- an optional `onClick` callback
-- ...and most of [Action's properties](?path=/docs/components-action-properties--docs).
+
+<br />
+Each item holds: - a required `label` - an optional `onClick` callback - ...and most
+of [Action's properties](?path=/docs/components-action-properties--docs).
 
 <Canvas of={ContextMenuStories.Items} />
 
@@ -55,4 +53,3 @@ Replace the default trigger with any React node or component by passing it as th
 <Canvas of={ContextMenuStories.Triggers} />
 
 </Content>
-

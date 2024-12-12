@@ -3,7 +3,7 @@ import { ComponentInfo, Canvas, Callout } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as ButtonStories from "../Button.stories.tsx";
 
-<Meta title="Components/Button/Usage" />
+<Meta title="Components/Actions/Button/Usage" />
 
 <ComponentInfo of={ButtonStories} figmaId="30%3A3670" />
 
@@ -34,7 +34,6 @@ If you ever need to display a button's label in front of its icons, set its `ico
 
 Most visual aspects of buttons can be customized to fit most flow's requirements.
 
-
 ### Colors
 
 A Button can be colored by passing it a `color` property.
@@ -48,10 +47,9 @@ This dictates the color palette it'll be displaying while in its default, hover 
 
 Passing it the `secondary` property will further style it according to its color.
 
-> Use `secondary` to differenciate a button for other in its range / screen based on the importance of the action it triggers. 
+> Use `secondary` to differenciate a button for other in its range / screen based on the importance of the action it triggers.
 
 <Canvas of={ButtonStories.SecondaryColors} />
-
 
 ### Width
 
@@ -72,7 +70,8 @@ By providing the `expandOnHover` property, a button will behave as an icon-only 
 <Canvas of={ButtonStories.Expandable} />
 
 <Callout color="warning" icon="ExclamationTriangle">
-This behavior will get overridden by the `fullWidth` property if both are provided.
+  This behavior will get overridden by the `fullWidth` property if both are
+  provided.
 </Callout>
 
 ## Loading state
