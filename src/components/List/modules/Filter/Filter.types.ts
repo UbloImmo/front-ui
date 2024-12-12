@@ -134,7 +134,7 @@ export type FilterData = Required<FilterConfig & FilterVisualData> & {
   optionDividers?: FilterOptionDivider[];
 };
 
-export interface IFilter<TItem extends object> extends Required<FilterData> {
+export interface Filter<TItem extends object> extends Required<FilterData> {
   /**
    * Whether the filter is active (e.g. has at least one selected options)
    *

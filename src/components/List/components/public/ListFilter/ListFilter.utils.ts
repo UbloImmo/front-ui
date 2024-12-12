@@ -20,7 +20,7 @@ import { useListContext } from "@/components/List/context";
 import {
   filterData,
   type FilterSignature,
-  type IFilter,
+  type Filter,
   type FilterOption,
 } from "@/components/List/modules";
 import { useClearFilterOption } from "@/components/List/modules/FilterOption/useFilterOption.hook";
@@ -38,10 +38,10 @@ import type { ListFilterProps, ListFilterStyleProps } from "./ListFilter.types";
 const useSatitizedFilter = (
   props: ListFilterProps,
   logger: Logger
-): IFilter<Record<string, unknown>> => {
+): Filter<Record<string, unknown>> => {
   const { getFilterBySignature } = useListContext<Record<string, unknown>>();
 
-  return useMemo<IFilter<Record<string, unknown>>>(() => {
+  return useMemo<Filter<Record<string, unknown>>>(() => {
     if (props.filter) return props.filter;
 
     if (props.signature) {
@@ -72,7 +72,7 @@ const useSatitizedFilter = (
 };
 
 const useFilterStyleProps = (
-  filter: IFilter<Record<string, unknown>>,
+  filter: Filter<Record<string, unknown>>,
   open?: boolean,
   renderMulti?: boolean
 ) => {
@@ -101,7 +101,7 @@ const useFilterQuery = () => {
 };
 
 const useFilteredOptions = (
-  filter: IFilter<Record<string, unknown>>,
+  filter: Filter<Record<string, unknown>>,
   query: Nullable<string>
 ): FilterOption<Record<string, unknown>>[] => {
   const clearFilterOption = useClearFilterOption(filter);
@@ -219,7 +219,7 @@ const useFilterKeyboardEvents = (
 
 const useFilterSubmitQuery = (
   highlightSignature: Nullable<FilterSignature>,
-  filter: IFilter<Record<string, unknown>>,
+  filter: Filter<Record<string, unknown>>,
   closeOptions: VoidFn
 ) => {
   return useCallback(

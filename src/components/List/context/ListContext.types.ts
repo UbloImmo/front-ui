@@ -8,7 +8,7 @@ import type {
   FilterPresetData,
   FilterSignature,
   IDataProvider,
-  IFilter,
+  Filter,
   IsFilterOptionFn,
   ListConfigAsyncFilterFn,
   ListConfigAsyncFilterPresetFn,
@@ -123,7 +123,7 @@ export type ListContextConfig<TItem extends object> = {
   /**
    * The list's filters
    *
-   * @type {Nullable<IFilter<TItem>[]>}
+   * @type {Nullable<Filter<TItem>[]>}
    * @default null
    */
   filters?: Nullable<FilterData[]>;
@@ -212,26 +212,26 @@ export type UseListConfigFilterPresetReducerAction =
 
 export type GetFilterByIdFn<TItem extends object> = GenericFn<
   [id: string],
-  Nullable<IFilter<TItem>>
+  Nullable<Filter<TItem>>
 >;
 
 export type GetFilterBySignatureFn<TItem extends object> = GenericFn<
   [signature: FilterSignature],
-  Nullable<IFilter<TItem>>
+  Nullable<Filter<TItem>>
 >;
 
 export type GetFilterByLabelFn<TItem extends object> = GenericFn<
   [label: string],
-  Nullable<IFilter<TItem>>
+  Nullable<Filter<TItem>>
 >;
 
 export type UseListFiltersReturn<TItem extends object> = {
   /**
    * The list's filters
    *
-   * @type {IFilter<TItem>[]}
+   * @type {Filter<TItem>[]}
    */
-  filters: IFilter<TItem>[];
+  filters: Filter<TItem>[];
   /**
    * Whether the list's filters are loading
    *
@@ -376,9 +376,9 @@ export type ListContextValue<TItem extends object> = {
   /**
    * The list's filters
    *
-   * @type {IFilter<TItem>[]}
+   * @type {Filter<TItem>[]}
    */
-  filters: IFilter<TItem>[];
+  filters: Filter<TItem>[];
   /**
    * The list's item count
    *

@@ -1,4 +1,4 @@
-import type { IFilter } from "../Filter/Filter.types";
+import type { Filter } from "../Filter/Filter.types";
 import type { FilterOptionData } from "../FilterOption/FilterOption.types";
 import type { FilterPreset } from "../FilterPreset/FilterPreset.types";
 import type { FilterBooleanOperator } from "../shared.types";
@@ -13,7 +13,7 @@ import type {
 export type DataProviderSetDataFn<TItem extends object> = VoidFn<[TItem[]]>;
 
 export type DataProviderFilterParam<TItem extends object> = Replace<
-  Pick<IFilter<TItem>, "selectedOptions" | "operator">,
+  Pick<Filter<TItem>, "selectedOptions" | "operator">,
   "selectedOptions",
   {
     selectedOptions: FilterOptionData<TItem>[];

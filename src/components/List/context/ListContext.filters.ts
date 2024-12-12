@@ -16,7 +16,7 @@ import type {
   FilterData,
   FilterOptionData,
   FilterSignature,
-  IFilter,
+  Filter,
   FilterOption,
   IsFilterOptionFn,
 } from "../modules";
@@ -99,7 +99,7 @@ export const useListFilters: UseListFilters = <TItem extends object>(
   );
 
   const buildFilter = useCallback(
-    (filterData: FilterData): IFilter<TItem> => {
+    (filterData: FilterData): Filter<TItem> => {
       const filterOptions = buildFilterOptions(filterData);
       const selectedOptions = filterOptions.filter((option) => option.selected);
       const active = !!selectedOptions.length;
@@ -127,7 +127,7 @@ export const useListFilters: UseListFilters = <TItem extends object>(
   }, [filterDatas]);
 
   const filters = useMemo(() => {
-    return filterDatas.data.map((item): IFilter<TItem> => {
+    return filterDatas.data.map((item): Filter<TItem> => {
       return buildFilter(item);
     });
   }, [filterDatas, buildFilter]);

@@ -4,7 +4,7 @@ import { useStatic, useUikitTranslation } from "@utils";
 
 import { filterOptionData, type FilterOption } from ".";
 
-import type { IFilter } from "../Filter/Filter.types";
+import type { Filter } from "../Filter/Filter.types";
 
 export const CLEAR_FILTER_OPTION_SIGNATURE =
   "***INTERNAL***CLEAR_FILTER_OPTION***INTERNAL***";
@@ -14,11 +14,11 @@ export const CLEAR_FILTER_OPTION_SIGNATURE =
  * It creates a base option with "All" text and a dashed circle icon, then
  * overrides its select method to clear the parent filter.
  *
- * @param {IFilter<Record<string, unknown>>} filter - The parent filter that will be cleared
+ * @param {Filter<Record<string, unknown>>} filter - The parent filter that will be cleared
  * @returns {FilterOption<Record<string, unknown>>} A filter option that clears its parent filter when selected
  */
 export const useClearFilterOption = (
-  filter: IFilter<Record<string, unknown>>
+  filter: Filter<Record<string, unknown>>
 ): FilterOption<Record<string, unknown>> => {
   const tl = useUikitTranslation();
   // create the base option once
