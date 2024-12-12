@@ -1,0 +1,24 @@
+import { Content, Header } from "@docs/containers";
+import { HeaderInfo, Text } from "@docs/blocks";
+import { ComponentList } from "@docs/blocks/ComponentList/ComponentList.block";
+import { Meta } from "@storybook/blocks";
+import * as componentsIndexRaw from "@components";
+
+<Meta title="Components/Dialogs/Overview" />
+
+<Header>
+  <HeaderInfo title="Overview" parent="Components/Dialogs">
+    <Text color="primary-dark">TO DO</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Dialog", "Modal"]}
+  parent="Dialogs"
+  randomSize
+/>
+
+</Content>

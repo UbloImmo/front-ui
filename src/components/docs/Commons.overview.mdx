@@ -1,0 +1,28 @@
+import { Content, Header } from "@docs/containers";
+import { HeaderInfo, Text } from "@docs/blocks";
+import { ComponentList } from "@docs/blocks/ComponentList/ComponentList.block";
+import { Meta } from "@storybook/blocks";
+import * as componentsIndexRaw from "@components";
+
+<Meta title="Components/Commons/Overview" />
+
+<Header>
+  <HeaderInfo title="Overview" parent="Components/Commons">
+    <Text color="primary-dark">
+      There are even more components, but some of them are not fit for just one
+      category, one specific usage, or their family of component doesn't exist
+      yet. Here are the commons components.
+    </Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Avatar", "Divider"]}
+  parent="Commons"
+  randomSize
+/>
+
+</Content>
