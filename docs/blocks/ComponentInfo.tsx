@@ -115,9 +115,14 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
 
   const githubLink = useMemo(() => {
     //lowercase the first letter of the parent directory
+    //remove the parent directory used in storybook to match the github structure
     const parentLink =
       parent &&
-      parent.replace("Components", "components").replace("Layouts", "layouts");
+      parent
+        .replace("Components", "components")
+        .replace("Layouts", "layouts")
+        .split("/")[0];
+
     return `${GITHUB_TEMPLATE}${parentLink}/${title}`;
   }, [title, parent]);
 
