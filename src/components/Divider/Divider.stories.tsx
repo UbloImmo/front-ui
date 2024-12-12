@@ -15,7 +15,7 @@ const componentSource = componentSourceFactory<DividerProps>(
 
 const meta = {
   component: Divider,
-  title: "Components/Divider/Stories",
+  title: "Components/Commons/Divider/Stories",
   argTypes: {
     label: {
       type: "string",
