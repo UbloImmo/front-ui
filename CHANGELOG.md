@@ -36,6 +36,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add `noWrap` property to make the text not wrap
   - Add `id` property to make the text / heading component accessible
 
+- `v0.0.4` Collapsible component
+  - Add `content` property to render custom content inside the collapsible
+
 ### Fixed
 
 - `v0.0.5` Callout component
