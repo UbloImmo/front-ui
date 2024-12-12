@@ -5,8 +5,14 @@ import styled, { css, type RuleSet } from "styled-components";
 import { StorybookThemeProvider } from "./StoryDecorator";
 
 import { getDynamicThemeSlugs } from "@/themes";
-import { codeFontFace, typographyFontFace } from "@/typography";
+import {
+  buildTypographyStyle,
+  codeFontFace,
+  defaultTypographyProps,
+  typographyFontFace,
+} from "@/typography";
 import { buildheadingOverrides } from "@docs/blocks";
+import { toStyleProps } from "@utils";
 
 import type { DynamicColorPaletteKey } from "@types";
 
@@ -66,16 +72,34 @@ const StyleReset = styled.div`
     width: 100%;
 
     blockquote {
-      padding: var(--s-1) var(--s-2);
-      border-left: var(--s-1) solid var(--primary-medium);
+      padding: var(--s-3) var(--s-4);
+      // account for left border
+      padding-left: var(--s-3);
+      border-left: var(--s-1) solid var(--primary-base);
       border-radius: var(--s-1);
       background: var(--primary-light);
       margin: var(--s-2) 0;
       margin-bottom: var(--s-4);
+
+      & span > em {
+        font-style: normal !important;
+      }
+
       span {
         margin-bottom: 0 !important;
-        font-size: var(--text-m);
-        color: var(--primary-dark) !important;
+        ${buildTypographyStyle({
+          ...defaultTypographyProps,
+          size: "m",
+        })(
+          toStyleProps({
+            ...defaultTypographyProps,
+            size: "m",
+            color: "primary-dark",
+            weight: "medium",
+            italic: false,
+            important: true,
+          })
+        )}
       }
     }
 
@@ -96,10 +120,14 @@ const StyleReset = styled.div`
     )}
     ${notInUnstyled("h1", buildheadingOverrides("h1", "bold", "gray-900"))}
     ${notInUnstyled("h2", buildheadingOverrides("h2", "bold", "gray-900"))}
-    ${notInUnstyled("h3", buildheadingOverrides("h2", "medium", "gray-900"))}
-    ${notInUnstyled("h4", buildheadingOverrides("h4", "medium", "gray-900"))}
+    ${notInUnstyled("h3", buildheadingOverrides("h3", "medium", "gray-900"))}
+    ${notInUnstyled("h4", buildheadingOverrides("h3", "regular", "gray-800"))}
     ${notInUnstyled("h5", buildheadingOverrides("h4", "medium", "gray-700"))}
     ${notInUnstyled("h6", buildheadingOverrides("h4", "regular", "gray-700"))}
+
+    [data-layout="docs-content"] > span {
+      display: block !important;
+    }
 
     ${notInUnstyled(
       "ul",
@@ -199,6 +227,74 @@ const StyleReset = styled.div`
     pre.prismjs {
       padding: var(--s-4) !important;
       ${codeFontFace(true)};
+
+      span:not(.token) {
+        color: var(--primary-dark);
+      }
+
+      .token.punctuation {
+        color: var(--gray-600);
+      }
+
+      .token.function {
+        color: var(--primary-base);
+      }
+
+      .token.comment {
+        color: var(--gray-300);
+        font-style: italic;
+      }
+
+      .token.string {
+        color: color-mix(
+          in oklab,
+          var(--success-base) 75%,
+          var(--success-dark)
+        );
+      }
+
+      .token.number,
+      .token.boolean {
+        color: var(--warning-base);
+      }
+
+      .token.class-name,
+      .token.maybe-class-name {
+        color: var(--warning-base);
+      }
+
+      .token.keyword,
+      .token.builtin {
+        color: var(--primary-base);
+      }
+
+      .token.maybe-class-name,
+      .token.class-name {
+        font-style: italic;
+      }
+
+      .token.keyword,
+      .token.builtin,
+      .token.operator {
+        font-style: normal;
+      }
+
+      .token.operator {
+        color: color-mix(
+          in oklab,
+          var(--primary-base) 65%,
+          var(--primary-medium)
+        );
+        font-style: normal;
+      }
+
+      .token.arrow {
+        color: color-mix(
+          in oklab,
+          var(--primary-base) 75%,
+          var(--primary-medium)
+        );
+      }
     }
 
     div:has(button) {

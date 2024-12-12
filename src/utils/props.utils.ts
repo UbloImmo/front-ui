@@ -6,7 +6,7 @@ import {
   objectFromEntries,
   transformObject,
   type GenericFn,
-  type Nullable,
+  type Nullish,
   type Optional,
   type Primitives,
 } from "@ubloimmo/front-util";
@@ -220,11 +220,11 @@ export const useTestId = <TProps extends Record<string, unknown>>(
  *
  * @template {Primitives} TAttributeValue - The type of the attribute value.
  *
- * @param {Nullable<TArttributeValue>} attribute - The attribute value or null.
+ * @param {Nullish<TArttributeValue>} attribute - The attribute value or null.
  * @returns {Optional<TAttributeValue>} The given attribute value, or `undefined` if it is `null`.
  */
 export const useHtmlAttribute = <TAttributeValue extends Primitives>(
-  attribute: Nullable<TAttributeValue>
+  attribute: Nullish<TAttributeValue>
 ): Optional<NonNullable<TAttributeValue>> =>
   useMemo<Optional<TAttributeValue>>(() => {
     if (isNull(attribute)) return undefined;

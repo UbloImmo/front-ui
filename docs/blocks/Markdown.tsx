@@ -16,7 +16,7 @@ export const markdownOverrides = (color?: PaletteColor) => ({
   h1: specificHeading("h1", "bold", color ?? "gray-900"),
   h2: specificHeading("h2", "bold", color ?? "gray-900"),
   h3: specificHeading("h3", "medium", color ?? "gray-900"),
-  h4: specificHeading("h4", "medium", color ?? "gray-900"),
+  h4: specificHeading("h3", "regular", color ?? "gray-800"),
   h5: specificHeading("h4", "medium", color ?? "gray-700"),
   h6: specificHeading("h4", "regular", color ?? "gray-700"),
   span: textOfSize("m", "regular", color ?? "gray-700"),

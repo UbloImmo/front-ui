@@ -16,10 +16,20 @@ import { Content, Header } from "@docs/containers";
 
 Options consist of a label, one or more matches and additional configuration.
 
+Calling `option()` will build a filter option and register it in the list's configuration,
+making it available for use in filters or filter presets.
+
+<Callout color="pending" icon={null}>
+Once registerd, options are considered immutable and cannot be modified.&nbsp;
+This means `option()` cannot be called inside a `useMemo()` hook or inside a hook / component's body.
+</Callout>
+
 ```typescript
 const { match, option } = useListConfig<Pokemon>(usePokemonData);
+// Registers an option once
 useStatic(() => {
   const isNamedPikachu = match("name", "=", "Pikachu");
+  // Builds a filter option and registers it in the list's configuration
   const isPikachu = option("Pikachu", isNamedPikachu);
   /**
    * {
@@ -41,42 +51,239 @@ useStatic(() => {
    * }
   */
 })
-
 ```
 
 ## Type definition
 
 ```typescript
-type ListConfigMatchesFn<TItem extends object> = (
-  property: FilterProperty<TItem>,
-  comparison: FilterComparisonOperator,
-  values: FilterOptionValue[]
-) => FilterOptionMatch<TItem>[];
+type ListConfigOptionFn<TItem extends object> = (
+  label: string<TItem>,
+  matchOrMatches: FilterOptionMatch<TItem> | FilterOptionMatch<TItem>[],
+  config?: FilterOptionConfig
+) => FilterOptionData<TItem>;
 ```
 
 ## Arguments
 
-#### `matches(property, comparison, values)`
+#### **`label`**: `string`
 
-- `property: FilterProperty<TItem>`: a single (possibly nested) string or number property of the item to match against
-- `comparison: FilterComparisonOperator`: a single comparison operator (either `=`, `!=`, `>`, `<`, `>=` or `<=`)
-- `values: FilterOptionValue[]`: a list of property values to match against
+The label of the generated filter option. **Required**.
+
+#### **`matchOrMatches`**: `FilterOptionMatch<TItem> | FilterOptionMatch<TItem>[]`
+
+Either a single match or a list of matches to create the filter option from. **Required**.
+
+> Single matches will be converted to a list of matches containing a single element.
+
+```typescript
+type FilterOptionMatch<TItem extends object> = {
+  value: FilterOptionValue;
+  comparison: FilterComparisonOperator;
+  property: FilterProperty<TItem>;
+};
+```
+
+<Callout color="gray">
+  While it is possible to pass matches as a simple object,
+  it is recommended to use the [match()](?path=/docs/components-list-configuration-methods-match--docs) or [matches()](?path=/docs/components-list-configuration-methods-matches--docs) methods instead.
+</Callout>
+
+#### **`config?`**: `FilterOptionConfig`
+
+Additional configuration for the filter option. Optional.
+
+```typescript
+type FilterOptionConfig = {
+  operator?: FilterBooleanOperator;
+  // Visual properties
+  color?: PaletteColor | ColorKey;
+  icon?: Nullable<IconName>;
+  // Behavioral properties
+  default?: boolean;
+  initial?: boolean;
+  fixed?: boolean;
+  disabled?: boolean;
+  hidden?: boolean;
+};
+```
+
+##### `config.operator?`
+
+The operator to use when combining multiple matches.<br/>
+Defaults to `AND`.
+
+```typescript
+type FilterBooleanOperator = "AND" | "OR";
+```
+
+##### `config.color?`: `PaletteColor | ColorKey`
+
+The color of the filter option.
+Can be either a palette color (`gray-600`, `primary-600`, etc.) or a color key (`gray`, `primary`, etc.).<br/>
+
+Defaults to `gray-600`.
+
+##### `config.icon?`: `Nullable<IconName>`
+
+The icon of the filter option.<br/>
+
+Defaults to `null`.
+
+##### `config.initial?`: `boolean`
+
+Controls whether the filter option is initially selected. Otherwise acts a regular option<br/>
+
+Defaults to `false`.
+
+> Options with this property will already be selected when the list is first rendered, but not when a filter is cleared.
+
+##### `config.default?`: `boolean`
+
+Controls whether the filter option is a default option. Default options are initially selected, can be manually toggled, but get re-applied when a filter is cleared.<br/>
+
+Defaults to `false`.
+
+> Think of it as `initial` with the added behavior of being re-applied when a filter is cleared.
+
+##### `config.fixed?`: `boolean`
+
+Controls whether the filter option is fixed.<br/>
+
+Defaults to `false`.
+
+> Fixed options are **always** selected, and cannot ever be unselected.
+
+
+##### `config.disabled?`: `boolean`
+
+Controls whether the filter option is disabled.
+Disabled options **cannot** have their `selected` state **toggled**, but can still be cleared.<br/>
+
+Defaults to `false`.
+
+> Disabled options may be selected if they are also default, fixed or initial options.
+
+##### `config.hidden?`: `boolean`
+
+Controls whether the filter option is hidden. Hidden options act as regular options, but are never displayed when assignted to a filter.<br/>
+
+Defaults to `false`.
 
 ## Returns
 
-`FilterOptionMatch<TItem>[]`: a list containing one `FilterOptionMatch` object for each value passed in the `values` parameter.
+A single `FilterOptionData` object. Contains all configuration properties.<br/>
+Its `colorKey` and `paletteColor` are generated from the `color` property.
 
-> All the matches are hold the same property and comparison, but different values.
-
-## Example
+> An option's `signature` is a unique identifier used to refer / find a single option, and is generated from the option's `label`, `matches` and `operator` properties.
 
 ```typescript
-// Retrieve the method from the useListConfig hook
-const { matches } = useListConfig<Pokemon>(usePokemonData);
+type FilterOptionData<TItem extends object> = Required<
+  FilterOptionConfig
+> & {
+  label: string;
+  matches: FilterOptionMatch<TItem>[];
+  operator: FilterBooleanOperator;
+  signature: FilterSignature;
+  paletteColor: PaletteColor;
+  colorKey: ColorKey;
+  selected: boolean;
+};
+```
 
-useStatic(() => {
-  const [isNamedPikachu, isNamedRaichu] = matches("name", "=", ["Pikachu", "Raichu"]);
+## Examples
+
+### Build a filter option from a single match and register it
+
+```typescript
+const { match, option } = useListConfig<Pokemon>(usePokemonData);
+
+const isPikachu = useStatic(() => {
+  return option(
+    "Pikachu",
+    match("name", "=", "Pikachu")
+  );
 })
 ```
 
+### Build a filter option from multiple matches and register it
+
+```typescript
+const { match, matches, option } = useListConfig<Pokemon>(usePokemonData);
+
+const isHeavyOrElectricOrNormal = useStatic(() =>
+  option(
+    "Heavy, Electric or Normal Pokemon",
+    [
+      // matches both the first and second type of a pokemon
+      ...matches("types.0.type.name", "=", ["electric", "normal"]),
+      ...matches("types.1.type.name", "=", ["electric", "normal"]),
+      // matches all pokemon that weigh at least 100kg
+      match("weight", ">=", 100),
+    ],
+    {
+      // combines the matches with an OR operator
+      operator: "OR",
+    }
+  )
+)
+```
+
+### Builds a filter option, change its visual properties and register it
+
+```typescript
+const { match, option } = useListConfig<Pokemon>(usePokemonData);
+
+const isFireType = useStatic(() =>
+  option(
+    "Fire",
+    [
+      // matches both the first and second type of a pokemon
+      match("types.0.type.name", "=", "fire"),
+      match("types.1.type.name", "=", "fire"),
+    ],
+    {
+      // make it red
+      color: "error-base",
+      // add a fire icon
+      icon: "Fire",
+    }
+  )
+)
+```
+
+### Build a filter option, make it always active and hidden, and register it
+
+```typescript
+const { match, option } = useListConfig<Pokemon>(usePokemonData);
+
+const onlyEZModePokemonAllowed = useStatic(() =>
+  option(
+    "God tier",
+    [
+      match("baseExperience", ">", 100_000_000_000),
+    ],
+    {
+      fixed: true,
+      hidden: true,
+    }
+  )
+)
+```
+
+
+## Common pitfalls
+
+### I created an option and everything is slow / broken
+
+As said previously, calling `option()` will build a filter option and **register** it in the list's configuration.
+
+> If you are experiencing performance issues, it is likely because you are calling `option()` outside of `useStatic()`, and thus registering it every render.
+
+### I created a fixed, hidden option and all my list results are gone
+
+Fixed and hidden options are always selected, and thus act as list-wide filters.
+
+> Make sure to only create fixed and hidden options when you need to restrict part of the results at all times.
+
 </Content>
+

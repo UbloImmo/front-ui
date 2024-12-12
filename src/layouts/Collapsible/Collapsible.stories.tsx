@@ -57,6 +57,7 @@ const CustomSubCollapsibles: CollapsibleDefaultProps[] = [
     compact: false,
     children: customChildren2,
     subCollapsibles: [defaultCollapsibleComponent, defaultCollapsibleComponent],
+    content: null,
   },
   {
     open: false,
@@ -71,6 +72,7 @@ const CustomSubCollapsibles: CollapsibleDefaultProps[] = [
         children: customChildren,
       },
     ],
+    content: null,
   },
 ];
 

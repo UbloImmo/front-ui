@@ -19,10 +19,6 @@ Matches are used to create filter options.
 ```typescript
 const { matches } = useListConfig<Pokemon>(usePokemonData);
 const isNamedPikachuOrRaichu = matches("name", "=", ["Pikachu", "Raichu"]);
-// [
-//   { property: "name", comparison: "=", value: "Pikachu" },
-//   { property: "name", comparison: "=", value: "Raichu" },
-// ]
 ```
 
 ## Type definition
@@ -65,7 +61,7 @@ type FilterOptionValue = string | number | boolean | Date | null;
 
 A list containing one `FilterOptionMatch` object for each value passed in the `values` parameter.
 
-> All the matches are hold the same property and comparison, but different values.
+> All the matches hold the same property and comparison, but different values.
 
 ```typescript
 type FilterOptionMatch<TItem extends object> = {

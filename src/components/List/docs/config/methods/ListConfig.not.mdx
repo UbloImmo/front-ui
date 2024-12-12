@@ -1,0 +1,89 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Not" />
+
+<Header>
+  <HeaderInfo title="not()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Builds and returns a **list** of _filter option matches_ for the list's data.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+This method negates a match's comparison.
+
+```typescript
+const { match, not } = useListConfig<Pokemon>(usePokemonData);
+const isNamedPikachuOrRaichu = match("name", "=", "Pikachu");
+// { property: "name", comparison: "=", value: "Pikachu" }
+const isNotNamedPikachu = not(isNamedPikachuOrRaichu);
+// { property: "name", comparison: "!=", value: "Pikachu" }
+```
+
+> Negating a match through `not()` does not mutate the input match.
+
+## Type definition
+
+```typescript
+type ListConfigNotFn<TItem extends object> = (
+  match: FilterOptionMatch<TItem>,
+) => FilterOptionMatch<TItem>;
+```
+
+## Arguments
+
+#### **`match`**: `FilterOptionMatch<TItem>`
+
+A single option match to invert
+
+```typescript
+type FilterOptionMatch<TItem extends object> = {
+  value: FilterOptionValue;
+  comparison: FilterComparisonOperator;
+  property: FilterProperty<TItem>;
+};
+```
+
+## Returns
+
+A new `FilterOptionMatch` object with the same property and value but an **inverted comparison**.
+
+- `=`&nbsp;&nbsp;&nbsp;becomes `!=`
+- `!=`&nbsp;becomes `=`
+- `>`&nbsp;&nbsp;&nbsp;becomes `<`
+- `<`&nbsp;&nbsp;&nbsp;becomes `>`
+- `>=`&nbsp;becomes `<=`
+- `<=`&nbsp;becomes `>=`
+
+
+```typescript
+type FilterOptionMatch<TItem extends object> = {
+  value: FilterOptionValue;
+  comparison: FilterComparisonOperator;
+  property: FilterProperty<TItem>;
+};
+```
+
+## Example
+
+### Invert a single match
+
+```typescript
+const { match, not } = useListConfig<Pokemon>(usePokemonData);
+const isNamedPikachuOrRaichu = match("name", "=", "Pikachu");
+const isNotNamedPikachu = not(isNamedPikachuOrRaichu);
+```
+
+### Invert a list of matches
+
+```typescript
+const { matches, not } = useListConfig<Pokemon>(usePokemonData);
+const legendaryNames = matches("name", "=", ["Mewtwo", "Articuno", "Zapdos"]);
+const commonNames = legendaryNames.map(not);
+```
+
+</Content>

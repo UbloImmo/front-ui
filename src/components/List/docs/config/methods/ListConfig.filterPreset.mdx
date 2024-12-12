@@ -1,0 +1,330 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/FilterPreset" />
+
+<Header>
+  <HeaderInfo title="filterPreset()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Builds and registers a _filter preset_ from options.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Filter presets are predefined combinations of options that can be applied across multiple filters.
+
+Calling `filterPreset()` will build a filter preset and register it in the list's configuration.
+
+<Callout color="pending" icon={null}>
+Once registered, filter presets are considered immutable and cannot be modified.&nbsp;
+This means `filterPreset()` cannot be called inside a `useMemo()` hook or inside a hook / component's body.
+</Callout>
+
+```typescript
+const { match, option, filterPreset } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const isFireType = option("Fire", match("type", "=", "fire"));
+  const isWaterType = option("Water", match("type", "=", "water"));
+  const isStrong = option("Strong", match("power", ">=", 80));
+  
+  filterPreset("Strong Elements", [isFireType, isWaterType, isStrong]);
+});
+```
+
+### Using and re-using options
+
+Options can be reused between filters and filter presets.
+The same option can be included in multiple filters and presets without needing to recreate it.
+
+### Using exclusive options
+
+At the same time, options used in a filter preset preset **do not need** to be included in a filter for the preset to function.
+
+
+```typescript
+const { match, option, filterPreset } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const isFireType = option("Fire", match("type", "=", "fire"));
+  const isStrong = option("Strong", match("power", ">=", 80));
+  
+  // Builds a filter preset and registers it in the list's configuration
+  const strongFirePokemon = filterPreset(
+    "Strong Fire Pokemon",
+    [isFireType, isStrong],
+    { 
+      color: "error",
+      operator: "AND"
+    }
+  );
+});
+```
+
+## Type definition
+
+```typescript
+type ListConfigFilterPresetFn<TItem extends object> = (
+  label: string,
+  optionsOrSignatures: (FilterOptionData<TItem> | FilterSignature)[],
+  config?: FilterPresetConfig,
+  loading?: boolean
+) => FilterPresetData;
+```
+
+## Arguments
+
+#### **`label`**: `string`
+
+The label of the filter preset. **Required**.
+
+#### **`optionsOrSignatures`**: `(FilterOptionData<TItem> | FilterSignature)[]`
+
+A list of options or option signatures to include in the preset. **Required**.
+
+<Callout color="gray">
+  While it is possible to pass options as simple objects,
+  it is recommended to use the [option()](?path=/docs/components-list-configuration-methods-option--docs) method to create them first.
+</Callout>
+
+#### **`config?`**: `FilterPresetConfig`
+
+Additional configuration for the filter preset. Optional.
+
+```typescript
+type FilterPresetConfig = {
+  color?: PaletteColor | ColorKey;
+  operator?: FilterBooleanOperator;
+  id?: string;
+  testId?: string;
+  disabled?: boolean;
+  hidden?: boolean;
+  exclusive?: boolean;
+};
+```
+
+##### `config.color?`: `PaletteColor | ColorKey`
+
+The color of the filter preset.<br/>
+Defaults to `"primary"`.
+
+##### `config.operator?`: `FilterBooleanOperator`
+
+The operator to use when combining options.<br/>
+Defaults to `"AND"`.
+
+```typescript
+type FilterBooleanOperator = "AND" | "OR";
+```
+
+##### `config.id?`: `string`
+
+A unique identifier for the filter preset.<br/>
+Defaults to the computed signature.
+
+##### `config.testId?`: `string`
+
+An identifier to trigger the filter preset element during e2e tests.<br/>
+Defaults to `list-filter-preset-${id}`.
+
+##### `config.disabled?`: `boolean`
+
+Whether the filter preset is disabled.<br/>
+Defaults to `false`.
+
+##### `config.hidden?`: `boolean`
+
+Whether the filter preset is hidden.<br/>
+Defaults to `false`.
+
+##### `config.exclusive?`: `boolean`
+
+Whether the filter preset is exclusive (unselects all other options when selected).<br/>
+Defaults to `false`.
+
+#### **`loading?`**: `boolean`
+
+Whether the filter preset is in a loading state. Optional.<br/>
+Defaults to `false`.
+
+## Returns
+
+A `FilterPresetData` object containing all configuration properties.
+
+```typescript
+type FilterPresetData = Required<FilterPresetConfig> & {
+  label: string;
+  optionSignatures: FilterSignature[];
+  signature: FilterSignature;
+  colorKey: ColorKey;
+  paletteColor: PaletteColor;
+  loading: boolean;
+};
+```
+
+## Examples
+
+### Create a simple filter preset
+
+```typescript
+const { match, option, filterPreset } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const isLegendary = option("Legendary", match("isLegendary", "=", true));
+  const isPsychic = option("Psychic", match("type", "=", "psychic"));
+  
+  const legendaryPsychicPreset = filterPreset(
+    "Legendary Psychic Pokemon",
+    [isLegendary, isPsychic]
+  );
+});
+```
+
+### Create an exclusive filter preset
+
+```typescript
+const { match, option, filterPreset } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const isStarter = option("Starter", match("isStarter", "=", true));
+  
+  const starterPreset = filterPreset(
+    "Starter Pokemon Only",
+    [isStarter],
+    {
+      exclusive: true, // Will unselect all other options when selected
+      color: "success"
+    }
+  );
+});
+```
+
+### Create a filter preset with custom operator
+
+```typescript
+const { match, option, filterPreset } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const isFire = option("Fire", match("type", "=", "fire"));
+  const isWater = option("Water", match("type", "=", "water"));
+  
+  const fireOrWaterPreset = filterPreset(
+    "Fire or Water Pokemon",
+    [isFire, isWater],
+    {
+      operator: "OR" // Will match if any option matches
+    }
+  );
+});
+```
+
+### Reuse options between filters and filter presets
+
+```typescript
+const { match, option, filter, filterPreset } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // Create shared options that will be used in both filters and presets
+  const isFireType = option("Fire", match("type", "=", "fire"));
+  const isWaterType = option("Water", match("type", "=", "water"));
+  const isStrong = option("Strong", match("power", ">=", 80));
+  const isLegendary = option("Legendary", match("isLegendary", "=", true));
+  
+  // Create a filter using some of the options
+  const typeFilter = filter(
+    "Pokemon Type",
+    [isFireType, isWaterType]
+  );
+  
+  // Create another filter using different options
+  const powerFilter = filter(
+    "Power Level",
+    [isStrong, isLegendary]
+  );
+  
+  // Create presets that combine options from different filters
+  const strongFirePreset = filterPreset(
+    "Strong Fire Pokemon",
+    [isFireType, isStrong],
+    { color: "error", operator: "AND" }
+  );
+  
+  const legendaryElementalPreset = filterPreset(
+    "Legendary Water Pokemon",
+    [isLegendary, isWaterType],
+    { 
+      color: "warning",
+      operator: "AND" 
+    }
+  );
+});
+```
+
+### Create a filter preset with exclusive options
+
+```typescript
+const { match, option, filter, filterPreset } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // Create options for different rarity levels
+  const isCommon = option("Common", match("rarity", "=", "common"));
+  const isUncommon = option("Uncommon", match("rarity", "=", "uncommon"));
+  const isRare = option("Rare", match("rarity", "=", "rare"));
+  const isLegendary = option("Legendary", match("rarity", "=", "legendary"));
+  
+  // Create a filter that allows selecting multiple rarities
+  const rarityFilter = filter(
+    "Pokemon Rarity",
+    [isCommon, isUncommon, isRare, isLegendary]
+  );
+  
+  // Create exclusive presets for specific combinations
+  const onlyLegendaryPreset = filterPreset(
+    "Legendary Pokemon Only",
+    [isLegendary],
+    {
+      exclusive: true, // Will unselect all other rarity options when selected
+      color: "warning",
+    }
+  );
+  
+  const commonAndUncommonPreset = filterPreset(
+    "Basic Pokemon Only",
+    [isCommon, isUncommon],
+    {
+      exclusive: true, // Will unselect rare and legendary options when selected
+      operator: "OR",
+      color: "success"
+    }
+  );
+  
+  const rareAndAbovePreset = filterPreset(
+    "Premium Pokemon Only",
+    [isRare, isLegendary],
+    {
+      exclusive: true, // Will unselect common and uncommon options when selected
+      operator: "OR",
+      color: "error"
+    }
+  );
+});
+```
+
+## Common pitfalls
+
+### I created a filter preset and everything is slow / broken
+
+As mentioned previously, calling `filterPreset()` will build a filter preset and **register** it in the list's configuration.
+
+> If you are experiencing performance issues, it is likely because you are calling `filterPreset()` outside of `useStatic()`, and thus registering it every render.
+
+### I want to create filter presets asynchronously
+
+`filterPreset()` is a strictly synchronous function. It doesn't handle promises or async operations.
+
+> Use the `async.filterPreset()` method to create filter presets asynchronously.
+
+</Content>

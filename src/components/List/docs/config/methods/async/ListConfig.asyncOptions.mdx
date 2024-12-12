@@ -1,0 +1,284 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Async/Options" />
+
+<Header>
+  <HeaderInfo title="async.options()" parent="Components/List/Configuration/Methods/Async">
+    <Text size="m" color="primary-dark">Builds and registers multiple _filter options_ for a single property and comparison operator from a list of labeled values.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Options consist of a label, one or more matches and additional configuration.
+
+The `async.options()` method is similar to the `options()` method but it takes an asynchronous callback and returns a promise that resolves to a list of filter options.
+
+<Callout color="pending" icon={null}>
+Once registerd, options are considered immutable and cannot be modified.&nbsp;
+This means `options()` cannot be called inside a `useMemo()` hook or inside a hook / component's body.
+</Callout>
+
+```typescript
+const { async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // build & register async options
+  const baseExperienceOptions = async.options("base_experience", "<=", async () => {
+    // fetch option values from elsewhere asynchronously
+    const baseExperiences = await getBaseExperienceValues();
+    return baseExperiences.map((experience) => {
+      const color = experience < 100 ? "gray" : "primary";
+      const label = `${experience} XP`;
+      return {
+        label,
+        value: experience,
+        config: {
+          color,
+        }
+      }
+    })
+  })
+  /**
+   * Promise<[
+   *   {
+   *     label: "50 XP",
+   *     matches: [
+   *      { property: "base_experience", comparison: "<=", value: 50 },
+   *     ],
+   *     colorKey: "gray";
+   *     paletteColor: "gray-600";
+   *     ...
+   *   },
+   *   {
+   *     label: "80 XP",
+   *     matches: [
+   *      { property: "base_experience", comparison: "<=", value: 80 },
+   *     ],
+   *     colorKey: "gray";
+   *     paletteColor: "gray-600";
+   *     ...
+   *   },
+   *   {
+   *     label: "120 XP",
+   *     matches: [
+   *      { property: "base_experience", comparison: "<=", value: 120 },
+   *     ],
+   *     colorKey: "primary";
+   *     paletteColor: "primary-base";
+   *     ...
+   *   },
+   * ]>
+  */
+})
+```
+
+Notice how in the above example, the promise returned by `async.options()` is **not** awaited before being assigned to `baseExperienceOptions`.
+
+> This promise is meant to be be consumed by the `async.filter()` or `async.filterPreset()` methods,
+> and is therefore not compatible with the regular `filter()` and `filterPreset()` methods.
+
+## Type definition
+
+```typescript
+type ListConfigAsyncOptionsFn<TItem extends object> = (
+  property: FilterProperty<TItem>,
+  comparison: FilterComparisonOperator,
+  labeledValuesGetter: ListConfigAsyncOptionsGetLabeledValuesFn,
+  sharedConfig?: FilterOptionConfig,
+) => Promise<FilterOptionData<TItem>[]>;
+```
+
+## Arguments
+
+#### **`property`**: `FilterProperty<TItem>`
+
+A single (possibly nested) string or number property for all options to match against. **Required**.
+
+```typescript
+type FilterProperty<TItem extends object> = DeepKeyOf<TItem>;
+```
+
+#### **`comparison`**: `FilterComparisonOperator`
+
+A single comparison operator. **Required**.
+
+```typescript
+type FilterComparisonOperator = "!=" | "=" | ">" | "<" | ">=" | "<=";
+```
+
+#### **`labeledValuesGetter`**: `ListConfigAsyncOptionsGetLabeledValuesFn`
+
+An asynchronous callback that returns a list of labeled values to create filter options from. **Required**.
+
+> One option will be created and registered for each labeled value.
+
+
+```typescript
+type ListConfigAsyncOptionsGetLabeledValuesFn = () =>
+  Promise<
+    {
+      label: string;
+      value: FilterOptionValue;
+      config?: FilterOptionConfig;
+    }[]
+  >;
+```
+
+##### `labeledValue.label`: `string`
+
+The label of the generated filter option. **Required**.
+
+##### `labeledValue.value`: `FilterOptionValue`
+
+The value the generated filter option will match against. **Required**.
+
+```typescript
+type FilterOptionValue = string | number | boolean | Date | null;
+```
+
+##### `labeledValue.config?`: `FilterOptionConfig`
+
+Optional configuration for a single generated filter option.<br/>
+Defaults to `{}`.
+
+<Callout color="gray">
+If provided, gets merged with the shared configuration.
+Multiple options can be created with the same behavior but different visual properties.
+</Callout>
+
+> Refer to the `option()` method's `config` argument's [type definition](?path=/docs/components-list-configuration-methods-option--docs#config-filteroptionconfig) for more information.
+
+#### **`sharedConfig?`**: `FilterOptionConfig`
+
+Additional configuration that serves a a base for every generated option. Optional.<br/>
+Defaults to `{}`.
+
+> Refer to the `option()` method's `config` argument's [type definition](?path=/docs/components-list-configuration-methods-option--docs#config-filteroptionconfig) for more information.
+
+## Returns
+
+A single **promise** that resolves to a list containing one `FilterOptionData` object for each `labeledValue` provided.<br/>
+Its `colorKey` and `paletteColor` are generated from the `color` property.
+
+> An option's `signature` is a unique identifier used to refer / find a single option, and is generated from the option's `label`, `matches` and `operator` properties.
+
+```typescript
+/**
+ * The data of a filter option
+ */
+type FilterOptionDataPromise<TItem extends object> = Promise<Required<
+  FilterOptionConfig
+> & {
+  label: string;
+  matches: FilterOptionMatch<TItem>[];
+  operator: FilterBooleanOperator;
+  signature: FilterSignature;
+  paletteColor: PaletteColor;
+  colorKey: ColorKey;
+  selected: boolean;
+}>;
+```
+
+## Examples
+
+### Build & register multiple filter options asynchronously
+
+```typescript
+const { async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const legendaryDoggos = async.options(
+    "name",
+    "=",
+    async () => {
+      // Simulate API call to fetch legendary dog names
+      const response = await fetch('/api/legendary-dogs');
+      const dogs = await response.json();
+      
+      return dogs.map((name) => ({
+        label: name,
+        value: name,
+      }));
+    }
+  );
+});
+```
+
+### Share a configuration between multiple async options
+
+```typescript
+const { async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const starterTypes = async.options(
+    "type",
+    "=",
+    async () => {
+      // Fetch available starter types from API
+      const types = await fetchStarterTypes();
+      
+      return types.map((type) => ({
+        value: type,
+        label: type,
+      }));
+    },
+    {
+      icon: "DiamondsFill"
+    }
+  );
+});
+```
+
+### Make use of specific configuration for each async option
+
+```typescript
+const { async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const onlyVIPsAllowed = async.options(
+    "name",
+    "=",
+    async () => {
+      // Fetch bird pokemon data from API
+      const { legendaryBirds, commonBirds } = await fetchBirdPokemon();
+      const allBirds = [...legendaryBirds, ...commonBirds];
+      
+      return allBirds.map((bird) => ({
+        value: bird,
+        label: bird,
+        config: legendaryBirds.includes(bird)
+          ? {
+              color: "primary",
+              icon: "StarsFill"
+            }
+          : {
+              disabled: true
+            }
+      }));
+    },
+    {
+      icon: "Feather",
+      color: "gray",
+    }
+  );
+});
+```
+
+## Common pitfalls
+
+All `async.option()` pitfalls may also apply to `async.options()`.
+
+### I get a TypeScript error when trying to use async options in a filter
+
+`async.options()` is a strictly asynchronous function. It returns a promise and relies on `async.filter()` or `async.filterPreset()` to be awaited.<br/>
+You are likely trying to pass options created by `async.options()` to `filter()` or `filterPreset()`, which are strictly synchronous functions.
+
+> Use the `async.filter()` or `async.filterPreset()` methods instead.
+
+</Content>
+

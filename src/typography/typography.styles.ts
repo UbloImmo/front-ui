@@ -102,6 +102,7 @@ export const sanitizeTypographyProps = (
     className: props.className ?? defaults.className,
     noWrap: props.noWrap ?? defaults.noWrap,
     fill: props.fill ?? defaults.fill,
+    id: props.id ?? null,
   };
 };
 
@@ -249,4 +250,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   className: null,
   fill: false,
   noWrap: false,
+  id: null,
 } as const;

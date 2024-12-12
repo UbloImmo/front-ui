@@ -86,7 +86,7 @@ export type ListConfigMatchesFn<TItem extends object> = GenericFn<
 
 export type FilterOptionBehavior = {
   /**
-   * Whether the filter option is a default option, that gets applied at all times
+   * Whether the filter option is a default option, that gets applied during the first render and when a filter is cleared
    *
    * @type {boolean}
    * @default false
@@ -275,7 +275,7 @@ export type ListConfigOptionLabeledValue = {
 export type ListConfigOptionsFn<TItem extends object> = GenericFn<
   [
     /**
-     * The property the generated options will filter on
+     * The single property the generated options will match
      *
      * @type {FilterProperty<TItem>}
      */
@@ -350,6 +350,49 @@ export type ListConfigAsyncOptionsFnParams<TItem extends object> = [
 export type ListConfigAsyncOptionsFn<TItem extends object> = AsyncFn<
   ListConfigAsyncOptionsFnParams<TItem>,
   FilterOptionData<TItem>[]
+>;
+
+export type ListConfigAsyncOptionMatchGetterFn<TItem extends object> = AsyncFn<
+  [],
+  FilterOptionMatch<TItem> | FilterOptionMatch<TItem>[]
+>;
+
+export type ListConfigAsyncOptionFnParams<TItem extends object> = [
+  /**
+   * The label of the generated filter option
+   *
+   * @type {string}
+   * @required
+   */
+  label: string,
+  /**
+   * An async callback that returns the match or matches to create the filter option from
+   *
+   * @type {ListConfigAsyncOptionMatchGetterFn<TItem>}
+   * @required
+   */
+  matchOrMatchesGetter: ListConfigAsyncOptionMatchGetterFn<TItem>,
+  /**
+   * The config of the generated filter option
+   *
+   * @type {FilterOptionConfig}
+   * @default {}
+   */
+  config?: FilterOptionConfig
+];
+
+/**
+ * A function that creates a filter option from the provided data
+ *
+ * @param {string} label - The label of the generated filter option
+ * @param {ListConfigAsyncOptionMatchGetterFn<TItem>} matchOrMatchesGetter - An async callback that returns the match or matches to create the filter option from
+ * @param {FilterOptionConfig} [config = {}] - The config of the generated filter option, gets merged with the shared config
+ * @returns {Promise<FilterOptionData<TItem>>} The created filter option
+ * @throws If the async callback throws an error
+ */
+export type ListConfigAsyncOptionFn<TItem extends object> = AsyncFn<
+  ListConfigAsyncOptionFnParams<TItem>,
+  FilterOptionData<TItem>
 >;
 
 /**

@@ -1,3 +1,5 @@
+import { isString, type NonNullish } from "@ubloimmo/front-util";
+import { useMemo, type ReactNode } from "react";
 import styled, { css, type RuleSet } from "styled-components";
 
 import {
@@ -13,9 +15,6 @@ import {
   type TextProps,
 } from "@types";
 
-import type { NonNullish } from "@ubloimmo/front-util";
-import type { ReactNode } from "react";
-
 /**
  * Renders a heading component with the specified children and props.
  * Intended for use within Storybook MDX documentation files.
@@ -28,9 +27,14 @@ export const Heading = ({
   children,
   ...props
 }: Omit<HeadingProps, "important"> & { children: ReactNode }) => {
+  const id = useMemo(() => {
+    if (isString(props.id)) return props.id;
+    if (isString(children)) return children;
+    return undefined;
+  }, [props.id, children]);
   return (
     <HeadingOverrides $size={props.size}>
-      <HeadingComponent {...props} important>
+      <HeadingComponent {...props} id={id} important>
         {children}
       </HeadingComponent>
     </HeadingOverrides>

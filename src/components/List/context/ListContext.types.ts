@@ -12,6 +12,7 @@ import type {
   IsFilterOptionFn,
   ListConfigAsyncFilterFn,
   ListConfigAsyncFilterPresetFn,
+  ListConfigAsyncOptionFn,
   ListConfigAsyncOptionsFn,
   ListConfigFilterFn,
   ListConfigFilterPresetFn,
@@ -61,6 +62,12 @@ export type ListConfigSearchParamsSync =
   | "write"
   | "read-write";
 
+/**
+ * The list's search params configuration
+ *
+ * @type {ListConfigSearchParams}
+ * @default { sync: false }
+ */
 export type ListConfigSearchParams = {
   /**
    * Whether the list should sync its search params with the url
@@ -158,6 +165,7 @@ export type ListConfigOptionDividerFn = GenericFn<
 >;
 
 export type UseListConfigAsyncReturn<TItem extends object> = {
+  option: ListConfigAsyncOptionFn<TItem>;
   options: ListConfigAsyncOptionsFn<TItem>;
   filter: ListConfigAsyncFilterFn<TItem>;
   filterPreset: ListConfigAsyncFilterPresetFn<TItem>;

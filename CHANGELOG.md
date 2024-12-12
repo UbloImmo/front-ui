@@ -27,11 +27,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improve changelog display
     - Add horizontal rules between sections
     - Normalize heading & content styles
+  - Match blockquote styles with Callout component
+  - Automatically generate `id` for heading blocks based on text content
 
 ### Added
 
 - `v0.0.6` Text component & `v0.0.5` Heading component
   - Add `noWrap` property to make the text not wrap
+  - Add `id` property to make the text / heading component accessible
+
+### Fixed
+
+- `v0.0.5` Callout component
+  - Fix left padding, accounting for 4px wide left border
 
 ## 1.0.3 - 2025-01-16
 ### Added

@@ -2,7 +2,12 @@ import styled from "styled-components";
 
 import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
 
-import { useClassName, useStyleProps, useTestId } from "@utils";
+import {
+  useClassName,
+  useHtmlAttribute,
+  useStyleProps,
+  useTestId,
+} from "@utils";
 
 import type { HeadingProps, StyleProps, TestIdProps } from "@types";
 
@@ -23,10 +28,12 @@ const Heading = (props: HeadingProps & TestIdProps) => {
   const innerProps = useStyleProps(props);
   const testId = useTestId("heading", props);
   const className = useClassName(props);
+  const id = useHtmlAttribute(props.id);
 
   return (
     <HeadingInner
       as={props.size ?? defaultHeadingProps.size}
+      id={id}
       {...innerProps}
       data-testid={testId}
       className={className}
