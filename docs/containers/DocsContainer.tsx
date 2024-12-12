@@ -11,7 +11,7 @@ import {
   defaultTypographyProps,
   typographyFontFace,
 } from "@/typography";
-import { buildheadingOverrides } from "@docs/blocks";
+import { buildheadingOverrides } from "@docs/blocks/Typography";
 import { toStyleProps } from "@utils";
 
 import type { DynamicColorPaletteKey } from "@types";

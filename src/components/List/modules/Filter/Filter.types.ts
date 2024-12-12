@@ -205,3 +205,5 @@ export type IsFilterOptionFn = GenericFn<
   [optionSignature: FilterSignature],
   boolean
 >;
+
+export type FilterDataMap = Map<FilterSignature, FilterData>;

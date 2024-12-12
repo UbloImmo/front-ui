@@ -1,4 +1,3 @@
-import type { FilterData } from "../Filter/Filter.types";
 import type {
   FilterBooleanOperator,
   FilterComparisonOperator,
@@ -412,8 +411,6 @@ export type FilterOptionMap<TItem extends object> = Map<
   FilterSignature,
   FilterOptionData<TItem>
 >;
-
-export type FilterDataMap = Map<FilterSignature, FilterData>;
 
 export type FilterOptionDataOrSignature<TItem extends object> =
   | FilterOptionData<TItem>
