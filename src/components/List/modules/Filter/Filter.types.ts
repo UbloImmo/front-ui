@@ -166,13 +166,33 @@ export interface IFilter<TItem extends object> extends Required<FilterData> {
 }
 
 export type ListConfigFilterFnParams<TItem extends object> = [
+  /**
+   * The label of the filter
+   *
+   * @type {string}
+   */
   label: string,
+  /**
+   * The options or dividers of the filter
+   *
+   * @type {(FilterSignature | FilterOptionData<TItem> | FilterOptionDividerData)[]}
+   */
   optionsOrDividers: (
     | FilterSignature
     | FilterOptionData<TItem>
     | FilterOptionDividerData
   )[],
+  /**
+   * The configuration of the filter
+   *
+   * @type {FilterConfig}
+   */
   config?: FilterConfig,
+  /**
+   * Whether the filter is loading
+   *
+   * @type {boolean}
+   */
   loading?: boolean
 ];
 
@@ -189,13 +209,34 @@ export type ListConfigFilterFn<TItem extends object> = GenericFn<
 >;
 
 export type ListConficAsyncFilterDataFnParams<TItem extends object> = [
+  /**
+   * The label of the filter
+   *
+   * @type {string}
+   */
   label: string,
+  /**
+   * The options or signatures of the filter
+   *
+   * @type {MaybePromise<FilterOptionDataOrSignature<TItem> | FilterOptionDividerData>[]}
+   */
   optionsOrSignaturesPromise: MaybePromise<
     MaybePromise<FilterOptionDataOrSignature<TItem> | FilterOptionDividerData>[]
   >,
+  /**
+   * The configuration of the filter
+   *
+   * @type {FilterConfig}
+   */
   config?: FilterConfig
 ];
 
+/**
+ * @param {string} label - The label of the filter
+ * @param {(FilterOptionDataOrSignature<TItem> | FilterOptionDividerData)[]} optionsOrSignaturesPromise - The options or signatures of the filter
+ * @param {FilterConfig} config - The configuration of the filter
+ * @returns {Nullable<FilterData>} The data of the filter
+ */
 export type ListConfigAsyncFilterFn<TItem extends object> = AsyncFn<
   ListConficAsyncFilterDataFnParams<TItem>,
   Nullable<FilterData>
