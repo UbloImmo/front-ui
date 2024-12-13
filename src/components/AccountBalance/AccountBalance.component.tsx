@@ -36,7 +36,6 @@ const AccountBalance = (
   const testId = useTestId("account-balance", props);
 
   if (!props.title) warn("Missing title prop");
-  if (!props.value) warn("Missing value prop");
 
   const formattedValue = useMemo(
     () => formatAmount(mergedProps.value),

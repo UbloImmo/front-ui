@@ -61,9 +61,7 @@ export const Title = (props: AccountBalanceProps) => {
 };
 
 Title.parameters = {
-  docs: componentSource(
-    titleVariants.map((variant) => ({ ...args, ...variant }))
-  ),
+  docs: componentSource(titleVariants.map((variant) => ({ ...variant }))),
 };
 
 const valueVariants = [
