@@ -1,3 +1,4 @@
+export * from "./AccountBalance";
 export * from "./Action";
 export * from "./ActionIcon";
 export * from "./Avatar";
