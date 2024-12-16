@@ -12,7 +12,7 @@ import { StaticIcon } from "../StaticIcon";
 import { Text } from "../Text";
 import { Tooltip, TooltipProps } from "../Tooltip";
 
-import { FlexLayout, FlexLayoutProps, FlexRowLayout } from "@/layouts";
+import { FlexLayout, FlexRowLayout, type FlexLayoutProps } from "@layouts";
 import {
   TextProps,
   type ColorKeyOrWhite,

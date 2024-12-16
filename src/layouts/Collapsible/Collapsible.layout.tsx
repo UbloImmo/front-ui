@@ -5,17 +5,16 @@ import {
   caretContainerStyles,
   collapsibleContainerStyles,
 } from "./Collapsible.styles";
-import {
-  type CollapsibleProps,
-  type CollapsibleDefaultProps,
-  type CollapsibleContainerStyleProps,
+import { Icon } from "../../components/Icon";
+import { FlexRowLayout } from "../Flex";
+
+import { useMergedProps, useTestId } from "@utils";
+
+import type {
+  CollapsibleContainerStyleProps,
+  CollapsibleDefaultProps,
+  CollapsibleProps,
 } from "./Collapsible.types";
-
-import { FlexRowLayout } from "@layouts";
-import { useTestId, useMergedProps } from "@utils";
-
-import { Icon } from "@components";
-
 import type { TestIdProps } from "@types";
 
 const defaultCollapsibleProps: CollapsibleDefaultProps = {

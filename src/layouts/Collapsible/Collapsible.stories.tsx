@@ -1,4 +1,4 @@
-import { Collapsible } from "./Collapsible.component";
+import { Collapsible } from "./Collapsible.layout";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";

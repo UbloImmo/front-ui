@@ -1,2 +1,2 @@
-export * from "./Collapsible.component";
+export * from "./Collapsible.layout";
 export type * from "./Collapsible.types";
