@@ -216,86 +216,95 @@ const StyleReset = styled.div`
     }
   }
 
-  .sbdocs-content .docblock-source {
+  pre.prismjs {
+    padding: var(--s-4) !important;
+    ${codeFontFace(true)};
+
+    span:not(.token) {
+      color: var(--primary-dark);
+    }
+
+    .token.tag {
+      color: color-mix(
+        in oklab,
+        var(--primary-base) 75%,
+        var(--primary-medium)
+      );
+    }
+
+    .token.attr-name {
+      color: color-mix(in oklab, var(--pending-dark) 45%, var(--pending-base));
+    }
+
+    .token.punctuation {
+      color: var(--gray-600);
+    }
+
+    .token.function {
+      color: var(--primary-base);
+    }
+
+    .token.comment {
+      color: var(--gray-300);
+      font-style: italic;
+    }
+
+    .token.attr-value,
+    .token.string {
+      color: color-mix(in oklab, var(--success-base) 75%, var(--success-dark));
+    }
+
+    .token.number,
+    .token.boolean {
+      color: var(--warning-base);
+    }
+
+    .token.class-name,
+    .token.maybe-class-name {
+      color: var(--warning-base);
+    }
+
+    .token.keyword,
+    .token.builtin {
+      color: var(--primary-base);
+    }
+
+    .token.maybe-class-name,
+    .token.class-name {
+      font-style: italic;
+    }
+
+    .token.keyword,
+    .token.builtin,
+    .token.operator {
+      font-style: normal;
+    }
+
+    .token.operator,
+    .token.attr-equals {
+      color: color-mix(
+        in oklab,
+        var(--primary-base) 65%,
+        var(--primary-medium)
+      );
+      font-style: normal;
+    }
+
+    .token.arrow {
+      color: color-mix(
+        in oklab,
+        var(--primary-base) 75%,
+        var(--primary-medium)
+      );
+    }
+  }
+
   :not(.sb-unstyled) .sbdocs-content .docblock-source {
     background: var(--gray-50) !important;
     box-shadow: none !important;
     border: none !important;
     border-radius: var(--s-2) !important;
     margin: var(--s-4) 0 !important;
-
-    pre.prismjs {
-      padding: var(--s-4) !important;
-      ${codeFontFace(true)};
-
-      span:not(.token) {
-        color: var(--primary-dark);
-      }
-
-      .token.punctuation {
-        color: var(--gray-600);
-      }
-
-      .token.function {
-        color: var(--primary-base);
-      }
-
-      .token.comment {
-        color: var(--gray-300);
-        font-style: italic;
-      }
-
-      .token.string {
-        color: color-mix(
-          in oklab,
-          var(--success-base) 75%,
-          var(--success-dark)
-        );
-      }
-
-      .token.number,
-      .token.boolean {
-        color: var(--warning-base);
-      }
-
-      .token.class-name,
-      .token.maybe-class-name {
-        color: var(--warning-base);
-      }
-
-      .token.keyword,
-      .token.builtin {
-        color: var(--primary-base);
-      }
-
-      .token.maybe-class-name,
-      .token.class-name {
-        font-style: italic;
-      }
-
-      .token.keyword,
-      .token.builtin,
-      .token.operator {
-        font-style: normal;
-      }
-
-      .token.operator {
-        color: color-mix(
-          in oklab,
-          var(--primary-base) 65%,
-          var(--primary-medium)
-        );
-        font-style: normal;
-      }
-
-      .token.arrow {
-        color: color-mix(
-          in oklab,
-          var(--primary-base) 75%,
-          var(--primary-medium)
-        );
-      }
-    }
 
     div:has(button) {
       right: var(--s-1);
@@ -326,5 +335,19 @@ const StyleReset = styled.div`
 
   header main[data-layout="docs-content"] .docblock-source {
     background: white !important;
+  }
+  :not(.sb-unstyled) .sbdocs-content td .docblock-source {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+
+    pre.prismjs {
+      padding: 0 !important;
+    }
+
+    div:has(button),
+    button {
+      display: none;
+    }
   }
 `;

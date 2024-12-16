@@ -100,6 +100,16 @@ export const parseJsDoc = (jsDoc: string): ParsedJsDoc => {
   };
 };
 
+const tsGenerics = [
+  "Required<",
+  "Optional<",
+  "Nullable<",
+  "Readonly<",
+  "Partial<",
+  "Omit<",
+  "Pick",
+];
+
 /**
  * Formats the prop type based on the given TypeScript type and default value.
  *
@@ -148,10 +158,27 @@ const formatPropType = ({
       : [typeStr.trim()];
 
   if (
+    type.name === "signature" &&
+    type?.type === "object" &&
+    isArray(type?.signature?.properties)
+  ) {
+    const objectSignature = objectFromEntries(
+      type.signature.properties.map((property): [string, string] => [
+        property.key,
+        formatPropType({ tsType: property.value }),
+      ])
+    );
+    return JSON.stringify(objectSignature, undefined, 2);
+  }
+
+  if (
     type.name === "intersection" &&
     isArray(type?.elements) &&
     isString(type.raw)
   ) {
+    if (tsGenerics.some((generic) => type.raw?.startsWith(generic))) {
+      return type.raw ?? "";
+    }
     const rawElements = type.raw.split("&").map((item) => item.trim());
     const elementTypes = type.elements
       .map((element) => ({
@@ -163,7 +190,6 @@ const formatPropType = ({
       }))
       // format each element
       .map((elementType) => formatPropType({ tsType: elementType }));
-
     return elementTypes.join(" & ");
   }
 
@@ -275,12 +301,18 @@ export const formatPropInfo = ({
   const finalType =
     parsedDescription.type ??
     formatPropType({ tsType: docGenType ?? { name: "unknown" }, defaultValue });
+
+  // remove jsdoc from type string
+  const sanitizedType = finalType
+    .replaceAll(/\/\*\*[\r\s\S]*?\*\//gi, "")
+    .replaceAll(/\n\s*\n/gim, "\n");
+
   const required = parsedDescription.required || req;
   const requiredStr = required ? "Yes" : "No";
   const name = required ? rawName : `${rawName}?`;
   return {
     ...parsedDescription,
-    type: finalType,
+    type: sanitizedType,
     required,
     requiredStr,
     name,

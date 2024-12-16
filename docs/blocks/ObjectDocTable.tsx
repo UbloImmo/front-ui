@@ -1,3 +1,4 @@
+import { Source } from "@storybook/blocks";
 import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
@@ -42,7 +43,7 @@ const DocTable = <TObj extends Record<string, unknown>>(
   props: DocTableProps<TObj>
 ): JSX.Element => {
   const propList = useMemo(() => {
-    return objectEntries(props.docgen)
+    return objectEntries(props?.docgen ?? {})
       .map(
         ([name, propInfo]) =>
           ({
@@ -132,9 +133,7 @@ const ComponentPropRow = ({
         </Text>
       </TableCell>
       <TableCell>
-        <Text size="m" color={textColor} important>
-          <code>{type}</code>
-        </Text>
+        <Source code={type} />
       </TableCell>
       <TableCell>
         <Text size="m" color={textColor} important>

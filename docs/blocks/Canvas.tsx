@@ -113,8 +113,25 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
 
   // code preview has generated classname
   .sbdocs-preview:has(.docblock-code-toggle--expanded) > div:not(.docs-story) {
-    background: var(--gray-700);
+    background: var(--primary-light-50);
     border-radius: 0;
+    border-bottom-left-radius: var(--s-2);
+    border-bottom-right-radius: var(--s-2);
+    box-shadow: none;
+
+    ${({ $horizontal }) =>
+      $horizontal &&
+      css`
+        border-radius: none;
+        border-bottom-left-radius: var(--s-2);
+        border-top-left-radius: var(--s-2);
+      `}
+
+    ${({ $inHeader }) =>
+      $inHeader &&
+      css`
+        background: var(--primary-light-75);
+      `}
 
     .prismjs {
       padding: var(--padding);

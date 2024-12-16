@@ -1,0 +1,42 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas, Callout } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as ListFilterOptionChipStories from "../ListFilterOptionChip.stories.tsx";
+
+<Meta title="Components/List/Components/ListFilterOptionChip/Usage" />
+
+<ComponentInfo of={ListFilterOptionChipStories} />
+
+<Content>
+
+## Usage
+
+This component is used to display and interact with a single list filter option.
+Its main property is `filterOption`. 
+
+<Callout color="warning" icon={null}>
+  If the `filterOption` property is missing, the component will not render.
+</Callout>
+
+<Canvas of={ListFilterOptionChipStories.Default} />
+
+### Appearance
+
+The option's label and color dictate the chip's appearance.
+
+<Canvas of={ListFilterOptionChipStories.Labels} />
+
+<Canvas of={ListFilterOptionChipStories.Colors} />
+
+### Behavior
+
+Clicking on the chips "X" button will unselect the option.
+
+OptionChips cannot be unselect if they are `disabled` or `fixed`. The `filterDisabled` property can be used to disable the chip.
+
+> The supplied filterOption is unselected through its own `unselect` method.
+
+<Canvas of={ListFilterOptionChipStories.Disabled} />
+
+</Content>
