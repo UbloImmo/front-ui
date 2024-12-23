@@ -536,6 +536,32 @@ const testListConfig = () => {
       (global.console.error as Mock<VoidFn>).mockReset();
     }
   );
+
+  testHook(
+    "should configure the search params from the configureSearchParams() method",
+    (result, _, { getResult, rerender }) => {
+      expect(result.configureSearchParams).toBeFunction();
+      const searchParams = {
+        sync: true,
+        readParams: null,
+        writeParams: () => {},
+      };
+      result.configureSearchParams(searchParams);
+      rerender();
+      expect(getResult().config.searchParams).toEqual(searchParams);
+    }
+  );
+
+  testHook(
+    "should set the default operator from the setOperator() method",
+    (result, _, { getResult, rerender }) => {
+      expect(result.setOperator).toBeFunction();
+      const operator = "AND";
+      result.setOperator(operator);
+      rerender();
+      expect(getResult().config.operator).toBe(operator);
+    }
+  );
 };
 
 describe("List Context", () => {
