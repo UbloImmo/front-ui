@@ -150,7 +150,6 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
               <ListFilterOptionItem
                 option={option}
                 multi={filter.multi}
-                filterSignature={filter.signature}
                 key={key}
                 closeFilter={closeOptions}
                 highlighted={highlighted}
