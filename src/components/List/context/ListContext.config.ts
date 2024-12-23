@@ -10,14 +10,12 @@ import {
   type FilterBooleanOperator,
   type FilterConfig,
   type FilterData,
-  type FilterDataMap,
   type FilterOptionData,
   type FilterOptionDataOrSignature,
   type FilterOptionDividerData,
   type FilterOptionMap,
   type FilterOptionMatch,
   type FilterPresetData,
-  type FilterPresetMap,
   type ListConfigAsyncFilterFn,
   type ListConfigAsyncFilterPresetFn,
   type ListConfigAsyncOptionFn,
@@ -34,6 +32,10 @@ import {
   type ListConfigOptionsFn,
   type UseDataProviderFn,
 } from "../modules";
+import {
+  listConfigFilterPresetReducer,
+  listConfigFilterReducer,
+} from "./ListContext.utils";
 import { invertMatchComparison } from "../modules/FilterOption/FilterOption.utils";
 
 import { mergeDefaultProps, useLogger, useUikitTranslation } from "@utils";
@@ -45,8 +47,6 @@ import type {
   ListContextConfig,
   UseListConfig,
   UseListConfigAsync,
-  UseListConfigFilterPresetReducerAction,
-  UseListConfigFilterReducerAction,
   UseListConfigReturn,
 } from "./ListContext.types";
 import type { MaybePromise } from "@types";
@@ -278,23 +278,7 @@ export const useListConfig: UseListConfig = <TItem extends object>(
   );
 
   const [filtersMap, dispatchFilterAction] = useReducer(
-    (map: FilterDataMap, [type, filter]: UseListConfigFilterReducerAction) => {
-      const copy = new Map(map);
-      // simply add the filter if it's the first time we see it
-      if (type === "register") copy.set(filter.signature, filter);
-      // update the filter if it's already in the map
-      if (type === "update") {
-        // find the old filter based on its index & label
-        const signature = Array.from(copy.values()).find(
-          (f) => f.index === filter.index && f.label === filter.label
-        )?.signature;
-        // delete it if found
-        if (signature) copy.delete(signature);
-        // add the updated filter
-        copy.set(filter.signature, filter);
-      }
-      return copy;
-    },
+    listConfigFilterReducer,
     new Map()
   );
 
@@ -313,26 +297,7 @@ export const useListConfig: UseListConfig = <TItem extends object>(
   );
 
   const [filterPresetsMap, dispatchFilterPresetAction] = useReducer(
-    (
-      map: FilterPresetMap,
-      [type, preset]: UseListConfigFilterPresetReducerAction
-    ) => {
-      const copy = new Map(map);
-      // simply add the filter if it's the first time we see it
-      if (type === "register") copy.set(preset.signature, preset);
-      // update the filter if it's already in the map
-      if (type === "update") {
-        // find the old filter based on its label
-        const signature = Array.from(copy.values()).find(
-          (p) => p.label === preset.label
-        )?.signature;
-        // delete it if found
-        if (signature) copy.delete(signature);
-        // add the updated filter
-        copy.set(preset.signature, preset);
-      }
-      return copy;
-    },
+    listConfigFilterPresetReducer,
     new Map()
   );
 
