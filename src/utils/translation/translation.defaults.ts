@@ -58,7 +58,8 @@ const validation: CompleteTranslationMap<"validation"> = {
   notAllowed: "Value is not allowed",
   tooBig: "Value is too big",
   tooSmall: "Value is too small",
-  stepMismatch: (step) => `Value does not respect the required step ${step}`,
+  stepMismatch: (step) =>
+    `Value does not respect the required step${step?.length ? ` ${step}` : ""}`,
   typeMismatch: "Value does not respect the required type",
 };
 

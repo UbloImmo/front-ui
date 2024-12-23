@@ -2,6 +2,7 @@ import {
   isArray,
   isBoolean,
   isObject,
+  isString,
   objectValues,
 } from "@ubloimmo/front-util";
 
@@ -23,7 +24,7 @@ import type {
 } from "./FilterOption.types";
 import type { FilterOptionVisualData } from "../shared.types";
 
-const defaultFilterOptionBehavior: Required<FilterOptionBehavior> = {
+export const defaultFilterOptionBehavior: Required<FilterOptionBehavior> = {
   default: false,
   initial: false,
   disabled: false,
@@ -31,7 +32,7 @@ const defaultFilterOptionBehavior: Required<FilterOptionBehavior> = {
   hidden: false,
 };
 
-const defaultFilterOptionVisualData: Required<FilterOptionVisualData> = {
+export const defaultFilterOptionVisualData: Required<FilterOptionVisualData> = {
   label: "[MISSING OPTION LABEL]",
   icon: null,
   color: "gray-600",
@@ -49,6 +50,8 @@ const defaultFilterOptionVisualData: Required<FilterOptionVisualData> = {
 export const filterOptionData = <TItem extends object>(
   ...[label, matchOrMatches, config = {}]: ListConfigOptionFnParams<TItem>
 ): FilterOptionData<TItem> => {
+  if (!matchOrMatches) throw new Error("Match or matches are required");
+  if (!isString(label)) throw new Error("Label should be a string");
   const matches: FilterOptionMatch<TItem>[] = isArray(matchOrMatches)
     ? matchOrMatches
     : [matchOrMatches];

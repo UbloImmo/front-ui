@@ -1,3 +1,5 @@
+import { isNull, type Nullable } from "@ubloimmo/front-util";
+
 import { ListFilterOptionChip } from "./ListFilterOptionChip.component";
 
 import {
@@ -12,6 +14,7 @@ import type {
   ListFilterOptionChipDefaultProps,
   ListFilterOptionChipProps,
 } from "./ListFilterOptionChip.types";
+import type { IconName } from "@/components/Icon";
 import type { Meta } from "@storybook/react";
 import type { ColorKey } from "@types";
 
@@ -57,7 +60,12 @@ export const Default = () => (
   <ListFilterOptionChip filterOption={filterOption} />
 );
 
-const labels = ["My option", "My other option", "My third option"];
+const labels = [
+  "My option",
+  "My other option",
+  "My third option",
+  "A very very veeeerryyy long option",
+];
 
 const labeledOptions = labels.map(
   (label): FilterOption<MockData> => ({
@@ -72,6 +80,8 @@ export const Labels = () => (
     of={ListFilterOptionChip<MockData>}
     variants={labeledOptions}
     defaults={defaultProps}
+    columns={2}
+    propLabels
   />
 );
 Labels.parameters = {
@@ -108,11 +118,50 @@ export const Colors = () => (
     of={ListFilterOptionChip<MockData>}
     variants={coloredOptions}
     defaults={defaultProps}
+    columns={2}
+    propLabels
   />
 );
 Colors.parameters = {
   docs: componentSource(
     coloredOptions.map((option) => ({ filterOption: option }))
+  ),
+};
+
+const icons: Nullable<IconName>[] = [
+  "Circle",
+  "Triangle",
+  "Square",
+  "PersonCircle",
+];
+
+const iconOptions = icons.map(
+  (icon): FilterOption<MockData> => ({
+    ...filterOptionData(
+      `A option with "${isNull(icon) ? "no" : icon}" icon`,
+      filterOptionMatch<MockData>("value", "=", 0),
+      {
+        icon,
+      }
+    ),
+    select: () => {},
+    unselect: () => {},
+  })
+);
+
+export const Icons = () => (
+  <ComponentVariants
+    for="filterOption"
+    of={ListFilterOptionChip<MockData>}
+    variants={iconOptions}
+    defaults={defaultProps}
+    columns={2}
+    propLabels
+  />
+);
+Icons.parameters = {
+  docs: componentSource(
+    iconOptions.map((option) => ({ filterOption: option }))
   ),
 };
 

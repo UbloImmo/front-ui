@@ -1,0 +1,240 @@
+import { describe, expect } from "bun:test";
+
+import { useListConfig } from "./ListContext.config";
+import { useStaticDataProvider, type UseDataProviderFn } from "../modules";
+
+import { testHookFactory } from "@/tests";
+import { arrayOf } from "@utils";
+
+type MockItem = {
+  value: number;
+  index: number;
+  selected: boolean;
+};
+
+const mockItems: MockItem[] = arrayOf(
+  100,
+  (index): MockItem => ({
+    index,
+    value: index * 2,
+    selected: Math.random() > 0.5,
+  })
+);
+
+const useMockDataProvider: UseDataProviderFn<MockItem> = (setData) =>
+  useStaticDataProvider(mockItems, setData);
+
+const testListConfig = () => {
+  type Hook = typeof useListConfig<MockItem>;
+  type HookReturn = ReturnType<Hook>;
+  type HookParams = Parameters<Hook>;
+  const testHook = testHookFactory<HookParams, HookReturn, Hook>(
+    "useListConfig",
+    useListConfig<MockItem>
+  )(useMockDataProvider);
+
+  testHook("should return a valid object containing a config", (result) => {
+    expect(result).toBeObject();
+    expect(result.config).toBeObject();
+  });
+
+  testHook("should store the provided dataProvider hook", (result) => {
+    expect(result.config.useDataProvider).toBeFunction();
+  });
+
+  testHook(
+    "should store and mutate the default operator",
+    (result, _params, { getResult, rerender }) => {
+      expect(result.config.operator).toBe("AND");
+      expect(result.setOperator).toBeFunction();
+      result.setOperator("OR");
+      rerender();
+      expect(getResult().config.operator).toBe("OR");
+    }
+  );
+
+  testHook("should return an object containing sync methods", (result) => {
+    expect(result.divider).toBeFunction();
+    expect(result.match).toBeFunction();
+    expect(result.matches).toBeFunction();
+    expect(result.not).toBeFunction();
+    expect(result.option).toBeFunction();
+    expect(result.options).toBeFunction();
+    expect(result.filter).toBeFunction();
+    expect(result.filterPreset).toBeFunction();
+  });
+
+  testHook("should return an object containing async methods", (result) => {
+    expect(result.async).toBeObject();
+    expect(result.async.option).toBeFunction();
+    expect(result.async.options).toBeFunction();
+    expect(result.async.filter).toBeFunction();
+    expect(result.async.filterPreset).toBeFunction();
+  });
+
+  testHook("should return a match from the match() method", (result) => {
+    expect(result.match).toBeFunction();
+    expect(() => result.match("index", ">", 2)).not.toThrow();
+    const match = result.match("index", ">", 2);
+    expect(match).toBeObject();
+    expect(match.property).toBe("index");
+    expect(match.comparison).toBe(">");
+    expect(match.value).toBe(2);
+  });
+
+  testHook(
+    "should return a list of matches from the matches() method",
+    (result) => {
+      expect(result.matches).toBeFunction();
+      expect(() => result.matches("index", ">", [2, 4])).not.toThrow();
+      const matches = result.matches("index", ">", [2, 4]);
+      expect(matches).toBeArray();
+      expect(matches.length).toBe(2);
+      expect(matches[0].property).toBe("index");
+      expect(matches[0].comparison).toBe(">");
+      expect(matches[0].value).toBe(2);
+      expect(matches[1].property).toBe("index");
+      expect(matches[1].comparison).toBe(">");
+      expect(matches[1].value).toBe(4);
+    }
+  );
+
+  testHook("should invert a match from the not() method", (result) => {
+    expect(result.not).toBeFunction();
+    const match = result.match("index", ">", 2);
+    expect(() => result.not(match)).not.toThrow();
+    const invertedMatch = result.not(match);
+    expect(invertedMatch).toBeObject();
+    expect(invertedMatch.property).toBe(match.property);
+    expect(invertedMatch.comparison).toBe("<");
+    expect(invertedMatch.value).toBe(match.value);
+  });
+
+  testHook(
+    "should create & return a divider from the divider() method",
+    (result) => {
+      expect(result.divider).toBeFunction();
+      const divider = result.divider("test");
+      expect(divider).toBeObject();
+      expect(divider.label).toBe("test");
+      expect(divider.kind).toBe("divider");
+    }
+  );
+
+  testHook(
+    "shuold create & register an option from the option() method",
+    (result, _params, { getResult, rerender }) => {
+      expect(result.option).toBeFunction();
+      const match = result.match("selected", "=", true);
+      const option = result.option("selected", match);
+      expect(option).toBeObject();
+      expect(option.label).toBe("selected");
+      expect(option.matches).toEqual([match]);
+      rerender();
+      expect(getResult().config.options).toBeArray();
+      expect(getResult().config.options?.length).toBe(1);
+      expect(getResult().config.options?.[0]).toEqual(option);
+    }
+  );
+
+  testHook(
+    "should create & register multiple options from the options() method",
+    (result, _params, { getResult, rerender }) => {
+      expect(result.options).toBeFunction();
+      const values = [15, 30, 45];
+      const property = "value" as const;
+      const comparison = ">=" as const;
+      const options = result.options(
+        property,
+        comparison,
+        values.map((value) => ({
+          value,
+          label: String(value),
+        }))
+      );
+      expect(options).toBeArray();
+      expect(options).toHaveLength(values.length);
+      options.forEach((option, index) => {
+        expect(option).toBeObject();
+        expect(option.label).toBeString();
+        expect(option.matches).toBeArray();
+        expect(option.matches).toHaveLength(1);
+        expect(option.matches[0].property).toBe(property);
+        expect(option.matches[0].comparison).toBe(comparison);
+        expect(option.matches[0].value).toBe(values[index]);
+      });
+      rerender();
+      expect(getResult().config.options).toBeArray();
+      expect(getResult().config.options).toEqual(options);
+    }
+  );
+
+  testHook(
+    "should create & register a filter from the filter() method",
+    (result, _params, { getResult, rerender }) => {
+      expect(result.filter).toBeFunction();
+      const options = result.options(
+        "value",
+        ">=",
+        [15, 30, 45].map((value) => ({
+          value,
+          label: String(value),
+        }))
+      );
+      const divider = result.divider("divider");
+      const label = "filter";
+      const filter = result.filter(label, [
+        options[0],
+        divider,
+        options[1],
+        options[2].signature,
+      ]);
+      expect(filter).toBeObject();
+      expect(filter.label).toBe(label);
+      expect(filter.optionSignatures).toBeArray();
+      expect(filter.optionSignatures).toEqual(
+        options.map(({ signature }) => signature)
+      );
+      expect(filter.optionDividers).toBeArray();
+      expect(filter.optionDividers).toHaveLength(1);
+      expect(filter.optionDividers[0].label).toBe(divider.label);
+      expect(filter.optionDividers[0].kind).toBe(divider.kind);
+      expect(filter.optionDividers[0].beforeSignature).toBe(
+        options[1].signature
+      );
+      rerender();
+      expect(getResult().config.filters).toBeArray();
+      expect(getResult().config.filters).toEqual([filter]);
+    }
+  );
+
+  testHook(
+    "should create & register a filter preset from the filterPreset() method",
+    (result, _params, { getResult, rerender }) => {
+      expect(result.filterPreset).toBeFunction();
+      const options = result.options(
+        "selected",
+        "=",
+        [true, false].map((value) => ({
+          value,
+          label: String(value),
+        }))
+      );
+      const label = "filterPreset";
+      const filterPreset = result.filterPreset(label, options);
+      expect(filterPreset).toBeObject();
+      expect(filterPreset.label).toBe(label);
+      expect(filterPreset.optionSignatures).toBeArray();
+      expect(filterPreset.optionSignatures).toEqual(
+        options.map(({ signature }) => signature)
+      );
+      rerender();
+      expect(getResult().config.filterPresets).toBeArray();
+      expect(getResult().config.filterPresets).toEqual([filterPreset]);
+    }
+  );
+};
+
+describe("List Context", () => {
+  testListConfig();
+});

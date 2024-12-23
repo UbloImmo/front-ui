@@ -1,11 +1,11 @@
 import { ListFilterOptionDivider } from "./ListFilterOptionDivider.component";
-import {
-  ListFilterOptionDividerProps,
-  ListFilterOptionDividerDefaultProps,
-} from "./ListFilterOptionDivider.types";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 
+import type {
+  ListFilterOptionDividerProps,
+  ListFilterOptionDividerDefaultProps,
+} from "./ListFilterOptionDivider.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<

@@ -37,7 +37,7 @@ const defaultStaticFilterConfig: Required<Omit<FilterConfig, "testId" | "id">> =
 export const filterData = <TItem extends object>(
   ...[
     label = "[MISSING FILTER LABEL]",
-    optionOrSignatures,
+    optionOrSignatures = [],
     config = {},
     loading = false,
   ]: ListConfigFilterFnParams<TItem>

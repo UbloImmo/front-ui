@@ -182,7 +182,7 @@ export type UseListConfigAsync = <TItem extends object>(
 ) => UseListConfigAsyncReturn<TItem>;
 
 export type UseListConfigReturn<TItem extends object> = {
-  config: ListContextConfig<TItem>;
+  config: Required<ListContextConfig<TItem>>;
   async: UseListConfigAsyncReturn<TItem>;
   match: ListConfigMatchFn<TItem>;
   not: ListConfigNotFn<TItem>;

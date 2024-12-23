@@ -1,14 +1,42 @@
-import { isArray, isObject, type ValueMap } from "@ubloimmo/front-util";
+import {
+  isArray,
+  isNullish,
+  isObject,
+  isString,
+  isUndefined,
+  type ValueMap,
+} from "@ubloimmo/front-util";
+import { isDate } from "date-fns";
 
 import type {
   FilterOption,
   FilterOptionData,
   FilterOptionDataOrSignature,
+  FilterOptionMatch,
 } from "./FilterOption.types";
 import type {
   FilterComparisonOperator,
   FilterSignature,
 } from "../shared.types";
+
+/**
+ * Computes a signature for a filter option match
+ *
+ * @param {FilterOptionMatch<TItem>} match - The match to compute the signature for
+ * @returns {FilterSignature} The computed signature
+ * @throws {Error} If the match is not provided, or if any of the match properties are missing
+ */
+export const computeFilterOptionMatchSignature = <TItem extends object>(
+  match: FilterOptionMatch<TItem>
+): FilterSignature => {
+  if (!match) throw new Error("Match is required");
+  if (isNullish(match.property)) throw new Error("Match property is required");
+  if (!match.comparison) throw new Error("Match comparison is required");
+  if (isUndefined(match.value)) throw new Error("Match value is required");
+  if (isObject(match.value) && !isDate(match.value))
+    throw new Error("Match value must be a primitive");
+  return [match.property, match.comparison, match.value].join("_");
+};
 
 /**
  * Computes a unique signature for a filter option based on its matches, operator and label
@@ -24,11 +52,15 @@ export const computeFilterOptionSignature = <TItem extends object>({
   FilterOption<TItem>,
   "matches" | "operator" | "label"
 >): FilterSignature => {
+  if (!isString(label)) throw new Error("Label must be a string");
+  if (!operator) throw new Error("Operator is required");
+  if (!matches) throw new Error("Matches are required");
+  if (!isArray(matches)) throw new Error("Matches must be an array");
   const matchesSignature = matches
-    .map(({ value, property, comparison }) =>
-      [property, comparison, value].join("_")
-    )
+    .map(computeFilterOptionMatchSignature)
     .join(operator);
+
+  if (!matchesSignature.length) return label;
 
   return [label, matchesSignature].join("-");
 };
@@ -55,6 +87,7 @@ const inverseMatchComparisonMap: ValueMap<
  * invertMatchComparison("=") // returns "!="
  */
 export const invertMatchComparison = (comparison: FilterComparisonOperator) => {
+  if (!comparison) throw new Error("Comparison is required");
   return inverseMatchComparisonMap[comparison];
 };
 
@@ -65,7 +98,7 @@ export const invertMatchComparison = (comparison: FilterComparisonOperator) => {
  * @param {FilterOptionDataOrSignature<TItem>} optionOrSignature - The value to check
  * @returns {boolean} True if the value is FilterOptionData, false if it's just a signature
  */
-const isFilterOptionData = <TItem extends object>(
+export const isFilterOptionData = <TItem extends object>(
   optionOrSignature: FilterOptionDataOrSignature<TItem>
 ): optionOrSignature is FilterOptionData<TItem> => {
   return (
@@ -95,6 +128,8 @@ const isFilterOptionData = <TItem extends object>(
 export const extractFilterOptionSignature = <TItem extends object>(
   optionOrSignature: FilterOptionDataOrSignature<TItem>
 ): FilterSignature => {
+  if (!isFilterOptionData(optionOrSignature) && !isString(optionOrSignature))
+    throw new Error("Invalid input");
   if (isFilterOptionData(optionOrSignature)) {
     return optionOrSignature.signature;
   }

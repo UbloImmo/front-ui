@@ -106,6 +106,13 @@ export type FilterPresetData = Required<
   loading: boolean;
 };
 
+/**
+ * A single filter preset
+ *
+ * Holds options, behavior, an active state and a count
+ *
+ * @template TItem - The type of the item being filtered
+ */
 export type FilterPreset<TItem extends object> = FilterPresetData & {
   /**
    * The options of the filter preset, derived from the option signatures

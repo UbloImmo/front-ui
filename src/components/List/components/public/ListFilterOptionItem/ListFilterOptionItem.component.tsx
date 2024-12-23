@@ -5,7 +5,7 @@ import { listFilterOptionItemStyles } from "./ListFilterOptionItem.styles";
 
 import { Checkbox } from "@/components/Checkbox";
 import { Icon, IconProps, type IconName } from "@/components/Icon";
-import { CLEAR_FILTER_OPTION_SIGNATURE } from "@/components/List/modules/FilterOption/useFilterOption.hook";
+import { CLEAR_FILTER_OPTION_SIGNATURE } from "@/components/List/modules/FilterOption/FilterOption.hook";
 import { Text } from "@/components/Text";
 import { FlexLayout } from "@layouts";
 import { TextProps } from "@types";

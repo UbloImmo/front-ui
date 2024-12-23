@@ -505,7 +505,7 @@ export const useListConfig: UseListConfig = <TItem extends object>(
   /**
    * A reactive, valid list config object
    */
-  const config = useMemo<ListContextConfig<TItem>>(() => {
+  const config = useMemo<Required<ListContextConfig<TItem>>>(() => {
     const optionsList = Array.from(optionsMap.values());
     const filtersList = Array.from(filtersMap.values()).sort(
       (a, b) => a.index - b.index

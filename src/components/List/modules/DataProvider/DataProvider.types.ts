@@ -22,13 +22,50 @@ export type DataProviderFilterParam<TItem extends object> = Replace<
 
 export type DataProviderFilterFnConfig<TItem extends object> =
   RequireAtLeastOne<{
+    /**
+     * A single filter to apply to the items
+     *
+     * @type {DataProviderFilterParam<TItem>}
+     */
     filter: DataProviderFilterParam<TItem>;
+    /**
+     * Multiple filters to apply to the items
+     *
+     * @type {DataProviderFilterParam<TItem>[]}
+     */
     filters: DataProviderFilterParam<TItem>[];
-    filterPresets: Pick<FilterPreset<TItem>, "options" | "operator">[];
+    /**
+     * A single filter preset to apply to the items
+     *
+     * @type {Pick<FilterPreset<TItem>, "options" | "operator">}
+     */
     filterPreset: Pick<FilterPreset<TItem>, "options" | "operator">;
+    /**
+     * Multiple filter presets to apply to the items
+     *
+     * @type {Pick<FilterPreset<TItem>, "options" | "operator">[]}
+     */
+    filterPresets: Pick<FilterPreset<TItem>, "options" | "operator">[];
+    /**
+     * A single option to apply to the items
+     *
+     * @type {FilterOptionData<TItem>}
+     */
+    option: FilterOptionData<TItem>;
+    /**
+     * Multiple options to apply to the items
+     *
+     * @type {FilterOptionData<TItem>[]}
+     */
     options: FilterOptionData<TItem>[];
   }> & {
-    operator: FilterBooleanOperator;
+    /**
+     * The operator to combine multiple filters, filter presets or options.
+     *
+     * @type {FilterBooleanOperator}
+     * @default "OR"
+     */
+    operator?: FilterBooleanOperator;
   };
 
 export type DataProviderFilterFn<TItem extends object> = VoidFn<

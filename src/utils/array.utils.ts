@@ -85,6 +85,11 @@ export const useDataArray: UseDataArray = <TData>(
 ): UseDataArrayReturn<TData> => {
   const [data, setData] = useState<TData[]>(isArray(rootData) ? rootData : []);
 
+  /**
+   * Updates the data array and calls the onDataChange callback if provided
+   *
+   * @param {SetStateAction<TData[]>} newData - The new data array or a function that returns a new data array
+   */
   const updateData = useCallback(
     (newData: SetStateAction<TData[]>) => {
       let updatedData: TData[];
@@ -103,6 +108,9 @@ export const useDataArray: UseDataArray = <TData>(
 
   const [isLoading, setIsLoading] = useState<boolean>(!isArray(rootData));
 
+  /**
+   * Loads data asynchronously and updates the data array
+   */
   useEffect(() => {
     const loadAsyncData = async () => {
       setIsLoading(true);
@@ -114,6 +122,9 @@ export const useDataArray: UseDataArray = <TData>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * Reloads data if the rootData reference changes
+   */
   useEffect(() => {
     const refreshData = async () => {
       if (!reactive) return;
@@ -126,8 +137,14 @@ export const useDataArray: UseDataArray = <TData>(
 
     refreshData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reactive, rootData]);
+  }, [rootData]);
 
+  /**
+   * Updates an item in the data array based on the provided predicate function
+   *
+   * @param {DataArrayItemPredicate<TData>} predicate - Function to test each element, taking the element and its index
+   * @param {(item: TData, index: number) => TData} updater - Function to update the item, taking the item and its index
+   */
   const updateItemWhere = useCallback<DataArrayUpdateItemWhereFn<TData>>(
     (predicate, updater) => {
       updateData((prev) =>
@@ -239,7 +256,7 @@ export const useDataArray: UseDataArray = <TData>(
     remove,
     updateItemWhere,
     unshift,
-    setData,
+    setData: updateData,
     find,
     findIndex,
     at,

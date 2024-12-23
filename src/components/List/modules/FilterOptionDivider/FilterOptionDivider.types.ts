@@ -26,8 +26,3 @@ export type FilterOptionDividerData = {
 export type FilterOptionDivider = Required<FilterOptionDividerData> & {
   beforeSignature: FilterSignature;
 };
-
-export type FilterOptionGroupDataFn = (
-  label: string,
-  index?: number
-) => FilterOptionDividerData;

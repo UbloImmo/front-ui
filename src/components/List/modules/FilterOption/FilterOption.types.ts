@@ -148,11 +148,14 @@ export type FilterOptionData<TItem extends object> = Required<
    * A boolean operator used to combine matches
    *
    * @type {FilterBooleanOperator}
+   * @default "AND"
    */
   operator: FilterBooleanOperator;
   /**
    * The signature of the filter option
    * Used to identify a filter option when comparing them
+   *
+   * @remarks Built from the label and the matches
    *
    * @type {FilterSignature}
    */
@@ -161,6 +164,7 @@ export type FilterOptionData<TItem extends object> = Required<
    * The palette color of the filter option
    *
    * @type {PaletteColor}
+   * @default "gray-600"
    */
   paletteColor: PaletteColor;
 
@@ -168,12 +172,14 @@ export type FilterOptionData<TItem extends object> = Required<
    * The color key of the filter option
    *
    * @type {ColorKey}
+   * @default "gray"
    */
   colorKey: ColorKey;
   /**
    * Whether the filter option is selected
    *
    * @type {boolean}
+   * @default false
    */
   selected: boolean;
 };

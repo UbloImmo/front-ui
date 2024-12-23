@@ -16,11 +16,13 @@ export const ListFilterOptionChip = <TItem extends object>({
 }: ListFilterOptionChipProps<TItem>) => {
   const { error } = useLogger("FilterOptionChip");
 
-  const color = useMemo(() => filterOption.colorKey, [filterOption]);
+  const color = useMemo(() => filterOption?.colorKey, [filterOption]);
 
-  const testId = useTestId("list-filter-option-chip", {
-    testId: filterOption.label,
-  });
+  const testId = useTestId("list-filter-option-chip");
+
+  const disabled = useMemo(() => {
+    return filterOption?.disabled || filterOption?.fixed || filterDisabled;
+  }, [filterOption, filterDisabled]);
 
   if (!filterOption) {
     error("No filter option provided");
@@ -32,7 +34,7 @@ export const ListFilterOptionChip = <TItem extends object>({
       color={color}
       label={filterOption.label}
       icon={filterOption.icon}
-      disabled={filterOption.disabled || filterOption.fixed || filterDisabled}
+      disabled={disabled}
       onDelete={filterOption.unselect}
       testId={testId}
       overrideTestId

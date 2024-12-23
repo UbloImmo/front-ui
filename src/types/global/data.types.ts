@@ -4,6 +4,7 @@ import type {
   Optional,
   VoidFn,
 } from "@ubloimmo/front-util";
+import type { SetStateAction } from "react";
 
 /**
  * A very basic email string type alias
@@ -80,11 +81,14 @@ export type DataArrayFindIndexFn<TData> = GenericFn<
   [predicate: DataArrayItemPredicate<TData>],
   number
 >;
+export type UseDataArrayUpdateDataFn<TData> = VoidFn<
+  [newData: SetStateAction<TData[]>]
+>;
 
 export type UseDataArrayReturn<TData> = {
   data: TData[];
   isLoading: boolean;
-  setData: VoidFn<[newData: TData[]]>;
+  setData: UseDataArrayUpdateDataFn<TData>;
   push: DataArrayPushFn<TData>;
   remove: DataArrayRemoveFn<TData>;
   updateItemWhere: DataArrayUpdateItemWhereFn<TData>;

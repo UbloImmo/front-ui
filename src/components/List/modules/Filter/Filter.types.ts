@@ -131,7 +131,7 @@ export type FilterData = Required<FilterConfig & FilterVisualData> & {
    * @type {FilterOptionDivider[]}
    * @default []
    */
-  optionDividers?: FilterOptionDivider[];
+  optionDividers: FilterOptionDivider[];
 };
 
 export interface Filter<TItem extends object> extends Required<FilterData> {

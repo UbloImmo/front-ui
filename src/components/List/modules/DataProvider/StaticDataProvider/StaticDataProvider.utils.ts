@@ -1,12 +1,16 @@
 import {
   deepValueOf,
+  isArray,
   isNumber,
   isObject,
   isString,
 } from "@ubloimmo/front-util";
 import { isDate } from "date-fns";
 
-import { ComparisonOperators } from "@/components/List/List.enums";
+import {
+  BooleanOperators,
+  ComparisonOperators,
+} from "@/components/List/List.enums";
 
 import type {
   FilterOptionData,
@@ -25,7 +29,7 @@ type Comparable = number | Date | string | object;
  * @param {unknown} value - The value to check
  * @returns {boolean} True if the value is comparable
  */
-const canCompare = (value: unknown): value is Comparable =>
+export const canCompare = (value: unknown): value is Comparable =>
   isNumber(value) || isDate(value) || isString(value) || isObject(value);
 
 /**
@@ -35,10 +39,14 @@ const canCompare = (value: unknown): value is Comparable =>
  * @param {FilterOptionMatch<TItem>} match - The match criteria
  * @returns {boolean} True if the item matches the criteria
  */
-const compareItemValue = <TItem extends object>(
+export const compareItemValue = <TItem extends object>(
   item: TItem,
   match: FilterOptionMatch<TItem>
 ): boolean => {
+  // if item is not an object, it cannot be compared
+  if (!isObject(item)) return false;
+  // if match is not an object, it cannot be compared
+  if (!isObject(match)) return false;
   // collapse nullish values to null
   const itemValue = deepValueOf(item, match.property, true) ?? null;
   switch (match.comparison) {
@@ -176,20 +184,33 @@ const itemMatchesFilterPresets = <TItem extends object>(
   );
 };
 
-/** Function type for filtering items */
+/**
+ * Function type for filtering items
+ * @template TItem - The type of the items being filtered
+ * @param {TItem} item - The item to filter
+ * @returns {boolean} True if the item matches the filter
+ *
+ * @internal
+ */
 type FilterFn<TItem extends object> = (item: TItem) => boolean;
 
 /**
  * Filters data based on the provided configuration
  * @template TItem - The type of the items being filtered
- * @param {TItem[]} data - The data to filter
+ * @param {TItem[]} items - The data to filter
  * @param {DataProviderFilterFnConfig<TItem>} config - The filter configuration
  * @returns {TItem[]} The filtered data
  */
-export const filterData = <TItem extends object>(
-  data: TItem[],
+export const filterItems = <TItem extends object>(
+  items: TItem[],
   config: DataProviderFilterFnConfig<TItem>
 ): TItem[] => {
+  // abort if items is not an array or is empty
+  if (!isArray(items) || !items.length) return [];
+
+  const operator = config.operator ?? BooleanOperators.OR;
+
+  // return all items by default
   let filterFn: FilterFn<TItem> = () => true;
 
   if (config.filter) {
@@ -198,7 +219,7 @@ export const filterData = <TItem extends object>(
   }
   if (config.filters) {
     const filters = config.filters;
-    filterFn = (item) => itemMatchesFilters(item, filters, config.operator);
+    filterFn = (item) => itemMatchesFilters(item, filters, operator);
   }
   if (config.filterPreset) {
     const filterPreset = config.filterPreset;
@@ -207,12 +228,16 @@ export const filterData = <TItem extends object>(
   if (config.filterPresets) {
     const filterPresets = config.filterPresets;
     filterFn = (item) =>
-      itemMatchesFilterPresets(item, filterPresets, config.operator);
+      itemMatchesFilterPresets(item, filterPresets, operator);
+  }
+  if (config.option) {
+    const option = config.option;
+    filterFn = (item) => itemMatchesOption(item, option);
   }
   if (config.options) {
     const options = config.options;
-    filterFn = (item) => itemMatchesOptions(item, options, config.operator);
+    filterFn = (item) => itemMatchesOptions(item, options, operator);
   }
 
-  return data.filter(filterFn);
+  return items.filter(filterFn);
 };

@@ -23,7 +23,7 @@ import {
   type Filter,
   type FilterOption,
 } from "@/components/List/modules";
-import { useClearFilterOption } from "@/components/List/modules/FilterOption/useFilterOption.hook";
+import { useClearFilterOption } from "@/components/List/modules/FilterOption/FilterOption.hook";
 import {
   clamp,
   isEmptyString,

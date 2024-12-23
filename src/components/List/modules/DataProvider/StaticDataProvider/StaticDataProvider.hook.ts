@@ -7,7 +7,7 @@ import {
   type IDataProvider,
   type UseStaticDataProviderFn,
 } from "../DataProvider.types";
-import { filterData } from "./StaticDataProvider.utils";
+import { filterItems } from "./StaticDataProvider.utils";
 
 import { useAsyncData } from "@utils";
 
@@ -32,7 +32,7 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
 
   const filter = useCallback(
     (config: DataProviderFilterFnConfig<TItem>) => {
-      const filteredData = filterData(staticDataRef.current, config);
+      const filteredData = filterItems(staticDataRef.current, config);
       setData(filteredData);
     },
     [setData]
@@ -40,7 +40,7 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
 
   const fetchCount = useCallback<DataProviderFetchCountFn<TItem>>(
     (config: DataProviderFilterFnConfig<TItem>) => {
-      const filteredData = filterData(staticDataRef.current, config);
+      const filteredData = filterItems(staticDataRef.current, config);
       return filteredData.length;
     },
     []
