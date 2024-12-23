@@ -1,3 +1,5 @@
+import { StyleOverrideProps } from "@types";
+
 import type { IconName } from "../Icon";
 import type { StaticIconIndicator } from "../StaticIcon";
 import type { TooltipProps } from "../Tooltip";
@@ -10,7 +12,7 @@ export type ActionSize = Enum<typeof actionSizes>;
 /**
  * Action component props
  */
-export type ActionProps = {
+export type ActionProps = StyleOverrideProps & {
   /**
    * The action button's label.
    *
