@@ -116,4 +116,19 @@ testAction({
   }
 );
 
+testAction({
+  ...Action.defaultProps,
+  indicator: {
+    name: "Circle2NdHalf",
+    color: "pending-base",
+    tooltip: {
+      content: "Tooltip content",
+    },
+  },
+})("should render an indicator with a tooltip", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(queryByTestId("static-icon-indicator")).not.toBeNull();
+  expect(queryByTestId("tooltip static-icon-indicator-tooltip")).not.toBeNull();
+});
+
 afterEach(cleanup);

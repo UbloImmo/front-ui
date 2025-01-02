@@ -8,6 +8,7 @@ import { useMergedProps } from "@utils";
 
 import type { ActionProps, ActionSize } from "./Action.types";
 import type { IconName } from "../Icon";
+import type { StaticIconIndicator } from "../StaticIcon";
 import type { TooltipProps } from "../Tooltip";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
@@ -183,6 +184,35 @@ export const Description = (props: ActionProps) => {
     <ComponentVariants
       variants={descriptions}
       for="description"
+      of={Action}
+      defaults={defaults}
+      scaling={1}
+      columns={2}
+      propLabels
+    />
+  );
+};
+
+const indicators: Nullable<StaticIconIndicator>[] = [
+  {
+    color: "pending-base",
+    name: "Circle2NdHalf",
+    tooltip: {
+      content: "A tooltip on an action",
+      direction: "top",
+    },
+  },
+  {
+    color: "success-base",
+    name: "Circle2NdHalf",
+  },
+];
+export const Indicator = (props: ActionProps) => {
+  const defaults = useMergedProps(Action.defaultProps, props);
+  return (
+    <ComponentVariants
+      variants={indicators}
+      for="indicator"
       of={Action}
       defaults={defaults}
       scaling={1}

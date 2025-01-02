@@ -53,6 +53,7 @@ const defaultActionProps: DefaultActionProps = {
   title: null,
   iconTooltip: null,
   description: null,
+  indicator: null,
 };
 
 /**
@@ -103,7 +104,8 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       ? "primary"
       : "gray";
     const size = staticIconSizeMap[mergedProps.size];
-    return { size, color, name: mergedProps.icon };
+    const indicator = mergedProps.indicator;
+    return { size, color, name: mergedProps.icon, indicator };
   }, [mergedProps, isHovering]);
 
   const badgeProps = useMemo<Nullable<BadgeProps & TestIdProps>>(() => {

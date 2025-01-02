@@ -1,4 +1,5 @@
 import type { IconName } from "../Icon";
+import type { StaticIconIndicator } from "../StaticIcon";
 import type { TooltipProps } from "../Tooltip";
 import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 
@@ -77,6 +78,13 @@ export type ActionProps = {
    * @default null
    */
   description?: Nullable<string>;
+  /**
+   * An additional to render on the top right corner of the static icon
+   *
+   * @type {Nullable<StaticIconIndicator>}
+   * @default null
+   */
+  indicator?: Nullable<StaticIconIndicator>;
 };
 
 export type DefaultActionProps = Required<ActionProps>;
