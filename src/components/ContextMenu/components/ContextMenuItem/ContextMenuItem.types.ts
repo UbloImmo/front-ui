@@ -6,7 +6,7 @@ export type ContextMenuItemSize = "s" | "m";
 
 export type ContextMenuItemProps = Omit<
   ActionProps,
-  "size" | "icon" | "description"
+  "size" | "icon" | "description" | "indicator"
 > & {
   /**
    * The item's size
