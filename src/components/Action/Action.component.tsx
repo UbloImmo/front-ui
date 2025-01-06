@@ -53,12 +53,13 @@ const defaultActionProps: DefaultActionProps = {
   title: null,
   iconTooltip: null,
   description: null,
+  indicator: null,
 };
 
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -103,7 +104,8 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       ? "primary"
       : "gray";
     const size = staticIconSizeMap[mergedProps.size];
-    return { size, color, name: mergedProps.icon };
+    const indicator = mergedProps.indicator;
+    return { size, color, name: mergedProps.icon, indicator };
   }, [mergedProps, isHovering]);
 
   const badgeProps = useMemo<Nullable<BadgeProps & TestIdProps>>(() => {
