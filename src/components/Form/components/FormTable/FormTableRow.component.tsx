@@ -44,6 +44,7 @@ export const FormTableRow = ({
   index,
   dynamicIndex,
   id,
+  stableId,
   deleteRow,
   colSpans,
 }: FormTableRowProps) => {
@@ -67,7 +68,7 @@ export const FormTableRow = ({
     listeners,
     setActivatorNodeRef,
     isDragging,
-  } = useSortable({ id, disabled: !mods.swappable });
+  } = useSortable({ id: stableId, disabled: !mods.swappable });
 
   const styledProps = useStyleProps({ ...mods, dragging: isDragging });
 
@@ -116,6 +117,7 @@ export const FormTableRow = ({
       {...styledProps}
       {...attributes}
       ref={setNodeRef}
+      id={id}
       style={style}
       data-testid="form-table-row"
       data-row-index={dynamicIndex}
@@ -161,6 +163,7 @@ type StyledTableRowProps = StyleProps<
 > & {
   ref: RefCallback<HTMLElement>;
   style?: CSSProperties;
+  id?: string;
 };
 
 const StyledTableRow = styled(TableRow)<StyledTableRowProps>`

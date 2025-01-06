@@ -11,7 +11,6 @@ import { FeatureSwitch } from "../FeatureSwitch";
 import { Heading } from "../Heading";
 import { Icon, type IconName } from "../Icon";
 import { Input } from "../Input";
-import { Tooltip } from "../Tooltip";
 import { isFormField } from "./Form.utils";
 import { Hypertext } from "../Hypertext";
 
@@ -20,6 +19,7 @@ import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
 import {
   clamp,
   createDelayedResponse,
+  delay,
   useMergedProps,
   useStatic,
 } from "@utils";
@@ -545,18 +545,28 @@ const identityTableSchema = z.object({
 
 type IdentityTable = z.input<typeof identityTableSchema>;
 
+const onSubmitTable = async (data: IdentityTable) => {
+  console.log(data);
+  await delay(1000);
+  fn()(data);
+  return data;
+};
+
 const tableFormProps: FormProps<IdentityTable> = {
   title: "Form with table",
   schema: identityTableSchema,
-  onSubmit: fn(),
+  onSubmit: onSubmitTable,
+  debug: true,
   defaultValues: {
     profiles: [
       {
         firstName: "John has a very very very long name",
         lastName: "Doe",
-      },
-      {
         dateOfBirth: "1990-01-01",
+        numberOfChildren: 0,
+        professionalInfo: {
+          role: "tester",
+        },
       },
     ],
   },
@@ -582,8 +592,11 @@ const tableFormProps: FormProps<IdentityTable> = {
         newRow: () => {
           return {
             lastName: String(Math.round(Math.random() * 100)),
+            firstName: String(Math.round(Math.random() * 100)),
+            dateOfBirth: "1990-01-01",
+            numberOfChildren: 0,
             professionalInfo: {
-              role: "Tester",
+              role: "tester",
             },
           };
         },
@@ -629,6 +642,10 @@ const tableFormProps: FormProps<IdentityTable> = {
               label: "UX/ UI Designer",
               value: "designer_ux_ui",
             },
+            {
+              label: "Tester",
+              value: "tester",
+            },
           ],
         },
         {
@@ -646,70 +663,70 @@ const tableFormProps: FormProps<IdentityTable> = {
       ],
     },
     "divider",
-    {
-      kind: "table",
-      source: "bankAccounts",
-      label: "Bank accounts",
-      swappable: true,
-      deletable: true,
-      columns: [
-        {
-          type: "text",
-          source: "name",
-          label: "Account name",
-          layout: {
-            readonly: true,
-          },
-        },
-        {
-          kind: "custom-field",
-          source: "primary",
-          label: "",
-          CustomInput: ({ rowIndex }: CustomFormInputProps<boolean>) => {
-            if (rowIndex === 0)
-              return (
-                <FlexRowLayout align="center" justify="center">
-                  <Tooltip content="Primary account">
-                    <Icon name="StarFill" />
-                  </Tooltip>
-                </FlexRowLayout>
-              );
-            return null;
-          },
-        },
-      ],
-      footer: {
-        kind: "select",
-        searchable: true,
-        controlIcon: "Search",
-        unique: ["name"],
-        testId: "bank-accounts-footer-test-id",
-        overrideTestId: true,
-        filterOption: ({ value }) => !value?.name?.includes("HSBC"),
-        options: [
-          {
-            testId: "credit-agricole-test-id",
-            overrideTestId: true,
-            label: "Credit agricole",
-            value: {
-              name: "Credit agricole",
-            },
-          },
-          {
-            label: "Bank of america",
-            value: {
-              name: "Bank of america",
-            },
-          },
-          {
-            label: "HSBC",
-            value: {
-              name: "HSBC France",
-            },
-          },
-        ],
-      },
-    },
+    // {
+    //   kind: "table",
+    //   source: "bankAccounts",
+    //   label: "Bank accounts",
+    //   swappable: true,
+    //   deletable: true,
+    //   columns: [
+    //     {
+    //       type: "text",
+    //       source: "name",
+    //       label: "Account name",
+    //       layout: {
+    //         readonly: true,
+    //       },
+    //     },
+    //     {
+    //       kind: "custom-field",
+    //       source: "primary",
+    //       label: "",
+    //       CustomInput: ({ rowIndex }: CustomFormInputProps<boolean>) => {
+    //         if (rowIndex === 0)
+    //           return (
+    //             <FlexRowLayout align="center" justify="center">
+    //               <Tooltip content="Primary account">
+    //                 <Icon name="StarFill" />
+    //               </Tooltip>
+    //             </FlexRowLayout>
+    //           );
+    //         return null;
+    //       },
+    //     },
+    //   ],
+    //   footer: {
+    //     kind: "select",
+    //     searchable: true,
+    //     controlIcon: "Search",
+    //     unique: ["name"],
+    //     testId: "bank-accounts-footer-test-id",
+    //     overrideTestId: true,
+    //     filterOption: ({ value }) => !value?.name?.includes("HSBC"),
+    //     options: [
+    //       {
+    //         testId: "credit-agricole-test-id",
+    //         overrideTestId: true,
+    //         label: "Credit agricole",
+    //         value: {
+    //           name: "Credit agricole",
+    //         },
+    //       },
+    //       {
+    //         label: "Bank of america",
+    //         value: {
+    //           name: "Bank of america",
+    //         },
+    //       },
+    //       {
+    //         label: "HSBC",
+    //         value: {
+    //           name: "HSBC France",
+    //         },
+    //       },
+    //     ],
+    //   },
+    // },
   ],
 };
 

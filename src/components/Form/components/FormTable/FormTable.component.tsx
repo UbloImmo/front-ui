@@ -57,7 +57,8 @@ export const FormTable = ({
   EmptyCard,
   data,
 }: BuiltFormTableProps) => {
-  const { isEditing, updateTableRowIndexMap } = useFormContext();
+  const { isEditing, updateTableRowIndexMap, tableRowIndexMap } =
+    useFormContext();
 
   const tableAssistiveText = useFieldAssistiveText(
     { assistiveText, error, errorText },
@@ -66,44 +67,147 @@ export const FormTable = ({
 
   const generateRowId = useCallback(() => uuidv4(), []);
 
-  const [stableRows, setStableRows] = useState<StableFormTableRow[]>(() =>
-    rows.map((row, initialIndex) => ({
-      ...row,
-      stableId: generateRowId(),
-      initialIndex,
-    }))
-  );
+  const [stableRows, setStableRows] = useState<StableFormTableRow[]>(() => {
+    const swappedRows: StableFormTableRow[] = [];
+
+    tableRowIndexMap[stableId]?.forEach((dynamicIndex, initialIndex) => {
+      const row = rows[initialIndex];
+      swappedRows[dynamicIndex] = {
+        ...row,
+        stableId: generateRowId(),
+        initialIndex,
+      };
+    });
+
+    return swappedRows;
+  });
+
+  useEffect(() => {
+    const swappedRows: StableFormTableRow[] = [];
+
+    tableRowIndexMap[stableId]?.forEach((dynamicIndex, initialIndex) => {
+      const row = rows[initialIndex];
+      if (!row) return;
+      const stableRow = stableRows[dynamicIndex];
+      swappedRows[dynamicIndex] = {
+        ...row,
+        stableId: stableRow?.stableId ?? generateRowId(),
+        initialIndex,
+      };
+    });
+
+    setStableRows(swappedRows);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tableRowIndexMap, rows, generateRowId, stableId]);
+
+  // const stableRows = useMemo<StableFormTableRow[]>(() => {
+  //   const swappedRows: StableFormTableRow[] = [];
+
+  //   tableRowIndexMap[stableId]?.forEach((dynamicIndex, initialIndex) => {
+  //     const row = rows[initialIndex];
+  //     swappedRows[dynamicIndex] = { ...row, stableId: row.id, initialIndex };
+  //   });
+
+  //   return swappedRows;
+  //   console.log(tableRowIndexMap[stableId]);
+
+  //   return (tableRowIndexMap[stableId] ?? []).map(
+  //     (dynamicIndex, initialIndex) => {
+  //       const row = rows[dynamicIndex];
+  //       return { ...row, stableId: row.id, initialIndex };
+  //     }
+  //   );
+
+  //   return rows.map((row, initialIndex) => ({
+  //     ...row,
+  //     stableId: row.id,
+  //     initialIndex,
+  //   }));
+  // }, [rows, stableId, tableRowIndexMap]);
 
   const sortableItems = useMemo<UniqueIdentifier[]>(
     () => stableRows.map(({ stableId }) => stableId),
     [stableRows]
   );
 
-  useEffect(() => {
-    // update stable rows data while keeping id
-    const updatedRows = rows
-      .map((row, initialIndex): StableFormTableRow => {
-        const stableRow = stableRows.find(({ id }) => id === row.id);
-        return {
-          ...row,
-          stableId: stableRow?.stableId ?? generateRowId(),
-          initialIndex,
-        };
-      })
-      .sort((a, b) => {
-        const aIndex = sortableItems.indexOf(a.stableId);
-        if (aIndex === -1) return 1;
-        const bIndex = sortableItems.indexOf(b.stableId);
-        if (bIndex === -1) return -1;
-        return aIndex - bIndex;
-      });
-    setStableRows(updatedRows);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows, generateRowId]);
+  // useEffect(() => {
+  //   // update stable rows data while keeping id
+  //   const updatedRows = rows
+  //     .map((row, initialIndex): StableFormTableRow => {
+  //       const stableRow = stableRows.find(({ id }) => id === row.id);
+  //       return {
+  //         ...row,
+  //         stableId: stableRow?.stableId ?? generateRowId(),
+  //         initialIndex,
+  //       };
+  //     })
+  //     .sort((a, b) => {
+  //       const aIndex = sortableItems.indexOf(a.stableId);
+  //       if (aIndex === -1) return 1;
+  //       const bIndex = sortableItems.indexOf(b.stableId);
+  //       if (bIndex === -1) return -1;
+  //       return aIndex - bIndex;
+  //     });
+  //   console.log("stable rows", updatedRows, "rows", rows);
+  //   setStableRows(updatedRows);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [rows, generateRowId]);
 
-  useEffect(() => {
-    updateTableRowIndexMap(stableId, stableRows);
-  }, [stableId, stableRows, updateTableRowIndexMap]);
+  // const stableRows = useMemo(() => {
+  //   // update stable rows data while keeping id
+  //   const updatedRows = rows
+  //     .map((row, initialIndex): StableFormTableRow => {
+  //       return {
+  //         ...row,
+  //         stableId: row.id,
+  //         initialIndex,
+  //       };
+  //     })
+  //     .sort((a, b) => {
+  //       const indexMap = getTableRowIndexMap().get(stableId) ?? [];
+  //       const aIndex = indexMap.indexOf(a.initialIndex);
+  //       if (aIndex === -1) return 1;
+  //       const bIndex = indexMap.indexOf(b.initialIndex);
+  //       if (bIndex === -1) return -1;
+  //       return aIndex - bIndex;
+  //     });
+  //   // setStableRows(updatedRows);
+  //   console.log({ updatedRows, sortableItems, rows });
+  //   // updateTableRowIndexMap(stableId, updatedRows);
+  //   return updatedRows;
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [rows, generateRowId]);
+
+  // useEffect(() => {
+  //   updateTableRowIndexMap(stableId, stableRows);
+  // }, [stableId, stableRows, updateTableRowIndexMap]);
+
+  // const rowsWithStableIds = useMemo<StableFormTableRow[]>(() => {
+  //   return rows.map((row) => ({
+  //     ...row,
+  //     stableId: row.
+  //   }))
+  // })
+
+  // const stableRows2 = useMemo(() => {
+  //   const indexMap = getTableRowIndexMap().get(stableId);
+  //   rows
+  //     .map((row, initialIndex): StableFormTableRow => {
+  //       const stableRow = stableRows.find(({ id }) => id === row.id);
+  //       return {
+  //         ...row,
+  //         stableId: stableRow?.stableId ?? generateRowId(),
+  //         initialIndex,
+  //       };
+  //     })
+  //     .sort((a, b) => {
+  //       const aIndex = sortableItems.indexOf(a.stableId);
+  //       if (aIndex === -1) return 1;
+  //       const bIndex = sortableItems.indexOf(b.stableId);
+  //       if (bIndex === -1) return -1;
+  //       return aIndex - bIndex;
+  //     });
+  // }, [stableId, rows]);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
@@ -119,9 +223,12 @@ export const FormTable = ({
       const oldIndex = sortableItems.indexOf(active.id);
       const newIndex = sortableItems.indexOf(over.id);
       const swapped = arrayMove([...stableRows], oldIndex, newIndex);
-      setStableRows(swapped);
+      console.log({ event, oldIndex, newIndex, swapped });
+
+      updateTableRowIndexMap(stableId, swapped);
+      // setStableRows(swapped);
     },
-    [sortableItems, stableRows]
+    [sortableItems, stableId, stableRows, updateTableRowIndexMap]
   );
 
   const errorTooltip = useMemo<Nullable<TooltipProps>>(() => {
@@ -182,13 +289,14 @@ export const FormTable = ({
               >
                 <SortableContext items={sortableItems}>
                   {stableRows.map(
-                    ({ cells, stableId, initialIndex }, dynamicIndex) => {
+                    ({ cells, stableId, initialIndex, id }, dynamicIndex) => {
                       const rowKey = `table-row-${stableId}-${initialIndex}`;
                       return (
                         <FormTableRow
                           key={rowKey}
                           modifiers={modifiers}
-                          id={stableId}
+                          id={id}
+                          stableId={stableId}
                           cells={cells}
                           index={initialIndex}
                           dynamicIndex={dynamicIndex}

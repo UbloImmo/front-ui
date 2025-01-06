@@ -6,8 +6,10 @@ import {
   isFunction,
   isNull,
   isNullish,
+  isNumber,
   isObject,
   isUndefined,
+  objectFromEntries,
   type DeepKeyOf,
   type DeepKeyOfType,
   type Logger,
@@ -30,6 +32,7 @@ import {
   type FormEvent,
   type ReactNode,
 } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import {
   buildFormText,
@@ -581,6 +584,8 @@ const useFormContent = <TData extends object>(
     ]
   );
 
+  const generateRowId = useCallback(() => uuidv4(), []);
+
   /**
    * @see {@link BuildFormTablePropsFn}
    */
@@ -666,6 +671,7 @@ const useFormContent = <TData extends object>(
         return {
           cells,
           id: rowSource,
+          stableId: generateRowId(),
         };
       });
 
@@ -843,40 +849,107 @@ const useFormTables = <TData extends object>(
 ): UseFormTablesReturn<TData> => {
   const tables = useMemo(() => content.filter(isBuiltFormTable), [content]);
 
-  const tableRowIndexMap = useRef<FormTableRowIndexMap>(
-    new Map(
+  const initTableRowIndexMap = useCallback(() => {
+    return new Map(
       tables.map(({ stableId, rows }): [StableFormTableId, number[]] => [
         stableId,
         rows.map((_, initialIndex) => initialIndex),
       ])
-    )
+    );
+  }, [tables]);
+
+  const tableRowIndexMapRef = useRef<FormTableRowIndexMap>(
+    initTableRowIndexMap()
   );
+
+  const [tableRowIndexMap, setTableRowIndexMap] = useState<
+    Record<StableFormTableId, number[]>
+  >(objectFromEntries([...tableRowIndexMapRef.current.entries()]));
 
   const changeTableRowIndexMap = useCallback(
     (tableId: StableFormTableId, rowIndexMap: number[]) => {
-      tableRowIndexMap.current.set(tableId, rowIndexMap);
+      const copy = new Map(tableRowIndexMapRef.current);
+      copy.set(tableId, rowIndexMap);
+
+      const updated = objectFromEntries([...copy.entries()]);
+      const current = objectFromEntries([
+        ...tableRowIndexMapRef.current.entries(),
+      ]);
+      if (JSON.stringify(updated) === JSON.stringify(current)) return;
+      tableRowIndexMapRef.current = copy;
+
+      setTableRowIndexMap(updated);
     },
     []
   );
 
-  useEffect(() => {
+  const resetTableRowIndexMap = useCallback<VoidFn>(() => {
+    const initialized = initTableRowIndexMap();
+    tableRowIndexMapRef.current = initialized;
+    setTableRowIndexMap(objectFromEntries([...initialized.entries()]));
+  }, [initTableRowIndexMap]);
+
+  const growTableRowIndexMap = useCallback<VoidFn>(() => {
     for (const { stableId, rows } of tables) {
-      if (stableId in tableRowIndexMap.current) continue;
-      changeTableRowIndexMap(
-        stableId,
-        rows.map((_, initialIndex) => initialIndex)
-      );
+      const currentTable = tableRowIndexMapRef.current.get(stableId);
+      if (currentTable && currentTable.length === rows.length) continue;
+
+      if (!currentTable) {
+        changeTableRowIndexMap(
+          stableId,
+          rows.map((_, initialIndex) => initialIndex)
+        );
+        continue;
+      }
+
+      if (currentTable && (currentTable?.length ?? 0) > rows.length) {
+        console.log("shrink", currentTable, rows);
+
+        const shrunkRows = currentTable.filter((dynamicIndex, initialIndex) => {
+          console.log("filter", dynamicIndex, initialIndex);
+          return isNumber(dynamicIndex) && !isUndefined(rows.at(dynamicIndex));
+        });
+        console.log("shrunk", shrunkRows);
+      }
+
+      const newRows = rows.map((_, initialIndex) => {
+        if (!currentTable) return initialIndex;
+        const dynamicIndex = currentTable[initialIndex];
+        if (!isNumber(dynamicIndex)) return initialIndex;
+        if (dynamicIndex !== initialIndex) {
+          console.log(
+            "keep dynamic index",
+            dynamicIndex,
+            "instead of",
+            initialIndex
+          );
+          return dynamicIndex;
+        }
+        return initialIndex;
+      });
+      console.log("grow", stableId, "with rows", newRows);
+
+      if (newRows.some((dynamicIndex) => dynamicIndex > rows.length - 1)) {
+        console.warn("overflow");
+      }
+
+      changeTableRowIndexMap(stableId, newRows);
     }
   }, [tables, changeTableRowIndexMap]);
 
+  useEffect(() => {
+    growTableRowIndexMap();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tables]);
+
   const getTableRowIndexMap = useCallback<GetFormTableRowIndexMapFn>(
-    () => tableRowIndexMap.current,
+    () => tableRowIndexMapRef.current,
     []
   );
 
   const getSpecificTableRowIndexMapCopy = useCallback(
     (tableId: StableFormTableId): number[] => [
-      ...(tableRowIndexMap.current.get(tableId) ?? []),
+      ...(tableRowIndexMapRef.current.get(tableId) ?? []),
     ],
     []
   );
@@ -884,6 +957,10 @@ const useFormTables = <TData extends object>(
   const updateTableRowIndexMap = useCallback<UpdateFormTableRowIndexMapFn>(
     (tableId: StableFormTableId, stableRows: StableFormTableRow[]) => {
       const copy = getSpecificTableRowIndexMapCopy(tableId);
+
+      console.log("before swap");
+      console.log([...copy]);
+      console.log("----");
       for (
         let dynamicIndex = 0;
         dynamicIndex < stableRows.length;
@@ -891,7 +968,15 @@ const useFormTables = <TData extends object>(
       ) {
         const { initialIndex } = stableRows[dynamicIndex];
         copy[initialIndex] = dynamicIndex;
+        console.log(
+          "assign initial index",
+          initialIndex,
+          "to dynamic index",
+          dynamicIndex
+        );
+        console.log([...copy]);
       }
+      console.log("update with", copy);
       changeTableRowIndexMap(tableId, copy);
     },
     [getSpecificTableRowIndexMapCopy, changeTableRowIndexMap]
@@ -938,10 +1023,15 @@ const useFormTables = <TData extends object>(
     [getTableRowIndexMap]
   );
 
+  console.log("tableRowIndexMap", tableRowIndexMap);
+
   return {
     updateTableRowIndexMap,
+    initTableRowIndexMap,
     getTableRowIndexMap,
     reorderAllTablesIfNeeded,
+    resetTableRowIndexMap,
+    tableRowIndexMap,
   };
 };
 
@@ -1038,6 +1128,16 @@ const useFormSubmission = <TData extends object>(
           : (dataToSubmit as FormData<TData>);
         formData.setData(updatedInitialData);
         formData.setInitialData(updatedInitialData);
+        if (isObject(result)) {
+          logger.debug("Resetting table row index map");
+          console.log("pre reset", [
+            ...([...formTables.getTableRowIndexMap().values()][0] ?? []),
+          ]);
+          formTables.resetTableRowIndexMap();
+          console.log("post reset", [
+            ...([...formTables.getTableRowIndexMap().values()][0] ?? []),
+          ]);
+        }
         editState.stopEditing();
         setIsSubmitting(false);
       } catch (e: unknown) {
@@ -1075,10 +1175,11 @@ const useFormSubmission = <TData extends object>(
   const cancelEdition = useCallback<VoidFn>(() => {
     if (!editState.isEditing || isSubmitting) return;
     formData.setData(formData.initialData);
+    formTables.resetTableRowIndexMap();
     editState.stopEditing();
     if (onCancelled) onCancelled();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editState, formData, isSubmitting]);
+  }, [editState, formData, formTables, isSubmitting]);
 
   return { submitForm, isSubmitting, cancelEdition };
 };
@@ -1236,8 +1337,11 @@ const defaultFormContext: FormContext<object> = {
   }),
   updateTableRowIndexMap: () => {},
   getTableRowIndexMap: () => new Map(),
+  initTableRowIndexMap: () => {},
   reorderAllTablesIfNeeded: () => ({}),
+  resetTableRowIndexMap: () => {},
   asModal: null,
+  tableRowIndexMap: {},
 };
 
 const InternalFormContext =

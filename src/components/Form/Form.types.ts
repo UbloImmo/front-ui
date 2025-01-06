@@ -408,6 +408,10 @@ export type BuiltFormTableRow = {
    * The id of the row. Computed from the cell's combined sources if absent
    */
   id: string;
+  /**
+   * The stable id of the row. Used to identify the row regardless of its index
+   */
+  stableId: string;
 };
 
 /**
@@ -1411,15 +1415,63 @@ export type UseFormEditStateReturn = {
 };
 
 export type UseFormLayoutReturn = {
+  /**
+   * The number of columns in the form
+   *
+   * @type {number}
+   */
   columns: number;
+  /**
+   * Builds a {@link BuiltFormFieldLayout} object
+   *
+   * @type {BuildFormFieldLayoutFn}
+   */
   buildFormFieldLayout: BuildFormFieldLayoutFn;
+  /**
+   * Data used to determine if / how the form should be displayed as a modal
+   *
+   * @type {FormLayoutProps["asModal"];}
+   */
   asModal: FormLayoutProps["asModal"];
 };
 
 export type UseFormTablesReturn<TData extends object> = {
+  /**
+   * Updates the form's table row index map
+   *
+   * @type {UpdateFormTableRowIndexMapFn}
+   */
   updateTableRowIndexMap: UpdateFormTableRowIndexMapFn;
+  /**
+   * Retrieves the form's table row index map
+   *
+   * @type {GetFormTableRowIndexMapFn}
+   */
   getTableRowIndexMap: GetFormTableRowIndexMapFn;
+  /**
+   * Reorders all table rows in the form's data if they have been reordered
+   *
+   * @type {ReoderAllTableRowsIfNeededFn<TData>}
+   */
   reorderAllTablesIfNeeded: ReoderAllTableRowsIfNeededFn<TData>;
+  /**
+   * Initializes the form's table row index map, removes any dynamic row indices
+   *
+   * @type {VoidFn}
+   */
+  initTableRowIndexMap: VoidFn;
+  /**
+   * Resets the form's table row index map, removing any dynamic row indices
+   *
+   * @type {VoidFn}
+   */
+  resetTableRowIndexMap: VoidFn;
+  /**
+   * The form's table row index map
+   *
+   * @type {FormTableRowIndexMap}
+   */
+  tableRowIndexMap: Record<StableFormTableId, number[]>;
 };
 
 // ------------------------------- CONTEXT ---------------------------------

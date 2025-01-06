@@ -529,3 +529,7 @@ export const formErrorTranslation = (
   if (error.code === "custom") return error.message;
   return tl.validation[zodIssueTranslationMap[error.code]]();
 };
+
+export const formTableRowId = (rowData: object) => {
+  return JSON.stringify(rowData);
+};
