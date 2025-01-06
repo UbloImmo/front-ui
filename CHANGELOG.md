@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.0.0 - 2025-01-06
 ### Fixed
-
 - `v0.0.22` Form component
   - Fix bug where form data would not be reset to initial state when cancelling edition
   - Fix bug where swapping / deleting rows in a form table would trigger reodering twice upon submission
