@@ -266,6 +266,8 @@ const useGlobalStyle = (theme: Theme): GlobaStyleInnerProps => {
   };
 };
 
+export const BEZIER = "cubic-bezier(0.38, 0, 0.21, 0.98)";
+
 /**
  * Generates a CSS rule set by appending global styles to the root element.
  *
@@ -283,7 +285,7 @@ const appendGlobalStyle = ({
     ${cssReset}
     ${iconOverflow}
     :root {
-      --bezier: cubic-bezier(0.38, 0, 0.21, 0.98);
+      --bezier: ${BEZIER};
       ${defaultCssVarsStr}
     }
     ${mediaQueries}

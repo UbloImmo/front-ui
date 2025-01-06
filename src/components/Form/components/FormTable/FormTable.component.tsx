@@ -12,16 +12,15 @@ import {
   restrictToParentElement,
   restrictToVerticalAxis,
 } from "@dnd-kit/modifiers";
-import { arrayMove, SortableContext } from "@dnd-kit/sortable";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { SortableContext } from "@dnd-kit/sortable";
+import { useCallback, useMemo } from "react";
 
 import { useFormContext } from "../../Form.context";
 import { FormFieldGridItem } from "../FormFieldGridItem.component";
 import { FormTableEmptyState } from "./FormTableEmptyState.component";
 import { FormTableHeader } from "./FormTableHeader/FormTableHeader.component";
 import { FormTableRow } from "./FormTableRow.component";
-import { StableFormTableRow, type BuiltFormTableProps } from "../../Form.types";
+import { type BuiltFormTableProps } from "../../Form.types";
 import { FormTableFooter } from "./FormTableFooter/FormTableFooter.component";
 
 import { FieldContainer } from "@/components/Field";
@@ -35,8 +34,17 @@ import { isEmptyString } from "@utils";
 import type { TooltipProps } from "@/components/Tooltip";
 import type { Nullable } from "@ubloimmo/front-util";
 
+/**
+ * A form table component that displays data in a tabular format with optional editing capabilities.
+ * Supports row deletion, reordering via drag and drop, and dynamic row addition.
+ *
+ * @version 0.0.2
+ *
+ * @param {BuiltFormTableProps} props - The props for the form table component
+ * @returns {JSX.Element} The rendered form table component
+ */
+
 export const FormTable = ({
-  stableId,
   rows,
   layout,
   headers,
@@ -54,56 +62,21 @@ export const FormTable = ({
   columnsCount,
   deleteRow,
   appendRow,
+  swapRows,
   EmptyCard,
   data,
 }: BuiltFormTableProps) => {
-  const { isEditing, updateTableRowIndexMap } = useFormContext();
+  const { isEditing } = useFormContext();
 
   const tableAssistiveText = useFieldAssistiveText(
     { assistiveText, error, errorText },
     data
   );
 
-  const generateRowId = useCallback(() => uuidv4(), []);
-
-  const [stableRows, setStableRows] = useState<StableFormTableRow[]>(() =>
-    rows.map((row, initialIndex) => ({
-      ...row,
-      stableId: generateRowId(),
-      initialIndex,
-    }))
-  );
-
   const sortableItems = useMemo<UniqueIdentifier[]>(
-    () => stableRows.map(({ stableId }) => stableId),
-    [stableRows]
+    () => rows.map(({ stableId }) => stableId),
+    [rows]
   );
-
-  useEffect(() => {
-    // update stable rows data while keeping id
-    const updatedRows = rows
-      .map((row, initialIndex): StableFormTableRow => {
-        const stableRow = stableRows.find(({ id }) => id === row.id);
-        return {
-          ...row,
-          stableId: stableRow?.stableId ?? generateRowId(),
-          initialIndex,
-        };
-      })
-      .sort((a, b) => {
-        const aIndex = sortableItems.indexOf(a.stableId);
-        if (aIndex === -1) return 1;
-        const bIndex = sortableItems.indexOf(b.stableId);
-        if (bIndex === -1) return -1;
-        return aIndex - bIndex;
-      });
-    setStableRows(updatedRows);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows, generateRowId]);
-
-  useEffect(() => {
-    updateTableRowIndexMap(stableId, stableRows);
-  }, [stableId, stableRows, updateTableRowIndexMap]);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
@@ -118,10 +91,9 @@ export const FormTable = ({
       }
       const oldIndex = sortableItems.indexOf(active.id);
       const newIndex = sortableItems.indexOf(over.id);
-      const swapped = arrayMove([...stableRows], oldIndex, newIndex);
-      setStableRows(swapped);
+      swapRows(oldIndex, newIndex);
     },
-    [sortableItems, stableRows]
+    [sortableItems, swapRows]
   );
 
   const errorTooltip = useMemo<Nullable<TooltipProps>>(() => {
@@ -173,7 +145,7 @@ export const FormTable = ({
         <Table layout={tableLayout}>
           <FormTableHeader headers={headers} colSpans={colSpans} />
           <TableBody>
-            {stableRows.length ? (
+            {rows.length ? (
               <DndContext
                 sensors={sensors}
                 onDragEnd={onDragEnd}
@@ -181,23 +153,22 @@ export const FormTable = ({
                 modifiers={[restrictToVerticalAxis, restrictToParentElement]}
               >
                 <SortableContext items={sortableItems}>
-                  {stableRows.map(
-                    ({ cells, stableId, initialIndex }, dynamicIndex) => {
-                      const rowKey = `table-row-${stableId}-${initialIndex}`;
-                      return (
-                        <FormTableRow
-                          key={rowKey}
-                          modifiers={modifiers}
-                          id={stableId}
-                          cells={cells}
-                          index={initialIndex}
-                          dynamicIndex={dynamicIndex}
-                          deleteRow={deleteRow}
-                          colSpans={colSpans}
-                        />
-                      );
-                    }
-                  )}
+                  {rows.map(({ cells, stableId, id }, index) => {
+                    const rowKey = `table-row-${stableId}-${index}`;
+
+                    return (
+                      <FormTableRow
+                        key={rowKey}
+                        modifiers={modifiers}
+                        id={id}
+                        stableId={stableId}
+                        cells={cells}
+                        index={index}
+                        deleteRow={deleteRow}
+                        colSpans={colSpans}
+                      />
+                    );
+                  })}
                 </SortableContext>
               </DndContext>
             ) : (

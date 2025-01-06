@@ -408,6 +408,10 @@ export type BuiltFormTableRow = {
    * The id of the row. Computed from the cell's combined sources if absent
    */
   id: string;
+  /**
+   * The stable id of the row. Used to identify the row regardless of its index
+   */
+  stableId: string;
 };
 
 /**
@@ -416,25 +420,10 @@ export type BuiltFormTableRow = {
  */
 export type StableFormTableId = `${string}-${number}`;
 
-/**
- * A map of stable table ids to their row indexes (initial indexes and dynamic indexes)
- */
-export type FormTableRowIndexMap = Map<StableFormTableId, number[]>;
-
-export type StableFormTableRow = BuiltFormTableRow & {
-  /**
-   * The stable id of the row. Used to identify the row regardless of its index
-   */
-  stableId: string;
-  /**
-   * The index of the row prior to any reordering
-   */
-  initialIndex: number;
-};
-
 export type BuiltFormTableCallbacks = {
   deleteRow: DeleteTableRowFn;
   appendRow: AppendTableRowFn<Record<string, unknown>>;
+  swapRows: SwapTableRowsFn;
 };
 
 /**
@@ -1219,29 +1208,7 @@ export type DeleteTableRowFn = VoidFn<[number]>;
 export type AppendTableRowFn<TRowValue extends Record<string, unknown>> =
   VoidFn<[Partial<TRowValue>]>;
 
-export type UpdateFormTableRowIndexMapFn = VoidFn<
-  [StableFormTableId, StableFormTableRow[]]
->;
-
-/**
- * Retrieves the form's table row index map:
- *
- * @returns {FormTableRowIndexMap} The form's table row index map
- */
-export type GetFormTableRowIndexMapFn = GenericFn<[], FormTableRowIndexMap>;
-
-/**
- * Reorders all table rows in the form if they have been reordered
- *
- * @template {object} TData - The form data
- *
- * @param {TData} data - The form data
- * @returns {TData} The form data with all table rows reordered
- */
-export type ReoderAllTableRowsIfNeededFn<TData extends object> = GenericFn<
-  [TData],
-  TData
->;
+export type SwapTableRowsFn = VoidFn<[number, number]>;
 
 // -------------------------- DISPLAY TRANSFORMS -----------------------------
 
@@ -1324,6 +1291,12 @@ export type UseFormDataReturn<TData extends object> = {
    * @type {boolean}
    */
   isLoading: boolean;
+  /**
+   * Manually sets the form's loading state
+   *
+   * @type {VoidFn<[boolean]>}
+   */
+  setIsLoading: VoidFn<[boolean]>;
 };
 
 /**
@@ -1411,15 +1384,24 @@ export type UseFormEditStateReturn = {
 };
 
 export type UseFormLayoutReturn = {
+  /**
+   * The number of columns in the form
+   *
+   * @type {number}
+   */
   columns: number;
+  /**
+   * Builds a {@link BuiltFormFieldLayout} object
+   *
+   * @type {BuildFormFieldLayoutFn}
+   */
   buildFormFieldLayout: BuildFormFieldLayoutFn;
+  /**
+   * Data used to determine if / how the form should be displayed as a modal
+   *
+   * @type {FormLayoutProps["asModal"];}
+   */
   asModal: FormLayoutProps["asModal"];
-};
-
-export type UseFormTablesReturn<TData extends object> = {
-  updateTableRowIndexMap: UpdateFormTableRowIndexMapFn;
-  getTableRowIndexMap: GetFormTableRowIndexMapFn;
-  reorderAllTablesIfNeeded: ReoderAllTableRowsIfNeededFn<TData>;
 };
 
 // ------------------------------- CONTEXT ---------------------------------
@@ -1438,8 +1420,7 @@ export type FormContext<TData extends object> = UseFormDataReturn<TData> &
   UseFormSubmissionReturn &
   FormModifers &
   UseFormEditStateReturn &
-  UseFormLayoutReturn &
-  UseFormTablesReturn<TData> & {
+  UseFormLayoutReturn & {
     /**
      * An array of {@link BuiltFieldProps},
      * used to render the form's fields

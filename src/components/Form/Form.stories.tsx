@@ -11,15 +11,16 @@ import { FeatureSwitch } from "../FeatureSwitch";
 import { Heading } from "../Heading";
 import { Icon, type IconName } from "../Icon";
 import { Input } from "../Input";
-import { Tooltip } from "../Tooltip";
 import { isFormField } from "./Form.utils";
 import { Hypertext } from "../Hypertext";
+import { Tooltip } from "../Tooltip";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
 import {
   clamp,
   createDelayedResponse,
+  delay,
   useMergedProps,
   useStatic,
 } from "@utils";
@@ -545,18 +546,39 @@ const identityTableSchema = z.object({
 
 type IdentityTable = z.input<typeof identityTableSchema>;
 
+const onSubmitTable = async (data: IdentityTable) => {
+  await delay(1000);
+  fn()(data);
+  return data;
+};
+
+const PrimaryCell = ({ rowIndex }: CustomFormInputProps<boolean>) => {
+  if (rowIndex === 0)
+    return (
+      <FlexRowLayout align="center" justify="center">
+        <Tooltip content="Primary account">
+          <Icon name="StarFill" />
+        </Tooltip>
+      </FlexRowLayout>
+    );
+  return null;
+};
+
 const tableFormProps: FormProps<IdentityTable> = {
   title: "Form with table",
   schema: identityTableSchema,
-  onSubmit: fn(),
+  onSubmit: onSubmitTable,
+  debug: true,
   defaultValues: {
     profiles: [
       {
         firstName: "John has a very very very long name",
         lastName: "Doe",
-      },
-      {
         dateOfBirth: "1990-01-01",
+        numberOfChildren: 0,
+        professionalInfo: {
+          role: "tester",
+        },
       },
     ],
   },
@@ -582,8 +604,11 @@ const tableFormProps: FormProps<IdentityTable> = {
         newRow: () => {
           return {
             lastName: String(Math.round(Math.random() * 100)),
+            firstName: String(Math.round(Math.random() * 100)),
+            dateOfBirth: "1990-01-01",
+            numberOfChildren: 0,
             professionalInfo: {
-              role: "Tester",
+              role: "tester",
             },
           };
         },
@@ -629,10 +654,14 @@ const tableFormProps: FormProps<IdentityTable> = {
               label: "UX/ UI Designer",
               value: "designer_ux_ui",
             },
+            {
+              label: "Tester",
+              value: "tester",
+            },
           ],
         },
         {
-          type: "date",
+          type: "text",
           source: "dateOfBirth",
           label: "Date of birth",
           placeholder: "Date of birth",
@@ -665,17 +694,7 @@ const tableFormProps: FormProps<IdentityTable> = {
           kind: "custom-field",
           source: "primary",
           label: "",
-          CustomInput: ({ rowIndex }: CustomFormInputProps<boolean>) => {
-            if (rowIndex === 0)
-              return (
-                <FlexRowLayout align="center" justify="center">
-                  <Tooltip content="Primary account">
-                    <Icon name="StarFill" />
-                  </Tooltip>
-                </FlexRowLayout>
-              );
-            return null;
-          },
+          CustomInput: PrimaryCell,
         },
       ],
       footer: {
