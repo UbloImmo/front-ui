@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.6` EntityInfoCard component
+  - Fix context menu props injection
+
 ## 1.0.0 - 2025-01-06
 ### Fixed
 - `v0.0.22` Form component
