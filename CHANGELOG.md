@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.22` Form component
+  - Fix bug where form data would not be reset to initial state when cancelling edition
+  - Fix bug where swapping / deleting rows in a form table would trigger reodering twice upon submission
+  - Fix bug where deleting a row in a swapped table would change other rows' order
+
 ## 0.36.2 - 2025-01-06
 ### Changed
 - `v0.0.3` ContextMenuItem component
