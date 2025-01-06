@@ -55,7 +55,7 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
@@ -90,13 +90,13 @@ const EntityInfoCard = (
         )}
         {mergedProps.contextMenu && (
           <ContextMenu
-            {...mergedProps.contextMenu}
             size="m"
             side="bottom"
             align="end"
             testId={`${testId}-context-menu`}
             overrideTestId
             collisionBoundary={elementRef.current}
+            {...mergedProps.contextMenu}
           />
         )}
       </EntityCardHeader>
