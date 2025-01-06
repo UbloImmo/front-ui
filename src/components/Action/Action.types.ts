@@ -79,7 +79,7 @@ export type ActionProps = {
    */
   description?: Nullable<string>;
   /**
-   * An additional to render on the top right corner of the static icon
+   * An additional indicator to render on the top right corner of the static icon
    *
    * @type {Nullable<StaticIconIndicator>}
    * @default null

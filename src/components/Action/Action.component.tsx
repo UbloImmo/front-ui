@@ -59,7 +59,7 @@ const defaultActionProps: DefaultActionProps = {
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
