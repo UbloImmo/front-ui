@@ -22,6 +22,7 @@ import {
 } from "@types";
 import {
   isEmptyString,
+  useClassName,
   useLogger,
   useMergedProps,
   useStyleProps,
@@ -53,13 +54,14 @@ const defaultActionProps: DefaultActionProps = {
   title: null,
   iconTooltip: null,
   description: null,
+  className: null,
   indicator: null,
 };
 
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -70,6 +72,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultActionProps, props);
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("action", props);
+  const className = useClassName(props);
 
   if (!props.icon) {
     warn(`Missing required icon, defaulting to ${defaultActionProps.icon}`);
@@ -174,6 +177,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       disabled={mergedProps.disabled}
+      className={className}
       {...styleProps}
     >
       <StaticIcon {...staticIconProps} />

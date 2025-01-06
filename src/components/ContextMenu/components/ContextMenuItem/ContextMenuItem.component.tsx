@@ -24,12 +24,13 @@ const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
   badgeLabel: null,
   index: 0,
   iconTooltip: null,
+  className: null,
 };
 
 /**
  * Renders a single button or action in a ContextMenu
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {ContextMenuItemProps & TestIdProps} props - ContextMenu component props
  * @returns {JSX.Element}
@@ -71,7 +72,7 @@ const ContextMenuItem = (
 
   if (mergedProps.size === "m")
     return (
-      <Action
+      <StyledAction
         label={mergedProps.label}
         icon={mergedProps.icon ?? "Cursor"}
         title={mergedProps.title ?? mergedProps.label}
@@ -109,4 +110,8 @@ export { ContextMenuItem };
 
 const ContextMenuItemContainer = styled.button`
   ${contextMenuItemStyles}
+`;
+
+const StyledAction = styled(Action)`
+  min-width: 25rem;
 `;

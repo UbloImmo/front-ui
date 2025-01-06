@@ -23,7 +23,7 @@ export const contextMenuStyles = ({
     background: var(--gray-50);
     border: 1px solid var(--primary-medium);
     // Max width of an EntityInfoCard in admin
-    max-width: 25rem;
+    max-width: 25.625rem;
   `;
 };
 
