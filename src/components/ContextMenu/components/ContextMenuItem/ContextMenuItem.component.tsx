@@ -30,7 +30,7 @@ const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
 /**
  * Renders a single button or action in a ContextMenu
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {ContextMenuItemProps & TestIdProps} props - ContextMenu component props
  * @returns {JSX.Element}
