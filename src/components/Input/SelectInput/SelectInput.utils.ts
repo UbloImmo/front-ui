@@ -336,7 +336,7 @@ export const useSelectValue = <
   useEffect(() => {
     if (!mergedProps.onChange) return;
 
-    if (activeOption) {
+    if (activeOption && activeOption.value !== mergedProps.value) {
       mergedProps.onChange(activeOption.value);
     } else if (internalValue !== mergedProps.value) {
       mergedProps.onChange(null);

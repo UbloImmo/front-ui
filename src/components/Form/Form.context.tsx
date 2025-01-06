@@ -1,15 +1,13 @@
+import { arrayMove } from "@dnd-kit/sortable";
 import {
   DeepValueOf,
   deepValueOf,
-  isArray,
   isBoolean,
   isFunction,
   isNull,
   isNullish,
-  isNumber,
   isObject,
   isUndefined,
-  objectFromEntries,
   type DeepKeyOf,
   type DeepKeyOfType,
   type Logger,
@@ -26,19 +24,16 @@ import {
   useEffect,
   useMemo,
   useReducer,
-  useRef,
   useState,
   type Context,
   type FormEvent,
   type ReactNode,
 } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 import {
   buildFormText,
   builtFormTableId,
   formErrorTranslation,
-  isBuiltFormTable,
   isFormCustomContent,
   isFormCustomField,
   isFormDivider,
@@ -97,23 +92,17 @@ import type {
   FormSchema,
   FormSource,
   FormTableProps,
-  FormTableRowIndexMap,
   FormValidation,
   GetFieldErrorFn,
   GetFieldValueFn,
-  GetFormTableRowIndexMapFn,
   IsFieldRequiredFn,
   MutateFormDataFn,
   PropagateChangeFn,
-  ReoderAllTableRowsIfNeededFn,
-  StableFormTableId,
-  StableFormTableRow,
-  UpdateFormTableRowIndexMapFn,
+  SwapTableRowsFn,
   UseFormDataReturn,
   UseFormEditStateReturn,
   UseFormLayoutReturn,
   UseFormSubmissionReturn,
-  UseFormTablesReturn,
   UseFormValidationReturn,
 } from "./Form.types";
 import type { GridEndPosition } from "@layouts";
@@ -237,6 +226,7 @@ const useFormData = <TData extends object>(
     setInitialData,
     mutateFormData,
     isLoading,
+    setIsLoading,
   };
 };
 
@@ -584,8 +574,6 @@ const useFormContent = <TData extends object>(
     ]
   );
 
-  const generateRowId = useCallback(() => uuidv4(), []);
-
   /**
    * @see {@link BuildFormTablePropsFn}
    */
@@ -610,7 +598,7 @@ const useFormContent = <TData extends object>(
 
       /**
        * Deletes a row from the table
-       * @param index The index of the row to delete
+       * @param {number} index The index of the row to delete
        */
       const deleteRow: DeleteTableRowFn = (index) => {
         const updatedArr = [...arrayValue];
@@ -621,11 +609,28 @@ const useFormContent = <TData extends object>(
         );
       };
 
+      /**
+       * Appends a row to the table
+       * @param {Partial<Record<string, unknown>>} newRow The new row to append
+       */
       const appendRow: AppendTableRowFn<Record<string, unknown>> = (newRow) => {
         const updatedArr = [...arrayValue, newRow];
         formData.mutateFormData(
           tableFormSource,
           updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
+        );
+      };
+
+      /**
+       * Swaps two rows in the table
+       * @param {number} oldIndex The index of the row to swap from
+       * @param {number} newIndex The index of the row to swap to
+       */
+      const swapRows: SwapTableRowsFn = (oldIndex, newIndex) => {
+        const swapped = arrayMove([...arrayValue], oldIndex, newIndex);
+        formData.mutateFormData(
+          tableFormSource,
+          swapped as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
         );
       };
 
@@ -671,7 +676,7 @@ const useFormContent = <TData extends object>(
         return {
           cells,
           id: rowSource,
-          stableId: generateRowId(),
+          stableId: rowSource,
         };
       });
 
@@ -724,6 +729,7 @@ const useFormContent = <TData extends object>(
         },
         deleteRow,
         appendRow,
+        swapRows,
         data: arrayValue,
         footer: footerWithTestId ?? null,
         columnsCount,
@@ -836,206 +842,6 @@ const useFormContent = <TData extends object>(
 };
 
 /**
- * Custom form hook
- * Keeps track of all form tables and the order of their (possibly swapped) rows.
- *
- * @template {object} TData - The form data type
- *
- * @param {BuiltFormContent<InputType>} content - The whole built form content
- * @returns {UseFormTablesReturn<TData>} - Data and utility functions pertaining to form tables
- */
-const useFormTables = <TData extends object>(
-  content: BuiltFormContent<InputType>[]
-): UseFormTablesReturn<TData> => {
-  const tables = useMemo(() => content.filter(isBuiltFormTable), [content]);
-
-  const initTableRowIndexMap = useCallback(() => {
-    return new Map(
-      tables.map(({ stableId, rows }): [StableFormTableId, number[]] => [
-        stableId,
-        rows.map((_, initialIndex) => initialIndex),
-      ])
-    );
-  }, [tables]);
-
-  const tableRowIndexMapRef = useRef<FormTableRowIndexMap>(
-    initTableRowIndexMap()
-  );
-
-  const [tableRowIndexMap, setTableRowIndexMap] = useState<
-    Record<StableFormTableId, number[]>
-  >(objectFromEntries([...tableRowIndexMapRef.current.entries()]));
-
-  const changeTableRowIndexMap = useCallback(
-    (tableId: StableFormTableId, rowIndexMap: number[]) => {
-      const copy = new Map(tableRowIndexMapRef.current);
-      copy.set(tableId, rowIndexMap);
-
-      const updated = objectFromEntries([...copy.entries()]);
-      const current = objectFromEntries([
-        ...tableRowIndexMapRef.current.entries(),
-      ]);
-      if (JSON.stringify(updated) === JSON.stringify(current)) return;
-      tableRowIndexMapRef.current = copy;
-
-      setTableRowIndexMap(updated);
-    },
-    []
-  );
-
-  const resetTableRowIndexMap = useCallback<VoidFn>(() => {
-    const initialized = initTableRowIndexMap();
-    tableRowIndexMapRef.current = initialized;
-    setTableRowIndexMap(objectFromEntries([...initialized.entries()]));
-  }, [initTableRowIndexMap]);
-
-  const growTableRowIndexMap = useCallback<VoidFn>(() => {
-    for (const { stableId, rows } of tables) {
-      const currentTable = tableRowIndexMapRef.current.get(stableId);
-      if (currentTable && currentTable.length === rows.length) continue;
-
-      if (!currentTable) {
-        changeTableRowIndexMap(
-          stableId,
-          rows.map((_, initialIndex) => initialIndex)
-        );
-        continue;
-      }
-
-      if (currentTable && (currentTable?.length ?? 0) > rows.length) {
-        console.log("shrink", currentTable, rows);
-
-        const shrunkRows = currentTable.filter((dynamicIndex, initialIndex) => {
-          console.log("filter", dynamicIndex, initialIndex);
-          return isNumber(dynamicIndex) && !isUndefined(rows.at(dynamicIndex));
-        });
-        console.log("shrunk", shrunkRows);
-      }
-
-      const newRows = rows.map((_, initialIndex) => {
-        if (!currentTable) return initialIndex;
-        const dynamicIndex = currentTable[initialIndex];
-        if (!isNumber(dynamicIndex)) return initialIndex;
-        if (dynamicIndex !== initialIndex) {
-          console.log(
-            "keep dynamic index",
-            dynamicIndex,
-            "instead of",
-            initialIndex
-          );
-          return dynamicIndex;
-        }
-        return initialIndex;
-      });
-      console.log("grow", stableId, "with rows", newRows);
-
-      if (newRows.some((dynamicIndex) => dynamicIndex > rows.length - 1)) {
-        console.warn("overflow");
-      }
-
-      changeTableRowIndexMap(stableId, newRows);
-    }
-  }, [tables, changeTableRowIndexMap]);
-
-  useEffect(() => {
-    growTableRowIndexMap();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tables]);
-
-  const getTableRowIndexMap = useCallback<GetFormTableRowIndexMapFn>(
-    () => tableRowIndexMapRef.current,
-    []
-  );
-
-  const getSpecificTableRowIndexMapCopy = useCallback(
-    (tableId: StableFormTableId): number[] => [
-      ...(tableRowIndexMapRef.current.get(tableId) ?? []),
-    ],
-    []
-  );
-
-  const updateTableRowIndexMap = useCallback<UpdateFormTableRowIndexMapFn>(
-    (tableId: StableFormTableId, stableRows: StableFormTableRow[]) => {
-      const copy = getSpecificTableRowIndexMapCopy(tableId);
-
-      console.log("before swap");
-      console.log([...copy]);
-      console.log("----");
-      for (
-        let dynamicIndex = 0;
-        dynamicIndex < stableRows.length;
-        dynamicIndex++
-      ) {
-        const { initialIndex } = stableRows[dynamicIndex];
-        copy[initialIndex] = dynamicIndex;
-        console.log(
-          "assign initial index",
-          initialIndex,
-          "to dynamic index",
-          dynamicIndex
-        );
-        console.log([...copy]);
-      }
-      console.log("update with", copy);
-      changeTableRowIndexMap(tableId, copy);
-    },
-    [getSpecificTableRowIndexMapCopy, changeTableRowIndexMap]
-  );
-
-  /**
-   * @see {@link ReoderAllTableRowsIfNeededFn}
-   */
-  const reorderAllTablesIfNeeded = useCallback<
-    ReoderAllTableRowsIfNeededFn<TData>
-  >(
-    (dataToSubmit) => {
-      // firsly copy original data to avoid mutating it
-      let copy = { ...dataToSubmit };
-      // iterate over all tables and their indices in the row index map
-      for (const [tableId, indices] of getTableRowIndexMap().entries()) {
-        // skip if no items were reordered
-        const noReorder = indices.every(
-          (dynamicIndex, initialIndex) => dynamicIndex === initialIndex
-        );
-        if (noReorder) continue;
-        // extract table source from id
-        // FIXME: find a way to remove excessive casts
-        const tableSource = tableId.split("-")[0] as DeepKeyOfType<
-          TData,
-          Record<string, unknown>[]
-        >;
-        // extract table data from source
-        const tableData = deepValueOf(copy, tableSource, true);
-        // skip if no data was found
-        if (!tableData || !isArray(tableData)) continue;
-        // actual reorder of a table's rows
-        const reordered: Record<string, unknown>[] = [];
-        indices.forEach((dynamicIndex, rowIndex) => {
-          reordered[dynamicIndex] = (tableData as Record<string, unknown>[])[
-            rowIndex
-          ];
-        });
-        copy = setObjectValue(copy, tableSource, reordered as typeof tableData);
-      }
-
-      return copy;
-    },
-    [getTableRowIndexMap]
-  );
-
-  console.log("tableRowIndexMap", tableRowIndexMap);
-
-  return {
-    updateTableRowIndexMap,
-    initTableRowIndexMap,
-    getTableRowIndexMap,
-    reorderAllTablesIfNeeded,
-    resetTableRowIndexMap,
-    tableRowIndexMap,
-  };
-};
-
-/**
  * Custom form hook that handles submission logic.
  *
  * @template {object} TData - The type of the form data.
@@ -1049,7 +855,6 @@ const useFormTables = <TData extends object>(
  */
 const useFormSubmission = <TData extends object>(
   formData: UseFormDataReturn<TData>,
-  formTables: UseFormTablesReturn<TData>,
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
   editState: UseFormEditStateReturn,
@@ -1103,14 +908,6 @@ const useFormSubmission = <TData extends object>(
         dataToSubmit = parsed.data as TData;
       }
 
-      // reorder any table rows based on index map
-      reorderTableRows: {
-        const hasTableRows = formTables.getTableRowIndexMap().size > 0;
-        if (!hasTableRows) break reorderTableRows;
-
-        dataToSubmit = formTables.reorderAllTablesIfNeeded(dataToSubmit);
-      }
-
       try {
         setIsSubmitting(true);
         const result = await onSubmit(dataToSubmit);
@@ -1126,19 +923,10 @@ const useFormSubmission = <TData extends object>(
         const updatedInitialData: FormData<TData> = isObject(result)
           ? result
           : (dataToSubmit as FormData<TData>);
+        editState.stopEditing();
         formData.setData(updatedInitialData);
         formData.setInitialData(updatedInitialData);
-        if (isObject(result)) {
-          logger.debug("Resetting table row index map");
-          console.log("pre reset", [
-            ...([...formTables.getTableRowIndexMap().values()][0] ?? []),
-          ]);
-          formTables.resetTableRowIndexMap();
-          console.log("post reset", [
-            ...([...formTables.getTableRowIndexMap().values()][0] ?? []),
-          ]);
-        }
-        editState.stopEditing();
+
         setIsSubmitting(false);
       } catch (e: unknown) {
         logger.error(e);
@@ -1158,7 +946,6 @@ const useFormSubmission = <TData extends object>(
       validation,
       logger,
       formData,
-      formTables,
       onSubmitError,
     ]
   );
@@ -1175,11 +962,11 @@ const useFormSubmission = <TData extends object>(
   const cancelEdition = useCallback<VoidFn>(() => {
     if (!editState.isEditing || isSubmitting) return;
     formData.setData(formData.initialData);
-    formTables.resetTableRowIndexMap();
+    // formTables.resetTableRowIndexMap();
     editState.stopEditing();
     if (onCancelled) onCancelled();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editState, formData, formTables, isSubmitting]);
+  }, [editState, formData, isSubmitting]);
 
   return { submitForm, isSubmitting, cancelEdition };
 };
@@ -1284,10 +1071,8 @@ export const useForm = <TData extends object>(
     logger,
     props.content
   );
-  const formTables = useFormTables<TData>(content);
   const formSubmission = useFormSubmission(
     formData,
-    formTables,
     formValidation,
     formModifiers,
     formEditState,
@@ -1304,7 +1089,6 @@ export const useForm = <TData extends object>(
     ...formEditState,
     ...formModifiers,
     ...formLayout,
-    ...formTables,
     content,
   };
 };
@@ -1317,6 +1101,7 @@ const defaultFormContext: FormContext<object> = {
   setInitialData: () => {},
   mutateFormData: () => ({}),
   isLoading: false,
+  setIsLoading: () => {},
   isSubmitting: false,
   isEditing: false,
   schema: null,
@@ -1335,13 +1120,7 @@ const defaultFormContext: FormContext<object> = {
     size: 1,
     columnEnd: "span 1",
   }),
-  updateTableRowIndexMap: () => {},
-  getTableRowIndexMap: () => new Map(),
-  initTableRowIndexMap: () => {},
-  reorderAllTablesIfNeeded: () => ({}),
-  resetTableRowIndexMap: () => {},
   asModal: null,
-  tableRowIndexMap: {},
 };
 
 const InternalFormContext =

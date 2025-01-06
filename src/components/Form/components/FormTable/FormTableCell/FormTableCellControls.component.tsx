@@ -86,7 +86,7 @@ export const RowDragHandle = styled.div`
   opacity: 0;
   pointer-events: none;
 
-  transition: opacity 300ms var(--bezier);
+  transition: opacity 0ms var(--bezier);
   z-index: 1;
 
   svg[data-testid="icon"] {
@@ -118,7 +118,7 @@ export const RowDeleteButton = styled.button`
   opacity: 0;
   pointer-events: none;
 
-  transition: opacity 300ms var(--bezier);
+  transition: opacity 0ms var(--bezier);
   z-index: 1;
 
   svg[data-testid="icon"] {

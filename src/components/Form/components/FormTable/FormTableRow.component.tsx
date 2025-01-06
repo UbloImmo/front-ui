@@ -20,6 +20,7 @@ import {
 } from "./FormTableCell/FormTableCellControls.component";
 import { FormTableCustomFieldCell } from "./FormTableCell/FormTableCustomFieldCell.component";
 
+import { BEZIER } from "@/themes";
 import { TableRow } from "@layouts";
 import { useStyleProps, useUikitTranslation, useStatic } from "@utils";
 
@@ -32,7 +33,6 @@ import type { StyleProps } from "@types";
 
 type FormTableRowProps = BuiltFormTableRow & {
   index: number;
-  dynamicIndex: number;
   modifiers: Required<FormTableModifiers>;
   deleteRow: DeleteTableRowFn;
   colSpans: number[];
@@ -42,7 +42,6 @@ export const FormTableRow = ({
   cells,
   modifiers,
   index,
-  dynamicIndex,
   id,
   stableId,
   deleteRow,
@@ -68,7 +67,14 @@ export const FormTableRow = ({
     listeners,
     setActivatorNodeRef,
     isDragging,
-  } = useSortable({ id: stableId, disabled: !mods.swappable });
+  } = useSortable({
+    id: stableId,
+    disabled: !mods.swappable,
+    transition: {
+      duration: 50,
+      easing: BEZIER,
+    },
+  });
 
   const styledProps = useStyleProps({ ...mods, dragging: isDragging });
 
@@ -120,7 +126,7 @@ export const FormTableRow = ({
       id={id}
       style={style}
       data-testid="form-table-row"
-      data-row-index={dynamicIndex}
+      data-row-index={index}
     >
       {cells.map((cell, cellIndex) => {
         const cellKey = `table-cell-${cellIndex}`;
@@ -136,19 +142,19 @@ export const FormTableRow = ({
           return (
             <FormTableCustomFieldCell
               {...cell}
-              key={cellKey}
-              rowIndex={dynamicIndex}
+              rowIndex={index}
               colSpan={colSpan}
               {...controlsProps}
+              key={cellKey}
             />
           );
         }
         return (
           <FormTableFieldCell
-            key={cellKey}
             colSpan={colSpan}
             {...cell}
             {...controlsProps}
+            key={cellKey}
           />
         );
       })}
@@ -178,6 +184,7 @@ const StyledTableRow = styled(TableRow)<StyledTableRowProps>`
     !$dragging &&
     css`
       &:hover ${RowDeleteButton} {
+        transition-duration: 300ms;
         opacity: 1;
         pointer-events: all;
       }
@@ -187,6 +194,7 @@ const StyledTableRow = styled(TableRow)<StyledTableRowProps>`
     $swappable &&
     css`
       &:hover ${RowDragHandle} {
+        transition-duration: 300ms;
         opacity: 1;
         pointer-events: all;
       }

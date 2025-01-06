@@ -13,6 +13,7 @@ import { Icon, type IconName } from "../Icon";
 import { Input } from "../Input";
 import { isFormField } from "./Form.utils";
 import { Hypertext } from "../Hypertext";
+import { Tooltip } from "../Tooltip";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
@@ -546,10 +547,21 @@ const identityTableSchema = z.object({
 type IdentityTable = z.input<typeof identityTableSchema>;
 
 const onSubmitTable = async (data: IdentityTable) => {
-  console.log(data);
   await delay(1000);
   fn()(data);
   return data;
+};
+
+const PrimaryCell = ({ rowIndex }: CustomFormInputProps<boolean>) => {
+  if (rowIndex === 0)
+    return (
+      <FlexRowLayout align="center" justify="center">
+        <Tooltip content="Primary account">
+          <Icon name="StarFill" />
+        </Tooltip>
+      </FlexRowLayout>
+    );
+  return null;
 };
 
 const tableFormProps: FormProps<IdentityTable> = {
@@ -649,7 +661,7 @@ const tableFormProps: FormProps<IdentityTable> = {
           ],
         },
         {
-          type: "date",
+          type: "text",
           source: "dateOfBirth",
           label: "Date of birth",
           placeholder: "Date of birth",
@@ -663,70 +675,60 @@ const tableFormProps: FormProps<IdentityTable> = {
       ],
     },
     "divider",
-    // {
-    //   kind: "table",
-    //   source: "bankAccounts",
-    //   label: "Bank accounts",
-    //   swappable: true,
-    //   deletable: true,
-    //   columns: [
-    //     {
-    //       type: "text",
-    //       source: "name",
-    //       label: "Account name",
-    //       layout: {
-    //         readonly: true,
-    //       },
-    //     },
-    //     {
-    //       kind: "custom-field",
-    //       source: "primary",
-    //       label: "",
-    //       CustomInput: ({ rowIndex }: CustomFormInputProps<boolean>) => {
-    //         if (rowIndex === 0)
-    //           return (
-    //             <FlexRowLayout align="center" justify="center">
-    //               <Tooltip content="Primary account">
-    //                 <Icon name="StarFill" />
-    //               </Tooltip>
-    //             </FlexRowLayout>
-    //           );
-    //         return null;
-    //       },
-    //     },
-    //   ],
-    //   footer: {
-    //     kind: "select",
-    //     searchable: true,
-    //     controlIcon: "Search",
-    //     unique: ["name"],
-    //     testId: "bank-accounts-footer-test-id",
-    //     overrideTestId: true,
-    //     filterOption: ({ value }) => !value?.name?.includes("HSBC"),
-    //     options: [
-    //       {
-    //         testId: "credit-agricole-test-id",
-    //         overrideTestId: true,
-    //         label: "Credit agricole",
-    //         value: {
-    //           name: "Credit agricole",
-    //         },
-    //       },
-    //       {
-    //         label: "Bank of america",
-    //         value: {
-    //           name: "Bank of america",
-    //         },
-    //       },
-    //       {
-    //         label: "HSBC",
-    //         value: {
-    //           name: "HSBC France",
-    //         },
-    //       },
-    //     ],
-    //   },
-    // },
+    {
+      kind: "table",
+      source: "bankAccounts",
+      label: "Bank accounts",
+      swappable: true,
+      deletable: true,
+      columns: [
+        {
+          type: "text",
+          source: "name",
+          label: "Account name",
+          layout: {
+            readonly: true,
+          },
+        },
+        {
+          kind: "custom-field",
+          source: "primary",
+          label: "",
+          CustomInput: PrimaryCell,
+        },
+      ],
+      footer: {
+        kind: "select",
+        searchable: true,
+        controlIcon: "Search",
+        unique: ["name"],
+        testId: "bank-accounts-footer-test-id",
+        overrideTestId: true,
+        filterOption: ({ value }) => !value?.name?.includes("HSBC"),
+        options: [
+          {
+            testId: "credit-agricole-test-id",
+            overrideTestId: true,
+            label: "Credit agricole",
+            value: {
+              name: "Credit agricole",
+            },
+          },
+          {
+            label: "Bank of america",
+            value: {
+              name: "Bank of america",
+            },
+          },
+          {
+            label: "HSBC",
+            value: {
+              name: "HSBC France",
+            },
+          },
+        ],
+      },
+    },
   ],
 };
 
