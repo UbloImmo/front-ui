@@ -1,1 +1,1 @@
-export * from "./ListContext.config";
+export * from "./ListContextConfig";

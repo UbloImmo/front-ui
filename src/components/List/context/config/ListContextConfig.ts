@@ -31,7 +31,8 @@ import {
   listConfigFilterPresetReducer,
   listConfigFilterReducer,
 } from "../ListContext.utils";
-import { useListConfigAsync } from "./ListContext.searchConfig";
+import { useListConfigAsync } from "./ListContextConfig.async";
+import { useListConfigSearch } from "./ListContextConfig.search";
 
 import { mergeDefaultProps, useUikitTranslation } from "@utils";
 
@@ -279,6 +280,8 @@ export const useListConfig: UseListConfig = <TItem extends object>(
       writeParams: null,
     });
 
+  const { searchConfig, setters: search } = useListConfigSearch<TItem>();
+
   /**
    * A reactive, valid list config object
    */
@@ -296,6 +299,7 @@ export const useListConfig: UseListConfig = <TItem extends object>(
       searchParams,
       useDataProvider: dataProvider,
       operator,
+      ...searchConfig,
     };
   }, [
     optionsMap,
@@ -304,11 +308,13 @@ export const useListConfig: UseListConfig = <TItem extends object>(
     searchParams,
     dataProvider,
     operator,
+    searchConfig,
   ]);
 
   return {
     config,
     async,
+    search,
     match,
     matches,
     not,

@@ -130,13 +130,13 @@ export type ListSearchConfig<TItem extends object> = {
    *
    * @default []
    */
-  searchProperties?: FilterProperty<TItem>[];
+  properties?: FilterProperty<TItem>[];
   /**
    * The search strategy used to match the search query against the properties
    *
    * @default "contains"
    */
-  searchStrategy?: ListSearchStrategy;
+  strategy?: ListSearchStrategy;
   /**
    * The error margin used to match the search query against the properties
    *
@@ -144,7 +144,7 @@ export type ListSearchConfig<TItem extends object> = {
    *
    * @default 0
    */
-  searchErrorMargin?: number;
+  errorMargin?: number;
 };
 
 /**
@@ -153,7 +153,7 @@ export type ListSearchConfig<TItem extends object> = {
  * @param {ListSearchConfig<TItem>} searchConfig - The search config to set
  * @returns {void}
  */
-export type ListSearchConfigSetter<TItem extends object> = VoidFn<
+export type ListSearchConfigSetterFn<TItem extends object> = VoidFn<
   [searchConfig: ListSearchConfig<TItem>]
 >;
 
@@ -163,7 +163,7 @@ export type ListSearchConfigSetter<TItem extends object> = VoidFn<
  * @param {FilterProperty<TItem>[]} properties - The properties to set
  * @returns {void}
  */
-export type ListSearchConfigPropertiesSetter<TItem extends object> = VoidFn<
+export type ListSearchConfigPropertiesSetterFn<TItem extends object> = VoidFn<
   [properties: FilterProperty<TItem>[]]
 >;
 
@@ -173,7 +173,7 @@ export type ListSearchConfigPropertiesSetter<TItem extends object> = VoidFn<
  * @param {ListSearchStrategy} strategy - The strategy to set
  * @returns {void}
  */
-export type ListSearchConfigStrategySetter = VoidFn<
+export type ListSearchConfigStrategySetterFn = VoidFn<
   [strategy: ListSearchStrategy]
 >;
 
@@ -183,7 +183,7 @@ export type ListSearchConfigStrategySetter = VoidFn<
  * @param {number} errorMargin - The error margin to set
  * @returns {void}
  */
-export type ListSearchConfigErrorMarginSetter = VoidFn<[errorMargin: number]>;
+export type ListSearchConfigErrorMarginSetterFn = VoidFn<[errorMargin: number]>;
 
 /**
  * Sets the list's search initial query
@@ -191,46 +191,46 @@ export type ListSearchConfigErrorMarginSetter = VoidFn<[errorMargin: number]>;
  * @param {Nullable<string>} initialQuery - The initial query to set
  * @returns {void}
  */
-export type ListSearchConfigInitialQuerySetter = VoidFn<
+export type ListSearchConfigInitialQuerySetterFn = VoidFn<
   [initialQuery: Nullable<string>]
 >;
 
-export type ListSearchConfigSetters<TItem extends object> = {
+export type ListSearchConfigSetterFns<TItem extends object> = {
   /**
    * Sets the whole search config
    *
-   * @see {@link ListSearchConfigSetter}
+   * @see {@link ListSearchConfigSetterFn}
    */
-  set: ListSearchConfigSetter<TItem>;
+  set: ListSearchConfigSetterFn<TItem>;
   /**
    * Sets the search properties
    *
-   * @see {@link ListSearchConfigPropertiesSetter}
+   * @see {@link ListSearchConfigPropertiesSetterFn}
    */
-  properties: ListSearchConfigPropertiesSetter<TItem>;
+  properties: ListSearchConfigPropertiesSetterFn<TItem>;
   /**
    * Sets the search strategy
    *
-   * @see {@link ListSearchConfigStrategySetter}
+   * @see {@link ListSearchConfigStrategySetterFn}
    */
-  strategy: ListSearchConfigStrategySetter;
+  strategy: ListSearchConfigStrategySetterFn;
   /**
    * Sets the search error margin
    *
-   * @see {@link ListSearchConfigErrorMarginSetter}
+   * @see {@link ListSearchConfigErrorMarginSetterFn}
    */
-  errorMargin: ListSearchConfigErrorMarginSetter;
+  errorMargin: ListSearchConfigErrorMarginSetterFn;
   /**
    * Sets the search initial query
    *
-   * @see {@link ListSearchConfigInitialQuerySetter}
+   * @see {@link ListSearchConfigInitialQuerySetterFn}
    */
-  initialQuery: ListSearchConfigInitialQuerySetter;
+  initialQuery: ListSearchConfigInitialQuerySetterFn;
 };
 
 export type UseListSearchConfigReturn<TItem extends object> = {
   searchConfig: Required<ListSearchConfig<TItem>>;
-  setters: ListSearchConfigSetters<TItem>;
+  setters: ListSearchConfigSetterFns<TItem>;
 };
 
 export type UseListSearchConfig = <
@@ -284,7 +284,7 @@ export type ListContextConfig<TItem extends object> = {
    * @default { sync: false }
    */
   searchParams?: ListConfigSearchParams;
-};
+} & ListSearchConfig<TItem>;
 
 type ListConfigSetOperatorFn = VoidFn<[operator: FilterBooleanOperator]>;
 
@@ -318,6 +318,7 @@ export type UseListConfigAsync = <TItem extends object>(
 export type UseListConfigReturn<TItem extends object> = {
   config: Required<ListContextConfig<TItem>>;
   async: UseListConfigAsyncReturn<TItem>;
+  search: ListSearchConfigSetterFns<TItem>;
   match: ListConfigMatchFn<TItem>;
   not: ListConfigNotFn<TItem>;
   divider: ListConfigOptionDividerFn;

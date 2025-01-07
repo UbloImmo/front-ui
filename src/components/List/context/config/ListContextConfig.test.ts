@@ -1,6 +1,6 @@
 import { describe, expect, it, mock, type Mock } from "bun:test";
 
-import { useListConfig } from "./ListContext.config";
+import { useListConfig } from "./ListContextConfig";
 import {
   filterData,
   filterOptionData,
@@ -23,6 +23,7 @@ import {
   listConfigFilterPresetReducer,
   listConfigFilterReducer,
 } from "../ListContext.utils";
+import { useListConfigSearch } from "./ListContextConfig.search";
 
 import { testHookFactory } from "@/tests";
 import { arrayOf } from "@utils";
@@ -748,8 +749,105 @@ const testListConfigOptions = () => {
   );
 };
 
-describe("List Context", () => {
+const testListConfigSearch = () => {
+  type Hook = typeof useListConfigSearch<MockItem>;
+  type HookReturn = ReturnType<Hook>;
+  type HookParams = Parameters<Hook>;
+
+  const testHook = testHookFactory<HookParams, HookReturn, Hook>(
+    "useListConfigSearch",
+    useListConfigSearch<MockItem>
+  )();
+
+  testHook(
+    "should return a valid object containing the search config & setters",
+    (result) => {
+      expect(result).toBeObject();
+      expect(result).toHaveProperty("searchConfig");
+      expect(result.searchConfig).toBeObject();
+      expect(result.searchConfig).toHaveProperty("properties");
+      expect(result.searchConfig).toHaveProperty("strategy");
+      expect(result.searchConfig).toHaveProperty("errorMargin");
+      expect(result.searchConfig).toHaveProperty("initialQuery");
+      expect(result).toHaveProperty("setters");
+      expect(result.setters).toBeObject();
+      expect(result.setters).toHaveProperty("properties");
+      expect(result.setters).toHaveProperty("strategy");
+      expect(result.setters).toHaveProperty("errorMargin");
+      expect(result.setters).toHaveProperty("initialQuery");
+    }
+  );
+
+  const properties = ["index" as const, "value" as const];
+  const strategy = "startsWith";
+  const errorMargin = 1;
+  const initialQuery = "test";
+
+  testHook(
+    "should set the search config at once",
+    (result, _params, { rerender, getResult }) => {
+      expect(result.setters.set).toBeFunction();
+      expect(result.setters.set).not.toThrow();
+      result.setters.set({
+        properties,
+        strategy,
+        errorMargin,
+        initialQuery,
+      });
+      rerender();
+      expect(getResult().searchConfig).toEqual({
+        properties,
+        strategy,
+        errorMargin,
+        initialQuery,
+      });
+    }
+  );
+
+  testHook(
+    "should set the properties",
+    (result, _params, { rerender, getResult }) => {
+      expect(result.setters.properties).toBeFunction();
+      result.setters.properties(properties);
+      rerender();
+      expect(getResult().searchConfig.properties).toEqual(properties);
+    }
+  );
+
+  testHook(
+    "should set the strategy",
+    (result, _params, { rerender, getResult }) => {
+      expect(result.setters.strategy).toBeFunction();
+      result.setters.strategy(strategy);
+      rerender();
+      expect(getResult().searchConfig.strategy).toEqual(strategy);
+    }
+  );
+
+  testHook(
+    "should set the error margin",
+    (result, _params, { rerender, getResult }) => {
+      expect(result.setters.errorMargin).toBeFunction();
+      result.setters.errorMargin(errorMargin);
+      rerender();
+      expect(getResult().searchConfig.errorMargin).toEqual(errorMargin);
+    }
+  );
+
+  testHook(
+    "should set the initial query",
+    (result, _params, { rerender, getResult }) => {
+      expect(result.setters.initialQuery).toBeFunction();
+      result.setters.initialQuery(initialQuery);
+      rerender();
+      expect(getResult().searchConfig.initialQuery).toEqual(initialQuery);
+    }
+  );
+};
+
+describe("List Context Config", () => {
   testListConfigReducers();
   testListConfig();
   testListConfigOptions();
+  testListConfigSearch();
 });
