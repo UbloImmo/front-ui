@@ -149,7 +149,7 @@ export const BalanceJournalRenderer = () => {
     );
 
   return (
-    <Table>
+    <Table layout="fixed">
       <TableHeader sticky top="s-1">
         <TableHeaderCell colSpan={2}>
           <Text color="gray-800" weight="bold">
