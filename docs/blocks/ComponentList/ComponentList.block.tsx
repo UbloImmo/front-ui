@@ -25,6 +25,8 @@ export const ComponentList = <TIndex extends AnyIndex>(
 ): Nullable<JSX.Element> => {
   const index = useStatic(extractComponentsFromIndex(props.index));
 
+  // console.log("props.index", props);
+
   const componentEntries = useStatic(
     componentIndexToEntries(index, props.exclude, props.include)
   );

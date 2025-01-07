@@ -44,6 +44,14 @@ const isComponentName = <TIndex extends AnyIndex>(
   return true;
 };
 
+// const isForwardRefComponent = (component) => {
+//   return (
+//     "$$typeof" in component &&
+//     typeof component.$$typeof === "symbol" &&
+//     String(component.$$typeof) === "Symbol(react.forward_ref)"
+//   );
+// };
+
 /**
  * Extracts components from an index object.
  *
@@ -56,8 +64,12 @@ export const extractComponentsFromIndex = <TIndex extends AnyIndex>(
   index: Nullish<TIndex>
 ): Nullable<ComponentIndex<TIndex>> => {
   if (isNullish(index)) return null;
+
   const entries = objectEntries<TIndex>(index).filter((entry) => {
     const [name, maybeComponent] = entry;
+
+    // console.log(name, isForwardRefComponent(maybeComponent));
+
     // remove hooks
     if (name.includes("use")) return false;
     // remove camelCase in favor of PascalCase

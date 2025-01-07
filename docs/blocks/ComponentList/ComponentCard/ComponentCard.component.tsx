@@ -16,12 +16,13 @@ import {
 import { randomCellSize } from "./ComponentCard.utils";
 import { hasDefaultProps, isDocumentedComponent } from "../ComponentList.utils";
 
+import { SampleGridItems } from "@/layouts/Grid/Grid.stories";
 import { Markdown } from "@docs/blocks/Markdown";
 import { parseJsDoc } from "@docs/docs.utils";
 import { FlexRowLayout } from "@layouts";
 import { capitalize, useStatic } from "@utils";
 
-import { Badge, Heading, Text } from "@components";
+import { Badge, Button, Heading, Text } from "@components";
 
 import type { AnyIndex, ComponentName } from "../ComponentList.types";
 import type { ParsedJsDoc } from "@docs/docs.types";
@@ -82,7 +83,7 @@ export const ComponentCard = <
         : name === "Avatar"
         ? { name: "Mathilde Carbonet" }
         : name === "EntityInfoCard"
-        ? { name: "Entity" }
+        ? { name: name }
         : name === "IconPicker"
         ? { icons: ["Square", "Circle", "Triangle", "Star"] }
         : name === "ComboBox"
@@ -92,6 +93,19 @@ export const ComponentCard = <
               { label: "Option 2", value: "Option 2" },
             ],
           }
+        : name === "Collapsible"
+        ? {
+            children: <Text>{name}</Text>,
+          }
+        : name.endsWith("Layout")
+        ? {
+            children: SampleGridItems,
+          }
+        : name === "Popover"
+        ? {
+            content: name,
+            children: <Button label="Button" />,
+          }
         : {};
 
     return {
@@ -100,11 +114,30 @@ export const ComponentCard = <
     };
   }, [Component, name]);
 
+  const componentName = useMemo(() => {
+    return name.endsWith("Layout") ? name.slice(0, -6) : name;
+  }, [name]);
+
   const redirectToDocs = useMemo(() => {
     const parentPath = parent ? `/${capitalize(parent)}` : "";
-    const url = `Components${parentPath}/${name}/Usage`;
+    const componentOrLayoutPath = parent === "Layouts" ? "" : "Components";
+    const url = `${componentOrLayoutPath}${parentPath}/${componentName}/Usage`;
     return linkTo(url);
-  }, [name, parent]);
+  }, [componentName, parent]);
+
+  // const renderedStory = useMemo(() => {
+  //   return lazy(async () => {
+  //     console.log("loading story");
+  //     const storyOrNull = await loadComponentDefaultStory({
+  //       name,
+  //       parent,
+  //     });
+  //     if (!storyOrNull) return null;
+  //     return { default: storyOrNull };
+  //   });
+  // }, [name, parent]);
+
+  // console.log(renderedStory);
 
   if (!componentProps || !description) {
     return null;
@@ -119,19 +152,22 @@ export const ComponentCard = <
     <CardContainer
       $size={size}
       data-testid="component-card"
-      title={name}
+      title={componentName}
       onClick={redirectToDocs}
     >
       <ComponentContainer data-testid="component-card-component-container">
         <ComponentScaleContainer data-testid="component-card-scale-container">
           {renderedComponent}
+          {/* <Suspense fallback={<Loading />}>
+            {renderedStory && <Canvas of={renderedStory} />}
+          </Suspense> */}
         </ComponentScaleContainer>
         {version && <Badge label={version} color="gray" />}
       </ComponentContainer>
       <InfoContainer>
         <FlexRowLayout gap="s-2" align="center" justify="start">
           <Heading size="h3" weight="medium" color="gray-800" important>
-            {name}
+            {componentName}
           </Heading>
           {internal && <Badge label="Internal" color="warning" />}
           {todo && <Badge label="WIP" color="pending" />}
