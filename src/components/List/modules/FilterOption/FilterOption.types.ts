@@ -46,8 +46,12 @@ export type FilterOptionMatch<TItem extends object> = {
  * - Or a {@link FilterProperty property}, {@link FilterComparisonOperator comparison} and {@link FilterOptionValue value}
  */
 export type ListConfigMatchFnParams<TItem extends object> =
-  | [FilterOptionMatch<TItem>]
-  | [FilterProperty<TItem>, FilterComparisonOperator, FilterOptionValue];
+  | [match: FilterOptionMatch<TItem>]
+  | [
+      property: FilterProperty<TItem>,
+      comparison: FilterComparisonOperator,
+      value: FilterOptionValue
+    ];
 
 /**
  * A function that creates a filter option match from {@link ListConfigMatchFnParams its parameters}
