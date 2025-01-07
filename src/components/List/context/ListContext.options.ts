@@ -1,3 +1,4 @@
+import { isString } from "@ubloimmo/front-util";
 import { useCallback, useEffect } from "react";
 
 import { BooleanOperators } from "../List.enums";
@@ -38,7 +39,7 @@ export const useListOptions: UseListOptions = <TItem extends object>(
         }
       );
       const operator = config.operator ?? BooleanOperators.AND;
-      if (filters) {
+      if (filters?.length) {
         dataProvider.filter({
           filters,
           operator,
@@ -47,7 +48,7 @@ export const useListOptions: UseListOptions = <TItem extends object>(
       }
       dataProvider.filter({
         options: updatedOptions,
-        operator: BooleanOperators.AND,
+        operator,
       });
     },
     [dataProvider, config.filters, config.operator]
@@ -92,6 +93,7 @@ export const useListOptions: UseListOptions = <TItem extends object>(
 
   const getOptionBySignature = useCallback<GetOptionBySignatureFn<TItem>>(
     (optionSignature) => {
+      if (!isString(optionSignature)) return null;
       return (
         options.find(({ signature }) => signature === optionSignature) ?? null
       );
