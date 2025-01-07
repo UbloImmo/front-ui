@@ -1,6 +1,5 @@
 import { describe, expect, it, mock, type Mock } from "bun:test";
 
-import { useListConfig } from "./ListContext.config";
 import {
   filterData,
   filterOptionData,
@@ -16,6 +15,7 @@ import {
   type IDataProvider,
   type UseDataProviderFn,
 } from "../modules";
+import { useListConfig } from "./config/ListContext.config";
 import { useListOptions } from "./ListContext.options";
 import {
   findFilterByIndexAndLabel,

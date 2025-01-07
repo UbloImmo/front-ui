@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useReducer, useRef, useState } from "react";
 
-import { BooleanOperators } from "../List.enums";
+import { BooleanOperators } from "../../List.enums";
 import {
   filterData,
   filterOptionData,
@@ -31,12 +31,12 @@ import {
   type ListConfigOptionFn,
   type ListConfigOptionsFn,
   type UseDataProviderFn,
-} from "../modules";
+} from "../../modules";
+import { invertMatchComparison } from "../../modules/FilterOption/FilterOption.utils";
 import {
   listConfigFilterPresetReducer,
   listConfigFilterReducer,
-} from "./ListContext.utils";
-import { invertMatchComparison } from "../modules/FilterOption/FilterOption.utils";
+} from "../ListContext.utils";
 
 import { mergeDefaultProps, useLogger, useUikitTranslation } from "@utils";
 
@@ -48,7 +48,7 @@ import type {
   UseListConfig,
   UseListConfigAsync,
   UseListConfigReturn,
-} from "./ListContext.types";
+} from "../ListContext.types";
 import type { MaybePromise } from "@types";
 import type { VoidFn } from "@ubloimmo/front-util";
 
