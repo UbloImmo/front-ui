@@ -22,6 +22,7 @@ import type {
   ListConfigOptionFn,
   ListConfigOptionsFn,
   UseDataProviderFn,
+  FilterProperty,
 } from "../modules";
 import type { UseDataArrayReturn } from "@types";
 import type {
@@ -102,6 +103,139 @@ export type ListConfigSearchParams = {
 export type ListConfigConfigureSearchParamsFn = VoidFn<
   [sync: ListConfigSearchParams]
 >;
+
+// SEARCH CONFIG ---------------------------------------------------------------------------------
+
+/**
+ * The list's search strategy
+ *
+ * @type {"contains" | "startsWith" | "endsWith"}
+ * @default "contains"
+ */
+export type ListSearchStrategy = "contains" | "startsWith" | "endsWith";
+
+/**
+ * The list's search configuration object
+ */
+export type ListSearchConfig<TItem extends object> = {
+  /**
+   * The initial search query
+   * Defaults to null
+   *
+   * @default null
+   */
+  initialQuery?: Nullable<string>;
+  /**
+   * The properties to match against the search query
+   *
+   * @default []
+   */
+  searchProperties?: FilterProperty<TItem>[];
+  /**
+   * The search strategy used to match the search query against the properties
+   *
+   * @default "contains"
+   */
+  searchStrategy?: ListSearchStrategy;
+  /**
+   * The error margin used to match the search query against the properties
+   *
+   * Maps to the number of characters that can be off in the search query
+   *
+   * @default 0
+   */
+  searchErrorMargin?: number;
+};
+
+/**
+ * Sets the list's whole search config at once
+ *
+ * @param {ListSearchConfig<TItem>} searchConfig - The search config to set
+ * @returns {void}
+ */
+export type ListSearchConfigSetter<TItem extends object> = VoidFn<
+  [searchConfig: ListSearchConfig<TItem>]
+>;
+
+/**
+ * Sets the list's search properties
+ *
+ * @param {FilterProperty<TItem>[]} properties - The properties to set
+ * @returns {void}
+ */
+export type ListSearchConfigPropertiesSetter<TItem extends object> = VoidFn<
+  [properties: FilterProperty<TItem>[]]
+>;
+
+/**
+ * Sets the list's search strategy
+ *
+ * @param {ListSearchStrategy} strategy - The strategy to set
+ * @returns {void}
+ */
+export type ListSearchConfigStrategySetter = VoidFn<
+  [strategy: ListSearchStrategy]
+>;
+
+/**
+ * Sets the list's search error margin
+ *
+ * @param {number} errorMargin - The error margin to set
+ * @returns {void}
+ */
+export type ListSearchConfigErrorMarginSetter = VoidFn<[errorMargin: number]>;
+
+/**
+ * Sets the list's search initial query
+ *
+ * @param {Nullable<string>} initialQuery - The initial query to set
+ * @returns {void}
+ */
+export type ListSearchConfigInitialQuerySetter = VoidFn<
+  [initialQuery: Nullable<string>]
+>;
+
+export type ListSearchConfigSetters<TItem extends object> = {
+  /**
+   * Sets the whole search config
+   *
+   * @see {@link ListSearchConfigSetter}
+   */
+  set: ListSearchConfigSetter<TItem>;
+  /**
+   * Sets the search properties
+   *
+   * @see {@link ListSearchConfigPropertiesSetter}
+   */
+  properties: ListSearchConfigPropertiesSetter<TItem>;
+  /**
+   * Sets the search strategy
+   *
+   * @see {@link ListSearchConfigStrategySetter}
+   */
+  strategy: ListSearchConfigStrategySetter;
+  /**
+   * Sets the search error margin
+   *
+   * @see {@link ListSearchConfigErrorMarginSetter}
+   */
+  errorMargin: ListSearchConfigErrorMarginSetter;
+  /**
+   * Sets the search initial query
+   *
+   * @see {@link ListSearchConfigInitialQuerySetter}
+   */
+  initialQuery: ListSearchConfigInitialQuerySetter;
+};
+
+export type UseListSearchConfigReturn<TItem extends object> = {
+  searchConfig: Required<ListSearchConfig<TItem>>;
+  setters: ListSearchConfigSetters<TItem>;
+};
+
+export type UseListSearchConfig = <
+  TItem extends object
+>() => UseListSearchConfigReturn<TItem>;
 
 // LIST CONFIG ----------------------------------------------------------------------------------
 

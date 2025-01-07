@@ -1,5 +1,6 @@
 import { describe, expect, it, mock, type Mock } from "bun:test";
 
+import { useListConfig } from "./ListContext.config";
 import {
   filterData,
   filterOptionData,
@@ -14,15 +15,14 @@ import {
   type FilterPresetMap,
   type IDataProvider,
   type UseDataProviderFn,
-} from "../modules";
-import { useListConfig } from "./config/ListContext.config";
-import { useListOptions } from "./ListContext.options";
+} from "../../modules";
+import { useListOptions } from "../ListContext.options";
 import {
   findFilterByIndexAndLabel,
   findFilterPresetByLabel,
   listConfigFilterPresetReducer,
   listConfigFilterReducer,
-} from "./ListContext.utils";
+} from "../ListContext.utils";
 
 import { testHookFactory } from "@/tests";
 import { arrayOf } from "@utils";
@@ -31,7 +31,7 @@ import type {
   ListContextConfig,
   UseListConfigFilterPresetReducerAction,
   UseListConfigFilterReducerAction,
-} from "./ListContext.types";
+} from "../ListContext.types";
 import type { VoidFn } from "@ubloimmo/front-util";
 
 type MockItem = {
