@@ -148,7 +148,8 @@
     "storybook:reinstall": "bun run reinstall && bun storybook",
     "storybook:build": "storybook build",
     "lib:build": "vite build --config vite.config.build.ts",
-    "init:component": "./scripts/init/component.sh"
+    "init:component": "./scripts/init/component.sh",
+    "docs:generate": "bun scripts/docs/index.ts"
   },
   "type": "module",
   "jest": {
