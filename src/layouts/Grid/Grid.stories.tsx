@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import { GridLayout } from "./Grid.layout";
 import { GridFlow, GridGap, GridLayoutProps, GridTemplate } from "./Grid.types";
+import { ComponentVariants } from "../../../docs/blocks/ComponentVariants";
 
 import { arrayOf } from "@/utils/array.utils";
-import { ComponentVariants } from "@docs/blocks";
 
 import type { Meta, StoryObj } from "@storybook/react";
 

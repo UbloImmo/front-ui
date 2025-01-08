@@ -19,7 +19,7 @@ import { hasDefaultProps, isDocumentedComponent } from "../ComponentList.utils";
 import { SampleGridItems } from "@/layouts/Grid/Grid.stories";
 import { Markdown } from "@docs/blocks/Markdown";
 import { parseJsDoc } from "@docs/docs.utils";
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout, TableBody, TableCell, TableRow } from "@layouts";
 import { capitalize, useStatic } from "@utils";
 
 import { Badge, Button, Heading, Text } from "@components";
@@ -66,9 +66,10 @@ export const ComponentCard = <
   });
 
   const componentProps = useMemo(() => {
-    if (!hasDefaultProps(Component)) return {};
+    const defaultProps = hasDefaultProps(Component)
+      ? Component.defaultProps
+      : {};
 
-    const { defaultProps } = Component;
     const additionalProps =
       name === "Text" || name === "Heading"
         ? {
@@ -103,8 +104,22 @@ export const ComponentCard = <
           }
         : name === "Popover"
         ? {
-            content: name,
-            children: <Button label="Button" />,
+            children: <Button label="Button trigger" color="black" />,
+          }
+        : name === "Table"
+        ? {
+            children: (
+              <TableBody>
+                <TableRow>
+                  <TableCell padded>Data 1</TableCell>
+                  <TableCell padded>Data 2</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell padded>Data 3</TableCell>
+                  <TableCell padded>Data 4</TableCell>
+                </TableRow>
+              </TableBody>
+            ),
           }
         : {};
 
@@ -125,20 +140,6 @@ export const ComponentCard = <
     return linkTo(url);
   }, [componentName, parent]);
 
-  // const renderedStory = useMemo(() => {
-  //   return lazy(async () => {
-  //     console.log("loading story");
-  //     const storyOrNull = await loadComponentDefaultStory({
-  //       name,
-  //       parent,
-  //     });
-  //     if (!storyOrNull) return null;
-  //     return { default: storyOrNull };
-  //   });
-  // }, [name, parent]);
-
-  // console.log(renderedStory);
-
   if (!componentProps || !description) {
     return null;
   }
@@ -158,9 +159,6 @@ export const ComponentCard = <
       <ComponentContainer data-testid="component-card-component-container">
         <ComponentScaleContainer data-testid="component-card-scale-container">
           {renderedComponent}
-          {/* <Suspense fallback={<Loading />}>
-            {renderedStory && <Canvas of={renderedStory} />}
-          </Suspense> */}
         </ComponentScaleContainer>
         {version && <Badge label={version} color="gray" />}
       </ComponentContainer>
