@@ -1,7 +1,7 @@
 import { $ } from "bun";
 
 const runTypedoc = async () => {
-  await $`bunx typedoc --options ./typedoc.json`;
+  await $`bunx typedoc`;
 };
 
 const main = async () => {
