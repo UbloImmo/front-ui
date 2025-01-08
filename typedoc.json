@@ -5,6 +5,6 @@
   "includeVersion": true,
   "includeHierarchySummary": true,
   "readme": "./README.md",
-  "out": "./docs/pages/types",
+  "out": "./docs/pages/typedoc",
   "plugin": ["typedoc-plugin-markdown"]
 }
