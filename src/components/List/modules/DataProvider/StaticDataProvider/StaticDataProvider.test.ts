@@ -68,6 +68,13 @@ const isMoreOrEqualTo420 = filterOptionMatch<MockItem>(
   ">=",
   420
 );
+const containsTri = filterOptionMatch<MockItem>("string", "contains", "tri");
+const startsWithSTr = filterOptionMatch<MockItem>(
+  "object.string",
+  "startsWith",
+  "stri"
+);
+const endsWithNg = filterOptionMatch<MockItem>("string", "endsWith", "ng");
 
 const selectOption = (
   option: FilterOptionData<MockItem>
@@ -207,6 +214,9 @@ describe("StaticDataProvider", () => {
         expect(compareItemValue(mockItem, isEqualToFalse)).toBe(true);
         expect(compareItemValue(mockItem, isLessOrEqualTo420)).toBe(true);
         expect(compareItemValue(mockItem, isMoreOrEqualTo420)).toBe(true);
+        expect(compareItemValue(mockItem, containsTri)).toBe(true);
+        expect(compareItemValue(mockItem, startsWithSTr)).toBe(true);
+        expect(compareItemValue(mockItem, endsWithNg)).toBe(true);
       });
     });
 

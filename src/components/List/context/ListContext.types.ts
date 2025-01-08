@@ -23,6 +23,8 @@ import type {
   ListConfigOptionsFn,
   UseDataProviderFn,
   FilterProperty,
+  FilterSearchOperator,
+  DataProviderFilterParam,
 } from "../modules";
 import type { UseDataArrayReturn } from "@types";
 import type {
@@ -107,14 +109,6 @@ export type ListConfigConfigureSearchParamsFn = VoidFn<
 // SEARCH CONFIG ---------------------------------------------------------------------------------
 
 /**
- * The list's search strategy
- *
- * @type {"contains" | "startsWith" | "endsWith"}
- * @default "contains"
- */
-export type ListSearchStrategy = "contains" | "startsWith" | "endsWith";
-
-/**
  * The list's search configuration object
  */
 export type ListSearchConfig<TItem extends object> = {
@@ -122,29 +116,31 @@ export type ListSearchConfig<TItem extends object> = {
    * The initial search query
    * Defaults to null
    *
+   * @type {Nullable<string>}
    * @default null
    */
   initialQuery?: Nullable<string>;
   /**
    * The properties to match against the search query
    *
+   * @type {FilterProperty<TItem>[]}
    * @default []
    */
   properties?: FilterProperty<TItem>[];
   /**
    * The search strategy used to match the search query against the properties
    *
+   * @type {FilterSearchOperator}
    * @default "contains"
    */
-  strategy?: ListSearchStrategy;
+  strategy?: FilterSearchOperator;
   /**
-   * The error margin used to match the search query against the properties
+   * The debounce delay in milliseconds
    *
-   * Maps to the number of characters that can be off in the search query
-   *
-   * @default 0
+   * @type {number}
+   * @default 300
    */
-  errorMargin?: number;
+  debounceDelay?: number;
 };
 
 /**
@@ -170,20 +166,12 @@ export type ListSearchConfigPropertiesSetterFn<TItem extends object> = VoidFn<
 /**
  * Sets the list's search strategy
  *
- * @param {ListSearchStrategy} strategy - The strategy to set
+ * @param {FilterSearchOperator} strategy - The strategy to set
  * @returns {void}
  */
 export type ListSearchConfigStrategySetterFn = VoidFn<
-  [strategy: ListSearchStrategy]
+  [strategy: FilterSearchOperator]
 >;
-
-/**
- * Sets the list's search error margin
- *
- * @param {number} errorMargin - The error margin to set
- * @returns {void}
- */
-export type ListSearchConfigErrorMarginSetterFn = VoidFn<[errorMargin: number]>;
 
 /**
  * Sets the list's search initial query
@@ -193,6 +181,16 @@ export type ListSearchConfigErrorMarginSetterFn = VoidFn<[errorMargin: number]>;
  */
 export type ListSearchConfigInitialQuerySetterFn = VoidFn<
   [initialQuery: Nullable<string>]
+>;
+
+/**
+ * Sets the list's search debounce delay
+ *
+ * @param {number} debounceDelay - The debounce delay to set
+ * @returns {void}
+ */
+export type ListSearchConfigDebounceDelaySetterFn = VoidFn<
+  [debounceDelay: number]
 >;
 
 export type ListSearchConfigSetterFns<TItem extends object> = {
@@ -215,17 +213,17 @@ export type ListSearchConfigSetterFns<TItem extends object> = {
    */
   strategy: ListSearchConfigStrategySetterFn;
   /**
-   * Sets the search error margin
-   *
-   * @see {@link ListSearchConfigErrorMarginSetterFn}
-   */
-  errorMargin: ListSearchConfigErrorMarginSetterFn;
-  /**
    * Sets the search initial query
    *
    * @see {@link ListSearchConfigInitialQuerySetterFn}
    */
   initialQuery: ListSearchConfigInitialQuerySetterFn;
+  /**
+   * Sets the search debounce delay
+   *
+   * @see {@link ListSearchConfigDebounceDelaySetterFn}
+   */
+  debounceDelay: ListSearchConfigDebounceDelaySetterFn;
 };
 
 export type UseListSearchConfigReturn<TItem extends object> = {
@@ -420,6 +418,13 @@ export type UpdateOptionSelectionFn = VoidFn<
   ]
 >;
 
+export type ApplyOptionsFn<TItem extends object> = VoidFn<
+  [
+    options: FilterOptionData<TItem>[],
+    extraFilters?: DataProviderFilterParam<TItem>[]
+  ]
+>;
+
 export type UseListOptionsReturn<TItem extends object> = {
   /**
    * The list's options, wrapped in a useDataArray hook
@@ -429,12 +434,27 @@ export type UseListOptionsReturn<TItem extends object> = {
   options: UseDataArrayReturn<FilterOptionData<TItem>>;
   /**
    * Updates a list option's selection
+   *
+   * @param {FilterSignature} optionSignature - The option signature to update
+   * @param {boolean} selected - Whether the option should be selected
+   * @param {boolean} multi - Whether other options assigned to the same filter stay selected
+   * @param {IsFilterOptionFn} isFilterOption - Whether the option is a filter option
    */
   updateOptionSelection: UpdateOptionSelectionFn;
   /**
    * Gets a list option by its signature
+   *
+   * @param {FilterSignature} optionSignature - The option signature to get
+   * @returns {Nullable<FilterOptionData<TItem>>} The option or null if not found
    */
   getOptionBySignature: GetOptionBySignatureFn<TItem>;
+  /**
+   * Applies the current options to the data provider, filtering the data
+   *
+   * @param {FilterOptionData<TItem>[]} options - The options to apply
+   * @param {DataProviderFilterParam<TItem>[]} extraFilters - Additional filters to apply
+   */
+  applyOptions: ApplyOptionsFn<TItem>;
 };
 
 export type UseListOptions = <TItem extends object>(
@@ -487,6 +507,41 @@ export type UseListFilterPresets = <TItem extends object>(
   options: UseListOptionsReturn<TItem>,
   dataProvider: IDataProvider<TItem>
 ) => UseListFilterPresetsReturn<TItem>;
+
+// LIST SEARCH ---------------------------------------------------------------------------------
+
+/**
+ * Changes the list's search query
+ *
+ * @param {Nullable<string>} query - The new query to set
+ * @returns {void}
+ */
+export type UseListSearchChangeQueryFn = VoidFn<[query: Nullable<string>]>;
+
+export type UseListSearchReturn<TItem extends object> = {
+  /**
+   * The list's search query, normalized to be an empty string if not set
+   *
+   * @type {string}
+   */
+  query: string;
+  /**
+   * The list's search filters, generated from the search query and search config
+   *
+   * @type {DataProviderFilterParam<TItem>[]}
+   */
+  queryFilters: DataProviderFilterParam<TItem>[];
+  /**
+   * Changes the list's search query, debounced
+   *
+   * @type {UseListSearchChangeQueryFn}
+   */
+  changeQuery: UseListSearchChangeQueryFn;
+};
+
+export type UseListSearch = <TItem extends object>(
+  config: ListSearchConfig<TItem>
+) => UseListSearchReturn<TItem>;
 
 // LIST CONTEXT ---------------------------------------------------------------------------------
 
@@ -556,6 +611,7 @@ export type ListContextValue<TItem extends object> = {
   clearAllFilters: VoidFn;
 } & UseListFilterPresetsReturn<TItem> &
   UseListFiltersReturn<TItem> &
+  UseListSearchReturn<TItem> &
   Replace<
     UseListOptionsReturn<TItem>,
     "options",

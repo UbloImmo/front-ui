@@ -23,6 +23,8 @@ import type {
   DataProviderFilterParam,
 } from "../DataProvider.types";
 
+const OBJECT_STR = "[object Object]";
+
 type Comparable = number | Date | string | object;
 /**
  * Type guard to check if a value can be compared using comparison operators
@@ -68,6 +70,24 @@ export const compareItemValue = <TItem extends object>(
       if (canCompare(itemValue) && canCompare(match.value))
         return (itemValue as Comparable) >= match.value;
       return false;
+    case ComparisonOperators.contains: {
+      const itemStr = String(itemValue);
+      const matchStr = String(match.value);
+      if (itemStr === OBJECT_STR || matchStr === OBJECT_STR) return false;
+      return itemStr.includes(matchStr);
+    }
+    case ComparisonOperators.startsWith: {
+      const itemStr = String(itemValue);
+      const matchStr = String(match.value);
+      if (itemStr === OBJECT_STR || matchStr === OBJECT_STR) return false;
+      return itemStr.startsWith(matchStr);
+    }
+    case ComparisonOperators.endsWith: {
+      const itemStr = String(itemValue);
+      const matchStr = String(match.value);
+      if (itemStr === OBJECT_STR || matchStr === OBJECT_STR) return false;
+      return itemStr.endsWith(matchStr);
+    }
     default:
       return itemValue === match.value;
   }

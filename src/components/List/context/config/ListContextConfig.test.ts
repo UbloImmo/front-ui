@@ -767,21 +767,19 @@ const testListConfigSearch = () => {
       expect(result.searchConfig).toBeObject();
       expect(result.searchConfig).toHaveProperty("properties");
       expect(result.searchConfig).toHaveProperty("strategy");
-      expect(result.searchConfig).toHaveProperty("errorMargin");
       expect(result.searchConfig).toHaveProperty("initialQuery");
       expect(result).toHaveProperty("setters");
       expect(result.setters).toBeObject();
       expect(result.setters).toHaveProperty("properties");
       expect(result.setters).toHaveProperty("strategy");
-      expect(result.setters).toHaveProperty("errorMargin");
       expect(result.setters).toHaveProperty("initialQuery");
     }
   );
 
   const properties = ["index" as const, "value" as const];
   const strategy = "startsWith";
-  const errorMargin = 1;
   const initialQuery = "test";
+  const debounceDelay = 1000;
 
   testHook(
     "should set the search config at once",
@@ -791,15 +789,15 @@ const testListConfigSearch = () => {
       result.setters.set({
         properties,
         strategy,
-        errorMargin,
         initialQuery,
+        debounceDelay,
       });
       rerender();
       expect(getResult().searchConfig).toEqual({
         properties,
         strategy,
-        errorMargin,
         initialQuery,
+        debounceDelay,
       });
     }
   );
@@ -821,16 +819,6 @@ const testListConfigSearch = () => {
       result.setters.strategy(strategy);
       rerender();
       expect(getResult().searchConfig.strategy).toEqual(strategy);
-    }
-  );
-
-  testHook(
-    "should set the error margin",
-    (result, _params, { rerender, getResult }) => {
-      expect(result.setters.errorMargin).toBeFunction();
-      result.setters.errorMargin(errorMargin);
-      rerender();
-      expect(getResult().searchConfig.errorMargin).toEqual(errorMargin);
     }
   );
 

@@ -1,7 +1,5 @@
 import { useListContext, ListContextProvider } from "../../context";
 
-import { useLogger } from "@utils";
-
 import type { ListProviderWrapperProps } from "../../List.types";
 
 /**
@@ -18,16 +16,13 @@ import type { ListProviderWrapperProps } from "../../List.types";
 export const ListProviderWrapper = <TItem extends object>(
   props: ListProviderWrapperProps<TItem>
 ): JSX.Element => {
-  const { debug } = useLogger("ListProviderWrapper");
   const parentContext = useListContext<TItem>();
   if (parentContext.contextMissing && props.config) {
-    debug("parent context missing, instanciating own provider");
     return (
       <ListContextProvider config={props.config}>
         {props.children}
       </ListContextProvider>
     );
   }
-  debug("parent context found, using it");
   return <>{props.children}</>;
 };

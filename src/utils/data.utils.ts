@@ -12,7 +12,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type {
   DebouncedState,
   UseDebounceValueOptions,
-  UseeDebounceOptions,
+  UseDebounceOptions,
 } from "@/types";
 
 type UseAsyncDataOnSuccessFn<TData extends NullishPrimitives> = MaybeAsyncFn<
@@ -196,30 +196,6 @@ export const createDelayedResponse =
   };
 
 /**
- * Custom hook that creates a debounced version of a callback function.
- * @template T - Type of the original callback function.
- * @param {T} func - The callback function to be debounced.
- * @param {number} delay - The delay in milliseconds before the callback is invoked (default is `500` milliseconds).
- * @param {DebounceOptions} [options] - Options to control the behavior of the debounced function.
- * @returns {DebouncedState<T>} A debounced version of the original callback along with control functions.
- * @public
- * @see [Documentation](https://usehooks-ts.com/react-hook/use-debounce-callback)
- * @example
- * ```tsx
- * const debouncedCallback = useDebounceCallback(
- *   (searchTerm) => {
- *     // Perform search after user stops typing for 500 milliseconds
- *     searchApi(searchTerm);
- *   },
- *   500
- * );
- *
- * // Later in the component
- * debouncedCallback('react hooks'); // Will invoke the callback after 500 milliseconds of inactivity.
- * ```
- */
-
-/**
  * Custom hook that runs a cleanup function when the component is unmounted.
  * @param {() => void} func - The cleanup function to be executed on unmount.
  * @public
@@ -244,12 +220,37 @@ export function useUnmount(func: () => void) {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
-  func: T,
+/**
+ * Custom hook that creates a debounced version of a callback function.
+ * @template TFunc - Type of the original callback function.
+ * @param {TFunc} func - The callback function to be debounced.
+ * @param {number} delay - The delay in milliseconds before the callback is invoked (default is `500` milliseconds).
+ * @param {DebounceOptions} [options] - Options to control the behavior of the debounced function.
+ * @returns {DebouncedState<TFunc>} A debounced version of the original callback along with control functions.
+ * @public
+ * @see [Documentation](https://usehooks-ts.com/react-hook/use-debounce-callback)
+ * @example
+ * ```tsx
+ * const debouncedCallback = useDebounceCallback(
+ *   (searchTerm) => {
+ *     // Perform search after user stops typing for 500 milliseconds
+ *     searchApi(searchTerm);
+ *   },
+ *   500
+ * );
+ *
+ * // Later in the component
+ * debouncedCallback('react hooks'); // Will invoke the callback after 500 milliseconds of inactivity.
+ * ```
+ */
+export function useDebounceCallback<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TFunc extends (...args: any) => ReturnType<TFunc>
+>(
+  func: TFunc,
   delay = 500,
-  options?: UseeDebounceOptions
-): DebouncedState<T> {
+  options?: UseDebounceOptions
+): DebouncedState<TFunc> {
   const debouncedFunc = useRef<ReturnType<typeof debounce>>();
 
   useUnmount(() => {
@@ -261,7 +262,7 @@ export function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
   const debounced = useMemo(() => {
     const debouncedFuncInstance = debounce(func, delay, options);
 
-    const wrappedFunc: DebouncedState<T> = (...args: Parameters<T>) => {
+    const wrappedFunc: DebouncedState<TFunc> = (...args: Parameters<TFunc>) => {
       return debouncedFuncInstance(...args);
     };
 
@@ -290,11 +291,11 @@ export function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
 
 /**
  * Custom hook that returns a debounced version of the provided value, along with a function to update it.
- * @template T - The type of the value.
- * @param {T | (() => T)} initialValue - The value to be debounced.
+ * @template TValue - The type of the value.
+ * @param {TValue | (() => TValue)} initialValue - The value to be debounced.
  * @param {number} delay - The delay in milliseconds before the value is updated (default is 500ms).
  * @param {object} [options] - Optional configurations for the debouncing behavior.
- * @returns {[T, DebouncedState<(value: T) => void>]} An array containing the debounced value and the function to update it.
+ * @returns {[TValue, DebouncedState<(value: TValue) => void>]} An array containing the debounced value and the function to update it.
  * @public
  * @see [Documentation](https://usehooks-ts.com/react-hook/use-debounce-value)
  * @example
@@ -302,18 +303,20 @@ export function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
  * const [debouncedValue, updateDebouncedValue] = useDebounceValue(inputValue, 500, { leading: true });
  * ```
  */
-export function useDebounceValue<T>(
-  initialValue: T | (() => T),
+export function useDebounceValue<TValue>(
+  initialValue: TValue | (() => TValue),
   delay: number,
-  options?: UseDebounceValueOptions<T>
-): [T, DebouncedState<(value: T) => void>] {
-  const eq = options?.equalityFn ?? ((left: T, right: T) => left === right);
-  const unwrappedInitialValue =
-    initialValue instanceof Function ? initialValue() : initialValue;
-  const [debouncedValue, setDebouncedValue] = useState<T>(
+  options?: UseDebounceValueOptions<TValue>
+): [TValue, DebouncedState<(value: TValue) => void>] {
+  const equals =
+    options?.equalityFn ?? ((left: TValue, right: TValue) => left === right);
+  const unwrappedInitialValue = isFunction(initialValue)
+    ? initialValue()
+    : initialValue;
+  const [debouncedValue, setDebouncedValue] = useState<TValue>(
     unwrappedInitialValue
   );
-  const previousValueRef = useRef<T | undefined>(unwrappedInitialValue);
+  const previousValueRef = useRef<TValue | undefined>(unwrappedInitialValue);
 
   const updateDebouncedValue = useDebounceCallback(
     setDebouncedValue,
@@ -322,7 +325,7 @@ export function useDebounceValue<T>(
   );
 
   // Update the debounced value if the initial value changes
-  if (!eq(previousValueRef.current as T, unwrappedInitialValue)) {
+  if (!equals(previousValueRef.current as TValue, unwrappedInitialValue)) {
     updateDebouncedValue(unwrappedInitialValue);
     previousValueRef.current = unwrappedInitialValue;
   }

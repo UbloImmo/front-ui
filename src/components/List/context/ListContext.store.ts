@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useListFilterPresets } from "./ListContext.filterPresets";
 import { useListFilters } from "./ListContext.filters";
 import { useListOptions } from "./ListContext.options";
+import { useListContextSearch } from "./ListContext.search";
 import { useListContextSearchParams } from "./ListContext.searchParams";
 
 import type { ListContextConfig, ListContextValue } from "./ListContext.types";
@@ -20,6 +21,8 @@ export const useListContextStore = <TItem extends object>({
   const filters = useListFilters(config, options);
 
   const filterPresets = useListFilterPresets(config, options, dataProvider);
+
+  const search = useListContextSearch(config);
 
   const itemCount = useMemo(() => data.length, [data]);
 
@@ -45,11 +48,18 @@ export const useListContextStore = <TItem extends object>({
     return data;
   }, [loading, data]);
 
+  useEffect(() => {
+    if (loading) return;
+    options.applyOptions(optionsArray, search.queryFilters);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [optionsArray, loading, search.queryFilters]);
+
   return {
     ...filterPresets,
     options: optionsArray,
     ...optionMethods,
     ...filters,
+    ...search,
     data: displayData,
     itemCount,
     dataProvider,

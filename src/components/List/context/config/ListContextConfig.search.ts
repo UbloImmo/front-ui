@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 import {
   ListSearchConfigSetterFns,
   type ListSearchConfig,
-  type ListSearchConfigErrorMarginSetterFn,
+  type ListSearchConfigDebounceDelaySetterFn,
   type ListSearchConfigInitialQuerySetterFn,
   type ListSearchConfigPropertiesSetterFn,
   type ListSearchConfigSetterFn,
@@ -24,8 +24,8 @@ const defaultSearchConfig = <TItem extends object>(): Required<
 > => ({
   initialQuery: null,
   strategy: "contains",
-  errorMargin: 0,
   properties: [],
+  debounceDelay: 300,
 });
 
 /**
@@ -79,16 +79,6 @@ export const useListConfigSearch: UseListSearchConfig = <
   );
 
   /**
-   * Updates just the error margin in the configuration
-   *
-   * @param {number} errorMargin - The new error margin
-   */
-  const errorMargin = useCallback<ListSearchConfigErrorMarginSetterFn>(
-    (errorMargin = defaults.errorMargin) => set({ errorMargin }),
-    [defaults.errorMargin, set]
-  );
-
-  /**
    * Updates just the initial query in the configuration
    *
    * @param {Nullable<string>} initialQuery - The new initial query
@@ -99,6 +89,16 @@ export const useListConfigSearch: UseListSearchConfig = <
   );
 
   /**
+   * Updates just the debounce delay in the configuration
+   *
+   * @param {number} debounceDelay - The new debounce delay
+   */
+  const debounceDelay = useCallback<ListSearchConfigDebounceDelaySetterFn>(
+    (debounceDelay = defaults.debounceDelay) => set({ debounceDelay }),
+    [defaults.debounceDelay, set]
+  );
+
+  /**
    * Memoized object containing all the setter functions
    */
   const setters = useMemo<ListSearchConfigSetterFns<TItem>>(
@@ -106,10 +106,10 @@ export const useListConfigSearch: UseListSearchConfig = <
       set,
       properties,
       strategy,
-      errorMargin,
       initialQuery,
+      debounceDelay,
     }),
-    [set, properties, strategy, errorMargin, initialQuery]
+    [set, properties, strategy, initialQuery, debounceDelay]
   );
 
   return { searchConfig, setters };

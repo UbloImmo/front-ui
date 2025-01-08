@@ -17,6 +17,7 @@ import {
   type UseDataProviderFn,
 } from "../modules";
 
+import { Input } from "@/components/Input";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import {
@@ -60,7 +61,7 @@ type PokemonListResponse = {
 };
 
 const DEFAULT_POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon";
-const LIMIT = 250;
+const LIMIT = 700;
 
 const fetchPokemonData = async (): Promise<Pokemon[]> => {
   const fetchDataSubset = async (baseUrl = DEFAULT_POKEAPI_URL) => {
@@ -102,6 +103,7 @@ const usePokemonListConfig = () => {
     filterPreset,
     async,
     configureSearchParams,
+    search,
   } = useListConfig(usePokemonData);
 
   // make the list's options read the search params
@@ -173,6 +175,16 @@ const usePokemonListConfig = () => {
         label: "Electric",
         value: "electric",
         config: { color: "pending", icon: "Lightning" },
+      },
+      {
+        label: "Psychic",
+        value: "psychic",
+        config: { color: "primary" },
+      },
+      {
+        label: "Ice",
+        value: "ice",
+        config: { color: "gray", icon: "Snow" },
       },
     ];
     const typeProperties: FilterProperty<Pokemon>[] = [
@@ -254,6 +266,10 @@ const usePokemonListConfig = () => {
     filterPreset("Obese mice", [names.pikachuOrRaichu, weights.heavy]);
   });
 
+  useStatic(() => {
+    search.properties(["name", "types.0.type.name", "types.1.type.name"]);
+  });
+
   return config;
 };
 
@@ -309,6 +325,11 @@ const Renderer = () => {
   );
 };
 
+const SearchBox = () => {
+  const { query, changeQuery } = useListContext<Pokemon>();
+  return <Input type="text" value={query} onChange={changeQuery} />;
+};
+
 export const PokemonListExample = () => {
   const config = usePokemonListConfig();
 
@@ -318,6 +339,7 @@ export const PokemonListExample = () => {
         <List>
           <SideView direction="column" fill gap="s-3">
             <ListSideHeader title="Pokedex" />
+            <SearchBox />
             <ListFilterCollection title="Attributes" />
           </SideView>
           <FlexLayout fill direction="column" gap="s-2">

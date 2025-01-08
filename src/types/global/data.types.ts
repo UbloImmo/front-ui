@@ -142,7 +142,7 @@ export type UseDebounceValueOptions<T> = {
 };
 
 /** Configuration options for controlling the behavior of the debounced function. */
-export type UseeDebounceOptions = {
+export type UseDebounceOptions = {
   /**
    * Determines whether the function should be invoked on the leading edge of the timeout.
    * @default false

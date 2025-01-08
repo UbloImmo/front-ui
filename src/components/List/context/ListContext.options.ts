@@ -1,5 +1,5 @@
 import { isString } from "@ubloimmo/front-util";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 
 import { BooleanOperators } from "../List.enums";
 import {
@@ -24,20 +24,32 @@ export const useListOptions: UseListOptions = <TItem extends object>(
 ): UseListOptionsReturn<TItem> => {
   const options = useDataArray(config.options ?? [], true);
 
-  const filterDataOnChange = useCallback(
-    (updatedOptions: FilterOptionData<TItem>[]) => {
-      const filters = config.filters?.map(
-        ({ optionSignatures, operator }): DataProviderFilterParam<TItem> => {
-          const selectedOptions = updatedOptions.filter(
-            ({ signature, selected }) =>
-              optionSignatures.includes(signature) && selected
-          );
-          return {
-            operator,
-            selectedOptions,
-          };
-        }
-      );
+  /**
+   * Filters the data provider based on the current options and any extra filters
+   *
+   * @param {FilterOptionData<TItem>[]} updatedOptions - The current state of filter options
+   * @param {DataProviderFilterParam<TItem>[]} extraFilters - Additional filters to apply (e.g. search query generated)
+   */
+  const applyOptions = useCallback(
+    (
+      updatedOptions: FilterOptionData<TItem>[],
+      extraFilters: DataProviderFilterParam<TItem>[] = []
+    ) => {
+      const filters = [
+        ...(config.filters ?? []).map(
+          ({ optionSignatures, operator }): DataProviderFilterParam<TItem> => {
+            const selectedOptions = updatedOptions.filter(
+              ({ signature, selected }) =>
+                optionSignatures.includes(signature) && selected
+            );
+            return {
+              operator,
+              selectedOptions,
+            };
+          }
+        ),
+        ...extraFilters,
+      ];
       const operator = config.operator ?? BooleanOperators.AND;
       if (filters?.length) {
         dataProvider.filter({
@@ -53,11 +65,6 @@ export const useListOptions: UseListOptions = <TItem extends object>(
     },
     [dataProvider, config.filters, config.operator]
   );
-
-  useEffect(() => {
-    if (!dataProvider.loading) filterDataOnChange(options.data);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options.data, dataProvider.loading]);
 
   const updateOptionSelection = useCallback<UpdateOptionSelectionFn>(
     (
@@ -105,5 +112,6 @@ export const useListOptions: UseListOptions = <TItem extends object>(
     options,
     updateOptionSelection,
     getOptionBySignature,
+    applyOptions,
   };
 };

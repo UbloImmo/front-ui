@@ -28,13 +28,16 @@ export type FilterProperty<TItem extends object> = DeepKeyOf<TItem>;
  */
 export type FilterOptionColor = PaletteColor | ColorKey;
 
+export type FilterSearchOperator = "contains" | "startsWith" | "endsWith";
+
 export type FilterComparisonOperatorName =
   | "eq"
   | "neq"
   | "lt"
   | "lte"
   | "gt"
-  | "gte";
+  | "gte"
+  | FilterSearchOperator;
 
 /**
  * The comparison operator, used to match the value against the property
@@ -42,7 +45,14 @@ export type FilterComparisonOperatorName =
  * @type {"=" | ">" | "<" | ">=" | "<="}
  * @default "="
  */
-export type FilterComparisonOperator = "!=" | "=" | ">" | "<" | ">=" | "<=";
+export type FilterComparisonOperator =
+  | "!="
+  | "="
+  | ">"
+  | "<"
+  | ">="
+  | "<="
+  | FilterSearchOperator;
 
 /**
  * The boolean operator, used to combine filters
