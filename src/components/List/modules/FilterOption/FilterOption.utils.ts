@@ -75,6 +75,10 @@ const inverseMatchComparisonMap: ValueMap<
   "<": ">",
   ">=": "<=",
   "<=": ">=",
+  // FIXME: Implement proper inverts for search operators
+  contains: "contains",
+  startsWith: "endsWith",
+  endsWith: "startsWith",
 };
 
 /**

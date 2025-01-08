@@ -28,4 +28,8 @@ export const defaultListContextValue = <
   options: [],
   getOptionBySignature: () => null,
   updateOptionSelection: () => {},
+  query: "",
+  queryFilters: [],
+  changeQuery: () => {},
+  applyOptions: () => {},
 });
