@@ -1,0 +1,10 @@
+{
+  "entryPoints": ["src/utils", "src/sizes", "src/types", "src/typography", "src/components", "src/layouts"],
+  "exclude": ["**/*+(test|component).(ts|tsx)"],
+  "name": "@ubloimmo/uikit",
+  "includeVersion": true,
+  "includeHierarchySummary": true,
+  "readme": "./README.md",
+  "out": "./docs/pages/types",
+  "plugin": ["typedoc-plugin-markdown"]
+}
