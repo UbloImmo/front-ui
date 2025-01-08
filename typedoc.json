@@ -6,5 +6,9 @@
   "includeHierarchySummary": true,
   "readme": "./README.md",
   "out": "./docs/pages/typedoc",
-  "plugin": ["typedoc-plugin-markdown"]
+  "plugin": ["typedoc-plugin-markdown"],
+  "outputFileStrategy": "members",
+  "membersWithOwnFile": ["TypeAlias", "Interface", "Enum", "Function", "Class"],
+  "fileExtension": ".mdx",
+  "logLevel": "Verbose",
 }
