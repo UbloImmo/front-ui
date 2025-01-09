@@ -60,8 +60,7 @@ export type EntityInfoCardProps = {
   /**
    * A list of Info Boxes
    *
-   * @remarks rendered as `InfoBox`s in a 2 column grid.
-   * @remarks If provided with an odd number of boxes, the last one will take up 2 columns.
+   * @remarks rendered as `InfoBox`s in a 2 column grid. If provided with an odd number of boxes, the last one will take up 2 columns.
    *
    * @default []
    */

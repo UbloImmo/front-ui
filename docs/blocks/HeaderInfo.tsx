@@ -1,6 +1,7 @@
 import { Text } from "./Typography";
 
 import { FlexColumnLayout } from "@/layouts";
+import { isEmptyString } from "@utils";
 
 import { Heading } from "@components";
 
@@ -16,7 +17,7 @@ export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
   return (
     <FlexColumnLayout gap="s-3" align="start" justify="start">
       <FlexColumnLayout gap={0} align="start" justify="start">
-        {parent && (
+        {parent && !isEmptyString(parent) && (
           <Text size="xs" color="primary-medium" weight="medium">
             {parent}
           </Text>

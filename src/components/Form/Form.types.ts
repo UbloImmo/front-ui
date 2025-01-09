@@ -978,7 +978,7 @@ export type DefaultFormEditBannerProps = Required<FormEditBannerProps>;
  *
  * @template {object} TData - The type of the form data
  *
- * @see {@link FormDataProps}, {@link FormModifierProps
+ * @see {@link FormDataProps}, {@link FormModifierProps}
  */
 export type FormContextProps<TData extends object> = FormDataProps<TData> &
   FormContentProps<NoInfer<TData>> &

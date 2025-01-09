@@ -130,6 +130,22 @@ export const useStyleProps = <TProps extends Record<string, unknown>>(
  * @template {unknown} TData - The type of the input data.
  * @param {TData | GenericFn<[], TData>} data - The input data to be memoized.
  * @return {TData} The memoized version of the input data.
+ *
+ * @example
+ * const Counter = () => {
+ *   const [reactiveData, setReactiveData] = useState(1);
+ *   // staticData will always be 1
+ *   const staticData = useStatic(() => reactiveData);
+ *
+ *   const increment = () => setReactiveData(reactiveData + 1);
+ *
+ *   return (
+ *     <>
+ *       <div>{staticData} {reactiveData}</div>
+ *       <button onClick={increment}>Increment</button>
+ *     </>
+ *   )
+ * }
  */
 export const useStatic = <TData>(data: TData | GenericFn<[], TData>) => {
   return useMemo<TData>(

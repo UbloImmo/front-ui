@@ -356,9 +356,7 @@ export const useDialog = (reference: DialogReference) => {
 /**
  * Context Provider needed to manager one or multiple dialogs in a page / app.
  *
- * @param {DialogContextProviderProps} props - Initial {@link DialogContext} config.
- * @param {ReactNode} props.children - The children components to be wrapped by the provider.
- * @param {string} props.portalRoot - Query selector targeting the root element to portal the dialogs to.
+ * @param {DialogContextProviderProps} props - Initial {@link DialogContext} config and children.
  * @return {JSX.Element} Its children wrapped in a {@link DialogContext.Provider}
  */
 export const DialogProvider = ({

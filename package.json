@@ -149,7 +149,7 @@
     "storybook:build": "storybook build",
     "lib:build": "vite build --config vite.config.build.ts",
     "init:component": "./scripts/init/component.sh",
-    "docs:generate": "bun scripts/docs/index.ts"
+    "docs:generate": "bunx typedoc --options ./typedoc.config.js"
   },
   "type": "module",
   "jest": {

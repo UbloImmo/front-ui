@@ -13,7 +13,7 @@ const SEPARATORS_AND_IDENTIFIER = new RegExp(
 );
 const NUMBERS_AND_IDENTIFIER = new RegExp("\\d+" + IDENTIFIER.source, "gu");
 
-export type Options = {
+type CamelcaseOptions = {
   /**
    Uppercase the first character: `foo-bar` → `FooBar`
 
@@ -178,7 +178,7 @@ const postProcess = (
  Correctly handles Unicode strings.
 
  @param {string | readonly string[]} input - The string to convert to camel case.
- @param {Options} options - {@link Options}
+ @param {CamelcaseOptions} options - {@link CamelcaseOptions}
 
  @example
  ```
@@ -213,7 +213,7 @@ const postProcess = (
  */
 export function camelCase(
   input: string | readonly string[],
-  options?: Options
+  options?: CamelcaseOptions
 ) {
   if (!(typeof input === "string" || Array.isArray(input))) {
     throw new TypeError("Expected the input to be `string | string[]`");

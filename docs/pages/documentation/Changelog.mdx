@@ -1,4 +1,5 @@
 import { Meta, Markdown } from "@storybook/blocks";
+import { Hypertext } from "@components";
 import { HeaderInfo, Text } from "../../blocks";
 import { Content, Header } from "../../containers";
 import changelog from "../../../CHANGELOG.md?raw";
@@ -8,11 +9,10 @@ import changelog from "../../../CHANGELOG.md?raw";
 
 <Header>
   <HeaderInfo title="Changelog" parent="Documentation">
-    <Text size="m" color="primary-dark">
-    <Markdown>{`All notable changes to the library will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).`}</Markdown>
+    <Text size="m" color="primary-dark" important>
+    All notable changes to the library will be documented in this file.<br/>
+    The format is based on <Hypertext href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</Hypertext>,&nbsp;
+    and this project adheres to <Hypertext href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</Hypertext>.
     </Text>
   </HeaderInfo>
 </Header>
