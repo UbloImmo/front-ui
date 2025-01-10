@@ -1,19 +1,18 @@
 // @ts-check
 
+import { MarkdownPageEvent } from "typedoc-plugin-markdown";
+
 import { MDXTheme } from "./typedoc.theme.js";
 
 /**
  * @param {import('typedoc-plugin-markdown').MarkdownApplication} app
  */
 export function load(app) {
+  // define the theme
   app.renderer.defineTheme("mdx-theme", MDXTheme);
-  // app.renderer.markdownHooks.on("page.begin", (context) => {
-  //   // app.logger.verbose("Formatting page head content");
-  //   return header(context);
-  // });
-  // app.renderer.markdownHooks.on("page.end", () => {
-  //   return lines(`</Content>`);
-  // });
 
-  // app.renderer. markdownHooks.on("content.begin", (context) => )
+  // replace all ts code blocks with tsx
+  app.renderer.on(MarkdownPageEvent.END, (page) => {
+    page.contents = page.contents?.replaceAll(/```ts$/gm, "```tsx");
+  });
 }
