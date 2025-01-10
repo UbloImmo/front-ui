@@ -1,6 +1,7 @@
 /**
  * Array that controls the available input types
  *
+ * @remarks
  * **Sensitive**
  */
 export const inputTypes = [
