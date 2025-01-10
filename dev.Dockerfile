@@ -3,6 +3,9 @@ FROM node:latest AS builder
 WORKDIR /app
 COPY . .
 RUN npm install -g bun && bun install --frozen-lockfile
+# Generates the docs with typedoc, typedoc-plugin-markdown and custom MDX plugin
+RUN bun run docs:generate
+# Builds the storybook
 RUN bun run storybook:build
 
 FROM nginx:alpine

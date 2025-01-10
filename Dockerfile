@@ -8,6 +8,7 @@ COPY bun.lockb bun.lockb
 RUN bun install --frozen-lockfile
 
 COPY . .
+RUN bun run docs:generate
 RUN bun run storybook:build
 
 FROM alpine:3.15 as Stage
