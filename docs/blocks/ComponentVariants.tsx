@@ -128,7 +128,7 @@ type ComponentVariantsDetailedConfig<
   variants: DetailConfigVariants<TComponentProps>;
 };
 
-const isDetailledConfig = <
+const isDetailedConfig = <
   TComponentProps extends Record<string, unknown>,
   TPropKey extends keyof TComponentProps & string
 >(
@@ -149,14 +149,15 @@ const isDetailledConfig = <
  */
 export const ComponentVariants = <
   TComponentProps extends Record<string, unknown>,
-  TPropKey extends keyof TComponentProps & string
+  TPropKey extends keyof TComponentProps & string = keyof TComponentProps &
+    string
 >(
   props:
     | ComponentVariantsConfig<TComponentProps, TPropKey>
     | ComponentVariantsDetailedConfig<TComponentProps>
 ): JSX.Element => {
   const propVariants = useMemo<PropVariant<TComponentProps>[]>(() => {
-    if (isDetailledConfig(props)) {
+    if (isDetailedConfig(props)) {
       return props.variants.map(
         (variant): PropVariant<TComponentProps> => ({
           ...props.defaults,
