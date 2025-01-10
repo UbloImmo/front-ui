@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 import { Text } from "./Typography";
 
 import { FlexColumnLayout } from "@/layouts";
@@ -22,9 +24,9 @@ export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
             {parent}
           </Text>
         )}
-        <Heading size="h1" color="primary-dark" weight="bold" important>
+        <InfoHeading size="h1" color="primary-dark" weight="bold" important>
           {title}
-        </Heading>
+        </InfoHeading>
       </FlexColumnLayout>
 
       {children && (
@@ -35,3 +37,7 @@ export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
     </FlexColumnLayout>
   );
 };
+
+const InfoHeading = styled(Heading)`
+  word-break: break-word;
+`;
