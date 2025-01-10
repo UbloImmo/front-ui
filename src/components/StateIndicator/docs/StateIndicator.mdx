@@ -3,7 +3,7 @@ import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as StateIndicatorStories from "../StateIndicator.stories.tsx";
 
-<Meta title="Components/StateIndicator/Usage" />
+<Meta title="Components/States/StateIndicator/Usage" />
 
 <ComponentInfo of={StateIndicatorStories} figmaId="756-3625" />
 
@@ -22,28 +22,28 @@ import * as StateIndicatorStories from "../StateIndicator.stories.tsx";
 StateIndicator's `label` is a simple string. It is **required**.
 
 > Please try to avoir excessively long label names as labels are set not to wrap onto new lines.
-> <br/>
+>
+> <br />
 > *These **will be clipped** if they overflow*.
 
 <Canvas of={StateIndicatorStories.Labels} />
 
-
 ### Colors
 
 There are a couple available colors, choosing one is as easy as setting the optional `color` property.
-<br/>
+
+<br />
 Defaults to `primary`.
 
 <Canvas of={StateIndicatorStories.Colors} />
 
 ### Icons
 
-StateIndicators internally use an [Icon](?path=/docs/components-icon-usage--docs) to render their provided `icon`.
+StateIndicators internally use an [Icon](?path=/docs/components-iconography-icon-usage--docs) to render their provided `icon`.
 As such, they can take any valid `IconName`.
 
-> Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list.
+> Please refer to the [Icon Repository](?path=/docs/components-iconography-icon-repository--docs) for a complete list.
 
 <Canvas of={StateIndicatorStories.Icons} />
-
 
 </Content>

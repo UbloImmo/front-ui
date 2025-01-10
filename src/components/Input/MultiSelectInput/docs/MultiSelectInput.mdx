@@ -4,7 +4,7 @@ import { Content } from "@docs/containers";
 import * as MultiSelectInputStories from "../MultiSelectInput.stories.tsx";
 import { Icon } from "../../../Icon/Icon.component.tsx";
 
-<Meta title="Components/Input/MultiSelectInput/Usage" />
+<Meta title="Components/Forms/Input/MultiSelectInput/Usage" />
 
 <ComponentInfo of={MultiSelectInputStories} figmaId="76-6562" />
 
@@ -12,14 +12,14 @@ import { Icon } from "../../../Icon/Icon.component.tsx";
 
 ## Usage
 
-`MultiSelectInput` is a variant of [SelectInput](?path=/docs/components-input-selectinput-usage--docs) that allows the user to select multiple options from a list.
-It displays its selected options using a regular [Chip](?path=/docs/components-chip-usage-docs) component.
+`MultiSelectInput` is a variant of [SelectInput](?path=/docs/components-forms-input-selectinput-usage--docs) that allows the user to select multiple options from a list.
+It displays its selected options using a regular [Chip](?path=/docs/components-actions-chip-usage--docs) component.
 
 ### Un/Selecting options
 
 To select an option, simply click on it in the dropdown list. The selected option will appear as a chip above the input field. multiple options can be selected, and each will be displayed as a separate chip.
 
-Unlike [SelectInput](?path=/docs/components-input-selectinput-usage--docs), this input cannot be made searchable.
+Unlike [SelectInput](?path=/docs/components-forms-input-selectinput-usage--docs), this input cannot be made searchable.
 
 To unselect an option, you can either click on the <Icon name="XLg" size="s-3" /> icon on the chip to remove it.
 
@@ -38,7 +38,7 @@ Disabled options cannot be selected not unselected and are visually distinct fro
 
 ### Loading state
 
-This input shows the loading state of the options by displaying a loading animation. Specifically, a **BouncingBalls** [Loading](?path=/docs/components-loading-usage--docs) component is displayed within the input while the options are being loaded.
+This input shows the loading state of the options by displaying a loading animation. Specifically, a **BouncingBalls** [Loading](?path=/docs/components-feedbacks-loading-usage--docs) component is displayed within the input while the options are being loaded.
 
 <Canvas of={MultiSelectInputStories.LoadingOptions} />
 
@@ -59,10 +59,10 @@ that is displayed on focus when the `searchable` property is enabled.
 
 #### Custom control icon
 
-`MultiSelectInput` uses the `CaretDownFill` [Icon](?path=/docs/components-icon-usage--docs) (<Icon name="CaretDownFill" />) by default as its *control icon*.
+`MultiSelectInput` uses the `CaretDownFill` [Icon](?path=/docs/components-iconography-icon-usage--docs) (<Icon name="CaretDownFill" />) by default as its _control icon_.
 To customize it, provide the name of your icon in the optional `controlIcon` property.
 
-Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list.
+Please refer to the [Icon Repository](?path=/docs/components-iconography-icon-repository--docs) for a complete list.
 
 <Canvas of={MultiSelectInputStories.ControlIcon} />
 

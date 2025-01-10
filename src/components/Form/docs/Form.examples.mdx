@@ -4,7 +4,7 @@ import { Content } from "@docs/containers";
 import * as FormStories from "../Form.stories.tsx";
 import { Icon } from "@/components";
 
-<Meta title="Components/Form/Examples" />
+<Meta title="Components/Forms/Form/Examples" />
 
 <ComponentInfo of={FormStories} figmaId="2407-16053" />
 
@@ -15,7 +15,7 @@ import { Icon } from "@/components";
 As our Form component gets more and more customizable and richer,
 it gets harder and harder to truly convey just how many different ways it can be used.
 
-> Take a look at the _Show code_ button under the each of the following examples to wrap your head around the various [property combinations](?path=/docs/components-form-properties--docs), their usage and their result.
+> Take a look at the _Show code_ button under the each of the following examples to wrap your head around the various [property combinations](?path=/docs/components-forms-form-properties--docs), their usage and their result.
 
 ### A form tailored for creation
 
@@ -29,7 +29,6 @@ We got tables <Icon name="EmojiSmile" />
 
 <Canvas of={FormStories.Table} />
 
-
 ### Custom fields
 
 <Canvas of={FormStories.CustomFields} />
@@ -37,7 +36,6 @@ We got tables <Icon name="EmojiSmile" />
 ### Custom content
 
 <Canvas of={FormStories.CustomContent} />
-
 
 ### A form as a modal
 
@@ -47,12 +45,14 @@ Yeah... _We still need to work on adding that and figuring out how to make it pl
 <Canvas of={FormStories.AsModal} />
 
 <Callout color="warning" icon="ExclamationTriangle">
-  This variant is not fully implemented yet and remains at an experimental state.
+  This variant is not fully implemented yet and remains at an experimental
+  state.
 </Callout>
 
 ### Steps within a form ??
 
 _Has science gone too far ?_
+
 <br />
 **Yes.** It does _not_ work (_yet_).
 

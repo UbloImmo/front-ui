@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import { GridLayout } from "./Grid.layout";
 import { GridFlow, GridGap, GridLayoutProps, GridTemplate } from "./Grid.types";
+import { ComponentVariants } from "../../../docs/blocks/ComponentVariants";
 
 import { arrayOf } from "@/utils/array.utils";
-import { ComponentVariants } from "@docs/blocks";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -37,11 +37,11 @@ const GridItemSpans = styled(GridItem)`
   }
 `;
 
-const sampleGridItems = arrayOf(4, (index) => <GridItem key={index} />);
+export const SampleGridItems = arrayOf(4, (index) => <GridItem key={index} />);
 
 export const Default: Story = {
   args: {
-    children: sampleGridItems,
+    children: SampleGridItems,
   },
 };
 
@@ -66,7 +66,7 @@ export const Gap = (props: Partial<GridLayoutProps>) => {
   );
 };
 Gap.args = {
-  children: sampleGridItems,
+  children: SampleGridItems,
 };
 
 const columns: GridTemplate[] = [2, 4, ["1fr", "2fr"], "unset"];
@@ -91,7 +91,7 @@ export const Columns = (props: Partial<GridLayoutProps>) => {
 };
 
 Columns.args = {
-  children: sampleGridItems,
+  children: SampleGridItems,
   justify: "center",
 };
 
@@ -120,7 +120,7 @@ export const Rows = (props: Partial<GridLayoutProps>) => {
 Rows.args = {
   columns: 3,
   flow: "column",
-  children: sampleGridItems,
+  children: SampleGridItems,
 };
 
 const flow: GridFlow[] = ["row", "column"];

@@ -15,7 +15,7 @@ const componentSource = componentSourceFactory<ComboBoxButtonProps>(
 
 const meta = {
   component: ComboBoxButton,
-  title: "Components/ComboBoxButton/Stories",
+  title: "Components/Forms/ComboBoxButton/Stories",
   args: {
     label: "[ComboBox option]",
     multi: false,

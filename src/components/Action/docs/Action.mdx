@@ -3,7 +3,7 @@ import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as ActionStories from "../Action.stories.tsx";
 
-<Meta title="Components/Action/Usage" />
+<Meta title="Components/Actions/Action/Usage" />
 
 <ComponentInfo of={ActionStories} figmaId="761-4208" />
 
@@ -36,10 +36,10 @@ There are no hard limits to the Action's label. Be wary of very long labels as t
 
 #### Icon
 
-Actions internally use a [StaticIcon](?path=/docs/components-staticicon-usage--docs) to render their Icon.
+Actions internally use a [StaticIcon](?path=/docs/components-iconography-staticicon-usage--docs) to render their Icon.
 As such, they can take any valid `IconName`.
 
-> Please refer to the [Icon Repository](?path=/docs/components-icon-repository--docs) for a complete list.
+> Please refer to the [Icon Repository](?path=/docs/components-iconography-icon-repository--docs) for a complete list.
 
 <Canvas of={ActionStories.Icons} />
 
@@ -47,7 +47,7 @@ As such, they can take any valid `IconName`.
 
 #### Badge
 
-Provide a `badgeLabel` to display a [Badge](?path=/docs/components-badge-usage--docs) alongside the Action's label.
+Provide a `badgeLabel` to display a [Badge](?path=/docs/components-states-badge-usage--docs) alongside the Action's label.
 Its color will change between `primary` and `gray` depending on the Actions's `disabled` property.
 
 > No `Badge` will be rendered if `badgeLabel` is an empty string or missing.
@@ -56,7 +56,7 @@ Its color will change between `primary` and `gray` depending on the Actions's `d
 
 #### Tooltips
 
-Add a [Tooltips's properties object](?path=/docs/components-tooltip-properties--docs) as its `iconTooltip` property to display a tooltip inside the action.
+Add a [Tooltips's properties object](?path=/docs/components-feedbacks-tooltip-properties--docs) as its `iconTooltip` property to display a tooltip inside the action.
 
 > Any children passed to the `iconTooltip` property will be ignored so as to always render an icon
 

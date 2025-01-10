@@ -12,7 +12,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {
-  title: "Components/InputLabel/Stories",
+  title: "Components/Forms/InputLabel/Stories",
   component: InputLabel,
   decorators: [
     (Story) => (

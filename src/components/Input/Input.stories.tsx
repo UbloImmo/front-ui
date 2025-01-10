@@ -13,7 +13,7 @@ import type { InputProps, InputType } from "./Input.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/Input/Stories",
+  title: "Components/Forms/Input/Stories",
   component: Input,
   argTypes: {
     type: {

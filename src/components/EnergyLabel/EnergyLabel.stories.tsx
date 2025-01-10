@@ -27,7 +27,7 @@ const meta = {
     },
   },
   component: EnergyLabel,
-  title: "Components/EnergyLabel/Stories",
+  title: "Components/States/EnergyLabel/Stories",
   args: {
     type: "DPE",
     state: "inactive",

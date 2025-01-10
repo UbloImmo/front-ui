@@ -25,7 +25,7 @@ const componentSource = componentSourceFactory<FieldProps<InputType>>(
 
 const meta = {
   component: Field,
-  title: "Components/Field/Stories",
+  title: "Components/Forms/Field/Stories",
   args: {
     ...Field.defaultProps,
     onChange: fn() as FieldProps<"text">["onChange"],

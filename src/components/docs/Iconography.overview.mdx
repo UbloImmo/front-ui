@@ -1,0 +1,24 @@
+import { Content, Header } from "@docs/containers";
+import { HeaderInfo, Text } from "@docs/blocks";
+import { ComponentList } from "@docs/blocks/ComponentList/ComponentList.block";
+import { Meta } from "@storybook/blocks";
+import * as componentsIndexRaw from "@components";
+
+<Meta title="Components/Iconography/Overview" />
+
+<Header>
+  <HeaderInfo title="Iconography overview" parent="Components/Iconography">
+    <Text color="primary-dark">The components to display icons.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Icon", "StaticIcon"]}
+  parent="Iconography"
+  randomSize
+/>
+
+</Content>

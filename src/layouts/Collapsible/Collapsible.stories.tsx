@@ -1,11 +1,10 @@
-import { Collapsible } from "./Collapsible.component";
-import { Badge } from "../Badge";
-import { StaticIcon } from "../StaticIcon";
-import { Text } from "../Text";
+import { Collapsible } from "./Collapsible.layout";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout } from "@layouts";
+
+import { Badge, StaticIcon, Text } from "@components";
 
 import type {
   CollapsibleDefaultProps,
@@ -77,7 +76,7 @@ const CustomSubCollapsibles: CollapsibleDefaultProps[] = [
 
 const meta = {
   component: Collapsible,
-  title: "Components/Collapsible/Stories",
+  title: "Layouts/Collapsible/Stories",
   args: {
     ...defaultCollapsibleChildren,
     subCollapsibles: [defaultCollapsibleChildren],

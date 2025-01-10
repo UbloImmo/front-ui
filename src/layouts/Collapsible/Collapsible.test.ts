@@ -1,6 +1,6 @@
 import { expect, mock } from "bun:test";
 
-import { Collapsible } from "./Collapsible.component";
+import { Collapsible } from "./Collapsible.layout";
 
 import { testComponentFactory } from "@/tests";
 

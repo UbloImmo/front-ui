@@ -1,0 +1,24 @@
+import { Content, Header } from "@docs/containers";
+import { HeaderInfo, Text } from "@docs/blocks";
+import { ComponentList } from "@docs/blocks/ComponentList/ComponentList.block";
+import { Meta } from "@storybook/blocks";
+import * as layoutsIndexRaw from "../index";
+
+<Meta title="Layouts/Overview" />
+
+<Header>
+  <HeaderInfo title="Layouts overview" parent="Layouts">
+    <Text color="primary-dark">
+      Discover all the layouts you can use to structure your interfaces.
+    </Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+  <ComponentList
+    index={layoutsIndexRaw}
+    include={["FlexLayout", "GridLayout", "Collapsible", "Popover", "Table"]}
+    parent="Layouts"
+    randomSize
+  />
+</Content>

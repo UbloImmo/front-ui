@@ -1,11 +1,10 @@
-
 import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
-import { Icon, Input } from "@components"
+import { Icon, Input } from "@components";
 import { Content } from "@docs/containers";
 import * as CopyClipboardInfoCardStories from "../CopyClipboardInfoCard.stories.tsx";
 
-<Meta title="Components/CopyClipboardInfoCard/Usage" />
+<Meta title="Components/Entity/CopyClipboardInfoCard/Usage" />
 
 <ComponentInfo of={CopyClipboardInfoCardStories} />
 
@@ -13,7 +12,7 @@ import * as CopyClipboardInfoCardStories from "../CopyClipboardInfoCard.stories.
 
 ## Usage
 
-You will rarely need to use this component by itself but may often come across it when rendered by other components - such as [EntityInfoCard](?path=/components-entityinfocard--usage).
+You will rarely need to use this component by itself but may often come across it when rendered by other components - such as [EntityInfoCard](?path=/docs/components-entity-entityinfocard-usage--docs).
 It displays basic information and allows users to **easily copy it**.
 
 ### Content customization
@@ -27,7 +26,7 @@ The `info` property is directly displayed in the `CopyClipboardInfoCard` compone
 #### Icon
 
 The `icon` property allows you to customize the icon used to represent the type of information displayed.
-The icon is rendered by [Icon](?path=/components-icon--usage) component.
+The icon is rendered by [Icon](?path=/docs/components-iconography-icon-usage--docs) component.
 
 <Canvas of={CopyClipboardInfoCardStories.Icon} />
 
@@ -50,7 +49,7 @@ If you need to format it before copying or simply want to override the data to b
 
 <Canvas of={CopyClipboardInfoCardStories.CopyData} />
 
-<Input type="text" uncontrolled placeholder="Try pasting here"/>
+<Input type="text" uncontrolled placeholder="Try pasting here" />
 
 ### Empty state
 
@@ -60,4 +59,3 @@ There are times when the information you want to display is not yet available or
 <Canvas of={CopyClipboardInfoCardStories.Empty} />
 
 </Content>
-

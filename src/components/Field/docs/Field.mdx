@@ -1,10 +1,9 @@
-
 import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as FieldStories from "../Field.stories.tsx";
 
-<Meta title="Components/Field/Usage" />
+<Meta title="Components/Forms/Field/Usage" />
 
 <ComponentInfo of={FieldStories} />
 
@@ -12,7 +11,7 @@ import * as FieldStories from "../Field.stories.tsx";
 
 ## Usage
 
-Render an [input](?path=/docs/components-input-usage--docs), its [label](?path=/docs/components-inputlabel-usage--docs) and [assistive / error text](?path=/docs/components-inputassistivetext-usage--docs) from a single component.
+Render an [input](?path=/docs/components-forms-input-usage--docs), its [label](?path=/docs/components-forms-inputlabel-usage--docs) and [assistive / error text](?path=/docs/components-forms-inputassistivetext-usage--docs) from a single component.
 
 ### Input type
 
@@ -22,9 +21,9 @@ By providing a `type` property, a `Field` can render any supported Input and wil
 
 ### Common input properties
 
-All common and specific [input properties](?path=/docs/components-input-properties--docs) (e.g. `required`, `disabled`, etc...) are passed directly to the underlying input.
+All common and specific [input properties](?path=/docs/components-forms-input-properties--docs) (e.g. `required`, `disabled`, etc...) are passed directly to the underlying input.
 
-> See [`Input`](?path=/docs/components-input-usage--docs)'s documentation for further details.
+> See [`Input`](?path=/docs/components-forms-input-usage--docs)'s documentation for further details.
 
 #### Required
 
@@ -38,11 +37,10 @@ All common and specific [input properties](?path=/docs/components-input-properti
 
 #### Label
 
-Fields use an [`InputLabel`](?path=/docs/components-inputlabel-usage--docs) under the hood.
+Fields use an [`InputLabel`](?path=/docs/components-forms-inputlabel-usage--docs) under the hood.
 As such, they inherit both its `label`, `required` and `tooltip` properties and pass them along.
 
 > Clicking on a field's label will focus its input.
-
 
 <Canvas of={FieldStories.Labels} />
 
@@ -53,7 +51,7 @@ As such, they inherit both its `label`, `required` and `tooltip` properties and 
 #### Assistive text
 
 You might have noticed that a Field's default assistive text is an obvious placeholder.
-It is meant to be *replaced* with an indication to our users about how / why they need to fill the field.
+It is meant to be _replaced_ with an indication to our users about how / why they need to fill the field.
 This could be an example, a reason, an explation or any useful text.
 
 > If you really don't want to display an assistive text under a Field's input, set its `assistiveText` property to `null`.
@@ -71,4 +69,3 @@ Similarly, if the child `Input` reports an invalid [validity state](https://deve
 <Canvas of={FieldStories.ErrorTexts} />
 
 </Content>
-

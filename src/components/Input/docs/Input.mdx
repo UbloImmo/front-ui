@@ -1,10 +1,15 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas, ComponentProps, ComponentList } from "@docs/blocks";
+import {
+  ComponentInfo,
+  Canvas,
+  ComponentProps,
+  ComponentList,
+} from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as InputStories from "../Input.stories.tsx";
 import * as inputsIndexRaw from "@components/Input";
 
-<Meta title="Components/Input/Usage" />
+<Meta title="Components/Forms/Input/Usage" />
 
 <ComponentInfo of={InputStories} figmaId="76%3A6562" />
 
@@ -20,11 +25,17 @@ Input's specific value type can be set with the `type` property.
 
 ### Specific Input Components
 
-<ComponentList index={inputsIndexRaw} parent="Input" exclude={["Input"]} columns={3} />
+<ComponentList
+  index={inputsIndexRaw}
+  parent="Forms/Input"
+  exclude={["Input", "IconPickerInput", "ComboBoxInput"]}
+  columns={3}
+/>
 
 > All input types share common properties such as `required`, `disabled`, `error`, and `placeholder`.
-> <br/>
->[Checkout Common Input properties](?path=/docs/components-input-common-properties--docs)
+>
+> <br />
+> [Checkout Common Input properties](?path=/docs/components-forms-input-common-properties--docs)
 
 ## Controls
 

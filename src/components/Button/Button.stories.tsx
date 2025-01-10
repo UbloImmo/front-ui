@@ -30,7 +30,7 @@ const componentSource = componentSourceFactory<ButtonProps>(
 );
 
 const meta = {
-  title: "Components/Button/Stories",
+  title: "Components/Actions/Button/Stories",
   component: Button,
   decorators: [
     (Story) => (

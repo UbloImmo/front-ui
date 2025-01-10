@@ -1,13 +1,12 @@
-
 import { Meta } from "@storybook/blocks";
 import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Hypertext } from "@components";
 import { Content } from "@docs/containers";
 import * as EntityInfoCardStories from "../EntityInfoCard.stories.tsx";
 
-<Meta title="Components/EntityInfoCard/Usage" />
+<Meta title="Components/Entity/EntityInfoCard/Usage" />
 
-<ComponentInfo of={EntityInfoCardStories} figmaId="802-12034"/>
+<ComponentInfo of={EntityInfoCardStories} figmaId="802-12034" />
 
 <Content>
 
@@ -27,9 +26,10 @@ Here are some of the ways one could use `EntityInfoCard` to provide a clutter-fr
 #### Information display
 
 EntityInfoCard can display information in various forms, through the use of several global components:
-- [InfoBox](?path=/docs/components-infobox-usage--docs)
-- [CopyClipboardInfoCard](?path=/docs/components-copyclipboardinfocard-usage--docs)
-- [Badge](?path=/docs/components-badge-usage--docs)
+
+- [InfoBox](?path=/docs/components-entity-infobox-usage--docs)
+- [CopyClipboardInfoCard](?path=/docs/components-entity-copyclipboardinfocard-usage--docs)
+- [Badge](?path=/docs/components-states-badge-usage--docs)
 
 > Combine some or all of them to create a disctinct layout for each entity.
 >
@@ -47,23 +47,22 @@ When all is lost and you need to display some info using custom means, pass a re
 
 #### State
 
-`EntityInfoCard` makes use of a [StateIndicator](?path=/docs/components-stateindicator-usage--docs) in its header.
+`EntityInfoCard` makes use of a [StateIndicator](?path=/docs/components-states-stateindicator-usage--docs) in its header.
 As such, its `state` property accepts all of the underlying component's properties.
 
 <Canvas of={EntityInfoCardStories.State} />
 
 #### Action Icon
 
-A standard [ActionIcon](?path=/docs/components-actionicon-usage--docs) is rendered when the `actionIcon` property is provided.
+A standard [ActionIcon](?path=/docs/components-actions-actionicon-usage--docs) is rendered when the `actionIcon` property is provided.
 
 <Canvas of={EntityInfoCardStories.ActionIcon} />
 
 #### Context Menu
 
 One sometimes needs to display additional secondary actions in a context menu.
-`EntityInfoCard` will render a [ContextMenu](?path=/docs/components-contextmenu-usage--docs) in its header if its `contextMenu` property is provided.
+`EntityInfoCard` will render a [ContextMenu](?path=/docs/components-actions-contextmenu-usage--docs) in its header if its `contextMenu` property is provided.
 
 <Canvas of={EntityInfoCardStories.ContextMenu} />
 
 </Content>
-

@@ -13,7 +13,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { ColorPalette, PaletteColor, SpacingLabel } from "@types";
 
 const meta = {
-  title: "Components/Icon/Stories",
+  title: "Components/Iconography/Icon/Stories",
   component: Icon,
   decorators: [
     (Story) => {

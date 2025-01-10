@@ -25,7 +25,7 @@ const componentSource = componentSourceFactory<ModalProps>(
 
 const meta = {
   component: Modal,
-  title: "Components/Modal/Stories",
+  title: "Components/Dialogs/Modal/Stories",
   args: {
     reference: "story-dialog",
     onOpened: fn(),

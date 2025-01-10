@@ -3,7 +3,7 @@ import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as FormStories from "../Form.stories.tsx";
 
-<Meta title="Components/Form/Usage" />
+<Meta title="Components/Forms/Form/Usage" />
 
 <ComponentInfo of={FormStories} figmaId="2407-16053" />
 
@@ -14,12 +14,13 @@ import * as FormStories from "../Form.stories.tsx";
 Forms are tricky. There are a lot of prerequisites needed for them to be great to use.
 
 Our `Form` component is our try at simplifying the whole experience, both for our users and collaborators.
-Built around our very own [Field](?path=/docs/components-field-usage--docs) component,
+Built around our very own [Field](?path=/docs/components-forms-field-usage--docs) component,
 it handles both edition and consultation of various data structures while providing ease of user.
 
 > You'll be looking at a simple address form in the majority of the upcoming examples;
+>
 > <br />
-> Though you're welcome to look at [additional examples](?path=/docs/components-form-examples--docs)
+> Though you're welcome to look at [additional examples](?path=/docs/components-forms-form-examples--docs)
 
 ### Switching between edition & consultation
 
@@ -37,7 +38,7 @@ While you can easily customize the behaviour of individual form fields and disab
 
 Various forms can be modeled, displayed, filled-in, validated and submitted using a single component.
 
-> Take a look at the _Show code_ button under the preview to wrap your head around the various [properties](?path=/docs/components-form-properties--docs) and their usage.
+> Take a look at the _Show code_ button under the preview to wrap your head around the various [properties](?path=/docs/components-forms-form-properties--docs) and their usage.
 
 <Canvas of={FormStories.Contents} />
 
@@ -48,15 +49,15 @@ Provide it as a form's `schema` property for it to be used to validate user- or 
 **Error messages can be manually provided but are generated from the schema by default.**
 
 > Both forms below share the same structure, but the one one the right is missing its data.
-> <br/>
+>
+> <br />
 > Notice how errors are reported to the user even while out of edit mode.
 
 <Canvas of={FormStories.Validation} />
 
-
 #### Data fetching
 
-To fetch existing data to be displayed inside a form, provide it with a `query` property. 
+To fetch existing data to be displayed inside a form, provide it with a `query` property.
 
 ```tsx
 import { Form, arrayOf } from "@ubloimmo/uikit";
@@ -65,32 +66,25 @@ import { Form, arrayOf } from "@ubloimmo/uikit";
 const fetchAsyncData = async () => {
   const res = await fetch("/api/data");
   return await res.json();
-}
+};
 
-const MyAsyncForm = () => (
-  <Form query={fetchData} />
-)
+const MyAsyncForm = () => <Form query={fetchData} />;
 
-// non-async function that return data 
+// non-async function that return data
 const generateData = (numberCount: number) => ({
   randomNumbers: arrayOf(numberCount, () => Math.random()),
-})
+});
 
-const MyGeneratedForm = () => (
-  <Form query={generateData} />
-)
+const MyGeneratedForm = () => <Form query={generateData} />;
 
 // static data object
 // this could also be derived from a state
 const staticData = {
   firstName: "John",
   lastName: "Doe",
-}
+};
 
-const MyStaticForm = () => (
-  <Form query={staticData} />
-)
-
+const MyStaticForm = () => <Form query={staticData} />;
 ```
 
 ### Debugging
@@ -98,4 +92,3 @@ const MyStaticForm = () => (
 <Canvas of={FormStories.Debug} />
 
 </Content>
-

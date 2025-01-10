@@ -3,7 +3,7 @@ import { ComponentInfo, Canvas } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as ComboBoxStories from "../ComboBox.stories.tsx";
 
-<Meta title="Components/ComboBox/Usage" />
+<Meta title="Components/Forms/ComboBox/Usage" />
 
 <ComponentInfo of={ComboBoxStories} />
 
@@ -12,7 +12,7 @@ import * as ComboBoxStories from "../ComboBox.stories.tsx";
 ## Usage
 
 `ComboBox` is a component that enables the user to select from a predefined set of options.
-Uses [ComboBoxButtons](?path=/docs/components-comboboxbutton-usage--docs) under the hood.
+Uses [ComboBoxButtons](?path=/docs/components-forms-comboboxbutton-usage--docs) under the hood.
 
 ### Selecting only one or many options
 
@@ -46,7 +46,7 @@ By default, the check icon displaying the selected option is visible. However, i
 
 ### Creating more options
 
-To enable the creation of new options, set the `creatable` property to `true`. An [ActionIcon](?path=/docs/components-actionicon-usage--docs) will be displayed after the comboboxes.
+To enable the creation of new options, set the `creatable` property to `true`. An [ActionIcon](?path=/docs/components-actions-actionicon-usage--docs) will be displayed after the comboboxes.
 
 You can also provide the desired callback for the creation of new options in the `onCreate` property.
 
@@ -56,7 +56,7 @@ You can also provide the desired callback for the creation of new options in the
 
 You can also enable the editing and deleting of options, by setting the `editable` and `deletable` properties to `true` for the desired options.
 
-A [ContextMenu](?path=/docs/components-contextmenu-usage--docs) will be displayed at the right of each option.
+A [ContextMenu](?path=/docs/components-actions-contextmenu-usage--docs) will be displayed at the right of each option.
 
 To customize the labels of the context menu items, you can provide the `optionEditLabel` and `optionDeleteLabel` properties.
 

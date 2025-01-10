@@ -14,7 +14,7 @@ const animations: LoadingAnimation[] = [
 ];
 
 const meta = {
-  title: "Components/Loading/Stories",
+  title: "Components/Feedbacks/Loading/Stories",
   component: Loading,
   args: Loading.defaultProps,
   argTypes: {

@@ -16,7 +16,7 @@ const sizes: AvatarSize[] = ["m", "l", "xl"];
 
 const meta = {
   component: Avatar,
-  title: "Components/Avatar/Stories",
+  title: "Components/Commons/Avatar/Stories",
   args: {
     size: "m",
     firstName: "Testing",

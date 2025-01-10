@@ -14,7 +14,7 @@ const componentSource = componentSourceFactory<IconPickerProps>(
 
 const meta = {
   component: IconPicker,
-  title: "Components/IconPicker/Stories",
+  title: "Components/Forms/IconPicker/Stories",
   args: {
     icons: [
       "EmojiHeartEyes",

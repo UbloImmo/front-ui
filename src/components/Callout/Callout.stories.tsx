@@ -31,7 +31,7 @@ const calloutColors: CalloutColor[] = [
 
 const meta = {
   component: Callout,
-  title: "Components/Callout/Stories",
+  title: "Components/Feedbacks/Callout/Stories",
   args: {
     children: "[Label]",
     color: "primary",

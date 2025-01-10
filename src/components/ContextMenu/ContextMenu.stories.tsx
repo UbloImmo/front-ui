@@ -43,7 +43,7 @@ const items: ContextMenuItemData[] = [
 
 const meta = {
   component: ContextMenu,
-  title: "Components/ContextMenu/Stories",
+  title: "Components/Actions/ContextMenu/Stories",
   args: {
     items,
   },

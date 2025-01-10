@@ -1,0 +1,27 @@
+import { Content, Header } from "@docs/containers";
+import { HeaderInfo, Text } from "@docs/blocks";
+import { ComponentList } from "@docs/blocks/ComponentList/ComponentList.block";
+import { Meta } from "@storybook/blocks";
+import * as componentsIndexRaw from "@components";
+
+<Meta title="Components/Feedbacks/Overview" />
+
+<Header>
+  <HeaderInfo title="Feedbacks overview" parent="Components/Feedbacks">
+    <Text color="primary-dark">
+      Those components are used to give feedback to the user (whether it's a
+      success, or not, or pending).
+    </Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Callout", "Loading", "SmallLoader", "Tooltip"]}
+  parent="Feedbacks"
+  randomSize
+/>
+
+</Content>

@@ -28,7 +28,7 @@ const componentSource = componentSourceFactory(
 );
 
 const meta = {
-  title: "Components/ActionIcon/Stories",
+  title: "Components/Actions/ActionIcon/Stories",
   component: ActionIcon,
   args: {
     ...ActionIcon.defaultProps,

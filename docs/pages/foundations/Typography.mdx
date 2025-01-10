@@ -1,13 +1,21 @@
 import { Meta } from "@storybook/blocks";
-import { HeaderInfo, ComponentList, Text, FontPreview, FontTokens } from "../../blocks";
+import {
+  HeaderInfo,
+  ComponentList,
+  Text,
+  FontPreview,
+  FontTokens,
+} from "../../blocks";
 import { Content, Header } from "../../containers";
 import * as componentsIndexRaw from "../../../src/components";
 
-<Meta title="Foundations/Typography"/>
+<Meta title="Foundations/Typography" />
 
 <Header>
   <HeaderInfo title="Typography" parent="Foundations">
-    <Text size="m" color="primary-dark">We put extra care to our typography in order to ensure optimal legibility.</Text>
+    <Text size="m" color="primary-dark">
+      We put extra care to our typography in order to ensure optimal legibility.
+    </Text>
   </HeaderInfo>
 </Header>
 
@@ -30,6 +38,11 @@ Styles applied to headings and texts depend on their `size` and `weights`.
 
 Using any typography style is as simple as importing its related component.
 
-<ComponentList index={componentsIndexRaw} include={["Text", "Heading"]} columns={2} />
+<ComponentList
+  index={componentsIndexRaw}
+  include={["Text", "Heading"]}
+  columns={2}
+  parent="typography"
+/>
 
 </Content>

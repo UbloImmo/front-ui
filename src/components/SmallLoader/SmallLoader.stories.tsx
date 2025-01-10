@@ -11,7 +11,7 @@ const componentSource = componentSourceFactory(
 
 const meta = {
   component: SmallLoader,
-  title: "Components/SmallLoader/Stories",
+  title: "Components/Feedbacks/SmallLoader/Stories",
   parameters: {
     docs: componentSource(),
   },

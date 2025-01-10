@@ -24,7 +24,7 @@ const booleans = [false, true];
 
 const meta = {
   component: FeatureSwitch,
-  title: "Components/FeatureSwitch/Stories",
+  title: "Components/Forms/FeatureSwitch/Stories",
   args: {
     ...FeatureSwitch.defaultProps,
     icon: "Square",

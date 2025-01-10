@@ -22,7 +22,7 @@ const componentSource = componentSourceFactory<AccountBalanceProps>(
 
 const meta = {
   component: AccountBalance,
-  title: "Components/AccountBalance/Stories",
+  title: "Components/Entity/AccountBalance/Stories",
   parameters: {
     docs: componentSource(),
   },

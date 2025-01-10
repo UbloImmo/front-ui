@@ -26,7 +26,7 @@ const componentSource = componentSourceFactory<
 
 const meta = {
   component: SelectInput,
-  title: "Components/Input/SelectInput/Stories",
+  title: "Components/Forms/Input/SelectInput/Stories",
   args: {
     placeholder: "Select an option",
     options: [

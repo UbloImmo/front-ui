@@ -16,7 +16,7 @@ const componentSource = componentSourceFactory<CopyClipboardInfoCardProps>(
 
 const meta = {
   component: CopyClipboardInfoCard,
-  title: "Components/CopyClipboardInfoCard/Stories",
+  title: "Components/Entity/CopyClipboardInfoCard/Stories",
   args: {
     info: "[Info]",
     onCopied: fn(),

@@ -15,7 +15,7 @@ import type { Meta } from "@storybook/react";
 import type { ReactNode } from "react";
 
 const meta = {
-  title: "Components/Dialog/Stories",
+  title: "Components/Dialogs/Dialog/Stories",
   component: Dialog,
   args: {
     reference: "story-dialog",

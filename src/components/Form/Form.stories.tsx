@@ -139,7 +139,7 @@ const componentSource = componentSourceFactory<FormProps<object>>(
 
 const meta = {
   component: Form,
-  title: "Components/Form/Stories",
+  title: "Components/Forms/Form/Stories",
   decorators: [
     (Story) => (
       <DialogProvider portalRoot="#dialog-root">

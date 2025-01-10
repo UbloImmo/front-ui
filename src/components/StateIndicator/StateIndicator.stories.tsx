@@ -26,7 +26,7 @@ const colors: ColorKeyOrWhite[] = [
 ];
 
 const meta = {
-  title: "Components/StateIndicator/Stories",
+  title: "Components/States/StateIndicator/Stories",
   component: StateIndicator,
   argTypes: {
     label: {

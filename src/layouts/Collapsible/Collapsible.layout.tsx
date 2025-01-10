@@ -5,16 +5,16 @@ import {
   caretContainerStyles,
   collapsibleContainerStyles,
 } from "./Collapsible.styles";
-import {
-  type CollapsibleProps,
-  type CollapsibleDefaultProps,
-  type CollapsibleContainerStyleProps,
+import { Icon } from "../../components/Icon";
+import { FlexRowLayout } from "../Flex";
+
+import { useMergedProps, useTestId } from "@utils";
+
+import type {
+  CollapsibleContainerStyleProps,
+  CollapsibleDefaultProps,
+  CollapsibleProps,
 } from "./Collapsible.types";
-import { Icon } from "../Icon";
-
-import { FlexRowLayout } from "@layouts";
-import { useTestId, useMergedProps } from "@utils";
-
 import type { TestIdProps } from "@types";
 
 const defaultCollapsibleProps: CollapsibleDefaultProps = {
@@ -28,7 +28,7 @@ const defaultCollapsibleProps: CollapsibleDefaultProps = {
 };
 
 /**
- * An expandable component that allow users to reveal or hide sub content on click.
+ * An expandable layout that allow users to reveal or hide sub content on click.
  *
  * @version 0.0.3
  *
