@@ -64,7 +64,7 @@ const controlIcons: IconName[] = ["Search", "Person", "BuildingAdd", "Bank"];
 
 export const ControlIcon = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<SearchInputProps<NullishPrimitives>>
       defaults={meta.args}
       variants={controlIcons}
       of={SearchInput}

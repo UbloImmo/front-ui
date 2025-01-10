@@ -9,6 +9,7 @@ import { Text } from "@/components/Text";
 import { ComponentVariants } from "@docs/blocks";
 import { FlexColumnLayout, GridLayout } from "@layouts";
 
+import type { SearchTextInputProps } from "./SearchTextInput.types";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
 
@@ -80,7 +81,7 @@ const controlIcons: IconName[] = ["Search", "BuildingBlocks"];
 
 export const ControlIcon = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<SearchTextInputProps>
       defaults={meta.args}
       variants={controlIcons}
       of={SearchTextInput}
