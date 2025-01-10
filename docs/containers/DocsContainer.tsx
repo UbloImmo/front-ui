@@ -129,6 +129,14 @@ const StyleReset = styled.div`
     max-width: unset;
   }
 
+  pre:has(> .docblock-source) {
+    width: 100%;
+
+    .docblock-source {
+      margin: 0 !important;
+    }
+  }
+
   .sbdocs-content .docblock-source {
     background: var(--gray-50) !important;
     box-shadow: none !important;
@@ -165,5 +173,9 @@ const StyleReset = styled.div`
         }
       }
     }
+  }
+
+  header main[data-layout="docs-content"] .docblock-source {
+    background: white !important;
   }
 `;
