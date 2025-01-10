@@ -166,7 +166,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@radix-ui/react-popover": "^1.1.1",
     "@ubloimmo/front-tokens": "^0.1.29",
-    "@ubloimmo/front-util": "^0.0.17",
+    "@ubloimmo/front-util": "^0.0.18",
     "date-fns": "^3.6.0",
     "lodash": "^4.17.21",
     "react-day-picker": "^9.0.9",
