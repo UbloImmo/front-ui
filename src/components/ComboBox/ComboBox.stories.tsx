@@ -70,7 +70,7 @@ export const Default: Story = {};
 
 export const MultiSelect = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<ComboBoxProps<NullishPrimitives>>
       for="multi"
       of={ComboBox}
       defaults={meta.args}
@@ -82,7 +82,7 @@ export const MultiSelect = () => {
 
 export const Direction = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<ComboBoxProps<NullishPrimitives>>
       for="direction"
       of={ComboBox}
       defaults={meta.args}
@@ -94,7 +94,7 @@ export const Direction = () => {
 
 export const Columns = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<ComboBoxProps<NullishPrimitives>>
       for="columns"
       of={ComboBox}
       defaults={meta.args}
@@ -129,7 +129,7 @@ export const DisabledOptions: Story = {
 
 export const ShowIcon = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<ComboBoxProps<NullishPrimitives>>
       for="showIcon"
       of={ComboBox}
       defaults={meta.args}

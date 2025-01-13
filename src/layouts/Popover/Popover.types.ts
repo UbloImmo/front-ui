@@ -22,13 +22,13 @@ export type PopoverCollisionPadding =
 export type PopoverPrimitiveCollisionPadding =
   PopoverPrimitiveContentProps["collisionPadding"];
 
-type PopoverBoundary = Nullable<Element>;
+export type PopoverBoundary = Nullable<Element>;
 
-type PopoverCollisionBoundary = PopoverBoundary | PopoverBoundary[];
+export type PopoverCollisionBoundary = PopoverBoundary | PopoverBoundary[];
 
-type PopoverSticky = PopoverPrimitiveContentProps["sticky"];
+export type PopoverSticky = PopoverPrimitiveContentProps["sticky"];
 
-type PopoverContentProps = {
+export type PopoverContentProps = {
   /**
    * The preferred side of the anchor to render against when open.
    * Will be reversed when collisions occur and avoidCollisions is enabled.
@@ -105,7 +105,7 @@ export type PopoverContentFn = GenericFn<[], ReactNode>;
 
 export type PopoverContent = NonNullish<ReactNode | PopoverContentFn>;
 
-type UncontrolledPopoverProps = PopoverContentProps & {
+export type UncontrolledPopoverProps = PopoverContentProps & {
   /**
    * The trigger for the popover.
    */

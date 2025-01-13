@@ -4,8 +4,9 @@ import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
-import type { AvatarProps, AvatarSize } from "./Avatar.types";
+import type { AvatarProps, AvatarPropsCount, AvatarSize } from "./Avatar.types";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { FC } from "react";
 
 const componentSource = componentSourceFactory<AvatarProps>(
   "Avatar",
@@ -14,15 +15,17 @@ const componentSource = componentSourceFactory<AvatarProps>(
 
 const sizes: AvatarSize[] = ["m", "l", "xl"];
 
+const defaults: AvatarProps = {
+  size: "m",
+  firstName: "Testing",
+  lastName: "User",
+  avatarUrl: null,
+};
+
 const meta = {
   component: Avatar,
   title: "Components/Commons/Avatar/Stories",
-  args: {
-    size: "m",
-    firstName: "Testing",
-    lastName: "User",
-    avatarUrl: null,
-  },
+  args: defaults,
   parameters: {
     docs: componentSource(),
   },
@@ -134,11 +137,11 @@ NameVariants.args = {
 export const NumberVariants = (props: Partial<AvatarProps>) => {
   const mergedProps = useMergedProps(Avatar.defaultProps, props);
   return (
-    <ComponentVariants
-      defaults={mergedProps}
-      variants={[2, 4, 5]}
+    <ComponentVariants<AvatarPropsCount, "count">
+      defaults={mergedProps as unknown as AvatarPropsCount}
       for="count"
-      of={Avatar}
+      variants={[2, 4, 5]}
+      of={Avatar as unknown as FC<AvatarPropsCount>}
       propLabels
     />
   );

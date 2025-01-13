@@ -27,7 +27,6 @@ type ComponentDefaultModule<TComponentProps extends Record<string, unknown>> = {
  * @remarks used for lazy-loading a component dynamically
  *
  * @param {string} componentName - The name of the component to load.
- * @param {string} [componentPath] - The path to the component module.
  * @return {Promise<ComponentDefaultModule<TComponentProps>>} A Promise that resolves to the loaded component module.
  *
  * @example

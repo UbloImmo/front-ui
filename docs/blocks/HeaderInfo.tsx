@@ -1,6 +1,9 @@
+import styled from "styled-components";
+
 import { Text } from "./Typography";
 
 import { FlexColumnLayout } from "@/layouts";
+import { isEmptyString } from "@utils";
 
 import { Heading } from "@components";
 
@@ -16,14 +19,14 @@ export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
   return (
     <FlexColumnLayout gap="s-3" align="start" justify="start">
       <FlexColumnLayout gap={0} align="start" justify="start">
-        {parent && (
+        {parent && !isEmptyString(parent) && (
           <Text size="xs" color="primary-medium" weight="medium">
             {parent}
           </Text>
         )}
-        <Heading size="h1" color="primary-dark" weight="bold" important>
+        <InfoHeading size="h1" color="primary-dark" weight="bold" important>
           {title}
-        </Heading>
+        </InfoHeading>
       </FlexColumnLayout>
 
       {children && (
@@ -34,3 +37,7 @@ export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
     </FlexColumnLayout>
   );
 };
+
+const InfoHeading = styled(Heading)`
+  word-break: break-word;
+`;

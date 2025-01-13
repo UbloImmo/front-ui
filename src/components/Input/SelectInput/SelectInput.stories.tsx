@@ -300,7 +300,7 @@ const controlIcons: IconName[] = [
 
 export const ControlIcon = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<SelectInputProps<NullishPrimitives>>
       defaults={meta.args}
       variants={controlIcons}
       of={SelectInput}

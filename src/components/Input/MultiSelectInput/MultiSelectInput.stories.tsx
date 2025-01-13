@@ -233,7 +233,7 @@ const controlIcons: IconName[] = [
 
 export const ControlIcon = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<MultiSelectInputProps<NullishPrimitives>>
       defaults={meta.args}
       variants={controlIcons}
       of={MultiSelectInput}

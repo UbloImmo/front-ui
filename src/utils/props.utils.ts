@@ -79,6 +79,15 @@ export const useMergedProps = <
  *
  * @remarks Inverse of {@link fromStyleProps}
  *
+ * @example
+ * const props = {
+ *   width: "100px",
+ *   height: "100px",
+ * }
+ *
+ * const styleProps = toStyleProps(props);
+ * // styleProps === { $width: "100px", $height: "100px" }
+ *
  * @param {TProps} props - The input props object.
  * @return {StyleProps<TProps>} The generated style props.
  */
@@ -98,6 +107,15 @@ export const toStyleProps = <TProps extends Record<string, unknown>>(
  *
  * @remarks Inverse of {@link toStyleProps}
  *
+ * @example
+ * const styleProps = {
+ *   $width: "100px",
+ *   $height: "100px",
+ * }
+ *
+ * const props = fromStyleProps(styleProps);
+ * // props === { width: "100px", height: "100px" }
+ *
  * @param {StyleProps<TProps>} props - The input object with style properties.
  * @return {TProps} The transformed object with updated keys.
  */
@@ -113,6 +131,7 @@ export const fromStyleProps = <TProps extends Record<string, unknown>>(
 
 /**
  * Returns a memoized object of style props based on the provided props object.
+ * Uses {@link toStyleProps} to generate the style props.
  *
  * @template {Record<string, unknown>} TProps - The type of the props object.
  * @param {TProps} props - The props object used to generate the style props.
@@ -130,6 +149,22 @@ export const useStyleProps = <TProps extends Record<string, unknown>>(
  * @template {unknown} TData - The type of the input data.
  * @param {TData | GenericFn<[], TData>} data - The input data to be memoized.
  * @return {TData} The memoized version of the input data.
+ *
+ * @example
+ * const Counter = () => {
+ *   const [reactiveData, setReactiveData] = useState(1);
+ *   // staticData will always be 1
+ *   const staticData = useStatic(() => reactiveData);
+ *
+ *   const increment = () => setReactiveData(reactiveData + 1);
+ *
+ *   return (
+ *     <>
+ *       <div>{staticData} {reactiveData}</div>
+ *       <button onClick={increment}>Increment</button>
+ *     </>
+ *   )
+ * }
  */
 export const useStatic = <TData>(data: TData | GenericFn<[], TData>) => {
   return useMemo<TData>(
@@ -141,6 +176,9 @@ export const useStatic = <TData>(data: TData | GenericFn<[], TData>) => {
 
 /**
  * Concatenates a test id based on the provided baseTestId and additional testId.
+ *
+ * Extracts the {@link TestIdProps} from the provided props and concatenates the test id if provided.
+ * Returns the provided `baseTestId` otherwise.
  *
  * @template {Record<string, unknown>} TProps - The component's base props
  *

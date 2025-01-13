@@ -96,6 +96,8 @@
     "react-docgen-typescript": "^2.2.2",
     "storybook": "^8.4.5",
     "svg-parser": "^2.0.4",
+    "typedoc": "^0.27.6",
+    "typedoc-plugin-markdown": "^4.4.1",
     "typescript": "^5.5.4",
     "vite": "^5.4.3",
     "vite-plugin-banner": "^0.7.1",
@@ -117,7 +119,7 @@
     "react-dom": "^18.3.1",
     "react-international-phone": "^4.2.9",
     "styled-components": "^6.1.11",
-    "typescript": "^5.3.3",
+    "typescript": "^5.5.4",
     "uuid": "^10.0.0",
     "vite": "^5.1.6",
     "zod": "^3.23.8"
@@ -146,7 +148,8 @@
     "storybook:reinstall": "bun run reinstall && bun storybook",
     "storybook:build": "storybook build",
     "lib:build": "vite build --config vite.config.build.ts",
-    "init:component": "./scripts/init/component.sh"
+    "init:component": "./scripts/init/component.sh",
+    "docs:generate": "bunx typedoc --options ./typedoc.config.js"
   },
   "type": "module",
   "jest": {
@@ -163,7 +166,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@radix-ui/react-popover": "^1.1.1",
     "@ubloimmo/front-tokens": "^0.1.29",
-    "@ubloimmo/front-util": "^0.0.17",
+    "@ubloimmo/front-util": "^0.0.18",
     "date-fns": "^3.6.0",
     "lodash": "^4.17.21",
     "react-day-picker": "^9.0.9",

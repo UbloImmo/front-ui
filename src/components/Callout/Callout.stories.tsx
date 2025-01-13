@@ -29,13 +29,15 @@ const calloutColors: CalloutColor[] = [
   "gray",
 ];
 
+const defaults: CalloutProps = {
+  children: "[Label]",
+  color: "primary",
+};
+
 const meta = {
   component: Callout,
   title: "Components/Feedbacks/Callout/Stories",
-  args: {
-    children: "[Label]",
-    color: "primary",
-  },
+  args: defaults,
   argTypes: {
     color: {
       options: calloutColors,
@@ -67,7 +69,7 @@ export const Default: Story = {};
 export const Colors = () => {
   return (
     <ComponentVariants
-      defaults={meta.args}
+      defaults={defaults}
       variants={calloutColors}
       for="color"
       of={Callout}

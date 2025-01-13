@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- **DOCS**
+  - `typedoc` & `typedoc-plugin-markdown` to generate documentation from code comments & ts static analysis
+  - Custom MDX `typedoc` plugin used to generate valid mdx files
+  - `docs:generate` script to generate documentation from code comments & ts static analysis
+
 ### Changed
+
+- **BUILD**
+  - Run `docs:generate` script in the dockerfile before building the storybook
 
 - Rearrange components & layouts display in storybook by parent groups: `Actions`, `Feedbacks`, `Dialogs`, `Groups`, ...
 

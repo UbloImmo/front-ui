@@ -125,7 +125,7 @@ const variants: DetailConfigVariants<FeatureSwitchProps<NullishPrimitives>> = [
 
 export const Variants = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<FeatureSwitchProps<NullishPrimitives>>
       variants={variants}
       of={FeatureSwitch}
       defaults={meta.args}
@@ -137,7 +137,7 @@ export const Variants = () => {
 
 export const Disabled = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<FeatureSwitchProps<NullishPrimitives>>
       of={FeatureSwitch}
       for="disabled"
       defaults={meta.args}
@@ -159,7 +159,7 @@ Disabled.parameters = {
 
 export const Compact = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<FeatureSwitchProps<NullishPrimitives>>
       of={FeatureSwitch}
       for="compact"
       defaults={meta.args}
@@ -186,7 +186,7 @@ const descriptionVariants = [
 
 export const Description = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<FeatureSwitchProps<NullishPrimitives>>
       of={FeatureSwitch}
       for="description"
       defaults={meta.args}
@@ -227,7 +227,7 @@ export const Tooltip = () => {
     description: "Activate the cheat code to turn on invulnerability.",
   });
   return (
-    <ComponentVariants
+    <ComponentVariants<FeatureSwitchProps<NullishPrimitives>>
       of={FeatureSwitch}
       for="tooltip"
       defaults={props}
@@ -247,7 +247,7 @@ const iconVariants: Nullable<IconName>[] = [
 
 export const Icon = () => {
   return (
-    <ComponentVariants
+    <ComponentVariants<FeatureSwitchProps<NullishPrimitives>>
       of={FeatureSwitch}
       for="icon"
       defaults={meta.args}
