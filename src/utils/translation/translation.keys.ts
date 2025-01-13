@@ -37,6 +37,7 @@ const actionTranslationKeys = [
   "hide",
   "giveUp",
   "filterBy",
+  "typeToSearch",
 ] as const;
 
 const validationTranslationKeys = [
@@ -74,6 +75,9 @@ const statusTranslationKeys = [
   "empty",
   "unspecified",
   "all",
+  "noResult",
+  "noResultFor",
+  "loadingResults",
 ] as const;
 
 export const translationKeys = {

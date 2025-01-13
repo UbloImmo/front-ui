@@ -42,6 +42,7 @@ const action: CompleteTranslationMap<"action"> = {
   hide: "Hide",
   giveUp: "Give up",
   filterBy: "Filter by",
+  typeToSearch: "Type to search...",
 } as const;
 
 const validation: CompleteTranslationMap<"validation"> = {
@@ -81,6 +82,9 @@ const status: CompleteTranslationMap<"status"> = {
   empty: "Empty",
   unspecified: "Not specified",
   all: "All",
+  noResult: "No result",
+  noResultFor: (query) => `No result for "${query}".`,
+  loadingResults: "Loading results...",
 };
 
 export const defaultTranslations: DefaultTranslationMaps = {

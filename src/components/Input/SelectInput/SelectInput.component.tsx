@@ -48,7 +48,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.9
+ * @version 0.0.10
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -173,17 +173,17 @@ const SelectInput = <
     return !displayOptions.length;
   }, [displayOptions]);
 
+  const tl = useUikitTranslation();
+
   const assistiveText = useMemo(() => {
     return isLoading
-      ? "Loading options..."
+      ? tl.status.loadingResults()
       : searchable
         ? isString(query) && query.length
-          ? `No result for "${query}".`
-          : "Type to search..."
-        : "No options available.";
-  }, [isLoading, query, searchable]);
-
-  const tl = useUikitTranslation();
+          ? tl.status.noResultFor(query)
+          : tl.action.typeToSearch()
+        : tl.status.noResult();
+  }, [isLoading, query, searchable, tl]);
 
   const clearLabel = useStatic(tl.action.unselect);
 
