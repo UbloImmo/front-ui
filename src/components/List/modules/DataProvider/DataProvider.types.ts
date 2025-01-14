@@ -3,6 +3,7 @@ import type { FilterOptionData } from "../FilterOption/FilterOption.types";
 import type { FilterPreset } from "../FilterPreset/FilterPreset.types";
 import type { FilterBooleanOperator } from "../shared.types";
 import type {
+  AsyncFn,
   GenericFn,
   MaybeAsyncFn,
   Replace,
@@ -77,13 +78,32 @@ export type DataProviderFetchCountFn<TItem extends object> = MaybeAsyncFn<
   number
 >;
 
-export type DataProviderParams<TItem extends object> = [
+/**
+ * A function that refetches the data provider's data
+ *
+ * @template {object} TItem - The type of the items in the list
+ *
+ * @returns {Promise<TItem[]>} The refetched data
+ */
+export type DataProviderRefetchFn<TItem extends object> = AsyncFn<[], TItem[]>;
+
+/**
+ * The base parameters of the DataProvider hook, inherited by the other DataProvider types
+ *
+ * @template {object} TItem - The type of the items in the list
+ */
+export type DataProviderBaseParams<TItem extends object> = [
   /**
    * The initial data or a function that fetches it
    */
   initialData: TItem[] | MaybeAsyncFn<[], TItem[]>,
   /**
    * A callback function that sets the list's data
+   *
+   * @type {DataProviderSetDataFn<TItem>}
+   *
+   * @template {object} TItem - The type of the items in the list
+   * @param {TItem[]} data - The data to set
    */
   setData: DataProviderSetDataFn<TItem>
 ];
@@ -103,7 +123,7 @@ export interface IDataProvider<TItem extends object> {
    * A function that refetches the data
    * updates data, filteredData and calls the `setData` callback
    */
-  refetch: () => Promise<TItem[]>;
+  refetch: DataProviderRefetchFn<TItem>;
   /**
    * A function that filters the data,
    * updates the filteredData and calls the `setData` callback
@@ -115,9 +135,17 @@ export interface IDataProvider<TItem extends object> {
   fetchCount: DataProviderFetchCountFn<TItem>;
 }
 
-export type UseStaticDataProviderFn = <TItem extends object>(
-  ...params: DataProviderParams<TItem>
-) => IDataProvider<TItem>;
+export type UseDataProviderParams<TItem extends object> = [
+  /**
+   * A callback function that sets the list's data
+   *
+   * @type {DataProviderSetDataFn<TItem>}
+   *
+   * @template {object} TItem - The type of the items in the list
+   * @param {TItem[]} data - The data to set
+   */
+  setData: DataProviderBaseParams<TItem>
+];
 
 /**
  * A hook that returns an object implementing the IDataProvider interface

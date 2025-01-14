@@ -1,20 +1,23 @@
 import { useCallback, useEffect, useRef } from "react";
 
-import {
-  DataProviderFetchCountFn,
-  type DataProviderFilterFnConfig,
-  type DataProviderParams,
-  type IDataProvider,
-  type UseStaticDataProviderFn,
-} from "../DataProvider.types";
 import { filterItems } from "./StaticDataProvider.utils";
 
 import { useAsyncData } from "@utils";
 
+import type {
+  DataProviderFetchCountFn,
+  DataProviderFilterFnConfig,
+  IDataProvider,
+} from "../DataProvider.types";
+import type {
+  StaticDataProviderParams,
+  UseStaticDataProviderFn,
+} from "./StaticDataProvider.types";
+
 export const useStaticDataProvider: UseStaticDataProviderFn = <
   TItem extends object
 >(
-  ...[initialData, setData]: DataProviderParams<TItem>
+  ...[initialData, setData]: StaticDataProviderParams<TItem>
 ): IDataProvider<TItem> => {
   const staticDataRef = useRef<TItem[]>([]);
 
