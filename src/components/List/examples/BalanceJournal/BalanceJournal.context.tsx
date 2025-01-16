@@ -5,9 +5,9 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { z } from "zod";
 
 import type { Nullable } from "@ubloimmo/front-util";
-import { z } from "zod";
 
 type BalanceJournalContextValue = {
   startDate: Nullable<string>;
@@ -27,7 +27,15 @@ const useBalanceJournal = (): BalanceJournalContextValue => {
         startDate: z.string().nullable(),
         endDate: z.string().nullable(),
       })
-      .superRefine((data, ctx) => {})
+      .superRefine((data, ctx) => {
+        if (data.startDate && data.endDate && data.startDate > data.endDate) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Start date must be before end date",
+            path: ["startDate"],
+          });
+        }
+      })
       .safeParse({
         startDate,
         endDate,
