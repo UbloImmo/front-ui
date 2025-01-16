@@ -83,11 +83,6 @@ const EntityInfoCard = (
     );
   }
 
-  const infoCards = mergedProps.infoCards ?? [];
-  const infoBoxes = mergedProps.infoBoxes ?? [];
-  const statusRows = mergedProps.statusRows ?? [];
-  const actions = mergedProps.actions ?? [];
-
   return (
     <EntityCardContainer testId={testId} overrideTestId fill>
       <EntityCardHeader
@@ -111,7 +106,7 @@ const EntityInfoCard = (
         ) : null}
         {mergedProps.actionIcon && (
           <ActionIcon
-            {...props.actionIcon}
+            {...mergedProps.actionIcon}
             size="l"
             testId={`${testId}-action`}
             overrideTestId
@@ -141,7 +136,7 @@ const EntityInfoCard = (
             {mergedProps.name}
           </EntityCardHeading>
         )}
-        {infoCards.map((infoCard, index) => {
+        {mergedProps.infoCards.map((infoCard, index) => {
           const cardTestId = `${testId}-info-card-${index}`;
           const propagateOnCopied = (content: string) => {
             if (mergedProps.onInfoCopied) {
@@ -161,11 +156,11 @@ const EntityInfoCard = (
             />
           );
         })}
-        {infoBoxes.length > 0 && (
+        {mergedProps.infoBoxes.length && (
           <GridLayout columns={2} gap="s-2" fill>
-            {infoBoxes.map((infoBox, index) => {
+            {mergedProps.infoBoxes.map((infoBox, index) => {
               const boxTestId = `${testId}-info-box-${index}`;
-              const isLast = index === infoBoxes.length - 1;
+              const isLast = index === mergedProps.infoBoxes.length - 1;
               const isEven = index % 2 === 0;
               const columnEnd: GridEndPosition = `span ${
                 isLast && isEven ? 2 : 1
@@ -183,9 +178,9 @@ const EntityInfoCard = (
             })}
           </GridLayout>
         )}
-        {statusRows.length && (
+        {mergedProps.statusRows.length && (
           <EntityCardStatusRowList gap={0} fill>
-            {statusRows.map((statusRow, index) => {
+            {mergedProps.statusRows.map((statusRow, index) => {
               const rowTestId = `${testId}-status-row-${index}`;
               return (
                 <EntityCardStatusRowContainer
@@ -210,14 +205,14 @@ const EntityInfoCard = (
           </EntityCardStatusRowList>
         )}
       </EntityCardContent>
-      {actions.length && (
+      {!!mergedProps.actions.length && (
         <EntityCardActionsContainer
           testId={`${testId}-actions`}
           overrideTestId
           fill
           gap="s-1"
         >
-          {actions.map((action, index) => {
+          {mergedProps.actions.map((action, index) => {
             const actionTestId = `${testId}-action-${index}`;
             return (
               <Action
