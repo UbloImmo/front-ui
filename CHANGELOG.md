@@ -16,10 +16,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `v0.0.8` EntityInfoCard component
+
+  - Allow rendering AccountBalance
+
 - **BUILD**
+
   - Run `docs:generate` script in the dockerfile before building the storybook
 
 - Rearrange components & layouts display in storybook by parent groups: `Actions`, `Feedbacks`, `Dialogs`, `Groups`, ...
+
+### Fixed
+
+- `v0.0.2` AccountBalance component
+  - Fixed responsive render
 
 ## 1.0.2 - 2025-01-08
 
