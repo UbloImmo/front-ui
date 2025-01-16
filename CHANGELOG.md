@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.9` EntityInfoCard component
+  - Fixed conditional rendering
+
 ## 1.0.3 - 2025-01-16
 
 ### Added
@@ -33,9 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.2` AccountBalance component
 
   - Fixed responsive render
-
-- `v0.0.9` EntityInfoCard component
-  - Fix conditional rendering
 
 ## 1.0.2 - 2025-01-08
 
