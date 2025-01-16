@@ -55,7 +55,7 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
