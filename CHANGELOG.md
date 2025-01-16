@@ -39,6 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.4` Collapsible component
   - Add `content` property to render custom content inside the collapsible
 
+- `v0.0.1` List component
+  - A flexible and extensible component for fetching, filtering and displaying a list of items
+  - A bunch of sub-components to handle and display the list's filtering state
+
 ### Fixed
 
 - `v0.0.5` Callout component
