@@ -21,7 +21,7 @@ export type EntityStatusRow = {
   content?: ReactNode;
 };
 
-type EntityStateProps = RequireAtLeastOne<{
+export type EntityStateProps = RequireAtLeastOne<{
   /**
    * The state to display above the entity's name and info
    */
