@@ -7,9 +7,11 @@ export const defaultListContextValue = <
   dataProvider: {
     data: [],
     loading: true,
+    error: false,
     refetch: async () => [],
     filter: () => {},
     fetchCount: () => 0,
+    type: "static",
   },
   filters: [],
   filtersLoading: true,

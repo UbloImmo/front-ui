@@ -30,6 +30,11 @@ export const useListFilterPresets: UseListFilterPresets = <
   const logger = useLogger("ListContext.filterPresets");
   const filterPresetDatas = useDataArray(config.filterPresets ?? [], true);
 
+  const filterPresetConfigLoading = useMemo(
+    () => filterPresetDatas.data.some(({ loading }) => loading),
+    [filterPresetDatas.data]
+  );
+
   const updateFilterPresetSelection = useCallback(
     (filterPresetSignature: FilterSignature, selected: boolean) => {
       const filterPreset = filterPresetDatas.find(
@@ -116,9 +121,10 @@ export const useListFilterPresets: UseListFilterPresets = <
   const filterPresetCounts = useAsyncData(fetchFilterPresetCounts);
 
   useEffect(() => {
+    if (filterPresetConfigLoading) return;
     filterPresetCounts.refetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config.filterPresets, dataProvider.loading]);
+  }, [config.filterPresets, filterPresetConfigLoading]);
 
   const buildFilterPreset = useCallback(
     (filterPresetData: FilterPresetData): FilterPreset<TItem> => {
@@ -158,10 +164,8 @@ export const useListFilterPresets: UseListFilterPresets = <
   }, [buildFilterPreset, filterPresetDatas.data]);
 
   const filterPresetsLoading = useMemo(
-    () =>
-      filterPresetDatas.data.some(({ loading }) => loading) ||
-      filterPresetCounts.isLoading,
-    [filterPresetCounts.isLoading, filterPresetDatas.data]
+    () => filterPresetConfigLoading || filterPresetCounts.isLoading,
+    [filterPresetCounts.isLoading, filterPresetConfigLoading]
   );
 
   const getFilterPresetBySignature = useCallback<

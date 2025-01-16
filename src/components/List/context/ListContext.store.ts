@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useListFilterPresets } from "./ListContext.filterPresets";
 import { useListFilters } from "./ListContext.filters";
@@ -7,11 +7,18 @@ import { useListContextSearch } from "./ListContext.search";
 import { useListContextSearchParams } from "./ListContext.searchParams";
 
 import type { ListContextConfig, ListContextValue } from "./ListContext.types";
+import type { DataProviderType } from "../modules";
 
-export const useListContextStore = <TItem extends object>({
+export const useListContextStore = <
+  TItem extends object,
+  TProviderType extends DataProviderType = DataProviderType
+>({
   useDataProvider,
   ...config
-}: ListContextConfig<TItem>): ListContextValue<TItem> => {
+}: ListContextConfig<TItem, TProviderType>): ListContextValue<
+  TItem,
+  TProviderType
+> => {
   const [data, setData] = useState<TItem[]>([]);
 
   const dataProvider = useDataProvider(setData);
@@ -31,6 +38,15 @@ export const useListContextStore = <TItem extends object>({
     ...optionMethods
   } = options;
 
+  const stringifyFiltersRef = useCallback(() => {
+    return JSON.stringify({
+      options: optionsArray,
+      search: search.queryFilters,
+    });
+  }, [optionsArray, search.queryFilters]);
+
+  const previousFiltersRef = useRef<string>(stringifyFiltersRef());
+
   const configLoading = useMemo(
     () => filters.filtersLoading || filterPresets.filterPresetsLoading,
     [filterPresets.filterPresetsLoading, filters.filtersLoading]
@@ -38,18 +54,16 @@ export const useListContextStore = <TItem extends object>({
 
   useListContextSearchParams(config, options, configLoading);
 
-  const loading = useMemo(
-    () => dataProvider.loading || configLoading,
-    [dataProvider.loading, configLoading]
-  );
-
-  const displayData = useMemo(() => {
-    if (loading) return [];
-    return data;
-  }, [loading, data]);
+  const loading = useMemo(() => {
+    return dataProvider.loading || configLoading;
+  }, [dataProvider.loading, configLoading]);
 
   useEffect(() => {
     if (loading) return;
+    const nextFilters = stringifyFiltersRef();
+    if (previousFiltersRef.current === nextFilters) return;
+    previousFiltersRef.current = nextFilters;
+
     options.applyOptions(optionsArray, search.queryFilters);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [optionsArray, loading, search.queryFilters]);
@@ -60,7 +74,7 @@ export const useListContextStore = <TItem extends object>({
     ...optionMethods,
     ...filters,
     ...search,
-    data: displayData,
+    data,
     itemCount,
     dataProvider,
     loading,

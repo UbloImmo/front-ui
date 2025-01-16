@@ -1,4 +1,4 @@
-import { isString, type Nullable } from "@ubloimmo/front-util";
+import { isNumber, isString, type Nullable } from "@ubloimmo/front-util";
 import styled from "styled-components";
 
 import {
@@ -6,17 +6,26 @@ import {
   ListFilterOptionBadge,
   ListFilterPresetCollection,
   ListSideHeader,
+  ListTableHeaderFilter,
 } from "../components";
 import { ListContextProvider, useListConfig, useListContext } from "../context";
 import { List } from "../List.component";
 import { BooleanOperators } from "../List.enums";
 import {
+  useDynamicDataProvider,
+  usePaginatedDataProvider,
   useStaticDataProvider,
+  type DataProviderFilterFnConfig,
+  type DataProviderType,
   type FilterProperty,
   type ListConfigOptionLabeledValue,
+  type PaginatedDataProviderFetchPageFn,
+  type PaginatedDataProviderFetchPageFnParams,
   type UseDataProviderFn,
 } from "../modules";
+import { filterItems } from "../modules/DataProvider/StaticDataProvider/StaticDataProvider.utils";
 
+import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
@@ -61,38 +70,127 @@ type PokemonListResponse = {
 };
 
 const DEFAULT_POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon";
-const LIMIT = 700;
+const LIMIT = 60;
+
+const fetchPokemonDataSubset = async (baseUrl = DEFAULT_POKEAPI_URL) => {
+  const response = await fetch(baseUrl);
+  const data = (await response.json()) as PokemonListResponse;
+  const results = await Promise.all(
+    data.results.map(async ({ url }) => {
+      const singleResponse = await fetch(url);
+      return (await singleResponse.json()) as Pokemon;
+    })
+  );
+  return { results, next: data.next };
+};
 
 const fetchPokemonData = async (): Promise<Pokemon[]> => {
-  const fetchDataSubset = async (baseUrl = DEFAULT_POKEAPI_URL) => {
-    const response = await fetch(baseUrl);
-    const data = (await response.json()) as PokemonListResponse;
-    const results = await Promise.all(
-      data.results.map(async ({ url }) => {
-        const singleResponse = await fetch(url);
-        const singleData = (await singleResponse.json()) as Pokemon;
-        return singleData;
-      })
-    );
-    return { results, next: data.next };
-  };
-
   let data: Pokemon[] = [];
   let nextUrl: Nullable<string> = DEFAULT_POKEAPI_URL;
 
-  while (isString(nextUrl) && data.length < LIMIT) {
-    const { results, next } = await fetchDataSubset(nextUrl);
+  while (isString(nextUrl) && data.length < LIMIT && nextUrl) {
+    const { results, next } = await fetchPokemonDataSubset(nextUrl);
     data = [...data, ...results];
     nextUrl = next;
   }
   return data;
 };
 
-const usePokemonData: UseDataProviderFn<Pokemon> = (setData) => {
+const useStaticPokemonData: UseDataProviderFn<Pokemon, "static"> = (
+  setData
+) => {
   return useStaticDataProvider(fetchPokemonData, setData);
 };
 
-const usePokemonListConfig = () => {
+const dynamicFetchPokemonData = async (
+  config: DataProviderFilterFnConfig<Pokemon>
+) => {
+  const data = await fetchPokemonData();
+  return filterItems(data, config);
+};
+
+const useDynamicPokemonData: UseDataProviderFn<Pokemon, "dynamic"> = (
+  setData
+) => {
+  return useDynamicDataProvider(dynamicFetchPokemonData, setData);
+};
+
+const buildPokeApiUrl = (
+  limit: Nullable<number>,
+  offset: Nullable<number | string>
+) => {
+  const url = new URL(DEFAULT_POKEAPI_URL);
+  if (isNumber(limit)) url.searchParams.set("limit", String(limit));
+  if (isNumber(offset)) url.searchParams.set("offset", String(offset));
+  return url.toString();
+};
+
+const fetchFilteredPokemonPage = async (
+  ...[config, after, pageSize]: PaginatedDataProviderFetchPageFnParams<Pokemon>
+) => {
+  const url = buildPokeApiUrl(pageSize, after);
+  const data = await fetchPokemonDataSubset(url);
+  const filteredData = filterItems(data.results, config);
+  return { url, data: data.results, filteredData, hasNext: !!data.next };
+};
+
+const paginatedFetchPokemonData: PaginatedDataProviderFetchPageFn<
+  Pokemon
+> = async (config, after, pageSize) => {
+  const pageJump = pageSize * 2;
+  let offset = (after ?? 0) as number;
+  let hasNext = true;
+  let pageData: Pokemon[] = [];
+
+  while (pageData.length < pageSize && hasNext) {
+    const currentFetch = await fetchFilteredPokemonPage(
+      config,
+      offset,
+      pageJump
+    );
+
+    offset += pageJump;
+    hasNext = currentFetch.hasNext;
+    pageData = [...pageData, ...currentFetch.filteredData];
+  }
+
+  pageData = pageData.slice(0, pageSize);
+  const finalAfter = !hasNext
+    ? null
+    : pageData.length
+    ? pageData.at(-1)?.id ?? null
+    : null;
+
+  return {
+    pageData,
+    after: finalAfter,
+    pageSize: pageData.length,
+  };
+};
+
+const usePaginatedPokemonData: UseDataProviderFn<Pokemon, "paginated"> = (
+  setData
+) => {
+  const paginated = usePaginatedDataProvider(
+    paginatedFetchPokemonData,
+    setData,
+    60
+  );
+  return {
+    ...paginated,
+    fetchCount: () => 0,
+  };
+};
+
+const pokemonDataProviders = {
+  static: useStaticPokemonData,
+  dynamic: useDynamicPokemonData,
+  paginated: usePaginatedPokemonData,
+};
+
+const usePokemonListConfig = (
+  dataProvider: Exclude<DataProviderType, "custom">
+) => {
   const {
     config,
     option,
@@ -104,7 +202,7 @@ const usePokemonListConfig = () => {
     async,
     configureSearchParams,
     search,
-  } = useListConfig(usePokemonData);
+  } = useListConfig(pokemonDataProviders[dataProvider]);
 
   // make the list's options read the search params
   useStatic(() => configureSearchParams({ sync: "read" }));
@@ -186,6 +284,31 @@ const usePokemonListConfig = () => {
         value: "ice",
         config: { color: "gray", icon: "Snow" },
       },
+      {
+        label: "Poison",
+        value: "poison",
+        config: { color: "primary", icon: "Droplet" },
+      },
+      {
+        label: "Dragon",
+        value: "dragon",
+        config: { color: "primary", icon: "DiamondsGrid" },
+      },
+      {
+        label: "Normal",
+        value: "normal",
+        config: { color: "gray" },
+      },
+      {
+        label: "Bug",
+        value: "bug",
+        config: { color: "warning-dark", icon: "Bug" },
+      },
+      {
+        label: "Flying",
+        value: "flying",
+        config: { color: "primary", icon: "Airplane" },
+      },
     ];
     const typeProperties: FilterProperty<Pokemon>[] = [
       `types.0.type.name`,
@@ -253,6 +376,7 @@ const usePokemonListConfig = () => {
       [types.fire, types.electric, weights.light],
       {
         color: "error",
+        operator: BooleanOperators.AND,
       }
     );
     filterPreset(
@@ -272,25 +396,25 @@ const usePokemonListConfig = () => {
 
   return config;
 };
-
-const LoadingFill = styled(Loading)`
-  width: 100%;
-`;
-
 const Renderer = () => {
-  const { data, loading } = useListContext<Pokemon>();
+  const { data, getFilterByLabel } = useListContext<Pokemon>();
 
-  if (loading) return <LoadingFill animation="ProgressBar" />;
+  const typeTypeFilter = getFilterByLabel("Type");
+
   return (
     <Table layout="fixed">
       <TableHeader sticky top="s-2">
         <TableHeaderCell>
           <Text>Name</Text>
         </TableHeaderCell>
-
         <TableHeaderCell>
-          <Text>Type</Text>
+          <Text>Id</Text>
         </TableHeaderCell>
+
+        {/* <TableHeaderCell>
+          <Text>Type</Text>
+        </TableHeaderCell> */}
+        <ListTableHeaderFilter filter={typeTypeFilter} fallbackLabel="Type" />
         <TableHeaderCell>
           <Text>Weight</Text>
         </TableHeaderCell>
@@ -300,6 +424,9 @@ const Renderer = () => {
           <TableRow style="list" key={String(pokemon.id)}>
             <TableCell padded>
               <Text weight="medium">{capitalize(pokemon.name)}</Text>
+            </TableCell>
+            <TableCell padded>
+              <Text weight="medium">{pokemon.id}</Text>
             </TableCell>
             <TableCell padded>
               <FlexLayout direction="row" gap="s-1">
@@ -325,13 +452,56 @@ const Renderer = () => {
   );
 };
 
+const LoadingContainer = styled.div`
+  width: 100%;
+  position: sticky;
+  inset: 0;
+  bottom: unset;
+`;
+
+const LoadingFill = styled(Loading)`
+  width: 100%;
+`;
+
+const LoadingBar = () => {
+  const { dataProvider } = useListContext<Pokemon>();
+  if (!dataProvider.loading) return null;
+  return (
+    <LoadingContainer>
+      <LoadingFill animation="ProgressBar" />
+    </LoadingContainer>
+  );
+};
+
+const NextPageButton = () => {
+  const { dataProvider, loading } = useListContext<Pokemon, "paginated">();
+
+  if (!dataProvider.hasNextPage || dataProvider.type !== "paginated")
+    return null;
+  return (
+    <Button
+      onClick={dataProvider.nextPage}
+      label="Fetch next page"
+      loading={loading}
+      fullWidth
+      secondary
+    />
+  );
+};
+
 const SearchBox = () => {
   const { query, changeQuery } = useListContext<Pokemon>();
   return <Input type="text" value={query} onChange={changeQuery} />;
 };
 
-export const PokemonListExample = () => {
-  const config = usePokemonListConfig();
+export type PokemonListExampleProps = {
+  dataProvider?: Exclude<DataProviderType, "custom">;
+};
+
+export const PokemonListExample = ({
+  dataProvider = "static",
+}: PokemonListExampleProps) => {
+  const config = usePokemonListConfig(dataProvider);
 
   return (
     <ListContextProvider config={config}>
@@ -344,7 +514,9 @@ export const PokemonListExample = () => {
           </SideView>
           <FlexLayout fill direction="column" gap="s-2">
             <ListFilterPresetCollection />
+            <LoadingBar />
             <Renderer />
+            <NextPageButton />
           </FlexLayout>
         </List>
       </FlexLayout>

@@ -25,7 +25,7 @@ const defaultSearchConfig = <TItem extends object>(): Required<
   initialQuery: null,
   strategy: "contains",
   properties: [],
-  debounceDelay: 300,
+  debounceDelay: 500,
 });
 
 /**

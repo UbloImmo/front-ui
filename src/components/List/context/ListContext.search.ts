@@ -12,7 +12,7 @@ import {
   type FilterSearchOperator,
 } from "../modules";
 
-import { isEmptyString, useDebounceValue } from "@utils";
+import { isEmptyString, useDebounceValue, useStatic } from "@utils";
 
 const SEARCH_OPTION_LABEL = "**INTERNAL**LIST_SEARCH_OPTION**INTERNAL**";
 
@@ -47,20 +47,26 @@ export const useListContextSearch: UseListSearch = <TItem extends object>({
   strategy,
   debounceDelay,
 }: ListSearchConfig<TItem>) => {
-  const [query, setQuery] = useState<string>(() =>
+  const [query, setQuery] = useState<string>(
     isString(initialQuery) ? initialQuery : ""
   );
 
+  const delay = useMemo(() => debounceDelay ?? 500, [debounceDelay]);
+
+  const debounceOptions = useStatic({
+    trailing: true,
+    leading: false,
+  });
+
   const [debouncedQuery, setDebouncedQuery] = useDebounceValue(
     query,
-    debounceDelay ?? 300,
-    {
-      trailing: true,
-    }
+    delay,
+    debounceOptions
   );
 
   const queryFilters = useMemo<DataProviderFilterParam<TItem>[]>(() => {
     // ensure query is not empty
+    console.debug("debouncedQuery", debouncedQuery);
     if (isEmptyString(debouncedQuery)) return [];
     // ensure matches can be generated from properties
     if (!isArray(properties)) return [];

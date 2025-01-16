@@ -21,10 +21,14 @@ type UseAsyncDataOnSuccessFn<TData extends NullishPrimitives> = MaybeAsyncFn<
 
 type UseAsyncDataOnErrorFn = MaybeAsyncFn<[Error]>;
 
-type UseAsyncDataOptions<TData extends NullishPrimitives> = {
+type UseAsyncDataOptions<
+  TData extends NullishPrimitives,
+  TDataParams extends unknown[] = []
+> = {
   defaultValue?: TData;
   onSuccess?: UseAsyncDataOnSuccessFn<TData>;
   onError?: UseAsyncDataOnErrorFn;
+  params?: TDataParams;
 };
 
 type UseAsyncDataState<TData extends NullishPrimitives> = {
@@ -33,14 +37,19 @@ type UseAsyncDataState<TData extends NullishPrimitives> = {
   error: Nullable<Error>;
 };
 
-type UseAsyncDataLoadFn<TData extends NullishPrimitives> = (
-  options?: Optional<UseAsyncDataOptions<TData>>
+type UseAsyncDataLoadFn<
+  TData extends NullishPrimitives,
+  TDataParams extends unknown[] = []
+> = (
+  options?: Optional<UseAsyncDataOptions<TData, TDataParams>>
 ) => Promise<UseAsyncDataState<TData>>;
 
-type UseAsyncDataReturn<TData extends NullishPrimitives> =
-  UseAsyncDataState<TData> & {
-    refetch: UseAsyncDataLoadFn<TData>;
-  };
+type UseAsyncDataReturn<
+  TData extends NullishPrimitives,
+  TDataParams extends unknown[] = []
+> = UseAsyncDataState<TData> & {
+  refetch: UseAsyncDataLoadFn<TData, TDataParams>;
+};
 
 /**
  * A custom React hook for handling asynchronous data loading.
@@ -56,10 +65,13 @@ type UseAsyncDataReturn<TData extends NullishPrimitives> =
  *   @property {Nullable<Error>} error - Any error that occurred during data loading, or null if no error.
  *   @property {AsyncFn<[], UseAsyncDataState<TData>>} refetch - A function to manually trigger a reload of the data.
  */
-export const useAsyncData = <TData extends NullishPrimitives>(
-  dataOrLoadingFn: TData | MaybeAsyncFn<[], TData>,
-  options?: UseAsyncDataOptions<TData>
-): UseAsyncDataReturn<TData> => {
+export const useAsyncData = <
+  TData extends NullishPrimitives,
+  TDataParams extends unknown[] = []
+>(
+  dataOrLoadingFn: TData | MaybeAsyncFn<TDataParams, TData>,
+  options?: UseAsyncDataOptions<TData, TDataParams>
+): UseAsyncDataReturn<TData, TDataParams> => {
   /**
    * The loaded data, or undefined if not yet loaded.
    */
@@ -89,7 +101,7 @@ export const useAsyncData = <TData extends NullishPrimitives>(
   const triggerLoadCallbacks = useCallback(
     (
       state: UseAsyncDataState<TData>,
-      currentOptions?: UseAsyncDataOptions<TData>
+      currentOptions?: UseAsyncDataOptions<TData, TDataParams>
     ) => {
       if (state.error) {
         if (options?.onError) options.onError(state.error);
@@ -108,17 +120,19 @@ export const useAsyncData = <TData extends NullishPrimitives>(
    * @param {UseAsyncDataOptions<TData>} [currentOptions] - Optional options for this load operation.
    * @returns {Promise<UseAsyncDataState<TData>>} A promise that resolves to the new state.
    */
-  const loadData = useCallback<UseAsyncDataLoadFn<TData>>(
-    async (currentOptions?: UseAsyncDataOptions<TData>) => {
+  const loadData = useCallback<UseAsyncDataLoadFn<TData, TDataParams>>(
+    async (currentOptions?: UseAsyncDataOptions<TData, TDataParams>) => {
       let state: UseAsyncDataState<TData> = {
         data,
         error,
         isLoading,
       };
-      if (isFunction<MaybeAsyncFn<[], TData>>(dataOrLoadingFn)) {
+      if (isFunction<MaybeAsyncFn<TDataParams, TData>>(dataOrLoadingFn)) {
         setIsLoading(true);
         try {
-          const loadedData = await dataOrLoadingFn();
+          const loadedData = await dataOrLoadingFn(
+            ...(currentOptions?.params ?? options?.params ?? [])
+          );
           state = {
             data: loadedData,
             error: null,
@@ -145,7 +159,7 @@ export const useAsyncData = <TData extends NullishPrimitives>(
 
       return state;
     },
-    [data, dataOrLoadingFn, error, isLoading, triggerLoadCallbacks]
+    [data, dataOrLoadingFn, error, isLoading, triggerLoadCallbacks, options]
   );
 
   // trigger load on mount
@@ -154,7 +168,12 @@ export const useAsyncData = <TData extends NullishPrimitives>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { data, isLoading, error, refetch: loadData };
+  return {
+    data,
+    isLoading,
+    error,
+    refetch: loadData,
+  };
 };
 
 /**
@@ -279,12 +298,14 @@ export function useDebounceCallback<
     };
 
     return wrappedFunc;
-  }, [func, delay, options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [delay, options]);
 
   // Update the debounced function ref whenever func, wait, or options change
   useEffect(() => {
     debouncedFunc.current = debounce(func, delay, options);
-  }, [func, delay, options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [delay, options]);
 
   return debounced;
 }

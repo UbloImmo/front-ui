@@ -44,7 +44,7 @@ const testListOptions = () => {
     operator: "AND",
   };
 
-  const mockFilterFn = mock(() => []);
+  const mockFilterFn = mock(() => {});
   const mockRefetchFn = mock(async () => []);
   const mockFetchCountFn = mock(() => 0);
 
@@ -52,8 +52,10 @@ const testListOptions = () => {
     filter: mockFilterFn,
     data: [],
     loading: false,
+    error: false,
     refetch: mockRefetchFn,
     fetchCount: mockFetchCountFn,
+    type: "static",
   };
 
   const testHookBase = testHookFactory<HookParams, HookReturn, Hook>(
@@ -61,10 +63,10 @@ const testListOptions = () => {
     useListOptions
   );
   const testHookWithFilters = testHookBase(mockConfig, mockDataProvider);
-  // const testHookWithoutFilters = testHookBase(
-  //   { ...mockConfig, filters: [] },
-  //   mockDataProvider
-  // );
+  const testHookWithoutFilters = testHookBase(
+    { ...mockConfig, filters: [] },
+    mockDataProvider
+  );
   const testHookWithMultiFilter = testHookBase(
     {
       ...mockConfig,
@@ -195,6 +197,32 @@ const testListOptions = () => {
         { ...optionA, selected: false },
         { ...optionB, selected: false },
       ]);
+    }
+  );
+
+  mockFilterFn.mockClear();
+
+  testHookWithMultiFilter(
+    "should call dataProvider.filter() when applying options",
+    (result, _, { rerender, getResult }) => {
+      expect(result.updateOptionSelection).toBeFunction();
+      result.updateOptionSelection(optionA.signature, false, false, () => true);
+      rerender();
+      expect(result.applyOptions).toBeFunction();
+      getResult().applyOptions([]);
+      expect(mockFilterFn).toHaveBeenCalled();
+    }
+  );
+
+  testHookWithoutFilters(
+    "should still call dataProvider.filter() when applying options without filters",
+    (result, _, { rerender, getResult }) => {
+      expect(result.updateOptionSelection).toBeFunction();
+      result.updateOptionSelection(optionA.signature, false, false, () => true);
+      rerender();
+      expect(result.applyOptions).toBeFunction();
+      getResult().applyOptions([]);
+      expect(mockFilterFn).toHaveBeenCalled();
     }
   );
 };

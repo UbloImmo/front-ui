@@ -25,6 +25,7 @@ import type {
   FilterProperty,
   FilterSearchOperator,
   DataProviderFilterParam,
+  DataProviderType,
 } from "../modules";
 import type { UseDataArrayReturn } from "@types";
 import type {
@@ -237,14 +238,17 @@ export type UseListSearchConfig = <
 
 // LIST CONFIG ----------------------------------------------------------------------------------
 
-export type ListContextConfig<TItem extends object> = {
+export type ListContextConfig<
+  TItem extends object,
+  TProviderType extends DataProviderType = DataProviderType
+> = {
   /**
    * The list's data provider: a hook that implements the IDataProvider interface
    *
-   * @type {UseDataProviderFn<TItem>}
+   * @type {UseDataProviderFn<TItem, TProviderType>}
    * @required
    */
-  useDataProvider: UseDataProviderFn<TItem>;
+  useDataProvider: UseDataProviderFn<TItem, TProviderType>;
   /**
    * The list's options
    *
@@ -313,8 +317,11 @@ export type UseListConfigAsync = <TItem extends object>(
   hydrateFilterConfig: HydrateFilterConfigFn
 ) => UseListConfigAsyncReturn<TItem>;
 
-export type UseListConfigReturn<TItem extends object> = {
-  config: Required<ListContextConfig<TItem>>;
+export type UseListConfigReturn<
+  TItem extends object,
+  TProviderType extends DataProviderType = DataProviderType
+> = {
+  config: Required<ListContextConfig<TItem, TProviderType>>;
   async: UseListConfigAsyncReturn<TItem>;
   search: ListSearchConfigSetterFns<TItem>;
   match: ListConfigMatchFn<TItem>;
@@ -550,7 +557,10 @@ export type ListContextDataProviderRef<TItem extends object> = {
 };
 
 // TODO: update as needed
-export type ListContextValue<TItem extends object> = {
+export type ListContextValue<
+  TItem extends object,
+  TProviderType extends DataProviderType = DataProviderType
+> = {
   /**
    * The list's data, updated as filters get applied
    *
@@ -562,7 +572,7 @@ export type ListContextValue<TItem extends object> = {
    *
    * @type {Nullable<IDataProvider<TItem>>}
    */
-  dataProvider: IDataProvider<TItem>;
+  dataProvider: IDataProvider<TItem, TProviderType>;
   /**
    * The list's filters
    *

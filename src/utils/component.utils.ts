@@ -1,4 +1,5 @@
 import type { TestIdProps } from "@types";
+import type { VoidFn } from "@ubloimmo/front-util";
 import type { FC } from "react";
 
 type Component<TComponentProps extends Record<string, unknown>> =
@@ -66,3 +67,10 @@ export const loadComponent =
       throw new Error(`Failed to load component ${componentName}: ${e}`);
     }
   };
+
+/**
+ * Executes a callback after the current tick
+ *
+ * @param {VoidFn} callback - The callback to execute.
+ */
+export const nextTick = (callback: VoidFn) => setTimeout(callback);

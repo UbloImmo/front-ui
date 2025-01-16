@@ -8,7 +8,8 @@ import { List } from "./List.component";
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { ListProps } from "./List.types";
-import type { Meta } from "@storybook/react";
+import type { DataProviderType } from "./modules/DataProvider/DataProvider.types";
+import type { Meta, StoryFn } from "@storybook/react";
 
 const componentSource = componentSourceFactory<ListProps<object>>(
   "List",
@@ -28,6 +29,19 @@ export default meta;
 
 export const Default = () => <DefaultExample />;
 
-export const PokeApiList = () => <PokemonListExample />;
+export const PokeApiList: StoryFn<Meta<typeof PokemonListExample>> = ({
+  dataProvider = "static",
+}: {
+  dataProvider?: Exclude<DataProviderType, "custom">;
+}) => <PokemonListExample dataProvider={dataProvider} />;
+PokeApiList.argTypes = {
+  // @ts-expect-error since it does not match the component's props
+  dataProvider: {
+    control: {
+      type: "radio",
+    },
+    options: ["static", "dynamic", "paginated"],
+  },
+};
 
 export const BalanceJournal = () => <BalanceJournalExample />;

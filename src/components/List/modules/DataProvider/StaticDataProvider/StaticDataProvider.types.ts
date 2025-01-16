@@ -8,4 +8,4 @@ export type StaticDataProviderParams<TItem extends object> =
 
 export type UseStaticDataProviderFn = <TItem extends object>(
   ...params: StaticDataProviderParams<TItem>
-) => IDataProvider<TItem>;
+) => IDataProvider<TItem, "static">;

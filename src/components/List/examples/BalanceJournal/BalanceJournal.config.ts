@@ -132,6 +132,7 @@ export const useBalanceJournalConfig = () => {
           config: {
             icon,
             color,
+            disabled: true,
           },
         };
       })
@@ -162,7 +163,7 @@ export const useBalanceJournalConfig = () => {
         ...creditNoteOptions,
       ],
       {
-        multi: false,
+        // multi: false,
       }
     );
   });

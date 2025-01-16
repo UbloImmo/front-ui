@@ -7,6 +7,7 @@ import {
   filterOptionDividerData,
   filterOptionMatch,
   filterPresetData,
+  type DataProviderType,
   type FilterBooleanOperator,
   type FilterConfig,
   type FilterData,
@@ -51,9 +52,12 @@ import type {
  * @param {UseDataProviderFn<TItem>} dataProvider - The data provider to use
  * @returns {UseListConfigReturn<TItem>} Object containing the list config & callbacks to further configure the list
  */
-export const useListConfig: UseListConfig = <TItem extends object>(
-  dataProvider: UseDataProviderFn<TItem>
-): UseListConfigReturn<TItem> => {
+export const useListConfig: UseListConfig = <
+  TItem extends object,
+  TProviderType extends DataProviderType
+>(
+  dataProvider: UseDataProviderFn<TItem, TProviderType>
+): UseListConfigReturn<TItem, TProviderType> => {
   const nextFilterIndex = useRef(0);
 
   const incrementFilterIndex = useCallback(() => {
@@ -285,7 +289,9 @@ export const useListConfig: UseListConfig = <TItem extends object>(
   /**
    * A reactive, valid list config object
    */
-  const config = useMemo<Required<ListContextConfig<TItem>>>(() => {
+  const config = useMemo<
+    Required<ListContextConfig<TItem, TProviderType>>
+  >(() => {
     const optionsList = Array.from(optionsMap.values());
     const filtersList = Array.from(filtersMap.values()).sort(
       (a, b) => a.index - b.index

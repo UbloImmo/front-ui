@@ -4,6 +4,7 @@ import type { FilterPreset } from "../FilterPreset/FilterPreset.types";
 import type { FilterBooleanOperator } from "../shared.types";
 import type {
   AsyncFn,
+  Enum,
   GenericFn,
   MaybeAsyncFn,
   Replace,
@@ -69,7 +70,7 @@ export type DataProviderFilterFnConfig<TItem extends object> =
     operator?: FilterBooleanOperator;
   };
 
-export type DataProviderFilterFn<TItem extends object> = VoidFn<
+export type DataProviderFilterFn<TItem extends object> = MaybeAsyncFn<
   [config: DataProviderFilterFnConfig<TItem>]
 >;
 
@@ -108,7 +109,16 @@ export type DataProviderBaseParams<TItem extends object> = [
   setData: DataProviderSetDataFn<TItem>
 ];
 
-export interface IDataProvider<TItem extends object> {
+export const dataProviderTypes = [
+  "static",
+  "dynamic",
+  "paginated",
+  "custom",
+] as const;
+
+export type DataProviderType = Enum<typeof dataProviderTypes>;
+
+export type DataProviderBase<TItem extends object> = {
   /**
    * The provider's data, initial or filtered
    *
@@ -119,6 +129,12 @@ export interface IDataProvider<TItem extends object> {
    * Indicates if the data is being loaded
    */
   loading: boolean;
+  /**
+   * Whether an error occurred while fetching the data
+   *
+   * @type {boolean}
+   */
+  error: boolean;
   /**
    * A function that refetches the data
    * updates data, filteredData and calls the `setData` callback
@@ -133,7 +149,47 @@ export interface IDataProvider<TItem extends object> {
    * A function that prefetches the counts of the data
    */
   fetchCount: DataProviderFetchCountFn<TItem>;
-}
+};
+
+export type IDataProvider<
+  TItem extends object,
+  TType extends DataProviderType = DataProviderType
+> = DataProviderBase<TItem> & {
+  /**
+   * The type of the data provider
+   *
+   * @type {DataProviderType}
+   *
+   * @remarks
+   *
+   * Custom data providers are required to return the `type` property
+   */
+  type: TType;
+} & (TType extends "paginated"
+    ? {
+        /**
+         * Indicates if there is a next page to load
+         */
+        hasNextPage: boolean;
+        /**
+         * A function that triggers fetching of the next page
+         *
+         * @type {VoidFn}
+         */
+        nextPage: VoidFn;
+        /**
+         * The maximum size of pages
+         *
+         * @remarks
+         * Gets clamped between `1` and `+Infinity`
+         *
+         * @type {number}
+         * @default 25
+         */
+        pageSize: number;
+      }
+    : // eslint-disable-next-line @typescript-eslint/ban-types
+      {});
 
 export type UseDataProviderParams<TItem extends object> = [
   /**
@@ -150,7 +206,10 @@ export type UseDataProviderParams<TItem extends object> = [
 /**
  * A hook that returns an object implementing the IDataProvider interface
  */
-export type UseDataProviderFn<TItem extends object> = GenericFn<
+export type UseDataProviderFn<
+  TItem extends object,
+  TType extends DataProviderType = DataProviderType
+> = GenericFn<
   [setData: DataProviderSetDataFn<TItem>],
-  IDataProvider<TItem>
+  IDataProvider<TItem, TType>
 >;
