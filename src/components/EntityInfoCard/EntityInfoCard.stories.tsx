@@ -30,6 +30,7 @@ const componentSource = componentSourceFactory<EntityInfoCardProps>(
   "EntityInfoCard",
   {
     state: EntityInfoCard.defaultProps.state,
+    accountBalance: EntityInfoCard.defaultProps.accountBalance,
   },
   EntityInfoCard.defaultProps
 );
@@ -523,4 +524,34 @@ ContextMenu.parameters = {
       ...variant,
     }))
   ),
+};
+
+const accountBalanceVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
+  {
+    __propVariantLabel: "With state indicator",
+    state: {
+      label: "State",
+      icon: "Circle",
+    },
+  },
+  {
+    __propVariantLabel: "With account balance",
+    accountBalance: {
+      title: "Account Balance",
+      value: 12300,
+    },
+  },
+];
+
+export const AccountBalance = (props: EntityInfoCardProps) => {
+  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={accountBalanceVariants}
+      of={EntityInfoCard}
+    />
+  );
 };
