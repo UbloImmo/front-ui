@@ -2,11 +2,23 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { FC } from "react";
 
+type DocgenTypeSignatureProperty = {
+  key: string;
+  description?: string;
+  value: DocgenPropType;
+};
+
+type DocgenTypeSignature = {
+  properties?: DocgenTypeSignatureProperty[];
+};
+
 type DocgenPropType = {
   name: string;
   value?: string;
   raw?: string;
   elements?: DocgenPropType[];
+  type?: string;
+  signature?: DocgenTypeSignature;
 };
 
 export type DocgenPropDef<TPropType> = {

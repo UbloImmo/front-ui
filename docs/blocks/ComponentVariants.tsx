@@ -1,4 +1,4 @@
-import { isNumber, isObject, isString } from "@ubloimmo/front-util";
+import { isNumber, isObject, isString, type KeyOf } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled, { css } from "styled-components";
 
@@ -143,14 +143,16 @@ const isDetailedConfig = <
  * Renders the same component many times with different values for a single prop
  *
  * @template {Record<string, unknown>} TComponentProps - The component's props
- * @template {keyof TComponentProps & string} TPropKey - The key of the prop to vary upon
+ * @template {KeyOf<TComponentProps, string>} TPropKey - The key of the prop to vary upon
  * @param {ComponentVariantsConfig<TComponentProps, TPropKey>} config - The config of what component to render and how to vary the prop
  * @returns {JSX.Element} The rendered grid
  */
 export const ComponentVariants = <
   TComponentProps extends Record<string, unknown>,
-  TPropKey extends keyof TComponentProps & string = keyof TComponentProps &
+  TPropKey extends KeyOf<TComponentProps, string> = KeyOf<
+    TComponentProps,
     string
+  >
 >(
   props:
     | ComponentVariantsConfig<TComponentProps, TPropKey>

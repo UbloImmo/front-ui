@@ -169,6 +169,8 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = {
    * @default tl.action.delete
    */
   optionDeleteLabel?: Nullable<string>;
+
+  // FIXME: add a required prop that prevents the user from clearing the selection
 };
 
 export type ComboBoxDefaultProps<TOptionValue extends NullishPrimitives> =

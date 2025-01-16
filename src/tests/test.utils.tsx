@@ -3,19 +3,9 @@ import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { isFunction, isObject, transformObject } from "@ubloimmo/front-util";
 import { describe, expect, it } from "bun:test";
 
+import type { TestHookOptions, TestHookUtils } from "@types";
 import type { GenericFn, MaybeAsyncFn, VoidFn } from "@ubloimmo/front-util";
 import type { FC, ReactNode } from "react";
-
-type TestHookUtils<THookReturn> = {
-  rerender: VoidFn;
-  unmount: VoidFn;
-  getResult: GenericFn<[], THookReturn>;
-};
-
-type TestOptions = {
-  skip?: boolean;
-  todo?: boolean;
-};
 
 /**
  *
@@ -42,7 +32,7 @@ export const testHookFactory = <
     tests: {
       name: string;
       test: VoidFn<[THookReturn]>;
-      options?: TestOptions;
+      options?: TestHookOptions;
     }[];
   }
 ) => {
@@ -66,9 +56,13 @@ export const testHookFactory = <
     (
       testName: string,
       tests: MaybeAsyncFn<
-        [THookReturn, THookParams, TestHookUtils<THookReturn>]
+        [
+          result: THookReturn,
+          params: THookParams,
+          utils: TestHookUtils<THookReturn, THookParams>
+        ]
       >,
-      options?: TestOptions
+      options?: TestHookOptions
     ) => {
       describe(hookName, () => {
         const paramsStr =
@@ -82,11 +76,15 @@ export const testHookFactory = <
         const testlabel = `${testName} with params ${paramsStr}"`;
         const testFn = options?.skip ? it.skip : options?.todo ? it.todo : it;
         testFn(testlabel, async () => {
-          const { result, unmount, rerender } = renderHook(() =>
-            hook(...(params ?? []))
+          const { result, unmount, rerender } = renderHook(
+            (initialProps?: THookParams | []) =>
+              hook(...(initialProps ?? params ?? []))
           );
-          const utils: TestHookUtils<THookReturn> = {
-            rerender: () => rerender(...params),
+          const utils: TestHookUtils<THookReturn, THookParams> = {
+            rerender: (...newParams: THookParams | []) => {
+              const rerenderParams = newParams.length ? newParams : params;
+              rerender(rerenderParams);
+            },
             unmount,
             getResult: () => result.current,
           };

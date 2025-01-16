@@ -1,4 +1,4 @@
-import { Canvas as SBCanvas } from "@storybook/blocks";
+import { Canvas as SBCanvas, Unstyled } from "@storybook/blocks";
 import styled, { css } from "styled-components";
 
 import { typographyFontFace } from "@/typography";
@@ -19,9 +19,11 @@ type CanvasProps = SBCanvasProps & CanvasLayoutProps;
 export const Canvas = (props: CanvasProps) => {
   const styleProps = useStyleProps(props);
   return (
-    <CanvasStyle {...styleProps}>
-      <SBCanvas {...props} />
-    </CanvasStyle>
+    <Unstyled>
+      <CanvasStyle {...styleProps}>
+        <SBCanvas {...props} />
+      </CanvasStyle>
+    </Unstyled>
   );
 };
 
@@ -111,8 +113,25 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
 
   // code preview has generated classname
   .sbdocs-preview:has(.docblock-code-toggle--expanded) > div:not(.docs-story) {
-    background: var(--gray-700);
+    background: var(--primary-light-50);
     border-radius: 0;
+    border-bottom-left-radius: var(--s-2);
+    border-bottom-right-radius: var(--s-2);
+    box-shadow: none;
+
+    ${({ $horizontal }) =>
+      $horizontal &&
+      css`
+        border-radius: none;
+        border-bottom-left-radius: var(--s-2);
+        border-top-left-radius: var(--s-2);
+      `}
+
+    ${({ $inHeader }) =>
+      $inHeader &&
+      css`
+        background: var(--primary-light-75);
+      `}
 
     .prismjs {
       padding: var(--padding);

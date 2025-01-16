@@ -1,0 +1,157 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Async/Filter" />
+
+<Header>
+  <HeaderInfo title="async.filter()" parent="Components/List/Configuration/Methods/Async">
+    <Text size="m" color="primary-dark">Builds and registers a _filter_ from asynchronously loaded options.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Filters consist of a label, a list of options or option signatures, and additional configuration.
+
+The `async.filter()` method is similar to the `filter()` method but it handles promises and async operations, allowing you to work with asynchronously loaded options.
+
+<Callout color="pending" icon={null}>
+The async methods are exposed through the `async` property of the `useListConfig` hook's return value.
+</Callout>
+
+```typescript
+const { async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // build & register an async filter
+  const typeFilter = async.filter(
+    "Pokemon Types",
+    async.options(
+      "type.0.type.name",
+      "=",
+      async () => {
+        const types = await fetchPokemonTypes();
+        return types.map(type => ({
+          label: type.name,
+          value: type.id,
+          config: { color: type.color }
+        }));
+      }
+    ),
+    { multi: true }
+  );
+});
+```
+
+## Type definition
+
+```typescript
+type MaybePromise<T> = T | Promise<T>;
+
+type ListConfigAsyncFilterFn<TItem extends object> = (
+  label: string,
+  optionsOrSignaturesPromise: MaybePromise<
+    MaybePromise<
+      | FilterOptionDataOrSignature<TItem>
+      | FilterOptionDividerData
+    >[]
+  >,
+  config?: FilterConfig
+) => Promise<FilterData>;
+```
+
+## Arguments
+
+### **`label`**: `string`
+
+The label of the generated filter. **Required**.
+
+### **`optionsOrSignaturesPromise`**: `MaybePromise<MaybePromise<FilterOptionDataOrSignature<TItem> | FilterOptionDividerData>[]>`
+
+A promise (or array of promises) that resolves to options, option signatures, or dividers. **Required**.
+
+> Can be a promise that resolves to an array of promises, allowing for complex async operations.
+
+### **`config?`**: `FilterConfig`
+
+Additional configuration for the generated filter. Optional.<br/>
+Defaults to `{}`.
+
+> Refer to the `filter()` method's `config` argument's [type definition](?path=/docs/components-list-configuration-methods-filter--docs#config-filterconfig) for more information.
+
+## Returns
+
+A promise that resolves to a `FilterData` object containing all configuration properties, or `null` if an error occurs.
+
+## Examples
+
+### Create a filter with async options
+
+```typescript
+const { match, async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // Create a filter with async options loaded from an API
+  async.filter(
+    "Pokemon Types",
+    async () => {
+      const response = await fetch("/api/pokemon/types");
+      const types = await response.json();
+      
+      return types.map(type => 
+        async.option(
+          type.name,
+          () => match("type", "=", type.id),
+          { color: type.color }
+        )
+      );
+    },
+    { multi: true }
+  );
+});
+```
+
+### Create a filter with mixed sync and async options
+
+```typescript
+const { match, option, async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // Create a filter with both sync and async options
+  async.filter(
+    "Pokemon Status",
+    [
+      option("Common", match("rarity", "=", "common")),
+      async.option(
+        "Legendary",
+        async () => {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          return match("rarity", "=", "legendary");
+        },
+        { color: "warning" }
+      )
+    ],
+    { 
+      multi: false,
+      operator: "OR" 
+    }
+  );
+});
+```
+
+## Common pitfalls
+
+### My filter is not displaying any options
+
+The `async.filter()` method handles promises, but you need to ensure that:
+
+1. All async operations complete successfully
+2. The promises resolve to valid option data or signatures
+3. You're using `async.option()` for async options instead of `option()`
+
+> Check your browser's console for potential errors in your async operations.
+
+</Content>

@@ -21,3 +21,4 @@ For a (mostly) exhaustive changelog, refer to [CHANGELOG.md](https://github.com/
 ## Getting started
 
 Refer to our [GETTING_STARTED.md](https://github.com/UbloImmo/front-ui/blob/main/GETTING_STARTED.md) to get up and running.
+

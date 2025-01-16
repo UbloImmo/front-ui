@@ -9,7 +9,7 @@ import {
   typographyWeightMap,
   linkFontFace,
 } from "../../typography";
-import { cssVar, useLogger, useStatic } from "../../utils";
+import { cssVar, cssVarUsage, useLogger, useStatic } from "../../utils";
 import { effectsToCssVars } from "../palette";
 
 import type {
@@ -180,13 +180,20 @@ export const iconOverflow = (): RuleSet => css`
   }
 `;
 
+const componentCssVars = () => {
+  const inputHeight = cssVar("input-height", cssVarUsage("s-8"));
+  const inputHeightMobile = cssVar("input-height", cssVarUsage("s-10"));
+
+  return { desktop: [inputHeight], mobile: [inputHeightMobile] };
+};
+
 /**
  * Generates CSS variables and media queries for unthemed global style aspects (spacings & text sizes).
  *
  * @return {{vars: CssVar<CssRem | `${number}`>[][], mediaQueries: RuleSet[]}} An object containing CSS variables and media queries.
  */
 const useUnthemedGlobaStyle = (): {
-  vars: CssVar<CssRem | `${number}`>[][];
+  vars: CssVar<CssRem | `${number}` | CssVarUsage>[][];
   mediaQueries: RuleSet[];
 } => {
   // generate css vars from spacings
@@ -196,12 +203,19 @@ const useUnthemedGlobaStyle = (): {
     desktop: textDesktopCssVars,
     weights: weightCssVars,
   } = useStatic(textSizesToCssVars());
+  const { desktop: componentDesktopCssVars, mobile: componentMobileCssVars } =
+    useStatic(componentCssVars());
 
   const mediaQueries = useStatic(
-    formatMediaQueries([["XS", [textMobileCssVars]]])
+    formatMediaQueries([["XS", [textMobileCssVars, componentMobileCssVars]]])
   );
   return {
-    vars: [spacingsCssVars, textDesktopCssVars, weightCssVars],
+    vars: [
+      spacingsCssVars,
+      textDesktopCssVars,
+      weightCssVars,
+      componentDesktopCssVars,
+    ],
     mediaQueries,
   };
 };

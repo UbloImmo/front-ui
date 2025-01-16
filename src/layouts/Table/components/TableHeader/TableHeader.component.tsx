@@ -1,15 +1,21 @@
 import { useMemo } from "react";
+import styled from "styled-components";
 
-import { useClassName, useTestId } from "@utils";
+import { tableHeaderStyles } from "./TableHeader.styles";
+import {
+  TableHeaderStyleProps,
+  type TableHeaderProps,
+} from "./TableHeader.types";
 
-import type { TableProps } from "../../Table.types";
+import { useClassName, useStyleProps, useTestId } from "@utils";
+
 import type { TestIdProps } from "@types";
 
 /**
  * The header part, a row on top in the `Table` layout to label the columns.
  * To be used with `TableHeaderCell`
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @example
  * <TableHeader>
@@ -17,18 +23,30 @@ import type { TestIdProps } from "@types";
  *   <TableHeaderCell>Header 2</TableHeaderCell>
  * </TableHeader>
  *
- * @param {TableProps} props - The component props.
+ * @param {TableHeaderProps} props - The component props.
  * @returns The table header component.
  */
-const TableHeader = (props: TableProps & TestIdProps): JSX.Element => {
+export const TableHeader = ({
+  sticky = false,
+  top = 0,
+  ...props
+}: TableHeaderProps & TestIdProps): JSX.Element => {
   const testId = useTestId("table-header", props);
   const rowTestId = useMemo(() => `${testId}-row`, [testId]);
   const className = useClassName(props);
+  const styleProps = useStyleProps({ sticky, top });
+
   return (
-    <thead data-testid={testId} className={className}>
+    <StyledTableHeader
+      {...styleProps}
+      data-testid={testId}
+      className={className}
+    >
       <tr data-testid={rowTestId}>{props.children}</tr>
-    </thead>
+    </StyledTableHeader>
   );
 };
 
-export { TableHeader };
+const StyledTableHeader = styled.thead<TableHeaderStyleProps>`
+  ${tableHeaderStyles}
+`;

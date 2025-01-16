@@ -93,6 +93,12 @@ export const loadIcon = async (
   return missingImport;
 };
 
+/**
+ * Type guard to check if an icon is a missing icon placeholder.
+ *
+ * @param {GeneratedIcon | MissingIcon} icon - The icon component to check
+ * @returns {boolean} True if the icon is a missing icon placeholder, false otherwise
+ */
 export const isMissingIcon = (
   icon: GeneratedIcon | MissingIcon
 ): icon is MissingIcon => {

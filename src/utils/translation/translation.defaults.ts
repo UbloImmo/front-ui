@@ -41,6 +41,7 @@ const action: CompleteTranslationMap<"action"> = {
   show: "Show",
   hide: "Hide",
   giveUp: "Give up",
+  filterBy: "Filter by",
 } as const;
 
 const validation: CompleteTranslationMap<"validation"> = {
@@ -57,7 +58,8 @@ const validation: CompleteTranslationMap<"validation"> = {
   notAllowed: "Value is not allowed",
   tooBig: "Value is too big",
   tooSmall: "Value is too small",
-  stepMismatch: (step) => `Value does not respect the required step ${step}`,
+  stepMismatch: (step) =>
+    `Value does not respect the required step${step?.length ? ` ${step}` : ""}`,
   typeMismatch: "Value does not respect the required type",
 };
 
@@ -77,6 +79,7 @@ const status: CompleteTranslationMap<"status"> = {
   hidden: "Hidden",
   empty: "Empty",
   unspecified: "Not specified",
+  all: "All",
 };
 
 export const defaultTranslations: DefaultTranslationMaps = {

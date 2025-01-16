@@ -1,0 +1,135 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Async/Option" />
+
+<Header>
+  <HeaderInfo title="async.option()" parent="Components/List/Configuration/Methods/Async">
+    <Text size="m" color="primary-dark">Builds and registers a _filter option_ from asynchronously loaded matches.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Options consist of a label, one or more matches and additional configuration.
+
+The `async.option()` method is similar to the `option()` method but it takes an asynchronous callback and returns a promise that resolves to a filter option.
+
+<Callout color="pending" icon={null}>
+The async methods are exposed through the `async` property of the `useListConfig` hook's return value.
+</Callout>
+
+```typescript
+const { async, match } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // build & register an async option
+  const legendaryOption = async.option(
+    "Legendary",
+    async () => {
+      // fetch match data from elsewhere asynchronously
+      const legendaryThreshold = await fetchLegendaryThreshold();
+      return match("power", ">=", legendaryThreshold);
+    },
+    { color: "warning" }
+  );
+});
+```
+
+## Type definition
+
+```typescript
+type ListConfigAsyncOptionFn<TItem extends object> = (
+  label: string,
+  matchOrMatchesGetter: ListConfigAsyncOptionMatchGetterFn<TItem>,
+  config?: FilterOptionConfig
+) => Promise<FilterOptionData>;
+```
+
+## Arguments
+
+### **`label`**: `string`
+
+The label of the generated filter option. **Required**.
+
+### **`matchOrMatchesGetter`**: `ListConfigAsyncOptionMatchGetterFn<TItem>`
+
+An asynchronous callback that returns the match or matches to create the filter option from. **Required**.
+
+```typescript
+type ListConfigAsyncOptionMatchGetterFn<TItem extends object> = () =>
+  Promise<FilterOptionMatch<TItem> | FilterOptionMatch<TItem>[]>;
+```
+
+### **`config?`**: `FilterOptionConfig`
+
+Additional configuration for the generated filter option. Optional.<br/>
+Defaults to `{}`.
+
+> Refer to the `option()` method's `config` argument's [type definition](?path=/docs/components-list-configuration-methods-option--docs#config-filteroptionconfig) for more information.
+
+## Returns
+
+A promise that resolves to a `FilterOptionData` object containing all configuration properties.
+
+## Examples
+
+### Create an async filter option
+
+```typescript
+const { match, async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // Create an async option that loads its match after a delay
+  const delayedOption = async.option(
+    "Delayed Pokemon",
+    async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return match("name", "=", "pikachu");
+    },
+    { color: "pending" }
+  );
+});
+```
+
+### Create an async option with multiple matches
+
+```typescript
+const { match, async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // Create an async option that loads multiple matches from an API
+  const apiOption = async.option(
+    "API Pokemon",
+    async () => {
+      const response = await fetch("/api/pokemon/types");
+      const types = await response.json();
+      return types.map(type => match("type", "=", type));
+    },
+    { 
+      color: "primary",
+      operator: "OR" 
+    }
+  );
+});
+```
+
+## Common pitfalls
+
+### My async option is not being displayed
+
+Async options need to be used with `async.filter()` or `async.filterPreset()` to be properly awaited and displayed.
+
+> Make sure you're using the appropriate async methods together.
+
+### I get a TypeScript error when trying to use async options in a filter
+
+`async.option()` is a strictly asynchronous function. It returns a promise and relies on `async.filter()` or `async.filterPreset()` to be awaited.<br/>
+You are likely trying to pass options created by `async.option()` to `filter()` or `filterPreset()`, which are strictly synchronous functions.
+
+> Use the `async.filter()` or `async.filterPreset()` methods instead.
+
+</Content>

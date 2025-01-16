@@ -1,0 +1,194 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Async/FilterPreset" />
+
+<Header>
+  <HeaderInfo title="async.filterPreset()" parent="Components/List/Configuration/Methods/Async">
+    <Text size="m" color="primary-dark">Builds and registers a _filter preset_ from asynchronously loaded options.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Filter presets are predefined combinations of options that can be applied across multiple filters.
+
+> Options can be reused across multiple filters and presets.
+
+The `async.filterPreset()` method is similar to the `filterPreset()` method but it handles promises and async operations, allowing you to work with asynchronously loaded options.
+
+<Callout color="pending" icon={null}>
+The async methods are exposed through the `async` property of the `useListConfig` hook's return value.
+</Callout>
+
+```typescript
+const { async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // build & register an async filter preset
+  const legendaryPreset = async.filterPreset(
+    "Legendary Pokemon",
+    async () => {
+      // fetch option data from elsewhere asynchronously
+      const legendaryTypes = await fetchLegendaryTypes();
+      return legendaryTypes.map(type => ({
+        label: type.name,
+        matches: [
+          match("type", "=", type.id),
+          match("rarity", "=", "legendary")
+        ]
+      }));
+    },
+    { 
+      exclusive: true,
+      color: "warning" 
+    }
+  );
+});
+```
+
+## Type definition
+
+```typescript
+type MaybePromise<T> = T | Promise<T>;
+
+type ListConfigAsyncFilterPresetFnParams<TItem extends object> = [
+  label: string,
+  optionsOrSignaturesPromise: MaybePromise<
+    MaybePromise<FilterOptionDataOrSignature<TItem>>[]
+  >,
+  config?: FilterPresetConfig
+];
+
+type ListConfigAsyncFilterPresetFn<TItem extends object> = (
+  label: string,
+  optionsOrSignaturesPromise: MaybePromise<
+    MaybePromise<FilterOptionDataOrSignature<TItem>>[]
+  >,
+  config?: Filter@PresetConfig
+) => Promise<Nullable<FilterPresetData>>;
+```
+
+## Arguments
+
+### **`label`**: `string`
+
+The label of the generated filter preset. **Required**.
+
+### **`optionsOrSignaturesPromise`**: `MaybePromise<MaybePromise<FilterOptionDataOrSignature<TItem>>[]>`
+
+A promise (or array of promises) that resolves to an array of options or option signatures. **Required**.
+
+> Can be a promise that resolves to an array of promises, allowing for complex async operations.
+
+> Synchronous and asynchronous options can be mixed freely.
+
+```typescript
+type MaybePromise<T> = T | Promise<T>;
+type OptionsOrSignaturesPromise<TItem extends object> =
+  MaybePromise<
+    MaybePromise<
+      | FilterOptionDataOrSignature<TItem>
+      | FilterOptionDividerData
+    >[]
+  >;
+```
+
+### **`config?`**: `FilterPresetConfig`
+
+Additional configuration for the generated filter preset. Optional.<br/>
+Defaults to `{}`.
+
+> Refer to the `filterPreset()` method's `config` argument's [type definition](?path=/docs/components-list-configuration-methods-filter-preset--docs#config-filterpresetconfig) for more information.
+
+## Returns
+
+A promise that resolves to a `FilterPresetData` object containing all configuration properties, or `null` if an error occurs.
+
+## Examples
+
+### Create a filter preset with async options
+
+```typescript
+const { match, async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // Create a preset with async options loaded from an API
+  async.filterPreset(
+    "Legendary Dragons",
+    Promise.all((async () => {
+      const response = await fetch("/api/pokemon/legendary-dragons");
+      const dragons = await response.json();
+      return dragons.map((dragon) => async.option(
+          dragon.name,
+          () => [
+            match("type.0.type.name", "=", "dragon"),
+            match("rarity", "=", "legendary")
+          ],
+          { color: "warning" }
+        ))
+    })()),
+    { 
+      exclusive: true,
+      operator: "OR" 
+    }
+  );
+});
+```
+
+### Create a preset with mixed sync and async options
+
+```typescript
+const { match, option, async } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const fireType = option("Fire", match("type.0.type.name", "=", "fire"));
+  
+  // Create a preset combining sync and async options
+  async.filterPreset(
+    "Powerful Fire Pokemon",
+    [
+      fireType,
+      async.option(
+        "High Attack",
+        async () => {
+          const threshold = await fetch("/api/pokemon/attack-threshold");
+          const { value } = await threshold.json();
+          return match("attack", ">=", value);
+        },
+        { color: "error" }
+      )
+    ],
+    { 
+      color: "error",
+      operator: "AND" 
+    }
+  );
+});
+```
+
+## Common pitfalls
+
+### My filter preset is not working with async options
+
+The `async.filterPreset()` method handles promises, but you need to ensure that:
+
+1. All async operations complete successfully
+2. The promises resolve to valid option data or signatures
+3. You're using `async.option()` for async options instead of `option()`
+
+> Check your browser's console for potential errors in your async operations.
+
+### I'm trying to combine async and sync options but getting errors
+
+When mixing sync and async options in a preset:
+
+1. Use `async.filterPreset()` instead of `filterPreset()`
+2. Ensure all async operations are properly handled
+
+> The async methods are designed to work together while supporting both sync and async options - mix them appropriately.
+
+</Content>

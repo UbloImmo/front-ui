@@ -47,7 +47,6 @@ export type CollapsibleProps = {
    * @default null
    */
   children?: ReactNode;
-
   /**
    * The nested collapsible to display
    *
@@ -55,6 +54,12 @@ export type CollapsibleProps = {
    * @default null
    */
   subCollapsibles?: Nullable<CollapsibleProps[]>;
+  /**
+   * The content to display inside the collapsible once opened
+   * @type {ReactNode}
+   * @default null
+   */
+  content?: ReactNode;
 };
 
 export type CollapsibleDefaultProps = Required<CollapsibleProps>;

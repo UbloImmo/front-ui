@@ -1,10 +1,17 @@
-import { isArray, isObject, isString } from "@ubloimmo/front-util";
+import {
+  isArray,
+  isObject,
+  isString,
+  type ValueMap,
+} from "@ubloimmo/front-util";
 
 import { lerp } from "./number.utils";
 
 import type {
   AnyColor,
   ColorKey,
+  DefaultPaletteColorShadeKey,
+  GrayscalePaletteColorShadeKey,
   HexColor,
   HexColorAlpha,
   HexColorShorthand,
@@ -509,4 +516,69 @@ export const isPaletteColor = (value: unknown): value is PaletteColor => {
 export const isGrayColor = (value: unknown): value is ColorKey & "gray" => {
   if (!isString(value)) return false;
   return value === "gray";
+};
+
+/**
+ * Maps default palette color shade keys to grayscale palette color shade keys
+ * @type {ValueMap<DefaultPaletteColorShadeKey, GrayscalePaletteColorShadeKey>}
+ */
+const grayColorShadeMap: ValueMap<
+  DefaultPaletteColorShadeKey,
+  GrayscalePaletteColorShadeKey
+> = {
+  light: "200",
+  medium: "300",
+  base: "600",
+  dark: "800",
+};
+
+/**
+ * Normalizes a color value to a palette color format.
+ *
+ * @param {ColorKey | PaletteColor} color - The color to normalize. Can be either a ColorKey or PaletteColor.
+ * @param {DefaultPaletteColorShadeKey} [shade="base"] - The shade to use if color is a ColorKey.
+ * @returns {PaletteColor} The normalized palette color in the format "color-shade".
+ */
+export const normalizeToPaletteColor = (
+  color: ColorKey | PaletteColor,
+  shade: DefaultPaletteColorShadeKey = "base"
+): PaletteColor => {
+  if (isPaletteColor(color)) return color;
+  if (isGrayColor(color)) {
+    const shadeKey = grayColorShadeMap[shade];
+    return `gray-${shadeKey}`;
+  }
+  return `${color}-${shade}`;
+};
+
+/**
+ * Extracts the color key from a palette color string.
+ *
+ * @param {PaletteColor} color - The palette color to extract from (e.g. "blue-500")
+ * @param {ColorKey} [defaultColorKey="gray"] - The default color key to return if extraction fails
+ * @returns {ColorKey} The extracted color key, or the default if extraction fails
+ */
+export const extractColorKey = (
+  color: PaletteColor,
+  defaultColorKey: ColorKey = "gray"
+): ColorKey => {
+  if (!isPaletteColor(color)) return defaultColorKey;
+  const [colorKey] = color.split("-");
+  if (!isColorKey(colorKey)) return defaultColorKey;
+  return colorKey;
+};
+
+/**
+ * Normalizes a color value to a ColorKey format.
+ *
+ * @param {ColorKey | PaletteColor} color - The color to normalize. Can be either a ColorKey or PaletteColor.
+ * @param {ColorKey} [defaultColorKey="gray"] - The default color key to return if color cannot be normalized.
+ * @returns {ColorKey} The normalized color key.
+ */
+export const normalizeToColorKey = (
+  color: ColorKey | PaletteColor,
+  defaultColorKey: ColorKey = "gray"
+): ColorKey => {
+  if (isColorKey(color)) return color;
+  return extractColorKey(color, defaultColorKey);
 };

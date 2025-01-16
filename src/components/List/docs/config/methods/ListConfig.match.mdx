@@ -1,0 +1,118 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Match" />
+
+<Header>
+  <HeaderInfo title="match()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Builds and returns a _filter option match_ for the list's data.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Matches are used to create filter options.
+
+```typescript
+const { match } = useListConfig<Pokemon>(usePokemonData);
+const isNamedPikachu = match("name", "=", "Pikachu");
+// { property: "name", comparison: "=", value: "Pikachu" }
+```
+
+## Type definition
+
+```typescript
+interface ListConfigMatchFn<TItem extends object> {
+  (
+    property: FilterProperty<TItem>,
+    comparison: FilterComparisonOperator,
+    value: FilterOptionValue
+  ): FilterOptionMatch<TItem>;
+  (match: FilterOptionMatch<TItem>): FilterOptionMatch<TItem>;
+}
+```
+
+## Arguments
+
+`match` has two signatures. Both return a `FilterOptionMatch` object.
+
+> Calling it with invalid arguments will throw an error.
+
+### Signature 1: `match(property, comparison, value)`
+
+This signature requires 3 arguments.
+
+
+#### **`property`**: `FilterProperty<TItem>`
+
+A single (possibly nested) string or number property of the item to match against
+
+```typescript
+type FilterProperty<TItem extends object> = DeepKeyOf<TItem>;
+```
+
+#### **`comparison`**: `FilterComparisonOperator`
+
+A single comparison operator
+
+```typescript
+type FilterComparisonOperator = "!=" | "=" | ">" | "<" | ">=" | "<=";
+```
+
+#### **`value`**: `FilterOptionValue`
+
+A single property value to match against
+
+```typescript
+type FilterOptionValue = string | number | boolean | Date | null;
+```
+
+### Signature 2: `match(optionMatch)`
+
+This signature is a shorthand for the first signature. It takes a complete `FilterOptionMatch` object and returns it unchanged, while ensuring it is correctly typed.
+
+#### **`optionMatch`**: `FilterOptionMatch<TItem>`
+
+A complete `FilterOptionMatch` object to return unchanged
+
+```typescript
+type FilterOptionMatch<TItem extends object> = {
+  value: FilterOptionValue;
+  comparison: FilterComparisonOperator;
+  property: FilterProperty<TItem>;
+};
+```
+
+## Returns
+
+A `FilterOptionMatch` object typed to the list's data
+
+```typescript
+type FilterOptionMatch<TItem extends object> = {
+  value: FilterOptionValue;
+  comparison: FilterComparisonOperator;
+  property: FilterProperty<TItem>;
+};
+```
+
+## Example
+
+```typescript
+// Retrieve the method from the useListConfig hook
+const { match } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+// Both of these calls are equivalent.
+  const isNamedPikachu = match("name", "=", "Pikachu");
+  const isNamedPikachu2 = match({
+    property: "name",
+    comparison: "=",
+    value: "Pikachu"
+  })
+})
+```
+
+</Content>

@@ -49,7 +49,7 @@ export const badgeStyle = (props: StyleProps<DefaultBadgeProps>) => {
 
   return css`
     border: 1px solid var(--${borderColor});
-    background-color: var(--${background});
+    background: var(--${background});
     ${commonBadgeStyles}
   `;
 };
@@ -67,6 +67,10 @@ export const commonBadgeStyles = () => {
     max-width: max-content;
     user-select: none;
     overflow: hidden;
+
+    transition-property: background, border;
+    transition-duration: 300ms;
+    transition-timing-function: var(--bezier);
 
     span {
       white-space: nowrap;

@@ -70,7 +70,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   }
 
   return (
-    <FlexRowLayout align="center" testId={testId} role="status">
+    <FlexRowLayout align="center" testId={testId} overrideTestId role="status">
       <ChipContainer {...styledProps}>
         {icon && <Icon name={icon} size="s-3" color={iconColorStyle} />}
         <Text size="s" weight="medium" color={textColorStyle} ellipsis>

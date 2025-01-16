@@ -1,0 +1,104 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Divider" />
+
+<Header>
+  <HeaderInfo title="divider()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Creates a _filter option divider_ to visually separate options in a filter.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Dividers are used to visually separate options in a filter's dropdown menu.
+
+```typescript
+const { match, option, divider, filter } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const legendaryFilter = filter(
+    "Legendary Pokemon",
+    [
+      option("Mewtwo", match("name", "=", "mewtwo")),
+      divider("Birds"), // Creates a divider with the label "Birds"
+      option("Articuno", match("name", "=", "articuno")),
+      option("Zapdos", match("name", "=", "zapdos")),
+    ]
+  );
+});
+```
+
+## Type definition
+
+```typescript
+type ListConfigOptionDividerFn = (label: string) => FilterOptionDividerData;
+```
+
+## Arguments
+
+#### **`label`**: `string`
+
+The label of the divider. **Required**.
+
+## Returns
+
+A `FilterOptionDividerData` object.
+
+```typescript
+type FilterOptionDividerData = {
+  kind: "divider";
+  label: string;
+};
+```
+
+## Examples
+
+### Create a simple divider
+
+```typescript
+const { divider } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const birdsDivider = divider("Birds");
+  // { kind: "divider", label: "Birds" }
+});
+```
+
+### Use dividers to organize filter options
+
+```typescript
+const { match, option, divider, filter } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const typeFilter = filter(
+    "Pokemon Types",
+    [
+      divider("Basic"),
+      option("Fire", match("type", "=", "fire")),
+      option("Water", match("type", "=", "water")),
+      option("Grass", match("type", "=", "grass")),
+      divider("Special"),
+      option("Dragon", match("type", "=", "dragon")),
+      option("Psychic", match("type", "=", "psychic")),
+      option("Ghost", match("type", "=", "ghost")),
+    ]
+  );
+});
+```
+
+## Common pitfalls
+
+### My divider is not being displayed
+
+Dividers are purely visual elements and don't affect filtering behavior.
+While they use a simple data structure, they need to follow certain rules:
+
+- A divider will only be displayed if it's followed by at least one option.
+- Multiple consecutive dividers will be collapsed into a single divider. Only the last divider will be taken into account.
+- Dividers at the end of a filter's options list are ignored.
+
+</Content>

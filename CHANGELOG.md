@@ -7,10 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.3` TableBody layout
+  - Add `style` property to allow for bespoke styles when used in a list or a form
+
+- `v0.0.3` TableHeader layout
+  - Add optional `sticky` and `top` properties to make the header sticky and offset it from the top of the viewport / container
+
+- `v0.0.4` TableHeaderCell layout
+  - Convert component to forwardRef to allow parents to access the element
+
+- `v0.0.3` TableRow layout
+  - Add `style` property to allow for bespoke styles when used in a list or a form
+
+- **`DOCS`**
+  - Improve story code snippet generation
+    - Recursively generate code snippets for children
+  - Improve changelog display
+    - Add horizontal rules between sections
+    - Normalize heading & content styles
+  - Match blockquote styles with Callout component
+  - Automatically generate `id` for heading blocks based on text content
+
+### Added
+
+- `v0.0.6` Text component & `v0.0.5` Heading component
+  - Add `noWrap` property to make the text not wrap
+  - Add `id` property to make the text / heading component accessible
+
+- `v0.0.4` Collapsible component
+  - Add `content` property to render custom content inside the collapsible
+
+- `v0.0.1` List component
+  - A flexible and extensible component for fetching, filtering and displaying a list of items
+  - A bunch of sub-components to handle and display the list's filtering state
+
 ### Fixed
+
+- `v0.0.5` Callout component
+  - Fix left padding, accounting for 4px wide left border
 
 - `v0.0.9` EntityInfoCard component
   - Fixed conditional rendering
+
 
 ## 1.0.3 - 2025-01-16
 
@@ -32,6 +72,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Run `docs:generate` script in the dockerfile before building the storybook
 
 - Rearrange components & layouts display in storybook by parent groups: `Actions`, `Feedbacks`, `Dialogs`, `Groups`, ...
+
+## 1.0.2 - 2025-01-08
+
+## 1.0.1 - 2025-01-06
 
 ### Fixed
 
@@ -94,6 +138,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.21` Form component
   - Improved form table cell for proper ellipsis behavior
 
+
 ## 0.35.5 - 2024-12-02
 
 ### Added
@@ -103,7 +148,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - `v0.0.10` ComboBoxButton component
-
   - Fix icon color when it is active and disabled
 
 - Add unit tests for components with low code coverage
@@ -121,8 +165,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.19` Form component
   - Rework FormTable controls markup and styles to fix css bug in Safari
-
-## 0.35.2 - 2024-11-26
 
 ## 0.35.1 - 2024-11-26
 
@@ -704,8 +746,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.3` Divider component
   - Only render Heading if divider label is provided
 
-## 0.29.1 - 2024-09-04
-
 ## 0.29.0 - 2024-09-03
 
 ### Added
@@ -738,8 +778,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.5` Tooltip component
   - Add support for usage inside other uikit components by checking aborting if IntersectionObserver is defined in global context
-
-## 0.27.1 - 2024-08-29
 
 ## 0.27.0 - 2024-08-29
 
@@ -1338,12 +1376,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Phone input foreign styles
 
-## 0.4.3 - 2024-05-21
-
-## 0.4.2 - 2024-05-21
-
-## 0.4.1 - 2024-05-21
-
 ## 0.4.0 - 2024-05-20
 
 ### Added
@@ -1396,8 +1428,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Text & Heading stories text content
 
-## 0.1.2 - 2024-04-25
-
 ## 0.1.1 - 2024-04-17
 
 ### Fixed
@@ -1441,8 +1471,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Text size after font style overhaul
 - `v0.0.2` InputAssistiveText
   - Text size after font style overhaul
-
-## 0.1.0-beta.0 - 2024-04-11
 
 ## 0.0.2-beta.0 - 2024-04-11
 

@@ -9,13 +9,17 @@ import { testPrimitives } from "./test.data";
 
 import {
   blendColors,
+  extractColorKey,
   hexColorConverter,
   isColorKey,
+  isGrayColor,
   isPaletteColor,
   isSameColor,
   isSameShade,
   isValidHexStr,
   isValidRgbaStr,
+  normalizeToColorKey,
+  normalizeToPaletteColor,
   rgbaColorConverter,
 } from "@utils";
 
@@ -230,6 +234,14 @@ describe("color predicates", () => {
     });
   });
 
+  describe("isGrayColor", () => {
+    it("should only return true for gray", () => {
+      expect(isGrayColor("gray")).toBeTrue();
+      expect(isGrayColor("primary")).toBeFalse();
+      expect(isGrayColor(40)).toBeFalse();
+    });
+  });
+
   describe("isPaletteColor", () => {
     it("should not throw", () => {
       expect(isPaletteColor).toBeFunction();
@@ -345,5 +357,58 @@ describe("color comparison", () => {
     testColorComparison("blue", "blue", isSameShade, true);
     testColorComparison("blue", "red", isSameShade, false);
     testColorComparison("blue", "green", isSameShade, false);
+  });
+});
+
+describe("color normalization", () => {
+  describe("normalizeToColorKey", () => {
+    it("should extract color keys from palette colors", () => {
+      expect(normalizeToColorKey("gray-50")).toEqual("gray");
+      expect(normalizeToColorKey("success-base")).toEqual("success");
+      expect(normalizeToColorKey("warning-dark")).toEqual("warning");
+    });
+    it("should preserve color keys", () => {
+      expect(normalizeToColorKey("gray")).toEqual("gray");
+      expect(normalizeToColorKey("success")).toEqual("success");
+      expect(normalizeToColorKey("warning")).toEqual("warning");
+    });
+    it("should return the default color key if the color is not a valid color key or palette color", () => {
+      // @ts-expect-error needed to test the default case
+      expect(normalizeToColorKey("hello")).toEqual("gray");
+      // @ts-expect-error needed to test the default case
+      expect(normalizeToColorKey("grey", "primary")).toEqual("primary");
+      // @ts-expect-error needed to test the default case
+      expect(normalizeToColorKey(123, "primary")).toEqual("primary");
+      // @ts-expect-error needed to test the default case
+      expect(normalizeToColorKey("primaried-main", "warning")).toEqual(
+        "warning"
+      );
+    });
+  });
+  describe("normalizeToPaletteColor", () => {
+    it("should normalize color keys to palette colors", () => {
+      expect(normalizeToPaletteColor("gray", "light")).toEqual("gray-200");
+      expect(normalizeToPaletteColor("success")).toEqual("success-base");
+      expect(normalizeToPaletteColor("warning", "dark")).toEqual(
+        "warning-dark"
+      );
+    });
+  });
+  describe("extractColorKey", () => {
+    it("should extract color keys from palette colors", () => {
+      expect(extractColorKey("gray-50")).toEqual("gray");
+      expect(extractColorKey("success-base")).toEqual("success");
+      expect(extractColorKey("warning-dark")).toEqual("warning");
+    });
+    it("should return the default color key if the color is not a valid color key or palette color", () => {
+      // @ts-expect-error needed to test the default case
+      expect(extractColorKey("hello")).toEqual("gray");
+      // @ts-expect-error needed to test the default case
+      expect(extractColorKey("grey", "primary")).toEqual("primary");
+      // @ts-expect-error needed to test the default case
+      expect(extractColorKey(123, "primary")).toEqual("primary");
+      // @ts-expect-error needed to test the default case
+      expect(extractColorKey("primaried-main", "warning")).toEqual("warning");
+    });
   });
 });

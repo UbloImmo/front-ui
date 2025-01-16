@@ -41,7 +41,6 @@ const defaultPopoverProps: PopoverDefaultProps = {
   wrapContent: false,
   fill: false,
 };
-
 /**
  * Displays rich content in a portal.
  *

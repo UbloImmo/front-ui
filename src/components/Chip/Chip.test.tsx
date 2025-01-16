@@ -6,7 +6,7 @@ import { ChipProps } from "./Chip.types";
 
 import { testComponentFactory } from "@/tests";
 
-const testId = "flex flex-row chip";
+const testId = "chip";
 
 const testChip = testComponentFactory<ChipProps>("Chip", Chip);
 

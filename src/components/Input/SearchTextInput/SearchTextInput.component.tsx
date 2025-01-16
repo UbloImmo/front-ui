@@ -70,6 +70,7 @@ const SearchTextInput = (
         data-testid={testId}
         value={value}
         type="text"
+        role="searchbox"
         onChange={onChange}
         onBlur={onBlur}
         required={mergedProps.required}
@@ -80,7 +81,7 @@ const SearchTextInput = (
         id={id}
         {...inputStyles}
       />
-      <StyledInputControl {...inputStyles}>
+      <StyledInputControl {...inputStyles} data-testid={`${testId}-control`}>
         <Icon name={mergedProps.controlIcon} />
       </StyledInputControl>
     </StyledInputContainer>

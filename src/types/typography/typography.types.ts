@@ -2,6 +2,7 @@ import { texts } from "@ubloimmo/front-tokens";
 
 import type { StyleOverrideProps } from "@/types/global/styles.types";
 import type { PaletteColor } from "@/types/themes/palette";
+import type { Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 export type TypographyTokens = typeof texts;
@@ -115,11 +116,23 @@ export type TypographyProps = {
    */
   fill?: boolean;
   /**
+   * Setting this to true will enable `white-space: nowrap` on the text contents.
+   *
+   * @default false
+   */
+  noWrap?: boolean;
+  /**
    * Any valid react children.
    *
    * @default undefined
    */
   children?: ReactNode;
+  /**
+   * A unique identifier for the text / heading component.
+   *
+   * @default undefined
+   */
+  id?: Nullable<string>;
 } & StyleOverrideProps;
 
 export type TextProps = TypographyProps & {

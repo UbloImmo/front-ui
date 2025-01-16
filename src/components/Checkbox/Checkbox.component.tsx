@@ -25,7 +25,7 @@ const defaultCheckboxProps: CheckboxDefaultProps = {
 /**
  * A simple checkbox that let users select multiple options from a set of items, or mark one individual item as selected
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {CheckboxProps & TestIdProps} props - Checkbox component props
  * @returns {JSX.Element}
@@ -60,6 +60,7 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
   const propagateOnChange = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
+      e.preventDefault();
       if (disabled) return;
 
       const newActive = !isActive;

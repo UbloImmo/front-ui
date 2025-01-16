@@ -25,20 +25,27 @@ const defaultCollapsibleProps: CollapsibleDefaultProps = {
   compact: false,
   children: null,
   subCollapsibles: null,
+  content: null,
 };
 
 /**
  * An expandable layout that allow users to reveal or hide sub content on click.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {CollapsibleProps & TestIdProps} props - Collapsible component props
  * @returns {JSX.Element}
  */
 const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultCollapsibleProps, props);
-  const { disabled, subCollapsibles, compact, children, onOpenChange } =
-    mergedProps;
+  const {
+    disabled,
+    subCollapsibles,
+    compact,
+    children,
+    onOpenChange,
+    content,
+  } = mergedProps;
   const [isOpen, setIsOpen] = useState(
     mergedProps.defaultOpen || mergedProps.open
   );
@@ -50,13 +57,13 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
 
   const toggleCollapsible = useCallback(() => {
     if (disabled) return;
-    if (!subCollapsibles) return;
+    if (!subCollapsibles && !content) return;
 
     const newIsOpen = !isOpen;
 
     if (onOpenChange) onOpenChange(newIsOpen);
     setIsOpen(newIsOpen);
-  }, [isOpen, disabled, subCollapsibles, onOpenChange]);
+  }, [isOpen, disabled, subCollapsibles, onOpenChange, content]);
 
   useEffect(() => {
     if (mergedProps.open !== isOpen) setIsOpen(mergedProps.open);
@@ -106,6 +113,7 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
           })}
         </SubCollapsibleContainer>
       )}
+      {content && isOpen && <>{content}</>}
     </>
   );
 };

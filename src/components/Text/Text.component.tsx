@@ -2,7 +2,12 @@ import { styled } from "styled-components";
 
 import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
 
-import { useClassName, useStyleProps, useTestId } from "@utils";
+import {
+  useClassName,
+  useHtmlAttribute,
+  useStyleProps,
+  useTestId,
+} from "@utils";
 
 import type { StyleProps, TestIdProps, TextProps } from "@types";
 
@@ -14,7 +19,8 @@ const defaultTextProps: Required<TextProps> = {
 /**
  * Customizable, accessible global text.
  *
- * @version 0.0.5
+ * @version 0.0.6
+ *
  * @param {WithTestId<TextProps>} props - Text component props
  * @returns {JSX.Element}
  */
@@ -22,8 +28,14 @@ const Text = (props: TextProps & TestIdProps): JSX.Element => {
   const innerProps = useStyleProps(props);
   const testId = useTestId("text", props);
   const className = useClassName(props);
+  const id = useHtmlAttribute(props.id);
   return (
-    <TextInner data-testid={testId} className={className} {...innerProps}>
+    <TextInner
+      data-testid={testId}
+      className={className}
+      {...innerProps}
+      id={id}
+    >
       {props.children}
     </TextInner>
   );

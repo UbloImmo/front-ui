@@ -1,0 +1,266 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Options" />
+
+<Header>
+  <HeaderInfo title="options()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Builds and registers multiple _filter options_ for a single property and comparison operator from a list of labeled values.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Options consist of a label, one or more matches and additional configuration.
+
+Calling `option()` will create a filter option from every labeled value it receives, register them and return them as a list.
+
+<Callout color="pending" icon={null}>
+Once registerd, options are considered immutable and cannot be modified.&nbsp;
+This means `options()` cannot be called inside a `useMemo()` hook or inside a hook / component's body.
+</Callout>
+
+```typescript
+const { options } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  // Builds 3 filter options and registers them in the list's configuration
+  const legendaryDoggos = options(
+    "name",
+    "=",
+    [
+      {
+        label: "Entei",
+        value: "entei",
+      },
+      {
+        label: "Raikou",
+        value: "raikou",
+      },
+      {
+        label: "Suicune",
+        value: "suicune",
+      },
+    ],
+  );
+})
+```
+
+> Compound options (options with multiple matches) cannot be created with `options()`. Declare them individually with the [option()](?path=/docs/components-list-configuration-methods-option--docs) method instead.
+
+## Type definition
+
+```typescript
+type ListConfigOptionsFn<TItem extends object> = (
+  property: FilterProperty<TItem>,
+  comparison: FilterComparisonOperator,
+  labeledValues: ListConfigOptionLabeledValue[],
+  sharedConfig?: FilterOptionConfig,
+) => FilterOptionData<TItem>[];
+```
+
+## Arguments
+
+#### **`property`**: `FilterProperty<TItem>`
+
+A single (possibly nested) string or number property for all options to match against. **Required**.
+
+```typescript
+type FilterProperty<TItem extends object> = DeepKeyOf<TItem>;
+```
+
+#### **`comparison`**: `FilterComparisonOperator`
+
+A single comparison operator. **Required**.
+
+```typescript
+type FilterComparisonOperator = "!=" | "=" | ">" | "<" | ">=" | "<=";
+```
+
+#### **`labeledValues`**: `ListConfigOptionLabeledValue[]`
+
+A list of labeled values to create filter options from. **Required**.
+
+> One option will be created for each labeled value.
+
+
+```typescript
+type ListConfigOptionLabeledValue = {
+  label: string;
+  value: FilterOptionValue;
+  config?: FilterOptionConfig;
+};
+```
+
+##### `labeledValue.label`: `string`
+
+The label of the generated filter option. **Required**.
+
+##### `labeledValue.value`: `FilterOptionValue`
+
+The value the generated filter option will match against. **Required**.
+
+```typescript
+type FilterOptionValue = string | number | boolean | Date | null;
+```
+
+##### `labeledValue.config?`: `FilterOptionConfig`
+
+Optional configuration for a single generated filter option.<br/>
+Defaults to `{}`.
+
+<Callout color="gray">
+If provided, gets merged with the shared configuration.
+Multiple options can be created with the same behavior but different visual properties.
+</Callout>
+
+> Refer to the `option()` method's `config` argument's [type definition](?path=/docs/components-list-configuration-methods-option--docs#config-filteroptionconfig) for more information.
+
+#### **`sharedConfig?`**: `FilterOptionConfig`
+
+Additional configuration that serves a a base for every generated option. Optional.<br/>
+Defaults to `{}`.
+
+> Refer to the `option()` method's `config` argument's [type definition](?path=/docs/components-list-configuration-methods-option--docs#config-filteroptionconfig) for more information.
+
+## Returns
+
+A list containing one `FilterOptionData` object for each `labeledValue` provided.<br/>
+Its `colorKey` and `paletteColor` are generated from the `color` property.
+
+> An option's `signature` is a unique identifier used to refer / find a single option, and is generated from the option's `label`, `matches` and `operator` properties.
+
+```typescript
+/**
+ * The data of a filter option
+ */
+type FilterOptionData<TItem extends object> = Required<
+  FilterOptionConfig
+> & {
+  label: string;
+  matches: FilterOptionMatch<TItem>[];
+  operator: FilterBooleanOperator;
+  signature: FilterSignature;
+  paletteColor: PaletteColor;
+  colorKey: ColorKey;
+  selected: boolean;
+};
+```
+
+## Examples
+
+Build & register multiple filter options
+
+```typescript
+const { options } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const legendaryDoggos = options(
+    "name",
+    "=",
+    [
+      {
+        label: "Entei",
+        value: "entei",
+      },
+      {
+        label: "Raikou",
+        value: "raikou",
+      },
+      {
+        label: "Suicune",
+        value: "suicune",
+      },
+    ],
+  );
+})
+```
+
+### Build multiple options from an array of values
+
+```typescript
+const goodBoys = ["entei", "raikou", "suicune"];
+
+const { options } = useListConfig<Pokemon>(usePokemonData);
+
+const legendaryDoggos = useStatic(() =>
+  options(
+    "name",
+    "=",
+    goodBoys.map((name) => ({
+      value: name,
+      label: name,
+    }))
+  )
+)
+```
+
+### Share a configuration between multiple options
+
+```typescript
+const types = ["fire", "water", "grass"];
+
+const { options } = useListConfig<Pokemon>(usePokemonData);
+
+const starterTypes = useStatic(() =>
+  options(
+    "type",
+    "=",
+    types.map((type) => ({
+      value: type,
+      label: type,
+    })),
+    {
+      icon: "DiamondsFill"
+    }
+  )
+)
+```
+
+### Make use of specific configuration for each option
+
+```typescript
+const greatBirdos = ["articuno", "zapdos", "moltres"];
+const allBirdos = [...greadBirdos, "pidgey", "pidgeotto", "pidgeot"];
+
+const { options } = useListConfig<Pokemon>(usePokemonData);
+
+const onlyVIPsAllowed = useStatic(() =>
+  options(
+    "name",
+    "=",
+    allBirdos.map((bird) => ({
+      value: bird,
+      label: bird,
+      config: greatBirdos.includes(bird)
+        ? {
+            color: "primary",
+            icon: "StarsFill"
+          }
+        : {
+          disabled: true
+        }
+    })),
+    {
+      icon: "Feather",
+      color: "gray",
+    }
+  )
+)
+```
+
+## Common pitfalls
+
+All `option()` pitfalls may also apply to `options()`.
+
+### I want to create options asynchronously
+
+`options()` is a strictly synchronous function. It doesn't handle promises or async operations.
+
+> Use the `async.options()` method to create options asynchronously.
+
+</Content>
+

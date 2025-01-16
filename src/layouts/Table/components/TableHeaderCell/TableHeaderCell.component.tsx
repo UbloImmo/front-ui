@@ -1,3 +1,4 @@
+import { forwardRef, type ForwardedRef } from "react";
 import styled from "styled-components";
 
 import { tableHeaderCellStyles } from "./TableHeaderCell.styles";
@@ -15,12 +16,15 @@ const defaultTableHeaderCellProps: TableCellProps = {
 /**
  * A table header cell component to label the corresponding column, used in `TableHeader`.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {CellProps} props - The props for the component.
  * @return {JSX.Element} The rendered table header cell.
  */
-const TableHeaderCell = (props: TableCellProps & TestIdProps): JSX.Element => {
+export const TableHeaderCell = forwardRef<
+  HTMLTableCellElement,
+  TableCellProps & TestIdProps
+>((props: TableCellProps & TestIdProps, ref): JSX.Element => {
   const mergedProps = useMergedProps(defaultTableHeaderCellProps, props);
   const testId = useTestId("table-header-cell", props);
   const className = useClassName(props);
@@ -30,14 +34,15 @@ const TableHeaderCell = (props: TableCellProps & TestIdProps): JSX.Element => {
       colSpan={mergedProps.colSpan}
       data-testid={testId}
       className={className}
+      ref={ref}
     >
       <div data-testid="table-header-cell-inner">{props.children}</div>
     </StyledTableHeaderCell>
   );
-};
+});
 
-const StyledTableHeaderCell = styled.th`
+const StyledTableHeaderCell = styled.th<{
+  ref: ForwardedRef<HTMLTableCellElement>;
+}>`
   ${tableHeaderCellStyles}
 `;
-
-export { TableHeaderCell };

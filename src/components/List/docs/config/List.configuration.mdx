@@ -1,0 +1,617 @@
+
+import { Meta, Unstyled, Source } from "@storybook/blocks";
+import { Canvas, Callout, Markdown, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+import { Hypertext } from "@components/Hypertext";
+import { Collapsible } from "@components/Collapsible";
+
+
+<Meta title="Components/List/Configuration/Configuration" />
+
+<Header>
+  <HeaderInfo title="Configuration" parent="Components/List">
+    <Text size="m" color="primary-dark">Setting up a list is a pretty involved process, but it is very well worth it.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Typing
+
+In order to make the List component type safe while still being flexible, we needed it to be _generic_.
+
+That means you need to define a type for the items you want to display. 
+
+> _We'll be using this `Pokemon` type in the examples below._
+
+```typescript
+type Pokemon = {
+  id: number;
+  name: string;
+  base_experience: number;
+  is_default: boolean;
+  order: number;
+  weight: number;
+  power: number;
+  attack: number;
+  types: {
+    slot: number;
+    type: {
+      id: number;
+      name: string;
+    };
+  }[];
+};
+```
+
+
+## Data Provider
+
+The component expects a `dataProvider` hook to be provided.
+**It is responsible for fetching / refetching, filtering and sorting the data.**
+Your custom hook will the be ran internally, and therefore drive what / how data is displayed.
+
+<Callout color="primary">
+  If you need to implement custom logic data / filtering / sorting for a specific list, this is the place to do it.
+</Callout>
+
+Don't worry, we provide a basic `useStaticDataProvider` hook, which is a good starting point that aims to cover most use cases.
+
+```tsx
+import { useStaticDataProvider, type UseDataProviderFn } from "@ubloimmo/uikit";
+
+// fetches a list of pokemon
+const fetchPokemon = async (): Promise<Pokemon[]> => {
+  // ...
+  return [];
+}
+
+// create a data provider hook that provides a fetcher
+// and forwards the setData callback to the static data provider
+const usePokemonData: UseDataProviderFn<Pokemon> = (setData) => {
+  return useStaticDataProvider(fetchPokemon, setData);
+} 
+```
+
+### Custom data provider
+
+Any custom `dataProvider` hook must conform to the exported **`UseDataProviderFn`** interface.
+
+> TODO: table with the interface
+
+
+
+## Behavior
+
+Now that we know what our data looks like and have a way to manage it, we can start configuring how the user can interact with it.
+
+Import the `useListConfig` hook to configure a list&apos;s options and behavior.
+It yieds a `config` object and various typed methods that mutate it.
+
+> This `config` object is the one and only property supplied to either the `List` component or its related `ListProvider`.
+
+### Barebones Configuration
+
+If all you need to do is display data in a list, this is the simplest way to do it.
+
+```tsx
+import { useListConfig } from "@ubloimmo/uikit";
+
+/**
+ * Custom hook that configures the list
+ */
+const usePokemonListConfig = () => {
+  // we pass our data provider hook to the useListConfig hook, without calling it
+  const { config } = useListConfig<Pokemon>(usePokemonData);
+  
+  // and return the config object
+  return config;
+}
+```
+
+## Filtering architecture
+
+When there is a lot of data, it is often useful to allow the user to filter it.
+
+Filtering a list's data revolves around **4 core concepts**.
+
+### Matches
+
+Matches are the building blocks of filtering. They are used to define the criteria for a filter option.
+
+A match can be interpreted as a single condition that must be met for an item to be matched.
+
+It holds three properties:
+
+- `property`: The item's property to match on.
+- `comparison`: The comparison operator to use for the match.
+- `value`: The value to match against.
+
+### Options
+
+Options are built on top of one or more matches and a user-readable label.
+
+They hold additional properties that define how the option should be displayed and behave.
+
+### Filters
+
+Filters are essentially a labeled collection of one or more options, and offer a way for users to interact (select / unselect) with them.
+
+They also hold additional properties that define how the filter should behave.
+
+### Filter presets
+
+Filter presets also hold a collection of one or more options, but they are meant to be used as a whole.
+
+Once toggled, all options in the preset are selected or unselected.
+
+## Combining multiple filters / options / filter presets
+
+By default, multiple selected options will be combined using the `AND` operator. If a user selects multiple options, the filter will be applied to items that match all of the selected options.
+
+This behavior can be changed by calling the `setOperator()` method returned from the `useListConfig` hook.
+
+## Configuration methods
+
+Matches, options filters and filter presets are, _you guessed it_, built using the `useListConfig` hook and its methods.
+
+> Each method is typed based on the data provider's generic `item` type, ensuring each option is compatible with the list'sdata.
+
+<Callout color="pending" icon={null}>
+  We recommend wrapping configuration method calls in a `useStatic` hook, to ensure they are only called once.
+  **Expect infinite render loops otherwise.**
+</Callout>
+
+### Filtering methods
+
+#### Matches
+
+- [match()](?path=/docs/components-list-configuration-methods-match--docs): Builds and returns a _filter option match_ for the list's data.
+- [matches()](?path=/docs/components-list-configuration-methods-match--docs): Builds and returns a **list** of _filter option matches_ for the list's data.
+
+#### Options
+
+- [option()](?path=/docs/components-list-configuration-methods-option--docs): Builds and registers a _filter option_ for the list's data.
+- [options()](?path=/docs/components-list-configuration-methods-options--docs): Builds and registers a **list** of _filter options_ for the list's data.
+- [async.option()](?path=/docs/components-list-configuration-methods-async-option--docs): Builds and registers a _filter option_ for the list's data asynchronously.
+- [async.options()](?path=/docs/components-list-configuration-methods-async-options--docs): Builds and registers a **list** of _filter options_ for the list's data asynchronously.
+
+<Callout color="pending" icon={null}>
+  Declaration order matters. Options within a filter are ordered based on the order they were declared, unless a `config.optionsSort` property other than `none` is specified.
+</Callout>
+
+#### Filters
+
+- [filter()](?path=/docs/components-list-configuration-methods-filter--docs): Builds and registers a _filter_ for the list's data.
+- [async.filter()](?path=/docs/components-list-configuration-methods-async-filter--docs): Builds and registers a _filter_ for the list's data asynchronously.
+
+<Callout color="pending" icon={null}>
+  Declaration order matters. Filters are displayed based on the order they were declared using the `filter()` or `async.filter()` methods.
+</Callout>
+
+#### Filter presets
+
+- [filterPreset()](?path=/docs/components-list-configuration-methods-filter-preset--docs): Builds and registers a _filter preset_ for the list's data.
+- [async.filterPreset()](?path=/docs/components-list-configuration-methods-async-filter-preset--docs): Builds and registers a _filter preset_ for the list's data asynchronously.
+
+<Callout color="pending" icon={null}>
+  Declaration order matters. Filters presets are displayed based on the order they were declared using the `filterPreset()` or `async.filterPreset()` methods.
+</Callout>
+
+## Search parameters
+
+You might want to show different initial filter options based on the link a user clicked to get to the page.
+
+To do this, you can use the `configureSearchParams()` method. By default, search parameters are not taken into account.
+
+```tsx
+import { useListConfig } from "@ubloimmo/uikit";
+
+const { configureSearchParams } = useListConfig(usePokemonData);
+
+useStatic(() => {
+  configureSearchParams({ sync: "read" });
+});
+```
+
+### Synchronization
+
+The `sync` property of the `configureSearchParams()` may be set to:
+
+- `"read"`: The list's options will be read from the search params when the list is mounted.
+- `"write"`: The list's options will be written to the search params when the list's options change.
+- `"read-write"`: The list's options will be both read from and written to the search params.
+- `true`: Equivalent to `"read-write"`.
+- `false`: Disables search params synchronization.
+
+### Framework / Router integration
+
+Search params are read and written to the url using the `window.location` property by default.
+
+`configureSearchParams()` accepts both `readParams` and `writeParams` callbacks to override this behavior.
+
+#### react-router-dom example
+
+```tsx
+import { useSearchParams } from "react-router-dom";
+import { useListConfig, useStatic } from "@ubloimmo/uikit";
+
+const usePokemonListConfig = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { configureSearchParams, config } = useListConfig(usePokemonData);
+
+  useStatic(() => {
+    configureSearchParams({
+      sync: "read-write",
+      readParams: () => searchParams,
+      writeParams: (params: URLSearchParams) => setSearchParams(params),
+    })
+  })
+
+  return config;
+}
+```
+
+## Examples
+
+This is what a somewhat complete configuration for a list of pokemon might look like.
+
+> Both examples result in the same configuration. Only the way they are written is different.
+
+### Separated
+
+
+<Collapsible content={
+  <Source code={`
+import {
+  useListConfig,
+  useStatic,
+  type ListConfigOptionLabeledValue,
+  type FilterProperty,
+} from "@ubloimmo/uikit";
+
+const usePokemonListConfig = () => {
+  const {
+    config,
+    option,
+    match,
+    matches,
+    filter,
+    options,
+    filterPreset,
+    async,
+    configureSearchParams,
+  } = useListConfig(usePokemonData);
+
+  // make the list's options read the search params
+  useStatic(() => configureSearchParams({ sync: "read" }));
+
+  // declare name options once
+  const names = useStatic(() => {
+    const clefairy = option("Clefairy", match("name", "=", "clefairy"), {
+      color: "primary",
+    });
+    const pikachuOrRaichu = option(
+      "Pikachu or Raichu",
+      matches("name", "=", ["pikachu", "raichu"]),
+      { color: "pending-dark", operator: "OR" }
+    );
+    const legendaries = options(
+      "name",
+      "=",
+      [
+        { label: "Entei", value: "entei" },
+        { label: "Cresselia", value: "cresselia" },
+        { label: "Suicune", value: "suicune" },
+      ],
+      { icon: "Stars", color: "primary" }
+    );
+
+    const all = [clefairy, pikachuOrRaichu, ...legendaries];
+
+    return {
+      clefairy,
+      pikachuOrRaichu,
+      legendaries,
+      all,
+    };
+  });
+
+  // declare base experience options once
+  const baseExperiences = useStatic(() =>
+    async.options("base_experience", "<=", async () => {
+      await delay(250);
+      return arrayOf(10, (index): ListConfigOptionLabeledValue => {
+        const exp = index * 50;
+        const label = "exp" + " XP";
+        return { label, value: exp, config: {} };
+      });
+    })
+  );
+
+  // declare type options once
+  // pokemon can have up to 2 types, so we need to declare options that match both types
+  const types = useStatic(() => {
+    const typesLabeledValues: ListConfigOptionLabeledValue[] = [
+      {
+        label: "Fire",
+        value: "fire",
+        config: { color: "error", icon: "Fire" },
+      },
+      {
+        label: "Grass",
+        value: "grass",
+        config: { color: "success", icon: "Flower1" },
+      },
+      {
+        label: "Water",
+        value: "water",
+        config: { color: "primary", icon: "Water" },
+      },
+      {
+        label: "Electric",
+        value: "electric",
+        config: { color: "pending", icon: "Lightning" },
+      },
+    ];
+    const typeProperties: FilterProperty<Pokemon>[] = [
+      "types.0.type.name",
+      "types.1.type.name",
+    ];
+
+    const all = typesLabeledValues.map(({ label, value, config }) =>
+      option(
+        label,
+        typeProperties.map((property) => match(property, "=", value)),
+        { ...(config ?? {}), operator: "OR" }
+      )
+    );
+    const [fire, grass, water, electric] = all;
+    return {
+      all,
+      fire,
+      grass,
+      water,
+      electric,
+    };
+  });
+
+  // declare weight options once
+  const weights = useStatic(() => {
+    const heavy = option("Heavy", match("weight", ">=", 200), {
+      color: "gray-600",
+      icon: "BoxArrowDown",
+    });
+    const light = option("Light", match("weight", "<", 100), {
+      color: "gray-200",
+      icon: "Feather",
+    });
+    const medium = option(
+      "Medium",
+      [match("weight", ">=", 100), match("weight", "<", 200)],
+      {
+        operator: "AND",
+        color: "gray-400",
+      }
+    );
+    const all = [light, medium, heavy];
+    return {
+      heavy,
+      light,
+      medium,
+      all,
+    };
+  });
+
+  // declare filters once
+  // order matters.
+  useStatic(() => {
+    filter("Name", names.all, { multi: true });
+    async.filter("Base Experience", baseExperiences);
+    filter("Type", types.all, { operator: BooleanOperators.AND });
+    filter("Weight", weights.all);
+  });
+
+  // declare some filter presets once
+  // order matters.
+  useStatic(() => {
+    filterPreset(
+      "PyroElectric lightweights",
+      [types.fire, types.electric, weights.light],
+      {
+        color: "error",
+      }
+    );
+    filterPreset(
+      "Electric Pikachu or Raichu",
+      [types.electric, names.pikachuOrRaichu],
+      {
+        color: "pending",
+        exclusive: true,
+      }
+    );
+    filterPreset("Obese mice", [names.pikachuOrRaichu, weights.heavy]);
+  });
+
+  return config;
+};
+`
+}/>}>
+<Text weight="bold">This example splits the configuration into multiple `useStatic` calls.</Text>
+</Collapsible>
+
+### All in one
+
+<Collapsible content={
+  <Source code={`
+import {
+  useListConfig,
+  useStatic,
+  type ListConfigOptionLabeledValue,
+  type FilterProperty,
+} from "@ubloimmo/uikit";
+
+const usePokemonListConfig = () => {
+  // we pass our data provider hook to the useListConfig hook, without calling it
+  // and get the config object and various methods to build our filtering architecture
+  const {
+    config,
+    option,
+    match,
+    matches,
+    filter,
+    options,
+    filterPreset,
+    async,
+    configureSearchParams,
+  } = useListConfig(usePokemonData);
+
+  // configure once
+  useStatic(() => {
+    // make the list's options read the search params
+    configureSearchParams({ sync: "read" });
+    // build & register a filter option for clefairy
+    const clefairy = option(
+      "Clefairy",
+      match("name", "=", "clefairy"),
+      { color: "primary" }
+    );
+    // build & register a filter option for pikachu or raichu
+    const pikachuOrRaichu = option(
+      "Pikachu or Raichu",
+      matches("name", "=", ["pikachu", "raichu"]),
+      { color: "pending-dark", operator: "OR" }
+    );
+    // build & register multiple filter options for entei, cresselia & suicune
+    const others = options(
+      "name",
+      "=",
+      [
+        { label: "Entei", value: "entei" },
+        { label: "Cresselia", value: "cresselia" },
+        { label: "Suicune", value: "suicune" },
+      ],
+      {
+        icon: "Stars",
+        color: "primary",
+      }
+    );
+    // build & register the name filter
+    filter("Name", [clefairy, pikachuOrRaichu, ...others], {
+      multi: true,
+    });
+
+    // declare the base experience filter options asynchronously
+    async.filter(
+      "Base Experience",
+      async.options("base_experience", "<=", async () => {
+        await delay(250);
+        return arrayOf(10, (index): ListConfigOptionLabeledValue => {
+          const exp = index * 50;
+          const label = "exp" + " XP";
+          return { label, value: exp };
+        });
+      })
+    );
+
+    // build & register the type filter options
+    const types: ListConfigOptionLabeledValue[] = [
+      {
+        label: "Fire",
+        value: "fire",
+        config: { color: "error", icon: "Fire" },
+      },
+      {
+        label: "Grass",
+        value: "grass",
+        config: { color: "success", icon: "Flower1" },
+      },
+      {
+        label: "Water",
+        value: "water",
+        config: { color: "primary", icon: "Water" },
+      },
+      {
+        label: "Electric",
+        value: "electric",
+        config: { color: "pending", icon: "Lightning" },
+      },
+    ];
+    const typeProperties: FilterProperty<Pokemon>[] = [
+      "types.0.type.name",
+      "types.1.type.name",
+    ];
+
+    const typeOptions = types.map((type) => 
+      option(
+        type.label,
+        typeProperties.map((property) => match(property, "=", type.value)),
+        { ...type.config, operator: "OR" }
+      )
+    );
+    // build & register the type filter
+    filter("Type", typeOptions, {
+      operator: BooleanOperators.AND,
+    });
+
+    // build & register filter options for light & heavy weight
+
+    const lightOption = option("Light", match("weight", "<", 100), {
+      color: "gray-200",
+      icon: "Feather",
+    })
+    const heavyOption = option("Heavy", match("weight", ">=", 200), {
+      color: "gray-600",
+      icon: "BoxArrowDown",
+    })
+
+    filter("Weight", [
+      // build & register a filter option for light weight
+      lightOption
+      // build & register a filter option for medium weight
+      option(
+        "Medium",
+        [match("weight", ">=", 100), match("weight", "<", 200)],
+        { operator: BooleanOperators.AND, color: "gray-400" }
+      ),
+      heavyOption
+    ]);
+
+    // declare some filter presets
+    filterPreset(
+      "PyroElectric lightweights",
+      [
+        ...typeOptions.filter(
+          (option) => option.label === "Fire" || option.label === "Electric"
+        ),
+        lightOption,
+      ],
+      {
+        color: "error",
+      }
+    );
+
+    const electricType = typeOptions.find(
+      (option) => option.label === "Electric"
+    );
+
+    filterPreset(
+      "Electric Pikachu or Raichu",
+      electricType ? [electricType, pikachuOrRaichu] : [pikachuOrRaichu],
+      {
+        color: "pending",
+        exclusive: true,
+      }
+    );
+
+    filterPreset("Obese mice", [pikachuOrRaichu, heavyOption]);
+  });
+  return config;
+};
+`
+}/>}>
+<Text weight="bold">This example shows how to build and register all the list's options, matches, filters and filter presets in one go and one `useStatic` call.</Text>
+</Collapsible>
+
+</Content>
+

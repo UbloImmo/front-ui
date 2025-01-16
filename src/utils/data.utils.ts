@@ -6,7 +6,14 @@ import {
   type Nullable,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useState } from "react";
+import { debounce } from "lodash";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import type {
+  DebouncedState,
+  UseDebounceValueOptions,
+  UseDebounceOptions,
+} from "@/types";
 
 type UseAsyncDataOnSuccessFn<TData extends NullishPrimitives> = MaybeAsyncFn<
   [TData]
@@ -14,9 +21,14 @@ type UseAsyncDataOnSuccessFn<TData extends NullishPrimitives> = MaybeAsyncFn<
 
 type UseAsyncDataOnErrorFn = MaybeAsyncFn<[Error]>;
 
-type UseAsyncDataOptions<TData extends NullishPrimitives> = {
+type UseAsyncDataOptions<
+  TData extends NullishPrimitives,
+  TDataParams extends unknown[] = []
+> = {
+  defaultValue?: TData;
   onSuccess?: UseAsyncDataOnSuccessFn<TData>;
   onError?: UseAsyncDataOnErrorFn;
+  params?: TDataParams;
 };
 
 type UseAsyncDataState<TData extends NullishPrimitives> = {
@@ -25,14 +37,19 @@ type UseAsyncDataState<TData extends NullishPrimitives> = {
   error: Nullable<Error>;
 };
 
-type UseAsyncDataLoadFn<TData extends NullishPrimitives> = (
-  options?: Optional<UseAsyncDataOptions<TData>>
+type UseAsyncDataLoadFn<
+  TData extends NullishPrimitives,
+  TDataParams extends unknown[] = []
+> = (
+  options?: Optional<UseAsyncDataOptions<TData, TDataParams>>
 ) => Promise<UseAsyncDataState<TData>>;
 
-type UseAsyncDataReturn<TData extends NullishPrimitives> =
-  UseAsyncDataState<TData> & {
-    refetch: UseAsyncDataLoadFn<TData>;
-  };
+type UseAsyncDataReturn<
+  TData extends NullishPrimitives,
+  TDataParams extends unknown[] = []
+> = UseAsyncDataState<TData> & {
+  refetch: UseAsyncDataLoadFn<TData, TDataParams>;
+};
 
 /**
  * A custom React hook for handling asynchronous data loading.
@@ -48,10 +65,13 @@ type UseAsyncDataReturn<TData extends NullishPrimitives> =
  *   @property {Nullable<Error>} error - Any error that occurred during data loading, or null if no error.
  *   @property {AsyncFn<[], UseAsyncDataState<TData>>} refetch - A function to manually trigger a reload of the data.
  */
-export const useAsyncData = <TData extends NullishPrimitives>(
-  dataOrLoadingFn: TData | MaybeAsyncFn<[], TData>,
-  options?: UseAsyncDataOptions<TData>
-): UseAsyncDataReturn<TData> => {
+export const useAsyncData = <
+  TData extends NullishPrimitives,
+  TDataParams extends unknown[] = []
+>(
+  dataOrLoadingFn: TData | MaybeAsyncFn<TDataParams, TData>,
+  options?: UseAsyncDataOptions<TData, TDataParams>
+): UseAsyncDataReturn<TData, TDataParams> => {
   /**
    * The loaded data, or undefined if not yet loaded.
    */
@@ -81,7 +101,7 @@ export const useAsyncData = <TData extends NullishPrimitives>(
   const triggerLoadCallbacks = useCallback(
     (
       state: UseAsyncDataState<TData>,
-      currentOptions?: UseAsyncDataOptions<TData>
+      currentOptions?: UseAsyncDataOptions<TData, TDataParams>
     ) => {
       if (state.error) {
         if (options?.onError) options.onError(state.error);
@@ -100,17 +120,19 @@ export const useAsyncData = <TData extends NullishPrimitives>(
    * @param {UseAsyncDataOptions<TData>} [currentOptions] - Optional options for this load operation.
    * @returns {Promise<UseAsyncDataState<TData>>} A promise that resolves to the new state.
    */
-  const loadData = useCallback<UseAsyncDataLoadFn<TData>>(
-    async (currentOptions?: UseAsyncDataOptions<TData>) => {
+  const loadData = useCallback<UseAsyncDataLoadFn<TData, TDataParams>>(
+    async (currentOptions?: UseAsyncDataOptions<TData, TDataParams>) => {
       let state: UseAsyncDataState<TData> = {
         data,
         error,
         isLoading,
       };
-      if (isFunction<MaybeAsyncFn<[], TData>>(dataOrLoadingFn)) {
+      if (isFunction<MaybeAsyncFn<TDataParams, TData>>(dataOrLoadingFn)) {
         setIsLoading(true);
         try {
-          const loadedData = await dataOrLoadingFn();
+          const loadedData = await dataOrLoadingFn(
+            ...(currentOptions?.params ?? options?.params ?? [])
+          );
           state = {
             data: loadedData,
             error: null,
@@ -137,16 +159,21 @@ export const useAsyncData = <TData extends NullishPrimitives>(
 
       return state;
     },
-    [data, dataOrLoadingFn, error, isLoading, triggerLoadCallbacks]
+    [data, dataOrLoadingFn, error, isLoading, triggerLoadCallbacks, options]
   );
 
-  // trigger load on mount or if dataOrLoadingFn or options change
+  // trigger load on mount
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataOrLoadingFn, options]);
+  }, []);
 
-  return { data, isLoading, error, refetch: loadData };
+  return {
+    data,
+    isLoading,
+    error,
+    refetch: loadData,
+  };
 };
 
 /**
@@ -186,3 +213,143 @@ export const createDelayedResponse =
   async (): Promise<TData> => {
     return await delayedResponse(response, ms);
   };
+
+/**
+ * Custom hook that runs a cleanup function when the component is unmounted.
+ * @param {() => void} func - The cleanup function to be executed on unmount.
+ * @public
+ * @see [Documentation](https://usehooks-ts.com/react-hook/use-unmount)
+ * @example
+ * ```tsx
+ * useUnmount(() => {
+ *   // Cleanup logic here
+ * });
+ * ```
+ */
+export function useUnmount(func: () => void) {
+  const funcRef = useRef(func);
+
+  funcRef.current = func;
+
+  useEffect(
+    () => () => {
+      funcRef.current();
+    },
+    []
+  );
+}
+
+/**
+ * Custom hook that creates a debounced version of a callback function.
+ * @template TFunc - Type of the original callback function.
+ * @param {TFunc} func - The callback function to be debounced.
+ * @param {number} delay - The delay in milliseconds before the callback is invoked (default is `500` milliseconds).
+ * @param {DebounceOptions} [options] - Options to control the behavior of the debounced function.
+ * @returns {DebouncedState<TFunc>} A debounced version of the original callback along with control functions.
+ * @public
+ * @see [Documentation](https://usehooks-ts.com/react-hook/use-debounce-callback)
+ * @example
+ * ```tsx
+ * const debouncedCallback = useDebounceCallback(
+ *   (searchTerm) => {
+ *     // Perform search after user stops typing for 500 milliseconds
+ *     searchApi(searchTerm);
+ *   },
+ *   500
+ * );
+ *
+ * // Later in the component
+ * debouncedCallback('react hooks'); // Will invoke the callback after 500 milliseconds of inactivity.
+ * ```
+ */
+export function useDebounceCallback<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TFunc extends (...args: any) => ReturnType<TFunc>
+>(
+  func: TFunc,
+  delay = 500,
+  options?: UseDebounceOptions
+): DebouncedState<TFunc> {
+  const debouncedFunc = useRef<ReturnType<typeof debounce>>();
+
+  useUnmount(() => {
+    if (debouncedFunc.current) {
+      debouncedFunc.current.cancel();
+    }
+  });
+
+  const debounced = useMemo(() => {
+    const debouncedFuncInstance = debounce(func, delay, options);
+
+    const wrappedFunc: DebouncedState<TFunc> = (...args: Parameters<TFunc>) => {
+      return debouncedFuncInstance(...args);
+    };
+
+    wrappedFunc.cancel = () => {
+      debouncedFuncInstance.cancel();
+    };
+
+    wrappedFunc.isPending = () => {
+      return !!debouncedFunc.current;
+    };
+
+    wrappedFunc.flush = () => {
+      return debouncedFuncInstance.flush();
+    };
+
+    return wrappedFunc;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [delay, options]);
+
+  // Update the debounced function ref whenever func, wait, or options change
+  useEffect(() => {
+    debouncedFunc.current = debounce(func, delay, options);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [delay, options]);
+
+  return debounced;
+}
+
+/**
+ * Custom hook that returns a debounced version of the provided value, along with a function to update it.
+ * @template TValue - The type of the value.
+ * @param {TValue | (() => TValue)} initialValue - The value to be debounced.
+ * @param {number} delay - The delay in milliseconds before the value is updated (default is 500ms).
+ * @param {object} [options] - Optional configurations for the debouncing behavior.
+ * @returns {[TValue, DebouncedState<(value: TValue) => void>]} An array containing the debounced value and the function to update it.
+ * @public
+ * @see [Documentation](https://usehooks-ts.com/react-hook/use-debounce-value)
+ * @example
+ * ```tsx
+ * const [debouncedValue, updateDebouncedValue] = useDebounceValue(inputValue, 500, { leading: true });
+ * ```
+ */
+export function useDebounceValue<TValue>(
+  initialValue: TValue | (() => TValue),
+  delay: number,
+  options?: UseDebounceValueOptions<TValue>
+): [TValue, DebouncedState<(value: TValue) => void>] {
+  const equals =
+    options?.equalityFn ?? ((left: TValue, right: TValue) => left === right);
+  const unwrappedInitialValue = isFunction(initialValue)
+    ? initialValue()
+    : initialValue;
+  const [debouncedValue, setDebouncedValue] = useState<TValue>(
+    unwrappedInitialValue
+  );
+  const previousValueRef = useRef<TValue | undefined>(unwrappedInitialValue);
+
+  const updateDebouncedValue = useDebounceCallback(
+    setDebouncedValue,
+    delay,
+    options
+  );
+
+  // Update the debounced value if the initial value changes
+  if (!equals(previousValueRef.current as TValue, unwrappedInitialValue)) {
+    updateDebouncedValue(unwrappedInitialValue);
+    previousValueRef.current = unwrappedInitialValue;
+  }
+
+  return [debouncedValue, updateDebouncedValue];
+}

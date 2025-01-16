@@ -1,0 +1,85 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Matches" />
+
+<Header>
+  <HeaderInfo title="matches()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Builds and returns a **list** of _filter option matches_ for the list's data.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Matches are used to create filter options.
+
+```typescript
+const { matches } = useListConfig<Pokemon>(usePokemonData);
+const isNamedPikachuOrRaichu = matches("name", "=", ["Pikachu", "Raichu"]);
+```
+
+## Type definition
+
+```typescript
+type ListConfigMatchesFn<TItem extends object> = (
+  property: FilterProperty<TItem>,
+  comparison: FilterComparisonOperator,
+  values: FilterOptionValue[]
+) => FilterOptionMatch<TItem>[];
+```
+
+## Arguments
+
+#### **`property`**: `FilterProperty<TItem>`
+
+A single (possibly nested) string or number property of the item to match against
+
+```typescript
+type FilterProperty<TItem extends object> = DeepKeyOf<TItem>;
+```
+
+#### **`comparison`**: `FilterComparisonOperator`
+
+A single comparison operator
+
+```typescript
+type FilterComparisonOperator = "!=" | "=" | ">" | "<" | ">=" | "<=";
+```
+
+#### **`values`**: `FilterOptionValue[]`
+
+A list of property values to match against
+
+```typescript
+type FilterOptionValue = string | number | boolean | Date | null;
+```
+
+## Returns
+
+A list containing one `FilterOptionMatch` object for each value passed in the `values` parameter.
+
+> All the matches hold the same property and comparison, but different values.
+
+```typescript
+type FilterOptionMatch<TItem extends object> = {
+  value: FilterOptionValue;
+  comparison: FilterComparisonOperator;
+  property: FilterProperty<TItem>;
+};
+```
+
+## Example
+
+```typescript
+// Retrieve the method from the useListConfig hook
+const { matches } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const [isNamedPikachu, isNamedRaichu] = matches("name", "=", ["Pikachu", "Raichu"]);
+})
+```
+
+</Content>

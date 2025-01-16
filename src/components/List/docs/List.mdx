@@ -1,0 +1,153 @@
+
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas, Callout } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as ListStories from "../List.stories.tsx";
+
+<Meta title="Components/List/Usage" />
+
+<ComponentInfo of={ListStories} />
+
+<Content>
+
+## Usage
+
+List is a multi-purpose component that can be used to display, manage & filter a list of items.
+It is intended to be modular, and thus highly customizable.
+
+Using it requires a bit of setup, but it is very well worth it.
+
+
+### Data
+
+#### Typing
+
+In order to make the List component type safe while still being flexible, we needed it to be _generic_.
+
+That means you need to define a type for the items you want to display. 
+
+> _We'll be using this `Pokemon` type in the examples below._
+
+```tsx
+type Pokemon = {
+  id: number;
+  name: string;
+  base_experience: number;
+  is_default: boolean;
+  order: number;
+  weight: number;
+  types: {
+    slot: number;
+    type: {
+      id: number;
+      name: string;
+    };
+  }[];
+};
+```
+
+
+#### Data Provider
+
+The component expects a custom `dataProvider` hook to be provided.
+**It is responsible for fetching / refetching, filtering and sorting the data.**
+Your custom hook will the be ran internally, and therefore drive what / how data is displayed.
+
+
+<Callout color="gray">
+Any custom `dataProvider` hook must conform to the exported `UseDataProviderFn` interface.
+</Callout>
+
+Don't worry, we export a simple `useStaticDataProvider` hook, which is a good starting point that aims to cover most use cases.
+
+```tsx
+import { useStaticDataProvider, type UseDataProviderFn } from "@ubloimmo/uikit";
+
+// fetches a list of pokemon
+const fetchPokemon = async (): Promise<Pokemon[]> => {
+  // ...
+  return [];
+}
+
+// create a data provider hook that provides a fetcher
+// and forwards the setData callback to the static data provider
+const usePokemonData: UseDataProviderFn<Pokemon> = (setData) => {
+  return useStaticDataProvider(fetchPokemon, setData);
+} 
+```
+
+
+
+<Callout color="primary">
+  If you need to implement custom logic for a specific list, this is the place to do it.
+</Callout>
+
+
+### Configuration
+
+Now that we know what our data looks like and have a way to manage it, we can start configuring how the user can interact with it.
+
+Import the `useListConfig` hook to configure a list&apos;s options and behavior.
+It yieds a `config` object and various typed methods that mutate it.
+
+> This `config` object is the one and only property supplied to either the List component or its related `ListProvider` provider.
+
+#### Barebones Configuration
+
+If all you need to do is display data in a list, this is the simplest way to do it.
+
+
+```tsx
+import { useListConfig } from "@ubloimmo/uikit";
+
+/**
+ * Custom hook that configures the list
+ */
+const usePokemonListConfig = () => {
+  // we pass our data provider hook to the useListConfig hook, without calling it
+  const {
+    config
+  } = useListConfig<Pokemon>(usePokemonData);
+  
+  // and return the config object
+  return config;
+}
+```
+
+#### Filtering & options
+
+When there is a lot of data, it is often useful to allow the user to filter it.
+These filters and options 
+
+```tsx
+import { useListConfig, useStatic } from "@ubloimmo/uikit";
+
+/**
+ * Custom hook that configures the list
+ */
+const usePokemonListConfig = () => {
+  // we pass our data provider hook to the useListConfig hook, without calling it
+  const {
+    match,
+    option,
+    options,
+    filter,
+  } = useListConfig<Pokemon>(usePokemonData);
+  
+  // we use the useStatic hook to fetch configure the list only once
+  // this could also be done in a useEffect hook
+  useStatic(() => {
+    
+  })
+  // we return the mutated config object, which will be used by the List component
+  return config;
+}
+```
+
+
+
+
+
+
+</Content>
+

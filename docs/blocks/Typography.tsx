@@ -1,18 +1,19 @@
-import styled from "styled-components";
+import { isString, type NonNullish } from "@ubloimmo/front-util";
+import { useMemo, type ReactNode } from "react";
+import styled, { css, type RuleSet } from "styled-components";
 
 import {
   Heading as HeadingComponent,
   Text as TextComponent,
 } from "@/components";
-import { cssVarUsage } from "@/utils";
+import { buildTypographyStyle, defaultTypographyProps } from "@/typography";
+import { cssVarUsage, toStyleProps } from "@/utils";
 import {
   StyleProps,
   type HeadingProps,
   type PaletteColor,
   type TextProps,
 } from "@types";
-
-import type { ReactNode } from "react";
 
 /**
  * Renders a heading component with the specified children and props.
@@ -26,9 +27,14 @@ export const Heading = ({
   children,
   ...props
 }: Omit<HeadingProps, "important"> & { children: ReactNode }) => {
+  const id = useMemo(() => {
+    if (isString(props.id)) return props.id;
+    if (isString(children)) return children;
+    return undefined;
+  }, [props.id, children]);
   return (
     <HeadingOverrides $size={props.size}>
-      <HeadingComponent {...props} important>
+      <HeadingComponent {...props} id={id} important>
         {children}
       </HeadingComponent>
     </HeadingOverrides>
@@ -105,15 +111,64 @@ export const textOfSize =
       </Text>
     );
 
-const HeadingOverrides = styled.span<{ $size?: HeadingProps["size"] }>`
-  & > * {
+const headingOverridesStyles = ({
+  $size,
+}: {
+  $size?: HeadingProps["size"];
+}) => css`
+  &:not(:has(> span)),
+  &:not(:has(> code)),
+  & > *:not(code) {
     margin-top: var(
-      --s-${({ $size }) => ($size === "h4" ? "4" : $size === "h3" ? "8" : $size === "h2" ? "10" : "16")}
+      --s-${$size === "h4" ? "4" : $size === "h3" ? "8" : $size === "h2" ? "10" : "16"}
     ) !important;
     margin-bottom: var(
-      --s-${({ $size }) => ($size === "h4" ? "2" : $size === "h3" ? "4" : $size === "h2" ? "6" : "8")}
+      --s-${$size === "h4" ? "2" : $size === "h3" ? "4" : $size === "h2" ? "6" : "8"}
     ) !important;
   }
+  & > a[aria-hidden="true"] {
+    display: none;
+  }
+  &:has(+ hr) {
+    margin-bottom: var(--s-2) !important;
+  }
+
+  & > code {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    color: inherit !important;
+  }
+`;
+
+/**
+ * Returns a styled-components RuleSet for heading elements with custom styles.
+ * Used to override default heading styles in documentation blocks.
+ *
+ * @param {NonNullish<HeadingProps["size"]>} size - The heading size (h1-h6)
+ * @param {HeadingProps["weight"]} [weight="medium"] - The font weight
+ * @param {PaletteColor} [color="gray-900"] - The text color
+ * @returns {RuleSet} The styled-components CSS rules
+ */
+export const buildheadingOverrides = (
+  size: NonNullish<HeadingProps["size"]>,
+  weight: HeadingProps["weight"] = "medium",
+  color: PaletteColor = "gray-900"
+): RuleSet => {
+  const props = {
+    ...defaultTypographyProps,
+    size,
+    weight,
+    color,
+  };
+  const styleProps = toStyleProps(props);
+  return css`
+    ${buildTypographyStyle(props)(styleProps)}
+    ${headingOverridesStyles({ $size: size })}
+  `;
+};
+
+const HeadingOverrides = styled.span<{ $size?: HeadingProps["size"] }>`
+  ${headingOverridesStyles}
 `;
 
 const TextOverrides = styled.span<{
@@ -168,4 +223,8 @@ export const Strong = styled.strong`
   font-weight: var(--text-weight-medium) !important;
   font-style: inherit !important;
   font-variation-settings: inherit !important;
+
+  &:has(code) {
+    font-weight: var(--text-weight-bold) !important;
+  }
 `;

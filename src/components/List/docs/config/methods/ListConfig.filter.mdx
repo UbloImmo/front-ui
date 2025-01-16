@@ -1,0 +1,281 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Filter" />
+
+<Header>
+  <HeaderInfo title="filter()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Builds and registers a _filter_ from options.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Filters consist of a label, a list of options or option signatures, and additional configuration.
+
+Calling `filter()` will build a filter and register it in the list's configuration.
+
+<Callout color="pending" icon={null}>
+Once registered, filters are considered immutable and cannot be modified.&nbsp;
+This means `filter()` cannot be called inside a `useMemo()` hook or inside a hook / component's body.
+</Callout>
+
+```typescript
+const { match, option, filter } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const isNamedPikachu = option("Pikachu", match("name", "=", "Pikachu"));
+  const isNamedRaichu = option("Raichu", match("name", "=", "Raichu"));
+  
+  // Builds a filter and registers it in the list's configuration
+  const nameFilter = filter(
+    "Pokemon Name",
+    [isNamedPikachu, isNamedRaichu.signature]
+  );
+  /**
+   * {
+   *   label: "Pokemon Name",
+   *   optionSignatures: ["Pikachu-name_=_Pikachu", "Raichu-name_=_Raichu"],
+   *   signature: "Pokemon Name-Pikachu-name_=_PikachuORRaichu-name_=_Raichu",
+   *   operator: "OR",
+   *   id: "Pokemon Name-Pikachu-name_=_PikachuORRaichu-name_=_Raichu",
+   *   testId: "list-filter-Pokemon Name-Pikachu-name_=_PikachuORRaichu-name_=_Raichu",
+   *   disabled: false,
+   *   hidden: false,
+   *   multi: true,
+   *   emptyLabel: null,
+   *   allowCompleteSelection: false,
+   *   index: 0,
+   *   optionsSort: "none",
+   *   loading: false
+   * }
+   */
+});
+```
+
+## Type definition
+
+```typescript
+type ListConfigFilterFn<TItem extends object> = (
+  label: string,
+  optionsOrDividers: (FilterSignature | FilterOptionData<TItem> | FilterOptionDividerData)[],
+  config?: FilterConfig,
+  loading?: boolean
+) => FilterData;
+```
+
+## Arguments
+
+#### **`label`**: `string`
+
+The label of the generated filter. **Required**.
+
+#### **`optionsOrDividers`**: `(FilterSignature | FilterOptionData<TItem> | FilterOptionDividerData)[]`
+
+A list of options, option signatures, or dividers to create the filter from. **Required**.
+
+All a filter really cares about is its option's `signature` property, in order to reference them and generate its own `signature`.
+As such, signatures will be extracted from `FilterOptionData` objects.
+
+> Dividers will only be taken into account if they appear before at least one option.
+> Internally, they reference the option directly after themselves.
+
+<Callout color="gray">
+  While it is possible to pass options and dividers as simple objects,
+  it is recommended to use the [option()](?path=/docs/components-list-configuration-methods-option--docs), [options()](?path=/docs/components-list-configuration-methods-options--docs) or [divider()](?path=/docs/components-list-configuration-methods-divider--docs) methods to create them first.
+</Callout>
+
+#### **`config?`**: `FilterConfig`
+
+Additional configuration for the filter. Optional.
+
+```typescript
+type FilterConfig = {
+  operator?: FilterBooleanOperator;
+  id?: string;
+  testId?: string;
+  emptyLabel?: Nullable<string>;
+  index?: number;
+  optionsSort?: FilterOptionsSort;
+  // Behavioral properties
+  multi?: boolean;
+  disabled?: boolean;
+  hidden?: boolean;
+  allowCompleteSelection?: boolean;
+};
+```
+
+##### `config.operator?`: `FilterBooleanOperator`
+
+The operator to use when combining multiple options.<br/>
+Defaults to `"OR"`.
+
+```typescript
+type FilterBooleanOperator = "AND" | "OR";
+```
+
+##### `config.id?`: `string`
+
+A unique identifier for the filter. Used to identify the filter when mutating its options/selection.<br/>
+Defaults to the computed `signature`.
+
+##### `config.testId?`: `string`
+
+An identifier to trigger the filter element during e2e tests.<br/>
+Defaults to `list-filter-${id}`.
+
+##### `config.emptyLabel?`: `Nullable<string>`
+
+The label to display when there are no options selected.<br/>
+Defaults to `null`.
+
+> If nullish, gets interpreted as `useUikitTranslation().status.all()`
+
+##### `config.index?`: `number`
+
+The index of the filter in the list.<br/>
+Auto-generated at config time based on declaration order.
+
+##### `config.optionsSort?`: `FilterOptionsSort`
+
+The sort order of the filter options.<br/>
+
+Available values include:
+
+- `none`: No sorting, options are displayed in declaration order.
+- `asc`: Options are sorted in ascending order based on their label (A -> Z).
+- `desc`: Options are sorted in descending order based on their label (Z -> A).
+
+Defaults to `none`.
+
+```typescript
+type FilterOptionsSort = "asc" | "desc" | "none";
+```
+
+##### `config.multi?`: `boolean`
+
+Whether the filter is multi-select and allows selecting more than one option.<br/>
+Defaults to `true`.
+
+> Making a filter only accept a single selection requires explicitly setting this to `false`.
+
+##### `config.disabled?`: `boolean`
+
+Whether the filter is disabled.<br/>
+Defaults to `false`.
+
+##### `config.hidden?`: `boolean`
+
+Whether the filter is hidden visually but still functional.<br/>
+Defaults to `false`.
+
+##### `config.allowCompleteSelection?`: `boolean`
+
+By default, selected all options in a multi-select filter will clear it.&nbsp;
+Setting this flag to `true` allows users to select all options in a multi-select filter.
+
+Defaults to `false`.
+
+> The default behavior was crafted with the assumption that most filters present one option for every possible value.
+
+#### **`loading?`**: `boolean`
+
+Whether the filter is in a loading state. Optional.<br/>
+Defaults to `false`.
+
+> This flag is only ever relevant when initializing asynchronous filters.
+> And gets ignored in the case of synchronous filters.
+
+## Returns
+
+A `FilterData` object containing all configuration properties.
+
+```typescript
+type FilterData = Required<FilterConfig> & {
+  label: string;
+  optionSignatures: FilterSignature[];
+  optionDividers?: FilterOptionDivider[];
+  signature: FilterSignature;
+  loading: boolean;
+};
+```
+
+## Examples
+
+### Build a simple filter with options
+
+```typescript
+const { match, option, filter } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const isFireType = option("Fire", match("type", "=", "fire"));
+  const isWaterType = option("Water", match("type", "=", "water"));
+  
+  const typeFilter = filter(
+    "Pokemon Type",
+    [isFireType, isWaterType]
+  );
+});
+```
+
+### Build a filter with dividers between options
+
+```typescript
+const { match, option, divider, filter } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const legendaryFilter = filter(
+    "Legendary Pokemon",
+    [
+      option("Mewtwo", match("name", "=", "mewtwo")),
+      divider("Birds"),
+      option("Articuno", match("name", "=", "articuno")),
+      option("Zapdos", match("name", "=", "zapdos")),
+      option("Moltres", match("name", "=", "moltres")),
+      divider("Dogs"),
+      option("Entei", match("name", "=", "entei")),
+      option("Raikou", match("name", "=", "raikou")),
+      option("Suicune", match("name", "=", "suicune")),
+    ]
+  );
+});
+```
+
+### Build a single-select filter
+
+```typescript
+const { match, option, filter } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const weightFilter = filter(
+    "Weight",
+    [
+      option("Light", match("weight", "<=", 10)),
+      option("Medium", [match("weight", ">", 10), match("weight", "<=", 50)], { operator: "AND" }),
+      option("Legendary", match("weight", ">", 50)),
+    ],
+    {
+      multi: false, // Only one option can be selected at a time
+    }
+  );
+});
+```
+
+## Common pitfalls
+
+### I created a filter and everything is slow / broken
+
+As mentioned previously, calling `filter()` will build a filter and **register** it in the list's configuration.
+
+> If you are experiencing performance issues, it is likely because you are calling `filter()` outside of `useStatic()`, and thus registering it every render.
+
+### I want to create filters asynchronously
+
+`filter()` is a strictly synchronous function. It doesn't handle promises or async operations.
+
+> Use the `async.filter()` method to create filters asynchronously.
+
+</Content>
