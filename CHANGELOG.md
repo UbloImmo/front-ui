@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Convert component to forwardRef to allow parents to access the element
 
 - `v0.0.3` TableRow layout
-  - Add `style` property to allow for bespoke styles when used in a list or a for
+  - Add `style` property to allow for bespoke styles when used in a list or a form
 
 - **`DOCS`**
   - Improve story code snippet generation
