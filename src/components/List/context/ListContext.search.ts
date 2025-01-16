@@ -66,7 +66,6 @@ export const useListContextSearch: UseListSearch = <TItem extends object>({
 
   const queryFilters = useMemo<DataProviderFilterParam<TItem>[]>(() => {
     // ensure query is not empty
-    console.debug("debouncedQuery", debouncedQuery);
     if (isEmptyString(debouncedQuery)) return [];
     // ensure matches can be generated from properties
     if (!isArray(properties)) return [];
