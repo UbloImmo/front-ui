@@ -55,7 +55,7 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
@@ -156,7 +156,7 @@ const EntityInfoCard = (
             />
           );
         })}
-        {mergedProps.infoBoxes.length && (
+        {!!mergedProps.infoBoxes.length && (
           <GridLayout columns={2} gap="s-2" fill>
             {mergedProps.infoBoxes.map((infoBox, index) => {
               const boxTestId = `${testId}-info-box-${index}`;
@@ -178,7 +178,7 @@ const EntityInfoCard = (
             })}
           </GridLayout>
         )}
-        {mergedProps.statusRows.length && (
+        {!!mergedProps.statusRows.length && (
           <EntityCardStatusRowList gap={0} fill>
             {mergedProps.statusRows.map((statusRow, index) => {
               const rowTestId = `${testId}-status-row-${index}`;
