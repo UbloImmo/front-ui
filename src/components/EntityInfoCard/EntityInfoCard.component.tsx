@@ -9,6 +9,7 @@ import {
   entityCardStatusRowContainerStyles,
   entityCardStatusRowListStyles,
 } from "./EntityInfoCard.styles";
+import { AccountBalance } from "../AccountBalance";
 
 import { Action } from "@/components/Action";
 import { ActionIcon } from "@/components/ActionIcon";
@@ -26,7 +27,7 @@ import {
   GridLayout,
   type GridEndPosition,
 } from "@layouts";
-import { useTestId, useMergedProps } from "@utils";
+import { useTestId, useMergedProps, useLogger } from "@utils";
 
 import type {
   EntityInfoCardProps,
@@ -44,6 +45,7 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
     label: "[State]",
     icon: "Square",
   },
+  accountBalance: null,
   actionIcon: null,
   children: null,
   onInfoCopied: null,
@@ -53,7 +55,7 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
@@ -62,7 +64,24 @@ const EntityInfoCard = (
   props: EntityInfoCardProps & TestIdProps
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultEntityInfoCardProps, props);
-  const testId = useTestId("entity-info-card", props);
+  const { testId: testIdProp } = props;
+  const testId = useTestId("entity-info-card", {
+    testId: testIdProp,
+  });
+  const logger = useLogger("EntityInfoCard");
+
+  const hasState = Boolean(props.state);
+  const hasAccountBalance = Boolean(props.accountBalance);
+
+  if (!hasState && !hasAccountBalance) {
+    logger.error("Either state or accountBalance must be provided");
+  }
+
+  if (hasState && hasAccountBalance) {
+    logger.error(
+      "You provided both state and accountBalance, only state will render"
+    );
+  }
 
   return (
     <EntityCardContainer testId={testId} overrideTestId fill>
@@ -72,11 +91,19 @@ const EntityInfoCard = (
         fill
         gap="s-1"
       >
-        <StateIndicator
-          {...mergedProps.state}
-          testId={`${testId}-state-indicator`}
-          overrideTestId
-        />
+        {mergedProps.accountBalance ? (
+          <AccountBalance
+            {...mergedProps.accountBalance}
+            testId={`${testId}-account-balance`}
+            overrideTestId
+          />
+        ) : mergedProps.state ? (
+          <StateIndicator
+            {...mergedProps.state}
+            testId={`${testId}-state-indicator`}
+            overrideTestId
+          />
+        ) : null}
         {mergedProps.actionIcon && (
           <ActionIcon
             {...mergedProps.actionIcon}
@@ -129,7 +156,7 @@ const EntityInfoCard = (
             />
           );
         })}
-        {!!mergedProps.infoBoxes.length && (
+        {mergedProps.infoBoxes.length && (
           <GridLayout columns={2} gap="s-2" fill>
             {mergedProps.infoBoxes.map((infoBox, index) => {
               const boxTestId = `${testId}-info-box-${index}`;
@@ -151,7 +178,7 @@ const EntityInfoCard = (
             })}
           </GridLayout>
         )}
-        {!!mergedProps.statusRows.length && (
+        {mergedProps.statusRows.length && (
           <EntityCardStatusRowList gap={0} fill>
             {mergedProps.statusRows.map((statusRow, index) => {
               const rowTestId = `${testId}-status-row-${index}`;

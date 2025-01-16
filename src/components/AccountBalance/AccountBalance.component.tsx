@@ -22,7 +22,7 @@ const defaultAccountBalanceProps: AccountBalanceDefaultProps = {
 /**
  * Render a component to display the account balance with correct format and € currency in the entity info card for rental folder.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {AccountBalanceProps & TestIdProps} props - AccountBalance component props
  * @returns {JSX.Element}
@@ -44,13 +44,21 @@ const AccountBalance = (
 
   return (
     <AccountBalanceContainer data-testid={testId} {...styledProps}>
-      <Text size="m" color="gray-800" testId={`${testId}-title`} overrideTestId>
+      <Text
+        size="m"
+        color="gray-800"
+        fill
+        ellipsis
+        testId={`${testId}-title`}
+        overrideTestId
+      >
         {mergedProps.title} :
       </Text>
       <Heading
         size="h3"
         weight="bold"
         color="gray-800"
+        align="right"
         testId={`${testId}-value`}
         overrideTestId
       >

@@ -1,3 +1,4 @@
+import type { AccountBalanceProps } from "@/components/AccountBalance";
 import type { ActionProps } from "@/components/Action";
 import type { ActionIconProps } from "@/components/ActionIcon";
 import type { BadgeProps } from "@/components/Badge";
@@ -8,7 +9,7 @@ import type {
 } from "@/components/CopyClipboardInfoCard";
 import type { InfoBoxProps } from "@/components/InfoBox";
 import type { StateIndicatorProps } from "@/components/StateIndicator";
-import type { Nullable } from "@ubloimmo/front-util";
+import type { Nullable, RequireAtLeastOne } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 export type EntityActionIcon = Omit<ActionIconProps, "size">;
@@ -20,18 +21,22 @@ export type EntityStatusRow = {
   content?: ReactNode;
 };
 
-export type EntityInfoCardProps = {
-  /**
-   * The entity's name
-   *
-   */
-  name?: Nullable<string>;
+export type EntityStateProps = RequireAtLeastOne<{
   /**
    * The state to display above the entity's name and info
-   *
-   * @required
    */
-  state: StateIndicatorProps;
+  state: Nullable<StateIndicatorProps>;
+  /**
+   * The account balance to display
+   */
+  accountBalance: Nullable<AccountBalanceProps>;
+}>;
+
+export type EntityInfoCardProps = EntityStateProps & {
+  /**
+   * The entity's name
+   */
+  name?: Nullable<string>;
   /**
    * An action made available to the user to interact with the whole entity.
    * Usually is deletion.
