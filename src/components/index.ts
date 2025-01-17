@@ -28,6 +28,7 @@ export * from "./InfoBox";
 export * from "./Input";
 export * from "./InputAssistiveText";
 export * from "./InputLabel";
+export * from "./List";
 export * from "./Loading";
 export * from "./Modal";
 export * from "./Portal";
