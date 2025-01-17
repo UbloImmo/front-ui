@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- use latest version of `@ubloimmo/front-util` in peedDependencies
+
+- **DOCS**
+  - Fix mdx documentation generation
+  - Properly escape `<`, `>` and `=` characters
+
 ## 1.1.0 - 2025-01-16
 ### Added
 - `v0.0.6` Text component & `v0.0.5` Heading component
