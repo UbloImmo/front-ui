@@ -176,4 +176,7 @@ dist
 
 tsconfig.tsbuildinfo
 
+# Docs
+
 storybook-static
+docs/pages/typedoc/**/*

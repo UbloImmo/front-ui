@@ -17,6 +17,41 @@ const pageFooter = (_page) => {
 };
 
 /**
+ * @param {string} str
+ * @returns {string}
+ */
+function sanitizeComments(str) {
+  const codeBlocks = [];
+  const placeholder = "___CODEBLOCKPLACEHOLDER___";
+  // Replace code blocks with placeholders
+  str = str.replace(/(```[\s\S]*?```|`[^`]*?`)/g, (match) => {
+    codeBlocks.push(match);
+    return placeholder;
+  });
+  // If line starts with a > treat it as a blockquote
+  // Otherwise escape all <, > and =
+  str = str
+    // escape =
+    .replace(/=/g, "\\=")
+    // restore = in links
+    .replace(
+      /(?<label>\[.+\])(?<urlStart>\(.+)(?<equal>\\=)(?<urlEnd>.+\))/g,
+      "$<label>$<urlStart>=$<urlEnd>"
+    )
+    // escape < that has not been escaped already
+    .replace(/(?<!\\)</g, "\\<")
+    // escape > that has not been escaped and is not the first character (blockquote)
+    .replace(/(?<!^)(?<!\\)>/g, "\\>");
+
+  // Replace placeholders with original code blocks
+  str = str.replace(
+    new RegExp(placeholder, "g"),
+    () => codeBlocks.shift() || ""
+  );
+  return str;
+}
+
+/**
  * @extends {MarkdownThemeContext}
  */
 class MDXThemeContext extends MarkdownThemeContext {
@@ -35,11 +70,13 @@ class MDXThemeContext extends MarkdownThemeContext {
     comment: (model, options) => {
       // generate comment as normal
       const baseComment = this.__commentBackup__(model, options);
+      // sanitize the comment
+      const sanitizedComment = sanitizeComments(baseComment);
       // remove source if needed
       // @ts-expect-error still works so...
       const source = this.partials.sources(this.page.model);
-      if (!source) return baseComment;
-      return baseComment.replace(source, "");
+      if (!source) return sanitizedComment;
+      return sanitizedComment.replace(source, "");
     },
   };
 
