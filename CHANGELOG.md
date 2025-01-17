@@ -7,19 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Fixed
-
-- use latest version of `@ubloimmo/front-util` in peedDependencies
-
-- **DOCS**
-  - Fix mdx documentation generation
-  - Properly escape `<`, `>` and `=` characters
-
+## 1.1.1 - 2025-01-17
 ### Changed
-
 - Git push behavior
   - Add `pre-push` script to check if there are source files to push
   - Only run `test:all` if there are source files to push, otherwise push without running tests
+
+### Fixed
+- use latest version of `@ubloimmo/front-util` in peedDependencies
+- **DOCS**
+  - Fix mdx documentation generation
+  - Properly escape `<`, `>` and `=` characters
 
 ## 1.1.0 - 2025-01-16
 ### Added
