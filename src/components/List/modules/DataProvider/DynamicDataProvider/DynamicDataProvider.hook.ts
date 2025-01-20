@@ -41,6 +41,7 @@ export const useDynamicDataProvider: UseDynamicDataProviderFn = <
         filters: [],
       },
     ],
+    initialFetch: false,
     onSuccess: (data) => {
       setData(data);
     },

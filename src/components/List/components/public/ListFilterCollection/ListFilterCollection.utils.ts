@@ -101,6 +101,10 @@ export const useListFilterCollection = (
     });
   }, [filters, listFilters]);
 
+  const hasActiveFilters = useMemo(() => {
+    return filters.some(({ active }) => active);
+  }, [filters]);
+
   const { ref, id } = useListFilterCollectionEvents(setOpenFilterSignature);
 
   return {
@@ -115,6 +119,7 @@ export const useListFilterCollection = (
     hasFilters,
     ref,
     id,
+    hasActiveFilters,
     clearDisplayedFilters,
   };
 };

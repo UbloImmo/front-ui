@@ -5,9 +5,12 @@ import {
   type MaybeAsyncFn,
   type Nullable,
   type NullishPrimitives,
+  isBoolean,
 } from "@ubloimmo/front-util";
 import { debounce } from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { useMounted } from "./component.utils";
 
 import type {
   DebouncedState,
@@ -29,6 +32,12 @@ type UseAsyncDataOptions<
   onSuccess?: UseAsyncDataOnSuccessFn<TData>;
   onError?: UseAsyncDataOnErrorFn;
   params?: TDataParams;
+  /**
+   * Whether to trigger a fetch on mount
+   *
+   * @default true
+   */
+  initialFetch?: boolean;
 };
 
 type UseAsyncDataState<TData extends NullishPrimitives> = {
@@ -163,10 +172,13 @@ export const useAsyncData = <
   );
 
   // trigger load on mount
-  useEffect(() => {
+  useMounted(() => {
+    const doFetch = !(
+      isBoolean(options?.initialFetch) && !options.initialFetch
+    );
+    if (!doFetch) return;
     loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return {
     data,

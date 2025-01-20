@@ -43,5 +43,9 @@ PokeApiList.argTypes = {
     options: ["static", "dynamic", "paginated"],
   },
 };
+PokeApiList.args = {
+  // @ts-expect-error since it does not match the component's props
+  dataProvider: "paginated",
+};
 
 export const BalanceJournal = () => <BalanceJournalExample />;

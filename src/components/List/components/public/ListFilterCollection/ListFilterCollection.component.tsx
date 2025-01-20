@@ -15,13 +15,13 @@ import { FlexLayout } from "@/layouts/Flex";
 import { useUikitTranslation } from "@utils";
 
 import type { ListFilterCollectionProps } from "./ListFilterCollection.types";
-import type { StyleOverrideProps, TestIdProps } from "@types";
+import type { StyleOverrideProps, StyleProps, TestIdProps } from "@types";
 
 /**
  * Displays a collection of registered filters
  * and allows selecting which to display.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ListFilterCollectionProps & TestIdProps & StyleOverrideProps} props - The props
  * @returns {JSX.Element}
@@ -38,6 +38,7 @@ export const ListFilterCollection = (
     ref,
     id,
     clearDisplayedFilters,
+    hasActiveFilters,
   } = useListFilterCollection(props);
 
   const tl = useUikitTranslation();
@@ -64,6 +65,7 @@ export const ListFilterCollection = (
           secondary
           iconPlacement="right"
           onClick={clearDisplayedFilters}
+          $hidden={!hasActiveFilters}
         />
       </ListFilterCollectionTitleContainer>
       {hasFilters && (
@@ -89,6 +91,8 @@ const ListFilterCollectionFiltersContainer = styled(FlexLayout)`
   ${listFilterCollectionFiltersContainerStyles}
 `;
 
-const ListFilterCollectionClearButton = styled(Button)`
+const ListFilterCollectionClearButton = styled(Button)<
+  StyleProps<{ hidden?: boolean }>
+>`
   ${listFilterCollectionClearButtonStyles}
 `;

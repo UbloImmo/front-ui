@@ -68,14 +68,20 @@ fetchPage.mockClear();
 
 global.console.error = mock(() => {});
 
-test("should fetch the first page data on mount", async (result, _, {
+test("should fetch the first page data only manually", async (result, _, {
   getResult,
+  rerender,
 }) => {
-  expect(fetchPage).toHaveBeenCalled();
   expect(result.data).toBeArray();
   // wait for fetch + rerender
   await delay(20);
   expect(getResult().data).toBeArray();
+  expect(getResult().data).toHaveLength(0);
+
+  await getResult().refetch();
+  await delay(20);
+  expect(fetchPage).toHaveBeenCalled();
+  rerender();
   expect(getResult().data).toHaveLength(PAGE_SIZE);
   expect(global.console.error).not.toHaveBeenCalled();
 });
@@ -101,7 +107,8 @@ const testError = testHook(
 
 testError(
   "should log an error if the fetchPage function throws an error",
-  () => {
+  async (result) => {
+    await result.refetch();
     expect(global.console.error).toHaveBeenCalled();
   }
 );
@@ -114,13 +121,12 @@ test("should not reset pagination when calling filter() with the same config", a
 }) => {
   rerender();
   await delay(0);
-  const initialHasNextPage = getResult().hasNextPage;
   expect(result.filter).toBeFunction();
   getResult().filter({ filters: [] });
   await delay(0);
   rerender();
   expect(getResult().hasNextPage).toBeBoolean();
-  expect(getResult().hasNextPage).toBe(initialHasNextPage);
+  expect(getResult().hasNextPage).toBe(true);
 });
 
 test("should reset pagination when filters change", async (result, _, {
@@ -130,12 +136,11 @@ test("should reset pagination when filters change", async (result, _, {
   rerender();
   await delay(0);
   const res = getResult();
-  const initialHasNextPage = res.hasNextPage;
   expect(res.filter).toBeFunction();
   res.filter({ filters: [mockListData.filters.filter1] });
   rerender();
   expect(getResult().hasNextPage).toBeBoolean();
-  expect(getResult().hasNextPage).not.toBe(initialHasNextPage);
+  expect(getResult().hasNextPage).toBe(false);
 });
 
 test("should reset pagination when refetching", async (result, _, {

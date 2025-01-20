@@ -1,4 +1,4 @@
-import { useCallback, type MouseEvent } from "react";
+import { Fragment, useCallback, type MouseEvent } from "react";
 import styled from "styled-components";
 
 import {
@@ -26,7 +26,7 @@ import type { Nullable } from "@ubloimmo/front-util";
  * A component that displays a single filters
  * and allows interacting with it and its options.
  *
- * @version 0.0.1
+ * @version 0.0.2
  * @param {ListFilterProps} props
  * @returns {Nullable<JSX.Element>}
  */
@@ -143,18 +143,17 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
           const highlighted = option.signature === highlightSignature;
           const divider = getOptionDivider(option.signature);
           return (
-            <>
+            <Fragment key={key}>
               {divider && !isQuerying && (
                 <ListFilterOptionDivider label={divider.label} />
               )}
               <ListFilterOptionItem
                 option={option}
                 multi={filter.multi}
-                key={key}
                 closeFilter={closeOptions}
                 highlighted={highlighted}
               />
-            </>
+            </Fragment>
           );
         })}
       </ListFilterOptionsList>

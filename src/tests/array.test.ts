@@ -219,12 +219,13 @@ testInParallel("should push item", async (result, _params, { getResult }) => {
 
 testInParallel(
   "should remove item based on predicate",
-  async (result, _params, { getResult }) => {
+  async (result, _params, { getResult, rerender }) => {
     await delay(DELAY);
     await delay(0);
     const predicate = (item: MockItem) => item.index >= 4 || item.selected;
     result.remove(predicate);
     await delay(0);
+    rerender();
     expect(getResult().data).toHaveLength(2);
     expect(getResult().data).toEqual(
       mockItems.filter((item) => !predicate(item))
