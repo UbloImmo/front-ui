@@ -2,6 +2,8 @@ import { type RuleSet, css } from "styled-components";
 
 import { cssDimensions } from "@/utils/styles.utils";
 
+import type { StyleProps } from "@types";
+
 export const listFilterCollectionContainerStyles = (): RuleSet => css`
   background: white;
   display: flex;
@@ -24,7 +26,18 @@ export const listFilterCollectionFiltersContainerStyles = (): RuleSet => css`
   padding: 0 var(--s-1) var(--s-1);
 `;
 
-export const listFilterCollectionClearButtonStyles = (): RuleSet => css`
+export const listFilterCollectionClearButtonStyles = ({
+  $hidden,
+}: StyleProps<{ hidden?: boolean }>): RuleSet => css`
   padding: 0 !important;
   ${cssDimensions("fit-content", "fit-content", true)};
+
+  transition: opacity 150ms var(--bezier) 0s;
+
+  ${$hidden &&
+  css`
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+  `}
 `;

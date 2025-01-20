@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-import { listFilterOptionDividerStyles } from "./ListFilterOptionDivider.styles";
+import {
+  listFilterOptionDividerLabelContainerStyles,
+  listFilterOptionDividerStyles,
+} from "./ListFilterOptionDivider.styles";
 
 import { Text } from "@/components/Text";
 import { useLogger, useMergedProps } from "@utils";
@@ -14,7 +17,7 @@ const defaultListFilterOptionDivider: Required<ListFilterOptionDividerProps> = {
 /**
  * Renders a divider with a label between list filter options
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ListFilterOptionDividerProps} props - The component props
  * @param {string} props.label - The text label to display in the divider
@@ -39,22 +42,28 @@ export const ListFilterOptionDivider = (
       data-divider-label={mergedProps.label}
       role="heading"
     >
-      <Text
-        size="s"
-        weight="bold"
-        color="gray-600"
-        fill
-        ellipsis
-        uppercase
-        testId="list-filter-option-divider-label"
-        overrideTestId
-      >
-        {mergedProps.label}
-      </Text>
+      <DividerLabelContainer>
+        <Text
+          size="s"
+          weight="bold"
+          color="gray-600"
+          fill
+          ellipsis
+          uppercase
+          testId="list-filter-option-divider-label"
+          overrideTestId
+        >
+          {mergedProps.label}
+        </Text>
+      </DividerLabelContainer>
     </DividerContainer>
   );
 };
 
 const DividerContainer = styled.li`
   ${listFilterOptionDividerStyles}
+`;
+
+const DividerLabelContainer = styled.div`
+  ${listFilterOptionDividerLabelContainerStyles}
 `;

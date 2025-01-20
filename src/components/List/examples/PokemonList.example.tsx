@@ -6,7 +6,6 @@ import {
   ListFilterOptionBadge,
   ListFilterPresetCollection,
   ListSideHeader,
-  ListTableHeaderFilter,
 } from "../components";
 import { ListContextProvider, useListConfig, useListContext } from "../context";
 import { List } from "../List.component";
@@ -174,7 +173,7 @@ const usePaginatedPokemonData: UseDataProviderFn<Pokemon, "paginated"> = (
   const paginated = usePaginatedDataProvider(
     paginatedFetchPokemonData,
     setData,
-    60
+    25
   );
   return {
     ...paginated,
@@ -397,9 +396,7 @@ const usePokemonListConfig = (
   return config;
 };
 const Renderer = () => {
-  const { data, getFilterByLabel } = useListContext<Pokemon>();
-
-  const typeTypeFilter = getFilterByLabel("Type");
+  const { data } = useListContext<Pokemon>();
 
   return (
     <Table layout="fixed">
@@ -410,11 +407,9 @@ const Renderer = () => {
         <TableHeaderCell>
           <Text>Id</Text>
         </TableHeaderCell>
-
-        {/* <TableHeaderCell>
+        <TableHeaderCell>
           <Text>Type</Text>
-        </TableHeaderCell> */}
-        <ListTableHeaderFilter filter={typeTypeFilter} fallbackLabel="Type" />
+        </TableHeaderCell>
         <TableHeaderCell>
           <Text>Weight</Text>
         </TableHeaderCell>
@@ -527,4 +522,7 @@ export const PokemonListExample = ({
 const SideView = styled(FlexLayout)`
   width: 340px;
   min-width: 340px;
+  position: sticky;
+  top: var(--s-2);
+  left: 0;
 `;

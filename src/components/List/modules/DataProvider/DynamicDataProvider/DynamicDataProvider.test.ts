@@ -50,7 +50,8 @@ test("should return a valid dataProvider object", (result) => {
 
 testError(
   "should log an error when the fetchData function throws an error",
-  () => {
+  ({ refetch }) => {
+    refetch();
     expect(global.console.error).toHaveBeenCalled();
   }
 );

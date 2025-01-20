@@ -1,6 +1,7 @@
+import { useEffect, useRef, type FC } from "react";
+
 import type { TestIdProps } from "@types";
 import type { VoidFn } from "@ubloimmo/front-util";
-import type { FC } from "react";
 
 type Component<TComponentProps extends Record<string, unknown>> =
   TComponentProps extends infer TBaseProps & TestIdProps
@@ -74,3 +75,23 @@ export const loadComponent =
  * @param {VoidFn} callback - The callback to execute.
  */
 export const nextTick = (callback: VoidFn) => setTimeout(callback);
+
+/**
+ * Executes a callback after the component is mounted
+ *
+ * @param {VoidFn} callback - The callback to execute.
+ */
+export const useMounted = (callback: VoidFn) => {
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    if (mounted.current) return;
+    mounted.current = true;
+    callback();
+
+    return () => {
+      mounted.current = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+};

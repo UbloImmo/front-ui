@@ -25,7 +25,9 @@ const config: StorybookConfig = {
 
   framework: {
     name: "@storybook/react-vite",
-    options: {},
+    options: {
+      strictMode: true,
+    },
   },
 
   docs: {},
@@ -80,6 +82,6 @@ const config: StorybookConfig = {
 
   typescript: {
     reactDocgen: "react-docgen",
-  }
+  },
 };
 export default config;

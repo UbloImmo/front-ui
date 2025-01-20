@@ -199,10 +199,16 @@ const useFilterKeyboardEvents = (
   open?: boolean
 ) => {
   useEffect(() => {
+    const prevent = (event: KeyboardEvent, callback: VoidFn) => {
+      event.preventDefault();
+      event.stopPropagation();
+      callback();
+    };
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowDown") walkHighlight(1);
-      if (event.key === "ArrowUp") walkHighlight(-1);
-      if (event.key === "Escape") closeOptions();
+      if (event.key === "ArrowDown") prevent(event, () => walkHighlight(1));
+      if (event.key === "ArrowUp") prevent(event, () => walkHighlight(-1));
+      if (event.key === "Escape") prevent(event, closeOptions);
     };
 
     let inputRef: typeof queryInputRef.current;
