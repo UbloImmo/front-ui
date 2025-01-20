@@ -12,7 +12,7 @@ const defaultListProps: ListDefaultProps<object> = {
 /**
  * Highly customizable list component
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {ListProps} props - List component props
  * @returns {JSX.Element}

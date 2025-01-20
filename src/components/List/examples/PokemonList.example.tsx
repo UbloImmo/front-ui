@@ -1,4 +1,5 @@
 import { isNumber, isString, type Nullable } from "@ubloimmo/front-util";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import {
@@ -56,6 +57,13 @@ type Pokemon = {
       name: string;
     };
   }[];
+  sprites: {
+    front_default: string;
+  };
+  cries: {
+    latest: string;
+    legacy: string;
+  };
 };
 
 type PokemonListResponse = {
@@ -398,52 +406,76 @@ const usePokemonListConfig = (
 const Renderer = () => {
   const { data } = useListContext<Pokemon>();
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [audioUrl, setAudioUrl] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = 0;
+    if (audioUrl) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [audioUrl]);
+
   return (
-    <Table layout="fixed">
-      <TableHeader sticky top="s-2">
-        <TableHeaderCell>
-          <Text>Name</Text>
-        </TableHeaderCell>
-        <TableHeaderCell>
-          <Text>Id</Text>
-        </TableHeaderCell>
-        <TableHeaderCell>
-          <Text>Type</Text>
-        </TableHeaderCell>
-        <TableHeaderCell>
-          <Text>Weight</Text>
-        </TableHeaderCell>
-      </TableHeader>
-      <TableBody style="list">
-        {data.map((pokemon) => (
-          <TableRow style="list" key={String(pokemon.id)}>
-            <TableCell padded>
-              <Text weight="medium">{capitalize(pokemon.name)}</Text>
-            </TableCell>
-            <TableCell padded>
-              <Text weight="medium">{pokemon.id}</Text>
-            </TableCell>
-            <TableCell padded>
-              <FlexLayout direction="row" gap="s-1">
-                <ListFilterOptionBadge
-                  item={pokemon}
-                  property="types.0.type.name"
-                />
-                {pokemon.types[1] && (
+    <>
+      <audio ref={audioRef} src={audioUrl} />
+      <Table layout="fixed">
+        <TableHeader sticky top="s-2">
+          <TableHeaderCell>
+            <Text>Name</Text>
+          </TableHeaderCell>
+          <TableHeaderCell>
+            <Text>Id</Text>
+          </TableHeaderCell>
+          <TableHeaderCell>
+            <Text>Type</Text>
+          </TableHeaderCell>
+          <TableHeaderCell>
+            <Text>Weight</Text>
+          </TableHeaderCell>
+        </TableHeader>
+        <TableBody style="list">
+          {data.map((pokemon) => (
+            <TableRow style="list" key={String(pokemon.id)}>
+              <TableCell padded>
+                <FlexLayout direction="row" fill align="center" justify="start">
+                  {pokemon.sprites.front_default && (
+                    <Sprite
+                      src={pokemon.sprites.front_default}
+                      onClick={() => setAudioUrl(pokemon.cries.latest)}
+                    />
+                  )}
+                  <Text weight="medium">{capitalize(pokemon.name)}</Text>
+                </FlexLayout>
+              </TableCell>
+              <TableCell padded>
+                <Text weight="medium">{pokemon.id}</Text>
+              </TableCell>
+              <TableCell padded>
+                <FlexLayout direction="row" gap="s-1">
                   <ListFilterOptionBadge
                     item={pokemon}
-                    property="types.1.type.name"
+                    property="types.0.type.name"
                   />
-                )}
-              </FlexLayout>
-            </TableCell>
-            <TableCell padded>
-              <ListFilterOptionBadge item={pokemon} property="weight" />
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+                  {pokemon.types[1] && (
+                    <ListFilterOptionBadge
+                      item={pokemon}
+                      property="types.1.type.name"
+                    />
+                  )}
+                </FlexLayout>
+              </TableCell>
+              <TableCell padded>
+                <ListFilterOptionBadge item={pokemon} property="weight" />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   );
 };
 
@@ -456,6 +488,12 @@ const LoadingContainer = styled.div`
 
 const LoadingFill = styled(Loading)`
   width: 100%;
+`;
+
+const Sprite = styled.img`
+  aspect-ratio: 1/1;
+  height: var(--s-12);
+  cursor: help;
 `;
 
 const LoadingBar = () => {
