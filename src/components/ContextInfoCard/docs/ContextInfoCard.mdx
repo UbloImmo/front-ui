@@ -1,0 +1,57 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as ContextInfoCardStories from "../ContextInfoCard.stories.tsx";
+
+<Meta title="Components/Entity/ContextInfoCard/Usage" figmaId="3864-27489" />
+
+<ComponentInfo of={ContextInfoCardStories} />
+
+<Content>
+
+## Usage
+
+**ContextInfoCard** is useful for displaying contextual information with an icon, title, and optional label, description, and details.
+
+<Canvas of={ContextInfoCardStories.Default} />
+
+## Customization
+
+### Title
+
+The `title` is a required string that serves as the main content of the card.
+
+<Canvas of={ContextInfoCardStories.Default} />
+
+### Label (Optional)
+
+You can add a `label` above the title to provide additional context.
+
+<Canvas of={ContextInfoCardStories.WithLabel} />
+
+### Description (Optional)
+
+A `description` can be added below the title to provide more detailed information.
+
+<Canvas of={ContextInfoCardStories.WithDescription} />
+
+### Details (Optional)
+
+You can add `details` below the description in a smaller text size (xs) for additional information.
+
+<Canvas of={ContextInfoCardStories.WithDetails} />
+
+### Combined Elements
+
+You can combine label, description, and details for a comprehensive display of information.
+
+<Canvas of={ContextInfoCardStories.WithAllProps} />
+
+### Icons
+
+ContextInfoCard uses [StaticIcon](?path=/docs/components-iconography-staticicon-usage--docs) to render the provided `staticIcon` configuration.
+You can customize both the icon name and color.
+
+<Canvas of={ContextInfoCardStories.DifferentIcon} />
+
+</Content>
