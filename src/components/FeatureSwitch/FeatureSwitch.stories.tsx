@@ -3,12 +3,15 @@ import styled from "styled-components";
 
 import { FeatureSwitch } from "./FeatureSwitch.component";
 import { type FeatureSwitchProps } from "./FeatureSwitch.types";
+import { Avatar } from "../Avatar";
 import { Badge } from "../Badge";
+import { Divider } from "../Divider";
+import { Hypertext } from "../Hypertext";
 import { Text } from "../Text";
 
 import { ComponentVariants, type DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
-import { FlexRowLayout } from "@layouts";
+import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
 import type { IconName } from "../Icon";
@@ -179,9 +182,31 @@ Compact.parameters = {
   ),
 };
 
+const CustomDescription = styled(FlexColumnLayout)`
+  margin-top: var(--s-3);
+`;
+
 const descriptionVariants = [
   null,
-  "This Feature Switch has a description, it can be used to provide more information about the feature.",
+  "This is a simple description, just a plain text to provide more information about the feature.",
+  <CustomDescription key="custom" fill gap="s-3">
+    <Divider />
+    <FlexRowLayout fill gap="s-3" align="center">
+      <Avatar
+        size="m"
+        firstName="John"
+        lastName="Cat"
+        avatarUrl="https://t.ly/lJMVh"
+      />
+      <Text>
+        This description has more custom elements to add explanation about your
+        feature.
+      </Text>
+    </FlexRowLayout>
+    <div>
+      <Hypertext href="#">Additional link</Hypertext>
+    </div>
+  </CustomDescription>,
 ];
 
 export const Description = () => {

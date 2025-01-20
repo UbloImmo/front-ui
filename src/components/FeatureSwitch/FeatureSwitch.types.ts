@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { CheckboxProps } from "../Checkbox";
 import type { IconName } from "../Icon";
 import type { SelectInputProps } from "../Input";
@@ -25,12 +26,12 @@ export type FeatureSwitchCommonProps = {
   label: string;
 
   /**
-   * The description to be displayed in the FeatureSwitch
+   * The description to be displayed in the FeatureSwitch, can be a string or a custom component
    *
-   * @type {Nullable<string>}
+   * @type {Nullable<ReactNode>}
    * @default null
    */
-  description?: Nullable<string>;
+  description?: Nullable<ReactNode>;
 
   /**
    * Whether the FeatureSwitch's layout is compact
