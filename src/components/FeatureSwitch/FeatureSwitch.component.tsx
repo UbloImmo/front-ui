@@ -49,7 +49,7 @@ const defaultFeatureSwitchProps: FeatureSwitchDefaultProps = {
  *
  * Provides informations about a feature that the user can activate, deactivate or select an option from a list.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {FeatureSwitchProps & TestIdProps} props - FeatureSwitch component props
  * @returns {JSX.Element}
