@@ -45,7 +45,7 @@ export const useListContextStore = <
     });
   }, [optionsArray, search.queryFilters]);
 
-  const previousFiltersRef = useRef<string>(stringifyFiltersRef());
+  const previousFiltersRef = useRef<string>("");
 
   const configLoading = useMemo(
     () => filters.filtersLoading || filterPresets.filterPresetsLoading,
