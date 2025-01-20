@@ -7,10 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `useMounted` hook
+  - Runs a callback _once_ when the component is mounted, even in strict mode
+
 ### Changed
+
+- **DOCS**
+  - Set storybook react strict mode to `true` in order to replicate production behavior
 
 - `v0.0.3` FeatureSwitch component
   - `description` property type changed to `ReactNode` to allow custom elements or just plain text
+
+- `v0.0.2` ListFilterCollection component
+  - Hide clear button when no active filters
+  
+- `v0.0.2` ListFilterOptionDivider component
+  - Fix styling, make dividers sticky and fix their height to match the design
+
+- `useAsyncData` hook
+  - Add `initialFetch` that dictates whether to fetch data on mount (default: true)
+
+### Fixed
+
+- `v0.0.2` List component
+  - Fix double fetch on mount and pagination refetch when using `DynamicDataProvider` & `PaginatedDataProvider` in strict mode
+  - Paginated & Dynamic data providers now do not fetch data on mount
+
+- `v0.0.2` ListFilter component
+  - Fix missing key in `filteredOptions` render map
 
 ## 1.1.2 - 2025-01-17
 
