@@ -7,20 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.1` ContextInfoCard component
+  - A component that displays contextual information with an icon, title, and optional label, description, and details
+  - Supports customizable icons through StaticIcon component
+
 ## 1.1.4 - 2025-01-20
 
 ### Fixed
 
 - `v0.0.3` List component
   - Trigger dataprovider first fetch upon mount
-
-## 1.1.3 - 2025-01-20
-
-### Added
-
-- `v0.0.1` ContextInfoCard component
-  - A component that displays contextual information with an icon, title, and optional label, description, and details
-  - Supports customizable icons through StaticIcon component
 
 ## 1.1.3 - 2025-01-20
 
