@@ -20,6 +20,8 @@ const defaultContextInfoCardProps: ContextInfoCardProps = {
 /**
  * A component that displays contextual information with an icon, title, label, and description.
  *
+ * @version 0.0.1
+ *
  * @param {TestIdProps & ContextInfoCardProps} props - The component props
  * @returns {JSX.Element} - The context info card markup
  */
