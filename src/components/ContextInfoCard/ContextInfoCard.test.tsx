@@ -1,73 +1,66 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, test } from "bun:test";
+import { expect } from "bun:test";
 
 import { ContextInfoCard } from "./ContextInfoCard.component";
 
-describe("ContextInfoCard", () => {
-  const defaultProps = ContextInfoCard.defaultProps;
+import { testComponentFactory } from "@/tests";
 
-  test("renders with default props", () => {
-    render(<ContextInfoCard {...defaultProps} />);
-    expect(screen.getByText("[Title]")).toBeDefined();
-  });
+const testCard = testComponentFactory("ContextInfoCard", ContextInfoCard);
+const defaultProps = ContextInfoCard.defaultProps;
+const testId = "context-info-card";
 
-  test("renders with label", () => {
-    render(<ContextInfoCard {...defaultProps} label="Context Label" />);
-    expect(screen.getByText("[Title]")).toBeDefined();
-    expect(screen.getByText("Context Label")).toBeDefined();
-  });
+testCard(defaultProps)(
+  "should render with default props",
+  async ({ findByTestId }) => {
+    expect(await findByTestId(testId)).not.toBeNull();
+  }
+);
 
-  test("renders with description", () => {
-    render(
-      <ContextInfoCard
-        {...defaultProps}
-        description="This is a description of the context"
-      />
-    );
-    expect(screen.getByText("[Title]")).toBeDefined();
-    expect(
-      screen.getByText("This is a description of the context")
-    ).toBeDefined();
-  });
+testCard({ ...defaultProps, label: "Context Label" })(
+  "should render with label",
+  async ({ findByText }) => {
+    expect(await findByText("[Title]")).not.toBeNull();
+    expect(await findByText("Context Label")).not.toBeNull();
+  }
+);
 
-  test("renders with details", () => {
-    render(
-      <ContextInfoCard
-        {...defaultProps}
-        details="This is a details of the context"
-      />
-    );
-    expect(screen.getByText("[Title]")).toBeDefined();
-    expect(screen.getByText("This is a details of the context")).toBeDefined();
-  });
+testCard({
+  ...defaultProps,
+  description: "This is a description of the context",
+})("should render with description", async ({ findByText }) => {
+  expect(await findByText("[Title]")).not.toBeNull();
+  expect(
+    await findByText("This is a description of the context")
+  ).not.toBeNull();
+});
 
-  test("renders with all optional props", () => {
-    render(
-      <ContextInfoCard
-        {...defaultProps}
-        label="Context Label"
-        description="This is a description of the context"
-        details="This is a details of the context"
-      />
-    );
-    expect(screen.getByText("[Title]")).toBeDefined();
-    expect(screen.getByText("Context Label")).toBeDefined();
-    expect(
-      screen.getByText("This is a description of the context")
-    ).toBeDefined();
-    expect(screen.getByText("This is a details of the context")).toBeDefined();
-  });
+testCard({ ...defaultProps, details: "This is a details of the context" })(
+  "should render with details",
+  async ({ findByText }) => {
+    expect(await findByText("[Title]")).not.toBeNull();
+    expect(await findByText("This is a details of the context")).not.toBeNull();
+  }
+);
 
-  test("renders with different icon", () => {
-    render(
-      <ContextInfoCard
-        {...defaultProps}
-        staticIcon={{
-          name: "InvoiceClock",
-          color: "pending",
-        }}
-      />
-    );
-    expect(screen.getByText("[Title]")).toBeDefined();
-  });
+testCard({
+  ...defaultProps,
+  label: "Context Label",
+  description: "This is a description of the context",
+  details: "This is a details of the context",
+})("should render with all optional props", async ({ findByText }) => {
+  expect(await findByText("[Title]")).not.toBeNull();
+  expect(await findByText("Context Label")).not.toBeNull();
+  expect(
+    await findByText("This is a description of the context")
+  ).not.toBeNull();
+  expect(await findByText("This is a details of the context")).not.toBeNull();
+});
+
+testCard({
+  ...defaultProps,
+  staticIcon: {
+    name: "InvoiceClock",
+    color: "pending",
+  },
+})("should render with different icon", async ({ findByTestId }) => {
+  expect(await findByTestId(testId)).not.toBeNull();
 });
