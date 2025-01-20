@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { isNullish } from "@ubloimmo/front-util";
 import styled from "styled-components";
 
 import { FlexColumnLayout, FlexRowLayout } from "../../layouts";
@@ -10,11 +10,38 @@ import { ContextInfoCardProps } from "./ContextInfoCard.types";
 import { TestIdProps, TextProps } from "@types";
 import { useMergedProps, useTestId } from "@utils";
 
-const defaultContextInfoCardProps: ContextInfoCardProps = {
+const defaultContextInfoCardProps: Required<ContextInfoCardProps> = {
   title: "[Title]",
   staticIcon: {
     name: "Circle",
   },
+  label: null,
+  description: null,
+  details: null,
+};
+
+const labelTextProps: TextProps = {
+  size: "m",
+  weight: "bold",
+  color: "gray-800",
+};
+
+const titleTextProps: TextProps = {
+  size: "m",
+  weight: "medium",
+  color: "gray-800",
+};
+
+const descriptionTextProps: TextProps = {
+  size: "m",
+  weight: "regular",
+  color: "gray-500",
+};
+
+const detailsTextProps: TextProps = {
+  size: "xs",
+  weight: "medium",
+  color: "gray-500",
 };
 
 /**
@@ -31,60 +58,34 @@ const ContextInfoCard = (
   const testId = useTestId("context-info-card", props);
   const mergedProps = useMergedProps(defaultContextInfoCardProps, props);
 
-  const labelTextProps = useMemo<TextProps>(
-    () => ({
-      size: "m",
-      weight: "bold",
-      color: "gray-800",
-    }),
-    []
-  );
-
-  const titleTextProps = useMemo<TextProps>(
-    () => ({
-      size: "m",
-      weight: "medium",
-      color: "gray-800",
-    }),
-    []
-  );
-
-  const descriptionTextProps = useMemo<TextProps>(
-    () => ({
-      size: "m",
-      weight: "regular",
-      color: "gray-500",
-    }),
-    []
-  );
-
-  const detailsTextProps = useMemo<TextProps>(
-    () => ({
-      size: "xs",
-      weight: "medium",
-      color: "gray-500",
-    }),
-    []
-  );
+  if (isNullish(mergedProps.title)) {
+    console.warn(
+      "ContextInfoCard: title prop is required but was not provided"
+    );
+  }
 
   return (
-    <ContextInfoCardContainer data-testid={testId}>
-      <FlexRowLayout gap="s-5" align="center">
-        <StaticIcon size="s" {...mergedProps.staticIcon} />
-        <FlexColumnLayout>
-          {mergedProps.label && (
-            <Text {...labelTextProps}>{mergedProps.label}</Text>
-          )}
-          <Text {...titleTextProps}>{mergedProps.title}</Text>
-          {mergedProps.description && (
-            <Text {...descriptionTextProps}>{mergedProps.description}</Text>
-          )}
-          {mergedProps.details && (
-            <Text {...detailsTextProps}>{mergedProps.details}</Text>
-          )}
-        </FlexColumnLayout>
-      </FlexRowLayout>
-    </ContextInfoCardContainer>
+    <StyledFlexRowLayout
+      testId={testId}
+      overrideTestId
+      gap="s-5"
+      align="center"
+      fill
+    >
+      <StaticIcon size="s" {...mergedProps.staticIcon} />
+      <FlexColumnLayout>
+        {mergedProps.label && (
+          <Text {...labelTextProps}>{mergedProps.label}</Text>
+        )}
+        <Text {...titleTextProps}>{mergedProps.title}</Text>
+        {mergedProps.description && (
+          <Text {...descriptionTextProps}>{mergedProps.description}</Text>
+        )}
+        {mergedProps.details && (
+          <Text {...detailsTextProps}>{mergedProps.details}</Text>
+        )}
+      </FlexColumnLayout>
+    </StyledFlexRowLayout>
   );
 };
 
@@ -92,6 +93,6 @@ ContextInfoCard.defaultProps = defaultContextInfoCardProps;
 
 export { ContextInfoCard };
 
-const ContextInfoCardContainer = styled(FlexColumnLayout)`
+const StyledFlexRowLayout = styled(FlexRowLayout)`
   ${contextInfoCardContainerStyles}
 `;

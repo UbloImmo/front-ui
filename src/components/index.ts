@@ -10,6 +10,7 @@ export * from "./Checkbox";
 export * from "./Chip";
 export * from "./ComboBox";
 export * from "./ComboBoxButton";
+export * from "./ContextInfoCard";
 export * from "./ContextLine";
 export * from "./ContextMenu";
 export * from "./CopyClipboardInfoCard";
