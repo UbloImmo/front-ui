@@ -20,25 +20,34 @@ const defaultContextInfoCardProps: Required<ContextInfoCardProps> = {
   details: null,
 };
 
+const commonTextProps: TextProps = {
+  fill: true,
+  ellipsis: true,
+};
+
 const labelTextProps: TextProps = {
+  ...commonTextProps,
   size: "m",
   weight: "bold",
   color: "gray-800",
 };
 
 const titleTextProps: TextProps = {
+  ...commonTextProps,
   size: "m",
   weight: "medium",
   color: "gray-800",
 };
 
 const descriptionTextProps: TextProps = {
+  ...commonTextProps,
   size: "m",
   weight: "regular",
   color: "gray-500",
 };
 
 const detailsTextProps: TextProps = {
+  ...commonTextProps,
   size: "xs",
   weight: "medium",
   color: "gray-500",
@@ -65,7 +74,7 @@ const ContextInfoCard = (
   }
 
   return (
-    <StyledFlexRowLayout
+    <ContextInfoCardContainer
       testId={testId}
       overrideTestId
       gap="s-5"
@@ -73,7 +82,7 @@ const ContextInfoCard = (
       fill
     >
       <StaticIcon size="s" {...mergedProps.staticIcon} />
-      <FlexColumnLayout>
+      <ContextInfoCardContentContainer fill>
         {mergedProps.label && (
           <Text {...labelTextProps}>{mergedProps.label}</Text>
         )}
@@ -84,8 +93,8 @@ const ContextInfoCard = (
         {mergedProps.details && (
           <Text {...detailsTextProps}>{mergedProps.details}</Text>
         )}
-      </FlexColumnLayout>
-    </StyledFlexRowLayout>
+      </ContextInfoCardContentContainer>
+    </ContextInfoCardContainer>
   );
 };
 
@@ -93,6 +102,10 @@ ContextInfoCard.defaultProps = defaultContextInfoCardProps;
 
 export { ContextInfoCard };
 
-const StyledFlexRowLayout = styled(FlexRowLayout)`
+const ContextInfoCardContainer = styled(FlexRowLayout)`
   ${contextInfoCardContainerStyles}
+`;
+
+const ContextInfoCardContentContainer = styled(FlexColumnLayout)`
+  overflow: hidden;
 `;
