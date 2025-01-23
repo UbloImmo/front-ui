@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - A component that displays contextual information with an icon, title, and optional label, description, and details
   - Supports customizable icons through StaticIcon component
 
+- New icons (`@ubloimmo/front-tokens@0.1.33`)
+
 ## 1.1.4 - 2025-01-20
 
 ### Fixed
