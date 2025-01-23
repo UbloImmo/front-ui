@@ -28,7 +28,7 @@ export const Invoice2In = (props: CommonIconProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <g clipPath="url(#clip0_1152_69)" >
+      <g clipPath="url(#clip0_1222_619)" >
         <path
           d="M5.55567 3.27777C5.27953 3.27777 5.05567 3.50163 5.05567 3.77777C5.05567 4.05391 5.27953 4.27777 5.55567 4.27777H10.4446C10.7207 4.27777 10.9446 4.05391 10.9446 3.77777C10.9446 3.50163 10.7207 3.27777 10.4446 3.27777H5.55567Z"
           fill={color}
@@ -49,7 +49,7 @@ export const Invoice2In = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_1152_69" >
+        <clipPath id="clip0_1222_619" >
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>
