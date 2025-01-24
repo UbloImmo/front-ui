@@ -12,7 +12,7 @@ export type ActionSize = Enum<typeof actionSizes>;
 /**
  * Action component props
  */
-export type ActionProps = StyleOverrideProps & {
+export type ActionProps = Omit<StyleOverrideProps, "as"> & {
   /**
    * The action button's label.
    *

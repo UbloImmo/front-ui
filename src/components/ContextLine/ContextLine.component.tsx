@@ -3,8 +3,10 @@ import styled from "styled-components";
 
 import { contextLineStyles } from "./ContextLine.styles";
 import { Badge } from "../Badge";
+import { StaticIcon, StaticIconProps } from "../StaticIcon";
 import { Text } from "../Text";
 
+import { FlexLayout } from "@layouts";
 import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
 
 import type {
@@ -12,39 +14,83 @@ import type {
   ContextLineDefaultProps,
 } from "./ContextLine.types";
 import type { StyleProps, TestIdProps } from "@types";
+import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultContextLineProps: ContextLineDefaultProps = {
   label: "[label]",
-  children: <Badge label="Children" color="primary" />,
+  children: null,
+  description: null,
+  icon: null,
+  badge: null,
+  borderBottom: true,
 };
 
 /**
  *
  * Use ContextLine inside contextual areas to display current state of something.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ContextLineProps & TestIdProps} props - ContextLine component props
  * @returns {JSX.Element}
  */
 const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
-  const { log, warn } = useLogger("ContextLine", { hideLogs: true });
+  const { warn } = useLogger("ContextLine", { hideLogs: true });
   const mergedProps = useMergedProps(defaultContextLineProps, props);
   const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("context-line", props);
 
-  log(mergedProps);
-
   if (!mergedProps.label) warn("Missing label prop");
 
-  const label = useMemo(() => `${mergedProps.label} :`, [mergedProps.label]);
+  const staticIconProps = useMemo<Nullable<StaticIconProps>>(() => {
+    if (!mergedProps.icon?.name) return null;
+
+    return {
+      ...mergedProps.icon,
+      size: "xs",
+      indicator: null,
+    };
+  }, [mergedProps.icon]);
 
   return (
-    <ContextLineContainer data-testid={testId} {...styledProps}>
-      <Text weight="medium" testId="context-line-label" overrideTestId>
-        {label}
-      </Text>
-      {mergedProps.children}
+    <ContextLineContainer
+      direction="row"
+      align="center"
+      justify="space-between"
+      gap="s-2"
+      fill
+      testId={testId}
+      overrideTestId
+      {...styledProps}
+    >
+      <FlexLayout
+        direction="row"
+        gap="s-2"
+        align={mergedProps.description ? "start" : "center"}
+        justify="start"
+      >
+        {staticIconProps && <StaticIcon {...staticIconProps} />}
+        <FlexLayout direction="column" fill>
+          <Text
+            weight="medium"
+            testId="context-line-label"
+            fill
+            ellipsis
+            overrideTestId
+          >
+            {mergedProps.label}
+          </Text>
+          {mergedProps.description && (
+            <Text size="xs" color="gray-800" fill ellipsis overrideTestId>
+              {mergedProps.description}
+            </Text>
+          )}
+        </FlexLayout>
+      </FlexLayout>
+      <FlexLayout direction="row" gap="s-2">
+        {mergedProps.children}
+        {mergedProps.badge && <Badge {...mergedProps.badge} />}
+      </FlexLayout>
     </ContextLineContainer>
   );
 };
@@ -53,6 +99,6 @@ ContextLine.defaultProps = defaultContextLineProps;
 
 export { ContextLine };
 
-const ContextLineContainer = styled.div<StyleProps<ContextLineProps>>`
+const ContextLineContainer = styled(FlexLayout)<StyleProps<ContextLineProps>>`
   ${contextLineStyles}
 `;

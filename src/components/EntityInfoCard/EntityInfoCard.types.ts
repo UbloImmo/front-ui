@@ -1,7 +1,8 @@
+import type { ContextInfoCardProps } from "../ContextInfoCard";
+import type { ContextLineProps } from "../ContextLine";
 import type { AccountBalanceProps } from "@/components/AccountBalance";
 import type { ActionProps } from "@/components/Action";
 import type { ActionIconProps } from "@/components/ActionIcon";
-import type { BadgeProps } from "@/components/Badge";
 import type { ContextMenuProps } from "@/components/ContextMenu";
 import type {
   CopyClipboardInfoCardProps,
@@ -15,12 +16,18 @@ import type { ReactNode } from "react";
 export type EntityActionIcon = Omit<ActionIconProps, "size">;
 export type EntityAction = Omit<ActionProps, "size">;
 
-export type EntityStatusRow = {
-  label: string;
-  badge?: BadgeProps;
+/**
+ * A single row of status information
+ *
+ * @see {@link ContextLineProps}
+ */
+export type EntityStatusRow = Omit<ContextLineProps, "children"> & {
   content?: ReactNode;
 };
 
+/**
+ * Properties related to the entity info card's state or account balance
+ */
 export type EntityStateProps = RequireAtLeastOne<{
   /**
    * The state to display above the entity's name and info
@@ -32,11 +39,7 @@ export type EntityStateProps = RequireAtLeastOne<{
   accountBalance: Nullable<AccountBalanceProps>;
 }>;
 
-export type EntityInfoCardProps = EntityStateProps & {
-  /**
-   * The entity's name
-   */
-  name?: Nullable<string>;
+export type EntityInfoCardHeaderProps = EntityStateProps & {
   /**
    * An action made available to the user to interact with the whole entity.
    * Usually is deletion.
@@ -54,14 +57,34 @@ export type EntityInfoCardProps = EntityStateProps & {
    * @default null
    */
   contextMenu?: Nullable<ContextMenuProps>;
+};
+
+/**
+ * Properties related to the entity info card's section
+ */
+export type EntityInfoCardSectionProps = {
+  /**
+   * The entity's name
+   */
+  name?: Nullable<string>;
   /**
    * A list of Info Cards
    *
-   * @remarks rendered as `CopyClipboardInfoCard`s in a single column
+   * @remarks
+   * Rendered as `CopyClipboardInfoCard`s in a single column
+   * Their `onCopied` callback gets propagated to `EntityInfoCard`'s `onInfoCopied` callback if provided
    *
    * @default []
    */
   infoCards?: CopyClipboardInfoCardProps[];
+  /**
+   * A list of ContextInfoCards
+   *
+   * @remarks rendered as `ContextInfoCard`s in a single column
+   *
+   * @default []
+   */
+  contextInfoCards?: ContextInfoCardProps[];
   /**
    * A list of Info Boxes
    *
@@ -79,6 +102,17 @@ export type EntityInfoCardProps = EntityStateProps & {
    */
   statusRows?: EntityStatusRow[];
   /**
+   * A custom element to display relavant information about the entity
+   *
+   * @remarks Rendered as the first element in the card / section.
+   *
+   * @default null
+   */
+  children?: ReactNode;
+};
+
+export type EntityInfoCardFooterProps = {
+  /**
    * A list of actions to be made available to the user
    *
    * @remarks rendered as an `Action`
@@ -86,14 +120,9 @@ export type EntityInfoCardProps = EntityStateProps & {
    * @default []
    */
   actions?: EntityAction[];
-  /**
-   * A custom element to display relavant information about the entity
-   *
-   * @remarks Rendered as the first element after the header.
-   *
-   * @default null
-   */
-  children?: ReactNode;
+};
+
+export type EntityInfoCardCallbackProps = {
   /**
    * callback called when the user copies information
    * displayed in the `CopyClipboardInfoCard`
@@ -104,4 +133,28 @@ export type EntityInfoCardProps = EntityStateProps & {
   onInfoCopied?: Nullable<OnCopiedFn>;
 };
 
+export type EntityInfoCardProps = EntityInfoCardHeaderProps &
+  EntityInfoCardFooterProps &
+  EntityInfoCardSectionProps &
+  EntityInfoCardCallbackProps & {
+    /**
+     * A list of sections to be displayed separately in the card
+     *
+     * @remarks
+     * Each section is rendered as a in a bordered, padded column.
+     *
+     * @default []
+     */
+    sections?: EntityInfoCardSectionProps[];
+  };
+
+export type EntityInfoCardSectionDefaultProps =
+  Required<EntityInfoCardSectionProps>;
+
 export type EntityInfoCardDefaultProps = Required<EntityInfoCardProps>;
+
+export type EntityInfoCardHeaderDefaultProps =
+  Required<EntityInfoCardHeaderProps>;
+
+export type EntityInfoCardFooterDefaultProps =
+  Required<EntityInfoCardFooterProps>;

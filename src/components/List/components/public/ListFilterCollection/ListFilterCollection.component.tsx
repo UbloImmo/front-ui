@@ -23,11 +23,13 @@ import type { StyleOverrideProps, StyleProps, TestIdProps } from "@types";
  *
  * @version 0.0.2
  *
- * @param {ListFilterCollectionProps & TestIdProps & StyleOverrideProps} props - The props
+ * @param {ListFilterCollectionProps & TestIdProps & Omit<StyleOverrideProps, "as">} props - The props
  * @returns {JSX.Element}
  */
 export const ListFilterCollection = (
-  props: ListFilterCollectionProps & TestIdProps & StyleOverrideProps
+  props: ListFilterCollectionProps &
+    TestIdProps &
+    Omit<StyleOverrideProps, "as">
 ) => {
   const {
     title,

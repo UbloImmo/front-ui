@@ -25,6 +25,7 @@ const listFilterPresetCollectionDefaultProps: ListFilterPresetCollectionDefaultP
     role: "listbox",
     id: null,
     className: null,
+    as: "div",
   };
 
 export const useListFilterPresetCollection = (

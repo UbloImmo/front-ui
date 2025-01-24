@@ -7,7 +7,7 @@ export type ActionIconSize = Enum<typeof actionIconSizes>;
 
 export type ActionIconColor = Extract<ColorKey, "primary" | "error"> | "white";
 
-export type ActionIconProps = StyleOverrideProps & {
+export type ActionIconProps = Omit<StyleOverrideProps, "as"> & {
   /**
    * The name of the nested icon to render
    * @type {IconName}

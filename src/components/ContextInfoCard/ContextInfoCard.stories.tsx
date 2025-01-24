@@ -18,7 +18,7 @@ export const WithLabel: Story = {
   args: {
     title: ContextInfoCard.defaultProps.title,
     label: "Context Label",
-    staticIcon: ContextInfoCard.defaultProps.staticIcon,
+    icon: ContextInfoCard.defaultProps.icon,
   },
 };
 
@@ -26,7 +26,7 @@ export const WithDescription: Story = {
   args: {
     title: ContextInfoCard.defaultProps.title,
     description: "This is a description of the context",
-    staticIcon: ContextInfoCard.defaultProps.staticIcon,
+    icon: ContextInfoCard.defaultProps.icon,
   },
 };
 
@@ -34,7 +34,7 @@ export const WithDetails: Story = {
   args: {
     title: ContextInfoCard.defaultProps.title,
     details: "This is a details of the context",
-    staticIcon: ContextInfoCard.defaultProps.staticIcon,
+    icon: ContextInfoCard.defaultProps.icon,
   },
 };
 
@@ -44,16 +44,24 @@ export const WithAllProps: Story = {
     label: "Context Label",
     description: "This is a description of the context",
     details: "This is a details of the context",
-    staticIcon: ContextInfoCard.defaultProps.staticIcon,
+    icon: ContextInfoCard.defaultProps.icon,
   },
 };
 
 export const DifferentIcon: Story = {
   args: {
     title: ContextInfoCard.defaultProps.title,
-    staticIcon: {
+    icon: {
       name: "InvoiceClock",
       color: "pending",
     },
+  },
+};
+
+export const WithHref: Story = {
+  args: {
+    title: ContextInfoCard.defaultProps.title,
+    icon: ContextInfoCard.defaultProps.icon,
+    href: "#",
   },
 };

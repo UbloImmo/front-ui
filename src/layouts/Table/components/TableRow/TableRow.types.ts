@@ -23,7 +23,7 @@ export type TableRowProps = {
    * @default "form"
    */
   style?: TableStyle;
-} & StyleOverrideProps;
+} & Omit<StyleOverrideProps, "as">;
 
 export type TableRowStyleProps = StyleProps<
   Required<Pick<TableRowProps, "style">> & {

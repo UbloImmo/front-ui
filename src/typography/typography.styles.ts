@@ -87,6 +87,7 @@ export const sanitizeTypographyProps = (
     ? rawWeight
     : defaults.weight;
   return {
+    as: "span",
     size,
     weight,
     color: props.color ?? defaults.color,
@@ -251,4 +252,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   fill: false,
   noWrap: false,
   id: null,
+  as: "span",
 } as const;

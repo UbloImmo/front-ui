@@ -15,33 +15,41 @@ import * as ContextInfoCardStories from "../ContextInfoCard.stories.tsx";
 
 <Canvas of={ContextInfoCardStories.Default} />
 
-## Customization
+### As a link
 
-### Title
+By providing a `href` property, the card will be rendered as a link.
+
+<Canvas of={ContextInfoCardStories.WithHref} />
+
+> Clicking on the card will open the provided `href` in a new tab.
+
+### Customization
+
+#### Title
 
 The `title` is a required string that serves as the main content of the card.
 
 <Canvas of={ContextInfoCardStories.Default} />
 
-### Label (Optional)
+#### Label (Optional)
 
 You can add a `label` above the title to provide additional context.
 
 <Canvas of={ContextInfoCardStories.WithLabel} />
 
-### Description (Optional)
+#### Description (Optional)
 
 A `description` can be added below the title to provide more detailed information.
 
 <Canvas of={ContextInfoCardStories.WithDescription} />
 
-### Details (Optional)
+#### Details (Optional)
 
 You can add `details` below the description in a smaller text size (xs) for additional information.
 
 <Canvas of={ContextInfoCardStories.WithDetails} />
 
-### Combined Elements
+#### Combined Elements
 
 You can combine label, description, and details for a comprehensive display of information.
 

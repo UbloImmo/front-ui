@@ -1,5 +1,12 @@
-import { Nullable } from "@ubloimmo/front-util";
-import { ReactNode } from "react";
+import type { BadgeProps } from "../Badge";
+import type { StaticIconProps } from "../StaticIcon";
+import type { NonOptional, Nullable } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
+
+export type ContextLineStaticIconProps = Omit<
+  StaticIconProps,
+  "size" | "indicator"
+>;
 
 export type ContextLineProps = {
   /**
@@ -13,10 +20,34 @@ export type ContextLineProps = {
   /**
    * A custom element to display in the ContextLine
    *
-   * @required
    * @default null
    */
-  children: ReactNode;
+  children?: ReactNode;
+  /**
+   * A badge to display in the ContextLine
+   *
+   * @default null
+   */
+  badge?: Nullable<BadgeProps>;
+  /**
+   * An optional icon to display in the ContextLine
+   * Gets rendered as a small StaticIcon
+   *
+   * @default null
+   */
+  icon?: Nullable<ContextLineStaticIconProps>;
+  /**
+   * An optional description to display below the label
+   *
+   * @default null
+   */
+  description?: Nullable<string | NonOptional<ReactNode>>;
+  /**
+   * Whether to display a bottom border
+   *
+   * @default true
+   */
+  borderBottom?: Nullable<boolean>;
 };
 
 export type ContextLineDefaultProps = Required<ContextLineProps>;

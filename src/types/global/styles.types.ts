@@ -1,4 +1,5 @@
 import type { Nullish } from "@ubloimmo/front-util";
+import type { SupportedHTMLElements } from "styled-components/dist/types";
 
 export type StylePropName<TPropName extends string> = `$${TPropName}`;
 
@@ -18,4 +19,10 @@ export type StyleOverrideProps = {
    * @default undefined
    */
   className?: Nullish<string>;
+  /**
+   * The HTML element to render the component as
+   *
+   * @default undefined
+   */
+  as?: Nullish<SupportedHTMLElements>;
 };

@@ -49,7 +49,9 @@ const useListFilterCollectionEvents = (
  * @param {ListFilterCollectionProps & TestIdProps & StyleOverrideProps} props - The component props
  */
 export const useListFilterCollection = (
-  props: ListFilterCollectionProps & TestIdProps & StyleOverrideProps
+  props: ListFilterCollectionProps &
+    TestIdProps &
+    Omit<StyleOverrideProps, "as">
 ) => {
   const mergedProps = useMergedProps(listFilterCollectionDefaultProps, props);
   const testId = useTestId("list-filter-collection", props);

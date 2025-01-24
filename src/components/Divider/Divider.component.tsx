@@ -22,6 +22,7 @@ const defaultDividerProps: DividerDefaultProps = {
   label: null,
   justify: "start",
   className: null,
+  as: "div",
 };
 
 /**
@@ -54,6 +55,7 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
       className={className}
       testId={testId}
       overrideTestId
+      as={mergedProps.as}
       {...styleProps}
       gap="s-2"
       align="center"

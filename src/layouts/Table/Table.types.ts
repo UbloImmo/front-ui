@@ -22,7 +22,7 @@ export type TableProps = {
    * @default "auto"
    */
   layout?: TableLayout;
-} & StyleOverrideProps;
+} & Omit<StyleOverrideProps, "as">;
 
 export type TableDefaultProps = Required<TableProps>;
 

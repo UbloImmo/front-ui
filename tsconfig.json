@@ -30,5 +30,5 @@
       "bun-types" // add Bun global
     ]
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "storybook-static", "dist"]
 }

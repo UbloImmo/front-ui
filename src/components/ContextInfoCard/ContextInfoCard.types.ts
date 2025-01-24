@@ -39,5 +39,12 @@ export type ContextInfoCardProps = {
    *
    * @default { name: "Circle" }
    */
-  staticIcon: ContextInfoCardStaticIconProps;
+  icon: ContextInfoCardStaticIconProps;
+
+  /**
+   * The URL to open in a new tab when the card is clicked
+   *
+   * @default null
+   */
+  href?: Nullable<string>;
 };

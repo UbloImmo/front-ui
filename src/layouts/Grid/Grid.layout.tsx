@@ -26,6 +26,7 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
   className: null,
   role: null,
   id: null,
+  as: "div",
 } as const;
 
 /**

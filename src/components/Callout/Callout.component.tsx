@@ -29,6 +29,7 @@ const defaultCalloutProps: CalloutDefaultProps = {
   title: null,
   size: "m",
   className: null,
+  as: "div",
 };
 
 /**

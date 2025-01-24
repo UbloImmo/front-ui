@@ -30,12 +30,13 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   className: null,
   role: null,
   id: null,
+  as: "div",
 } as const;
 
 /**
  * A flexbox wrapper layout, with default properties direction set to `row`, align and justify set to `start`
  *
- * @version 0.0.2
+ * @version 0.0.3
  * @param {FlexLayoutProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */
@@ -55,6 +56,7 @@ export const FlexLayout = forwardRef<
       className={className}
       id={id}
       role={props.role ?? undefined}
+      as={props.as ?? "div"}
     >
       {props.children}
     </FlexLayoutInner>

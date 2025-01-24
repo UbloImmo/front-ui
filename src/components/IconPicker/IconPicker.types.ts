@@ -49,6 +49,6 @@ export type IconPickerProps = {
    * @default null
    */
   id?: Nullable<string>;
-} & StyleOverrideProps;
+} & Omit<StyleOverrideProps, "as">;
 
 export type IconPickerDefaultProps = Required<IconPickerProps>;

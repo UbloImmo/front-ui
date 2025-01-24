@@ -24,12 +24,13 @@ const defaultGridItemProps: GridItemDefaultProps = {
   fill: false,
   children: null,
   className: null,
+  as: "div",
 };
 
 /**
  * Renders a grid item with the specified position and children.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {GridItemProps} props - The props for the grid item.
  * @param {Optional<GridStartPosition>} props.rowStart - The start position of the row.
@@ -41,7 +42,9 @@ const defaultGridItemProps: GridItemDefaultProps = {
  * @param {ReactNode} props.children - The children to render inside the grid item.
  * @return {JSX.Element} The rendered grid item.
  */
-const GridItem = (props: GridItemProps & TestIdProps): JSX.Element => {
+const GridItem = (
+  props: GridItemProps & TestIdProps = defaultGridItemProps
+): JSX.Element => {
   const testId = useTestId("grid-item", props as TestIdProps);
   const position = useGridItemPosition(defaultGridItemProps, props);
   const styleProps = useStyleProps(position);
@@ -50,6 +53,7 @@ const GridItem = (props: GridItemProps & TestIdProps): JSX.Element => {
   return (
     <GridItemContainer
       {...styleProps}
+      as={props.as ?? "div"}
       data-testid={testId}
       className={className}
       data-layout="grid-item"

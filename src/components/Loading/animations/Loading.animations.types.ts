@@ -5,7 +5,7 @@ import type {
   TestIdProps,
 } from "@types";
 
-export type AnimationProps = StyleOverrideProps & {
+export type AnimationProps = Omit<StyleOverrideProps, "as"> & {
   /**
    * The size of the loading animation and its container
    * Wether it affects height of width is determined by the animation itself

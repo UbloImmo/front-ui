@@ -27,7 +27,7 @@ const buttonTypes = ["button", "submit"] as const;
 
 export type ButtonType = Enum<typeof buttonTypes>;
 
-export type ButtonProps = StyleOverrideProps & {
+export type ButtonProps = Omit<StyleOverrideProps, "as"> & {
   /**
    * The type of the button. Either `button` or `submit`.
    * Useful for form submissions.

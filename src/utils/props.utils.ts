@@ -56,6 +56,7 @@ export const mergeDefaultProps = <
  *
  * @param {TDefaultProps} defaultProps - the default properties to be merged
  * @param {TProps} [props = {}] - the properties to merge with the default props
+ * @param {boolean} [pruneExtraProps = false] - whether to only keep the props that are present in the default props
  * @return {TDefaultProps} the merged default props with the given props
  */
 export const useMergedProps = <
@@ -63,7 +64,8 @@ export const useMergedProps = <
   TProps extends Partial<TDefaultProps>
 >(
   defaultProps: TDefaultProps | (() => TDefaultProps),
-  props: TProps = {} as TProps
+  props: TProps = {} as TProps,
+  pruneExtraProps = false
 ): TDefaultProps => {
   return useMemo<TDefaultProps>(
     () =>
@@ -71,9 +73,10 @@ export const useMergedProps = <
         isFunction<() => TDefaultProps>(defaultProps)
           ? defaultProps()
           : defaultProps,
-        props
+        props,
+        pruneExtraProps
       ),
-    [defaultProps, props]
+    [defaultProps, props, pruneExtraProps]
   );
 };
 

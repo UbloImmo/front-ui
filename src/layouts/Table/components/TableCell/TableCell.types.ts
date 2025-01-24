@@ -21,7 +21,7 @@ export type TableCellProps = {
    * @default false
    */
   padded?: boolean;
-} & StyleOverrideProps;
+} & Omit<StyleOverrideProps, "as">;
 
 export type TableCellDefaultProps = Required<TableCellProps>;
 

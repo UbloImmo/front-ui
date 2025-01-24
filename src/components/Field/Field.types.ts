@@ -33,7 +33,7 @@ export type FieldProps<
   TGenericValue extends NullishPrimitives = NullishPrimitives
 > = GenericInputProps<TType, TGenericValue> &
   FieldAssistiveTextProps &
-  StyleOverrideProps &
+  Omit<StyleOverrideProps, "as"> &
   FieldLabelProps;
 
 export type FieldDefaultProps<TType extends InputType = InputType> = Required<

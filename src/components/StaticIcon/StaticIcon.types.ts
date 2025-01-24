@@ -16,7 +16,7 @@ export type StaticIconIndicator = Pick<IconProps, "color" | "name"> & {
   tooltip?: Nullable<Omit<TooltipProps, "children">>;
 };
 
-export type StaticIconProps = StyleOverrideProps & {
+export type StaticIconProps = Omit<StyleOverrideProps, "as"> & {
   /**
    * The color of the staticIcon
    *
