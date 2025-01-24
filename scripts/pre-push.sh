@@ -7,7 +7,6 @@ grep -E "^(src|docs)\/.*\.(ts|tsx|js|jsx|json)$" |
 wc -l
 `
 
-
 if [ $source_files_count == 0 ]
 then
   echo "No source files to commit"
