@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `v0.0.2` ContextLine component
-  - Add new `icon`, `description`, `badge` properties
+  - Add new `icon`, `description`, `badge` content properties
+  - Add new `borderBottom`, `paddingHorizontal`, `compact` styling properties
   - Edit `children` property type definition to allow for arbitrary content
   - Rewrite markup to use FlexLayout
   - Update docs
