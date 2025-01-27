@@ -42,7 +42,7 @@ import type {
  */
 export const arrayOf = <TItem>(
   length: number,
-  creatorFn: (index: number) => TItem
+  creatorFn: (index: number) => TItem,
 ): TItem[] => Array.from({ length }, (_, index) => creatorFn(index));
 
 /**
@@ -56,7 +56,7 @@ export const arrayOf = <TItem>(
  * @returns {Promise<TData[]>} Promise that resolves to the loaded data array
  */
 const loadData = async <TData>(
-  dataToLoad: TData[] | AsyncFn<[], TData[]>
+  dataToLoad: TData[] | AsyncFn<[], TData[]>,
 ): Promise<TData[]> => {
   if (isArray(dataToLoad)) return dataToLoad;
   try {
@@ -81,7 +81,7 @@ const loadData = async <TData>(
 export const useDataArray: UseDataArray = <TData>(
   rootData: TData[] | AsyncFn<[], TData[]>,
   reactive = false,
-  onDataChange?: VoidFn<[newData: TData[]]>
+  onDataChange?: VoidFn<[newData: TData[]]>,
 ): UseDataArrayReturn<TData> => {
   const [data, setData] = useState<TData[]>(isArray(rootData) ? rootData : []);
 
@@ -103,7 +103,7 @@ export const useDataArray: UseDataArray = <TData>(
         return updatedData;
       });
     },
-    [onDataChange]
+    [onDataChange],
   );
 
   const [isLoading, setIsLoading] = useState<boolean>(!isArray(rootData));
@@ -151,10 +151,10 @@ export const useDataArray: UseDataArray = <TData>(
         prev.map((item, index) => {
           if (predicate(item, index)) return updater(item, index);
           return item;
-        })
+        }),
       );
     },
-    [updateData]
+    [updateData],
   );
 
   /**
@@ -167,7 +167,7 @@ export const useDataArray: UseDataArray = <TData>(
     (predicate) => {
       return data.find(predicate);
     },
-    [data]
+    [data],
   );
 
   /**
@@ -180,7 +180,7 @@ export const useDataArray: UseDataArray = <TData>(
     (predicate) => {
       return data.findIndex(predicate);
     },
-    [data]
+    [data],
   );
 
   /**
@@ -192,7 +192,7 @@ export const useDataArray: UseDataArray = <TData>(
     (newItem) => {
       updateData((prev) => [...prev, newItem]);
     },
-    [updateData]
+    [updateData],
   );
 
   /**
@@ -203,10 +203,10 @@ export const useDataArray: UseDataArray = <TData>(
   const remove = useCallback<DataArrayRemoveFn<TData>>(
     (predicate) => {
       updateData((prev) =>
-        prev.filter((item, index) => !predicate(item, index))
+        prev.filter((item, index) => !predicate(item, index)),
       );
     },
-    [updateData]
+    [updateData],
   );
 
   /**
@@ -218,7 +218,7 @@ export const useDataArray: UseDataArray = <TData>(
     (newItem) => {
       updateData((prev) => [newItem, ...prev]);
     },
-    [updateData]
+    [updateData],
   );
 
   /**
@@ -233,7 +233,7 @@ export const useDataArray: UseDataArray = <TData>(
       if (index < 0 || index >= data.length) return defaultValue;
       return data[index] ?? defaultValue;
     },
-    [data]
+    [data],
   );
 
   /**
@@ -246,7 +246,7 @@ export const useDataArray: UseDataArray = <TData>(
     (predicate) => {
       return [...data].filter(predicate);
     },
-    [data]
+    [data],
   );
 
   return {

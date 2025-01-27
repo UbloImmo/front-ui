@@ -64,7 +64,7 @@ export const FontTokens = (): JSX.Element => {
               size={size}
               weight={weight}
             />
-          ))
+          )),
         )}
       </TableBody>
       <TableHeader>
@@ -82,7 +82,7 @@ export const FontTokens = (): JSX.Element => {
               size={size}
               weight={weight}
             />
-          ))
+          )),
         )}
       </TableBody>
     </Table>
@@ -100,7 +100,7 @@ export const FontTokens = (): JSX.Element => {
 const FontTokenRow = ({ size, weight }: FontTokenRowProps): JSX.Element => {
   const specs = useMemo(
     () => texts.desktop[size][weight].css.style,
-    [size, weight]
+    [size, weight],
   );
 
   const { fontSize, lineHeight, letterSpacing, fontWeight } = useMemo(() => {
@@ -117,7 +117,7 @@ const FontTokenRow = ({ size, weight }: FontTokenRowProps): JSX.Element => {
       size: cssVarName(`text-${size}`),
       weight: cssVarName(`text-weight-${weight}`),
     }),
-    [size, weight]
+    [size, weight],
   );
 
   return (

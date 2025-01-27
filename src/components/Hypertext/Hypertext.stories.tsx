@@ -12,7 +12,7 @@ import type { ColorKey } from "@types";
 
 const componentSource = componentSourceFactory<HypertextProps>(
   "Hypertext",
-  Hypertext.defaultProps
+  Hypertext.defaultProps,
 );
 
 const meta = {
@@ -60,7 +60,7 @@ TextLengths.parameters = {
       children: text,
       title: "Ublo's homepage",
       href: "https://www.ublo.immo/",
-    }))
+    })),
   ),
 };
 
@@ -93,7 +93,7 @@ HypertextInText.parameters = {
     texts.map((text) => ({
       ...Hypertext.defaultProps,
       children: text,
-    }))
+    })),
   ),
 };
 
@@ -122,7 +122,7 @@ Redirection.parameters = {
     urls.map((url) => ({
       ...Hypertext.defaultProps,
       href: url,
-    }))
+    })),
   ),
 };
 
@@ -153,6 +153,6 @@ Colors.parameters = {
     colors.map((color) => ({
       ...Hypertext.defaultProps,
       color,
-    }))
+    })),
   ),
 };

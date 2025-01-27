@@ -21,7 +21,7 @@ const avatarBorderRadiusMap: ValueMap<AvatarSize, CssPx> = {
 };
 
 export const avatarStyles = (
-  styleProps: StyleProps<AvatarDefaultProps>
+  styleProps: StyleProps<AvatarDefaultProps>,
 ): RuleSet => {
   const props = fromStyleProps(styleProps);
 

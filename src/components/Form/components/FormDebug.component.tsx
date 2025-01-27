@@ -37,13 +37,13 @@ export const FormDebug = (): Nullable<JSX.Element> => {
 
   const isDataDifferent = useMemo(
     () => JSON.stringify(data) !== JSON.stringify(initialData),
-    [data, initialData]
+    [data, initialData],
   );
 
   const validationDisabled = useMemo(
     () =>
       !schema || (!validateOnBlur && !validateOnChange && !validateOnSubmit),
-    [schema, validateOnBlur, validateOnChange, validateOnSubmit]
+    [schema, validateOnBlur, validateOnChange, validateOnSubmit],
   );
 
   const validation = useMemo(() => {
@@ -186,13 +186,13 @@ const DebugBlock = ({
     if (isString(content)) return `"${content}"`;
     return JSON.stringify(content, undefined, 2).replaceAll(
       /"(\S+)":\s/g,
-      "$1: "
+      "$1: ",
     );
   }, [content]);
 
   const headingColor = useMemo<PaletteColor>(
     () => `${color}-base` as PaletteColor,
-    [color]
+    [color],
   );
 
   return (

@@ -20,7 +20,7 @@ type MockData = {
 const defaultOption: FilterOption<MockData> = {
   ...filterOptionData(
     "A single option",
-    filterOptionMatch<MockData>("value", "=", 0)
+    filterOptionMatch<MockData>("value", "=", 0),
   ),
   select: fn(),
   unselect: fn(),

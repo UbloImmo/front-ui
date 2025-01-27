@@ -2,7 +2,7 @@ import type { StyleOverrideProps, CssFr, CssLength } from "@types";
 import type { Enum, Nullable } from "@ubloimmo/front-util";
 import type { AriaRole, ReactNode } from "react";
 
-const flexAlignments = [
+const _flexAlignments = [
   "center",
   "start",
   "end",
@@ -13,11 +13,11 @@ const flexAlignments = [
   "baseline",
 ] as const;
 
-export type FlexAlignment = Enum<typeof flexAlignments>;
+export type FlexAlignment = Enum<typeof _flexAlignments>;
 
-const flexDirections = ["row", "column"] as const;
+const _flexDirections = ["row", "column"] as const;
 
-export type FlexDirection = Enum<typeof flexDirections>;
+export type FlexDirection = Enum<typeof _flexDirections>;
 
 export type FlexWrap = boolean | "reverse";
 

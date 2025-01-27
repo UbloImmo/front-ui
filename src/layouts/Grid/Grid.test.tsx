@@ -6,7 +6,7 @@ import { GridLayout, GridLayoutProps } from ".";
 
 const testGridLayout = testComponentFactory<GridLayoutProps>(
   "GridLayout",
-  GridLayout
+  GridLayout,
 );
 
 testGridLayout({

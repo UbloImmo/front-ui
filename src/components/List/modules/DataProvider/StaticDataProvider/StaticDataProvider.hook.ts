@@ -29,7 +29,7 @@ const DATA_PROVIDER_TYPE = "static" as const;
  * This data provider fetches all its data once and then filters it using only JS, without re-fetching the data
  */
 export const useStaticDataProvider: UseStaticDataProviderFn = <
-  TItem extends object
+  TItem extends object,
 >(
   ...[initialData, setData]: StaticDataProviderParams<TItem>
 ): IDataProvider<TItem, typeof DATA_PROVIDER_TYPE> => {
@@ -52,7 +52,7 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
       const filteredData = filterItems(staticDataRef.current, config);
       setData(filteredData);
     },
-    [setData]
+    [setData],
   );
 
   const fetchCount = useCallback<DataProviderFetchCountFn<TItem>>(
@@ -60,7 +60,7 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
       const filteredData = filterItems(staticDataRef.current, config);
       return filteredData.length;
     },
-    []
+    [],
   );
 
   const error = useMemo(() => {

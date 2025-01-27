@@ -38,7 +38,7 @@ const headerInfo = (
   description,
   source,
   declaration,
-  declarationTitle
+  declarationTitle,
 ) => {
   const { pageParent, pageTitle } = storybookMeta(page.url);
 
@@ -51,7 +51,7 @@ const headerInfo = (
   const sourceUrl =
     sourceLink?.slice(
       sourceLink?.indexOf("(") + 1,
-      (sourceLink?.length ?? 2) - 2
+      (sourceLink?.length ?? 2) - 2,
     ) ?? null;
 
   const sourceContent =
@@ -59,8 +59,8 @@ const headerInfo = (
       ? headerInfoItem(
           "Definition",
           linesCompact(
-            `<Hypertext href="${sourceUrl}"><code>${sourcePath}</code></Hypertext>`
-          )
+            `<Hypertext href="${sourceUrl}"><code>${sourcePath}</code></Hypertext>`,
+          ),
         )
       : [];
 
@@ -84,7 +84,7 @@ const headerInfo = (
     `</GridLayout>`,
     declarationStr && !isLib ? declarationStr : "",
     `</FlexLayout>`,
-    `</Header>`
+    `</Header>`,
   );
 };
 
@@ -101,20 +101,20 @@ const pageHeader = (
   description,
   source,
   declaration,
-  declarationTitle
+  declarationTitle,
 ) => {
   const meta = metaTag(page);
   return lines(
     imports(),
     meta,
     headerInfo(page, description, source, declaration, declarationTitle),
-    `<Content>`
+    `<Content>`,
   );
 };
 
 export function header() {
   const desc = this.page.model.comment
-    ? this.helpers.getDescriptionForComment(this.page.model.comment) ?? null
+    ? (this.helpers.getDescriptionForComment(this.page.model.comment) ?? null)
     : null;
 
   /** @type {string | null} */
@@ -149,6 +149,6 @@ export function header() {
   }
 
   return lines(
-    pageHeader(this.page, desc, source, declaration, declarationTitle)
+    pageHeader(this.page, desc, source, declaration, declarationTitle),
   );
 }

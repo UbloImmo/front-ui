@@ -1,8 +1,8 @@
 import type { Enum } from "@ubloimmo/front-util";
 
-const fontFormats = ["woff2", "woff", "eot", "svg", "opentype", "truetype"];
+const _fontFormats = ["woff2", "woff", "eot", "svg", "opentype", "truetype"];
 
-export type FontFormat = Enum<typeof fontFormats>;
+export type FontFormat = Enum<typeof _fontFormats>;
 
 export type FontWeight = number | `${number}`;
 
@@ -15,9 +15,9 @@ export type FontFaceDeclaration = {
   italic?: boolean;
 };
 
-const fontFamilyKeys = ["fontFamily", "format"] as const;
+const _fontFamilyKeys = ["fontFamily", "format"] as const;
 
-type FontFamilyDeclarationKeys = Enum<typeof fontFamilyKeys>;
+type FontFamilyDeclarationKeys = Enum<typeof _fontFamilyKeys>;
 
 export type FontFamilyDeclaration = Pick<
   FontFaceDeclaration,

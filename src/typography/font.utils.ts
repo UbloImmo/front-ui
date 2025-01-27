@@ -42,6 +42,6 @@ export const fontFamily =
         fontFace({
           ...familyDeclaration,
           ...styleDeclaration,
-        })
+        }),
       )
       .join("");

@@ -15,7 +15,7 @@ import { Text } from "@/components/Text";
  */
 export const SelectInputOptionGroup = <
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 >({
   label,
   options,

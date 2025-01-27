@@ -29,6 +29,8 @@ EntityInfoCard can display information in various forms, through the use of seve
 
 - [InfoBox](?path=/docs/components-entity-infobox-usage--docs)
 - [CopyClipboardInfoCard](?path=/docs/components-entity-copyclipboardinfocard-usage--docs)
+- [ContextInfoCard](?path=/docs/components-entity-contextinfocard-usage--docs)
+- [ContextLine](?path=/docs/components-entity-contextline-usage--docs)
 - [Badge](?path=/docs/components-states-badge-usage--docs)
 
 > Combine some or all of them to create a disctinct layout for each entity.
@@ -42,6 +44,17 @@ EntityInfoCard can display information in various forms, through the use of seve
 When all is lost and you need to display some info using custom means, pass a regular element / component into `EntityInfoCard`'s `children`.
 
 <Canvas of={EntityInfoCardStories.MainContent} />
+
+#### Sections
+
+
+By default, `EntityInfoCard` will display its content in a single section.
+If need be, you can split its content into multiple sections by providing an array of `EntityInfoCardSectionProps` to its `sections` property.
+
+> These sections may contain one or more data type supported by `EntityInfoCard`.
+
+<Canvas of={EntityInfoCardStories.Sections} />
+
 
 ### Header customization
 

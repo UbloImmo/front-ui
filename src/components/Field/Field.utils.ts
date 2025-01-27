@@ -29,7 +29,7 @@ const invalidErrorMessages: ValueMap<InvalidStateKey, string> = {
 } as const;
 
 export const constructValidityStateRecord = (
-  validityState: ValidityState
+  validityState: ValidityState,
 ): ValidityStateRecord => {
   return {
     badInput: validityState.badInput,
@@ -50,12 +50,12 @@ export const useFieldValidity = (mergedProps: FieldDefaultProps<InputType>) => {
   const [validityState, setValidityState] = useReducer(
     (
       _prevState: Nullable<ValidityStateRecord>,
-      rootState: Nullable<ValidityState>
+      rootState: Nullable<ValidityState>,
     ): Nullable<ValidityStateRecord> => {
       if (!rootState) return null;
       return constructValidityStateRecord(rootState);
     },
-    null
+    null,
   );
 
   const invalidState = useMemo<Nullable<ValidityStateKey>>(() => {
@@ -98,7 +98,7 @@ export const useFieldValidity = (mergedProps: FieldDefaultProps<InputType>) => {
  */
 export const useFieldAssistiveText = (
   { assistiveText, errorText, error }: FieldAssistiveTextProps,
-  value: unknown
+  value: unknown,
 ) => {
   const text = useMemo<Nullable<string>>(() => {
     if (isNullish(assistiveText)) return null;

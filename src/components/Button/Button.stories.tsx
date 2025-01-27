@@ -26,7 +26,7 @@ const defaultMockProps = {
 const componentSource = componentSourceFactory<ButtonProps>(
   "Button",
   { label: "Button" },
-  defaultMockProps
+  defaultMockProps,
 );
 
 const meta = {
@@ -60,7 +60,7 @@ export const Default: Story = {
 export const PrimaryColors = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultMockProps,
-    props
+    props,
   );
 
   const { enabled, disabled } = useMemo(() => {
@@ -102,15 +102,15 @@ export const PrimaryColors = (props: ButtonProps) => {
 PrimaryColors.parameters = {
   docs: componentSource(
     [false, true].flatMap((disabled) =>
-      buttonColors.map((color) => ({ color, disabled, label: "Button" }))
-    )
+      buttonColors.map((color) => ({ color, disabled, label: "Button" })),
+    ),
   ),
 };
 
 export const SecondaryColors = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultMockProps,
-    { ...props, secondary: true }
+    { ...props, secondary: true },
   );
 
   const { enabled, disabled } = useMemo(() => {
@@ -157,8 +157,8 @@ SecondaryColors.parameters = {
         disabled,
         label: "Button",
         secondary: true,
-      }))
-    )
+      })),
+    ),
   ),
 };
 
@@ -166,7 +166,7 @@ export const Icons = (props: ButtonProps) => {
   const icon = isString(props.icon) ? props.icon : "CircleFill";
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultMockProps,
-    { ...props, icon }
+    { ...props, icon },
   );
 
   return (
@@ -217,7 +217,7 @@ const buttonLabels = [
 export const Loading = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultMockProps,
-    props
+    props,
   );
 
   const { loaded, loading } = useMemo(() => {
@@ -282,7 +282,7 @@ const iconPlacements: DirectionHorizontal[] = ["left", "right"];
 export const IconPlacement = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     Button.defaultProps,
-    { ...props, ...reverseProps }
+    { ...props, ...reverseProps },
   );
 
   return (
@@ -299,8 +299,8 @@ export const IconPlacement = (props: ButtonProps) => {
 IconPlacement.parameters = {
   docs: componentSource(
     iconPlacements.map(
-      (iconPlacement): ButtonProps => ({ ...reverseProps, iconPlacement })
-    )
+      (iconPlacement): ButtonProps => ({ ...reverseProps, iconPlacement }),
+    ),
   ),
 };
 const bools = [false, true];
@@ -308,7 +308,7 @@ const bools = [false, true];
 export const FullWidth = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     Button.defaultProps,
-    { ...props, ...reverseProps }
+    { ...props, ...reverseProps },
   );
 
   return (
@@ -325,14 +325,14 @@ export const FullWidth = (props: ButtonProps) => {
 };
 FullWidth.parameters = {
   docs: componentSource(
-    bools.map((fullWidth): ButtonProps => ({ ...reverseProps, fullWidth }))
+    bools.map((fullWidth): ButtonProps => ({ ...reverseProps, fullWidth })),
   ),
 };
 
 export const Expandable = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     Button.defaultProps,
-    { ...reverseProps, ...props, icon: props.icon ?? "ArrowRight" }
+    { ...reverseProps, ...props, icon: props.icon ?? "ArrowRight" },
   );
 
   return (
@@ -350,7 +350,7 @@ export const Expandable = (props: ButtonProps) => {
 Expandable.parameters = {
   docs: componentSource(
     bools.map(
-      (expandOnHover): ButtonProps => ({ ...reverseProps, expandOnHover })
-    )
+      (expandOnHover): ButtonProps => ({ ...reverseProps, expandOnHover }),
+    ),
   ),
 };

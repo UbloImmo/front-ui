@@ -13,7 +13,7 @@ import type { LoggerFn, LoggerConfig } from "@ubloimmo/front-util";
  */
 export const useLogger = (
   componentName: string,
-  config?: LoggerConfig
+  config?: LoggerConfig,
 ): Logger => {
   const logger = useMemo(() => {
     const { config: conf, ...fns } = Logger(config);
@@ -24,7 +24,7 @@ export const useLogger = (
     return {
       ...transformObject(
         logger.fns,
-        (logFn: LoggerFn) => (message: unknown) => logFn(message, prefix)
+        (logFn: LoggerFn) => (message: unknown) => logFn(message, prefix),
       ),
       config: logger.conf,
     };

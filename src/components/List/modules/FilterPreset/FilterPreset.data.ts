@@ -54,15 +54,15 @@ export const filterPresetData = <TItem extends object>(
   const mergedConfig = mergeDefaultProps(
     defaultFilterPresetStaticConfig,
     config,
-    true
+    true,
   );
   const optionSignatures: FilterSignature[] = optionsOrSignatures.map(
-    extractFilterOptionSignature
+    extractFilterOptionSignature,
   );
   const signature = computeFilterPresetSignature(
     label,
     optionSignatures,
-    mergedConfig.operator
+    mergedConfig.operator,
   );
   const id = config.id ?? signature;
   const testId = config.testId ?? `list-filter-preset-${id}`;

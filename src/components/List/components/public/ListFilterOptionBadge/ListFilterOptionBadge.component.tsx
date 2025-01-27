@@ -35,8 +35,8 @@ export const ListFilterOptionBadge = <TItem extends object>({
     if (!property) return emptyBadge;
     const propertyOptions = options.filter((option) =>
       option.matches[arrayComparison(option.operator)](
-        (match) => match.property === property
-      )
+        (match) => match.property === property,
+      ),
     );
 
     if (!propertyOptions.length) return emptyBadge;
@@ -44,20 +44,20 @@ export const ListFilterOptionBadge = <TItem extends object>({
     const refinedOptions = propertyOptions.map(
       (option): FilterOptionData<TItem> => {
         const matches = option.matches.filter(
-          (match) => match.property === property
+          (match) => match.property === property,
         );
         return {
           ...option,
           selected: true,
           matches,
         };
-      }
+      },
     );
 
     if (!refinedOptions.length) return emptyBadge;
 
     const matchingOption = refinedOptions.find((option) =>
-      itemMatchesOption(item, option)
+      itemMatchesOption(item, option),
     );
 
     if (!matchingOption) return emptyBadge;

@@ -12,7 +12,7 @@ testCard(defaultProps)(
   "should render with default props",
   async ({ findByTestId }) => {
     expect(await findByTestId(testId)).not.toBeNull();
-  }
+  },
 );
 
 testCard({ ...defaultProps, label: "Context Label" })(
@@ -20,7 +20,7 @@ testCard({ ...defaultProps, label: "Context Label" })(
   async ({ findByText }) => {
     expect(await findByText("[Title]")).not.toBeNull();
     expect(await findByText("Context Label")).not.toBeNull();
-  }
+  },
 );
 
 testCard({
@@ -29,7 +29,7 @@ testCard({
 })("should render with description", async ({ findByText }) => {
   expect(await findByText("[Title]")).not.toBeNull();
   expect(
-    await findByText("This is a description of the context")
+    await findByText("This is a description of the context"),
   ).not.toBeNull();
 });
 
@@ -38,7 +38,7 @@ testCard({ ...defaultProps, details: "This is a details of the context" })(
   async ({ findByText }) => {
     expect(await findByText("[Title]")).not.toBeNull();
     expect(await findByText("This is a details of the context")).not.toBeNull();
-  }
+  },
 );
 
 testCard({
@@ -50,14 +50,14 @@ testCard({
   expect(await findByText("[Title]")).not.toBeNull();
   expect(await findByText("Context Label")).not.toBeNull();
   expect(
-    await findByText("This is a description of the context")
+    await findByText("This is a description of the context"),
   ).not.toBeNull();
   expect(await findByText("This is a details of the context")).not.toBeNull();
 });
 
 testCard({
   ...defaultProps,
-  staticIcon: {
+  icon: {
     name: "InvoiceClock",
     color: "pending",
   },

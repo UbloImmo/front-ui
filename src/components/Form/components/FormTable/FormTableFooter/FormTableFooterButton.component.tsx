@@ -29,19 +29,19 @@ export const FormTableFooterButton = ({
       GenericFn<[], Partial<RowValue>>
     >(newRow)
       ? newRow()
-      : newRow ?? {};
+      : (newRow ?? {});
 
     appendRow(rowToAppend);
   }, [newRow, appendRow]);
 
   const label = useMemo(
     () => buttonProps.label ?? tl.action.addItem(),
-    [buttonProps.label, tl]
+    [buttonProps.label, tl],
   );
 
   const icon = useMemo<IconName>(
     () => buttonProps.icon ?? "PlusCircle",
-    [buttonProps.icon]
+    [buttonProps.icon],
   );
 
   return (

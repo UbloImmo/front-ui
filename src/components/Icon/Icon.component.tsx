@@ -41,7 +41,7 @@ const Icon = (props: IconProps) => {
   if (!props.name) warn("Missing name prop");
   const { name, color, size } = useMemo(
     () => mergeDefaultProps(defaultIconProps, props),
-    [props]
+    [props],
   );
 
   const IconComponent = useMemo<

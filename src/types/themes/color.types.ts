@@ -13,7 +13,7 @@ export type RgbaColorObj = {
   a: number;
 };
 
-const hexComponents = [
+const _hexComponents = [
   "A",
   "B",
   "C",
@@ -29,7 +29,7 @@ const hexComponents = [
   // "f",
 ] as const;
 
-export type HexComponent = Enum<typeof hexComponents> | `${number}`;
+export type HexComponent = Enum<typeof _hexComponents> | `${number}`;
 
 /**
  * #RRGGBB

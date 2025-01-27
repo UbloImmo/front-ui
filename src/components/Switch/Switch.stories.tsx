@@ -10,7 +10,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<SwitchProps>(
   "Switch",
-  Switch.defaultProps
+  Switch.defaultProps,
 );
 
 const meta = {
@@ -67,7 +67,7 @@ Active.parameters = {
     [true, false].map((bool) => ({
       active: bool,
       disabled: false,
-    }))
+    })),
   ),
 };
 
@@ -98,7 +98,7 @@ Disabled.parameters = {
   docs: componentSource(
     [true, false].map((bool) => ({
       disabled: bool,
-    }))
+    })),
   ),
 };
 

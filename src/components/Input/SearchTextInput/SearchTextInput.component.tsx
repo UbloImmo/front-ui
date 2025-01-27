@@ -40,7 +40,7 @@ const defaultSearchTextInputProps: DefaultSearchTextInputProps = {
  * @returns {JSX.Element}
  */
 const SearchTextInput = (
-  props: SearchTextInputProps & TestIdProps
+  props: SearchTextInputProps & TestIdProps,
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultSearchTextInputProps, props);
 
@@ -48,7 +48,7 @@ const SearchTextInput = (
     (nativeValue) => isString(nativeValue),
     (nativeValue) => (isString(nativeValue) ? nativeValue : null),
     mergedProps.onChange,
-    mergedProps.onChangeNative
+    mergedProps.onChangeNative,
   );
 
   const value = useInputValue<"search-text">(mergedProps.value, props);

@@ -34,7 +34,7 @@ export const ColorShadeGrid = ({
 }): JSX.Element => {
   const [showOpacity, toggleShowOpacity] = useReducer(
     (state) => !state,
-    initShowOpacity ?? false
+    initShowOpacity ?? false,
   );
 
   const shades = useMemo(() => {
@@ -46,7 +46,7 @@ export const ColorShadeGrid = ({
     const shades = objectEntries(
       color as PaletteColorShaded<
         DefaultPaletteColorShadeKey[] | GrayscalePaletteColorShadeKey[]
-      >
+      >,
     )
       .sort(([_aKey, aValue], [_bKey, bValue]) => {
         const aSum = sumRgbaColor(aValue.rgba);

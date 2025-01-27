@@ -27,7 +27,7 @@ const DATA_PROVIDER_TYPE = "dynamic" as const;
  * This data provider fetches its data every time the filters change and relies on the server to filter the data
  */
 export const useDynamicDataProvider: UseDynamicDataProviderFn = <
-  TItem extends object
+  TItem extends object,
 >(
   ...[fetchData, setData]: DynamicDataProviderParams<TItem>
 ): IDataProvider<TItem, typeof DATA_PROVIDER_TYPE> => {
@@ -62,7 +62,7 @@ export const useDynamicDataProvider: UseDynamicDataProviderFn = <
         params: [config],
       });
     },
-    [reactiveData]
+    [reactiveData],
   );
 
   const fetchCount = useCallback<DataProviderFetchCountFn<TItem>>(
@@ -70,7 +70,7 @@ export const useDynamicDataProvider: UseDynamicDataProviderFn = <
       const filteredData = await fetchData(config);
       return filteredData.length;
     },
-    [fetchData]
+    [fetchData],
   );
 
   const error = useMemo(() => {

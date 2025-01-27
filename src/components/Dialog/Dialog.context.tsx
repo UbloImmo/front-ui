@@ -36,7 +36,7 @@ const DEFAULT_PORTAL_ROOT = "#dialog-root";
  * @return {GlobalDialogContext} The global dialog context object
  */
 export const useGlobalDialogContext = (
-  params: DialogContextProps
+  params: DialogContextProps,
 ): GlobalDialogContext => {
   const { error, warn, debug } = useLogger("Dialog Manager");
 
@@ -55,7 +55,7 @@ export const useGlobalDialogContext = (
   const [dialogStateMap, dispatchDialogState] = useReducer(
     (
       map: InternalDialogStateMap,
-      action: InternalDialogStateAction
+      action: InternalDialogStateAction,
     ): InternalDialogStateMap => {
       const copy: InternalDialogStateMap = new Map(map.entries());
       switch (action.type) {
@@ -89,7 +89,7 @@ export const useGlobalDialogContext = (
           return copy;
       }
     },
-    new Map<DialogReference, boolean>()
+    new Map<DialogReference, boolean>(),
   );
 
   /**
@@ -115,7 +115,7 @@ export const useGlobalDialogContext = (
     (reference: DialogReference): Nullable<boolean> => {
       return dialogStateMap.get(reference) ?? null;
     },
-    [dialogStateMap]
+    [dialogStateMap],
   );
 
   /**
@@ -125,7 +125,7 @@ export const useGlobalDialogContext = (
     (reference: DialogReference) => {
       return dialogStateMap.has(reference);
     },
-    [dialogStateMap]
+    [dialogStateMap],
   );
 
   /**
@@ -137,7 +137,7 @@ export const useGlobalDialogContext = (
   const registerDialog = useCallback(
     (reference: DialogReference, open?: Optional<boolean>) => {
       debug(
-        `Registering dialog ${reference}... (${registerCounter.current} already registered)`
+        `Registering dialog ${reference}... (${registerCounter.current} already registered)`,
       );
       if (!isString(reference)) {
         error("Dialog reference should be a string");
@@ -154,10 +154,10 @@ export const useGlobalDialogContext = (
       dispatchDialogState({ reference, type: "register", open: open ?? false });
       registerCounter.current++;
       debug(
-        `Dialog ${reference} registered. ${registerCounter.current} currently registered`
+        `Dialog ${reference} registered. ${registerCounter.current} currently registered`,
       );
     },
-    [debug, isDialogRegistered, error]
+    [debug, isDialogRegistered, error],
   );
 
   /**
@@ -171,7 +171,7 @@ export const useGlobalDialogContext = (
     (
       reference: DialogReference,
       callback: VoidFn<[boolean]>,
-      errorMessage?: string
+      errorMessage?: string,
     ) => {
       const state = findDialogState(reference);
       const message = errorMessage ?? `Unable to execute action for dialog`;
@@ -181,7 +181,7 @@ export const useGlobalDialogContext = (
       }
       callback(state);
     },
-    [findDialogState, warn]
+    [findDialogState, warn],
   );
 
   /**
@@ -198,13 +198,13 @@ export const useGlobalDialogContext = (
           dispatchDialogState({ reference, type: "unregister" });
           registerCounter.current--;
           debug(
-            `Dialog ${reference} unregistered, ${registerCounter.current} remaining`
+            `Dialog ${reference} unregistered, ${registerCounter.current} remaining`,
           );
         },
-        "Already unregistered dialog"
+        "Already unregistered dialog",
       );
     },
-    [debug, executeIfDialogIsRegistered]
+    [debug, executeIfDialogIsRegistered],
   );
 
   /**
@@ -221,10 +221,10 @@ export const useGlobalDialogContext = (
           dispatchDialogState({ reference, type: "open" });
           debug(`Dialog ${reference} opened`);
         },
-        "Unable to open dialog"
+        "Unable to open dialog",
       );
     },
-    [debug, executeIfDialogIsRegistered, registerDialog]
+    [debug, executeIfDialogIsRegistered, registerDialog],
   );
 
   /**
@@ -238,10 +238,10 @@ export const useGlobalDialogContext = (
           dispatchDialogState({ reference, type: "close" });
           debug(`Dialog ${reference} closed`);
         },
-        "Unable to close dialog"
+        "Unable to close dialog",
       );
     },
-    [debug, executeIfDialogIsRegistered]
+    [debug, executeIfDialogIsRegistered],
   );
 
   /**
@@ -256,13 +256,13 @@ export const useGlobalDialogContext = (
           const newState = !state;
           dispatchDialogState({ reference, type: "toggle" });
           debug(
-            `Dialog ${reference} toggled to ${newState ? "open" : "closed"}`
+            `Dialog ${reference} toggled to ${newState ? "open" : "closed"}`,
           );
         },
-        "Unable to toggle dialog"
+        "Unable to toggle dialog",
       );
     },
-    [debug, executeIfDialogIsRegistered]
+    [debug, executeIfDialogIsRegistered],
   );
 
   /**
@@ -274,10 +274,10 @@ export const useGlobalDialogContext = (
       executeIfDialogIsRegistered(
         reference,
         () => dispatchDialogState({ reference, type: "set", open }),
-        "Unable to set open state for dialog"
+        "Unable to set open state for dialog",
       );
     },
-    [executeIfDialogIsRegistered]
+    [executeIfDialogIsRegistered],
   );
 
   /**
@@ -287,7 +287,7 @@ export const useGlobalDialogContext = (
     (reference: DialogReference) => {
       return findDialogState(reference) ?? false;
     },
-    [findDialogState]
+    [findDialogState],
   );
 
   return {

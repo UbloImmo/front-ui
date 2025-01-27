@@ -18,16 +18,68 @@ You can inspect it to see the effect.
 
 <Canvas of={ContextLineStories.Example} />
 
-### Label
+### Content Customization
 
-A label can be provided in the `label` property. It's a required property.
+#### Label
+
+A label must be provided in the `label` property. It's a required property.
 
 <Canvas of={ContextLineStories.Label} />
 
+#### Description
+
+A optional description may be provided through the `description` property.
+
+<Canvas of={ContextLineStories.Descriptions} />
+
 ### Children
 
-You must add a **children** component (eg. `<Badge />` component to display a state of something).
+#### Arbitrary content
+
+Arbitrary `children` can be provided (eg. `<Badge />` component to display a state of something).
 
 <Canvas of={ContextLineStories.Children} />
+
+#### Badge
+
+While Badges can be rendered using the `children` property, it's recommended to use the `badge` property instead.
+
+<Canvas of={ContextLineStories.Badges} />
+
+> If both `children` and `badge` are provided, the children will be rendered first.
+
+### Icon
+
+An optional icon can be provided through the `icon` property to be displayed at the left most side of the component.
+
+> The icon will be rendered as a small StaticIcon.
+
+<Canvas of={ContextLineStories.Icons} />
+
+### Container styling
+
+#### Border Bottom
+
+By default, a `ContextLine` will display a thin bottom border if it's not the last child of its parent.
+
+This behavior can be disabled by setting the `borderBottom` property to `false`.
+
+<Canvas of={ContextLineStories.BorderBottom} />
+
+#### Horizontal padding
+
+Sometimes things just look better with a little more space on the sides.
+
+Set the `paddingHorizontal` property to `true` to add `--s-3` ( \= 0.75rem \= 12px ) of horizontal padding to the container.
+
+<Canvas of={ContextLineStories.PaddingHorizontal} />
+
+#### Vertical padding
+
+The `compact` property can be set to `true` to reduce the vertical padding to `--s-2` ( \= 0.5rem \= 8px ) as opposed to `--s-3` ( \= 0.75rem \= 12px ) by default.
+
+<Canvas of={ContextLineStories.Compact} />
+
+> The first and last `ContextLine`s in a container will have their top and bottom padding respectively reduced to `0`.
 
 </Content>

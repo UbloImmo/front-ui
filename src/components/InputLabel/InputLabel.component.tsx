@@ -42,7 +42,7 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("InputLabel");
   const mergedProps = useMergedProps<DefaultInputLabelProps, InputLabelProps>(
     defaultInputLabelProps,
-    props
+    props,
   );
   const testId = useTestId("input-label", props);
   const className = useClassName(mergedProps);

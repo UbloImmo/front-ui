@@ -40,7 +40,7 @@ export type InputLabelProps = {
   compact?: boolean;
 
   htmlFor?: Nullable<string>;
-} & StyleOverrideProps;
+} & Omit<StyleOverrideProps, "as">;
 
 export type DefaultInputLabelProps = Required<InputLabelProps>;
 

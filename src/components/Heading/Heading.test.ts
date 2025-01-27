@@ -23,7 +23,7 @@ testHeading({ children: testContent })(
     expect(heading).toBeDefined();
     const content = queryByText(testContent);
     expect(content).toBeDefined();
-  }
+  },
 );
 
 const sizes: HeadingSize[] = ["h1", "h2", "h3", "h4"];
@@ -36,6 +36,6 @@ sizes.forEach((size) => {
       expect(heading).toBeDefined();
       const content = queryByText(testContent);
       expect(content).toBeDefined();
-    }
+    },
   );
 });

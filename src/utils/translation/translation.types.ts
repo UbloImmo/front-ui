@@ -10,21 +10,21 @@ export type TranslationFn<TArgs extends unknown[] = string[]> = GenericFn<
 >;
 
 export type TranslationKeySubset<
-  TTranslationSubsetName extends TranslationSubsetName
+  TTranslationSubsetName extends TranslationSubsetName,
 > = Enum<(typeof translationKeys)[TTranslationSubsetName]>;
 
 export type Translation = TranslationFn | string;
 
 export type TranslationKey<
-  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName
+  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName,
 > = TranslationKeySubset<TTranslationSubsetName>;
 
 export type CompleteTranslationMap<
-  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName
+  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName,
 > = ValueMap<TranslationKey<TTranslationSubsetName>, Translation>;
 
 export type TranslationMap<
-  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName
+  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName,
 > = Partial<CompleteTranslationMap<TTranslationSubsetName>>;
 
 export type DefaultTranslationMaps = {
@@ -32,7 +32,7 @@ export type DefaultTranslationMaps = {
 };
 
 export type CompleteTranslationFnMap<
-  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName
+  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName,
 > = ValueMap<TranslationKey<TTranslationSubsetName>, TranslationFn>;
 
 export type TranslationContext = {

@@ -19,12 +19,12 @@ import type { Nullable } from "@ubloimmo/front-util";
  */
 export const findFilterByIndexAndLabel = (
   map: FilterDataMap,
-  filter: FilterData
+  filter: FilterData,
 ): Nullable<FilterData> => {
   if (!map || !filter) return null;
   return (
     Array.from(map.values()).find(
-      ({ index, label }) => index === filter.index && label === filter.label
+      ({ index, label }) => index === filter.index && label === filter.label,
     ) ?? null
   );
 };
@@ -38,7 +38,7 @@ export const findFilterByIndexAndLabel = (
  */
 export const listConfigFilterReducer = (
   map: FilterDataMap,
-  [type, filter]: UseListConfigFilterReducerAction
+  [type, filter]: UseListConfigFilterReducerAction,
 ) => {
   const copy = new Map(map);
   // simply add the filter if it's the first time we see it
@@ -64,7 +64,7 @@ export const listConfigFilterReducer = (
  */
 export const findFilterPresetByLabel = (
   map: FilterPresetMap,
-  preset: FilterPresetData
+  preset: FilterPresetData,
 ): Nullable<FilterPresetData> => {
   if (!map || !preset) return null;
   return (
@@ -81,7 +81,7 @@ export const findFilterPresetByLabel = (
  */
 export const listConfigFilterPresetReducer = (
   map: FilterPresetMap,
-  [type, preset]: UseListConfigFilterPresetReducerAction
+  [type, preset]: UseListConfigFilterPresetReducerAction,
 ) => {
   const copy = new Map(map);
   // simply add the filter if it's the first time we see it

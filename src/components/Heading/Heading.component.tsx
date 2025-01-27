@@ -32,9 +32,9 @@ const Heading = (props: HeadingProps & TestIdProps) => {
 
   return (
     <HeadingInner
-      as={props.size ?? defaultHeadingProps.size}
       id={id}
       {...innerProps}
+      as={props.size ?? defaultHeadingProps.size}
       data-testid={testId}
       className={className}
     >

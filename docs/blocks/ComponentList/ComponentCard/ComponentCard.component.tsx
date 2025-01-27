@@ -44,7 +44,7 @@ import type { ParsedJsDoc } from "@docs/docs.types";
  */
 export const ComponentCard = <
   TIndex extends AnyIndex,
-  TName extends ComponentName<TIndex>
+  TName extends ComponentName<TIndex>,
 >({
   name,
   Component,
@@ -52,7 +52,7 @@ export const ComponentCard = <
   parent,
 }: ComponentCardProps<TIndex, TName>) => {
   const size = useStatic<ComponentCardCellSize>(() =>
-    randomSize ? randomCellSize() : "small"
+    randomSize ? randomCellSize() : "small",
   );
 
   const { description, internal, todo, version } = useStatic<
@@ -78,50 +78,52 @@ export const ComponentCard = <
             important: true,
           }
         : name === "Badge"
-        ? { label: "Badge" }
-        : name === "InputAssistiveText"
-        ? { assistiveText: "Input assistive text" }
-        : name === "Avatar"
-        ? { name: "Mathilde Carbonet" }
-        : name === "EntityInfoCard"
-        ? { name: name }
-        : name === "IconPicker"
-        ? { icons: ["Square", "Circle", "Triangle", "Star"] }
-        : name === "ComboBox"
-        ? {
-            options: [
-              { label: "Option 1", value: "Option 1" },
-              { label: "Option 2", value: "Option 2" },
-            ],
-          }
-        : name === "Collapsible"
-        ? {
-            children: <Text>{name}</Text>,
-          }
-        : name.endsWith("Layout")
-        ? {
-            children: SampleGridItems,
-          }
-        : name === "Popover"
-        ? {
-            children: <Button label="Button trigger" color="black" />,
-          }
-        : name === "Table"
-        ? {
-            children: (
-              <TableBody>
-                <TableRow>
-                  <TableCell padded>Data 1</TableCell>
-                  <TableCell padded>Data 2</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell padded>Data 3</TableCell>
-                  <TableCell padded>Data 4</TableCell>
-                </TableRow>
-              </TableBody>
-            ),
-          }
-        : {};
+          ? { label: "Badge" }
+          : name === "InputAssistiveText"
+            ? { assistiveText: "Input assistive text" }
+            : name === "Avatar"
+              ? { name: "Mathilde Carbonet" }
+              : name === "EntityInfoCard"
+                ? { name: name }
+                : name === "IconPicker"
+                  ? { icons: ["Square", "Circle", "Triangle", "Star"] }
+                  : name === "ComboBox"
+                    ? {
+                        options: [
+                          { label: "Option 1", value: "Option 1" },
+                          { label: "Option 2", value: "Option 2" },
+                        ],
+                      }
+                    : name === "Collapsible"
+                      ? {
+                          children: <Text>{name}</Text>,
+                        }
+                      : name.endsWith("Layout")
+                        ? {
+                            children: SampleGridItems,
+                          }
+                        : name === "Popover"
+                          ? {
+                              children: (
+                                <Button label="Button trigger" color="black" />
+                              ),
+                            }
+                          : name === "Table"
+                            ? {
+                                children: (
+                                  <TableBody>
+                                    <TableRow>
+                                      <TableCell padded>Data 1</TableCell>
+                                      <TableCell padded>Data 2</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                      <TableCell padded>Data 3</TableCell>
+                                      <TableCell padded>Data 4</TableCell>
+                                    </TableRow>
+                                  </TableBody>
+                                ),
+                              }
+                            : {};
 
     return {
       ...defaultProps,

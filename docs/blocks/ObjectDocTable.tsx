@@ -40,7 +40,7 @@ type DocTableProps<TObj extends Record<string, unknown>> = {
  * @return {JSX.Element} the table of component props
  */
 const DocTable = <TObj extends Record<string, unknown>>(
-  props: DocTableProps<TObj>
+  props: DocTableProps<TObj>,
 ): JSX.Element => {
   const propList = useMemo(() => {
     return objectEntries(props?.docgen ?? {})
@@ -49,13 +49,13 @@ const DocTable = <TObj extends Record<string, unknown>>(
           ({
             ...propInfo,
             name,
-          } as ComponentPropInfo)
+          }) as ComponentPropInfo,
       )
       .map(formatPropInfo)
       .sort(
         (
           { name: aName, todo: aTodo, required: aRequired },
-          { name: bName, todo: bTodo, required: bRequired }
+          { name: bName, todo: bTodo, required: bRequired },
         ) => {
           if (aTodo === bTodo && aRequired === bRequired)
             return aName.localeCompare(bName);
@@ -63,7 +63,7 @@ const DocTable = <TObj extends Record<string, unknown>>(
           if (!aTodo && bTodo) return -1;
           if (aRequired && !bRequired) return -1;
           return 0;
-        }
+        },
       );
   }, [props]);
 

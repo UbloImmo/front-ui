@@ -29,6 +29,7 @@ const defaultCalloutProps: CalloutDefaultProps = {
   title: null,
   size: "m",
   className: null,
+  as: "div",
 };
 
 /**
@@ -55,8 +56,8 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
     return isGrayColor(color)
       ? "gray-700"
       : size === "l"
-      ? `${color}-base`
-      : `${color}-dark`;
+        ? `${color}-base`
+        : `${color}-dark`;
   }, [color, size]);
 
   const titleWeight = useMemo<TypographyWeight>(() => {
@@ -67,7 +68,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
 
   if (!props.children) {
     warn(
-      `Missing required children, defaulting to ${defaultCalloutProps.children}`
+      `Missing required children, defaulting to ${defaultCalloutProps.children}`,
     );
   }
 

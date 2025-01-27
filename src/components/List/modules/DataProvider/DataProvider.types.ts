@@ -106,7 +106,7 @@ export type DataProviderBaseParams<TItem extends object> = [
    * @template {object} TItem - The type of the items in the list
    * @param {TItem[]} data - The data to set
    */
-  setData: DataProviderSetDataFn<TItem>
+  setData: DataProviderSetDataFn<TItem>,
 ];
 
 export const dataProviderTypes = [
@@ -153,7 +153,7 @@ export type DataProviderBase<TItem extends object> = {
 
 export type IDataProvider<
   TItem extends object,
-  TType extends DataProviderType = DataProviderType
+  TType extends DataProviderType = DataProviderType,
 > = DataProviderBase<TItem> & {
   /**
    * The type of the data provider
@@ -188,7 +188,7 @@ export type IDataProvider<
          */
         pageSize: number;
       }
-    : // eslint-disable-next-line @typescript-eslint/ban-types
+    : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       {});
 
 export type UseDataProviderParams<TItem extends object> = [
@@ -200,7 +200,7 @@ export type UseDataProviderParams<TItem extends object> = [
    * @template {object} TItem - The type of the items in the list
    * @param {TItem[]} data - The data to set
    */
-  setData: DataProviderBaseParams<TItem>
+  setData: DataProviderBaseParams<TItem>,
 ];
 
 /**
@@ -208,7 +208,7 @@ export type UseDataProviderParams<TItem extends object> = [
  */
 export type UseDataProviderFn<
   TItem extends object,
-  TType extends DataProviderType = DataProviderType
+  TType extends DataProviderType = DataProviderType,
 > = GenericFn<
   [setData: DataProviderSetDataFn<TItem>],
   IDataProvider<TItem, TType>

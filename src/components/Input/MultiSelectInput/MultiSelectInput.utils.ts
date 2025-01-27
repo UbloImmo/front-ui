@@ -13,14 +13,14 @@ const copySet = <TValue extends NullishPrimitives>(set: Set<TValue>) => {
 
 export const useMultiSelectValue = <
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 >(
   mergedProps: DefaultMultiSelectInputProps<TValue, TExtraData>,
   options: SelectOptionOrGroup<TValue, TExtraData>[],
-  flattenedOptions: SelectOption<TValue, TExtraData>[]
+  flattenedOptions: SelectOption<TValue, TExtraData>[],
 ) => {
   const [internalValue, setInternalValue] = useState<Set<TValue>>(
-    new Set(mergedProps.value ?? [])
+    new Set(mergedProps.value ?? []),
   );
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const useMultiSelectValue = <
       const updatedCopy = copySet(internalValue).add(optionValue);
       setInternalValue(updatedCopy);
     },
-    [clearInternalValue, internalValue]
+    [clearInternalValue, internalValue],
   );
 
   const unselectOption = useCallback(
@@ -66,19 +66,21 @@ export const useMultiSelectValue = <
         setInternalValue(copy);
       }
     },
-    [internalValue]
+    [internalValue],
   );
 
   const activeOptions = useMemo(() => {
     return flattenedOptions.filter(
-      (option) => !isNull(option.value) && internalValue.has(option.value)
+      (option) => !isNull(option.value) && internalValue.has(option.value),
     );
   }, [flattenedOptions, internalValue]);
 
   const displayOptions = useMemo(() => {
     return assignActiveOptions(options, (optionValue) =>
       // any null option is active if the set is empty, else it's active if the set has it
-      isNull(optionValue) ? !internalValue.size : internalValue.has(optionValue)
+      isNull(optionValue)
+        ? !internalValue.size
+        : internalValue.has(optionValue),
     );
   }, [options, internalValue]);
 

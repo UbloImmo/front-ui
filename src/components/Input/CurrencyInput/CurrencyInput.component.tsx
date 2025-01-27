@@ -49,7 +49,7 @@ const defaultCurrencyInputProps: CurrencyInputDefaultProps = {
  * @returns {JSX.Element}
  */
 const CurrencyInput = (
-  props: CurrencyInputProps & TestIdProps
+  props: CurrencyInputProps & TestIdProps,
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultCurrencyInputProps, props);
   const testId = useTestId("input-currency", props);
@@ -70,7 +70,7 @@ const CurrencyInput = (
     () => ({
       name: currencySymbolIconMap[mergedProps.currency] ?? "CurrencyEuro",
     }),
-    [mergedProps.currency]
+    [mergedProps.currency],
   );
 
   const id = useInputId(mergedProps);

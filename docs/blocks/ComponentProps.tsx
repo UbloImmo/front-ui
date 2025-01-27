@@ -17,7 +17,7 @@ type ComponentPropsBlockProps<TComponentProps extends Record<string, unknown>> =
  * @return {JSX.Element} the table of component props
  */
 const ComponentPropsBlock = <TComponentProps extends Record<string, unknown>>(
-  props: ComponentPropsBlockProps<TComponentProps>
+  props: ComponentPropsBlockProps<TComponentProps>,
 ): JSX.Element => {
   const propList = useMemo(() => {
     return props.of.default.component.__docgenInfo.props;

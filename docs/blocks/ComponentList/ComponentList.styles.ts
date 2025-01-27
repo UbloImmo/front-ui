@@ -14,8 +14,11 @@ export const componentListStyle = (): RuleSet => {
     [data-testid="grid"]:has([data-testid="component-card"]:hover)
       [data-testid="component-card"]:not(:hover) {
       opacity: 0.75;
-      transition: border-color 300ms ease-out 0s, background 300ms ease-out 0s,
-        box-shadow 300ms ease-out 0s, opacity 300ms ease-in 600ms;
+      transition:
+        border-color 300ms ease-out 0s,
+        background 300ms ease-out 0s,
+        box-shadow 300ms ease-out 0s,
+        opacity 300ms ease-in 600ms;
     }
 
     @media only screen and (max-width: ${breakpointsPx.SM}) {

@@ -101,12 +101,12 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
       observerRef.current = new IO(
         computeTooltipIntersections(
           () => tooltipDirectionRef.current,
-          setTooltipDirection
+          setTooltipDirection,
         ),
         {
           root: observerRoot,
           threshold: THRESHOLDS,
-        }
+        },
       );
     }
 

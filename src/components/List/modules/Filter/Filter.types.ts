@@ -193,7 +193,7 @@ export type ListConfigFilterFnParams<TItem extends object> = [
    *
    * @type {boolean}
    */
-  loading?: boolean
+  loading?: boolean,
 ];
 
 /**
@@ -228,7 +228,7 @@ export type ListConficAsyncFilterDataFnParams<TItem extends object> = [
    *
    * @type {FilterConfig}
    */
-  config?: FilterConfig
+  config?: FilterConfig,
 ];
 
 /**

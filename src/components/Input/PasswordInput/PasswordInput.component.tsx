@@ -47,12 +47,12 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
  * @return {JSX.Element} The rendered text input component.
  */
 const PasswordInput = (
-  props: PasswordInputProps & TestIdProps
+  props: PasswordInputProps & TestIdProps,
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultPasswordInputProps, props);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(
-    mergedProps.visible
+    mergedProps.visible,
   );
 
   const { inputRef, forwardRef } = useInputRef(mergedProps);
@@ -71,7 +71,7 @@ const PasswordInput = (
       setIsPasswordVisible(inverseVis);
       if (isNull(mergedProps.onVisibilityChange)) return;
       mergedProps.onVisibilityChange(inverseVis);
-    }
+    },
   );
 
   const visibility = useMemo<PasswordVisibility>(() => {
@@ -97,7 +97,7 @@ const PasswordInput = (
     (nativeValue) =>
       isString(nativeValue) && nativeValue.length > 0 ? nativeValue : null,
     mergedProps.onChange,
-    mergedProps.onChangeNative
+    mergedProps.onChangeNative,
   );
 
   const value = useInputValue<"password">(mergedProps.value, props);

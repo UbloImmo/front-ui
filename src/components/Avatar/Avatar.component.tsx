@@ -38,7 +38,7 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
   const { error, warn } = useLogger("Avatar");
   const mergedProps = useMergedProps<AvatarDefaultProps, AvatarProps>(
     { ...props, ...defaultAvatarProps },
-    props
+    props,
   );
 
   const styledProps = useStyleProps(mergedProps);

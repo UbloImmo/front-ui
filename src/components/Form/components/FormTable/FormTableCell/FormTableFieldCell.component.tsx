@@ -59,7 +59,7 @@ export const FormTableFieldCell = ({
 
   const isDisplay = useMemo(
     () => !isEditing || layout.readonly,
-    [isEditing, layout.readonly]
+    [isEditing, layout.readonly],
   );
 
   const inputId = useInputId(props);

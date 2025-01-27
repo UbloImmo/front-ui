@@ -14,7 +14,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<CollapsibleProps>(
   "Collapsible",
-  Collapsible.defaultProps
+  Collapsible.defaultProps,
 );
 
 const defaultChildren = <Text>[children]</Text>;

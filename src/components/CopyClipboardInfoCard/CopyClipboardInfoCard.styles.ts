@@ -65,7 +65,9 @@ export const copyClipboardInfoCardLinkStyles = (): RuleSet => css`
   cursor: pointer;
 
   span:has(&) {
-    transition: color 300ms ease-out 0s, text-decoration-color 300ms ease-out 0s;
+    transition:
+      color 300ms ease-out 0s,
+      text-decoration-color 300ms ease-out 0s;
     // needed to show underline while in ellipsis
     padding: var(--s-05) 0;
 

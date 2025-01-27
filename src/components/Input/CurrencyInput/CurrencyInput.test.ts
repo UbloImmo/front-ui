@@ -27,7 +27,7 @@ const testId = "input-currency";
 describe("Input", () => {
   const testInput = testComponentFactory<CurrencyInputProps>(
     "CurrencyInput",
-    CurrencyInput
+    CurrencyInput,
   );
 
   const testDefaultProps = testInput(CurrencyInput.defaultProps);
@@ -52,14 +52,14 @@ describe("Input", () => {
       expect(onChange).toHaveBeenCalledWith(1200);
       expect(input.value).toBe("12,00");
       onChange.mockReset();
-    }
+    },
   );
 
   testInput({ onChange, showSign: true, value: 1200, min: -2000 })(
     "should revert the value when clicking the plus/minus button",
     async ({ queryByTestId }, { click }) => {
       const signButton = queryByTestId(
-        `${testId}-sign-control`
+        `${testId}-sign-control`,
       ) as HTMLDivElement;
       expect(signButton).not.toBeNull();
       await click(signButton);
@@ -67,7 +67,7 @@ describe("Input", () => {
       expect(onChange).toHaveBeenCalled();
       expect(onChange).toHaveBeenCalledWith(-1200);
       onChange.mockReset();
-    }
+    },
   );
 
   testInput({
@@ -81,7 +81,7 @@ describe("Input", () => {
     async ({ queryByTestId }, { click, keyboard }) => {
       const input = queryByTestId(testId) as HTMLInputElement;
       const signButton = queryByTestId(
-        `${testId}-sign-control`
+        `${testId}-sign-control`,
       ) as HTMLDivElement;
       expect(signButton).not.toBeNull();
 
@@ -92,7 +92,7 @@ describe("Input", () => {
       expect(onChange).toHaveBeenCalled();
       expect(onChange).toHaveBeenCalledWith(-120);
       onChange.mockReset();
-    }
+    },
   );
 
   describe("CurrencyInput", () => {
@@ -104,7 +104,7 @@ describe("Input", () => {
       it("should throw if not provided with a number", () => {
         // @ts-expect-error needed to make it throw
         expect(() => currencyIntToFloat("not a number")).toThrow(
-          "currencyInt must be a number"
+          "currencyInt must be a number",
         );
       });
 
@@ -125,7 +125,7 @@ describe("Input", () => {
       it("should throw if not provided with a number", () => {
         // @ts-expect-error needed to make it throw
         expect(() => currencyFloatToInt("not a number")).toThrow(
-          `currencyFloat must be a number, received not a number`
+          `currencyFloat must be a number, received not a number`,
         );
       });
 
@@ -167,7 +167,7 @@ describe("Input", () => {
       it("should throw if not provided with a number", () => {
         // @ts-expect-error needed to make it throw
         expect(() => currencyFloatToStr("not a number")).toThrow(
-          "currencyFloat must be a number"
+          "currencyFloat must be a number",
         );
       });
 
@@ -185,7 +185,7 @@ describe("Input", () => {
       it("should throw if not provided with a number", () => {
         // @ts-expect-error needed to make it throw
         expect(() => currencyIntToStr("not a number")).toThrow(
-          "currencyInt must be a number"
+          "currencyInt must be a number",
         );
       });
 

@@ -17,7 +17,7 @@ type HookReturn = ReturnType<Hook>;
 
 const testHook = testHookFactory<HookParams, HookReturn, Hook>(
   "usePaginatedDataProvider",
-  usePaginatedDataProvider<MockListItem>
+  usePaginatedDataProvider<MockListItem>,
 );
 
 const PAGE_SIZE = 20;
@@ -27,11 +27,11 @@ const fetchPage = mock(
   async (
     config: DataProviderFilterFnConfig<MockListItem>,
     after: PaginationAfter,
-    pageSize: number
+    pageSize: number,
   ) => {
     const pageData = filterItems(
       arrayOf(pageSize, () => mockListData.item),
-      config
+      config,
     );
     const nextAfter =
       isNumber(after) && after >= 100
@@ -42,7 +42,7 @@ const fetchPage = mock(
       after: nextAfter,
       pageSize: pageData.length,
     };
-  }
+  },
 );
 
 const test = testHook(fetchPage, setData, PAGE_SIZE);
@@ -102,7 +102,7 @@ const testError = testHook(
     throw new Error("test error");
   },
   setData,
-  PAGE_SIZE
+  PAGE_SIZE,
 );
 
 testError(
@@ -110,7 +110,7 @@ testError(
   async (result) => {
     await result.refetch();
     expect(global.console.error).toHaveBeenCalled();
-  }
+  },
 );
 
 (global.console.error as Mock<VoidFn>).mockClear();

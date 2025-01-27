@@ -35,7 +35,7 @@ const defaultIconPickerInputProps: IconPickerInputDefaultProps = {
  */
 
 const IconPickerInput = (
-  props: IconPickerInputProps & TestIdProps
+  props: IconPickerInputProps & TestIdProps,
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultIconPickerInputProps, props);
   const testId = useTestId("input-icon-picker", props);
@@ -45,7 +45,7 @@ const IconPickerInput = (
       if (!mergedProps.onChange) return;
       return mergedProps.onChange(value);
     },
-    [mergedProps]
+    [mergedProps],
   );
 
   const id = useInputId(mergedProps);

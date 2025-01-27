@@ -82,13 +82,13 @@ const flexFill = (fill: FlexFill): RuleSet => {
  */
 export const buildFlexLayoutStyle =
   (
-    defaultProps: FlexLayoutDefaultProps
+    defaultProps: FlexLayoutDefaultProps,
   ): StyleFunction<StyleProps<FlexLayoutProps>> =>
   (props) => {
     const { direction, gap, justify, align, wrap, reverse, inline, fill } =
       mergeDefaultProps(
         defaultProps,
-        fromStyleProps(props as StyleProps<FlexLayoutProps>)
+        fromStyleProps(props as StyleProps<FlexLayoutProps>),
       );
 
     const display = inline ? "inline-flex" : "flex";

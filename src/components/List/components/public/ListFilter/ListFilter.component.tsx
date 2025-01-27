@@ -53,7 +53,7 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
       event.preventDefault();
       openOptions();
     },
-    [openOptions]
+    [openOptions],
   );
 
   if (filter.hidden) return null;

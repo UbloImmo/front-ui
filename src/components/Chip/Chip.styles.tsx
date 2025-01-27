@@ -8,7 +8,7 @@ import { fromStyleProps, isGrayColor } from "@utils";
 import type { PaletteColor, StyleProps } from "@types";
 
 export const buildChipContainerStyles = (
-  props: StyleProps<ChipProps>
+  props: StyleProps<ChipProps>,
 ): RuleSet => {
   const { iconPlacement, color, disabled } = fromStyleProps(props);
 

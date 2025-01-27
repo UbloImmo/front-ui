@@ -37,13 +37,13 @@ const defaultComboBoxInputProps: ComboBoxInputDefaultProps<NullishPrimitives> =
  * @returns {JSX.Element}
  */
 const ComboBoxInput = <
-  TOptionValue extends NullishPrimitives = NullishPrimitives
+  TOptionValue extends NullishPrimitives = NullishPrimitives,
 >(
-  props: ComboBoxInputProps<TOptionValue> & TestIdProps
+  props: ComboBoxInputProps<TOptionValue> & TestIdProps,
 ): JSX.Element => {
   const { onChange, multi, ...mergedProps } = useMergedProps(
     () => defaultComboBoxInputProps as ComboBoxInputDefaultProps<TOptionValue>,
-    props
+    props,
   );
   const testId = useTestId("input-combobox", props);
 
@@ -53,7 +53,7 @@ const ComboBoxInput = <
       if (multi) return onChange(value);
       return onChange(value[0] ?? null);
     },
-    [multi, onChange]
+    [multi, onChange],
   );
 
   const id = useInputId(mergedProps);

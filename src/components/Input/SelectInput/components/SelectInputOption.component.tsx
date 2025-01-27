@@ -31,7 +31,7 @@ import type { PaletteColor, TextProps } from "@types";
  */
 const SelectInputOption = <
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 >({
   Option,
   onSelect,
@@ -43,8 +43,8 @@ const SelectInputOption = <
     return option.disabled
       ? "gray-500"
       : option.active
-      ? "gray-900"
-      : "gray-800";
+        ? "gray-900"
+        : "gray-800";
   }, [option]);
 
   const propagateSelection = useCallback<MouseEventHandler<HTMLDivElement>>(
@@ -54,7 +54,7 @@ const SelectInputOption = <
 
       if (isFunction<VoidFn>(onSelect)) onSelect();
     },
-    [onSelect]
+    [onSelect],
   );
 
   const textProps = useMemo<TextProps>(
@@ -63,7 +63,7 @@ const SelectInputOption = <
       weight: option.active ? "bold" : "medium",
       size: "m",
     }),
-    [contentColor, option]
+    [contentColor, option],
   );
 
   const testId = useTestId("input-select-option", option);
@@ -133,7 +133,7 @@ const CustomSelectOptionContainer = styled.div<SelectOptionItemStyleProps>`
 `;
 
 const SelectOptionValueContainer = styled(
-  FlexRowLayout
+  FlexRowLayout,
 )<SelectOptionItemStyleProps>`
   ${selectOptionLabelContainerStyles}
 `;

@@ -35,7 +35,7 @@ const defaultSearchConfig = <TItem extends object>(): Required<
  * @returns {UseListSearchConfigReturn<TItem>} Object containing the search config & setters to update it
  */
 export const useListConfigSearch: UseListSearchConfig = <
-  TItem extends object
+  TItem extends object,
 >() => {
   /**
    * Default search configuration for the list
@@ -55,7 +55,7 @@ export const useListConfigSearch: UseListSearchConfig = <
    */
   const set = useCallback<ListSearchConfigSetterFn<TItem>>(
     (config = defaults) => setSearchConfig(mergeDefaultProps(defaults, config)),
-    [defaults]
+    [defaults],
   );
 
   /**
@@ -65,7 +65,7 @@ export const useListConfigSearch: UseListSearchConfig = <
    */
   const properties = useCallback<ListSearchConfigPropertiesSetterFn<TItem>>(
     (properties = defaults.properties) => set({ properties }),
-    [defaults.properties, set]
+    [defaults.properties, set],
   );
 
   /**
@@ -75,7 +75,7 @@ export const useListConfigSearch: UseListSearchConfig = <
    */
   const strategy = useCallback<ListSearchConfigStrategySetterFn>(
     (strategy = defaults.strategy) => set({ strategy }),
-    [defaults.strategy, set]
+    [defaults.strategy, set],
   );
 
   /**
@@ -85,7 +85,7 @@ export const useListConfigSearch: UseListSearchConfig = <
    */
   const initialQuery = useCallback<ListSearchConfigInitialQuerySetterFn>(
     (initialQuery = defaults.initialQuery) => set({ initialQuery }),
-    [defaults.initialQuery, set]
+    [defaults.initialQuery, set],
   );
 
   /**
@@ -95,7 +95,7 @@ export const useListConfigSearch: UseListSearchConfig = <
    */
   const debounceDelay = useCallback<ListSearchConfigDebounceDelaySetterFn>(
     (debounceDelay = defaults.debounceDelay) => set({ debounceDelay }),
-    [defaults.debounceDelay, set]
+    [defaults.debounceDelay, set],
   );
 
   /**
@@ -109,7 +109,7 @@ export const useListConfigSearch: UseListSearchConfig = <
       initialQuery,
       debounceDelay,
     }),
-    [set, properties, strategy, initialQuery, debounceDelay]
+    [set, properties, strategy, initialQuery, debounceDelay],
   );
 
   return { searchConfig, setters };

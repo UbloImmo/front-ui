@@ -58,7 +58,7 @@ describe("global style", () => {
       objectValues(textCssVars).forEach((cssVars) =>
         cssVars.forEach((cssVar) => {
           expect(cssVar).toBeString();
-        })
+        }),
       );
     });
 

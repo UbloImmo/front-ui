@@ -9,7 +9,7 @@ const testId = "energy-label";
 
 const testEnergyLabel = testComponentFactory<EnergyLabelProps>(
   "EnergyLabel",
-  EnergyLabel
+  EnergyLabel,
 );
 
 testEnergyLabel({
@@ -29,7 +29,7 @@ testEnergyLabel({
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryByTestId("energy-label-value")?.textContent).toBe("A");
-  }
+  },
 );
 
 testEnergyLabel({
@@ -42,7 +42,7 @@ testEnergyLabel({
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryByTestId("energy-label-value")?.textContent).toBe("C");
-  }
+  },
 );
 
 testEnergyLabel({

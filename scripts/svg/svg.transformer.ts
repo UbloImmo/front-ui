@@ -56,7 +56,7 @@ const logger = Logger({
  */
 const svgTagProperties = (
   properties?: Record<string, string | number>,
-  isRoot?: boolean
+  isRoot?: boolean,
 ): string[] => {
   if (!properties) return [];
 
@@ -72,7 +72,7 @@ const svgTagProperties = (
         return [formattedKey, "{size}"];
       }
       return [formattedKey, `"${value}"`];
-    })
+    }),
   );
 
   if (isRoot) {
@@ -87,7 +87,7 @@ const svgTagProperties = (
   const { class: _, ...propertiesWithoutClass } = properties;
 
   return objectEntries(propertiesWithoutClass).map(
-    ([key, value]): string => `${key}=${value}`
+    ([key, value]): string => `${key}=${value}`,
   );
 };
 
@@ -107,7 +107,7 @@ const svgTagFactory =
   (tagName: string, indentation = 0, printWidth = 80) =>
   (
     properties?: Record<string, string | number>,
-    children: Primitives = ""
+    children: Primitives = "",
   ): string => {
     const spaces = tagIndentation(indentation);
     const childrenStr = String(children);
@@ -163,7 +163,7 @@ export const svgTextNodeToTsx = (node: SvgTextNode): string => {
  */
 const svgElementNodeToTsx = (
   { tagName = "", properties, children: childNodes }: SvgElementNode,
-  indentation = 0
+  indentation = 0,
 ): string => {
   logger.log(`converting ${tagName} to tsx syntax...`, LOGGER_NAME);
 
@@ -173,8 +173,8 @@ const svgElementNodeToTsx = (
     .map((childNode) =>
       svgNodeToTsx(
         isString(childNode) ? { value: childNode, type: "text" } : childNode,
-        indentation + 1
-      )
+        indentation + 1,
+      ),
     )
     .join("\n");
 
@@ -221,7 +221,7 @@ const componentDeclarationTemplate = (
   name: string,
   componentName: string,
   render: string,
-  type: IconFileType
+  type: IconFileType,
 ) => {
   return `/**
  * React component generated from ${type} icon: \`${name}\`.
@@ -252,7 +252,7 @@ ${render}
  * @return {NormalizedIconFileDeclaration} the normalized icon file declaration
  */
 const iconFileDeclaration = (
-  iconFile: BootstrapIconFile | CustomIconFile
+  iconFile: BootstrapIconFile | CustomIconFile,
 ): NormalizedIconFileDeclaration => {
   const { svg, name } = iconFile;
   const type: IconFileType = isBootstrapIconFile(iconFile)
@@ -307,18 +307,18 @@ const BOOTSTRAP_ICONS_DIR = "./node_modules/bootstrap-icons/icons";
  * @return {Promise<BootstrapIconFile[]>} A promise that resolves to an array of BootstrapIconFile objects representing the retrieved SVG icons.
  */
 const getBootstrapIconFiles = async (
-  customIconNames: string[]
+  customIconNames: string[],
 ): Promise<BootstrapIconFile[]> => {
   logger.info(
     `fetching bootstrap svg icons list from ${BOOTSTRAP_ICONS_DIR}...`,
-    LOGGER_NAME
+    LOGGER_NAME,
   );
 
   const svgFilesNames = await readdir(BOOTSTRAP_ICONS_DIR);
 
   logger.log(
     `found ${svgFilesNames.length} svg files in ${BOOTSTRAP_ICONS_DIR}`,
-    LOGGER_NAME
+    LOGGER_NAME,
   );
 
   logger.log("retrieving file contents...", LOGGER_NAME);
@@ -340,7 +340,7 @@ const getBootstrapIconFiles = async (
         svg: fileContents,
         type,
       };
-    })
+    }),
   );
 
   logger.info(`retrieved ${iconFiles.length} bootstrap svg icons`, LOGGER_NAME);
@@ -355,7 +355,7 @@ const getBootstrapIconFiles = async (
  * @return {Promise<NormalizedIconFileDeclaration[]>} a promise that resolves to an array of normalized icon file declarations
  */
 const generateBootstrapIconFiles = async (
-  customIconNames: string[]
+  customIconNames: string[],
 ): Promise<NormalizedIconFileDeclaration[]> => {
   logger.info("generate bootstrap icons", LOGGER_NAME);
   const bootstrapIconFiles = await getBootstrapIconFiles(customIconNames);
@@ -397,7 +397,7 @@ export const transformSvgs = async () => {
   const bootstrapIcons = await generateBootstrapIconFiles(customIconNames);
   logger.info(
     `transformed ${bootstrapIcons.length + customIcons.length} total icons`,
-    LOGGER_NAME
+    LOGGER_NAME,
   );
   return {
     bootstrapIcons,

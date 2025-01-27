@@ -156,7 +156,7 @@ Disabled.parameters = {
     booleans.map((disabled) => ({
       ...meta.args,
       disabled,
-    }))
+    })),
   ),
 };
 
@@ -178,7 +178,7 @@ Compact.parameters = {
     booleans.map((compact) => ({
       ...meta.args,
       compact,
-    }))
+    })),
   ),
 };
 
@@ -227,7 +227,7 @@ Description.parameters = {
     descriptionVariants.map((description) => ({
       ...meta.args,
       description,
-    }))
+    })),
   ),
 };
 
@@ -287,6 +287,6 @@ Icon.parameters = {
     iconVariants.map((icon) => ({
       ...meta.args,
       icon,
-    }))
+    })),
   ),
 };

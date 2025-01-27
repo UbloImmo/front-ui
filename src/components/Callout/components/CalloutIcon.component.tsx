@@ -12,11 +12,11 @@ import type { PaletteColor, SpacingLabel } from "@types";
 export const CalloutIcon = ({ size, color, icon }: CalloutDefaultProps) => {
   const iconSize = useMemo<SpacingLabel>(
     () => (size === "l" ? "s-6" : "s-4"),
-    [size]
+    [size],
   );
   const iconColor = useMemo<PaletteColor>(
     () => (isGrayColor(color) ? "gray-600" : `${color}-base`),
-    [color]
+    [color],
   );
 
   const iconName = useMemo(() => {

@@ -33,11 +33,11 @@ const listFilterCollectionDefaultProps: ListFilterCollectionDefaultProps = {
 };
 
 const useListFilterCollectionEvents = (
-  setOpenFilterSignature: VoidFn<[Nullable<FilterSignature>]>
+  setOpenFilterSignature: VoidFn<[Nullable<FilterSignature>]>,
 ) => {
   const close = useCallback(
     () => setOpenFilterSignature(null),
-    [setOpenFilterSignature]
+    [setOpenFilterSignature],
   );
 
   return useEscapeOrOutsideClickEvent<HTMLDivElement>(close);
@@ -49,7 +49,9 @@ const useListFilterCollectionEvents = (
  * @param {ListFilterCollectionProps & TestIdProps & StyleOverrideProps} props - The component props
  */
 export const useListFilterCollection = (
-  props: ListFilterCollectionProps & TestIdProps & StyleOverrideProps
+  props: ListFilterCollectionProps &
+    TestIdProps &
+    Omit<StyleOverrideProps, "as">,
 ) => {
   const mergedProps = useMergedProps(listFilterCollectionDefaultProps, props);
   const testId = useTestId("list-filter-collection", props);
@@ -70,7 +72,7 @@ export const useListFilterCollection = (
       : mergedProps.filters.map((filterOrSignature) =>
           isObject(filterOrSignature) && "signature" in filterOrSignature
             ? filterOrSignature.signature
-            : filterOrSignature
+            : filterOrSignature,
         );
   }, [mergedProps.filters, filters]);
 
@@ -95,7 +97,7 @@ export const useListFilterCollection = (
   const clearDisplayedFilters = useCallback(() => {
     listFilters.forEach(({ signature }) => {
       const filter = filters.find(
-        ({ signature: filterSignature }) => filterSignature === signature
+        ({ signature: filterSignature }) => filterSignature === signature,
       );
       if (filter) filter.clear();
     });

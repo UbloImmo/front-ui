@@ -30,10 +30,10 @@ export type FieldAssistiveTextProps = Replace<
 
 export type FieldProps<
   TType extends InputType,
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = GenericInputProps<TType, TGenericValue> &
   FieldAssistiveTextProps &
-  StyleOverrideProps &
+  Omit<StyleOverrideProps, "as"> &
   FieldLabelProps;
 
 export type FieldDefaultProps<TType extends InputType = InputType> = Required<

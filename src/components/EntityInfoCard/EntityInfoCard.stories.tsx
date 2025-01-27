@@ -1,4 +1,9 @@
 import { fn } from "@storybook/test";
+import {
+  objectEntries,
+  objectFromEntries,
+  type Nullable,
+} from "@ubloimmo/front-util";
 
 import { EntityInfoCard } from "./EntityInfoCard.component";
 
@@ -15,16 +20,20 @@ import {
   Badge,
   type StateIndicatorProps,
   type ActionIconProps,
+  formatAmount,
+  Button,
+  Text,
+  Icon,
 } from "@components";
 
 import type {
   EntityAction,
   EntityActionIcon,
   EntityInfoCardProps,
+  EntityInfoCardSectionProps,
   EntityStatusRow,
 } from "./EntityInfoCard.types";
 import type { Meta, StoryObj } from "@storybook/react";
-import type { Nullable } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<EntityInfoCardProps>(
   "EntityInfoCard",
@@ -32,7 +41,7 @@ const componentSource = componentSourceFactory<EntityInfoCardProps>(
     state: EntityInfoCard.defaultProps.state,
     accountBalance: EntityInfoCard.defaultProps.accountBalance,
   },
-  EntityInfoCard.defaultProps
+  EntityInfoCard.defaultProps,
 );
 
 const infoCards: CopyClipboardInfoCardProps[] = [
@@ -175,6 +184,117 @@ const agencEntityCardProps: EntityInfoCardProps = {
   onInfoCopied: fn(),
 };
 
+const sepaEntityCardProps: EntityInfoCardProps = {
+  state: {
+    label: "Facture en attente de paiement",
+    icon: "Squircle",
+    color: "pending",
+  },
+  sections: [
+    {
+      children: (
+        <FlexColumnLayout gap="s-5" fill align="center">
+          <FlexColumnLayout fill align="center">
+            <Heading size="h3" color="primary-base">
+              {formatAmount(99999999999)} TTC CC
+            </Heading>
+            <Text color="primary-dark">[n° facture]</Text>
+          </FlexColumnLayout>
+          <Button label="Encaisser le reste" icon="CoinsIn" />
+        </FlexColumnLayout>
+      ),
+    },
+    {
+      contextInfoCards: [
+        {
+          label: "Location",
+          title: "[Nom du dossier]",
+          description: "[Ref du dossier]",
+          icon: {
+            name: "FolderSparkle",
+            color: "white",
+            indicator: {
+              name: "CircleCore",
+              color: "success-base",
+            },
+          },
+          href: "#",
+        },
+        {
+          label: "Destinataires",
+          title: "Mathilde Carbonet, Ublo.immo",
+          icon: {
+            color: "white",
+            name: "EmojiSmile",
+          },
+        },
+        {
+          label: "Adresse de facturation",
+          title: "32 rue des Violettes, 75004 Paris",
+          icon: {
+            color: "white",
+            name: "GeoAlt",
+          },
+        },
+      ],
+    },
+    {
+      statusRows: [
+        {
+          label: "Création :",
+          borderBottom: false,
+          paddingHorizontal: true,
+          compact: true,
+          content: (
+            <FlexRowLayout align="center" gap="s-2">
+              <Icon color="gray-800" name="CatRobot" size="s-4" />
+              <Text color="gray-800" weight="medium">
+                [dd/mm/yyyy]
+              </Text>
+            </FlexRowLayout>
+          ),
+        },
+        {
+          label: "Émission :",
+          borderBottom: false,
+          paddingHorizontal: true,
+          compact: true,
+          content: (
+            <FlexRowLayout align="center" gap="s-2">
+              <Icon color="gray-800" name="CatRobot" size="s-4" />
+              <Text color="gray-800" weight="medium">
+                [dd/mm/yyyy]
+              </Text>
+            </FlexRowLayout>
+          ),
+        },
+        {
+          label: "Échéance :",
+          borderBottom: false,
+          paddingHorizontal: true,
+          compact: true,
+          content: (
+            <Text color="gray-800" weight="medium">
+              [dd/mm/yyyy]
+            </Text>
+          ),
+        },
+        {
+          label: "Terme comptable :",
+          borderBottom: false,
+          paddingHorizontal: true,
+          compact: true,
+          content: (
+            <Text color="gray-800" weight="medium">
+              [dd/mm/yyyy]
+            </Text>
+          ),
+        },
+      ],
+    },
+  ],
+};
+
 const meta = {
   component: EntityInfoCard,
   title: "Components/Entity/EntityInfoCard/Stories",
@@ -218,6 +338,13 @@ export const Agency: Story = {
   args: agencEntityCardProps,
   parameters: {
     docs: componentSource([agencEntityCardProps]),
+  },
+};
+
+export const Sepa: Story = {
+  args: sepaEntityCardProps,
+  parameters: {
+    docs: componentSource([sepaEntityCardProps]),
   },
 };
 
@@ -298,7 +425,7 @@ const sharedInfos = [
   },
 ] as const;
 
-const infoStyleVariants = [
+const infoStyleVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
   {
     __propVariantLabel: "InfoBox",
     infoBoxes: sharedInfos.map(
@@ -306,7 +433,7 @@ const infoStyleVariants = [
         label: info.label,
         icon: info.icon,
         info: info.info,
-      })
+      }),
     ),
   },
   {
@@ -315,11 +442,11 @@ const infoStyleVariants = [
       (info): CopyClipboardInfoCardProps => ({
         info: info.info,
         icon: info.icon,
-      })
+      }),
     ),
   },
   {
-    __propVariantLabel: "StatusRow with Badge",
+    __propVariantLabel: "StatusRow",
     statusRows: sharedInfos.map(
       (info): EntityStatusRow => ({
         label: info.label,
@@ -328,34 +455,19 @@ const infoStyleVariants = [
           color: info.color,
           icon: info.icon,
         },
-      })
+      }),
     ),
   },
   {
-    __propVariantLabel: "All",
-    infoBoxes: sharedInfos.map(
-      (info): InfoBoxProps => ({
-        label: info.label,
-        icon: info.icon,
-        info: info.info,
-      })
-    ),
-    infoCards: sharedInfos.map(
-      (info): CopyClipboardInfoCardProps => ({
-        info: info.info,
-        icon: info.icon,
-      })
-    ),
-    statusRows: sharedInfos.map(
-      (info): EntityStatusRow => ({
-        label: info.label,
-        badge: {
-          label: info.info,
-          color: info.color,
-          icon: info.icon,
-        },
-      })
-    ),
+    __propVariantLabel: "ContextInfoCard",
+    contextInfoCards: sharedInfos.map((info) => ({
+      label: info.label,
+      title: info.info,
+      icon: {
+        name: info.icon,
+        color: "white",
+      },
+    })),
   },
 ];
 
@@ -378,8 +490,52 @@ InfoStyles.parameters = {
       ({ __propVariantLabel, ...variant }): EntityInfoCardProps => ({
         ...EntityInfoCard.defaultProps,
         ...variant,
-      })
-    )
+      }),
+    ),
+  ),
+};
+
+const sectionVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
+  {
+    __propVariantLabel: "One section (default)",
+    sections: [
+      objectFromEntries(
+        infoStyleVariants.flatMap(
+          ({ __propVariantLabel: _, ...sectionProps }) =>
+            objectEntries(sectionProps),
+        ),
+      ) as unknown as EntityInfoCardSectionProps,
+    ],
+  },
+  {
+    __propVariantLabel: "Sectioned by info style",
+    sections: infoStyleVariants.map(
+      ({ __propVariantLabel: _, ...sectionProps }) => sectionProps,
+    ),
+  },
+];
+
+export const Sections = (props: EntityInfoCardProps) => {
+  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={sectionVariants}
+      of={EntityInfoCard}
+      scaling={1}
+    />
+  );
+};
+Sections.parameters = {
+  docs: componentSource(
+    sectionVariants.map(
+      ({ __propVariantLabel, ...variant }): EntityInfoCardProps => ({
+        ...EntityInfoCard.defaultProps,
+        ...variant,
+      }),
+    ),
   ),
 };
 
@@ -427,8 +583,8 @@ MainContent.parameters = {
       ({ __propVariantLabel, ...variant }): EntityInfoCardProps => ({
         ...EntityInfoCard.defaultProps,
         ...variant,
-      })
-    )
+      }),
+    ),
   ),
 };
 
@@ -451,7 +607,7 @@ State.parameters = {
     states.map((state) => ({
       ...EntityInfoCard.defaultProps,
       state,
-    }))
+    })),
   ),
 };
 
@@ -481,7 +637,7 @@ ActionIcon.parameters = {
     actionIcons.map((actionIcon) => ({
       ...EntityInfoCard.defaultProps,
       actionIcon,
-    }))
+    })),
   ),
 };
 
@@ -522,7 +678,7 @@ ContextMenu.parameters = {
     contextMenus.map(({ __propVariantLabel, ...variant }) => ({
       ...EntityInfoCard.defaultProps,
       ...variant,
-    }))
+    })),
   ),
 };
 

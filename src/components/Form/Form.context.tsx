@@ -122,7 +122,7 @@ const FORM_DEBUG_FLAG = "FORM_DEBUG_ENABLED" as const;
 const useFormData = <TData extends object>(
   props: FormProps<TData>,
   logger: Logger,
-  modifiers: FormModifers
+  modifiers: FormModifers,
 ): UseFormDataReturn<TData> => {
   /**
    * Initial form data derived from the query or default values
@@ -178,7 +178,7 @@ const useFormData = <TData extends object>(
       setIsLoading(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.query]
+    [props.query],
   );
 
   /**
@@ -211,12 +211,12 @@ const useFormData = <TData extends object>(
       const mutated = setObjectValue(
         data,
         key as DeepKeyOf<FormData<TData>>,
-        value as DeepValueOf<FormData<TData>, DeepKeyOf<FormData<TData>>>
+        value as DeepValueOf<FormData<TData>, DeepKeyOf<FormData<TData>>>,
       );
       setData(mutated);
       return mutated;
     },
-    [data, isLoading, props, logger]
+    [data, isLoading, props, logger],
   );
 
   return {
@@ -249,14 +249,14 @@ const defaultFormModifiers: FormModifers = {
  * @returns {FormModifers} An object containing all form modifiers with their default values if missing.
  */
 export const useFormModifiers = <TData extends object>(
-  props: FormProps<TData>
+  props: FormProps<TData>,
 ): FormModifers => {
   /**
    * All form modifiers with their default values if missing
    */
   const mergedMods = useMergedProps<FormModifers, FormModifierProps>(
     defaultFormModifiers,
-    props
+    props,
   );
 
   const debug = useMemo(() => {
@@ -270,7 +270,7 @@ export const useFormModifiers = <TData extends object>(
       ...mergedMods,
       debug,
     }),
-    [mergedMods, debug]
+    [mergedMods, debug],
   );
 };
 
@@ -291,7 +291,7 @@ const defaultFormValidation: FormValidation = {
 const useFormValidation = <TData extends object>(
   formSchema: Nullish<FormSchema<TData>>,
   formData: UseFormDataReturn<TData>,
-  modifiers: FormModifers
+  modifiers: FormModifers,
 ): UseFormValidationReturn<TData> => {
   const schema = useMemo(() => formSchema ?? null, [formSchema]);
 
@@ -323,7 +323,7 @@ const useFormValidation = <TData extends object>(
    */
   const [formValidation, triggerFormValidation] = useReducer(
     computeFormValidation,
-    computeFormValidation()
+    computeFormValidation(),
   );
 
   /**
@@ -346,7 +346,7 @@ const useFormValidation = <TData extends object>(
 
 const useFormLayout = (
   formLayout: DefaultFormLayoutProps,
-  formEditState: UseFormEditStateReturn
+  formEditState: UseFormEditStateReturn,
 ): UseFormLayoutReturn => {
   /**
    * The number of columns in the form. Only even column counts <= 2 are allowed.
@@ -373,8 +373,8 @@ const useFormLayout = (
       const hidden = isFunction<FormFieldLayoutHiddenFn>(fieldLayout?.hidden)
         ? fieldLayout.hidden(formEditState.isEditing)
         : isBoolean(fieldLayout?.hidden)
-        ? fieldLayout.hidden
-        : false;
+          ? fieldLayout.hidden
+          : false;
 
       const size = fieldLayout?.size ?? defaultSize;
 
@@ -388,7 +388,7 @@ const useFormLayout = (
         readonly: fieldLayout?.readonly ?? false,
       };
     },
-    [columns, formEditState]
+    [columns, formEditState],
   );
 
   return {
@@ -416,7 +416,7 @@ const useFormContent = <TData extends object>(
   modifiers: FormModifers,
   formLayout: UseFormLayoutReturn,
   logger: Logger,
-  content?: FormContent<TData>[]
+  content?: FormContent<TData>[],
 ): BuiltFormContent<InputType>[] => {
   const tl = useUikitTranslation();
 
@@ -428,7 +428,7 @@ const useFormContent = <TData extends object>(
       const value = deepValueOf(formData.data, source, true);
       return value ?? null;
     },
-    [formData]
+    [formData],
   );
 
   /**
@@ -442,7 +442,7 @@ const useFormContent = <TData extends object>(
         onChange(value);
       };
     },
-    [formData]
+    [formData],
   );
 
   /**
@@ -464,7 +464,7 @@ const useFormContent = <TData extends object>(
         errorText: baseErrorText ?? errorTranslation,
       };
     },
-    [validation, tl]
+    [validation, tl],
   );
 
   /**
@@ -476,7 +476,7 @@ const useFormContent = <TData extends object>(
       if (!validation.schema) return false;
       return isSchemaFieldRequired(validation.schema, source);
     },
-    [validation]
+    [validation],
   );
 
   /**
@@ -484,7 +484,7 @@ const useFormContent = <TData extends object>(
    */
   const buildFieldProps = useCallback<BuildFieldPropsFn<TData>>(
     <TType extends InputType>(
-      formField: FormFieldProps<TData>
+      formField: FormFieldProps<TData>,
     ): BuiltFieldProps<TType> => {
       const {
         source,
@@ -505,10 +505,10 @@ const useFormContent = <TData extends object>(
         ...getFieldErrorProps(source, error, errorText),
         onChange: propagateChange<TType, typeof source>(
           source,
-          onChange as InputOnChangeFn<TType>
+          onChange as InputOnChangeFn<TType>,
         ) as BuiltFieldProps<TType>["onChange"],
         value: getFieldValue<DeepKeyOf<FormData<TData>>>(
-          source as DeepKeyOf<FormData<TData>>
+          source as DeepKeyOf<FormData<TData>>,
         ),
         type: type as TType,
         disabled: disabled || modifiers.disabled,
@@ -525,7 +525,7 @@ const useFormContent = <TData extends object>(
       modifiers.disabled,
       isFieldRequired,
       formLayout,
-    ]
+    ],
   );
 
   /**
@@ -533,7 +533,7 @@ const useFormContent = <TData extends object>(
    */
   const buildCustomFieldProps = useCallback<BuildCustomFieldPropsFn<TData>>(
     (
-      formCustomField: FormCustomFieldProps<TData>
+      formCustomField: FormCustomFieldProps<TData>,
     ): BuiltFormCustomFieldProps => {
       const {
         source,
@@ -554,10 +554,10 @@ const useFormContent = <TData extends object>(
         CustomInput,
         onChange: propagateChange(
           source,
-          onChange as Nullable<InputOnChangeFn<InputType>>
+          onChange as Nullable<InputOnChangeFn<InputType>>,
         ) as CustomFormInputProps<NullishPrimitives>["onChange"],
         value: getFieldValue<DeepKeyOf<FormData<TData>>>(
-          source as DeepKeyOf<FormData<TData>>
+          source as DeepKeyOf<FormData<TData>>,
         ),
         disabled: disabled || modifiers.disabled,
         required: isFieldRequired(source, required),
@@ -571,7 +571,7 @@ const useFormContent = <TData extends object>(
       isFieldRequired,
       modifiers.disabled,
       propagateChange,
-    ]
+    ],
   );
 
   /**
@@ -580,7 +580,7 @@ const useFormContent = <TData extends object>(
   const buildFormTable = useCallback<BuildFormTablePropsFn<TData>>(
     (
       table: FormTableProps<TData>,
-      contentIndex: number
+      contentIndex: number,
     ): BuiltFormTableProps => {
       // cast to remove `never` case and proceed as usual
       const t = table as FormTableProps<{ arr: { data: string }[] }>;
@@ -605,7 +605,7 @@ const useFormContent = <TData extends object>(
         updatedArr.splice(index, 1);
         formData.mutateFormData(
           tableFormSource,
-          updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
+          updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>,
         );
       };
 
@@ -617,7 +617,7 @@ const useFormContent = <TData extends object>(
         const updatedArr = [...arrayValue, newRow];
         formData.mutateFormData(
           tableFormSource,
-          updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
+          updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>,
         );
       };
 
@@ -630,7 +630,7 @@ const useFormContent = <TData extends object>(
         const swapped = arrayMove([...arrayValue], oldIndex, newIndex);
         formData.mutateFormData(
           tableFormSource,
-          swapped as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
+          swapped as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>,
         );
       };
 
@@ -641,9 +641,9 @@ const useFormContent = <TData extends object>(
           compact,
           required: isFieldRequired(
             `${t.source}.0.${source}` as FormFieldProps<TData>["source"],
-            required
+            required,
           ),
-        })
+        }),
       );
 
       const colSpans = t.columns?.map(({ layout }) => layout?.size ?? 1) ?? [];
@@ -670,7 +670,7 @@ const useFormContent = <TData extends object>(
             return null;
           })
           .filter(
-            (cell): cell is BuiltFormTableRow["cells"][number] => !isNull(cell)
+            (cell): cell is BuiltFormTableRow["cells"][number] => !isNull(cell),
           );
 
         return {
@@ -685,13 +685,13 @@ const useFormContent = <TData extends object>(
       const errorProps = getFieldErrorProps(
         tableFormSource,
         t.error,
-        t.errorText
+        t.errorText,
       );
 
       if (!errorProps.error) {
         // check for nested errors if none on top level
         const containsNestedErrors = rows.some(({ cells }) =>
-          cells.some(({ error }) => error)
+          cells.some(({ error }) => error),
         );
         errorProps.error = errorProps.error || containsNestedErrors;
         errorProps.errorText = errorProps.errorText ?? tl.validation.invalid();
@@ -737,7 +737,7 @@ const useFormContent = <TData extends object>(
         tableLayout: t.tableLayout ?? "auto",
       };
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [
       getFieldValue,
       getFieldErrorProps,
@@ -748,7 +748,7 @@ const useFormContent = <TData extends object>(
       buildCustomFieldProps,
       buildFieldProps,
       tl.validation,
-    ]
+    ],
   );
 
   const buildFormFeatureSwitch = useCallback<BuildFormFeatureSwitchFn<TData>>(
@@ -768,7 +768,7 @@ const useFormContent = <TData extends object>(
       const disabled = baseDisabled || modifiers.disabled;
       const required = isFieldRequired(
         source as FormSource<TData>,
-        baseRequired
+        baseRequired,
       );
       const layout = formLayout.buildFormFieldLayout({
         ...(f.layout ?? {}),
@@ -778,7 +778,7 @@ const useFormContent = <TData extends object>(
       const value = getFieldValue(source as DeepKeyOf<FormData<TData>>);
       const onChange = propagateChange(
         source as FormSource<TData>,
-        baseOnChange as Nullable<InputOnChangeFn<InputType>>
+        baseOnChange as Nullable<InputOnChangeFn<InputType>>,
       );
       const baseProps = {
         ...rest,
@@ -808,7 +808,7 @@ const useFormContent = <TData extends object>(
       isFieldRequired,
       modifiers.disabled,
       propagateChange,
-    ]
+    ],
   );
 
   /**
@@ -861,7 +861,7 @@ const useFormSubmission = <TData extends object>(
   onSubmit: Nullish<FormOnSubmitFn<TData>>,
   onSubmitError: Nullish<FormOnSubmitErrorFn>,
   onCancelled: Nullish<VoidFn>,
-  logger: Logger
+  logger: Logger,
 ): UseFormSubmissionReturn => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -914,7 +914,7 @@ const useFormSubmission = <TData extends object>(
         if (isBoolean(result)) {
           if (!result && onSubmitError) {
             onSubmitError(
-              new Error("Failed to submit form: `onSubmit` returned false.")
+              new Error("Failed to submit form: `onSubmit` returned false."),
             );
           }
           return;
@@ -932,7 +932,7 @@ const useFormSubmission = <TData extends object>(
         logger.error(e);
         if (onSubmitError)
           onSubmitError(
-            new Error(`Failed to submit form: ${(e as Error).message}`)
+            new Error(`Failed to submit form: ${(e as Error).message}`),
           );
         setIsSubmitting(false);
       }
@@ -947,7 +947,7 @@ const useFormSubmission = <TData extends object>(
       logger,
       formData,
       onSubmitError,
-    ]
+    ],
   );
 
   /**
@@ -983,17 +983,17 @@ const useFormSubmission = <TData extends object>(
  */
 const useFormEditState = (
   modifiers: FormModifers,
-  asModal: FormLayoutProps["asModal"]
+  asModal: FormLayoutProps["asModal"],
 ): UseFormEditStateReturn => {
   const { closeDialog, isDialogRegistered, isDialogOpen } = useDialogManager();
 
   const dialogRef = useMemo(
     () => asModal?.reference ?? "",
-    [asModal?.reference]
+    [asModal?.reference],
   );
 
   const [isEditing, setIsEditing] = useState(
-    !!modifiers.defaultEditing || false
+    !!modifiers.defaultEditing || false,
   );
 
   /**
@@ -1049,19 +1049,19 @@ const useFormEditState = (
  */
 export const useForm = <TData extends object>(
   { columns, asModal, embedded, ...props }: FormDefaultProps<TData>,
-  logger: Logger
+  logger: Logger,
 ): FormContext<TData> => {
   const formModifiers = useFormModifiers(props);
   const formData = useFormData<TData>(props, logger, formModifiers);
   const formValidation = useFormValidation<TData>(
     props.schema,
     formData,
-    formModifiers
+    formModifiers,
   );
   const formEditState = useFormEditState(formModifiers, asModal);
   const formLayout = useFormLayout(
     { columns, asModal, embedded },
-    formEditState
+    formEditState,
   );
   const content = useFormContent(
     formData,
@@ -1069,7 +1069,7 @@ export const useForm = <TData extends object>(
     formModifiers,
     formLayout,
     logger,
-    props.content
+    props.content,
   );
   const formSubmission = useFormSubmission(
     formData,
@@ -1079,7 +1079,7 @@ export const useForm = <TData extends object>(
     props.onSubmit,
     props.onSubmitError,
     props.onCancelled,
-    logger
+    logger,
   );
 
   return {
@@ -1136,7 +1136,7 @@ const InternalFormContext =
  */
 export const useFormContext = <TData extends object>(): FormContext<TData> => {
   return useContext(
-    InternalFormContext as unknown as Context<FormContext<TData>>
+    InternalFormContext as unknown as Context<FormContext<TData>>,
   ) as unknown as FormContext<TData>;
 };
 
@@ -1150,7 +1150,7 @@ export const useFormContext = <TData extends object>(): FormContext<TData> => {
  * @returns {JSX.Element} The provider component wrapping the children components.
  */
 export const FormProvider = <TData extends object>(
-  props: FormDefaultProps<TData> & { children: ReactNode }
+  props: FormDefaultProps<TData> & { children: ReactNode },
 ): JSX.Element => {
   const logger = useLogger("Form Context");
   const context = useForm<TData>(props, logger);

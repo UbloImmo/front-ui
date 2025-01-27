@@ -55,7 +55,7 @@ import type { TranslationContext } from "@utils";
  * @return {key is `${number} | number`} Returns `true` if the key is a valid array index key, otherwise `false`.
  */
 const isArrayIndexKey = (
-  key: string | number | `${number}`
+  key: string | number | `${number}`,
 ): key is `${number}` | number => {
   if (isNumber(key)) return true;
   const n = parseInt(key as `${number}`);
@@ -80,12 +80,12 @@ const isArrayIndexKey = (
 export const setObjectValue = <
   TObject extends object,
   TKey extends DeepKeyOf<TObject>,
-  TValue extends DeepValueOf<TObject, TKey>
+  TValue extends DeepValueOf<TObject, TKey>,
 >(
   object: TObject,
   key: TKey,
   value: Optional<TValue>,
-  warn: VoidFn<[unknown]> = () => {}
+  warn: VoidFn<[unknown]> = () => {},
 ): TObject => {
   if (!isObject(object)) {
     warn("object must be an object");
@@ -130,8 +130,8 @@ export const setObjectValue = <
   if (!isObject(nestedObject)) {
     warn(
       `object[${head}] is not an object but path still contains remaining key(s): ${tails.join(
-        "."
-      )}`
+        ".",
+      )}`,
     );
     return object;
   }
@@ -180,14 +180,14 @@ const isSchemaOptional = (schema: ZodType) => {
  */
 export const isSchemaFieldRequired = <TData extends object>(
   schema: FormSchema<TData> | ZodType,
-  key: FormSource<NoInfer<TData>> | string
+  key: FormSource<NoInfer<TData>> | string,
 ): boolean => {
   if (isNumber(key)) {
     key = `${key}` as DeepKeyOf<TData> & string;
   }
   const [head, ...tails] = key.split(".") as [
     KeyOf<TData>,
-    ...DeepKeyOf<TData[KeyOf<TData>]>[]
+    ...DeepKeyOf<TData[KeyOf<TData>]>[],
   ];
 
   if (isSchemaOptional(schema)) {
@@ -201,7 +201,7 @@ export const isSchemaFieldRequired = <TData extends object>(
     const tail = tails.join(".");
     return isSchemaFieldRequired(
       schema.shape[head] as unknown as ZodType,
-      tail
+      tail,
     );
   }
 
@@ -224,7 +224,7 @@ export const isSchemaFieldRequired = <TData extends object>(
  * @return {content is FormDividerProps} Returns `true` if `fieldOrDivider` is a `FormDividerProps`, otherwise `false`.
  */
 export const isFormDivider = <TData extends object>(
-  content: FormContent<TData> | BuiltFormContent<InputType>
+  content: FormContent<TData> | BuiltFormContent<InputType>,
 ): content is FormDividerProps => {
   if (isString(content) && content === "divider") return true;
   if (
@@ -255,7 +255,7 @@ export const isFormDivider = <TData extends object>(
  * @return {content is FormCustomContentProps} - `true` if `content` is a `FormCustomContentProps` object, `false` otherwise.
  */
 export const isFormCustomContent = <TData extends object>(
-  content: FormContent<TData> | BuiltFormContent<InputType>
+  content: FormContent<TData> | BuiltFormContent<InputType>,
 ): content is FormCustomContentProps => {
   if (isFunction<FC>(content)) return true;
   return (
@@ -275,7 +275,7 @@ export const isFormCustomContent = <TData extends object>(
  * @return {content is FormCustomFieldProps<TData>} Returns `true` if `fieldOrDivider` is a `FormCustomFieldProps`, otherwise `false`.
  */
 export const isFormCustomField = <TData extends object>(
-  content: FormContent<TData>
+  content: FormContent<TData>,
 ): content is FormCustomFieldProps<TData> => {
   if (
     isFormDivider(content) ||
@@ -303,7 +303,7 @@ export const isFormCustomField = <TData extends object>(
  * @return {content is FormFieldProps<TData>} Returns `true` if `content` is a `FormFieldProps`, otherwise `false`.
  */
 export const isFormField = <TData extends object>(
-  content: FormContent<TData>
+  content: FormContent<TData>,
 ): content is FormFieldProps<TData> => {
   if (
     isFormDivider(content) ||
@@ -330,7 +330,7 @@ export const isFormField = <TData extends object>(
  * @return {contentOrText is FormTextProps} - `true` if `contentOrText` is a `FormTextProps` object, `false` otherwise.
  */
 export const isFormText = <TData extends object>(
-  content: FormContent<TData> | BuiltFormContent<InputType>
+  content: FormContent<TData> | BuiltFormContent<InputType>,
 ): content is FormTextProps => {
   return (
     isObject(content) &&
@@ -349,7 +349,7 @@ export const isFormText = <TData extends object>(
  * @return {content is FormTableProps<TData>} - `true` if `content` is a `FormTableProps` object, `false` otherwise.
  */
 export const isFormTable = <TData extends object>(
-  content: FormContent<TData>
+  content: FormContent<TData>,
 ): content is FormTableProps<TData> => {
   return (
     isObject(content) &&
@@ -363,7 +363,7 @@ export const isFormTable = <TData extends object>(
 };
 
 export const isFormFeatureSwitch = <TData extends object>(
-  content: FormContent<TData>
+  content: FormContent<TData>,
 ): content is FormFeatureSwitchProps<TData> => {
   if (
     isFormCustomContent(content) ||
@@ -391,7 +391,7 @@ export const isFormFeatureSwitch = <TData extends object>(
  * @return {content is BuiltFormTableProps} - `true` if `content` is a `BuiltFormTableProps` object, `false` otherwise.
  */
 export const isBuiltFormTable = (
-  content: BuiltFormContent<InputType>
+  content: BuiltFormContent<InputType>,
 ): content is BuiltFormTableProps => {
   return (
     isObject(content) &&
@@ -411,7 +411,7 @@ export const isBuiltFormTable = (
  * @returns {contentOrText is BuiltFormTextProps} - `true` if `contentOrText` is a `BuiltFormTextProps` object, `false` otherwise.
  */
 export const isBuiltFormText = <TData extends object>(
-  content: FormContent<TData> | BuiltFormContent<InputType>
+  content: FormContent<TData> | BuiltFormContent<InputType>,
 ): content is BuiltFormTextProps => {
   return (
     isObject(content) &&
@@ -430,7 +430,7 @@ export const isBuiltFormText = <TData extends object>(
  * @return {content is BuiltFieldProps<TType>} Returns `true` if `fieldOrDivider` is a built form field, otherwise `false`.
  */
 export const isBuiltFormField = <TType extends InputType>(
-  content: BuiltFormContent<TType>
+  content: BuiltFormContent<TType>,
 ): content is BuiltFieldProps<TType> => {
   return (
     !isFormDivider(content) &&
@@ -449,7 +449,7 @@ export const isBuiltFormField = <TType extends InputType>(
  * @returns {content is BuiltFormCustomFieldProps} - `true` if `content` is a `BuiltFormCustomFieldProps` object, `false` otherwise.
  */
 export const isBuiltCustomFormField = (
-  content: BuiltFormContent<InputType>
+  content: BuiltFormContent<InputType>,
 ): content is BuiltFormCustomFieldProps => {
   return (
     isObject(content) &&
@@ -460,7 +460,7 @@ export const isBuiltCustomFormField = (
 };
 
 export const isBuiltFormFeatureSwitch = (
-  content: BuiltFormContent<InputType>
+  content: BuiltFormContent<InputType>,
 ): content is BuiltFormFeatureSwitchProps => {
   return (
     isObject(content) && "kind" in content && content.kind === "feature-switch"
@@ -491,7 +491,7 @@ export const buildFormText = (formText: FormTextProps): BuiltFormTextProps => {
  */
 export const builtFormTableId = (
   tableSource: string,
-  contentIndex: number
+  contentIndex: number,
 ): StableFormTableId => `${tableSource}-${contentIndex}`;
 
 const zodIssueTranslationMap: ValueMap<
@@ -524,7 +524,7 @@ const zodIssueTranslationMap: ValueMap<
  */
 export const formErrorTranslation = (
   error: FormError,
-  tl: TranslationContext
+  tl: TranslationContext,
 ): string => {
   if (error.code === "custom") return error.message;
   return tl.validation[zodIssueTranslationMap[error.code]]();

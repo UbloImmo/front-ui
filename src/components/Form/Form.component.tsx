@@ -62,11 +62,11 @@ const defaultFormProps: FormDefaultProps<object> = {
  * @returns {JSX.Element}
  */
 const Form = <TData extends object>(
-  props: FormProps<TData> & TestIdProps
+  props: FormProps<TData> & TestIdProps,
 ): JSX.Element => {
   const mergedProps = useMergedProps<FormDefaultProps<TData>, FormProps<TData>>(
     defaultFormProps as unknown as FormDefaultProps<TData>,
-    props
+    props,
   );
 
   return (
@@ -93,7 +93,7 @@ export { Form };
  * @return {JSX.Element} The rendered inner form component.
  */
 const InnerForm = <TData extends object>(
-  props: FormDefaultProps<TData> & TestIdProps
+  props: FormDefaultProps<TData> & TestIdProps,
 ): JSX.Element => {
   const InnerContent = useMemo(
     (): JSX.Element => (
@@ -115,7 +115,7 @@ const InnerForm = <TData extends object>(
         />
       </InnerFormContainer>
     ),
-    [props]
+    [props],
   );
 
   if (props.asModal) {

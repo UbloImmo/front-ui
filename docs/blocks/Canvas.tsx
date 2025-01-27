@@ -46,8 +46,10 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
 
   & > .sbdocs-preview {
     box-shadow: none;
-    background: ${({ $inHeader }) => ($inHeader ? "#fff" : "var(--gray-50)")};
+    background: ${({ $inHeader }) =>
+      $inHeader ? "#fff" : "var(--gray-50-25)"};
     border: none;
+    outline: 1px solid var(--gray-50);
     border-radius: var(--s-2);
     overflow: visible;
   }
@@ -75,7 +77,9 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     box-shadow: var(--shadow-button) !important;
     width: auto;
     border: 1px solid transparent;
-    transition: color 200ms ease-out 0s, background 200ms ease-out 0s,
+    transition:
+      color 200ms ease-out 0s,
+      background 200ms ease-out 0s,
       border-color 200ms ease-out 0s;
 
     &.docblock-code-toggle--expanded {
@@ -92,18 +96,16 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
   .docs-story {
     border-radius: 0;
 
-    ${({ $overflowHidden }) =>
-      css`
-        overflow: ${$overflowHidden ? "hidden" : "visible"};
-      `}
+    ${({ $overflowHidden }) => css`
+      overflow: ${$overflowHidden ? "hidden" : "visible"};
+    `}
 
     // story container has generated classname
     & > div:first-child {
       padding: var(--padding);
-      ${({ $overflowHidden }) =>
-        css`
-          overflow: ${$overflowHidden ? "hidden" : "visible"};
-        `}
+      ${({ $overflowHidden }) => css`
+        overflow: ${$overflowHidden ? "hidden" : "visible"};
+      `}
     }
 
     & .innerZoomElementWrapper > div {
@@ -155,7 +157,9 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
     width: auto;
     border: 1px solid transparent;
     z-index: initial;
-    transition: color 200ms ease-out 0s, border-color 200ms ease-out 0s;
+    transition:
+      color 200ms ease-out 0s,
+      border-color 200ms ease-out 0s;
   }
 
   ${({ $horizontal }) =>

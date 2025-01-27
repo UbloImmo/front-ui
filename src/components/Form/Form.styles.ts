@@ -67,8 +67,11 @@ export const formEditButtonStyles = ({
     scale: 1;
     transform-origin: center;
     opacity: 1;
-    transition: color 300ms ease-out 0s, background-color 300ms ease-out 0s,
-      border-color 300ms ease-out 0s, opacity 150ms ease-in 0s,
+    transition:
+      color 300ms ease-out 0s,
+      background-color 300ms ease-out 0s,
+      border-color 300ms ease-out 0s,
+      opacity 150ms ease-in 0s,
       scale 150ms ease-in 0s;
 
     ${$hidden &&
@@ -94,7 +97,9 @@ export const formEditBannerStyles = ({
     height: auto;
     opacity: 1;
     overflow: hidden;
-    transition: opacity 150ms ease-out 0s, height 150ms ease-out 0s,
+    transition:
+      opacity 150ms ease-out 0s,
+      height 150ms ease-out 0s,
       padding 300ms ease-out 0s;
 
     ${!$isEditing &&

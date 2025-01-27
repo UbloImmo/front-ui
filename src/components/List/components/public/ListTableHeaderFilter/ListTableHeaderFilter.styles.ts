@@ -12,7 +12,9 @@ export const listTableHeaderFilterStyles = ({
   div > button > svg[data-testid="icon"] {
     &,
     & path {
-      transition: fill 300ms var(--beizer), opacity 150ms var(--beizer);
+      transition:
+        fill 300ms var(--beizer),
+        opacity 150ms var(--beizer);
       fill: var(--primary-medium);
     }
   }

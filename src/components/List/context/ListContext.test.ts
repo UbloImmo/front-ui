@@ -26,11 +26,11 @@ const testListOptions = () => {
 
   const optionA = filterOptionData(
     "A",
-    filterOptionMatch<MockItem>("value", "<", 10)
+    filterOptionMatch<MockItem>("value", "<", 10),
   ) as FilterOptionData<MockItem>;
   const optionB = filterOptionData(
     "B",
-    filterOptionMatch<MockItem>("value", ">=", 15)
+    filterOptionMatch<MockItem>("value", ">=", 15),
   ) as FilterOptionData<MockItem>;
 
   const filterA = filterData<MockItem>("A", [optionA, optionB]);
@@ -60,12 +60,12 @@ const testListOptions = () => {
 
   const testHookBase = testHookFactory<HookParams, HookReturn, Hook>(
     "useListOptions",
-    useListOptions
+    useListOptions,
   );
   const testHookWithFilters = testHookBase(mockConfig, mockDataProvider);
   const testHookWithoutFilters = testHookBase(
     { ...mockConfig, filters: [] },
-    mockDataProvider
+    mockDataProvider,
   );
   const testHookWithMultiFilter = testHookBase(
     {
@@ -75,7 +75,7 @@ const testListOptions = () => {
         selected: true,
       })),
     },
-    mockDataProvider
+    mockDataProvider,
   );
 
   testHookWithFilters("should return a valid object", (result) => {
@@ -132,7 +132,7 @@ const testListOptions = () => {
     (result) => {
       expect(result.getOptionBySignature).toBeFunction();
       expect(result.getOptionBySignature("unknown")).toBeNull();
-    }
+    },
   );
 
   testHookWithFilters(
@@ -148,7 +148,7 @@ const testListOptions = () => {
       expect(result.getOptionBySignature(undefined)).toBeNull();
       // @ts-expect-error needed to test the function
       expect(result.getOptionBySignature(1)).toBeNull();
-    }
+    },
   );
 
   testHookWithFilters(
@@ -161,7 +161,7 @@ const testListOptions = () => {
         { ...optionA, selected: true },
         optionB,
       ]);
-    }
+    },
   );
 
   testHookWithFilters(
@@ -171,7 +171,7 @@ const testListOptions = () => {
       result.updateOptionSelection(optionA.signature, false);
       rerender();
       expect(getResult().options.data).toEqual([optionA, optionB]);
-    }
+    },
   );
 
   testHookWithMultiFilter(
@@ -184,7 +184,7 @@ const testListOptions = () => {
         { ...optionA, selected: false },
         { ...optionB, selected: true },
       ]);
-    }
+    },
   );
 
   testHookWithMultiFilter(
@@ -197,7 +197,7 @@ const testListOptions = () => {
         { ...optionA, selected: false },
         { ...optionB, selected: false },
       ]);
-    }
+    },
   );
 
   mockFilterFn.mockClear();
@@ -211,7 +211,7 @@ const testListOptions = () => {
       expect(result.applyOptions).toBeFunction();
       getResult().applyOptions([]);
       expect(mockFilterFn).toHaveBeenCalled();
-    }
+    },
   );
 
   testHookWithoutFilters(
@@ -223,7 +223,7 @@ const testListOptions = () => {
       expect(result.applyOptions).toBeFunction();
       getResult().applyOptions([]);
       expect(mockFilterFn).toHaveBeenCalled();
-    }
+    },
   );
 };
 

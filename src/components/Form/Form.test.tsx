@@ -30,7 +30,7 @@ const testFormAsModal = testComponentFactory(
         <Button onClick={open} label="Test open form in modal" />
       </DialogProvider>
     );
-  }
+  },
 );
 
 const testSchema = z.object({
@@ -78,7 +78,7 @@ testForm({ ...Form.defaultProps, embedded: true })(
   "should render as embedded",
   ({ queryByTestId }) => {
     expect(queryByTestId("form")).not.toBeNull();
-  }
+  },
 );
 
 testForm({
@@ -103,7 +103,7 @@ testForm({
     expect(data[0].textContent).toBe("The Tester");
     expect(data[1].textContent).toBe("25");
     expect(data[2].textContent).toBe("—");
-  }
+  },
 );
 
 testFormAsModal({ ...Form.defaultProps })(
@@ -115,5 +115,5 @@ testFormAsModal({ ...Form.defaultProps })(
     await openModalButton?.click();
 
     expect(queryByTestId("form")).not.toBeNull();
-  }
+  },
 );

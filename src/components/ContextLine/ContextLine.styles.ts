@@ -1,15 +1,28 @@
+import { isBoolean } from "@ubloimmo/front-util";
 import { css } from "styled-components";
 
-export const contextLineStyles = () => {
-  return css`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
-    width: 100%;
+import { cssVarUsage } from "@utils";
 
-    padding: var(--s-3) 0;
-    box-shadow: var(--border-bottom);
+import type { ContextLineProps } from "./ContextLine.types";
+import type { StyleProps } from "@types";
+
+export const contextLineStyles = ({
+  $borderBottom,
+  $paddingHorizontal,
+  $compact,
+}: StyleProps<ContextLineProps>) => {
+  const paddingHorizontal = $paddingHorizontal ? cssVarUsage("s-3") : 0;
+  const paddingVertical = cssVarUsage($compact ? "s-2" : "s-3");
+  const displayBorder = !(isBoolean($borderBottom) && !$borderBottom);
+
+  return css`
+    background: white;
+    flex: 1;
+    padding: ${paddingVertical} ${paddingHorizontal};
+    ${displayBorder &&
+    css`
+      box-shadow: var(--border-bottom);
+    `}
 
     &:first-child {
       padding-top: 0;

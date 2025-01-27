@@ -24,7 +24,7 @@ import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "@utils";
  * @return {{row: CssLengthUsage, column: CssLengthUsage}} the transformed object with CSS compatible gap values
  */
 const gridGap = (
-  gridGap: GridGap
+  gridGap: GridGap,
 ): { row: CssLengthUsage; column: CssLengthUsage } => {
   // split common gap into row and column object with same values
   const gap = isObject(gridGap) ? gridGap : { row: gridGap, column: gridGap };
@@ -58,7 +58,7 @@ const gridTemplate = (template: GridTemplate) => {
  */
 export const buildGridLayoutStyle =
   (
-    defaultProps: GridLayoutDefaultProps
+    defaultProps: GridLayoutDefaultProps,
   ): StyleFunction<StyleProps<GridLayoutProps>> =>
   (props: StyleProps<GridLayoutProps>) => {
     const { flow, gap, justify, align, columns, rows, inline, fill } =

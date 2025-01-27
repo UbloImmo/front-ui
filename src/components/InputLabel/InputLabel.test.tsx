@@ -22,7 +22,7 @@ describe("InputLabel", () => {
           },
         },
       ],
-    }
+    },
   );
 
   global.console.warn = mock(() => {});
@@ -32,7 +32,7 @@ describe("InputLabel", () => {
     () => {
       expect(global.console.warn).toHaveBeenCalled();
       (global.console.warn as Mock<(_msg: unknown) => void>).mockReset();
-    }
+    },
   );
 
   testInputLabel({ label: "test input", required: true })(
@@ -41,6 +41,6 @@ describe("InputLabel", () => {
       const label = (await findByTestId(testId)) as HTMLSpanElement;
       expect(label).not.toBeNull();
       expect(label.dataset.required).toBe("true");
-    }
+    },
   );
 });

@@ -43,10 +43,10 @@ const mockTransactionItem = (prevBalance: number): TransactionItem => {
     type === "invoice"
       ? 0
       : state === "draft" || state === "available"
-      ? amount
-      : state === "locked_paid" || state === "paid" || state === "refunded"
-      ? 0
-      : Math.round(Math.random() * amount);
+        ? amount
+        : state === "locked_paid" || state === "paid" || state === "refunded"
+          ? 0
+          : Math.round(Math.random() * amount);
 
   const balance = prevBalance + amount;
 
@@ -80,7 +80,7 @@ const generateMockTransactionItems = (): TransactionItem[] => {
 };
 
 export const useBalanceJournalData: UseDataProviderFn<TransactionItem> = (
-  setData
+  setData,
 ) => {
   const staticMockData = useStatic(generateMockTransactionItems);
   const filters = useBalanceJournalContext();

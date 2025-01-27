@@ -1,12 +1,23 @@
 import { ContextLine } from "./ContextLine.component";
 import { Badge } from "../Badge";
+import {
+  ContextLineDefaultProps,
+  type ContextLineProps,
+  type ContextLineStaticIconProps,
+} from "./ContextLine.types";
+import { formatAmount } from "../AccountBalance";
+import { Hypertext } from "../Hypertext";
+import { Icon } from "../Icon";
+import { Text } from "../Text";
 
 import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
-import { useMergedProps } from "@utils";
+import { FlexLayout } from "@layouts";
+import { arrayOf, useMergedProps } from "@utils";
 
-import type { ContextLineProps } from "./ContextLine.types";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { NonOptional } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 const args = {
   ...ContextLine.defaultProps,
@@ -18,7 +29,7 @@ const componentSource = componentSourceFactory<ContextLineProps>(
     label: "[label]",
     children: '<Badge label="Children" color="primary" />',
   },
-  ContextLine.defaultProps
+  ContextLine.defaultProps,
 );
 
 const meta = {
@@ -57,24 +68,35 @@ const infosVariants = [
   },
 ] as const;
 
-const infosBisVariants = [
+const infosBisVariants: ContextLineProps[] = [
   {
     label: "Label 1",
-    badgeLabel: "Badge 1",
-    badgeColor: "primary",
-    badgeIcon: "CircleFill",
+    badge: {
+      label: "Badge 1",
+      color: "primary",
+      icon: "CircleFill",
+    },
   },
   {
     label: "Label 2",
-    badgeLabel: "Badge 2",
-    badgeColor: "success",
-    badgeIcon: "CircleFill",
+    badge: {
+      label: "Badge 2",
+      color: "success",
+      icon: "CircleFill",
+    },
   },
   {
-    label: "Label 3",
-    badgeLabel: "Badge 3",
-    badgeColor: "warning",
-    badgeIcon: "CircleFill",
+    label: "Incoming payments",
+    description: "To be assigned to invoices",
+    icon: {
+      name: "ExclamationTriangleFill",
+      color: "warning",
+    },
+    children: (
+      <Text color="gray-800" weight="medium">
+        {formatAmount(15626636)}
+      </Text>
+    ),
   },
 ] as const;
 
@@ -95,16 +117,7 @@ const contextLineVariants: DetailConfigVariants<{ rows: ContextLineProps[] }> =
     },
     {
       __propVariantLabel: "Example",
-      rows: infosBisVariants.map((info) => ({
-        label: info.label,
-        children: (
-          <Badge
-            label={info.badgeLabel}
-            color={info.badgeColor}
-            icon={info.badgeIcon}
-          />
-        ),
-      })),
+      rows: infosBisVariants,
     },
   ];
 
@@ -173,6 +186,11 @@ const childrenVariants: DetailConfigVariants<ContextLineProps> = [
       <Badge label="Expirée" color="error" icon="ExclamationCircleFill" />
     ),
   },
+  {
+    __propVariantLabel: "Example 3",
+    label: "Text",
+    children: <Text weight="bold">{formatAmount(15626636)}</Text>,
+  },
 ];
 
 export const Children = (props: ContextLineProps) => {
@@ -180,12 +198,191 @@ export const Children = (props: ContextLineProps) => {
 
   return (
     <ComponentVariants
-      columns={3}
+      columns={2}
       defaults={mergedProps}
       variants={childrenVariants}
       of={ContextLine}
       align="center"
       propLabels
+    />
+  );
+};
+
+const badgeVariants: DetailConfigVariants<ContextLineProps> = [
+  {
+    __propVariantLabel: "Example 1",
+    label: "Contrat de location",
+    badge: {
+      label: "Valide",
+      color: "success",
+      icon: "CircleFill",
+    },
+  },
+  {
+    __propVariantLabel: "Example 2",
+    label: "Assurance",
+    badge: {
+      label: "Manquante",
+      color: "warning",
+      icon: "QuestionCircleFill",
+    },
+  },
+];
+
+export const Badges = (props: ContextLineProps) => {
+  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={badgeVariants}
+      of={ContextLine}
+      align="center"
+      propLabels
+    />
+  );
+};
+
+const icons: ContextLineStaticIconProps[] = [
+  {
+    name: "ExclamationCircleFill",
+    color: "warning",
+  },
+  {
+    name: "Check2Circle",
+    color: "success",
+    stroke: true,
+  },
+  {
+    name: "CurrencyEuro",
+    color: "gray",
+  },
+  {
+    name: "Airplane",
+    color: "error",
+  },
+];
+
+export const Icons = (props: ContextLineProps) => {
+  const mergedProps = useMergedProps<ContextLineDefaultProps, ContextLineProps>(
+    {
+      ...ContextLine.defaultProps,
+      badge: {
+        label: "Badge",
+        color: "primary",
+        icon: "CircleFill",
+      },
+    },
+    props,
+  );
+
+  return (
+    <ComponentVariants
+      columns={3}
+      defaults={mergedProps}
+      variants={icons}
+      of={ContextLine}
+      for="icon"
+      align="center"
+    />
+  );
+};
+
+const descriptions: (string | NonOptional<ReactNode>)[] = [
+  "I am a simple description",
+  <>
+    I am an{" "}
+    <Text weight="bold" color="primary-dark" italic size="xs">
+      advanced
+    </Text>{" "}
+    description
+  </>,
+  <>
+    I even contain an icon <Icon size="s-2" name="Airplane" /> !
+  </>,
+  <>
+    <Hypertext href="#">I am a link</Hypertext>
+  </>,
+];
+
+export const Descriptions = (props: ContextLineProps) => {
+  const mergedProps = useMergedProps<ContextLineDefaultProps, ContextLineProps>(
+    {
+      ...ContextLine.defaultProps,
+      badge: {
+        label: "Badge",
+        color: "primary",
+        icon: "CircleFill",
+      },
+    },
+    props,
+  );
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={descriptions}
+      of={ContextLine}
+      for="description"
+      align="center"
+      propLabels
+    />
+  );
+};
+
+const booleans = [false, true];
+
+const MultiContextLines = (props: ContextLineProps) => (
+  <FlexLayout direction="column" fill>
+    {arrayOf(3, (index) => (
+      <ContextLine key={["contextLine", index].join("-")} {...props} />
+    ))}
+  </FlexLayout>
+);
+
+export const Compact = (props: ContextLineProps) => {
+  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={booleans}
+      of={MultiContextLines}
+      for="compact"
+      align="center"
+    />
+  );
+};
+
+export const PaddingHorizontal = (props: ContextLineProps) => {
+  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={booleans}
+      of={MultiContextLines}
+      for="paddingHorizontal"
+      align="center"
+    />
+  );
+};
+
+export const BorderBottom = (props: ContextLineProps) => {
+  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={booleans}
+      of={MultiContextLines}
+      for="borderBottom"
+      align="center"
     />
   );
 };

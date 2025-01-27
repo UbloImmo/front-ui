@@ -1,13 +1,28 @@
 import type { IconName } from "../Icon";
+import type { ComponentSize } from "@/types/themes/sizes/sizes.types";
 import type { ColorKey, StyleOverrideProps, StyleProps } from "@types";
-import type { Enum, Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
 
-const actionIconSizes = ["l", "m", "s"] as const;
-export type ActionIconSize = Enum<typeof actionIconSizes>;
+/**
+ * The size of the ActionIcon
+ * @type {ComponentSize}
+ * @default "l"
+ */
+export type ActionIconSize = ComponentSize;
 
+/**
+ * The color of the ActionIcon.
+ *
+ * Affects its appearance while hovering when size is `m` or `l`.
+ *
+ * @remarks Set it to `error` for destructive actions.
+ *
+ * @type {ActionIconColor}
+ * @default "primary"
+ */
 export type ActionIconColor = Extract<ColorKey, "primary" | "error"> | "white";
 
-export type ActionIconProps = StyleOverrideProps & {
+export type ActionIconProps = Omit<StyleOverrideProps, "as"> & {
   /**
    * The name of the nested icon to render
    * @type {IconName}

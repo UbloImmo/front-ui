@@ -36,14 +36,14 @@ const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
  * @returns {JSX.Element}
  */
 const ContextMenuItem = (
-  props: ContextMenuItemProps & TestIdProps
+  props: ContextMenuItemProps & TestIdProps,
 ): JSX.Element => {
   const { warn, debug } = useLogger("ContextMenu", {
     hideDebug: true,
   });
   const { disabled, index, ...mergedProps } = useMergedProps(
     defaultContextMenuItemProps,
-    props
+    props,
   );
   const testId = useTestId("context-menu-item", props);
 
@@ -55,19 +55,19 @@ const ContextMenuItem = (
       event.preventDefault();
       if (onClick) onClick();
     },
-    [onClick]
+    [onClick],
   );
 
   debug(mergedProps);
 
   const tabIndex = useMemo(
     () => (disabled ? -1 : index + 1),
-    [disabled, index]
+    [disabled, index],
   );
 
   if (!isString(props.label))
     warn(
-      `Missing required label, defaulting to ${defaultContextMenuItemProps.label}`
+      `Missing required label, defaulting to ${defaultContextMenuItemProps.label}`,
     );
 
   if (mergedProps.size === "m")

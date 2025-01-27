@@ -20,7 +20,7 @@ import type {
 
 export const useListOptions: UseListOptions = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "options" | "filters" | "operator">,
-  dataProvider: IDataProvider<TItem>
+  dataProvider: IDataProvider<TItem>,
 ): UseListOptionsReturn<TItem> => {
   const options = useDataArray(config.options ?? [], true);
 
@@ -33,20 +33,20 @@ export const useListOptions: UseListOptions = <TItem extends object>(
   const applyOptions = useCallback(
     (
       updatedOptions: FilterOptionData<TItem>[],
-      extraFilters: DataProviderFilterParam<TItem>[] = []
+      extraFilters: DataProviderFilterParam<TItem>[] = [],
     ) => {
       const filters = [
         ...(config.filters ?? []).map(
           ({ optionSignatures, operator }): DataProviderFilterParam<TItem> => {
             const selectedOptions = updatedOptions.filter(
               ({ signature, selected }) =>
-                optionSignatures.includes(signature) && selected
+                optionSignatures.includes(signature) && selected,
             );
             return {
               operator,
               selectedOptions,
             };
-          }
+          },
         ),
         ...extraFilters,
       ];
@@ -63,7 +63,7 @@ export const useListOptions: UseListOptions = <TItem extends object>(
         operator,
       });
     },
-    [dataProvider, config.filters, config.operator]
+    [dataProvider, config.filters, config.operator],
   );
 
   const updateOptionSelection = useCallback<UpdateOptionSelectionFn>(
@@ -71,7 +71,7 @@ export const useListOptions: UseListOptions = <TItem extends object>(
       optionSignature,
       selected,
       multi = false,
-      isFilterOption = () => false
+      isFilterOption = () => false,
     ) => {
       const isTargetOption = ({ signature }: FilterOptionData<TItem>) =>
         signature === optionSignature;
@@ -92,10 +92,10 @@ export const useListOptions: UseListOptions = <TItem extends object>(
             ...option,
             selected: option.fixed,
           };
-        }
+        },
       );
     },
-    [options]
+    [options],
   );
 
   const getOptionBySignature = useCallback<GetOptionBySignatureFn<TItem>>(
@@ -105,7 +105,7 @@ export const useListOptions: UseListOptions = <TItem extends object>(
         options.find(({ signature }) => signature === optionSignature) ?? null
       );
     },
-    [options]
+    [options],
   );
 
   return {

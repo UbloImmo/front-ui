@@ -63,15 +63,15 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultCalendarProps, props);
   const assistiveTextTemplate = useMergedProps(
     defaultCalendarAssistiveTextTemplate,
-    mergedProps.assistiveTextTemplate
+    mergedProps.assistiveTextTemplate,
   );
   const testId = useTestId("calendar", props);
 
   const [dateStart, setDateStart] = useState<Nullable<Date>>(
-    mergedProps.date ?? mergedProps.range?.from ?? null
+    mergedProps.date ?? mergedProps.range?.from ?? null,
   );
   const [dateEnd, setDateEnd] = useState<Nullable<Date>>(
-    mergedProps.range?.to ?? null
+    mergedProps.range?.to ?? null,
   );
 
   const calendarRange = useMemo<CalendarRange>(
@@ -79,7 +79,7 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
       from: dateStart,
       to: dateEnd,
     }),
-    [dateEnd, dateStart]
+    [dateEnd, dateStart],
   );
 
   debug({ calendarRange });
@@ -99,21 +99,23 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
     if (!mergedProps.onChange) return;
     mergedProps.onChange(
       calendarRange.from,
-      mergedProps.mode === "range" && calendarRange.to ? calendarRange.to : null
+      mergedProps.mode === "range" && calendarRange.to
+        ? calendarRange.to
+        : null,
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calendarRange]);
 
   const numberOfMonths = useMemo(
     () => clamp(mergedProps.numberOfMonths, 1, 3),
-    [mergedProps.numberOfMonths]
+    [mergedProps.numberOfMonths],
   );
 
   const selectSingle = useCallback(
     (date: Optional<Date>) => {
       setDateStart(date ?? null);
     },
-    [setDateStart]
+    [setDateStart],
   );
 
   const selectRange = useCallback(
@@ -131,14 +133,14 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
         setDateEnd(null);
       }
     },
-    [setDateStart, setDateEnd]
+    [setDateStart, setDateEnd],
   );
 
   const dayPickerProps = useMemo<CalenderInnerProps>(() => {
     if (mergedProps.mode === "range") {
       const dateRange: DateRange = transformObject(
         calendarRange,
-        (value): Optional<Date> => value ?? undefined
+        (value): Optional<Date> => value ?? undefined,
       );
       return {
         selected: dateRange,

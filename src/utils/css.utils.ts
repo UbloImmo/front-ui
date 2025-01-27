@@ -143,7 +143,7 @@ export const cssVarName = (name: string): CssVarName => `--${name}`;
  */
 export const cssVar = <TValue extends string = string>(
   name: string,
-  value: TValue
+  value: TValue,
 ): CssVar<TValue> => `${cssVarName(name)}: ${value};`;
 
 /**
@@ -309,7 +309,7 @@ export const isCssLengthUsage = (value: unknown): value is CssLengthUsage => {
  * @return {{ name: CssVarName; value: string }} the name and value of the CSS variable
  */
 export const parseCssVar = <TValue extends string>(
-  variable: CssVar<TValue>
+  variable: CssVar<TValue>,
 ): { name: CssVarName; value: TValue } => {
   const [name, value] = variable
     .split(":")

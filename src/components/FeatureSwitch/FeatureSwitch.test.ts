@@ -24,14 +24,14 @@ testFeatureSwitch(FeatureSwitch.defaultProps)(
   "should render",
   ({ queryByTestId }) => {
     expect(queryByTestId("feature-switch")).not.toBeNull();
-  }
+  },
 );
 
 testFeatureSwitch({ ...FeatureSwitch.defaultProps, variant: "checkbox" })(
   "should render with checkbox variant",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
-  }
+  },
 );
 
 testFeatureSwitch({

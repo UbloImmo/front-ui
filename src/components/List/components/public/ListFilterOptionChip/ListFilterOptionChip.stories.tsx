@@ -22,7 +22,7 @@ type MockData = { value: number };
 
 const mockOptionData = filterOptionData(
   "My option",
-  filterOptionMatch<MockData>("value", "=", 0)
+  filterOptionMatch<MockData>("value", "=", 0),
 );
 
 const filterOption: FilterOption<MockData> = {
@@ -71,7 +71,7 @@ const labeledOptions = labels.map(
   (label): FilterOption<MockData> => ({
     ...filterOption,
     label,
-  })
+  }),
 );
 
 export const Labels = () => (
@@ -86,7 +86,7 @@ export const Labels = () => (
 );
 Labels.parameters = {
   docs: componentSource(
-    labeledOptions.map((option) => ({ filterOption: option }))
+    labeledOptions.map((option) => ({ filterOption: option })),
   ),
 };
 
@@ -105,11 +105,11 @@ const coloredOptions = colors.map(
       filterOptionMatch<MockData>("value", "=", 0),
       {
         color,
-      }
+      },
     ),
     select: () => {},
     unselect: () => {},
-  })
+  }),
 );
 
 export const Colors = () => (
@@ -124,7 +124,7 @@ export const Colors = () => (
 );
 Colors.parameters = {
   docs: componentSource(
-    coloredOptions.map((option) => ({ filterOption: option }))
+    coloredOptions.map((option) => ({ filterOption: option })),
   ),
 };
 
@@ -142,11 +142,11 @@ const iconOptions = icons.map(
       filterOptionMatch<MockData>("value", "=", 0),
       {
         icon,
-      }
+      },
     ),
     select: () => {},
     unselect: () => {},
-  })
+  }),
 );
 
 export const Icons = () => (
@@ -161,7 +161,7 @@ export const Icons = () => (
 );
 Icons.parameters = {
   docs: componentSource(
-    iconOptions.map((option) => ({ filterOption: option }))
+    iconOptions.map((option) => ({ filterOption: option })),
   ),
 };
 
@@ -202,6 +202,6 @@ Disabled.parameters = {
     disabledOptions.map(({ filterOption, filterDisabled }) => ({
       filterOption: filterOption as FilterOption<MockData>,
       filterDisabled,
-    }))
+    })),
   ),
 };

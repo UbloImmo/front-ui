@@ -84,7 +84,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
 
   if (props.description && props.size === "default") {
     warn(
-      `Description is not available for default size. Set size to "large" to display it.`
+      `Description is not available for default size. Set size to "large" to display it.`,
     );
   }
 
@@ -97,15 +97,15 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       if (isFunction<VoidFn>(mergedProps.onClick) && !mergedProps.disabled)
         mergedProps.onClick();
     },
-    [mergedProps]
+    [mergedProps],
   );
 
   const staticIconProps = useMemo<StaticIconProps>(() => {
     const color: ColorKeyOrWhite = mergedProps.disabled
       ? "white"
       : isHovering
-      ? "primary"
-      : "gray";
+        ? "primary"
+        : "gray";
     const size = staticIconSizeMap[mergedProps.size];
     const indicator = mergedProps.indicator;
     return { size, color, name: mergedProps.icon, indicator };
@@ -126,8 +126,8 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     const color: PaletteColor = mergedProps.disabled
       ? "gray-600"
       : isHovering
-      ? "primary-base"
-      : "gray-800";
+        ? "primary-base"
+        : "gray-800";
     return {
       color,
       weight: "bold",

@@ -17,7 +17,7 @@ const componentSource = componentSourceFactory<AccountBalanceProps>(
     title: "Titre",
     value: 999_999,
   },
-  AccountBalance.defaultProps
+  AccountBalance.defaultProps,
 );
 
 const meta = {
@@ -109,6 +109,6 @@ export const Value = (props: AccountBalanceProps) => {
 
 Value.parameters = {
   docs: componentSource(
-    valueVariants.map((variant) => ({ ...args, ...variant }))
+    valueVariants.map((variant) => ({ ...args, ...variant })),
   ),
 };

@@ -12,7 +12,7 @@ import type { Meta } from "@storybook/react";
 
 const componentSource = componentSourceFactory<PopoverProps>(
   "Popover",
-  Popover.defaultProps
+  Popover.defaultProps,
 );
 
 const meta = {

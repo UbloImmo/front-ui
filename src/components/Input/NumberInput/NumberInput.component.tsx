@@ -59,7 +59,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
 
   const safeScale = useMemo(
     () => Math.max(mergedProps.scale, 0),
-    [mergedProps.scale]
+    [mergedProps.scale],
   );
 
   const safePrecision = useMemo(() => {
@@ -78,7 +78,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
         scaledValue.toFixed(safePrecision)
         ? previousNativeValue
         : scaledValue;
-    }
+    },
   );
 
   const testId = useTestId("input-number", props);
@@ -109,7 +109,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
       return scaleNumber(clamped, safeScale, mergedProps.precision);
     },
     mergedProps.onChange,
-    mergedProps.onChangeNative
+    mergedProps.onChangeNative,
   );
 
   /**
@@ -127,10 +127,10 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
       }
       if (mergedProps.onChange)
         mergedProps.onChange(
-          scaleNumber(clamped, safeScale, mergedProps.precision)
+          scaleNumber(clamped, safeScale, mergedProps.precision),
         );
     },
-    [inputRef, mergedProps, safeScale]
+    [inputRef, mergedProps, safeScale],
   );
 
   /**
@@ -181,7 +181,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
         decrementValue();
       }
     },
-    [incrementValue, decrementValue]
+    [incrementValue, decrementValue],
   );
 
   const inputStyles = useInputStyles(mergedProps);

@@ -21,7 +21,7 @@ import type { FilterBooleanOperator, FilterSignature } from "../shared.types";
 export const computeFilterDataSignature = (
   label: string,
   optionSignatures: FilterSignature[],
-  operator: FilterBooleanOperator
+  operator: FilterBooleanOperator,
 ): FilterSignature => {
   if (!label) throw new Error("Label is required");
   if (!isArray(optionSignatures))
@@ -49,7 +49,7 @@ export const separateOptionsAndDividers = <TItem extends object>(
     | FilterOptionData<TItem>
     | FilterSignature
     | FilterOptionDividerData
-  )[]
+  )[],
 ): {
   optionSignatures: FilterSignature[];
   optionDividers: FilterOptionDivider[];

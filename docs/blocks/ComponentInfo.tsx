@@ -39,17 +39,17 @@ type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
  * @return {JSX.Element} The rendered component info section.
  */
 export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
-  props: ComponentInfoProps<TComponentProps>
+  props: ComponentInfoProps<TComponentProps>,
 ) => {
   const [isPropsPage, setIsPropsPage] = useState(false);
 
   useLayoutEffect(() => {
     const pageSubtitle = document.querySelector(
-      `main[data-layout="docs-content"] > span:first-child > h2[data-testid="heading"]:first-child`
+      `main[data-layout="docs-content"] > span:first-child > h2[data-testid="heading"]:first-child`,
     );
 
     setIsPropsPage(
-      !!(pageSubtitle && pageSubtitle.textContent === "Properties")
+      !!(pageSubtitle && pageSubtitle.textContent === "Properties"),
     );
   }, []);
 
@@ -72,8 +72,8 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
     const propsLink = rawTitle.endsWith("/Usage")
       ? rawTitle.replace("/Usage", "/Properties")
       : rawTitle.endsWith("/Stories")
-      ? rawTitle.replace("/Stories", "/Properties")
-      : null;
+        ? rawTitle.replace("/Stories", "/Properties")
+        : null;
 
     // remove "Stories" from the title if present
     if (rawTitle && rawTitle.endsWith("/Stories")) {
@@ -81,7 +81,7 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
     }
     const [title, ...rest] = rawTitle.split("/").reverse();
     const parent =
-      props.parent ?? (Array.isArray(rest) && rest.length > 0)
+      (props.parent ?? (Array.isArray(rest) && rest.length > 0))
         ? rest.reverse().join("/")
         : "";
 
@@ -136,7 +136,7 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
         window.open(link, "_blank");
       }
     },
-    []
+    [],
   );
 
   const redirectToProps = useMemo(() => {

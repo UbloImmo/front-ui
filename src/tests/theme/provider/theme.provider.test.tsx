@@ -18,7 +18,7 @@ describe("theme provider", () => {
     const { getByText } = render(
       <ThemeProvider>
         <span>Test</span>
-      </ThemeProvider>
+      </ThemeProvider>,
     );
     expect(getByText("Test")).toBeDefined();
   });
@@ -37,13 +37,13 @@ describe("theme provider", () => {
                 light: "#e9e6f8",
               },
             },
-          })
-        )
+          }),
+        ),
     );
     const { getByText } = render(
       <ThemeProvider getOverridesFn={getOverrides}>
         <span>Test</span>
-      </ThemeProvider>
+      </ThemeProvider>,
     );
     expect(getByText("Test")).toBeDefined();
   });

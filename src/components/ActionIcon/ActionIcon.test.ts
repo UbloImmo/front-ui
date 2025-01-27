@@ -11,14 +11,14 @@ const testId = "action-icon";
 
 const testActionIcon = testComponentFactory<ActionIconProps>(
   "ActionIcon",
-  ActionIcon
+  ActionIcon,
 );
 
 testActionIcon(ActionIcon.defaultProps)(
   "should render",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
-  }
+  },
 );
 
 const onClick = mock<VoidFn>(() => {});
@@ -32,7 +32,7 @@ testActionIcon({ ...ActionIcon.defaultProps, onClick })(
     await click(actionIcon);
     expect(onClick).toHaveBeenCalled();
     onClick.mockReset();
-  }
+  },
 );
 
 testActionIcon({ ...ActionIcon.defaultProps, disabled: true })(
@@ -45,7 +45,7 @@ testActionIcon({ ...ActionIcon.defaultProps, disabled: true })(
     await click(actionIcon);
     expect(onClick).not.toHaveBeenCalled();
     onClick.mockReset();
-  }
+  },
 );
 
 global.console.warn = mock(() => {});
@@ -59,7 +59,7 @@ testActionIcon({ ...ActionIcon.defaultProps, icon: null })(
     expect(queryByTestId(testId)).not.toBeNull();
     expect(global.console.error).toHaveBeenCalled();
     (global.console.error as Mock<VoidFn>).mockReset();
-  }
+  },
 );
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -70,5 +70,5 @@ testActionIcon({ ...ActionIcon.defaultProps, title: null })(
     expect(queryByTestId(testId)).not.toBeNull();
     expect(global.console.warn).toHaveBeenCalled();
     (global.console.warn as Mock<VoidFn>).mockReset();
-  }
+  },
 );

@@ -14,7 +14,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<CheckboxProps>(
   "Checkbox",
-  Checkbox.defaultProps
+  Checkbox.defaultProps,
 );
 
 const checkboxStatus: CheckboxStatus[] = [true, "mixed", false];
@@ -94,7 +94,7 @@ const baseItems: { label: string; checked: CheckboxStatus }[] = arrayOf(
   (index) => ({
     label: "Item " + index,
     checked: false,
-  })
+  }),
 );
 
 export const Mixed = () => {
@@ -118,7 +118,7 @@ export const Mixed = () => {
       items.map((item) => ({
         ...item,
         checked: active,
-      }))
+      })),
     );
   };
 

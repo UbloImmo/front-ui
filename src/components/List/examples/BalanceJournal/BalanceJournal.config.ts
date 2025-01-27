@@ -94,7 +94,7 @@ export const useBalanceJournalConfig = () => {
         operator: BooleanOperators.AND,
         icon: "CatRobot",
         color: "primary",
-      }
+      },
     );
 
     return filter(
@@ -102,7 +102,7 @@ export const useBalanceJournalConfig = () => {
       [automaticInvoices, invoices, payments, creditNotes],
       {
         emptyLabel: tl.status.all(`${TRANSACTION_FILTER_LABEL}s`),
-      }
+      },
     );
   });
 
@@ -135,7 +135,7 @@ export const useBalanceJournalConfig = () => {
             disabled: true,
           },
         };
-      })
+      }),
     );
 
     const creditNoteOptions = options(
@@ -151,7 +151,7 @@ export const useBalanceJournalConfig = () => {
             color,
           },
         };
-      })
+      }),
     );
 
     return filter(
@@ -164,7 +164,7 @@ export const useBalanceJournalConfig = () => {
       ],
       {
         // multi: false,
-      }
+      },
     );
   });
 

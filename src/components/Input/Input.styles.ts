@@ -68,7 +68,7 @@ const commonInputControlStyles = ({
 `;
 
 export const inputControlGroupStyles = (
-  props: InputControlAnchorProps
+  props: InputControlAnchorProps,
 ): RuleSet => css`
   ${commonInputControlStyles(props)}
   position: absolute;

@@ -84,7 +84,7 @@ const defaultData: DefaultListItem[] = [
 ];
 
 export const useDefaultDataProvider: UseDataProviderFn<DefaultListItem> = (
-  setData
+  setData,
 ) => {
   return useStaticDataProvider(defaultData, setData);
 };

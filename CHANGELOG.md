@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.2` ContextLine component
+  - Add new `icon`, `description`, `badge` content properties
+  - Add new `borderBottom`, `paddingHorizontal`, `compact` styling properties
+  - Edit `children` property type definition to allow for arbitrary content
+  - Rewrite markup to use FlexLayout
+  - Update docs
+
+- `v0.0.2` ContextInfoCard component
+  - Add `href` property to allow for navigation
+  - Update styles & markup to reflect whether the card is a link or not
+  - Update docs
+
+- `v0.0.10` EntityInfoCard component
+  - Major rewrite of the component and its typings to allow for more flexibility and customization
+  - Add `sections` property to allow for multiple sections of already supported content
+  - Add `contextInfoCards` property to allow for context info cards to be displayed in a section
+  - Remove internal `EntityStatusRow` rendering in favor of `ContextLine`
+  - Update docs
+
+- `StyleOverrideProps`
+  - Add `as` property to allow components to make use of `styled-components`' `as` property on a per-component basis
+  - Add support for `as` property in `FlexLayout` & `Text` for now
+  - Update other component typings to omit it.
+
+- **DOCS**
+  - Update `Canvas` block styles to make components with a `gray-50` background more readable
+
 ## 1.2.0 - 2025-01-24
 ### Added
 - `v0.0.1` ContextInfoCard component
