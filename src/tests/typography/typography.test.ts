@@ -3,7 +3,6 @@ import { describe, expect, it } from "bun:test";
 import { testLenghts } from "../css.test";
 
 import { buildTypographyWeightMap } from "@/typography/typogaphy.weight";
-import { typographyFontFace, linkFontFace } from "@/typography/typography.font";
 import {
   typographyTextDecoration,
   mobileFontSize,
@@ -11,6 +10,7 @@ import {
   sanitizeTypographyProps,
   buildTypographyStyle,
 } from "@/typography/typography.styles";
+import { typographyFontFace, linkFontFace } from "@/utils/typography.font";
 import { cssRem } from "@utils";
 
 import type { AnyTypographyProps, TextProps, TypographyProps } from "@types";
