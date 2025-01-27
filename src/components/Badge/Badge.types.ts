@@ -6,8 +6,8 @@ import type {
 } from "@types";
 import type { Enum, Nullable, RequireAtLeastOne } from "@ubloimmo/front-util";
 
-const badgeShades = ["light", "dark"] as const;
-export type BadgeShade = Enum<typeof badgeShades>;
+const _badgeShades = ["light", "dark"] as const;
+export type BadgeShade = Enum<typeof _badgeShades>;
 
 export type BadgeProps = RequireAtLeastOne<{
   /**

@@ -23,9 +23,9 @@ export const buttonColors = [
 
 export type ButtonColor = Enum<typeof buttonColors>;
 
-const buttonTypes = ["button", "submit"] as const;
+const _buttonTypes = ["button", "submit"] as const;
 
-export type ButtonType = Enum<typeof buttonTypes>;
+export type ButtonType = Enum<typeof _buttonTypes>;
 
 export type ButtonProps = Omit<StyleOverrideProps, "as"> & {
   /**

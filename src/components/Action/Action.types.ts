@@ -5,9 +5,9 @@ import type { StaticIconIndicator } from "../StaticIcon";
 import type { TooltipProps } from "../Tooltip";
 import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 
-const actionSizes = ["default", "large"] as const;
+const _actionSizes = ["default", "large"] as const;
 
-export type ActionSize = Enum<typeof actionSizes>;
+export type ActionSize = Enum<typeof _actionSizes>;
 
 /**
  * Action component props

@@ -46,7 +46,7 @@ const isComponentName = <TIndex extends AnyIndex>(
   return true;
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type ForwardedRefExoticRenderComponent<T, P = {}> = ReturnType<
   typeof forwardRef<T, P>
 > & {

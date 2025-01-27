@@ -2,7 +2,7 @@ import type { CssLength, StyleOverrideProps } from "@types";
 import type { Enum, Nullable } from "@ubloimmo/front-util";
 import type { AriaRole, ReactNode } from "react";
 
-const gridFlows = [
+const _gridFlows = [
   "row",
   "column",
   "row dense",
@@ -10,11 +10,11 @@ const gridFlows = [
   "dense",
 ] as const;
 
-export type GridFlow = Enum<typeof gridFlows>;
+export type GridFlow = Enum<typeof _gridFlows>;
 
-const gridAlignments = ["center", "start", "end", "baseline"] as const;
+const _gridAlignments = ["center", "start", "end", "baseline"] as const;
 
-export type GridAlignment = Enum<typeof gridAlignments>;
+export type GridAlignment = Enum<typeof _gridAlignments>;
 
 export type GridGap =
   | CssLength

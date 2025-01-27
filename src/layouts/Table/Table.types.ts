@@ -1,13 +1,13 @@
 import type { StyleOverrideProps, StyleProps } from "@types";
 import type { ReactNode } from "react";
 
-const tableLayouts = ["auto", "fixed"] as const;
+const _tableLayouts = ["auto", "fixed"] as const;
 
-export type TableLayout = (typeof tableLayouts)[number];
+export type TableLayout = (typeof _tableLayouts)[number];
 
-const tableStyles = ["list", "form"] as const;
+const _tableStyles = ["list", "form"] as const;
 
-export type TableStyle = (typeof tableStyles)[number];
+export type TableStyle = (typeof _tableStyles)[number];
 
 export type TableProps = {
   /**

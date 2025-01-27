@@ -188,7 +188,7 @@ export type IDataProvider<
          */
         pageSize: number;
       }
-    : // eslint-disable-next-line @typescript-eslint/ban-types
+    : // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       {});
 
 export type UseDataProviderParams<TItem extends object> = [

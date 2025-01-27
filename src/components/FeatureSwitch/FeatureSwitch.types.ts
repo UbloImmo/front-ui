@@ -6,8 +6,8 @@ import type { TooltipProps } from "../Tooltip";
 import type { Enum, Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
-const featureSwitchVariants = ["checkbox", "switch", "select"] as const;
-export type FeatureSwitchVariant = Enum<typeof featureSwitchVariants>;
+const _featureSwitchVariants = ["checkbox", "switch", "select"] as const;
+export type FeatureSwitchVariant = Enum<typeof _featureSwitchVariants>;
 
 export type FeatureSwitchCommonProps = {
   /**

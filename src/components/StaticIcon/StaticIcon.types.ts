@@ -1,10 +1,10 @@
 import type { IconName, IconProps } from "../Icon/Icon.types";
 import type { TooltipProps } from "../Tooltip";
+import type { ExtendedComponentSize } from "@/types/themes/sizes/sizes.types";
 import type { SpacingLabel, ColorKeyOrWhite, StyleOverrideProps } from "@types";
-import type { Enum, Nullable } from "@ubloimmo/front-util";
+import type { Nullable } from "@ubloimmo/front-util";
 
-const staticIconSizes = ["xs", "s", "m", "l"] as const;
-export type StaticIconSize = Enum<typeof staticIconSizes>;
+export type StaticIconSize = Exclude<ExtendedComponentSize, "xl">;
 
 export type StaticIconIndicator = Pick<IconProps, "color" | "name"> & {
   /**

@@ -6,9 +6,9 @@ import type {
 import type { StyleProps } from "@types";
 import type { Enum } from "@ubloimmo/front-util";
 
-const componentCardCellSizes = ["large", "small"] as const;
+const _componentCardCellSizes = ["large", "small"] as const;
 
-export type ComponentCardCellSize = Enum<typeof componentCardCellSizes>;
+export type ComponentCardCellSize = Enum<typeof _componentCardCellSizes>;
 
 export type ComponentCardProps<
   TIndex extends AnyIndex,

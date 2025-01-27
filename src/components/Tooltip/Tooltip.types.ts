@@ -10,7 +10,7 @@ import type { ReactNode } from "react";
 
 export type TooltipContentFn = GenericFn<[], ReactNode>;
 
-const cursors = [
+const _cursors = [
   "default",
   "pointer",
   "not-allowed",
@@ -24,7 +24,7 @@ const cursors = [
   "copy",
 ] as const;
 
-export type ToolitipCursor = Enum<typeof cursors>;
+export type ToolitipCursor = Enum<typeof _cursors>;
 
 export type TooltipProps = {
   /**

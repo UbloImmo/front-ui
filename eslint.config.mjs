@@ -136,7 +136,9 @@ export default [
       "@typescript-eslint/no-empty-interface": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/ban-ts-comment": "warn",
+      "@typescript-eslint/ban-types": "off",
 
+      // imports
       "import/no-restricted-paths": [
         "error",
         {

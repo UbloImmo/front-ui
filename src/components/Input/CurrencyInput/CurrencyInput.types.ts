@@ -8,9 +8,9 @@ import type { IconName } from "@/components/Icon";
 import type { NumberSign, StyleProps } from "@types";
 import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 
-const currencies = ["euro", "dollar", "pound", "yen"] as const;
+const _currencies = ["euro", "dollar", "pound", "yen"] as const;
 
-export type Currency = Enum<typeof currencies>;
+export type Currency = Enum<typeof _currencies>;
 
 export type CurrencyInputProps = InputProps<"currency"> & {
   /**
