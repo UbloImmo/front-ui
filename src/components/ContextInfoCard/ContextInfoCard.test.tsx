@@ -57,7 +57,7 @@ testCard({
 
 testCard({
   ...defaultProps,
-  staticIcon: {
+  icon: {
     name: "InvoiceClock",
     color: "pending",
   },
