@@ -64,3 +64,5 @@ testCard({
 })("should render with different icon", async ({ findByTestId }) => {
   expect(await findByTestId(testId)).not.toBeNull();
 });
+
+console.log("test");
