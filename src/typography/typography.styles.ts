@@ -20,6 +20,7 @@ import type {
   TypographySize,
   TypographyBreakpoint,
   TypographyStyle,
+  HeadingSize,
 } from "@types";
 
 /**
@@ -86,8 +87,11 @@ export const sanitizeTypographyProps = (
   const weight = allTypographyWeights.includes(rawWeight)
     ? rawWeight
     : defaults.weight;
+  const as = ["h1", "h2", "h3", "h4"].includes(size)
+    ? (size as HeadingSize)
+    : (props.as ?? defaults.as);
   return {
-    as: "span",
+    as,
     size,
     weight,
     color: props.color ?? defaults.color,

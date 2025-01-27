@@ -143,7 +143,7 @@
     "test:unit:watch": "bun test --watch",
     "test:deps": "bun madge src --extensions js,jsx,ts,tsx",
     "test:deps:circular": "bun madge src --extensions js,jsx,ts,tsx --circular --warning --ts-config tsconfig.json",
-    "test:all": "bun test:types && bun test:deps:circular && bun test:unit",
+    "test:all": "bun test:lint && bun test:types && bun test:deps:circular && bun test:unit",
     "prepare": "husky",
     "pre-push": "./scripts/pre-push.sh || bun test:all",
     "icons:generate": "bun scripts/svg/index.ts && bun test:lint:fix",

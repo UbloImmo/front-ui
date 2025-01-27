@@ -152,7 +152,7 @@ describe("typography", () => {
 
       it("should accept valid props", () => {
         const validProps: Required<AnyTypographyProps> = {
-          size: "h1",
+          size: "m",
           color: "primary-base",
           italic: true,
           underline: true,
@@ -168,11 +168,13 @@ describe("typography", () => {
           fill: true,
           noWrap: true,
           id: null,
-          as: "p",
+          as: "span",
         };
-        expect(sanitizeTypographyProps(defaultProps, validProps)).toEqual(
+        const sanitizedProps = sanitizeTypographyProps(
+          defaultProps,
           validProps,
         );
+        expect(sanitizedProps).toEqual(validProps);
       });
     });
   });
