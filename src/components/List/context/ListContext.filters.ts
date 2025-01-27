@@ -23,7 +23,7 @@ import type {
 
 export const useListFilters: UseListFilters = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "filters">,
-  { options, updateOptionSelection }: UseListOptionsReturn<TItem>
+  { options, updateOptionSelection }: UseListOptionsReturn<TItem>,
 ): UseListFiltersReturn<TItem> => {
   const filterDatas = useDataArray(config.filters ?? [], true);
 
@@ -32,21 +32,21 @@ export const useListFilters: UseListFilters = <TItem extends object>(
       optionData: FilterOptionData<TItem>,
       multi = false,
       isFilterOption: IsFilterOptionFn = () => false,
-      isFilterDisabled = false
+      isFilterDisabled = false,
     ): FilterOption<TItem> => {
       const select = () =>
         updateOptionSelection(
           optionData.signature,
           true,
           multi,
-          isFilterOption
+          isFilterOption,
         );
       const unselect = () =>
         updateOptionSelection(
           optionData.signature,
           false,
           multi,
-          isFilterOption
+          isFilterOption,
         );
       return {
         ...optionData,
@@ -55,7 +55,7 @@ export const useListFilters: UseListFilters = <TItem extends object>(
         unselect,
       };
     },
-    [updateOptionSelection]
+    [updateOptionSelection],
   );
 
   const buildFilterOptions = useCallback(
@@ -68,21 +68,21 @@ export const useListFilters: UseListFilters = <TItem extends object>(
       return filterData.optionSignatures
         .map((optionSignature) => {
           const optionData = options.find(
-            ({ signature }) => signature === optionSignature
+            ({ signature }) => signature === optionSignature,
           );
           if (!optionData) return null;
           return buildFilterOption(
             optionData,
             filterData.multi,
             isFilterOption,
-            filterData.disabled
+            filterData.disabled,
           );
         })
         .filter((maybeOption): maybeOption is FilterOption<TItem> =>
-          isObject(maybeOption)
+          isObject(maybeOption),
         );
     },
-    [options, buildFilterOption]
+    [options, buildFilterOption],
   );
 
   const clearFilter = useCallback(
@@ -92,10 +92,10 @@ export const useListFilters: UseListFilters = <TItem extends object>(
         (option) => ({
           ...option,
           selected: option.fixed || option.default,
-        })
+        }),
       );
     },
-    [options]
+    [options],
   );
 
   const buildFilter = useCallback(
@@ -119,7 +119,7 @@ export const useListFilters: UseListFilters = <TItem extends object>(
         selectAll,
       };
     },
-    [buildFilterOptions, clearFilter]
+    [buildFilterOptions, clearFilter],
   );
 
   const filtersLoading = useMemo(() => {
@@ -136,7 +136,7 @@ export const useListFilters: UseListFilters = <TItem extends object>(
     (filterId: string) => {
       return filters.find(({ id }) => id === filterId) ?? null;
     },
-    [filters]
+    [filters],
   );
 
   const getFilterBySignature = useCallback<GetFilterBySignatureFn<TItem>>(
@@ -145,19 +145,19 @@ export const useListFilters: UseListFilters = <TItem extends object>(
         filters.find(({ signature }) => signature === filterSignature) ?? null
       );
     },
-    [filters]
+    [filters],
   );
 
   const getFilterByLabel = useCallback<GetFilterByLabelFn<TItem>>(
     (filterLabel: string) => {
       return filters.find(({ label }) => label === filterLabel) ?? null;
     },
-    [filters]
+    [filters],
   );
 
   const clearAllFilters = useCallback<VoidFn>(
     () => filters.forEach((filter) => filter.clear()),
-    [filters]
+    [filters],
   );
 
   return {

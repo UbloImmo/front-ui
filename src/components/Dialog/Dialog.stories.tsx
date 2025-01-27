@@ -73,7 +73,7 @@ const TestDialog =
   (
     reference: DialogReference,
     fixedChildren?: ReactNode,
-    buttonLabel = "Open dialog"
+    buttonLabel = "Open dialog",
   ) =>
   (props: DialogProps) => {
     const { children: _, ...mergedProps } = mergeDefaultProps(props, {
@@ -161,7 +161,7 @@ const DialogVariantWrapper = (props: DialogProps) => {
 
 export const Default = TestDialog(
   "example-default",
-  <ExampleCard reference="example-default" />
+  <ExampleCard reference="example-default" />,
 );
 
 export const Content = (props: DialogProps) => {
@@ -188,7 +188,7 @@ export const CloseButton = TestDialog(
   >
     This card is an example. <br />
     It contains a manual close button.
-  </TestCard>
+  </TestCard>,
 );
 
 export const Overflow = TestDialog(
@@ -204,7 +204,7 @@ export const Overflow = TestDialog(
     <br />
     Try scrolling !
   </TestCard>,
-  "Open overflowing dialog"
+  "Open overflowing dialog",
 );
 
 const StoryContainer = styled.div`

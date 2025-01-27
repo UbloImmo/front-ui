@@ -20,8 +20,11 @@ export const componentCardStyle = ({
     height: 100%;
     border: 1px solid var(--primary-light-00);
     opacity: 1;
-    transition: border-color 300ms ease-out 0s, background 300ms ease-out 0s,
-      box-shadow 300ms ease-out 0s, opacity 150ms ease-in 0ms;
+    transition:
+      border-color 300ms ease-out 0s,
+      background 300ms ease-out 0s,
+      box-shadow 300ms ease-out 0s,
+      opacity 150ms ease-in 0ms;
 
     &,
     & * {

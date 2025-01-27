@@ -10,7 +10,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<ComboBoxButtonProps>(
   "ComboBoxButton",
-  ComboBoxButton.defaultProps
+  ComboBoxButton.defaultProps,
 );
 
 const meta = {

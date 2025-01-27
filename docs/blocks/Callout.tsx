@@ -25,7 +25,7 @@ export const Callout = ({
   return (
     <CalloutStyleOverrides>
       <UikitCallout {...props} color={color}>
-        {isString(content) ? <Markdown>{content}</Markdown> : content ?? ""}
+        {isString(content) ? <Markdown>{content}</Markdown> : (content ?? "")}
       </UikitCallout>
     </CalloutStyleOverrides>
   );

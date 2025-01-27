@@ -29,7 +29,7 @@ import type { StyleOverrideProps, StyleProps, TestIdProps } from "@types";
 export const ListFilterCollection = (
   props: ListFilterCollectionProps &
     TestIdProps &
-    Omit<StyleOverrideProps, "as">
+    Omit<StyleOverrideProps, "as">,
 ) => {
   const {
     title,

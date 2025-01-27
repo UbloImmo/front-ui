@@ -12,7 +12,7 @@ import type { TextAreaInputProps } from "./TextAreaInput";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 type SpecificInputPropsMap<
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = {
   text: InputProps<"text">;
   email: InputProps<"email">;
@@ -32,12 +32,12 @@ type SpecificInputPropsMap<
 
 export type SpecificInputProps<
   TType extends InputType,
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = SpecificInputPropsMap<TGenericValue>[TType];
 
 export interface SpecificInputComponent<
   TType extends InputType,
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > {
   (props: SpecificInputProps<TType, TGenericValue>): JSX.Element;
   defaultProps?: Required<
@@ -46,14 +46,14 @@ export interface SpecificInputComponent<
 }
 
 export type SpecificInputComponentMap<
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = {
   [TType in InputType]: Nullable<SpecificInputComponent<TType, TGenericValue>>;
 };
 
 export type GenericInputProps<
   TType extends InputType,
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = {
   /**
    * The input's type

@@ -16,7 +16,7 @@ import type { NullishPrimitives } from "@ubloimmo/front-util";
  * @template TValue - The value type for the FeatureSwitch, must extend NullishPrimitives
  */
 export const isFeatureSwitchOptionVariant = <TValue extends NullishPrimitives>(
-  props: FeatureSwitchProps<TValue>
+  props: FeatureSwitchProps<TValue>,
 ): props is FeatureSwitchOptionsVariant<TValue> => {
   return props.variant === "select";
 };
@@ -29,7 +29,7 @@ export const isFeatureSwitchOptionVariant = <TValue extends NullishPrimitives>(
  * @see {@link FeatureSwitchSwitchVariant}
  */
 export const isFeatureSwitchSwitchVariant = (
-  props: FeatureSwitchProps<NullishPrimitives>
+  props: FeatureSwitchProps<NullishPrimitives>,
 ): props is FeatureSwitchSwitchVariant => {
   return props.variant === "switch";
 };
@@ -42,7 +42,7 @@ export const isFeatureSwitchSwitchVariant = (
  * @see {@link FeatureSwitchCheckboxVariant}
  */
 export const isFeatureSwitchCheckboxVariant = (
-  props: FeatureSwitchProps<NullishPrimitives>
+  props: FeatureSwitchProps<NullishPrimitives>,
 ): props is FeatureSwitchCheckboxVariant => {
   return props.variant === "checkbox";
 };

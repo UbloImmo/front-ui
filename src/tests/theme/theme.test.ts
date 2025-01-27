@@ -38,7 +38,7 @@ describe("theme", () => {
 
     it("should return null in localhost", async () => {
       const getOverrides = mock(
-        async () => await getThemeOverrides(fakeFetchNull)
+        async () => await getThemeOverrides(fakeFetchNull),
       );
       const overrides = await getOverrides();
       expect(getOverrides).toHaveBeenCalled();
@@ -47,7 +47,7 @@ describe("theme", () => {
 
     it("should return a theme override object in a staging or production env", async () => {
       const getOverrides = mock(
-        async () => await getThemeOverrides(fakeFetchDefaultTheme)
+        async () => await getThemeOverrides(fakeFetchDefaultTheme),
       );
       const overrides = await getOverrides();
       expect(getOverrides).toHaveBeenCalled();
@@ -65,7 +65,7 @@ describe("theme", () => {
 
     it("should build the theme and include overrides", async () => {
       const getOverrides = mock(
-        async () => await getThemeOverrides(fakeFetchDefaultTheme)
+        async () => await getThemeOverrides(fakeFetchDefaultTheme),
       );
       const build = mock(buildTheme);
       const overrides = await getOverrides();

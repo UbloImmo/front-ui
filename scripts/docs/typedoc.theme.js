@@ -12,7 +12,7 @@ const pageFooter = (_page) => {
   return lines(
     `<hr style={{marginTop: "var(--s-12) !important", marginBottom: "var(--s-4) !important"}} />`,
     `<Text size="s" color="gray-400" italic>This documentation page was generated with typedoc.</Text>`,
-    `</Content>`
+    `</Content>`,
   );
 };
 
@@ -36,7 +36,7 @@ function sanitizeComments(str) {
     // restore = in links
     .replace(
       /(?<label>\[.+\])(?<urlStart>\(.+)(?<equal>\\=)(?<urlEnd>.+\))/g,
-      "$<label>$<urlStart>=$<urlEnd>"
+      "$<label>$<urlStart>=$<urlEnd>",
     )
     // escape < that has not been escaped already
     .replace(/(?<!\\)</g, "\\<")
@@ -46,7 +46,7 @@ function sanitizeComments(str) {
   // Replace placeholders with original code blocks
   str = str.replace(
     new RegExp(placeholder, "g"),
-    () => codeBlocks.shift() || ""
+    () => codeBlocks.shift() || "",
   );
   return str;
 }

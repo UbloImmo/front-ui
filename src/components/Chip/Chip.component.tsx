@@ -47,7 +47,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   const tl = useUikitTranslation();
   const deleteLabel = useMemo(
     () => deleteButtonTitle ?? tl.action.delete(label),
-    [deleteButtonTitle, label, tl]
+    [deleteButtonTitle, label, tl],
   );
 
   const onDelete = useCallback<MouseEventHandler<HTMLElement>>(
@@ -56,7 +56,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
       event.stopPropagation();
       mergedProps.onDelete();
     },
-    [mergedProps]
+    [mergedProps],
   );
 
   const { iconColorStyle, textColorStyle } = useMemo(() => {

@@ -29,7 +29,7 @@ const componentSource = componentSourceFactory<ContextLineProps>(
     label: "[label]",
     children: '<Badge label="Children" color="primary" />',
   },
-  ContextLine.defaultProps
+  ContextLine.defaultProps,
 );
 
 const meta = {
@@ -274,7 +274,7 @@ export const Icons = (props: ContextLineProps) => {
         icon: "CircleFill",
       },
     },
-    props
+    props,
   );
 
   return (
@@ -316,7 +316,7 @@ export const Descriptions = (props: ContextLineProps) => {
         icon: "CircleFill",
       },
     },
-    props
+    props,
   );
 
   return (

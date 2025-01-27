@@ -81,7 +81,7 @@ const testDialog = testComponentFactory<DialogProps>(
       },
     ],
   },
-  Wrapper
+  Wrapper,
 );
 
 testDialog({ ...props, open: true })(
@@ -90,7 +90,7 @@ testDialog({ ...props, open: true })(
     objectValues(testIds).forEach((testId) => {
       expect(queryByTestId(testId)).not.toBeNull();
     });
-  }
+  },
 );
 
 global.console.error = mock(() => {});
@@ -106,14 +106,14 @@ testDialog({ ...props, reference: null })(
     });
     expect(global.console.error).toHaveBeenCalled();
     (global.console.error as Mock<VoidFn>).mockReset();
-  }
+  },
 );
 
 const testUseGlobalDialogContext = () => {
   type Hook = typeof useGlobalDialogContext;
   const testContext = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
     "Context",
-    useGlobalDialogContext
+    useGlobalDialogContext,
   );
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -128,7 +128,7 @@ const testUseGlobalDialogContext = () => {
     (result) => {
       expect(result).toContainKey("portalRoot");
       expect(result.portalRoot).toBe("#dialog-root");
-    }
+    },
   );
 
   testContext({ portalRoot: "#root" })(
@@ -136,7 +136,7 @@ const testUseGlobalDialogContext = () => {
     (result) => {
       expect(result).toContainKey("portalRoot");
       expect(result.portalRoot).toBe("#root");
-    }
+    },
   );
 
   global.console.error = mock(() => {});
@@ -148,7 +148,7 @@ const testUseGlobalDialogContext = () => {
       expect(result.portalRoot).toBe("#dialog-root");
       expect(global.console.error).toHaveBeenCalled();
       (global.console.error as Mock<VoidFn>).mockReset();
-    }
+    },
   );
   (global.console.error as Mock<VoidFn>).mockReset();
   const testDefaultContext = testContext({ portalRoot: "#dialog-root" });
@@ -175,7 +175,7 @@ const testUseGlobalDialogContext = () => {
     },
     {
       skip: true,
-    }
+    },
   );
 
   testDefaultContext(
@@ -191,7 +191,7 @@ const testUseGlobalDialogContext = () => {
       expect(global.console.error).toHaveBeenCalled();
 
       (global.console.error as Mock<VoidFn>).mockReset();
-    }
+    },
   );
   // FIXME: find out why we are unable to get the hook to rerender
   testDefaultContext(
@@ -208,7 +208,7 @@ const testUseGlobalDialogContext = () => {
       await act(() => result.unregisterDialog("test"));
       expect(global.console.error).not.toHaveBeenCalled();
       (global.console.error as Mock<VoidFn>).mockReset();
-    }
+    },
   );
 
   testDefaultContext(
@@ -224,7 +224,7 @@ const testUseGlobalDialogContext = () => {
       expect(global.console.warn).not.toHaveBeenCalled();
       (global.console.error as Mock<VoidFn>).mockReset();
       (global.console.warn as Mock<VoidFn>).mockReset();
-    }
+    },
   );
 
   testDefaultContext(
@@ -236,7 +236,7 @@ const testUseGlobalDialogContext = () => {
       act(() => unregisterDialog("test"));
       expect(global.console.warn).toHaveBeenCalled();
       (global.console.warn as Mock<VoidFn>).mockReset();
-    }
+    },
   );
 
   testDefaultContext(
@@ -271,7 +271,7 @@ const testUseGlobalDialogContext = () => {
 
       (global.console.warn as Mock<VoidFn>).mockReset();
       (global.console.error as Mock<VoidFn>).mockReset();
-    }
+    },
   );
 
   testDefaultContext(
@@ -286,7 +286,7 @@ const testUseGlobalDialogContext = () => {
       await act(() => result.toggleDialog("test"));
       result = getResult();
       expect(result.isDialogOpen("test")).toBe(false);
-    }
+    },
   );
 
   // FIXME: find out why we are unable to get the hook to rerender
@@ -308,7 +308,7 @@ const testUseGlobalDialogContext = () => {
       act(() => result.setDialogState("test", false));
       result = getResult();
       expect(result.isDialogOpen("test")).toBe(false);
-    }
+    },
   );
 
   testDefaultContext(
@@ -343,7 +343,7 @@ const testUseGlobalDialogContext = () => {
       expect(global.console.warn).toHaveBeenCalled();
 
       (global.console.warn as Mock<VoidFn>).mockReset();
-    }
+    },
   );
 };
 
@@ -351,7 +351,7 @@ const testUseDialogManager = () => {
   type Hook = typeof useDialogManager;
   const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
     "useDialogManager",
-    useDialogManager
+    useDialogManager,
   );
 
   testHook()("should return all methods from context", (result) => {
@@ -364,7 +364,7 @@ const testUseDialog = () => {
   type Hook = typeof useDialog;
   const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
     "useDialog",
-    useDialog
+    useDialog,
   );
 
   testHook("test")(
@@ -372,7 +372,7 @@ const testUseDialog = () => {
     (result) => {
       expect(result).toBeObject();
       expect(result).toContainKeys(useDialogKeys);
-    }
+    },
   );
 };
 describe("Dialog", () => {

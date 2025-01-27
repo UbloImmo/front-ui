@@ -136,7 +136,7 @@ export const isValidRgbaStr = (rootStr: unknown): rootStr is RgbaColorStr => {
  * @return {HexColorAlpha} The hexadecimal color with alpha.
  */
 const hexColorShorthandToHexColorAlpha = (
-  hexColorShorthand: HexColorShorthand | HexColorShorthandAlpha
+  hexColorShorthand: HexColorShorthand | HexColorShorthandAlpha,
 ): HexColorAlpha => {
   const [hashtag, redComponent, greenComponent, blueComponent, alphaComponent] =
     hexColorShorthand.split("");
@@ -160,7 +160,7 @@ const hexColorShorthandToHexColorAlpha = (
  * @return {number} The converted RGB component.
  */
 const hexComponentDoubleToRgbComponent = (
-  hexComponent: HexComponentDouble
+  hexComponent: HexComponentDouble,
 ): number => {
   return parseInt(hexComponent, 16);
 };
@@ -172,7 +172,7 @@ const hexComponentDoubleToRgbComponent = (
  * @return {number} The converted RGB alpha component.
  */
 const hexAlphaComponentToRgbAlphaComponent = (
-  hexComponent: HexComponentDouble
+  hexComponent: HexComponentDouble,
 ): number => {
   return parseInt(hexComponent, 16) / 255;
 };
@@ -194,7 +194,7 @@ const isHexColorAlpha = (hexColor: unknown): hexColor is HexColorAlpha => {
  * @return {boolean} Returns true if the hex color is in shorthand format, false otherwise.
  */
 const isHexColorShorthand = (
-  hexColor: unknown
+  hexColor: unknown,
 ): hexColor is HexColorShorthand => {
   return isValidHexStr(hexColor) && hexColor.length === 4;
 };
@@ -206,7 +206,7 @@ const isHexColorShorthand = (
  * @return {boolean} Returns true if the hex color is in shorthand alpha format, false otherwise.
  */
 const isHexColorShorthandAlpha = (
-  hexColor: unknown
+  hexColor: unknown,
 ): hexColor is HexColorShorthandAlpha => {
   return isValidHexStr(hexColor) && hexColor.length === 5;
 };
@@ -239,7 +239,7 @@ export const hexColorToHexColorAlpha = (hexColor: HexColor): HexColorAlpha => {
  * @return {HexComponentDouble} - The double hex component.
  */
 const rgbComponentToHexComponentDouble = (
-  rgbComponent: number
+  rgbComponent: number,
 ): HexComponentDouble => {
   const hexComponent = rgbComponent.toString(16);
   return (
@@ -254,7 +254,7 @@ const rgbComponentToHexComponentDouble = (
  * @return {HexComponentDouble} The hexadecimal alpha component (00-FF).
  */
 const rgbAlphaComponentToHexAlphaComponent = (
-  alphaComponent: number
+  alphaComponent: number,
 ): HexComponentDouble => {
   const hexComponent = Math.round(alphaComponent * 255).toString(16);
   return (
@@ -292,16 +292,16 @@ const hexColorToRgbaColorArr = (hexColor: HexColor): RgbaColorArr => {
   };
 
   const r = hexComponentDoubleToRgbComponent(
-    sliceHexColor(componentIndices[0])
+    sliceHexColor(componentIndices[0]),
   );
   const g = hexComponentDoubleToRgbComponent(
-    sliceHexColor(componentIndices[1])
+    sliceHexColor(componentIndices[1]),
   );
   const b = hexComponentDoubleToRgbComponent(
-    sliceHexColor(componentIndices[2])
+    sliceHexColor(componentIndices[2]),
   );
   const a = hexAlphaComponentToRgbAlphaComponent(
-    sliceHexColor(componentIndices[3])
+    sliceHexColor(componentIndices[3]),
   );
   return [r, g, b, a];
 };
@@ -391,7 +391,7 @@ const anyColorToRgbaColorArr = (anyColor: AnyColor): RgbaColorArr => {
 export const blendColors = (
   colorA: AnyColor,
   colorB: AnyColor,
-  factor = 0.5
+  factor = 0.5,
 ): RgbaColorStr => {
   const arrA = anyColorToRgbaColorArr(colorA);
   const arrB = anyColorToRgbaColorArr(colorB);
@@ -475,7 +475,7 @@ export const isSameShade = (colorA: AnyColor, colorB: AnyColor, delta = 0) => {
 export const isColorKey = (value: unknown): value is ColorKey => {
   if (!isString(value)) return false;
   return ["success", "error", "warning", "pending", "gray", "primary"].includes(
-    value as ColorKey
+    value as ColorKey,
   );
 };
 
@@ -541,7 +541,7 @@ const grayColorShadeMap: ValueMap<
  */
 export const normalizeToPaletteColor = (
   color: ColorKey | PaletteColor,
-  shade: DefaultPaletteColorShadeKey = "base"
+  shade: DefaultPaletteColorShadeKey = "base",
 ): PaletteColor => {
   if (isPaletteColor(color)) return color;
   if (isGrayColor(color)) {
@@ -560,7 +560,7 @@ export const normalizeToPaletteColor = (
  */
 export const extractColorKey = (
   color: PaletteColor,
-  defaultColorKey: ColorKey = "gray"
+  defaultColorKey: ColorKey = "gray",
 ): ColorKey => {
   if (!isPaletteColor(color)) return defaultColorKey;
   const [colorKey] = color.split("-");
@@ -577,7 +577,7 @@ export const extractColorKey = (
  */
 export const normalizeToColorKey = (
   color: ColorKey | PaletteColor,
-  defaultColorKey: ColorKey = "gray"
+  defaultColorKey: ColorKey = "gray",
 ): ColorKey => {
   if (isColorKey(color)) return color;
   return extractColorKey(color, defaultColorKey);

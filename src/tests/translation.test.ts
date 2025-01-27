@@ -17,7 +17,7 @@ describe("translation", () => {
 
     it("should convert string maps to fn maps", () => {
       objectValues(
-        makeTranslationFnMap<"global">(defaultTranslations.global)
+        makeTranslationFnMap<"global">(defaultTranslations.global),
       ).forEach((translation) => {
         expect(translation).toBeFunction();
         expect(translation).not.toThrow();

@@ -45,16 +45,16 @@ const GLOBAL_STYLE_RENDER_WARN_THRESHOLD = 3;
  * @return {CssVar<RgbaColorStr>[]} an array of CSS variables for the palette color shades
  */
 export const paletteColorToCssVars = <
-  TShadeKeys extends AnyPaletteColorShadeKeys
+  TShadeKeys extends AnyPaletteColorShadeKeys,
 >(
   colorName: string,
   shadedColors: PaletteColorShaded<TShadeKeys>,
-  generateAlpha?: boolean
+  generateAlpha?: boolean,
 ): CssVar<RgbaColorStr>[] => {
   if (!generateAlpha)
     return objectEntries(shadedColors).map(
       ([shadeName, { rgba }]): CssVar<RgbaColorStr> =>
-        cssVar(`${colorName.toLowerCase()}-${shadeName.toLowerCase()}`, rgba)
+        cssVar(`${colorName.toLowerCase()}-${shadeName.toLowerCase()}`, rgba),
     );
   return objectEntries(shadedColors).flatMap(
     ([shadeName, { rgba, opacity }]): CssVar<RgbaColorStr>[] => {
@@ -65,12 +65,12 @@ export const paletteColorToCssVars = <
         .map((_, index) => {
           const opacityCoeff = (index * 5) / 100;
           const opacityName = `${varName}-${String(
-            opacityCoeff.toFixed(2)
+            opacityCoeff.toFixed(2),
           ).replaceAll("0.", "")}`;
           return cssVar(opacityName, opacity(opacityCoeff));
         });
       return [cssVar(varName, rgba), ...opacityVars];
-    }
+    },
   );
 };
 
@@ -107,8 +107,8 @@ export const textSizesToCssVars = (): {
   const weights = objectEntries(typographyWeightMap).map(([name, value]) =>
     cssVar<`${number}`>(
       `text-weight-${name.toLowerCase()}`,
-      String(value) as `${number}`
-    )
+      String(value) as `${number}`,
+    ),
   );
   return {
     desktop: vars.map(({ desktop }) => desktop),
@@ -124,7 +124,7 @@ export const textSizesToCssVars = (): {
  * @return {string} The joined string of CSS variables.
  */
 export const joinCssVarCollection = (
-  cssVarCollection: CssVar<string>[][]
+  cssVarCollection: CssVar<string>[][],
 ): string => {
   return cssVarCollection.map((cssVars) => cssVars.join("\n")).join("\n");
 };
@@ -136,7 +136,7 @@ export const joinCssVarCollection = (
  * @return {RuleSet[]} An array of CSS rulesets representing the formatted media queries.
  */
 export const formatMediaQueries = (
-  mediaQueries?: [BreakpointLabel, CssVar<string>[][]][]
+  mediaQueries?: [BreakpointLabel, CssVar<string>[][]][],
 ): RuleSet[] => {
   return (mediaQueries ?? []).map(([breakpointLabel, vars]) => {
     const mediaQueryCssVarStr = joinCssVarCollection(vars);
@@ -207,7 +207,7 @@ const useUnthemedGlobaStyle = (): {
     useStatic(componentCssVars());
 
   const mediaQueries = useStatic(
-    formatMediaQueries([["XS", [textMobileCssVars, componentMobileCssVars]]])
+    formatMediaQueries([["XS", [textMobileCssVars, componentMobileCssVars]]]),
   );
   return {
     vars: [
@@ -227,7 +227,7 @@ const useUnthemedGlobaStyle = (): {
  * @return {(CssVar<string> | CssVar<`${string}${CssVarUsage}`>)[][]} An array containing the generated CSS variables and effect CSS variables.
  */
 const useThemedGlobalStyle = (
-  theme: Theme
+  theme: Theme,
 ): (CssVar<string> | CssVar<`${string}${CssVarUsage}`>)[][] => {
   // generate css vars from non-legacy palette
   const paletteCssVars = useMemo(() => {
@@ -240,14 +240,14 @@ const useThemedGlobalStyle = (
       paletteColorToCssVars(
         colorName,
         shadedColor as PaletteColorShaded<AnyPaletteColorShadeKeys>,
-        true
-      )
+        true,
+      ),
     );
   }, [theme]);
 
   const effectCssVars = useMemo(
     () => effectsToCssVars(paletteCssVars),
-    [paletteCssVars]
+    [paletteCssVars],
   );
 
   return [paletteCssVars, effectCssVars];
@@ -266,7 +266,7 @@ const useGlobalStyle = (theme: Theme): GlobaStyleInnerProps => {
   const { vars: unthemedCssVars, mediaQueries } = useUnthemedGlobaStyle();
   const defaultCssVarsStr = useMemo(
     () => joinCssVarCollection([...themeCssVars, ...unthemedCssVars]),
-    [themeCssVars, unthemedCssVars]
+    [themeCssVars, unthemedCssVars],
   );
 
   renderCount.current++;

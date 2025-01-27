@@ -69,7 +69,9 @@ export const tooltipStyles = ($direction: Direction): RuleSet => {
     max-width: 12rem;
     padding: var(--s-05) var(--s-1);
     border-radius: var(--s-1);
-    transition: visibility 0s, opacity 0.2s ease-out;
+    transition:
+      visibility 0s,
+      opacity 0.2s ease-out;
     visibility: hidden;
     opacity: 0;
     pointer-events: none;

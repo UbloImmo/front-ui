@@ -29,7 +29,7 @@ import type { FixedCssLength } from "@types";
  * @return {mergedProps is ControlledPopoverDefaultProps} Returns true if the mergedProps object is a controlled popover, false otherwise.
  */
 const isControlledPopover = (
-  mergedProps: PopoverDefaultProps
+  mergedProps: PopoverDefaultProps,
 ): mergedProps is ControlledPopoverDefaultProps => {
   return (
     "open" in mergedProps &&
@@ -46,7 +46,7 @@ const isControlledPopover = (
  * @return {mergedProps is UncontrolledPopoverDefaultProps & Partial<ControlledPopoverPropsExtension>} Returns true if the mergedProps object is a partially controlled popover, false otherwise.
  */
 const isPartiallyControlledPopover = (
-  mergedProps: PopoverDefaultProps
+  mergedProps: PopoverDefaultProps,
 ): mergedProps is UncontrolledPopoverDefaultProps &
   Partial<ControlledPopoverPropsExtension> => {
   return (
@@ -63,7 +63,7 @@ const isPartiallyControlledPopover = (
  * @return {ControlledPopoverPropsExtension | Record<string, never>} The controlled popover props or an empty object.
  */
 export const useControlledPopoverProps = (
-  mergedProps: PopoverDefaultProps
+  mergedProps: PopoverDefaultProps,
 ): ControlledPopoverPropsExtension | Record<string, never> => {
   const { error } = useLogger("Popover");
 
@@ -72,7 +72,7 @@ export const useControlledPopoverProps = (
   >(() => {
     if (isPartiallyControlledPopover(mergedProps)) {
       error(
-        "Popover is partially controlled. Either include both `open` and `onOpenChange` props or none."
+        "Popover is partially controlled. Either include both `open` and `onOpenChange` props or none.",
       );
     }
     if (isControlledPopover(mergedProps))
@@ -93,7 +93,7 @@ export const useControlledPopoverProps = (
  * @return {ReactNode} The content of the popover component.
  */
 export const usePopoverContent = (
-  mergedProps: PopoverDefaultProps
+  mergedProps: PopoverDefaultProps,
 ): ReactNode => {
   return useMemo<ReactNode>(() => {
     if (isFunction<PopoverContentFn>(mergedProps.content))
@@ -123,12 +123,12 @@ export const usePopoverOffset = (offset: FixedCssLength): number => {
  * @return {PopoverPrimitiveCollisionPadding} The converted collision padding object.
  */
 export const usePopoverCollisionPadding = (
-  padding: PopoverCollisionPadding
+  padding: PopoverCollisionPadding,
 ): PopoverPrimitiveCollisionPadding => {
   return useMemo<PopoverPrimitiveCollisionPadding>(() => {
     if (!isObject(padding)) return parseFixedLengthToPx(padding);
     return transformObject(padding, (length): number =>
-      isNullish(length) ? 0 : parseFixedLengthToPx(length)
+      isNullish(length) ? 0 : parseFixedLengthToPx(length),
     );
   }, [padding]);
 };

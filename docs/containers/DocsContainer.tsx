@@ -54,7 +54,7 @@ export const DocsContainer = ({
 
 const notInUnstyled = (
   selector: string | string[],
-  rules: RuleSet
+  rules: RuleSet,
 ): RuleSet | RuleSet[] => {
   const template = `${selector}:not(.sb-unstyled ${selector}):not([data-testid="docs-header"] ${selector})`;
   if (isArray(selector)) return selector.map((s) => notInUnstyled(s, rules));
@@ -98,7 +98,7 @@ const StyleReset = styled.div`
             weight: "medium",
             italic: false,
             important: true,
-          })
+          }),
         )}
       }
     }
@@ -116,7 +116,7 @@ const StyleReset = styled.div`
         margin: 0;
         border: none;
         ${typographyFontFace(true)}
-      `
+      `,
     )}
     ${notInUnstyled("h1", buildheadingOverrides("h1", "bold", "gray-900"))}
     ${notInUnstyled("h2", buildheadingOverrides("h2", "bold", "gray-900"))}
@@ -136,14 +136,14 @@ const StyleReset = styled.div`
         margin: 0;
         padding: 0;
         padding-left: var(--s-4);
-      `
+      `,
     )}
 
     ${notInUnstyled(
       ["div > ul", "div > ul > li > ul"],
       css`
         margin-bottom: var(--s-4);
-      `
+      `,
     )}
 
     ${notInUnstyled(
@@ -154,14 +154,14 @@ const StyleReset = styled.div`
         color: var(--gray-700);
         margin-left: var(--s-2);
         ${typographyFontFace()};
-      `
+      `,
     )}
 
     ${notInUnstyled(
       "hr",
       css`
         border-color: var(--primary-light);
-      `
+      `,
     )}
   }
 
@@ -324,7 +324,9 @@ const StyleReset = styled.div`
         box-shadow: var(--shadow-button) !important;
         width: auto;
         border: 1px solid transparent;
-        transition: color 200ms ease-out 0s, border-color 200ms ease-out 0s;
+        transition:
+          color 200ms ease-out 0s,
+          border-color 200ms ease-out 0s;
 
         &:hover {
           border-color: var(--primary-medium);

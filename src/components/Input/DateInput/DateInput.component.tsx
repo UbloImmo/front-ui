@@ -83,7 +83,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
     spacing: 0,
   });
   const [innerDateStr, setInnerDateStr] = useState<string>(
-    normalizeToDateNativeStr(mergedProps.value) ?? ""
+    normalizeToDateNativeStr(mergedProps.value) ?? "",
   );
 
   const computedDateISO = useMemo(() => {
@@ -113,25 +113,25 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
       if (isFunction<InputOnChangeFn<"date">>(mergedProps.onChange)) {
         const formatter = dateFormatters[mergedProps.format];
         mergedProps.onChange(
-          isValidDateNativeStr(value) ? formatter(value) : null
+          isValidDateNativeStr(value) ? formatter(value) : null,
         );
       }
     },
-    [mergedProps]
+    [mergedProps],
   );
 
   const onChange = useInputOnChange<"date">(
     () => true,
     (nativeValue) => (isString(nativeValue) ? nativeValue : null),
     setInnerValueAndPropagate,
-    mergedProps.onChangeNative
+    mergedProps.onChangeNative,
   );
 
   const onCalendarChange = useCallback<CalendarOnChangeFn>(
     (date) => {
       setInnerValueAndPropagate(normalizeToDateNativeStr(date));
     },
-    [setInnerValueAndPropagate]
+    [setInnerValueAndPropagate],
   );
 
   const [calendarShown, setCalendarShown] = useState(false);
@@ -155,7 +155,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
         }, 1);
       }
     },
-    [calendarShown, inputRef, isFocused]
+    [calendarShown, inputRef, isFocused],
   );
 
   debug({ innerDateStr, computedDateISO, outerValue: mergedProps.value });
@@ -177,7 +177,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
         mergedProps.onBlur(event);
       setIsFocused(false);
     },
-    [mergedProps]
+    [mergedProps],
   );
 
   const onKeyDown = useCallback<KeyboardEventHandler<HTMLInputElement>>(
@@ -190,7 +190,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
         setCalendarShown(false);
       }
     },
-    []
+    [],
   );
 
   const inputType = useMemo<"text" | "date">(() => {
@@ -201,7 +201,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
     return isString(inputValue)
       ? isFocused
         ? inputValue
-        : normalizeToDateStr(inputValue) ?? ""
+        : (normalizeToDateStr(inputValue) ?? "")
       : "";
   }, [isFocused, inputValue]);
 
@@ -217,7 +217,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
       };
     return transformObject(
       minMax,
-      (date) => normalizeToDateNativeStr(date) ?? undefined
+      (date) => normalizeToDateNativeStr(date) ?? undefined,
     );
   }, [minMax, isFocused]);
 

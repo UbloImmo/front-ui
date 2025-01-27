@@ -70,7 +70,7 @@ export type DataArrayRemoveFn<TData> = VoidFn<
 export type DataArrayUpdateItemWhereFn<TData> = VoidFn<
   [
     predicate: DataArrayItemPredicate<TData>,
-    updater: DataArrayItemUpdater<TData>
+    updater: DataArrayItemUpdater<TData>,
   ]
 >;
 export type DataArrayFindFn<TData> = GenericFn<
@@ -115,7 +115,7 @@ export type UseDataArray = <TData>(
   /**
    * A callback function that is called when the data changes
    */
-  onDataChange?: VoidFn<[newData: TData[]]>
+  onDataChange?: VoidFn<[newData: TData[]]>,
 ) => UseDataArrayReturn<TData>;
 
 /**

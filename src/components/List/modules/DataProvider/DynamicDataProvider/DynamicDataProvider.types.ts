@@ -12,7 +12,7 @@ export type DynamicDataProviderFetchFn<TItem extends object> = MaybeAsyncFn<
 
 export type DynamicDataProviderParams<TItem extends object> = [
   fetchData: DynamicDataProviderFetchFn<TItem>,
-  setData: DataProviderSetDataFn<TItem>
+  setData: DataProviderSetDataFn<TItem>,
 ];
 
 export type UseDynamicDataProviderFn = <TItem extends object>(

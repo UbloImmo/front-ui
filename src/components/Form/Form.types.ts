@@ -83,7 +83,7 @@ export type FormSource<TData extends object> = DeepKeyOf<
  */
 export type FormFieldSource<
   TData extends object,
-  TType extends InputType
+  TType extends InputType,
 > = DeepKeyOfType<CompleteFormData<TData>, Nullish<InputValue<TType>>>;
 
 /**
@@ -159,7 +159,7 @@ export type BuiltFormFieldLayoutProps = {
  */
 type FormFieldType<
   TData extends object,
-  TSource extends FormFieldSource<TData, InputType>
+  TSource extends FormFieldSource<TData, InputType>,
 > = {
   [TType in InputType]: DeepValueOf<
     CompleteFormData<TData>,
@@ -274,7 +274,7 @@ export type FormTableModifiers = {
 };
 
 export type FormTableCustomFooterProps<
-  TRowValue extends Record<string, unknown>
+  TRowValue extends Record<string, unknown>,
 > = {
   /**
    * Appends a new row at the end of the table
@@ -599,12 +599,12 @@ export type FormFeatureSwitchProps<TData extends object> = {
             source: TSource;
           }
       : TFieldValue extends NullishPrimitives
-      ? FormFieldLayoutProps &
-          Omit<FeatureSwitchOptionsVariant<TFieldValue>, "value"> & {
-            kind: "feature-switch";
-            source: TSource;
-          }
-      : never
+        ? FormFieldLayoutProps &
+            Omit<FeatureSwitchOptionsVariant<TFieldValue>, "value"> & {
+              kind: "feature-switch";
+              source: TSource;
+            }
+        : never
     : never;
 }[FormSource<TData>];
 
@@ -1052,10 +1052,10 @@ export type FormValidation = {
  * @returns {FormData<TData>} The mutated {@link FormData}
  */
 export type MutateFormDataFn<TData extends object> = <
-  TSource extends FormSource<TData>
+  TSource extends FormSource<TData>,
 >(
   source: TSource,
-  value: Nullable<DeepValueOf<CompleteFormData<TData>, TSource>>
+  value: Nullable<DeepValueOf<CompleteFormData<TData>, TSource>>,
 ) => FormData<TData>;
 
 /**
@@ -1070,7 +1070,7 @@ export type MutateFormDataFn<TData extends object> = <
  * @returns {FieldProps<TType>} The built and linked {@link FieldProps}
  */
 export type BuildFieldPropsFn<TData extends object> = <TType extends InputType>(
-  formField: FormFieldProps<TData>
+  formField: FormFieldProps<TData>,
 ) => BuiltFieldProps<TType>;
 
 /**
@@ -1085,7 +1085,7 @@ export type BuildFieldPropsFn<TData extends object> = <TType extends InputType>(
  * @returns {BuiltFormCustomFieldProps<TData>} The built and linked {@link BuiltFormCustomFieldProps}
  */
 export type BuildCustomFieldPropsFn<TData extends object> = (
-  formCustomField: FormCustomFieldProps<TData>
+  formCustomField: FormCustomFieldProps<TData>,
 ) => BuiltFormCustomFieldProps;
 
 /**
@@ -1100,7 +1100,7 @@ export type BuildCustomFieldPropsFn<TData extends object> = (
  */
 export type BuildFormTablePropsFn<TData extends object> = (
   formTable: FormTableProps<TData>,
-  index: number
+  index: number,
 ) => BuiltFormTableProps;
 
 /**
@@ -1114,13 +1114,13 @@ export type BuildFormTablePropsFn<TData extends object> = (
  * @returns {BuiltFormFeatureSwitchProps} The built and linked {@link BuiltFormFeatureSwitchProps}
  */
 export type BuildFormFeatureSwitchFn<TData extends object> = (
-  featureSwitch: FormFeatureSwitchProps<TData>
+  featureSwitch: FormFeatureSwitchProps<TData>,
 ) => BuiltFormFeatureSwitchProps;
 
 export type GetFieldValueFn<TData extends object> = <
-  TSource extends DeepKeyOf<FormData<TData>>
+  TSource extends DeepKeyOf<FormData<TData>>,
 >(
-  source: TSource
+  source: TSource,
 ) => Nullable<DeepValueOf<FormData<TData>, TSource>>;
 
 /**
@@ -1138,10 +1138,10 @@ export type GetFieldValueFn<TData extends object> = <
  */
 export type PropagateChangeFn<TData extends object> = <
   TType extends InputType,
-  TSource extends FormSource<TData>
+  TSource extends FormSource<TData>,
 >(
   source: TSource,
-  onChange?: Nullable<InputOnChangeFn<TType>>
+  onChange?: Nullable<InputOnChangeFn<TType>>,
 ) => VoidFn<
   [Nullable<InputValue<TType> & DeepValueOf<CompleteFormData<TData>, TSource>>]
 >;
@@ -1160,11 +1160,11 @@ export type PropagateChangeFn<TData extends object> = <
  * @returns {Pick<FieldProps<InputType>, "error" | "errorText">} The {@link FieldProps}'s `error` and `errorText` properties
  */
 export type GetFieldErrorFn<TData extends object> = <
-  TSource extends FormSource<TData>
+  TSource extends FormSource<TData>,
 >(
   source: TSource,
   baseError?: Optional<boolean>,
-  baseErrorText?: Nullable<string>
+  baseErrorText?: Nullable<string>,
 ) => Pick<FieldProps<InputType>, "error" | "errorText">;
 
 /**
@@ -1181,7 +1181,7 @@ export type GetFieldErrorFn<TData extends object> = <
  */
 export type IsFieldRequiredFn<TData extends object> = (
   source: FormSource<TData>,
-  baseRequired?: boolean
+  baseRequired?: boolean,
 ) => boolean;
 
 /**
@@ -1226,7 +1226,7 @@ export type SwapTableRowsFn = VoidFn<[number, number]>;
  */
 export type FormDisplayValueFormatterFn<
   TType extends InputType,
-  TTransformedValue extends ReactNode | FC = string
+  TTransformedValue extends ReactNode | FC = string,
 > = GenericFn<
   [InputValue<TType>, SpecificInputProps<TType>],
   TTransformedValue
@@ -1236,7 +1236,7 @@ export type FormDisplayValueFormatterFn<
  * Mapping of {@link InputType} to {@link FormDisplayValueFormatterFn}
  */
 export type FormDisplayValueFormatterMap<
-  TTransformedValue extends ReactNode | FC = string
+  TTransformedValue extends ReactNode | FC = string,
 > = {
   [TType in InputType]: FormDisplayValueFormatterFn<TType, TTransformedValue>;
 };

@@ -9,7 +9,7 @@ import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 export type MultiSelectInputProps<
   TValue extends NullishPrimitives | NullishPrimitives[],
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = InputProps<"multi-select", TValue> & {
   /**
    * The options data to be displayed in the dropdown
@@ -48,5 +48,5 @@ export type MultiSelectInputProps<
 
 export type DefaultMultiSelectInputProps<
   TValue extends NullishPrimitives | NullishPrimitives[],
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = Required<MultiSelectInputProps<TValue, TExtraData>>;

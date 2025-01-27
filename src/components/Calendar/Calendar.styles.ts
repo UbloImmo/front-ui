@@ -366,7 +366,9 @@ const calendarDayStyles = css`
     width: var(--rdp-day-width);
     height: var(--rdp-day-height);
     background: var(--primary-light-00);
-    transition: background 150ms ease-out 0s, border-radius 150ms ease-out 0s;
+    transition:
+      background 150ms ease-out 0s,
+      border-radius 150ms ease-out 0s;
   }
 
   ${range_start}, ${range_middle}, ${range_end} {

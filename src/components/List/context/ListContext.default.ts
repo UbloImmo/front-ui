@@ -1,7 +1,7 @@
 import type { ListContextValue } from "./ListContext.types";
 
 export const defaultListContextValue = <
-  TItem extends object
+  TItem extends object,
 >(): ListContextValue<TItem> => ({
   data: [],
   dataProvider: {

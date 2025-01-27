@@ -34,7 +34,7 @@ import type { forwardRef } from "react";
  * @return {maybeName is ComponentName<TIndex>} - True if the value is a valid component name, false otherwise.
  */
 const isComponentName = <TIndex extends AnyIndex>(
-  maybeName: ComponentName<TIndex> | Nullish<string>
+  maybeName: ComponentName<TIndex> | Nullish<string>,
 ): maybeName is ComponentName<TIndex> => {
   // remove null values
   if (isNullish(maybeName)) return false;
@@ -61,7 +61,7 @@ type ForwardedRefExoticRenderComponent<T, P = {}> = ReturnType<
  * @return {component is ForwardedRefExoticRenderComponent<Element>} - True if the component is a forwardRef component, false otherwise.
  */
 export const isForwardRefComponent = (
-  component: unknown
+  component: unknown,
 ): component is ForwardedRefExoticRenderComponent<Element> => {
   return (
     isObject(component) &&
@@ -84,7 +84,7 @@ export const isForwardRefComponent = (
  * @returns {Nullable<ComponentIndex<TIndex>>} - The extracted components index or null
  */
 export const extractComponentsFromIndex = <TIndex extends AnyIndex>(
-  index: Nullish<TIndex>
+  index: Nullish<TIndex>,
 ): Nullable<ComponentIndex<TIndex>> => {
   if (isNullish(index)) return null;
 
@@ -117,7 +117,7 @@ export const extractComponentsFromIndex = <TIndex extends AnyIndex>(
           return [componentName, forwardedComponent];
         }
         return [componentName, component as ComponentMask<TIndex>];
-      }
+      },
     );
 
   if (!entries.length) return null;
@@ -137,7 +137,7 @@ export const extractComponentsFromIndex = <TIndex extends AnyIndex>(
 export const componentIndexToEntries = <TIndex extends AnyIndex>(
   index: Nullish<ComponentIndex<TIndex>>,
   exclude?: ComponentName<TIndex>[],
-  include?: ComponentName<TIndex>[]
+  include?: ComponentName<TIndex>[],
 ): Nullable<ComponentEntries<TIndex>> => {
   if (isNullish(index)) return null;
 
@@ -149,7 +149,7 @@ export const componentIndexToEntries = <TIndex extends AnyIndex>(
       >): ComponentEntryItem<TIndex, TName> => ({
         name,
         Component,
-      })
+      }),
     )
     .sort((a, b) => a.name.localeCompare(b.name))
     .filter(({ name }) => (!exclude ? true : !exclude.includes(name)))
@@ -169,11 +169,11 @@ export const componentIndexToEntries = <TIndex extends AnyIndex>(
  */
 export const isDocumentedComponent = <
   TIndex extends AnyIndex,
-  TName extends ComponentName<TIndex>
+  TName extends ComponentName<TIndex>,
 >(
   maybeDocumentedComponent:
     | Component<TIndex, TName>
-    | DocumentedComponent<TIndex, TName>
+    | DocumentedComponent<TIndex, TName>,
 ): maybeDocumentedComponent is DocumentedComponent<TIndex, TName> => {
   return (
     "__docgenInfo" in maybeDocumentedComponent &&
@@ -193,9 +193,9 @@ export const isDocumentedComponent = <
  */
 export const hasDefaultProps = <
   TIndex extends AnyIndex,
-  TName extends ComponentName<TIndex>
+  TName extends ComponentName<TIndex>,
 >(
-  component: MaybeDocumentedComponent<TIndex, TName>
+  component: MaybeDocumentedComponent<TIndex, TName>,
 ): component is MaybeDocumentedComponent<TIndex, TName> &
   ComponentDefaultPropsMask<ComponentProps<TIndex, TName>> => {
   if (!("defaultProps" in component)) return false;

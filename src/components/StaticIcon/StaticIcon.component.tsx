@@ -50,8 +50,8 @@ const StaticIcon = (props: StaticIconProps & TestIdProps) => {
       color === "gray"
         ? "gray-600"
         : color === "white"
-        ? "gray-500"
-        : `${color}-base`;
+          ? "gray-500"
+          : `${color}-base`;
 
     return {
       color: iconColor,

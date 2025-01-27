@@ -43,7 +43,7 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
   const { error } = useLogger("Dialog");
   const { children, open, reference, onClosed, onOpened } = mergeDefaultProps(
     defaultDialogProps,
-    props
+    props,
   );
   const testId = useTestId("dialog-content", props);
   const { isOpen, isRegistered, portalRoot, close, register, unregister, set } =

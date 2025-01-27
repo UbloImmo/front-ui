@@ -35,17 +35,17 @@ export const ListFilterOptionItem = <TItem extends object = object>({
 }: ListFilterOptionItemProps<TItem>): Nullable<JSX.Element> => {
   const highlightProps = useMergedProps(
     { highlighted: false },
-    { highlighted }
+    { highlighted },
   );
   const styleProps = useStyleProps(highlightProps);
   const matchAttr = useMemo(
     () =>
       option?.matches
         .map(({ value, comparison, property }) =>
-          [property, comparison, JSON.stringify(value)].join(" ")
+          [property, comparison, JSON.stringify(value)].join(" "),
         )
         .join(option.operator) ?? "",
-    [option]
+    [option],
   );
 
   const textProps = useMemo<TextProps>(() => {
@@ -55,8 +55,8 @@ export const ListFilterOptionItem = <TItem extends object = object>({
       color: option.disabled
         ? "gray-500"
         : highlighted
-        ? "gray-800"
-        : "gray-700",
+          ? "gray-800"
+          : "gray-700",
       fill: true,
       ellipsis: true,
     };
@@ -66,8 +66,8 @@ export const ListFilterOptionItem = <TItem extends object = object>({
     const name: IconName = option.icon
       ? option.icon
       : option.selected
-      ? "CircleFill"
-      : "Circle";
+        ? "CircleFill"
+        : "Circle";
 
     return {
       name,

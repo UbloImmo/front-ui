@@ -201,7 +201,7 @@ const DisplayMultiSelectValue = ({
   if (!fieldValue) return <FormFieldDisplayValue value={noValue} />;
   if (isLoading) return <FieldSkeleton />;
   const activeOptions = flattenedOptions.filter(({ value }) =>
-    fieldValue.includes(value)
+    fieldValue.includes(value),
   );
 
   return (
@@ -277,16 +277,19 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   password: displayPasswordValue,
   phone: String,
   textarea: String,
-  select: (fieldValue, props) => () =>
-    <DisplaySelectValue fieldValue={fieldValue} props={props} />,
+  select: (fieldValue, props) => () => (
+    <DisplaySelectValue fieldValue={fieldValue} props={props} />
+  ),
   date: displayDateValue,
   combobox: displayComboBoxValue,
   "icon-picker": displayIconPickerValue,
-  search: (fieldValue, props) => () =>
-    <DisplaySearchValue fieldValue={fieldValue} props={props} />,
+  search: (fieldValue, props) => () => (
+    <DisplaySearchValue fieldValue={fieldValue} props={props} />
+  ),
   "search-text": String,
-  "multi-select": (fieldValue, props) => () =>
-    <DisplayMultiSelectValue fieldValue={fieldValue} props={props} />,
+  "multi-select": (fieldValue, props) => () => (
+    <DisplayMultiSelectValue fieldValue={fieldValue} props={props} />
+  ),
 };
 
 /**
@@ -307,7 +310,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
  */
 export const computeFieldDisplayContent = <TType extends InputType>(
   type: TType,
-  props: SpecificInputProps<TType>
+  props: SpecificInputProps<TType>,
 ): ReactNode | FC => {
   return isNullish(props.value)
     ? noValue

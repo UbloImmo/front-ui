@@ -54,17 +54,16 @@ export const specificHeading =
   (
     size: HeadingProps["size"],
     weight: HeadingProps["weight"] = "medium",
-    color: PaletteColor = "gray-900"
+    color: PaletteColor = "gray-900",
   ) =>
   ({
     children,
     ...props
-  }: Omit<HeadingProps, "size" | "important" | "weight" | "color">) =>
-    (
-      <Heading {...props} size={size} weight={weight} color={color}>
-        {children}
-      </Heading>
-    );
+  }: Omit<HeadingProps, "size" | "important" | "weight" | "color">) => (
+    <Heading {...props} size={size} weight={weight} color={color}>
+      {children}
+    </Heading>
+  );
 
 /**
  * Renders a Text component with given children and props.
@@ -99,17 +98,16 @@ export const textOfSize =
   (
     size: TextProps["size"],
     weight: TextProps["weight"] = "regular",
-    color: PaletteColor = "gray-900"
+    color: PaletteColor = "gray-900",
   ) =>
   ({
     children,
     ...props
-  }: Omit<TextProps, "size" | "important" | "weight" | "color">) =>
-    (
-      <Text {...props} size={size} weight={weight} color={color}>
-        {children}
-      </Text>
-    );
+  }: Omit<TextProps, "size" | "important" | "weight" | "color">) => (
+    <Text {...props} size={size} weight={weight} color={color}>
+      {children}
+    </Text>
+  );
 
 const headingOverridesStyles = ({
   $size,
@@ -120,10 +118,22 @@ const headingOverridesStyles = ({
   &:not(:has(> code)),
   & > *:not(code) {
     margin-top: var(
-      --s-${$size === "h4" ? "4" : $size === "h3" ? "8" : $size === "h2" ? "10" : "16"}
+      --s-${$size === "h4"
+          ? "4"
+          : $size === "h3"
+            ? "8"
+            : $size === "h2"
+              ? "10"
+              : "16"}
     ) !important;
     margin-bottom: var(
-      --s-${$size === "h4" ? "2" : $size === "h3" ? "4" : $size === "h2" ? "6" : "8"}
+      --s-${$size === "h4"
+          ? "2"
+          : $size === "h3"
+            ? "4"
+            : $size === "h2"
+              ? "6"
+              : "8"}
     ) !important;
   }
   & > a[aria-hidden="true"] {
@@ -152,7 +162,7 @@ const headingOverridesStyles = ({
 export const buildheadingOverrides = (
   size: NonNullish<HeadingProps["size"]>,
   weight: HeadingProps["weight"] = "medium",
-  color: PaletteColor = "gray-900"
+  color: PaletteColor = "gray-900",
 ): RuleSet => {
   const props = {
     ...defaultTypographyProps,

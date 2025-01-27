@@ -42,7 +42,7 @@ export const useInputOnChange = <TType extends InputType>(
   onChange: Nullish<InputOnChangeFn<TType>>,
   onChangeNative: Nullish<
     NativeInputOnChangeFn | Nullable<NativeInputOnChangeFn>[]
-  >
+  >,
 ) => {
   return useCallback<NativeInputOnChangeFn>(
     (e) => {
@@ -59,7 +59,7 @@ export const useInputOnChange = <TType extends InputType>(
         onChange(valueTransformer(e.target.value));
       }
     },
-    [onChange, onChangeNative, condition, valueTransformer]
+    [onChange, onChangeNative, condition, valueTransformer],
   );
 };
 
@@ -92,12 +92,12 @@ type InputValueFallbackTransformerFn = GenericFn<[], NativeInputValue>;
  */
 export const useInputValue = <
   TType extends InputType,
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 >(
   value: Nullable<InputValue<TType, TGenericValue>>,
   rawProps: InputProps<TType, TGenericValue>,
   valueTransformer?: InputValueTransformerFn<TType>,
-  fallback?: InputValueFallbackTransformerFn
+  fallback?: InputValueFallbackTransformerFn,
 ): NativeInputValue => {
   return useMemo(() => {
     if (isNull(value)) {
@@ -122,7 +122,7 @@ export const useInputValue = <
  * @return {CommonInputStyleProps} The style props for the input
  */
 export const useInputStyles = (
-  mergedProps: DefaultCommonInputProps
+  mergedProps: DefaultCommonInputProps,
 ): CommonInputStyleProps => {
   return useMemo(() => {
     const { error, disabled, placeholder, required, table } = mergedProps;
@@ -141,7 +141,7 @@ export const useInputStyles = (
 export const useInputControlCallback = (
   inputRef: MutableRefObject<Nullable<HTMLInputElement>>,
   mergedProps: DefaultCommonInputProps,
-  callback: VoidFn
+  callback: VoidFn,
 ) => {
   return useCallback(() => {
     // abort if disabled
@@ -162,7 +162,7 @@ export const useInputControlCallback = (
  * @returns {UseInputRefReturn<TElement>}: An object containing the `inputRef` and `forwardRef` properties.
  */
 export const useInputRef = <TElement extends Element = HTMLInputElement>(
-  mergedProps: DefaultCommonInputProps
+  mergedProps: DefaultCommonInputProps,
 ): UseInputRefReturn<TElement> => {
   // declare & expose inner input ref for components that need it
   const inputRef = useRef<Nullable<TElement>>(null);
@@ -183,7 +183,7 @@ export const useInputRef = <TElement extends Element = HTMLInputElement>(
           inputElement;
       }
     },
-    [mergedProps]
+    [mergedProps],
   );
 
   return { inputRef, forwardRef };

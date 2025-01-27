@@ -37,7 +37,7 @@ const testPortal = testComponentFactory<PortalProps>(
       },
     ],
   },
-  Wrapper
+  Wrapper,
 );
 
 global.console.error = mock(() => {});
@@ -47,7 +47,7 @@ testPortal({ ...props, rootSelector: "nowhere" })(
     expect(queryByTestId(testId)).toBeNull();
     expect(global.console.error).toHaveBeenCalled();
     (global.console.error as Mock<(_msg: unknown) => void>).mockReset();
-  }
+  },
 );
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -58,5 +58,5 @@ testPortal({ ...props, rootSelector: null })(
     expect(queryByTestId(testId)).toBeNull();
     expect(global.console.error).toHaveBeenCalled();
     (global.console.error as Mock<(_msg: unknown) => void>).mockReset();
-  }
+  },
 );

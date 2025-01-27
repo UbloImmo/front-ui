@@ -43,7 +43,7 @@ export type PaginatedDataProviderFetchPageFnParams<TItem extends object> = [
   /**
    * The number of items per page
    */
-  pageSize: number
+  pageSize: number,
 ];
 
 export type PaginatedDataProviderFetchPageFn<TItem extends object> =
@@ -79,7 +79,7 @@ export type PaginatedDataProviderParams<TItem extends object> = [
    * @type {number}
    * @default 25
    */
-  pageSize?: number
+  pageSize?: number,
 ];
 
 /**

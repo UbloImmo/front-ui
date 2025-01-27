@@ -11,7 +11,7 @@ import type { CopyClipboardInfoCardProps } from "./CopyClipboardInfoCard.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<CopyClipboardInfoCardProps>(
-  "CopyClipboardInfoCard"
+  "CopyClipboardInfoCard",
 );
 
 const meta = {

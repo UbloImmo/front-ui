@@ -29,12 +29,12 @@ const listFilterPresetCollectionDefaultProps: ListFilterPresetCollectionDefaultP
   };
 
 export const useListFilterPresetCollection = (
-  props: ListFilterPresetCollectionProps
+  props: ListFilterPresetCollectionProps,
 ) => {
   const { filterPresets } = useListContext();
   const mergedProps = useMergedProps(
     listFilterPresetCollectionDefaultProps,
-    props
+    props,
   );
 
   const filterPresetSignatures = useMemo<FilterSignature[]>(() => {
@@ -64,7 +64,7 @@ export const useListFilterPresetCollection = (
 
   const hasFilterPresets = useMemo(
     () => !!listFilterPresets.length,
-    [listFilterPresets]
+    [listFilterPresets],
   );
 
   const className = useClassName(mergedProps);

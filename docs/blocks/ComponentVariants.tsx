@@ -76,7 +76,7 @@ export type PropVariant<TComponentProps extends Record<string, unknown>> =
 
 type ComponentVariantsConfig<
   TComponentProps extends Record<string, unknown>,
-  TPropKey extends keyof TComponentProps
+  TPropKey extends keyof TComponentProps,
 > = ComponentVariantsBaseConfig & {
   /**
    * The key of the prop to vary upon.
@@ -104,11 +104,11 @@ type ComponentVariantsConfig<
 };
 
 export type DetailConfigVariants<
-  TComponentProps extends Record<string, unknown>
+  TComponentProps extends Record<string, unknown>,
 > = (Partial<TComponentProps> | PropVariant<Partial<TComponentProps>>)[];
 
 type ComponentVariantsDetailedConfig<
-  TComponentProps extends Record<string, unknown>
+  TComponentProps extends Record<string, unknown>,
 > = ComponentVariantsBaseConfig & {
   for?: never;
   /**
@@ -130,11 +130,11 @@ type ComponentVariantsDetailedConfig<
 
 const isDetailedConfig = <
   TComponentProps extends Record<string, unknown>,
-  TPropKey extends keyof TComponentProps & string
+  TPropKey extends keyof TComponentProps & string,
 >(
   props:
     | ComponentVariantsConfig<TComponentProps, TPropKey>
-    | ComponentVariantsDetailedConfig<TComponentProps>
+    | ComponentVariantsDetailedConfig<TComponentProps>,
 ): props is ComponentVariantsDetailedConfig<TComponentProps> => {
   return !("for" in props);
 };
@@ -152,11 +152,11 @@ export const ComponentVariants = <
   TPropKey extends KeyOf<TComponentProps, string> = KeyOf<
     TComponentProps,
     string
-  >
+  >,
 >(
   props:
     | ComponentVariantsConfig<TComponentProps, TPropKey>
-    | ComponentVariantsDetailedConfig<TComponentProps>
+    | ComponentVariantsDetailedConfig<TComponentProps>,
 ): JSX.Element => {
   const propVariants = useMemo<PropVariant<TComponentProps>[]>(() => {
     if (isDetailedConfig(props)) {
@@ -167,7 +167,7 @@ export const ComponentVariants = <
           __propVariantLabel: isString(variant?.__propVariantLabel)
             ? variant.__propVariantLabel
             : JSON.stringify(variant).replace(/"/g, ""),
-        })
+        }),
       );
     }
 
@@ -204,7 +204,7 @@ export const ComponentVariants = <
   const Wrapper = useMemo(() => {
     if (props.columns) {
       const columns = Array(
-        isNumber(props.columns) ? props.columns : props.variants.length
+        isNumber(props.columns) ? props.columns : props.variants.length,
       ).fill("1fr");
       const align =
         props.align &&
@@ -329,7 +329,9 @@ const ComponentLabelContainer = styled.div`
   background: var(--primary-light-30);
   padding: var(--s-05) var(--s-2);
   z-index: 2;
-  transition: opacity 150ms ease-out 0s, filter 150ms ease-out 0s;
+  transition:
+    opacity 150ms ease-out 0s,
+    filter 150ms ease-out 0s;
 
   & > span > code {
     white-space: nowrap;

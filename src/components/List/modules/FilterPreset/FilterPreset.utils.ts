@@ -14,7 +14,7 @@ import type { FilterBooleanOperator, FilterSignature } from "../shared.types";
 export const computeFilterPresetSignature = (
   label: string,
   optionSignatures: FilterSignature[],
-  operator: FilterBooleanOperator
+  operator: FilterBooleanOperator,
 ): FilterSignature => {
   if (!isString(label)) throw new Error("Label must be a string");
   if (!isArray(optionSignatures))

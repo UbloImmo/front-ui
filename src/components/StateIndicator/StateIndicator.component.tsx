@@ -33,13 +33,13 @@ const defaultStateIndicatorProps: DefaultStateIndicatorProps = {
  * @returns {JSX.Element} - the state indicator markup
  */
 const StateIndicator = (
-  props: TestIdProps & StateIndicatorProps
+  props: TestIdProps & StateIndicatorProps,
 ): JSX.Element => {
   const testId = useTestId("state-indicator", props);
   const mergedProps = useMergedProps(defaultStateIndicatorProps, props);
   const colors = useMemo(
     () => computeStateIndicatorColors(mergedProps.color),
-    [mergedProps]
+    [mergedProps],
   );
   const styleProps = useStyleProps(colors);
 

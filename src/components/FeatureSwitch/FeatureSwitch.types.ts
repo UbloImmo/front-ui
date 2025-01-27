@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
 import type { CheckboxProps } from "../Checkbox";
 import type { IconName } from "../Icon";
 import type { SelectInputProps } from "../Input";
 import type { SwitchProps } from "../Switch";
 import type { TooltipProps } from "../Tooltip";
 import type { Enum, Nullable, NullishPrimitives } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 const featureSwitchVariants = ["checkbox", "switch", "select"] as const;
 export type FeatureSwitchVariant = Enum<typeof featureSwitchVariants>;

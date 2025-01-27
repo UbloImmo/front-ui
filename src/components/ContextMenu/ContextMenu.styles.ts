@@ -13,7 +13,7 @@ export const contextMenuStyles = ({
   const padding = $size === "m" ? "var(--s-1)" : "0";
   const borderRadius = cssVarUsage($size === "m" ? "s-2" : "s-05");
   const shadow = cssVarUsage(
-    `shadow-card-elevation-${$size === "m" ? "high" : "medium"}`
+    `shadow-card-elevation-${$size === "m" ? "high" : "medium"}`,
   );
   return css`
     position: relative;

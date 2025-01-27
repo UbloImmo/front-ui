@@ -16,7 +16,7 @@ const testUseIconSize = () => {
   type Hook = typeof useIconSize;
   const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
     "useIconSize",
-    useIconSize
+    useIconSize,
   );
 
   const warn = mock((_: unknown) => {});
@@ -81,7 +81,7 @@ const testUseIconSize = () => {
       expect(isCssRem(size)).toBeTrue();
       expect(size).toBe("1rem"); // s-5 = 20px = 1.25rem
       warn.mockReset();
-    }
+    },
   );
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore Need to ignore in order to test missing prop
@@ -104,7 +104,7 @@ describe("Icon", () => {
     const { findByTestId } = render(
       <ThemeProvider>
         <Icon name="Circle" />
-      </ThemeProvider>
+      </ThemeProvider>,
     );
     const icon = await findByTestId("icon");
     expect(icon).toBeDefined();
@@ -128,7 +128,7 @@ describe("Icon", () => {
         <Icon name="Circle" size="s-05" />
         <Icon name="Circle" size="s-4" />
         <Icon name="Circle" size="s-112353513153" />
-      </ThemeProvider>
+      </ThemeProvider>,
     );
     const icons = await findAllByTestId("icon");
     expect(global.console.warn).not.toHaveBeenCalled();

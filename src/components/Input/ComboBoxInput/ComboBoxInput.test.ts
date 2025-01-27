@@ -8,7 +8,7 @@ import type { ComboBoxInputProps } from "./ComboBoxInput.types";
 
 const testInput = testComponentFactory<ComboBoxInputProps>(
   "ComboBoxInput",
-  ComboBoxInput
+  ComboBoxInput,
 );
 
 testInput({

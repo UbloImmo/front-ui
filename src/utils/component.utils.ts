@@ -14,7 +14,7 @@ type Component<TComponentProps extends Record<string, unknown>> =
 
 type ComponentModule<
   TComponentName extends string,
-  TComponentProps extends Record<string, unknown>
+  TComponentProps extends Record<string, unknown>,
 > = Record<string, unknown> & {
   [key in TComponentName]: Component<TComponentProps>;
 };
@@ -52,10 +52,10 @@ type ComponentDefaultModule<TComponentProps extends Record<string, unknown>> = {
 export const loadComponent =
   <
     TComponentName extends string,
-    TComponentProps extends Record<string, unknown>
+    TComponentProps extends Record<string, unknown>,
   >(
     componentName: TComponentName,
-    modulePromise: Promise<ComponentModule<TComponentName, TComponentProps>>
+    modulePromise: Promise<ComponentModule<TComponentName, TComponentProps>>,
   ) =>
   async (): Promise<ComponentDefaultModule<TComponentProps>> => {
     try {

@@ -45,7 +45,7 @@ testDefaultAction(
     expect(queryByTestId(testId)).not.toBeNull();
     await click(queryByTestId(testId) as HTMLButtonElement);
     expect(onClick).toHaveBeenCalled();
-  }
+  },
 );
 
 testAction({
@@ -75,7 +75,7 @@ testAction({
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryByTestId(`text ${testId}-description`)).toBeNull();
-  }
+  },
 );
 
 global.console.warn = mock(() => {});
@@ -113,7 +113,7 @@ testAction({
     expect(queryByTestId(`text ${testId}-description`)).toBeNull();
     expect(global.console.warn).toHaveBeenCalled();
     (global.console.warn as Mock<VoidFn>).mockReset();
-  }
+  },
 );
 
 testAction({

@@ -41,7 +41,7 @@ import type { ReactNode } from "react";
 export type UseListContextSearchParams = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "searchParams">,
   options: UseListOptionsReturn<TItem>,
-  configLoading: boolean
+  configLoading: boolean,
 ) => void;
 
 export type ListConfigSearchParamsReadParamsFn = GenericFn<[], URLSearchParams>;
@@ -233,14 +233,14 @@ export type UseListSearchConfigReturn<TItem extends object> = {
 };
 
 export type UseListSearchConfig = <
-  TItem extends object
+  TItem extends object,
 >() => UseListSearchConfigReturn<TItem>;
 
 // LIST CONFIG ----------------------------------------------------------------------------------
 
 export type ListContextConfig<
   TItem extends object,
-  TProviderType extends DataProviderType = DataProviderType
+  TProviderType extends DataProviderType = DataProviderType,
 > = {
   /**
    * The list's data provider: a hook that implements the IDataProvider interface
@@ -314,12 +314,12 @@ export type UseListConfigAsync = <TItem extends object>(
   updateFilter: VoidFn<[FilterData]>,
   registerFilterPreset: VoidFn<[FilterPresetData]>,
   updateFilterPreset: VoidFn<[FilterPresetData]>,
-  hydrateFilterConfig: HydrateFilterConfigFn
+  hydrateFilterConfig: HydrateFilterConfigFn,
 ) => UseListConfigAsyncReturn<TItem>;
 
 export type UseListConfigReturn<
   TItem extends object,
-  TProviderType extends DataProviderType = DataProviderType
+  TProviderType extends DataProviderType = DataProviderType,
 > = {
   config: Required<ListContextConfig<TItem, TProviderType>>;
   async: UseListConfigAsyncReturn<TItem>;
@@ -337,7 +337,7 @@ export type UseListConfigReturn<
 };
 
 export type UseListConfig = <TItem extends object>(
-  dataProvider: UseDataProviderFn<TItem>
+  dataProvider: UseDataProviderFn<TItem>,
 ) => UseListConfigReturn<TItem>;
 
 export type UseListConfigFilterReducerAction =
@@ -406,7 +406,7 @@ export type UseListFiltersReturn<TItem extends object> = {
 
 export type UseListFilters = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "filters">,
-  listOptions: UseListOptionsReturn<TItem>
+  listOptions: UseListOptionsReturn<TItem>,
 ) => UseListFiltersReturn<TItem>;
 
 // LIST OPTIONS ---------------------------------------------------------------------------------
@@ -421,14 +421,14 @@ export type UpdateOptionSelectionFn = VoidFn<
     optionSignature: FilterSignature,
     selected: boolean,
     multi?: boolean,
-    isFilterOption?: IsFilterOptionFn
+    isFilterOption?: IsFilterOptionFn,
   ]
 >;
 
 export type ApplyOptionsFn<TItem extends object> = VoidFn<
   [
     options: FilterOptionData<TItem>[],
-    extraFilters?: DataProviderFilterParam<TItem>[]
+    extraFilters?: DataProviderFilterParam<TItem>[],
   ]
 >;
 
@@ -466,7 +466,7 @@ export type UseListOptionsReturn<TItem extends object> = {
 
 export type UseListOptions = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "options" | "filters" | "operator">,
-  dataProvider: IDataProvider<TItem>
+  dataProvider: IDataProvider<TItem>,
 ) => UseListOptionsReturn<TItem>;
 
 // LIST FILTER PRESETS ---------------------------------------------------------------------------
@@ -512,7 +512,7 @@ export type UseListFilterPresetsReturn<TItem extends object> = {
 export type UseListFilterPresets = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "filterPresets">,
   options: UseListOptionsReturn<TItem>,
-  dataProvider: IDataProvider<TItem>
+  dataProvider: IDataProvider<TItem>,
 ) => UseListFilterPresetsReturn<TItem>;
 
 // LIST SEARCH ---------------------------------------------------------------------------------
@@ -547,7 +547,7 @@ export type UseListSearchReturn<TItem extends object> = {
 };
 
 export type UseListSearch = <TItem extends object>(
-  config: ListSearchConfig<TItem>
+  config: ListSearchConfig<TItem>,
 ) => UseListSearchReturn<TItem>;
 
 // LIST CONTEXT ---------------------------------------------------------------------------------
@@ -559,7 +559,7 @@ export type ListContextDataProviderRef<TItem extends object> = {
 // TODO: update as needed
 export type ListContextValue<
   TItem extends object,
-  TProviderType extends DataProviderType = DataProviderType
+  TProviderType extends DataProviderType = DataProviderType,
 > = {
   /**
    * The list's data, updated as filters get applied

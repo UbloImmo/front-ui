@@ -37,7 +37,7 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
   const testId = useTestId("checkbox", props);
 
   const [isActive, setIsActive] = useState<CheckboxStatus>(
-    mergedProps.active ?? false
+    mergedProps.active ?? false,
   );
 
   useEffect(() => {
@@ -53,8 +53,8 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
         ? "gray-500"
         : "gray-400"
       : isActive
-      ? "primary-base"
-      : "gray-800";
+        ? "primary-base"
+        : "gray-800";
   }, [disabled, isActive]);
 
   const propagateOnChange = useCallback(
@@ -68,7 +68,7 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
       if (onChange) onChange(newActive);
       setIsActive(newActive);
     },
-    [isActive, disabled, onChange]
+    [isActive, disabled, onChange],
   );
 
   return (

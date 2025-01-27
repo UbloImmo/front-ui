@@ -26,7 +26,7 @@ type UseAsyncDataOnErrorFn = MaybeAsyncFn<[Error]>;
 
 type UseAsyncDataOptions<
   TData extends NullishPrimitives,
-  TDataParams extends unknown[] = []
+  TDataParams extends unknown[] = [],
 > = {
   defaultValue?: TData;
   onSuccess?: UseAsyncDataOnSuccessFn<TData>;
@@ -48,14 +48,14 @@ type UseAsyncDataState<TData extends NullishPrimitives> = {
 
 type UseAsyncDataLoadFn<
   TData extends NullishPrimitives,
-  TDataParams extends unknown[] = []
+  TDataParams extends unknown[] = [],
 > = (
-  options?: Optional<UseAsyncDataOptions<TData, TDataParams>>
+  options?: Optional<UseAsyncDataOptions<TData, TDataParams>>,
 ) => Promise<UseAsyncDataState<TData>>;
 
 type UseAsyncDataReturn<
   TData extends NullishPrimitives,
-  TDataParams extends unknown[] = []
+  TDataParams extends unknown[] = [],
 > = UseAsyncDataState<TData> & {
   refetch: UseAsyncDataLoadFn<TData, TDataParams>;
 };
@@ -76,10 +76,10 @@ type UseAsyncDataReturn<
  */
 export const useAsyncData = <
   TData extends NullishPrimitives,
-  TDataParams extends unknown[] = []
+  TDataParams extends unknown[] = [],
 >(
   dataOrLoadingFn: TData | MaybeAsyncFn<TDataParams, TData>,
-  options?: UseAsyncDataOptions<TData, TDataParams>
+  options?: UseAsyncDataOptions<TData, TDataParams>,
 ): UseAsyncDataReturn<TData, TDataParams> => {
   /**
    * The loaded data, or undefined if not yet loaded.
@@ -87,14 +87,14 @@ export const useAsyncData = <
   const [data, setData] = useState<Optional<TData>>(
     isFunction<MaybeAsyncFn<[], TData>>(dataOrLoadingFn)
       ? undefined
-      : dataOrLoadingFn
+      : dataOrLoadingFn,
   );
 
   /**
    * Indicates whether the data is currently being loaded.
    */
   const [isLoading, setIsLoading] = useState(
-    !isFunction<MaybeAsyncFn<[], TData>>(dataOrLoadingFn)
+    !isFunction<MaybeAsyncFn<[], TData>>(dataOrLoadingFn),
   );
 
   /**
@@ -110,7 +110,7 @@ export const useAsyncData = <
   const triggerLoadCallbacks = useCallback(
     (
       state: UseAsyncDataState<TData>,
-      currentOptions?: UseAsyncDataOptions<TData, TDataParams>
+      currentOptions?: UseAsyncDataOptions<TData, TDataParams>,
     ) => {
       if (state.error) {
         if (options?.onError) options.onError(state.error);
@@ -121,7 +121,7 @@ export const useAsyncData = <
         if (currentOptions?.onSuccess) currentOptions.onSuccess(state.data);
       }
     },
-    [options]
+    [options],
   );
 
   /**
@@ -140,7 +140,7 @@ export const useAsyncData = <
         setIsLoading(true);
         try {
           const loadedData = await dataOrLoadingFn(
-            ...(currentOptions?.params ?? options?.params ?? [])
+            ...(currentOptions?.params ?? options?.params ?? []),
           );
           state = {
             data: loadedData,
@@ -168,7 +168,7 @@ export const useAsyncData = <
 
       return state;
     },
-    [data, dataOrLoadingFn, error, isLoading, triggerLoadCallbacks, options]
+    [data, dataOrLoadingFn, error, isLoading, triggerLoadCallbacks, options],
   );
 
   // trigger load on mount
@@ -206,7 +206,7 @@ export const delay = (ms: number): Promise<void> =>
  */
 export const delayedResponse = async <TData>(
   response: TData,
-  ms: number
+  ms: number,
 ): Promise<TData> => {
   await delay(ms);
   return response;
@@ -247,7 +247,7 @@ export function useUnmount(func: () => void) {
     () => () => {
       funcRef.current();
     },
-    []
+    [],
   );
 }
 
@@ -276,11 +276,11 @@ export function useUnmount(func: () => void) {
  */
 export function useDebounceCallback<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  TFunc extends (...args: any) => ReturnType<TFunc>
+  TFunc extends (...args: any) => ReturnType<TFunc>,
 >(
   func: TFunc,
   delay = 500,
-  options?: UseDebounceOptions
+  options?: UseDebounceOptions,
 ): DebouncedState<TFunc> {
   const debouncedFunc = useRef<ReturnType<typeof debounce>>();
 
@@ -339,7 +339,7 @@ export function useDebounceCallback<
 export function useDebounceValue<TValue>(
   initialValue: TValue | (() => TValue),
   delay: number,
-  options?: UseDebounceValueOptions<TValue>
+  options?: UseDebounceValueOptions<TValue>,
 ): [TValue, DebouncedState<(value: TValue) => void>] {
   const equals =
     options?.equalityFn ?? ((left: TValue, right: TValue) => left === right);
@@ -347,14 +347,14 @@ export function useDebounceValue<TValue>(
     ? initialValue()
     : initialValue;
   const [debouncedValue, setDebouncedValue] = useState<TValue>(
-    unwrappedInitialValue
+    unwrappedInitialValue,
   );
   const previousValueRef = useRef<TValue | undefined>(unwrappedInitialValue);
 
   const updateDebouncedValue = useDebounceCallback(
     setDebouncedValue,
     delay,
-    options
+    options,
   );
 
   // Update the debounced value if the initial value changes

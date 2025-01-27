@@ -86,7 +86,7 @@ const fetchPokemonDataSubset = async (baseUrl = DEFAULT_POKEAPI_URL) => {
     data.results.map(async ({ url }) => {
       const singleResponse = await fetch(url);
       return (await singleResponse.json()) as Pokemon;
-    })
+    }),
   );
   return { results, next: data.next };
 };
@@ -104,27 +104,27 @@ const fetchPokemonData = async (): Promise<Pokemon[]> => {
 };
 
 const useStaticPokemonData: UseDataProviderFn<Pokemon, "static"> = (
-  setData
+  setData,
 ) => {
   return useStaticDataProvider(fetchPokemonData, setData);
 };
 
 const dynamicFetchPokemonData = async (
-  config: DataProviderFilterFnConfig<Pokemon>
+  config: DataProviderFilterFnConfig<Pokemon>,
 ) => {
   const data = await fetchPokemonData();
   return filterItems(data, config);
 };
 
 const useDynamicPokemonData: UseDataProviderFn<Pokemon, "dynamic"> = (
-  setData
+  setData,
 ) => {
   return useDynamicDataProvider(dynamicFetchPokemonData, setData);
 };
 
 const buildPokeApiUrl = (
   limit: Nullable<number>,
-  offset: Nullable<number | string>
+  offset: Nullable<number | string>,
 ) => {
   const url = new URL(DEFAULT_POKEAPI_URL);
   if (isNumber(limit)) url.searchParams.set("limit", String(limit));
@@ -153,7 +153,7 @@ const paginatedFetchPokemonData: PaginatedDataProviderFetchPageFn<
     const currentFetch = await fetchFilteredPokemonPage(
       config,
       offset,
-      pageJump
+      pageJump,
     );
 
     offset += pageJump;
@@ -165,8 +165,8 @@ const paginatedFetchPokemonData: PaginatedDataProviderFetchPageFn<
   const finalAfter = !hasNext
     ? null
     : pageData.length
-    ? pageData.at(-1)?.id ?? null
-    : null;
+      ? (pageData.at(-1)?.id ?? null)
+      : null;
 
   return {
     pageData,
@@ -176,12 +176,12 @@ const paginatedFetchPokemonData: PaginatedDataProviderFetchPageFn<
 };
 
 const usePaginatedPokemonData: UseDataProviderFn<Pokemon, "paginated"> = (
-  setData
+  setData,
 ) => {
   const paginated = usePaginatedDataProvider(
     paginatedFetchPokemonData,
     setData,
-    25
+    25,
   );
   return {
     ...paginated,
@@ -196,7 +196,7 @@ const pokemonDataProviders = {
 };
 
 const usePokemonListConfig = (
-  dataProvider: Exclude<DataProviderType, "custom">
+  dataProvider: Exclude<DataProviderType, "custom">,
 ) => {
   const {
     config,
@@ -222,7 +222,7 @@ const usePokemonListConfig = (
     const pikachuOrRaichu = option(
       "Pikachu or Raichu",
       matches("name", "=", ["pikachu", "raichu"]),
-      { color: "pending-dark", operator: "OR" }
+      { color: "pending-dark", operator: "OR" },
     );
     const legendaries = options(
       "name",
@@ -232,7 +232,7 @@ const usePokemonListConfig = (
         { label: "Cresselia", value: "cresselia" },
         { label: "Suicune", value: "suicune" },
       ],
-      { icon: "Stars", color: "primary" }
+      { icon: "Stars", color: "primary" },
     );
 
     const all = [clefairy, pikachuOrRaichu, ...legendaries];
@@ -254,7 +254,7 @@ const usePokemonListConfig = (
         const label = `${exp} XP`;
         return { label, value: exp, config: {} };
       });
-    })
+    }),
   );
 
   // declare type options once
@@ -326,8 +326,8 @@ const usePokemonListConfig = (
       option(
         label,
         typeProperties.map((property) => match(property, "=", value)),
-        { ...(config ?? {}), operator: "OR" }
-      )
+        { ...(config ?? {}), operator: "OR" },
+      ),
     );
     const [fire, grass, water, electric] = all;
     return {
@@ -355,7 +355,7 @@ const usePokemonListConfig = (
       {
         operator: "AND",
         color: "gray-400",
-      }
+      },
     );
     const all = [light, medium, heavy];
     return {
@@ -384,7 +384,7 @@ const usePokemonListConfig = (
       {
         color: "error",
         operator: BooleanOperators.AND,
-      }
+      },
     );
     filterPreset(
       "Electric Pikachu or Raichu",
@@ -392,7 +392,7 @@ const usePokemonListConfig = (
       {
         color: "pending",
         exclusive: true,
-      }
+      },
     );
     filterPreset("Obese mice", [names.pikachuOrRaichu, weights.heavy]);
   });

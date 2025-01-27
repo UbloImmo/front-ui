@@ -19,7 +19,7 @@ import type { Logger } from "@ubloimmo/front-util";
  */
 const useSanitizedFilterPreset = (
   props: ListFilterPresetProps,
-  logger: Logger
+  logger: Logger,
 ): FilterPreset<Record<string, unknown>> => {
   const { getFilterPresetBySignature } =
     useListContext<Record<string, unknown>>();
@@ -41,14 +41,14 @@ const useSanitizedFilterPreset = (
       if (foundFilterPreset) return foundFilterPreset;
     }
     logger.warn(
-      "No filter preset or signature provided, defaulting to an empty filter preset"
+      "No filter preset or signature provided, defaulting to an empty filter preset",
     );
     const emptyData = filterPresetData<Record<string, unknown>>(
       "[EMPTY FILTER PRESET]",
       [],
       {
         disabled: true,
-      }
+      },
     );
     return {
       ...emptyData,

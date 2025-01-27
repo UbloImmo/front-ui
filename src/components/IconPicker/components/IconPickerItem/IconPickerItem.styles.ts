@@ -24,7 +24,8 @@ export const IconPickerItemStyles = ({
     border: 1px solid
       ${$active ? cssVarUsage("primary-medium") : cssVarUsage("primary-light")};
     box-shadow: var(--shadow-button);
-    transition: 150ms background-color var(--bezier) 0s,
+    transition:
+      150ms background-color var(--bezier) 0s,
       150ms border-color var(--bezier) 0s;
 
     ${!$readonly &&

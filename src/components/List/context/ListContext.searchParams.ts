@@ -39,39 +39,39 @@ const writeWindowSearchParams = (searchParams: URLSearchParams): void => {
  * @returns {void} This hook doesn't return anything
  */
 export const useListContextSearchParams: UseListContextSearchParams = <
-  TItem extends object
+  TItem extends object,
 >(
   { searchParams }: Pick<ListContextConfig<TItem>, "searchParams">,
   { options, updateOptionSelection }: UseListOptionsReturn<TItem>,
-  configLoading: boolean
+  configLoading: boolean,
 ) => {
   const [initialSynced, setInitialSynced] = useState(false);
 
   const readSearchParams = useMemo(
     () => searchParams?.readParams ?? readWindowSearchParams,
-    [searchParams?.readParams]
+    [searchParams?.readParams],
   );
 
   const writeSearchParams = useMemo(
     () => searchParams?.writeParams ?? writeWindowSearchParams,
-    [searchParams?.writeParams]
+    [searchParams?.writeParams],
   );
 
   const readWrite = useMemo(
     () =>
       (isBoolean(searchParams?.sync) && searchParams.sync) ||
       (isString(searchParams?.sync) && searchParams.sync === "read-write"),
-    [searchParams?.sync]
+    [searchParams?.sync],
   );
 
   const read = useMemo(
     () => readWrite || searchParams?.sync === "read",
-    [readWrite, searchParams?.sync]
+    [readWrite, searchParams?.sync],
   );
 
   const write = useMemo(
     () => readWrite || searchParams?.sync === "write",
-    [readWrite, searchParams?.sync]
+    [readWrite, searchParams?.sync],
   );
 
   /**
@@ -88,7 +88,7 @@ export const useListContextSearchParams: UseListContextSearchParams = <
       // update the window search
       writeSearchParams(nextSearchParams);
     },
-    [readSearchParams, writeSearchParams]
+    [readSearchParams, writeSearchParams],
   );
 
   /**
@@ -125,7 +125,7 @@ export const useListContextSearchParams: UseListContextSearchParams = <
       .filter(
         (paramSignature) =>
           options.findIndex(({ signature }) => signature === paramSignature) >=
-          0
+          0,
       );
   }, [options, readSearchParams]);
 

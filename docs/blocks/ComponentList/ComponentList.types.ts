@@ -18,7 +18,7 @@ export type AnyIndex = {
  * Used to filter a potential component by allowing its props to by either TProps or TProps & TestIdProps
  */
 type ComponentPropsMask<
-  TProps extends Record<string, unknown> = Record<string, unknown>
+  TProps extends Record<string, unknown> = Record<string, unknown>,
 > = TProps | (TProps & TestIdProps);
 
 /**
@@ -104,7 +104,7 @@ export type ComponentName<TIndex extends AnyIndex> =
  */
 export type ComponentEntry<
   TIndex extends AnyIndex,
-  TName extends ComponentName<TIndex> = ComponentName<TIndex>
+  TName extends ComponentName<TIndex> = ComponentName<TIndex>,
 > = [TName, ComponentIndex<TIndex>[TName]];
 
 /**
@@ -112,7 +112,7 @@ export type ComponentEntry<
  */
 export type Component<
   TIndex extends AnyIndex,
-  TName extends ComponentName<TIndex>
+  TName extends ComponentName<TIndex>,
 > = ComponentIndex<TIndex>[TName];
 
 /**
@@ -120,7 +120,7 @@ export type Component<
  */
 export type ComponentProps<
   TIndex extends AnyIndex,
-  TName extends ComponentName<TIndex>
+  TName extends ComponentName<TIndex>,
 > = Parameters<Component<TIndex, TName>>[0];
 
 /**
@@ -129,7 +129,7 @@ export type ComponentProps<
  */
 export type DocumentedComponent<
   TIndex extends AnyIndex,
-  TName extends ComponentName<TIndex>
+  TName extends ComponentName<TIndex>,
 > = Component<TIndex, TName> & {
   __docgenInfo: DocgenInfo<ComponentProps<TIndex, TName>>;
 };
@@ -140,7 +140,7 @@ export type DocumentedComponent<
  */
 export type MaybeDocumentedComponent<
   TIndex extends AnyIndex,
-  TName extends ComponentName<TIndex>
+  TName extends ComponentName<TIndex>,
 > = Component<TIndex, TName> | DocumentedComponent<TIndex, TName>;
 
 /**
@@ -148,7 +148,7 @@ export type MaybeDocumentedComponent<
  */
 export type ComponentEntryItem<
   TIndex extends AnyIndex,
-  TName extends ComponentName<TIndex>
+  TName extends ComponentName<TIndex>,
 > = {
   name: TName;
   Component: MaybeDocumentedComponent<TIndex, TName>;

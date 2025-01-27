@@ -45,7 +45,7 @@ export const Query = () => {
 
   const filteredQueries = useMemo(() => {
     return queries.filter((query) =>
-      query.toLowerCase().includes(typeQuery.toLowerCase())
+      query.toLowerCase().includes(typeQuery.toLowerCase()),
     );
   }, [typeQuery]);
 

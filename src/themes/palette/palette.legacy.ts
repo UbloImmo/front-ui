@@ -23,30 +23,30 @@ import {
  */
 const colorTokenToLegacyPaletteColor = <
   TReturnPalette extends LegacyPalette[string],
-  TColorTokenGroup extends TokenValueGroup = TokenValueGroup
+  TColorTokenGroup extends TokenValueGroup = TokenValueGroup,
 >(
   colorTokenGroup: TColorTokenGroup,
   extractKeys: (
     | [keyof TColorTokenGroup, keyof TReturnPalette]
     | (keyof TReturnPalette & keyof TColorTokenGroup)
-  )[]
+  )[],
 ): TReturnPalette => {
   const lookupKeys = extractKeys.map(
     (
-      keyDef: (typeof extractKeys)[number]
+      keyDef: (typeof extractKeys)[number],
     ): [keyof TColorTokenGroup, keyof TReturnPalette] =>
-      Array.isArray(keyDef) ? keyDef : [keyDef, keyDef]
+      Array.isArray(keyDef) ? keyDef : [keyDef, keyDef],
   );
   return Object.fromEntries(
     lookupKeys.map(
       ([extractKey, mapToKey]: [
         keyof TColorTokenGroup,
-        keyof TReturnPalette
+        keyof TReturnPalette,
       ]): [keyof TReturnPalette, string] => {
         const token = colorTokenGroup[extractKey];
         return [mapToKey, token.value];
-      }
-    )
+      },
+    ),
   ) as Record<keyof TReturnPalette, string> as TReturnPalette;
 };
 
@@ -73,14 +73,14 @@ const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
           "base",
           "dark",
           "light",
-        ])
+        ]),
     ),
     background: colorTokenToLegacyPaletteColor<LegacyLightAndDarkPalette>(
       gray,
       [
         ["100", "dark"],
         ["50", "light"],
-      ]
+      ],
     ),
     white: {
       base: "rgba(255,255,255,1)",
@@ -124,7 +124,7 @@ type MissingLegacyShadows = Omit<
  * @return {string} The value of the effect token shadow.
  */
 export const extractEffectTokenShadow = (
-  effectKey: keyof typeof effects.shadow
+  effectKey: keyof typeof effects.shadow,
 ): string => {
   if (!effects.shadow[effectKey]) return "";
   // TODO: remove this cast once effects have been exported from Design Tokens figma file
@@ -160,8 +160,8 @@ const effectTokensToLegacyShadows = (): Omit<
       (effectKey): [keyof LegacyShadows, string] => [
         effectTokenToLegacyShadowKeyMap[effectKey],
         extractEffectTokenShadow(effectKey),
-      ]
-    )
+      ],
+    ),
   ) as Record<keyof LegacyShadows, string>;
 };
 

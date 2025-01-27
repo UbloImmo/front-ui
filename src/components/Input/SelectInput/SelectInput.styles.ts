@@ -39,7 +39,7 @@ export const selectInputWrapperStyles = (): RuleSet => css`
 `;
 
 export const selectInputContainerStyles = (
-  props: CommonInputStyleProps
+  props: CommonInputStyleProps,
 ): RuleSet => css`
   ${commonInputContainerStyles(props)}
 

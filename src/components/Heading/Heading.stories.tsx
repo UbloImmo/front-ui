@@ -23,7 +23,7 @@ const lorem = "The quick brown fox jumps over the lazy dog.";
 const componentSource = componentSourceFactory<HeadingProps>(
   "Heading",
   { children: lorem },
-  Heading.defaultProps
+  Heading.defaultProps,
 );
 
 const meta = {

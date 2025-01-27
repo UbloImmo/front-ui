@@ -23,14 +23,14 @@ const computeMaxHeight = (props: ListFilterStyleProps) => {
   const { open, active, multi } = fromStyleProps(props);
   if (open)
     return `calc(${cssVarUsage(
-      HEADER_HEIGHT_VAR_NAME
+      HEADER_HEIGHT_VAR_NAME,
     )} + ${MAX_OPTIONS_HEIGHT})`;
   if (active && multi) return "calc-size(fit-content, size)";
   return HEADER_HEIGHT;
 };
 
 export const listFilterContainerStyles = (
-  props: ListFilterStyleProps
+  props: ListFilterStyleProps,
 ): RuleSet => {
   const maxHeight = computeMaxHeight(props);
   const borderRadius = cssVarUsage(`s-${props.$open ? 2 : 1}`);
@@ -78,7 +78,7 @@ export const listFilterContainerStyles = (
 };
 
 export const listFilterHeaderStyles = (
-  props: ListFilterStyleProps
+  props: ListFilterStyleProps,
 ): RuleSet => {
   const { multi } = fromStyleProps(props);
   const height = multi ? "fit-content" : cssVarName(HEADER_HEIGHT_VAR_NAME);
@@ -99,7 +99,7 @@ export const listFilterHeaderStyles = (
 };
 
 export const listFilterOptionChipsStyles = (
-  _props: ListFilterStyleProps
+  _props: ListFilterStyleProps,
 ): RuleSet => {
   return css`
     /* padding: var(--s-2); */
@@ -107,7 +107,7 @@ export const listFilterOptionChipsStyles = (
 };
 
 export const listFilterOptionsListStyles = (
-  props: ListFilterStyleProps
+  props: ListFilterStyleProps,
 ): RuleSet => {
   const { open } = fromStyleProps(props);
 

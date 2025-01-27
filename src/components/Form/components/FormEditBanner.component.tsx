@@ -57,12 +57,12 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
   const cancelLabel = useStatic(() =>
     mergedProps.cancelLabel in tl.action
       ? tl.action[mergedProps.cancelLabel as TranslationKey<"action">]()
-      : mergedProps.cancelLabel
+      : mergedProps.cancelLabel,
   );
   const submitLabel = useStatic(() =>
     mergedProps.submitLabel in tl.action
       ? tl.action[mergedProps.submitLabel as TranslationKey<"action">]()
-      : mergedProps.submitLabel
+      : mergedProps.submitLabel,
   );
 
   const submitDisabled = useMemo<boolean>(() => {
@@ -71,7 +71,7 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
 
   const submitButtonType = useMemo(
     () => (mergedProps.embedded ? "button" : "submit"),
-    [mergedProps.embedded]
+    [mergedProps.embedded],
   );
 
   const submitOnClickIfEmbedded = useCallback(() => {

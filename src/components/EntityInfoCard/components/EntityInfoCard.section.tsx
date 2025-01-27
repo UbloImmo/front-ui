@@ -7,6 +7,11 @@ import {
   entityCardStatusRowListStyles,
 } from "../EntityInfoCard.styles";
 
+import { ContextInfoCard } from "@/components/ContextInfoCard";
+import { ContextLine } from "@/components/ContextLine";
+import { CopyClipboardInfoCard } from "@/components/CopyClipboardInfoCard";
+import { Heading } from "@/components/Heading";
+import { InfoBox } from "@/components/InfoBox";
 import {
   FlexColumnLayout,
   GridItem,
@@ -14,14 +19,6 @@ import {
   type GridEndPosition,
 } from "@layouts";
 import { isNonEmptyString, useMergedProps, useTestId } from "@utils";
-
-import {
-  ContextInfoCard,
-  ContextLine,
-  CopyClipboardInfoCard,
-  Heading,
-  InfoBox,
-} from "@components";
 
 import type {
   EntityInfoCardCallbackProps,
@@ -51,7 +48,7 @@ export const defaultEntityInfoCardSectionProps: EntityInfoCardSectionDefaultProp
  * @param {EntityInfoCardSectionProps & EntityInfoCardCallbackProps & TestIdProps} props - the properties of the section
  */
 export const EntityInfoCardSection = (
-  props: EntityInfoCardSectionProps & EntityInfoCardCallbackProps & TestIdProps
+  props: EntityInfoCardSectionProps & EntityInfoCardCallbackProps & TestIdProps,
 ) => {
   const {
     name,

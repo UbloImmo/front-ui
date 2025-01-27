@@ -6,7 +6,7 @@ import { testComponentFactory } from "@/tests";
 
 const testComponent = testComponentFactory(
   "ListFilterOptionDivider",
-  ListFilterOptionDivider
+  ListFilterOptionDivider,
 );
 
 const testId = "list-filter-option-divider";

@@ -14,7 +14,7 @@ import type { ListProviderWrapperProps } from "../../List.types";
  * @returns {JSX.Element}
  */
 export const ListProviderWrapper = <TItem extends object>(
-  props: ListProviderWrapperProps<TItem>
+  props: ListProviderWrapperProps<TItem>,
 ): JSX.Element => {
   const parentContext = useListContext<TItem>();
   if (parentContext.contextMissing && props.config) {

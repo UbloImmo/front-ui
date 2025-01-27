@@ -47,7 +47,7 @@ export const FormTableFooterSelect = ({
         return tableData.some((rowValue) => rowValue[key] === optionValue[key]);
       });
     },
-    [tableData, unique]
+    [tableData, unique],
   );
 
   /**
@@ -62,7 +62,7 @@ export const FormTableFooterSelect = ({
       const externalFilter = filterOption ? filterOption(option) : true;
       return externalFilter && filterOptionBasedOnValue(option);
     },
-    [filterOption, filterOptionBasedOnValue]
+    [filterOption, filterOptionBasedOnValue],
   );
 
   const selectProps = useMemo<SelectInputProps<Partial<RowValue>>>(
@@ -77,7 +77,7 @@ export const FormTableFooterSelect = ({
       filterOption: filterSelectOption,
       disabled,
     }),
-    [footerSelectProps, action, filterSelectOption, disabled, appendRow]
+    [footerSelectProps, action, filterSelectOption, disabled, appendRow],
   );
 
   const testId = useTestId("form-table-footer-select", footerSelectProps);

@@ -159,7 +159,7 @@ export type ListConfigFilterPresetFnParams<TItem extends object> = [
   label: string,
   optionsOrSignatures: (FilterOptionData<TItem> | FilterSignature)[],
   config?: FilterPresetConfig,
-  loading?: boolean
+  loading?: boolean,
 ];
 
 export type ListConfigFilterPresetFn<TItem extends object> = GenericFn<
@@ -172,7 +172,7 @@ export type ListConfigAsyncFilterPresetFnParams<TItem extends object> = [
   optionsOrSignaturesPromise: MaybePromise<
     MaybePromise<FilterOptionDataOrSignature<TItem>>[]
   >,
-  config?: FilterPresetConfig
+  config?: FilterPresetConfig,
 ];
 
 export type ListConfigAsyncFilterPresetFn<TItem extends object> = AsyncFn<

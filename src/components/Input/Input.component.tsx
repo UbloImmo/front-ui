@@ -29,7 +29,7 @@ import type { TestIdProps } from "@types";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const inputComponentMap = <
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 >(): SpecificInputComponentMap<TGenericValue> => ({
   text: TextInput,
   number: NumberInput,
@@ -57,7 +57,7 @@ const inputComponentMap = <
  */
 const Input = <
   TType extends InputType = "text",
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 >({
   type,
   ...props
@@ -65,7 +65,7 @@ const Input = <
   const { warn, error } = useLogger("Input");
 
   const inputMap = useStatic<SpecificInputComponentMap<TGenericValue>>(
-    inputComponentMap<TGenericValue>
+    inputComponentMap<TGenericValue>,
   );
 
   const InputComponent = useMemo<

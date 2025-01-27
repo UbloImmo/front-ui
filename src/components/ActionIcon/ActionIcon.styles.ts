@@ -104,7 +104,9 @@ export const actionIconContainerStyles = ({
     justify-content: center;
     cursor: pointer;
     box-shadow: var(--shadow-button);
-    transition: background 300ms ease-out 0s, border-color 300ms ease-out 0s,
+    transition:
+      background 300ms ease-out 0s,
+      border-color 300ms ease-out 0s,
       box-shadow 300ms ease-out 0s;
 
     &:hover {

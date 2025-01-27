@@ -35,7 +35,7 @@ import type {
  * @return {ShadeOpacityFn} The shade opacity function
  */
 export const shadeOpacityFactory = (
-  rgbaColorArr: RgbaColorArr
+  rgbaColorArr: RgbaColorArr,
 ): ShadeOpacityFn => {
   if (!rgbaColorArr || !isArray(rgbaColorArr))
     throw new Error("Invalid color provided");
@@ -56,9 +56,9 @@ export const shadeOpacityFactory = (
  * @return {PaletteColorShaded<TShades>} The shaded palette color.
  */
 const colorTokenGroupToPaletteColorShaded = <
-  TShades extends AnyPaletteColorShadeKeys
+  TShades extends AnyPaletteColorShadeKeys,
 >(
-  colorTokenGroup: Record<TShades[number], Token<"COLOR">>
+  colorTokenGroup: Record<TShades[number], Token<"COLOR">>,
 ): PaletteColorShaded<TShades> => {
   return transformObject(
     colorTokenGroup,
@@ -66,7 +66,7 @@ const colorTokenGroupToPaletteColorShaded = <
       rgba: token.value,
       hex: rgbaColorConverter.strToHex(token.value),
       opacity: shadeOpacityFactory(rgbaColorConverter.strToArr(token.value)),
-    })
+    }),
   );
 };
 
@@ -81,10 +81,10 @@ const buildStaticColorPalette = (): StaticColorPalette => {
   return {
     ...transformObject(
       statusShades,
-      colorTokenGroupToPaletteColorShaded<DefaultPaletteColorShadeKey[]>
+      colorTokenGroupToPaletteColorShaded<DefaultPaletteColorShadeKey[]>,
     ),
     gray: colorTokenGroupToPaletteColorShaded<GrayscalePaletteColorShadeKey[]>(
-      gray
+      gray,
     ),
   };
 };
@@ -108,7 +108,7 @@ const STATIC_COLOR_KEYS: (keyof typeof colors)[] = [
 export const getDynamicThemeSlugs = (): DynamicColorPaletteKey[] => {
   return objectKeys(colors).filter(
     (colorKey): colorKey is DynamicColorPaletteKey =>
-      !STATIC_COLOR_KEYS.includes(colorKey)
+      !STATIC_COLOR_KEYS.includes(colorKey),
   );
 };
 
@@ -125,10 +125,10 @@ const dynamicClientColorPalette = (): DynamicColorPalette => {
     arrayFilter(
       dynamicColorKeys.map(
         (
-          key
+          key,
         ): [
           DynamicColorPaletteKey,
-          Nullable<Record<DefaultPaletteColorShadeKey, Token<"COLOR">>>
+          Nullable<Record<DefaultPaletteColorShadeKey, Token<"COLOR">>>,
         ] => {
           const dynamicColorTokenGroup = colors[
             key
@@ -144,7 +144,7 @@ const dynamicClientColorPalette = (): DynamicColorPalette => {
           const mediumColor = blendColors(
             dynamicColorBase.value,
             dynamicColorTokenGroup.light.value,
-            0.5
+            0.5,
           );
           const mediumToken: Token<"COLOR"> =
             dynamicColorTokenGroup?.medium ?? {
@@ -159,17 +159,17 @@ const dynamicClientColorPalette = (): DynamicColorPalette => {
             light: dynamicColorTokenGroup.light,
           };
           return [key, updatedTokenGroup];
-        }
+        },
       ),
-      (item) => !isNull(item[1])
+      (item) => !isNull(item[1]),
     ) as [
       DynamicColorPaletteKey,
-      Record<DefaultPaletteColorShadeKey, Token<"COLOR">>
-    ][]
+      Record<DefaultPaletteColorShadeKey, Token<"COLOR">>,
+    ][],
   );
   return transformObject(
     dynamicColorTokens,
-    colorTokenGroupToPaletteColorShaded<DefaultPaletteColorShadeKey[]>
+    colorTokenGroupToPaletteColorShaded<DefaultPaletteColorShadeKey[]>,
   );
 };
 
@@ -180,7 +180,7 @@ const dynamicClientColorPalette = (): DynamicColorPalette => {
  * @return {DynamicColorPaletteSubset} the dynamic color palette for the specified client
  */
 export const buildDynamicColorPalette = (
-  forClient: DynamicColorPaletteKey = "primary"
+  forClient: DynamicColorPaletteKey = "primary",
 ): DynamicColorPaletteSubset => {
   const clientColorPalette = dynamicClientColorPalette();
   return {
@@ -195,7 +195,7 @@ export const buildDynamicColorPalette = (
  * @return {ColorPalette} the color palette for the specified client
  */
 export const buildColorPalette = (
-  forClient: DynamicColorPaletteKey = "primary"
+  forClient: DynamicColorPaletteKey = "primary",
 ): ColorPalette => {
   return {
     ...buildDynamicColorPalette(forClient),

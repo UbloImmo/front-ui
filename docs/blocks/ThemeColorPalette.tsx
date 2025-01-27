@@ -42,7 +42,7 @@ export const ThemeColorShades = ({
   const theme = useTheme();
   const [showCodePreview, toggleShowCodePreview] = useReducer(
     (state) => !state,
-    false
+    false,
   );
   const { color, lightShade, darkShade } = useMemo(() => {
     const color = theme[colorKey];
@@ -127,7 +127,7 @@ const ThemeColorCodePreview = ({
       color as PaletteColorShaded<
         DefaultPaletteColorShadeKey[] | GrayscalePaletteColorShadeKey[]
       >,
-      ({ hex, rgba }) => ({ hex, rgba, opacity: "[function(number)]" })
+      ({ hex, rgba }) => ({ hex, rgba, opacity: "[function(number)]" }),
     );
     return {
       [colorKey]: colorObj,

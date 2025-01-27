@@ -54,9 +54,9 @@ import type {
  */
 export const useListConfig: UseListConfig = <
   TItem extends object,
-  TProviderType extends DataProviderType
+  TProviderType extends DataProviderType,
 >(
-  dataProvider: UseDataProviderFn<TItem, TProviderType>
+  dataProvider: UseDataProviderFn<TItem, TProviderType>,
 ): UseListConfigReturn<TItem, TProviderType> => {
   const nextFilterIndex = useRef(0);
 
@@ -82,7 +82,7 @@ export const useListConfig: UseListConfig = <
         emptyLabel: indexedConfig.emptyLabel ?? tl.status.all(),
       };
     },
-    [incrementFilterIndex, tl.status]
+    [incrementFilterIndex, tl.status],
   );
 
   const [optionsMap, registerOption] = useReducer(
@@ -91,49 +91,49 @@ export const useListConfig: UseListConfig = <
       copy.set(option.signature, option);
       return copy;
     },
-    new Map()
+    new Map(),
   );
 
   const [filtersMap, dispatchFilterAction] = useReducer(
     listConfigFilterReducer,
-    new Map()
+    new Map(),
   );
 
   const registerFilter = useCallback(
     (filter: FilterData) => {
       dispatchFilterAction(["register", filter]);
     },
-    [dispatchFilterAction]
+    [dispatchFilterAction],
   );
 
   const updateFilter = useCallback(
     (filter: FilterData) => {
       dispatchFilterAction(["update", filter]);
     },
-    [dispatchFilterAction]
+    [dispatchFilterAction],
   );
 
   const [filterPresetsMap, dispatchFilterPresetAction] = useReducer(
     listConfigFilterPresetReducer,
-    new Map()
+    new Map(),
   );
 
   const registerFilterPreset = useCallback(
     (preset: FilterPresetData) => {
       dispatchFilterPresetAction(["register", preset]);
     },
-    [dispatchFilterPresetAction]
+    [dispatchFilterPresetAction],
   );
 
   const updateFilterPreset = useCallback(
     (preset: FilterPresetData) => {
       dispatchFilterPresetAction(["update", preset]);
     },
-    [dispatchFilterPresetAction]
+    [dispatchFilterPresetAction],
   );
 
   const [operator, setOperator] = useState<FilterBooleanOperator>(
-    BooleanOperators.AND
+    BooleanOperators.AND,
   );
 
   /**
@@ -148,7 +148,7 @@ export const useListConfig: UseListConfig = <
     (...params: ListConfigMatchFnParams<TItem>): FilterOptionMatch<TItem> => {
       return filterOptionMatch(...params);
     },
-    []
+    [],
   );
 
   /**
@@ -163,7 +163,7 @@ export const useListConfig: UseListConfig = <
     (property, comparison, values) => {
       return values.map((value) => match(property, comparison, value));
     },
-    [match]
+    [match],
   );
 
   /**
@@ -180,7 +180,7 @@ export const useListConfig: UseListConfig = <
         value,
       };
     },
-    []
+    [],
   );
 
   /**
@@ -205,7 +205,7 @@ export const useListConfig: UseListConfig = <
    */
   const divider = useCallback<ListConfigOptionDividerFn>(
     filterOptionDividerData,
-    []
+    [],
   );
 
   /**
@@ -223,11 +223,11 @@ export const useListConfig: UseListConfig = <
         return option(
           label,
           match(property, comparison, value),
-          mergeDefaultProps(sharedConfig, config)
+          mergeDefaultProps(sharedConfig, config),
         );
       });
     },
-    [match, option]
+    [match, option],
   );
 
   /**
@@ -247,7 +247,7 @@ export const useListConfig: UseListConfig = <
       registerFilter(data);
       return data;
     },
-    [hydrateFilterConfig, registerFilter]
+    [hydrateFilterConfig, registerFilter],
   );
 
   /**
@@ -264,7 +264,7 @@ export const useListConfig: UseListConfig = <
       registerFilterPreset(presetData);
       return presetData;
     },
-    [registerFilterPreset]
+    [registerFilterPreset],
   );
 
   const async = useListConfigAsync<TItem>(
@@ -274,7 +274,7 @@ export const useListConfig: UseListConfig = <
     updateFilter,
     registerFilterPreset,
     updateFilterPreset,
-    hydrateFilterConfig
+    hydrateFilterConfig,
   );
 
   const [searchParams, configureSearchParams] =
@@ -294,7 +294,7 @@ export const useListConfig: UseListConfig = <
   >(() => {
     const optionsList = Array.from(optionsMap.values());
     const filtersList = Array.from(filtersMap.values()).sort(
-      (a, b) => a.index - b.index
+      (a, b) => a.index - b.index,
     );
     const filterPresetsList = Array.from(filterPresetsMap.values());
 

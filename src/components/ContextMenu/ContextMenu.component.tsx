@@ -62,7 +62,7 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
 
       item.onClick();
     },
-    [disabled]
+    [disabled],
   );
 
   const menuItems = useMemo<ContextMenuItemProps[]>(() => {
@@ -87,7 +87,7 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
       }
       setOpen(opened);
     },
-    [mergedProps, disabled]
+    [mergedProps, disabled],
   );
 
   useEffect(() => {
@@ -105,7 +105,7 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
 
   const padding = useMemo<FixedCssLength>(
     () => (isMediumSize ? "s-1" : "s-2"),
-    [isMediumSize]
+    [isMediumSize],
   );
 
   const PovoverContent = useCallback(
@@ -125,13 +125,13 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
         {!isMediumSize && <ContextMenuArrow />}
       </>
     ),
-    [testId, size, isMediumSize, menuItems]
+    [testId, size, isMediumSize, menuItems],
   );
 
   const tl = useUikitTranslation();
   const actionIconTitle = useMemo(
     () => tl.action[open ? "hide" : "show"]("menu"),
-    [open, tl.action]
+    [open, tl.action],
   );
 
   const PopoverChildren = useMemo(() => {
@@ -177,7 +177,7 @@ const ContextMenuContainer = styled.div<ContextMenuStyleProps>`
 `;
 
 const ContextMenuActionIcon = styled(
-  ActionIcon
+  ActionIcon,
 )<ContextMenuActionIconStyleProps>`
   ${contextMenuActionIconStyles}
 `;

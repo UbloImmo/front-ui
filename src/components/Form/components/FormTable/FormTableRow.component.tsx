@@ -51,7 +51,7 @@ export const FormTableRow = ({
 
   const mods = useMemo(
     () => transformObject(modifiers, (modifier) => isEditing && modifier),
-    [modifiers, isEditing]
+    [modifiers, isEditing],
   );
 
   const deleteSelf = useCallback(() => {
@@ -86,7 +86,7 @@ export const FormTableRow = ({
       transform: CSS.Transform.toString(transform),
       transition,
     }),
-    [transform, transition]
+    [transform, transition],
   );
 
   const controls = useMemo<Nullish<FormTableCellControls>>(() => {
@@ -206,7 +206,9 @@ const StyledTableRow = styled(TableRow)<StyledTableRowProps>`
       background: white;
       border: 2px solid var(--primary-medium);
       box-shadow: var(--shadow-card-elevation-medium);
-      transition: box-shadow 150ms var(--bezier), border 150ms var(--bezier);
+      transition:
+        box-shadow 150ms var(--bezier),
+        border 150ms var(--bezier);
       z-index: 1;
 
       & > td {

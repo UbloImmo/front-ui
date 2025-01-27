@@ -35,7 +35,7 @@ export const defaultEntityInfoCardHeaderProps: EntityInfoCardHeaderDefaultProps 
  * @returns {JSX.Element}
  */
 export const EntityInfoCardHeader = (
-  props: EntityInfoCardHeaderProps & TestIdProps
+  props: EntityInfoCardHeaderProps & TestIdProps,
 ) => {
   const mergedProps = useMergedProps(defaultEntityInfoCardHeaderProps, props);
   const logger = useLogger("EntityInfoCard");
@@ -55,7 +55,7 @@ export const EntityInfoCardHeader = (
 
   if (hasState && hasAccountBalance) {
     logger.error(
-      "You provided both state and accountBalance, only state will render"
+      "You provided both state and accountBalance, only state will render",
     );
   }
 

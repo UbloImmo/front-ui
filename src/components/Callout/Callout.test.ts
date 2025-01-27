@@ -15,28 +15,28 @@ testCallout({ ...Callout.defaultProps, icon: "Square" })(
   "should replace default icon with provided icon props",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
-  }
+  },
 );
 
 testCallout({ ...Callout.defaultProps, icon: null })(
   "should render without icon",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
-  }
+  },
 );
 
 testCallout({ ...Callout.defaultProps, color: "gray" })(
   "should replace with provided gray color props",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
-  }
+  },
 );
 
 testCallout({ ...Callout.defaultProps, title: "Callout test title" })(
   "should replace with title props",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
-  }
+  },
 );
 
 globalThis.console.warn = mock(() => {});
@@ -48,5 +48,5 @@ testCallout({ ...Callout.defaultProps, children: null })(
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
     expect(globalThis.console.warn).toHaveBeenCalled();
-  }
+  },
 );

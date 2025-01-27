@@ -47,7 +47,7 @@ export const actionContainerStyles = ({
   const borderRadius = borderRadii[$size];
   const background = $disabled ? cssVarUsage("gray-50") : "#fff";
   const disabledShadow = cssVarUsage(
-    $size === "large" ? "shadow-card-elevation-low" : "shadow-button"
+    $size === "large" ? "shadow-card-elevation-low" : "shadow-button",
   );
 
   return css`
@@ -65,7 +65,9 @@ export const actionContainerStyles = ({
     box-shadow: var(--shadow-button);
     border-radius: var(--${borderRadius});
 
-    transition: background 300ms ease-out 0s, border-color 300ms ease-out 0s,
+    transition:
+      background 300ms ease-out 0s,
+      border-color 300ms ease-out 0s,
       box-shadow 300ms ease-out 0s;
 
     span[data-testid="text action-label"] {

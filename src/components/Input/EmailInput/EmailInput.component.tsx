@@ -42,7 +42,7 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
     (nativeValue) => isString(nativeValue),
     (nativeValue) => (isString(nativeValue) ? nativeValue : null),
     mergedProps.onChange,
-    mergedProps.onChangeNative
+    mergedProps.onChangeNative,
   );
 
   const value = useInputValue<"email">(mergedProps.value, props);

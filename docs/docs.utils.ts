@@ -87,7 +87,7 @@ export const parseJsDoc = (jsDoc: string): ParsedJsDoc => {
   const version = prune("@version");
   const rawType = prune("@type");
   const prunedType = /{(.+)}/.exec(rawType ?? "");
-  const type = prunedType ? prunedType[1] ?? null : null;
+  const type = prunedType ? (prunedType[1] ?? null) : null;
   return {
     description,
     defaultValue,
@@ -149,7 +149,7 @@ const formatPropType = ({
     // replace SPACING LABEL
     output = type.value.replaceAll(
       /\${typeof SPACING_PREFIX}/g,
-      SPACING_PREFIX
+      SPACING_PREFIX,
     );
   }
   const toUnion = (typeStr: string) =>
@@ -166,7 +166,7 @@ const formatPropType = ({
       type.signature.properties.map((property): [string, string] => [
         property.key,
         formatPropType({ tsType: property.value }),
-      ])
+      ]),
     );
     return JSON.stringify(objectSignature, undefined, 2);
   }
@@ -210,7 +210,7 @@ const formatPropType = ({
       const intersectionUnion = toUnion(intersectionType);
       // remove common members and re-format the union
       const finalUnion = baseUnion.filter(
-        (member) => !intersectionUnion.includes(member)
+        (member) => !intersectionUnion.includes(member),
       );
       // re-run through union formatter
       return formatPropType({
@@ -294,7 +294,7 @@ export const formatPropInfo = ({
   }
 
   const docGenTypeName: Nullable<string> = (
-    type ? /{(.+)}/.exec(type.name) ?? [null, null] : [null, null]
+    type ? (/{(.+)}/.exec(type.name) ?? [null, null]) : [null, null]
   )[1];
   const docGenType = { ...type, name: docGenTypeName ?? type.name };
 
@@ -331,7 +331,7 @@ const tagProperties = (properties?: Record<string, unknown>): string[] => {
   const formattedProps = objectEntries(properties)
     .map(([key, value]) => {
       const output = (
-        formattedValue: Nullable<string>
+        formattedValue: Nullable<string>,
       ): [string, unknown, Nullable<string>] => [key, value, formattedValue];
       if (isBoolean(value)) {
         return output(null);
@@ -342,13 +342,13 @@ const tagProperties = (properties?: Record<string, unknown>): string[] => {
       if (isObject(value)) {
         const stringObj = JSON.stringify(value, undefined, 2).replaceAll(
           /"(\S+)":\s/gi,
-          "$1: "
+          "$1: ",
         );
 
         const lines = stringObj.split("\n");
         const propObj = lines
           .map((line, index) =>
-            index === 0 || index - 1 === lines.length ? line : `  ${line}`
+            index === 0 || index - 1 === lines.length ? line : `  ${line}`,
           )
           .join("\n");
         return output(`{${propObj}}`);
@@ -356,7 +356,7 @@ const tagProperties = (properties?: Record<string, unknown>): string[] => {
       return output(`{${value}}`);
     })
     .filter(
-      ([_, value]) => !(isBoolean(value) && !value) && !isUndefined(value)
+      ([_, value]) => !(isBoolean(value) && !value) && !isUndefined(value),
     );
 
   return formattedProps.map(([key, _value, formattedValue]): string => {
@@ -428,7 +428,7 @@ const tagFactory =
 const componentChildrenSourceString = (
   { children }: Record<string, unknown>,
   printWidth = 80,
-  indentation = 0
+  indentation = 0,
 ): Optional<string> => {
   if (isNullish(children)) return undefined;
   const componentChildren = isArray(children) ? children : [children];
@@ -441,18 +441,18 @@ const componentChildrenSourceString = (
         const childName = isString(child.type)
           ? child.type
           : (isObject(child.type) || isFunction(child.type)) &&
-            "name" in child.type &&
-            isString(child.type.name)
-          ? child.type.name
-          : isObject(child.type) &&
-            "__docgenInfo" in child.type &&
-            isObject(child.type.__docgenInfo) &&
-            "displayName" in child.type.__docgenInfo &&
-            isString(child.type.__docgenInfo.displayName)
-          ? child.type.__docgenInfo.displayName
-          : "displayName" in child && isString(child.displayName)
-          ? child.displayName
-          : "UnknownElement";
+              "name" in child.type &&
+              isString(child.type.name)
+            ? child.type.name
+            : isObject(child.type) &&
+                "__docgenInfo" in child.type &&
+                isObject(child.type.__docgenInfo) &&
+                "displayName" in child.type.__docgenInfo &&
+                isString(child.type.__docgenInfo.displayName)
+              ? child.type.__docgenInfo.displayName
+              : "displayName" in child && isString(child.displayName)
+                ? child.displayName
+                : "UnknownElement";
         const childProps: Record<string, unknown> = isObject(child.props)
           ? (child.props as Record<string, unknown>)
           : {};
@@ -462,7 +462,7 @@ const componentChildrenSourceString = (
           childProps,
           undefined,
           printWidth,
-          indentation
+          indentation,
         );
       }
       return undefined;
@@ -488,7 +488,7 @@ export const componentSourceString = (
   componentProperties: Record<string, unknown>,
   defaultProps?: Record<string, unknown>,
   printWidth = 80,
-  indentation = 0
+  indentation = 0,
 ) => {
   const { children, ...restProps } = componentProperties;
 
@@ -499,13 +499,13 @@ export const componentSourceString = (
       if (!defaultProps) return true;
       if (!(name in defaultProps)) return false;
       return value !== defaultProps[name];
-    })
+    }),
   );
 
   const reactChildren = componentChildrenSourceString(
     { children },
     printWidth,
-    indentation
+    indentation,
   );
 
   const tagChildren =
@@ -513,13 +513,13 @@ export const componentSourceString = (
     (isNullish(children)
       ? undefined
       : isString(children)
-      ? children
-      : `{${children}}`);
+        ? children
+        : `{${children}}`);
 
   return tagFactory(
     componentName,
     indentation,
-    printWidth
+    printWidth,
   )(properties, tagChildren);
 };
 
@@ -538,10 +538,10 @@ export const componentSourceTemplate = (
   componentName: string,
   propList: Record<string, unknown>[] = [{}],
   defaultProps?: Record<string, unknown>,
-  printWidth = 80
+  printWidth = 80,
 ) => {
   const components = propList.map((props) =>
-    componentSourceString(componentName, props, defaultProps, printWidth)
+    componentSourceString(componentName, props, defaultProps, printWidth),
   );
   return components.join("\n");
 };
@@ -555,16 +555,16 @@ export const componentSourceTemplate = (
  */
 export const componentPropTemplate = <
   TPropName extends string,
-  TPropValue extends NullishPrimitives
+  TPropValue extends NullishPrimitives,
 >(
   propName: TPropName,
-  propValues: TPropValue[]
+  propValues: TPropValue[],
 ): { [key in TPropName]: TPropValue }[] => {
   return propValues.map(
     (value) =>
       ({
         [propName]: value,
-      } as { [key in TPropName]: TPropValue })
+      }) as { [key in TPropName]: TPropValue },
   );
 };
 
@@ -582,12 +582,13 @@ export const componentSource = <
     string,
     NullishPrimitives
   >,
-  TDefaultComponentProps extends Required<TComponentProps> = Required<TComponentProps>
+  TDefaultComponentProps extends
+    Required<TComponentProps> = Required<TComponentProps>,
 >(
   componentName: string,
   propList: TComponentProps[] = [{} as TComponentProps],
   defaultProps?: TDefaultComponentProps,
-  printWidth = 80
+  printWidth = 80,
 ): { source: { language: string; code: string } } => {
   return {
     source: {
@@ -596,7 +597,7 @@ export const componentSource = <
         componentName,
         propList,
         defaultProps,
-        printWidth
+        printWidth,
       ),
     },
   };
@@ -607,12 +608,13 @@ export const componentSourceFactory = <
     string,
     NullishPrimitives
   >,
-  TDefaultComponentProps extends Required<TComponentProps> = Required<TComponentProps>
+  TDefaultComponentProps extends
+    Required<TComponentProps> = Required<TComponentProps>,
 >(
   componentName: string,
   fixedProps: TComponentProps = {} as TComponentProps,
   defaultProps?: TDefaultComponentProps,
-  printWidth = 80
+  printWidth = 80,
 ) => {
   return (propList: TComponentProps[] = [{} as TComponentProps]) => {
     const mergedPropList = propList.map((props) => ({
@@ -623,7 +625,7 @@ export const componentSourceFactory = <
       componentName,
       mergedPropList,
       defaultProps,
-      printWidth
+      printWidth,
     );
   };
 };

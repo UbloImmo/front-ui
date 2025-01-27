@@ -32,9 +32,9 @@ import type {
  *   are non-empty strings. Existing translation functions are left untouched.
  */
 export const makeTranslationFnMap = <
-  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName
+  TTranslationSubsetName extends TranslationSubsetName = TranslationSubsetName,
 >(
-  translationMap: CompleteTranslationMap<TTranslationSubsetName>
+  translationMap: CompleteTranslationMap<TTranslationSubsetName>,
 ): CompleteTranslationFnMap<TTranslationSubsetName> => {
   if (!isObject(translationMap)) {
     return {} as CompleteTranslationFnMap<TTranslationSubsetName>;
@@ -58,13 +58,13 @@ export const makeTranslationFnMap = <
  * @return {TranslationContext} The merged translation context.
  */
 export const mergeTranslationMap = (
-  replacementMap: TranslationMap = {}
+  replacementMap: TranslationMap = {},
 ): TranslationContext => {
   if (!isObject(replacementMap))
     return transformObject(defaultTranslations, (translationMap) =>
       makeTranslationFnMap<TranslationSubsetName>(
-        translationMap as CompleteTranslationMap<TranslationSubsetName>
-      )
+        translationMap as CompleteTranslationMap<TranslationSubsetName>,
+      ),
     ) as TranslationContext;
   return transformObject(
     defaultTranslations,
@@ -75,9 +75,9 @@ export const mergeTranslationMap = (
           TranslationMap<TranslationSubsetName>
         >(
           defaultTranslationsForSubset as CompleteTranslationMap<TranslationSubsetName>,
-          replacementMap
-        )
+          replacementMap,
+        ),
       );
-    }
+    },
   ) as TranslationContext;
 };

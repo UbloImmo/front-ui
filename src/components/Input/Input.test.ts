@@ -11,7 +11,7 @@ import type { InputType } from "./Input.types";
 describe("Input", () => {
   const testGenericInput = testComponentFactory<GenericInputProps<InputType>>(
     "Generic",
-    Input
+    Input,
   );
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore needed to check unintended behavior with no props
@@ -20,7 +20,7 @@ describe("Input", () => {
     async ({ findByTestId }) => {
       const input = await findByTestId("input-text");
       expect(input).not.toBeNull();
-    }
+    },
   );
   inputTypes.forEach((type) => {
     testGenericInput({ type })(
@@ -28,7 +28,7 @@ describe("Input", () => {
       async ({ findByTestId }) => {
         const input = await findByTestId(`input-${type}`);
         expect(input).not.toBeNull();
-      }
+      },
     );
   });
 
@@ -43,6 +43,6 @@ describe("Input", () => {
       const input = await findByTestId("input-text");
       expect(input).not.toBeNull();
       expect(global.console.warn).toHaveBeenCalled();
-    }
+    },
   );
 });

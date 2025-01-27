@@ -11,9 +11,9 @@ export const ListContext = createContext<
 
 export const useListContext = <
   TItem extends object = object,
-  TProviderType extends DataProviderType = DataProviderType
+  TProviderType extends DataProviderType = DataProviderType,
 >() => {
   return useContext(
-    ListContext as unknown as Context<ListContextValue<TItem, TProviderType>>
+    ListContext as unknown as Context<ListContextValue<TItem, TProviderType>>,
   );
 };

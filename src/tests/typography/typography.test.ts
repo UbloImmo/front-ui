@@ -74,10 +74,10 @@ describe("typography", () => {
       expect(typographyTextDecoration(noProps)).toBe("none");
       expect(typographyTextDecoration(underlineProps)).toInclude("underline");
       expect(typographyTextDecoration(lineThroughProps)).toInclude(
-        "line-through"
+        "line-through",
       );
       expect(typographyTextDecoration(allProps)).toInclude(
-        "underline overline"
+        "underline overline",
       );
     });
 
@@ -87,7 +87,7 @@ describe("typography", () => {
       expect(() => mobileFontSize("10rem")).not.toThrow();
       expect(mobileFontSize("10rem")).toBeString();
       expect(mobileFontSize(testLenghts.cssRem.int)).toBe(
-        cssRem(testLenghts.rem.int + 0.125)
+        cssRem(testLenghts.rem.int + 0.125),
       );
     });
 
@@ -105,11 +105,11 @@ describe("typography", () => {
       it("should assign default missing props", () => {
         const noProps = {};
         expect(() =>
-          sanitizeTypographyProps(defaultProps, noProps)
+          sanitizeTypographyProps(defaultProps, noProps),
         ).not.toThrow();
         expect(sanitizeTypographyProps(defaultProps, noProps)).toBeObject();
         expect(
-          sanitizeTypographyProps(defaultProps, noProps)
+          sanitizeTypographyProps(defaultProps, noProps),
         ).not.toBeEmptyObject();
         expect(sanitizeTypographyProps(defaultProps, noProps)).toContainKeys([
           "size",
@@ -122,7 +122,7 @@ describe("typography", () => {
           "uppercase",
         ]);
         expect(sanitizeTypographyProps(defaultProps, noProps)).toEqual(
-          defaultProps
+          defaultProps,
         );
       });
 
@@ -134,7 +134,7 @@ describe("typography", () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore Need to ingore to test invalid size
         expect(sanitizeTypographyProps(defaultProps, invalidSizeProps)).toEqual(
-          defaultProps
+          defaultProps,
         );
       });
 
@@ -146,7 +146,7 @@ describe("typography", () => {
         expect(
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore Need to ingore to test invalid weight
-          sanitizeTypographyProps(defaultProps, invalidWeightProps)
+          sanitizeTypographyProps(defaultProps, invalidWeightProps),
         ).toEqual(defaultProps);
       });
 
@@ -171,7 +171,7 @@ describe("typography", () => {
           as: "p",
         };
         expect(sanitizeTypographyProps(defaultProps, validProps)).toEqual(
-          validProps
+          validProps,
         );
       });
     });
@@ -198,7 +198,7 @@ describe("typography", () => {
       expect(() =>
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore Don't want to mock styled-components execution context
-        buildTypographyStyle(defaultProps)(validProps)
+        buildTypographyStyle(defaultProps)(validProps),
       ).not.toThrow();
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore Don't want to mock styled-components execution context

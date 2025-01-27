@@ -11,13 +11,13 @@ const testId = "account-balance";
 
 const testAccountBalance = testComponentFactory<AccountBalanceProps>(
   "AccountBalance",
-  AccountBalance
+  AccountBalance,
 );
 
 const testFormatAmount = (
   testName: string,
   value: Nullish<number>,
-  expected: string
+  expected: string,
 ) => {
   return test(testName, () => {
     expect(formatAmount(value)).toBe(expected);
@@ -40,12 +40,12 @@ testAccountBalance({
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryByTestId("account-balance-title")?.textContent).toBe(
-      "Solde locataire :"
+      "Solde locataire :",
     );
     expect(queryByTestId("account-balance-value")?.textContent).toBe(
-      "999,99 k€"
+      "999,99 k€",
     );
-  }
+  },
 );
 
 testAccountBalance({
@@ -62,7 +62,7 @@ testAccountBalance({
 })("should render negative value", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId("account-balance-value")?.textContent).toEqual(
-    "- 50 000,75 €"
+    "- 50 000,75 €",
   );
 });
 

@@ -56,11 +56,11 @@ export const currencyIntToFloat = (currencyInt: CurrencyInt): number => {
  * @throws {Error} If the input is not a number.
  */
 export const currencyFloatToInt = (
-  currencyFloat: CurrencyFloat
+  currencyFloat: CurrencyFloat,
 ): CurrencyInt => {
   if (!isNumber(currencyFloat))
     throw new Error(
-      `currencyFloat must be a number, received ${currencyFloat}`
+      `currencyFloat must be a number, received ${currencyFloat}`,
     );
   // remove extra decimals
   const trimmedFloat = toFixed(currencyFloat, CURRENCY_DECIMALS);
@@ -69,7 +69,7 @@ export const currencyFloatToInt = (
   // FIXME: handle big integer values
   if (int > Number.MAX_SAFE_INTEGER || int < Number.MIN_SAFE_INTEGER) {
     console.warn(
-      `Overflowing currency integer (${int}), some precision may be lost`
+      `Overflowing currency integer (${int}), some precision may be lost`,
     );
   }
   return int;
@@ -84,14 +84,14 @@ export const currencyFloatToInt = (
  * @throws {Error} If the input is not a number.
  */
 export const currencyFloatToStr = (
-  currencyFloat: CurrencyFloat
+  currencyFloat: CurrencyFloat,
 ): CurrencyStr => {
   if (!isNumber(currencyFloat))
     throw new Error("currencyFloat must be a number");
   if (isInt(currencyFloat)) return `${currencyFloat},00`;
   let currencyStr = String(toFixed(currencyFloat, CURRENCY_DECIMALS)).replace(
     ".",
-    ","
+    ",",
   ) as CurrencyStr;
   // add missing 0 if needed
   if (!currencyStr.includes(",")) return currencyStr;
@@ -122,7 +122,7 @@ export const currencyIntToStr = (currencyInt: CurrencyInt): CurrencyStr => {
  * @return {CurrencyStr} The string representation of the currency number.
  */
 export const currencyNumberToStr = (
-  currencyNumber: Nullable<CurrencyInt | CurrencyFloat>
+  currencyNumber: Nullable<CurrencyInt | CurrencyFloat>,
 ): CurrencyStr => {
   let currencyStr: CurrencyStr;
   if (!isNumber(currencyNumber)) {
@@ -142,11 +142,11 @@ export const currencyNumberToStr = (
  * @return {Nullable<CurrencyInt>} The nullable integer value of the currency, or null if the input is not a valid number.
  */
 export const currencyStrToInt = (
-  currencyStr: CurrencyStr
+  currencyStr: CurrencyStr,
 ): Nullable<CurrencyInt> => {
   if (!isString(currencyStr)) return null;
   const floatOrNaN = parseFloat(
-    currencyStr.replace(",", ".").replaceAll(" ", "")
+    currencyStr.replace(",", ".").replaceAll(" ", ""),
   );
   if (isNaN(floatOrNaN)) return null;
   return currencyFloatToInt(floatOrNaN);
@@ -159,7 +159,7 @@ export const currencyStrToInt = (
  * @return {Nullable<CurrencyInt>} The nullable integer value of the currency, or null if the input is not a valid number.
  */
 export const nativeCurrencyValueToInt = (
-  nativeCurrencyValue: NativeInputValue
+  nativeCurrencyValue: NativeInputValue,
 ): Nullable<CurrencyInt> => {
   if (isNullish(nativeCurrencyValue)) {
     return null;
@@ -205,7 +205,7 @@ export const useCurrencyInputValidationPattern = ({
  */
 export const computeCurrencySign = (
   value: Nullable<CurrencyInt>,
-  defaultSign?: Nullish<NumberSign>
+  defaultSign?: Nullish<NumberSign>,
 ): Nullable<NumberSign> => {
   if (isNullish(value) || !isNumber(value) || isZero(value))
     return defaultSign ?? null;
@@ -222,7 +222,7 @@ export const computeCurrencySign = (
  * @return {string} The sanitized currency input value.
  */
 export const sanitizeCurrencyInputValue = (
-  nativeStringValue: string
+  nativeStringValue: string,
 ): string => {
   return (
     nativeStringValue
@@ -262,12 +262,12 @@ export const formatCurrencyInputValue =
     // store space positions
     const spaces = arrayOf(
       nativeInputValueSanitized.length,
-      (index) => nativeInputValueSanitized[index] === " "
+      (index) => nativeInputValueSanitized[index] === " ",
     );
     // remove spaces from native input before comparing it with generated string
     let nativeInputValueFullTrimmed = nativeInputValueSanitized.replaceAll(
       " ",
-      ""
+      "",
     );
     // add negative sign to trimmed native input value if needed
     let negativeSpaceOffset = 0;
@@ -282,7 +282,7 @@ export const formatCurrencyInputValue =
     // restrict string value to native input's length
     const stringValueClipped = stringValue.substring(
       0,
-      nativeInputValueFullTrimmed.length
+      nativeInputValueFullTrimmed.length,
     );
     // re-add spaces to string value
     let spaceOffset = 0;
@@ -310,7 +310,7 @@ export const formatCurrencyInputValue =
  * @return {Nullable<CurrencyInt>} The converted currency integer, or null if the input is undefined.
  */
 const convertNativeCurrencyValueToCurrencyInt = (
-  nativeValue: NativeInputValue
+  nativeValue: NativeInputValue,
 ): Nullable<CurrencyInt> => {
   if (isUndefined(nativeValue)) return null;
   const sanizitedNativeValue = isString(nativeValue)
@@ -333,7 +333,7 @@ const convertNativeCurrencyValueToCurrencyInt = (
  *   - toggleSign: The function to toggle the currency sign.
  */
 export const useCurrencyInput = (
-  mergedProps: CurrencyInputDefaultProps
+  mergedProps: CurrencyInputDefaultProps,
 ): UseCurrencyInputReturn => {
   const [nativeInputValue, setNativeInputValue] = useState<NativeInputValue>();
 
@@ -347,22 +347,22 @@ export const useCurrencyInput = (
       return clamp(
         value,
         (mergedProps.min ?? -Infinity) * CURRENCY_FACTOR,
-        (mergedProps.max ?? Infinity) * CURRENCY_FACTOR
+        (mergedProps.max ?? Infinity) * CURRENCY_FACTOR,
       );
     },
-    [mergedProps]
+    [mergedProps],
   );
 
   const clampedValue = useMemo(
     () => clampToMinMax(mergedProps.value),
-    [mergedProps.value, clampToMinMax]
+    [mergedProps.value, clampToMinMax],
   );
 
   const [toggleableSign, setToggleableSign] = useState(
     computeCurrencySign(
       mergedProps.value,
-      mergedProps.defaultSign ?? "+"
-    ) as NumberSign
+      mergedProps.defaultSign ?? "+",
+    ) as NumberSign,
   );
 
   /**
@@ -375,7 +375,7 @@ export const useCurrencyInput = (
         : convertNativeCurrencyValueToCurrencyInt(nativeInputValue);
     const currencySign = computeCurrencySign(
       clampedValue ?? currencyInt,
-      mergedProps.defaultSign
+      mergedProps.defaultSign,
     ) as NumberSign;
 
     // update toggleable sign in the background if not shown
@@ -397,7 +397,7 @@ export const useCurrencyInput = (
     (nativeValue) => {
       setNativeInputValue(nativeValue);
       const currencyInt = clampToMinMax(
-        convertNativeCurrencyValueToCurrencyInt(nativeValue)
+        convertNativeCurrencyValueToCurrencyInt(nativeValue),
       );
       if (isNull(currencyInt)) return currencyInt;
       if (mergedProps.showSign) {
@@ -407,7 +407,7 @@ export const useCurrencyInput = (
       return currencyInt;
     },
     mergedProps.onChange,
-    mergedProps.onChangeNative
+    mergedProps.onChangeNative,
   );
 
   const inputValue = useInputValue<"currency">(
@@ -416,7 +416,7 @@ export const useCurrencyInput = (
     formatCurrencyInputValue(nativeInputValue),
     () => {
       const currencyInt = clampToMinMax(
-        convertNativeCurrencyValueToCurrencyInt(nativeInputValue)
+        convertNativeCurrencyValueToCurrencyInt(nativeInputValue),
       );
       if (isNull(currencyInt)) {
         if (isString(nativeInputValue))
@@ -424,7 +424,7 @@ export const useCurrencyInput = (
         return "";
       }
       return formatCurrencyInputValue(nativeInputValue)(currencyInt);
-    }
+    },
   );
 
   const strictInputValue = useMemo(() => {
@@ -461,7 +461,7 @@ export const useCurrencyInput = (
  * @throws {Error} If the input is not an int.
  */
 export const formatCurrencyInt = (
-  currencyInt: CurrencyInt
+  currencyInt: CurrencyInt,
 ): FormattedCurrencyStrWithSymbol => {
   const currencyStr = currencyIntToStr(currencyInt);
   const [intStr, decimalStr = "00"] = currencyStr.split(",");

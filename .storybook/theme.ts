@@ -1,8 +1,8 @@
 import { create } from "@storybook/theming/create";
 
 import { buildTheme } from "../src/themes";
-import { blendColors } from "../src/utils";
 import { fontFamilySets } from "../src/typography/typography.font";
+import { blendColors } from "../src/utils";
 
 const t = buildTheme();
 

@@ -92,7 +92,9 @@ export const ComboBoxButtonStyles = (): RuleSet => {
     padding: var(--s-2) var(--s-4);
     border-radius: var(--s-1);
     border: 1px solid var(--combobox-button-border-color);
-    transition: 300ms background ease-out 0s, 300ms border-color ease-out 0s;
+    transition:
+      300ms background ease-out 0s,
+      300ms border-color ease-out 0s;
     overflow: hidden;
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
@@ -148,7 +150,9 @@ export const ComboBoxContextMenuTriggerStyles = (): RuleSet => css`
   background: var(--combobox-button-background);
   border-top-right-radius: var(--s-1);
   border-bottom-right-radius: var(--s-1);
-  transition: 300ms background ease-out 0s, 300ms border-color ease-out 0s;
+  transition:
+    300ms background ease-out 0s,
+    300ms border-color ease-out 0s;
 
   grid-column: 2 / span 1;
   grid-row: 1 / span 1;

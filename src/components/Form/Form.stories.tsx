@@ -134,7 +134,7 @@ const componentSource = componentSourceFactory<FormProps<object>>(
   {
     title: "Form",
   },
-  Form.defaultProps
+  Form.defaultProps,
 );
 
 const meta = {
@@ -528,7 +528,7 @@ const identityTableSchema = z.object({
         professionalInfo: true,
         dateOfBirth: true,
         numberOfChildren: true,
-      })
+      }),
     )
     .max(5),
   bankAccounts: z
@@ -539,7 +539,7 @@ const identityTableSchema = z.object({
           .boolean()
           .nullish()
           .transform(() => undefined),
-      })
+      }),
     )
     .nullish(),
 });
@@ -850,16 +850,16 @@ export const Steps = () => {
           [...content].slice(0, 1),
           [...content].slice(2),
         ] as FormContent<Identity>[][])
-      : []
+      : [],
   );
   const [stepIndex, setStepIndex] = useState<number>(0);
   const maxStep = useStatic(steps.length - 1);
   const title = useMemo<string>(
     (): string =>
       [mergedProps.title, "-", "Step", stepIndex + 1, "/", steps.length].join(
-        " "
+        " ",
       ),
-    [mergedProps.title, stepIndex, steps.length]
+    [mergedProps.title, stepIndex, steps.length],
   );
   const currentStep = useMemo(() => steps[stepIndex], [steps, stepIndex]);
   const currentStepSchema = useMemo(
@@ -867,10 +867,10 @@ export const Steps = () => {
       // @ts-expect-error This is not an intented use of the form, but still fun to play with nonetheless
       mergedProps.schema?.pick(
         objectFromEntries(
-          currentStep.filter(isFormField).map(({ source }) => [source, true])
-        )
+          currentStep.filter(isFormField).map(({ source }) => [source, true]),
+        ),
       ),
-    [currentStep, mergedProps.schema]
+    [currentStep, mergedProps.schema],
   );
 
   return (

@@ -12,7 +12,7 @@ import { TestIdProps } from "@types";
 import { useStyleProps, useTestId } from "@utils";
 
 export const IconPickerItem = (
-  props: IconPickerItemProps & TestIdProps
+  props: IconPickerItemProps & TestIdProps,
 ): JSX.Element => {
   const styleProps = useStyleProps(props);
 
@@ -26,8 +26,8 @@ export const IconPickerItem = (
         ? "primary-dark"
         : "primary-base"
       : disabled
-      ? "gray-400"
-      : "gray-700";
+        ? "gray-400"
+        : "gray-700";
   }, [active, disabled]);
 
   return (

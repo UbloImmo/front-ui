@@ -150,7 +150,7 @@ export type InputType = Enum<typeof inputTypes>;
  * Intermediary map used by {@link InputValue}
  */
 export type InputTypeMap<
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = {
   text: string;
   password: string;
@@ -178,7 +178,7 @@ export type InputTypeMap<
  */
 export type InputValue<
   TType extends InputType,
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = InputTypeMap<TGenericValue>[TType];
 
 /**
@@ -191,7 +191,7 @@ export type InputValue<
  */
 export type InputOnChangeFn<
   TType extends InputType,
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = VoidFn<[Nullable<InputValue<TType, TGenericValue>>]>;
 
 /**
@@ -204,7 +204,7 @@ export type InputOnChangeFn<
  */
 export type InputProps<
   TType extends InputType,
-  TGenericValue extends NullishPrimitives = NullishPrimitives
+  TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = CommonInputProps & {
   /**
    * The input's value or null if empty

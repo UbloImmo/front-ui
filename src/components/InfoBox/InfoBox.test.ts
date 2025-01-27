@@ -10,7 +10,7 @@ testInfoBox({ ...InfoBox.defaultProps })(
   "should render",
   ({ queryByTestId }) => {
     expect(queryByTestId("info-box")).not.toBeNull();
-  }
+  },
 );
 
 testInfoBox({ ...InfoBox.defaultProps, info: "Testing" })(
@@ -18,5 +18,5 @@ testInfoBox({ ...InfoBox.defaultProps, info: "Testing" })(
   ({ queryByTestId }) => {
     expect(queryByTestId("info-box-text")).not.toBeNull();
     expect(queryByTestId("info-box-text")?.textContent).toBe("Testing");
-  }
+  },
 );

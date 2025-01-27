@@ -24,7 +24,7 @@ const defaultMockProps = {
 const componentSource = componentSourceFactory(
   "ActionIcon",
   { icon: "Square" },
-  defaultMockProps
+  defaultMockProps,
 );
 
 const meta = {

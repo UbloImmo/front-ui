@@ -10,7 +10,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const componentSource = componentSourceFactory<DividerProps>(
   "Divider",
   {},
-  Divider.defaultProps
+  Divider.defaultProps,
 );
 
 const meta = {

@@ -6,7 +6,7 @@ import { cssVarName } from "@utils";
 import type { ListFilterOptionItemStyleProps } from "./ListFilterOptionItem.types";
 
 export const listFilterOptionItemStyles = (
-  props: ListFilterOptionItemStyleProps
+  props: ListFilterOptionItemStyleProps,
 ) => {
   return css`
     ${cssDimensions("100%", cssVarName("input-height"), true)}
@@ -22,7 +22,9 @@ export const listFilterOptionItemStyles = (
     outline: 1px solid var(--primary-medium-00);
     margin: 0;
 
-    transition: background 150ms var(--bezier), outline 50ms var(--bezier);
+    transition:
+      background 150ms var(--bezier),
+      outline 50ms var(--bezier);
 
     &[aria-disabled="true"] {
       cursor: not-allowed;

@@ -102,7 +102,7 @@ describe("prop utils", () => {
 
     it("should preserve prop values ", () => {
       expect(objectValues(toStyleProps(defaultProps))).toEqual(
-        objectValues(styleProps)
+        objectValues(styleProps),
       );
     });
 
@@ -120,13 +120,13 @@ describe("prop utils", () => {
 
     it("should correctly convert prop keys ", () => {
       expect(fromStyleProps(styleProps)).toContainKeys(
-        objectKeys(defaultProps)
+        objectKeys(defaultProps),
       );
     });
 
     it("should preserve prop values ", () => {
       expect(objectValues(fromStyleProps(styleProps))).toEqual(
-        objectValues(defaultProps)
+        objectValues(defaultProps),
       );
     });
 
@@ -165,7 +165,7 @@ describe("prop utils", () => {
     type Hook = typeof useTestId;
     const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
       "useTestId",
-      useTestId
+      useTestId,
     );
     const baseTestId = "base";
     const customTestId = "custom";
@@ -182,7 +182,7 @@ describe("prop utils", () => {
       (result) => {
         expect(result).toBeString();
         expect(result).toBe(baseTestId);
-      }
+      },
     );
 
     const testEmptySting = testHook(baseTestId, { testId: "" });
@@ -202,7 +202,7 @@ describe("prop utils", () => {
     type Hook = typeof useClassName;
     const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
       "useClassname",
-      useClassName
+      useClassName,
     );
 
     const validProps = {
@@ -221,7 +221,7 @@ describe("prop utils", () => {
       "should convert null className to undefined",
       (result) => {
         expect(result).toBeUndefined();
-      }
+      },
     );
 
     testHook()("should return undefined if missing props", (result) => {
@@ -237,7 +237,7 @@ describe("prop utils", () => {
       "should return undefined is no className in props",
       (result) => {
         expect(result).toBeUndefined();
-      }
+      },
     );
   });
 
@@ -245,7 +245,7 @@ describe("prop utils", () => {
     type Hook = typeof useHtmlAttribute;
     const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
       "useHtmlAttribute",
-      useHtmlAttribute
+      useHtmlAttribute,
     );
 
     objectEntries(testPrimitives).forEach(([key, value]) => {
@@ -262,7 +262,7 @@ describe("prop utils", () => {
             expect(result).not.toBeNull();
             expect(result).toBe(value);
           }
-        }
+        },
       );
     });
   });

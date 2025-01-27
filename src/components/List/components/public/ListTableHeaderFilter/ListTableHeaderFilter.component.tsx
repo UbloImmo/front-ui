@@ -46,7 +46,7 @@ import type { TestIdProps, TextProps } from "@types";
  * @returns {JSX.Element}
  */
 export const ListTableHeaderFilter = (
-  props: ListTableHeaderFilterProps & TestIdProps
+  props: ListTableHeaderFilterProps & TestIdProps,
 ) => {
   const { getFilterBySignature, loading } = useListContext();
 
@@ -97,8 +97,8 @@ export const ListTableHeaderFilter = (
       isString(props.filter.signature)
         ? props.filter.signature
         : isString(props.filter)
-        ? props.filter
-        : null;
+          ? props.filter
+          : null;
     if (!signature) return null;
     return getFilterBySignature(signature);
   }, [props.filter, getFilterBySignature]);
@@ -118,7 +118,7 @@ export const ListTableHeaderFilter = (
 
   const justify = useMemo(
     () => (props.hideLabel ? "center" : "space-between"),
-    [props.hideLabel]
+    [props.hideLabel],
   );
 
   if (!filter)
@@ -198,7 +198,7 @@ export const ListTableHeaderFilter = (
 };
 
 const FilterHeaderCell = styled(
-  TableHeaderCell
+  TableHeaderCell,
 )<ListTableHeaderFilterStyleProps>`
   ${listTableHeaderFilterStyles}
 `;

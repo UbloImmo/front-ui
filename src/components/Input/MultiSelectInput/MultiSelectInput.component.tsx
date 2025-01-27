@@ -76,9 +76,9 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
  */
 const MultiSelectInput = <
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 >(
-  props: MultiSelectInputProps<TValue, TExtraData> & TestIdProps
+  props: MultiSelectInputProps<TValue, TExtraData> & TestIdProps,
 ): JSX.Element => {
   const testId = useTestId("input-multi-select", props);
   const wrapperRef = useRef<Nullable<HTMLDivElement>>(null);
@@ -92,13 +92,13 @@ const MultiSelectInput = <
       TValue,
       TExtraData
     >,
-    props
+    props,
   );
 
   const { inputRef } = useInputRef(mergedProps);
 
   const { options, flattenedOptions, isLoading } = useSelectOptions(
-    props as unknown as SelectInputProps<TValue, TExtraData>
+    props as unknown as SelectInputProps<TValue, TExtraData>,
   );
   const { displayOptions, activeOptions, selectOption, unselectOption } =
     useMultiSelectValue(mergedProps, options, flattenedOptions);
@@ -147,7 +147,7 @@ const MultiSelectInput = <
       selectOption(option.value);
       closeOptions();
     },
-    [disabled, closeOptions, selectOption]
+    [disabled, closeOptions, selectOption],
   );
 
   /**
@@ -162,7 +162,7 @@ const MultiSelectInput = <
       unselectOption(option.value);
       closeOptions();
     },
-    [disabled, required, activeOptions.length, unselectOption, closeOptions]
+    [disabled, required, activeOptions.length, unselectOption, closeOptions],
   );
 
   const testIds = useMemo(
@@ -177,7 +177,7 @@ const MultiSelectInput = <
       control: `${testId}-control`,
       container: `${testId}-container`,
     }),
-    [testId]
+    [testId],
   );
 
   /**
@@ -205,7 +205,7 @@ const MultiSelectInput = <
         return;
       toggleOptions();
     },
-    [toggleOptions, testIds]
+    [toggleOptions, testIds],
   );
 
   const tl = useUikitTranslation();
@@ -255,7 +255,7 @@ const MultiSelectInput = <
                 Option={mergedProps.Option}
                 {...optionOrGroup}
               />
-            )
+            ),
           )}
           {noOptions && (
             <AssistiveTextWrapper>
@@ -305,8 +305,8 @@ const MultiSelectInput = <
                     error
                       ? "error"
                       : option.disabled || disabled
-                      ? "gray"
-                      : "primary"
+                        ? "gray"
+                        : "primary"
                   }
                   disabled={
                     (required && activeOptions.length <= 1) ||

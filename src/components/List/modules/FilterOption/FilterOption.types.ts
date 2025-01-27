@@ -50,7 +50,7 @@ export type ListConfigMatchFnParams<TItem extends object> =
   | [
       property: FilterProperty<TItem>,
       comparison: FilterComparisonOperator,
-      value: FilterOptionValue
+      value: FilterOptionValue,
     ];
 
 /**
@@ -67,7 +67,7 @@ export interface ListConfigMatchFn<TItem extends object> {
   (
     property: FilterProperty<TItem>,
     comparison: FilterComparisonOperator,
-    value: FilterOptionValue
+    value: FilterOptionValue,
   ): FilterOptionMatch<TItem>;
 }
 
@@ -82,7 +82,7 @@ export type ListConfigMatchesFn<TItem extends object> = GenericFn<
   [
     property: FilterProperty<TItem>,
     comparison: FilterComparisonOperator,
-    values: FilterOptionValue[]
+    values: FilterOptionValue[],
   ],
   FilterOptionMatch<TItem>[]
 >;
@@ -229,7 +229,7 @@ export type ListConfigOptionFnParams<TItem extends object> = [
    * @type {FilterOptionConfig}
    * @default {}
    */
-  config?: FilterOptionConfig
+  config?: FilterOptionConfig,
 ];
 
 /**
@@ -308,7 +308,7 @@ export type ListConfigOptionsFn<TItem extends object> = GenericFn<
      * @type {FilterOptionConfig}
      * @default {}
      */
-    sharedConfig?: FilterOptionConfig
+    sharedConfig?: FilterOptionConfig,
   ],
   FilterOptionData<TItem>[]
 >;
@@ -350,7 +350,7 @@ export type ListConfigAsyncOptionsFnParams<TItem extends object> = [
    *
    * @type {FilterOptionConfig}
    */
-  sharedConfig?: FilterOptionConfig
+  sharedConfig?: FilterOptionConfig,
 ];
 
 /**
@@ -387,7 +387,7 @@ export type ListConfigAsyncOptionFnParams<TItem extends object> = [
    * @type {FilterOptionConfig}
    * @default {}
    */
-  config?: FilterOptionConfig
+  config?: FilterOptionConfig,
 ];
 
 /**

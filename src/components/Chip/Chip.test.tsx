@@ -35,5 +35,5 @@ testChip({ ...Chip.defaultProps, label: "" })(
     expect(queryByTestId(testId)).not.toBeNull();
     expect(global.console.warn).toHaveBeenCalled();
     (global.console.warn as Mock<VoidFn>).mockReset();
-  }
+  },
 );

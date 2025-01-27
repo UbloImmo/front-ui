@@ -36,42 +36,42 @@ const isEqualTo10 = filterOptionMatch<MockListItem>("number", "=", 10);
 const isNotEqualToFalse = filterOptionMatch<MockListItem>(
   "boolean",
   "!=",
-  false
+  false,
 );
 const isEqualToString = filterOptionMatch<MockListItem>(
   "string",
   "=",
-  "string"
+  "string",
 );
 const isBeforeNow = filterOptionMatch<MockListItem>(
   "object.date",
   "<",
-  new Date(Date.now())
+  new Date(Date.now()),
 );
 const isEqualToFalse = filterOptionMatch<MockListItem>(
   "object.boolean",
   "=",
-  false
+  false,
 );
 const isLessOrEqualTo420 = filterOptionMatch<MockListItem>(
   "object.number",
   "<=",
-  420
+  420,
 );
 const isMoreOrEqualTo420 = filterOptionMatch<MockListItem>(
   "object.number",
   ">=",
-  420
+  420,
 );
 const containsTri = filterOptionMatch<MockListItem>(
   "string",
   "contains",
-  "tri"
+  "tri",
 );
 const startsWithStr = filterOptionMatch<MockListItem>(
   "object.string",
   "startsWith",
-  "stri"
+  "stri",
 );
 const endsWithNg = filterOptionMatch<MockListItem>("string", "endsWith", "ng");
 
@@ -91,7 +91,7 @@ const mockMatches = {
 };
 
 const selectOption = (
-  option: FilterOptionData<MockListItem>
+  option: FilterOptionData<MockListItem>,
 ): FilterOptionData<MockListItem> => {
   return {
     ...option,
@@ -103,7 +103,7 @@ const numberMoreThan5 = filterOptionData("is more than 5", isMoreThan5);
 const objectDateBeforeNow = filterOptionData("is before now", isBeforeNow);
 const booleanNotEqualToFalse = filterOptionData(
   "is not equal to false",
-  isNotEqualToFalse
+  isNotEqualToFalse,
 );
 const alwaysInvalidOption = filterOptionData<MockListItem>("always invalid", {
   property: "object.number",
@@ -120,7 +120,7 @@ export const mockOptions = {
 
 const mockFilter = (
   label: string,
-  options: FilterOptionData<MockListItem>[]
+  options: FilterOptionData<MockListItem>[],
 ): Filter<MockListItem> => {
   const data = filterData(label, options);
   const filterOptions = options.map((option) => ({
@@ -164,7 +164,7 @@ const selectFilter = (filter: Filter<MockListItem>) => {
 
 const mockFilterPreset = (
   label: string,
-  options: FilterOptionData<MockListItem>[]
+  options: FilterOptionData<MockListItem>[],
 ): FilterPreset<MockListItem> => {
   const data = filterPresetData(label, options);
   return {

@@ -11,7 +11,7 @@ import type { DataProviderType } from "../modules";
 
 export const useListContextStore = <
   TItem extends object,
-  TProviderType extends DataProviderType = DataProviderType
+  TProviderType extends DataProviderType = DataProviderType,
 >({
   useDataProvider,
   ...config
@@ -49,7 +49,7 @@ export const useListContextStore = <
 
   const configLoading = useMemo(
     () => filters.filtersLoading || filterPresets.filterPresetsLoading,
-    [filterPresets.filterPresetsLoading, filters.filtersLoading]
+    [filterPresets.filterPresetsLoading, filters.filtersLoading],
   );
 
   useListContextSearchParams(config, options, configLoading);

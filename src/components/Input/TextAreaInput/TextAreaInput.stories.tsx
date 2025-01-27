@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<TextAreaInputProps>(
   "TextAreaInput",
-  TextAreaInput.defaultProps
+  TextAreaInput.defaultProps,
 );
 
 const meta = {

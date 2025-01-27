@@ -45,7 +45,7 @@ const Hypertext = (props: HypertextProps): JSX.Element => {
 
   if (isEmptyString(title)) {
     warn(
-      `Missing required title, please provide a title for better accessibility`
+      `Missing required title, please provide a title for better accessibility`,
     );
   }
 

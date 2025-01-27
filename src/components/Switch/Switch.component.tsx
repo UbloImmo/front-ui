@@ -61,22 +61,22 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
       if (props.onChange) props.onChange(newActive);
       setIsActive(newActive);
     },
-    [isActive, props]
+    [isActive, props],
   );
 
   const tl = useUikitTranslation();
 
   const activeHelperText = useStatic(
-    () => mergedProps.activeHelperText ?? tl.global.yes().toUpperCase()
+    () => mergedProps.activeHelperText ?? tl.global.yes().toUpperCase(),
   );
 
   const inactiveHelperText = useStatic(
-    () => mergedProps.inactiveHelperText ?? tl.global.no().toUpperCase()
+    () => mergedProps.inactiveHelperText ?? tl.global.no().toUpperCase(),
   );
 
   const helperText = useMemo(
     () => (isActive ? activeHelperText : inactiveHelperText),
-    [activeHelperText, inactiveHelperText, isActive]
+    [activeHelperText, inactiveHelperText, isActive],
   );
 
   const textColor = useMemo(() => {

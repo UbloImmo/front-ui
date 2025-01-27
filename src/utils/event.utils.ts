@@ -12,18 +12,18 @@ import type { Nullable, VoidFn } from "@ubloimmo/front-util";
  * @returns {{ ref: RefObject<TElement>, id: string }} Object containing ref and id
  */
 export const useEscapeOrOutsideClickEvent = <
-  TElement extends HTMLElement = HTMLDivElement
+  TElement extends HTMLElement = HTMLDivElement,
 >(
   callback: VoidFn,
   wrapperRef?: RefObject<Nullable<TElement>>,
-  wrapperId?: string
+  wrapperId?: string,
 ) => {
   const defaultId = useId();
   const defaultRef = useRef<TElement>(null);
 
   const ref = useMemo<RefObject<TElement>>(
     () => (wrapperRef as RefObject<TElement>) ?? defaultRef,
-    [wrapperRef]
+    [wrapperRef],
   );
   const id = useMemo(() => wrapperId ?? defaultId, [defaultId, wrapperId]);
 

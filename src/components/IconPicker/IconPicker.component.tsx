@@ -54,7 +54,7 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
         mergedProps.onChange(newIcon);
       }
     },
-    [debug, mergedProps, selection]
+    [debug, mergedProps, selection],
   );
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
 
   const hasRows = useMemo(
     () => isArray(mergedProps.icons[0]),
-    [mergedProps.icons]
+    [mergedProps.icons],
   );
 
   return (
@@ -105,7 +105,7 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
             disabled={mergedProps.disabled}
             onClick={updateSelection(iconOrRow)}
           />
-        )
+        ),
       )}
     </IconPickerContainer>
   );

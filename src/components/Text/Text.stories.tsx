@@ -24,7 +24,7 @@ const lorem = "The quick brown fox jumps over the lazy dog.";
 const componentSource = componentSourceFactory<TextProps>(
   "Text",
   { children: lorem },
-  Text.defaultProps
+  Text.defaultProps,
 );
 
 const meta = {
@@ -220,7 +220,7 @@ export const Colors = (props: TextProps) => {
       (color): [ColorKey, GenericFn<[Required<TextProps>], JSX.Element>] => [
         color,
         TextColorRenderer(color),
-      ]
+      ],
     );
   }, []);
 
@@ -235,7 +235,7 @@ export const Colors = (props: TextProps) => {
 Colors.args = {};
 Colors.parameters = {
   docs: componentSource(
-    componentPropTemplate("color", colors.flatMap(colorToShades))
+    componentPropTemplate("color", colors.flatMap(colorToShades)),
   ),
 };
 

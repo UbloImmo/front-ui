@@ -122,7 +122,7 @@ const computeButtonColor = ({
     buttonStyleMap[color][secondary ? "secondary" : "primary"];
 
   let defaultColors = transformObject(rawButtonColors.default, (color) =>
-    color ? (isValidRgbaStr(color) ? color : cssVarUsage(color)) : null
+    color ? (isValidRgbaStr(color) ? color : cssVarUsage(color)) : null,
   );
   defaultColors = {
     ...defaultColors,
@@ -135,16 +135,16 @@ const computeButtonColor = ({
     }).map(
       ([key, color]): [
         keyof ButtonStyleColors,
-        Nullable<CssVarUsage | RgbaColorStr>
+        Nullable<CssVarUsage | RgbaColorStr>,
       ] => [
         key,
         color
           ? isValidRgbaStr(color)
             ? color
             : cssVarUsage(color)
-          : defaultColors[key] ?? null,
-      ]
-    )
+          : (defaultColors[key] ?? null),
+      ],
+    ),
   );
 
   return (key: keyof ButtonStyleColors, hovering?: boolean) => {
@@ -217,12 +217,15 @@ const commonButtonStyles = ({
     border-width: 1px;
     border-style: solid;
     box-shadow: ${color === "clear" ? "none" : "var(--shadow-button)"};
-    transition: color 300ms var(--bezier) 0s,
+    transition:
+      color 300ms var(--bezier) 0s,
       background-color 300ms var(--bezier) 0s,
       border-color 300ms var(--bezier) 0s;
 
     & > span {
-      transition: color 300ms var(--bezier) 0s, opacity 300ms var(--bezier) 0s;
+      transition:
+        color 300ms var(--bezier) 0s,
+        opacity 300ms var(--bezier) 0s;
       width: max-content;
     }
 
@@ -306,10 +309,13 @@ const buttonModifierStyles = ({
 
       --padding-horizontal: var(--padding-vertical);
 
-      transition: color 300ms var(--bezier) 0s,
+      transition:
+        color 300ms var(--bezier) 0s,
         background-color 300ms var(--bezier) 0s,
-        border-color 300ms var(--bezier) 0s, padding 300ms var(--bezier) 0s,
-        width 300ms var(--bezier) 0s, opacity 300ms var(--bezier) 0s,
+        border-color 300ms var(--bezier) 0s,
+        padding 300ms var(--bezier) 0s,
+        width 300ms var(--bezier) 0s,
+        opacity 300ms var(--bezier) 0s,
         scale 300ms var(--bezier) 0s;
       justify-content: flex-start;
 
@@ -347,7 +353,7 @@ const buttonModifierStyles = ({
 };
 
 export const buildButtonStyles = (
-  styledProps: StyleProps<DefaultButtonProps>
+  styledProps: StyleProps<DefaultButtonProps>,
 ): RuleSet => {
   const props = fromStyleProps(styledProps);
 

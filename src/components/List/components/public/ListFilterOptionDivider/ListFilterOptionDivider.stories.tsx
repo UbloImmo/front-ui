@@ -18,7 +18,7 @@ const componentSource = componentSourceFactory<
   },
   {
     label: "[Divider]",
-  }
+  },
 );
 
 const meta = {

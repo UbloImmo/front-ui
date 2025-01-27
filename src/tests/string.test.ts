@@ -40,7 +40,7 @@ describe("string utils", () => {
     it("should convert any string to camel case", () => {
       objectValues(testStrings).forEach((str) => {
         expect(camelCase(str, { preserveConsecutiveUppercase: true })).toEqual(
-          testStrings.camelCase
+          testStrings.camelCase,
         );
       });
     });
@@ -55,13 +55,13 @@ describe("string utils", () => {
           camelCase(str, {
             preserveConsecutiveUppercase: true,
             locale: "fr-FR",
-          })
+          }),
         ).toEqual(testStrings.camelCase);
         expect(
           camelCase(str, {
             preserveConsecutiveUppercase: true,
             locale: ["fr-FR", "en-US"],
-          })
+          }),
         ).toEqual(testStrings.camelCase);
       });
     });
@@ -83,7 +83,7 @@ describe("string utils", () => {
           camelCase(str, {
             preserveConsecutiveUppercase: true,
             pascalCase: true,
-          })
+          }),
         ).toEqual(capitalize(testStrings.camelCase));
       });
     });

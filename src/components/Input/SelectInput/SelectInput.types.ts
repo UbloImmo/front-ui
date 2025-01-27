@@ -17,7 +17,7 @@ import type { FC } from "react";
 
 export type SelectOption<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = {
   value: TValue | null;
   label: string;
@@ -34,7 +34,7 @@ export type SelectOptionItemStyleProps = StyleProps<
 // groupe d'options
 export type SelectOptionGroup<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = {
   label: string;
   options: SelectOption<TValue, TExtraData>[];
@@ -42,7 +42,7 @@ export type SelectOptionGroup<
 
 export type SelectOptionOrGroup<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = SelectOption<TValue, TExtraData> | SelectOptionGroup<TValue, TExtraData>;
 
 /**
@@ -50,7 +50,7 @@ export type SelectOptionOrGroup<
  */
 export type SelectOptionsQueryFn<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = MaybeAsyncFn<[Nullable<string>], SelectOptionOrGroup<TValue, TExtraData>[]>;
 
 /**
@@ -59,14 +59,14 @@ export type SelectOptionsQueryFn<
  */
 export type SelectOptionsQuery<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > =
   | SelectOptionOrGroup<TValue, TExtraData>[]
   | SelectOptionsQueryFn<TValue, TExtraData>;
 
 export type CustomOptionComponent<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = FC<SelectOption<TValue, TExtraData>>;
 
 /**
@@ -79,7 +79,7 @@ export type CustomOptionComponent<
  */
 export type FilterSelectOptionFn<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = GenericFn<[SelectOption<TValue, TExtraData>], boolean>;
 
 /**
@@ -102,7 +102,7 @@ export type CustomSelectedOptionComponent<TValue extends NullishPrimitives> =
 
 export type SelectInputProps<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = Replace<
   InputProps<"select", TValue>,
   "value",
@@ -166,12 +166,12 @@ export type SelectInputProps<
 
 export type DefaultSelectInputProps<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = Required<SelectInputProps<TValue, TExtraData>>;
 
 export type SelectInputOptionProps<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = SelectOption<TValue, TExtraData> & {
   onSelect?: Nullable<VoidFn>;
   Option?: Nullable<CustomOptionComponent<TValue, TExtraData>>;
@@ -179,7 +179,7 @@ export type SelectInputOptionProps<
 
 export type SelectInputOptionGroupProps<
   TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives
+  TExtraData extends NullishPrimitives = NullishPrimitives,
 > = SelectOptionGroup<TValue, TExtraData> & {
   onSelectOption: GenericFn<[SelectOption<TValue>], VoidFn>;
   Option?: Nullable<CustomOptionComponent<TValue, TExtraData>>;
