@@ -243,6 +243,8 @@ const sepaEntityCardProps: EntityInfoCardProps = {
         {
           label: "Création :",
           borderBottom: false,
+          paddingHorizontal: true,
+          compact: true,
           content: (
             <FlexRowLayout align="center" gap="s-2">
               <Icon color="gray-800" name="CatRobot" size="s-4" />
@@ -255,6 +257,8 @@ const sepaEntityCardProps: EntityInfoCardProps = {
         {
           label: "Émission :",
           borderBottom: false,
+          paddingHorizontal: true,
+          compact: true,
           content: (
             <FlexRowLayout align="center" gap="s-2">
               <Icon color="gray-800" name="CatRobot" size="s-4" />
@@ -267,6 +271,8 @@ const sepaEntityCardProps: EntityInfoCardProps = {
         {
           label: "Échéance :",
           borderBottom: false,
+          paddingHorizontal: true,
+          compact: true,
           content: (
             <Text color="gray-800" weight="medium">
               [dd/mm/yyyy]
@@ -276,6 +282,8 @@ const sepaEntityCardProps: EntityInfoCardProps = {
         {
           label: "Terme comptable :",
           borderBottom: false,
+          paddingHorizontal: true,
+          compact: true,
           content: (
             <Text color="gray-800" weight="medium">
               [dd/mm/yyyy]

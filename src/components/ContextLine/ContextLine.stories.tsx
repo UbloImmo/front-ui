@@ -6,17 +6,18 @@ import {
   type ContextLineStaticIconProps,
 } from "./ContextLine.types";
 import { formatAmount } from "../AccountBalance";
+import { Hypertext } from "../Hypertext";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
 import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
-import { useMergedProps } from "@utils";
+import { FlexLayout } from "@layouts";
+import { arrayOf, useMergedProps } from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react";
 import type { NonOptional } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
-import { Hypertext } from "../Hypertext";
 
 const args = {
   ...ContextLine.defaultProps,
@@ -304,6 +305,7 @@ const descriptions: (string | NonOptional<ReactNode>)[] = [
     <Hypertext href="#">I am a link</Hypertext>
   </>,
 ];
+
 export const Descriptions = (props: ContextLineProps) => {
   const mergedProps = useMergedProps<ContextLineDefaultProps, ContextLineProps>(
     {
@@ -326,6 +328,61 @@ export const Descriptions = (props: ContextLineProps) => {
       for="description"
       align="center"
       propLabels
+    />
+  );
+};
+
+const booleans = [false, true];
+
+const MultiContextLines = (props: ContextLineProps) => (
+  <FlexLayout direction="column" fill>
+    {arrayOf(3, (index) => (
+      <ContextLine key={["contextLine", index].join("-")} {...props} />
+    ))}
+  </FlexLayout>
+);
+
+export const Compact = (props: ContextLineProps) => {
+  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={booleans}
+      of={MultiContextLines}
+      for="compact"
+      align="center"
+    />
+  );
+};
+
+export const PaddingHorizontal = (props: ContextLineProps) => {
+  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={booleans}
+      of={MultiContextLines}
+      for="paddingHorizontal"
+      align="center"
+    />
+  );
+};
+
+export const BorderBottom = (props: ContextLineProps) => {
+  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      columns={2}
+      defaults={mergedProps}
+      variants={booleans}
+      of={MultiContextLines}
+      for="borderBottom"
+      align="center"
     />
   );
 };

@@ -47,7 +47,22 @@ export type ContextLineProps = {
    *
    * @default true
    */
-  borderBottom?: Nullable<boolean>;
+  borderBottom?: boolean;
+  /**
+   * Whether to add horizontal padding (adds `--s-3` on each side)
+   *
+   * @default false
+   */
+  paddingHorizontal?: boolean;
+  /**
+   * Whether to display a compact version of the ContextLine
+   *
+   * When compact, the ContextLine's vertical padding is reduced to `--s-2`
+   * as opposed to `--s-3` by default
+   *
+   * @default false
+   */
+  compact?: boolean;
 };
 
 export type ContextLineDefaultProps = Required<ContextLineProps>;

@@ -19,8 +19,12 @@ export const contextInfoCardContainerLinkStyles = (): RuleSet => css`
   transition-property: border-color;
   transition-duration: 300ms;
   transition-timing-function: var(--bezier);
-  cursor: pointer;
   text-decoration: none;
+
+  &,
+  & * {
+    cursor: pointer;
+  }
 
   [data-testid="context-info-card-icon-container"] svg,
   [data-testid="context-info-card-icon-container"] svg path {

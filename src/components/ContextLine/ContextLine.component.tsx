@@ -23,6 +23,8 @@ const defaultContextLineProps: ContextLineDefaultProps = {
   icon: null,
   badge: null,
   borderBottom: true,
+  paddingHorizontal: false,
+  compact: false,
 };
 
 /**
