@@ -6,7 +6,7 @@ import { allIconNames } from "../Icon/Icon.types";
 import { ComponentVariants } from "@docs/blocks";
 import { useMergedProps } from "@utils";
 
-import type { ActionProps, ActionSize } from "./Action.types";
+import type { ActionProps, ActionVariant } from "./Action.types";
 import type { IconName } from "../Icon";
 import type { StaticIconIndicator } from "../StaticIcon";
 import type { TooltipProps } from "../Tooltip";
@@ -27,8 +27,8 @@ const meta = {
     icon: {
       options: allIconNames,
     },
-    size: {
-      options: ["default", "large"],
+    variant: {
+      options: ["default", "centered", "chunky", "card"],
     },
     title: {
       control: "text",
@@ -73,16 +73,17 @@ export const Labels = (props: ActionProps) => {
   );
 };
 
-const sizes: ActionSize[] = ["default", "large"];
-export const Sizes = (props: ActionProps) => {
+const variants: ActionVariant[] = ["default", "centered", "chunky", "card"];
+export const Variants = (props: ActionProps) => {
   const defaults = useMergedProps(Action.defaultProps, {
     ...props,
     badgeLabel: "New",
+    description: "[Description]",
   });
   return (
     <ComponentVariants
-      variants={sizes}
-      for="size"
+      variants={variants}
+      for="variant"
       of={Action}
       defaults={defaults}
       scaling={1}
@@ -178,7 +179,7 @@ export const Description = (props: ActionProps) => {
   const defaults = useMergedProps(Action.defaultProps, {
     ...props,
     badgeLabel: "New",
-    size: "large",
+    variant: "chunky",
   });
   return (
     <ComponentVariants
