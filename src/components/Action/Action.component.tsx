@@ -31,7 +31,7 @@ import {
 
 import type {
   ActionProps,
-  ActionSize,
+  ActionVariant,
   DefaultActionProps,
 } from "./Action.types";
 import type {
@@ -39,15 +39,17 @@ import type {
   StaticIconSize,
 } from "../StaticIcon/StaticIcon.types";
 
-const staticIconSizeMap: Record<ActionSize, StaticIconSize> = {
+const staticIconSizeMap: Record<ActionVariant, StaticIconSize> = {
   default: "s",
-  large: "m",
+  centered: "s",
+  chunky: "m",
+  card: "m",
 };
 
 const defaultActionProps: DefaultActionProps = {
   label: "[Action]",
   icon: "Cursor",
-  size: "default",
+  variant: "default",
   disabled: false,
   badgeLabel: null,
   onClick: null,
@@ -82,9 +84,9 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     warn(`Missing required icon, defaulting to ${defaultActionProps.label}`);
   }
 
-  if (props.description && props.size === "default") {
+  if (props.description && props.variant === "default") {
     warn(
-      `Description is not available for default size. Set size to "large" to display it.`,
+      `Description is not available for default variant. Set variant to "chunky" or "card" to display it.`
     );
   }
 
@@ -97,16 +99,16 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       if (isFunction<VoidFn>(mergedProps.onClick) && !mergedProps.disabled)
         mergedProps.onClick();
     },
-    [mergedProps],
+    [mergedProps]
   );
 
   const staticIconProps = useMemo<StaticIconProps>(() => {
     const color: ColorKeyOrWhite = mergedProps.disabled
       ? "white"
       : isHovering
-        ? "primary"
-        : "gray";
-    const size = staticIconSizeMap[mergedProps.size];
+      ? "primary"
+      : "gray";
+    const size = staticIconSizeMap[mergedProps.variant];
     const indicator = mergedProps.indicator;
     return { size, color, name: mergedProps.icon, indicator };
   }, [mergedProps, isHovering]);
@@ -126,8 +128,8 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     const color: PaletteColor = mergedProps.disabled
       ? "gray-600"
       : isHovering
-        ? "primary-base"
-        : "gray-800";
+      ? "primary-base"
+      : "gray-800";
     return {
       color,
       weight: "bold",
@@ -136,7 +138,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
   }, [mergedProps, isHovering]);
 
   const layoutProps = useMemo<FlexLayoutProps>(() => {
-    if (mergedProps.size === "large") {
+    if (mergedProps.variant === "chunky" || mergedProps.variant === "card") {
       return {
         direction: "column",
         gap: "s-1",
@@ -165,7 +167,10 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
   }, [mergedProps]);
 
   const canDisplayDescription = useMemo(() => {
-    return mergedProps.description && mergedProps.size === "large";
+    return (
+      mergedProps.description &&
+      (mergedProps.variant === "chunky" || mergedProps.variant === "card")
+    );
   }, [mergedProps]);
 
   return (
@@ -180,44 +185,86 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       className={className}
       {...styleProps}
     >
-      <StaticIcon {...staticIconProps} />
-      <FlexLayout {...layoutProps} fill>
-        <ActionLabelContainer
-          align="center"
-          justify="start"
-          fill
-          gap="s-2"
-          testId={`${testId}-label-container`}
-        >
+      {mergedProps.variant === "centered" ? (
+        <div>
+          <StaticIcon {...staticIconProps} />
           <Text {...textProps} testId={`${testId}-label`}>
             {mergedProps.label}
           </Text>
-          {iconTooltipProps && mergedProps.size === "large" && (
-            <Tooltip {...iconTooltipProps} />
-          )}
-          {canDisplayDescription && badgeProps && (
-            <Badge {...badgeProps} testId={`${testId}-badge`} />
-          )}
-        </ActionLabelContainer>
+        </div>
+      ) : mergedProps.variant === "card" ? (
+        <FlexLayout direction="column" gap="s-2" fill>
+          <StaticIcon {...staticIconProps} />
+          <FlexLayout {...layoutProps} fill>
+            <ActionLabelContainer
+              align="center"
+              justify="start"
+              fill
+              gap="s-2"
+              testId={`${testId}-label-container`}
+            >
+              <Text {...textProps} testId={`${testId}-label`}>
+                {mergedProps.label}
+              </Text>
+              {iconTooltipProps && <Tooltip {...iconTooltipProps} />}
+              {canDisplayDescription && badgeProps && (
+                <Badge {...badgeProps} testId={`${testId}-badge`} />
+              )}
+            </ActionLabelContainer>
 
-        {!canDisplayDescription && badgeProps && (
-          <Badge {...badgeProps} testId={`${testId}-badge`} />
-        )}
+            {!canDisplayDescription && badgeProps && (
+              <Badge {...badgeProps} testId={`${testId}-badge`} />
+            )}
 
-        {canDisplayDescription && (
-          <ActionDescription
-            color="gray-600"
-            fill
-            size="s"
-            testId={`${testId}-description`}
-          >
-            {mergedProps.description}
-          </ActionDescription>
-        )}
-        {iconTooltipProps && mergedProps.size === "default" ? (
-          <Tooltip {...iconTooltipProps} />
-        ) : null}
-      </FlexLayout>
+            {canDisplayDescription && (
+              <ActionDescription
+                color="gray-600"
+                fill
+                size="s"
+                testId={`${testId}-description`}
+              >
+                {mergedProps.description}
+              </ActionDescription>
+            )}
+          </FlexLayout>
+        </FlexLayout>
+      ) : (
+        <>
+          <StaticIcon {...staticIconProps} />
+          <FlexLayout {...layoutProps} fill>
+            <ActionLabelContainer
+              align="center"
+              justify="start"
+              fill
+              gap="s-2"
+              testId={`${testId}-label-container`}
+            >
+              <Text {...textProps} testId={`${testId}-label`}>
+                {mergedProps.label}
+              </Text>
+              {iconTooltipProps && <Tooltip {...iconTooltipProps} />}
+              {canDisplayDescription && badgeProps && (
+                <Badge {...badgeProps} testId={`${testId}-badge`} />
+              )}
+            </ActionLabelContainer>
+
+            {!canDisplayDescription && badgeProps && (
+              <Badge {...badgeProps} testId={`${testId}-badge`} />
+            )}
+
+            {canDisplayDescription && (
+              <ActionDescription
+                color="gray-600"
+                fill
+                size="s"
+                testId={`${testId}-description`}
+              >
+                {mergedProps.description}
+              </ActionDescription>
+            )}
+          </FlexLayout>
+        </>
+      )}
     </ActionContainer>
   );
 };
