@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Storybook build docker timeout
+
+### Added
+
+- Changelog update script
+
+- Auto-generation CI workflow
+
 ### Changed
 
 - `v0.0.2` ContextLine component
