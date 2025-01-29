@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Updated or added  New icons
+
 - @ubloimmo/front-tokens version ^0.1.35
 
 - `v0.0.2` ContextLine component
