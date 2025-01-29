@@ -5,9 +5,9 @@ import type { StaticIconIndicator } from "../StaticIcon";
 import type { TooltipProps } from "../Tooltip";
 import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 
-const _actionSizes = ["default", "large"] as const;
+const _actionVariants = ["default", "centered", "chunky", "card"] as const;
 
-export type ActionSize = Enum<typeof _actionSizes>;
+export type ActionVariant = Enum<typeof _actionVariants>;
 
 /**
  * Action component props
@@ -43,11 +43,11 @@ export type ActionProps = Omit<StyleOverrideProps, "as"> & {
    */
   disabled?: boolean;
   /**
-   * The Action button's size variant.
-   * @type {ActionSize}
+   * The Action button's variant.
+   * @type {ActionVariant}
    * @default "default"
    */
-  size?: ActionSize;
+  variant?: ActionVariant;
   /**
    * Optional badge label.
    *
