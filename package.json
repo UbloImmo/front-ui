@@ -156,7 +156,13 @@
     "storybook:build": "storybook build",
     "lib:build": "vite build --config vite.config.build.ts",
     "init:component": "./scripts/init/component.sh",
-    "docs:generate": "bunx typedoc --options ./typedoc.config.js"
+    "docs:generate": "bunx typedoc --options ./typedoc.config.js",
+    "changelog:added": "./scripts/ci/add-to-changelog.sh \"Added\" ",
+    "changelog:changed": "./scripts/ci/add-to-changelog.sh \"Changed\" ",
+    "changelog:deprecated": "./scripts/ci/add-to-changelog.sh \"Deprecated\" ",
+    "changelog:removed": "./scripts/ci/add-to-changelog.sh \"Removed\" ",
+    "changelog:fixed": "./scripts/ci/add-to-changelog.sh \"Fixed\" ",
+    "changelog:security": "./scripts/ci/add-to-changelog.sh \"Security\" "
   },
   "type": "module",
   "jest": {
