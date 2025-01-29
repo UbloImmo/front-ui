@@ -16,8 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated or added 1 new icon(s)
 - Updated dependencies
   - Updated `@ubloimmo/front-tokens` to `0.1.35`
-  - Updated `vite` to `6.0.11`
-  - Updated `storybook` to `8.5.2`
+
 - `v0.0.2` ContextLine component
   - Add new `icon`, `description`, `badge` content properties
   - Add new `borderBottom`, `paddingHorizontal`, `compact` styling properties
