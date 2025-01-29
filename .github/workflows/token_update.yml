@@ -121,7 +121,7 @@ jobs:
         id: changelog_update
         if: steps.icons_generation.outputs.generated_icons_count > 0
         run: |
-          bun run changelog:changed "- Updated or added $GENERATED_ICONS_COUNT New icons"
+          bun run changelog:changed "- Updated or added $GENERATED_ICONS_COUNT new icon(s)"
           git add "CHANGELOG.md"
           git commit -m "ci: update changelog"
         env:
