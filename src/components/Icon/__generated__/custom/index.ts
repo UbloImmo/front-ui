@@ -78,6 +78,7 @@ export { DiamondsStripes } from "./DiamondsStripes.icon";
 export { Feather3 } from "./Feather3.icon";
 export { Figma } from "./Figma.icon";
 export { FigmaFill } from "./FigmaFill.icon";
+export { File2Clock } from "./File2Clock.icon";
 export { Fire } from "./Fire.icon";
 export { FireFill } from "./FireFill.icon";
 export { FolderSparkle } from "./FolderSparkle.icon";
