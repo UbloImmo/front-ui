@@ -113,7 +113,7 @@ jobs:
         if: steps.pre_update_version.outputs.pre_bump_version != steps.post_update_version.outputs.post_bump_version
         run: |
           bun run icons:generate
-          git add "src/icons"
+          git add "src/components/Icon"
           echo "generated_icons_count=$(echo $(./scripts/utils/staged-file-count.sh))" >> $GITHUB_OUTPUT
           git commit -m "ci: generate icons"
         
