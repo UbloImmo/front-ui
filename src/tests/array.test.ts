@@ -1,12 +1,11 @@
-import { describe, expect, it, mock } from "bun:test";
+import { describe, expect, it, mock, type Mock } from "bun:test";
 
 import { testHookFactory } from "./test.utils";
 
 import { arrayOf, delay, useDataArray } from "@utils";
 
-import type { Mock } from "@storybook/test";
 import type { TestHookOptions, TestHookUtils } from "@types";
-import type { MaybeAsyncFn } from "@ubloimmo/front-util";
+import type { MaybeAsyncFn, VoidFn } from "@ubloimmo/front-util";
 
 describe("arrayOf", () => {
   it("should be a function", () => {
@@ -108,7 +107,7 @@ testInParallel(
     await delay(DELAY);
     utils.rerender();
     expect(onDataChange).toHaveBeenCalledWith(mockItems);
-    (onDataChange as Mock).mockClear();
+    (onDataChange as Mock<VoidFn>).mockClear();
   },
 );
 
@@ -127,17 +126,17 @@ testInParallel(
     expect(result.findIndex).toBeFunction();
     expect(result.at).toBeFunction();
     expect(result.filter).toBeFunction();
-    (onDataChange as Mock).mockClear();
+    (onDataChange as Mock<VoidFn>).mockClear();
   },
 );
 
 testInParallel("should set data", async (result, [, , onDataChange], utils) => {
-  (onDataChange as Mock).mockClear();
+  (onDataChange as Mock<VoidFn>).mockClear();
   result.setData(mockItems);
   utils.rerender();
   await delay(0);
   expect(onDataChange).toHaveBeenCalledWith(mockItems);
-  (onDataChange as Mock).mockClear();
+  (onDataChange as Mock<VoidFn>).mockClear();
 });
 
 testInParallel(
