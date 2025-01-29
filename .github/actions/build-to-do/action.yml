@@ -33,7 +33,7 @@ runs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
     - name: Authenticate with DigitalOcean Container Registry
-      run: doctl registry login --expiry-seconds 600
+      run: doctl registry login --expiry-seconds 1800
       shell: bash
     - name: Build and Push to DigitalOcean Container Registry
       uses: docker/build-push-action@v4
