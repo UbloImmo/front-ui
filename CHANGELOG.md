@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- @ubloimmo/front-tokens version ^0.1.35
+
 - `v0.0.2` ContextLine component
   - Add new `icon`, `description`, `badge` content properties
   - Add new `borderBottom`, `paddingHorizontal`, `compact` styling properties
