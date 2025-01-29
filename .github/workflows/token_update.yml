@@ -101,7 +101,7 @@ jobs:
         id: changelog_update_tokens
         if: steps.pre_update_version.outputs.pre_bump_version != steps.post_update_version.outputs.post_bump_version
         run: |
-          bun run changelog:changed "- @ubloimmo/front-tokens version $NEW_TOKENS_VERSION"
+          bun run changelog:changed "- Updated \`@ubloimmo/front-tokens\` to \`$NEW_TOKENS_VERSION\`"
           git add "CHANGELOG.md"
           git commit -m "ci: update changelog"
         env:
@@ -121,7 +121,7 @@ jobs:
         id: changelog_update
         if: steps.icons_generation.outputs.generated_icons_count > 0
         run: |
-          bun run changelog:changed "- Updated or added $GENEREATED_ICONS_COUNT New icons"
+          bun run changelog:changed "- Updated or added $GENERATED_ICONS_COUNT New icons"
           git add "CHANGELOG.md"
           git commit -m "ci: update changelog"
         env:
