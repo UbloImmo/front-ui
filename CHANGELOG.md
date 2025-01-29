@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.7` InputLabel component
+  - Decrease text size from `m` to `s`
+
+- `v0.0.4` InputAssistiveText component
+  - Decrease text size from `s` to `xs`
+  - Add `assistiveTextIcon` property to render an icon next to the assistive text
+
 ## 1.4.0 - 2025-01-29
 
 ## 1.3.0 - 2025-01-29

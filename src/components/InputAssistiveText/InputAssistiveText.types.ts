@@ -1,4 +1,5 @@
-import { Nullable } from "@ubloimmo/front-util";
+import type { IconName } from "../Icon";
+import type { Nullable } from "@ubloimmo/front-util";
 
 export type InputAssistiveTextProps = {
   /**
@@ -19,6 +20,18 @@ export type InputAssistiveTextProps = {
    * @type {boolean}
    */
   error?: boolean;
+  /**
+   * An optional icon to display before the assistive text
+   *
+   * @remarks
+   * - If `true`, the default `SquircleInfo` icon will be displayed
+   * - If `false` or `null`, the icon will **not** be displayed
+   * - If an `IconName`, the icon will be displayed with the name of the icon
+   *
+   * @type {Nullable<IconName | boolean>}
+   * @default null
+   */
+  assistiveTextIcon?: Nullable<IconName | boolean>;
 };
 
 export type DefaultInputAssistiveTextProps = Required<InputAssistiveTextProps>;

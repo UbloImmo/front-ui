@@ -21,10 +21,18 @@ This text offers to users additional information about the input field.
 
 > It can also notify users of any errors that might occur during input entry.
 
-## Handling errors
+### Handling errors
 
 You can indicate an error by setting the `error` property to `true` and providing the corresponding error text in the `errorText` property.
 
 <Canvas of={InputAssistiveTextStories.States} />
+
+### Customization
+
+An optional icon can be displayed before the assistive - or error - text by setting the `assistiveTextIcon` property.
+
+> If set to `true`, the default `SquircleInfo` icon will be displayed. Its color depends on the value of the `error` property.
+
+<Canvas of={InputAssistiveTextStories.Icons} />
 
 </Content>

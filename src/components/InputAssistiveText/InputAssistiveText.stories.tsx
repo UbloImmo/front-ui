@@ -5,8 +5,16 @@ import { FlexRowLayout } from "../../layouts";
 import { ComponentVariants } from "@docs/blocks";
 import { useMergedProps } from "@utils";
 
+import type { IconName } from "../Icon";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { Nullable } from "@ubloimmo/front-util";
+import { componentSourceFactory } from "@docs/docs.utils";
 
+const source = componentSourceFactory(
+  "InputAssistiveText",
+  {},
+  InputAssistiveText.defaultProps,
+);
 const meta = {
   title: "Components/Forms/InputAssistiveText/Stories",
   component: InputAssistiveText,
@@ -30,7 +38,7 @@ export const Default: Story = {
 };
 
 const errors = [false, true];
-export const States = (props: InputAssistiveTextProps) => {
+export const States: Story = (props: InputAssistiveTextProps) => {
   const defaultProps = useMergedProps(InputAssistiveText.defaultProps, props);
 
   return (
@@ -42,6 +50,7 @@ export const States = (props: InputAssistiveTextProps) => {
       justify="center"
       scaling={1.1}
       propLabels
+      columns={2}
     />
   );
 };
@@ -49,6 +58,9 @@ export const States = (props: InputAssistiveTextProps) => {
 States.args = {
   assistiveText: "This is an assistive text for the input.",
   errorText: "This is an error message for the input.",
+};
+States.parameters = {
+  docs: source(errors.map((error) => ({ error }))),
 };
 
 const assistiveTexts = [
@@ -70,4 +82,40 @@ export const TextLength = (props: InputAssistiveTextProps) => {
       columns={2}
     />
   );
+};
+TextLength.args = {
+  assistiveText: "This is an assistive text for the input.",
+};
+TextLength.parameters = {
+  docs: source(assistiveTexts.map((text) => ({ assistiveText: text }))),
+};
+
+const icons: Nullable<IconName | boolean>[] = [
+  null,
+  true,
+  "QuestionCircle",
+  "ExclamationTriangle",
+];
+
+export const Icons = (props: InputAssistiveTextProps) => {
+  const defaultProps = useMergedProps(InputAssistiveText.defaultProps, props);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={icons}
+      for="assistiveTextIcon"
+      of={InputAssistiveText}
+      justify="center"
+      scaling={1.1}
+      propLabels
+      columns={2}
+    />
+  );
+};
+Icons.args = {
+  assistiveText: "This is an assistive text for the input.",
+};
+Icons.parameters = {
+  docs: source(icons.map((icon) => ({ assistiveTextIcon: icon }))),
 };
