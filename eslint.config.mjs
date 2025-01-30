@@ -40,8 +40,8 @@ export default [
       "plugin:react/recommended",
       "plugin:react-hooks/recommended",
       "plugin:prettier/recommended",
-      "plugin:storybook/recommended",
-    ),
+      "plugin:storybook/recommended"
+    )
   ),
   {
     plugins: {
@@ -104,6 +104,13 @@ export default [
     },
 
     rules: {
+      // generic
+      "no-console": [
+        "warn",
+        {
+          allow: ["warn", "error"],
+        },
+      ],
       "comma-dangle": [
         "error",
         {
@@ -114,11 +121,10 @@ export default [
           functions: "only-multiline",
         },
       ],
-      // generic
-      "no-console": [
+      "prettier/prettier": [
         "warn",
         {
-          allow: ["warn", "error"],
+          trailingComma: "es5",
         },
       ],
 
