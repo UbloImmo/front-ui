@@ -2,31 +2,31 @@ import { css, type RuleSet } from "styled-components";
 
 import { cssVarUsage } from "@utils";
 
-import type { DefaultActionProps, ActionVariant } from "./Action.types";
-import type { CssRem, SpacingLabel, StyleProps } from "@types";
+import type { ActionSize, ActionStyledProps } from "./Action.types";
+import type { CssRem, SpacingLabel } from "@types";
 
-const horizontalPaddings: Record<ActionVariant, SpacingLabel> = {
-  default: "s-2",
-  centered: "s-2",
-  chunky: "s-6",
-  card: "s-4",
-};
-
-const heights: Record<ActionVariant, CssRem> = {
+const heights: Record<ActionSize, CssRem | "unset"> = {
   default: "2.5rem",
   centered: "2.5rem",
-  chunky: "5.25rem",
-  card: "8rem",
+  large: "5.25rem",
+  card: "unset",
 };
 
-const borderRadii: Record<ActionVariant, SpacingLabel> = {
+const borderRadii: Record<ActionSize, SpacingLabel> = {
   default: "s-1",
   centered: "s-1",
-  chunky: "s-3",
+  large: "s-3",
   card: "s-3",
 };
 
-export const actionTextWrappingStyles = () => css`
+const paddings: Record<ActionSize, [SpacingLabel, SpacingLabel]> = {
+  default: ["s-1", "s-2"],
+  centered: ["s-1", "s-2"],
+  large: ["s-4", "s-6"],
+  card: ["s-4", "s-6"],
+};
+
+const actionTextWrappingStyles = () => css`
   overflow-y: hidden;
   overflow-wrap: break-word;
   display: block;
@@ -45,95 +45,65 @@ export const actionTextWrappingStyles = () => css`
  * @return {RuleSet} The generated CSS styles for the action container.
  */
 export const actionContainerStyles = ({
-  $variant,
-  $disabled,
-}: StyleProps<DefaultActionProps>): RuleSet => {
-  const paddingHorizontal = horizontalPaddings[$variant];
-  const height = heights[$variant];
-  const borderRadius = borderRadii[$variant];
-  const background = $disabled ? cssVarUsage("gray-50") : "#fff";
-  const disabledShadow = cssVarUsage(
-    $variant === "chunky" || $variant === "card"
-      ? "shadow-card-elevation-low"
-      : "shadow-button"
+  $size,
+  $color,
+}: ActionStyledProps): RuleSet => {
+  const height = heights[$size];
+  const borderRadius = borderRadii[$size];
+  const padding = paddings[$size].map(cssVarUsage).join(" ");
+  const disabledShadow =
+    $size === "large" || $size === "card"
+      ? cssVarUsage("shadow-card-default")
+      : "none";
+
+  const borderColor = `${$color}-medium`;
+  const borderColorTransparent = `${borderColor}-00`;
+
+  const hoverShadow = cssVarUsage(
+    $color === "error"
+      ? "shadow-input-error-focus"
+      : "shadow-card-elevation-medium"
   );
 
   return css`
     cursor: pointer;
-    height: ${height};
     min-height: ${height};
-    max-height: ${$variant === "card" ? "none" : height};
     width: 100%;
-    padding: var(--s-05) var(--${paddingHorizontal});
-    display: flex;
-    align-items: center;
-    gap: var(--s-4);
-    background: ${background};
-    border: 1px solid transparent;
+    padding: ${padding};
+
+    background: white;
+    border: 1px solid ${cssVarUsage(borderColorTransparent)};
     box-shadow: var(--shadow-button);
     border-radius: var(--${borderRadius});
 
-    transition: background 300ms ease-out 0s, border-color 300ms ease-out 0s,
-      box-shadow 300ms ease-out 0s;
+    transition:
+      background 300ms var(--bezier) 0s,
+      border-color 300ms var(--bezier) 0s,
+      box-shadow 300ms var(--bezier) 0s;
 
-    span[data-testid="text action-label"] {
-      ${$variant === "default" &&
-      css`
-        flex: 1;
-      `}
+    span[data-testid="action-label"] {
       text-overflow: ellipsis;
       max-height: 100%;
       max-width: fit-content;
+      transition: color 150ms var(--bezier) 0s;
       ${actionTextWrappingStyles}
-    }
-
-    ${$variant === "centered" &&
-    css`
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: var(--s-05) var(--${paddingHorizontal});
-
-      > div:first-child {
-        display: flex;
-        align-items: center;
-        gap: var(--s-2);
-        margin: 0 auto;
-      }
-
-      span[data-testid="text action-label"] {
-        white-space: nowrap;
-      }
-
-      *[data-testid="badge action-badge"] {
-        display: none;
-      }
-    `}
-
-    ${$variant === "card" &&
-    css`
-      padding: var(--s-4);
-
-      > div {
-        gap: var(--s-4);
-      }
-    `}
-
-    *[data-testid="badge action-badge"] span {
-      max-width: max-content;
-      min-width: max-content;
-      white-space: nowrap;
     }
 
     &:hover:not(:disabled) {
       transition-duration: 150ms;
-      border-color: var(--primary-medium);
-      box-shadow: var(--shadow-card-elevation-medium);
+      border-color: ${cssVarUsage(borderColor)};
+      box-shadow: ${hoverShadow};
+
+      ${$size === "centered" &&
+      css`
+        background: var(--${$color}-light);
+      `}
     }
 
     &:disabled {
       cursor: not-allowed;
       box-shadow: ${disabledShadow};
+      background: var(--gray-50);
     }
   `;
 };

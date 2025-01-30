@@ -1,13 +1,32 @@
-import { StyleOverrideProps } from "@types";
+import {
+  StyleOverrideProps,
+  type ColorKey,
+  type StyleProps,
+  type TestIdProps,
+} from "@types";
 
+import type { BadgeProps } from "../Badge";
 import type { IconName } from "../Icon";
 import type { StaticIconIndicator } from "../StaticIcon";
 import type { TooltipProps } from "../Tooltip";
-import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { Enum, Nullable, Replace, VoidFn } from "@ubloimmo/front-util";
+import type { FC, MouseEventHandler } from "react";
 
-const _actionVariants = ["default", "centered", "chunky", "card"] as const;
+const _actionSizes = ["centered", "default", "large", "card"] as const;
 
-export type ActionVariant = Enum<typeof _actionVariants>;
+/**
+ * The size of an action.
+ *
+ * @default "default"
+ */
+export type ActionSize = Enum<typeof _actionSizes>;
+
+/**
+ * The color of an action. Set it to `error` for destructive actions.
+ *
+ * @default "primary"
+ */
+export type ActionColor = Extract<ColorKey, "primary" | "error">;
 
 /**
  * Action component props
@@ -47,7 +66,7 @@ export type ActionProps = Omit<StyleOverrideProps, "as"> & {
    * @type {ActionVariant}
    * @default "default"
    */
-  variant?: ActionVariant;
+  size?: ActionSize;
   /**
    * Optional badge label.
    *
@@ -87,6 +106,34 @@ export type ActionProps = Omit<StyleOverrideProps, "as"> & {
    * @default null
    */
   indicator?: Nullable<StaticIconIndicator>;
+  /**
+   * The color of the Action
+   *
+   * @type {ActionColor}
+   * @default "primary"
+   */
+  color?: ActionColor;
 };
 
 export type DefaultActionProps = Required<ActionProps>;
+
+export type ActionStyledProps = StyleProps<
+  Omit<DefaultActionProps, "onClick"> & Required<Pick<TestIdProps, "testId">>
+>;
+
+export type SizedActionProps = Replace<
+  DefaultActionProps,
+  "onClick",
+  {
+    onClick: MouseEventHandler;
+  }
+> & {
+  isHovering: boolean;
+} & Required<Pick<TestIdProps, "testId">> & {
+    badgeProps: Nullable<BadgeProps>;
+    iconTooltipProps: Nullable<TooltipProps>;
+  };
+
+export type SizedActionMap = {
+  [size in ActionSize]: FC<SizedActionProps>;
+};

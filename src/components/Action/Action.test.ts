@@ -34,8 +34,8 @@ testAction({
 
 testAction({
   ...Action.defaultProps,
-  variant: "chunky",
-})("should render the chunky variant", async ({ findByTestId }) => {
+  size: "large",
+})("should render the large size", async ({ findByTestId }) => {
   expect(await findByTestId(testId)).not.toBeNull();
 });
 
@@ -61,8 +61,8 @@ testAction({
 testAction({
   ...Action.defaultProps,
   description: "A description",
-  variant: "chunky",
-})("should render a description with a chunky variant", ({ queryByTestId }) => {
+  size: "large",
+})("should render a description with a large size", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId(`text ${testId}-description`)).not.toBeNull();
 });
@@ -105,9 +105,9 @@ testAction({
 testAction({
   ...Action.defaultProps,
   description: "A description",
-  variant: "default",
+  size: "default",
 })(
-  "should warn if description is set with default variant",
+  "should warn if description is set with default size",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryByTestId(`text ${testId}-description`)).toBeNull();

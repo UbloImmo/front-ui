@@ -6,7 +6,7 @@ import { allIconNames } from "../Icon/Icon.types";
 import { ComponentVariants } from "@docs/blocks";
 import { useMergedProps } from "@utils";
 
-import type { ActionProps, ActionVariant } from "./Action.types";
+import type { ActionColor, ActionProps, ActionSize } from "./Action.types";
 import type { IconName } from "../Icon";
 import type { StaticIconIndicator } from "../StaticIcon";
 import type { TooltipProps } from "../Tooltip";
@@ -27,8 +27,8 @@ const meta = {
     icon: {
       options: allIconNames,
     },
-    variant: {
-      options: ["default", "centered", "chunky", "card"],
+    size: {
+      options: ["default", "centered", "large", "card"],
     },
     title: {
       control: "text",
@@ -41,6 +41,9 @@ const meta = {
     },
     description: {
       control: "text",
+    },
+    color: {
+      options: ["primary", "error"],
     },
   },
 } satisfies Meta<typeof Action>;
@@ -73,8 +76,8 @@ export const Labels = (props: ActionProps) => {
   );
 };
 
-const variants: ActionVariant[] = ["default", "centered", "chunky", "card"];
-export const Variants = (props: ActionProps) => {
+const sizes: ActionSize[] = ["default", "centered", "large", "card"];
+export const Sizes = (props: ActionProps) => {
   const defaults = useMergedProps(Action.defaultProps, {
     ...props,
     badgeLabel: "New",
@@ -82,8 +85,8 @@ export const Variants = (props: ActionProps) => {
   });
   return (
     <ComponentVariants
-      variants={variants}
-      for="variant"
+      variants={sizes}
+      for="size"
       of={Action}
       defaults={defaults}
       scaling={1}
@@ -179,7 +182,7 @@ export const Description = (props: ActionProps) => {
   const defaults = useMergedProps(Action.defaultProps, {
     ...props,
     badgeLabel: "New",
-    variant: "chunky",
+    size: "large",
   });
   return (
     <ComponentVariants
@@ -214,6 +217,22 @@ export const Indicator = (props: ActionProps) => {
     <ComponentVariants
       variants={indicators}
       for="indicator"
+      of={Action}
+      defaults={defaults}
+      scaling={1}
+      columns={2}
+      propLabels
+    />
+  );
+};
+
+const colors: ActionColor[] = ["primary", "error"];
+export const Colors = (props: ActionProps) => {
+  const defaults = useMergedProps(Action.defaultProps, props);
+  return (
+    <ComponentVariants
+      variants={colors}
+      for="color"
       of={Action}
       defaults={defaults}
       scaling={1}
