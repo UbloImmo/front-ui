@@ -31,7 +31,7 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
 /**
  * Displays key information about an entity in a card.
  *
- * @version 0.0.10
+ * @version 0.0.11
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
  * @returns {JSX.Element}
@@ -54,6 +54,7 @@ const EntityInfoCard = (
       infoCards,
       statusRows,
       contextInfoCards,
+      order,
     } = mergedProps;
     return [
       {
@@ -63,6 +64,7 @@ const EntityInfoCard = (
         infoCards,
         statusRows,
         contextInfoCards,
+        order,
       },
       ...mergedProps.sections,
     ];

@@ -30,6 +30,7 @@ import type {
   EntityAction,
   EntityActionIcon,
   EntityInfoCardProps,
+  EntityInfoCardSectionItemName,
   EntityInfoCardSectionProps,
   EntityStatusRow,
 } from "./EntityInfoCard.types";
@@ -710,4 +711,38 @@ export const AccountBalance = (props: EntityInfoCardProps) => {
       of={EntityInfoCard}
     />
   );
+};
+
+const orders: EntityInfoCardSectionItemName[][] = [
+  [],
+  ["infoBoxes", "statusRows"],
+];
+
+export const Order = (props: EntityInfoCardProps) => {
+  const mergedProps = useMergedProps(
+    {
+      ...EntityInfoCard.defaultProps,
+      ...sectionVariants[0].sections?.[0],
+    },
+    props,
+  );
+
+  return (
+    <ComponentVariants
+      defaults={mergedProps}
+      variants={orders}
+      for="order"
+      of={EntityInfoCard}
+      propLabels
+      columns={2}
+    />
+  );
+};
+Order.parameters = {
+  docs: componentSource(
+    orders.map((order) => ({
+      ...EntityInfoCard.defaultProps,
+      order,
+    })),
+  ),
 };

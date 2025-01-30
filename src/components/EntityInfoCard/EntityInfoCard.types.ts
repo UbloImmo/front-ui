@@ -10,8 +10,9 @@ import type {
 } from "@/components/CopyClipboardInfoCard";
 import type { InfoBoxProps } from "@/components/InfoBox";
 import type { StateIndicatorProps } from "@/components/StateIndicator";
-import type { Nullable, RequireAtLeastOne } from "@ubloimmo/front-util";
-import type { ReactNode } from "react";
+import type { TestIdProps } from "@types";
+import type { KeyOf, Nullable, RequireAtLeastOne } from "@ubloimmo/front-util";
+import type { FC, ReactNode } from "react";
 
 export type EntityActionIcon = Omit<ActionIconProps, "size">;
 export type EntityAction = Omit<ActionProps, "size">;
@@ -62,7 +63,7 @@ export type EntityInfoCardHeaderProps = EntityStateProps & {
 /**
  * Properties related to the entity info card's section
  */
-export type EntityInfoCardSectionProps = {
+export type EntityInfoCardSectionInnerProps = {
   /**
    * The entity's name
    */
@@ -109,6 +110,23 @@ export type EntityInfoCardSectionProps = {
    * @default null
    */
   children?: ReactNode;
+};
+
+export type EntityInfoCardSectionItemName = KeyOf<
+  EntityInfoCardSectionInnerProps,
+  string
+>;
+
+export type EntityInfoCardSectionProps = EntityInfoCardSectionInnerProps &
+  EntityInfoCardSectionOrderProps;
+
+export type EntityInfoCardSectionOrderProps = {
+  /**
+   * The order of a section's items to be displayed in the section
+   *
+   * @default ["children","name","contextInfoCards","infoCards","infoBoxes","statusRows"]
+   */
+  order?: EntityInfoCardSectionItemName[];
 };
 
 export type EntityInfoCardFooterProps = {
@@ -158,3 +176,15 @@ export type EntityInfoCardHeaderDefaultProps =
 
 export type EntityInfoCardFooterDefaultProps =
   Required<EntityInfoCardFooterProps>;
+
+export type EntityInfoCardSectionItemRendererProps =
+  Required<EntityInfoCardSectionInnerProps> &
+    TestIdProps &
+    EntityInfoCardCallbackProps;
+
+export type EntityInfoCardSectionItemRenderer =
+  FC<EntityInfoCardSectionItemRendererProps>;
+
+export type EntityInfoCardSectionItemRendererMap = {
+  [ItemKey in EntityInfoCardSectionItemName]: EntityInfoCardSectionItemRenderer;
+};
