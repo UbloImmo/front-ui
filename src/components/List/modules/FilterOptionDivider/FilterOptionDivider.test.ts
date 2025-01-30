@@ -22,10 +22,10 @@ describe("FilterOptionDivider module", () => {
       });
       it("should return false if the item is not a FilterOptionDividerData object", () => {
         expect(isFilterOptionDividerData({ kind: "divider", label: 23 })).toBe(
-          false,
+          false
         );
         expect(
-          isFilterOptionDividerData({ kind: "dividers", label: "label" }),
+          isFilterOptionDividerData({ kind: "dividers", label: "label" })
         ).toBe(false);
       });
     });

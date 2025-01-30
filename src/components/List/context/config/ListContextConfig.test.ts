@@ -43,7 +43,7 @@ const mockItems: MockItem[] = arrayOf(
     index,
     value: index * 2,
     selected: Math.random() > 0.5,
-  }),
+  })
 );
 
 const useMockDataProvider: UseDataProviderFn<MockItem> = (setData) =>
@@ -84,8 +84,8 @@ const testListConfigReducers = () => {
             expect(
               findFilterByIndexAndLabel(
                 new Map([[filter.signature, filter]]),
-                filter,
-              ),
+                filter
+              )
             ).toEqual(filter);
           });
         });
@@ -175,7 +175,7 @@ const testListConfig = () => {
   type HookParams = Parameters<Hook>;
   const testHook = testHookFactory<HookParams, HookReturn, Hook>(
     "useListConfig",
-    useListConfig<MockItem>,
+    useListConfig<MockItem>
   )(useMockDataProvider);
 
   testHook("should return a valid object containing a config", (result) => {
@@ -195,7 +195,7 @@ const testListConfig = () => {
       result.setOperator("OR");
       rerender();
       expect(getResult().config.operator).toBe("OR");
-    },
+    }
   );
 
   testHook("should return an object containing sync methods", (result) => {
@@ -241,7 +241,7 @@ const testListConfig = () => {
       expect(matches[1].property).toBe("index");
       expect(matches[1].comparison).toBe(">");
       expect(matches[1].value).toBe(4);
-    },
+    }
   );
 
   testHook("should invert a match from the not() method", (result) => {
@@ -263,7 +263,7 @@ const testListConfig = () => {
       expect(divider).toBeObject();
       expect(divider.label).toBe("test");
       expect(divider.kind).toBe("divider");
-    },
+    }
   );
 
   testHook(
@@ -279,7 +279,7 @@ const testListConfig = () => {
       expect(getResult().config.options).toBeArray();
       expect(getResult().config.options?.length).toBe(1);
       expect(getResult().config.options?.[0]).toEqual(option);
-    },
+    }
   );
 
   testHook(
@@ -295,7 +295,7 @@ const testListConfig = () => {
         values.map((value) => ({
           value,
           label: String(value),
-        })),
+        }))
       );
       expect(options).toBeArray();
       expect(options).toHaveLength(values.length);
@@ -311,7 +311,7 @@ const testListConfig = () => {
       rerender();
       expect(getResult().config.options).toBeArray();
       expect(getResult().config.options).toEqual(options);
-    },
+    }
   );
 
   testHook(
@@ -324,7 +324,7 @@ const testListConfig = () => {
         [15, 30, 45].map((value) => ({
           value,
           label: String(value),
-        })),
+        }))
       );
       const divider = result.divider("divider");
       const label = "filter";
@@ -338,19 +338,19 @@ const testListConfig = () => {
       expect(filter.label).toBe(label);
       expect(filter.optionSignatures).toBeArray();
       expect(filter.optionSignatures).toEqual(
-        options.map(({ signature }) => signature),
+        options.map(({ signature }) => signature)
       );
       expect(filter.optionDividers).toBeArray();
       expect(filter.optionDividers).toHaveLength(1);
       expect(filter.optionDividers[0].label).toBe(divider.label);
       expect(filter.optionDividers[0].kind).toBe(divider.kind);
       expect(filter.optionDividers[0].beforeSignature).toBe(
-        options[1].signature,
+        options[1].signature
       );
       rerender();
       expect(getResult().config.filters).toBeArray();
       expect(getResult().config.filters).toEqual([filter]);
-    },
+    }
   );
 
   testHook(
@@ -363,7 +363,7 @@ const testListConfig = () => {
         [true, false].map((value) => ({
           value,
           label: String(value),
-        })),
+        }))
       );
       const label = "filterPreset";
       const filterPreset = result.filterPreset(label, options);
@@ -371,12 +371,12 @@ const testListConfig = () => {
       expect(filterPreset.label).toBe(label);
       expect(filterPreset.optionSignatures).toBeArray();
       expect(filterPreset.optionSignatures).toEqual(
-        options.map(({ signature }) => signature),
+        options.map(({ signature }) => signature)
       );
       rerender();
       expect(getResult().config.filterPresets).toBeArray();
       expect(getResult().config.filterPresets).toEqual([filterPreset]);
-    },
+    }
   );
 
   testHook("should return valid async methods", (result) => {
@@ -403,7 +403,7 @@ const testListConfig = () => {
       rerender();
       expect(getResult().config.options).toBeArray();
       expect(getResult().config.options).toEqual([option]);
-    },
+    }
   );
 
   global.console.error = mock(() => {});
@@ -423,7 +423,7 @@ const testListConfig = () => {
         expect((error as Error).message).toBe("test");
       }
       (global.console.error as Mock<VoidFn>).mockReset();
-    },
+    }
   );
   testHook(
     "should create & register multiple options from the async.options() method",
@@ -431,8 +431,8 @@ const testListConfig = () => {
       expect(result.async.options).toBeFunction();
       const optionsPromise = result.async.options("value", "=", () =>
         Promise.resolve(
-          [5, 10, 15].map((value) => ({ value, label: String(value) })),
-        ),
+          [5, 10, 15].map((value) => ({ value, label: String(value) }))
+        )
       );
       expect(optionsPromise).resolves.toBeArray();
       const options = await optionsPromise;
@@ -441,7 +441,7 @@ const testListConfig = () => {
       rerender();
       expect(getResult().config.options).toBeArray();
       expect(getResult().config.options).toEqual(options);
-    },
+    }
   );
 
   testHook(
@@ -449,7 +449,7 @@ const testListConfig = () => {
     async (result) => {
       expect(result.async.options).toBeFunction();
       const optionsPromise = result.async.options("value", "=", () =>
-        Promise.reject(new Error("test")),
+        Promise.reject(new Error("test"))
       );
       expect(optionsPromise).resolves.toBeArray();
       const options = await optionsPromise;
@@ -457,7 +457,7 @@ const testListConfig = () => {
       expect(options).toHaveLength(0);
       expect(global.console.error).toHaveBeenCalled();
       (global.console.error as Mock<VoidFn>).mockReset();
-    },
+    }
   );
 
   testHook(
@@ -466,8 +466,8 @@ const testListConfig = () => {
       expect(result.async.filter).toBeFunction();
       const optionsPromise = result.async.options("value", "=", () =>
         Promise.resolve(
-          [5, 10, 15].map((value) => ({ value, label: String(value) })),
-        ),
+          [5, 10, 15].map((value) => ({ value, label: String(value) }))
+        )
       );
       const label = "filter";
       const filterPromise = result.async.filter(label, optionsPromise);
@@ -477,9 +477,9 @@ const testListConfig = () => {
       expect(filter).not.toBeNull();
       expect((filter as FilterData).label).toBe(label);
       expect((filter as FilterData).optionSignatures).toEqual(
-        (await optionsPromise).map(({ signature }) => signature),
+        (await optionsPromise).map(({ signature }) => signature)
       );
-    },
+    }
   );
 
   testHook(
@@ -488,13 +488,13 @@ const testListConfig = () => {
       expect(result.async.filter).toBeFunction();
       const filterPromise = result.async.filter(
         "filter",
-        Promise.reject(new Error("test")),
+        Promise.reject(new Error("test"))
       );
 
       expect(filterPromise).resolves.toBeNull();
       expect(global.console.error).toHaveBeenCalled();
       (global.console.error as Mock<VoidFn>).mockReset();
-    },
+    }
   );
 
   testHook(
@@ -503,13 +503,13 @@ const testListConfig = () => {
       expect(result.async.filterPreset).toBeFunction();
       const optionsPromise = result.async.options("value", "=", () =>
         Promise.resolve(
-          [5, 10, 15].map((value) => ({ value, label: String(value) })),
-        ),
+          [5, 10, 15].map((value) => ({ value, label: String(value) }))
+        )
       );
       const label = "filterPreset";
       const filterPresetPromise = result.async.filterPreset(
         label,
-        optionsPromise,
+        optionsPromise
       );
       expect(filterPresetPromise).resolves.toBeObject();
       const filterPreset = await filterPresetPromise;
@@ -519,9 +519,9 @@ const testListConfig = () => {
       }
       expect(filterPreset.label).toBe(label);
       expect(filterPreset.optionSignatures).toEqual(
-        (await optionsPromise).map(({ signature }) => signature),
+        (await optionsPromise).map(({ signature }) => signature)
       );
-    },
+    }
   );
 
   testHook(
@@ -530,12 +530,12 @@ const testListConfig = () => {
       expect(result.async.filterPreset).toBeFunction();
       const filterPresetPromise = result.async.filterPreset(
         "filterPreset",
-        Promise.reject(new Error("test")),
+        Promise.reject(new Error("test"))
       );
       expect(filterPresetPromise).resolves.toBeNull();
       expect(global.console.error).toHaveBeenCalled();
       (global.console.error as Mock<VoidFn>).mockReset();
-    },
+    }
   );
 
   testHook(
@@ -550,7 +550,7 @@ const testListConfig = () => {
       result.configureSearchParams(searchParams);
       rerender();
       expect(getResult().config.searchParams).toEqual(searchParams);
-    },
+    }
   );
 
   testHook(
@@ -561,7 +561,7 @@ const testListConfig = () => {
       result.setOperator(operator);
       rerender();
       expect(getResult().config.operator).toBe(operator);
-    },
+    }
   );
 };
 
@@ -572,7 +572,7 @@ const testListConfigSearch = () => {
 
   const testHook = testHookFactory<HookParams, HookReturn, Hook>(
     "useListConfigSearch",
-    useListConfigSearch<MockItem>,
+    useListConfigSearch<MockItem>
   )();
 
   testHook(
@@ -589,7 +589,7 @@ const testListConfigSearch = () => {
       expect(result.setters).toHaveProperty("properties");
       expect(result.setters).toHaveProperty("strategy");
       expect(result.setters).toHaveProperty("initialQuery");
-    },
+    }
   );
 
   const properties = ["index" as const, "value" as const];
@@ -615,7 +615,7 @@ const testListConfigSearch = () => {
         initialQuery,
         debounceDelay,
       });
-    },
+    }
   );
 
   testHook(
@@ -625,7 +625,7 @@ const testListConfigSearch = () => {
       result.setters.properties(properties);
       rerender();
       expect(getResult().searchConfig.properties).toEqual(properties);
-    },
+    }
   );
 
   testHook(
@@ -635,7 +635,7 @@ const testListConfigSearch = () => {
       result.setters.strategy(strategy);
       rerender();
       expect(getResult().searchConfig.strategy).toEqual(strategy);
-    },
+    }
   );
 
   testHook(
@@ -645,7 +645,7 @@ const testListConfigSearch = () => {
       result.setters.initialQuery(initialQuery);
       rerender();
       expect(getResult().searchConfig.initialQuery).toEqual(initialQuery);
-    },
+    }
   );
 };
 

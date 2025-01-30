@@ -58,7 +58,7 @@ describe("FilterOption module", () => {
       it("should throw if match comparison is not provided", () => {
         expect(() =>
           // @ts-expect-error - match comparison is required
-          computeFilterOptionMatchSignature({ property: "value" }),
+          computeFilterOptionMatchSignature({ property: "value" })
         ).toThrow();
       });
       it("should throw if match value is not provided", () => {
@@ -67,7 +67,7 @@ describe("FilterOption module", () => {
           computeFilterOptionMatchSignature({
             property: "value",
             comparison: ComparisonOperators.eq,
-          }),
+          })
         ).toThrow();
       });
       it("should throw if match value is an object", () => {
@@ -77,7 +77,7 @@ describe("FilterOption module", () => {
             comparison: ComparisonOperators.eq,
             // @ts-expect-error - value must be a primitive
             value: {},
-          }),
+          })
         ).toThrow();
       });
 
@@ -85,7 +85,7 @@ describe("FilterOption module", () => {
         const signature = computeFilterOptionMatchSignature(match);
         expect(signature).toBeString();
         expect(signature).toBe(
-          match.property + "_" + match.comparison + "_" + match.value,
+          match.property + "_" + match.comparison + "_" + match.value
         );
       });
     });
@@ -104,19 +104,19 @@ describe("FilterOption module", () => {
       it("should throw if operator is not provided", () => {
         expect(() =>
           // @ts-expect-error - operator is required
-          computeFilterOptionSignature({ label, matches: [match] }),
+          computeFilterOptionSignature({ label, matches: [match] })
         ).toThrow();
       });
       it("should throw if matches is not provided", () => {
         expect(() =>
           // @ts-expect-error - matches is required
-          computeFilterOptionSignature({ label, operator }),
+          computeFilterOptionSignature({ label, operator })
         ).toThrow();
       });
       it("should throw if matches is not an array", () => {
         expect(() =>
           // @ts-expect-error - matches is required
-          computeFilterOptionSignature({ label, matches: match }),
+          computeFilterOptionSignature({ label, matches: match })
         ).toThrow();
       });
       it("should compute a signature with an empty match array", () => {
@@ -136,7 +136,7 @@ describe("FilterOption module", () => {
         });
         expect(signature).toBeString();
         expect(signature).toBe(
-          `${label}-${match.property}_${match.comparison}_${match.value}`,
+          `${label}-${match.property}_${match.comparison}_${match.value}`
         );
       });
       it("should compute a signature with multiple matches", () => {
@@ -147,7 +147,7 @@ describe("FilterOption module", () => {
         });
         expect(signature).toBeString();
         expect(signature).toBe(
-          `${label}-${match.property}_${match.comparison}_${match.value}${operator}${match.property}_${match.comparison}_${match.value}`,
+          `${label}-${match.property}_${match.comparison}_${match.value}${operator}${match.property}_${match.comparison}_${match.value}`
         );
       });
     });
@@ -162,22 +162,22 @@ describe("FilterOption module", () => {
       });
       it("should return the inverse comparison operator", () => {
         expect(invertMatchComparison(ComparisonOperators.eq)).toBe(
-          ComparisonOperators.neq,
+          ComparisonOperators.neq
         );
         expect(invertMatchComparison(ComparisonOperators.neq)).toBe(
-          ComparisonOperators.eq,
+          ComparisonOperators.eq
         );
         expect(invertMatchComparison(ComparisonOperators.gt)).toBe(
-          ComparisonOperators.lt,
+          ComparisonOperators.lt
         );
         expect(invertMatchComparison(ComparisonOperators.lt)).toBe(
-          ComparisonOperators.gt,
+          ComparisonOperators.gt
         );
         expect(invertMatchComparison(ComparisonOperators.gte)).toBe(
-          ComparisonOperators.lte,
+          ComparisonOperators.lte
         );
         expect(invertMatchComparison(ComparisonOperators.lte)).toBe(
-          ComparisonOperators.gte,
+          ComparisonOperators.gte
         );
       });
     });
@@ -210,10 +210,10 @@ describe("FilterOption module", () => {
       });
       it("should not throw if the input is valid", () => {
         expect(() =>
-          extractFilterOptionSignature("test signature"),
+          extractFilterOptionSignature("test signature")
         ).not.toThrow();
         expect(() =>
-          extractFilterOptionSignature(filterOptionData(label, [match])),
+          extractFilterOptionSignature(filterOptionData(label, [match]))
         ).not.toThrow();
       });
       it("should throw if the input is not a filterOptionData object or a signature", () => {
@@ -255,7 +255,7 @@ describe("FilterOption module", () => {
       });
       it("should return the match if provided with a property, comparison operator and value", () => {
         expect(
-          filterOptionMatch(match.property, match.comparison, match.value),
+          filterOptionMatch(match.property, match.comparison, match.value)
         ).toEqual(match);
       });
     });
@@ -325,7 +325,7 @@ describe("FilterOption module", () => {
     type Hook = typeof useClearFilterOption;
     const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
       "useClearFilterOption",
-      useClearFilterOption,
+      useClearFilterOption
     );
 
     const mockSelectAll = mock(() => {});
@@ -368,7 +368,7 @@ describe("FilterOption module", () => {
         expect(mockSelectAll).not.toHaveBeenCalled();
         result.select();
         expect(mockSelectAll).toHaveBeenCalled();
-      },
+      }
     );
   });
 });

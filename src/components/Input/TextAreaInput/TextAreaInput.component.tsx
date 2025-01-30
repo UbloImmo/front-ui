@@ -37,7 +37,7 @@ const defaultTextAreaInputProps: TextAreaInputDefaultProps = {
  * @returns {JSX.Element}
  */
 const TextAreaInput = (
-  props: TextAreaInputProps & TestIdProps,
+  props: TextAreaInputProps & TestIdProps
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultTextAreaInputProps, props);
   const testId = useTestId("input-textarea", props);
@@ -49,7 +49,7 @@ const TextAreaInput = (
     (nativeValue) =>
       isString(nativeValue) && nativeValue.length > 0 ? nativeValue : null,
     mergedProps.onChange,
-    mergedProps.onChangeNative,
+    mergedProps.onChangeNative
   ) as ChangeEventHandler<Pick<HTMLTextAreaElement, "value">>;
 
   const { forwardRef } = useInputRef<HTMLTextAreaElement>(mergedProps);

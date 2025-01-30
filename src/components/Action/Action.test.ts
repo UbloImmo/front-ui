@@ -9,8 +9,9 @@ import type { VoidFn } from "@ubloimmo/front-util";
 import type { Mock } from "bun:test";
 
 const testId = "action";
-const labelTestId = "text action-label";
-const badgeTestId = "badge action-badge";
+const labelTestId = "action-label";
+const badgeTestId = "action-badge";
+const descriptionTestId = "action-description";
 
 const testAction = testComponentFactory("Action", Action);
 
@@ -35,7 +36,7 @@ testAction({
 testAction({
   ...Action.defaultProps,
   size: "large",
-})("should render a large action", async ({ findByTestId }) => {
+})("should render the large size", async ({ findByTestId }) => {
   expect(await findByTestId(testId)).not.toBeNull();
 });
 
@@ -45,7 +46,7 @@ testDefaultAction(
     expect(queryByTestId(testId)).not.toBeNull();
     await click(queryByTestId(testId) as HTMLButtonElement);
     expect(onClick).toHaveBeenCalled();
-  },
+  }
 );
 
 testAction({
@@ -64,7 +65,7 @@ testAction({
   size: "large",
 })("should render a description with a large size", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
-  expect(queryByTestId(`text ${testId}-description`)).not.toBeNull();
+  expect(queryByTestId(descriptionTestId)).not.toBeNull();
 });
 
 testAction({
@@ -74,8 +75,8 @@ testAction({
   "should not render a description with a default size",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
-    expect(queryByTestId(`text ${testId}-description`)).toBeNull();
-  },
+    expect(queryByTestId(descriptionTestId)).toBeNull();
+  }
 );
 
 global.console.warn = mock(() => {});
@@ -110,10 +111,10 @@ testAction({
   "should warn if description is set with default size",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
-    expect(queryByTestId(`text ${testId}-description`)).toBeNull();
+    expect(queryByTestId(descriptionTestId)).toBeNull();
     expect(global.console.warn).toHaveBeenCalled();
     (global.console.warn as Mock<VoidFn>).mockReset();
-  },
+  }
 );
 
 testAction({

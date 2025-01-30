@@ -14,12 +14,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 const componentSource = componentSourceFactory<CurrencyInputProps>(
   "CurrencyInput",
   {},
-  CurrencyInput.defaultProps,
+  CurrencyInput.defaultProps
 );
 
 const decorators: Meta<typeof CurrencyInput>["decorators"] = (
   Story,
-  context,
+  context
 ) => {
   const [value, setValue] = useState(context.args.value ?? null);
 
@@ -31,7 +31,7 @@ const decorators: Meta<typeof CurrencyInput>["decorators"] = (
       if (context.args.onChange) context.args.onChange(v);
       setValue(v);
     },
-    [setValue, context],
+    [setValue, context]
   );
   return (
     <CurrencyInput

@@ -9,7 +9,7 @@ import type { FilterOptionDividerData } from "./FilterOptionDivider.types";
  * @returns {FilterOptionDividerData} The filter option divider data object
  */
 export const filterOptionDividerData = (
-  label: string,
+  label: string
 ): FilterOptionDividerData => {
   if (!isString(label)) {
     console.error("Missing label for filter option divider");

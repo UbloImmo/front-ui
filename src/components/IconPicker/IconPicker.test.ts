@@ -24,7 +24,7 @@ testIconPicker(IconPicker.defaultProps)(
   "should render with default props",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
-  },
+  }
 );
 
 testIconPicker({
@@ -36,7 +36,7 @@ testIconPicker({
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryAllByTestId(`${testId}-item`)).not.toBeNull();
     expect(queryAllByTestId(`${testId}-item`)).toHaveLength(3);
-  },
+  }
 );
 
 testIconPicker({
@@ -47,7 +47,7 @@ testIconPicker({
   ({ queryByTestId, queryAllByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryAllByTestId(`${testId}-item`)).not.toBeNull();
-  },
+  }
 );
 
 const onChange = mock((_value: Nullable<IconName>) => {});
@@ -68,7 +68,7 @@ testIconPicker({
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith("EmojiSmile");
     onChange.mockReset();
-  },
+  }
 );
 
 testIconPicker({
@@ -86,5 +86,5 @@ testIconPicker({
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith(null);
     onChange.mockReset();
-  },
+  }
 );

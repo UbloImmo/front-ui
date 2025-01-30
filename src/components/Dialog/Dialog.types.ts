@@ -20,7 +20,7 @@ export type InternalDialogStateMap = Map<DialogReference, boolean>;
  */
 type OpenGlobalDialogFn = (
   reference: DialogReference,
-  forceOpen?: boolean,
+  forceOpen?: boolean
 ) => void;
 
 /**

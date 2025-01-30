@@ -20,7 +20,7 @@ const componentSource = componentSourceFactory<ModalProps>(
     reference: ref,
     title: "Modal title",
   },
-  Modal.defaultProps,
+  Modal.defaultProps
 );
 
 const meta = {
@@ -56,7 +56,7 @@ const TestModal =
   (
     reference: DialogReference,
     fixedChildren?: ReactNode,
-    buttonLabel = "Open modal",
+    buttonLabel = "Open modal"
   ) =>
   (props: ModalProps) => {
     const { children: _, ...mergedProps } = mergeDefaultProps(props, {

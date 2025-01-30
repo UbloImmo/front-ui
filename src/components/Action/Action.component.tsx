@@ -1,25 +1,15 @@
-import { VoidFn, isFunction, type Nullable } from "@ubloimmo/front-util";
-import { MouseEventHandler, useCallback, useMemo, useState } from "react";
+import { type VoidFn, isFunction, type Nullable } from "@ubloimmo/front-util";
+import { type MouseEventHandler, useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 
+import { actionContainerStyles } from "./Action.styles";
 import {
-  actionContainerStyles,
-  actionLabelContainerStyles,
-  actionTextWrappingStyles,
-} from "./Action.styles";
-import { Badge, type BadgeProps } from "../Badge";
-import { StaticIcon } from "../StaticIcon";
-import { Text } from "../Text";
-import { Tooltip, TooltipProps } from "../Tooltip";
+  ActionCard,
+  ActionCentered,
+  ActionDefault,
+  ActionLarge,
+} from "./components";
 
-import { FlexLayout, FlexRowLayout, type FlexLayoutProps } from "@layouts";
-import {
-  TextProps,
-  type ColorKeyOrWhite,
-  type PaletteColor,
-  type StyleProps,
-  type TestIdProps,
-} from "@types";
 import {
   isEmptyString,
   useClassName,
@@ -29,25 +19,21 @@ import {
   useTestId,
 } from "@utils";
 
+import type { BadgeProps } from "../Badge";
+import type { TooltipProps } from "../Tooltip";
 import type {
   ActionProps,
-  ActionSize,
+  ActionStyledProps,
   DefaultActionProps,
+  SizedActionMap,
 } from "./Action.types";
-import type {
-  StaticIconProps,
-  StaticIconSize,
-} from "../StaticIcon/StaticIcon.types";
-
-const staticIconSizeMap: Record<ActionSize, StaticIconSize> = {
-  default: "s",
-  large: "m",
-};
+import type { TestIdProps } from "@types";
 
 const defaultActionProps: DefaultActionProps = {
   label: "[Action]",
   icon: "Cursor",
   size: "default",
+  color: "primary",
   disabled: false,
   badgeLabel: null,
   onClick: null,
@@ -59,9 +45,26 @@ const defaultActionProps: DefaultActionProps = {
 };
 
 /**
+ * Maps Action size variants to their corresponding render components.
+ * Each component handles the specific layout and styling for that size variant.
+ *
+ * @type {SizedActionMap}
+ * @property {React.FC<SizedActionProps>} default - Component for default size variant
+ * @property {React.FC<SizedActionProps>} centered - Component for centered size variant
+ * @property {React.FC<SizedActionProps>} large - Component for large size variant
+ * @property {React.FC<SizedActionProps>} card - Component for card size variant
+ */
+const sizedActionMap: SizedActionMap = {
+  default: ActionDefault,
+  centered: ActionCentered,
+  large: ActionLarge,
+  card: ActionCard,
+};
+
+/**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -70,8 +73,8 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("Action");
 
   const mergedProps = useMergedProps(defaultActionProps, props);
-  const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("action", props);
+  const styleProps = useStyleProps({ ...mergedProps, testId });
   const className = useClassName(props);
 
   if (!props.icon) {
@@ -84,7 +87,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
 
   if (props.description && props.size === "default") {
     warn(
-      `Description is not available for default size. Set size to "large" to display it.`,
+      `Description is not available for default size. Set size to "large" or "card" to display it.`
     );
   }
 
@@ -97,58 +100,21 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       if (isFunction<VoidFn>(mergedProps.onClick) && !mergedProps.disabled)
         mergedProps.onClick();
     },
-    [mergedProps],
+    [mergedProps]
   );
 
-  const staticIconProps = useMemo<StaticIconProps>(() => {
-    const color: ColorKeyOrWhite = mergedProps.disabled
-      ? "white"
-      : isHovering
-        ? "primary"
-        : "gray";
-    const size = staticIconSizeMap[mergedProps.size];
-    const indicator = mergedProps.indicator;
-    return { size, color, name: mergedProps.icon, indicator };
-  }, [mergedProps, isHovering]);
-
   const badgeProps = useMemo<Nullable<BadgeProps & TestIdProps>>(() => {
-    if (!mergedProps.badgeLabel || isEmptyString(mergedProps.badgeLabel))
+    if (
+      !mergedProps.badgeLabel ||
+      isEmptyString(mergedProps.badgeLabel) ||
+      mergedProps.size === "centered"
+    )
       return null;
     return {
       label: mergedProps.badgeLabel,
-      color: mergedProps.disabled ? "gray" : "primary",
+      color: mergedProps.disabled ? "gray" : mergedProps.color,
       shade: "light",
       testId: "action-badge",
-    };
-  }, [mergedProps]);
-
-  const textProps = useMemo<TextProps>(() => {
-    const color: PaletteColor = mergedProps.disabled
-      ? "gray-600"
-      : isHovering
-        ? "primary-base"
-        : "gray-800";
-    return {
-      color,
-      weight: "bold",
-      size: "m",
-    };
-  }, [mergedProps, isHovering]);
-
-  const layoutProps = useMemo<FlexLayoutProps>(() => {
-    if (mergedProps.size === "large") {
-      return {
-        direction: "column",
-        gap: "s-1",
-        align: "start",
-        justify: "center",
-      };
-    }
-    return {
-      direction: "row",
-      gap: "s-2",
-      align: "center",
-      justify: "space-between",
     };
   }, [mergedProps]);
 
@@ -164,9 +130,15 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
     };
   }, [mergedProps]);
 
-  const canDisplayDescription = useMemo(() => {
-    return mergedProps.description && mergedProps.size === "large";
-  }, [mergedProps]);
+  const SizedAction = useMemo(() => {
+    if (!(mergedProps.size in sizedActionMap)) {
+      warn(
+        `Invalid size: ${mergedProps.size} provided, defaulting to "default"`
+      );
+      return sizedActionMap.default;
+    }
+    return sizedActionMap[mergedProps.size];
+  }, [mergedProps.size, warn]);
 
   return (
     <ActionContainer
@@ -180,44 +152,14 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       className={className}
       {...styleProps}
     >
-      <StaticIcon {...staticIconProps} />
-      <FlexLayout {...layoutProps} fill>
-        <ActionLabelContainer
-          align="center"
-          justify="start"
-          fill
-          gap="s-2"
-          testId={`${testId}-label-container`}
-        >
-          <Text {...textProps} testId={`${testId}-label`}>
-            {mergedProps.label}
-          </Text>
-          {iconTooltipProps && mergedProps.size === "large" && (
-            <Tooltip {...iconTooltipProps} />
-          )}
-          {canDisplayDescription && badgeProps && (
-            <Badge {...badgeProps} testId={`${testId}-badge`} />
-          )}
-        </ActionLabelContainer>
-
-        {!canDisplayDescription && badgeProps && (
-          <Badge {...badgeProps} testId={`${testId}-badge`} />
-        )}
-
-        {canDisplayDescription && (
-          <ActionDescription
-            color="gray-600"
-            fill
-            size="s"
-            testId={`${testId}-description`}
-          >
-            {mergedProps.description}
-          </ActionDescription>
-        )}
-        {iconTooltipProps && mergedProps.size === "default" ? (
-          <Tooltip {...iconTooltipProps} />
-        ) : null}
-      </FlexLayout>
+      <SizedAction
+        {...mergedProps}
+        isHovering={isHovering}
+        testId={testId}
+        onClick={onClick}
+        badgeProps={badgeProps}
+        iconTooltipProps={iconTooltipProps}
+      />
     </ActionContainer>
   );
 };
@@ -226,14 +168,6 @@ Action.defaultProps = defaultActionProps;
 
 export { Action };
 
-const ActionContainer = styled.button<StyleProps<DefaultActionProps>>`
+const ActionContainer = styled.button<ActionStyledProps>`
   ${actionContainerStyles}
-`;
-
-const ActionLabelContainer = styled(FlexRowLayout)`
-  ${actionLabelContainerStyles}
-`;
-
-const ActionDescription = styled(Text)`
-  ${actionTextWrappingStyles}
 `;

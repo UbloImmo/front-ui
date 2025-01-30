@@ -26,7 +26,7 @@ export const defaultEntityInfoCardFooterProps: EntityInfoCardFooterDefaultProps 
  * @param {EntityInfoCardFooterProps & TestIdProps} props - the properties of the footer
  */
 export const EntityInfoCardFooter = (
-  props: EntityInfoCardFooterProps & TestIdProps,
+  props: EntityInfoCardFooterProps & TestIdProps
 ) => {
   const { testId: testIdProp, overrideTestId } = props;
   const { actions } = useMergedProps(defaultEntityInfoCardFooterProps, props);

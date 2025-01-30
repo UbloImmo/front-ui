@@ -115,7 +115,7 @@ export type UseDataArray = <TData>(
   /**
    * A callback function that is called when the data changes
    */
-  onDataChange?: VoidFn<[newData: TData[]]>,
+  onDataChange?: VoidFn<[newData: TData[]]>
 ) => UseDataArrayReturn<TData>;
 
 /**

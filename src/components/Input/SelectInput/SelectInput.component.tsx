@@ -57,7 +57,7 @@ const SelectInput = <
   TValue extends NullishPrimitives = NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 >(
-  props: SelectInputProps<TValue, TExtraData> & TestIdProps,
+  props: SelectInputProps<TValue, TExtraData> & TestIdProps
 ): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const { options, flattenedOptions, mergedProps, refetchOptions, isLoading } =
@@ -75,7 +75,7 @@ const SelectInput = <
     options,
     flattenedOptions,
     refetchOptions,
-    isOpen,
+    isOpen
   );
   const inputStyles = useInputStyles(mergedProps);
 
@@ -123,20 +123,14 @@ const SelectInput = <
         setInternalValue(option.value);
       };
     },
-    [
-      disabled,
-      isQuerying,
-      setAutoCompleteQuery,
-      closeOptions,
-      setInternalValue,
-    ],
+    [disabled, isQuerying, setAutoCompleteQuery, closeOptions, setInternalValue]
   );
 
   const onQueryChange = useInputOnChange<"text">(
     () => searchable && !disabled,
     (nativeValue) => (isString(nativeValue) ? nativeValue : null),
     setAutoCompleteQuery,
-    mergedProps.onChangeNative,
+    mergedProps.onChangeNative
   );
 
   const query = useInputValue<"text">(
@@ -149,7 +143,7 @@ const SelectInput = <
       }
       if (isString(rawQuery)) return rawQuery;
       return undefined;
-    },
+    }
   );
 
   const openOptionsOnFocus = useCallback(() => {
@@ -163,12 +157,12 @@ const SelectInput = <
 
   const OptionComponent = useMemo(
     () => mergedProps.Option ?? null,
-    [mergedProps],
+    [mergedProps]
   );
 
   const SelectedOptionComponent = useMemo(
     () => mergedProps.SelectedOption ?? null,
-    [mergedProps],
+    [mergedProps]
   );
 
   const valueTextColor = useMemo(() => {
@@ -226,7 +220,7 @@ const SelectInput = <
                 Option={OptionComponent}
                 {...optionOrGroup}
               />
-            ),
+            )
           )}
           {isEmptyResult && (
             <AssistiveTextWrapper>

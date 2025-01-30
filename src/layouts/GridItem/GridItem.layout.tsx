@@ -43,7 +43,7 @@ const defaultGridItemProps: GridItemDefaultProps = {
  * @return {JSX.Element} The rendered grid item.
  */
 const GridItem = (
-  props: GridItemProps & TestIdProps = defaultGridItemProps,
+  props: GridItemProps & TestIdProps = defaultGridItemProps
 ): JSX.Element => {
   const testId = useTestId("grid-item", props as TestIdProps);
   const position = useGridItemPosition(defaultGridItemProps, props);

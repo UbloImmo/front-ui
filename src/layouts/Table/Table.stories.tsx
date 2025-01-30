@@ -121,7 +121,7 @@ const ListStyleExample: ReactNode = (
 
 const componentSource = componentSourceFactory<TableProps>(
   "Table",
-  Table.defaultProps,
+  Table.defaultProps
 );
 
 const meta = {

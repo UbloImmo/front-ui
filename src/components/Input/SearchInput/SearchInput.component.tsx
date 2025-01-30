@@ -38,11 +38,11 @@ const SearchInput = <
   TValue extends NullishPrimitives = NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 >(
-  props: SearchInputProps<TValue, TExtraData> & TestIdProps,
+  props: SearchInputProps<TValue, TExtraData> & TestIdProps
 ): JSX.Element => {
   const { results, ...mergedProps } = useMergedProps(
     defaultSearchInputProps as SearchInputDefaultProps<TValue, TExtraData>,
-    props,
+    props
   );
   const testId = useTestId("input-search", props);
 
@@ -51,7 +51,7 @@ const SearchInput = <
       if (!results) return [];
       return await results(query);
     },
-    [results],
+    [results]
   );
 
   return (

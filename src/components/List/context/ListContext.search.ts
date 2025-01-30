@@ -19,7 +19,7 @@ const SEARCH_OPTION_LABEL = "**INTERNAL**LIST_SEARCH_OPTION**INTERNAL**";
 const generateQueryFilterParam = <TItem extends object>(
   properties: FilterProperty<TItem>[],
   query: string,
-  strategy?: FilterSearchOperator,
+  strategy?: FilterSearchOperator
 ): DataProviderFilterParam<TItem> => {
   // santitize strategy
   const operator: FilterSearchOperator = strategy ?? "contains";
@@ -28,9 +28,9 @@ const generateQueryFilterParam = <TItem extends object>(
     ...filterOptionData<TItem>(
       SEARCH_OPTION_LABEL,
       properties.map((property) =>
-        filterOptionMatch(property, operator, query),
+        filterOptionMatch(property, operator, query)
       ),
-      { hidden: true, disabled: true, operator: BooleanOperators.OR },
+      { hidden: true, disabled: true, operator: BooleanOperators.OR }
     ),
     selected: true,
   };
@@ -48,7 +48,7 @@ export const useListContextSearch: UseListSearch = <TItem extends object>({
   debounceDelay,
 }: ListSearchConfig<TItem>) => {
   const [query, setQuery] = useState<string>(
-    isString(initialQuery) ? initialQuery : "",
+    isString(initialQuery) ? initialQuery : ""
   );
 
   const delay = useMemo(() => debounceDelay ?? 500, [debounceDelay]);
@@ -61,7 +61,7 @@ export const useListContextSearch: UseListSearch = <TItem extends object>({
   const [debouncedQuery, setDebouncedQuery] = useDebounceValue(
     query,
     delay,
-    debounceOptions,
+    debounceOptions
   );
 
   const queryFilters = useMemo<DataProviderFilterParam<TItem>[]>(() => {
@@ -80,7 +80,7 @@ export const useListContextSearch: UseListSearch = <TItem extends object>({
       setQuery(updatedQuery);
       setDebouncedQuery(updatedQuery);
     },
-    [query, setDebouncedQuery],
+    [query, setDebouncedQuery]
   );
 
   return {

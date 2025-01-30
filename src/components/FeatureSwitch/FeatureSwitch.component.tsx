@@ -55,7 +55,7 @@ const defaultFeatureSwitchProps: FeatureSwitchDefaultProps = {
  * @returns {JSX.Element}
  */
 const FeatureSwitch = <TValue extends NullishPrimitives>(
-  props: FeatureSwitchProps<TValue> & TestIdProps,
+  props: FeatureSwitchProps<TValue> & TestIdProps
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultFeatureSwitchProps, props);
   const { icon, label, description, tooltip, compact, disabled, variant } =
@@ -103,13 +103,13 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
 
   if (!props.label) {
     warn(
-      `Missing required label, defaulting to ${defaultFeatureSwitchProps.label}`,
+      `Missing required label, defaulting to ${defaultFeatureSwitchProps.label}`
     );
   }
 
   if (!props.variant) {
     warn(
-      `Missing required variant, defaulting to ${defaultFeatureSwitchProps.variant}`,
+      `Missing required variant, defaulting to ${defaultFeatureSwitchProps.variant}`
     );
   }
 

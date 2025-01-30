@@ -54,7 +54,7 @@ const SelectInputOption = <
 
       if (isFunction<VoidFn>(onSelect)) onSelect();
     },
-    [onSelect],
+    [onSelect]
   );
 
   const textProps = useMemo<TextProps>(
@@ -63,7 +63,7 @@ const SelectInputOption = <
       weight: option.active ? "bold" : "medium",
       size: "m",
     }),
-    [contentColor, option],
+    [contentColor, option]
   );
 
   const testId = useTestId("input-select-option", option);
@@ -133,7 +133,7 @@ const CustomSelectOptionContainer = styled.div<SelectOptionItemStyleProps>`
 `;
 
 const SelectOptionValueContainer = styled(
-  FlexRowLayout,
+  FlexRowLayout
 )<SelectOptionItemStyleProps>`
   ${selectOptionLabelContainerStyles}
 `;

@@ -44,7 +44,7 @@ export const defaultEntityInfoCardSectionProps: EntityInfoCardSectionDefaultProp
  * @param {EntityInfoCardSectionProps & EntityInfoCardCallbackProps & TestIdProps} props - the properties of the section
  */
 export const EntityInfoCardSection = (
-  props: EntityInfoCardSectionProps & EntityInfoCardCallbackProps & TestIdProps,
+  props: EntityInfoCardSectionProps & EntityInfoCardCallbackProps & TestIdProps
 ) => {
   const mergedProps = useMergedProps(defaultEntityInfoCardSectionProps, props);
   const {

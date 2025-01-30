@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.8` Action component
+  - Add `color` property to allow for custom colors
+  - Update `size` property to add `card` & `centered` variants
+  - Rewrite component and its styles to remove excessive conditional checks
+  - Update docs
+
 ## 1.4.1 - 2025-01-30
 ### Changed
 - `v0.0.11` EntityInfoCard component
@@ -15,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - `v0.0.5` StateIndicator component
   - Hide vertical overflow (scrollbar) when text size grows to mobile size
+
 
 ## 1.4.0 - 2025-01-29
 

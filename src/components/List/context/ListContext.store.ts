@@ -49,7 +49,7 @@ export const useListContextStore = <
 
   const configLoading = useMemo(
     () => filters.filtersLoading || filterPresets.filterPresetsLoading,
-    [filterPresets.filterPresetsLoading, filters.filtersLoading],
+    [filterPresets.filterPresetsLoading, filters.filtersLoading]
   );
 
   useListContextSearchParams(config, options, configLoading);

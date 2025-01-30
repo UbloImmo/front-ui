@@ -11,21 +11,21 @@ testAvatar({ firstName: "Testing", lastName: "User" })(
   "should render with properties firstName and lastName",
   ({ queryByTestId }) => {
     expect(queryByTestId("avatar")).not.toBeNull();
-  },
+  }
 );
 
 testAvatar({ name: "Testing User" })(
   "should render with property name",
   ({ queryByTestId }) => {
     expect(queryByTestId("avatar")).not.toBeNull();
-  },
+  }
 );
 
 testAvatar({ count: 2 })(
   "should render with count name",
   ({ queryByTestId }) => {
     expect(queryByTestId("avatar")).not.toBeNull();
-  },
+  }
 );
 
 testAvatar({ firstName: "Testing", lastName: "User" })(
@@ -33,7 +33,7 @@ testAvatar({ firstName: "Testing", lastName: "User" })(
   ({ queryByTestId }) => {
     expect(queryByTestId("avatar")).not.toBeNull();
     expect(queryByTestId("avatar-text")?.textContent).toBe("TU");
-  },
+  }
 );
 
 testAvatar({
@@ -50,7 +50,7 @@ testAvatar({ name: "Testing User" })(
   ({ queryByTestId }) => {
     expect(queryByTestId("avatar")).not.toBeNull();
     expect(queryByTestId("avatar-text")?.textContent).toBe("TU");
-  },
+  }
 );
 
 testAvatar({ name: "Testing" })(
@@ -58,7 +58,7 @@ testAvatar({ name: "Testing" })(
   ({ queryByTestId }) => {
     expect(queryByTestId("avatar")).not.toBeNull();
     expect(queryByTestId("avatar-text")?.textContent).toBe("T");
-  },
+  }
 );
 
 testAvatar({ size: "xl", name: "Testing" })(
@@ -67,7 +67,7 @@ testAvatar({ size: "xl", name: "Testing" })(
     expect(queryByTestId("avatar")).not.toBeNull();
     expect(queryByTestId("avatar-text")).not.toBeNull();
     expect(queryByTestId("avatar-text")?.textContent).toBe("T");
-  },
+  }
 );
 
 global.console.warn = mock(() => {});
@@ -79,5 +79,5 @@ testAvatar({ count: 0 })(
     expect(queryByTestId("avatar-text")).toBeNull();
     expect(global.console.warn).toHaveBeenCalled();
     (global.console.warn as Mock<VoidFn>).mockReset();
-  },
+  }
 );

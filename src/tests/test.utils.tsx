@@ -34,7 +34,7 @@ export const testHookFactory = <
       test: VoidFn<[THookReturn]>;
       options?: TestHookOptions;
     }[];
-  },
+  }
 ) => {
   describe(hookName, () => {
     it("should be a function", () => {
@@ -47,7 +47,7 @@ export const testHookFactory = <
         it(name, () => {
           test(result.current);
           cleanup();
-        }),
+        })
       );
     }
   });
@@ -62,14 +62,14 @@ export const testHookFactory = <
           utils: TestHookUtils<THookReturn, THookParams>,
         ]
       >,
-      options?: TestHookOptions,
+      options?: TestHookOptions
     ) => {
       describe(hookName, () => {
         const paramsStr =
           params && params.length > 0
             ? params
                 .map((param) =>
-                  isFunction(param) ? "() => {}" : JSON.stringify(param),
+                  isFunction(param) ? "() => {}" : JSON.stringify(param)
                 )
                 .join(", ")
             : "no params";
@@ -78,7 +78,7 @@ export const testHookFactory = <
         testFn(testlabel, async () => {
           const { result, unmount, rerender } = renderHook(
             (initialProps?: THookParams | []) =>
-              hook(...(initialProps ?? params ?? [])),
+              hook(...(initialProps ?? params ?? []))
           );
           const utils: TestHookUtils<THookReturn, THookParams> = {
             rerender: (...newParams: THookParams | []) => {
@@ -114,7 +114,7 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
     props: TProps;
     tests: { name: string; test: VoidFn<[RenderResult]> }[];
   },
-  Wrapper?: ({ children }: { children?: ReactNode }) => JSX.Element,
+  Wrapper?: ({ children }: { children?: ReactNode }) => JSX.Element
 ) => {
   describe(componentName, () => {
     it.if(!isObject(Component))("should be a function", () => {
@@ -137,7 +137,7 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
           ? render(
               <Wrapper>
                 <Component {...staticTests.props} />
-              </Wrapper>,
+              </Wrapper>
             )
           : render(<Component {...staticTests.props} />);
       const renderResult = renderFn();
@@ -145,23 +145,23 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
         it(name, () => {
           test(renderResult);
           cleanup();
-        }),
+        })
       );
     }
   });
 
   return (
-      testProps: TProps,
+      testProps: TProps
     ): VoidFn<[string, MaybeAsyncFn<[RenderResult, UserEvent, TProps]>]> =>
     (
       testName: string,
-      tests: MaybeAsyncFn<[RenderResult, UserEvent, TProps]>,
+      tests: MaybeAsyncFn<[RenderResult, UserEvent, TProps]>
     ) => {
       describe(componentName, () => {
         const paramsStr = JSON.stringify(
           transformObject(testProps, (value) =>
-            isFunction(value) ? "() => {}" : value,
-          ),
+            isFunction(value) ? "() => {}" : value
+          )
         );
         const testlabel = `${testName} with params ${paramsStr}"`;
         it(testlabel, async () => {
@@ -172,7 +172,7 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
               ? render(
                   <Wrapper>
                     <Component {...testProps} />
-                  </Wrapper>,
+                  </Wrapper>
                 )
               : render(<Component {...testProps} />);
           const renderResult = renderFn();

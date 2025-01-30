@@ -67,7 +67,7 @@ export interface ListConfigMatchFn<TItem extends object> {
   (
     property: FilterProperty<TItem>,
     comparison: FilterComparisonOperator,
-    value: FilterOptionValue,
+    value: FilterOptionValue
   ): FilterOptionMatch<TItem>;
 }
 

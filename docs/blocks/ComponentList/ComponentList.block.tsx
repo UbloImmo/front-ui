@@ -21,12 +21,12 @@ import type { Nullable } from "@ubloimmo/front-util";
  */
 
 export const ComponentList = <TIndex extends AnyIndex>(
-  props: ComponentListProps<TIndex>,
+  props: ComponentListProps<TIndex>
 ): Nullable<JSX.Element> => {
   const index = useStatic(extractComponentsFromIndex(props.index));
 
   const componentEntries = useStatic(
-    componentIndexToEntries(index, props.exclude, props.include),
+    componentIndexToEntries(index, props.exclude, props.include)
   );
 
   if (!componentEntries) return null;

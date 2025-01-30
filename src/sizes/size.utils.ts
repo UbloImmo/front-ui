@@ -25,11 +25,11 @@ import type { CssRem, FixedCssLength, SpacingLabel } from "@types";
  */
 export const parseFixedLength = (
   length: FixedCssLength,
-  warn?: VoidFn<[unknown]>,
+  warn?: VoidFn<[unknown]>
 ): CssRem => {
   if (isSpacingLabel(length)) {
     const propValue = getComputedStyle(
-      document.documentElement,
+      document.documentElement
     ).getPropertyValue(cssVarName(length));
     // use rem is available
     if (isCssRem(propValue)) return propValue;
@@ -46,7 +46,7 @@ export const parseFixedLength = (
     if (isFloat(sizeMultiplier)) {
       if (warn)
         warn(
-          `unsupported length (${length}) provided, removing decimal from float spacing label`,
+          `unsupported length (${length}) provided, removing decimal from float spacing label`
         );
       sizeMultiplier = Math.floor(sizeMultiplier);
     }
@@ -70,7 +70,7 @@ export const parseFixedLength = (
  */
 export const parseFixedLengthToPx = (
   length: FixedCssLength,
-  warn?: VoidFn<[unknown]>,
+  warn?: VoidFn<[unknown]>
 ): number => {
   return remToPx(extractRem(parseFixedLength(length, warn)));
 };

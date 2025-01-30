@@ -24,7 +24,7 @@ import type { TooltipProps } from "@/components/Tooltip";
  * @returns {JSX.Element} The {@link FieldDisplayContainer} containing the field's display value
  */
 export const FormFieldDisplay = <TType extends InputType>(
-  props: BuiltFieldProps<TType>,
+  props: BuiltFieldProps<TType>
 ): JSX.Element => {
   const { label, type, error, errorText } = props;
   const displayContent = useMemo(() => {

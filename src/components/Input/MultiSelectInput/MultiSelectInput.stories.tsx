@@ -188,7 +188,7 @@ const options: SelectOptionOrGroup<string, BadgeProps>[] = [
 ];
 
 export const CustomComponents = (
-  props: MultiSelectInputProps<string, BadgeProps>,
+  props: MultiSelectInputProps<string, BadgeProps>
 ) => {
   return (
     <MultiSelectInput {...props} options={options} Option={CustomOption} />

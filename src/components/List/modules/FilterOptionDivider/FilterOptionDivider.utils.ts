@@ -9,7 +9,7 @@ import type { FilterOptionDividerData } from "./FilterOptionDivider.types";
  * @returns {boolean} True if the item is a FilterOptionDividerData object, false otherwise
  */
 export const isFilterOptionDividerData = (
-  item: unknown,
+  item: unknown
 ): item is FilterOptionDividerData => {
   return (
     isObject(item) &&

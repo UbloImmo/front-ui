@@ -55,7 +55,7 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
 
   const initialValue = useMemo(
     () => defaultToFrenchPhone(mergedProps.value ?? ""),
-    [mergedProps.value],
+    [mergedProps.value]
   );
 
   const prevPhone = useRef<string>(initialValue);
@@ -64,7 +64,7 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
     ({ phone }: { phone: string }) => {
       if (mergedProps.onChange) mergedProps.onChange(phone);
     },
-    [mergedProps],
+    [mergedProps]
   );
 
   const { inputValue, setCountry, handlePhoneValueChange, country } =
@@ -87,7 +87,7 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
       }
       prevPhone.current = event.target.value;
     },
-    [handlePhoneValueChange, mergedProps],
+    [handlePhoneValueChange, mergedProps]
   );
 
   const changeCountryOnSelect = useCallback(
@@ -97,7 +97,7 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
         inputRef.current.focus();
       }
     },
-    [inputRef, setCountry],
+    [inputRef, setCountry]
   );
 
   const onBlur = useHtmlAttribute(mergedProps.onBlur);

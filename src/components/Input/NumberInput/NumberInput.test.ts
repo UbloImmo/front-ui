@@ -23,7 +23,7 @@ describe("Input", async () => {
           },
         },
       ],
-    },
+    }
   );
 
   const onChange = mock((_value: Nullable<number>) => {});
@@ -45,7 +45,7 @@ describe("Input", async () => {
       await click(input);
       await keyboard("15");
       expect(onChange).toHaveBeenCalled();
-    },
+    }
   );
 
   testNumberInput({
@@ -54,7 +54,7 @@ describe("Input", async () => {
   })("should increment", async ({ findByTestId }, { click }) => {
     const input = (await findByTestId(testId)) as HTMLInputElement;
     const button = (await findByTestId(
-      "input-control-increment",
+      "input-control-increment"
     )) as HTMLDivElement;
     await click(button);
     expect(input.value).toBe("16");
@@ -71,7 +71,7 @@ describe("Input", async () => {
       await click(input);
       await keyboard("[ArrowUp]");
       expect(input.value).toBe("16");
-    },
+    }
   );
 
   testNumberInput({
@@ -80,7 +80,7 @@ describe("Input", async () => {
   })("should decrement", async ({ findByTestId }, { click }) => {
     const input = (await findByTestId(testId)) as HTMLInputElement;
     const button = (await findByTestId(
-      "input-control-decrement",
+      "input-control-decrement"
     )) as HTMLDivElement;
     await click(button);
     expect(input.value).toBe("14");
@@ -97,7 +97,7 @@ describe("Input", async () => {
       await click(input);
       await keyboard("[ArrowDown]");
       expect(input.value).toBe("14");
-    },
+    }
   );
 
   testNumberInput({

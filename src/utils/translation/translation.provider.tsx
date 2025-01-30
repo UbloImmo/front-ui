@@ -20,13 +20,13 @@ import type {
  * @return {TranslationContext} The merged translation context.
  */
 const useUikitTranslationContext = (
-  replacementMap: TranslationMap = {},
+  replacementMap: TranslationMap = {}
 ): TranslationContext => {
   return useStatic(() => mergeTranslationMap(replacementMap));
 };
 
 const UikitTranslationContext = createContext<TranslationContext>(
-  mergeTranslationMap(),
+  mergeTranslationMap()
 );
 
 /**

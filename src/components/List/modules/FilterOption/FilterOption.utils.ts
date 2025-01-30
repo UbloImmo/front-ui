@@ -27,7 +27,7 @@ import type {
  * @throws {Error} If the match is not provided, or if any of the match properties are missing
  */
 export const computeFilterOptionMatchSignature = <TItem extends object>(
-  match: FilterOptionMatch<TItem>,
+  match: FilterOptionMatch<TItem>
 ): FilterSignature => {
   if (!match) throw new Error("Match is required");
   if (isNullish(match.property)) throw new Error("Match property is required");
@@ -103,7 +103,7 @@ export const invertMatchComparison = (comparison: FilterComparisonOperator) => {
  * @returns {boolean} True if the value is FilterOptionData, false if it's just a signature
  */
 export const isFilterOptionData = <TItem extends object>(
-  optionOrSignature: FilterOptionDataOrSignature<TItem>,
+  optionOrSignature: FilterOptionDataOrSignature<TItem>
 ): optionOrSignature is FilterOptionData<TItem> => {
   return (
     isObject(optionOrSignature) &&
@@ -130,7 +130,7 @@ export const isFilterOptionData = <TItem extends object>(
  * extractFilterOptionSignature("my-signature") // returns "my-signature"
  */
 export const extractFilterOptionSignature = <TItem extends object>(
-  optionOrSignature: FilterOptionDataOrSignature<TItem>,
+  optionOrSignature: FilterOptionDataOrSignature<TItem>
 ): FilterSignature => {
   if (!isFilterOptionData(optionOrSignature) && !isString(optionOrSignature))
     throw new Error("Invalid input");

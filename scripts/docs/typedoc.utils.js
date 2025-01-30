@@ -68,7 +68,7 @@ export const storybookMeta = (baseUrl) => {
 
   let pageTitle = camelCase(fileName.replace(".mdx", "")).replace(
     "README",
-    `${metaName} Overview`,
+    `${metaName} Overview`
   );
 
   if (isFunction) {
@@ -113,7 +113,7 @@ export const imports = () => {
     `import { Content, Header } from "@docs/containers";`,
     `import { HeaderInfo, Text } from "@docs/blocks";`,
     `import { FlexLayout, GridLayout } from "@/layouts";`,
-    `import { Hypertext } from "@/components";`,
+    `import { Hypertext } from "@/components";`
   );
 };
 
@@ -154,7 +154,7 @@ export function unEscapeChars(str) {
   return str
     .replace(
       /(`[^`]*?)\\*([^`]*?`)/g,
-      (_match, p1, p2) => `${p1}${p2.replace(/\*/g, "\\*")}`,
+      (_match, p1, p2) => `${p1}${p2.replace(/\*/g, "\\*")}`
     )
     .replace(/\\\\/g, "\\")
     .replace(/(?<!\\)\*/g, "")
@@ -166,7 +166,7 @@ export function unEscapeChars(str) {
     .replace(/\\{/g, "{")
     .replace(/\\}/g, "}")
     .replace(/``.*?``|(?<!\\)`/g, (match) =>
-      match.startsWith("``") ? match : "",
+      match.startsWith("``") ? match : ""
     )
     .replace(/`` /g, "")
     .replace(/ ``/g, "")

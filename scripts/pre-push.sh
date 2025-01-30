@@ -16,4 +16,3 @@ fi
 echo "$source_files_count source files to commit - Running tests..."
 
 exit 1
-sc

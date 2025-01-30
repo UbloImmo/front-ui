@@ -38,17 +38,17 @@ const testUseInputOnChange = () => {
           test: (result) => expect(result).toBeFunction(),
         },
       ],
-    },
+    }
   );
   const mockTransformer = mock((value: Optional<string | number>) =>
-    String(value),
+    String(value)
   );
 
   testHook(
     () => false,
     () => null,
     mockOnChange,
-    mockOnChangeNative,
+    mockOnChangeNative
   )("should never call onChange but call condition", (cb) => {
     cb(mockEvent);
     expect(mockTransformer).not.toHaveBeenCalled();
@@ -64,12 +64,12 @@ const testUseInputOnChange = () => {
     () => true,
     mockTransformer,
     mockOnChange,
-    mockOnChangeNative,
+    mockOnChangeNative
   )("should call onChange & transformer", (cb) => {
     cb(mockEvent);
     expect(mockTransformer).toHaveBeenCalledWith(mockEvent.target.value);
     expect(mockOnChange).toHaveBeenCalledWith(
-      mockTransformer(mockEvent.target.value),
+      mockTransformer(mockEvent.target.value)
     );
     expect(mockOnChangeNative).toHaveBeenCalledWith(mockEvent);
 
@@ -83,7 +83,7 @@ const testUseInputValue = () => {
   type Hook = typeof useInputValue;
   const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
     "useInputValue",
-    useInputValue,
+    useInputValue
   );
 
   testHook(null, { value: null })("should return an empty string", (value) => {
@@ -94,32 +94,32 @@ const testUseInputValue = () => {
     "should return an undefined when value is undefined",
     (value) => {
       expect(value).toBeUndefined();
-    },
+    }
   );
 
   testHook(null, { value: null, uncontrolled: true })(
     "should return an undefined when uncontrolled",
     (value) => {
       expect(value).toBeUndefined();
-    },
+    }
   );
 
   testHook("test", {})("should return string", (value) =>
-    expect(value).toBeString(),
+    expect(value).toBeString()
   );
 
   testHook(123, {})("should return number", (value) =>
-    expect(value).toBeNumber(),
+    expect(value).toBeNumber()
   );
 
   const mockTransformer = mock(
-    (_value: Nullable<InputValue<InputType>>) => "transformed",
+    (_value: Nullable<InputValue<InputType>>) => "transformed"
   );
 
   testHook(
     "test",
     {},
-    mockTransformer,
+    mockTransformer
   )("should return transformed value", (value) => {
     expect(value).toBe("transformed");
     expect(mockTransformer).toHaveBeenCalledWith("test");
@@ -153,7 +153,7 @@ const testUseInputStyles = () => {
           test: (result) => expect(result).toBeObject(),
         },
       ],
-    },
+    }
   );
 
   testHook(inputProps)("should transform input style props", (styles) => {
@@ -191,13 +191,13 @@ const testUseInputControlCallback = () => {
           test: (result) => expect(result).toBeFunction(),
         },
       ],
-    },
+    }
   );
 
   testHook(
     fakeNoInputRef,
     inputProps,
-    callback,
+    callback
   )("should call callback when called", (result, [_, __, cb]) => {
     result();
     cb();
@@ -207,7 +207,7 @@ const testUseInputControlCallback = () => {
   testHook(
     fakeInputRef,
     inputProps,
-    callback,
+    callback
   )("should focus input", (result, [_, __, cb]) => {
     result();
     cb();

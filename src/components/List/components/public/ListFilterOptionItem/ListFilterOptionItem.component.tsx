@@ -35,17 +35,17 @@ export const ListFilterOptionItem = <TItem extends object = object>({
 }: ListFilterOptionItemProps<TItem>): Nullable<JSX.Element> => {
   const highlightProps = useMergedProps(
     { highlighted: false },
-    { highlighted },
+    { highlighted }
   );
   const styleProps = useStyleProps(highlightProps);
   const matchAttr = useMemo(
     () =>
       option?.matches
         .map(({ value, comparison, property }) =>
-          [property, comparison, JSON.stringify(value)].join(" "),
+          [property, comparison, JSON.stringify(value)].join(" ")
         )
         .join(option.operator) ?? "",
-    [option],
+    [option]
   );
 
   const textProps = useMemo<TextProps>(() => {

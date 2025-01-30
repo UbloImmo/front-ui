@@ -42,7 +42,7 @@ const componentSource = componentSourceFactory<EntityInfoCardProps>(
     state: EntityInfoCard.defaultProps.state,
     accountBalance: EntityInfoCard.defaultProps.accountBalance,
   },
-  EntityInfoCard.defaultProps,
+  EntityInfoCard.defaultProps
 );
 
 const infoCards: CopyClipboardInfoCardProps[] = [
@@ -434,7 +434,7 @@ const infoStyleVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
         label: info.label,
         icon: info.icon,
         info: info.info,
-      }),
+      })
     ),
   },
   {
@@ -443,7 +443,7 @@ const infoStyleVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
       (info): CopyClipboardInfoCardProps => ({
         info: info.info,
         icon: info.icon,
-      }),
+      })
     ),
   },
   {
@@ -456,7 +456,7 @@ const infoStyleVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
           color: info.color,
           icon: info.icon,
         },
-      }),
+      })
     ),
   },
   {
@@ -491,8 +491,8 @@ InfoStyles.parameters = {
       ({ __propVariantLabel, ...variant }): EntityInfoCardProps => ({
         ...EntityInfoCard.defaultProps,
         ...variant,
-      }),
-    ),
+      })
+    )
   ),
 };
 
@@ -503,15 +503,15 @@ const sectionVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
       objectFromEntries(
         infoStyleVariants.flatMap(
           ({ __propVariantLabel: _, ...sectionProps }) =>
-            objectEntries(sectionProps),
-        ),
+            objectEntries(sectionProps)
+        )
       ) as unknown as EntityInfoCardSectionProps,
     ],
   },
   {
     __propVariantLabel: "Sectioned by info style",
     sections: infoStyleVariants.map(
-      ({ __propVariantLabel: _, ...sectionProps }) => sectionProps,
+      ({ __propVariantLabel: _, ...sectionProps }) => sectionProps
     ),
   },
 ];
@@ -535,8 +535,8 @@ Sections.parameters = {
       ({ __propVariantLabel, ...variant }): EntityInfoCardProps => ({
         ...EntityInfoCard.defaultProps,
         ...variant,
-      }),
-    ),
+      })
+    )
   ),
 };
 
@@ -584,8 +584,8 @@ MainContent.parameters = {
       ({ __propVariantLabel, ...variant }): EntityInfoCardProps => ({
         ...EntityInfoCard.defaultProps,
         ...variant,
-      }),
-    ),
+      })
+    )
   ),
 };
 
@@ -608,7 +608,7 @@ State.parameters = {
     states.map((state) => ({
       ...EntityInfoCard.defaultProps,
       state,
-    })),
+    }))
   ),
 };
 
@@ -638,7 +638,7 @@ ActionIcon.parameters = {
     actionIcons.map((actionIcon) => ({
       ...EntityInfoCard.defaultProps,
       actionIcon,
-    })),
+    }))
   ),
 };
 
@@ -679,7 +679,7 @@ ContextMenu.parameters = {
     contextMenus.map(({ __propVariantLabel, ...variant }) => ({
       ...EntityInfoCard.defaultProps,
       ...variant,
-    })),
+    }))
   ),
 };
 

@@ -6,7 +6,7 @@ import { cssVarName } from "@utils";
 import type { ListFilterOptionItemStyleProps } from "./ListFilterOptionItem.types";
 
 export const listFilterOptionItemStyles = (
-  props: ListFilterOptionItemStyleProps,
+  props: ListFilterOptionItemStyleProps
 ) => {
   return css`
     ${cssDimensions("100%", cssVarName("input-height"), true)}

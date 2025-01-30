@@ -50,7 +50,7 @@ export const filterData = <TItem extends object>(
   const signature = computeFilterDataSignature(
     label,
     optionSignatures,
-    operator,
+    operator
   );
   const id = config.id ?? signature;
   const testId = config.testId ?? `list-filter-${id}`;

@@ -35,13 +35,13 @@ export const mergeDefaultProps = <
 >(
   defaultProps: TDefaultProps,
   props: TProps = {} as TProps,
-  pruneExtraProps = false,
+  pruneExtraProps = false
 ): TDefaultProps => {
   const mergedProps = objectFromEntries(
     objectEntries(defaultProps).map(([key, value]) => [
       key,
       isUndefined(props[key]) ? value : props[key],
-    ]),
+    ])
   ) as TDefaultProps;
   if (pruneExtraProps) return mergedProps;
   return {
@@ -65,7 +65,7 @@ export const useMergedProps = <
 >(
   defaultProps: TDefaultProps | (() => TDefaultProps),
   props: TProps = {} as TProps,
-  pruneExtraProps = false,
+  pruneExtraProps = false
 ): TDefaultProps => {
   return useMemo<TDefaultProps>(
     () =>
@@ -74,9 +74,9 @@ export const useMergedProps = <
           ? defaultProps()
           : defaultProps,
         props,
-        pruneExtraProps,
+        pruneExtraProps
       ),
-    [defaultProps, props, pruneExtraProps],
+    [defaultProps, props, pruneExtraProps]
   );
 };
 
@@ -99,12 +99,12 @@ export const useMergedProps = <
  * @return {StyleProps<TProps>} The generated style props.
  */
 export const toStyleProps = <TProps extends Record<string, unknown>>(
-  props: TProps,
+  props: TProps
 ): StyleProps<TProps> => {
   return transformObject(
     props,
     (value) => value,
-    (key): StylePropName<typeof key> => `$${key}`,
+    (key): StylePropName<typeof key> => `$${key}`
   ) as unknown as StyleProps<TProps>;
 };
 
@@ -127,12 +127,12 @@ export const toStyleProps = <TProps extends Record<string, unknown>>(
  * @return {TProps} The transformed object with updated keys.
  */
 export const fromStyleProps = <TProps extends Record<string, unknown>>(
-  props: StyleProps<TProps>,
+  props: StyleProps<TProps>
 ): TProps => {
   return transformObject(
     props,
     (value) => value,
-    (key): keyof TProps & string => (key[0] === "$" ? key.slice(1) : key),
+    (key): keyof TProps & string => (key[0] === "$" ? key.slice(1) : key)
   ) as unknown as TProps;
 };
 
@@ -145,7 +145,7 @@ export const fromStyleProps = <TProps extends Record<string, unknown>>(
  * @returns {StyleProps<TProps>} - The memoized object of style props.
  */
 export const useStyleProps = <TProps extends Record<string, unknown>>(
-  props: TProps,
+  props: TProps
 ): StyleProps<TProps> => {
   return useMemo(() => toStyleProps(props), [props]);
 };
@@ -177,7 +177,7 @@ export const useStatic = <TData>(data: TData | GenericFn<[], TData>): TData => {
   return useMemo<TData>(
     () => (isFunction<GenericFn<[], TData>>(data) ? data() : data),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    []
   );
 };
 /**
@@ -188,7 +188,7 @@ export const useStatic = <TData>(data: TData | GenericFn<[], TData>): TData => {
  * @return {MutableRefObject<TData>} The memoized version of the input data.
  */
 export const useStaticRef = <TData>(
-  data: TData | GenericFn<[], TData>,
+  data: TData | GenericFn<[], TData>
 ): MutableRefObject<TData> => {
   return useRef<TData>(isFunction<GenericFn<[], TData>>(data) ? data() : data);
 };
@@ -207,7 +207,7 @@ export const useStaticRef = <TData>(
  */
 export const useTestId = <TProps extends Record<string, unknown>>(
   baseTestId: string,
-  props?: TProps & TestIdProps,
+  props?: TProps & TestIdProps
 ): string => {
   return useMemo((): string => {
     if (!props) return baseTestId;
@@ -227,7 +227,7 @@ export const useTestId = <TProps extends Record<string, unknown>>(
  * @returns {Optional<TAttributeValue>} The given attribute value, or `undefined` if it is `null`.
  */
 export const useHtmlAttribute = <TAttributeValue extends Primitives>(
-  attribute: Nullish<TAttributeValue>,
+  attribute: Nullish<TAttributeValue>
 ): Optional<NonNullable<TAttributeValue>> =>
   useMemo<Optional<TAttributeValue>>(() => {
     if (isNull(attribute)) return undefined;
@@ -243,7 +243,7 @@ export const useHtmlAttribute = <TAttributeValue extends Primitives>(
  * @return {Optional<string>} The `className` prop, or `undefined` if it is not provided.
  */
 export const useClassName = <TProps extends StyleOverrideProps>(
-  props?: TProps,
+  props?: TProps
 ): Optional<string> => {
   return useMemo((): Optional<string> => {
     if (!props || !("className" in props)) return undefined;

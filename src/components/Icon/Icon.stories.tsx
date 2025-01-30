@@ -47,7 +47,7 @@ export const Colors = (props: Partial<IconProps>) => {
       `${color}-light`,
       `${color}-dark`,
       `${color}-medium`,
-    ],
+    ]
   );
   const defaultProps = useMemo(() => {
     return {

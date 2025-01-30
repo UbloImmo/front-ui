@@ -23,7 +23,7 @@ describe("Input", () => {
           },
         },
       ],
-    },
+    }
   );
 
   testPhoneInput({
@@ -46,7 +46,7 @@ describe("Input", () => {
       await click(input);
       await keyboard("+33612345678");
       expect(onChange).toHaveBeenCalled();
-    },
+    }
   );
 
   testPhoneInput({
@@ -61,7 +61,7 @@ describe("Input", () => {
       await keyboard("[Backspace][Backspace][Backspace][Backspace]");
       await keyboard("0");
       expect(input.value).toBe("+33 ");
-    },
+    }
   );
 
   testPhoneInput({
@@ -79,7 +79,7 @@ describe("Input", () => {
 
       await click(button as HTMLButtonElement);
       const countryOption = container?.querySelector(
-        `li[role="option"][data-country="ie"]`,
+        `li[role="option"][data-country="ie"]`
       );
       expect(countryOption).not.toBeNull();
       expect(countryOption?.textContent).toBe("Ireland+353");
@@ -87,7 +87,7 @@ describe("Input", () => {
       expect(input?.value).toBe("+353 ");
 
       expect(onChange).toHaveBeenCalledWith("+353");
-    },
+    }
   );
 });
 
@@ -96,16 +96,16 @@ describe("Input", () => {
     describe("defaultToFrenchPhone", () => {
       it("should default to french phone", () => {
         expect(defaultToFrenchPhone("06 12 34 56 78")).toBe(
-          "+33 6 12 34 56 78",
+          "+33 6 12 34 56 78"
         );
       });
 
       it("should not change valid phone", () => {
         expect(defaultToFrenchPhone("+33 6 12 34 56 78")).toBe(
-          "+33 6 12 34 56 78",
+          "+33 6 12 34 56 78"
         );
         expect(defaultToFrenchPhone("+49 6 12 34 56 78")).toBe(
-          "+49 6 12 34 56 78",
+          "+49 6 12 34 56 78"
         );
       });
     });

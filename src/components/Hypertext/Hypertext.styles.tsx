@@ -9,11 +9,11 @@ export const hypertextStyle = ({
   $color,
 }: StyleProps<DefaultHypertextProps>): RuleSet => {
   const textDecorationColor = cssVarUsage(
-    $color === "gray" ? `${$color}-700-00` : `${$color}-base-00`,
+    $color === "gray" ? `${$color}-700-00` : `${$color}-base-00`
   );
 
   const hoverColor = cssVarUsage(
-    $color === "gray" ? `${$color}-900` : `${$color}-dark`,
+    $color === "gray" ? `${$color}-900` : `${$color}-dark`
   );
 
   return css`

@@ -23,7 +23,7 @@ describe("Input", () => {
           },
         },
       ],
-    },
+    }
   );
 
   const onChange = mock((_value: Nullable<string>) => {});
@@ -45,6 +45,6 @@ describe("Input", () => {
       await click(input);
       await keyboard("test");
       expect(onChange).toHaveBeenCalled();
-    },
+    }
   );
 });

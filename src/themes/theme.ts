@@ -44,7 +44,7 @@ export const defaultOrganizationData: OrganizationData = {
  */
 export const buildTheme = (
   themeOverrides: Nullable<ThemeOverride> = null,
-  forClient?: DynamicColorPaletteKey,
+  forClient?: DynamicColorPaletteKey
 ): Theme => {
   const colorPalette = buildColorPalette(forClient);
   const defaultColorPalette = buildDynamicColorPalette("primary");
@@ -78,7 +78,7 @@ export const buildTheme = (
  */
 export const applyFavicon = (
   themeSlice: DeepPick<ThemeOverride, "organization.assets.favicon">,
-  linkSelectors?: FaviconLinkSelectors,
+  linkSelectors?: FaviconLinkSelectors
 ): boolean => {
   if (!themeSlice?.organization?.assets?.favicon) return false;
   const x16Selector = linkSelectors?.x16 ?? "link#favicon-16[rel='icon']";

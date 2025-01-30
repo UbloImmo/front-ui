@@ -19,7 +19,7 @@ describe("spacings", () => {
   it("should contain all scales", () => {
     const scales = arrayOf(
       defaultSpacingMapConfig.maxScale - 1,
-      (scale): SpacingLabel => `${SPACING_PREFIX}-${scale + 1}`,
+      (scale): SpacingLabel => `${SPACING_PREFIX}-${scale + 1}`
     );
     const spacingMap = buildSpacingMap(defaultSpacingMapConfig.maxScale);
     scales.forEach((scale) => {
@@ -29,7 +29,7 @@ describe("spacings", () => {
   });
   it("should contain all scales", () => {
     expect(Object.keys(spacings).length - 1).toEqual(
-      defaultSpacingMapConfig.maxScale,
+      defaultSpacingMapConfig.maxScale
     );
   });
   it("should only contain css rem values", () => {

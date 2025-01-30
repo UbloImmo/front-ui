@@ -19,7 +19,7 @@ export const FormTableFooter = ({
 
   const footerDisabled = useMemo(
     () => !isEditing || disabled,
-    [disabled, isEditing],
+    [disabled, isEditing]
   );
   const FooterComponent = useCallback((): ReactNode => {
     const commonProps = {

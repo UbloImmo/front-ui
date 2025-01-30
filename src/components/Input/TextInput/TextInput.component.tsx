@@ -36,7 +36,7 @@ const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
     (nativeValue) =>
       isString(nativeValue) && nativeValue.length > 0 ? nativeValue : null,
     mergedProps.onChange,
-    mergedProps.onChangeNative,
+    mergedProps.onChangeNative
   );
 
   const value = useInputValue<"text">(mergedProps.value, props);
