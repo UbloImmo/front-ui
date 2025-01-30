@@ -16,6 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Decrease text size from `s` to `xs`
   - Add `assistiveTextIcon` property to render an icon next to the assistive text
 
+- `v0.0.11` EntityInfoCard component
+  - Add a way to change render order within a section
+
+### Fixed
+
+- `v0.0.5` StateIndicator component
+  - Hide vertical overflow (scrollbar) when text size grows to mobile size
+
+
 ## 1.4.0 - 2025-01-29
 
 ## 1.3.0 - 2025-01-29

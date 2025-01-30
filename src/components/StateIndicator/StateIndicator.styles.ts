@@ -59,8 +59,7 @@ export const stateIndicatorStyle = ({
     align-items: center;
     justify-content: flex-start;
     gap: var(--s-3);
-    overflow-x: hidden;
-    overflow-y: visible;
+    overflow: hidden;
 
     svg {
       min-width: var(--s-3);
