@@ -34,8 +34,8 @@ testAction({
 
 testAction({
   ...Action.defaultProps,
-  size: "large",
-})("should render a large action", async ({ findByTestId }) => {
+  variant: "chunky",
+})("should render the chunky variant", async ({ findByTestId }) => {
   expect(await findByTestId(testId)).not.toBeNull();
 });
 
@@ -45,7 +45,7 @@ testDefaultAction(
     expect(queryByTestId(testId)).not.toBeNull();
     await click(queryByTestId(testId) as HTMLButtonElement);
     expect(onClick).toHaveBeenCalled();
-  },
+  }
 );
 
 testAction({
@@ -61,8 +61,8 @@ testAction({
 testAction({
   ...Action.defaultProps,
   description: "A description",
-  size: "large",
-})("should render a description with a large size", ({ queryByTestId }) => {
+  variant: "chunky",
+})("should render a description with a chunky variant", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId(`text ${testId}-description`)).not.toBeNull();
 });
@@ -75,7 +75,7 @@ testAction({
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryByTestId(`text ${testId}-description`)).toBeNull();
-  },
+  }
 );
 
 global.console.warn = mock(() => {});
@@ -105,15 +105,15 @@ testAction({
 testAction({
   ...Action.defaultProps,
   description: "A description",
-  size: "default",
+  variant: "default",
 })(
-  "should warn if description is set with default size",
+  "should warn if description is set with default variant",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
     expect(queryByTestId(`text ${testId}-description`)).toBeNull();
     expect(global.console.warn).toHaveBeenCalled();
     (global.console.warn as Mock<VoidFn>).mockReset();
-  },
+  }
 );
 
 testAction({
