@@ -33,6 +33,9 @@ export const entityCardStatusRowListStyles = (): RuleSet => css`
   &:not(:first-child) {
     margin-top: var(--s-2);
   }
+  &:not(:last-child) {
+    margin-bottom: var(--s-2);
+  }
 `;
 
 export const entityCardActionsContainerStyles = (): RuleSet => css`
