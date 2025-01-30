@@ -125,9 +125,7 @@ const ContextInfoCard = (
         )}
         <FlexRowLayout fill>
           <Text {...titleTextProps}>{mergedProps.title}</Text>
-          {mergedProps.content && (
-            <FlexRowLayout>{mergedProps.content}</FlexRowLayout>
-          )}
+          {mergedProps.content}
         </FlexRowLayout>
         {mergedProps.description && (
           <Text {...descriptionTextProps}>{mergedProps.description}</Text>
