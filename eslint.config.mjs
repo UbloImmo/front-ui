@@ -104,6 +104,16 @@ export default [
     },
 
     rules: {
+      "comma-dangle": [
+        "error",
+        {
+          arrays: "always-multiline",
+          objects: "always-multiline",
+          imports: "only-multiline",
+          exports: "always-multiline",
+          functions: "only-multiline",
+        },
+      ],
       // generic
       "no-console": [
         "warn",
