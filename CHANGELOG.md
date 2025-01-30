@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.11` EntityInfoCard component
+  - Add a way to change render order within a section
+
 ## 1.4.0 - 2025-01-29
 
 ## 1.3.0 - 2025-01-29

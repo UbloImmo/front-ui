@@ -45,7 +45,7 @@ When all is lost and you need to display some info using custom means, pass a re
 
 <Canvas of={EntityInfoCardStories.MainContent} />
 
-#### Sections
+### Sections
 
 
 By default, `EntityInfoCard` will display its content in a single section.
@@ -54,6 +54,18 @@ If need be, you can split its content into multiple sections by providing an arr
 > These sections may contain one or more data type supported by `EntityInfoCard`.
 
 <Canvas of={EntityInfoCardStories.Sections} />
+
+#### Ordering
+
+Content within a section can be ordered by providing an array of keys to its `order` property.
+
+The default order is `["children","name","contextInfoCards","infoCards","infoBoxes","statusRows"]`.
+
+> Section content that is omitted from the `order` array will still be rendered below those included in the array.
+
+<Canvas of={EntityInfoCardStories.Order} />
+
+
 
 
 ### Header customization
