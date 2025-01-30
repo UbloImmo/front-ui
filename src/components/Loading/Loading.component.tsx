@@ -29,7 +29,7 @@ const Loading = (props: LoadingProps & TestIdProps): Nullable<JSX.Element> => {
   const { warn } = useLogger("Loading");
   const { animation, ...mergedProps } = useMergedProps(
     defaultLoadingProps,
-    props,
+    props
   );
   const testId = useTestId("loading-indicator", props);
 
@@ -37,7 +37,7 @@ const Loading = (props: LoadingProps & TestIdProps): Nullable<JSX.Element> => {
     const DefaultAnimation = LoadingAnimations[defaultAnimationName];
     if (!(animation in LoadingAnimations)) {
       warn(
-        `Unknown animation ${animation}. Defaulting to ${defaultAnimationName}`,
+        `Unknown animation ${animation}. Defaulting to ${defaultAnimationName}`
       );
       return DefaultAnimation;
     }

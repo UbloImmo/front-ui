@@ -21,7 +21,7 @@ export const lerp = (a: number, b: number, t: number): number => {
 export const clamp = (
   value: number,
   min = -Infinity,
-  max = Infinity,
+  max = Infinity
 ): number => {
   return Math.min(Math.max(value, min), max);
 };
@@ -82,7 +82,7 @@ export const isBetween = (
   num: number,
   min: number,
   max: number,
-  exclusive = false,
+  exclusive = false
 ): boolean => {
   if (exclusive) {
     return num > min && num < max;

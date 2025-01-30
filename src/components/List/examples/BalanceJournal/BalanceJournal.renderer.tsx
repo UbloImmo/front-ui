@@ -55,7 +55,7 @@ const BalanceJournalRow = ({ item }: BalanceJournalRowProps) => {
 
   const isAutomaticInvoice = useMemo(
     () => item.type === "invoice" && isString(item.autoSendDate),
-    [item.type, item.autoSendDate],
+    [item.type, item.autoSendDate]
   );
   const staticIconProps = useMemo<StaticIconProps>(() => {
     const name = transactionItemIconMap[item.type];
@@ -69,17 +69,17 @@ const BalanceJournalRow = ({ item }: BalanceJournalRowProps) => {
 
   const textColor = useMemo<PaletteColor>(
     () => (isAutomaticInvoice ? "primary-base" : "gray-800"),
-    [isAutomaticInvoice],
+    [isAutomaticInvoice]
   );
 
   const formattedAmount = useMemo(
     () => formatCurrencyIntWithSign(item.amount),
-    [item.amount],
+    [item.amount]
   );
 
   const formattedBalance = useMemo(
     () => formatCurrencyIntWithSign(item.balance),
-    [item.balance],
+    [item.balance]
   );
 
   const state = useMemo(() => {
@@ -138,7 +138,7 @@ export const BalanceJournalRenderer = () => {
       amount: getFilterByLabel(AMOUNT_FILTER_LABEL),
       state: getFilterByLabel(STATE_FILTER_LABEL),
     }),
-    [getFilterByLabel],
+    [getFilterByLabel]
   );
 
   if (loading)

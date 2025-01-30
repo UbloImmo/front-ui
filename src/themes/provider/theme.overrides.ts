@@ -26,7 +26,7 @@ export const DEFAULT_UBLO_API_URL = "https://ublo.ublo.org";
  * @return {`${string}/themes/json`} The generated path template for theme overrides.
  */
 const themeOverridesPathTemplate = (
-  basePath: string,
+  basePath: string
 ): `${string}/api/themes/json` => `${basePath}/api/themes/json` as const;
 
 /**
@@ -38,7 +38,7 @@ const themeOverridesPathTemplate = (
  */
 const fetchThemeOverrides = async (
   basePath: string,
-  fakeFetchFn?: typeof fetch,
+  fakeFetchFn?: typeof fetch
 ): Promise<Nullable<ThemeOverride>> => {
   try {
     const path = themeOverridesPathTemplate(basePath);
@@ -69,7 +69,7 @@ const fetchThemeOverrides = async (
  * @return {Promise<Nullable<ThemeOverride>>} The theme overrides
  */
 export const getThemeOverrides: GetThemeOverridesFn = async (
-  fakeFetchFn?: typeof fetch,
+  fakeFetchFn?: typeof fetch
 ): Promise<Nullable<ThemeOverride>> => {
   const origin: Nullable<string> = window.location.origin;
   const basePath =
@@ -79,7 +79,7 @@ export const getThemeOverrides: GetThemeOverridesFn = async (
 
   const overrides: Nullable<ThemeOverride> = await fetchThemeOverrides(
     basePath,
-    fakeFetchFn,
+    fakeFetchFn
   );
 
   return overrides;
@@ -93,7 +93,7 @@ export const getThemeOverrides: GetThemeOverridesFn = async (
  * @return {PaletteColorShaded<DefaultPaletteColorShadeKey[]>} the generated shaded color palette
  */
 export const themeOverridePaletteToColorPaletteShaded = (
-  palette: ThemeOverridePalette,
+  palette: ThemeOverridePalette
 ): PaletteColorShaded<DefaultPaletteColorShadeKey[]> => {
   // generate medium color if missing, keep values as hex
   const basePaletteHex = {
@@ -101,7 +101,7 @@ export const themeOverridePaletteToColorPaletteShaded = (
     medium:
       palette.medium ??
       rgbaColorConverter.strToHex(
-        blendColors(palette.base, palette.light, 0.5),
+        blendColors(palette.base, palette.light, 0.5)
       ),
   };
   // actually convert to PaletteColorShaded
@@ -112,7 +112,7 @@ export const themeOverridePaletteToColorPaletteShaded = (
         hex,
         rgba: hexColorConverter.hexToRgbaStr(hex),
         opacity: shadeOpacityFactory(hexColorConverter.hexToRgbaArr(hex)),
-      }),
+      })
     );
   return paletteColorShaded;
 };

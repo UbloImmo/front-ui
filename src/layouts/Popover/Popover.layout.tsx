@@ -63,7 +63,7 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
   const sideOffset = usePopoverOffset(mergedProps.sideOffset);
   const alignOffset = usePopoverOffset(mergedProps.alignOffset);
   const collisionPadding = usePopoverCollisionPadding(
-    mergedProps.collisionPadding,
+    mergedProps.collisionPadding
   );
 
   return (
@@ -113,7 +113,7 @@ const PopoverInnerTrigger = styled.div<PopoverTriggerStyleProps>`
 `;
 
 const PopoverContent = styled(
-  PopoverPrimitive.Content,
+  PopoverPrimitive.Content
 )<PopoverContentStyleProps>`
   ${popoverContentStyles}
 `;

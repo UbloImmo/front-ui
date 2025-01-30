@@ -19,7 +19,7 @@ const logger = Logger();
  */
 const writeFile = async (
   { path, contents }: FileDescription,
-  dryRun = false,
+  dryRun = false
 ) => {
   if (dryRun) return;
   logger.debug(`${path}`, "write file");
@@ -56,7 +56,7 @@ const iconFileName = (componentName: string) => {
  */
 const generateLocalIconIndex = (
   files: NormalizedIconFileDeclaration[],
-  rootDirPath: string,
+  rootDirPath: string
 ): FileDescription => {
   const contents = [
     ...files
@@ -84,7 +84,7 @@ const generateLocalIconIndex = (
 export const exportGeneratedSvgFiles = async (
   iconFiles: NormalizedIconFileDeclaration[],
   rootDirPath: string,
-  dryRun = false,
+  dryRun = false
 ) => {
   const files: FileDescription[] = iconFiles.map((iconFile) => {
     const path = `${rootDirPath}/${iconFileName(iconFile.componentName)}.tsx`;
@@ -165,12 +165,12 @@ export const commonIconDefaulProps: CommonIconDefaultProps = {
 export const exportSvgFiles = async (
   bootstrapIcons: NormalizedIconFileDeclaration[],
   customIcons: NormalizedIconFileDeclaration[],
-  dryRun = false,
+  dryRun = false
 ): Promise<void> => {
   await exportGeneratedSvgFiles(
     bootstrapIcons,
     BOOTSTRAP_ICONS_DIR_PATH,
-    dryRun,
+    dryRun
   );
   await exportGeneratedSvgFiles(customIcons, CUSTOM_ICONS_DIR_PATH, dryRun);
   await writeMultipleFiles(
@@ -178,6 +178,6 @@ export const exportSvgFiles = async (
       generateRootIconIndex(ROOT_DIR_PATH),
       generateCommonTypesDefs(ROOT_DIR_PATH),
     ],
-    dryRun,
+    dryRun
   );
 };

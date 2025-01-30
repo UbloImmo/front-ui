@@ -49,20 +49,20 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
   const { warn, error } = useLogger("ActionIcon");
   const mergedProps = useMergedProps<DefaultActionIconProps, ActionIconProps>(
     defaultActionIconProps,
-    props,
+    props
   );
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("action-icon", props);
 
   if (!props.icon) {
     error(
-      `Missing required icon, defaulting to ${defaultActionIconProps.icon}`,
+      `Missing required icon, defaulting to ${defaultActionIconProps.icon}`
     );
   }
 
   if (!props.title) {
     warn(
-      `Missing required title, defaulting to ${defaultActionIconProps.title}`,
+      `Missing required title, defaulting to ${defaultActionIconProps.title}`
     );
   }
 

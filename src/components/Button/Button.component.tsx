@@ -52,7 +52,7 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("Button");
   const mergedProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultButtonProps,
-    props,
+    props
   );
   const styledProps = useStyleProps(mergedProps);
   const testId = useTestId<ButtonProps>("button", props);
@@ -65,7 +65,7 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
       if (mergedProps.loading || isNull(mergedProps.onClick)) return;
       mergedProps.onClick();
     },
-    [mergedProps],
+    [mergedProps]
   );
 
   const {
@@ -105,7 +105,7 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
 
   if ((!icon && !label) || (!icon && label?.length === 0)) {
     warn(
-      "Button must have at least a label and / or an icon. Both are missing",
+      "Button must have at least a label and / or an icon. Both are missing"
     );
     label = "[Label]";
   }
@@ -122,7 +122,7 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
       "aria-label": ariaTitle,
       role: ariaRole,
     }),
-    [ariaRole, ariaTitle, className, disabled, expandable, styledProps, testId],
+    [ariaRole, ariaTitle, className, disabled, expandable, styledProps, testId]
   );
 
   const buttonContent = useMemo(() => {

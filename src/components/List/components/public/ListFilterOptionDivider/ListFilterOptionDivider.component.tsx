@@ -24,7 +24,7 @@ const defaultListFilterOptionDivider: Required<ListFilterOptionDividerProps> = {
  * @returns {JSX.Element} The rendered divider component
  */
 export const ListFilterOptionDivider = (
-  props: ListFilterOptionDividerProps,
+  props: ListFilterOptionDividerProps
 ) => {
   const { warn } = useLogger("ListFilterOptionDivider");
 
@@ -32,7 +32,7 @@ export const ListFilterOptionDivider = (
 
   if (!props.label) {
     warn(
-      `Missing label, defaulting to ${defaultListFilterOptionDivider.label}`,
+      `Missing label, defaulting to ${defaultListFilterOptionDivider.label}`
     );
   }
 

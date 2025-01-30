@@ -140,7 +140,7 @@ describe("palette", () => {
       it("should allow changing the opacity of shades", () => {
         expect(shadeOpacityFactory).toBeFunction();
         expect(() =>
-          shadeOpacityFactory(colorCollections.red.rgbaArr),
+          shadeOpacityFactory(colorCollections.red.rgbaArr)
         ).not.toThrow();
         const redOpacityFn = shadeOpacityFactory(colorCollections.red.rgbaArr);
         expect(redOpacityFn).toBeFunction();
@@ -156,16 +156,16 @@ describe("palette", () => {
       it("should parse an effect token", () => {
         expect(parseEffectToken).toBeFunction();
         expect(() =>
-          parseEffectToken(effects.shadow.card.default),
+          parseEffectToken(effects.shadow.card.default)
         ).not.toThrow();
         expect(parseEffectToken(effects.shadow.card.default)).toContainKey(
-          "originalValue",
+          "originalValue"
         );
         expect(
           parseEffectToken({
             ...effects.shadow.card.default,
             value: "blur(45px)",
-          }),
+          })
         ).not.toContainKey("originalValue");
       });
     });
@@ -189,7 +189,7 @@ describe("palette", () => {
       value: "blur(45px)",
     });
     const parsedEffectWithPrimaryDefault = parseEffectToken(
-      effects.shadow.input.default.focus,
+      effects.shadow.input.default.focus
     );
     it("should not throw", () => {
       expect(parsedEffectToCssVar).toBeDefined();
@@ -200,10 +200,10 @@ describe("palette", () => {
     it("should return a css var", () => {
       expect(parsedEffectToCssVar(parsedEffect, cssVarsSplit)).toBeString();
       expect(
-        parsedEffectToCssVar(parsedEffectWithoutColor, cssVarsSplit),
+        parsedEffectToCssVar(parsedEffectWithoutColor, cssVarsSplit)
       ).toBeString();
       expect(
-        parsedEffectToCssVar(parsedEffectWithPrimaryDefault, cssVarsSplit),
+        parsedEffectToCssVar(parsedEffectWithPrimaryDefault, cssVarsSplit)
       ).toBeString();
     });
   });

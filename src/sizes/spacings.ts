@@ -26,7 +26,7 @@ export const defaultSpacingMapConfig = {
  * @return {Spacings} the constructed spacing map
  */
 export const buildSpacingMap = (
-  maxScale = defaultSpacingMapConfig.maxScale,
+  maxScale = defaultSpacingMapConfig.maxScale
 ): Spacings => {
   // construct factors array based on min / max factors
   // add +1 to offset added 0.5 scale
@@ -39,7 +39,7 @@ export const buildSpacingMap = (
         `${SPACING_PREFIX}-${scale}`,
         cssRem(pxToRem(scaleUnitByFactor(scale))),
       ];
-    }),
+    })
   );
   return {
     "s-05": cssRem(pxToRem(scaleUnitByFactor(0.5))),

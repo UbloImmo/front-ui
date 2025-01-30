@@ -18,7 +18,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<CalloutProps>(
   "Callout",
-  Callout.defaultProps,
+  Callout.defaultProps
 );
 
 const calloutColors: CalloutColor[] = [
@@ -82,7 +82,7 @@ export const Colors = () => {
 
 Colors.parameters = {
   docs: componentSource(
-    calloutColors.map((color) => ({ ...meta.args, color })),
+    calloutColors.map((color) => ({ ...meta.args, color }))
   ),
 };
 
@@ -134,8 +134,8 @@ WithCustomIcon.parameters = {
       ({ ...variant }): CalloutProps => ({
         ...Callout.defaultProps,
         ...variant,
-      }),
-    ),
+      })
+    )
   ),
 };
 

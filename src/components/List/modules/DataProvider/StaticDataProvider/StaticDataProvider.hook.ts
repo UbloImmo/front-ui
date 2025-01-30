@@ -52,7 +52,7 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
       const filteredData = filterItems(staticDataRef.current, config);
       setData(filteredData);
     },
-    [setData],
+    [setData]
   );
 
   const fetchCount = useCallback<DataProviderFetchCountFn<TItem>>(
@@ -60,7 +60,7 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
       const filteredData = filterItems(staticDataRef.current, config);
       return filteredData.length;
     },
-    [],
+    []
   );
 
   const error = useMemo(() => {

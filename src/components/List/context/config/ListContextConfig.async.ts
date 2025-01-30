@@ -44,7 +44,7 @@ export const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
   updateFilter: VoidFn<[FilterData]>,
   registerFilterPreset: VoidFn<[FilterPresetData]>,
   updateFilterPreset: VoidFn<[FilterPresetData]>,
-  hydrateFilterConfig: HydrateFilterConfigFn,
+  hydrateFilterConfig: HydrateFilterConfigFn
 ) => {
   const logger = useLogger("ListConfigAsync");
 
@@ -69,7 +69,7 @@ export const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
         throw error;
       }
     },
-    [logger, registerOption],
+    [logger, registerOption]
   );
 
   /**
@@ -89,7 +89,7 @@ export const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
           const optionData = filterOptionData<TItem>(
             label,
             match(property, comparison, value),
-            mergeDefaultProps(sharedConfig, config),
+            mergeDefaultProps(sharedConfig, config)
           );
           registerOption(optionData);
           return optionData;
@@ -100,7 +100,7 @@ export const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
         return [];
       }
     },
-    [logger, match, registerOption],
+    [logger, match, registerOption]
   );
 
   /**
@@ -113,11 +113,11 @@ export const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
    */
   const awaitAsyncOptions = useCallback(
     async <TPayload>(
-      optionsOrSignatures: MaybePromise<MaybePromise<TPayload>[]>,
+      optionsOrSignatures: MaybePromise<MaybePromise<TPayload>[]>
     ): Promise<TPayload[]> => {
       return await Promise.all(await optionsOrSignatures);
     },
-    [],
+    []
   );
 
   /**
@@ -155,7 +155,7 @@ export const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
       logger,
       registerFilter,
       updateFilter,
-    ],
+    ]
   );
 
   /**
@@ -174,18 +174,18 @@ export const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
           label,
           [],
           config,
-          true,
+          true
         );
         registerFilterPreset(tempFilterPresetData);
         // wait for options to load
         const optionsOrSignatures = await awaitAsyncOptions(
-          optionsOrSignaturesPromise,
+          optionsOrSignaturesPromise
         );
         // create new filter preset data based on loaded options and config
         const data = filterPresetData<TItem>(
           label,
           optionsOrSignatures,
-          config,
+          config
         );
         updateFilterPreset(data);
         return data;
@@ -194,7 +194,7 @@ export const useListConfigAsync: UseListConfigAsync = <TItem extends object>(
         return null;
       }
     },
-    [awaitAsyncOptions, logger, registerFilterPreset, updateFilterPreset],
+    [awaitAsyncOptions, logger, registerFilterPreset, updateFilterPreset]
   );
 
   return {

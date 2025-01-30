@@ -99,7 +99,7 @@ const testColorConversion = <
 >(
   input: TInput,
   output: TOutput,
-  converter: (input: ColorCollection[TInput]) => ColorCollection[TOutput],
+  converter: (input: ColorCollection[TInput]) => ColorCollection[TOutput]
 ) => {
   it(`should convert ${input} to ${output}`, () => {
     expect(converter(red[input])).toEqual(red[output]);
@@ -110,7 +110,7 @@ const testColorConversion = <
 
 const testHexColorConversion = <TOutput extends keyof ColorCollection>(
   output: TOutput,
-  converter: (input: HexColor) => ColorCollection[TOutput],
+  converter: (input: HexColor) => ColorCollection[TOutput]
 ) => {
   testColorConversion("hexShort", output, converter);
   testColorConversion("hexShortAlpha", output, converter);
@@ -215,7 +215,7 @@ describe("color predicates", () => {
       ["success", "error", "warning", "pending", "gray", "primary"].forEach(
         (colorKey) => {
           expect(isColorKey(colorKey)).toBeTrue();
-        },
+        }
       );
     });
 
@@ -320,7 +320,7 @@ const testColorComparison = (
   colorA: PrimaryColor,
   colorB: PrimaryColor,
   comparator: GenericFn<[AnyColor, AnyColor], boolean>,
-  expected: boolean,
+  expected: boolean
 ) => {
   const sources = objectEntries(colorCollections[colorA]);
   const targets = objectEntries(colorCollections[colorB]);
@@ -381,7 +381,7 @@ describe("color normalization", () => {
       expect(normalizeToColorKey(123, "primary")).toEqual("primary");
       // @ts-expect-error needed to test the default case
       expect(normalizeToColorKey("primaried-main", "warning")).toEqual(
-        "warning",
+        "warning"
       );
     });
   });
@@ -390,7 +390,7 @@ describe("color normalization", () => {
       expect(normalizeToPaletteColor("gray", "light")).toEqual("gray-200");
       expect(normalizeToPaletteColor("success")).toEqual("success-base");
       expect(normalizeToPaletteColor("warning", "dark")).toEqual(
-        "warning-dark",
+        "warning-dark"
       );
     });
   });

@@ -11,7 +11,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 const testId = "input-icon-picker";
 const testIconPickerInput = testComponentFactory<IconPickerInputProps>(
   "IconPickerInput",
-  IconPickerInput,
+  IconPickerInput
 );
 const testIcons: IconName[] = ["Square", "Circle", "Triangle"];
 
@@ -38,5 +38,5 @@ testIconPickerInput({
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith("Circle");
-  },
+  }
 );

@@ -47,7 +47,7 @@ const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
  * @returns {JSX.Element}
  */
 const CopyClipboardInfoCard = (
-  props: CopyClipboardInfoCardProps & TestIdProps,
+  props: CopyClipboardInfoCardProps & TestIdProps
 ): JSX.Element => {
   const logger = useLogger("CopyClipboardInfoCard");
   const mergedProps = useMergedProps(defaultCopyClipboardInfoCardProps, props);
@@ -55,12 +55,12 @@ const CopyClipboardInfoCard = (
 
   const isEmpty = useMemo(
     () => isNullish(mergedProps.info) || isEmptyString(mergedProps.info),
-    [mergedProps.info],
+    [mergedProps.info]
   );
 
   const contentColor = useMemo<PaletteColor>(
     () => (isEmpty ? "gray-500" : "gray-800"),
-    [isEmpty],
+    [isEmpty]
   );
 
   const info = useMemo(
@@ -68,7 +68,7 @@ const CopyClipboardInfoCard = (
       mergedProps.info && !isEmpty
         ? mergedProps.info
         : "Information non renseignée",
-    [isEmpty, mergedProps.info],
+    [isEmpty, mergedProps.info]
   );
 
   const textProps = useMemo<TextProps>(
@@ -77,7 +77,7 @@ const CopyClipboardInfoCard = (
       weight: isEmpty ? "regular" : "medium",
       underline: !isEmpty && isString(mergedProps.href),
     }),
-    [contentColor, isEmpty, mergedProps.href],
+    [contentColor, isEmpty, mergedProps.href]
   );
 
   const iconProps = useMemo<IconProps>(
@@ -86,7 +86,7 @@ const CopyClipboardInfoCard = (
       size: "s-4",
       color: contentColor,
     }),
-    [mergedProps.icon, contentColor],
+    [mergedProps.icon, contentColor]
   );
 
   const copyInfo = useCallback(() => {
@@ -106,7 +106,7 @@ const CopyClipboardInfoCard = (
   const tl = useUikitTranslation();
   const tooltipLabel = useMemo(
     () => mergedProps.copyTooltipLabel ?? tl.action.copyToClipboard(),
-    [mergedProps.copyTooltipLabel, tl.action],
+    [mergedProps.copyTooltipLabel, tl.action]
   );
 
   return (
@@ -173,7 +173,7 @@ const CopyClipboardInfoCardLink = styled.a`
 `;
 
 const CopyClipboardInfoCardContainer = styled(
-  FlexRowLayout,
+  FlexRowLayout
 )<CopyClipboardInfoCardStyleProps>`
   ${copyClipboardInfoCardContainerStyles}
 `;

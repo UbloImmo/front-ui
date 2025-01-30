@@ -70,17 +70,17 @@ export const FormTable = ({
 
   const tableAssistiveText = useFieldAssistiveText(
     { assistiveText, error, errorText },
-    data,
+    data
   );
 
   const sortableItems = useMemo<UniqueIdentifier[]>(
     () => rows.map(({ stableId }) => stableId),
-    [rows],
+    [rows]
   );
 
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
-    useSensor(TouchSensor, {}),
+    useSensor(TouchSensor, {})
   );
 
   const onDragEnd = useCallback(
@@ -93,7 +93,7 @@ export const FormTable = ({
       const newIndex = sortableItems.indexOf(over.id);
       swapRows(oldIndex, newIndex);
     },
-    [sortableItems, swapRows],
+    [sortableItems, swapRows]
   );
 
   const errorTooltip = useMemo<Nullable<TooltipProps>>(() => {
@@ -108,7 +108,7 @@ export const FormTable = ({
 
   const labelTooltip = useMemo(
     () => (isEditing ? tooltip : errorTooltip),
-    [isEditing, errorTooltip, tooltip],
+    [isEditing, errorTooltip, tooltip]
   );
 
   const hasLabel = useMemo(() => {

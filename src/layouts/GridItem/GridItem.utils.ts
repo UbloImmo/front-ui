@@ -23,7 +23,7 @@ import type { Optional } from "@ubloimmo/front-util";
  * @return {ParsedGridAxisPosition} - An object with the start and end positions of the grid axis.
  */
 const parseGridAxisPosition = (
-  axisPosition: GridAxisPosition,
+  axisPosition: GridAxisPosition
 ): ParsedGridAxisPosition => {
   let start: Optional<GridStartPosition> = undefined;
   let end: Optional<GridEndPosition> = undefined;
@@ -57,7 +57,7 @@ export const parseGridItemPosition = (
   position: Pick<
     GridItemProps,
     keyof GridCombinedPosition | keyof GridDetailedPosition
-  >,
+  >
 ): ParsedGridItemPosition => {
   let rowStart: Optional<GridStartPosition> = undefined;
   let rowEnd: Optional<GridEndPosition> = undefined;
@@ -106,7 +106,7 @@ export const parseGridItemPosition = (
  */
 export const useGridItemPosition = (
   defaultProps: GridItemDefaultProps,
-  { justify, align, fill, ...position }: GridItemProps,
+  { justify, align, fill, ...position }: GridItemProps
 ): GridItemInnerProps => {
   const parsedPosition = parseGridItemPosition(position);
   const {

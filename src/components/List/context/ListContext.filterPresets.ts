@@ -25,20 +25,20 @@ export const useListFilterPresets: UseListFilterPresets = <
 >(
   config: Pick<ListContextConfig<TItem>, "filterPresets">,
   { options }: UseListOptionsReturn<TItem>,
-  dataProvider: IDataProvider<TItem>,
+  dataProvider: IDataProvider<TItem>
 ): UseListFilterPresetsReturn<TItem> => {
   const logger = useLogger("ListContext.filterPresets");
   const filterPresetDatas = useDataArray(config.filterPresets ?? [], true);
 
   const filterPresetConfigLoading = useMemo(
     () => filterPresetDatas.data.some(({ loading }) => loading),
-    [filterPresetDatas.data],
+    [filterPresetDatas.data]
   );
 
   const updateFilterPresetSelection = useCallback(
     (filterPresetSignature: FilterSignature, selected: boolean) => {
       const filterPreset = filterPresetDatas.find(
-        ({ signature }) => signature === filterPresetSignature,
+        ({ signature }) => signature === filterPresetSignature
       );
       if (!filterPreset || filterPreset.disabled) return;
       const isFilterPresetOption = ({ signature }: FilterOptionData<TItem>) =>
@@ -49,7 +49,7 @@ export const useListFilterPresets: UseListFilterPresets = <
           (option) => ({
             ...option,
             selected: option.fixed,
-          }),
+          })
         );
       }
       options.updateItemWhere(isFilterPresetOption, (option) => {
@@ -59,18 +59,18 @@ export const useListFilterPresets: UseListFilterPresets = <
         };
       });
     },
-    [filterPresetDatas, options],
+    [filterPresetDatas, options]
   );
 
   const getFilterPresetOptions = useCallback(
     (
-      filterPresetData: Pick<FilterPresetData, "optionSignatures">,
+      filterPresetData: Pick<FilterPresetData, "optionSignatures">
     ): FilterOptionData<TItem>[] => {
       return options.filter(({ signature }) =>
-        filterPresetData.optionSignatures.includes(signature),
+        filterPresetData.optionSignatures.includes(signature)
       );
     },
-    [options],
+    [options]
   );
 
   const filterPresetsOptionsMap = useMemo(() => {
@@ -82,8 +82,8 @@ export const useListFilterPresets: UseListFilterPresets = <
         }): [FilterSignature, FilterOptionData<TItem>[]] => [
           signature,
           getFilterPresetOptions({ optionSignatures }),
-        ],
-      ),
+        ]
+      )
     );
   }, [config.filterPresets, getFilterPresetOptions]);
 
@@ -111,8 +111,8 @@ export const useListFilterPresets: UseListFilterPresets = <
             logger.error(error);
             return [signature, 0];
           }
-        },
-      ),
+        }
+      )
     );
     return objectFromEntries(counts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -156,7 +156,7 @@ export const useListFilterPresets: UseListFilterPresets = <
         count,
       };
     },
-    [filterPresetCounts, filterPresetsOptionsMap, updateFilterPresetSelection],
+    [filterPresetCounts, filterPresetsOptionsMap, updateFilterPresetSelection]
   );
 
   const filterPresets = useMemo<FilterPreset<TItem>[]>(() => {
@@ -165,7 +165,7 @@ export const useListFilterPresets: UseListFilterPresets = <
 
   const filterPresetsLoading = useMemo(
     () => filterPresetConfigLoading || filterPresetCounts.isLoading,
-    [filterPresetCounts.isLoading, filterPresetConfigLoading],
+    [filterPresetCounts.isLoading, filterPresetConfigLoading]
   );
 
   const getFilterPresetBySignature = useCallback<
@@ -174,11 +174,11 @@ export const useListFilterPresets: UseListFilterPresets = <
     (filterPresetSignature) => {
       return (
         filterPresets.find(
-          ({ signature }) => signature === filterPresetSignature,
+          ({ signature }) => signature === filterPresetSignature
         ) ?? null
       );
     },
-    [filterPresets],
+    [filterPresets]
   );
 
   return {

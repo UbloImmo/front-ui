@@ -40,7 +40,7 @@ export const Markdown = ({ children, inline, color }: MarkdownProps) => {
     () => ({
       overrides: markdownOverrides(color),
     }),
-    [color],
+    [color]
   );
   return (
     <MarkdownStyle $inline={inline}>

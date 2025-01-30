@@ -15,7 +15,7 @@ const componentSource = componentSourceFactory<InfoBoxProps>(
     label: "[Label]",
     info: "[Info]",
   },
-  InfoBox.defaultProps,
+  InfoBox.defaultProps
 );
 
 const meta = {
@@ -66,7 +66,7 @@ Info.parameters = {
     infos.map((info) => ({
       ...InfoBox.defaultProps,
       info,
-    })),
+    }))
   ),
 };
 
@@ -107,6 +107,6 @@ Examples.parameters = {
     examples.map((example) => ({
       ...InfoBox.defaultProps,
       ...example,
-    })),
+    }))
   ),
 };

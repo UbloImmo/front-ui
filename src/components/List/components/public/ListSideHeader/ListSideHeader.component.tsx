@@ -34,7 +34,7 @@ const listSideHeaderDefaultProps: ListSideHeaderDefaultProps = {
  * @version 0.0.1
  */
 export const ListSideHeader = (
-  props: ListSideHeaderProps & TestIdProps & Omit<StyleOverrideProps, "as">,
+  props: ListSideHeaderProps & TestIdProps & Omit<StyleOverrideProps, "as">
 ) => {
   const mergedProps = useMergedProps(listSideHeaderDefaultProps, props);
   const testId = useTestId("list-side-header", props);

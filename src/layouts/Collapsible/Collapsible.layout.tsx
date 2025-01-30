@@ -47,7 +47,7 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
     content,
   } = mergedProps;
   const [isOpen, setIsOpen] = useState(
-    mergedProps.defaultOpen || mergedProps.open,
+    mergedProps.defaultOpen || mergedProps.open
   );
   const testId = useTestId("collapsible", props);
 
@@ -122,7 +122,7 @@ Collapsible.defaultProps = defaultCollapsibleProps;
 export { Collapsible };
 
 const CollapsibleContainer = styled(
-  FlexRowLayout,
+  FlexRowLayout
 )<CollapsibleContainerStyleProps>`
   ${collapsibleContainerStyles}
 `;

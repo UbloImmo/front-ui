@@ -35,7 +35,7 @@ const EFFECT_COLOR_DELTA = 2;
  * @return {value is Token<TType>} true if the value is a Token of a specific type, false otherwise
  */
 const isToken = <TType extends TokenType>(
-  value: TokenValues<TType> | Token<TType>,
+  value: TokenValues<TType> | Token<TType>
 ): value is Token<TType> => {
   if (!isObject(value)) return false;
   const tokenKeys: (keyof Token)[] = ["name", "value", "type"];
@@ -53,7 +53,7 @@ const isToken = <TType extends TokenType>(
  */
 export const parseEffectToken = (
   token: Token<"EFFECT">,
-  parentName?: string,
+  parentName?: string
 ): ParsedEffect => {
   const name = (parentName ?? token.name).replaceAll("/", "-");
   const basicToken = { ...token, name };
@@ -65,7 +65,7 @@ export const parseEffectToken = (
 
   const value = token.value.replaceAll(rgbaRegex, (match: string) => {
     const normalized = rgbaColorConverter.arrToStr(
-      rgbaColorConverter.strToArr(match as RgbaColorStr),
+      rgbaColorConverter.strToArr(match as RgbaColorStr)
     );
     return `$$${normalized}$$`;
   });
@@ -89,7 +89,7 @@ export const parseEffectToken = (
  */
 const effectTokenOrGroupToEffect = (
   tokenOrGroup: TokenValues<"EFFECT"> | Token<"EFFECT">,
-  parentName?: string,
+  parentName?: string
 ): ParsedEffect[] => {
   if (isToken(tokenOrGroup)) {
     return [parseEffectToken(tokenOrGroup, parentName)];
@@ -111,7 +111,7 @@ const effectTokenOrGroupToEffect = (
  */
 export const parsedEffectToCssVar = (
   { value, name, originalValue }: ParsedEffect,
-  colorVarsSplit: [CssVarName, RgbaColorArr][] = [],
+  colorVarsSplit: [CssVarName, RgbaColorArr][] = []
 ):
   | CssVar<string>
   | CssVar<`${string}${CssVarUsage}`>
@@ -147,14 +147,14 @@ export const parsedEffectToCssVar = (
       const newVarName = matchingVarName.includes(PRIMARY_NAME_DEFAULT)
         ? (matchingVarName.replace(
             PRIMARY_NAME_DEFAULT,
-            PRIMARY_NAME,
+            PRIMARY_NAME
           ) as CssVarName)
         : matchingVarName;
       // derive color from variable and keep alpha
       const relativeColor: CssRelativeRgbaColor = `rgb(from var(${newVarName}) r g b / ${effectColorAlpha})`;
       // and use them as replacement
       return relativeColor;
-    },
+    }
   );
   // reset regex after checking
   substitutionRegex.lastIndex = 0;
@@ -170,7 +170,7 @@ export const parsedEffectToCssVar = (
  * @return {(CssVar<string> | CssVar<`${string}${CssVarUsage}`>)[]} a list of CSS variable decalrations
  */
 export const effectsToCssVars = (
-  colorVars: CssVar<RgbaColorStr>[],
+  colorVars: CssVar<RgbaColorStr>[]
 ): (CssVar<string> | CssVar<`${string}${CssVarUsage}`>)[] => {
   const parsedEffects = effectTokenOrGroupToEffect(effects);
   // sanitize color vars
@@ -182,6 +182,6 @@ export const effectsToCssVars = (
       rgbaColorConverter.strToArr(value),
     ]);
   return parsedEffects.map((parsedEffect) =>
-    parsedEffectToCssVar(parsedEffect, colorVarsSplit),
+    parsedEffectToCssVar(parsedEffect, colorVarsSplit)
   );
 };

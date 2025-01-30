@@ -12,7 +12,7 @@ export const FormFeatureSwitch = (props: BuiltFormFeatureSwitchProps) => {
   const { isEditing } = useFormContext<object>();
   const disabled = useMemo(
     () => baseDisabled || !isEditing,
-    [baseDisabled, isEditing],
+    [baseDisabled, isEditing]
   );
 
   return (

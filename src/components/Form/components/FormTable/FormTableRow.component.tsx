@@ -51,7 +51,7 @@ export const FormTableRow = ({
 
   const mods = useMemo(
     () => transformObject(modifiers, (modifier) => isEditing && modifier),
-    [modifiers, isEditing],
+    [modifiers, isEditing]
   );
 
   const deleteSelf = useCallback(() => {
@@ -86,7 +86,7 @@ export const FormTableRow = ({
       transform: CSS.Transform.toString(transform),
       transition,
     }),
-    [transform, transition],
+    [transform, transition]
   );
 
   const controls = useMemo<Nullish<FormTableCellControls>>(() => {

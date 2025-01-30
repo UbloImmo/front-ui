@@ -80,7 +80,7 @@ const generateMockTransactionItems = (): TransactionItem[] => {
 };
 
 export const useBalanceJournalData: UseDataProviderFn<TransactionItem> = (
-  setData,
+  setData
 ) => {
   const staticMockData = useStatic(generateMockTransactionItems);
   const filters = useBalanceJournalContext();

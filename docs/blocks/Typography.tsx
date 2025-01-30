@@ -54,7 +54,7 @@ export const specificHeading =
   (
     size: HeadingProps["size"],
     weight: HeadingProps["weight"] = "medium",
-    color: PaletteColor = "gray-900",
+    color: PaletteColor = "gray-900"
   ) =>
   ({
     children,
@@ -98,7 +98,7 @@ export const textOfSize =
   (
     size: TextProps["size"],
     weight: TextProps["weight"] = "regular",
-    color: PaletteColor = "gray-900",
+    color: PaletteColor = "gray-900"
   ) =>
   ({
     children,
@@ -162,7 +162,7 @@ const headingOverridesStyles = ({
 export const buildheadingOverrides = (
   size: NonNullish<HeadingProps["size"]>,
   weight: HeadingProps["weight"] = "medium",
-  color: PaletteColor = "gray-900",
+  color: PaletteColor = "gray-900"
 ): RuleSet => {
   const props = {
     ...defaultTypographyProps,

@@ -25,7 +25,7 @@ describe("Input", () => {
           },
         },
       ],
-    },
+    }
   );
 
   testEmailInput({
@@ -48,7 +48,7 @@ describe("Input", () => {
       await click(input);
       await keyboard("test");
       expect(onChange).toHaveBeenCalled();
-    },
+    }
   );
 
   describe("isEmailString", () => {

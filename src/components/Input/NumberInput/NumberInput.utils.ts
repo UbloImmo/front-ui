@@ -9,11 +9,11 @@ import type { NativeInputValue } from "../Input.types";
  * @returns {Nullable<number>} The parsed number, or null if parsing fails.
  */
 export const transformNumber = (
-  nativeValue: NativeInputValue,
+  nativeValue: NativeInputValue
 ): Nullable<number> => {
   if (!isString(nativeValue) || nativeValue.length === 0) return null;
   const parsed = parseFloat(
-    nativeValue.replace(",", ".").replaceAll(/\s/g, ""),
+    nativeValue.replace(",", ".").replaceAll(/\s/g, "")
   );
   if (isNaN(parsed)) return null;
   return parsed;
@@ -29,15 +29,15 @@ export const transformNumber = (
 export const scaleNumber = (
   value: Nullable<number>,
   scale: number,
-  precision: Nullable<number> = 7,
+  precision: Nullable<number> = 7
 ): Nullable<number> => {
   if (!isNumber(value)) return null;
   if (!scale) return value;
   const safePrecision = Math.max(
     isNumber(precision) ? precision - scale : 7,
-    7,
+    7
   );
   return parseFloat(
-    parseFloat(String(value * Math.pow(10, scale))).toPrecision(safePrecision),
+    parseFloat(String(value * Math.pow(10, scale))).toPrecision(safePrecision)
   );
 };

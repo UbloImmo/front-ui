@@ -25,7 +25,7 @@ const componentSource = componentSourceFactory<ChipProps>(
     label: "[Chip]",
     icon: "Square",
   },
-  Chip.defaultProps,
+  Chip.defaultProps
 );
 
 const colors: ColorKey[] = [
@@ -97,7 +97,7 @@ Colors.parameters = {
       label: "[Chip]",
       icon: "Square",
       deleteButtonTitle: "[Delete action]",
-    })),
+    }))
   ),
 };
 
@@ -125,7 +125,7 @@ Placement.parameters = {
       label: "[Chip]",
       icon: "Square",
       deleteButtonTitle: "[Delete action]",
-    })),
+    }))
   ),
 };
 
@@ -148,7 +148,7 @@ export const WithDelete = (props: Partial<ChipProps>) => {
 
   const handleDelete = (label: string) => {
     const updatedLabel = labels.filter(
-      (selectedLabel) => selectedLabel !== label,
+      (selectedLabel) => selectedLabel !== label
     );
     setLabels(updatedLabel);
   };

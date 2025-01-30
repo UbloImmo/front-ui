@@ -43,7 +43,7 @@ const getStoryThemes = () => {
   const storyThemes = objectFromEntries(
     getDynamicThemeSlugs()
       .sort()
-      .map((slug) => [slug, { client: slug }]),
+      .map((slug) => [slug, { client: slug }])
   );
   return storyThemes;
 };

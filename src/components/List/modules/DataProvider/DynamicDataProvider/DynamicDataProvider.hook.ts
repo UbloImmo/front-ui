@@ -62,7 +62,7 @@ export const useDynamicDataProvider: UseDynamicDataProviderFn = <
         params: [config],
       });
     },
-    [reactiveData],
+    [reactiveData]
   );
 
   const fetchCount = useCallback<DataProviderFetchCountFn<TItem>>(
@@ -70,7 +70,7 @@ export const useDynamicDataProvider: UseDynamicDataProviderFn = <
       const filteredData = await fetchData(config);
       return filteredData.length;
     },
-    [fetchData],
+    [fetchData]
   );
 
   const error = useMemo(() => {

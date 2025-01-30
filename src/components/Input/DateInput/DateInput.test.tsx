@@ -44,7 +44,7 @@ describe("Input", () => {
               isValid ? "" : "not "
             }accept ${dateLike} as ${predicate}`, () => {
               expect(predicates[predicate](dateFormats[dateLike])).toBe(
-                isValid,
+                isValid
               );
             });
           });
@@ -68,7 +68,7 @@ describe("Input", () => {
         objectEntries(dateFormats).forEach(([format, dateLike]) => {
           it(`should normalize ${format} to nativeStr`, () => {
             expect(normalizeToDateNativeStr(dateLike)).toBe(
-              dateFormats.nativeStr,
+              dateFormats.nativeStr
             );
           });
         });
@@ -106,7 +106,7 @@ describe("Input", () => {
       await click(control);
       const calendar = await findByTestId(calendarTestId);
       expect(calendar).not.toBeNull();
-    },
+    }
   );
 
   testDefaultProps(
@@ -121,7 +121,7 @@ describe("Input", () => {
 
       await keyboard("[Escape]");
       expect(await queryByTestId(calendarTestId)).toBeNull();
-    },
+    }
   );
 
   const onChange = mock(() => {});
@@ -140,13 +140,13 @@ describe("Input", () => {
 
       const dayCell = await findByTestId(calendarTestId).then((calendar) => {
         return calendar.querySelector(
-          `td[role="gridcell"][data-day="${dateToSelect}"]`,
+          `td[role="gridcell"][data-day="${dateToSelect}"]`
         );
       });
       expect(dayCell).not.toBeNull();
 
       const dayButton = dayCell?.querySelector(
-        "button.rdp-day_button",
+        "button.rdp-day_button"
       ) as HTMLElement;
       expect(dayButton).not.toBeNull();
 
@@ -155,7 +155,7 @@ describe("Input", () => {
 
       const expectedDate = dateISOToDateStr(dateToDateISO(new Date())) ?? "";
       expect(input.value).toBe(expectedDate);
-    },
+    }
   );
 
   const testControlled = testDateInput({
@@ -179,6 +179,6 @@ describe("Input", () => {
       await click(input);
       expect(input.value).toBe(dateFormats.nativeStr);
       expect(input.type).toBe("date");
-    },
+    }
   );
 });

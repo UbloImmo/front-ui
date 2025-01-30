@@ -20,7 +20,7 @@ const defaultListProps: ListDefaultProps<object> = {
 const List = <TItem extends object>(props: ListProps<TItem>): JSX.Element => {
   const mergedProps = useMergedProps(
     defaultListProps as unknown as ListDefaultProps<TItem>,
-    props,
+    props
   );
 
   return (

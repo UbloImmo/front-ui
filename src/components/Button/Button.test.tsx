@@ -26,7 +26,7 @@ describe("Button", () => {
     ({ queryByTestId }) => {
       expect(queryByTestId("button")).not.toBeNull();
       expect(global.console.warn).toHaveBeenCalled();
-    },
+    }
   );
 
   testButton({ label: "test", onClick })(
@@ -36,7 +36,7 @@ describe("Button", () => {
       const button = queryByTestId("button") as HTMLButtonElement;
       await click(button);
       expect(onClick).toHaveBeenCalled();
-    },
+    }
   );
 
   testButton({ label: "test", onClick, disabled: true })(
@@ -46,7 +46,7 @@ describe("Button", () => {
       const button = queryByTestId("button") as HTMLButtonElement;
       await click(button);
       expect(onClick).not.toHaveBeenCalled();
-    },
+    }
   );
 
   testButton({ label: "test", onClick, loading: true })(
@@ -56,6 +56,6 @@ describe("Button", () => {
       const button = queryByTestId("button") as HTMLButtonElement;
       await click(button);
       expect(onClick).not.toHaveBeenCalled();
-    },
+    }
   );
 });

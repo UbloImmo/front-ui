@@ -9,7 +9,7 @@ import { BootstrapIconFile, CustomIconFile } from "./svg.types";
  * @return {boolean} true if the value is a BootstrapIconFile, false otherwise
  */
 export const isBootstrapIconFile = (
-  value: BootstrapIconFile | CustomIconFile,
+  value: BootstrapIconFile | CustomIconFile
 ): value is BootstrapIconFile => {
   return (
     isObject(value) &&

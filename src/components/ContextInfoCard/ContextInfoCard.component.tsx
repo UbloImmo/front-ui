@@ -70,14 +70,14 @@ const detailsTextProps: TextProps = {
  * @returns {JSX.Element} - The context info card markup
  */
 const ContextInfoCard = (
-  props: ContextInfoCardProps & TestIdProps,
+  props: ContextInfoCardProps & TestIdProps
 ): JSX.Element => {
   const testId = useTestId("context-info-card", props);
   const mergedProps = useMergedProps(defaultContextInfoCardProps, props);
 
   if (isNullish(mergedProps.title)) {
     console.warn(
-      "ContextInfoCard: title prop is required but was not provided",
+      "ContextInfoCard: title prop is required but was not provided"
     );
   }
 
@@ -112,7 +112,7 @@ const ContextInfoCard = (
         </ContextInfoCardContainer>
       );
     },
-    [mergedProps.href, testId],
+    [mergedProps.href, testId]
   );
 
   return (

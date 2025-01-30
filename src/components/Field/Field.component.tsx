@@ -41,7 +41,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
  * @returns {Nullable<JSX.Element>}
  */
 const Field = <TType extends InputType>(
-  props: FieldProps<TType> & TestIdProps,
+  props: FieldProps<TType> & TestIdProps
 ): Nullable<JSX.Element> => {
   const logger = useLogger("Field");
 
@@ -73,12 +73,12 @@ const Field = <TType extends InputType>(
         mergedProps.onChangeNative(event);
       }
     },
-    [mergedProps, setValidityState],
+    [mergedProps, setValidityState]
   );
 
   const fieldAssistiveText = useFieldAssistiveText(
     mergedProps,
-    mergedProps.value,
+    mergedProps.value
   );
 
   if (!mergedProps.type || !inputTypes?.includes(mergedProps.type)) {

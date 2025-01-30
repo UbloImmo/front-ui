@@ -31,7 +31,7 @@ import type { Nullable } from "@ubloimmo/front-util";
  * @returns {Nullable<JSX.Element>} The rendered component.
  */
 export const FormCustomField = (
-  props: BuiltFormCustomFieldProps,
+  props: BuiltFormCustomFieldProps
 ): Nullable<JSX.Element> => {
   const {
     CustomInput,
@@ -76,14 +76,14 @@ export const FormCustomField = (
 
   const noLabel = useMemo(
     () => !fieldProps.label || isEmptyString(fieldProps.label),
-    [fieldProps.label],
+    [fieldProps.label]
   );
 
   const inputId = useInputId(fieldProps);
 
   const fieldAssistiveText = useFieldAssistiveText(
     { assistiveText, error, errorText },
-    customFieldProps.value,
+    customFieldProps.value
   );
 
   if (layout.hidden) return null;

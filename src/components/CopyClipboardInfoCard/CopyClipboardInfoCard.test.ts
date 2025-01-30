@@ -6,7 +6,7 @@ import { testComponentFactory } from "@/tests";
 
 const testCard = testComponentFactory(
   "CopyClipboardInfoCard",
-  CopyClipboardInfoCard,
+  CopyClipboardInfoCard
 );
 
 const testEmpty = testCard({ icon: "Activity" });
@@ -25,5 +25,5 @@ testCard({ icon: "Activity", info: "Copy me" })(
   async ({ findByTestId, findByText }) => {
     expect(await findByTestId("copy-clipboard-info-card")).not.toBeNull();
     expect(await findByText("Copy me")).not.toBeNull();
-  },
+  }
 );

@@ -19,7 +19,7 @@ export const multiSelectWrapperStyles = (): RuleSet => css`
 `;
 
 export const multiSelectInputElementStyles = (
-  props: CommonInputStyleProps,
+  props: CommonInputStyleProps
 ): RuleSet => css`
   ${commonInputStyles(props)}
   // vertical padding (6px) equal to input height minus chip height

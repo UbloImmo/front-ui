@@ -17,13 +17,13 @@ type HookReturn = ReturnType<Hook>;
 
 const testHook = testHookFactory<HookParams, HookReturn, Hook>(
   "useDynamicDataProvider",
-  useDynamicDataProvider<MockListItem>,
+  useDynamicDataProvider<MockListItem>
 );
 
 const fetchData = mock((config: DataProviderFilterFnConfig<MockListItem>) => {
   return filterItems(
     arrayOf(20, () => mockListData.item),
-    config,
+    config
   );
 });
 
@@ -53,7 +53,7 @@ testError(
   ({ refetch }) => {
     refetch();
     expect(global.console.error).toHaveBeenCalled();
-  },
+  }
 );
 
 test("should call fetchData and return data when calling refetch", async (_, __, {

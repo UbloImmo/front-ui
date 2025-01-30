@@ -12,7 +12,7 @@ import type { ColorKeyOrWhite } from "@types";
 const componentTemplate = componentSourceFactory(
   "StateIndicator",
   {},
-  StateIndicator.defaultProps,
+  StateIndicator.defaultProps
 );
 
 const colors: ColorKeyOrWhite[] = [

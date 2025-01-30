@@ -17,7 +17,7 @@ const columnTestId = `${testId} ${testId}-column`;
 describe("FlexLayout", () => {
   const testFlexInitial = testComponentFactory<FlexLayoutProps>(
     "Flex",
-    FlexLayout,
+    FlexLayout
   );
 
   testFlexInitial({
@@ -45,7 +45,7 @@ describe("FlexLayout", () => {
 
   const testFlexRow = testComponentFactory<FlexDirectionLayoutProps>(
     "FlexRow",
-    FlexRowLayout,
+    FlexRowLayout
   );
 
   testFlexRow({
@@ -70,7 +70,7 @@ describe("FlexLayout", () => {
 
   const testFlexColumn = testComponentFactory<FlexDirectionLayoutProps>(
     "FlexColumn",
-    FlexColumnLayout,
+    FlexColumnLayout
   );
 
   testFlexColumn({
@@ -83,7 +83,7 @@ describe("FlexLayout", () => {
       const flexLayout = (await findByTestId(columnTestId)) as HTMLElement;
       const flexStyle = flexLayout && window.getComputedStyle(flexLayout);
       expect(flexStyle.flexDirection).toBe("column");
-    },
+    }
   );
 
   testFlexColumn({

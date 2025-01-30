@@ -9,7 +9,7 @@ import type {
 import type { ColorKeyOrWhite } from "@types";
 
 export const computeStateIndicatorColors = (
-  color: ColorKeyOrWhite,
+  color: ColorKeyOrWhite
 ): StateIndicatorStyleColors => {
   if (color === "gray") {
     return {

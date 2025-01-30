@@ -21,7 +21,7 @@ describe("InputAssistiveText", () => {
           },
         },
       ],
-    },
+    }
   );
 
   global.console.warn = mock(() => {});
@@ -33,7 +33,7 @@ describe("InputAssistiveText", () => {
       expect(nullText).toBeNull();
       expect(global.console.warn).toHaveBeenCalled();
       (global.console.warn as Mock<(_msg: unknown) => void>).mockReset();
-    },
+    }
   );
 
   testInputAssistiveText({ errorText: null, error: true })(
@@ -41,7 +41,7 @@ describe("InputAssistiveText", () => {
     () => {
       expect(global.console.warn).toHaveBeenCalled();
       (global.console.warn as Mock<(_msg: unknown) => void>).mockReset();
-    },
+    }
   );
 
   testInputAssistiveText({
