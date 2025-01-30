@@ -47,6 +47,7 @@ const actionTextWrappingStyles = () => css`
 export const actionContainerStyles = ({
   $size,
   $color,
+  $testId,
 }: ActionStyledProps): RuleSet => {
   const height = heights[$size];
   const borderRadius = borderRadii[$size];
@@ -81,7 +82,7 @@ export const actionContainerStyles = ({
       border-color 300ms var(--bezier) 0s,
       box-shadow 300ms var(--bezier) 0s;
 
-    span[data-testid="action-label"] {
+    span[data-testid="${$testId}-label"] {
       text-overflow: ellipsis;
       max-height: 100%;
       max-width: fit-content;

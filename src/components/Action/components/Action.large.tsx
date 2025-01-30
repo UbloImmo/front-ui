@@ -76,7 +76,9 @@ export const ActionLarge = ({
             </Text>
             {iconTooltipProps && <Tooltip {...iconTooltipProps} />}
           </FlexLayout>
-          {badgeProps && <Badge {...badgeProps} testId={`${testId}-badge`} />}
+          {badgeProps && (
+            <Badge {...badgeProps} testId={`${testId}-badge`} overrideTestId />
+          )}
         </FlexLayout>
         {description && (
           <ActionDescription
@@ -84,6 +86,7 @@ export const ActionLarge = ({
             fill
             size="s"
             testId={`${testId}-description`}
+            overrideTestId
           >
             {description}
           </ActionDescription>

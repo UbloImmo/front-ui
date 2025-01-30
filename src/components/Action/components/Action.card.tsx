@@ -75,10 +75,18 @@ export const ActionCard = ({
             </Text>
             {iconTooltipProps && <Tooltip {...iconTooltipProps} />}
           </FlexLayout>
-          {badgeProps && <Badge {...badgeProps} testId={`${testId}-badge`} />}
+          {badgeProps && (
+            <Badge {...badgeProps} testId={`${testId}-badge`} overrideTestId />
+          )}
         </FlexLayout>
         {description && (
-          <Text color="gray-600" fill size="s" testId={`${testId}-description`}>
+          <Text
+            color="gray-600"
+            fill
+            size="s"
+            testId={`${testId}-description`}
+            overrideTestId
+          >
             {description}
           </Text>
         )}

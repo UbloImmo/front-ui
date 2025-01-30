@@ -65,7 +65,9 @@ export const ActionDefault = ({
           {label}
         </Text>
         <FlexLayout direction="row" gap="s-2" align="center">
-          {badgeProps && <Badge {...badgeProps} testId={`${testId}-badge`} />}
+          {badgeProps && (
+            <Badge {...badgeProps} testId={`${testId}-badge`} overrideTestId />
+          )}
           {iconTooltipProps && <Tooltip {...iconTooltipProps} />}
         </FlexLayout>
       </FlexLayout>
