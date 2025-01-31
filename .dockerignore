@@ -13,6 +13,7 @@ yarn-*.log
 eslint-local-rules
 .eslint*
 .prettier*
+eslint.config.mjs
 
 # Tests
 **/*.test.*
