@@ -26,6 +26,7 @@ const defaultContextInfoCardProps: Required<ContextInfoCardProps> = {
   description: null,
   details: null,
   href: null,
+  content: null,
 };
 
 const commonTextProps: TextProps = {
@@ -64,7 +65,7 @@ const detailsTextProps: TextProps = {
 /**
  * A component that displays contextual information with an icon, title, label, and description.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {TestIdProps & ContextInfoCardProps} props - The component props
  * @returns {JSX.Element} - The context info card markup
@@ -122,7 +123,10 @@ const ContextInfoCard = (
         {mergedProps.label && (
           <Text {...labelTextProps}>{mergedProps.label}</Text>
         )}
-        <Text {...titleTextProps}>{mergedProps.title}</Text>
+        <FlexRowLayout fill>
+          <Text {...titleTextProps}>{mergedProps.title}</Text>
+          {mergedProps.content}
+        </FlexRowLayout>
         {mergedProps.description && (
           <Text {...descriptionTextProps}>{mergedProps.description}</Text>
         )}

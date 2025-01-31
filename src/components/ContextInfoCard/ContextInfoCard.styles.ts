@@ -43,8 +43,6 @@ export const contextInfoCardContainerLinkStyles = (): RuleSet => css`
 `;
 
 export const contextInfoCardIconContainerStyles = (): RuleSet => css`
-  position: absolute;
-  right: var(--s-3);
-  top: var(--s-3);
   pointer-events: none;
+  align-self: flex-start;
 `;
