@@ -8,21 +8,21 @@ import type { VoidFn } from "@ubloimmo/front-util";
 
 const testComboBoxButton = testComponentFactory(
   "ComboBoxButton",
-  ComboBoxButton,
+  ComboBoxButton
 );
 
 testComboBoxButton({ ...ComboBoxButton.defaultProps })(
   "should render",
   ({ queryByTestId }) => {
     expect(queryByTestId("combo-box-button")).not.toBeNull();
-  },
+  }
 );
 
 testComboBoxButton({ ...ComboBoxButton.defaultProps, multi: true })(
   "should render as multi",
   ({ queryByTestId }) => {
     expect(queryByTestId("combo-box-button")).not.toBeNull();
-  },
+  }
 );
 
 const onSelect = mock<VoidFn>(() => {});
@@ -69,7 +69,7 @@ testComboBoxButton({
   async ({ queryByTestId, queryAllByTestId }, { click }) => {
     expect(queryByTestId("combo-box-button")).not.toBeNull();
     const contextMenuTrigger = queryByTestId(
-      "combo-box-button-context-menu",
+      "combo-box-button-context-menu"
     ) as HTMLButtonElement;
     expect(contextMenuTrigger).not.toBeNull();
     await click(contextMenuTrigger);
@@ -84,5 +84,5 @@ testComboBoxButton({
     await click(contextMenuItems[0]);
     expect(onEdit).toHaveBeenCalled();
     onEdit.mockReset();
-  },
+  }
 );

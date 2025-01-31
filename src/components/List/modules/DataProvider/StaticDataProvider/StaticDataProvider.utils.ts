@@ -43,7 +43,7 @@ export const canCompare = (value: unknown): value is Comparable =>
  */
 export const compareItemValue = <TItem extends object>(
   item: TItem,
-  match: FilterOptionMatch<TItem>,
+  match: FilterOptionMatch<TItem>
 ): boolean => {
   // if item is not an object, it cannot be compared
   if (!isObject(item)) return false;
@@ -99,7 +99,7 @@ export const compareItemValue = <TItem extends object>(
  * @returns {"every" | "some"} The array method name
  */
 export const arrayComparison = (
-  operator: FilterBooleanOperator,
+  operator: FilterBooleanOperator
 ): "every" | "some" => (operator === "AND" ? "every" : "some");
 
 /**
@@ -111,11 +111,11 @@ export const arrayComparison = (
  */
 export const itemMatchesOption = <TItem extends object>(
   item: TItem,
-  option: FilterOptionData<TItem>,
+  option: FilterOptionData<TItem>
 ): boolean => {
   if (!option.selected) return true;
   return option.matches[arrayComparison(option.operator)]((match) =>
-    compareItemValue(item, match),
+    compareItemValue(item, match)
   );
 };
 
@@ -130,11 +130,11 @@ export const itemMatchesOption = <TItem extends object>(
 const itemMatchesOptions = <TItem extends object>(
   item: TItem,
   options: FilterOptionData<TItem>[],
-  operator: FilterBooleanOperator,
+  operator: FilterBooleanOperator
 ): boolean => {
   if (!options.length) return true;
   return options[arrayComparison(operator)]((option) =>
-    itemMatchesOption(item, option),
+    itemMatchesOption(item, option)
   );
 };
 
@@ -147,7 +147,7 @@ const itemMatchesOptions = <TItem extends object>(
  */
 const itemMatchesFilter = <TItem extends object>(
   item: TItem,
-  filter: DataProviderFilterParam<TItem>,
+  filter: DataProviderFilterParam<TItem>
 ): boolean => {
   return itemMatchesOptions(item, filter.selectedOptions, filter.operator);
 };
@@ -163,11 +163,11 @@ const itemMatchesFilter = <TItem extends object>(
 const itemMatchesFilters = <TItem extends object>(
   item: TItem,
   filters: DataProviderFilterParam<TItem>[],
-  operator: FilterBooleanOperator,
+  operator: FilterBooleanOperator
 ): boolean => {
   if (!filters.length) return true;
   return filters[arrayComparison(operator)]((filter) =>
-    itemMatchesFilter(item, filter),
+    itemMatchesFilter(item, filter)
   );
 };
 
@@ -180,7 +180,7 @@ const itemMatchesFilters = <TItem extends object>(
  */
 const itemMatchesFilterPreset = <TItem extends object>(
   item: TItem,
-  filterPreset: Pick<FilterPreset<TItem>, "options" | "operator">,
+  filterPreset: Pick<FilterPreset<TItem>, "options" | "operator">
 ): boolean => {
   return itemMatchesOptions(item, filterPreset.options, filterPreset.operator);
 };
@@ -196,11 +196,11 @@ const itemMatchesFilterPreset = <TItem extends object>(
 const itemMatchesFilterPresets = <TItem extends object>(
   item: TItem,
   filterPresets: Pick<FilterPreset<TItem>, "options" | "operator">[],
-  operator: FilterBooleanOperator,
+  operator: FilterBooleanOperator
 ): boolean => {
   if (!filterPresets.length) return true;
   return filterPresets[arrayComparison(operator)]((filterPreset) =>
-    itemMatchesFilterPreset(item, filterPreset),
+    itemMatchesFilterPreset(item, filterPreset)
   );
 };
 
@@ -223,7 +223,7 @@ type FilterFn<TItem extends object> = (item: TItem) => boolean;
  */
 export const filterItems = <TItem extends object>(
   items: TItem[],
-  config: DataProviderFilterFnConfig<TItem>,
+  config: DataProviderFilterFnConfig<TItem>
 ): TItem[] => {
   // abort if items is not an array or is empty
   if (!isArray(items) || !items.length) return [];

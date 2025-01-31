@@ -9,7 +9,7 @@ const SEPARATORS = /[_.\- ]+/;
 const LEADING_SEPARATORS = new RegExp("^" + SEPARATORS.source);
 const SEPARATORS_AND_IDENTIFIER = new RegExp(
   SEPARATORS.source + IDENTIFIER.source,
-  "gu",
+  "gu"
 );
 const NUMBERS_AND_IDENTIFIER = new RegExp("\\d+" + IDENTIFIER.source, "gu");
 
@@ -90,7 +90,7 @@ const preserveCamelCase = (
   string: string,
   toLowerCase: GenericFn<[string], string>,
   toUpperCase: GenericFn<[string], string>,
-  preserveConsecutiveUppercase?: boolean,
+  preserveConsecutiveUppercase?: boolean
 ) => {
   let isLastCharLower = false;
   let isLastCharUpper = false;
@@ -140,7 +140,7 @@ const preserveCamelCase = (
  */
 const preserveConsecutiveUppercase = (
   input: string,
-  toLowerCase: GenericFn<[string], string>,
+  toLowerCase: GenericFn<[string], string>
 ) => {
   LEADING_CAPITAL.lastIndex = 0;
 
@@ -156,7 +156,7 @@ const preserveConsecutiveUppercase = (
  */
 const postProcess = (
   input: string,
-  toUpperCase: GenericFn<[string], string>,
+  toUpperCase: GenericFn<[string], string>
 ) => {
   SEPARATORS_AND_IDENTIFIER.lastIndex = 0;
   NUMBERS_AND_IDENTIFIER.lastIndex = 0;
@@ -165,10 +165,10 @@ const postProcess = (
     .replaceAll(NUMBERS_AND_IDENTIFIER, (match, pattern, offset) =>
       ["_", "-"].includes(input.charAt(offset + match.length))
         ? match
-        : toUpperCase(match),
+        : toUpperCase(match)
     )
     .replaceAll(SEPARATORS_AND_IDENTIFIER, (_, identifier) =>
-      toUpperCase(identifier),
+      toUpperCase(identifier)
     );
 };
 
@@ -213,7 +213,7 @@ const postProcess = (
  */
 export function camelCase(
   input: string | readonly string[],
-  options?: CamelcaseOptions,
+  options?: CamelcaseOptions
 ) {
   if (!(typeof input === "string" || Array.isArray(input))) {
     throw new TypeError("Expected the input to be `string | string[]`");
@@ -270,7 +270,7 @@ export function camelCase(
       input,
       toLowerCase,
       toUpperCase,
-      options.preserveConsecutiveUppercase,
+      options.preserveConsecutiveUppercase
     );
   }
 

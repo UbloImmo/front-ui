@@ -11,9 +11,9 @@ import * as ActionStories from "../Action.stories.tsx";
 
 ## Usage
 
-### Sizing
+### Sizes
 
-Action provides 2 sizes (`default` & `large`) to help users differenciate between multiple actions.
+Action provides 4 sizes (`default`, `centered`, `large`, & `card`) to help users differentiate between multiple actions.
 
 <br />
 *As expected, the default size is `default`.*
@@ -24,7 +24,7 @@ Action provides 2 sizes (`default` & `large`) to help users differenciate betwee
 
 ### Basic customization
 
-Action buttons can have their `label`, `icon` and `badgeLabel` properties customized to fit most needs.
+Action buttons can have their `label`, `icon`, and `badgeLabel` properties customized to fit most needs.
 
 #### Label
 
@@ -42,6 +42,14 @@ As such, they can take any valid `IconName`.
 > Please refer to the [Icon Repository](?path=/docs/components-iconography-icon-repository--docs) for a complete list.
 
 <Canvas of={ActionStories.Icons} />
+
+#### Color
+
+Actions use the `primary` color by default. Destructive actions may use the `error` color.
+
+> Hovering over an action will reveal its color.
+
+<Canvas of={ActionStories.Colors} />
 
 ### Further customization
 
@@ -66,11 +74,15 @@ Add a [Tooltips's properties object](?path=/docs/components-feedbacks-tooltip-pr
 
 Use the `description` property to display additional text below the action's label, providing users with more context or details about the action's purpose.
 
+> The description is only shown in `large` & `card` sized actions. 
+
 <Canvas of={ActionStories.Description} />
 
 #### Indicator
 
 Use the `indicator` property to display an additional element on the top right corner of the static icon.
+
+> Since `centered` actions display a simple [Icon](?path=/docs/components-iconography-icon-usage--docs) instead of a [StaticIcon](?path=/docs/components-iconography-staticicon-usage--docs), the `indicator` property is ignored.
 
 <Canvas of={ActionStories.Indicator} />
 

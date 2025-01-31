@@ -79,7 +79,7 @@ export const allTypographyWeights: TypographyWeight[] =
  */
 export const sanitizeTypographyProps = (
   defaults: Required<AnyTypographyProps>,
-  props: AnyTypographyProps,
+  props: AnyTypographyProps
 ): Required<AnyTypographyProps> => {
   const rawSize = props.size ?? defaults.size;
   const size = allTypographySizes.includes(rawSize) ? rawSize : defaults.size;
@@ -122,7 +122,7 @@ export const sanitizeTypographyProps = (
 const extractTypographyStyle = (
   breakpoint: TypographyBreakpoint,
   size: TypographySize,
-  weight: TypographyWeight,
+  weight: TypographyWeight
 ): TypographyStyle => {
   return texts[breakpoint][size][weight].css.style;
 };
@@ -149,7 +149,7 @@ const applyRule = (important?: boolean) => (value: string) => {
  */
 const baseTypographyStyle = (
   style: TypographyStyle,
-  important?: boolean,
+  important?: boolean
 ): RuleSet => {
   const { letterSpacing, textIndent, lineHeight, fontFeatureSettings } =
     transformObject(style, applyRule(important));
@@ -169,7 +169,7 @@ const baseTypographyStyle = (
  * @return {StyleFunction<TextProps | HeadingProps>} the style function for text or heading props
  */
 export const buildTypographyStyle = (
-  defaults: Required<AnyTypographyProps>,
+  defaults: Required<AnyTypographyProps>
 ): GenericFn<[StyleProps<AnyTypographyProps>], RuleSet> => {
   return (props) => {
     const {

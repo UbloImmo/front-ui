@@ -14,6 +14,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Decrease text size from `s` to `xs`
   - Add `assistiveTextIcon` property to render an icon next to the assistive text
 
+## 1.4.2 - 2025-01-31
+### Changed
+- `v0.0.8` Action component
+  - Add `color` property to allow for custom colors
+  - Update `size` property to add `card` & `centered` variants
+  - Rewrite component and its styles to remove excessive conditional checks
+  - Update docs
+
+## 1.4.1 - 2025-01-30
+### Changed
+- `v0.0.3` ContextInfoCard component
+  - Add `content` property to render additional content in the card
+
+
 ## 1.4.1 - 2025-01-30
 ### Changed
 

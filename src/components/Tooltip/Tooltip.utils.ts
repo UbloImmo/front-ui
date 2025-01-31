@@ -26,7 +26,7 @@ const inverseDirectionMap: Record<Direction, Direction> = {
 export const computeTooltipIntersections =
   (
     getTooltipDirection: GenericFn<[], Direction>,
-    setTooltipDirection: GenericFn<[Direction]>,
+    setTooltipDirection: GenericFn<[Direction]>
   ): IntersectionObserverCallback =>
   (entries, observer) => {
     /**
@@ -86,7 +86,7 @@ export const computeTooltipIntersections =
           objectEntries(clippingMap).reduce(
             (
               prevClipDir: Nullable<Direction>,
-              [clipDir, isClipping],
+              [clipDir, isClipping]
             ): Nullable<Direction> => {
               if (!isClipping) return prevClipDir;
               if (!prevClipDir) {
@@ -98,7 +98,7 @@ export const computeTooltipIntersections =
               if (currentDiffRatio > prevDiffRatio) return clipDir;
               return prevClipDir;
             },
-            clippingDirection,
+            clippingDirection
           ) ?? clippingDirection;
 
         if (currentClippingDirection) {
@@ -118,7 +118,7 @@ export const computeTooltipIntersections =
         }
 
         prevPassDiffRatios = diffRatios;
-      },
+      }
     );
 
     /**

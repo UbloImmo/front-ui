@@ -15,7 +15,7 @@ type MockData = { value: number };
 
 const testComponent = testComponentFactory(
   "ListFilterOptionChip",
-  ListFilterOptionChip<MockData>,
+  ListFilterOptionChip<MockData>
 );
 
 const testId = "list-filter-option-chip";
@@ -23,7 +23,7 @@ const deleteButtonTestId = "chip-button";
 
 const mockOptionData = filterOptionData(
   "My option",
-  filterOptionMatch<MockData>("value", "=", 0),
+  filterOptionMatch<MockData>("value", "=", 0)
 );
 
 const select = mock(() => {});

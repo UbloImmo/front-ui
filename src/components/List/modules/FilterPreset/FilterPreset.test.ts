@@ -39,7 +39,7 @@ describe("FilterPreset module", () => {
         const signature = computeFilterPresetSignature(
           label,
           optionSignatures,
-          operator,
+          operator
         );
         expect(signature).toBe("label-option-signature-1ANDoption-signature-2");
       });
@@ -65,7 +65,7 @@ describe("FilterPreset module", () => {
     it("should throw if loading is not a boolean", () => {
       expect(() =>
         // @ts-expect-error - loading is should be a boolean
-        filterPresetData("label", [], {}, "loading string"),
+        filterPresetData("label", [], {}, "loading string")
       ).toThrow();
     });
     it("should return a valid filter preset data if provided with valid arguments", () => {
@@ -85,7 +85,7 @@ describe("FilterPreset module", () => {
         label,
         optionsOrSignatures,
         config,
-        loading,
+        loading
       );
       expect(filterPreset).toBeObject();
       expect(filterPreset.label).toBe(label);

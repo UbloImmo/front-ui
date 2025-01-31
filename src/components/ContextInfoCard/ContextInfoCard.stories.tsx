@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 
 import { ContextInfoCard } from "./ContextInfoCard.component";
+import { Text } from "../Text";
 
 const meta = {
   component: ContextInfoCard,
@@ -63,5 +64,18 @@ export const WithHref: Story = {
     title: ContextInfoCard.defaultProps.title,
     icon: ContextInfoCard.defaultProps.icon,
     href: "#",
+  },
+};
+
+export const WithValue: Story = {
+  args: {
+    title: ContextInfoCard.defaultProps.title,
+    icon: ContextInfoCard.defaultProps.icon,
+    href: "#",
+    content: (
+      <Text size="m" weight="medium" color="gray-800">
+        123,45€
+      </Text>
+    ),
   },
 };

@@ -14,7 +14,7 @@ import type { Meta, StoryFn } from "@storybook/react";
 const componentSource = componentSourceFactory<ListProps<object>>(
   "List",
   {},
-  List.defaultProps,
+  List.defaultProps
 );
 
 const meta = {

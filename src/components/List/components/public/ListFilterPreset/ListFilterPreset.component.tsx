@@ -33,7 +33,7 @@ export const ListFilterPreset = (props: ListFilterPresetProps) => {
       label: String(filterPreset.count),
       color: filterPreset.active ? filterPreset.colorKey : "gray",
     }),
-    [filterPreset],
+    [filterPreset]
   );
 
   if (filterPreset.hidden) return null;

@@ -39,12 +39,12 @@ testLoading({ animation: "Ripple" })(
   "should render another animation",
   async ({ findByTestId }) => {
     expect(await findByTestId(testId)).not.toBeNull();
-  },
+  }
 );
 
 testLoading({ animation: "ProgressBar" })(
   "should render another animation",
   async ({ findByTestId }) => {
     expect(await findByTestId(testId)).not.toBeNull();
-  },
+  }
 );

@@ -17,7 +17,7 @@ const componentSource = componentSourceFactory<EnergyLabelProps>(
     type: "DPE",
     state: "active",
   },
-  EnergyLabel.defaultProps,
+  EnergyLabel.defaultProps
 );
 
 const meta = {

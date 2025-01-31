@@ -50,7 +50,7 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
    * @remarks Used to keep the same filters when fetching the next page
    */
   const lastFilterConfig = useRef<DataProviderFilterFnConfig<TItem>>(
-    NO_FILTERS_CONFIG as DataProviderFilterFnConfig<TItem>,
+    NO_FILTERS_CONFIG as DataProviderFilterFnConfig<TItem>
   );
 
   /**
@@ -59,7 +59,7 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
    * @remarks Used to check if the filters have changed and reset the page accordingly
    */
   const lastFilterConfigSignature = useRef<Nullable<string>>(
-    NO_FILTERS_CONFIG_SIGNATURE,
+    NO_FILTERS_CONFIG_SIGNATURE
   );
 
   /**
@@ -103,7 +103,7 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
         const currentPageData = await fetchPage(
           config,
           afterRef.current,
-          safePageSize,
+          safePageSize
         );
         afterRef.current = currentPageData?.after ?? null;
         setHasNextPage(!isNullish(afterRef.current));
@@ -117,7 +117,7 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
         return [];
       }
     },
-    [logger, fetchPage, safePageSize],
+    [logger, fetchPage, safePageSize]
   );
 
   /**
@@ -130,7 +130,7 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
       setInternalData(accumulatedDataRef.current);
       setData(accumulatedDataRef.current);
     },
-    [setData],
+    [setData]
   );
 
   const {
@@ -161,7 +161,7 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
       lastFilterConfig.current = config;
       lastFilterConfigSignature.current = JSON.stringify(config);
     },
-    [],
+    []
   );
 
   /**
@@ -177,7 +177,7 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
       }
       nextTick(() => filterDynamic(config));
     },
-    [filterDynamic, resetPagination, storeLastFilterConfig],
+    [filterDynamic, resetPagination, storeLastFilterConfig]
   );
 
   /**

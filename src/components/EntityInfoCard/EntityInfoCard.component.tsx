@@ -37,7 +37,7 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
  * @returns {JSX.Element}
  */
 const EntityInfoCard = (
-  props: EntityInfoCardProps & TestIdProps,
+  props: EntityInfoCardProps & TestIdProps
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultEntityInfoCardProps, props);
   const { testId: testIdProp, overrideTestId } = props;

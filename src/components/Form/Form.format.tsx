@@ -201,7 +201,7 @@ const DisplayMultiSelectValue = ({
   if (!fieldValue) return <FormFieldDisplayValue value={noValue} />;
   if (isLoading) return <FieldSkeleton />;
   const activeOptions = flattenedOptions.filter(({ value }) =>
-    fieldValue.includes(value),
+    fieldValue.includes(value)
   );
 
   return (
@@ -310,7 +310,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
  */
 export const computeFieldDisplayContent = <TType extends InputType>(
   type: TType,
-  props: SpecificInputProps<TType>,
+  props: SpecificInputProps<TType>
 ): ReactNode | FC => {
   return isNullish(props.value)
     ? noValue

@@ -134,7 +134,7 @@ const isDetailedConfig = <
 >(
   props:
     | ComponentVariantsConfig<TComponentProps, TPropKey>
-    | ComponentVariantsDetailedConfig<TComponentProps>,
+    | ComponentVariantsDetailedConfig<TComponentProps>
 ): props is ComponentVariantsDetailedConfig<TComponentProps> => {
   return !("for" in props);
 };
@@ -156,7 +156,7 @@ export const ComponentVariants = <
 >(
   props:
     | ComponentVariantsConfig<TComponentProps, TPropKey>
-    | ComponentVariantsDetailedConfig<TComponentProps>,
+    | ComponentVariantsDetailedConfig<TComponentProps>
 ): JSX.Element => {
   const propVariants = useMemo<PropVariant<TComponentProps>[]>(() => {
     if (isDetailedConfig(props)) {
@@ -167,7 +167,7 @@ export const ComponentVariants = <
           __propVariantLabel: isString(variant?.__propVariantLabel)
             ? variant.__propVariantLabel
             : JSON.stringify(variant).replace(/"/g, ""),
-        }),
+        })
       );
     }
 
@@ -204,7 +204,7 @@ export const ComponentVariants = <
   const Wrapper = useMemo(() => {
     if (props.columns) {
       const columns = Array(
-        isNumber(props.columns) ? props.columns : props.variants.length,
+        isNumber(props.columns) ? props.columns : props.variants.length
       ).fill("1fr");
       const align =
         props.align &&

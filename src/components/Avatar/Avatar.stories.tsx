@@ -10,7 +10,7 @@ import type { FC } from "react";
 
 const componentSource = componentSourceFactory<AvatarProps>(
   "Avatar",
-  Avatar.defaultProps,
+  Avatar.defaultProps
 );
 
 const sizes: AvatarSize[] = ["m", "l", "xl"];

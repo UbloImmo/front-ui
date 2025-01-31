@@ -104,12 +104,12 @@ describe("StaticDataProvider", () => {
       });
       it("should only take into account selected options", () => {
         expect(
-          filterItems(items, { option: options.alwaysInvalidOption }),
+          filterItems(items, { option: options.alwaysInvalidOption })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
             option: selectOption(options.alwaysInvalidOption),
-          }),
+          })
         ).toHaveLength(0);
       });
       it("should return all items if no filter is provided", () => {
@@ -118,12 +118,12 @@ describe("StaticDataProvider", () => {
       });
       it("should filter by a single option", () => {
         expect(
-          filterItems(items, { option: selectOption(options.numberMoreThan5) }),
+          filterItems(items, { option: selectOption(options.numberMoreThan5) })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
             option: selectOption(options.alwaysInvalidOption),
-          }),
+          })
         ).toHaveLength(0);
       });
       it("should filter by multiple options", () => {
@@ -134,7 +134,7 @@ describe("StaticDataProvider", () => {
               options.alwaysInvalidOption,
             ],
             operator: "AND",
-          }),
+          })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
@@ -143,7 +143,7 @@ describe("StaticDataProvider", () => {
               selectOption(options.alwaysInvalidOption),
             ],
             operator: "AND",
-          }),
+          })
         ).toHaveLength(0);
         expect(
           filterItems(items, {
@@ -152,18 +152,18 @@ describe("StaticDataProvider", () => {
               selectOption(options.alwaysInvalidOption),
             ],
             operator: "OR",
-          }),
+          })
         ).toHaveLength(3);
       });
       it("should filter by a single filter", () => {
         expect(
-          filterItems(items, { filter: selectFilter(filters.filter1) }),
+          filterItems(items, { filter: selectFilter(filters.filter1) })
         ).toHaveLength(3);
         expect(
-          filterItems(items, { filter: filters.invalidFilter }),
+          filterItems(items, { filter: filters.invalidFilter })
         ).toHaveLength(3);
         expect(
-          filterItems(items, { filter: selectFilter(filters.invalidFilter) }),
+          filterItems(items, { filter: selectFilter(filters.invalidFilter) })
         ).toHaveLength(0);
       });
       it("should filter by multiple filters", () => {
@@ -174,7 +174,7 @@ describe("StaticDataProvider", () => {
               selectFilter(filters.filter2),
             ],
             operator: "AND",
-          }),
+          })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
@@ -183,7 +183,7 @@ describe("StaticDataProvider", () => {
               selectFilter(filters.invalidFilter),
             ],
             operator: "AND",
-          }),
+          })
         ).toHaveLength(0);
         expect(
           filterItems(items, {
@@ -192,24 +192,24 @@ describe("StaticDataProvider", () => {
               selectFilter(filters.invalidFilter),
             ],
             operator: "OR",
-          }),
+          })
         ).toHaveLength(3);
       });
       it("should filter by a single filter preset", () => {
         expect(
           filterItems(items, {
             filterPreset: selectFilterPreset(filterPresets.filterPreset1),
-          }),
+          })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
             filterPreset: filterPresets.invalidFilterPreset,
-          }),
+          })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
             filterPreset: selectFilterPreset(filterPresets.invalidFilterPreset),
-          }),
+          })
         ).toHaveLength(0);
       });
       it("should filter by multiple filter presets", () => {
@@ -220,7 +220,7 @@ describe("StaticDataProvider", () => {
               selectFilterPreset(filterPresets.filterPreset2),
             ],
             operator: "AND",
-          }),
+          })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
@@ -229,7 +229,7 @@ describe("StaticDataProvider", () => {
               selectFilterPreset(filterPresets.invalidFilterPreset),
             ],
             operator: "AND",
-          }),
+          })
         ).toHaveLength(0);
         expect(
           filterItems(items, {
@@ -238,7 +238,7 @@ describe("StaticDataProvider", () => {
               selectFilterPreset(filterPresets.invalidFilterPreset),
             ],
             operator: "OR",
-          }),
+          })
         ).toHaveLength(3);
       });
     });
@@ -249,7 +249,7 @@ describe("StaticDataProvider", () => {
   type HookReturn = ReturnType<Hook>;
   const testHook = testHookFactory<HookParams, HookReturn, Hook>(
     "useStaticDataProvider",
-    useStaticDataProvider<MockListItem>,
+    useStaticDataProvider<MockListItem>
   );
 
   const setData = mock((_data: MockListItem[]) => {});
@@ -265,7 +265,7 @@ describe("StaticDataProvider", () => {
       expect(result.refetch).toBeFunction();
       expect(result.filter).toBeFunction();
       expect(result.fetchCount).toBeFunction();
-    },
+    }
   );
 
   setData.mockReset();
@@ -278,7 +278,7 @@ describe("StaticDataProvider", () => {
     setData.mockClear();
     result.filter({
       option: mockListData.selectOption(
-        mockListData.options.alwaysInvalidOption,
+        mockListData.options.alwaysInvalidOption
       ),
     });
     // rerender();
@@ -292,11 +292,11 @@ describe("StaticDataProvider", () => {
       setData.mockClear();
       const count = await result.fetchCount({
         option: mockListData.selectOption(
-          mockListData.options.alwaysInvalidOption,
+          mockListData.options.alwaysInvalidOption
         ),
       });
       expect(setData).not.toHaveBeenCalled();
       expect(count).toEqual(0);
-    },
+    }
   );
 });

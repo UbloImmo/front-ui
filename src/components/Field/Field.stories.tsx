@@ -20,7 +20,7 @@ const componentSource = componentSourceFactory<FieldProps<InputType>>(
     type: "text",
     label: "[Field label]",
   },
-  Field.defaultProps,
+  Field.defaultProps
 );
 
 const meta = {
@@ -88,7 +88,7 @@ export const Default = {} as Story;
 export const Types = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
     Field.defaultProps as Required<FieldProps<InputType>>,
-    props,
+    props
   );
   return (
     <ComponentVariants
@@ -111,7 +111,7 @@ const labels = ["First name", "Last name"];
 export const Labels = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
     Field.defaultProps as Required<FieldProps<InputType>>,
-    props,
+    props
   );
   return (
     <ComponentVariants
@@ -131,7 +131,7 @@ const bools = [false, true];
 export const Required = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
     Field.defaultProps as Required<FieldProps<InputType>>,
-    props,
+    props
   );
   return (
     <ComponentVariants
@@ -149,7 +149,7 @@ export const Required = (props: FieldProps<InputType>) => {
 export const Disabled = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
     Field.defaultProps as Required<FieldProps<InputType>>,
-    props,
+    props
   );
   return (
     <ComponentVariants
@@ -169,7 +169,7 @@ const assistiveTexts = ["The CVC can be found on the back of your card", null];
 export const AssistiveTexts = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
     Field.defaultProps as Required<FieldProps<InputType>>,
-    props,
+    props
   );
   return (
     <ComponentVariants
@@ -189,7 +189,7 @@ const errorTexts = ["This field is required", null];
 export const ErrorTexts = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
     Field.defaultProps as Required<FieldProps<InputType>>,
-    { ...props, error: true, assistiveText: null },
+    { ...props, error: true, assistiveText: null }
   );
   return (
     <ComponentVariants
@@ -212,7 +212,7 @@ const tooltipProps: Nullable<InputLabelTooltipProps>[] = [
 export const Tooltips = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
     Field.defaultProps as Required<FieldProps<InputType>>,
-    props,
+    props
   );
   return (
     <ComponentVariants

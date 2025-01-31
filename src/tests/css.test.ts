@@ -61,7 +61,7 @@ const testLengthConversion = <
   converter: GenericFn<
     [LengthCollection[TInput][keyof LengthCollection[TInput]]],
     LengthCollection[TOutput][keyof LengthCollection[TOutput]]
-  >,
+  >
 ) => {
   const keys = objectKeys(testLenghts[input]);
   const outputKeys = objectKeys(testLenghts[output]);
@@ -70,7 +70,7 @@ const testLengthConversion = <
     keys.forEach((key, index) => {
       const outputKey = outputKeys[index];
       expect(converter(testLenghts[input][key])).toEqual(
-        testLenghts[output][outputKey],
+        testLenghts[output][outputKey]
       );
     });
   });
@@ -81,7 +81,7 @@ const testLengthPredicate = <
   TInput extends LengthUnitKey,
 >(
   input: TInput,
-  predicate: Predicate<TPredicateType>,
+  predicate: Predicate<TPredicateType>
 ) => {
   it(`should identify a ${input}`, () => {
     expect(predicate).toBeDefined();
@@ -127,7 +127,7 @@ describe("css", () => {
       expect(cssVar).toBeFunction();
       expect(cssVar).not.toThrow();
       expect(cssVar("foo", testLenghts.cssRem.float)).toEqual(
-        `--foo: ${testLenghts.cssRem.float};`,
+        `--foo: ${testLenghts.cssRem.float};`
       );
     });
 
@@ -149,10 +149,10 @@ describe("css", () => {
       expect(cssLengthUsage).toBeDefined();
       expect(cssLengthUsage).toBeFunction();
       expect(cssLengthUsage(testLenghts.rem.float)).toEqual(
-        testLenghts.cssRem.float,
+        testLenghts.cssRem.float
       );
       expect(cssLengthUsage(testLenghts.cssRem.float)).toEqual(
-        testLenghts.cssRem.float,
+        testLenghts.cssRem.float
       );
       expect(cssLengthUsage("s-1")).toEqual(cssVarUsage("s-1"));
     });

@@ -33,7 +33,7 @@ export const CalendarChevron = (props: CalendarChevronProps) => {
   const mergedProps = useMergedProps(defaultCalendarChevronProps, props);
   const iconName = useMemo(
     () => chevronIconMap[mergedProps.orientation],
-    [mergedProps],
+    [mergedProps]
   );
 
   return (

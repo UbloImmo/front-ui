@@ -30,7 +30,7 @@ const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
  * @return {Nullable<JSX.Element>} The JSX element representing the assistive text.
  */
 const InputAssistiveText = (
-  props: InputAssistiveTextProps & TestIdProps,
+  props: InputAssistiveTextProps & TestIdProps
 ): Nullable<JSX.Element> => {
   const mergedProps = useMergedProps<
     DefaultInputAssistiveTextProps,

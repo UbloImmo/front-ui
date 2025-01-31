@@ -12,7 +12,7 @@ import { TestIdProps } from "@types";
 import { useStyleProps, useTestId } from "@utils";
 
 export const IconPickerItem = (
-  props: IconPickerItemProps & TestIdProps,
+  props: IconPickerItemProps & TestIdProps
 ): JSX.Element => {
   const styleProps = useStyleProps(props);
 

@@ -14,6 +14,6 @@ export const useListContext = <
   TProviderType extends DataProviderType = DataProviderType,
 >() => {
   return useContext(
-    ListContext as unknown as Context<ListContextValue<TItem, TProviderType>>,
+    ListContext as unknown as Context<ListContextValue<TItem, TProviderType>>
   );
 };

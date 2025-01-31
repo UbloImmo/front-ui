@@ -122,7 +122,7 @@ const computeButtonColor = ({
     buttonStyleMap[color][secondary ? "secondary" : "primary"];
 
   let defaultColors = transformObject(rawButtonColors.default, (color) =>
-    color ? (isValidRgbaStr(color) ? color : cssVarUsage(color)) : null,
+    color ? (isValidRgbaStr(color) ? color : cssVarUsage(color)) : null
   );
   defaultColors = {
     ...defaultColors,
@@ -143,8 +143,8 @@ const computeButtonColor = ({
             ? color
             : cssVarUsage(color)
           : (defaultColors[key] ?? null),
-      ],
-    ),
+      ]
+    )
   );
 
   return (key: keyof ButtonStyleColors, hovering?: boolean) => {
@@ -353,7 +353,7 @@ const buttonModifierStyles = ({
 };
 
 export const buildButtonStyles = (
-  styledProps: StyleProps<DefaultButtonProps>,
+  styledProps: StyleProps<DefaultButtonProps>
 ): RuleSet => {
   const props = fromStyleProps(styledProps);
 

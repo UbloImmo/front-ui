@@ -52,5 +52,5 @@ export type EmptyThemeOverride = {
 export type ThemeOverrideReponse = ThemeOverride | EmptyThemeOverride;
 
 export type GetThemeOverridesFn = (
-  fakeFetchFn?: typeof fetch,
+  fakeFetchFn?: typeof fetch
 ) => Promise<Nullable<ThemeOverride>>;

@@ -23,7 +23,7 @@ describe("Input", () => {
           },
         },
       ],
-    },
+    }
   );
 
   testPasswordInput({
@@ -46,7 +46,7 @@ describe("Input", () => {
       await click(input);
       await keyboard("test");
       expect(onChange).toHaveBeenCalled();
-    },
+    }
   );
 
   const onVisibilityChange = mock(() => {});
@@ -60,6 +60,6 @@ describe("Input", () => {
       expect(control).toBeDefined();
       await click(control as HTMLElement);
       expect(onVisibilityChange).toHaveBeenCalled();
-    },
+    }
   );
 });

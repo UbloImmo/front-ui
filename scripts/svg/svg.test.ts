@@ -15,7 +15,7 @@ describe("svg to tsx conversion", () => {
     it("should not throw", () => {
       expect(async () => transformSvgs()).not.toThrow();
       expect(() =>
-        svgTextNodeToTsx({ type: "text", value: "value" }),
+        svgTextNodeToTsx({ type: "text", value: "value" })
       ).not.toThrow();
     });
   });

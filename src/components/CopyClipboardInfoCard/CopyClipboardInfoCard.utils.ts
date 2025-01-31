@@ -13,7 +13,7 @@ import type { OnCopiedFn } from "./CopyClipboardInfoCard.types";
 export const copyToClipboard = async (
   content: string,
   onCopied?: Nullable<OnCopiedFn>,
-  logger?: Logger,
+  logger?: Logger
 ): Promise<boolean> => {
   if (
     !navigator ||

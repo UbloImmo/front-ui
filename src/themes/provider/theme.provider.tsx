@@ -72,7 +72,7 @@ export const ThemeProvider = ({
 
   const theme = useMemo(
     () => buildTheme(overrides, _forceTheme),
-    [overrides, _forceTheme],
+    [overrides, _forceTheme]
   );
 
   return (

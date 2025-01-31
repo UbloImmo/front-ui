@@ -21,7 +21,7 @@ const testModal = testComponentFactory(
         <DialogProvider>{children}</DialogProvider>
       </div>
     );
-  },
+  }
 );
 
 testModal({ open: false })(
@@ -34,7 +34,7 @@ testModal({ open: false })(
       res = null;
     }
     expect(res).toBeNull();
-  },
+  }
 );
 
 testModal({ open: true })("should render if open", async ({ findByTestId }) => {
@@ -48,7 +48,7 @@ testModal({ open: true, reference: TEST_MODAL_REF })(
     expect(queryByTestId(testId)).not.toBeNull();
 
     const closeButton = queryByTestId(
-      "modal-close-button",
+      "modal-close-button"
     ) as HTMLButtonElement;
     expect(closeButton).not.toBeNull();
 
@@ -56,5 +56,5 @@ testModal({ open: true, reference: TEST_MODAL_REF })(
     expect(queryByTestId(testId)).toBeNull();
 
     debug();
-  },
+  }
 );

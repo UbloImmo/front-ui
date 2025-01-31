@@ -14,7 +14,7 @@ export const buildTypographyWeightMap = (): Record<
 > => {
   return transformObject(
     texts.desktop.m,
-    (token) => token.css.style.fontWeight,
+    (token) => token.css.style.fontWeight
   );
 };
 

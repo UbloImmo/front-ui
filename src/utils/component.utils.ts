@@ -55,7 +55,7 @@ export const loadComponent =
     TComponentProps extends Record<string, unknown>,
   >(
     componentName: TComponentName,
-    modulePromise: Promise<ComponentModule<TComponentName, TComponentProps>>,
+    modulePromise: Promise<ComponentModule<TComponentName, TComponentProps>>
   ) =>
   async (): Promise<ComponentDefaultModule<TComponentProps>> => {
     try {

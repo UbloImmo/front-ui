@@ -249,7 +249,7 @@ const options: SelectOptionOrGroup<string, BadgeProps>[] = [
 ];
 
 export const CustomComponents = (
-  props: SelectInputProps<string, BadgeProps>,
+  props: SelectInputProps<string, BadgeProps>
 ) => {
   return (
     <SelectInput

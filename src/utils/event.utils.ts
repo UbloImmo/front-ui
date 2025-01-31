@@ -16,14 +16,14 @@ export const useEscapeOrOutsideClickEvent = <
 >(
   callback: VoidFn,
   wrapperRef?: RefObject<Nullable<TElement>>,
-  wrapperId?: string,
+  wrapperId?: string
 ) => {
   const defaultId = useId();
   const defaultRef = useRef<TElement>(null);
 
   const ref = useMemo<RefObject<TElement>>(
     () => (wrapperRef as RefObject<TElement>) ?? defaultRef,
-    [wrapperRef],
+    [wrapperRef]
   );
   const id = useMemo(() => wrapperId ?? defaultId, [defaultId, wrapperId]);
 

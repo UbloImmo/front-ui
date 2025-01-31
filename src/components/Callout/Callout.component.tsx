@@ -68,7 +68,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
 
   if (!props.children) {
     warn(
-      `Missing required children, defaulting to ${defaultCalloutProps.children}`,
+      `Missing required children, defaulting to ${defaultCalloutProps.children}`
     );
   }
 

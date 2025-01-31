@@ -22,7 +22,7 @@ testTable(Table.defaultProps)("should render", ({ queryByTestId }) => {
 
 const testTableScrollView = testComponentFactory(
   "TableScrollView",
-  TableScrollView,
+  TableScrollView
 );
 
 testTableScrollView({})("should render", ({ queryByTestId }) => {
@@ -37,7 +37,7 @@ testTableHeader({})("should render", ({ queryByTestId }) => {
 
 const testTableHeaderCell = testComponentFactory(
   "TableHeaderCell",
-  TableHeaderCell,
+  TableHeaderCell
 );
 
 testTableHeaderCell({})("should render", ({ queryByTestId }) => {

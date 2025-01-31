@@ -8,7 +8,7 @@ import { testComponentFactory, testHookFactory } from "@/tests";
 const testId = "input-multi-select";
 const testMultiSelectInput = testComponentFactory(
   "MultiSelectInput",
-  MultiSelectInput,
+  MultiSelectInput
 );
 
 const options = [
@@ -26,12 +26,12 @@ const groupOptions = [
 
 describe("Input", () => {
   testMultiSelectInput({})("should render", ({ queryByTestId }) =>
-    expect(queryByTestId(testId)).not.toBeNull(),
+    expect(queryByTestId(testId)).not.toBeNull()
   );
 
   testMultiSelectInput({ options: options, placeholder: "Select an option" })(
     "should render single options",
-    ({ queryByTestId }) => expect(queryByTestId(testId)).not.toBeNull(),
+    ({ queryByTestId }) => expect(queryByTestId(testId)).not.toBeNull()
   );
 
   testMultiSelectInput({
@@ -53,7 +53,7 @@ describe("Input", () => {
     "should show dropdown with single options on Click on the select",
     async ({ queryByTestId }, { click }) => {
       const inputSelect = queryByTestId(
-        `${testId}-element`,
+        `${testId}-element`
       ) as HTMLButtonElement;
 
       await click(inputSelect);
@@ -64,7 +64,7 @@ describe("Input", () => {
       expect(optionsDropdown).not.toBeNull();
 
       expect(inputSelect.getAttribute("aria-expanded")).toBe("true");
-    },
+    }
   );
 
   testMultiSelectInput({
@@ -73,7 +73,7 @@ describe("Input", () => {
     "should close dropdown on click outside",
     async ({ queryByTestId }, { click }) => {
       const inputSelect = queryByTestId(
-        `${testId}-element`,
+        `${testId}-element`
       ) as HTMLButtonElement;
 
       await click(inputSelect);
@@ -81,7 +81,7 @@ describe("Input", () => {
       await click(document.body);
       expect(queryByTestId(`${testId}-options`)).toBeNull();
       expect(inputSelect.getAttribute("aria-expanded")).toBe("false");
-    },
+    }
   );
 
   testMultiSelectInput({
@@ -90,17 +90,17 @@ describe("Input", () => {
     "should not select and close on disabled option click",
     async ({ queryByTestId, queryAllByTestId }, { click }) => {
       const inputSelect = queryByTestId(
-        `${testId}-element`,
+        `${testId}-element`
       ) as HTMLButtonElement;
 
       await click(inputSelect);
 
       await click(
-        queryAllByTestId(`input-select-option`)?.[2] as HTMLDivElement,
+        queryAllByTestId(`input-select-option`)?.[2] as HTMLDivElement
       );
 
       expect(inputSelect.getAttribute("aria-expanded")).toBe("true");
-    },
+    }
   );
 });
 
@@ -124,7 +124,7 @@ testMultiSelectInput({
     expect(inputSelect.textContent).toBe("Option 2");
     expect(onChange).toHaveBeenCalledWith(["2"]);
     onChange.mockReset();
-  },
+  }
 );
 
 testMultiSelectInput({
@@ -146,7 +146,7 @@ testMultiSelectInput({
     expect(inputSelect.textContent).toContain("Option 2");
     expect(onChange).toHaveBeenCalledWith(["1", "2"]);
     onChange.mockReset();
-  },
+  }
 );
 
 testMultiSelectInput({
@@ -162,7 +162,7 @@ testMultiSelectInput({
     expect(inputSelect.textContent).toContain("Option 2");
 
     const clearButton = queryAllByTestId(
-      "chip-button",
+      "chip-button"
     )?.[0] as HTMLButtonElement;
     await click(clearButton);
 
@@ -170,14 +170,14 @@ testMultiSelectInput({
     expect(inputSelect.textContent).toBe("Option 2");
     expect(onChange).toHaveBeenCalledWith(["2"]);
     onChange.mockReset();
-  },
+  }
 );
 
 const testUseMultiSelectValue = () => {
   type Hook = typeof useMultiSelectValue;
   const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
     "useMultiSelectValue",
-    useMultiSelectValue,
+    useMultiSelectValue
   );
 
   testHook(
@@ -186,7 +186,7 @@ const testUseMultiSelectValue = () => {
       onChange,
     },
     [],
-    [],
+    []
   )("should handle null options", (result) => {
     expect(result.internalValue.size).toBe(0);
 

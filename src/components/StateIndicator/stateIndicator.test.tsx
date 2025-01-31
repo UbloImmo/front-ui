@@ -9,7 +9,7 @@ const testId = "state-indicator";
 
 const testStateIndicator = testComponentFactory<StateIndicatorProps>(
   "StateIndicator",
-  StateIndicator,
+  StateIndicator
 );
 
 testStateIndicator({

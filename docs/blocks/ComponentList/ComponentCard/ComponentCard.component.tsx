@@ -52,7 +52,7 @@ export const ComponentCard = <
   parent,
 }: ComponentCardProps<TIndex, TName>) => {
   const size = useStatic<ComponentCardCellSize>(() =>
-    randomSize ? randomCellSize() : "small",
+    randomSize ? randomCellSize() : "small"
   );
 
   const { description, internal, todo, version } = useStatic<

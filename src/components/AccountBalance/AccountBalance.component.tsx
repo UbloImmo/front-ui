@@ -28,7 +28,7 @@ const defaultAccountBalanceProps: AccountBalanceDefaultProps = {
  * @returns {JSX.Element}
  */
 const AccountBalance = (
-  props: AccountBalanceProps & TestIdProps,
+  props: AccountBalanceProps & TestIdProps
 ): JSX.Element => {
   const { warn } = useLogger("AccountBalance", { hideLogs: true });
   const mergedProps = useMergedProps(defaultAccountBalanceProps, props);
@@ -39,7 +39,7 @@ const AccountBalance = (
 
   const formattedValue = useMemo(
     () => formatAmount(mergedProps.value),
-    [mergedProps.value],
+    [mergedProps.value]
   );
 
   return (

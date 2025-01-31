@@ -65,7 +65,7 @@ const Input = <
   const { warn, error } = useLogger("Input");
 
   const inputMap = useStatic<SpecificInputComponentMap<TGenericValue>>(
-    inputComponentMap<TGenericValue>,
+    inputComponentMap<TGenericValue>
   );
 
   const InputComponent = useMemo<

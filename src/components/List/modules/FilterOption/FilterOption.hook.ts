@@ -18,7 +18,7 @@ export const CLEAR_FILTER_OPTION_SIGNATURE =
  * @returns {FilterOption<Record<string, unknown>>} A filter option that clears its parent filter when selected
  */
 export const useClearFilterOption = (
-  filter: Filter<Record<string, unknown>>,
+  filter: Filter<Record<string, unknown>>
 ): FilterOption<Record<string, unknown>> => {
   const tl = useUikitTranslation();
   // create the base option once
@@ -26,7 +26,7 @@ export const useClearFilterOption = (
     filterOptionData<Record<string, unknown>>(tl.status.all(), [], {
       icon: "CircleDashed",
       color: "gray-600",
-    }),
+    })
   );
 
   // return the option with the select method overridden to clear the filter,

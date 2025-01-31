@@ -16,7 +16,7 @@ import type { CssPx, CssRem, FixedCssLength } from "@types";
  */
 const parseIconSize = (
   size: Optional<FixedCssLength>,
-  warn: VoidFn<[unknown]>,
+  warn: VoidFn<[unknown]>
 ): CssRem => {
   if (!isCssLengthUsage(size)) {
     warn(`unsupported size (${size}) provided`);
@@ -35,7 +35,7 @@ const parseIconSize = (
  */
 export const useIconSize = (
   size: Optional<FixedCssLength>,
-  warn: VoidFn<[unknown]>,
+  warn: VoidFn<[unknown]>
 ): CssPx | CssRem => {
   return useMemo(() => {
     return parseIconSize(size, warn);
@@ -51,7 +51,7 @@ export const useIconSize = (
  */
 export const loadIcon = async (
   name: IconName,
-  warn: VoidFn<[unknown]>,
+  warn: VoidFn<[unknown]>
 ): Promise<{ default: GeneratedIcon | MissingIcon }> => {
   const missingIcon: MissingIcon = () => <div />;
   missingIcon.__missing = true;
@@ -100,7 +100,7 @@ export const loadIcon = async (
  * @returns {boolean} True if the icon is a missing icon placeholder, false otherwise
  */
 export const isMissingIcon = (
-  icon: GeneratedIcon | MissingIcon,
+  icon: GeneratedIcon | MissingIcon
 ): icon is MissingIcon => {
   return "__missing" in icon && icon.__missing;
 };

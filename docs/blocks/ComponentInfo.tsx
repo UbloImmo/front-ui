@@ -39,17 +39,17 @@ type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
  * @return {JSX.Element} The rendered component info section.
  */
 export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
-  props: ComponentInfoProps<TComponentProps>,
+  props: ComponentInfoProps<TComponentProps>
 ) => {
   const [isPropsPage, setIsPropsPage] = useState(false);
 
   useLayoutEffect(() => {
     const pageSubtitle = document.querySelector(
-      `main[data-layout="docs-content"] > span:first-child > h2[data-testid="heading"]:first-child`,
+      `main[data-layout="docs-content"] > span:first-child > h2[data-testid="heading"]:first-child`
     );
 
     setIsPropsPage(
-      !!(pageSubtitle && pageSubtitle.textContent === "Properties"),
+      !!(pageSubtitle && pageSubtitle.textContent === "Properties")
     );
   }, []);
 
@@ -136,7 +136,7 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
         window.open(link, "_blank");
       }
     },
-    [],
+    []
   );
 
   const redirectToProps = useMemo(() => {

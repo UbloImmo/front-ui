@@ -55,12 +55,12 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
  * @returns {JSX.Element}
  */
 const ComboBox = <TOptionValue extends NullishPrimitives>(
-  props: ComboBoxProps<TOptionValue> & TestIdProps,
+  props: ComboBoxProps<TOptionValue> & TestIdProps
 ): JSX.Element => {
   const { warn } = useLogger("ComboBox");
   const mergedProps = useMergedProps(
     defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue>,
-    props,
+    props
   );
   const { options, multi, onChange, disabled, direction, showIcon, readonly } =
     mergedProps;
@@ -73,12 +73,12 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
       if (Array.isArray(value)) return value as TOptionValue[];
       return [value];
     },
-    [],
+    []
   );
 
   const getInitialSelection = useCallback<GenericFn<[], TOptionValue[]>>(
     (): TOptionValue[] => valueToSelection(mergedProps.value),
-    [mergedProps.value, valueToSelection],
+    [mergedProps.value, valueToSelection]
   );
 
   const [selection, setSelection] =
@@ -105,7 +105,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
 
   const isOptionActive = useCallback(
     (option: ComboBoxOption<TOptionValue>) => selection.includes(option.value),
-    [selection],
+    [selection]
   );
 
   useEffect(() => {
@@ -123,7 +123,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
       if (multi) {
         if (isOptionActive(option)) {
           const newSelection = [...selection].filter(
-            (value) => value !== option.value,
+            (value) => value !== option.value
           );
           setSelection(newSelection);
         } else {
@@ -135,7 +135,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
         setSelection([option.value]);
       }
     },
-    [multi, selection, isOptionActive, disabled, readonly],
+    [multi, selection, isOptionActive, disabled, readonly]
   );
 
   if (!props.options) {
@@ -146,14 +146,14 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     (value: TOptionValue) => () => {
       if (mergedProps.onOptionDelete) mergedProps.onOptionDelete(value);
     },
-    [mergedProps],
+    [mergedProps]
   );
 
   const onOptionEdit = useCallback(
     (value: TOptionValue) => () => {
       if (mergedProps.onOptionEdit) mergedProps.onOptionEdit(value);
     },
-    [mergedProps],
+    [mergedProps]
   );
 
   const creatable = useMemo(() => {
@@ -170,7 +170,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
       disabled,
       title: action.create(),
     }),
-    [action, disabled, mergedProps.onCreate],
+    [action, disabled, mergedProps.onCreate]
   );
 
   if (isNumber(mergedProps.columns)) {

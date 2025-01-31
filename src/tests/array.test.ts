@@ -45,11 +45,11 @@ type HookParams = Parameters<Hook>;
 
 const testHook = testHookFactory<HookParams, HookReturn, Hook>(
   "useDataArray",
-  useDataArray<MockItem>,
+  useDataArray<MockItem>
 );
 const testAsyncHook = testHookFactory<HookParams, HookReturn, Hook>(
   "useDataArray (async)",
-  useDataArray<MockItem>,
+  useDataArray<MockItem>
 );
 
 const onDataChangeSync = mock(() => {});
@@ -64,7 +64,7 @@ testHook("not an array")(
   "should log an error if data is not an array nor a function",
   () => {
     expect(global.console.error).toHaveBeenCalled();
-  },
+  }
 );
 
 /**
@@ -83,21 +83,21 @@ const testInParallel = (
       utils: TestHookUtils<HookReturn, HookParams>,
     ]
   >,
-  options?: TestHookOptions,
+  options?: TestHookOptions
 ) => {
   testHookSync(
     testName,
     async (result, params, utils) => {
       await test(result, params, utils);
     },
-    options,
+    options
   );
   testHookAsync(
     testName,
     async (result, params, utils) => {
       await test(result, params, utils);
     },
-    options,
+    options
   );
 };
 
@@ -108,7 +108,7 @@ testInParallel(
     utils.rerender();
     expect(onDataChange).toHaveBeenCalledWith(mockItems);
     (onDataChange as Mock<VoidFn>).mockClear();
-  },
+  }
 );
 
 testInParallel(
@@ -127,7 +127,7 @@ testInParallel(
     expect(result.at).toBeFunction();
     expect(result.filter).toBeFunction();
     (onDataChange as Mock<VoidFn>).mockClear();
-  },
+  }
 );
 
 testInParallel("should set data", async (result, [, , onDataChange], utils) => {
@@ -154,7 +154,7 @@ testInParallel(
     await delay(0);
     const newResult = getResult();
     expect(newResult.data).toBe(emptied);
-  },
+  }
 );
 
 testInParallel(
@@ -174,9 +174,9 @@ testInParallel(
     await delay(0);
 
     expect(getResult().data).toEqual(
-      mockItems.map((item) => (predicate(item) ? updater(item) : item)),
+      mockItems.map((item) => (predicate(item) ? updater(item) : item))
     );
-  },
+  }
 );
 
 testInParallel(
@@ -189,7 +189,7 @@ testInParallel(
     const found = getResult().find(predicate);
 
     expect(found).toBe(mockItems[0]);
-  },
+  }
 );
 
 testInParallel(
@@ -203,7 +203,7 @@ testInParallel(
 
     expect(found).toBeNumber();
     expect(found).toBe(4);
-  },
+  }
 );
 
 testInParallel("should push item", async (result, _params, { getResult }) => {
@@ -227,9 +227,9 @@ testInParallel(
     rerender();
     expect(getResult().data).toHaveLength(2);
     expect(getResult().data).toEqual(
-      mockItems.filter((item) => !predicate(item)),
+      mockItems.filter((item) => !predicate(item))
     );
-  },
+  }
 );
 
 testInParallel(
@@ -242,7 +242,7 @@ testInParallel(
     await delay(0);
     expect(getResult().data).toHaveLength(mockItems.length + 1);
     expect(getResult().data).toEqual([newItem, ...mockItems]);
-  },
+  }
 );
 
 testInParallel(
@@ -254,7 +254,7 @@ testInParallel(
 
     const item = getResult().at(index, { index: -1, selected: false });
     expect(item).toEqual(mockItems[index]);
-  },
+  }
 );
 
 testInParallel(
@@ -265,5 +265,5 @@ testInParallel(
     const predicate = (item: MockItem) => item.selected;
     const filtered = getResult().filter(predicate);
     expect(filtered).toEqual(mockItems.filter(predicate));
-  },
+  }
 );

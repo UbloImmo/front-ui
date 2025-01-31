@@ -20,7 +20,7 @@ export const cssDimensions = (
   width: CssLength | CssVarName | "auto",
   height: CssLength | CssVarName | "auto",
   includeMinMax = false,
-  important = false,
+  important = false
 ): RuleSet => {
   const parsedSize = transformObject({ width, height }, (length) => {
     if (isFixedCssLength(length)) return parseFixedLength(length);

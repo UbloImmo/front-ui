@@ -40,15 +40,15 @@ describe("Filter module", () => {
           computeFilterDataSignature(
             "label",
             ["test-option-signature-1", "test-option-signature-2"],
-            "AND",
-          ),
+            "AND"
+          )
         ).toBe("label-test-option-signature-1ANDtest-option-signature-2");
         expect(
           computeFilterDataSignature(
             "label",
             ["test-option-signature-1"],
-            "AND",
-          ),
+            "AND"
+          )
         ).toBe("label-test-option-signature-1");
       });
     });
@@ -73,15 +73,15 @@ describe("Filter module", () => {
       });
       const option1 = filterOptionData<MockData>(
         "option 1",
-        filterOptionMatch("value", "<", 32),
+        filterOptionMatch("value", "<", 32)
       );
       const option2 = filterOptionData<MockData>(
         "option 2",
-        filterOptionMatch("value", ">=", 10),
+        filterOptionMatch("value", ">=", 10)
       );
       it("sould extract signatures from options", () => {
         const { optionDividers, optionSignatures } = separateOptionsAndDividers(
-          [option1, option2],
+          [option1, option2]
         );
         expect(optionSignatures).toEqual([
           option1.signature,
@@ -136,11 +136,11 @@ describe("Filter module", () => {
       const label = "filter";
       const option1 = filterOptionData<MockData>(
         "option 1",
-        filterOptionMatch("value", "<", 32),
+        filterOptionMatch("value", "<", 32)
       );
       const option2 = filterOptionData<MockData>(
         "option 2",
-        filterOptionMatch("value", ">=", 10),
+        filterOptionMatch("value", ">=", 10)
       );
       const divider = filterOptionDividerData("divider");
       const optionOrSignatures = [option1, divider, option2.signature];

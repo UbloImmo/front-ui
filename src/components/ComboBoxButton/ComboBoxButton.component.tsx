@@ -55,7 +55,7 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
  * @returns {JSX.Element}
  */
 const ComboBoxButton = (
-  props: ComboBoxButtonProps & TestIdProps,
+  props: ComboBoxButtonProps & TestIdProps
 ): JSX.Element => {
   const { warn } = useLogger("ComboBoxButton");
   const mergedProps = useMergedProps(defaultComboBoxButtonProps, props);
@@ -83,7 +83,7 @@ const ComboBoxButton = (
 
   if (!props.label || isEmptyString(props.label)) {
     warn(
-      `Missing required label, defaulting to ${defaultComboBoxButtonProps.label}`,
+      `Missing required label, defaulting to ${defaultComboBoxButtonProps.label}`
     );
   }
 
@@ -93,7 +93,7 @@ const ComboBoxButton = (
       event.stopPropagation();
       mergedProps.onSelect();
     },
-    [mergedProps],
+    [mergedProps]
   );
 
   const iconName = useMemo(() => {
@@ -119,7 +119,7 @@ const ComboBoxButton = (
       size: "m",
       ellipsis: true,
     }),
-    [active, disabled],
+    [active, disabled]
   );
 
   const iconProps = useMemo<IconProps>(
@@ -127,7 +127,7 @@ const ComboBoxButton = (
       color: disabled ? "gray-400" : active ? "primary-base" : "primary-medium",
       name: iconName,
     }),
-    [active, disabled, iconName],
+    [active, disabled, iconName]
   );
 
   const tl = useUikitTranslation();
@@ -137,7 +137,7 @@ const ComboBoxButton = (
 
   const shouldDisplayContextMenu = useMemo(
     () => (editable || deletable) && !disabled,
-    [editable, deletable, disabled],
+    [editable, deletable, disabled]
   );
 
   const contextMenuItems = useMemo<ContextMenuItemData[]>(
@@ -162,7 +162,7 @@ const ComboBoxButton = (
       onDelete,
       onEdit,
       tl.action,
-    ],
+    ]
   );
 
   return (

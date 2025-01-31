@@ -25,7 +25,7 @@ export const calloutStyle = ({ $color, $size }: CalloutStyleProps): RuleSet => {
       ? "gray-600"
       : $size === "l"
         ? `${$color}-medium`
-        : `${$color}-base`,
+        : `${$color}-base`
   );
 
   const flexLayout =

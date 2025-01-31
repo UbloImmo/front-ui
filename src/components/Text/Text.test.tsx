@@ -23,7 +23,7 @@ testText({ children: testContent })(
     expect(text).toBeDefined();
     const content = queryByText(testContent);
     expect(content).toBeDefined();
-  },
+  }
 );
 
 const sizes: TextSize[] = ["m", "s", "xs"];
@@ -36,6 +36,6 @@ sizes.forEach((size) => {
       expect(heading).toBeDefined();
       const content = queryByText(testContent);
       expect(content).toBeDefined();
-    },
+    }
   );
 });

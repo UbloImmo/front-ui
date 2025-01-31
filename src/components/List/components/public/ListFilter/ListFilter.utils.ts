@@ -37,7 +37,7 @@ import type { ListFilterProps, ListFilterStyleProps } from "./ListFilter.types";
 
 const useSatitizedFilter = (
   props: ListFilterProps,
-  logger: Logger,
+  logger: Logger
 ): Filter<Record<string, unknown>> => {
   const { getFilterBySignature } = useListContext<Record<string, unknown>>();
 
@@ -49,7 +49,7 @@ const useSatitizedFilter = (
       if (foundFilter) return foundFilter;
     }
     logger.warn(
-      "No filter or signature provided, defaulting to an empty filter",
+      "No filter or signature provided, defaulting to an empty filter"
     );
     const emptyData = filterData<Record<string, unknown>>(
       "[EMPTY FILTER]",
@@ -57,7 +57,7 @@ const useSatitizedFilter = (
       {
         hidden: true,
         disabled: true,
-      },
+      }
     );
     return {
       ...emptyData,
@@ -74,7 +74,7 @@ const useSatitizedFilter = (
 const useFilterStyleProps = (
   filter: Filter<Record<string, unknown>>,
   open?: boolean,
-  renderMulti?: boolean,
+  renderMulti?: boolean
 ) => {
   return useMemo<ListFilterStyleProps>(() => {
     const { disabled, loading, active } = filter;
@@ -102,7 +102,7 @@ const useFilterQuery = () => {
 
 const useFilteredOptions = (
   filter: Filter<Record<string, unknown>>,
-  query: Nullable<string>,
+  query: Nullable<string>
 ): FilterOption<Record<string, unknown>>[] => {
   const clearFilterOption = useClearFilterOption(filter);
 
@@ -123,14 +123,14 @@ const useFilteredOptions = (
 
   return useMemo(
     () => [...filteredOptions, clearFilterOption],
-    [filteredOptions, clearFilterOption],
+    [filteredOptions, clearFilterOption]
   );
 };
 
 type WalkHighlightFn = GenericFn<[delta: 1 | -1]>;
 
 const useFilterHighlight = (
-  filteredOptions: FilterOption<Record<string, unknown>>[],
+  filteredOptions: FilterOption<Record<string, unknown>>[]
 ): [Nullable<FilterSignature>, WalkHighlightFn, VoidFn] => {
   const [highlightSignature, setHighlightSignature] =
     useState<Nullable<FilterSignature>>(null);
@@ -143,13 +143,13 @@ const useFilterHighlight = (
       if (!optionElement) return;
       optionElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
     },
-    [],
+    []
   );
 
   const walkHighlight = useCallback<WalkHighlightFn>(
     (delta) => {
       const previousOptionIndex = filteredOptions.findIndex(
-        ({ signature }) => signature === highlightSignature,
+        ({ signature }) => signature === highlightSignature
       );
       const lowerLimit = 0;
       const upperLimit = filteredOptions.length - 1;
@@ -161,7 +161,7 @@ const useFilterHighlight = (
         const nextOptionIndex = clamp(
           currentOptionIndex + delta,
           lowerLimit,
-          upperLimit,
+          upperLimit
         );
         const isSame = nextOptionIndex === currentOptionIndex;
         currentOptionIndex = nextOptionIndex;
@@ -182,7 +182,7 @@ const useFilterHighlight = (
       setHighlightSignature(nextOptionSignature);
       scrollToHighlightedOption(nextOptionSignature);
     },
-    [filteredOptions, highlightSignature, scrollToHighlightedOption],
+    [filteredOptions, highlightSignature, scrollToHighlightedOption]
   );
 
   const resetHighlight = useCallback(() => {
@@ -196,7 +196,7 @@ const useFilterKeyboardEvents = (
   walkHighlight: WalkHighlightFn,
   closeOptions: VoidFn,
   queryInputRef: RefObject<HTMLInputElement>,
-  open?: boolean,
+  open?: boolean
 ) => {
   useEffect(() => {
     const prevent = (event: KeyboardEvent, callback: VoidFn) => {
@@ -226,7 +226,7 @@ const useFilterKeyboardEvents = (
 const useFilterSubmitQuery = (
   highlightSignature: Nullable<FilterSignature>,
   filter: Filter<Record<string, unknown>>,
-  closeOptions: VoidFn,
+  closeOptions: VoidFn
 ) => {
   return useCallback(
     (event: FormEvent<HTMLFormElement>) => {
@@ -235,13 +235,13 @@ const useFilterSubmitQuery = (
 
       if (!highlightSignature) return;
       const option = filter.options.find(
-        ({ signature }) => signature === highlightSignature,
+        ({ signature }) => signature === highlightSignature
       );
       if (!option) return;
       option[option.selected ? "unselect" : "select"]();
       closeOptions();
     },
-    [filter, highlightSignature, closeOptions],
+    [filter, highlightSignature, closeOptions]
   );
 };
 
@@ -259,7 +259,7 @@ export const useListFilter = (props: ListFilterProps) => {
 
   const renderMulti = useMemo(
     () => filter.active && filter.selectedOptions.length > 1 && !filter.loading,
-    [filter],
+    [filter]
   );
 
   const { query, queryInputRef, setQuery } = useFilterQuery();
@@ -289,7 +289,7 @@ export const useListFilter = (props: ListFilterProps) => {
   const selectOptionOnEnter = useFilterSubmitQuery(
     highlightSignature,
     filter,
-    closeOptions,
+    closeOptions
   );
 
   const styleProps = useFilterStyleProps(filter, open, renderMulti);
@@ -299,14 +299,14 @@ export const useListFilter = (props: ListFilterProps) => {
   const getOptionDivider = (signature: FilterSignature) => {
     return (
       filter.optionDividers.find(
-        ({ beforeSignature }) => beforeSignature === signature,
+        ({ beforeSignature }) => beforeSignature === signature
       ) ?? null
     );
   };
 
   const isQuerying = useMemo(
     () => isString(query) && !isEmptyString(query),
-    [query],
+    [query]
   );
 
   return {

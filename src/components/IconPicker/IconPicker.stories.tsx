@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<IconPickerProps>(
   "IconPicker",
-  IconPicker.defaultProps,
+  IconPicker.defaultProps
 );
 
 const meta = {

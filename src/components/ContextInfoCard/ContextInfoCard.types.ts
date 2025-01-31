@@ -47,4 +47,11 @@ export type ContextInfoCardProps = {
    * @default null
    */
   href?: Nullable<string>;
+
+  /**
+   * The content to display in the card
+   *
+   * @default null
+   */
+  content?: Nullable<ReactNode>;
 };
