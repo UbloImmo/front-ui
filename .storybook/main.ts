@@ -1,4 +1,8 @@
-import path from "path";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ___filename = fileURLToPath(import.meta.url);
+const ___dirname = path.dirname(___filename);
 
 import { mergeConfig } from "vite";
 
@@ -49,11 +53,15 @@ const config: StorybookConfig = {
     });
 
     const alias = {
-      "@docs": path.resolve(path.dirname(__dirname), "docs"),
-      "@types": path.resolve(path.dirname(__dirname), "src", "types"),
-      "@utils": path.resolve(path.dirname(__dirname), "src", "utils"),
-      "@components": path.resolve(path.dirname(__dirname), "src", "components"),
-      "@": path.resolve(path.dirname(__dirname), "src"),
+      "@docs": path.resolve(path.dirname(___dirname), "docs"),
+      "@types": path.resolve(path.dirname(___dirname), "src", "types"),
+      "@utils": path.resolve(path.dirname(___dirname), "src", "utils"),
+      "@components": path.resolve(
+        path.dirname(___dirname),
+        "src",
+        "components"
+      ),
+      "@": path.resolve(path.dirname(___dirname), "src"),
     };
     return mergeConfig(baseConfig, {
       build: {

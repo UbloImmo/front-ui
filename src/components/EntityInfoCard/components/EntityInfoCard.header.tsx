@@ -29,7 +29,7 @@ export const defaultEntityInfoCardHeaderProps: EntityInfoCardHeaderDefaultProps 
 /**
  * Displays the header of an entity info card.
  *
- * @version 0.0.10
+ * @version 0.0.11
  *
  * @param {EntityInfoCardHeaderProps & TestIdProps} props - EntityInfoCardHeader component props
  * @returns {JSX.Element}
@@ -45,18 +45,12 @@ export const EntityInfoCardHeader = (
     overrideTestId: props.overrideTestId,
   });
 
-  const hasState = Boolean(props.state);
-  const hasAccountBalance = Boolean(props.accountBalance);
+  const hasState = Boolean(mergedProps.state);
+  const hasAccountBalance = Boolean(mergedProps.accountBalance);
 
   if (!hasState && !hasAccountBalance) {
     logger.error("Either state or accountBalance must be provided");
     return null;
-  }
-
-  if (hasState && hasAccountBalance) {
-    logger.error(
-      "You provided both state and accountBalance, only state will render"
-    );
   }
 
   return (

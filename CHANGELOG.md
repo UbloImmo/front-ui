@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Decrease text size from `s` to `xs`
   - Add `assistiveTextIcon` property to render an icon next to the assistive text
 
+## 1.4.3 - 2025-02-03
+### Fixed
+- `v0.0.12` EntityInfoCard component
+  - Fix bug where no matter the prop combination, an error would be thrown
+
+
 ## 1.4.2 - 2025-01-31
 ### Changed
 - `v0.0.8` Action component
