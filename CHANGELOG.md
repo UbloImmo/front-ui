@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.4.3 - 2025-02-03
 ### Fixed
-
 - `v0.0.12` EntityInfoCard component
   - Fix bug where no matter the prop combination, an error would be thrown
 
