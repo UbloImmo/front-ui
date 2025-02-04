@@ -103,7 +103,7 @@ const StyleReset = styled.div`
       }
     }
 
-    table {
+    table:not([data-testid="table"]) {
       margin: var(--s-4) 0;
     }
   }

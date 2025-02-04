@@ -33,7 +33,7 @@ const defaultInputLabelProps: DefaultInputLabelProps = {
 
 /**
  * Renders an input label component, to be used in association with the Input component.
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
@@ -69,7 +69,7 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
       <FlexRowLayout align="center" gap="s-2" justify={justify}>
         <InputLabelText
           color="gray-600"
-          size="m"
+          size="s"
           testId="input-label-text"
           $required={required}
         >

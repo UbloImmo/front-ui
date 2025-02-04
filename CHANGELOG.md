@@ -7,10 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- `v0.0.7` InputLabel component
+  - Decrease text size from `m` to `s`
+
+- `v0.0.4` InputAssistiveText component
+  - Decrease text size from `s` to `xs`
+  - Add `assistiveTextIcon` property to render an icon next to the assistive text
+
 ## 1.4.3 - 2025-02-03
 ### Fixed
 - `v0.0.12` EntityInfoCard component
   - Fix bug where no matter the prop combination, an error would be thrown
+
 
 ## 1.4.2 - 2025-01-31
 ### Changed
@@ -25,14 +33,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.3` ContextInfoCard component
   - Add `content` property to render additional content in the card
 
+
 ## 1.4.1 - 2025-01-30
 ### Changed
+
 - `v0.0.11` EntityInfoCard component
   - Add a way to change render order within a section
 
 ### Fixed
 - `v0.0.5` StateIndicator component
   - Hide vertical overflow (scrollbar) when text size grows to mobile size
+
 
 ## 1.4.0 - 2025-01-29
 

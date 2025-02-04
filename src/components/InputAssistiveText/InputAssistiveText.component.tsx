@@ -1,19 +1,22 @@
-import { isNull } from "@ubloimmo/front-util";
-import styled from "styled-components";
+import { isBoolean, isNull } from "@ubloimmo/front-util";
+import { useMemo } from "react";
 
+import { Icon, type IconName } from "../Icon";
 import { Text } from "../Text/Text.component";
 
+import { FlexRowLayout } from "@layouts";
 import { isNonEmptyString, useLogger, useMergedProps, useTestId } from "@utils";
 
 import type {
   DefaultInputAssistiveTextProps,
   InputAssistiveTextProps,
 } from "./InputAssistiveText.types";
-import type { TestIdProps } from "@types";
+import type { PaletteColor, TestIdProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
   assistiveText: null,
+  assistiveTextIcon: null,
   errorText: null,
   error: false,
 };
@@ -21,7 +24,7 @@ const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
 /**
  * Renders an assistive text for the Input component based on the provided props.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {InputAssistiveTextProps & TestIdProps} props - The properties for the assistive text.
  * @return {Nullable<JSX.Element>} The JSX element representing the assistive text.
@@ -34,9 +37,22 @@ const InputAssistiveText = (
     InputAssistiveTextProps
   >(defaultInputAssistiveTextProps, props);
 
-  const { assistiveText, errorText, error } = mergedProps;
+  const { assistiveText, errorText, error, assistiveTextIcon } = mergedProps;
   const { warn } = useLogger("InputAssistiveText");
   const testId = useTestId("assistive-text", props);
+
+  const iconName = useMemo<Nullable<IconName>>(() => {
+    if (isBoolean(assistiveTextIcon)) {
+      if (assistiveTextIcon) return "SquircleInfo";
+      return null;
+    }
+    return assistiveTextIcon;
+  }, [assistiveTextIcon]);
+
+  const iconColor = useMemo<PaletteColor>(
+    () => (error ? "error-base" : "gray-400"),
+    [error],
+  );
 
   if (
     (isNull(assistiveText) || !isNonEmptyString(assistiveText)) &&
@@ -49,25 +65,29 @@ const InputAssistiveText = (
   if (error && !isNonEmptyString(errorText)) {
     warn("errorText is missing. If error is true, errorText must be defined.");
   }
+
   return (
-    <InnerAssistiveText data-testid={testId}>
+    <FlexRowLayout
+      testId={testId}
+      overrideTestId
+      fill
+      justify="start"
+      align="center"
+      gap="s-1"
+    >
+      {iconName && <Icon name={iconName} size="s-3" color={iconColor} />}
       {error && isNonEmptyString(errorText) ? (
-        <Text size="s" color="error-base">
+        <Text size="xs" color="error-base" testId="error-text" fill>
           {errorText}
         </Text>
       ) : (
-        <Text size="s" color="gray-400">
+        <Text size="xs" color="gray-400" testId="assistive-text" fill>
           {assistiveText}
         </Text>
       )}
-    </InnerAssistiveText>
+    </FlexRowLayout>
   );
 };
 
 InputAssistiveText.defaultProps = defaultInputAssistiveTextProps;
 export { InputAssistiveText };
-
-const InnerAssistiveText = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
