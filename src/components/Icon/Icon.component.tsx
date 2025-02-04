@@ -54,7 +54,7 @@ const Icon = (props: IconProps) => {
 
   if (!isGeneratedIcon(IconComponent)) {
     warn(`No icon component found for name "${name}"`);
-    return null;
+    return <IconFallback data-testid="icon-fallback" $size={parsedSize} />;
   }
   return (
     <Suspense
