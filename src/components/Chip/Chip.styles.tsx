@@ -19,6 +19,7 @@ export const buildChipContainerStyles = (
 
   return css`
     ${commonBadgeStyles}
+    max-width: 100%;
     flex-direction: ${iconPlacement === "left" ? "row" : "row-reverse"};
     border: 1px solid var(--${borderColor});
     background-color: var(--${background});
@@ -60,4 +61,8 @@ export const buildChipButtonStyles = ({
       fill: var(--${$color}-${isGrayColor($color) ? "800" : "dark"});
     }
   }
+`;
+
+export const buildChipWrapperStyles = () => css`
+  max-width: 100%;
 `;

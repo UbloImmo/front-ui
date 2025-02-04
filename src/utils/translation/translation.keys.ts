@@ -54,6 +54,7 @@ const validationTranslationKeys = [
   "tooSmall",
   "stepMismatch",
   "typeMismatch",
+  "badInput",
 ] as const;
 
 const statusTranslationKeys = [

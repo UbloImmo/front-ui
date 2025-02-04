@@ -26,7 +26,8 @@ import type { Nullable } from "@ubloimmo/front-util";
  * A component that displays a single filters
  * and allows interacting with it and its options.
  *
- * @version 0.0.2
+ * @version 0.0.3
+ *
  * @param {ListFilterProps} props
  * @returns {Nullable<JSX.Element>}
  */
@@ -140,18 +141,24 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
       >
         {filteredOptions.map((option, index) => {
           const key = [option.signature, index, option.selected].join("-");
+          const optionKey = `option-${key}`;
+          const dividerKey = `divider-${key}`;
           const highlighted = option.signature === highlightSignature;
           const divider = getOptionDivider(option.signature);
           return (
             <Fragment key={key}>
               {divider && !isQuerying && (
-                <ListFilterOptionDivider label={divider.label} />
+                <ListFilterOptionDivider
+                  label={divider.label}
+                  key={dividerKey}
+                />
               )}
               <ListFilterOptionItem
                 option={option}
                 multi={filter.multi}
                 closeFilter={closeOptions}
                 highlighted={highlighted}
+                key={optionKey}
               />
             </Fragment>
           );

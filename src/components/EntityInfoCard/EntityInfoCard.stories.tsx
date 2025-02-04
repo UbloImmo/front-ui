@@ -724,7 +724,7 @@ export const Order = (props: EntityInfoCardProps) => {
       ...EntityInfoCard.defaultProps,
       ...sectionVariants[0].sections?.[0],
     },
-    props,
+    props
   );
 
   return (
@@ -743,6 +743,6 @@ Order.parameters = {
     orders.map((order) => ({
       ...EntityInfoCard.defaultProps,
       order,
-    })),
+    }))
   ),
 };

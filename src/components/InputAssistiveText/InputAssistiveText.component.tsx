@@ -51,7 +51,7 @@ const InputAssistiveText = (
 
   const iconColor = useMemo<PaletteColor>(
     () => (error ? "error-base" : "gray-400"),
-    [error],
+    [error]
   );
 
   if (

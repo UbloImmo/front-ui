@@ -2,7 +2,11 @@ import { isNull } from "@ubloimmo/front-util";
 import { MouseEventHandler, useCallback, useMemo } from "react";
 import styled from "styled-components";
 
-import { buildChipContainerStyles, buildChipButtonStyles } from "./Chip.styles";
+import {
+  buildChipContainerStyles,
+  buildChipButtonStyles,
+  buildChipWrapperStyles,
+} from "./Chip.styles";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
@@ -32,7 +36,7 @@ const defaultChipProps: DefaultChipProps = {
 /**
  * An interactive `Badge` with a remove button, can be used as a filter tag.
  *
- * @version 0.0.6
+ * @version 0.0.7
  * @param {ChipProps} props - the props for the Chip component
  * @returns {JSX.Element} - the Chip component
  */
@@ -70,7 +74,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   }
 
   return (
-    <FlexRowLayout align="center" testId={testId} overrideTestId role="status">
+    <ChipWrapper align="center" testId={testId} overrideTestId role="status">
       <ChipContainer {...styledProps}>
         {icon && <Icon name={icon} size="s-3" color={iconColorStyle} />}
         <Text size="s" weight="medium" color={textColorStyle} ellipsis>
@@ -90,7 +94,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
           <Icon name="X" size="s-4" color={iconColorStyle} />
         </ChipButton>
       )}
-    </FlexRowLayout>
+    </ChipWrapper>
   );
 };
 
@@ -103,4 +107,8 @@ const ChipContainer = styled.div<StyleProps<DefaultChipProps>>`
 
 const ChipButton = styled.button<StyleProps<DefaultChipProps>>`
   ${buildChipButtonStyles}
+`;
+
+const ChipWrapper = styled(FlexRowLayout)`
+  ${buildChipWrapperStyles}
 `;

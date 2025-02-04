@@ -319,6 +319,15 @@ describe("FilterOption module", () => {
         expect(data.default).toBe(config.default);
         expect(data.initial).toBe(config.initial);
       });
+      it("should respect disabled and fixed behavior", () => {
+        const data = filterOptionData(label, match, {
+          disabled: true,
+          fixed: true,
+        });
+        expect(data.disabled).toBe(true);
+        expect(data.fixed).toBe(true);
+        expect(data.selected).toBe(true);
+      });
     });
   });
   describe("hook", () => {

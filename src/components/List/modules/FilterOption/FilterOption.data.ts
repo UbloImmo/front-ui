@@ -1,10 +1,4 @@
-import {
-  isArray,
-  isBoolean,
-  isObject,
-  isString,
-  objectValues,
-} from "@ubloimmo/front-util";
+import { isArray, isObject, isString } from "@ubloimmo/front-util";
 
 import { computeFilterOptionSignature } from "./FilterOption.utils";
 import { BooleanOperators } from "../../List.enums";
@@ -72,12 +66,8 @@ export const filterOptionData = <TItem extends object>(
     FilterOptionBehavior
   >(defaultFilterOptionBehavior, config, true);
 
-  const { disabled, ...restBehavior } = behavior;
-  const selected =
-    !disabled &&
-    objectValues(restBehavior)
-      .filter(isBoolean)
-      .some((bool) => bool);
+  const { default: isDefault, initial, fixed } = behavior;
+  const selected = fixed || isDefault || initial;
 
   const paletteColor = normalizeToPaletteColor(visualData.color);
   const colorKey = normalizeToColorKey(visualData.color);

@@ -6,14 +6,7 @@ import {
   isObject,
   isString,
 } from "@ubloimmo/front-util";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
 import {
@@ -28,6 +21,7 @@ import {
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
+import { FlexColumnLayout } from "@layouts";
 import { isEmptyString, useLogger, useMergedProps, useTestId } from "@utils";
 
 import type {
@@ -54,7 +48,7 @@ const THRESHOLDS = generateThresholds(THRESHOLD_COUNT);
 /**
  * Text popup box that appears when the user hovers over an element
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {TooltipProps & TestIdProps} props - The tooltip's props
  * @returns {JSX.Element} The rendered tooltip
@@ -154,9 +148,11 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
     }
     if (isString(content) || isNumber(content)) {
       return (
-        <Text color="gray-50" size="s" fill>
-          {content}
-        </Text>
+        <FlexColumnLayout fill>
+          <Text color="gray-50" size="s" fill>
+            {content}
+          </Text>
+        </FlexColumnLayout>
       );
     }
     warn(`Empty tooltip content provided: ${content}`);
@@ -166,7 +162,7 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
   /**
    * Checks children props and if it is empty, renders a default questionmark icon in the children property
    */
-  const RenderedChildren = useCallback(() => {
+  const RenderedChildren = useMemo(() => {
     if (!children || (isString(children) && isEmptyString(children))) {
       return <Icon name={icon} size="s-4" color={iconColor} />;
     }
@@ -200,7 +196,7 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
           </TooltipContainer>
         </>
       )}
-      <RenderedChildren />
+      {RenderedChildren}
     </TooltipWrapper>
   );
 };

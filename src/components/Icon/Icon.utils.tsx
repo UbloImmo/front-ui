@@ -1,5 +1,12 @@
-import { isFunction, type Optional, type VoidFn } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import {
+  isFunction,
+  Logger,
+  type Nullable,
+  type Nullish,
+  type Optional,
+  type VoidFn,
+} from "@ubloimmo/front-util";
+import { useMemo, type LazyExoticComponent } from "react";
 
 import { parseFixedLength } from "@/sizes/size.utils";
 import { cssRem, isCssLengthUsage } from "@utils";
@@ -46,16 +53,17 @@ export const useIconSize = (
  * Loads an icon based on the provided name, trying different locations and types of icons.
  *
  * @param {IconName} name - The name of the icon to load.
- * @param {VoidFn<[unknown]>} warn - A function to call in case of a warning or failure during icon loading.
  * @return {Promise<{ default: GeneratedIcon | MissingIcon }>} The loaded icon or a missing icon placeholder.
  */
 export const loadIcon = async (
-  name: IconName,
-  warn: VoidFn<[unknown]>
+  name: IconName
 ): Promise<{ default: GeneratedIcon | MissingIcon }> => {
   const missingIcon: MissingIcon = () => <div />;
   missingIcon.__missing = true;
   const missingImport = { default: missingIcon };
+  const { warn } = Logger({
+    spacing: 0,
+  });
 
   // Try loading icon in a targeted way to enable tree shaking
   try {
@@ -96,11 +104,19 @@ export const loadIcon = async (
 /**
  * Type guard to check if an icon is a missing icon placeholder.
  *
- * @param {GeneratedIcon | MissingIcon} icon - The icon component to check
+ * @param {Nullish<GeneratedIcon | MissingIcon>} icon - The icon component to check
  * @returns {boolean} True if the icon is a missing icon placeholder, false otherwise
  */
 export const isMissingIcon = (
-  icon: GeneratedIcon | MissingIcon
-): icon is MissingIcon => {
-  return "__missing" in icon && icon.__missing;
+  icon: Nullish<LazyExoticComponent<GeneratedIcon | MissingIcon>>
+): icon is LazyExoticComponent<MissingIcon> => {
+  return Boolean(!icon || ("__missing" in icon && icon.__missing));
+};
+
+export const isGeneratedIcon = (
+  icon: Nullable<
+    LazyExoticComponent<GeneratedIcon> | LazyExoticComponent<MissingIcon>
+  >
+): icon is LazyExoticComponent<GeneratedIcon> => {
+  return Boolean(icon && !isMissingIcon(icon));
 };

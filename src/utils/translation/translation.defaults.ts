@@ -61,6 +61,7 @@ const validation: CompleteTranslationMap<"validation"> = {
   stepMismatch: (step) =>
     `Value does not respect the required step${step?.length ? ` ${step}` : ""}`,
   typeMismatch: "Value does not respect the required type",
+  badInput: "Unable to make sense of value",
 };
 
 const status: CompleteTranslationMap<"status"> = {
