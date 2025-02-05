@@ -1,6 +1,8 @@
 import { isFunction, isNullish, objectEntries } from "@ubloimmo/front-util";
 import { useMemo, useReducer } from "react";
 
+import { useUikitTranslation, type TranslationKey } from "@utils";
+
 import type {
   FieldAssistiveTextFn,
   FieldAssistiveTextProps,
@@ -16,18 +18,26 @@ type InvalidStateKey = Exclude<ValidityStateKey, "valid" | "customError">;
  */
 export type ValidityStateRecord = Record<ValidityStateKey, boolean>;
 
-const invalidErrorMessages: ValueMap<InvalidStateKey, string> = {
-  valueMissing: "Value is required",
-  badInput: "Unable to make sense of value",
-  patternMismatch: "Value does not respect the required format",
-  tooLong: "Value is too long",
-  tooShort: "Value is too short",
-  rangeOverflow: "Value is too large",
-  rangeUnderflow: "Value is too small",
-  stepMismatch: "Value does not respect the required step",
-  typeMismatch: "Value does not respect the required type",
+const invalidErrorMessages: ValueMap<
+  InvalidStateKey,
+  TranslationKey<"validation">
+> = {
+  valueMissing: "missing",
+  badInput: "badInput",
+  patternMismatch: "patternMismatch",
+  tooLong: "tooLong",
+  tooShort: "tooShort",
+  rangeOverflow: "tooHigh",
+  rangeUnderflow: "tooLow",
+  stepMismatch: "stepMismatch",
+  typeMismatch: "typeMismatch",
 } as const;
 
+/**
+ * Converts a ValidityState object into a ValidityStateRecord
+ * @param {ValidityState} validityState - The ValidityState object to convert
+ * @returns {ValidityStateRecord} A record containing all validity state flags
+ */
 export const constructValidityStateRecord = (
   validityState: ValidityState
 ): ValidityStateRecord => {
@@ -46,6 +56,11 @@ export const constructValidityStateRecord = (
   };
 };
 
+/**
+ * Custom hook that manages the validity state of a field
+ * @param {FieldDefaultProps<InputType>} mergedProps - The merged props for the field
+ * @returns {Object} An object containing the validity state and a function to set it
+ */
 export const useFieldValidity = (mergedProps: FieldDefaultProps<InputType>) => {
   const [validityState, setValidityState] = useReducer(
     (
@@ -58,19 +73,33 @@ export const useFieldValidity = (mergedProps: FieldDefaultProps<InputType>) => {
     null
   );
 
+  /**
+   * Determines the invalid state key based on the validity state
+   * @returns {Nullable<ValidityStateKey>} The invalid state key or null if valid
+   */
   const invalidState = useMemo<Nullable<ValidityStateKey>>(() => {
     if (!validityState) return null;
-    const stateKey = (objectEntries(validityState).find(([_key, flag]) => {
-      return flag;
-    }) ?? ["valid", true])[0];
+    const stateKey = (objectEntries(validityState).find(
+      ([_key, flag]) => flag
+    ) ?? ["valid", true])[0];
     if (stateKey === "valid") return null;
     return stateKey;
   }, [validityState]);
 
+  /**
+   * Determines if the field has an error based on the merged props and validity state
+   * @returns {boolean} True if the field has an error, false otherwise
+   */
   const error = useMemo<boolean>(() => {
     return mergedProps.error || !!invalidState;
   }, [mergedProps, invalidState]);
 
+  const tl = useUikitTranslation();
+
+  /**
+   * Determines the error text translatio to display based on the invalid state
+   * @returns {Nullable<string>} The error text or null if no error
+   */
   const errorText = useMemo<Nullable<string>>(() => {
     if (
       !invalidState ||
@@ -78,8 +107,9 @@ export const useFieldValidity = (mergedProps: FieldDefaultProps<InputType>) => {
       invalidState === "customError"
     )
       return mergedProps.errorText;
-    return invalidErrorMessages[invalidState];
-  }, [mergedProps, invalidState]);
+    const translationKey = invalidErrorMessages[invalidState];
+    return tl.validation[translationKey]();
+  }, [mergedProps, invalidState, tl.validation]);
 
   return {
     error,

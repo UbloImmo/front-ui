@@ -125,6 +125,33 @@ const generateRootIconIndex = (rootDirPath: string): FileDescription => {
 };
 
 /**
+ * Generates a file description for the lazy icon index.
+ *
+ * @param {NormalizedIconFileDeclaration[]} files - the array of normalized icon file declarations
+ * @param {string} rootDirPath - the root directory path
+ * @return {FileDescription} the generated file description
+ */
+const generateLazyIconIndex = (
+  files: NormalizedIconFileDeclaration[],
+  rootDirPath: string
+): FileDescription => {
+  const imports = [
+    `import { lazy } from "react";`,
+    `import { loadIcon } from "../Icon.utils";`,
+  ];
+  const exports = files.map(({ componentName }) => {
+    return `export const ${componentName} = lazy(() => loadIcon("${componentName}"));`;
+  });
+
+  const contents = [...imports, "", ...exports, ""].join("\n");
+  const path = `${rootDirPath}/index.lazy.ts`;
+  return {
+    contents,
+    path,
+  };
+};
+
+/**
  * Generates a file description for common types definitions.
  *
  * @param {string} rootDirPath - the root directory path
@@ -173,10 +200,16 @@ export const exportSvgFiles = async (
     dryRun
   );
   await exportGeneratedSvgFiles(customIcons, CUSTOM_ICONS_DIR_PATH, dryRun);
+
+  const allIcons = [...bootstrapIcons, ...customIcons].sort((a, b) =>
+    a.componentName.localeCompare(b.componentName)
+  );
+
   await writeMultipleFiles(
     [
       generateRootIconIndex(ROOT_DIR_PATH),
       generateCommonTypesDefs(ROOT_DIR_PATH),
+      generateLazyIconIndex(allIcons, ROOT_DIR_PATH),
     ],
     dryRun
   );

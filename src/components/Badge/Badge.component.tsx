@@ -32,7 +32,7 @@ const defaultBadgeProps: DefaultBadgeProps = {
  *
  * @remarks Badge shades are based on two sets of colors, light and dark, depending on the shade prop.
  *
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {BadgeProps} props - the props for the Badge component
  * @return {Nullable<JSX.Element>} the Badge component
@@ -72,7 +72,7 @@ const Badge = (props: BadgeProps & TestIdProps): Nullable<JSX.Element> => {
         />
       )}
       {label && !isEmptyString(label) && (
-        <Text size="s" color={textColorStyle} weight="medium">
+        <Text size="s" color={textColorStyle} weight="medium" fill ellipsis>
           {label}
         </Text>
       )}

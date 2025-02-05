@@ -35,6 +35,18 @@ import {
 
 import type { ListFilterProps, ListFilterStyleProps } from "./ListFilter.types";
 
+const FILTER_OPTION_LABEL_MAX_SINGLE_LINE_LENGTH = 35;
+
+/**
+ * Hook that returns a sanitized filter based on the provided props.
+ * If a filter is directly provided in props, it will be returned as-is.
+ * If a signature is provided, it will attempt to find the corresponding filter.
+ * If neither is provided, returns an empty disabled filter.
+ *
+ * @param {ListFilterProps} props - The component props containing filter or signature
+ * @param {Logger} logger - Logger instance for warnings
+ * @returns {Filter<Record<string, unknown>>} The sanitized filter instance
+ */
 const useSatitizedFilter = (
   props: ListFilterProps,
   logger: Logger
@@ -71,6 +83,13 @@ const useSatitizedFilter = (
   }, [getFilterBySignature, logger, props.filter, props.signature]);
 };
 
+/**
+ * Hook that returns style props for a filter component
+ * @param {Filter<Record<string, unknown>>} filter - The filter instance
+ * @param {boolean} [open] - Whether the filter options are open
+ * @param {boolean} [renderMulti] - Whether to render in multi-line mode
+ * @returns {ListFilterStyleProps} Style props for the filter component
+ */
 const useFilterStyleProps = (
   filter: Filter<Record<string, unknown>>,
   open?: boolean,
@@ -88,6 +107,14 @@ const useFilterStyleProps = (
   }, [filter, open, renderMulti]);
 };
 
+/**
+ * Hook to manage filter query state and input ref
+ * @returns {{
+ *   queryInputRef: React.RefObject<HTMLInputElement | null>,
+ *   query: string | null,
+ *   setQuery: React.Dispatch<React.SetStateAction<string | null>>
+ * }} Query state and ref
+ */
 const useFilterQuery = () => {
   const queryInputRef = useRef<Nullable<HTMLInputElement>>(null);
 
@@ -100,6 +127,13 @@ const useFilterQuery = () => {
   };
 };
 
+/**
+ * Hook that filters and sorts filter options based on a search query
+ * @template T - The type of data being filtered
+ * @param {Filter<T>} filter - The filter instance containing options and sort preferences
+ * @param {string | null} query - The search query to filter options by
+ * @returns {FilterOption<T>[]} Array of filtered and sorted options with clear option appended
+ */
 const useFilteredOptions = (
   filter: Filter<Record<string, unknown>>,
   query: Nullable<string>
@@ -129,12 +163,22 @@ const useFilteredOptions = (
 
 type WalkHighlightFn = GenericFn<[delta: 1 | -1]>;
 
+/**
+ * Hook that manages keyboard-based highlighting and scrolling of filter options
+ * @template T - The type of data being filtered
+ * @param {FilterOption<Record<string, unknown>>[]} filteredOptions - Array of filtered options to highlight
+ * @returns {[Nullable<FilterSignature>, WalkHighlightFn, VoidFn]} Tuple containing: [Current highlighted option signature, Function to move highlight up/down, Function to reset highlight]
+ */
 const useFilterHighlight = (
   filteredOptions: FilterOption<Record<string, unknown>>[]
 ): [Nullable<FilterSignature>, WalkHighlightFn, VoidFn] => {
   const [highlightSignature, setHighlightSignature] =
     useState<Nullable<FilterSignature>>(null);
 
+  /**
+   * Scrolls the highlighted option into view
+   * @param {Nullable<FilterSignature>} signature - Signature of option to scroll to
+   */
   const scrollToHighlightedOption = useCallback(
     (signature: Nullable<FilterSignature>) => {
       if (!signature) return;
@@ -146,6 +190,10 @@ const useFilterHighlight = (
     []
   );
 
+  /**
+   * Moves the highlight up or down through the filtered options
+   * @param {1 | -1} delta - Direction to move (-1 for up, 1 for down)
+   */
   const walkHighlight = useCallback<WalkHighlightFn>(
     (delta) => {
       const previousOptionIndex = filteredOptions.findIndex(
@@ -185,6 +233,9 @@ const useFilterHighlight = (
     [filteredOptions, highlightSignature, scrollToHighlightedOption]
   );
 
+  /**
+   * Resets the highlight state to null
+   */
   const resetHighlight = useCallback(() => {
     setHighlightSignature(null);
   }, [setHighlightSignature]);
@@ -192,20 +243,39 @@ const useFilterHighlight = (
   return [highlightSignature, walkHighlight, resetHighlight];
 };
 
+/**
+ * Hook to handle keyboard events for the filter's query input
+ * @param {WalkHighlightFn} walkHighlight - Function to walk through the filtered options
+ * @param {VoidFn} closeOptions - Function to close the options dropdown
+ * @param {RefObject<HTMLInputElement>} queryInputRef - Ref to the query input element
+ * @param {boolean} [open] - Whether the options dropdown is open
+ * @returns {void}
+ */
 const useFilterKeyboardEvents = (
   walkHighlight: WalkHighlightFn,
   closeOptions: VoidFn,
   queryInputRef: RefObject<HTMLInputElement>,
   open?: boolean
-) => {
+): void => {
   useEffect(() => {
-    const prevent = (event: KeyboardEvent, callback: VoidFn) => {
+    /**
+     * Prevents default event behavior and executes callback
+     * @param {KeyboardEvent} event - Keyboard event to prevent
+     * @param {VoidFn} callback - Function to execute after preventing default
+     * @returns {void}
+     */
+    const prevent = (event: KeyboardEvent, callback: VoidFn): void => {
       event.preventDefault();
       event.stopPropagation();
       callback();
     };
 
-    const onKeyDown = (event: KeyboardEvent) => {
+    /**
+     * Handles keydown events on the query input
+     * @param {KeyboardEvent} event - Keyboard event from the query input
+     * @returns {void}
+     */
+    const onKeyDown = (event: KeyboardEvent): void => {
       if (event.key === "ArrowDown") prevent(event, () => walkHighlight(1));
       if (event.key === "ArrowUp") prevent(event, () => walkHighlight(-1));
       if (event.key === "Escape") prevent(event, closeOptions);
@@ -223,12 +293,24 @@ const useFilterKeyboardEvents = (
   }, [walkHighlight, open, closeOptions, queryInputRef]);
 };
 
+/**
+ * Hook to handle form submission for the filter's query input
+ * @param {Nullable<FilterSignature>} highlightSignature - Signature of the currently highlighted option
+ * @param {Filter<Record<string, unknown>>} filter - Filter instance containing options and selection state
+ * @param {VoidFn} closeOptions - Function to close the options dropdown
+ * @returns {(event: FormEvent<HTMLFormElement>) => void} Form submit handler function
+ */
 const useFilterSubmitQuery = (
   highlightSignature: Nullable<FilterSignature>,
   filter: Filter<Record<string, unknown>>,
   closeOptions: VoidFn
 ) => {
   return useCallback(
+    /**
+     * Handles form submission events for the filter query
+     * @param {FormEvent<HTMLFormElement>} event - Form submission event
+     * @returns {void}
+     */
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       event.stopPropagation();
@@ -245,6 +327,12 @@ const useFilterSubmitQuery = (
   );
 };
 
+/**
+ * Custom hook to manage the state and behavior of a list filter component
+ * @template T - Type of the data being filtered
+ * @param {ListFilterProps} props - Props passed to the ListFilter component
+ * @returns Object containing filter state and handler functions
+ */
 export const useListFilter = (props: ListFilterProps) => {
   const logger = useLogger("ListFilter");
 
@@ -258,7 +346,12 @@ export const useListFilter = (props: ListFilterProps) => {
   const filter = useSatitizedFilter(props, logger);
 
   const renderMulti = useMemo(
-    () => filter.active && filter.selectedOptions.length > 1 && !filter.loading,
+    () =>
+      filter.active &&
+      !filter.loading &&
+      (filter.selectedOptions.length > 1 ||
+        (filter.selectedOptions[0]?.label?.length ?? 0) >=
+          FILTER_OPTION_LABEL_MAX_SINGLE_LINE_LENGTH),
     [filter]
   );
 
@@ -269,6 +362,10 @@ export const useListFilter = (props: ListFilterProps) => {
   const [highlightSignature, walkHighlight, resetHighlight] =
     useFilterHighlight(filteredOptions);
 
+  /**
+   * Opens the options dropdown if not already open and filter is not loading
+   * @returns {void}
+   */
   const openOptions = useCallback(() => {
     if (open || filter.loading) return;
     setOpen(true);
@@ -278,6 +375,10 @@ export const useListFilter = (props: ListFilterProps) => {
     if (props.onOpened) props.onOpened();
   }, [open, filter.loading, setQuery, resetHighlight, props, queryInputRef]);
 
+  /**
+   * Closes the options dropdown and resets state
+   * @returns {void}
+   */
   const closeOptions = useCallback(() => {
     const wasOpen = open;
     setOpen(false);
@@ -296,6 +397,11 @@ export const useListFilter = (props: ListFilterProps) => {
 
   useFilterKeyboardEvents(walkHighlight, closeOptions, queryInputRef, open);
 
+  /**
+   * Gets the divider configuration for an option by its signature
+   * @param {FilterSignature} signature - Signature of the option
+   * @returns {Nullable<FilterOptionDivider>} Divider configuration or null if none exists
+   */
   const getOptionDivider = (signature: FilterSignature) => {
     return (
       filter.optionDividers.find(

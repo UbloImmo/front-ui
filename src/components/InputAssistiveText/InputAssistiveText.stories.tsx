@@ -3,17 +3,17 @@ import { InputAssistiveTextProps } from "./InputAssistiveText.types";
 import { FlexRowLayout } from "../../layouts";
 
 import { ComponentVariants } from "@docs/blocks";
+import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { IconName } from "../Icon";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { Nullable } from "@ubloimmo/front-util";
-import { componentSourceFactory } from "@docs/docs.utils";
 
 const source = componentSourceFactory(
   "InputAssistiveText",
   {},
-  InputAssistiveText.defaultProps,
+  InputAssistiveText.defaultProps
 );
 const meta = {
   title: "Components/Forms/InputAssistiveText/Stories",

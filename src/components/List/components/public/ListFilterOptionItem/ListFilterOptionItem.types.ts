@@ -28,7 +28,7 @@ export type ListFilterOptionItemProps<TItem extends object = object> = {
    * @remarks Renders a checkbox
    *
    * @type {boolean}
-   * @default {false}
+   * @default false
    */
   multi?: boolean;
   /**
@@ -36,6 +36,8 @@ export type ListFilterOptionItemProps<TItem extends object = object> = {
    * Fired once the `option` has been toggled
    *
    * @remarks Will not fire when `multi` and the option has been toggled from the rendered checkbox to allow for easy multi-selection
+   *
+   * @type {VoidFn}
    */
   closeFilter?: VoidFn;
 } & ListFilterOptionItemHighlightProps;

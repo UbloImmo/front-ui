@@ -119,9 +119,9 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
     const parentLink =
       parent &&
       parent
-        .replace("Components", "components")
-        .replace("Layouts", "layouts")
-        .split("/")[0];
+        .replaceAll("Components", "components")
+        .replaceAll("Layouts", "layouts")
+        .split("/");
 
     return `${GITHUB_TEMPLATE}${parentLink}/${title}`;
   }, [title, parent]);

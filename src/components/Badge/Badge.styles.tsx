@@ -75,7 +75,7 @@ export const commonBadgeStyles = () => {
     span {
       white-space: nowrap;
       text-overflow: ellipsis;
-      max-width: 16rem;
+      max-width: 100%;
       overflow-y: hidden;
     }
   `;

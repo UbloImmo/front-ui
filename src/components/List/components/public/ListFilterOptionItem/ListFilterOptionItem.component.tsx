@@ -101,10 +101,11 @@ export const ListFilterOptionItem = <TItem extends object = object>({
       onClick={toggleOptionSelectionAndClose}
     >
       <FlexLayout fill direction="row" align="center" gap="s-2">
-        <Icon {...iconProps} />
+        <Icon {...iconProps} key="option icon" />
         <Text {...textProps}>{option.label}</Text>
         {option.signature === CLEAR_FILTER_OPTION_SIGNATURE ? null : multi ? (
           <Checkbox
+            key="option checkbox"
             disabled={option.disabled || option.fixed}
             active={option.selected}
             onChange={toggleOptionSelection}

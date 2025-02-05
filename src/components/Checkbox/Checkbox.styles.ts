@@ -19,6 +19,11 @@ export const buildCheckboxContainerStyles = (): RuleSet => {
       overflow: visible;
     }
 
+    & > svg[data-testid="icon"] {
+      position: absolute;
+      inset: 0;
+    }
+
     input[type="checkbox"] {
       appearance: none;
       height: 0;
@@ -35,6 +40,10 @@ export const buildActiveIconContainerStyles = ({
   $active,
 }: StyleProps<CheckboxDefaultProps>): RuleSet => {
   return css`
+    height: var(--s-4);
+    width: var(--s-4);
+    position: relative;
+
     svg[data-testid="icon"] {
       overflow: visible;
       position: absolute;

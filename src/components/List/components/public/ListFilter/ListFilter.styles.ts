@@ -102,7 +102,7 @@ export const listFilterOptionChipsStyles = (
   _props: ListFilterStyleProps
 ): RuleSet => {
   return css`
-    /* padding: var(--s-2); */
+    max-width: 100%;
   `;
 };
 
@@ -135,6 +135,8 @@ export const listFilterOptionsListStyles = (
     align-items: flex-start;
     justify-content: flex-start;
     gap: var(--s-1);
+
+    scrollbar-width: thin;
   `;
 };
 
