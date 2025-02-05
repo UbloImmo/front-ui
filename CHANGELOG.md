@@ -7,36 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.4.4 - 2025-02-05
 ### Fixed
-
 - `v0.0.7` InputLabel component
   - Decrease text size from `m` to `s`
-
 - `v0.0.4` InputAssistiveText component
   - Decrease text size from `s` to `xs`
   - Add `assistiveTextIcon` property to render an icon next to the assistive text
-
 - `v0.0.3` Icon component
   - Add missing keys to stabilize
   - Fix bug where lazy loading specific icons would make them flash upon parent's state update
   - Update generation script to generate `index.lazy.ts` file
-
 - `v0.0.7` Tooltip component
   - Change RenderedChildren rendering from `useCallback` to `useMemo` for better stability and less re-renders
-
 - `v0.0.8` Badge component
   - Hide overflowing badge label with ellipsis
-
 - `v0.0.7` Chip component
   - Set max-width to 100% to prevent overflow
-
 - `v0.0.13` EntityInfoCard component
   - Remove error log when rendering both `state` and `accountBalance` props, since default props contain state
-
 - `v0.0.3` ListFilter component
   - Fix overflow when rendering a single selected option's chip whith a long label
   - Set scrollbar width to `thin`
-
 - `v0.0.9` Field component
   - Update `useFieldValidity` hook to use `useUikitTranslation` for error messages
 
@@ -44,7 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - `v0.0.12` EntityInfoCard component
   - Fix bug where no matter the prop combination, an error would be thrown
-
 
 ## 1.4.2 - 2025-01-31
 ### Changed
@@ -59,17 +50,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.3` ContextInfoCard component
   - Add `content` property to render additional content in the card
 
-
 ## 1.4.1 - 2025-01-30
 ### Changed
-
 - `v0.0.11` EntityInfoCard component
   - Add a way to change render order within a section
 
 ### Fixed
 - `v0.0.5` StateIndicator component
   - Hide vertical overflow (scrollbar) when text size grows to mobile size
-
 
 ## 1.4.0 - 2025-01-29
 
@@ -211,7 +199,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
   - Run `docs:generate` script in the dockerfile before building the storybook
 - Rearrange components & layouts display in storybook by parent groups: `Actions`, `Feedbacks`, `Dialogs`, `Groups`, ...
-
 - `v0.0.10` SelectInput component
   - Replace hardcoded assistive text strins with uikitTranslations
 
