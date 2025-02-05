@@ -77,6 +77,7 @@ import type {
   FormContext,
   FormCustomFieldProps,
   FormData,
+  FormDataProps,
   FormDefaultProps,
   FormFeatureSwitchProps,
   FormFieldLayout,
@@ -976,6 +977,8 @@ const useFormSubmission = <TData extends object>(
  * Returns an object containing the state and functions to manage the editing state of a form.
  *
  * @param {FormModifers} modifiers - An object containing modifier functions for the form.
+ * @param {FormLayoutProps["asModal"]} asModal - The modal reference of the form.
+ * @param {FormDataProps["onEditStateChanged"]} onEditStateChanged - The callback function to be called when the edit state changes.
  * @return {UseFormEditStateReturn} An object with the following properties:
  *   - isEditing: A boolean indicating whether the form is currently in edit mode.
  *   - startEditing: A function that switches the form into edit mode.
@@ -983,7 +986,8 @@ const useFormSubmission = <TData extends object>(
  */
 const useFormEditState = (
   modifiers: FormModifers,
-  asModal: FormLayoutProps["asModal"]
+  asModal: FormLayoutProps["asModal"],
+  onEditStateChanged: FormDataProps["onEditStateChanged"]
 ): UseFormEditStateReturn => {
   const { closeDialog, isDialogRegistered, isDialogOpen } = useDialogManager();
 
@@ -997,12 +1001,32 @@ const useFormEditState = (
   );
 
   /**
+   * Changes the form's edit state and calls the `onEditStateChanged` callback if it exists
+   *
+   * @param {boolean} newState - The new edit state of the form.
+   */
+  const changeEditState = useCallback(
+    (newState: boolean) => {
+      setIsEditing((prevState) => {
+        if (
+          newState !== prevState &&
+          isFunction<VoidFn<[boolean]>>(onEditStateChanged)
+        ) {
+          onEditStateChanged(newState);
+        }
+        return newState;
+      });
+    },
+    [onEditStateChanged]
+  );
+
+  /**
    * Switches the form into edit mode
    */
   const startEditing = useCallback<VoidFn>(() => {
     if (modifiers.readonly) return;
-    setIsEditing(true);
-  }, [modifiers.readonly]);
+    changeEditState(true);
+  }, [modifiers.readonly, changeEditState]);
 
   /**
    * Switches the form out of edit mode while preserving the form's data
@@ -1011,7 +1035,7 @@ const useFormEditState = (
    */
   const stopEditing = useCallback<VoidFn>(() => {
     if (modifiers.defaultEditing !== "force") {
-      setIsEditing(false);
+      changeEditState(false);
     }
     if (
       !isEmptyString(dialogRef) &&
@@ -1026,6 +1050,7 @@ const useFormEditState = (
     isDialogRegistered,
     isDialogOpen,
     closeDialog,
+    changeEditState,
   ]);
 
   return {
@@ -1048,7 +1073,13 @@ const useFormEditState = (
  * @see {@link useFormData}, {@link useFormValidation}, {@link useFormEditState} {@link useFormModifiers}, {@link useFormContent}, {@link useFormSubmission}, {@link useFormTables}
  */
 export const useForm = <TData extends object>(
-  { columns, asModal, embedded, ...props }: FormDefaultProps<TData>,
+  {
+    columns,
+    asModal,
+    embedded,
+    onEditStateChanged,
+    ...props
+  }: FormDefaultProps<TData>,
   logger: Logger
 ): FormContext<TData> => {
   const formModifiers = useFormModifiers(props);
@@ -1058,7 +1089,11 @@ export const useForm = <TData extends object>(
     formData,
     formModifiers
   );
-  const formEditState = useFormEditState(formModifiers, asModal);
+  const formEditState = useFormEditState(
+    formModifiers,
+    asModal,
+    onEditStateChanged
+  );
   const formLayout = useFormLayout(
     { columns, asModal, embedded },
     formEditState

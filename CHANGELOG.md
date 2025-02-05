@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.23` Form component
+  - Add `onEditStateChanged` optional callback property to allow for custom behavior when the form's edit state changes
+
 ## 1.4.4 - 2025-02-05
 ### Fixed
 - `v0.0.7` InputLabel component
