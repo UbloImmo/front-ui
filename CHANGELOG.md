@@ -212,6 +212,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Run `docs:generate` script in the dockerfile before building the storybook
 - Rearrange components & layouts display in storybook by parent groups: `Actions`, `Feedbacks`, `Dialogs`, `Groups`, ...
 
+- `v0.0.10` SelectInput component
+  - Replace hardcoded assistive text strins with uikitTranslations
+
 ## 1.0.2 - 2025-01-08
 
 ## 1.0.2 - 2025-01-08
