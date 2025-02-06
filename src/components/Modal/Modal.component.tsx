@@ -33,7 +33,7 @@ const defaultModalProps: ModalDefaultProps = {
 /**
  * A simple modal with a title and close button. Built on top of [Dialog](/?path=/docs/components-dialog-usage--docs)
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {ModalProps & TestIdProps} props - Modal component props
  * @returns {Nullable<JSX.Element>}
@@ -91,6 +91,7 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
               size="h2"
               weight="bold"
               color="gray-900"
+              fill
             >
               {mergedProps.title}
             </Heading>

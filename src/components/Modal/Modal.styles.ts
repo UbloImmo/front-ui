@@ -8,8 +8,9 @@ import type { ValueMap } from "@ubloimmo/front-util";
 
 export const modalSizeToWidthMap: ValueMap<ModalSize, CssPx> = {
   s: "600px",
-  m: "960px",
-  l: "1280px",
+  m: "740px",
+  l: "960px",
+  xl: "1280px",
 };
 
 export const modalCardStyles = ({ $size }: ModalStyleProps) => {
