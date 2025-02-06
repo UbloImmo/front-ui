@@ -50,7 +50,7 @@ const inputComponentMap = <
 /**
  * Renders a specific input component based on the provided `type` prop.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {GenericInputProps<TType>} props - The generic input props.
  * @returns {Nullable<JSX.Element>}
@@ -61,7 +61,8 @@ const Input = <
 >({
   type,
   ...props
-}: GenericInputProps<TType> & TestIdProps): Nullable<JSX.Element> => {
+}: GenericInputProps<TType, TGenericValue> &
+  TestIdProps): Nullable<JSX.Element> => {
   const { warn, error } = useLogger("Input");
 
   const inputMap = useStatic<SpecificInputComponentMap<TGenericValue>>(

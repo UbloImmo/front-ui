@@ -978,7 +978,7 @@ const useFormSubmission = <TData extends object>(
  *
  * @param {FormModifers} modifiers - An object containing modifier functions for the form.
  * @param {FormLayoutProps["asModal"]} asModal - The modal reference of the form.
- * @param {FormDataProps["onEditStateChanged"]} onEditStateChanged - The callback function to be called when the edit state changes.
+ * @param {FormDataProps<object>["onEditStateChanged"]} onEditStateChanged - The callback function to be called when the edit state changes.
  * @return {UseFormEditStateReturn} An object with the following properties:
  *   - isEditing: A boolean indicating whether the form is currently in edit mode.
  *   - startEditing: A function that switches the form into edit mode.
@@ -987,7 +987,7 @@ const useFormSubmission = <TData extends object>(
 const useFormEditState = (
   modifiers: FormModifers,
   asModal: FormLayoutProps["asModal"],
-  onEditStateChanged: FormDataProps["onEditStateChanged"]
+  onEditStateChanged: FormDataProps<object>["onEditStateChanged"]
 ): UseFormEditStateReturn => {
   const { closeDialog, isDialogRegistered, isDialogOpen } = useDialogManager();
 

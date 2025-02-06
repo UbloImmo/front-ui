@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.23` Form component
   - Add `onEditStateChanged` optional callback property to allow for custom behavior when the form's edit state changes
 
+### Fixed
+
+- `v0.0.7` Input component
+  - Propagate `TGenericValue` type argument to GenericInputProps
+
 ## 1.4.4 - 2025-02-05
 ### Fixed
 - `v0.0.7` InputLabel component
