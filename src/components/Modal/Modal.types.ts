@@ -2,7 +2,7 @@ import type { DialogProps } from "../Dialog";
 import type { StyleProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
-export type ModalSize = "s" | "m" | "l";
+export type ModalSize = "s" | "m" | "l" | "xl";
 
 export type ModalProps = Omit<DialogProps, "reference"> & {
   /**

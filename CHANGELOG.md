@@ -16,7 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `m` updated (740px)
   - `s` remains the same (600px)
 
-
 ### Added
 
 - `v0.0.23` Form component
