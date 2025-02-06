@@ -6,9 +6,13 @@ import { isNegative, toFixed } from "@utils";
  * Format the amount with the correct currency and format.
  *
  * @param value - The amount to format
+ * @param compact - Whether to use compact format (true by default)
  * @returns The formatted amount
  */
-export const formatAmount = (value: Nullish<number>) => {
+export const formatAmount = (
+  value: Nullish<number>,
+  compact: boolean = true
+) => {
   if (isNullish(value)) return "— €";
 
   const formatter = new Intl.NumberFormat("fr-FR", {
@@ -20,6 +24,10 @@ export const formatAmount = (value: Nullish<number>) => {
 
   const absAmount = Math.abs(value / 100);
   const sign = isNegative(value) ? "- " : "";
+
+  if (!compact) {
+    return normalizeSpaces(`${sign}${formatter.format(absAmount)} €`);
+  }
 
   // Milliards (1,00 G€ à 999,99 G€)
   if (absAmount >= 1_000_000_000) {

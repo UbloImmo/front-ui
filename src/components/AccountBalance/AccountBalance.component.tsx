@@ -17,12 +17,13 @@ import type {
 const defaultAccountBalanceProps: AccountBalanceDefaultProps = {
   title: "Titre",
   value: null,
+  compact: true,
 };
 
 /**
  * Render a component to display the account balance with correct format and € currency in the entity info card for rental folder.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {AccountBalanceProps & TestIdProps} props - AccountBalance component props
  * @returns {JSX.Element}
@@ -38,8 +39,8 @@ const AccountBalance = (
   if (!props.title) warn("Missing title prop");
 
   const formattedValue = useMemo(
-    () => formatAmount(mergedProps.value),
-    [mergedProps.value]
+    () => formatAmount(mergedProps.value, mergedProps.compact),
+    [mergedProps.value, mergedProps.compact]
   );
 
   return (

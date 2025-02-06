@@ -16,6 +16,14 @@ export type AccountBalanceProps = {
    * @default null
    */
   value?: Nullable<number>;
+
+  /**
+   * Whether to use compact format (true by default)
+   *
+   * @type {boolean}
+   * @default true
+   */
+  compact?: boolean;
 };
 
 export type AccountBalanceDefaultProps = Required<AccountBalanceProps>;
