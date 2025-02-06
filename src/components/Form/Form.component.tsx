@@ -30,6 +30,7 @@ const defaultFormProps: FormDefaultProps<object> = {
   onSubmit: null,
   onSubmitError: console.error,
   onCancelled: null,
+  onEditStateChanged: null,
   title: "Form",
   badge: null,
   icon: null,
@@ -54,7 +55,7 @@ const defaultFormProps: FormDefaultProps<object> = {
 /**
  * A flexible yet expressive form renderer.
  *
- * @version 0.0.22
+ * @version 0.0.23
  *
  * @template {object} TData - The type of the form data
  *

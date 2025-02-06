@@ -867,6 +867,13 @@ export type FormDataProps<TData extends object> = {
    * @default null
    */
   onCancelled?: Nullable<VoidFn>;
+  /**
+   * Callback called when form edition state changes
+   *
+   * @type {Nullable<VoidFn<[boolean]>>}
+   * @default null
+   */
+  onEditStateChanged?: Nullable<VoidFn<[boolean]>>;
 };
 
 /**
