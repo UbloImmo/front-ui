@@ -695,7 +695,8 @@ const accountBalanceVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
     __propVariantLabel: "With account balance",
     accountBalance: {
       title: "Account Balance",
-      value: 12300,
+      value: 1230000000,
+      compact: false,
     },
   },
 ];
