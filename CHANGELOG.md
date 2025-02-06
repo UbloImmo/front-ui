@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.3` Modal component
+  - Change sizes to accommodate for new `740px` width
+  - `l` renamed to `xl` (1280px)
+  - previous `m` becomes `l` (960px)
+  - `m` updated (740px)
+  - `s` remains the same (600px)
+
+
 ### Added
 
 - `v0.0.23` Form component
