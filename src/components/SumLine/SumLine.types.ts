@@ -2,7 +2,7 @@ import type { Enum, Nullable } from "@ubloimmo/front-util";
 
 export type SumLineSize = "m" | "l";
 
-export const sumLineUnits = ["€", "€ CC", "€ HC", "m²"] as const;
+export const sumLineUnits = ["€", "€ CC", "€ HC", "€ TTC", "m²"] as const;
 
 export type SumLineUnit = Enum<typeof sumLineUnits>;
 
@@ -48,6 +48,12 @@ export type SumLineProps = {
    * @default null
    */
   period?: Nullable<string>;
+  /**
+   * Whether to render the sum line's value in a compact format
+   *
+   * @default false
+   */
+  compact?: boolean;
 };
 
 export type SumLineDefaultProps = Required<SumLineProps>;
