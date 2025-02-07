@@ -16,8 +16,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
   assistiveText: null,
-  assistiveTextIcon: "SquircleInfo",
-  showAssistiveTextIcon: false,
+  assistiveTextIcon: false,
   errorText: null,
   error: false,
 };
@@ -38,13 +37,7 @@ const InputAssistiveText = (
     InputAssistiveTextProps
   >(defaultInputAssistiveTextProps, props);
 
-  const {
-    assistiveText,
-    errorText,
-    error,
-    showAssistiveTextIcon,
-    assistiveTextIcon,
-  } = mergedProps;
+  const { assistiveText, errorText, error, assistiveTextIcon } = mergedProps;
   const { warn } = useLogger("InputAssistiveText");
   const testId = useTestId("assistive-text", props);
 
@@ -74,8 +67,8 @@ const InputAssistiveText = (
       align="center"
       gap="s-1"
     >
-      {showAssistiveTextIcon && (
-        <Icon name={assistiveTextIcon} size="s-3" color={iconColor} />
+      {assistiveTextIcon && (
+        <Icon name="SquircleInfo" size="s-3" color={iconColor} />
       )}
       {error && isNonEmptyString(errorText) ? (
         <Text size="xs" color="error-base" testId="error-text" fill>
