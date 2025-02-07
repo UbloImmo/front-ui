@@ -7,14 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.4.6 - 2025-02-07
 ### Changed
-
 - `v0.0.5` InputAssistiveText component
   - Limit `assistiveTextIcon` to only accept boolean values
   - Fixes ts & build slowdowns
 
 ### Fixed
-
 - `v0.0.4` Icon component
   - Icon generation script now clears both `bootstrap` and `custom` icon directories before generating new icons
   - Replace aliased `@utils` import with relative path
