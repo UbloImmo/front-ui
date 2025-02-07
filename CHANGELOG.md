@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Limit `assistiveTextIcon` to only accept boolean values
   - Fixes ts & build slowdowns
 
-### Fixes
+### Fixed
 
 - `v0.0.4` Icon component
   - Icon generation script now clears both `bootstrap` and `custom` icon directories before generating new icons
