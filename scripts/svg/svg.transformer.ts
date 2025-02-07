@@ -262,7 +262,7 @@ const iconFileDeclaration = (
 
 import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 
-import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "@utils";`;
+import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "../../../../utils";`;
 
   const tsxReturn = svgRootNodeToTsx(parseSvgStr(svg));
 

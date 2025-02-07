@@ -27,7 +27,7 @@ const defaultIconProps: DefaultIconProps = {
  *
  * @remarks Determines the icon name based on the provided name, then looks up the corresponding icon component.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {IconProps} props - The props for the icon component.
  * @return {JSX.Element | null} The rendered icon component or null if the icon component is not found.
