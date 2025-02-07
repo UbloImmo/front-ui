@@ -198,9 +198,11 @@ export const exportSvgFiles = async (
   dryRun = false
 ): Promise<void> => {
   // clear both directories
-  logger.debug("clearing both directories");
-  await rm(BOOTSTRAP_ICONS_DIR_PATH, { recursive: true, force: true });
-  await rm(CUSTOM_ICONS_DIR_PATH, { recursive: true, force: true });
+  if (!dryRun) {
+    logger.debug("clearing both directories");
+    await rm(BOOTSTRAP_ICONS_DIR_PATH, { recursive: true, force: true });
+    await rm(CUSTOM_ICONS_DIR_PATH, { recursive: true, force: true });
+  }
 
   // write all icon files
   await exportGeneratedSvgFiles(
