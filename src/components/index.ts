@@ -36,6 +36,7 @@ export * from "./Portal";
 export * from "./SmallLoader";
 export * from "./StateIndicator";
 export * from "./StaticIcon";
+export * from "./SumLine";
 export * from "./Switch";
 export * from "./Text";
 export * from "./Tooltip";
