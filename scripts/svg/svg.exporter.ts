@@ -1,3 +1,5 @@
+import { rm } from "node:fs/promises";
+
 import { Logger } from "@ubloimmo/front-util";
 
 import { FileDescription, NormalizedIconFileDeclaration } from "./svg.types";
@@ -23,6 +25,7 @@ const writeFile = async (
 ) => {
   if (dryRun) return;
   logger.debug(`${path}`, "write file");
+
   await Bun.write(path, contents);
 };
 
@@ -194,6 +197,14 @@ export const exportSvgFiles = async (
   customIcons: NormalizedIconFileDeclaration[],
   dryRun = false
 ): Promise<void> => {
+  // clear both directories
+  if (!dryRun) {
+    logger.debug("clearing both directories");
+    await rm(BOOTSTRAP_ICONS_DIR_PATH, { recursive: true, force: true });
+    await rm(CUSTOM_ICONS_DIR_PATH, { recursive: true, force: true });
+  }
+
+  // write all icon files
   await exportGeneratedSvgFiles(
     bootstrapIcons,
     BOOTSTRAP_ICONS_DIR_PATH,

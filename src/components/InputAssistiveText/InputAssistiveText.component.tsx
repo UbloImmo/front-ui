@@ -1,7 +1,7 @@
-import { isBoolean, isNull } from "@ubloimmo/front-util";
+import { isNull } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import { Icon, type IconName } from "../Icon";
+import { Icon } from "../Icon";
 import { Text } from "../Text/Text.component";
 
 import { FlexRowLayout } from "@layouts";
@@ -16,7 +16,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
   assistiveText: null,
-  assistiveTextIcon: null,
+  assistiveTextIcon: false,
   errorText: null,
   error: false,
 };
@@ -24,7 +24,7 @@ const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
 /**
  * Renders an assistive text for the Input component based on the provided props.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {InputAssistiveTextProps & TestIdProps} props - The properties for the assistive text.
  * @return {Nullable<JSX.Element>} The JSX element representing the assistive text.
@@ -40,14 +40,6 @@ const InputAssistiveText = (
   const { assistiveText, errorText, error, assistiveTextIcon } = mergedProps;
   const { warn } = useLogger("InputAssistiveText");
   const testId = useTestId("assistive-text", props);
-
-  const iconName = useMemo<Nullable<IconName>>(() => {
-    if (isBoolean(assistiveTextIcon)) {
-      if (assistiveTextIcon) return "SquircleInfo";
-      return null;
-    }
-    return assistiveTextIcon;
-  }, [assistiveTextIcon]);
 
   const iconColor = useMemo<PaletteColor>(
     () => (error ? "error-base" : "gray-400"),
@@ -75,7 +67,9 @@ const InputAssistiveText = (
       align="center"
       gap="s-1"
     >
-      {iconName && <Icon name={iconName} size="s-3" color={iconColor} />}
+      {assistiveTextIcon && (
+        <Icon name="SquircleInfo" size="s-3" color={iconColor} />
+      )}
       {error && isNonEmptyString(errorText) ? (
         <Text size="xs" color="error-base" testId="error-text" fill>
           {errorText}

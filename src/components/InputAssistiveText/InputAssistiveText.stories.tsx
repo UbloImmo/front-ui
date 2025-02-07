@@ -6,9 +6,7 @@ import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
-import type { IconName } from "../Icon";
 import type { Meta, StoryObj } from "@storybook/react";
-import type { Nullable } from "@ubloimmo/front-util";
 
 const source = componentSourceFactory(
   "InputAssistiveText",
@@ -90,12 +88,7 @@ TextLength.parameters = {
   docs: source(assistiveTexts.map((text) => ({ assistiveText: text }))),
 };
 
-const icons: Nullable<IconName | boolean>[] = [
-  null,
-  true,
-  "QuestionCircle",
-  "ExclamationTriangle",
-];
+const booleans = [false, true];
 
 export const Icons = (props: InputAssistiveTextProps) => {
   const defaultProps = useMergedProps(InputAssistiveText.defaultProps, props);
@@ -103,7 +96,7 @@ export const Icons = (props: InputAssistiveTextProps) => {
   return (
     <ComponentVariants
       defaults={defaultProps}
-      variants={icons}
+      variants={booleans}
       for="assistiveTextIcon"
       of={InputAssistiveText}
       justify="center"
@@ -117,5 +110,5 @@ Icons.args = {
   assistiveText: "This is an assistive text for the input.",
 };
 Icons.parameters = {
-  docs: source(icons.map((icon) => ({ assistiveTextIcon: icon }))),
+  docs: source(booleans.map((bool) => ({ assistiveTextIcon: bool }))),
 };
