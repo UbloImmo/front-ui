@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.5.0 - 2025-02-10
 ### Added
-
 - `v0.0.1` SumLine component
   - A component to display a sum line with a label, value, unit and period
 
