@@ -1,0 +1,74 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as SumLineStories from "../SumLine.stories.tsx";
+
+<Meta title="Components/States/SumLine/Usage" />
+
+<ComponentInfo of={SumLineStories} figmaId="2380-4393" />
+
+<Content>
+
+## Usage
+
+Sumline displays a label, a value, an optional unit and an optional period in a single row.
+
+If rendered as a first child, its top border will be colored with the `primary-base` color.
+Otherwise, as long as it's not the last child, its bottom border will have the `primary-light` color.
+
+<Canvas of={SumLineStories.MultipleSumLines} />
+
+### Content
+
+#### Label
+
+SumLine's `label` property requires a string.
+
+> The label will be truncated if it's too long in favor of the value.
+
+<Canvas of={SumLineStories.Labels} />
+
+#### Value
+
+SumLine's `value` property accepts an integer. It then gets formatted to a decimal before being displayed.
+
+<Canvas of={SumLineStories.Values} />
+
+> See the **Compact** section for more control on the formatting behavior.
+
+### Appearance
+ 
+
+#### Sizes
+
+SumLine's `size` property accepts `l` or `m`.
+
+`l` will result in the value being displayed in a `Heading` component instead of a `Text` component.
+
+<Canvas of={SumLineStories.Sizes} />
+
+#### Units
+
+SumLine's `unit` property, if provided, will be displayed after the value.
+
+Currently supported units are: `€`, `€ CC`, `€ HC`, `€ TTC` & `m²`.
+
+> No unit will be displayed if the `unit` property is not provided or is `null`.
+
+<Canvas of={SumLineStories.Units} />
+
+#### Period
+
+SumLine's `period` property, if provided, will be displayed after the value, and prefixed with a `/`.
+
+<Canvas of={SumLineStories.Periods} />
+
+#### Compact
+
+By default, SumLine's value gets formatted but not truncated.
+<br/>
+Setting the `compact` property to `true` will truncate the value to at most 3 digits, 2 decimals and a `k`, `m`, `M` or `G` suffix if needed.
+
+<Canvas of={SumLineStories.Compact} />
+
+</Content>
