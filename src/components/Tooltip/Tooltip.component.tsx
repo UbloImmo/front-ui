@@ -1,8 +1,9 @@
+import { PopoverArrow } from "@radix-ui/react-popover";
 import { isFunction, isNumber, isObject, isString } from "@ubloimmo/front-util";
 import { useMemo, useState } from "react";
 import styled from "styled-components";
 
-import { tooltipStyles } from "./Tooltip.styles";
+import { tooltipStyles, tooltipWrapperStyles } from "./Tooltip.styles";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
@@ -13,8 +14,9 @@ import type {
   DefaultTooltipProps,
   TooltipContentFn,
   TooltipProps,
+  TooltipWrapperStyleProps,
 } from "./Tooltip.types";
-import type { Direction, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 
 const defaultTooltipProps: DefaultTooltipProps = {
   children: "",
@@ -102,21 +104,21 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
         open={isOpen}
         onOpenChange={setIsOpen}
         content={
-          <TooltipContent
-            $direction={direction}
-            data-testid={testId}
-            role="tooltip"
-          >
-            {tooltipContent}
-          </TooltipContent>
+          <>
+            <TooltipContent data-testid={testId} role="tooltip">
+              {tooltipContent}
+            </TooltipContent>
+            <TooltipArrow />
+          </>
         }
         side={direction}
-        sideOffset="s-2"
+        sideOffset="s-1"
         collisionBoundary={
           isString(intersectionRoot)
             ? document.querySelector(intersectionRoot)
             : intersectionRoot
         }
+        sticky="always"
       >
         {RenderedChildren}
       </Popover>
@@ -127,14 +129,14 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
 Tooltip.defaultProps = defaultTooltipProps;
 export { Tooltip };
 
-const TooltipTrigger = styled.div<{ $cursor: DefaultTooltipProps["cursor"] }>`
-  position: relative;
-  line-height: 0px;
-  height: fit-content;
-  width: fit-content;
-  cursor: ${({ $cursor }) => $cursor};
+const TooltipTrigger = styled.div<TooltipWrapperStyleProps>`
+  ${tooltipWrapperStyles}
 `;
 
-const TooltipContent = styled.div<{ $direction: Direction }>`
-  ${({ $direction }) => tooltipStyles($direction)}
+const TooltipContent = styled.div`
+  ${tooltipStyles}
+`;
+
+const TooltipArrow = styled(PopoverArrow)`
+  fill: var(--gray-700);
 `;
