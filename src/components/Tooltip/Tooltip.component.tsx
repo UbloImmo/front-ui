@@ -14,7 +14,7 @@ import type {
   TooltipContentFn,
   TooltipProps,
 } from "./Tooltip.types";
-import type { TestIdProps } from "@types";
+import type { Direction, TestIdProps } from "@types";
 
 const defaultTooltipProps: DefaultTooltipProps = {
   children: "",
@@ -102,7 +102,11 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
         open={isOpen}
         onOpenChange={setIsOpen}
         content={
-          <TooltipContent data-testid={testId} role="tooltip">
+          <TooltipContent
+            $direction={direction}
+            data-testid={testId}
+            role="tooltip"
+          >
             {tooltipContent}
           </TooltipContent>
         }
@@ -131,6 +135,6 @@ const TooltipTrigger = styled.div<{ $cursor: DefaultTooltipProps["cursor"] }>`
   cursor: ${({ $cursor }) => $cursor};
 `;
 
-const TooltipContent = styled.div`
-  ${tooltipStyles}
+const TooltipContent = styled.div<{ $direction: Direction }>`
+  ${({ $direction }) => tooltipStyles($direction)}
 `;
