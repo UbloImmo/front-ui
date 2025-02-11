@@ -46,12 +46,20 @@ export const dialogWrapperStyles = css`
   inset: 0;
   z-index: ${Z_INDEX};
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  overflow-y: auto;
 `;
 
 export const dialogContentStyles = css`
-  max-height: 100%;
+  min-height: 100%;
   max-width: 100%;
-  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  & > * {
+    pointer-events: auto;
+  }
 `;

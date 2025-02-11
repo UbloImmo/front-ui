@@ -112,7 +112,13 @@ const CardContainer = styled.div<{ $large?: boolean }>`
     `}
 `;
 
-const references: DialogReference[] = ["image", "card", "input", "nested"];
+const references: DialogReference[] = [
+  "image",
+  "card",
+  "input",
+  "nested",
+  "scrolling",
+];
 
 const NestedDialog = () => {
   const nestedRef = "nested-dialog";
@@ -136,6 +142,13 @@ const NestedDialog = () => {
   );
 };
 
+const LongDiv = styled.div`
+  height: 200vh;
+  width: 300px;
+  background: var(--primary-medium);
+  border-radius: var(--s-2);
+`;
+
 const children: Record<DialogReference, JSX.Element> = {
   card: <ExampleCard reference="example-card" />,
   image: (
@@ -146,6 +159,7 @@ const children: Record<DialogReference, JSX.Element> = {
   ),
   input: <TextInput uncontrolled />,
   nested: <NestedDialog />,
+  scrolling: <LongDiv />,
 };
 
 const DialogVariantWrapper = (props: DialogProps) => {
