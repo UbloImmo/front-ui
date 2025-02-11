@@ -37,5 +37,7 @@ testStaticIcon({
 })("should render an indicator with a tooltip", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId(`${testId}-indicator`)).not.toBeNull();
-  expect(queryByTestId(`tooltip ${testId}-indicator-tooltip`)).not.toBeNull();
+  expect(
+    queryByTestId(`tooltip ${testId}-indicator-tooltip-wrapper`)
+  ).not.toBeNull();
 });

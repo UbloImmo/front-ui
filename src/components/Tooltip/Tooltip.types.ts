@@ -72,12 +72,8 @@ export type TooltipProps = {
 
 export type DefaultTooltipProps = Required<TooltipProps>;
 
-export type TooltipStyleProps = StyleProps<
-  Pick<DefaultTooltipProps, "direction">
->;
-
 export type TooltipWrapperStyleProps = StyleProps<
-  Pick<DefaultTooltipProps, "cursor"> & { innerTestId: string }
+  Pick<DefaultTooltipProps, "cursor">
 >;
 
 export type ToolipIntersection = Pick<DOMRectReadOnly, Direction>;

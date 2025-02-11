@@ -56,7 +56,7 @@ testAction({
   },
 })("should render a tooltip", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
-  expect(queryByTestId(`tooltip`)).not.toBeNull();
+  expect(queryByTestId(`tooltip-wrapper`)).not.toBeNull();
 });
 
 testAction({
@@ -129,7 +129,9 @@ testAction({
 })("should render an indicator with a tooltip", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId("static-icon-indicator")).not.toBeNull();
-  expect(queryByTestId("tooltip static-icon-indicator-tooltip")).not.toBeNull();
+  expect(
+    queryByTestId(`tooltip static-icon-indicator-tooltip-wrapper`)
+  ).not.toBeNull();
 });
 
 afterEach(cleanup);
