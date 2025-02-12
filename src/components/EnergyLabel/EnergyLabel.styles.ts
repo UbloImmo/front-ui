@@ -45,7 +45,7 @@ export const energyLabelStyle = (props: StyleProps<EnergyLabelProps>) => {
 
   const backgroundColor = activeState
     ? getBackgroundColor(type, value)
-    : "#F9F9FD";
+    : cssVarUsage("gray-50");
 
   const textColor = activeState ? "white" : cssVarUsage("gray-600");
 
@@ -58,7 +58,7 @@ export const energyLabelStyle = (props: StyleProps<EnergyLabelProps>) => {
     span[data-testid="energy-label-value"] {
       color: ${textColor};
     }
-    background-color: ${backgroundColor};
+    background: ${backgroundColor};
     border-radius: var(--s-1);
     user-select: none;
     ${!activeState &&
