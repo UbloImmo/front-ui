@@ -40,7 +40,7 @@ export const listFilterPresetButtonStyles = ({
     transition-timing-function: var(--bezier);
 
     &:hover:not(:disabled) {
-      background: white;
+      background: var(--white);
       transition-duration: 150ms;
     }
   `;

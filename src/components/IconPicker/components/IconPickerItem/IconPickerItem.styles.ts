@@ -20,7 +20,7 @@ export const IconPickerItemStyles = ({
     max-height: var(--s-8);
     border-radius: var(--s-05);
 
-    background-color: ${$active ? cssVarUsage("primary-light") : "white"};
+    background-color: ${cssVarUsage($active ? "primary-light" : "white")};
     border: 1px solid
       ${$active ? cssVarUsage("primary-medium") : cssVarUsage("primary-light")};
     box-shadow: var(--shadow-button);

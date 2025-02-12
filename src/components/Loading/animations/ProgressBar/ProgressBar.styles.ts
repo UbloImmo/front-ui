@@ -35,7 +35,7 @@ export const ProgressBarStyle: StyleFunction<
     border-radius: var(--s-2);
     height: var(--s-1);
     position: relative;
-    background: white;
+    background: var(--white);
     overflow: hidden;
     cursor: progress;
 

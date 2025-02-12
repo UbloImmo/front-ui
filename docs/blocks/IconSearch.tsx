@@ -93,7 +93,7 @@ const List = styled.div`
   padding: var(--s-6);
   overflow-y: auto;
   overflow-x: hidden;
-  background: #fff;
+  background: var(--white);
   border-radius: var(--s-1);
 `;
 

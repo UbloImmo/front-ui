@@ -203,7 +203,7 @@ const StyledTableRow = styled(TableRow)<StyledTableRowProps>`
   ${({ $dragging }) =>
     $dragging &&
     css`
-      background: white;
+      background: var(--white);
       border: 2px solid var(--primary-medium);
       box-shadow: var(--shadow-card-elevation-medium);
       transition:

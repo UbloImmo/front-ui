@@ -68,4 +68,6 @@ export type ColorCollection = {
   hexAlpha: HexColorAlpha;
 };
 
-export type AnyColor = HexColor | RgbaColorStr | RgbaColorArr | RgbaColorObj;
+export type AnyColorStr = HexColor | RgbaColorStr;
+
+export type AnyColor = AnyColorStr | RgbaColorArr | RgbaColorObj;

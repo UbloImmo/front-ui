@@ -72,7 +72,7 @@ export const actionContainerStyles = ({
     width: 100%;
     padding: ${padding};
 
-    background: white;
+    background: var(--white);
     border: 1px solid ${cssVarUsage(borderColorTransparent)};
     box-shadow: var(--shadow-button);
     border-radius: var(--${borderRadius});

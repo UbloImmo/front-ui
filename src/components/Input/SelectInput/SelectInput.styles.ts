@@ -62,7 +62,7 @@ export const selectOptionContainerStyles = (): RuleSet => {
     min-height: var(--s-8);
     max-height: calc(var(--s-8) * 7 + var(--s-1));
     height: fit-content;
-    background-color: white;
+    background-color: var(--white);
     overflow-y: auto;
     overflow-x: hidden;
     box-shadow: var(--shadow-card-elevation-medium);

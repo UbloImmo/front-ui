@@ -132,7 +132,7 @@ export const reactInternalPhoneStyle = css`
     padding: 0;
     padding-top: var(--s-1);
     margin: 0;
-    background: white;
+    background: var(--white);
     box-shadow: var(--shadow-card-elevation-low);
     color: var(--gray-800);
     list-style: none;
@@ -157,7 +157,7 @@ export const reactInternalPhoneStyle = css`
     min-height: var(--react-international-phone-dropdown-item-height, 28px);
     box-sizing: border-box;
     align-items: center;
-    background: white;
+    background: var(--white);
     transition: background 150ms ease-out 0s;
     padding: var(--s-2);
     gap: var(--s-2);

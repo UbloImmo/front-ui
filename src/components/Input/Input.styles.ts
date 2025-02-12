@@ -144,7 +144,7 @@ export const commonInputStyles = ({
   border-radius: var(--s-1);
   border: none;
   outline: none;
-  background: white;
+  background: var(--white);
   font-size: var(--text-m);
   font-weight: var(--text-weight-regular);
   color: var(--${$error ? "error-dark" : "gray-800"});

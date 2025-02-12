@@ -26,9 +26,9 @@ export default create({
   colorSecondary: blendColors(t.primary.base.rgba, t.primary.medium.rgba),
 
   // UI Colors
-  appBg: t.gray[50].rgba,
+  appBg: `light-dark(${t.gray[50].rgba}, ${t.gray[900].rgba})`,
   appContentBg: t.gray[50].rgba,
-  appPreviewBg: "#fff",
+  appPreviewBg: "light-dark(white, black)",
   appBorderColor: t.primary.medium.rgba,
   appBorderRadius: 8,
 

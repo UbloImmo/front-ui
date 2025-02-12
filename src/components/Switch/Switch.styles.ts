@@ -69,11 +69,10 @@ export const SwitchHandleStyles = ({
     min-width: var(--s-4);
     min-height: var(--s-4);
     border-radius: var(--s-4);
-    background: ${$disabled
-      ? $active
-        ? cssVarUsage("gray-200")
-        : cssVarUsage("gray-400")
-      : "white"};
+    background: ${cssVarUsage(
+      $disabled ? ($active ? "gray-200" : "gray-400") : "white"
+    )};
+
     cursor: inherit;
 
     &[aria-checked] {

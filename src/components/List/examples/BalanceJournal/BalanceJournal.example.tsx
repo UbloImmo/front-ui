@@ -13,7 +13,7 @@ import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 
 const Card = styled(FlexColumnLayout)`
   padding: var(--s-8);
-  background: white;
+  background: var(--white);
   box-shadow: var(--shadow-card-default);
   border-radius: var(--s-2);
 `;

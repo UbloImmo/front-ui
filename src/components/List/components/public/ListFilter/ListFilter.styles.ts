@@ -34,7 +34,7 @@ export const listFilterContainerStyles = (
 ): RuleSet => {
   const maxHeight = computeMaxHeight(props);
   const borderRadius = cssVarUsage(`s-${props.$open ? 2 : 1}`);
-  const background = props.$open ? "white" : cssVarUsage("gray-50");
+  const background = cssVarUsage(props.$open ? "white" : "gray-50");
   return css`
     background: ${background};
     border-radius: ${borderRadius};

@@ -16,9 +16,9 @@ export const ComboBoxButtonWrapperStyles = ({
   $description,
   $testId,
 }: StyleProps<ComboBoxButtonDefaultProps & TestIdProps>): RuleSet => css`
-  --combobox-button-background: ${$active
-    ? cssVarUsage("primary-light")
-    : "white"};
+  --combobox-button-background: ${cssVarUsage(
+    $active ? "primary-light" : "white"
+  )};
   --combobox-button-border-color: var(--primary-medium);
   --combobox-button-min-height: var(--s-8);
   --combobox-button-height: ${$description

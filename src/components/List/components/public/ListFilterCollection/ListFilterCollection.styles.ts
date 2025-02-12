@@ -5,7 +5,7 @@ import { cssDimensions } from "@/utils/styles.utils";
 import type { StyleProps } from "@types";
 
 export const listFilterCollectionContainerStyles = (): RuleSet => css`
-  background: white;
+  background: var(--white);
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-card-default);

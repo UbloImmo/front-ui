@@ -14,7 +14,7 @@ export const entityCardHeaderStyles = (): RuleSet => css`
 
 export const entityCardContentStyles = (): RuleSet => css`
   padding: var(--s-4);
-  background: white;
+  background: var(--white);
   border-top: 1px solid var(--primary-light);
 
   &:last-child {

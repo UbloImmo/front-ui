@@ -16,7 +16,7 @@ export const contextLineStyles = ({
   const displayBorder = !(isBoolean($borderBottom) && !$borderBottom);
 
   return css`
-    background: white;
+    background: var(--white);
     flex: 1;
     padding: ${paddingVertical} ${paddingHorizontal};
     ${displayBorder &&

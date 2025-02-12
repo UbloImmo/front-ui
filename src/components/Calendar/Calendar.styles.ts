@@ -75,10 +75,12 @@ const calendarCssVars = css`
     --rdp-accent-background-color
   ); /* The color of the background for days in the middle of a range. */
   --rdp-range_middle-font: normal medium var(--rdp-font-family); /* The font for days in the middle of a range. */
-  --rdp-range_middle-foreground-color: white; /* The font for days in the middle of a range. */
+  --rdp-range_middle-foreground-color: var(
+    --white
+  ); /* The font for days in the middle of a range. */
   --rdp-range_middle-color: inherit; /* The color of the range text. */
 
-  --rdp-range_start-color: white; /* The color of the range text. */
+  --rdp-range_start-color: var(--white); /* The color of the range text. */
   --rdp-range_start-background: linear-gradient(
     var(--rdp-gradient-direction),
     transparent 50%,
@@ -93,7 +95,7 @@ const calendarCssVars = css`
     var(--rdp-range_middle-background-color) 50%,
     transparent 50%
   ); /* Used for the background of the end of the selected range. */
-  --rdp-range_end-color: white; /* The color of the range text. */
+  --rdp-range_end-color: var(--white); /* The color of the range text. */
   --rdp-range_end-date-background-color: var(
     --rdp-accent-color
   ); /* The background color of the date when at the end of the selected range. */
@@ -142,43 +144,6 @@ const calendarRootStyles = css`
 `;
 
 const calendarBaseStyles = css`
-  /* 
-
-  .rdp-caption_label {
-    z-index: 1;
-
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-
-    white-space: nowrap;
-    border: 0;
-    ${texts.desktop.h4.medium.css.rules}
-    text-transform: capitalize;
-    color: var(--gray-800);
-  } */
-  /* 
-  .rdp-button_next:disabled,
-  .rdp-button_previous:disabled {
-    cursor: revert;
-
-    opacity: var(--rdp-nav_button-disabled-opacity);
-  }
-
-  .rdp-chevron {
-    display: inline-block;
-    fill: var(--rdp-accent-color);
-  } */
-
-  /* .rdp-root[dir="rtl"] .rdp-nav .rdp-chevron {
-    transform: rotate(180deg);
-  }
-
-  .rdp-root[dir="rtl"] .rdp-nav .rdp-chevron {
-    transform: rotate(180deg);
-    transform-origin: 50%;
-  } */
-
   .rdp-dropdowns {
     position: relative;
     display: inline-flex;
@@ -536,7 +501,7 @@ const calendarFooterStyles = css`
 `;
 
 export const calendarWrapperStyles = css`
-  background: white;
+  background: var(--white);
   padding: var(--s-2) var(--s-1);
   box-shadow: var(--shadow-card-elevation-low);
   width: fit-content;
