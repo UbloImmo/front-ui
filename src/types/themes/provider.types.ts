@@ -1,6 +1,6 @@
 import type { GetThemeOverridesFn } from "./overrides.types";
 import type { DynamicColorPaletteKey } from "./palette";
-import type { GlobalStyleProps } from "@/themes";
+import type { Theme } from "./theme.types";
 import type { ReactNode } from "react";
 
 export type FaviconLinkSelectors = {
@@ -8,6 +8,28 @@ export type FaviconLinkSelectors = {
   x32?: string;
 };
 
+/**
+ * Props for the `GlobalStyle` component
+ */
+export type GlobalStyleProps = {
+  /**
+   * The complete theme object
+   */
+  theme: Theme;
+  /**
+   * **EXPERIMENTAL**
+   *
+   * Whether to support the css `light dark` color-sheme property
+   *
+   * Will result in all color css variables being declared
+   * using `light-dark()` function with their inverse color
+   */
+  lightDarkSupport?: boolean;
+};
+
+/**
+ * Props for the `ThemeProvider` component
+ */
 export type ThemeProviderProps = {
   /**
    * The children of the provider.

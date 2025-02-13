@@ -25,23 +25,8 @@ import type {
   CssVarUsage,
   CssLightDark,
   CssRgbFrom,
+  GlobalStyleProps,
 } from "@types";
-
-export type GlobalStyleProps = {
-  /**
-   * The complete theme object
-   */
-  theme: Theme;
-  /**
-   * **EXPERIMENTAL**
-   *
-   * Whether to support the css `light dark` color-sheme property
-   *
-   * Will result in all color css variables being declared
-   * using `light-dark()` function with their inverse color
-   */
-  lightDarkSupport?: boolean;
-};
 
 type GlobaStyleInnerProps = {
   defaultCssVarsStr: string;
@@ -50,6 +35,18 @@ type GlobaStyleInnerProps = {
 
 const GLOBAL_STYLE_RENDER_WARN_THRESHOLD = 3;
 
+/**
+ * Converts each shade of a palette color to CSS variables
+ *
+ * @remarks
+ * Use {@link paletteColorToCssVars} to convert a palette color to CSS variables
+ * with light-dark support and opacity variables for each shade
+ *
+ * @template {AnyPaletteColorShadeKeys} TShadeKeys - The shade keys of the palette color
+ * @param {string} colorName - The name of the palette color
+ * @param {PaletteColorShaded<TShadeKeys>} shadedColors - The shaded palette color
+ * @return {CssVar<RgbaColorStr>[]} An array of CSS variables for the palette color shades
+ */
 export const paletteColorToCssVarsSimple = <
   TShadeKeys extends AnyPaletteColorShadeKeys,
 >(
@@ -69,7 +66,7 @@ export const paletteColorToCssVarsSimple = <
  * @param {string} colorName - the name of the palette color
  * @param {PaletteColorShaded<TShadeKeys>} shadedColors - the shaded palette color
  * @param {boolean} generateAlpha - whether to generate alpha variables
- * @return {CssVar<RgbaColorStr>[]} an array of CSS variables for the palette color shades
+ * @return {CssVar<RgbaColorStr | CssRgbFrom<CssVarUsage> | CssLightDark<RgbaColorStr, RgbaColorStr>>[]} an array of CSS variables for the palette color shades, ni various formats
  */
 export const paletteColorToCssVars = <
   TShadeKeys extends AnyPaletteColorShadeKeys,
