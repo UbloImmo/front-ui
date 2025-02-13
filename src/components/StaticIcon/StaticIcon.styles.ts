@@ -53,7 +53,7 @@ export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
   const backgroundColorShade = color === "gray" ? "50" : "light";
   const backgroundColor =
     color === "white"
-      ? "white"
+      ? cssVarUsage("white")
       : cssVarUsage(`${color}-${backgroundColorShade}`);
 
   return css`
