@@ -373,6 +373,25 @@ const appendGlobalStyle = ({
         color-scheme: light dark;
       `}
       --white: ${lightDarkSupport ? "light-dark(white, black)" : "white"};
+      --white-05: rgb(from var(--white) r g b / 0.05);
+      --white-10: rgb(from var(--white) r g b / 0.1);
+      --white-15: rgb(from var(--white) r g b / 0.15);
+      --white-20: rgb(from var(--white) r g b / 0.2);
+      --white-25: rgb(from var(--white) r g b / 0.25);
+      --white-30: rgb(from var(--white) r g b / 0.3);
+      --white-35: rgb(from var(--white) r g b / 0.35);
+      --white-40: rgb(from var(--white) r g b / 0.4);
+      --white-45: rgb(from var(--white) r g b / 0.45);
+      --white-50: rgb(from var(--white) r g b / 0.5);
+      --white-55: rgb(from var(--white) r g b / 0.55);
+      --white-60: rgb(from var(--white) r g b / 0.6);
+      --white-65: rgb(from var(--white) r g b / 0.65);
+      --white-70: rgb(from var(--white) r g b / 0.7);
+      --white-75: rgb(from var(--white) r g b / 0.75);
+      --white-80: rgb(from var(--white) r g b / 0.8);
+      --white-85: rgb(from var(--white) r g b / 0.85);
+      --white-90: rgb(from var(--white) r g b / 0.9);
+      --white-95: rgb(from var(--white) r g b / 0.95);
       --bezier: ${BEZIER};
       ${defaultCssVarsStr}
     }
