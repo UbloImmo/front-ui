@@ -5,7 +5,7 @@ type TableCellProps = {
 };
 
 export const TableCell = styled.td<TableCellProps>`
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--white-50);
   border-radius: var(--s-1);
   border: none !important;
   padding: var(--s-2) !important;
