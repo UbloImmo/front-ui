@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Experimental support for `color-scheme: light-dark`
+  - Replace CSS variable declarations `light-dark()` color function
+  - Add new `white` & `white-${opacity}` CSS variables
+  - Replace hardcoded `white`, `rgba(255, 255, 255, 1)` and `#fff` usages with CSS variables
+
 ## 1.5.2 - 2025-02-12
 ### Fixed
 - `v0.0.7` Dialog component
