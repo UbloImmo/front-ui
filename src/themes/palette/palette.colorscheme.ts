@@ -6,6 +6,10 @@ import {
   GrayscalePaletteColorShadeKey,
 } from "@types";
 
+/**
+ * Inversion map for the shade keys
+ * Each value is the inverse of the key
+ */
 const shadeInversionMap: ValueMap<
   GrayscalePaletteColorShadeKey,
   GrayscalePaletteColorShadeKey
@@ -27,6 +31,13 @@ const shadeInversionMap: ValueMap<
   light: "dark",
 };
 
+/**
+ * Inverts a shade key
+ *
+ * @template {AnyPaletteColorShadeKeys} TShades - The sub-type of the shade key, either default or grayscale shade keys
+ * @param {TShades[number]} shadeKey - The shade key to invert
+ * @return {TShades[number]} The inverted shade key
+ */
 export const invertShadeKey = <TShades extends AnyPaletteColorShadeKeys>(
   shadeKey: TShades[number]
 ): TShades[number] => {
