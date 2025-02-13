@@ -52,9 +52,8 @@ const whiteButtonStyle: ButtonStyle = {
   },
   secondary: {
     default: {
-      content: "rgba(255, 255, 255, 1)",
-      border: "rgba(255, 255, 255, 1)",
-      background: "rgba(255, 255, 255, 0.05)",
+      content: "white",
+      border: "white",
     },
     hover: {
       background: "rgba(255, 255, 255, 0.05)",
