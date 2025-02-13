@@ -166,7 +166,8 @@ export type ButtonElementColor =
   | PaletteColor
   | "transparent"
   | RgbaColorStr
-  | "white";
+  | "white"
+  | `white-${number}`;
 
 export type ButtonStyleColors = {
   background?: ButtonElementColor;
