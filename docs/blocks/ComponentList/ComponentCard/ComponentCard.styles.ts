@@ -38,7 +38,7 @@ export const componentCardStyle = ({
       box-shadow: var(--shadow-card-elevation-medium);
 
       [data-testid="component-card-component-container"] {
-        background: var(--gray-50-50);
+        background: var(--primary-100-50);
         border-color: var(--primary-light);
 
         [data-testid="component-card-scale-container"] {
@@ -57,7 +57,7 @@ export const componentCardStyle = ({
 
 export const componentCardContainerStyle = (): RuleSet => {
   return css`
-    background: white;
+    background: var(--gray-50);
     padding: var(--s-10) var(--s-4);
     border-radius: var(--s-1);
     flex: 1;

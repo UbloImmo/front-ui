@@ -1,3 +1,4 @@
+import type { AnyColorStr } from "../themes/color.types";
 import type { SpacingLabel } from "../themes/sizes/spacing.types";
 
 /**
@@ -119,3 +120,11 @@ export type CssVarUsage = `var(${CssVarName})`;
  * const primaryBaseRelativeAlpha = `rgb(from var(--${primaryBaseName}) r g b / ${alpha})`
  */
 export type CssRelativeRgbaColor = `rgb(from ${CssVarUsage} r g b / ${number})`;
+
+export type CssLightDark<
+  TLightColor extends AnyColorStr,
+  TDarkColor extends AnyColorStr,
+> = `light-dark(${TLightColor}, ${TDarkColor})`;
+
+export type CssRgbFrom<TFromColor extends AnyColorStr | CssVarUsage> =
+  `rgb(from ${TFromColor} r g b / ${number})`;

@@ -32,6 +32,7 @@ export const StorybookThemeProvider = ({
   <ThemeProvider
     _forceTheme={theme.client}
     faviconLinkSelectors={{ x16: 'link[rel="icon"]' }}
+    lightDarkSupport
   >
     <UikitTranslationProvider>
       <DialogProvider portalRoot="#dialog-root">{children}</DialogProvider>

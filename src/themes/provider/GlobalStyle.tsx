@@ -11,6 +11,7 @@ import {
 } from "../../typography";
 import { cssVar, cssVarUsage, useLogger, useStatic } from "../../utils";
 import { effectsToCssVars } from "../palette";
+import { invertShadeKey } from "../palette/palette.colorscheme";
 
 import type {
   Theme,
@@ -22,18 +23,41 @@ import type {
   BreakpointLabel,
   Spacings,
   CssVarUsage,
+  CssLightDark,
+  CssRgbFrom,
+  GlobalStyleProps,
 } from "@types";
 
 type GlobaStyleInnerProps = {
   defaultCssVarsStr: string;
   mediaQueries?: RuleSet[];
-};
-
-type GlobalStyleProps = {
-  theme: Theme;
-};
+} & Pick<GlobalStyleProps, "lightDarkSupport">;
 
 const GLOBAL_STYLE_RENDER_WARN_THRESHOLD = 3;
+
+/**
+ * Converts each shade of a palette color to CSS variables
+ *
+ * @remarks
+ * Use {@link paletteColorToCssVars} to convert a palette color to CSS variables
+ * with light-dark support and opacity variables for each shade
+ *
+ * @template {AnyPaletteColorShadeKeys} TShadeKeys - The shade keys of the palette color
+ * @param {string} colorName - The name of the palette color
+ * @param {PaletteColorShaded<TShadeKeys>} shadedColors - The shaded palette color
+ * @return {CssVar<RgbaColorStr>[]} An array of CSS variables for the palette color shades
+ */
+export const paletteColorToCssVarsSimple = <
+  TShadeKeys extends AnyPaletteColorShadeKeys,
+>(
+  colorName: string,
+  shadedColors: PaletteColorShaded<TShadeKeys>
+): CssVar<RgbaColorStr>[] => {
+  return objectEntries(shadedColors).map(
+    ([shadeName, { rgba }]): CssVar<RgbaColorStr> =>
+      cssVar(`${colorName.toLowerCase()}-${shadeName.toLowerCase()}`, rgba)
+  );
+};
 
 /**
  * Generates CSS variables for the given palette color and its shades.
@@ -42,23 +66,40 @@ const GLOBAL_STYLE_RENDER_WARN_THRESHOLD = 3;
  * @param {string} colorName - the name of the palette color
  * @param {PaletteColorShaded<TShadeKeys>} shadedColors - the shaded palette color
  * @param {boolean} generateAlpha - whether to generate alpha variables
- * @return {CssVar<RgbaColorStr>[]} an array of CSS variables for the palette color shades
+ * @return {CssVar<RgbaColorStr | CssRgbFrom<CssVarUsage> | CssLightDark<RgbaColorStr, RgbaColorStr>>[]} an array of CSS variables for the palette color shades, ni various formats
  */
 export const paletteColorToCssVars = <
   TShadeKeys extends AnyPaletteColorShadeKeys,
 >(
   colorName: string,
   shadedColors: PaletteColorShaded<TShadeKeys>,
-  generateAlpha?: boolean
-): CssVar<RgbaColorStr>[] => {
+  generateAlpha?: boolean,
+  enableLightDark?: boolean
+): CssVar<
+  | RgbaColorStr
+  | CssRgbFrom<CssVarUsage>
+  | CssLightDark<RgbaColorStr, RgbaColorStr>
+>[] => {
   if (!generateAlpha)
-    return objectEntries(shadedColors).map(
-      ([shadeName, { rgba }]): CssVar<RgbaColorStr> =>
-        cssVar(`${colorName.toLowerCase()}-${shadeName.toLowerCase()}`, rgba)
-    );
+    return paletteColorToCssVarsSimple(colorName, shadedColors);
+
   return objectEntries(shadedColors).flatMap(
-    ([shadeName, { rgba, opacity }]): CssVar<RgbaColorStr>[] => {
+    ([shadeName, { rgba }]): CssVar<
+      | RgbaColorStr
+      | CssRgbFrom<CssVarUsage>
+      | CssLightDark<RgbaColorStr, RgbaColorStr>
+    >[] => {
       const varName = `${colorName.toLowerCase()}-${shadeName.toLowerCase()}`;
+      let varValue: RgbaColorStr | CssLightDark<RgbaColorStr, RgbaColorStr> =
+        rgba;
+      if (enableLightDark) {
+        const invertedShade = invertShadeKey(shadeName);
+        const invertedColor = shadedColors[invertedShade].rgba ?? rgba;
+        varValue = `light-dark(${rgba}, ${invertedColor})`;
+      }
+      const baseVar = cssVar(varName, varValue);
+      if (!generateAlpha) return [baseVar];
+
       // create variables for major opacities (0 - 0.95)
       const opacityVars = Array(20)
         .fill(0)
@@ -67,9 +108,10 @@ export const paletteColorToCssVars = <
           const opacityName = `${varName}-${String(
             opacityCoeff.toFixed(2)
           ).replaceAll("0.", "")}`;
-          return cssVar(opacityName, opacity(opacityCoeff));
+          const referencedColor: CssRgbFrom<CssVarUsage> = `rgb(from ${cssVarUsage(varName)} r g b / ${opacityCoeff})`;
+          return cssVar(opacityName, referencedColor);
         });
-      return [cssVar(varName, rgba), ...opacityVars];
+      return [baseVar, ...opacityVars];
     }
   );
 };
@@ -224,31 +266,49 @@ const useUnthemedGlobaStyle = (): {
  * Generates CSS variables and effect CSS variables based on the given theme.
  *
  * @param {Theme} theme - The theme object containing the palette and organization.
+ * @param {boolean} [lightDarkSupport] - Whether to declare color variables as light-dark
  * @return {(CssVar<string> | CssVar<`${string}${CssVarUsage}`>)[][]} An array containing the generated CSS variables and effect CSS variables.
  */
 const useThemedGlobalStyle = (
-  theme: Theme
+  theme: Theme,
+  lightDarkSupport?: boolean
 ): (CssVar<string> | CssVar<`${string}${CssVarUsage}`>)[][] => {
-  // generate css vars from non-legacy palette
-  const paletteCssVars = useMemo(() => {
+  const themePalette = useMemo(() => {
     // abort if no theme
-    if (!theme) return [];
+    if (!theme) return null;
     // filter legacy palette and organization out
     const { palette: _, organization: __, ...palette } = theme;
+    return palette;
+  }, [theme]);
+
+  // generate css vars from non-legacy palette
+  const paletteCssVars = useMemo(() => {
+    // abort if no theme palette
+    if (!themePalette) return [];
+
     // transform palette to css vars
-    return objectEntries(palette).flatMap(([colorName, shadedColor]) =>
+    return objectEntries(themePalette).flatMap(([colorName, shadedColor]) =>
       paletteColorToCssVars(
         colorName,
         shadedColor as PaletteColorShaded<AnyPaletteColorShadeKeys>,
-        true
+        true,
+        lightDarkSupport
       )
     );
-  }, [theme]);
+  }, [themePalette, lightDarkSupport]);
 
-  const effectCssVars = useMemo(
-    () => effectsToCssVars(paletteCssVars),
-    [paletteCssVars]
-  );
+  const effectCssVars = useMemo(() => {
+    if (!themePalette) return [];
+
+    const opaquePaletteVars = objectEntries(themePalette).flatMap(
+      ([colorName, shadedColor]) =>
+        paletteColorToCssVarsSimple(
+          colorName,
+          shadedColor as PaletteColorShaded<AnyPaletteColorShadeKeys>
+        )
+    );
+    return effectsToCssVars(opaquePaletteVars);
+  }, [themePalette]);
 
   return [paletteCssVars, effectCssVars];
 };
@@ -257,12 +317,16 @@ const useThemedGlobalStyle = (
  * Returns the global style props for a given theme.
  *
  * @param {Theme} theme - The theme object.
+ * @param {boolean} [lightDarkSupport] - Whether to declare color variables as light-dark
  * @return {GlobaStyleInnerProps} The global style props including the default CSS variables string and media queries.
  */
-const useGlobalStyle = (theme: Theme): GlobaStyleInnerProps => {
+const useGlobalStyle = (
+  theme: Theme,
+  lightDarkSupport?: boolean
+): GlobaStyleInnerProps => {
   const { warn } = useLogger("GlobalStyle");
   const renderCount = useRef(0);
-  const themeCssVars = useThemedGlobalStyle(theme);
+  const themeCssVars = useThemedGlobalStyle(theme, lightDarkSupport);
   const { vars: unthemedCssVars, mediaQueries } = useUnthemedGlobaStyle();
   const defaultCssVarsStr = useMemo(
     () => joinCssVarCollection([...themeCssVars, ...unthemedCssVars]),
@@ -277,6 +341,7 @@ const useGlobalStyle = (theme: Theme): GlobaStyleInnerProps => {
   return {
     defaultCssVarsStr,
     mediaQueries,
+    lightDarkSupport,
   };
 };
 
@@ -293,12 +358,37 @@ export const BEZIER = "cubic-bezier(0.38, 0, 0.21, 0.98)";
 const appendGlobalStyle = ({
   defaultCssVarsStr,
   mediaQueries,
+  lightDarkSupport,
 }: GlobaStyleInnerProps): RuleSet => {
   return css`
     ${linkFontFace}
     ${cssReset}
     ${iconOverflow}
     :root {
+      ${lightDarkSupport &&
+      css`
+        color-scheme: light dark;
+      `}
+      --white: ${lightDarkSupport ? "light-dark(white, black)" : "white"};
+      --white-05: rgb(from var(--white) r g b / 0.05);
+      --white-10: rgb(from var(--white) r g b / 0.1);
+      --white-15: rgb(from var(--white) r g b / 0.15);
+      --white-20: rgb(from var(--white) r g b / 0.2);
+      --white-25: rgb(from var(--white) r g b / 0.25);
+      --white-30: rgb(from var(--white) r g b / 0.3);
+      --white-35: rgb(from var(--white) r g b / 0.35);
+      --white-40: rgb(from var(--white) r g b / 0.4);
+      --white-45: rgb(from var(--white) r g b / 0.45);
+      --white-50: rgb(from var(--white) r g b / 0.5);
+      --white-55: rgb(from var(--white) r g b / 0.55);
+      --white-60: rgb(from var(--white) r g b / 0.6);
+      --white-65: rgb(from var(--white) r g b / 0.65);
+      --white-70: rgb(from var(--white) r g b / 0.7);
+      --white-75: rgb(from var(--white) r g b / 0.75);
+      --white-80: rgb(from var(--white) r g b / 0.8);
+      --white-85: rgb(from var(--white) r g b / 0.85);
+      --white-90: rgb(from var(--white) r g b / 0.9);
+      --white-95: rgb(from var(--white) r g b / 0.95);
       --bezier: ${BEZIER};
       ${defaultCssVarsStr}
     }
@@ -315,8 +405,8 @@ const appendGlobalStyle = ({
  * @param {GlobalStyleProps} props - The props for the GlobalStyle component.
  * @param {Theme} props.theme - The theme object
  */
-export const GlobalStyle = ({ theme }: GlobalStyleProps) => {
-  const innerProps = useGlobalStyle(theme);
+export const GlobalStyle = ({ theme, lightDarkSupport }: GlobalStyleProps) => {
+  const innerProps = useGlobalStyle(theme, lightDarkSupport);
   return <GlobalStyleInner {...innerProps} />;
 };
 

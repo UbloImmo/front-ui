@@ -8,8 +8,8 @@ import {
   extractEffectTokenShadow,
   parseEffectToken,
   parsedEffectToCssVar,
-  paletteColorToCssVars,
   buildTheme,
+  paletteColorToCssVarsSimple,
 } from "../../themes";
 import { colorCollections } from "../color.test";
 
@@ -65,7 +65,6 @@ const NEXT_PALETTE_KEYS: (keyof ColorPalette)[] = [
  * Validates the legacy palette object and its properties.
  *
  * @param {LegacyPalette} legacyPalette - the legacy palette object to be validated
- * @return {void}
  */
 export const testLegacyPalette = (legacyPalette: LegacyPalette) => {
   expect(legacyPalette).toBeDefined();
@@ -79,7 +78,6 @@ export const testLegacyPalette = (legacyPalette: LegacyPalette) => {
  * Function to test the color palette object for all its properties.
  *
  * @param {ColorPalette} colorPalette - the color palette object to test
- * @return {void}
  */
 export const testColorPalette = (colorPalette: ColorPalette) => {
   expect(colorPalette).toBeDefined();
@@ -174,8 +172,8 @@ describe("palette", () => {
   describe("converting to css var", () => {
     const { primary } = buildTheme();
     const cssVars = [
-      ...paletteColorToCssVars("primary-default", primary),
-      ...paletteColorToCssVars("primary", primary),
+      ...paletteColorToCssVarsSimple("primary-default", primary),
+      ...paletteColorToCssVarsSimple("primary", primary),
     ];
     const cssVarsSplit = cssVars
       .map(parseCssVar<RgbaColorStr>)

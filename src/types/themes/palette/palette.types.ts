@@ -39,6 +39,10 @@ export type PaletteColorShade = {
   opacity: ShadeOpacityFn;
 };
 
+export type AnyPaletteColorShadeKey =
+  | DefaultPaletteColorShadeKey
+  | GrayscalePaletteColorShadeKey;
+
 export type AnyPaletteColorShadeKeys =
   | DefaultPaletteColorShadeKey[]
   | GrayscalePaletteColorShadeKey[];

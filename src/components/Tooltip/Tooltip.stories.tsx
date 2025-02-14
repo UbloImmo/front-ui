@@ -134,7 +134,7 @@ const TooltipIntersectionContainer = styled.div`
   height: 12rem;
   overflow: auto;
   border-radius: var(--s-05);
-  background: white;
+  background: var(--white);
   position: relative;
 `;
 

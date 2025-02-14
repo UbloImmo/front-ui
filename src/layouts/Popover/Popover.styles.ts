@@ -77,7 +77,7 @@ export const popoverContentStyles = ({
 
 export const popoverContentWrapperStyles = (): RuleSet => {
   return css`
-    background: white;
+    background: var(--white);
     padding: var(--s-3) var(--s-4);
     border-radius: var(--s-2);
     box-shadow: var(--shadow-card-elevation-medium);

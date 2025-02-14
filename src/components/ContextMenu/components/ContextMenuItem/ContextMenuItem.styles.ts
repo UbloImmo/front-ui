@@ -8,7 +8,7 @@ export const contextMenuItemStyles = (): RuleSet => {
     width: 100%;
     min-width: 10rem;
     max-width: 100%;
-    background: white;
+    background: var(--white);
     padding: 0 var(--s-2);
     display: flex;
     align-items: center;

@@ -7,7 +7,7 @@ export const accountBalanceStyle = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: var(--s-1);
     border: 1px solid var(--gray-100);
     padding: var(--s-2) var(--s-3);

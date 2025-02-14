@@ -47,7 +47,7 @@ const CanvasStyle = styled.div<StyleProps<CanvasLayoutProps>>`
   & > .sbdocs-preview {
     box-shadow: none;
     background: ${({ $inHeader }) =>
-      $inHeader ? "#fff" : "var(--gray-50-25)"};
+      $inHeader ? "var(--white)" : "var(--gray-50-50)"};
     border: none;
     outline: 1px solid var(--gray-50);
     border-radius: var(--s-2);

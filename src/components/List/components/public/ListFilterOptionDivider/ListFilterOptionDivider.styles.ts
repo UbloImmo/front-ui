@@ -18,7 +18,7 @@ export const listFilterOptionDividerStyles = (): RuleSet => css`
     position: absolute;
     inset: 0;
     top: calc(var(--s-1) * -1);
-    background: white;
+    background: var(--white);
     z-index: unset;
   }
 `;

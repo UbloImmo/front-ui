@@ -29,7 +29,7 @@ const tableRowListStyles = ({ $clickable }: TableRowStyleProps) => css`
     min-height: var(--s-12);
     height: var(--s-12);
     vertical-align: middle;
-    background: white;
+    background: var(--white);
     transition: background 150ms var(--bezier);
   }
 

@@ -70,6 +70,7 @@ const StyleReset = styled.div`
   .sbdocs-wrapper {
     padding: 0;
     width: 100%;
+    background: light-dark(white, black);
 
     blockquote {
       padding: var(--s-3) var(--s-4);
@@ -208,12 +209,30 @@ const StyleReset = styled.div`
     max-width: unset;
   }
 
+  .docblock-source.sb-unstyled {
+    color: var(--gray-600);
+  }
+
   pre:has(> .docblock-source) {
     width: 100%;
 
     .docblock-source {
       margin: 0 !important;
     }
+  }
+
+  .sbdocs-content main p {
+    color: var(--gray-800);
+  }
+
+  span[data-testid="text"] code,
+  li code,
+  h4 code,
+  h3 code,
+  p code {
+    background: var(--gray-200-50);
+    color: var(--gray-800);
+    border-color: var(--gray-100-50);
   }
 
   pre.prismjs {
@@ -280,6 +299,14 @@ const StyleReset = styled.div`
       font-style: normal;
     }
 
+    .token.property {
+      color: var(--primary-base);
+    }
+
+    .token.selector {
+      color: var(--pending-base);
+    }
+
     .token.operator,
     .token.attr-equals {
       color: color-mix(
@@ -336,7 +363,7 @@ const StyleReset = styled.div`
   }
 
   header main[data-layout="docs-content"] .docblock-source {
-    background: white !important;
+    background: light-dark(white, black) !important;
   }
   :not(.sb-unstyled) .sbdocs-content td .docblock-source {
     padding: 0 !important;

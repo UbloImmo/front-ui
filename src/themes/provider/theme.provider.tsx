@@ -24,6 +24,7 @@ export const ThemeProvider = ({
   _forceTheme = "primary",
   noFavicon = false,
   faviconLinkSelectors,
+  lightDarkSupport,
 }: ThemeProviderProps): JSX.Element => {
   const { warn, debug } = useLogger("ThemeProvider");
   const [overrides, setOverrides] = useState<Nullable<ThemeOverride>>(null);
@@ -77,7 +78,7 @@ export const ThemeProvider = ({
 
   return (
     <StyledThemeProvider theme={theme}>
-      <GlobalStyle theme={theme} />
+      <GlobalStyle theme={theme} lightDarkSupport={lightDarkSupport} />
       {children}
     </StyledThemeProvider>
   );

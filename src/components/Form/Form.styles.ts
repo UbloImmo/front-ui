@@ -18,7 +18,7 @@ export const formContainerStyles = ({
 }: FormContainerStyleProps): RuleSet => {
   const asModalWidth = $size ? modalSizeToWidthMap[$size] : null;
   return css`
-    background: white;
+    background: var(--white);
     box-shadow: var(--shadow-card-default);
     border-radius: var(--s-2);
     position: relative;

@@ -28,7 +28,7 @@ export const TableRow = styled.tr<
     $required &&
     css`
       & > td {
-        background: #fff;
+        background: var(--white);
       }
     `}
 

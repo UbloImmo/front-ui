@@ -164,7 +164,7 @@ const ShadeGridContainer = styled.div`
   grid-template-rows: minmax(0, max-content) repeat(auto-fit, minmax(0, 1fr));
   gap: var(--s-05);
   padding: var(--s-1);
-  background: #fff;
+  background: var(--white);
   border-radius: var(--s-1);
   overflow: hidden;
 `;

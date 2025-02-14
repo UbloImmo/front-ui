@@ -97,7 +97,7 @@ const ExampleCard = ({ reference }: { reference: DialogReference }) => (
 );
 
 const CardContainer = styled.div<{ $large?: boolean }>`
-  background: #fff;
+  background: var(--white);
   padding: var(--s-12) var(--s-4);
   border: 1px solid var(--gray-50);
   border-radius: var(--s-2);

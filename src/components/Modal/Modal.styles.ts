@@ -19,7 +19,7 @@ export const modalCardStyles = ({ $size }: ModalStyleProps) => {
     max-width: ${width};
     width: ${width};
     max-width: 100%;
-    background: white;
+    background: var(--white);
     padding: var(--s-6);
     border-radius: var(--s-2);
     position: relative;

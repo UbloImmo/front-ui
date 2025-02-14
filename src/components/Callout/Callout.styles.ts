@@ -15,10 +15,9 @@ export const computeCalloutIconNames: Record<CalloutColor, IconName> = {
 };
 
 export const calloutStyle = ({ $color, $size }: CalloutStyleProps): RuleSet => {
-  const background =
-    $size === "l"
-      ? "white"
-      : cssVarUsage($color === "gray" ? "gray-50" : `${$color}-light`);
+  const background = cssVarUsage(
+    $size === "l" ? "white" : $color === "gray" ? "gray-50" : `${$color}-light`
+  );
 
   const borderColor = cssVarUsage(
     $color === "gray"

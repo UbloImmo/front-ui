@@ -85,8 +85,7 @@ export const actionIconContainerStyles = ({
       ? cssVarUsage(`${normalizedColor}-medium`)
       : borderColorTransparent;
   const backgroundColor = actionIconBackgroundMap[$size][$color];
-  const background =
-    backgroundColor === "white" ? "white" : cssVarUsage(backgroundColor);
+  const background = cssVarUsage(backgroundColor);
 
   const padding = cssVarUsage(actionIconPaddingMap[$size]);
   const borderRadius = cssVarUsage(actionIconBorderRadiusMap[$size]);

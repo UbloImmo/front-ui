@@ -162,7 +162,12 @@ export type ButtonProps = Omit<StyleOverrideProps, "as"> & {
 
 export type DefaultButtonProps = Required<ButtonProps>;
 
-export type ButtonElementColor = PaletteColor | "transparent" | RgbaColorStr;
+export type ButtonElementColor =
+  | PaletteColor
+  | "transparent"
+  | RgbaColorStr
+  | "white"
+  | `white-${number}`;
 
 export type ButtonStyleColors = {
   background?: ButtonElementColor;

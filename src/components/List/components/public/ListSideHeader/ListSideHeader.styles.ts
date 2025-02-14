@@ -4,7 +4,7 @@ export const headerContainerStyles = (): RuleSet => css`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background: white;
+  background: var(--white);
   box-shadow: var(--shadow-card-default);
   border-radius: var(--s-2);
   overflow: hidden;
