@@ -33,11 +33,11 @@ export type EntityStateProps = RequireAtLeastOne<{
   /**
    * The state to display above the entity's name and info
    */
-  state: Nullable<StateIndicatorProps>;
+  state?: Nullable<StateIndicatorProps>;
   /**
    * The account balance to display
    */
-  accountBalance: Nullable<AccountBalanceProps>;
+  accountBalance?: Nullable<AccountBalanceProps>;
 }>;
 
 export type EntityInfoCardHeaderProps = EntityStateProps & {
