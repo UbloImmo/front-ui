@@ -106,6 +106,7 @@ export { Invoice2 } from "./Invoice2.icon";
 export { Invoice2In } from "./Invoice2In.icon";
 export { Invoice2Out } from "./Invoice2Out.icon";
 export { InvoiceClock } from "./InvoiceClock.icon";
+export { InvoiceDelete } from "./InvoiceDelete.icon";
 export { InvoiceDraft } from "./InvoiceDraft.icon";
 export { InvoicePdf } from "./InvoicePdf.icon";
 export { Invoices } from "./Invoices.icon";

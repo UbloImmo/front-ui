@@ -1355,6 +1355,7 @@ export const Invoice2 = lazy(() => loadIcon("Invoice2"));
 export const Invoice2In = lazy(() => loadIcon("Invoice2In"));
 export const Invoice2Out = lazy(() => loadIcon("Invoice2Out"));
 export const InvoiceClock = lazy(() => loadIcon("InvoiceClock"));
+export const InvoiceDelete = lazy(() => loadIcon("InvoiceDelete"));
 export const InvoiceDraft = lazy(() => loadIcon("InvoiceDraft"));
 export const InvoicePdf = lazy(() => loadIcon("InvoicePdf"));
 export const Invoices = lazy(() => loadIcon("Invoices"));
