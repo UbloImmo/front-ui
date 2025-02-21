@@ -27,21 +27,23 @@ export const calloutStyle = ({ $color, $size }: CalloutStyleProps): RuleSet => {
         : `${$color}-base`
   );
 
+  const borderRadius = cssVarUsage(`s-${$size === "l" ? 2 : 1}`);
+
   const flexLayout =
     $size === "l"
       ? css`
           flex-direction: column;
           align-items: start;
-          padding: var(--s-8) var(--s-7);
+          padding: var(--s-8);
           // account for left border
-          padding-left: var(--s-6);
+          /* padding-left: var(--s-6); */
         `
       : css`
           flex-direction: row;
           align-items: center;
           padding: var(--s-3) var(--s-4);
           // account for left border
-          padding-left: var(--s-3);
+          /* padding-left: var(--s-3); */
         `;
 
   return css`
@@ -52,13 +54,25 @@ export const calloutStyle = ({ $color, $size }: CalloutStyleProps): RuleSet => {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    border-radius: var(--s-1);
+    border-radius: ${borderRadius};
     background-color: ${background};
+    position: relative;
+    overflow: hidden;
 
     ${$size === "l" &&
     css`
-      border: 1px solid ${borderColor};
+      outline: 1px solid ${borderColor};
+      outline-offset: -1px;
     `}
-    border-left: var(--s-1) solid ${borderColor};
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      right: unset;
+      height: 100%;
+      width: var(--s-1);
+      background: ${borderColor};
+    }
   `;
 };
