@@ -35,15 +35,11 @@ export const calloutStyle = ({ $color, $size }: CalloutStyleProps): RuleSet => {
           flex-direction: column;
           align-items: start;
           padding: var(--s-8);
-          // account for left border
-          /* padding-left: var(--s-6); */
         `
       : css`
           flex-direction: row;
           align-items: center;
           padding: var(--s-3) var(--s-4);
-          // account for left border
-          /* padding-left: var(--s-3); */
         `;
 
   return css`
