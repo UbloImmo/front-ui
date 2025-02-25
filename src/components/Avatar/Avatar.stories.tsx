@@ -176,3 +176,24 @@ export const Organization = (props: Partial<AvatarProps>) => {
     />
   );
 };
+
+const tooltips = [...bools, "Custom tooltip"];
+
+export const Tooltip = (props: Partial<AvatarProps>) => {
+  const mergedProps = useMergedProps(Avatar.defaultProps, {
+    ...props,
+    firstName: "John",
+    lastName: "Doe",
+  });
+
+  return (
+    <ComponentVariants
+      defaults={mergedProps}
+      variants={tooltips}
+      for="tooltip"
+      of={Avatar}
+      propLabels
+      align="center"
+    />
+  );
+};

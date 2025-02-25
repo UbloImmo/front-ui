@@ -1,6 +1,8 @@
 import type { RequiredNonNever } from "@/types/global/object.types";
 import type { ExtendedComponentSize } from "@/types/themes/sizes/sizes.types";
+import type { Direction } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 export type AvatarSize = Extract<ExtendedComponentSize, "m" | "l" | "xl">;
 
@@ -21,6 +23,31 @@ type CommonAvatarProps = {
    * @default false
    */
   organization?: boolean;
+
+  /**
+   * Whether to wrap the Avatar in a tooltip
+   *
+   * @remarks
+   * - If `true`, the Avatar will be we wrapped with a tooltip
+   *   displaying its `name`, `firstName` & `lastName` properties.
+   *   If only provided with the `count` property, no tooltip will be displayed even if `true`.
+   * - If `false`, no tooltip will be displayed.
+   * - If a `ReactNode`, its content will be used as the tooltip text.
+   *
+   * @type {ReactNode | boolean}
+   * @default false
+   */
+  tooltip?: ReactNode | boolean;
+  /**
+   * The direction of the tooltip
+   *
+   * @remarks
+   * Will get overridden if no space is available in the given direction
+   *
+   * @type {Direction}
+   * @default "right"
+   */
+  tooltipDirection?: Direction;
 };
 
 export type AvatarPropsFullName = CommonAvatarProps & {

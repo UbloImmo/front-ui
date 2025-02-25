@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `v0.0.3` Avatar component
+  - Add `tooltip` property to allow for custom or generated tooltip content
+
 - Updated or added 3 new icon(s)
 
 - Updated `@ubloimmo/front-tokens` to `^0.1.36`

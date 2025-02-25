@@ -47,4 +47,23 @@ When the `organization` property is set to `true`, the avatar will be displayed 
 
 <Canvas of={AvatarStories.Organization} />
 
+### Show tooltips
+
+Avatar offers two properties related to tooltips.
+
+- `tooltip`: Whether to show a tooltip when hovering the avatar. Defaults to `false`.
+- `tooltipDirection`: The direction of the tooltip. Defaults to `right`
+
+When set to `true`, the avatar's tooltip will display what is provided in the `name` or `firstName` & `lastName` properties by default. The `count` property will not be reflected in the tooltip.
+
+> Its default generated content can be overridden by providing a valid `ReactNode` to the `tooltip` property.
+
+<Canvas of={AvatarStories.Tooltip} />
+
+### Customize tooltip content
+
+When provided with a `ReactNode`, the avatar's tooltip will display the provided content instead of the default one.
+
+
+
 </Content>
