@@ -7,28 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Changed
-
-- `v0.0.3` Avatar component
-  - Add `tooltip` property to allow for custom or generated tooltip content
-
-- Updated or added 3 new icon(s)
-
-- Updated `@ubloimmo/front-tokens` to `^0.1.36`
-
-- `v0.0.6` Callout component
-  - Render a larger border radius for `l` size
-  - Update styling to render left border using `::after` pseudo-element
-  - Update styles to render `l`-size border using `outline` property
-  - Make sure content does not overflow
-
+## 1.6.0 - 2025-02-25
 ### Added
-
 - Experimental support for `color-scheme: light-dark`
   - Replace CSS variable declarations `light-dark()` color function
   - Add new `white` & `white-${opacity}` CSS variables
   - Replace hardcoded `white`, `rgba(255, 255, 255, 1)` and `#fff` usages with CSS variables
   - New `lightDarkSupport` property to `GlobalStyle` & `ThemeProvider` components to activate this feature
+
+### Changed
+- `v0.0.3` Avatar component
+  - Add `tooltip` property to allow for custom or generated tooltip content
+- Updated or added 3 new icon(s)
+- Updated `@ubloimmo/front-tokens` to `^0.1.36`
+- `v0.0.6` Callout component
+  - Render a larger border radius for `l` size
+  - Update styling to render left border using `::after` pseudo-element
+  - Update styles to render `l`-size border using `outline` property
+  - Make sure content does not overflow
 
 ## 1.5.2 - 2025-02-12
 ### Fixed
