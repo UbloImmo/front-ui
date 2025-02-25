@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated `@ubloimmo/front-tokens` to `^0.1.36`
 
+- `v0.0.6` Callout component
+  - Render a larger border radius for `l` size
+  - Update styling to render left border using `::after` pseudo-element
+  - Update styles to render `l`-size border using `outline` property
+  - Make sure content does not overflow
+
 ### Added
 
 - Experimental support for `color-scheme: light-dark`

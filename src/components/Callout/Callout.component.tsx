@@ -36,7 +36,7 @@ const defaultCalloutProps: CalloutDefaultProps = {
  * A card to display permanent feedback information.
  * Its color indicates the type of feedback.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {CalloutProps & TestIdProps} props - Callout component props
  * @returns {JSX.Element}
