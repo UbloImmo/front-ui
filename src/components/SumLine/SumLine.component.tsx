@@ -7,9 +7,13 @@ import { Text } from "../Text";
 import { sumLineContainerStyles, sumLineHeadingStyles } from "./SumLine.styles";
 
 import { FlexRowLayout } from "@layouts";
-import { useMergedProps, useTestId, useClassName } from "@utils";
+import { useMergedProps, useTestId, useClassName, useStyleProps } from "@utils";
 
-import type { SumLineDefaultProps, SumLineProps } from "./SumLine.types";
+import type {
+  SumLineDefaultProps,
+  SumLineProps,
+  SumlineStyleProps,
+} from "./SumLine.types";
 import type { TestIdProps, StyleOverrideProps } from "@types";
 
 const defaultSumLineProps: SumLineDefaultProps = {
@@ -24,7 +28,7 @@ const defaultSumLineProps: SumLineDefaultProps = {
 /**
  * Displays a single number value with a label, a unit and a period
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {SumLineProps & TestIdProps & Omit<StyleOverrideProps, "as">} props - The component's props
  */
@@ -55,6 +59,8 @@ const SumLine = (
     return `/ ${period}`;
   }, [period]);
 
+  const styleProps = useStyleProps({ size });
+
   return (
     <SumLineContainer
       className={className}
@@ -64,6 +70,7 @@ const SumLine = (
       fill="row"
       gap="s-2"
       justify="space-between"
+      {...styleProps}
     >
       <Text
         color="gray-700"
@@ -119,7 +126,7 @@ SumLine.defaultProps = defaultSumLineProps;
 
 export { SumLine };
 
-const SumLineContainer = styled(FlexRowLayout)`
+const SumLineContainer = styled(FlexRowLayout)<SumlineStyleProps>`
   ${sumLineContainerStyles}
 `;
 

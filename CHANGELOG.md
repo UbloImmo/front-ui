@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.2` SumLine component
+  - Decrease vertical padding for `l` size
+
 ## 1.6.0 - 2025-02-25
 ### Added
 - Experimental support for `color-scheme: light-dark`

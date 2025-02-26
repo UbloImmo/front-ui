@@ -1,7 +1,11 @@
 import { css, type RuleSet } from "styled-components";
 
-export const sumLineContainerStyles = (): RuleSet => css`
-  padding: var(--s-3) 0;
+import type { SumlineStyleProps } from "./SumLine.types";
+
+export const sumLineContainerStyles = ({
+  $size,
+}: SumlineStyleProps): RuleSet => css`
+  padding: var(--s-${$size === "l" ? 1 : 3}) 0;
   &:first-child {
     border-top: 1px solid var(--primary-base);
   }
