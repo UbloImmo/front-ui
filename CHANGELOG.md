@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.6.1 - 2025-02-26
 ### Fixed
-
 - `v0.0.2` SumLine component
   - Decrease vertical padding for `l` size
 
