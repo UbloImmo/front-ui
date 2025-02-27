@@ -40,7 +40,7 @@ import type { TestIdProps, TextProps } from "@types";
 /**
  * Allows controlling a list filter from a table header cell.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {ListTableHeaderFilterProps} props - ListTableHeaderFilter component props
  * @returns {JSX.Element}
@@ -181,6 +181,8 @@ export const ListTableHeaderFilter = (
               <FilterButton
                 data-testid={`${testId}-trigger`}
                 $active={filter?.active}
+                type="button"
+                disabled={filter.disabled}
               >
                 <Icon size="s-4" name="FilterCircle" color="primary-medium" />
                 <Icon

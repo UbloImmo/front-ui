@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.2` ListTableHeaderFilter component
+  - Fix bug where the filter button would not be disabled when the filter is disabled
+  - Fix bug where the filter button would cause parent forms to be submitted when clicking on it
+
 ## 1.6.1 - 2025-02-26
 ### Fixed
 - `v0.0.2` SumLine component
