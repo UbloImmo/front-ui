@@ -86,7 +86,7 @@ const EmptyStateCard = (
         color={headingColor}
         fill
         align="center"
-        testId={`${testId}-heading`}
+        testId={`${testId}-title`}
         overrideTestId
       >
         {heading}
@@ -98,7 +98,7 @@ const EmptyStateCard = (
           weight="medium"
           fill
           align="center"
-          testId={`${testId}-heading`}
+          testId={`${testId}-description`}
           overrideTestId
         >
           {displayDescription}

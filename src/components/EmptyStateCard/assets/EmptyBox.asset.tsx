@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useId, useMemo } from "react";
 import styled from "styled-components";
 
 import { emptyStateCardAssetDefaultProps } from "./assets.defaults";
@@ -54,25 +54,18 @@ const useEmptyBoxAssetColors = (color: ColorKey) => {
         [cssColorMix(["gray-50", "30%"], `${colorKeyNoGray}-light`), "60%"],
         "gray-50"
       ),
-
       darkerLight: cssColorMix(["gray-400", "30%"], `${colorKeyNoGray}-medium`),
-
-      darkMedium: cssColorMix(["gray-600", "30%"], `${colorKeyNoGray}-medium`),
-
+      darkMedium: cssColorMix(["gray-600", "70%"], `${colorKeyNoGray}-medium`),
       darkerMedium: cssColorMix(
         ["gray-700", "50%"],
         `${colorKeyNoGray}-medium`
       ),
-
       darkestMedium: cssColorMix(
-        ["gray-800", "40%"],
+        ["gray-800", "60%"],
         `${colorKeyNoGray}-medium`
       ),
-
-      lightestBase: cssColorMix(["gray-200", "10%"], `${colorKeyNoGray}-base`),
-
+      lightestBase: cssColorMix(["gray-200", "90%"], `${colorKeyNoGray}-base`),
       darkerBase: cssColorMix(["gray-700", "55%"], `${colorKeyNoGray}-base`),
-
       darkestBase: cssColorMix(["gray-800", "35%"], `${colorKeyNoGray}-base`),
     }),
     [colorKeyNoGray]
@@ -94,6 +87,28 @@ const useEmptyBoxAssetColors = (color: ColorKey) => {
 
 type AssetColors = ReturnType<typeof useEmptyBoxAssetColors>;
 
+const useEmptyBoxAssetGradientIds = () => {
+  const gradient1 = useId();
+  const gradient2 = useId();
+  const gradient3 = useId();
+  const gradient4 = useId();
+  const gradient5 = useId();
+  const gradient6 = useId();
+  const gradient7 = useId();
+
+  return {
+    gradient1,
+    gradient2,
+    gradient3,
+    gradient4,
+    gradient5,
+    gradient6,
+    gradient7,
+  };
+};
+
+type AssetGradientIds = ReturnType<typeof useEmptyBoxAssetGradientIds>;
+
 /**
  * Renders the SVG gradient definitions for the EmptyBox asset
  *
@@ -110,13 +125,15 @@ const Defs = ({
     lightestBase,
     darkerLight,
   },
+  gradientIds,
 }: {
   colors: AssetColors;
+  gradientIds: AssetGradientIds;
 }): JSX.Element => {
   return (
     <defs>
       <linearGradient
-        id="paint0_linear_4239_3999"
+        id={gradientIds.gradient1}
         x1="50.3915"
         y1="73.5207"
         x2="46.8525"
@@ -127,7 +144,7 @@ const Defs = ({
         <stop offset="1" stopColor="var(--gray-800)" />
       </linearGradient>
       <linearGradient
-        id="paint1_linear_4239_3999"
+        id={gradientIds.gradient2}
         x1="50.3918"
         y1="73.5207"
         x2="46.8528"
@@ -138,7 +155,7 @@ const Defs = ({
         <stop offset="1" stopColor="var(--gray-800)" />
       </linearGradient>
       <linearGradient
-        id="paint2_linear_4239_3999"
+        id={gradientIds.gradient3}
         x1="38.3256"
         y1="102.256"
         x2="44.5632"
@@ -149,7 +166,7 @@ const Defs = ({
         <stop offset="1" stopColor={darkerMedium} />
       </linearGradient>
       <linearGradient
-        id="paint3_linear_4239_3999"
+        id={gradientIds.gradient4}
         x1="72.8214"
         y1="107.086"
         x2="73.3112"
@@ -160,7 +177,7 @@ const Defs = ({
         <stop offset="1" stopColor={darkestBase} />
       </linearGradient>
       <linearGradient
-        id="paint4_linear_4239_3999"
+        id={gradientIds.gradient5}
         x1="22.0041"
         y1="57.4136"
         x2="22.0041"
@@ -171,7 +188,7 @@ const Defs = ({
         <stop offset="1" stopColor={darkerLight} />
       </linearGradient>
       <linearGradient
-        id="paint5_linear_4239_3999"
+        id={gradientIds.gradient6}
         x1="25.5766"
         y1="97.995"
         x2="25.5766"
@@ -182,7 +199,7 @@ const Defs = ({
         <stop offset="1" stopColor={darkerLight} />
       </linearGradient>
       <linearGradient
-        id="paint6_linear_4239_3999"
+        id={gradientIds.gradient7}
         x1="97.061"
         y1="96.3334"
         x2="95.4482"
@@ -196,6 +213,14 @@ const Defs = ({
   );
 };
 
+/**
+ * An empty box illustration asset for the EmptyStateCard component
+ *
+ * @param {EmptyStateCardAssetProps} props - The component props
+ * @param {string} props.icon - The icon to display inside the box
+ * @param {PaletteColor} props.color - The color theme for the illustration
+ * @returns {JSX.Element} The rendered empty box illustration
+ */
 export const EmptyBox = (props: EmptyStateCardAssetProps) => {
   const { icon, color } = useMergedProps(
     emptyStateCardAssetDefaultProps,
@@ -209,10 +234,15 @@ export const EmptyBox = (props: EmptyStateCardAssetProps) => {
   const colors = useEmptyBoxAssetColors(color);
   const { backdrop, dotColor, lightestBase, darkMedium } = colors;
 
+  const gradientIds = useEmptyBoxAssetGradientIds();
+
   return (
-    <AssetContainer>
+    <AssetContainer
+      data-testid="empty-state-card-asset"
+      data-asset-name="EmptyBox"
+    >
       <SvgLayer {...SVG_LAYER_PROPS}>
-        <Defs colors={colors} />
+        <Defs colors={colors} gradientIds={gradientIds} />
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -244,12 +274,12 @@ export const EmptyBox = (props: EmptyStateCardAssetProps) => {
           <path
             opacity="0.13"
             d="M32.4469 112.765L58.6691 104.597V71.0909L32.4469 79.2V112.765Z"
-            fill="url(#paint0_linear_4239_3999)"
+            fill={`url(#${gradientIds.gradient1})`}
           />
           <path
             opacity="0.13"
             d="M84.8917 112.765L58.6694 104.597V71.0909L84.8917 79.2V112.765Z"
-            fill="url(#paint1_linear_4239_3999)"
+            fill={`url(#${gradientIds.gradient2})`}
           />
         </g>
         <path
@@ -269,7 +299,7 @@ export const EmptyBox = (props: EmptyStateCardAssetProps) => {
       </DivLayer>
 
       <SvgLayer {...SVG_LAYER_PROPS}>
-        <Defs colors={colors} />
+        <Defs colors={colors} gradientIds={gradientIds} />
         <path
           d="M58.669 121L32.4468 112.825V79.3257L58.669 87.5011V121Z"
           fill="var(--gray-50)"
@@ -281,12 +311,12 @@ export const EmptyBox = (props: EmptyStateCardAssetProps) => {
         <path
           opacity="0.09"
           d="M52.7278 115.092L32.4468 112.825V79.3257L58.669 87.5011L52.7278 115.092Z"
-          fill="url(#paint2_linear_4239_3999)"
+          fill={`url(#${gradientIds.gradient3})`}
         />
         <path
           opacity="0.2"
           d="M64.6106 109.184L84.8917 112.825V79.3257L58.6694 87.5011L64.6106 109.184Z"
-          fill="url(#paint3_linear_4239_3999)"
+          fill={`url(#${gradientIds.gradient4})`}
         />
         <path
           d="M32.4473 79.3257L58.6695 87.5011L45.5892 95.7946L19.6804 87.2499L32.4473 79.3257Z"
@@ -298,15 +328,15 @@ export const EmptyBox = (props: EmptyStateCardAssetProps) => {
         />
         <path
           d="M24.3272 58.8686H22.7007V57.2511H21.3068V58.8686H19.6804V60.3013H21.3068V61.9186H22.7007V60.3013H24.3272V58.8686Z"
-          fill="url(#paint4_linear_4239_3999)"
+          fill={`url(#${gradientIds.gradient5})`}
         />
         <path
           d="M27.8996 99.4499H26.2732V97.8326H24.8793V99.4499H23.2521V100.883H24.8793V102.5H26.2732V100.883H27.8996V99.4499Z"
-          fill="url(#paint5_linear_4239_3999)"
+          fill={`url(#${gradientIds.gradient6})`}
         />
         <path
           d="M99.0001 99.5385L97.0098 98.5416L98.0146 96.5625L96.3087 95.7057L95.3039 97.6849L93.3144 96.6806L92.4239 98.4382L94.4142 99.4352L93.4094 101.414L95.1153 102.271L96.1201 100.292L98.1096 101.289L99.0001 99.5385Z"
-          fill="url(#paint6_linear_4239_3999)"
+          fill={`url(#${gradientIds.gradient7})`}
         />
       </SvgLayer>
 

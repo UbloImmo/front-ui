@@ -47,6 +47,8 @@ export const TaskSleepingCat = (props: EmptyStateCardAssetProps) => {
       viewBox="0 0 277 134"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      data-testid="empty-state-card-asset"
+      data-asset-name="TaskSleepingCat"
     >
       <path
         d="M1.49158 96.056H264.5V103.056H1.49158V96.056Z"
