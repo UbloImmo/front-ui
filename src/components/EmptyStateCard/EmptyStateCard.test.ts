@@ -21,10 +21,13 @@ testDefault("should render title", ({ getByTestId }) => {
   expect(getByTestId(titleTestId)).not.toBeNull();
 });
 
-testDefault("should not render description nor asset", ({ getByTestId }) => {
-  expect(getByTestId(descriptionTestId)).toBeNull();
-  expect(getByTestId(assetTestId)).toBeNull();
-});
+testDefault(
+  "should not render description nor asset",
+  async ({ findByTestId }) => {
+    expect(async () => await findByTestId(descriptionTestId)).toThrow();
+    expect(async () => await findByTestId(assetTestId)).toThrow();
+  }
+);
 
 testCard({
   description: "test description",
