@@ -1,4 +1,4 @@
-import type { AnyColorStr } from "../themes/color.types";
+import type { AnyColorStr, RgbaColorStr } from "../themes/color.types";
 import type { SpacingLabel } from "../themes/sizes/spacing.types";
 
 /**
@@ -85,6 +85,14 @@ export type CssLengthUsage =
   | CssLengthKeyword;
 
 /**
+ * A CSS `deg` angle
+ *
+ * @example
+ * const angle: CssDeg = "45deg";
+ */
+export type CssDeg = `${number}deg`;
+
+/**
  * A CSS variable name
  *
  * @example
@@ -121,10 +129,79 @@ export type CssVarUsage = `var(${CssVarName})`;
  */
 export type CssRelativeRgbaColor = `rgb(from ${CssVarUsage} r g b / ${number})`;
 
+/**
+ * A CSS light-dark() function type that takes light and dark color values
+ *
+ * @template TLightColor - The color value to use in light mode
+ * @template TDarkColor - The color value to use in dark mode
+ *
+ * @example
+ * const color: CssLightDark<"#fff", "#000"> = "light-dark(#fff, #000)";
+ */
 export type CssLightDark<
   TLightColor extends AnyColorStr,
   TDarkColor extends AnyColorStr,
 > = `light-dark(${TLightColor}, ${TDarkColor})`;
 
+/**
+ * A CSS rgb() function that takes a color value and extracts its RGB components with an alpha value
+ *
+ * @template TFromColor - The color value to extract RGB components from, can be a color string or CSS variable
+ *
+ * @example
+ * const color: CssRgbFrom<"#467861"> = "rgb(from #467861 r g b / 0.5)";
+ * const varColor: CssRgbFrom<"var(--primary-base)"> = "rgb(from var(--primary-base) r g b / 0.8)";
+ */
 export type CssRgbFrom<TFromColor extends AnyColorStr | CssVarUsage> =
   `rgb(from ${TFromColor} r g b / ${number})`;
+
+/**
+ * A CSS rectangular color space
+ *
+ * @example
+ * const color: CssRectangularColorSpace = "srgb";
+ */
+export type CssRectangularColorSpace =
+  | "srgb"
+  | "srgb-linear"
+  | "display-p3"
+  | "a98-rgb"
+  | "prophoto-rgb"
+  | "rec2020"
+  | "lab"
+  | "oklab"
+  | "xyz"
+  | "xyz-d50"
+  | "xyz-d65";
+
+/**
+ * A CSS polar color space
+ *
+ * @example
+ * const color: CssPolarColorSpace = "hsl";
+ */
+export type CssPolarColorSpace = "hsl" | "hwb" | "lch" | "oklch";
+
+/**
+ * A CSS color space
+ *
+ * @example
+ * const color: CssColorSpace = "srgb";
+ */
+export type CssColorSpace = CssRectangularColorSpace | CssPolarColorSpace;
+
+/**
+ * A CSS color-mix() function
+ *
+ * @remarks
+ * This type should support any CSS color string representantation,
+ * but currently only supports RGBA color strings and CSS variables, since adding more whould result in excessive type complexity.
+ *
+ * @example
+ * const color: CssColorMix = "color-mix(in srgb, #467861, #467861 50%)";
+ */
+export type CssColorMix =
+  | `color-mix(in ${CssColorSpace}, ${RgbaColorStr | CssVarUsage | string}, ${RgbaColorStr | CssVarUsage | string})`
+  | `color-mix(in ${CssColorSpace}, ${RgbaColorStr | CssVarUsage | string} ${CssPercent}, ${RgbaColorStr | CssVarUsage | string})`
+  | `color-mix(in ${CssColorSpace}, ${RgbaColorStr | CssVarUsage | string}, ${RgbaColorStr | CssVarUsage | string} ${CssPercent})`
+  | `color-mix(in ${CssColorSpace}, ${RgbaColorStr | CssVarUsage | string} ${CssPercent}, ${RgbaColorStr | CssVarUsage | string} ${CssPercent})`;
