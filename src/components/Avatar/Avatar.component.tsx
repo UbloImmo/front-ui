@@ -32,7 +32,7 @@ const defaultAvatarProps: AvatarDefaultProps = {
  *
  * A visual reference for the user's profile, using its image or its initials.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {AvatarProps & TestIdProps} props - Avatar component props
  * @returns {Nullable<JSX.Element>}
@@ -68,6 +68,7 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
       return mergedProps.name
         .split(" ")
         .map((char) => char.charAt(0).toUpperCase())
+        .slice(0, 2)
         .join("");
     }
 
