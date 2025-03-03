@@ -22,9 +22,7 @@ const assetNames = objectKeys(assetsIndex);
 
 const componentSource = componentSourceFactory<EmptyStateCardProps>(
   "EmptyStateCard",
-  {
-    // TODO
-  },
+  {},
   EmptyStateCard.defaultProps
 );
 
