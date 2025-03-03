@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.1` EmptyStateCard component
+  - With support for 2 assets: `EmptyBox` & `TaskSleepingCat`
+  - With support for all color keys, reactive to color scheme
+ 
 ## 1.6.3 - 2025-03-03
 ### Changed
 - Updated or added 10 new icon(s)

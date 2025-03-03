@@ -1,9 +1,12 @@
-import { isNumber, isString, isUndefined } from "@ubloimmo/front-util";
+import { isArray, isNumber, isString, isUndefined } from "@ubloimmo/front-util";
 
 import { isNonEmptyString } from "./string.utils";
 import { SPACING_PREFIX } from "../types";
+import { isPaletteColor } from "./color.utils";
 
 import type {
+  CssColorMix,
+  CssColorSpace,
   CssFr,
   CssLength,
   CssLengthUsage,
@@ -14,6 +17,8 @@ import type {
   CssVarName,
   CssVarUsage,
   FixedCssLength,
+  PaletteColor,
+  RgbaColorStr,
   SpacingLabel,
 } from "@types";
 
@@ -315,4 +320,67 @@ export const parseCssVar = <TValue extends string>(
     .split(":")
     .map((part) => part.trim().replaceAll(";", "")) as [CssVarName, TValue];
   return { name, value };
+};
+
+/**
+ * Checks if a value is a valid CSS color-mix() function string
+ *
+ * @param {unknown} value - The value to check
+ * @returns {boolean} True if the value is a valid CSS color-mix() function string, false otherwise
+ *
+ * @example
+ * isCssColorMix("color-mix(in oklab, rgba(255, 255, 255, 1), var(--primary-base))") // true
+ * isCssColorMix("not-a-color-mix") // false
+ */
+export const isCssColorMix = (value: unknown): value is CssColorMix => {
+  if (!isString(value)) return false;
+  if (!value.startsWith("color-mix(in ")) return false;
+  if (!value.endsWith(")")) return false;
+  return true;
+};
+
+/**
+ * Creates a CSS color-mix() function string by mixing two colors in a specified color space
+ *
+ * @param {RgbaColorStr | CssVarUsage | CssColorMix | [RgbaColorStr | CssVarUsage | CssColorMix, CssPercent]} colorA - First color to mix, can be a color string, CSS variable, existing color-mix, or tuple with percentage
+ * @param {RgbaColorStr | CssVarUsage | CssColorMix | [RgbaColorStr | CssVarUsage | CssColorMix, CssPercent]} colorB - Second color to mix, can be a color string, CSS variable, existing color-mix, or tuple with percentage
+ * @param {CssColorSpace} [colorSpace="oklab"] - Color space to perform mixing in
+ * @returns {CssColorMix} CSS color-mix() function string
+ *
+ * @example
+ * cssColorMix("rgba(255,255,255,1)", "var(--primary-base)")
+ * // "color-mix(in oklab, rgba(255,255,255,1), var(--primary-base))"
+ *
+ * cssColorMix(["rgba(255,255,255,1)", "40%"], "var(--primary-base)")
+ * // "color-mix(in oklab, rgba(255,255,255,1) 40%, var(--primary-base))"
+ */
+export const cssColorMix = (
+  colorA:
+    | RgbaColorStr
+    | PaletteColor
+    | "white"
+    | CssColorMix
+    | [RgbaColorStr | PaletteColor | "white" | CssColorMix, CssPercent],
+  colorB:
+    | RgbaColorStr
+    | PaletteColor
+    | "white"
+    | CssColorMix
+    | [RgbaColorStr | PaletteColor | "white" | CssColorMix, CssPercent],
+  colorSpace: CssColorSpace = "oklab"
+): CssColorMix => {
+  const normalizeColor = (stop: typeof colorA) => {
+    if (isArray(stop)) {
+      const [color, percent] = stop;
+      const colorUsage =
+        isPaletteColor(color) || color === "white" ? cssVarUsage(color) : color;
+      if (!isCssPercent(percent)) return colorUsage;
+      return `${colorUsage} ${percent}`;
+    }
+    if (isPaletteColor(stop)) return cssVarUsage(stop);
+    return stop;
+  };
+  const a = normalizeColor(colorA);
+  const b = normalizeColor(colorB);
+  return `color-mix(in ${colorSpace}, ${a}, ${b})`;
 };
