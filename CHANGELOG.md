@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.7.1 - 2025-03-04
 ### Fixed
-
 - `v0.0.4` Avatar component
   - Limit displayed name initials to 2 characters
 
