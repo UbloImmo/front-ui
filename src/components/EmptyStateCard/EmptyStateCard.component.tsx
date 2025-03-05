@@ -14,11 +14,13 @@ import {
   useMergedProps,
   useUikitTranslation,
   normalizeToPaletteColor,
+  useStyleProps,
 } from "@utils";
 
 import type {
   EmptyStateCardProps,
   EmptyStateCardDefaultProps,
+  EmptyStateCardStyleProps,
 } from "./EmptyStateCard.types";
 import type { TestIdProps } from "@types";
 
@@ -28,12 +30,13 @@ const defaultEmptyStateCardProps: EmptyStateCardDefaultProps = {
   title: null,
   description: null,
   editingDescription: null,
+  transparent: false,
 };
 
 /**
  * Notifies the user that there are no results in a list / page.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {EmptyStateCardProps & TestIdProps} props - EmptyStateCard component props
  * @returns {JSX.Element}
@@ -41,8 +44,14 @@ const defaultEmptyStateCardProps: EmptyStateCardDefaultProps = {
 const EmptyStateCard = (
   props: EmptyStateCardProps & TestIdProps
 ): JSX.Element => {
-  const { asset, title, description, editingDescription, ...assetProps } =
-    useMergedProps(defaultEmptyStateCardProps, props);
+  const {
+    asset,
+    title,
+    description,
+    editingDescription,
+    transparent,
+    ...assetProps
+  } = useMergedProps(defaultEmptyStateCardProps, props);
   const { isEditing } = useFormContext();
   const testId = useTestId("empty-state-card", props);
 
@@ -70,6 +79,8 @@ const EmptyStateCard = (
     return desc;
   }, [description, editingDescription, isEditing]);
 
+  const styleProps = useStyleProps({ transparent });
+
   return (
     <Card
       testId={testId}
@@ -78,6 +89,7 @@ const EmptyStateCard = (
       align="center"
       justify="center"
       gap="s-1"
+      {...styleProps}
     >
       {Asset && <Asset {...assetProps} />}
       <Heading
@@ -111,6 +123,6 @@ EmptyStateCard.defaultProps = defaultEmptyStateCardProps;
 
 export { EmptyStateCard };
 
-const Card = styled(FlexColumnLayout)`
+const Card = styled(FlexColumnLayout)<EmptyStateCardStyleProps>`
   ${emptyStateCardStyles}
 `;

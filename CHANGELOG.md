@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.2` EmptyStateCard component
+  - New `transparent` optional boolean property to not render the card's background and shadow
+
 ## 1.7.1 - 2025-03-04
 ### Fixed
 - `v0.0.4` Avatar component

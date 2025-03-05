@@ -1,5 +1,6 @@
 import type * as Assets from "./assets";
 import type { EmptyStateCardAssetProps } from "./assets/assets.types";
+import type { StyleProps } from "@types";
 import type { KeyOf, Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -47,6 +48,20 @@ export type EmptyStateCardProps = EmptyStateCardAssetProps & {
    * @default null
    */
   editingDescription?: ReactNode;
+  /**
+   * Whether not to render the card's background and shadow.
+   *
+   * @remarks
+   * Useful when displaying the card in a table cell or other container
+   *
+   * @type {boolean}
+   * @default false
+   */
+  transparent?: boolean;
 };
 
 export type EmptyStateCardDefaultProps = Required<EmptyStateCardProps>;
+
+export type EmptyStateCardStyleProps = StyleProps<
+  Pick<EmptyStateCardDefaultProps, "transparent">
+>;

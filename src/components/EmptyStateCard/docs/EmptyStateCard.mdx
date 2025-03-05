@@ -66,4 +66,12 @@ Some asset may render an icon. What icon gets rendered may be defined by providi
 
 <Canvas of={EmptyStateCardStories.Icons} />
 
+#### Transparent
+
+Since EmptyStateCard may be embedded in any container, it may be useful to only render its contents (text & asset), but not its container.
+
+Setting the `transparent` property to `true` will remove the card's background and shadow, while keeping the padding.
+
+<Canvas of={EmptyStateCardStories.Transparent} />
+
 </Content>
