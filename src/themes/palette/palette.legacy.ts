@@ -86,8 +86,8 @@ const colorTokensToLegacyColorPalette = (): Omit<LegacyPalette, "shadows"> => {
       base: "rgba(255,255,255,1)",
     },
     black: colorTokenToLegacyPaletteColor<LegacyEmphasisPalette>(gray, [
-      ["700", "inactive"],
       ["600", "disabled"],
+      ["700", "inactive"],
       ["800", "mediumEmphasis"],
       ["900", "highEmphasis"],
     ]),

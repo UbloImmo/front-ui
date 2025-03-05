@@ -40,8 +40,7 @@ export const stateIndicatorStyle = ({
   $background,
   $border,
 }: StateIndicatorStyleProps): RuleSet => {
-  const background =
-    $background === "white" ? "white" : cssVarUsage($background);
+  const background = cssVarUsage($background);
   const border = cssVarUsage($border);
 
   return css`

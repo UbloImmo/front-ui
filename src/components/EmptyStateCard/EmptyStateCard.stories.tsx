@@ -210,3 +210,29 @@ export const Icons = (props: Partial<EmptyStateCardProps>) => {
 Icons.parameters = {
   docs: componentSource(icons.map((icon) => ({ asset: "EmptyBox", icon }))),
 };
+
+export const Transparent = (props: Partial<EmptyStateCardProps>) => {
+  const defaults = useMergedProps<
+    EmptyStateCardDefaultProps,
+    EmptyStateCardProps
+  >({ ...EmptyStateCard.defaultProps, asset: "EmptyBox" }, props);
+
+  return (
+    <ComponentVariants
+      defaults={defaults}
+      variants={[false, true]}
+      for="transparent"
+      of={EmptyStateCard}
+      columns={2}
+      propLabels
+    />
+  );
+};
+Transparent.parameters = {
+  docs: componentSource(
+    [false, true].map((transparent) => ({
+      asset: "EmptyBox",
+      transparent,
+    }))
+  ),
+};
