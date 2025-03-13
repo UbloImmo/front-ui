@@ -1,6 +1,6 @@
 import { fn } from "@storybook/test";
 import { isArray, objectFromEntries } from "@ubloimmo/front-util";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 
 import { Form } from "./Form.component";
@@ -13,7 +13,7 @@ import { Icon, type IconName } from "../Icon";
 import { Input } from "../Input";
 import { isFormField } from "./Form.utils";
 import { Hypertext } from "../Hypertext";
-import { Tooltip } from "../Tooltip";
+import { Modal } from "../Modal";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
@@ -30,6 +30,9 @@ import type {
   FormData,
   FormContent,
   CustomFormInputProps,
+  FormTableProps,
+  FormTableTryDeletingRowFn,
+  FormTableTryDeletingRowParams,
 } from "./Form.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -531,17 +534,6 @@ const identityTableSchema = z.object({
       })
     )
     .max(5),
-  bankAccounts: z
-    .array(
-      z.object({
-        name: z.string(),
-        primary: z
-          .boolean()
-          .nullish()
-          .transform(() => undefined),
-      })
-    )
-    .nullish(),
 });
 
 type IdentityTable = z.input<typeof identityTableSchema>;
@@ -552,23 +544,99 @@ const onSubmitTable = async (data: IdentityTable) => {
   return data;
 };
 
-const PrimaryCell = ({ rowIndex }: CustomFormInputProps<boolean>) => {
-  if (rowIndex === 0)
-    return (
-      <FlexRowLayout align="center" justify="center">
-        <Tooltip content="Primary account">
-          <Icon name="StarFill" />
-        </Tooltip>
-      </FlexRowLayout>
-    );
-  return null;
+const formTableProps: FormTableProps<IdentityTable> = {
+  kind: "table",
+  source: "profiles",
+  label: "Renseignez le(s) propriétaire(s) du lot dans le tableau ci-dessous",
+  deletable: true,
+  swappable: true,
+  EmptyCard: () => {
+    return <span>Empty card</span>;
+  },
+  layout: {
+    size: 2,
+  },
+  footer: {
+    kind: "button",
+    label: "Add row",
+    newRow: () => {
+      return {
+        lastName: String(Math.round(Math.random() * 100)),
+        firstName: String(Math.round(Math.random() * 100)),
+        dateOfBirth: "1990-01-01",
+        numberOfChildren: 0,
+        professionalInfo: {
+          role: "tester",
+        },
+      };
+    },
+  },
+  columns: [
+    {
+      type: "text",
+      source: "firstName",
+      label: "First name",
+      errorText: "Test",
+      tooltip: {
+        content: "Je suis un tooltip",
+      },
+    },
+    {
+      type: "text",
+      source: "lastName",
+      label: "Last name",
+      errorText: "Ceci est une erreur",
+    },
+    {
+      type: "select",
+      source: "professionalInfo.role",
+      testId: "job-title-test-id",
+      overrideTestId: true,
+      label: "Job title",
+      options: [
+        {
+          testId: "developer-test-id",
+          overrideTestId: true,
+          label: "Developer",
+          value: "dev",
+        },
+        {
+          label: "UX Designer",
+          value: "designer_ux",
+        },
+        {
+          label: "UI Designer",
+          value: "designer_ui",
+        },
+        {
+          label: "UX/ UI Designer",
+          value: "designer_ux_ui",
+        },
+        {
+          label: "Tester",
+          value: "tester",
+        },
+      ],
+    },
+    {
+      type: "text",
+      source: "dateOfBirth",
+      label: "Date of birth",
+      placeholder: "Date of birth",
+    },
+    {
+      type: "number",
+      source: "numberOfChildren",
+      label: "Number of children",
+      scale: 2,
+    },
+  ],
 };
 
-const tableFormProps: FormProps<IdentityTable> = {
+const commonTableFormProps: FormProps<IdentityTable> = {
   title: "Form with table",
   schema: identityTableSchema,
   onSubmit: onSubmitTable,
-  debug: true,
   defaultValues: {
     profiles: [
       {
@@ -582,154 +650,11 @@ const tableFormProps: FormProps<IdentityTable> = {
       },
     ],
   },
-  content: [
-    {
-      kind: "table",
-      source: "profiles",
-      // label: null,
-      label:
-        "Renseignez le(s) propriétaire(s) du lot dans le tableau ci-dessous",
-      assistiveText: "assistive text",
-      deletable: true,
-      swappable: true,
-      EmptyCard: () => {
-        return <span>Empty card</span>;
-      },
-      layout: {
-        size: 2,
-      },
-      footer: {
-        kind: "button",
-        label: "Add row",
-        newRow: () => {
-          return {
-            lastName: String(Math.round(Math.random() * 100)),
-            firstName: String(Math.round(Math.random() * 100)),
-            dateOfBirth: "1990-01-01",
-            numberOfChildren: 0,
-            professionalInfo: {
-              role: "tester",
-            },
-          };
-        },
-      },
-      columns: [
-        {
-          type: "text",
-          source: "firstName",
-          label: "First name",
-          errorText: "Test",
-          tooltip: {
-            content: "Je suis un tooltip",
-          },
-        },
-        {
-          type: "text",
-          source: "lastName",
-          label: "Last name",
-          errorText: "Ceci est une erreur",
-        },
-        {
-          type: "select",
-          source: "professionalInfo.role",
-          testId: "job-title-test-id",
-          overrideTestId: true,
-          label: "Job title",
-          options: [
-            {
-              testId: "developer-test-id",
-              overrideTestId: true,
-              label: "Developer",
-              value: "dev",
-            },
-            {
-              label: "UX Designer",
-              value: "designer_ux",
-            },
-            {
-              label: "UI Designer",
-              value: "designer_ui",
-            },
-            {
-              label: "UX/ UI Designer",
-              value: "designer_ux_ui",
-            },
-            {
-              label: "Tester",
-              value: "tester",
-            },
-          ],
-        },
-        {
-          type: "text",
-          source: "dateOfBirth",
-          label: "Date of birth",
-          placeholder: "Date of birth",
-        },
-        {
-          type: "number",
-          source: "numberOfChildren",
-          label: "Number of children",
-          scale: 2,
-        },
-      ],
-    },
-    "divider",
-    {
-      kind: "table",
-      source: "bankAccounts",
-      label: "Bank accounts",
-      swappable: true,
-      deletable: true,
-      columns: [
-        {
-          type: "text",
-          source: "name",
-          label: "Account name",
-          layout: {
-            readonly: true,
-          },
-        },
-        {
-          kind: "custom-field",
-          source: "primary",
-          label: "",
-          CustomInput: PrimaryCell,
-        },
-      ],
-      footer: {
-        kind: "select",
-        searchable: true,
-        controlIcon: "Search",
-        unique: ["name"],
-        testId: "bank-accounts-footer-test-id",
-        overrideTestId: true,
-        filterOption: ({ value }) => !value?.name?.includes("HSBC"),
-        options: [
-          {
-            testId: "credit-agricole-test-id",
-            overrideTestId: true,
-            label: "Credit agricole",
-            value: {
-              name: "Credit agricole",
-            },
-          },
-          {
-            label: "Bank of america",
-            value: {
-              name: "Bank of america",
-            },
-          },
-          {
-            label: "HSBC",
-            value: {
-              name: "HSBC France",
-            },
-          },
-        ],
-      },
-    },
-  ],
+};
+
+const tableFormProps: FormProps<IdentityTable> = {
+  ...commonTableFormProps,
+  content: [formTableProps],
 };
 
 export const Table = (props: FormStoryProps) => {
@@ -738,6 +663,65 @@ export const Table = (props: FormStoryProps) => {
 };
 Table.parameters = {
   docs: componentSource([tableFormProps as FormStoryProps]),
+};
+
+export const TableTryDeletingRow = (props: FormStoryProps) => {
+  const mergedProps = useMergedProps(commonTableFormProps, props);
+  const [modalOpen, setModalOpen] = useState(false);
+  const rowToDeleteRef = useRef<FormTableTryDeletingRowParams<object>>();
+
+  const tryDeletingRow = useCallback<
+    FormTableTryDeletingRowFn<IdentityTable["profiles"][number]>
+  >((rowToDelete) => {
+    rowToDeleteRef.current = rowToDelete;
+    setModalOpen(true);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+  }, []);
+
+  const confirmDelete = useCallback(() => {
+    if (!rowToDeleteRef.current) return;
+
+    rowToDeleteRef.current.confirmDelete();
+    closeModal();
+  }, [closeModal]);
+
+  const cancelDelete = useCallback(() => {
+    if (!rowToDeleteRef.current) return;
+
+    rowToDeleteRef.current.cancelDelete();
+    closeModal();
+  }, [closeModal]);
+
+  const content = useMemo<FormContent<IdentityTable>[]>(() => {
+    return [
+      {
+        ...formTableProps,
+        tryDeletingRow,
+      },
+    ];
+  }, [tryDeletingRow]);
+
+  return (
+    <>
+      <Form
+        {...mergedProps}
+        title="Table with modal when deleting a row"
+        content={content}
+      />
+      <Modal
+        open={modalOpen}
+        onClosed={closeModal}
+        title={`Delete row at index ${rowToDeleteRef.current?.index ?? "unknown"} ?`}
+        size="s"
+      >
+        <Button label="Confirm deletion" color="red" onClick={confirmDelete} />
+        <Button label="Cancel" secondary onClick={cancelDelete} />
+      </Modal>
+    </>
+  );
 };
 
 const creatableFormProps: FormProps<object> = {
