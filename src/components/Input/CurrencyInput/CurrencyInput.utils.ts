@@ -345,13 +345,15 @@ export const useCurrencyInput = (
   const [nativeInputValue, setNativeInputValue] = useState<NativeInputValue>();
 
   const min = useMemo(() => {
-    if (!isNumber(mergedProps.min)) return -Infinity;
+    if (!isNumber(mergedProps.min) || !Number.isFinite(mergedProps.min))
+      return -Infinity;
     const big = new Big(mergedProps.min);
     return big.times(CURRENCY_FACTOR).toNumber();
   }, [mergedProps.min]);
 
   const max = useMemo(() => {
-    if (!isNumber(mergedProps.max)) return Infinity;
+    if (!isNumber(mergedProps.max) || !Number.isFinite(mergedProps.max))
+      return Infinity;
     const big = new Big(mergedProps.max);
     return big.times(CURRENCY_FACTOR).toNumber();
   }, [mergedProps.max]);
