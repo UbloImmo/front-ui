@@ -352,13 +352,13 @@ export type FormTableTryDeletingRowParams<TRowData extends object> = {
    *
    * @type {TRowData}
    */
-  rowData: TRowData;
+  data: TRowData;
   /**
    * The index of the row to be deleted
    *
    * @type {number}
    */
-  rowIndex: number;
+  index: number;
   /**
    * A callback function that confirms and executes the deletion of the row
    *
@@ -381,10 +381,10 @@ export type FormTableTryDeletingRowParams<TRowData extends object> = {
  *
  * @template {object} TRowData - The type of a single row in the table's data
  *
- * @param {FormTableTryDeletingRowParams<TRowData>} params - The params object passed to the callback
+ * @param {FormTableTryDeletingRowParams<TRowData>} row - The params object passed to the callback
  */
 export type FormTableTryDeletingRowFn<TRowData extends object> = VoidFn<
-  [params: FormTableTryDeletingRowParams<TRowData>]
+  [row: FormTableTryDeletingRowParams<TRowData>]
 >;
 
 /**
