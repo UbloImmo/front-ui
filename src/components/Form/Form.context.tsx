@@ -308,7 +308,6 @@ const useFormValidation = <TData extends object>(
     const validation = schema.safeParse(formData.data);
     if (!validation.error?.errors || !validation.error.errors.length)
       return defaultFormValidation;
-    // TODO: maybe use validation.error.issues instead to get full list of errors
     const formErrors = validation.error.errors.map(({ path, ...error }) => ({
       ...error,
       path: path.join("."),
@@ -655,6 +654,7 @@ const useFormContent = <TData extends object>(
           );
         };
 
+        // run callback if provided
         if (t.tryDeletingRow) {
           const rowParams: FormTableTryDeletingRowParams<{ data: string }> = {
             index,
@@ -665,7 +665,7 @@ const useFormContent = <TData extends object>(
           t.tryDeletingRow(rowParams);
           return;
         }
-
+        // else, proceed with deletion
         confirmDelete();
       };
 
