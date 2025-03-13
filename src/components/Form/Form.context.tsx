@@ -16,7 +16,7 @@ import {
   type NullishPrimitives,
   type VoidFn,
 } from "@ubloimmo/front-util";
-import { merge } from "lodash";
+import { isEqual, merge } from "lodash";
 import {
   createContext,
   useCallback,
@@ -93,6 +93,7 @@ import type {
   FormSchema,
   FormSource,
   FormTableProps,
+  FormTableTryDeletingRowParams,
   FormValidation,
   GetFieldErrorFn,
   GetFieldValueFn,
@@ -307,7 +308,6 @@ const useFormValidation = <TData extends object>(
     const validation = schema.safeParse(formData.data);
     if (!validation.error?.errors || !validation.error.errors.length)
       return defaultFormValidation;
-    // TODO: maybe use validation.error.issues instead to get full list of errors
     const formErrors = validation.error.errors.map(({ path, ...error }) => ({
       ...error,
       path: path.join("."),
@@ -602,13 +602,71 @@ const useFormContent = <TData extends object>(
        * Deletes a row from the table
        * @param {number} index The index of the row to delete
        */
-      const deleteRow: DeleteTableRowFn = (index) => {
-        const updatedArr = [...arrayValue];
-        updatedArr.splice(index, 1);
-        formData.mutateFormData(
-          tableFormSource,
-          updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
-        );
+      const deleteRow: DeleteTableRowFn = (index: number) => {
+        const arrayCopy = [...arrayValue];
+        const preConfirmLength = arrayCopy.length;
+        const preConfirmRowData = { ...arrayCopy[index] };
+
+        /**
+         * Cancels the deletion of a table row
+         *
+         * @remarks
+         * Does nothing but loggingfor now, may change in the future
+         */
+        const cancelDelete = () => {
+          logger.debug(
+            `Table row deletion at index ${index} cancelled. No changes were made to the table data.`
+          );
+        };
+
+        /**
+         * Confirms and executes the deletion of a table row after checking for data integrity
+         *
+         * @remarks
+         * - Aborts if table rows count changed
+         * - Aborts if row data changed between pre- and post-confirmation
+         *
+         * Calls `cancelDelete` if any of the above conditions are met
+         */
+        const confirmDelete = () => {
+          const postCheckArr = [...arrayValue];
+          // abort if table rows count changed
+          const postCheckLength = postCheckArr.length;
+          if (postCheckLength !== preConfirmLength) {
+            logger.error(
+              `Table row length changed before delete confirmation. Was ${preConfirmLength}, is now ${postCheckLength}. Indices may not match anymore. Aborting deletion.`
+            );
+            return cancelDelete();
+          }
+          // abort if row data changed between pre- and post-confirmation
+          const postConfirmRowData = { ...postCheckArr[index] };
+          if (!isEqual(preConfirmRowData, postConfirmRowData)) {
+            logger.error(
+              `Table row data at index ${index} changed between pre- and post-confirmation. Aborting deletion.`
+            );
+            return cancelDelete();
+          }
+
+          postCheckArr.splice(index, 1);
+          formData.mutateFormData(
+            tableFormSource,
+            postCheckArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
+          );
+        };
+
+        // run callback if provided
+        if (t.tryDeletingRow) {
+          const rowParams: FormTableTryDeletingRowParams<{ data: string }> = {
+            index,
+            data: preConfirmRowData as { data: string },
+            confirmDelete,
+            cancelDelete,
+          };
+          t.tryDeletingRow(rowParams);
+          return;
+        }
+        // else, proceed with deletion
+        confirmDelete();
       };
 
       /**
