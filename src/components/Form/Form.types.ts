@@ -341,6 +341,57 @@ export type FormTableColumn<TRowValue extends Record<string, unknown>> =
   | FormFieldProps<TRowValue>
   | FormCustomFieldProps<TRowValue>;
 
+/**
+ * Params passed to the {@link FormTableTryDeletingRowFn} callback
+ *
+ * @template {object} TRowData - The type of a single row in the table's data
+ */
+export type FormTableTryDeletingRowParams<TRowData extends object> = {
+  /**
+   * The data of the row to be deleted
+   *
+   * @type {TRowData}
+   */
+  rowData: TRowData;
+  /**
+   * The index of the row to be deleted
+   *
+   * @type {number}
+   */
+  rowIndex: number;
+  /**
+   * A callback function that confirms and executes the deletion of the row
+   *
+   * @type {VoidFn}
+   */
+  confirmDelete: VoidFn;
+  /**
+   * A callback function that cancels the deletion of the row.
+   *
+   * @remarks
+   * This does nothing for now but is included if needed in the future
+   *
+   * @type {VoidFn}
+   */
+  cancelDelete: VoidFn;
+};
+
+/**
+ * A callback function that gets called when a row is being deleted.
+ *
+ * @template {object} TRowData - The type of a single row in the table's data
+ *
+ * @param {FormTableTryDeletingRowParams<TRowData>} params - The params object passed to the callback
+ */
+export type FormTableTryDeletingRowFn<TRowData extends object> = VoidFn<
+  [params: FormTableTryDeletingRowParams<TRowData>]
+>;
+
+/**
+ * Props needed to render a table in a form's content array
+ *
+ * @template {object} TData - The type of the form's data
+ */
 export type FormTableProps<TData extends object> = {
   [TSource in FormFieldSource<TData, InputType>]: DeepValueOf<
     CompleteFormData<TData>,
@@ -381,6 +432,12 @@ export type FormTableProps<TData extends object> = {
                * @type {AnyFormTableFooter<TRowValue>}
                */
               footer?: AnyFormTableFooter<TRowValue>;
+              /**
+               * A custom component used to display a card when the table is empty
+               *
+               * @type {FC}
+               * @default undefined
+               */
               EmptyCard?: FC;
               /**
                * The table's native layout
@@ -389,6 +446,16 @@ export type FormTableProps<TData extends object> = {
                * @default "auto"
                */
               tableLayout?: TableLayout;
+              /**
+               * A callback function that gets called when a row is being deleted.
+               *
+               * @remarks
+               * If missing, no check will be performed and the row will be deleted immediately
+               *
+               * @type {FormTableTryDeletingRowFn<TRowValue>}
+               * @default undefined
+               */
+              tryDeletingRow?: FormTableTryDeletingRowFn<TRowValue>;
             } & FieldLabelProps &
               FieldAssistiveTextProps &
               FormFieldLayoutProps &
