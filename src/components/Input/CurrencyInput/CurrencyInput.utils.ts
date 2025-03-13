@@ -169,7 +169,10 @@ export const nativeCurrencyValueToInt = (
     return null;
   }
   if (isInt(nativeCurrencyValue)) {
-    return toFixed(nativeCurrencyValue * CURRENCY_FACTOR, 0);
+    return toFixed(
+      new Big(nativeCurrencyValue).times(CURRENCY_FACTOR).toNumber(),
+      0
+    );
   }
   if (isFloat(nativeCurrencyValue)) {
     return currencyFloatToInt(nativeCurrencyValue);
