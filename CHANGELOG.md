@@ -7,13 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.7.3 - 2025-03-13
 ### Added
-
 - `v0.0.24` Form component
   - `tryDeletingRow` callback property on form tables, to run some checks and possibly render modals or other elements before comitting deleting a single table row
 
 ### Fixed
-
 - `V0.0.5` CurrencyInput component
   - Fix rounding errors when providing decimal min / max properties
 
