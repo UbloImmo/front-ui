@@ -7,6 +7,7 @@ import {
   isString,
   isUndefined,
 } from "@ubloimmo/front-util";
+import Big from "big.js";
 import { useCallback, useMemo, useState } from "react";
 
 import { invertSignMap, signIconMap } from "./CurrencyInput.data";
@@ -45,7 +46,10 @@ export const currencyIntToFloat = (currencyInt: CurrencyInt): number => {
   if (!isInt(currencyInt)) {
     currencyInt = toFixed(currencyInt, 0);
   }
-  return toFixed(currencyInt / CURRENCY_FACTOR, CURRENCY_DECIMALS);
+  return toFixed(
+    new Big(currencyInt).div(CURRENCY_FACTOR).toNumber(),
+    CURRENCY_DECIMALS
+  );
 };
 
 /**
@@ -64,7 +68,7 @@ export const currencyFloatToInt = (
     );
   // remove extra decimals
   const trimmedFloat = toFixed(currencyFloat, CURRENCY_DECIMALS);
-  const int = Math.round(toFixed(trimmedFloat * CURRENCY_FACTOR * 10, 0) / 10);
+  const int = new Big(trimmedFloat).times(CURRENCY_FACTOR).toNumber();
 
   // FIXME: handle big integer values
   if (int > Number.MAX_SAFE_INTEGER || int < Number.MIN_SAFE_INTEGER) {
@@ -165,7 +169,10 @@ export const nativeCurrencyValueToInt = (
     return null;
   }
   if (isInt(nativeCurrencyValue)) {
-    return toFixed(nativeCurrencyValue * CURRENCY_FACTOR, 0);
+    return toFixed(
+      new Big(nativeCurrencyValue).times(CURRENCY_FACTOR).toNumber(),
+      0
+    );
   }
   if (isFloat(nativeCurrencyValue)) {
     return currencyFloatToInt(nativeCurrencyValue);
@@ -337,6 +344,20 @@ export const useCurrencyInput = (
 ): UseCurrencyInputReturn => {
   const [nativeInputValue, setNativeInputValue] = useState<NativeInputValue>();
 
+  const min = useMemo(() => {
+    if (!isNumber(mergedProps.min) || !Number.isFinite(mergedProps.min))
+      return -Infinity;
+    const big = new Big(mergedProps.min);
+    return big.times(CURRENCY_FACTOR).toNumber();
+  }, [mergedProps.min]);
+
+  const max = useMemo(() => {
+    if (!isNumber(mergedProps.max) || !Number.isFinite(mergedProps.max))
+      return Infinity;
+    const big = new Big(mergedProps.max);
+    return big.times(CURRENCY_FACTOR).toNumber();
+  }, [mergedProps.max]);
+
   /**
    * Clamps a given value between the min and max props
    * While scaling them to a currency integer
@@ -344,13 +365,9 @@ export const useCurrencyInput = (
   const clampToMinMax = useCallback(
     (value: Nullable<CurrencyInt>) => {
       if (isNull(value)) return null;
-      return clamp(
-        value,
-        (mergedProps.min ?? -Infinity) * CURRENCY_FACTOR,
-        (mergedProps.max ?? Infinity) * CURRENCY_FACTOR
-      );
+      return clamp(value, min, max);
     },
-    [mergedProps]
+    [max, min]
   );
 
   const clampedValue = useMemo(

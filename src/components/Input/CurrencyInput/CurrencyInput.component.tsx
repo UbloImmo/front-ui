@@ -39,11 +39,11 @@ const defaultCurrencyInputProps: CurrencyInputDefaultProps = {
 };
 
 /**
- * A number input tailored to handeling monetary values
+ * A number input tailored to handling monetary values
  *
- * Does some rudimentary monetary like number formatting.
+ * Does some rudimentary simple input & output value formatting.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {CurrencyInputProps & TestIdProps} props - CurrencyInput component props
  * @returns {JSX.Element}

@@ -110,6 +110,9 @@ describe("Input", () => {
 
       it("should convert a currency int to a float", () => {
         expect(currencyIntToFloat(456456)).toBe(4564.56);
+        expect(currencyIntToFloat(0)).toBe(0);
+        expect(currencyIntToFloat(100)).toBe(1);
+        expect(currencyIntToFloat(29065)).toBe(290.65);
       });
 
       it("should not take decimals into account if provided with a float", () => {
@@ -132,6 +135,8 @@ describe("Input", () => {
       it("should convert a currency float to an int without rounding", () => {
         expect(currencyFloatToInt(4564.56)).toBe(456456);
         expect(currencyFloatToInt(4564.5689)).toBe(456456);
+        expect(currencyFloatToInt(290.65)).toBe(29065);
+        expect(currencyFloatToInt(290.679)).toBe(29067);
       });
 
       it("should not suffer from precision errors", () => {
