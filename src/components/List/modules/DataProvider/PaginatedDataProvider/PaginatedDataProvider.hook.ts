@@ -137,6 +137,7 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
     filter: filterDynamic,
     refetch: refetchDynamic,
     fetchCount,
+    clear: clearDynamic,
     loading,
     error,
   } = useDynamicDataProvider(fetchPageData, setListData);
@@ -200,10 +201,19 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
     filter(lastFilterConfig.current);
   }, [filter, hasNextPage, loading]);
 
+  /**
+   * Clears the current data and resets interal states
+   */
+  const clear = useCallback(() => {
+    resetPagination();
+    clearDynamic();
+  }, [clearDynamic, resetPagination]);
+
   return {
     type: DATA_PROVIDER_TYPE,
     filter,
     fetchCount,
+    clear,
     data: internalData,
     loading,
     error,

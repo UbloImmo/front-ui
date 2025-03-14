@@ -48,6 +48,13 @@ export type FilterBehavior = {
   allowCompleteSelection?: boolean;
   // TODO:
   // no results if no options selected
+  /**
+   * Whether the filter requires at least one option to be selected in order to display any results
+   *
+   * @type {boolean}
+   * @default false
+   */
+  noResultsIfInactive?: boolean;
 
   // fallback to defaults if empty
 

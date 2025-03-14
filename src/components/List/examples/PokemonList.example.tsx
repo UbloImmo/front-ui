@@ -371,7 +371,10 @@ const usePokemonListConfig = (
   useStatic(() => {
     filter("Name", names.all, { multi: true });
     async.filter("Base Experience", baseExperiences);
-    filter("Type", types.all, { operator: BooleanOperators.OR });
+    filter("Type", types.all, {
+      operator: BooleanOperators.OR,
+      noResultsIfInactive: true,
+    });
     filter("Weight", weights.all);
   });
 
