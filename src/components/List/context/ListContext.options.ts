@@ -83,17 +83,21 @@ export const useListOptions: UseListOptions = <TItem extends object>(
           selected: selected || option.fixed,
         };
       });
-      if (multi) return;
-      // Update the filter's other options
-      options.updateItemWhere(
-        (option) => !isTargetOption(option) && isFilterOption(option.signature),
-        (option) => {
-          return {
-            ...option,
-            selected: option.fixed,
-          };
-        }
-      );
+      unselectOtherOptions: {
+        // only unselect other options if multi is false
+        if (multi) break unselectOtherOptions;
+        // Update the filter's other options
+        options.updateItemWhere(
+          (option) =>
+            !isTargetOption(option) && isFilterOption(option.signature),
+          (option) => {
+            return {
+              ...option,
+              selected: option.fixed,
+            };
+          }
+        );
+      }
     },
     [options]
   );

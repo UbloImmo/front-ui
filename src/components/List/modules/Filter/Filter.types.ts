@@ -15,6 +15,20 @@ import type {
 import type { MaybePromise } from "@types";
 import type { AsyncFn, GenericFn, Nullable } from "@ubloimmo/front-util";
 
+/**
+ * A matcher used to select a subset of a filter's options when none are selected
+ *
+ * @remarks
+ * - `fixed`: only the options that have the `fixed` property set to `true` are selected
+ * - `default`: only the options that have the `default` property set to `true` are selected
+ * - `initial`: only the options that have the `initial` property set to `true` are selected
+ * - `all`: all options are selected
+ *
+ * @type {FilterBehaviorInactiveFallback}
+ * @default "fixed"
+ */
+type FilterBehaviorInactiveFallback = "fixed" | "default" | "all" | "initial";
+
 export type FilterBehavior = {
   /**
    * Whether the filter is multi-select and allows selecting more than one option
@@ -46,12 +60,24 @@ export type FilterBehavior = {
    * @default false
    */
   allowCompleteSelection?: boolean;
-  // TODO:
-  // no results if no options selected
-
-  // fallback to defaults if empty
-
-  // select all if empty
+  /**
+   * Whether the filter requires at least one option to be selected in order to display any results
+   *
+   * @type {boolean}
+   * @default false
+   */
+  noResultsIfInactive?: boolean;
+  /**
+   * The fallback behavior for the filter when no options are selected
+   *
+   * Either a single fallback or an array of fallbacks (excluding `all`)
+   *
+   * @type {FilterBehaviorInactiveFallback | Exclude<FilterBehaviorInactiveFallback, "all">[];}
+   * @default "fixed"
+   */
+  emptyFallback?:
+    | FilterBehaviorInactiveFallback
+    | Exclude<FilterBehaviorInactiveFallback, "all">[];
 };
 
 export type FilterOptionsSort = "asc" | "desc" | "none";

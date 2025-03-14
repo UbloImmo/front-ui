@@ -149,6 +149,10 @@ export type DataProviderBase<TItem extends object> = {
    * A function that prefetches the counts of the data
    */
   fetchCount: DataProviderFetchCountFn<TItem>;
+  /**
+   * A function that clears the current data
+   */
+  clear: VoidFn;
 };
 
 export type IDataProvider<

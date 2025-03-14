@@ -1,5 +1,10 @@
-import { isObject, type VoidFn } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import {
+  isArray,
+  isObject,
+  objectFromEntries,
+  type VoidFn,
+} from "@ubloimmo/front-util";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { useDataArray } from "@utils";
 
@@ -159,6 +164,79 @@ export const useListFilters: UseListFilters = <TItem extends object>(
     () => filters.forEach((filter) => filter.clear()),
     [filters]
   );
+
+  const applyFallbackToInactiveFilters = useCallback(
+    (inactiveFilters: Filter<TItem>[]) => {
+      // only keep filters that are allowed to run side effects
+      const sideEffectFilters = inactiveFilters.filter(
+        ({ optionSignatures, emptyFallback, disabled, active }) => {
+          return (
+            !active &&
+            emptyFallback !== "fixed" &&
+            !disabled &&
+            !!optionSignatures.length
+          );
+        }
+      );
+      // abort if no filters to run side effects on
+      if (!sideEffectFilters.length) return;
+      // construct map of flags for each filter
+      const singleSelectFlagMap = objectFromEntries(
+        inactiveFilters.map(({ signature }): [string, boolean] => [
+          signature,
+          false,
+        ])
+      );
+      // predicate to select one or more options in the all filters based on its multi property
+      const shouldSelectOption = (
+        option: FilterOptionData<TItem>,
+        index: number
+      ) => {
+        // reset every flag in map on the first option to account for multiple predicate runs
+        if (index === 0) {
+          for (const filterSignature in singleSelectFlagMap) {
+            singleSelectFlagMap[filterSignature] = false;
+          }
+        }
+        // abort if the option is disabled
+        if (option.disabled) return false;
+        // find the first filter the option belongs to, and abort if it does not belong to any filter
+        const optionFilter = sideEffectFilters.find(({ optionSignatures }) =>
+          optionSignatures.includes(option.signature)
+        );
+        if (!optionFilter) return false;
+        const { emptyFallback, multi, signature } = optionFilter;
+        // do not select multiple in a single filter options if a single option has already been selected
+        if (singleSelectFlagMap[signature]) return false;
+        // match options based on the emptyFallback property and the option's behavior
+        const targetBehavior =
+          emptyFallback === "all"
+            ? true
+            : isArray(emptyFallback)
+              ? emptyFallback.some((behavior) => option[behavior])
+              : option[emptyFallback];
+        // skip further checks if the option does not match the target behavior
+        if (!targetBehavior) return false;
+        // the option will be selected right after. we set the flag to true if its filter is multi
+        // to prevent selecting multiple options on a single filter
+        if (!multi) singleSelectFlagMap[signature] = true;
+        return true;
+      };
+      // apply the side effect once for all filters
+      options.updateItemWhere(shouldSelectOption, (option) => ({
+        ...option,
+        selected: true,
+      }));
+    },
+    [options]
+  );
+
+  // run side effects on inactive filters
+  useEffect(() => {
+    const inactiveFilters = filters.filter(({ active }) => !active);
+    if (!inactiveFilters.length) return;
+    applyFallbackToInactiveFilters(inactiveFilters);
+  }, [filters, applyFallbackToInactiveFilters]);
 
   return {
     filters,

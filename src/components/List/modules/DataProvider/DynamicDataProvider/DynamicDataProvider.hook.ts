@@ -77,6 +77,13 @@ export const useDynamicDataProvider: UseDynamicDataProviderFn = <
     return !!reactiveData.error;
   }, [reactiveData.error]);
 
+  /**
+   * Clears the current data while keeping the internal state
+   */
+  const clear = useCallback(() => {
+    setData([]);
+  }, [setData]);
+
   return {
     type: DATA_PROVIDER_TYPE,
     data: reactiveData.data ?? [],
@@ -85,5 +92,6 @@ export const useDynamicDataProvider: UseDynamicDataProviderFn = <
     refetch,
     filter,
     fetchCount,
+    clear,
   };
 };

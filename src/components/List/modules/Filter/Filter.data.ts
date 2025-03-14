@@ -20,6 +20,8 @@ const defaultStaticFilterConfig: Required<Omit<FilterConfig, "testId" | "id">> =
     operator: BooleanOperators.OR,
     emptyLabel: null,
     allowCompleteSelection: false,
+    noResultsIfInactive: false,
+    emptyFallback: "fixed",
     index: 0,
     optionsSort: "none",
   };

@@ -11,6 +11,7 @@ export const defaultListContextValue = <
     refetch: async () => [],
     filter: () => {},
     fetchCount: () => 0,
+    clear: () => {},
     type: "static",
   },
   filters: [],

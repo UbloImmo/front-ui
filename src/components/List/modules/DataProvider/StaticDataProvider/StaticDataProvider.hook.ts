@@ -63,6 +63,10 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
     []
   );
 
+  const clear = useCallback(() => {
+    setData([]);
+  }, [setData]);
+
   const error = useMemo(() => {
     return !!reactiveData.error;
   }, [reactiveData.error]);
@@ -80,5 +84,6 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
     refetch,
     filter,
     fetchCount,
+    clear,
   };
 };

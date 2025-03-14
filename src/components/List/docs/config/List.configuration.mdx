@@ -55,7 +55,11 @@ Your custom hook will the be ran internally, and therefore drive what / how data
   If you need to implement custom logic data / filtering / sorting for a specific list, this is the place to do it.
 </Callout>
 
-Don't worry, we provide a basic `useStaticDataProvider` hook, which is a good starting point that aims to cover most use cases.
+Don't worry, we provide a couple starter data provider hooks, which should cover most use cases.
+
+### Static data provider
+
+The `useStaticDataProvider` fetches its data once and filters it using JS-based logic, without any server interaction.
 
 ```tsx
 import { useStaticDataProvider, type UseDataProviderFn } from "@ubloimmo/uikit";
@@ -72,6 +76,14 @@ const usePokemonData: UseDataProviderFn<Pokemon> = (setData) => {
   return useStaticDataProvider(fetchPokemon, setData);
 } 
 ```
+
+### Dynamic data provider
+
+> TODO: add description & example
+
+### Paginated data provider
+
+> TODO: add description & example
 
 ### Custom data provider
 

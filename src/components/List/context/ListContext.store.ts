@@ -63,6 +63,16 @@ export const useListContextStore = <
     const nextFilters = stringifyFiltersRef();
     if (previousFiltersRef.current === nextFilters) return;
     previousFiltersRef.current = nextFilters;
+    // clear data if some filters are inactive and have a flag set
+    const shouldClear = filters.filters.some(
+      ({ active, noResultsIfInactive }) => !active && noResultsIfInactive
+    );
+    if (shouldClear) {
+      // call the data provider's clear method instead of setting data to []
+      // to reset any internal states if needed (e.g. pagination cursor)
+      dataProvider.clear();
+      return;
+    }
 
     options.applyOptions(optionsArray, search.queryFilters);
     // eslint-disable-next-line react-hooks/exhaustive-deps
