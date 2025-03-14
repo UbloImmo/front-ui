@@ -147,8 +147,6 @@ export const useDataArray: UseDataArray = <TData>(
    */
   const updateItemWhere = useCallback<DataArrayUpdateItemWhereFn<TData>>(
     (predicate, updater) => {
-      // abort if no item matches the predicate
-      if (!data.some(predicate)) return;
       updateData((prev) =>
         prev.map((item, index) => {
           if (predicate(item, index)) return updater(item, index);
@@ -156,7 +154,7 @@ export const useDataArray: UseDataArray = <TData>(
         })
       );
     },
-    [data, updateData]
+    [updateData]
   );
 
   /**
