@@ -21,6 +21,7 @@ const defaultStaticFilterConfig: Required<Omit<FilterConfig, "testId" | "id">> =
     emptyLabel: null,
     allowCompleteSelection: false,
     noResultsIfInactive: false,
+    emptyFallback: "fixed",
     index: 0,
     optionsSort: "none",
   };

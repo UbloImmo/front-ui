@@ -348,6 +348,7 @@ const usePokemonListConfig = (
     const light = option("Light", match("weight", "<", 100), {
       color: "gray-200",
       icon: "Feather",
+      initial: true,
     });
     const medium = option(
       "Medium",
@@ -355,6 +356,7 @@ const usePokemonListConfig = (
       {
         operator: "AND",
         color: "gray-400",
+        default: true,
       }
     );
     const all = [light, medium, heavy];
@@ -373,9 +375,11 @@ const usePokemonListConfig = (
     async.filter("Base Experience", baseExperiences);
     filter("Type", types.all, {
       operator: BooleanOperators.OR,
-      noResultsIfInactive: true,
+      // noResultsIfInactive: true,
     });
-    filter("Weight", weights.all);
+    filter("Weight", weights.all, {
+      emptyFallback: "default",
+    });
   });
 
   // declare some filter presets once
