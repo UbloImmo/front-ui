@@ -70,15 +70,14 @@ export type FilterBehavior = {
   /**
    * The fallback behavior for the filter when no options are selected
    *
-   * @type {FilterBehaviorInactiveFallback}
+   * Either a single fallback or an array of fallbacks (excluding `all`)
+   *
+   * @type {FilterBehaviorInactiveFallback | Exclude<FilterBehaviorInactiveFallback, "all">[];}
    * @default "fixed"
    */
-  emptyFallback?: FilterBehaviorInactiveFallback;
-
-  // TODO:
-  // fallback to defaults if empty
-
-  // select all if empty
+  emptyFallback?:
+    | FilterBehaviorInactiveFallback
+    | Exclude<FilterBehaviorInactiveFallback, "all">[];
 };
 
 export type FilterOptionsSort = "asc" | "desc" | "none";

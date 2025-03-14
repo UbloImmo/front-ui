@@ -372,13 +372,15 @@ const usePokemonListConfig = (
   // order matters.
   useStatic(() => {
     filter("Name", names.all, { multi: true });
-    async.filter("Base Experience", baseExperiences);
+    async.filter("Base Experience", baseExperiences, {
+      emptyFallback: "all",
+    });
     filter("Type", types.all, {
       operator: BooleanOperators.OR,
       // noResultsIfInactive: true,
     });
     filter("Weight", weights.all, {
-      emptyFallback: "default",
+      // emptyFallback: ["default", "initial"],
     });
   });
 
