@@ -31,7 +31,7 @@ const listSideHeaderDefaultProps: ListSideHeaderDefaultProps = {
  *
  * Renders a title and a count of items
  *
- * @version 0.0.1
+ * @version 0.0.2
  */
 export const ListSideHeader = (
   props: ListSideHeaderProps & TestIdProps & Omit<StyleOverrideProps, "as">
@@ -62,6 +62,7 @@ export const ListSideHeader = (
         </Heading>
         {isNumber(count) && <Badge label={count.toString()} color="primary" />}
       </HeaderTitleContainer>
+      {mergedProps.children}
     </HeaderContainer>
   );
 };
