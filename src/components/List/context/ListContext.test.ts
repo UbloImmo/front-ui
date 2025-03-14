@@ -47,6 +47,7 @@ const testListOptions = () => {
   const mockFilterFn = mock(() => {});
   const mockRefetchFn = mock(async () => []);
   const mockFetchCountFn = mock(() => 0);
+  const mockClearFn = mock(() => {});
 
   const mockDataProvider: IDataProvider<MockItem> = {
     filter: mockFilterFn,
@@ -56,6 +57,7 @@ const testListOptions = () => {
     refetch: mockRefetchFn,
     fetchCount: mockFetchCountFn,
     type: "static",
+    clear: mockClearFn,
   };
 
   const testHookBase = testHookFactory<HookParams, HookReturn, Hook>(
