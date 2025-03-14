@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.2` ListSideHeader component
+  - Render given children
+
 ## 1.7.4 - 2025-03-14
 ### Added
 - `v0.0.4` List component
