@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.0.4` List component
+  - Add new `clear` method on all data provider factory hooks
+  - Add new `noResultsInInactive` behavior property on filters that clea
+
 ## 1.7.3 - 2025-03-13
 ### Added
 - `v0.0.24` Form component
