@@ -9,8 +9,8 @@ import type {
   FieldDefaultProps,
 } from "./Field.types";
 import type { InputType } from "../Input";
-import type { KeyOf, Nullable, ValueMap } from "@ubloimmo/front-util";
 import type { StyleOverrideProps } from "@types";
+import type { KeyOf, Nullable, ValueMap } from "@ubloimmo/front-util";
 
 type ValidityStateKey = keyof ValidityState;
 type InvalidStateKey = Exclude<ValidityStateKey, "valid" | "customError">;
