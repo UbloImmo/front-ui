@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `styleOverride` property in `StyleOverrideProps`
   - Bump all components that use it to support it
 
+- Convert all layout components to use forwardRef
+
 ## 1.7.5 - 2025-03-14
 ### Fixed
 - `v0.0.2` ListSideHeader component
