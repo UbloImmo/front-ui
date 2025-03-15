@@ -11,7 +11,12 @@ import { Badge } from "@/components/Badge";
 import { Heading } from "@/components/Heading";
 import { useListContext } from "@/components/List/context";
 import { FlexLayout } from "@layouts";
-import { useClassName, useMergedProps, useTestId } from "@utils";
+import {
+  useClassName,
+  useHtmlAttribute,
+  useMergedProps,
+  useTestId,
+} from "@utils";
 
 import type {
   ListSideHeaderDefaultProps,
@@ -31,7 +36,7 @@ const listSideHeaderDefaultProps: ListSideHeaderDefaultProps = {
  *
  * Renders a title and a count of items
  *
- * @version 0.0.2
+ * @version 0.0.3
  */
 export const ListSideHeader = (
   props: ListSideHeaderProps & TestIdProps & Omit<StyleOverrideProps, "as">
@@ -39,6 +44,8 @@ export const ListSideHeader = (
   const mergedProps = useMergedProps(listSideHeaderDefaultProps, props);
   const testId = useTestId("list-side-header", props);
   const className = useClassName(props);
+  const style = useHtmlAttribute(props.styleOverride);
+
   const { itemCount } = useListContext();
 
   const count = useMemo(() => {
@@ -48,7 +55,7 @@ export const ListSideHeader = (
   }, [itemCount, mergedProps.overrideCount, mergedProps.displayCount]);
 
   return (
-    <HeaderContainer className={className} data-testid={testId}>
+    <HeaderContainer className={className} data-testid={testId} style={style}>
       <HeaderTitleContainer
         align="center"
         gap="s-2"

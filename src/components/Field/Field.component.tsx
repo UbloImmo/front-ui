@@ -30,12 +30,13 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
   onChange: null,
   className: null,
   name: null,
+  styleOverride: null,
 };
 
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.9
+ * @version 0.0.10
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
@@ -45,10 +46,11 @@ const Field = <TType extends InputType>(
 ): Nullable<JSX.Element> => {
   const logger = useLogger("Field");
 
-  const mergedProps: FieldDefaultProps<InputType> = useMergedProps<
-    FieldDefaultProps<InputType>,
-    Partial<FieldDefaultProps<InputType>>
-  >(defaultFieldProps, props as Partial<FieldDefaultProps<InputType>>);
+  const { styleOverride, ...mergedProps }: FieldDefaultProps<InputType> =
+    useMergedProps<
+      FieldDefaultProps<InputType>,
+      Partial<FieldDefaultProps<InputType>>
+    >(defaultFieldProps, props as Partial<FieldDefaultProps<InputType>>);
 
   const testId = useTestId("field", props);
   const className = useClassName(mergedProps);
@@ -92,6 +94,7 @@ const Field = <TType extends InputType>(
       overrideTestId
       data-field-type={mergedProps.type}
       className={className}
+      styleOverride={styleOverride}
       gap="s-1"
       fill
     >

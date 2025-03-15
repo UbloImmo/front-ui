@@ -13,6 +13,7 @@ export const defaultLoadingProps: DefaultLoadingProps = {
   color: "primary-base",
   animation: "BouncingBalls",
   className: null,
+  styleOverride: null,
 };
 
 const defaultAnimationName = defaultLoadingProps.animation;
@@ -20,7 +21,7 @@ const defaultAnimationName = defaultLoadingProps.animation;
 /**
  * An extensible component for displaying loadings animation.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {LoadingProps & TestIdProps} props - props for configuring the loading animation
  * @return {Nullable<JSX.Element>} the rendered loading animation component, or null if no animation found

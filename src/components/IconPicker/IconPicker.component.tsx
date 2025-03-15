@@ -23,12 +23,13 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
   required: false,
   className: null,
   id: null,
+  styleOverride: null,
 };
 
 /**
  * Allows users to pick an icon from a subset, like a radio input for icons.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {IconPickerProps & TestIdProps} props - IconPicker component props
  * @returns {JSX.Element}
@@ -83,6 +84,7 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
       overrideTestId
       fill
       id={mergedProps.id}
+      styleOverride={mergedProps.styleOverride}
     >
       {mergedProps.icons.map((iconOrRow, index) =>
         isArray(iconOrRow) ? (

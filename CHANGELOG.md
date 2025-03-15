@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `styleOverride` property in `StyleOverrideProps`
+  - Bump all components that use it to support it
+
 ## 1.7.5 - 2025-03-14
 ### Fixed
 - `v0.0.2` ListSideHeader component
   - Render given children
+- Convert most layout components to use forwardRef
 
 ## 1.7.4 - 2025-03-14
 ### Added

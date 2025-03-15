@@ -27,12 +27,13 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
   role: null,
   id: null,
   as: "div",
+  styleOverride: null,
 } as const;
 
 /**
  * A grid wrapper layout with default `row` flow and 12 columns
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {GridLayoutProps} [props = defaultGridLayoutProps] - optional props
  * @return {JSX.Element} The styled grid wrapper
@@ -44,6 +45,7 @@ const GridLayout = (props: GridLayoutProps & TestIdProps): JSX.Element => {
   const className = useClassName(props);
   const role = useHtmlAttribute(mergedProps.role);
   const id = useHtmlAttribute(mergedProps.id);
+  const style = useHtmlAttribute(mergedProps.styleOverride);
   return (
     <GridLayoutInner
       {...innerProps}
@@ -51,6 +53,7 @@ const GridLayout = (props: GridLayoutProps & TestIdProps): JSX.Element => {
       role={role}
       className={className}
       id={id}
+      style={style}
     >
       {props.children}
     </GridLayoutInner>

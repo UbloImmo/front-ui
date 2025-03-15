@@ -10,6 +10,7 @@ import { Icon } from "../Icon";
 
 import {
   useClassName,
+  useHtmlAttribute,
   useLogger,
   useMergedProps,
   useStyleProps,
@@ -33,6 +34,7 @@ const defaultActionIconProps: DefaultActionIconProps = {
   disabled: false,
   title: "[Action title]",
   className: null,
+  styleOverride: null,
 };
 
 /**
@@ -40,7 +42,7 @@ const defaultActionIconProps: DefaultActionIconProps = {
  *
  * No label, no tags, just an icon.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {ActionIconProps & TestIdProps} props - The properties for the action icon
  * @return {JSX.Element} The rendered action icon component
@@ -85,6 +87,7 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
   }, [mergedProps]);
 
   const className = useClassName(mergedProps);
+  const style = useHtmlAttribute(props.styleOverride);
 
   return (
     <ActionIconContainer
@@ -98,6 +101,7 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
       aria-label={mergedProps.title}
       role="button"
       type="button"
+      style={style}
     >
       <Icon {...iconProps} />
     </ActionIconContainer>

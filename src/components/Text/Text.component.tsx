@@ -19,7 +19,7 @@ const defaultTextProps: Required<TextProps> = {
 /**
  * Customizable, accessible global text.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {WithTestId<TextProps>} props - Text component props
  * @returns {JSX.Element}
@@ -29,10 +29,12 @@ const Text = (props: TextProps & TestIdProps): JSX.Element => {
   const testId = useTestId("text", props);
   const className = useClassName(props);
   const id = useHtmlAttribute(props.id);
+  const style = useHtmlAttribute(props.styleOverride);
   return (
     <TextInner
       data-testid={testId}
       className={className}
+      style={style}
       {...innerProps}
       id={id}
     >
