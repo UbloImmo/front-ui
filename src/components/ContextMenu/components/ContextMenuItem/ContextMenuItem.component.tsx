@@ -26,6 +26,7 @@ const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
   iconTooltip: null,
   className: null,
   color: "primary",
+  styleOverride: null,
 };
 
 /**
@@ -60,6 +61,7 @@ const ContextMenuItem = (
   );
 
   debug(mergedProps);
+  const style = useHtmlAttribute(mergedProps.styleOverride);
 
   const tabIndex = useMemo(
     () => (disabled ? -1 : index + 1),
@@ -84,6 +86,7 @@ const ContextMenuItem = (
         badgeLabel={mergedProps.badgeLabel}
         testId={testId}
         overrideTestId
+        styleOverride={style}
       />
     );
 
@@ -93,6 +96,7 @@ const ContextMenuItem = (
       disabled={disabled}
       onClick={onSmallItemClick}
       tabIndex={tabIndex}
+      style={style}
     >
       <Text
         color={disabled ? "gray-600" : "gray-800"}

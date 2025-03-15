@@ -12,6 +12,7 @@ import { Text } from "../Text";
 
 import {
   useClassName,
+  useHtmlAttribute,
   useLogger,
   useMergedProps,
   useStyleProps,
@@ -38,12 +39,13 @@ const defaultButtonProps: DefaultButtonProps = {
   onClick: null,
   className: null,
   onClickNative: null,
+  styleOverride: null,
 };
 
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.9
+ * @version 0.0.10
  *
  * @param {ButtonProps} props - the button's props
  * @returns {JSX.Element} the rendered button
@@ -57,6 +59,7 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
   const styledProps = useStyleProps(mergedProps);
   const testId = useTestId<ButtonProps>("button", props);
   const className = useClassName(props);
+  const style = useHtmlAttribute(props.styleOverride);
 
   const onClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
     (event) => {
@@ -121,8 +124,18 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
       title: ariaTitle,
       "aria-label": ariaTitle,
       role: ariaRole,
+      style,
     }),
-    [ariaRole, ariaTitle, className, disabled, expandable, styledProps, testId]
+    [
+      ariaRole,
+      ariaTitle,
+      className,
+      disabled,
+      expandable,
+      style,
+      styledProps,
+      testId,
+    ]
   );
 
   const buttonContent = useMemo(() => {

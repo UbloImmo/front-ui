@@ -94,6 +94,8 @@ export const sanitizeTypographyProps = (
     as,
     size,
     weight,
+    // set styleOverride to null here since it gets applied at the component level
+    styleOverride: null,
     color: props.color ?? defaults.color,
     italic: props.italic ?? defaults.italic,
     underline: props.underline ?? defaults.underline,
@@ -257,4 +259,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   noWrap: false,
   id: null,
   as: "span",
+  styleOverride: null,
 } as const;

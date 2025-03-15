@@ -13,6 +13,7 @@ import {
   useStyleProps,
   useLogger,
   useClassName,
+  useHtmlAttribute,
 } from "@utils";
 
 import type { DividerProps, DividerDefaultProps } from "./Divider.types";
@@ -23,6 +24,7 @@ const defaultDividerProps: DividerDefaultProps = {
   justify: "start",
   className: null,
   as: "div",
+  styleOverride: null,
 };
 
 /**
@@ -30,7 +32,7 @@ const defaultDividerProps: DividerDefaultProps = {
  *
  * A horizontal line that can be used to separate content, with an optional label.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {DividerProps & TestIdProps} props - Divider component props
  * @returns {JSX.Element}
@@ -42,6 +44,7 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("divider", props);
   const className = useClassName(props);
+  const style = useHtmlAttribute(props.styleOverride);
 
   const label = useMemo(() => {
     if (isString(mergedProps.label) || isNull(mergedProps.label))
@@ -61,6 +64,7 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
       align="center"
       justify="center"
       fill
+      styleOverride={style}
     >
       {label && justify === "center" ? (
         <>

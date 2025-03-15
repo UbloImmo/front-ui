@@ -101,8 +101,13 @@ export const useMergedProps = <
 export const toStyleProps = <TProps extends Record<string, unknown>>(
   props: TProps
 ): StyleProps<TProps> => {
+  const propsCopy = { ...props };
+  // delete style overrride props
+  if ("styleOverride" in propsCopy) delete propsCopy.styleOverride;
+  if ("className" in propsCopy) delete propsCopy.className;
+  if ("as" in propsCopy) delete propsCopy.as;
   return transformObject(
-    props,
+    propsCopy,
     (value) => value,
     (key): StylePropName<typeof key> => `$${key}`
   ) as unknown as StyleProps<TProps>;

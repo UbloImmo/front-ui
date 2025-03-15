@@ -28,7 +28,7 @@ const defaultSumLineProps: SumLineDefaultProps = {
 /**
  * Displays a single number value with a label, a unit and a period
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {SumLineProps & TestIdProps & Omit<StyleOverrideProps, "as">} props - The component's props
  */
@@ -64,6 +64,7 @@ const SumLine = (
   return (
     <SumLineContainer
       className={className}
+      styleOverride={props.styleOverride}
       testId={testId}
       overrideTestId
       align="center"

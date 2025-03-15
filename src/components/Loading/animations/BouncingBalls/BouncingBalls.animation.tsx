@@ -4,10 +4,16 @@ import styled from "styled-components";
 import { bouncingBallsStyle } from "./BouncingBalls.styles";
 
 import { parseFixedLength } from "@/sizes/size.utils";
-import { cssVarUsage, useClassName } from "@utils";
+import { cssVarUsage, useClassName, useHtmlAttribute } from "@utils";
 
 import type { LoadingAnimationProps } from "../Loading.animations.types";
 
+/**
+ * Renders a BouncingBalls loading animation
+ *
+ * @param {LoadingAnimationProps} props - the loading animation props.
+ * @return {JSX.Element} the rendered spinner component
+ */
 export const BouncingBalls = (props: LoadingAnimationProps) => {
   const innerProps = useMemo(() => {
     return {
@@ -17,6 +23,7 @@ export const BouncingBalls = (props: LoadingAnimationProps) => {
   }, [props]);
 
   const className = useClassName(props);
+  const style = useHtmlAttribute(props.styleOverride);
 
   return (
     <Container
@@ -26,6 +33,7 @@ export const BouncingBalls = (props: LoadingAnimationProps) => {
       viewBox="0 0 48 28"
       data-testid={props.testId}
       className={className}
+      style={style}
     >
       <g>
         <circle cx="4" cy="14" r="4" />

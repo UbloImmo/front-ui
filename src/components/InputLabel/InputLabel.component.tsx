@@ -29,11 +29,12 @@ const defaultInputLabelProps: DefaultInputLabelProps = {
   tooltip: null,
   compact: false,
   htmlFor: null,
+  styleOverride: null,
 };
 
 /**
  * Renders an input label component, to be used in association with the Input component.
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
@@ -47,6 +48,7 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
   const testId = useTestId("input-label", props);
   const className = useClassName(mergedProps);
   const { label, required } = mergedProps;
+  const style = useHtmlAttribute(props.styleOverride);
 
   if (!isNonEmptyString(label)) {
     warn("InputLabel must have a defined label.");
@@ -65,6 +67,7 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
       className={className}
       data-testid={testId}
       data-required={String(required)}
+      style={style}
     >
       <FlexRowLayout align="center" gap="s-2" justify={justify}>
         <InputLabelText

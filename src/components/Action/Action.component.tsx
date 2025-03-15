@@ -13,6 +13,7 @@ import {
 import {
   isEmptyString,
   useClassName,
+  useHtmlAttribute,
   useLogger,
   useMergedProps,
   useStyleProps,
@@ -42,6 +43,7 @@ const defaultActionProps: DefaultActionProps = {
   description: null,
   className: null,
   indicator: null,
+  styleOverride: null,
 };
 
 /**
@@ -64,7 +66,7 @@ const sizedActionMap: SizedActionMap = {
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -72,10 +74,11 @@ const sizedActionMap: SizedActionMap = {
 const Action = (props: ActionProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("Action");
 
-  const mergedProps = useMergedProps(defaultActionProps, props);
+  const mergedProps = useMergedProps(defaultActionProps, props, true);
   const testId = useTestId("action", props);
   const styleProps = useStyleProps({ ...mergedProps, testId });
   const className = useClassName(props);
+  const style = useHtmlAttribute(props.styleOverride);
 
   if (!props.icon) {
     warn(`Missing required icon, defaulting to ${defaultActionProps.icon}`);
@@ -150,6 +153,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       onMouseLeave={() => setIsHovering(false)}
       disabled={mergedProps.disabled}
       className={className}
+      style={style}
       {...styleProps}
     >
       <SizedAction

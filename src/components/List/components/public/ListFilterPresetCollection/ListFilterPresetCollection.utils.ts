@@ -26,6 +26,7 @@ const listFilterPresetCollectionDefaultProps: ListFilterPresetCollectionDefaultP
     id: null,
     className: null,
     as: "div",
+    styleOverride: null,
   };
 
 export const useListFilterPresetCollection = (

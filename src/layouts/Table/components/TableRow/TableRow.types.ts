@@ -19,7 +19,7 @@ export type TableRowProps = {
   /**
    * The style of the row.
    *
-   * @type {TableRowStyle}
+   * @type {TableStyle}
    * @default "form"
    */
   style?: TableStyle;

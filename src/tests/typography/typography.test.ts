@@ -169,6 +169,7 @@ describe("typography", () => {
           noWrap: true,
           id: null,
           as: "span",
+          styleOverride: null,
         };
         const sanitizedProps = sanitizeTypographyProps(
           defaultProps,

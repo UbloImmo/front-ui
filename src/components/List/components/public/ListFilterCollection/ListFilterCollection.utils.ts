@@ -10,7 +10,6 @@ import { ListFilterProps } from "../ListFilter/ListFilter.types";
 
 import { useListContext } from "@/components/List/context";
 import {
-  useClassName,
   useEscapeOrOutsideClickEvent,
   useMergedProps,
   useTestId,
@@ -55,7 +54,6 @@ export const useListFilterCollection = (
 ) => {
   const mergedProps = useMergedProps(listFilterCollectionDefaultProps, props);
   const testId = useTestId("list-filter-collection", props);
-  const className = useClassName(props);
   const { filters } = useListContext();
   const [openFilterSignature, setOpenFilterSignature] =
     useState<FilterSignature | null>(null);
@@ -112,7 +110,6 @@ export const useListFilterCollection = (
   return {
     title,
     filterSignatures,
-    className,
     testId,
     openFilterSignature,
     setOpenFilterSignature,

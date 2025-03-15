@@ -29,12 +29,13 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
   name: Icon.defaultProps.name,
   className: null,
   indicator: null,
+  styleOverride: null,
 };
 
 /**
  * Wraps an `Icon` in a container of the same color, a shade lighter.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {StaticIconProps & TestIdProps} props - The props for the static icon.
  * @return {JSX.Element} The static icon component.
@@ -62,11 +63,12 @@ const StaticIcon = (props: StaticIconProps & TestIdProps) => {
   const testId = useTestId("static-icon", props);
 
   const className = useHtmlAttribute(mergedProps.className);
-
+  const style = useHtmlAttribute(mergedProps.styleOverride);
   return (
     <StaticIconContainer
       data-testid={testId}
       className={className}
+      style={style}
       {...styledProps}
     >
       <Icon name={name} {...iconProps} />

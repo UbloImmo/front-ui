@@ -31,12 +31,13 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   role: null,
   id: null,
   as: "div",
+  styleOverride: null,
 } as const;
 
 /**
  * A flexbox wrapper layout, with default properties direction set to `row`, align and justify set to `start`
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @param {FlexLayoutProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */
@@ -47,6 +48,7 @@ export const FlexLayout = forwardRef<
   const innerProps = useStyleProps(props);
   const testId = useTestId("flex", props);
   const className = useClassName(props);
+  const style = useHtmlAttribute(props.styleOverride);
   const id = useHtmlAttribute(props.id ?? null);
   return (
     <FlexLayoutInner
@@ -54,6 +56,7 @@ export const FlexLayout = forwardRef<
       ref={ref}
       data-testid={testId}
       className={className}
+      style={style}
       id={id}
       role={props.role ?? undefined}
       as={props.as ?? "div"}

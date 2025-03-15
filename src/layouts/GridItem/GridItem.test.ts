@@ -7,9 +7,12 @@ import { testComponentFactory } from "@/tests";
 const testId = "grid-item";
 const testGridItem = testComponentFactory("GridItem", GridItem);
 
-testGridItem(GridItem.defaultProps)("should render", ({ queryByTestId }) => {
-  expect(queryByTestId(testId)).not.toBeNull();
-});
+testGridItem(GridItem.defaultProps ?? {})(
+  "should render",
+  ({ queryByTestId }) => {
+    expect(queryByTestId(testId)).not.toBeNull();
+  }
+);
 
 testGridItem({
   ...GridItem.defaultProps,

@@ -20,6 +20,7 @@ import {
   useStyleProps,
   useClassName,
   isGrayColor,
+  useHtmlAttribute,
 } from "@utils";
 
 const defaultCalloutProps: CalloutDefaultProps = {
@@ -30,13 +31,14 @@ const defaultCalloutProps: CalloutDefaultProps = {
   size: "m",
   className: null,
   as: "div",
+  styleOverride: null,
 };
 
 /**
  * A card to display permanent feedback information.
  * Its color indicates the type of feedback.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {CalloutProps & TestIdProps} props - Callout component props
  * @returns {JSX.Element}
@@ -47,6 +49,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
   const { color, size, title, icon, children } = mergedProps;
   const testId = useTestId("callout", props);
   const className = useClassName(mergedProps);
+  const style = useHtmlAttribute(props.styleOverride);
 
   const textColor = useMemo<PaletteColor>(() => {
     return color === "gray" ? "gray-700" : `${color}-dark`;
@@ -77,6 +80,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
       {...styleProps}
       data-testid={testId}
       className={className}
+      style={style}
     >
       {icon && <CalloutIcon {...mergedProps} />}
       <FlexColumnLayout fill gap="s-3">
