@@ -64,7 +64,7 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
       align="center"
       justify="center"
       fill
-      style={style}
+      styleOverride={style}
     >
       {label && justify === "center" ? (
         <>
