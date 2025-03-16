@@ -36,7 +36,7 @@ const listSideHeaderDefaultProps: ListSideHeaderDefaultProps = {
  *
  * Renders a title and a count of items
  *
- * @version 0.0.4
+ * @version 0.0.5
  */
 export const ListSideHeader = (
   props: ListSideHeaderProps & TestIdProps & Omit<StyleOverrideProps, "as">
