@@ -67,8 +67,9 @@ export const ListSideHeader = (
         <Heading size="h4" weight="medium" color="gray-800" ellipsis>
           {mergedProps.title}
         </Heading>
-        {isNumber(count) ||
-          (isString(count) && <Badge label={`${count}`} color="primary" />)}
+        {(isNumber(count) || isString(count)) && (
+          <Badge label={`${count}`} color="primary" />
+        )}
       </HeaderTitleContainer>
       {mergedProps.children}
     </HeaderContainer>
