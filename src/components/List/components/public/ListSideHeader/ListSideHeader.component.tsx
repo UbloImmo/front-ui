@@ -50,8 +50,12 @@ export const ListSideHeader = (
 
   const count = useMemo(() => {
     if (!mergedProps.displayCount) return null;
-    if (isNumber(mergedProps.overrideCount)) return mergedProps.overrideCount;
-    return itemCount;
+    if (
+      isNumber(mergedProps.overrideCount) ||
+      isString(mergedProps.overrideCount)
+    )
+      return String(mergedProps.overrideCount);
+    return String(itemCount);
   }, [itemCount, mergedProps.overrideCount, mergedProps.displayCount]);
 
   return (
@@ -67,9 +71,7 @@ export const ListSideHeader = (
         <Heading size="h4" weight="medium" color="gray-800" ellipsis>
           {mergedProps.title}
         </Heading>
-        {(isNumber(count) || isString(count)) && (
-          <Badge label={`${count}`} color="primary" />
-        )}
+        {isString(count) && <Badge label={`${count}`} color="primary" />}
       </HeaderTitleContainer>
       {mergedProps.children}
     </HeaderContainer>
