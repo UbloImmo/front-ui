@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.7.9 - 2025-03-16
+
 ## 1.7.8 - 2025-03-16
 ### Fixed
 - `v0.0.5` ListSideHeader component
