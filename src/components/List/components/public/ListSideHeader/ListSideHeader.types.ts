@@ -17,12 +17,12 @@ export type ListSideHeaderProps = {
    */
   displayCount?: boolean;
   /**
-   * The count of items in the list
+   * The count of items in the list displayed in a badge
    *
-   * @type {Nullable<number>}
+   * @type {Nullable<number | string>}
    * @default null
    */
-  overrideCount?: Nullable<number>;
+  overrideCount?: Nullable<number | string>;
   /**
    * The component's children.
    * Could be a Search bar or anything else

@@ -1,4 +1,4 @@
-import { isNumber } from "@ubloimmo/front-util";
+import { isNumber, isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 import styled from "styled-components";
 
@@ -36,7 +36,7 @@ const listSideHeaderDefaultProps: ListSideHeaderDefaultProps = {
  *
  * Renders a title and a count of items
  *
- * @version 0.0.3
+ * @version 0.0.4
  */
 export const ListSideHeader = (
   props: ListSideHeaderProps & TestIdProps & Omit<StyleOverrideProps, "as">
@@ -67,7 +67,8 @@ export const ListSideHeader = (
         <Heading size="h4" weight="medium" color="gray-800" ellipsis>
           {mergedProps.title}
         </Heading>
-        {isNumber(count) && <Badge label={count.toString()} color="primary" />}
+        {isNumber(count) ||
+          (isString(count) && <Badge label={`${count}`} color="primary" />)}
       </HeaderTitleContainer>
       {mergedProps.children}
     </HeaderContainer>
