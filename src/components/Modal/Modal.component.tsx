@@ -33,7 +33,7 @@ const defaultModalProps: ModalDefaultProps = {
 /**
  * A simple modal with a title and close button. Built on top of [Dialog](/?path=/docs/components-dialog-usage--docs)
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {ModalProps & TestIdProps} props - Modal component props
  * @returns {Nullable<JSX.Element>}
@@ -83,7 +83,7 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
           overrideTestId
           expandOnHover
         />
-        <FlexColumnLayout fill gap="s-3">
+        <FlexColumnLayout fill gap="s-4">
           {mergedProps.title && (
             <Heading
               testId="modal-title"
