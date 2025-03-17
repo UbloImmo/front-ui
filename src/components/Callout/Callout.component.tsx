@@ -12,7 +12,7 @@ import { Text } from "../Text";
 import { CalloutIcon } from "./components/CalloutIcon.component";
 
 import { FlexColumnLayout } from "@layouts";
-import { PaletteColor, type TestIdProps, type TypographyWeight } from "@types";
+import { PaletteColor, type TestIdProps } from "@types";
 import {
   useLogger,
   useTestId,
@@ -38,7 +38,7 @@ const defaultCalloutProps: CalloutDefaultProps = {
  * A card to display permanent feedback information.
  * Its color indicates the type of feedback.
  *
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {CalloutProps & TestIdProps} props - Callout component props
  * @returns {JSX.Element}
@@ -63,10 +63,6 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
         : `${color}-dark`;
   }, [color, size]);
 
-  const titleWeight = useMemo<TypographyWeight>(() => {
-    return size === "l" ? "bold" : "medium";
-  }, [size]);
-
   const styleProps = useStyleProps(mergedProps);
 
   if (!props.children) {
@@ -86,12 +82,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
       <FlexColumnLayout fill gap="s-3">
         <FlexColumnLayout fill>
           {title && (
-            <Heading
-              size="h4"
-              color={titleColor}
-              weight={titleWeight}
-              important
-            >
+            <Heading size="h4" color={titleColor} weight="bold" important>
               {title}
             </Heading>
           )}

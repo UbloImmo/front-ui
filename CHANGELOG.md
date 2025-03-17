@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.8` Callout component
+  - Changed title weight to bold
+
 ### Fixed
 
 - `v0.0.4` Modal component
