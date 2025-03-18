@@ -166,6 +166,7 @@ export type InputTypeMap<
   search: TGenericValue;
   "search-text": string;
   "multi-select": TGenericValue[];
+  "energy-score": number;
 };
 
 /**

@@ -1,3 +1,5 @@
+import { EnergyScoreInputProps } from "./EnergyScoreInput/EnergyScoreInput.types";
+
 import type { ComboBoxInputProps } from "./ComboBoxInput";
 import type { CurrencyInputProps } from "./CurrencyInput";
 import type { DateInputProps } from "./DateInput/DateInput.types";
@@ -28,6 +30,7 @@ type SpecificInputPropsMap<
   search: SearchInputProps<TGenericValue>;
   "search-text": InputProps<"search-text">;
   "multi-select": MultiSelectInputProps<TGenericValue>;
+  "energy-score": EnergyScoreInputProps;
 };
 
 export type SpecificInputProps<
