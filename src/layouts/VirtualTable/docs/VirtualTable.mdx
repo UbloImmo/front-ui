@@ -1,0 +1,96 @@
+import { Meta, Source } from "@storybook/blocks";
+import { ComponentInfo, Canvas, Text } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import { Collapsible } from "@/layouts/Collapsible";
+
+import * as VirtualTableStories from "../VirtualTable.stories.tsx";
+
+<Meta title="Layouts/VirtualTable/Usage" />
+
+<ComponentInfo of={VirtualTableStories} />
+
+<Content>
+
+## Usage
+
+VirtualTable is a layout component that renders a virtualized table list.
+It relies on the [react-virtuoso](https://virtuoso.dev/) package to achieve this.
+
+> Virtualized rendering is a technique that renders only the visible items in a list,
+> and only pre-renders the items that are close to the currently visible items.
+> This is particularly useful for rendering large (10K+ items) lists, as it can significantly reduce the amount of memory used.
+
+### Rendering data
+
+VirtualTable relies on two properties to render
+
+#### Data
+
+The `data` property expects an list of objects items to render. Each item in the list will be rendered as a row in the table.
+
+> An empty state may be shown if the data array is empty by providing the `EmptyState` property.
+
+#### Columns
+
+The `columns` property is used to define what to render for each item in the array.
+
+Each column takes at least a `HeaderContent` label, object or function component (used to render the column's header), and a `CellContent` function component - used to render its cell for each row.
+
+> Take a look at each example's source code for code examples.
+
+##### HeaderContent
+
+Defines the content to be rendered in a column's header.
+
+<Collapsible content={
+  <Source code={`
+export type VirtualTableColumnHeaderContent =
+  | string
+  | FC
+  | {
+      /**
+       * The label of the column. Gets displayed in the header.
+       *
+       * @remarks
+       * Always gets rendered within a \`Text\` component
+       *
+       * @type {string};
+       * @required
+       */
+      label: string;
+      /**
+       * An optional tooltip to be displayed within the header
+       */
+      tooltip?: TooltipProps;
+    }
+  | {
+      /**
+       * A custom cell component to be used in place of the default cell.
+       *
+       * @remarks
+       * Gets rendered directly within the header, should render its only \`TableHeaderCell\`
+       *
+       * @type {FC<TableCellProps>}
+       * @required
+       */
+      ReplacementCell: FC<TableCellProps>;
+    };
+`} />
+}>
+<Text weight="medium" color="primary-dark">Type definition</Text>
+</Collapsible>
+
+Each column in the example below defines its header in a different way.
+
+<Canvas of={VirtualTableStories.Headers} />
+
+> Headers can be made empty by setting `HeaderContent` to `() => null`.
+
+
+
+
+### Empty state
+
+
+
+</Content>

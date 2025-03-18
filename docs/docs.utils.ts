@@ -2,7 +2,9 @@ import {
   isArray,
   isBoolean,
   isFunction,
+  isNull,
   isNullish,
+  isNumber,
   isObject,
   isString,
   isUndefined,
@@ -11,7 +13,9 @@ import {
   type Nullable,
   type NullishPrimitives,
   type Optional,
+  type Predicate,
   type Primitives,
+  type VoidFn,
 } from "@ubloimmo/front-util";
 import { isValidElement } from "react";
 
@@ -319,6 +323,112 @@ export const formatPropInfo = ({
   };
 };
 
+const MAX_ARRAY_LENGTH = 10;
+const FN_ARG_REGEX =
+  /^\(((?:[^()]|\((?:[^()]|\([^()]*\))*\))*)\)=>|^function\s+(?:\w+\s*)?\(((?:[^()]|\((?:[^()]|\([^()]*\))*\))*)\)|^function\(((?:[^()]|\((?:[^()]|\([^()]*\))*\))*)\)/;
+
+const FN_ARROW_BLOCK_BODY_REGEX = /=>\s*{/;
+const FN_BLOCK_BODY_REGEX =
+  /(?:=>|function\s*(?:\w+)?\s*\([^)]*\))\s*{([\s\S]*?)}(?:[^}]*?)?$/;
+const FN_EXPRESSION_BODY_REGEX = /=>\s*([\s\S]*?)$/;
+
+const extractFnArgs = (fnStr: string) => {
+  const match = fnStr.match(FN_ARG_REGEX);
+  // extract args
+  if (!match) return null;
+  return match[1] !== undefined
+    ? match[1]
+    : match[2] !== undefined
+      ? match[2]
+      : match[3];
+};
+
+const extractFnBody = (functionStr: string) => {
+  // For arrow functions with expression bodies (no curly braces)
+  if (
+    functionStr.includes("=>") &&
+    !functionStr.match(FN_ARROW_BLOCK_BODY_REGEX)
+  ) {
+    const match = functionStr.match(FN_EXPRESSION_BODY_REGEX);
+    return match ? match[1] : null;
+  }
+
+  // For arrow functions with block bodies and regular functions
+  const match = functionStr.match(FN_BLOCK_BODY_REGEX);
+  return match ? match[1] : null;
+};
+
+const resetRegexes = () => {
+  FN_ARG_REGEX.lastIndex = 0;
+  FN_ARROW_BLOCK_BODY_REGEX.lastIndex = 0;
+  FN_BLOCK_BODY_REGEX.lastIndex = 0;
+  FN_EXPRESSION_BODY_REGEX.lastIndex = 0;
+};
+
+const parseFn = (fn: VoidFn) => {
+  // stringify and sanitize fn
+  const fnStr = String(fn).replaceAll("\n", "").replaceAll(" ", "");
+  // reset all regexes before using
+  resetRegexes();
+  const args = extractFnArgs(fnStr);
+  const body = extractFnBody(fnStr);
+  resetRegexes();
+  return { args, body, fnStr };
+};
+
+const stringifyValue = (value: unknown): string => {
+  if (isBoolean(value)) {
+    return String(value);
+  }
+  if (isString(value)) {
+    return `"${value}"`;
+  }
+  if (isNull(value)) {
+    return "null";
+  }
+  if (isUndefined(value)) return "undefined";
+  if (isNumber(value)) return String(value);
+  if (isFunction(value)) {
+    const { args, body, fnStr } = parseFn(value);
+    console.log(fnStr);
+    console.log(args);
+    console.log(body);
+  }
+  if (isArray(value)) {
+    const diff = value.length - MAX_ARRAY_LENGTH;
+    const overflows = diff > 0;
+    const subset = value.slice(0, MAX_ARRAY_LENGTH);
+    const subsetStrings = subset.map((item) => {
+      const str = stringifyValue(item);
+      return str
+        .split("\n")
+        .map((line) => `  ${line}`)
+        .join("\n");
+    });
+    console.log(subsetStrings);
+    if (overflows) {
+      subsetStrings.push(`  // ... ${diff} more`);
+    }
+    return `[\n${subsetStrings.join(",\n")}\n]`;
+  }
+  if ((isObject as Predicate<Record<string, unknown>>)(value)) {
+    const entries = objectEntries(value);
+    const formattedEntries = entries.map(([key, value]) => {
+      const valueStr = stringifyValue(value);
+      const lines = valueStr.split("\n");
+      const formattedLines = lines
+        .map((line, index) =>
+          index === 0 || index - 1 === lines.length ? line : `  ${line}`
+        )
+        .join("\n");
+      return `  ${key}: ${formattedLines},`;
+    });
+    return `{\n${formattedEntries.join("\n")}\n}`;
+  }
+  console.warn("unhandled value", value, typeof value);
+  return `${value}`;
+};
+
 /**
  * Generate an array of strings representing the properties of an SVG tag.
  *
@@ -339,11 +449,14 @@ const tagProperties = (properties?: Record<string, unknown>): string[] => {
       if (isString(value)) {
         return output(`"${value}"`);
       }
+      if (isFunction(value)) {
+        return output(`{${JSON.stringify(value)}}`);
+      }
       if (isObject(value)) {
-        const stringObj = JSON.stringify(value, undefined, 2).replaceAll(
-          /"(\S+)":\s/gi,
-          "$1: "
-        );
+        const stringified = JSON.stringify(value, undefined, 2);
+        const stringObj = stringified.replaceAll(/"(\S+)":\s/gi, "$1: ");
+        const recursiveStrObject = stringifyValue(value);
+        console.log(recursiveStrObject);
 
         const lines = stringObj.split("\n");
         const propObj = lines

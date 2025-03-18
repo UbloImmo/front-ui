@@ -104,7 +104,7 @@ const StyleReset = styled.div`
       }
     }
 
-    table:not([data-testid="table"]) {
+    table:not([data-testid="table"], [data-testid="table virtual"]) {
       margin: var(--s-4) 0;
     }
   }
