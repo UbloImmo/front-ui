@@ -337,7 +337,7 @@ export const FormFieldDisplayValue = ({
       justify="start"
       align="center"
       wrap={isTextarea}
-      isTextarea={isTextarea}
+      $isTextarea={isTextarea}
     >
       <Text color="gray-800" weight="medium" fill ellipsis={!isTextarea}>
         {value}
@@ -346,7 +346,9 @@ export const FormFieldDisplayValue = ({
   );
 };
 
-const FieldDisplayValueContainer = styled(FlexLayout)<{ isTextarea?: boolean }>`
+const FieldDisplayValueContainer = styled(FlexLayout)<{
+  $isTextarea?: boolean;
+}>`
   --container-height: var(--s-8);
   --container-height-mobile: calc(var(--container-height) + var(--s-2));
 
@@ -360,7 +362,7 @@ const FieldDisplayValueContainer = styled(FlexLayout)<{ isTextarea?: boolean }>`
   min-height: var(--container-height);
 
   ${(props) =>
-    props.isTextarea &&
+    props.$isTextarea &&
     `
   height: auto;
   max-height: var(--s-32);
