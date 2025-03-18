@@ -4,6 +4,7 @@ import { ComboBoxInput } from "./ComboBoxInput";
 import { CurrencyInput } from "./CurrencyInput";
 import { DateInput } from "./DateInput";
 import { EmailInput } from "./EmailInput";
+import { EnergyScoreInput } from "./EnergyScoreInput/EnergyScoreInput.component";
 import { IconPickerInput } from "./IconPickerInput";
 import { inputTypes } from "./Input.data";
 import { MultiSelectInput } from "./MultiSelectInput";
@@ -45,6 +46,7 @@ const inputComponentMap = <
   search: SearchInput<TGenericValue>,
   "search-text": SearchTextInput,
   "multi-select": MultiSelectInput<TGenericValue>,
+  "energy-score": EnergyScoreInput,
 });
 
 /**
@@ -72,7 +74,7 @@ const Input = <
   const InputComponent = useMemo<
     Nullable<SpecificInputComponent<TType, TGenericValue>>
   >(() => {
-    const DefaultTextInput = TextInput as SpecificInputComponent<
+    const DefaultTextInput = TextInput as unknown as SpecificInputComponent<
       TType,
       TGenericValue
     >;
@@ -89,7 +91,7 @@ const Input = <
   }, [type, warn, inputMap]);
 
   const inputProps = useMemo(() => {
-    return props as SpecificInputProps<TType, TGenericValue>;
+    return props as unknown as SpecificInputProps<TType, TGenericValue>;
   }, [props]);
 
   if (!InputComponent) {
