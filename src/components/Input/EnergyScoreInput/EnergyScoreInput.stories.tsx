@@ -1,4 +1,4 @@
-import React from "react";
+import { fn } from "@storybook/test";
 
 import { EnergyScoreInput } from "./EnergyScoreInput.component";
 
@@ -7,14 +7,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta = {
   title: "Components/Forms/Input/EnergyScoreInput/Stories",
   component: EnergyScoreInput,
-  decorators: [
-    (Story, context) => {
-      const [value, setValue] = React.useState<number | null>(
-        context.args.value ?? 100
-      );
-      return <Story args={{ ...context.args, value, onChange: setValue }} />;
-    },
-  ],
+  args: {
+    uncontrolled: true,
+  },
   argTypes: {
     type: {
       options: ["energy", "climate"],
@@ -33,24 +28,24 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     type: "energy",
-    value: 100,
     placeholder: "Number input",
+    onLabelChange: fn(),
   },
 };
 
 export const Climate: Story = {
   args: {
     type: "climate",
-    value: 100,
     placeholder: "Number input",
+    onLabelChange: fn(),
   },
 };
 
 export const Disabled: Story = {
   args: {
     type: "energy",
-    value: 200,
     placeholder: "Number input",
     disabled: true,
+    onLabelChange: fn(),
   },
 };
