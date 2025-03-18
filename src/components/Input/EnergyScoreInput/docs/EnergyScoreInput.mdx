@@ -1,0 +1,69 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as EnergyScoreInputStories from "../EnergyScoreInput.stories";
+
+<Meta title="Components/Forms/Input/EnergyScoreInput/Usage" />
+
+<ComponentInfo of={EnergyScoreInputStories} figmaId="76%3A6562" />
+
+<Content>
+
+## Usage
+
+`EnergyScoreInput` is a specialized input component that combines a `NumberInput` with an `EnergyLabel` to create a complete energy/climate score input experience. It automatically calculates and displays the energy performance grade (A-G) based on the input value.
+
+The component supports two types of scores:
+
+- Energy consumption (kWh/m²/year)
+- Climate impact (kgCO₂/m²/year)
+
+> Try entering different values to see how the energy grade changes automatically!
+
+<Canvas of={EnergyScoreInputStories.Default} />
+
+## Energy vs Climate Scores
+
+The component can be configured to calculate either energy consumption or climate impact scores using the `type` prop:
+
+### Energy Consumption
+
+Used for calculating the energy performance grade based on annual energy consumption per square meter.
+
+<Canvas of={EnergyScoreInputStories.Default} />
+
+### Climate Impact
+
+Used for calculating the climate impact grade based on annual greenhouse gas emissions per square meter.
+
+<Canvas of={EnergyScoreInputStories.Climate} />
+
+## Score Ranges
+
+### Energy Score Ranges (kWh/m²/year)
+
+- A: < 70
+- B: 70-110
+- C: 110-180
+- D: 180-250
+- E: 250-330
+- F: 330-420
+- G: ≥ 420
+
+### Climate Score Ranges (kgCO₂/m²/year)
+
+- A: < 6
+- B: 6-11
+- C: 11-30
+- D: 30-50
+- E: 50-70
+- F: 70-100
+- G: ≥ 100
+
+### Disabled State
+
+The input can be disabled when the value should not be editable.
+
+<Canvas of={EnergyScoreInputStories.Disabled} />
+
+</Content>
