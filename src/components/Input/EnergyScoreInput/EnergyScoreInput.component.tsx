@@ -1,21 +1,35 @@
-import { isNumber } from "@ubloimmo/front-util";
-import { useMemo, useState } from "react";
+import { isNull, isNumber, isString, type Nullable } from "@ubloimmo/front-util";
+import { useCallback, useMemo, useState } from "react";
+import styled from "styled-components";
 
 import { EnergyLabel } from "../../EnergyLabel/EnergyLabel.component";
 import { defaultCommonInputProps, StyledInputContainer } from "../Input.common";
+import { calculateEnergyScore } from "./EnergyScoreInput.utils";
 import {
-  calculateEnergyTag,
-  calculateClimateTag,
-} from "./EnergyScoreInput.utils";
-import { NumberInput } from "../NumberInput/NumberInput.component";
+  useInputId,
+  useInputOnChange,
+  useInputRef,
+  useInputStyles,
+  useInputValue,
+} from "../Input.utils";
+import { StyledNumberInput } from "../NumberInput/NumberInput.styles";
 
-import { useTestId, useMergedProps } from "@utils";
+import {
+  EnergyLabelState,
+  type EnergyLabelValue,
+} from "@/components/EnergyLabel";
+import {
+  useTestId,
+  useMergedProps,
+  useHtmlAttribute,
+  clamp,
+  useLogger,
+} from "@utils";
 
 import type {
   DefaultEnergyScoreInputProps,
   EnergyScoreInputProps,
 } from "./EnergyScoreInput.types";
-import type { EpcTagType } from "./EnergyScoreInput.utils";
 import type { TestIdProps } from "@types";
 
 const defaultEnergyScoreInputProps: DefaultEnergyScoreInputProps = {
@@ -25,8 +39,9 @@ const defaultEnergyScoreInputProps: DefaultEnergyScoreInputProps = {
   name: null,
   min: 0,
   max: 999,
-  type: "energy",
-  onLabelChange: () => {},
+  scoreType: "DPE",
+  onLabelChange: null,
+  unit: null,
 };
 
 /**
@@ -41,70 +56,113 @@ const defaultEnergyScoreInputProps: DefaultEnergyScoreInputProps = {
 const EnergyScoreInput = (
   props: EnergyScoreInputProps & TestIdProps
 ): JSX.Element => {
+  const { warn } = useLogger("EnergyScoreInput");
   const mergedProps = useMergedProps(defaultEnergyScoreInputProps, props);
-  const {
-    value,
-    type,
-    error,
-    disabled,
-    required,
-    table,
-    placeholder,
-    onChange,
-    ...numberInputProps
-  } = mergedProps;
-  const { onLabelChange } = props;
-  const testId = useTestId("input-energy-score", { testId: props.testId });
-  const [currentTag, setCurrentTag] = useState<EpcTagType | null>(null);
+  const { scoreType, disabled, onLabelChange } = mergedProps;
+  const [currentTag, setCurrentTag] =
+    useState<Nullable<EnergyLabelValue>>(null);
 
-  const calculatedTag: EpcTagType | undefined = useMemo(() => {
-    if (!isNumber(value)) return undefined;
-    return type === "energy"
-      ? calculateEnergyTag(value)
-      : calculateClimateTag(value);
-  }, [value, type]);
+  const updateTag = useCallback(
+    (sourceValue: Nullable<number>) => {
+      const tag = calculateEnergyScore(sourceValue, scoreType);
+      if (currentTag !== tag) {
+        setCurrentTag(tag);
+      }
+      if (onLabelChange) {
+        onLabelChange(tag);
+      }
+    },
+    [onLabelChange, scoreType, currentTag]
+  );
 
-  const handleChange = (newValue: number | null) => {
-    if (onChange) {
-      onChange(newValue);
-    }
-    if (onLabelChange) {
-      const newTag = isNumber(newValue)
-        ? type === "energy"
-          ? calculateEnergyTag(newValue)
-          : calculateClimateTag(newValue)
+  const clampToMinMax = useCallback(
+    (sourceValue: Nullable<number>) => {
+      if (!isNumber(sourceValue)) return null;
+      return clamp(sourceValue, mergedProps.min, mergedProps.max);
+    },
+    [mergedProps.min, mergedProps.max]
+  );
+
+  const onChange = useInputOnChange<"energy-score">(
+    (nativeValue) => isString(nativeValue),
+    (nativeValue) => {
+      const parsedValue = isString(nativeValue)
+        ? parseFloat(nativeValue)
         : null;
-      setCurrentTag(newTag);
-      onLabelChange(newTag);
+      if (isNull(parsedValue) || isNaN(parsedValue)) return null;
+      return clampToMinMax(parsedValue);
+    },
+    (valueToPropagate) => {
+      updateTag(valueToPropagate);
+      mergedProps.onChange?.(valueToPropagate);
+    },
+    mergedProps.onChangeNative
+  );
+
+  const value = useInputValue<"energy-score">(
+    mergedProps.value,
+    props,
+    (externalValue) => {
+      updateTag(externalValue);
+      return externalValue;
     }
-  };
+  );
+  const inputStyles = useInputStyles(mergedProps);
+  const testId = useTestId("input-energy-score", props);
+  const { forwardRef } = useInputRef(mergedProps);
+  const onBlur = useHtmlAttribute(mergedProps.onBlur);
+  const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
+  const id = useInputId(mergedProps);
+
+  const energyLabelState = useMemo<EnergyLabelState>(() => {
+    if (disabled || !currentTag) return "inactive";
+    return "active";
+  }, [disabled, currentTag]);
+
+  if (!props.scoreType) {
+    warn(
+      `Missing required prop "scoreType" for EnergyScoreInput, defaulting to ${defaultEnergyScoreInputProps.scoreType}`
+    );
+  }
 
   return (
-    <StyledInputContainer
-      $error={error}
-      $disabled={disabled}
-      $required={required}
-      $table={table}
-      $placeholder={placeholder}
-      data-testid="input-energy-score-container"
-      style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}
-    >
-      <NumberInput
+    <StyledContainer {...inputStyles}>
+      <StyledNumberInput
         data-testid={testId}
+        type="number"
+        min={mergedProps.min}
+        max={mergedProps.max}
         value={value}
-        onChange={handleChange}
-        error={error}
-        disabled={disabled}
-        required={required}
-        table={table}
-        placeholder={placeholder}
-        {...numberInputProps}
+        onChange={onChange}
+        ref={forwardRef}
+        onBlur={onBlur}
+        name={mergedProps.name ?? undefined}
+        disabled={mergedProps.disabled}
+        placeholder={mergedProps.placeholder}
+        required={mergedProps.required}
+        {...inputStyles}
+        id={id}
+        autoComplete={autoComplete}
+        step="1"
       />
-      <EnergyLabel type="DPE" value={currentTag ?? calculatedTag ?? null} />
-    </StyledInputContainer>
+      <EnergyLabel
+        state={energyLabelState}
+        type={scoreType}
+        value={currentTag}
+      />
+    </StyledContainer>
   );
 };
 
 EnergyScoreInput.defaultProps = defaultEnergyScoreInputProps;
 
 export { EnergyScoreInput };
+
+const StyledContainer = styled(StyledInputContainer)`
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-1);
+`;

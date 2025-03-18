@@ -1,5 +1,3 @@
-import { fn } from "@storybook/test";
-
 import { EnergyScoreInput } from "./EnergyScoreInput.component";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -11,12 +9,12 @@ const meta = {
     uncontrolled: true,
   },
   argTypes: {
-    type: {
-      options: ["energy", "climate"],
+    scoreType: {
+      options: ["DPE", "GES"],
       description:
         "Type of score to calculate (energy consumption or climate impact)",
       table: {
-        defaultValue: { summary: "energy" },
+        defaultValue: { summary: "DPE" },
       },
     },
   },
@@ -27,25 +25,22 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    type: "energy",
+    scoreType: "DPE",
     placeholder: "Number input",
-    onLabelChange: fn(),
   },
 };
 
 export const Climate: Story = {
   args: {
-    type: "climate",
+    scoreType: "GES",
     placeholder: "Number input",
-    onLabelChange: fn(),
   },
 };
 
 export const Disabled: Story = {
   args: {
-    type: "energy",
+    scoreType: "DPE",
     placeholder: "Number input",
     disabled: true,
-    onLabelChange: fn(),
   },
 };

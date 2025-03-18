@@ -957,6 +957,7 @@ const allFieldsSchema = z.object({
   textarea: z.string(),
   search: z.string(),
   searchText: z.string(),
+  energyScore: z.number(),
 });
 
 type AllFieldsData = z.input<typeof allFieldsSchema>;
@@ -992,6 +993,7 @@ const queryData: FormData<AllFieldsData> = {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   search: sharedOptions[0].value,
   searchText: "Search",
+  energyScore: 12,
 };
 
 const allFieldsIcons: IconName[] = ["Square", "Triangle", "Circle"];
@@ -999,7 +1001,6 @@ const allFieldsIcons: IconName[] = ["Square", "Triangle", "Circle"];
 const allFieldsFormProps: FormProps<AllFieldsData> = {
   title: "All fields",
   schema: allFieldsSchema,
-  // defaultValues: ,
   query: createDelayedResponse(queryData, 100),
   content: [
     {
@@ -1078,6 +1079,13 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       label: "Textarea",
       type: "textarea",
       source: "textarea",
+    },
+    {
+      label: "Energy Score",
+      source: "energyScore",
+      type: "energy-score",
+      scoreType: "GES",
+      // unit: "kgCO2eq/m²/an",
     },
   ],
   onSubmit: (...args) => {

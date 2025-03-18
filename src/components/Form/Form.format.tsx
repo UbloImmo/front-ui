@@ -7,6 +7,8 @@ import { type FC, type ReactNode } from "react";
 import styled, { css } from "styled-components";
 
 import { Badge } from "../Badge";
+import { EnergyLabel } from "../EnergyLabel";
+import { calculateEnergyScore } from "../Input/EnergyScoreInput/EnergyScoreInput.utils";
 import { Text } from "../Text";
 import { FieldSkeleton } from "./components/FieldSkeleton.component";
 import { scaleNumber } from "../Input/NumberInput/NumberInput.utils";
@@ -18,7 +20,7 @@ import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
 import { useSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
 import { breakpointsPx } from "@/sizes";
 import { FlexLayout, FlexRowLayout } from "@layouts";
-import { arrayOf, isEmptyString } from "@utils";
+import { arrayOf, isEmptyString, isNonEmptyString } from "@utils";
 
 import type {
   FormDisplayValueFormatterFn,
@@ -292,6 +294,22 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   "multi-select": (fieldValue, props) => () => (
     <DisplayMultiSelectValue fieldValue={fieldValue} props={props} />
   ),
+  "energy-score":
+    (fieldValue, { scoreType = "DPE", unit }) =>
+    () => {
+      const tag = calculateEnergyScore(fieldValue, scoreType);
+      const displayValue = [String(fieldValue), unit]
+        .filter(isNonEmptyString)
+        .join(" ");
+      return (
+        <FormFieldDisplayValue
+          value={displayValue}
+          beforeChildren={
+            <EnergyLabel type={scoreType} value={tag} state="active" />
+          }
+        />
+      );
+    },
 };
 
 /**
@@ -327,10 +345,14 @@ export const computeFieldDisplayContent = <TType extends InputType>(
  */
 export const FormFieldDisplayValue = ({
   value,
-  isTextarea = false,
+  isTextarea,
+  beforeChildren,
+  afterChildren,
 }: {
   value: string;
   isTextarea?: boolean;
+  beforeChildren?: ReactNode;
+  afterChildren?: ReactNode;
 }) => {
   return (
     <FieldDisplayValueContainer
@@ -339,9 +361,11 @@ export const FormFieldDisplayValue = ({
       wrap={isTextarea}
       $isTextarea={isTextarea}
     >
+      {beforeChildren}
       <Text color="gray-800" weight="medium" fill ellipsis={!isTextarea}>
         {value}
       </Text>
+      {afterChildren}
     </FieldDisplayValueContainer>
   );
 };
