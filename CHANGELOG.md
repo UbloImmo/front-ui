@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `FormFieldDisplayValue` component
+  - Add `isTextarea` property to allow for textarea values to be don't overflow the container
+
 ### Changed
 
 - `v0.0.8` Callout component

@@ -276,7 +276,9 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   currency: formatCurrencyInt,
   password: displayPasswordValue,
   phone: String,
-  textarea: String,
+  textarea: (value) => (
+    <FormFieldDisplayValue value={String(value)} isTextarea={true} />
+  ),
   select: (fieldValue, props) => () => (
     <DisplaySelectValue fieldValue={fieldValue} props={props} />
   ),
@@ -323,19 +325,32 @@ export const computeFieldDisplayContent = <TType extends InputType>(
  * @param {{ value: string }} props - The props of the component.
  * @returns {JSX.Element} The rendered component.
  */
-export const FormFieldDisplayValue = ({ value }: { value: string }) => {
+export const FormFieldDisplayValue = ({
+  value,
+  isTextarea = false,
+}: {
+  value: string;
+  isTextarea?: boolean;
+}) => {
   return (
-    <FieldDisplayValueContainer justify="start" align="center">
-      <Text color="gray-800" weight="medium" fill ellipsis>
+    <FieldDisplayValueContainer
+      justify="start"
+      align="center"
+      wrap={isTextarea}
+      isTextarea={isTextarea}
+    >
+      <Text color="gray-800" weight="medium" fill ellipsis={!isTextarea}>
         {value}
       </Text>
     </FieldDisplayValueContainer>
   );
 };
 
-const FieldDisplayValueContainer = styled(FlexLayout)`
+const FieldDisplayValueContainer = styled(FlexLayout)<{ isTextarea?: boolean }>`
   --container-height: var(--s-8);
   --container-height-mobile: calc(var(--container-height) + var(--s-2));
+
+  align-self: start;
 
   td:has(&) & {
     --container-height: var(--s-6);
@@ -343,6 +358,14 @@ const FieldDisplayValueContainer = styled(FlexLayout)`
   max-height: var(--container-height);
   height: var(--container-height);
   min-height: var(--container-height);
+
+  ${(props) =>
+    props.isTextarea &&
+    `
+  height: auto;
+  max-height: var(--s-32);
+  overflow-y: auto;
+`}
 
   @media screen and (max-width: ${breakpointsPx.XS}) {
     max-height: var(--container-height-mobile);
