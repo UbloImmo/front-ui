@@ -2,7 +2,9 @@ import {
   isArray,
   isBoolean,
   isFunction,
+  isNull,
   isNullish,
+  isNumber,
   isObject,
   isString,
   isUndefined,
@@ -11,8 +13,11 @@ import {
   type Nullable,
   type NullishPrimitives,
   type Optional,
+  type Predicate,
   type Primitives,
+  type VoidFn,
 } from "@ubloimmo/front-util";
+import { isSymbol } from "lodash";
 import { isValidElement } from "react";
 
 import { SPACING_PREFIX } from "@types";
@@ -319,6 +324,237 @@ export const formatPropInfo = ({
   };
 };
 
+const MAX_ARRAY_LENGTH = 10;
+const FN_ARG_REGEX =
+  /^\(((?:[^()]|\((?:[^()]|\([^()]*\))*\))*)\)=>|^function\s+(?:\w+\s*)?\(((?:[^()]|\((?:[^()]|\([^()]*\))*\))*)\)|^function\(((?:[^()]|\((?:[^()]|\([^()]*\))*\))*)\)/;
+
+const FN_ARROW_BLOCK_BODY_REGEX = /=>\s*{/;
+const FN_BLOCK_BODY_REGEX =
+  /(?:=>|function\s*(?:\w+)?\s*\([^)]*\))\s*{([\s\S]*?)}(?:[^}]*?)?$/;
+const FN_EXPRESSION_BODY_REGEX = /=>\s*([\s\S]*?)$/;
+const FN_JSX_DEV_BODY_REGEX =
+  /(?<=\/\*@__PURE__\*\/jsxDEV\()(?:("?\w+"?),({.*))(?=,void0,(?:true|false),{.*},this\))/;
+
+/**
+ * Extracts function arguments from a stringified function
+ * @param {string} fnStr - The stringified function
+ * @returns {string | null} The function arguments string or null if no match
+ */
+const extractFnArgs = (fnStr: string) => {
+  const match = fnStr.match(FN_ARG_REGEX);
+  // extract args
+  if (!match) return null;
+  return match[1] !== undefined
+    ? match[1]
+    : match[2] !== undefined
+      ? match[2]
+      : match[3];
+};
+
+/**
+ * Extracts the function body from a stringified function.
+ * Handles both arrow functions (with expression and block bodies) and regular functions.
+ *
+ * @param {string} functionStr - The stringified function to extract the body from
+ * @returns {string | null} The function body as a string, or null if no body found
+ *
+ * @example
+ * // Arrow function with expression body
+ * extractFnBody("(x) => x + 1")
+ * // Returns "x + 1"
+ *
+ * @example
+ * // Arrow function with block body
+ * extractFnBody("() => { return 42; }")
+ * // Returns "return 42;"
+ *
+ * @example
+ * // Regular function
+ * extractFnBody("function(x) { return x * 2; }")
+ * // Returns "return x * 2;"
+ */
+const extractFnBody = (functionStr: string) => {
+  // For arrow functions with expression bodies (no curly braces)
+  if (
+    functionStr.includes("=>") &&
+    !functionStr.match(FN_ARROW_BLOCK_BODY_REGEX)
+  ) {
+    const match = functionStr.match(FN_EXPRESSION_BODY_REGEX);
+    return match ? match[1] : null;
+  }
+
+  // For arrow functions with block bodies and regular functions
+  const match = functionStr.match(FN_BLOCK_BODY_REGEX);
+  return match ? match[1] : null;
+};
+
+/**
+ * Resets the lastIndex property of all regex patterns used for function parsing.
+ * This ensures consistent matching behavior across multiple uses of the same regex.
+ * Must be called before and after using the regex patterns to avoid stateful issues.
+ *
+ * @example
+ * resetRegexes();
+ * const args = extractFnArgs(fnStr);
+ * resetRegexes(); // Reset after using regex
+ */
+const resetRegexes = () => {
+  FN_ARG_REGEX.lastIndex = 0;
+  FN_ARROW_BLOCK_BODY_REGEX.lastIndex = 0;
+  FN_BLOCK_BODY_REGEX.lastIndex = 0;
+  FN_EXPRESSION_BODY_REGEX.lastIndex = 0;
+};
+
+/**
+ * Parses a function into its constituent parts - arguments, body and string representation.
+ * Handles both arrow functions and regular functions.
+ *
+ * @param {VoidFn} fn - The function to parse, can be any function but typed to be a `VoidFn`
+ * @returns {{args: string | null, body: string | null, fnStr: string}} Object containing:
+ *   - args: The function arguments as a string, or null if none found
+ *   - body: The function body as a string, or null if none found
+ *   - fnStr: The full function as a sanitized string
+ *
+ *
+ * @example
+ * // Arrow function
+ * parseFn((x) => x + 1)
+ * // Returns { args: "x", body: "x+1", fnStr: "(x)=>x+1" }
+ *
+ * @example
+ * // Regular function
+ * parseFn(function(a, b) { return a + b; })
+ * // Returns { args: "a,b", body: "returna+b;", fnStr: "function(a,b){returna+b;}" }
+ */
+const parseFn = (fn: VoidFn) => {
+  // stringify and sanitize fn
+  let fnStr = "()=>{}";
+  try {
+    fnStr = String(fn).replaceAll("\n", "").replaceAll(" ", "");
+  } catch (_error) {
+    // fail silently
+  }
+  // reset all regexes before using
+  resetRegexes();
+  const args = extractFnArgs(fnStr);
+  const body = extractFnBody(fnStr);
+  resetRegexes();
+  return { args, body, fnStr };
+};
+
+/**
+ * Stringifies a function body, handling JSX dev expressions by extracting component names.
+ * Used internally by stringifyValue to format function bodies for display.
+ *
+ * @param {string} bodyStr - The function body string to process
+ * @returns {string} The stringified function body
+ *
+ * @example
+ * // For a JSX dev expression like:
+ * // jsxDEV("Button", {color: "primary"}, void 0, false, {}, this)
+ * stringifyFnBody('jsxDEV("Button",{color:"primary"},void 0,false,{},this)')
+ * // Returns "<Button />"
+ */
+const stringifyFnBody = (bodyStr: string) => {
+  FN_JSX_DEV_BODY_REGEX.lastIndex = 0;
+  const matches = bodyStr.match(FN_JSX_DEV_BODY_REGEX);
+  if (!matches) return bodyStr;
+  const name = matches[1];
+  // TODO: stringify props
+  // const props = matches[2];
+  if (!name) return bodyStr;
+  return tagFactory(name)();
+};
+
+/**
+ * Converts a value of any type into a formatted string representation.
+ * Handles various data types including primitives, functions, arrays and objects.
+ *
+ * @param {unknown} value - The value to stringify
+ * @returns {string} A formatted string representation of the value
+ *
+ * @example
+ * // Boolean
+ * stringifyValue(true) // Returns "true"
+ *
+ * @example
+ * // String
+ * stringifyValue("hello") // Returns "\"hello\""
+ *
+ * @example
+ * // Function
+ * stringifyValue((x) => x + 1) // Returns "(x) => x + 1"
+ *
+ * @example
+ * // Array
+ * stringifyValue([1,2,3]) // Returns formatted array string with line breaks
+ *
+ * @example
+ * // Object
+ * stringifyValue({a: 1, b: 2}) // Returns formatted object string with line breaks
+ */
+const stringifyValue = (value: unknown): string => {
+  if (isBoolean(value)) {
+    return String(value);
+  }
+  if (isString(value)) {
+    return `"${value}"`;
+  }
+  if (isNull(value)) {
+    return "null";
+  }
+  if (isUndefined(value)) return "undefined";
+  if (isNumber(value)) return String(value);
+  if (isFunction(value)) {
+    const { args, body } = parseFn(value);
+    const bodyStr = stringifyFnBody(body ?? "");
+    return `(${args}) => ${bodyStr}`;
+  }
+  if (isArray(value)) {
+    if (!value.length) return "[]";
+    const diff = value.length - MAX_ARRAY_LENGTH;
+    const overflows = diff > 0;
+    const subset = value.slice(0, MAX_ARRAY_LENGTH);
+    const subsetStrings = subset.map((item) => {
+      const str = stringifyValue(item);
+      return str
+        .split("\n")
+        .map((line) => `  ${line}`)
+        .join("\n");
+    });
+    if (overflows) {
+      subsetStrings.push(`  // ... ${diff} more`);
+    }
+    return `[\n${subsetStrings.join(",\n")}\n]`;
+  }
+  if ((isObject as Predicate<Record<string, unknown>>)(value)) {
+    const entries = objectEntries(value);
+    const formattedEntries = entries.map(([key, value]) => {
+      const valueStr = stringifyValue(value);
+      const lines = valueStr.split("\n");
+      const formattedLines = lines
+        .map((line, index) =>
+          index === 0 || index - 1 === lines.length ? line : `  ${line}`
+        )
+        .join("\n");
+      return `  ${key}: ${formattedLines},`;
+    });
+    return `{\n${formattedEntries.join("\n")}\n}`;
+  }
+  if (isSymbol(value)) {
+    switch (value.description) {
+      case "react.element":
+        return tagFactory("React.Element")();
+      case "react-fragment":
+        return tagFactory("React.Fragment")();
+      default:
+        return "Symbol";
+    }
+  }
+  console.warn("unhandled value", value, typeof value);
+  return `${value}`;
+};
+
 /**
  * Generate an array of strings representing the properties of an SVG tag.
  *
@@ -339,13 +575,13 @@ const tagProperties = (properties?: Record<string, unknown>): string[] => {
       if (isString(value)) {
         return output(`"${value}"`);
       }
+      if (isFunction(value)) {
+        return output(`{${JSON.stringify(value)}}`);
+      }
       if (isObject(value)) {
-        const stringObj = JSON.stringify(value, undefined, 2).replaceAll(
-          /"(\S+)":\s/gi,
-          "$1: "
-        );
+        const recursiveStrObject = stringifyValue(value);
 
-        const lines = stringObj.split("\n");
+        const lines = recursiveStrObject.split("\n");
         const propObj = lines
           .map((line, index) =>
             index === 0 || index - 1 === lines.length ? line : `  ${line}`

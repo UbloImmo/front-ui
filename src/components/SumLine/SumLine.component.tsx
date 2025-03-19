@@ -6,7 +6,7 @@ import { Heading } from "../Heading";
 import { Text } from "../Text";
 import { sumLineContainerStyles, sumLineHeadingStyles } from "./SumLine.styles";
 
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 import { useMergedProps, useTestId, useClassName, useStyleProps } from "@utils";
 
 import type {

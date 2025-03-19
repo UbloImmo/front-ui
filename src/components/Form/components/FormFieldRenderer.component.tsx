@@ -21,7 +21,7 @@ import {
 } from "../Form.utils";
 import { FormTable } from "./FormTable/FormTable.component";
 
-import { GridLayout } from "@layouts";
+import { GridLayout } from "@/layouts/Grid";
 
 import type { BuiltFormCustomContentProps } from "../Form.types";
 import type { DividerProps } from "@/components/Divider";

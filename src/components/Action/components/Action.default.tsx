@@ -4,7 +4,7 @@ import { Badge } from "@/components/Badge";
 import { StaticIcon } from "@/components/StaticIcon";
 import { Text } from "@/components/Text";
 import { Tooltip } from "@/components/Tooltip";
-import { FlexLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
 
 import type { SizedActionProps } from "../Action.types";
 import type { PaletteColor, TextProps } from "@types";

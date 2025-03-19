@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { entityCardContentStyles } from "../EntityInfoCard.styles";
 import { entityInfoCardSectionItemRenderers } from "./EntityInfoCard.sectionItems";
 
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { isNonEmptyString, useMergedProps, useTestId } from "@utils";
 
 import type {

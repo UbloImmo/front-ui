@@ -32,8 +32,8 @@ import { Icon } from "@/components/Icon";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { cssDimensions } from "@/utils/styles.utils";
-import { FlexColumnLayout } from "@layouts";
 import {
   useHtmlAttribute,
   useStatic,

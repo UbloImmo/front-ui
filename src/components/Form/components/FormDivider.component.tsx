@@ -1,5 +1,5 @@
 import { Divider, type DividerProps } from "@/components/Divider";
-import { GridItem } from "@layouts";
+import { GridItem } from "@/layouts/GridItem";
 
 /**
  * Renders a form divider component.

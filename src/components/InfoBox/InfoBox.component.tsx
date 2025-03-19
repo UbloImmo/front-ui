@@ -5,7 +5,7 @@ import { infoBoxStyles } from "./InfoBox.styles";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import {
   useLogger,
   useTestId,

@@ -17,7 +17,9 @@ import {
 import { ActionIcon, ActionIconProps } from "../ActionIcon";
 import { ComboBoxButton } from "../ComboBoxButton";
 
-import { FlexLayout, GridItem, GridLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
+import { GridLayout } from "@/layouts/Grid";
+import { GridItem } from "@/layouts/GridItem";
 import {
   useTestId,
   useMergedProps,

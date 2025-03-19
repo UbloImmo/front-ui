@@ -7,7 +7,7 @@ import { modalButtonStyles, modalCardStyles } from "./Modal.styles";
 import { Button } from "@/components/Button";
 import { Dialog, useDialogManager } from "@/components/Dialog";
 import { Heading } from "@/components/Heading";
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import {
   useLogger,
   useTestId,

@@ -3,7 +3,7 @@ import { DefaultListRenderer } from "./Default.renderer";
 import { ListFilterCollection } from "../../components";
 import { List } from "../../List.component";
 
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 
 export const DefaultExample = () => {
   const config = useDefaultListConfig();

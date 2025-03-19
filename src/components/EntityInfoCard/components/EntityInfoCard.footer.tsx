@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { entityCardActionsContainerStyles } from "../EntityInfoCard.styles";
 
 import { Action } from "@/components/Action";
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { useMergedProps, useTestId } from "@utils";
 
 import type {

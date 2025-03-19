@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 import { SmallLoader } from "@/components/SmallLoader";
+import { FlexRowLayout } from "@/layouts/Flex";
 import { breakpointsPx } from "@/sizes";
-import { FlexRowLayout } from "@layouts";
 
 export const FieldSkeleton = () => {
   return (

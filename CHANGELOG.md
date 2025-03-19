@@ -16,10 +16,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Includes min/max value validation and label change callbacks
   - Configurable unit display for energy values
 
+- New dependencies
+  - `react-virtoso: "^4.12.5"` dependency
+  - `@faker-js/faker: "^9.6.0"` dev dependency
+
+- `v0.0.1` VirtualTable layout
+  - Renders a virtualized html table using `react-virtuoso`
+  - Basic tests
+  - Docs & stories
+
+- `v0.0.25` Form component
+  - `layout.fixedWidth` property in content & table fields
+
+### Changed
+
+- **DOCS**
+  - Improve story source code generation
+  - Add support for nested objects / array
+  - Stringify callback functions
+
 ### Fixed
 
 - `v0.0.9` NumberInput component
   - Improved clamping logic to better handle input validation when min/max limits are applied
+
+- `v0.0.5` TableRow layout
+  - Properly handle test id override
 
 ## 1.7.10 - 2025-03-19
 

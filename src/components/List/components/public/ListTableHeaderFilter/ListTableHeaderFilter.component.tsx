@@ -16,13 +16,13 @@ import {
 } from "@/components/InputLabel";
 import { useListContext } from "@/components/List/context";
 import { Tooltip, type TooltipProps } from "@/components/Tooltip";
-import { parseFixedLength } from "@/sizes/size.utils";
+import { FlexRowLayout } from "@/layouts/Flex";
 import {
-  FlexRowLayout,
   Popover,
-  TableHeaderCell,
   type PopoverCollisionCompoundPadding,
-} from "@layouts";
+} from "@/layouts/Popover";
+import { TableHeaderCell } from "@/layouts/Table";
+import { parseFixedLength } from "@/sizes/size.utils";
 import {
   cssPx,
   cssRemToCssPx,

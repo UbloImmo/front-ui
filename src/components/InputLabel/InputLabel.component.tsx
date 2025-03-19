@@ -13,7 +13,7 @@ import { Text } from "../Text/Text.component";
 import { Tooltip } from "../Tooltip";
 import { inputLabelStyles, inputLabelTextStyles } from "./InputLabel.styles";
 
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 
 import type {
   DefaultInputLabelProps,

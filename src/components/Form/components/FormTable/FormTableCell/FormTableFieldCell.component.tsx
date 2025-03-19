@@ -1,6 +1,6 @@
-import { isFunction, isString } from "@ubloimmo/front-util";
+import { isFunction, isNull, isString } from "@ubloimmo/front-util";
 import { useMemo, type FC, type ReactNode } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import {
   FormTableCellControls,
@@ -11,10 +11,13 @@ import { useFormContext } from "@/components/Form/Form.context";
 import { computeFieldDisplayContent } from "@/components/Form/Form.format";
 import { Input, useInputId, type InputType } from "@/components/Input";
 import { Text } from "@/components/Text";
+import { TableCell } from "@/layouts/Table";
 import { breakpointsPx } from "@/sizes";
-import { TableCell } from "@layouts";
 
-import type { BuiltFieldProps } from "@/components/Form/Form.types";
+import type {
+  BuiltFieldProps,
+  BuiltFormFieldLayoutFixedWidthProp,
+} from "@/components/Form/Form.types";
 
 type FormTableFieldCellProps = BuiltFieldProps<InputType> &
   FormTableCellControlsProps & {
@@ -65,7 +68,11 @@ export const FormTableFieldCell = ({
   const inputId = useInputId(props);
 
   return (
-    <FormTableCell padded={isDisplay} colSpan={colSpan}>
+    <FormTableCell
+      padded={isDisplay}
+      colSpan={colSpan}
+      $fixedWidth={layout.fixedWidth}
+    >
       <FormTableCellControls
         controls={controls}
         isFirst={isFirst}
@@ -80,8 +87,16 @@ export const FormTableFieldCell = ({
   );
 };
 
-const FormTableCell = styled(TableCell)`
+const FormTableCell = styled(TableCell)<BuiltFormFieldLayoutFixedWidthProp>`
   position: relative;
+
+  ${({ $fixedWidth }) =>
+    !isNull($fixedWidth) &&
+    css`
+      min-width: ${$fixedWidth} !important;
+      max-width: ${$fixedWidth} !important;
+      width: ${$fixedWidth} !important;
+    `}
 `;
 
 const FormTableDisplayCellInner = styled.div`

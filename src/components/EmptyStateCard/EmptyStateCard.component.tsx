@@ -8,7 +8,7 @@ import { useFormContext } from "../Form";
 import { Heading } from "../Heading";
 import { Text } from "../Text";
 
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import {
   useTestId,
   useMergedProps,

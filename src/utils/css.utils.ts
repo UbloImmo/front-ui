@@ -5,6 +5,7 @@ import { SPACING_PREFIX } from "../types";
 import { isPaletteColor } from "./color.utils";
 
 import type {
+  CssCh,
   CssColorMix,
   CssColorSpace,
   CssFr,
@@ -196,8 +197,24 @@ export const isCssPercent = (value: unknown): value is CssPercent => {
   if (!isString(value) || !value.includes("%")) {
     return false;
   }
-  const frValue = parseFloat(value.split("%")[0]);
-  if (isNaN(frValue)) return false;
+  const percentValue = parseFloat(value.split("%")[0]);
+  if (isNaN(percentValue)) return false;
+
+  return true;
+};
+
+/**
+ * Type guard to check if the input value is of type {@link CssCh}.
+ *
+ * @param {unknown} value - The value to be checked
+ * @return {boolean} Whether the input value is of type CssCh
+ */
+export const isCssCh = (value: unknown): value is CssCh => {
+  if (!isString(value) || !value.includes("ch")) {
+    return false;
+  }
+  const chValue = parseFloat(value.split("ch")[0]);
+  if (isNaN(chValue)) return false;
 
   return true;
 };
@@ -247,7 +264,8 @@ export const isCssLength = (value: unknown): value is CssLength => {
     isCssRem(value) ||
     isCssPx(value) ||
     isCssFr(value) ||
-    isCssPercent(value)
+    isCssPercent(value) ||
+    isCssCh(value)
   );
 };
 
@@ -282,7 +300,7 @@ export const cssLengthUsage = (length: CssLength): CssLengthUsage => {
   if (isNumber(length)) {
     return cssRem(length);
   }
-  if (isCssPx(length) || isCssRem(length)) {
+  if (isCssPx(length) || isCssRem(length) || isCssCh(length)) {
     return length;
   }
   if (isSpacingLabel(length)) {
@@ -303,7 +321,8 @@ export const isCssLengthUsage = (value: unknown): value is CssLengthUsage => {
     isNumber(value) ||
     isCssPx(value) ||
     isCssRem(value) ||
-    isSpacingLabel(value)
+    isSpacingLabel(value) ||
+    isCssCh(value)
   );
 };
 

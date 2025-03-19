@@ -6,7 +6,7 @@ import { dividerLineStyles } from "./Divider.styles";
 
 import { Heading } from "@/components/Heading";
 import { Text } from "@/components/Text";
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 import {
   useTestId,
   useMergedProps,

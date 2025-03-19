@@ -19,7 +19,8 @@ import {
 } from "./ContextMenu.types";
 import { ActionIcon } from "../ActionIcon";
 
-import { FlexColumnLayout, Popover } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
+import { Popover } from "@/layouts/Popover";
 import { FixedCssLength, type TestIdProps } from "@types";
 import {
   useLogger,

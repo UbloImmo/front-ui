@@ -11,7 +11,7 @@ import {
   TableHeaderCell,
   TableRow,
   TableScrollView,
-} from "@layouts";
+} from "@/layouts/Table";
 
 export const DefaultListRenderer = () => {
   const { data } = useListContext<DefaultListItem>();

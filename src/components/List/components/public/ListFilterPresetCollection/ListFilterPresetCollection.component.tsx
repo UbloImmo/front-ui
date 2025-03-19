@@ -1,7 +1,7 @@
 import { useListFilterPresetCollection } from "./ListFilterPresetCollection.utils";
 import { ListFilterPreset } from "../ListFilterPreset";
 
-import { FlexLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
 import { useTestId } from "@utils";
 
 import type { ListFilterPresetCollectionProps } from "./ListFilterPresetCollection.types";

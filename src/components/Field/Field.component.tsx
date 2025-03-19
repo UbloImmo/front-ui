@@ -10,7 +10,7 @@ import { inputTypes } from "../Input/Input.data";
 import { InputAssistiveText } from "../InputAssistiveText";
 import { InputLabel } from "../InputLabel";
 
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
 
 import type { FieldProps, FieldDefaultProps } from "./Field.types";

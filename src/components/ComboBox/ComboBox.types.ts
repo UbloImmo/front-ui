@@ -4,7 +4,7 @@ import {
   type VoidFn,
 } from "@ubloimmo/front-util";
 
-import { FlexDirection } from "@layouts";
+import { FlexDirection } from "@/layouts/Flex";
 
 export type ComboBoxOption<TOptionValue extends NullishPrimitives> = {
   /**

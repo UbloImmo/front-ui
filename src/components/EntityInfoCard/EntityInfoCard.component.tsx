@@ -11,7 +11,7 @@ import {
 } from "./components";
 import { entityCardContainerStyles } from "./EntityInfoCard.styles";
 
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { useTestId, useMergedProps } from "@utils";
 
 import type {

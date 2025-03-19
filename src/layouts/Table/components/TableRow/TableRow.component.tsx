@@ -16,7 +16,7 @@ import type { TestIdProps } from "@types";
 /**
  * A table row component, to be used in `TableBody`.
  *
- * @version 0.0.4
+ * @version 0.0.5
  */
 export const TableRow = forwardRef<
   HTMLTableRowElement,
@@ -28,6 +28,7 @@ export const TableRow = forwardRef<
       children,
       onClick,
       testId,
+      overrideTestId,
       style = "form",
       styleOverride,
       ...props
@@ -35,7 +36,7 @@ export const TableRow = forwardRef<
     ref
   ) => {
     const cn = useClassName({ className });
-    const tid = useTestId("table-row", { testId });
+    const tid = useTestId("table-row", { testId, overrideTestId });
     const styleProps = useStyleProps({ style, clickable: !!onClick });
     const styleProperties = useHtmlAttribute(styleOverride);
     return (

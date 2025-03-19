@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { Icon } from "../Icon";
 import { Text } from "../Text/Text.component";
 
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 import { isNonEmptyString, useLogger, useMergedProps, useTestId } from "@utils";
 
 import type {

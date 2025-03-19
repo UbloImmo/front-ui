@@ -9,7 +9,7 @@ import {
 
 import { Icon } from "@/components/Icon";
 import { InputLabel } from "@/components/InputLabel";
-import { FlexColumnLayout, FlexRowLayout } from "@layouts";
+import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
 
 import type { BuiltFieldProps } from "../Form.types";
 import type { InputType } from "@/components/Input";

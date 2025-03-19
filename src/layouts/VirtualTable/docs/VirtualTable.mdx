@@ -1,0 +1,255 @@
+import { Meta, Source } from "@storybook/blocks";
+import { ComponentInfo, Canvas, Text, Callout } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import { Collapsible } from "@/layouts/Collapsible";
+
+import * as VirtualTableStories from "../VirtualTable.stories.tsx";
+
+<Meta title="Layouts/VirtualTable/Usage" />
+
+<ComponentInfo of={VirtualTableStories} />
+
+<Content>
+
+## Usage
+
+VirtualTable is a layout component that renders a virtualized table list.
+It relies on the [react-virtuoso](https://virtuoso.dev/) package to achieve this.
+
+> Virtualized rendering is a technique that renders only the visible items in a list,
+> and only pre-renders the items that are close to the currently visible items.
+> This is particularly useful for rendering large (10K+ items) lists, as it can significantly reduce the amount of memory used.
+
+### Rendering data
+
+VirtualTable relies on two properties to render
+
+#### Data
+
+The `data` property expects an list of objects items to render. Each item in the list will be rendered as a row in the table.
+
+> An empty state may be shown if the data array is empty by providing the `EmptyState` property.
+
+#### Columns
+
+The `columns` property is used to define what to render for each item in the array.
+
+Each column takes at least a `HeaderContent` label, object or function component (used to render the column's header), and a `CellContent` function component - used to render its cell for each row.
+
+> Take a look at each example's source code for code examples.
+
+##### HeaderContent
+
+Defines the content to be rendered in a column's header.
+
+<Collapsible content={
+  <Source code={`
+export type VirtualTableColumnHeaderContent =
+  | string
+  | FC
+  | {
+      /**
+       * The label of the column. Gets displayed in the header.
+       *
+       * @remarks
+       * Always gets rendered within a \`Text\` component
+       *
+       * @type {string};
+       * @required
+       */
+      label: string;
+      /**
+       * An optional tooltip to be displayed within the header
+       */
+      tooltip?: TooltipProps;
+    }
+  | {
+      /**
+       * A custom cell component to be used in place of the default cell.
+       *
+       * @remarks
+       * Gets rendered directly within the header, should render its only \`TableHeaderCell\`
+       *
+       * @type {FC<TableCellProps>}
+       * @required
+       */
+      ReplacementCell: FC<TableCellProps>;
+    };
+`} />
+}>
+<Text weight="medium" color="primary-dark">Type definition</Text>
+</Collapsible>
+
+Each column in the example below defines its header in a different way.
+
+<Canvas of={VirtualTableStories.Headers} />
+
+> Headers can be made empty by setting `HeaderContent` to `() => null`.
+>
+> If you wish to show no header at all, set `HeaderContent` to `{ ReplacementCell: () => null }`.
+
+##### CellContent
+
+<Collapsible content={
+  <Source code={`
+/**
+ * Props passed to a virtual table cell component.
+ *
+ * @template TItem - The type of items in the data array. Must be an object.
+ */
+export type VirtualTableColumnCellProps<TItem extends object> = {
+  /**
+   * The item to be displayed in the cell.
+   *
+   * @type {TItem}
+   */
+  item: TItem;
+  /**
+   * The index of the item in the data array.
+   *
+   * @type {number}
+   */
+  index: number;
+};
+
+/**
+ * Inner content to be rendered in a cell.
+ *
+ * @template {object} TItem - The type of the item in the data array.
+ */
+export type VirtualTableCellContent<TItem extends object> = FC<
+  VirtualTableColumnCellProps<TItem>
+>;`} />
+}>
+<Text weight="medium" color="primary-dark">Type definition</Text>
+</Collapsible>
+
+Each column's cell is defined through its `CellContent` property. It expects a function component that gets called with the current row's item and index.
+
+<Canvas of={VirtualTableStories.Cells} />
+
+### State management
+
+#### Loading state
+
+The `loading` property is used to show a loading state. It renders a `SmallLoader` component in the table's footer.
+
+<Canvas of={VirtualTableStories.Loading} />
+
+#### Empty state
+
+An empty state may be configured using the `EmptyState` property.
+
+It accepts either a function component with no properties, or an object containing `EmptyStateCardProps`.
+
+> Empty states will be only be rendered if the `loading` property is falsy and no items are present in the `data` array.
+
+<Canvas of={VirtualTableStories.Empty} />
+
+### Styling
+
+#### Padded/Unpadded cells
+
+The `paddedCells` property is used to control whether cells have padding or not
+
+> To enable or disabled padding per column, set the `paddedCell` property on the column's definition.
+
+<Canvas of={VirtualTableStories.PaddedCells} />
+
+#### Column width and span
+
+Column widths and spans are not set by default. This can result in unwanted behavior when rendering cells with different content widths, as items get rendered in and out of the DOM.
+
+To alleviate this, the `fixedWidth` property can be set to and valid CSS length. If provided, the column's cells and their content container will be hard-set to the provided width.
+
+> The `colSpan` property can be used to achieve a similar effect, by spanning a column's cells across multiple columns.
+
+#### List Styles
+
+The `listStyle` property is used to control the list's style. It accepts either `list` or `form`,
+and affects to visuals of the table's body and rows.
+
+<Canvas of={VirtualTableStories.Styles} />
+
+### Performance
+
+#### Fixed & default item height
+
+VirtualTable supports dynamic rows heights out of the box.
+This works by using the first rendered item's height as a reference (default value) when calculating the height of each item.
+If the first item's height is an outlier, a default height can be set using the `defaultItemHeight` property.
+
+<Callout color="pending" icon={null}>
+Setting a default item height will still enable support for dynamic item heights.
+</Callout>
+
+If all items should have the same height, the `fixedItemHeight` property can be set to a fixed CSS length,
+eliminating the need to computed each item's height and therefore improving performance.
+
+<Callout color="warning" icon={null}>
+Setting a fixed item height will **force** all items to have the same height.
+</Callout>
+
+#### Overscan
+
+The `overscan` property is used to expand the bounding box / viewport in which items are rendered.
+Items outside of this range will only be rendered when the user scrolls to them, which can result in FOUC (Flash of Unstyled Content).
+
+It accepts a fixed CSS length, or an object with separate top and bottom lengths.
+
+<Callout color="pending" icon={null}>
+Setting overscan to a value greater than `0` will result in more items being rendered, which can slightly decrease performance.
+</Callout>
+
+<Canvas of={VirtualTableStories.Overscan} />
+
+### Callbacks
+
+#### `onItemClick(item, index): void`
+
+If items need to be clickable, the `onItemClick` callback may be provided, and will be called when an item is clicked.
+
+It receives the clicked item and its index in the `data` array as arguments.
+
+#### `onEndReached(lastIndex): void`
+
+The `onEndReached` callback is called when the user scrolls to the end of the table.
+
+It receives the index of the last item in the table as an argument.
+
+#### `onStartReached(firstIndex): void`
+
+The `onStartReached` callback is called when the user scrolls to the start of the table.
+
+It receives the index of the first item in the table as an argument.
+
+
+### Scroll behavior
+
+#### Limiting the height
+
+If a VirtualTable is to rendered in a limited height container, its `heigth` property can be set to match.
+It accepts any valid css length (px, rem, %, fr, ...etc).
+
+<Callout color="warning" icon={null}>
+CSS `calc()` values are not supported. Use `height: "100%"` and wrap the table in a container instead.
+</Callout>
+
+#### Using a custom scroller element
+
+By default, VirtualTable uses its own root scroller element, and tracks its scroll position to render items accordingly.
+
+This behavior can be overridden by providing a reference to any parent HTML element through the `scrollerElement` property.
+
+> Ensure the custom scroller element is scrollable (overflow-y: "auto" or "scroll").
+
+#### Tracking the window's scroll position
+
+Setting the `useWindowScroll` property to `true` will make the table track the window's scroll position.
+Its height will then be exclusively self-managed, and grow as the window is scrolled.
+
+> The browser's native scrollbar may be used to scroll the table.
+
+<Canvas of={VirtualTableStories.UseWindowScroll} />
+
+</Content>

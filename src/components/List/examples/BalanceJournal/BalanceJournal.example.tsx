@@ -9,7 +9,7 @@ import { BalanceJournalRenderer } from "./BalanceJournal.renderer";
 import { List } from "../../List.component";
 
 import { Button, Heading, Input, Text } from "@/components";
-import { FlexColumnLayout, FlexRowLayout } from "@layouts";
+import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
 
 const Card = styled(FlexColumnLayout)`
   padding: var(--s-8);

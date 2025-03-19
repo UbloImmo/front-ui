@@ -24,7 +24,7 @@ import {
   FlexRowLayout,
   type FlexAlignment,
   type FlexDirection,
-} from "@layouts";
+} from "@/layouts/Flex";
 import {
   useTestId,
   useMergedProps,

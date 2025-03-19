@@ -6,7 +6,7 @@ import { Badge } from "../Badge";
 import { StaticIcon, StaticIconProps } from "../StaticIcon";
 import { Text } from "../Text";
 
-import { FlexLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
 import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
 
 import type {

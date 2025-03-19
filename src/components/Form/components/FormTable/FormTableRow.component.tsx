@@ -20,8 +20,8 @@ import {
 } from "./FormTableCell/FormTableCellControls.component";
 import { FormTableCustomFieldCell } from "./FormTableCell/FormTableCustomFieldCell.component";
 
+import { TableRow } from "@/layouts/Table";
 import { BEZIER } from "@/themes";
-import { TableRow } from "@layouts";
 import { useStyleProps, useUikitTranslation, useStatic } from "@utils";
 
 import type {

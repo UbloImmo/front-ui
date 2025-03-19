@@ -1,6 +1,6 @@
 import type { FilterData, FilterSignature } from "@/components/List/modules";
 import type { TooltipProps } from "@/components/Tooltip";
-import type { TableCellProps } from "@layouts";
+import type { TableCellProps } from "@/layouts/Table";
 import type { StyleProps } from "@types";
 import type { Nullable, RequireAtLeastOne } from "@ubloimmo/front-util";
 
