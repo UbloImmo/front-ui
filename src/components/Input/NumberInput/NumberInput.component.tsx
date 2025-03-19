@@ -47,7 +47,7 @@ const defaultNumberInputProps: DefaultNumberInputProps = {
 /**
  * Renders a number input component.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
@@ -103,8 +103,14 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
       const parsed = transformNumber(nativeValue);
       if (!isNumber(parsed)) return null;
       const clamped = clamp(parsed, mergedProps.min, mergedProps.max);
-      if (clamped !== parsed && inputRef.current) {
-        inputRef.current.value = String(clamped);
+      const clampedStr = String(clamped);
+      const sourceStr = isString(nativeValue) ? nativeValue : String(parsed);
+      if (
+        clamped !== parsed &&
+        inputRef.current &&
+        sourceStr.length >= clampedStr.length
+      ) {
+        inputRef.current.value = clampedStr;
       }
       return scaleNumber(clamped, safeScale, mergedProps.precision);
     },
