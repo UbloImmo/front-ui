@@ -4,7 +4,7 @@ import {
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
 import { type FC, type ReactNode } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { Badge } from "../Badge";
 import { Text } from "../Text";
@@ -276,7 +276,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   currency: formatCurrencyInt,
   password: displayPasswordValue,
   phone: String,
-  textarea: (value) => (
+  textarea: (value) => () => (
     <FormFieldDisplayValue value={String(value)} isTextarea={true} />
   ),
   select: (fieldValue, props) => () => (
@@ -361,17 +361,27 @@ const FieldDisplayValueContainer = styled(FlexLayout)<{
   height: var(--container-height);
   min-height: var(--container-height);
 
-  ${(props) =>
-    props.$isTextarea &&
-    `
-  height: auto;
-  max-height: var(--s-32);
-  overflow-y: auto;
-`}
+  ${({ $isTextarea }) =>
+    $isTextarea &&
+    css`
+      display: block;
+      height: auto;
+      max-height: var(--s-20);
+      overflow-y: auto;
+    `}
 
   @media screen and (max-width: ${breakpointsPx.XS}) {
     max-height: var(--container-height-mobile);
     height: var(--container-height-mobile);
     min-height: var(--container-height-mobile);
+
+    ${({ $isTextarea }) =>
+      $isTextarea &&
+      css`
+        display: block;
+        height: auto;
+        max-height: var(--s-20);
+        overflow-y: auto;
+      `}
   }
 `;
