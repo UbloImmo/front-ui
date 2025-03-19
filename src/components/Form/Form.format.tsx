@@ -346,6 +346,16 @@ export const FormFieldDisplayValue = ({
   );
 };
 
+const textAreaStyles = ({ $isTextarea }: { $isTextarea?: boolean }) =>
+  $isTextarea
+    ? css`
+        display: block;
+        height: auto;
+        max-height: 8rem;
+        overflow-y: auto;
+      `
+    : css``;
+
 const FieldDisplayValueContainer = styled(FlexLayout)<{
   $isTextarea?: boolean;
 }>`
@@ -361,27 +371,13 @@ const FieldDisplayValueContainer = styled(FlexLayout)<{
   height: var(--container-height);
   min-height: var(--container-height);
 
-  ${({ $isTextarea }) =>
-    $isTextarea &&
-    css`
-      display: block;
-      height: auto;
-      max-height: var(--s-20);
-      overflow-y: auto;
-    `}
+  ${textAreaStyles}
 
   @media screen and (max-width: ${breakpointsPx.XS}) {
     max-height: var(--container-height-mobile);
     height: var(--container-height-mobile);
     min-height: var(--container-height-mobile);
 
-    ${({ $isTextarea }) =>
-      $isTextarea &&
-      css`
-        display: block;
-        height: auto;
-        max-height: var(--s-20);
-        overflow-y: auto;
-      `}
+    ${textAreaStyles}
   }
 `;
