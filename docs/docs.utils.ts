@@ -331,6 +331,8 @@ const FN_ARROW_BLOCK_BODY_REGEX = /=>\s*{/;
 const FN_BLOCK_BODY_REGEX =
   /(?:=>|function\s*(?:\w+)?\s*\([^)]*\))\s*{([\s\S]*?)}(?:[^}]*?)?$/;
 const FN_EXPRESSION_BODY_REGEX = /=>\s*([\s\S]*?)$/;
+const FN_JSX_DEV_BODY_REGEX =
+  /(?<=\/\*@__PURE__\*\/jsxDEV\()(?:("?\w+"?),({.*))(?=,void0,(?:true|false),{.*},this\))/;
 
 const extractFnArgs = (fnStr: string) => {
   const match = fnStr.match(FN_ARG_REGEX);
@@ -376,6 +378,17 @@ const parseFn = (fn: VoidFn) => {
   return { args, body, fnStr };
 };
 
+const stringifyFnBody = (bodyStr: string) => {
+  FN_JSX_DEV_BODY_REGEX.lastIndex = 0;
+  const matches = bodyStr.match(FN_JSX_DEV_BODY_REGEX);
+  if (!matches) return bodyStr;
+  const name = matches[1];
+  // const props = matches[2];
+  if (!name) return bodyStr;
+  // TOOD: stringify props
+  return tagFactory(name)();
+};
+
 const stringifyValue = (value: unknown): string => {
   if (isBoolean(value)) {
     return String(value);
@@ -389,12 +402,12 @@ const stringifyValue = (value: unknown): string => {
   if (isUndefined(value)) return "undefined";
   if (isNumber(value)) return String(value);
   if (isFunction(value)) {
-    const { args, body, fnStr } = parseFn(value);
-    console.log(fnStr);
-    console.log(args);
-    console.log(body);
+    const { args, body } = parseFn(value);
+    const bodyStr = stringifyFnBody(body ?? "");
+    return `(${args}) => ${bodyStr}`;
   }
   if (isArray(value)) {
+    if (!value.length) return "[]";
     const diff = value.length - MAX_ARRAY_LENGTH;
     const overflows = diff > 0;
     const subset = value.slice(0, MAX_ARRAY_LENGTH);
@@ -405,7 +418,6 @@ const stringifyValue = (value: unknown): string => {
         .map((line) => `  ${line}`)
         .join("\n");
     });
-    console.log(subsetStrings);
     if (overflows) {
       subsetStrings.push(`  // ... ${diff} more`);
     }
@@ -453,12 +465,9 @@ const tagProperties = (properties?: Record<string, unknown>): string[] => {
         return output(`{${JSON.stringify(value)}}`);
       }
       if (isObject(value)) {
-        const stringified = JSON.stringify(value, undefined, 2);
-        const stringObj = stringified.replaceAll(/"(\S+)":\s/gi, "$1: ");
         const recursiveStrObject = stringifyValue(value);
-        console.log(recursiveStrObject);
 
-        const lines = stringObj.split("\n");
+        const lines = recursiveStrObject.split("\n");
         const propObj = lines
           .map((line, index) =>
             index === 0 || index - 1 === lines.length ? line : `  ${line}`
