@@ -2,9 +2,9 @@ import { TableVirtuoso } from "react-virtuoso";
 
 import { defaultVirtualTableProps } from "./VirtualTable.defaults";
 import {
-  useVirtualTableItemHeight,
   useVirtualTableContent,
   useVirtualTableContext,
+  useVirtualTableItemHeight,
   useVirtualTableOverrides,
   useVirtualTableOverscan,
   useVirtualTableScrollSetup,
