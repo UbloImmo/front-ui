@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `v0.0.1` EnergyScoreInput component
-  - A specialized input component that combines a NumberInput with an EnergyLabel
-  - Supports both energy consumption (kWh/m²/year) and climate impact (kgCO₂/m²/year) scores
-  - Automatically calculates and displays energy performance grade (A-G) based on input value
+  - New component that combines a numeric input with an automatic energy label
+  - Supports both DPE (energy consumption) and GES (climate emissions) score types
+  - Automatically calculates and displays A-G energy labels based on input values
+  - Includes min/max value validation and label change callbacks
+  - Configurable unit display for energy values
 
 ## 1.7.10 - 2025-03-19
 
