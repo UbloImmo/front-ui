@@ -71,8 +71,8 @@ const VirtualTable = <TItem extends object>({
   const scrollSetupProps = useVirtualTableScrollSetup(mergedProps);
   const overscan = useVirtualTableOverscan(mergedProps);
 
-  const endReached = useHtmlAttribute(mergedProps.endReached);
-  const startReached = useHtmlAttribute(mergedProps.startReached);
+  const endReached = useHtmlAttribute(mergedProps.onEndReached);
+  const startReached = useHtmlAttribute(mergedProps.onStartReached);
 
   if (!context.columnsCount) {
     warn("No columns provided to VirtualTable");

@@ -406,7 +406,7 @@ export type VirtualTableProps<TItem extends object> = {
    * @type {Nullable<VoidFn<[lastIndex: number]>>}
    * @default null
    */
-  endReached?: Nullable<VoidFn<[lastIndex: number]>>;
+  onEndReached?: Nullable<VoidFn<[lastIndex: number]>>;
   /**
    * A callback that gets called when the user scrolls to the start of the list.
    * Receives the first item index as an argument.
@@ -417,7 +417,7 @@ export type VirtualTableProps<TItem extends object> = {
    * @type {Nullable<VoidFn<[firstIndex: number]>>}
    * @default null
    */
-  startReached?: Nullable<VoidFn<[firstIndex: number]>>;
+  onStartReached?: Nullable<VoidFn<[firstIndex: number]>>;
   /**
    * Defines what gets displayed when the list is empty.
    * Either a custom component or a props object for the `EmptyStateCard` component.
