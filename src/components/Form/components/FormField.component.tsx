@@ -43,6 +43,7 @@ export const FormField = ({
 
   return (
     <FormFieldGridItem
+      $fixedWidth={layout.fixedWidth}
       columnEnd={layout.columnEnd}
       align="start"
       testId="form-field-container"
