@@ -33,6 +33,14 @@ export type CssFr = `${number}fr`;
  */
 export type CssPercent = `${number}%`;
 
+/**
+ * A CSS `ch` length
+ *
+ * @example
+ * const ch: CssCh = "100ch";
+ */
+export type CssCh = `${number}ch`;
+
 export type CssLengthKeyword =
   | "auto"
   | "min-content"
@@ -49,6 +57,7 @@ export type CssLengthKeyword =
  * - {@link CssPercent}: `50%`, `100%`, `200%`, etc...
  * - {@link SpacingLabel}: `s05`, `s1`, `s2`, `s3`, etc...
  * - {@link CssLengthKeyword}: `auto`, `min-content`, `max-content`, `fit-content`
+ * - {@link CssCh}: `100ch`, `200ch`, `300ch`, etc...
  * - {@link number}: `100`, `200`, `300`, etc...
  */
 export type CssLength =
@@ -58,6 +67,7 @@ export type CssLength =
   | CssFr
   | CssPercent
   | CssLengthKeyword
+  | CssCh
   | number;
 
 /**
@@ -74,11 +84,13 @@ export type FixedCssLength = SpacingLabel | CssRem | CssPx | number;
  * - {@link CssFr}: `1fr`, `2fr`, `3fr`, etc...
  * - {@link CssPercent}: `50%`, `100%`, `200%`, etc...
  * - {@link CssVarUsage}: `var(--s05)`, `var(--s1)`, `var(--s2)`, `var(--s3)`, etc...
+ * - {@link CssCh}: `100ch`, `200ch`, `300ch`, etc...
  * - {@link CssLengthKeyword}: `auto`, `min-content`, `max-content`, `fit-content`
  */
 export type CssLengthUsage =
   | CssPx
   | CssRem
+  | CssCh
   | CssVarUsage
   | CssFr
   | CssPercent
