@@ -83,7 +83,11 @@ const EnergyScoreInput = (
   const clampToMinMax = useCallback(
     (sourceValue: Nullable<number>) => {
       if (!isNumber(sourceValue)) return null;
-      return clamp(sourceValue, mergedProps.min, mergedProps.max);
+      const clamped = clamp(sourceValue, mergedProps.min, mergedProps.max);
+      const clampedStr = String(clamped);
+      const sourceStr = String(sourceValue);
+      if (sourceStr.length < clampedStr.length) return sourceValue;
+      return clamped;
     },
     [mergedProps.min, mergedProps.max]
   );
