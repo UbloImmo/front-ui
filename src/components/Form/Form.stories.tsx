@@ -1085,7 +1085,7 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       source: "energyScore",
       type: "energy-score",
       scoreType: "GES",
-      // unit: "kgCO2eq/m²/an",
+      unit: "kgCO₂/m²/an",
     },
   ],
   onSubmit: (...args) => {
