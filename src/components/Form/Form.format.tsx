@@ -7,6 +7,8 @@ import { type FC, type ReactNode } from "react";
 import styled, { css } from "styled-components";
 
 import { Badge } from "../Badge";
+import { EnergyLabel } from "../EnergyLabel";
+import { calculateEnergyScore } from "../Input/EnergyScoreInput/EnergyScoreInput.utils";
 import { Text } from "../Text";
 import { FieldSkeleton } from "./components/FieldSkeleton.component";
 import { scaleNumber } from "../Input/NumberInput/NumberInput.utils";
@@ -18,7 +20,7 @@ import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
 import { useSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
 import { breakpointsPx } from "@/sizes";
 import { FlexLayout, FlexRowLayout } from "@layouts";
-import { arrayOf, isEmptyString } from "@utils";
+import { arrayOf, isEmptyString, isNonEmptyString } from "@utils";
 
 import type {
   FormDisplayValueFormatterFn,
@@ -269,6 +271,33 @@ const formatNumberValue = (value: number, props: NumberInputProps) => {
     .trim();
 };
 
+/**
+ * A {@link FormDisplayValueFormatterFn} that displays an `energy-score` field's value.
+ *
+ * @param {InputValue} fieldValue - The value of the field to display.
+ * @param {Object} props - The props object containing the score type and unit.
+ * @param {string} [props.scoreType="DPE"] - The type of energy score (e.g. "DPE").
+ * @param {string} [props.unit] - The unit to display after the value.
+ * @returns {ReactNode} A FormFieldDisplayValue component with the energy label and formatted value.
+ */
+const displayEnergyScoreValue: FormDisplayValueFormatterFn<
+  "energy-score",
+  ReactNode
+> = (fieldValue, { scoreType = "DPE", unit }) => {
+  const tag = calculateEnergyScore(fieldValue, scoreType);
+  const displayValue = [String(fieldValue), unit]
+    .filter(isNonEmptyString)
+    .join(" ");
+  return (
+    <FormFieldDisplayValue
+      value={displayValue}
+      beforeChildren={
+        <EnergyLabel type={scoreType} value={tag} state="active" />
+      }
+    />
+  );
+};
+
 const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   text: String,
   number: formatNumberValue,
@@ -292,6 +321,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   "multi-select": (fieldValue, props) => () => (
     <DisplayMultiSelectValue fieldValue={fieldValue} props={props} />
   ),
+  "energy-score": displayEnergyScoreValue,
 };
 
 /**
@@ -327,10 +357,14 @@ export const computeFieldDisplayContent = <TType extends InputType>(
  */
 export const FormFieldDisplayValue = ({
   value,
-  isTextarea = false,
+  isTextarea,
+  beforeChildren,
+  afterChildren,
 }: {
   value: string;
   isTextarea?: boolean;
+  beforeChildren?: ReactNode;
+  afterChildren?: ReactNode;
 }) => {
   return (
     <FieldDisplayValueContainer
@@ -338,10 +372,13 @@ export const FormFieldDisplayValue = ({
       align="center"
       wrap={isTextarea}
       $isTextarea={isTextarea}
+      gap={"s-2"}
     >
+      {beforeChildren}
       <Text color="gray-800" weight="medium" fill ellipsis={!isTextarea}>
         {value}
       </Text>
+      {afterChildren}
     </FieldDisplayValueContainer>
   );
 };

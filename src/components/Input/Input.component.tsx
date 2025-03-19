@@ -4,6 +4,7 @@ import { ComboBoxInput } from "./ComboBoxInput";
 import { CurrencyInput } from "./CurrencyInput";
 import { DateInput } from "./DateInput";
 import { EmailInput } from "./EmailInput";
+import { EnergyScoreInput } from "./EnergyScoreInput";
 import { IconPickerInput } from "./IconPickerInput";
 import { inputTypes } from "./Input.data";
 import { MultiSelectInput } from "./MultiSelectInput";
@@ -45,6 +46,7 @@ const inputComponentMap = <
   search: SearchInput<TGenericValue>,
   "search-text": SearchTextInput,
   "multi-select": MultiSelectInput<TGenericValue>,
+  "energy-score": EnergyScoreInput,
 });
 
 /**

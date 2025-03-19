@@ -158,6 +158,7 @@ export type InputTypeMap<
   textarea: string;
   date: string;
   number: number;
+  "energy-score": number;
   currency: CurrencyInt;
   email: Email;
   select: TGenericValue;

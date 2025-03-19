@@ -19,4 +19,5 @@ export const inputTypes = [
   "search",
   "search-text",
   "multi-select",
+  "energy-score",
 ] as const;

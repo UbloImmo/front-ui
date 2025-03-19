@@ -1,0 +1,70 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as EnergyScoreInputStories from "../EnergyScoreInput.stories";
+
+<Meta title="Components/Forms/Input/EnergyScoreInput/Usage" />
+
+<ComponentInfo of={EnergyScoreInputStories} figmaId="76%3A6562" />
+
+<Content>
+
+## Usage
+
+The `EnergyScoreInput` component combines a numeric input with a visual energy label that updates automatically based on the input value. It's designed for displaying energy performance diagnostics in real estate applications.
+The component supports two types of scores:
+
+- DPE (Diagnostic de Performance Énergétique) - Energy consumption (kWh/m²/year)
+- GES (Gaz à Effet de Serre) - Climate impact (kgCO₂/m²/year)
+
+> Try entering different values to see how the energy grade changes automatically!
+
+<Canvas of={EnergyScoreInputStories.Default} />
+
+## Energy vs Climate Scores
+
+The component can be configured to calculate either energy consumption or climate impact scores using the `scoreType` prop:
+
+### Energy Consumption (DPE)
+
+Used for calculating the energy performance grade based on annual energy consumption per square meter.
+
+<Canvas of={EnergyScoreInputStories.Default} />
+
+### Climate Impact (GES)
+
+Used for calculating the climate impact grade based on annual greenhouse gas emissions per square meter.
+
+<Canvas of={EnergyScoreInputStories.Climate} />
+
+## Score Ranges
+
+The component calculates the appropriate DPE or GES label (A-G) based on the input value and the scoreType.
+
+### DPE (kWh/m²/year)
+
+- A: < 70
+- B: 70-110
+- C: 110-180
+- D: 180-250
+- E: 250-330
+- F: 330-420
+- G: ≥ 420
+
+### GES (kgCO₂/m²/year)
+
+- A: < 6
+- B: 6-11
+- C: 11-30
+- D: 30-50
+- E: 50-70
+- F: 70-100
+- G: ≥ 100
+
+### Disabled State
+
+The input can be disabled when the value should not be editable. The energy label will appear in an inactive state.
+
+<Canvas of={EnergyScoreInputStories.Disabled} />
+
+</Content>

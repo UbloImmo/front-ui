@@ -6,6 +6,8 @@ import {
   EnergyLabelValue,
 } from "./EnergyLabel.types";
 
+import { breakpointsPx } from "@/sizes";
+import { cssDimensions } from "@/utils/styles.utils";
 import { HexColorOpaque, StyleProps } from "@types";
 import { cssVarUsage, fromStyleProps } from "@utils";
 
@@ -50,8 +52,7 @@ export const energyLabelStyle = (props: StyleProps<EnergyLabelProps>) => {
   const textColor = activeState ? "white" : cssVarUsage("gray-600");
 
   return css`
-    width: var(--s-6);
-    height: var(--s-8);
+    ${cssDimensions("s-6", "s-8", true)}
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,5 +66,9 @@ export const energyLabelStyle = (props: StyleProps<EnergyLabelProps>) => {
     css`
       border: 1px solid var(--gray-300);
     `}
+
+    @media only screen and (max-width: ${breakpointsPx.XS}) {
+      ${cssDimensions("s-8", "s-10", true)}
+    }
   `;
 };

@@ -18,3 +18,4 @@ export * from "./IconPickerInput";
 export * from "./SearchInput";
 export * from "./SearchTextInput";
 export * from "./MultiSelectInput";
+export * from "./EnergyScoreInput";
