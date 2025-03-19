@@ -1,4 +1,9 @@
-import { isNull, isNumber, isString, type Nullable } from "@ubloimmo/front-util";
+import {
+  isNull,
+  isNumber,
+  isString,
+  type Nullable,
+} from "@ubloimmo/front-util";
 import { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 
