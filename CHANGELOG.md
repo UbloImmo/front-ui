@@ -16,8 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Includes min/max value validation and label change callbacks
   - Configurable unit display for energy values
 
+- New dependencies
+  - `react-virtoso: "^4.12.5"` dependency
+  - `@faker-js/faker: "^9.6.0"` dev dependency
+
 - `v0.0.1` VirtualTable layout
-  - Renders a virtualized html table using react-virtuoso
+  - Renders a virtualized html table using `react-virtuoso`
   - Basic tests
   - Docs & stories
 
