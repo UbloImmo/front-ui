@@ -1,7 +1,7 @@
 import { isFunction } from "@ubloimmo/front-util";
 import { FC } from "react";
 
-import { EmptyStateCard } from "@components";
+import { EmptyStateCard } from "@/components/EmptyStateCard";
 
 import type { VirtualTableSharedContext } from "../VirtualTable.types";
 import type { ContextProp, TableComponents } from "react-virtuoso";

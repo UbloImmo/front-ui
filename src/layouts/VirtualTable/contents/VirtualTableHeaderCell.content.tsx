@@ -1,10 +1,10 @@
 import { isFunction, isObject, isString } from "@ubloimmo/front-util";
 
+import { Text } from "@/components/Text";
+import { Tooltip } from "@/components/Tooltip";
 import { FlexLayout } from "@/layouts/Flex";
 import { TableHeaderCell, type TableCellProps } from "@/layouts/Table";
 import { useLogger } from "@utils";
-
-import { Text, Tooltip } from "@components";
 
 import type { VirtualTableHeaderCellContentProps } from "../VirtualTable.types";
 import type { FC, ReactNode } from "react";

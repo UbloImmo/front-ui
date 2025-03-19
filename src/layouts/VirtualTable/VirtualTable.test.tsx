@@ -2,9 +2,8 @@ import { expect } from "bun:test";
 
 import { VirtualTable } from "./VirtualTable.layout";
 
+import { Text } from "@/components/Text";
 import { testComponentFactory } from "@/tests";
-
-import { Text } from "@components";
 
 import type { VirtualTableProps } from "./VirtualTable.types";
 

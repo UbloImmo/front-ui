@@ -1,6 +1,5 @@
+import { SmallLoader } from "@/components/SmallLoader";
 import { TableCell } from "@/layouts/Table";
-
-import { SmallLoader } from "@components";
 
 import type { CSSProperties } from "react";
 import type { FixedFooterContent } from "react-virtuoso";

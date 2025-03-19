@@ -1,6 +1,6 @@
 import type { TableCellProps, TableLayout, TableStyle } from "../Table";
-import type { EmptyStateCardProps } from "@/components/EmptyStateCard";
-import type { TooltipProps } from "@/components/Tooltip";
+import type { EmptyStateCardProps } from "@/components/EmptyStateCard/EmptyStateCard.types";
+import type { TooltipProps } from "@/components/Tooltip/Tooltip.types";
 import type {
   CssLength,
   CssLengthUsage,
