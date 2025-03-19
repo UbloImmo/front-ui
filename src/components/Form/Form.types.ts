@@ -25,6 +25,8 @@ import type { ModalProps, ModalSize } from "@/components/Modal";
 import type { GridEndPosition, TableLayout } from "@layouts";
 import type {
   ColorKey,
+  CssLength,
+  CssLengthUsage,
   StyleOverrideProps,
   StyleProps,
   TestIdProps,
@@ -129,6 +131,18 @@ export type FormFieldLayout = {
    * @default false
    */
   hidden?: boolean | FormFieldLayoutHiddenFn;
+  /**
+   * The fixed width of the field, or the table cell that contains it
+   *
+   * @remarks
+   * When a table cell field,
+   * this width applies to all the cell but is still bound by the column's header width.
+   * -> The min width is the column's header width if smaller than the provided fixed width.
+   *
+   * @type {Nullable<CssLength>}
+   * @default null
+   */
+  fixedWidth?: Nullable<CssLength>;
 };
 
 /**
@@ -136,20 +150,49 @@ export type FormFieldLayout = {
  */
 export type FormFieldLayoutProps = {
   /**
-   * Layout of the field
+   * Optional layout of the field
+   *
+   * @type {FormFieldLayout}
    */
   layout?: FormFieldLayout;
 };
 
+/**
+ * A built form field layout with all properties required and the hidden property
+ * converted from a boolean | function to just a boolean
+ *
+ * @see {@link FormFieldLayout}
+ */
 export type BuiltFormFieldLayout = Required<
-  Replace<FormFieldLayout, "hidden", { hidden: boolean }>
+  Omit<FormFieldLayout, "hidden" | "fixedWidth">
 > & {
+  hidden: boolean;
+  fixedWidth: Nullable<CssLengthUsage>;
   columnEnd: GridEndPosition;
 };
 
+/**
+ * Props for components that use a built form field layout
+ *
+ * @see {@link BuiltFormFieldLayout}
+ */
 export type BuiltFormFieldLayoutProps = {
+  /**
+   * The built layout object containing all required layout properties
+   *
+   * @type {BuiltFormFieldLayout}
+   */
   layout: BuiltFormFieldLayout;
 };
+
+/**
+ * Props for components that use the form field's fixed width layout property
+ *
+ * @type {StyleProps<Pick<BuiltFormFieldLayout, "fixedWidth">>}
+ */
+export type BuiltFormFieldLayoutFixedWidthProp = StyleProps<
+  Pick<BuiltFormFieldLayout, "fixedWidth">
+>;
 
 /**
  * Determines a field's value type according to its `source`'s type

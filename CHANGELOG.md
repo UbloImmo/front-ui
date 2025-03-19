@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Basic tests
   - Docs & stories
 
+- `v0.0.25` Form component
+  - `layout.fixedWidth` property in content & table fields
+
 ### Changed
 
 - **DOCS**

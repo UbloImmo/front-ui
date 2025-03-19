@@ -586,7 +586,11 @@ const formTableProps: FormTableProps<IdentityTable> = {
       source: "lastName",
       label: "Last name",
       errorText: "Ceci est une erreur",
+      layout: {
+        fixedWidth: "140px",
+      },
     },
+
     {
       type: "select",
       source: "professionalInfo.role",

@@ -47,6 +47,7 @@ import {
 import { useDialogManager } from "../Dialog";
 
 import {
+  cssLengthUsage,
   isEmptyString,
   useLogger,
   useMergedProps,
@@ -379,11 +380,15 @@ const useFormLayout = (
           : false;
 
       const size = fieldLayout?.size ?? defaultSize;
+      const fixedWidth = fieldLayout?.fixedWidth
+        ? cssLengthUsage(fieldLayout.fixedWidth)
+        : null;
 
       const columnEnd: GridEndPosition = `span ${size}`;
 
       return {
         ...fieldLayout,
+        fixedWidth,
         hidden,
         size,
         columnEnd,
@@ -1213,6 +1218,7 @@ const defaultFormContext: FormContext<object> = {
     hidden: false,
     size: 1,
     columnEnd: "span 1",
+    fixedWidth: null,
   }),
   asModal: null,
 };
