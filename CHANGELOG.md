@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Includes min/max value validation and label change callbacks
   - Configurable unit display for energy values
 
+### Fixed
+
+- `v0.0.9` NumberInput component
+  - Improved clamping logic to better handle input validation when min/max limits are applied
+
 ## 1.7.10 - 2025-03-19
 
 ### Changed
