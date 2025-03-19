@@ -372,6 +372,7 @@ export const FormFieldDisplayValue = ({
       align="center"
       wrap={isTextarea}
       $isTextarea={isTextarea}
+      gap={"s-2"}
     >
       {beforeChildren}
       <Text color="gray-800" weight="medium" fill ellipsis={!isTextarea}>
