@@ -28,6 +28,7 @@ export type FieldAssistiveTextProps = Replace<
   }
 >;
 
+// TODO: add suffix prop
 export type FieldProps<
   TType extends InputType,
   TGenericValue extends NullishPrimitives = NullishPrimitives,

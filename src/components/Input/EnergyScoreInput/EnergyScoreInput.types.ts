@@ -37,6 +37,7 @@ export type EnergyScoreInputProps = InputProps<"energy-score"> & {
    * @default 999
    */
   max?: InputValue<"energy-score">;
+  // TODO: remove in favor of field.suffix when implemented
   /**
    * The unit of the energy score.
    *
