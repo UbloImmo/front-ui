@@ -39,7 +39,6 @@ export const Climate: Story = {
 
 export const Disabled: Story = {
   args: {
-    scoreType: "DPE",
     placeholder: "Number input",
     disabled: true,
     value: 100,
