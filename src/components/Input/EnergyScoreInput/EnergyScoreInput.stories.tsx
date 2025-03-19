@@ -42,5 +42,6 @@ export const Disabled: Story = {
     scoreType: "DPE",
     placeholder: "Number input",
     disabled: true,
+    value: 100,
   },
 };
