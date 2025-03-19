@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.9` NumberInput component
   - Improved clamping logic to better handle input validation when min/max limits are applied
 
+- `v0.0.5` TableRow layout
+  - Properly handle test id override
 
 ## 1.7.10 - 2025-03-19
 
