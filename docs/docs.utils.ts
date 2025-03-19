@@ -17,6 +17,7 @@ import {
   type Primitives,
   type VoidFn,
 } from "@ubloimmo/front-util";
+import { isSymbol } from "lodash";
 import { isValidElement } from "react";
 
 import { SPACING_PREFIX } from "@types";
@@ -427,7 +428,12 @@ const resetRegexes = () => {
  */
 const parseFn = (fn: VoidFn) => {
   // stringify and sanitize fn
-  const fnStr = String(fn).replaceAll("\n", "").replaceAll(" ", "");
+  let fnStr = "()=>{}";
+  try {
+    fnStr = String(fn).replaceAll("\n", "").replaceAll(" ", "");
+  } catch (_error) {
+    // fail silently
+  }
   // reset all regexes before using
   resetRegexes();
   const args = extractFnArgs(fnStr);
@@ -534,6 +540,16 @@ const stringifyValue = (value: unknown): string => {
       return `  ${key}: ${formattedLines},`;
     });
     return `{\n${formattedEntries.join("\n")}\n}`;
+  }
+  if (isSymbol(value)) {
+    switch (value.description) {
+      case "react.element":
+        return tagFactory("React.Element")();
+      case "react-fragment":
+        return tagFactory("React.Fragment")();
+      default:
+        return "Symbol";
+    }
   }
   console.warn("unhandled value", value, typeof value);
   return `${value}`;
