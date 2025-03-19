@@ -177,12 +177,12 @@ export const useVirtualTableOverscan = ({
 };
 
 /**
- * Hook that processes a variable item height value.
+ * Hook that processes a virtual table's item height value.
  *
  * @param {Nullable<FixedCssLength>} height - The height value to process, can be a fixed CSS length or null
  * @returns {Optional<number>} The processed height value in pixels, or undefined if no height provided
  */
-export const useVariableItemHeight = (
+export const useVirtualTableItemHeight = (
   height: Nullable<FixedCssLength>
 ): Optional<number> => {
   return useMemo<Optional<number>>(() => {

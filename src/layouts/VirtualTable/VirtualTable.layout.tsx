@@ -2,7 +2,7 @@ import { TableVirtuoso } from "react-virtuoso";
 
 import { defaultVirtualTableProps } from "./VirtualTable.defaults";
 import {
-  useVariableItemHeight,
+  useVirtualTableItemHeight,
   useVirtualTableContent,
   useVirtualTableContext,
   useVirtualTableOverrides,
@@ -61,10 +61,12 @@ const VirtualTable = <TItem extends object>({
   const context = useVirtualTableContext(mergedProps);
   const componentOverrides = useVirtualTableOverrides<TItem>();
 
-  const defaultItemHeight = useVariableItemHeight(
+  const defaultItemHeight = useVirtualTableItemHeight(
     mergedProps.defaultItemHeight
   );
-  const fixedItemHeight = useVariableItemHeight(mergedProps.fixedItemHeight);
+  const fixedItemHeight = useVirtualTableItemHeight(
+    mergedProps.fixedItemHeight
+  );
   const contentProps = useVirtualTableContent(mergedProps, context);
   const scrollSetupProps = useVirtualTableScrollSetup(mergedProps);
   const overscan = useVirtualTableOverscan(mergedProps);
