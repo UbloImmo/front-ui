@@ -190,8 +190,8 @@ export type BuiltFormFieldLayoutProps = {
  *
  * @type {StyleProps<Pick<BuiltFormFieldLayout, "fixedWidth">>}
  */
-export type BuiltFormFieldLayoutFixedWidthProp = StyleProps<
-  Pick<BuiltFormFieldLayout, "fixedWidth">
+export type BuiltFormFieldLayoutFixedWidthProp = Partial<
+  StyleProps<Pick<BuiltFormFieldLayout, "fixedWidth">>
 >;
 
 /**
