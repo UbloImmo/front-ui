@@ -4,7 +4,7 @@ import {
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
 import { type FC, type ReactNode } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { Badge } from "../Badge";
 import { Text } from "../Text";
@@ -276,7 +276,9 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   currency: formatCurrencyInt,
   password: displayPasswordValue,
   phone: String,
-  textarea: String,
+  textarea: (value) => () => (
+    <FormFieldDisplayValue value={String(value)} isTextarea={true} />
+  ),
   select: (fieldValue, props) => () => (
     <DisplaySelectValue fieldValue={fieldValue} props={props} />
   ),
@@ -323,19 +325,44 @@ export const computeFieldDisplayContent = <TType extends InputType>(
  * @param {{ value: string }} props - The props of the component.
  * @returns {JSX.Element} The rendered component.
  */
-export const FormFieldDisplayValue = ({ value }: { value: string }) => {
+export const FormFieldDisplayValue = ({
+  value,
+  isTextarea = false,
+}: {
+  value: string;
+  isTextarea?: boolean;
+}) => {
   return (
-    <FieldDisplayValueContainer justify="start" align="center">
-      <Text color="gray-800" weight="medium" fill ellipsis>
+    <FieldDisplayValueContainer
+      justify="start"
+      align="center"
+      wrap={isTextarea}
+      $isTextarea={isTextarea}
+    >
+      <Text color="gray-800" weight="medium" fill ellipsis={!isTextarea}>
         {value}
       </Text>
     </FieldDisplayValueContainer>
   );
 };
 
-const FieldDisplayValueContainer = styled(FlexLayout)`
+const textAreaStyles = ({ $isTextarea }: { $isTextarea?: boolean }) =>
+  $isTextarea
+    ? css`
+        display: block;
+        height: auto;
+        max-height: 8rem;
+        overflow-y: auto;
+      `
+    : css``;
+
+const FieldDisplayValueContainer = styled(FlexLayout)<{
+  $isTextarea?: boolean;
+}>`
   --container-height: var(--s-8);
   --container-height-mobile: calc(var(--container-height) + var(--s-2));
+
+  align-self: start;
 
   td:has(&) & {
     --container-height: var(--s-6);
@@ -344,9 +371,13 @@ const FieldDisplayValueContainer = styled(FlexLayout)`
   height: var(--container-height);
   min-height: var(--container-height);
 
+  ${textAreaStyles}
+
   @media screen and (max-width: ${breakpointsPx.XS}) {
     max-height: var(--container-height-mobile);
     height: var(--container-height-mobile);
     min-height: var(--container-height-mobile);
+
+    ${textAreaStyles}
   }
 `;
