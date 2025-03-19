@@ -271,6 +271,33 @@ const formatNumberValue = (value: number, props: NumberInputProps) => {
     .trim();
 };
 
+/**
+ * A {@link FormDisplayValueFormatterFn} that displays an `energy-score` field's value.
+ *
+ * @param {InputValue} fieldValue - The value of the field to display.
+ * @param {Object} props - The props object containing the score type and unit.
+ * @param {string} [props.scoreType="DPE"] - The type of energy score (e.g. "DPE").
+ * @param {string} [props.unit] - The unit to display after the value.
+ * @returns {ReactNode} A FormFieldDisplayValue component with the energy label and formatted value.
+ */
+const displayEnergyScoreValue: FormDisplayValueFormatterFn<
+  "energy-score",
+  ReactNode
+> = (fieldValue, { scoreType = "DPE", unit }) => {
+  const tag = calculateEnergyScore(fieldValue, scoreType);
+  const displayValue = [String(fieldValue), unit]
+    .filter(isNonEmptyString)
+    .join(" ");
+  return (
+    <FormFieldDisplayValue
+      value={displayValue}
+      beforeChildren={
+        <EnergyLabel type={scoreType} value={tag} state="active" />
+      }
+    />
+  );
+};
+
 const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   text: String,
   number: formatNumberValue,
@@ -294,22 +321,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   "multi-select": (fieldValue, props) => () => (
     <DisplayMultiSelectValue fieldValue={fieldValue} props={props} />
   ),
-  "energy-score":
-    (fieldValue, { scoreType = "DPE", unit }) =>
-    () => {
-      const tag = calculateEnergyScore(fieldValue, scoreType);
-      const displayValue = [String(fieldValue), unit]
-        .filter(isNonEmptyString)
-        .join(" ");
-      return (
-        <FormFieldDisplayValue
-          value={displayValue}
-          beforeChildren={
-            <EnergyLabel type={scoreType} value={tag} state="active" />
-          }
-        />
-      );
-    },
+  "energy-score": displayEnergyScoreValue,
 };
 
 /**
