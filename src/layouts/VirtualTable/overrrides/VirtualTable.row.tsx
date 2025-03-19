@@ -50,6 +50,7 @@ export const VirtualTableRow: VirtualTableComponentOverrides<object>["TableRow"]
           styleOverride={style}
           $clickable={clickable}
           $fixedItemHeight={context.fixedItemHeight}
+          $style={context.style}
           {...props}
         >
           {children}

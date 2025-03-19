@@ -52,26 +52,6 @@ export type VirtualTableColumnStyleProps = {
 };
 
 /**
- * Props passed to a virtual table cell component.
- *
- * @template TItem - The type of items in the data array. Must be an object.
- */
-export type VirtualTableColumnCellProps<TItem extends object> = {
-  /**
-   * The item to be displayed in the cell.
-   *
-   * @type {TItem}
-   */
-  item: TItem;
-  /**
-   * The index of the item in the data array.
-   *
-   * @type {number}
-   */
-  index: number;
-};
-
-/**
  * Inner content to be rendered in a header.
  *
  * @remarks
@@ -135,6 +115,26 @@ export type VirtualTableColumnHeaderContent =
        */
       ReplacementCell: FC<TableCellProps>;
     };
+
+/**
+ * Props passed to a virtual table cell component.
+ *
+ * @template TItem - The type of items in the data array. Must be an object.
+ */
+export type VirtualTableColumnCellProps<TItem extends object> = {
+  /**
+   * The item to be displayed in the cell.
+   *
+   * @type {TItem}
+   */
+  item: TItem;
+  /**
+   * The index of the item in the data array.
+   *
+   * @type {number}
+   */
+  index: number;
+};
 
 /**
  * Inner content to be rendered in a cell.
@@ -553,6 +553,13 @@ export type VirutalTableRowStyleProps = StyleProps<{
    * @default false
    */
   clickable?: boolean;
+  /**
+   * The style of the table.
+   *
+   * @type {TableStyle}
+   * @default "list"
+   */
+  style?: TableStyle;
 }>;
 
 /**

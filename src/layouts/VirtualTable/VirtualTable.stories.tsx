@@ -10,10 +10,11 @@ import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { arrayOf } from "@utils";
 
-import { Avatar, Icon, Text } from "@components";
+import { Avatar, Button, Icon, Text } from "@components";
 
 import type {
   VirtualTableColumnCellProps,
+  VirtualTableColumnProps,
   VirtualTableDefaultProps,
   VirtualTableOverscan,
   VirtualTableProps,
@@ -21,6 +22,8 @@ import type {
 import type { Meta } from "@storybook/react";
 
 const STORY_DATA_LENGTH = 1000;
+const WINDOW_SCROLL_DATA_LENGTH = 200;
+const STRESS_TEST_DATA_LENGTH = 150_000;
 
 type StoryData = {
   id: number;
@@ -114,12 +117,13 @@ export default meta;
 export const Default = {
   args: storyProps,
   parameters: {
-    docs: componentSource(),
+    docs: componentSource([storyProps]),
   },
 };
 
-const emptyProps = {
+const emptyProps: VirtualTableProps<StoryData> = {
   ...storyProps,
+  height: "16rem",
   data: [],
 };
 
@@ -130,8 +134,10 @@ export const Empty = {
   },
 };
 
-const loadingProps = {
+const loadingProps: VirtualTableProps<StoryData> = {
   ...storyProps,
+  height: "s-11",
+  data: [],
   loading: true,
 };
 
@@ -142,8 +148,9 @@ export const Loading = {
   },
 };
 
-const useWindowScrollProps = {
+const useWindowScrollProps: VirtualTableProps<StoryData> = {
   ...storyProps,
+  data: generateStoryData(WINDOW_SCROLL_DATA_LENGTH),
   useWindowScroll: true,
   height: null,
 };
@@ -225,7 +232,7 @@ const headerProps: VirtualTableProps<StoryData> = {
           children: null,
         },
       },
-      CellContent: () => null,
+      CellContent: () => <Text />,
     },
     {
       HeaderContent: () => (
@@ -257,5 +264,85 @@ export const Headers = {
   args: headerProps,
   parameters: {
     docs: componentSource([headerProps]),
+  },
+};
+
+const cellProps: VirtualTableProps<StoryData> = {
+  ...headerProps,
+  data: generateStoryData(1),
+  height: "6rem",
+  columns: [
+    {
+      HeaderContent: "Empty cell",
+      CellContent: () => null,
+    },
+    {
+      HeaderContent: "Text",
+      // eslint-disable-next-line react/prop-types
+      CellContent: ({ item }) => <Text>{item.firstName}</Text>,
+    },
+    {
+      HeaderContent: "Button",
+      CellContent: () => <Button>Click me</Button>,
+    },
+    {
+      HeaderContent: "Icon",
+      CellContent: () => <Icon name="Person" />,
+    },
+  ],
+};
+
+export const Cells = {
+  args: cellProps,
+  parameters: {
+    docs: componentSource([cellProps]),
+  },
+};
+
+const singleColumnProps = (
+  column: VirtualTableColumnProps<StoryData>
+): VirtualTableProps<StoryData> => ({
+  ...cellProps,
+  columns: [column],
+});
+
+const singleColumnDefault = singleColumnProps({
+  HeaderContent: "Cell",
+  CellContent: () => <Text>Cell content</Text>,
+});
+
+const bools = [false, true];
+
+export const PaddedCells = () => (
+  <ComponentVariants
+    defaults={singleColumnDefault}
+    of={VirtualTable<StoryData>}
+    variants={bools}
+    for="paddedCells"
+    columns={2}
+    propLabels
+  />
+);
+PaddedCells.parameters = {
+  docs: componentSource(
+    bools.map((paddedCells) => ({
+      ...singleColumnDefault,
+      paddedCells,
+    }))
+  ),
+};
+
+const stressTestProps: VirtualTableProps<StoryData> = {
+  ...storyProps,
+  data: generateStoryData(STRESS_TEST_DATA_LENGTH),
+  height: null,
+  useWindowScroll: true,
+  overscan: "1000px",
+};
+
+export const StressTest = {
+  args: stressTestProps,
+  parameters: {
+    docs: componentSource([stressTestProps]),
   },
 };

@@ -65,7 +65,7 @@ const VirtualTable = <TItem extends object>({
     mergedProps.defaultItemHeight
   );
   const fixedItemHeight = useVariableItemHeight(mergedProps.fixedItemHeight);
-  const contentProps = useVirtualTableContent(mergedProps);
+  const contentProps = useVirtualTableContent(mergedProps, context);
   const scrollSetupProps = useVirtualTableScrollSetup(mergedProps);
   const overscan = useVirtualTableOverscan(mergedProps);
 

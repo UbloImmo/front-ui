@@ -10,6 +10,7 @@ import type {
   VirtualTableCellContentProps,
   VirtualTableCellStyleProps,
 } from "../VirtualTable.types";
+import type { ReactNode } from "react";
 
 /**
  * A component that renders a cell's content within a virtualized table.
@@ -17,7 +18,7 @@ import type {
  *
  * @template {object} TItem - The type of item being rendered in the table
  * @param {VirtualTableCellContentProps<TItem>} props - The component props
- * @returns {JSX.Element} The rendered cell content
+ * @returns {ReactNode} The rendered cell content
  */
 export const VirtualTableCellContent = <TItem extends object>({
   index,
@@ -26,7 +27,7 @@ export const VirtualTableCellContent = <TItem extends object>({
   paddedCell,
   colSpan,
   CellContent,
-}: VirtualTableCellContentProps<TItem>) => {
+}: VirtualTableCellContentProps<TItem>): ReactNode => {
   const { error } = useLogger("VirtualTableCellContent");
   if (!CellContent) {
     error("No CellContent provided to VirtualTableCellContent");

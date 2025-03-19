@@ -19,6 +19,7 @@ import type {
 export const virtualTableRowStyles = ({
   $fixedItemHeight,
   $clickable,
+  $style,
 }: VirutalTableRowStyleProps): RuleSet => css`
   // set fixed height if provided
   ${!isNull($fixedItemHeight) &&
@@ -27,15 +28,19 @@ export const virtualTableRowStyles = ({
     min-height: ${$fixedItemHeight};
     max-height: ${$fixedItemHeight};
   `}
-  // reset styles since virtualized lists make these unreliable
-  &:nth-child(even) > td,
-  &:nth-child(odd) > td {
-    background: var(--white);
-  }
 
-  &.even > td {
-    background: var(--gray-50);
-  }
+  ${$style === "list" &&
+  css`
+    // reset styles since virtualized lists make these unreliable
+    &:nth-child(even) > td,
+    &:nth-child(odd) > td {
+      background: var(--white);
+    }
+
+    &.even > td {
+      background: var(--gray-50);
+    }
+  `}
 
   ${$clickable &&
   css`

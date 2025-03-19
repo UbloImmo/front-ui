@@ -114,7 +114,14 @@ export const useVirtualTableContext = <TItem extends object>({
   paddedCells,
   layout,
 }: VirtualTableDefaultProps<TItem>): VirtualTableSharedContext<TItem> => {
-  const columnsCount = useMemo(() => columns.length, [columns]);
+  const columnsCount = useMemo(
+    () =>
+      columns.reduce(
+        (acc: number, { colSpan }) => acc + Math.max(1, colSpan ?? 1),
+        0
+      ),
+    [columns]
+  );
   const { warn } = useLogger("VirtualTable:context");
   const fixedItemHeight = useMemo(() => {
     if (!isCssLength(itemHeight)) return null;
@@ -188,6 +195,7 @@ export const useVariableItemHeight = (
  * Hook that generates memoized content components for a virtual table.
  *
  * @param {VirtualTableDefaultProps<TItem>} mergedProps - The merged props containing table configuration
+ * @param {VirtualTableSharedContext<TItem>} context - The shared context containing table configuration
  * @returns {VirutalTableContentProps<TItem>} Object containing:
  *   - itemContent: Memoized row content component
  *   - fixedHeaderContent: Memoized header content component
@@ -195,7 +203,8 @@ export const useVariableItemHeight = (
  * @template TItem - The type of items in the table data
  */
 export const useVirtualTableContent = <TItem extends object>(
-  mergedProps: VirtualTableDefaultProps<TItem>
+  mergedProps: VirtualTableDefaultProps<TItem>,
+  context: VirtualTableSharedContext<TItem>
 ): VirutalTableContentProps<TItem> => {
   const itemContent = useMemo(
     () => VirtualTableRowContent(mergedProps.columns),
@@ -208,12 +217,8 @@ export const useVirtualTableContent = <TItem extends object>(
   );
 
   const fixedFooterContent = useMemo(
-    () =>
-      VirtualTableFooterContent(
-        mergedProps.columns.length,
-        mergedProps.loading
-      ),
-    [mergedProps.columns.length, mergedProps.loading]
+    () => VirtualTableFooterContent(context.columnsCount, context.loading),
+    [context.columnsCount, context.loading]
   );
 
   return { itemContent, fixedHeaderContent, fixedFooterContent };

@@ -1,5 +1,10 @@
 import type { VirtualTableDefaultProps } from "./VirtualTable.types";
 
+/**
+ * Default props for the VirtualTable component.
+ *
+ * @type {VirtualTableDefaultProps<object>}
+ */
 export const defaultVirtualTableProps: VirtualTableDefaultProps<object> = {
   data: [],
   columns: [],

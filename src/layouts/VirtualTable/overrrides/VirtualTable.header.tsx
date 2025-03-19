@@ -15,7 +15,13 @@ export const VirtualTableHeader: VirtualTableComponentOverrides<object>["TableHe
     HTMLTableSectionElement,
     { children?: ReactNode; style?: CSSProperties }
   >(({ children, style }, ref) => (
-    <TableHeader styleOverride={style} ref={ref} testId="virtual">
+    <TableHeader
+      styleOverride={style}
+      ref={ref}
+      testId="virtual"
+      sticky
+      top={0}
+    >
       {children}
     </TableHeader>
   ));

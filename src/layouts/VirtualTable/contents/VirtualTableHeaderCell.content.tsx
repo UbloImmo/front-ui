@@ -7,7 +7,7 @@ import { useLogger } from "@utils";
 import { Text, Tooltip } from "@components";
 
 import type { VirtualTableHeaderCellContentProps } from "../VirtualTable.types";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 
 /**
  * A component that renders a header cell's content within a virtualized table.
@@ -17,7 +17,7 @@ import type { FC } from "react";
  * @param {VirtualTableHeaderCellContentProps<TItem>} props - The component props
  * @param {VirtualTableColumnHeaderContent} props.HeaderContent - The content to render in the header
  * @param {number} [props.colSpan] - Optional column span for the header cell
- * @returns {JSX.Element | null} The rendered header cell content or null if invalid content
+ * @returns {ReactNode} The rendered header cell content or null if invalid content
  *
  * @remarks
  * Renders header content in three different ways:
@@ -28,7 +28,7 @@ import type { FC } from "react";
 export const VirtualTableHeaderCellContent = <TItem extends object>({
   HeaderContent,
   colSpan,
-}: VirtualTableHeaderCellContentProps<TItem>) => {
+}: VirtualTableHeaderCellContentProps<TItem>): ReactNode => {
   const { warn } = useLogger(`VirtualTable:HeaderCellContent`);
 
   if (isString(HeaderContent))
