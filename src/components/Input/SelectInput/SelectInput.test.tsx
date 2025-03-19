@@ -5,8 +5,8 @@ import { SelectInput } from "./SelectInput.component";
 
 import { Badge } from "@/components/Badge";
 import { Text } from "@/components/Text";
+import { FlexLayout } from "@/layouts/Flex";
 import { testComponentFactory } from "@/tests";
-import { FlexLayout } from "@layouts";
 
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 

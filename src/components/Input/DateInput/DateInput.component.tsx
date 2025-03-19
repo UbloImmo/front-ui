@@ -42,7 +42,7 @@ import {
 
 import { Calendar, type CalendarOnChangeFn } from "@/components/Calendar";
 import { Icon } from "@/components/Icon";
-import { Popover } from "@layouts";
+import { Popover } from "@/layouts/Popover";
 import { useHtmlAttribute, useLogger, useMergedProps, useTestId } from "@utils";
 
 import type { DateInputDefaultProps, DateInputProps } from "./DateInput.types";

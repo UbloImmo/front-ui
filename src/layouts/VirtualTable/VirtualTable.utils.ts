@@ -20,7 +20,7 @@ import {
   VirtualTableRow,
   VirtualTableFooter,
   VirtualTableEmpty,
-} from "./overrrides";
+} from "./overrides";
 
 import { parseFixedLength } from "@/sizes/size.utils";
 import {

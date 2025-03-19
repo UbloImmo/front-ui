@@ -8,7 +8,8 @@ import {
   type InputLabelTextStyleProps,
 } from "@/components/InputLabel";
 import { Tooltip, type TooltipProps } from "@/components/Tooltip";
-import { FlexRowLayout, TableHeader, TableHeaderCell } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
+import { TableHeader, TableHeaderCell } from "@/layouts/Table";
 import { isEmptyString } from "@utils";
 
 import type { BuiltFormTableProps } from "../../../Form.types";

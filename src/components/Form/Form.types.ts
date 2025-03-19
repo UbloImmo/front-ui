@@ -22,7 +22,8 @@ import type {
   SelectInputProps,
 } from "@/components/Input";
 import type { ModalProps, ModalSize } from "@/components/Modal";
-import type { GridEndPosition, TableLayout } from "@layouts";
+import type { GridEndPosition } from "@/layouts/GridItem";
+import type { TableLayout } from "@/layouts/Table";
 import type {
   ColorKey,
   CssLength,

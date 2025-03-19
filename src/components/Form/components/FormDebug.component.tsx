@@ -7,8 +7,9 @@ import { formDebugPreStyles, formDebugContainerStyles } from "../Form.styles";
 
 import { Heading } from "@/components/Heading";
 import { Text } from "@/components/Text";
+import { GridLayout } from "@/layouts/Grid";
+import { GridItem, type GridItemProps } from "@/layouts/GridItem";
 import { breakpointsPx } from "@/sizes";
-import { GridLayout, GridItem, type GridItemProps } from "@layouts";
 import { arrayOf } from "@utils";
 
 import type { FormDebugPreStyleProps } from "../Form.types";

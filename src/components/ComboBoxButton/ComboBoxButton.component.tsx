@@ -12,7 +12,7 @@ import { ContextMenu, ContextMenuItemData } from "../ContextMenu";
 import { Icon, type IconProps } from "../Icon";
 import { Text } from "../Text";
 
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { StyleProps, type TestIdProps, type TextProps } from "@types";
 import {
   useLogger,

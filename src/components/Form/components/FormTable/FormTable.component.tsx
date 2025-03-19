@@ -28,7 +28,7 @@ import { useFieldAssistiveText } from "@/components/Field/Field.utils";
 import { Icon } from "@/components/Icon";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { InputLabel } from "@/components/InputLabel";
-import { Table, TableBody } from "@layouts";
+import { Table, TableBody } from "@/layouts/Table";
 import { isEmptyString } from "@utils";
 
 import type { TooltipProps } from "@/components/Tooltip";

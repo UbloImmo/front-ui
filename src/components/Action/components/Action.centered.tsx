@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
-import { FlexLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
 
 import type { SizedActionProps } from "../Action.types";
 import type { PaletteColor, TextProps } from "@types";

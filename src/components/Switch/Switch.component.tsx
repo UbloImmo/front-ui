@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { SwitchContainerStyles, SwitchHandleStyles } from "./Switch.styles";
 import { Text } from "../Text";
 
-import { FlexLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
 import {
   useTestId,
   useMergedProps,

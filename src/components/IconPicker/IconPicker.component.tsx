@@ -6,7 +6,7 @@ import { IconName } from "../Icon/Icon.types";
 import { IconPickerItem } from "./components/IconPickerItem/IconPickerItem.component";
 import { iconPickerContainerStyles } from "./IconPicker.styles";
 
-import { FlexLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
 import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
 
 import type {

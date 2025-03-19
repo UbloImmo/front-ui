@@ -7,7 +7,8 @@ import { tooltipStyles, tooltipWrapperStyles } from "./Tooltip.styles";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
-import { FlexColumnLayout, Popover } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
+import { Popover } from "@/layouts/Popover";
 import { isEmptyString, useLogger, useMergedProps, useTestId } from "@utils";
 
 import type {

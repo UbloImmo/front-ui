@@ -7,8 +7,8 @@ import { formEditBannerStyles } from "../Form.styles";
 import { Button } from "@/components/Button";
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
+import { FlexRowLayout } from "@/layouts/Flex";
 import { cssDimensions } from "@/utils/styles.utils";
-import { FlexRowLayout } from "@layouts";
 import {
   useMergedProps,
   useStatic,

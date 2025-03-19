@@ -1,5 +1,5 @@
 import type { FilterPreset, FilterSignature } from "@/components/List/modules";
-import type { FlexLayoutProps } from "@layouts";
+import type { FlexLayoutProps } from "@/layouts/Flex";
 import type { Nullable } from "@ubloimmo/front-util";
 
 export type ListFilterPresetCollectionProps = {

@@ -108,7 +108,7 @@ import type {
   UseFormSubmissionReturn,
   UseFormValidationReturn,
 } from "./Form.types";
-import type { GridEndPosition } from "@layouts";
+import type { GridEndPosition } from "@/layouts/GridItem";
 
 const FORM_DEBUG_FLAG = "FORM_DEBUG_ENABLED" as const;
 

@@ -14,7 +14,7 @@ import { Tooltip } from "../Tooltip";
 import { Icon, type IconProps } from "@/components/Icon";
 import { InfoBox } from "@/components/InfoBox";
 import { Text } from "@/components/Text";
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 import {
   useLogger,
   useTestId,

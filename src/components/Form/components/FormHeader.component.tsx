@@ -8,7 +8,7 @@ import { formHeaderStyles } from "../Form.styles";
 import { Badge } from "@/components/Badge";
 import { Heading } from "@/components/Heading";
 import { Icon } from "@/components/Icon";
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 import { useMergedProps } from "@utils";
 
 import type { FormHeaderProps } from "../Form.types";

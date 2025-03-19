@@ -10,12 +10,9 @@ import { ContextLine } from "@/components/ContextLine";
 import { CopyClipboardInfoCard } from "@/components/CopyClipboardInfoCard";
 import { Heading } from "@/components/Heading";
 import { InfoBox } from "@/components/InfoBox";
-import {
-  FlexColumnLayout,
-  GridItem,
-  GridLayout,
-  type GridEndPosition,
-} from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
+import { GridLayout } from "@/layouts/Grid";
+import { GridItem, type GridEndPosition } from "@/layouts/GridItem";
 
 import type {
   EntityInfoCardSectionItemRendererMap,

@@ -1,8 +1,8 @@
 import { isNull } from "@ubloimmo/front-util";
 import styled, { css } from "styled-components";
 
+import { GridItem } from "@/layouts/GridItem";
 import { breakpointsPx } from "@/sizes";
-import { GridItem } from "@layouts";
 
 import type { BuiltFormFieldLayoutFixedWidthProp } from "../Form.types";
 

@@ -5,7 +5,7 @@ import { FormTableFooterButton } from "./FormTableFooterButton.component";
 import { FormTableFooterSelect } from "./FormTableFooterSelect.component";
 import { useFormContext } from "../../../Form.context";
 
-import { TableCell, TableFooter, TableRow } from "@layouts";
+import { TableCell, TableFooter, TableRow } from "@/layouts/Table";
 
 import type { FormTableFooterProps } from "../../../Form.types";
 

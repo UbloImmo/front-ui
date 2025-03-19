@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/Checkbox";
 import { Icon, IconProps, type IconName } from "@/components/Icon";
 import { CLEAR_FILTER_OPTION_SIGNATURE } from "@/components/List/modules/FilterOption/FilterOption.hook";
 import { Text } from "@/components/Text";
-import { FlexLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
 import { TextProps } from "@types";
 import { useMergedProps, useStyleProps } from "@utils";
 

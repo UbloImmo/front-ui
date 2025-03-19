@@ -10,7 +10,7 @@ import {
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 import {
   isEmptyString,
   useLogger,

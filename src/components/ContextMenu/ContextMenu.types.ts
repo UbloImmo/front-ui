@@ -3,7 +3,7 @@ import type {
   ContextMenuItemProps,
   ContextMenuItemSize,
 } from "./components/ContextMenuItem/ContextMenuItem.types";
-import type { ControlledPopoverProps } from "@layouts";
+import type { ControlledPopoverProps } from "@/layouts/Popover";
 import type { StyleProps, TestIdProps } from "@types";
 import type { ReactNode } from "react";
 

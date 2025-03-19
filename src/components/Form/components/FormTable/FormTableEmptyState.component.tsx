@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 import { Text } from "@/components/Text";
-import { TableCell, TableRow } from "@layouts";
+import { TableCell, TableRow } from "@/layouts/Table";
 import { useStatic, useUikitTranslation } from "@utils";
 
 import type { BuiltFormTableProps } from "../../Form.types";

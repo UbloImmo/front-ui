@@ -17,7 +17,7 @@ import { Icon } from "@/components/Icon";
 import { Input } from "@/components/Input";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
-import { FlexLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
 
 import type { ListFilterStyleProps, ListFilterProps } from "./ListFilter.types";
 import type { Nullable } from "@ubloimmo/front-util";

@@ -11,7 +11,7 @@ import { Heading } from "../Heading";
 import { Text } from "../Text";
 import { CalloutIcon } from "./components/CalloutIcon.component";
 
-import { FlexColumnLayout } from "@layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { PaletteColor, type TestIdProps } from "@types";
 import {
   useLogger,

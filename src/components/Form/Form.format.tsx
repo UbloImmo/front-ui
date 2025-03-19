@@ -18,8 +18,8 @@ import { IconPickerItem } from "@/components/IconPicker/components/IconPickerIte
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
 import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
 import { useSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
+import { FlexLayout, FlexRowLayout } from "@/layouts/Flex";
 import { breakpointsPx } from "@/sizes";
-import { FlexLayout, FlexRowLayout } from "@layouts";
 import { arrayOf, isEmptyString, isNonEmptyString } from "@utils";
 
 import type {

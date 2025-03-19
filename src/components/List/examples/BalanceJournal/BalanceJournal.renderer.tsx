@@ -24,15 +24,15 @@ import { Loading } from "@/components/Loading";
 import { StaticIcon, type StaticIconProps } from "@/components/StaticIcon";
 import { Text } from "@/components/Text";
 import { Tooltip } from "@/components/Tooltip";
+import { FlexLayout } from "@/layouts/Flex";
 import {
-  FlexLayout,
   Table,
   TableBody,
   TableCell,
   TableHeader,
   TableHeaderCell,
   TableRow,
-} from "@layouts";
+} from "@/layouts/Table";
 import { PaletteColor, type ColorKey, type CurrencyInt } from "@types";
 import { isPositive } from "@utils";
 

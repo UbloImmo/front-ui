@@ -8,7 +8,7 @@ import {
 import { useFormContext } from "../../../Form.context";
 
 import { useInputId } from "@/components/Input";
-import { TableCell } from "@layouts";
+import { TableCell } from "@/layouts/Table";
 
 import type { BuiltFormCustomFieldProps } from "../../../Form.types";
 

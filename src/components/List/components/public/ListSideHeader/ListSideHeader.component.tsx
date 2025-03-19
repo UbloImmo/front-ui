@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/Badge";
 import { Heading } from "@/components/Heading";
 import { useListContext } from "@/components/List/context";
-import { FlexLayout } from "@layouts";
+import { FlexLayout } from "@/layouts/Flex";
 import {
   useClassName,
   useHtmlAttribute,

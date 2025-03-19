@@ -11,8 +11,8 @@ import { useFormContext } from "@/components/Form/Form.context";
 import { computeFieldDisplayContent } from "@/components/Form/Form.format";
 import { Input, useInputId, type InputType } from "@/components/Input";
 import { Text } from "@/components/Text";
+import { TableCell } from "@/layouts/Table";
 import { breakpointsPx } from "@/sizes";
-import { TableCell } from "@layouts";
 
 import type {
   BuiltFieldProps,

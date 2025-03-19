@@ -6,7 +6,7 @@ import { AccountBalance } from "@/components/AccountBalance";
 import { ActionIcon } from "@/components/ActionIcon";
 import { ContextMenu } from "@/components/ContextMenu";
 import { StateIndicator } from "@/components/StateIndicator";
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 import { useLogger, useMergedProps, useTestId } from "@utils";
 
 import type {

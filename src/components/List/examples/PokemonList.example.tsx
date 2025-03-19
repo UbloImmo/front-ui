@@ -29,15 +29,15 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
+import { FlexLayout } from "@/layouts/Flex";
 import {
-  FlexLayout,
   Table,
   TableBody,
   TableCell,
   TableHeader,
   TableHeaderCell,
   TableRow,
-} from "@layouts";
+} from "@/layouts/Table";
 import { arrayOf, capitalize, delay, useStatic } from "@utils";
 
 type Pokemon = {

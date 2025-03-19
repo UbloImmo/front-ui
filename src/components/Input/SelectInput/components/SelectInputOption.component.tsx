@@ -14,7 +14,7 @@ import {
 
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
-import { FlexRowLayout } from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
 import { useStyleProps, useTestId } from "@utils";
 
 import type {
