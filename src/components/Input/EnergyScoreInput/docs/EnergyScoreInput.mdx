@@ -11,12 +11,11 @@ import * as EnergyScoreInputStories from "../EnergyScoreInput.stories";
 
 ## Usage
 
-`EnergyScoreInput` is a specialized input component that combines a `NumberInput` with an `EnergyLabel` to create a complete energy/climate score input experience. It automatically calculates and displays the energy performance grade (A-G) based on the input value.
-
+The `EnergyScoreInput` component combines a numeric input with a visual energy label that updates automatically based on the input value. It's designed for displaying energy performance diagnostics in real estate applications.
 The component supports two types of scores:
 
-- Energy consumption (kWh/m²/year)
-- Climate impact (kgCO₂/m²/year)
+- DPE (Diagnostic de Performance Énergétique) - Energy consumption (kWh/m²/year)
+- GES (Gaz à Effet de Serre) - Climate impact (kgCO₂/m²/year)
 
 > Try entering different values to see how the energy grade changes automatically!
 
@@ -24,15 +23,15 @@ The component supports two types of scores:
 
 ## Energy vs Climate Scores
 
-The component can be configured to calculate either energy consumption or climate impact scores using the `type` prop:
+The component can be configured to calculate either energy consumption or climate impact scores using the `scoreType` prop:
 
-### Energy Consumption
+### Energy Consumption (DPE)
 
 Used for calculating the energy performance grade based on annual energy consumption per square meter.
 
 <Canvas of={EnergyScoreInputStories.Default} />
 
-### Climate Impact
+### Climate Impact (GES)
 
 Used for calculating the climate impact grade based on annual greenhouse gas emissions per square meter.
 
@@ -40,7 +39,9 @@ Used for calculating the climate impact grade based on annual greenhouse gas emi
 
 ## Score Ranges
 
-### Energy Score Ranges (kWh/m²/year)
+The component calculates the appropriate DPE or GES label (A-G) based on the input value and the scoreType.
+
+### DPE (kWh/m²/year)
 
 - A: < 70
 - B: 70-110
@@ -50,7 +51,7 @@ Used for calculating the climate impact grade based on annual greenhouse gas emi
 - F: 330-420
 - G: ≥ 420
 
-### Climate Score Ranges (kgCO₂/m²/year)
+### GES (kgCO₂/m²/year)
 
 - A: < 6
 - B: 6-11
@@ -62,7 +63,7 @@ Used for calculating the climate impact grade based on annual greenhouse gas emi
 
 ### Disabled State
 
-The input can be disabled when the value should not be editable.
+The input can be disabled when the value should not be editable. The energy label will appear in an inactive state.
 
 <Canvas of={EnergyScoreInputStories.Disabled} />
 
