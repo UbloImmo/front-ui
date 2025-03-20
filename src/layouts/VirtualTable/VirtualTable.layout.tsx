@@ -29,7 +29,7 @@ import type { StyleOverrideProps, TestIdProps } from "@types";
 /**
  * A virtualized table component that efficiently renders large datasets.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @template {object} TItem - The type of items in the data array
  * @param {VirtualTableProps<TItem> & Omit<StyleOverrideProps, "as"> & TestIdProps} props - Component props

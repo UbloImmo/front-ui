@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- `v0.0.2` VirtualTable layout
+  - propagate `style` property to overridden body
+
 ## 1.8.1 - 2025-03-20
 ### Changed
 - `v0.0.2` VirtualTable layout
