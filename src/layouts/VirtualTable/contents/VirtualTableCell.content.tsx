@@ -40,12 +40,7 @@ export const VirtualTableCellContent = <TItem extends object>({
       padded={paddedCell}
       testId="virtual"
     >
-      <StyledFlexLayout
-        fill="row"
-        align="center"
-        justify="start"
-        $fixedWidth={fixedWidth}
-      >
+      <StyledFlexLayout fill="row" align="center" justify="start">
         <CellContent index={index} item={item} />
       </StyledFlexLayout>
     </StyledTableCell>
@@ -56,6 +51,6 @@ const StyledTableCell = styled(TableCell)<VirtualTableCellStyleProps>`
   ${virtualTableCellStyles}
 `;
 
-const StyledFlexLayout = styled(FlexLayout)<VirtualTableCellStyleProps>`
-  ${virtualTableCellStyles}
+const StyledFlexLayout = styled(FlexLayout)`
+  overflow: hidden;
 `;
