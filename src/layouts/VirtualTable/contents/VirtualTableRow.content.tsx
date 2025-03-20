@@ -1,12 +1,7 @@
 import { VirtualTableCellContent } from "./VirtualTableCell.content";
 
-import type {
-  VirtualTableColumnProps,
-  VirtualTableSharedContext,
-} from "../VirtualTable.types";
-import type { Optional } from "@ubloimmo/front-util";
+import type { VirtualTableSharedContext } from "../VirtualTable.types";
 import type { ReactNode } from "react";
-import type { ItemContent } from "react-virtuoso";
 
 /**
  * Creates a row content renderer function for the virtual table.
@@ -28,28 +23,26 @@ import type { ItemContent } from "react-virtuoso";
  * ```
  */
 export const VirtualTableRowContent = <TItem extends object>(
-  columns: VirtualTableColumnProps<TItem>[]
-): Optional<ItemContent<TItem, VirtualTableSharedContext<TItem>>> => {
-  if (!columns.length) return undefined;
+  index: number,
+  item: TItem,
+  context: VirtualTableSharedContext<TItem>
+): ReactNode => {
+  return (
+    <>
+      {context.columns.map((column, columnIndex) => {
+        const key = `${columnIndex}-${index}`;
+        const padded = context.paddedCells || column.paddedCell;
 
-  return (index, item, context): ReactNode => {
-    return (
-      <>
-        {columns.map((column, columnIndex) => {
-          const key = `${columnIndex}-${index}`;
-          const padded = context.paddedCells || column.paddedCell;
-
-          return (
-            <VirtualTableCellContent
-              {...column}
-              paddedCell={padded}
-              item={item}
-              index={index}
-              key={key}
-            />
-          );
-        })}
-      </>
-    );
-  };
+        return (
+          <VirtualTableCellContent
+            {...column}
+            paddedCell={padded}
+            item={item}
+            index={index}
+            key={key}
+          />
+        );
+      })}
+    </>
+  );
 };

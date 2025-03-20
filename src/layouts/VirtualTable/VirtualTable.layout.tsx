@@ -1,5 +1,6 @@
 import { TableVirtuoso } from "react-virtuoso";
 
+import { VirtualTableRowContent } from "./contents";
 import { defaultVirtualTableProps } from "./VirtualTable.defaults";
 import {
   useVirtualTableContent,
@@ -28,7 +29,7 @@ import type { StyleOverrideProps, TestIdProps } from "@types";
 /**
  * A virtualized table component that efficiently renders large datasets.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @template {object} TItem - The type of items in the data array
  * @param {VirtualTableProps<TItem> & Omit<StyleOverrideProps, "as"> & TestIdProps} props - Component props
@@ -67,8 +68,12 @@ const VirtualTable = <TItem extends object>({
   const fixedItemHeight = useVirtualTableItemHeight(
     mergedProps.fixedItemHeight
   );
-  const contentProps = useVirtualTableContent(mergedProps, context);
-  const scrollSetupProps = useVirtualTableScrollSetup(mergedProps);
+  const { fixedFooterContent, fixedHeaderContent } = useVirtualTableContent(
+    mergedProps,
+    context
+  );
+  const { style, useWindowScroll, customScrollParent } =
+    useVirtualTableScrollSetup(mergedProps);
   const overscan = useVirtualTableOverscan(mergedProps);
 
   const endReached = useHtmlAttribute(mergedProps.onEndReached);
@@ -90,9 +95,13 @@ const VirtualTable = <TItem extends object>({
       endReached={endReached}
       startReached={startReached}
       increaseViewportBy={overscan}
-      ref={mergedProps.ref}
-      {...scrollSetupProps}
-      {...contentProps}
+      ref={mergedProps.virtualizerRef}
+      itemContent={VirtualTableRowContent}
+      fixedHeaderContent={fixedHeaderContent}
+      fixedFooterContent={fixedFooterContent}
+      style={style}
+      useWindowScroll={useWindowScroll}
+      customScrollParent={customScrollParent}
     />
   );
 };

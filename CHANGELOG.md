@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.2` VirtualTable layout
+  - Rename `ref` prop to `virtualizerRef`
+  - Improve perf by relying on shared context to diplay row columns instead of HOC
+
 ## 1.8.0 - 2025-03-19
 ### Added
 - `v0.0.1` EnergyScoreInput component
