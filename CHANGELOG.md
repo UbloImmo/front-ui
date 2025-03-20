@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.8.1 - 2025-03-20
 ### Changed
-
 - `v0.0.2` VirtualTable layout
   - Rename `ref` prop to `virtualizerRef`
   - Improve perf by relying on shared context to diplay row columns instead of HOC
