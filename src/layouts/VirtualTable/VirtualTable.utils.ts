@@ -11,7 +11,6 @@ import { CSSProperties } from "styled-components";
 import {
   VirtualTableFooterContent,
   VirtualTableHeaderContent,
-  VirtualTableRowContent,
 } from "./contents";
 import {
   VirtualTableBody,
@@ -138,6 +137,7 @@ export const useVirtualTableContext = <TItem extends object>({
       loading,
       paddedCells,
       layout,
+      columns,
     }),
     [
       fixedItemHeight,
@@ -148,6 +148,7 @@ export const useVirtualTableContext = <TItem extends object>({
       loading,
       paddedCells,
       layout,
+      columns,
     ]
   );
 };
@@ -206,11 +207,6 @@ export const useVirtualTableContent = <TItem extends object>(
   mergedProps: VirtualTableDefaultProps<TItem>,
   context: VirtualTableSharedContext<TItem>
 ): VirutalTableContentProps<TItem> => {
-  const itemContent = useMemo(
-    () => VirtualTableRowContent(mergedProps.columns),
-    [mergedProps.columns]
-  );
-
   const fixedHeaderContent = useMemo(
     () => VirtualTableHeaderContent(mergedProps.columns),
     [mergedProps.columns]
@@ -221,7 +217,7 @@ export const useVirtualTableContent = <TItem extends object>(
     [context.columnsCount, context.loading]
   );
 
-  return { itemContent, fixedHeaderContent, fixedFooterContent };
+  return { fixedHeaderContent, fixedFooterContent };
 };
 
 /**

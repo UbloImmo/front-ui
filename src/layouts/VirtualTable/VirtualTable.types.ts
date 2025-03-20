@@ -441,7 +441,7 @@ export type VirtualTableProps<TItem extends object> = {
    * @type {Nullable<Ref<TableVirtuosoHandle>>}
    * @default null
    */
-  ref?: Ref<TableVirtuosoHandle>;
+  virtualizerRef?: Ref<TableVirtuosoHandle>;
   /**
    * The layout of the table. Either `auto` or `fixed`.
    *
@@ -477,6 +477,7 @@ export type VirtualTableSharedContext<TItem extends object> = Replace<
     | "layout"
     | "loading"
     | "paddedCells"
+    | "columns"
   >,
   "fixedItemHeight",
   {
@@ -500,7 +501,7 @@ export type VirtualTableSharedContext<TItem extends object> = Replace<
  */
 export type VirutalTableContentProps<TItem extends object> = Pick<
   TableVirtuosoProps<TItem, VirtualTableSharedContext<TItem>>,
-  "itemContent" | "fixedFooterContent" | "fixedHeaderContent"
+  "fixedFooterContent" | "fixedHeaderContent"
 >;
 
 /**

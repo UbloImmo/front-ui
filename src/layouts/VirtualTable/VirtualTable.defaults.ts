@@ -21,6 +21,6 @@ export const defaultVirtualTableProps: VirtualTableDefaultProps<object> = {
   EmptyState: null,
   style: "list",
   layout: "auto",
-  ref: null,
+  virtualizerRef: null,
   height: null,
 };
