@@ -2,7 +2,11 @@ import { forwardRef, type CSSProperties, type ReactNode } from "react";
 
 import { TableBody } from "@/layouts/Table";
 
-import type { VirtualTableComponentOverrides } from "../VirtualTable.types";
+import type {
+  VirtualTableComponentOverrides,
+  VirtualTableSharedContext,
+} from "../VirtualTable.types";
+import type { ContextProp } from "react-virtuoso";
 
 /**
  * A custom table body component for use with react-virtuoso's TableComponents.
@@ -13,9 +17,16 @@ import type { VirtualTableComponentOverrides } from "../VirtualTable.types";
 export const VirtualTableBody: VirtualTableComponentOverrides<object>["TableBody"] =
   forwardRef<
     HTMLTableSectionElement,
-    { children?: ReactNode; style?: CSSProperties }
-  >(({ children, style }, ref) => (
-    <TableBody styleOverride={style} style="list" ref={ref} testId="virtual">
+    { children?: ReactNode; style?: CSSProperties } & ContextProp<
+      VirtualTableSharedContext<object>
+    >
+  >(({ children, style, context }, ref) => (
+    <TableBody
+      styleOverride={style}
+      style={context.style}
+      ref={ref}
+      testId="virtual"
+    >
       {children}
     </TableBody>
   ));
