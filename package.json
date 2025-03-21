@@ -1,7 +1,7 @@
 {
   "name": "@ubloimmo/uikit",
   "description": "Colors, themes, typography, common components for use in frontend applications",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
