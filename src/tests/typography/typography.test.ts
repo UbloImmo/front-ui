@@ -170,6 +170,7 @@ describe("typography", () => {
           fill: true,
           noWrap: true,
           id: null,
+          lineClamp: null,
           as: "span",
           styleOverride: null,
         };

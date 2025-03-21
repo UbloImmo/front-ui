@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.2` ListFilterPreset component
+  - Tweak styles
+
+### Added
+
+- Optional `lineClamp` property to Typography component props
+
 ## 1.8.4 - 2025-03-21
 ### Added
 - Added `capitalized` property for Text and Heading to capitalize the first letter of each word

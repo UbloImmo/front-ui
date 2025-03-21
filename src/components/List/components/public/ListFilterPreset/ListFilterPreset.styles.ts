@@ -1,10 +1,10 @@
 import { css } from "styled-components";
 
 import { cssDimensions } from "@/utils/styles.utils";
-import { cssVarName, normalizeToPaletteColor } from "@utils";
+import { cssVarName, cssVarUsage, normalizeToPaletteColor } from "@utils";
 
 import type { ListFilterPresetStyleProps } from "./ListFilterPreset.types";
-import type { PaletteColor } from "@types";
+import type { PaletteColorOrWhite } from "@types";
 import type { RuleSet } from "styled-components";
 
 export const listFilterPresetButtonStyles = ({
@@ -12,8 +12,12 @@ export const listFilterPresetButtonStyles = ({
   $disabled,
   $colorKey,
 }: ListFilterPresetStyleProps): RuleSet => {
-  const backgroundColor: PaletteColor = $disabled ? "gray-100" : "gray-50";
-  const borderColor: PaletteColor = $active
+  const backgroundColor: PaletteColorOrWhite = $active
+    ? "white"
+    : $disabled
+      ? "gray-100"
+      : "gray-50";
+  const borderColor: PaletteColorOrWhite = $active
     ? normalizeToPaletteColor($colorKey, "medium")
     : backgroundColor;
   return css`
@@ -23,11 +27,11 @@ export const listFilterPresetButtonStyles = ({
     max-width: 100%;
     overflow: hidden;
 
-    background: var(--gray-50);
+    background: ${cssVarUsage(backgroundColor)};
     padding: var(--s-3);
     padding-left: var(--s-4);
     border-radius: var(--s-1);
-    border: 1px solid var(--${borderColor});
+    border: 1px solid ${cssVarUsage(borderColor)};
     display: flex;
     flex-direction: row;
     align-items: center;

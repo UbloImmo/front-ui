@@ -1,5 +1,6 @@
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
 import {
+  isNumber,
   objectKeys,
   transformObject,
   type GenericFn,
@@ -111,6 +112,7 @@ export const sanitizeTypographyProps = (
     noWrap: props.noWrap ?? defaults.noWrap,
     fill: props.fill ?? defaults.fill,
     id: props.id ?? null,
+    lineClamp: props.lineClamp ?? defaults.lineClamp,
   };
 };
 
@@ -190,6 +192,7 @@ export const buildTypographyStyle = (
       align,
       fill,
       noWrap,
+      lineClamp,
     } = sanitizeTypographyProps(defaults, fromStyleProps(props));
     const dekstopStyle = extractTypographyStyle("desktop", size, weight);
     const mobileStyle = extractTypographyStyle("mobile", size, weight);
@@ -208,8 +211,11 @@ export const buildTypographyStyle = (
       underline,
       overline,
     });
-    const apply = applyRule(important);
+    const webkitLineClamp = isNumber(lineClamp) ? String(lineClamp) : null;
     const textOverflow = ellipsis ? "ellipsis" : dekstopStyle.textOverflow;
+
+    const apply = applyRule(important);
+
     return css`
       ${typographyFontFace(important)}
       ${baseTypographyStyle(dekstopStyle, important)}
@@ -244,6 +250,13 @@ export const buildTypographyStyle = (
       css`
         width: ${apply("100%")};
       `}
+
+      ${isNumber(webkitLineClamp) &&
+      css`
+        display: ${apply("-webkit-box")};
+        -webkit-line-clamp: ${apply(webkitLineClamp)};
+        -webkit-box-orient: ${apply("vertical")};
+      `}
     `;
   };
 };
@@ -267,4 +280,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   id: null,
   as: "span",
   styleOverride: null,
+  lineClamp: null,
 } as const;
