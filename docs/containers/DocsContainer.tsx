@@ -243,6 +243,14 @@ const StyleReset = styled.div`
       color: var(--primary-dark);
     }
 
+    .token {
+      color: var(--gray-800);
+    }
+
+    .token.plain-text {
+      color: var(--gray-700);
+    }
+
     .token.tag {
       color: color-mix(
         in oklab,
@@ -363,7 +371,7 @@ const StyleReset = styled.div`
   }
 
   header main[data-layout="docs-content"] .docblock-source {
-    background: light-dark(white, black) !important;
+    background: var(--white) !important;
   }
   :not(.sb-unstyled) .sbdocs-content td .docblock-source {
     padding: 0 !important;
