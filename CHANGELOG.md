@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `useAsyncData` utility hook
+  - Prevent async race conditions
+
+- **DOCS**
+  - Properly color all generated code tokens
+  - Typo in Heading usage doc
+
 ## 1.8.3 - 2025-03-20
 ### Fixed
 - `v0.0.3` VirtualTable layout
