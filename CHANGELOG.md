@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.8.6 - 2025-03-21
 ### Fixed
-
 - `lineClamp` style property implementation
 
 ## 1.8.5 - 2025-03-21
