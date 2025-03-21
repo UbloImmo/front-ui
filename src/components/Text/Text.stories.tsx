@@ -258,3 +258,23 @@ Uppercase.args = {};
 Uppercase.parameters = {
   docs: componentSource(componentPropTemplate("uppercase", booleans)),
 };
+
+export const Capitalized = (props: TextProps) => {
+  return (
+    <ComponentVariants
+      defaults={props}
+      variants={booleans}
+      for="capitalized"
+      of={Text}
+      direction="column"
+      align="start"
+      gap={1}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+Capitalized.args = {};
+Capitalized.parameters = {
+  docs: componentSource(componentPropTemplate("capitalized", booleans)),
+};
