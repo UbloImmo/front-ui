@@ -66,6 +66,12 @@ export type TypographyProps = {
    */
   lineThrough?: boolean;
   /**
+   * Whether or not the first letter of the text should be capitalized
+   *
+   * @default false
+   */
+  capitalized?: boolean;
+  /**
    * The font weight of the text contents.
    *
    * Either `regular`, `medium` or `bold`.

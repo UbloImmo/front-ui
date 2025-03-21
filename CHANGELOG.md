@@ -7,24 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Added `capitalized` property for Text and Heading to capitalize the first letter of each word
+
 ## 1.8.3 - 2025-03-20
+
 ### Fixed
+
 - `v0.0.3` VirtualTable layout
   - Do not set nested `fixedWidth` in rendered table cell flex layout
 
 ## 1.8.2 - 2025-03-20
+
 ### Fixed
+
 - `v0.0.2` VirtualTable layout
   - propagate `style` property to overridden body
 
 ## 1.8.1 - 2025-03-20
+
 ### Changed
+
 - `v0.0.2` VirtualTable layout
   - Rename `ref` prop to `virtualizerRef`
   - Improve perf by relying on shared context to diplay row columns instead of HOC
 
 ## 1.8.0 - 2025-03-19
+
 ### Added
+
 - `v0.0.1` EnergyScoreInput component
   - New component that combines a numeric input with an automatic energy label
   - Supports both DPE (energy consumption) and GES (climate emissions) score types
@@ -42,23 +54,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `layout.fixedWidth` property in content & table fields
 
 ### Changed
+
 - **DOCS**
   - Improve story source code generation
   - Add support for nested objects / array
   - Stringify callback functions
 
 ### Fixed
+
 - `v0.0.9` NumberInput component
   - Improved clamping logic to better handle input validation when min/max limits are applied
 - `v0.0.5` TableRow layout
   - Properly handle test id override
 
 ## 1.7.10 - 2025-03-19
+
 ### Changed
+
 - `v0.0.8` Callout component
   - Changed title weight to bold
 
 ### Fixed
+
 - `FormFieldDisplayValue` component
   - Add `isTextarea` property to allow for textarea values to be don't overflow the container
 - `v0.0.4` Modal component
@@ -67,77 +84,104 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.7.9 - 2025-03-16
 
 ## 1.7.8 - 2025-03-16
+
 ### Fixed
+
 - `v0.0.5` ListSideHeader component
   - Count badge display condition
 
 ## 1.7.7 - 2025-03-16
+
 ### Changed
+
 - `v0.0.4` ListSideHeader component
   - Allow `string`s to be passed to `overrideCount` property
 
 ## 1.7.6 - 2025-03-15
+
 ### Added
+
 - `styleOverride` property in `StyleOverrideProps`
   - Bump all components that use it to support it
 - Convert all layout components to use forwardRef
 
 ## 1.7.5 - 2025-03-14
+
 ### Fixed
+
 - `v0.0.2` ListSideHeader component
   - Render given children
 - Convert most layout components to use forwardRef
 
 ## 1.7.4 - 2025-03-14
+
 ### Added
+
 - `v0.0.4` List component
   - Add new `clear` method on all data provider factory hooks
   - Add new `noResultsInInactive` behavior property on filters that clear list results when no options are selected
   - Add new `emptyFallback` behevior property on filters that select a subset of options when a filter is inactive
 
 ## 1.7.3 - 2025-03-13
+
 ### Added
+
 - `v0.0.24` Form component
   - `tryDeletingRow` callback property on form tables, to run some checks and possibly render modals or other elements before comitting deleting a single table row
 
 ### Fixed
+
 - `V0.0.5` CurrencyInput component
   - Fix rounding errors when providing decimal min / max properties
 
 ## 1.7.2 - 2025-03-05
+
 ### Added
+
 - `v0.0.2` EmptyStateCard component
   - New `transparent` optional boolean property to not render the card's background and shadow
 
 ## 1.7.1 - 2025-03-04
+
 ### Fixed
+
 - `v0.0.4` Avatar component
   - Limit displayed name initials to 2 characters
 
 ## 1.7.0 - 2025-03-03
+
 ### Added
+
 - `v0.0.1` EmptyStateCard component
   - With support for 2 assets: `EmptyBox` & `TaskSleepingCat`
   - With support for all color keys, reactive to color scheme
 
 ## 1.6.3 - 2025-03-03
+
 ### Changed
+
 - Updated or added 10 new icon(s)
 - Updated `@ubloimmo/front-tokens` to `^0.1.38`
 
 ## 1.6.2 - 2025-02-27
+
 ### Fixed
+
 - `v0.0.2` ListTableHeaderFilter component
   - Fix bug where the filter button would not be disabled when the filter is disabled
   - Fix bug where the filter button would cause parent forms to be submitted when clicking on it
 
 ## 1.6.1 - 2025-02-26
+
 ### Fixed
+
 - `v0.0.2` SumLine component
   - Decrease vertical padding for `l` size
 
 ## 1.6.0 - 2025-02-25
+
 ### Added
+
 - Experimental support for `color-scheme: light-dark`
   - Replace CSS variable declarations `light-dark()` color function
   - Add new `white` & `white-${opacity}` CSS variables
@@ -145,6 +189,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - New `lightDarkSupport` property to `GlobalStyle` & `ThemeProvider` components to activate this feature
 
 ### Changed
+
 - `v0.0.3` Avatar component
   - Add `tooltip` property to allow for custom or generated tooltip content
 - Updated or added 3 new icon(s)
@@ -156,12 +201,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Make sure content does not overflow
 
 ## 1.5.2 - 2025-02-12
+
 ### Fixed
+
 - `v0.0.7` Dialog component
   - Update styles to add support for overflowing content by making its wrapper scrollable if needed
 
 ## 1.5.1 - 2025-02-11
+
 ### Changed
+
 - `v0.0.8` Tooltip component
   - Migrate to use Popover component for positioning
   - Remove custom intersection observer logic
@@ -169,27 +218,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update test structure and test ids
 
 ## 1.5.0 - 2025-02-10
+
 ### Added
+
 - `v0.0.1` SumLine component
   - A component to display a sum line with a label, value, unit and period
 
 ## 1.4.6 - 2025-02-07
+
 ### Changed
+
 - `v0.0.5` InputAssistiveText component
   - Limit `assistiveTextIcon` to only accept boolean values
   - Fixes ts & build slowdowns
 
 ### Fixed
+
 - `v0.0.4` Icon component
   - Icon generation script now clears both `bootstrap` and `custom` icon directories before generating new icons
   - Replace aliased `@utils` import with relative path
 
 ## 1.4.5 - 2025-02-07
+
 ### Added
+
 - `v0.0.23` Form component
   - Add `onEditStateChanged` optional callback property to allow for custom behavior when the form's edit state changes
 
 ### Changed
+
 - `v0.0.3` AccountBalance component
   - Add `compact` property to allow for compact format
 - `v0.0.3` Modal component
@@ -200,11 +257,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `s` remains the same (600px)
 
 ### Fixed
+
 - `v0.0.7` Input component
   - # Propagate `TGenericValue` type argument to GenericInputProps
 
 ## 1.4.4 - 2025-02-05
+
 ### Fixed
+
 - `v0.0.7` InputLabel component
   - Decrease text size from `m` to `s`
 - `v0.0.4` InputAssistiveText component
@@ -229,12 +289,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update `useFieldValidity` hook to use `useUikitTranslation` for error messages
 
 ## 1.4.3 - 2025-02-03
+
 ### Fixed
+
 - `v0.0.12` EntityInfoCard component
   - Fix bug where no matter the prop combination, an error would be thrown
 
 ## 1.4.2 - 2025-01-31
+
 ### Changed
+
 - `v0.0.8` Action component
   - Add `color` property to allow for custom colors
   - Update `size` property to add `card` & `centered` variants
@@ -242,27 +306,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update docs
 
 ## 1.4.1 - 2025-01-30
+
 ### Changed
+
 - `v0.0.3` ContextInfoCard component
   - Add `content` property to render additional content in the card
 
 ## 1.4.1 - 2025-01-30
+
 ### Changed
+
 - `v0.0.11` EntityInfoCard component
   - Add a way to change render order within a section
 
 ### Fixed
+
 - `v0.0.5` StateIndicator component
   - Hide vertical overflow (scrollbar) when text size grows to mobile size
 
 ## 1.4.0 - 2025-01-29
 
 ## 1.3.0 - 2025-01-29
+
 ### Added
+
 - Changelog update script
 - Auto-generation CI workflow
 
 ### Changed
+
 - Updated or added 1 new icon(s)
 - Updated dependencies
   - Updated `@ubloimmo/front-tokens` to `0.1.35`
@@ -290,26 +362,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update `Canvas` block styles to make components with a `gray-50` background more readable
 
 ### Fixed
+
 - Storybook build docker timeout
 
 ## 1.2.0 - 2025-01-24
+
 ### Added
+
 - `v0.0.1` ContextInfoCard component
   - A component that displays contextual information with an icon, title, and optional label, description, and details
   - Supports customizable icons through StaticIcon component
 - New icons (`@ubloimmo/front-tokens@0.1.33`)
 
 ## 1.1.4 - 2025-01-20
+
 ### Fixed
+
 - `v0.0.3` List component
   - Trigger dataprovider first fetch upon mount
 
 ## 1.1.3 - 2025-01-20
+
 ### Added
+
 - `useMounted` hook
   - Runs a callback _once_ when the component is mounted, even in strict mode
 
 ### Changed
+
 - **DOCS**
   - Set storybook react strict mode to `true` in order to replicate production behavior
 - `v0.0.3` FeatureSwitch component
@@ -322,6 +402,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add `initialFetch` that dictates whether to fetch data on mount (default: true)
 
 ### Fixed
+
 - `v0.0.2` List component
   - Fix double fetch on mount and pagination refetch when using `DynamicDataProvider` & `PaginatedDataProvider` in strict mode
   - Paginated & Dynamic data providers now do not fetch data on mount
@@ -329,24 +410,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fix missing key in `filteredOptions` render map
 
 ## 1.1.2 - 2025-01-17
+
 ### Fixed
+
 - `v0.0.1` List component
   - export it from components index
 
 ## 1.1.1 - 2025-01-17
+
 ### Changed
+
 - Git push behavior
   - Add `pre-push` script to check if there are source files to push
   - Only run `test:all` if there are source files to push, otherwise push without running tests
 
 ### Fixed
+
 - use latest version of `@ubloimmo/front-util` in peedDependencies
 - **DOCS**
   - Fix mdx documentation generation
   - Properly escape `<`, `>` and `=` characters
 
 ## 1.1.0 - 2025-01-16
+
 ### Added
+
 - `v0.0.6` Text component & `v0.0.5` Heading component
   - Add `noWrap` property to make the text not wrap
   - Add `id` property to make the text / heading component accessible
@@ -357,6 +445,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - A bunch of sub-components to handle and display the list's filtering state
 
 ### Changed
+
 - `v0.0.3` TableBody layout
   - Add `style` property to allow for bespoke styles when used in a list or a form
 - `v0.0.3` TableHeader layout
@@ -375,25 +464,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Automatically generate `id` for heading blocks based on text content
 
 ### Fixed
+
 - `v0.0.5` Callout component
   - Fix left padding, accounting for 4px wide left border
 - `v0.0.9` EntityInfoCard component
   - Fixed conditional rendering
 
 ## 1.0.3 - 2025-01-16
+
 ### Added
+
 - **DOCS**
   - `typedoc` & `typedoc-plugin-markdown` to generate documentation from code comments & ts static analysis
   - Custom MDX `typedoc` plugin used to generate valid mdx files
   - `docs:generate` script to generate documentation from code comments & ts static analysis
 
 ### Changed
+
 - `v0.0.8` EntityInfoCard component
-  
+
   - Allow rendering AccountBalance
+
 - **BUILD**
-  
+
   - Run `docs:generate` script in the dockerfile before building the storybook
+
 - Rearrange components & layouts display in storybook by parent groups: `Actions`, `Feedbacks`, `Dialogs`, `Groups`, ...
 - `v0.0.10` SelectInput component
   - Replace hardcoded assistive text strins with uikitTranslations
@@ -401,146 +496,193 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.0.2 - 2025-01-08
 
 ## 1.0.2 - 2025-01-08
+
 ### Fixed
+
 - `v0.0.7` EntityInfoCard component
   - Force collision boundary to null to fix context menu positioning
 
 ## 1.0.1 - 2025-01-06
+
 ### Fixed
+
 - `v0.0.2` AccountBalance component
-  
+
   - Fixed responsive render
 
 ## 1.0.1 - 2025-01-06
+
 ### Fixed
+
 - `v0.0.6` EntityInfoCard component
   - Fix context menu props injection
 
 ## 1.0.0 - 2025-01-06
+
 ### Fixed
+
 - `v0.0.22` Form component
   - Fix bug where form data would not be reset to initial state when cancelling edition
   - Fix bug where swapping / deleting rows in a form table would trigger reodering twice upon submission
   - Fix bug where deleting a row in a swapped table would change other rows' order
 
 ## 0.36.2 - 2025-01-06
+
 ### Changed
+
 - `v0.0.3` ContextMenuItem component
   - Add min-width to styled Action container
 - `v0.0.7` Action component
   - Add `className` property
 
 ## 0.36.1 - 2025-01-06
+
 ### Added
+
 - `v0.0.6` Action component
   - Add `indicator` property to render an indicator on the top right corner of the static icon
 
 ## 0.36.0 - 2024-12-13
+
 ### Added
+
 - `v0.0.1` AccountBalance component
   - A component to display the account balance with correct format and € currency in the entity info card for rental folder
 
 ## 0.35.7 - 2024-12-06
 
 ## 0.35.6 - 2024-12-06
+
 ### Fixed
+
 - `v0.0.21` Form component
   - Improved form table cell for proper ellipsis behavior
 
 ## 0.35.5 - 2024-12-02
+
 ### Added
+
 - New icons (`@ubloimmo/front-tokens@0.1.29`)
 
 ### Fixed
+
 - `v0.0.10` ComboBoxButton component
   - Fix icon color when it is active and disabled
 - Add unit tests for components with low code coverage
 
 ## 0.35.4 - 2024-11-28
+
 ### Fixed
+
 - `v0.0.20` Form component
   - Propagate testId props to SelectInputOption and FormTableFooterSelect
 
 ## 0.35.3 - 2024-11-27
+
 ### Fixed
+
 - `v0.0.19` Form component
   - Rework FormTable controls markup and styles to fix css bug in Safari
 
 ## 0.35.1 - 2024-11-26
+
 ### Added
+
 - `v0.0.18` Form component
   - added missing TestIdProps
 
 ### Fixed
+
 - `v0.0.4` FormField component
   - propagate testId
 
 ## 0.35.0 - 2024-11-21
+
 ### Added
+
 - New icons (`@ubloimmo/front-tokens@0.1.26`)
   - FolderSparkle
 - `v0.0.5` Action component
-  
+
   - Add `description` property to display a text underneath the action's label
+
 - `v0.0.2` Callout component
-  
+
   - Add `size` property (m, l), defaulting to `m`
+
 - `v0.0.3` Hypertext component
   - Add `color` property, defaulting to `primary`
 
 ### Changed
+
 - `v0.0.2` Infobox component
   - use translation kit for `info` property when not provided
 
 ### Fixed
+
 - `v0.0.2` FeatureSwitch component
   - Add warning for missing `variant` and `name` property
 
 ## 0.34.1 - 2024-11-14
+
 ### Added
+
 - `v0.0.9` SelectInput component
   - Add `clearable` property to allow clearing the selected option
 - `v0.0.9` Button component
   - Add `embedded` property to render a button inside another button element
 
 ### Fixed
+
 - `v0.0.17` Form component
   - Fix assistive text (& error text) display in custom fields and tables
 
 ## 0.34.0 - 2024-11-12
+
 ### Changed
+
 - `v0.0.8` Field component
   - Allow assistive text to be changed based on value
 - `v0.0.16` Form component
   - Allow assistive text to be changed based on value for custom fields and tables
 
 ### Fixed
+
 - Storybook Build: dockerfile
 
 ## 0.33.15 - 2024-11-12
+
 ### Added
+
 - `v0.0.1` FeatureSwitch component
-  
+
   - A component that allows the user to activate, deactivate or select an option from a list for a feature
+
 - `v0.0.5` StaticIcon component
   - `indicator` property to render an indicator on the top right corner of the container
   - update documentation
 
 ### Changed
+
 - `v0.0.15` Form component
   - add `feature-switch` to available `kind`
 
 ### Fixed
+
 - `v0.0.2` Checkbox component
   - Fix CSS behavior to prevent checked icon from shifting downward when toggling active state
 
 ## 0.33.14 - 2024-10-31
+
 ### Fixed
+
 - `v0.0.4` CurrencyInput component
   - Add support for floating point precision by multiplying by 1000, removing decimals, then dividing by 10 and rounding to the nearest integer
 
 ## 0.33.13 - 2024-10-31
+
 ### Fixed
+
 - `v0.0.14` Form component
   - Fix bugs where query data was always merged with form data when updated by adding a new `shouldMergeQueryData` modifier, set to `true` by default.
   - Fix visual bug where readonly form table cells would sometimes have height too large
@@ -548,53 +690,72 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fix visual bug where a table's footer was not sized correctly when using custom-sized columns
 
 ## 0.33.12 - 2024-10-29
+
 ### Fixed
+
 - `v0.0.8` NumberInput component
   - Fix precision handling & display (no extra comma when not needed)
 
 ## 0.33.11 - 2024-10-29
+
 ### Fixed
+
 - `v0.0.6` Dialog component
   - Add a `forceOpen` property to open a dialog regardless of its current registration. Will register the dialog if not already registered.
 
 ## 0.33.10 - 2024-10-24
+
 ### Changed
+
 - `v0.0.5` EntityInfoCard component
   - Add `content` property to render custom content in status rows
 
 ### Fixed
+
 - `v0.0.11` Form component
   - Do not diplay required indicator on custom field's label & input while form is in read-mode
 
 ## 0.33.9 - 2024-10-23
+
 ### Added
+
 - `v0.0.3` Collapsible component
   - `defaultOpen` property to set the open state on initial render
 
 ## 0.33.8 - 2024-10-23
+
 ### Fixed
+
 - `v0.0.4` Switch component
   - Fix uncontrolled initial active state
 - `v0.0.2` Calendar component
   - Translate assistive texts to French
 
 ## 0.33.7 - 2024-10-22
+
 ### Fixed
+
 - Crash when displaying an empty number field in a read-mode form
 
 ## 0.33.6 - 2024-10-22
+
 ### Fixed
+
 - `v0.0.7` NumberInput component
   - Fix input regex pattern
   - Fix display in read-mode form
 
 ## 0.33.5 - 2024-10-22
+
 ### Added
+
 - `v0.0.2` SearchTextInput component
   - controlIcon prop
 
 ## 0.33.4 - 2024-10-21
+
 ### Changed
+
 - `v0.0.3` TableHeaderCell component, `v0.0.2` TableHeader component, `v0.0.3` TableCell component, `v0.0.2` TableBody component, `v0.0.2` TableFooter component, `v0.0.2` TableRow component, `v0.0.2` TableScrollView component
   - Implement custom testid & className support
 - `v0.0.13` Form component
@@ -606,15 +767,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Add support for `tableLayout` property, supporting values `auto` (default) and `fixed`
 
 ### Fixed
+
 - Global style override
   - Set every icon's overflow to `visible`
 
 ## 0.33.3 - 2024-10-17
+
 ### Changed
+
 - Mute console logs
 
 ## 0.33.2 - 2024-10-16
+
 ### Fixed
+
 - `v0.0.6` NumberInput component
   - Rewrite component around text input instead of number input
   - Add `scale` property to convert between decimal & integer notation
@@ -622,12 +788,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fix bug where typing a dot would yield `null`
 
 ## 0.33.1 - 2024-10-16
+
 ### Fixed
+
 - `v0.0.8` SelectInput, `v0.0.2` MultiSelectInput & `v0.0.4` SearchInput
   - Set width to 100%
 
 ## 0.33.0 - 2024-10-16
+
 ### Added
+
 - `v0.0.1` MultiSelectInput component
   - A multi select input component
   - Based on SelectInput component
@@ -640,6 +810,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add support for Skeleton rendering in view mode while field data is loading (select, search, multi-select)
 
 ### Changed
+
 - `v0.0.7` SelectInput component
   - Update some utility functions to use in new MultiSelectInput component
   - Tweak some styles
@@ -651,6 +822,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Tweak styles to match design (min-height, padding)
 
 ### Fixed
+
 - `v0.0.2` SmallLoader component
   - Fix props merging
   - Add support for `className` property
@@ -658,7 +830,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fix value update while options are loading
 
 ## 0.32.23 - 2024-10-14
+
 ### Added
+
 - `v0.0.6` Tooltip component
   - `iconColor` property to change the color of the default icon
 - `v0.0.4` Action component
@@ -667,39 +841,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `fill` property to make the text fill the available width
 
 ## 0.32.22 - 2024-10-14
+
 ### Fixed
+
 - `v0.0.6` SelectInput component
   - Fix `optionGroup` display (remove max-height)
   - Add testid to option group label
   - Add testid to component wrapper
 
 ## 0.32.21 - 2024-10-14
+
 ### Added
+
 - Test ids in various form sub-components
 
 ## 0.32.20 - 2024-10-11
+
 ### Added
+
 - `v0.0.11` Form component
   - `embedded` property to render a form inside another legacy form without triggering the outer form's submission
 
 ## 0.32.19 - 2024-10-10
+
 ### Added
+
 - `v0.0.1` SearchTextInput component
   - A text input component with a search icon
 - Even more icons
 
 ## 0.32.18 - 2024-10-08
+
 ### Changed
+
 - Update `@ubloimmo/front-tokens` to `0.1.24`
   - Regen icons
 
 ## 0.32.17 - 2024-10-07
+
 ### Changed
+
 - Update `@ubloimmo/front-tokens` to `0.1.23`
   - Regen icons
 
 ## 0.32.16 - 2024-10-04
+
 ### Added
+
 - `v0.0.2` Avatar component
   - Added organization avatar styles
   - Added `l` size
@@ -709,103 +897,136 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `submitButtonStyle` & `cancelButtonStyle` properties to style the submit and cancel buttons
 
 ## 0.32.15 - 2024-10-04
+
 ### Fixed
+
 - `v0.0.7` PhoneInput component
   - Do not break layout when used inside a flex container
 
 ## 0.32.14 - 2024-10-03
+
 ### Changed
+
 - `v0.0.10` Form component
   - `v0.0.3` FormEditBanner component
     - `submitLabel` & `cancelLabel` properties now accept string as well as translation keys
 
 ### Fixed
+
 - `v0.0.5` Dialog component
   - `register` effect now only unregisters on unmount if dialog is registered (fixes behavior in strict mode)
 
 ## 0.32.13 - 2024-10-01
+
 ### Fixed
+
 - `v0.0.4` Dialog component
   - Always try to register on mount
 
 ## 0.32.12 - 2024-10-01
+
 ### Changed
+
 - `v0.0.3` Dialog component
   - Rewrite internal state management using useReducer hook
   - Should fix issues with uncontrolled dialogs not being closed and registration issues
 
 ## 0.32.11 - 2024-09-30
+
 ### Fixed
+
 - `v0.0.3` IconPicker component
   - Infinite useEffect when used inside form with query
 
 ## 0.32.10 - 2024-09-24
+
 ### Added
+
 - `v0.0.9` Form component
   - Added ability to filter table values based on table data
 - `v0.0.5` SelectInput component
   - Added new `filterOption` callback property that allows for filtering options based on external criteria
 
 ## 0.32.9 - 2024-09-23
+
 ### Changed
+
 - `v0.0.2` IconPicker component
   - Added `IconName[][]` property support to render multiple rows
   - Added horizontal overflow on root container
 
 ## 0.32.8 - 2024-09-20
+
 ### Fixed
+
 - Mute logs
 
 ## 0.32.7 - 2024-09-20
+
 ### Fixed
+
 - `v0.0.12` ComboBox component
   - Update `creatable` ActionIcon props based on previous changes
 - `v0.0.9` ComboBoxButton component
   - Fix disabled hover border-color & cursor
 
 ## 0.32.6 - 2024-09-20
+
 ### Added
+
 - **`DOCS`** Changelog in docs
 
 ### Fixed
+
 - `v0.0.11` ComboBox component
   - Update `creatable` ActionIcon color based on previous changes
 - `v0.0.2` Collapsible component
   - Clamp arrow button height to match design
 
 ## 0.32.5 - 2024-09-19
+
 ### Changed
+
 - `v0.0.4` ActionIcon component
   - Update styles based on size and color according to figma update
   - Update docs
   - Fix size type declaration
 
 ### Fixed
+
 - `v0.0.8` Form component
   - Do not render custom content if it itself doesn't (returns `null`)
 
 ## 0.32.4 - 2024-09-19
+
 ### Fixed
+
 - `v0.0.2` ComboBoxInput component
   - Render passed html id
 
 ## 0.32.3 - 2024-09-18
+
 ### Changed
+
 - `v0.0.7` Form component
   - Pass form edit state to `layout.hidden()` function
 
 ### Fixed
+
 - `v0.0.3` Action component
   - Stop event propagation
 - `v0.0.2` ContextMenuItem interal component
   - Stop event propagation
 
 ## 0.32.2 - 2024-09-18
+
 ### Changed
+
 - `v0.0.8` ComboBoxButton component
   - Remove warning when `multi` and `!showIcon`
 
 ### Fixed
+
 - `v0.0.6` Form component
   - Force ComboBox options to not be editable not deletable in display mode
 - `v0.0.10` ComboBox component
@@ -813,7 +1034,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - JsDoc
 
 ## 0.32.1 - 2024-09-18
+
 ### Changed
+
 - `v0.0.5` Form component
   - Improve `asModal` property
     - Render a "close" button while editing
@@ -822,7 +1045,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add `Esc` keyboard shortcut to close dialog
 
 ## 0.32.0 - 2024-09-18
+
 ### Added
+
 - New dependencies
   - `@dnd-kit/core`: `^6.1.0`
   - `@dnd-kit/modifiers`: `^7.0.0`
@@ -845,12 +1070,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Supports all available form field variants as well as custom fields
 
 ### Changed
+
 - `v0.0.2` Table layout
   - Added `forwardRef` and `onClick` prop to TableRow
 - `v0.0.10` ComboBox component
   - Remove warn when `multi` and `!showIcon`
 
 ### Fixed
+
 - `v0.0.2` FormDebug internal component
   - Replace duplicate display of `data` with one for `initialData`
   - Remove duplicate `Mode` debug block
@@ -861,12 +1088,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Various css fixes so as to not impact nested tables (e.g. Calendar)
 
 ## 0.31.2 - 2024-09-10
+
 ### Fixed
+
 - `v0.0.7` ComboBoxButton component
   - grid column template set to `auto auto`
 
 ## 0.31.1 - 2024-09-10
+
 ### Added
+
 - `v0.0.2` DateInput component
   - `format` property to control output format
 - `v0.0.9` ComboBox component
@@ -875,11 +1106,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `deletable`, `editable` properties
 
 ### Changed
+
 - `v0.0.3` ActionIcon component
   - new `m` & `l` (formerly `m`) sizes
 
 ## 0.31.0 - 2024-09-09
+
 ### Added
+
 - `v0.0.1` Table layout
   - A structured layout element used to display data in rows and columns.
   - Sub-components included:
@@ -891,18 +1125,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - TableScrollView
 
 ### Fixed
+
 - `v0.0.8` ComboBox component
   - add missing `description` property for flexLayout display
 
 ## 0.30.1 - 2024-09-09
+
 ### Added
+
 - Generated new icons from tokens
 
 ### Changed
+
 - Updated dependencies
 
 ## 0.30.0 - 2024-09-06
+
 ### Added
+
 - `v0.0.3` Form component
   - Ability to customize columns. Rounds odd columns up to their even couterpart (3 becomes 4 and so on).
   - Ability to render bespoke components in content
@@ -918,21 +1158,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Customizable submit & cancel labels using uikitTranslation action keys
 
 ### Fixed
+
 - `v0.0.8` ComboBox component
   - Update useEffect dependencies to remove infinite render
 - `v0.0.3` Divider component
   - Only render Heading if divider label is provided
 
 ## 0.29.0 - 2024-09-03
+
 ### Added
+
 - `v0.0.1` Collapsible component
   - An expandable component that allow users to reveal or hide sub content on click.
 
 ## 0.28.0 - 2024-09-02
+
 ### Added
+
 - Global translation provider
 
 ### Changed
+
 - `v0.0.5` Chip component
   - Translate delete button title
 - `v0.0.5` ComboBoxButton component
@@ -947,26 +1193,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Translation active / inactive helper labels
 
 ### Fixed
+
 - `v0.0.5` Tooltip component
   - Add support for usage inside other uikit components by checking aborting if IntersectionObserver is defined in global context
 
 ## 0.27.0 - 2024-08-29
+
 ### Added
+
 - **`DOCS`** Callout block
   - parses markdown content and formats it accordingly for usage inside component documentation files
 - `v0.0.1` SearchInput component
   - an input designed for querying and retrieving information from a dataset by typing
 
 ### Changed
+
 - `v0.0.2` HyperText component
   - Show underline on hover for better accessibility
 - `v0.0.8` Button component
   - New `expandOnHover` property that requires both icon and label
 - `v0.0.4` SelectInput component
-  
+
   - add `Loading` component displaying when `isLoading` is true
   - add empty state text in `searchable` mode when there are no results
   - styles: fixed cursor `not-allowed` application on children elements when disabled
+
 - FormField component
   - update display value for search and select inputs
 - `v0.0.3` Callout component
@@ -975,16 +1226,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Replace letter spacing, text indent, line height and font feature settings upon viewport size change (media queries)
 
 ### Fixed
+
 - `v0.0.3` Form component
   - Fix responsive content display at very small viewport sizes
 - `v0.0.4` SelectInput component
   - Option label ellispis at small sizes
 
 ## 0.26.0 - 2024-08-27
+
 ### Added
+
 - `v0.0.1` ContextMenu component
 
 ### Changed
+
 - `v0.0.2` Callout component
   - Replace px usage with css variable
   - Mute logs
@@ -994,20 +1249,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add support for ContextMenu
 
 ### Fixed
+
 - Circular dependencies in whole project
 
 ## 0.25.0 - 2024-08-27
+
 ### Added
+
 - `v0.0.1` IconPicker component
 - `v0.0.1` IconPickerInput internal component
   - Used to make IconPicker available as a field and inside forms
 
 ## 0.24.0 - 2024-08-27
+
 ### Added
+
 - `v0.0.1` ContextLine component
 
 ## 0.23.2 - 2024-08-22
+
 ### Changed
+
 - `v0.0.7` ComboBox component
   - Add support for comboboxButton descriptions
 - `v0.0.5` ComboBoxButton component
@@ -1017,13 +1279,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Make field take full width based on breakpoint
 
 ## 0.23.1 - 2024-08-21
+
 ### Added
+
 - `v0.0.1` ComboBoxInput internal component
   - Used to make comboBox available as a field and inside forms
   - `onChange` returns a single value or `null` when `multi=false`
 - `v0.0.1` EnergyLabel component
 
 ### Changed
+
 - `v0.0.2` Divider component
   - added property `justify` to change label alignment (`start` or `center`)
 - `v0.0.3` SelectInput component
@@ -1042,6 +1307,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - declare `inputComponentMap` inside the component's `render` body to benefit from nested generics
 
 ### Fixed
+
 - `v0.0.6` ComboBox component
   - Infinite renders caused by `props.value` & `selection` mismatch
   - Properly handle falsy values by checking with `isNullish(value)` instead of `!value`
@@ -1049,12 +1315,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Rewrite outside click detection to work with custom components by checking wether click target is contained within the select inputs DOM tree
 
 ## 0.23.0 - 2024-08-20
+
 ### Added
+
 - `v0.0.1` Calendar component
 - `v0.0.1` DateInput component
   - with Input, Field and Form integration
 
 ### Changed
+
 - Global style
   - set selection highlight color based on current theme
 - `v0.0.2` SelectInput component
@@ -1066,26 +1335,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add support for grid display when `columns` prop is provided
 
 ### Fixed
+
 - `v0.0.2` Icon component
   - Render transparent spacer of same size while icon is loading
 
 ## 0.22.0 - 2024-07-29
+
 ### Added
+
 - `v0.0.1` Callout component
   - a card to display permanent feedback information
 
 ### Fixed
+
 - `v0.0.3` EntityInfoCard component
   - remove warn for missing name
 - `v0.0.6` PhoneInput component
   - Do not convert nullish values to `+33` on initialization
 
 ## 0.21.0 - 2024-07-24
+
 ### Added
+
 - `v0.0.1` SelectInput
   - A customizable, searchable select input
 
 ### Changed
+
 - `mergeDefaultProps`, `useMergedProps`
   - Allow foreign props not contained in defaultProps in final object.
   - Useful for polymorphic props
@@ -1093,18 +1369,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - display selected option's label based on field value
 
 ## 0.20.1 - 2024-07-23
+
 ### Fixed
+
 - `v0.0.4` CopyClipboardInfoCard
   - Display href info underline while in ellipsis
 
 ## 0.20.0 - 2024-07-23
+
 ### Added
+
 - `v0.0.1` Checkbox component
 - `v0.0.3` ComboBox & `v0.0.2` ComboBoxButton
   - add optional `showIcon` property (set default to `true`)
   - add button shadow on enabled options
 
 ### Changed
+
 - `v0.0.2` EntityInfoCard
   - `onInfoCopied` callback property that gets called
     if any nested CopyClipboardInfoCard's info gets copied to the users's clipboard
@@ -1112,15 +1393,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `onCopied` callback property
 
 ### Fixed
+
 - `v0.0.3` CopyClipboardInfoCard
   - Information span overflow & ellipsis
 
 ## 0.19.2 - 2024-07-22
+
 ### Added
+
 - New icons following `front-tokens@0.1.19` update
 
 ## 0.19.1 - 2024-07-18
+
 ### Fixed
+
 - `v0.0.2` CopyClipboardInfoCard
   - Display underline in href label even through ellipsis
   - Change href label color on hover
@@ -1130,7 +1416,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Use `@storybook/builder-vite` in config
 
 ## 0.19.0 - 2024-07-17
+
 ### Added
+
 - `v0.0.1` CopyClipboardInfoCard
   - Displays an info and / or a link in an easily readable card
   - Allows easy copying to clipboard
@@ -1139,6 +1427,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Renders several levels of data and info in a easily digestible manner
 
 ### Changed
+
 - `v0.0.2` Switch component
   - styles: disabled colors to match Figma updates on the component
   - add `withHelper`, `activeHelperText` and `inactiveHelperText` to handle the displaying of the text
@@ -1146,34 +1435,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Allow cursor customization, defaults to `help`
 
 ## 0.18.0 - 2024-07-16
+
 ### Added
+
 - `v0.0.1` Switch component
 - `v0.0.4` Text component
   - an optional uppercase property to capitalize its text contents
 
 ## 0.17.1 - 2024-07-09
+
 ### Fixed
+
 - Input / Field controlled / uncontrolled states and value propagation
 
 ## 0.17.0 - 2024-07-08
+
 ### Added
+
 - `v0.0.1` TextAreaInput component
 
 ### Fixed
+
 - (Un)controlled input detection & warnings
 
 ## 0.16.1 - 2024-07-08
+
 ### Changed
+
 - `v0.0.3` ComboBox
   - Support for setting & updating selection through `value` prop
 
 ### Fixed
+
 - `v0.0.4` Input components
   - replace placholder `placeholder` default prop with empty string
 - TYPES: Do not export inner flex layout to avoid ts error when used as a dependency
 
 ## 0.16.0 - 2024-07-02
+
 ### Added
+
 - `v0.0.1` Divider component
   - A horizontal line with an optional label
 - `v0.0.1` Form component
@@ -1182,6 +1483,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Data validation using zod schemas, error propagation
 
 ### Changed
+
 - Input styles
   - Added support for displaying inside a table cell
 - `v0.0.2` GridItem layout
@@ -1192,94 +1494,127 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added support for object / array props with proper formatting
 
 ### Fixed
+
 - `v0.0.4` Field component
   - Do not render assistive / error text if no content available
   - This prevents rendering an additional gap at the bottom of the field between its input and an effectively empty div.
 
 ## 0.15.0 - 2024-07-02
+
 ### Added
+
 - `v0.0.1` Avatar component
 
 ### Changed
+
 - `v0.0.4` EmailInput component
   - added "autocomplete" attribute
 
 ## 0.14.1 - 2024-06-27
+
 ### Fixed
+
 - `v0.0.2` ComboBox component
   - include "combobox" ARIA role
 - `v0.0.2` ComboBoxButton component
   - set type to "button"
 
 ## 0.14.0 - 2024-06-27
+
 ### Added
+
 - `v0.0.1` ComboBox component
 - `v0.0.1` ComboBoxButton component
 
 ## 0.13.0 - 2024-06-26
+
 ### Added
+
 - `v0.0.1` Modal component
 
 ## 0.12.0 - 2024-06-24
+
 ### Added
+
 - `v0.0.1` InfoBox component
 
 ## 0.11.2 - 2024-06-20
+
 ### Changed
+
 - Upgraded storybook to latest version
 
 ### Fixed
+
 - `v0.0.3` EmailInput component
   - Use standard validation regex
 - `v0.0.4` PasswordInput component
   - Include `autoComplete="new-password"` attribute
 
 ## 0.11.1 - 2024-06-19
+
 ### Fixed
+
 - `v0.0.4` TextInput component
   - TestIdProps
 
 ## 0.11.0 - 2024-06-19
+
 ### Added
+
 - `v0.0.2` Loading component
-  
+
   - animation type `ProgressBar`
   - `className` & `TestId` props
+
 - `v0.0.1` SmallLoader component
 
 ### Fixed
+
 - `v0.0.4` NumberInput component
-  
+
   - prevent controls from changing value when input is `disabled`
+
 - `v0.0.4` StateIndicator component
   - styles: set overflow to hidden to disable scrollbar inside the component in Firefox
 
 ## 0.10.8 - 2024-06-17
+
 ### Added
+
 - `v0.0.6` Button components
   - `fullWidth` prop: fills the parent container if true
 
 ## 0.10.7 - 2024-06-13
+
 ### Fixed
+
 - `v0.0.5` Button component
   - Avoid text break by setting inner span width to `max-content`
 
 ## 0.10.6 - 2024-06-13
+
 ### Changed
+
 - `v0.0.4` Button component
   - Add testid prop support
   - Add style override usage (`styled(Button)`) support
 
 ### Fixed
+
 - reduced all input components `min-width` to 6rem
 
 ## 0.10.5 - 2024-06-12
+
 ### Changed
+
 - `v0.0.6` Badge component
   - increased `border-radius` for rounded corners
 
 ## 0.10.4 - 2024-06-11
+
 ### Added
+
 - `onBlur` & `inputRef` to all input & field components
 - `useInputRef` custom hook
   - used to assign an element to both parent and inner `inputRef`s
@@ -1288,28 +1623,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - normalizes an nullable value and returns `undefined` if `null`
 
 ## 0.10.3 - 2024-06-06
+
 ### Changed
+
 - `v.0.0.5` Badge component
   - Require at least one of `label` or `icon`
 
 ## 0.10.2 - 2024-06-06
+
 ### Fixed
+
 - `v.0.0.4` Chip component
   - assign onDelete to delete button onMouseDown as well to stop event propagation
 
 ## 0.10.1 - 2024-06-06
+
 ### Fixed
+
 - `v.0.0.3` Chip component
   - stop onDelete event propagation
 
 ## 0.10.0 - 2024-06-06
+
 ### Added
+
 - `v0.0.1` CurrencyInput component
 - New `name` & `onChangeNative` props for all Inputs & Field components
 - `useTestId` & `TestIdProps`
   - Ability to override / replace default test id
 
 ### Changed
+
 - Propagate native input event from custom inputs regardless of onChange condition
 - `v0.0.2` Field component
   - Display generic error messages based on underlying input validity
@@ -1320,26 +1664,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add support for custom test id
 
 ### Fixed
+
 - `v.0.0.2` Chip component
   - make icon property optional
 
 ## 0.9.0 - 2024-06-04
+
 ### Added
+
 - `v0.0.1` Chip component
 
 ## 0.8.1 - 2024-06-03
+
 ### Fixed
+
 - `v0.0.3` State Indicator
   - Use correct text size (from S to M)
 
 ## 0.8.0 - 2024-06-03
+
 ### Added
+
 - `v0.0.1` Field component
 - New `className` prop for compatibility with `styled([Component])` usage:
   - `Text`, `Heading` typo components
   - `Flex`, `Grid` & `GridItem` layouts
 
 ### Changed
+
 - Component init script
   - Added Boilerplace file contents
 - Generic Input component typings
@@ -1347,41 +1699,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added boilerplate content
 
 ### Fixed
+
 - Various minor fixes in multiple components
   - Unit tests
   - Styles
   - Test ids
 
 ## 0.7.0 - 2024-05-30
+
 ### Added
+
 - `v0.0.1` Tooltip component
 
 ## 0.6.4 - 2024-05-29
+
 ### Fixed
+
 - Wait for overrides to have been fetched before applying favicon
 
 ## 0.6.3 - 2024-05-28
+
 ### Fixed
+
 - Compare favicon retry count to retry limit, allowing favicon to actually be applied
 
 ## 0.6.2 - 2024-05-28
+
 ### Fixed
+
 - Actually check if favicon has been applied
 
 ## 0.6.1 - 2024-05-28
+
 ### Added
+
 - Set favicon from theme provider according to overrides
 
 ### Changed
+
 - Theme provider optimizations
 - Bumped `@ubloimmo/front-tokens` to `0.0.17`
 - Rewrite `GlobalStyle` in order to decrease excessive renders and increase perf
 
 ### Fixed
+
 - Effect color mapping thanks to updated design tokens
 
 ## 0.6.0 - 2024-05-28
+
 ### Added
+
 - `v0.0.1` GridItem layout
 - Docs
   - `Typography` page
@@ -1390,6 +1757,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Link to related `Properties` page
 
 ### Changed
+
 - Story sorting in storybook
 - Docs
   - Index pages
@@ -1397,42 +1765,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Page Header Styles
 
 ### Fixed
+
 - Shadow / effect parsing following `@ubloimmo/front-tokens` regen
 - Various minor fixes
 
 ## 0.5.1 - 2024-05-23
+
 ### Fixed
+
 - `v0.0.3` PhoneInput component
   - width
   - z-clashing
   - responsive height
 
 ## 0.5.0 - 2024-05-22
+
 ### Added
+
 - `v.0.0.1` Hypertext component
 
 ## 0.4.4 - 2024-05-21
+
 ### Added
+
 - Phone input default placeholder
 
 ### Fixed
+
 - Phone input foreign styles
 
 ## 0.4.0 - 2024-05-20
+
 ### Added
+
 - `v.0.0.1` PhoneInput component
 - Full coverage test for NumberInput component
 
 ## 0.3.2 - 2024-05-14
+
 ### Fixed
+
 - Theme override validation condition
 
 ## 0.3.1 - 2024-05-14
+
 ### Fixed
+
 - Theme override URL template
 
 ## 0.3.0 - 2024-05-14
+
 ### Added
+
 - `v0.0.1` Action Icon component
   - Logic
   - Styles
@@ -1441,31 +1825,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Extract` type: a safeguard when dealing with union subsets
 
 ### Fixed
+
 - `v0.0.2` State Indicator component
   - Set minimum height to 40px
   - Reduce markup complexity (remove nested div)
 
 ## 0.2.0 - 2024-05-13
+
 ### Added
+
 - `v.0.0.1` State indicator component
 - `EnumExtension` generic type
 
 ### Changed
+
 - Typings
   - Replace `StaticIconColor` with `ColorKeyOrWhite`
 
 ### Fixed
+
 - Text & Heading stories text content
 
 ## 0.1.1 - 2024-04-17
+
 ### Fixed
+
 - `v0.0.3` Static Icon component
   - Sizing
 - `v0.0.2` Action component
   - Responsive behaviour
 
 ## 0.1.0 - 2024-04-16
+
 ### Added
+
 - License & copyright
 - `v0.0.1` Action component
   - [Usage](https://ublo.ublo.org/design-system?path=/docs/components-action-usage--docs)
@@ -1477,6 +1870,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Card elevation shadow
 
 ### Changed
+
 - `v0.0.2` Button component
   - Secondary styles (white, primary, error)
 - `v0.0.3` Badge component
@@ -1485,17 +1879,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - White variant
 
 ### Removed
+
 - Icons:
   - Delete (custom icon)
 
 ### Fixed
+
 - `v0.0.2` InputLabel
   - Text size after font style overhaul
 - `v0.0.2` InputAssistiveText
   - Text size after font style overhaul
 
 ## 0.0.2-beta.0 - 2024-04-11
+
 ### Added
+
 - Global Theme
 - Theme context, provider & consumer hook.
 - Global style injector (based on `styled-components`'s `GlobalStyle` component).

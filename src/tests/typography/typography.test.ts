@@ -120,6 +120,7 @@ describe("typography", () => {
           "overline",
           "lineThrough",
           "uppercase",
+          "capitalized",
         ]);
         expect(sanitizeTypographyProps(defaultProps, noProps)).toEqual(
           defaultProps
@@ -158,6 +159,7 @@ describe("typography", () => {
           underline: true,
           overline: true,
           uppercase: true,
+          capitalized: true,
           lineThrough: true,
           weight: "medium",
           important: false,
