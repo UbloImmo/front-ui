@@ -91,6 +91,24 @@ export const useAsyncData = <
   );
 
   /**
+   * A ref holding the ID of the last load operation.
+   * Used to track concurrent load operations and prevent race conditions.
+   */
+  const lastLoadId = useRef<bigint>(0n);
+
+  /**
+   * Generates a new unique load ID by incrementing the last ID.
+   * Used to track concurrent load operations and prevent race conditions.
+   *
+   * @returns {bigint} A new unique load ID
+   */
+  const getLoadId = useCallback(() => {
+    const newId = lastLoadId.current + 1n;
+    lastLoadId.current = newId;
+    return newId;
+  }, []);
+
+  /**
    * Indicates whether the data is currently being loaded.
    */
   const [isLoading, setIsLoading] = useState(
@@ -131,6 +149,8 @@ export const useAsyncData = <
    */
   const loadData = useCallback<UseAsyncDataLoadFn<TData, TDataParams>>(
     async (currentOptions?: UseAsyncDataOptions<TData, TDataParams>) => {
+      // generate a new loadId store it in the ref
+      const loadId = getLoadId();
       let state: UseAsyncDataState<TData> = {
         data,
         error,
@@ -161,14 +181,26 @@ export const useAsyncData = <
           isLoading: false,
         };
       }
-      setData(state.data);
-      setError(state.error);
-      setIsLoading(state.isLoading);
-      triggerLoadCallbacks(state, currentOptions);
-
+      // only update state and trigger callbacks if the loadId is the same as the last loadId
+      // this is to prevent race conditions when multiple refetches are triggered closely together
+      // only the latest loadId will trigger the update
+      if (loadId === lastLoadId.current) {
+        setData(state.data);
+        setError(state.error);
+        setIsLoading(state.isLoading);
+        triggerLoadCallbacks(state, currentOptions);
+      }
       return state;
     },
-    [data, dataOrLoadingFn, error, isLoading, triggerLoadCallbacks, options]
+    [
+      getLoadId,
+      data,
+      error,
+      isLoading,
+      dataOrLoadingFn,
+      options?.params,
+      triggerLoadCallbacks,
+    ]
   );
 
   // trigger load on mount

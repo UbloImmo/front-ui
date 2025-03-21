@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `useAsyncData` utility hook
+  - Prevent async race conditions
+
+- **DOCS**
+  - Properly color all generated code tokens
+  - Typo in Heading usage doc
+
 ### Added
 
 - Added `capitalized` property for Text and Heading to capitalize the first letter of each word

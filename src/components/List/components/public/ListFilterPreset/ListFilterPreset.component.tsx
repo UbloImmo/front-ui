@@ -13,6 +13,8 @@ import type {
   ListFilterPresetStyleProps,
 } from "./ListFilterPreset.types";
 
+// TODO: make its background white by default
+// TODO: change the text's color to `${colorKey}-dark` when active
 /**
  * A component that displays a single filter preset button
  * and allows interacting with it.
