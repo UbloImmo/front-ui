@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.2` ListFilterPreset component
+  - Tweak styles
+
 ### Added
 
 - Optional `lineClamp` property to Typography component props
