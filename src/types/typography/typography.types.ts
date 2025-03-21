@@ -99,6 +99,14 @@ export type TypographyProps = {
    */
   ellipsis?: boolean;
   /**
+   * The number of lines to display before truncating the text.
+   *
+   * No truncation will occur if this is `null`.
+   *
+   * @default null
+   */
+  lineClamp?: Nullable<number>;
+  /**
    * Whether or not the text contents should be uppercase
    *
    * @default false
