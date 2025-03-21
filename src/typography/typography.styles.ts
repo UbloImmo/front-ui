@@ -1,6 +1,7 @@
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
 import {
   isNumber,
+  isString,
   objectKeys,
   transformObject,
   type GenericFn,
@@ -251,7 +252,7 @@ export const buildTypographyStyle = (
         width: ${apply("100%")};
       `}
 
-      ${isNumber(webkitLineClamp) &&
+      ${isString(webkitLineClamp) &&
       css`
         display: ${apply("-webkit-box")};
         -webkit-line-clamp: ${apply(webkitLineClamp)};
