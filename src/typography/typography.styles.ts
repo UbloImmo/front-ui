@@ -255,8 +255,10 @@ export const buildTypographyStyle = (
       ${isString(webkitLineClamp) &&
       css`
         display: ${apply("-webkit-box")};
+        line-clamp: ${apply(webkitLineClamp)};
         -webkit-line-clamp: ${apply(webkitLineClamp)};
         -webkit-box-orient: ${apply("vertical")};
+        white-space: ${apply("normal")};
       `}
     `;
   };
