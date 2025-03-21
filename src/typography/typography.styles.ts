@@ -101,6 +101,7 @@ export const sanitizeTypographyProps = (
     underline: props.underline ?? defaults.underline,
     overline: props.overline ?? defaults.overline,
     lineThrough: props.lineThrough ?? defaults.lineThrough,
+    capitalized: props.capitalized ?? defaults.capitalized,
     uppercase: props.uppercase ?? defaults.uppercase,
     children: props.children ?? null,
     important: props.important ?? defaults.important,
@@ -185,6 +186,7 @@ export const buildTypographyStyle = (
       important,
       ellipsis,
       uppercase,
+      capitalized,
       align,
       fill,
       noWrap,
@@ -196,7 +198,11 @@ export const buildTypographyStyle = (
     const fontWeight = cssVarUsage(`text-weight-${weight.toLowerCase()}`);
     const fontStyle = (italic ?? defaults.italic) ? "italic" : "normal";
     const fontItalic = `"ital" ${(italic ?? defaults.italic) ? 1 : 0}`;
-    const textTransform = uppercase ? "uppercase" : "none";
+    const textTransform = uppercase
+      ? "uppercase"
+      : capitalized
+        ? "capitalize"
+        : "none";
     const textDecoration = typographyTextDecoration({
       lineThrough,
       underline,
@@ -249,6 +255,7 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   underline: false,
   overline: false,
   lineThrough: false,
+  capitalized: false,
   important: false,
   ellipsis: false,
   uppercase: false,
