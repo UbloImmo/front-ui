@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.8.8 - 2025-03-25
 ### Fixed
-
 - `v0.0.5` List component
   - Delay initial load until search params have been applied
 
