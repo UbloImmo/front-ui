@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.5` List component
+  - Delay initial load until search params have been applied
+
 ## 1.8.7 - 2025-03-21
 ### Fixed
 - `lineClamp` style property combination (add `white-space:normal`)

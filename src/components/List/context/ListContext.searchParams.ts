@@ -36,7 +36,7 @@ const writeWindowSearchParams = (searchParams: URLSearchParams): void => {
  * @param {Pick<ListContextConfig<TItem>, "searchParams">} config - The list context configuration
  * @param {UseListOptionsReturn<TItem>} options - The list options state and methods
  * @param {boolean} configLoading - Whether the list configuration is loading
- * @returns {void} This hook doesn't return anything
+ * @returns {UseListContextSearchParamsReturn} The initial sync status
  */
 export const useListContextSearchParams: UseListContextSearchParams = <
   TItem extends object,
@@ -45,8 +45,6 @@ export const useListContextSearchParams: UseListContextSearchParams = <
   { options, updateOptionSelection }: UseListOptionsReturn<TItem>,
   configLoading: boolean
 ) => {
-  const [initialSynced, setInitialSynced] = useState(false);
-
   const readSearchParams = useMemo(
     () => searchParams?.readParams ?? readWindowSearchParams,
     [searchParams?.readParams]
@@ -68,6 +66,8 @@ export const useListContextSearchParams: UseListContextSearchParams = <
     () => readWrite || searchParams?.sync === "read",
     [readWrite, searchParams?.sync]
   );
+
+  const [initialSynced, setInitialSynced] = useState(!read);
 
   const write = useMemo(
     () => readWrite || searchParams?.sync === "write",
@@ -150,8 +150,13 @@ export const useListContextSearchParams: UseListContextSearchParams = <
    * Initializes the list options from the URL search parameters when the component mounts.
    */
   useLayoutEffect(() => {
-    if (initialSynced || configLoading || !read) return;
+    // initialSynced only starts as false if read is true
+    if (initialSynced || configLoading) return;
     setInitialSynced(true);
     initOptionsFromSearchParams();
-  }, [configLoading, initOptionsFromSearchParams, initialSynced, read]);
+  }, [configLoading, initOptionsFromSearchParams, initialSynced]);
+
+  return {
+    initialSynced,
+  };
 };

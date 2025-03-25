@@ -52,11 +52,15 @@ export const useListContextStore = <
     [filterPresets.filterPresetsLoading, filters.filtersLoading]
   );
 
-  useListContextSearchParams(config, options, configLoading);
+  const { initialSynced } = useListContextSearchParams(
+    config,
+    options,
+    configLoading
+  );
 
   const loading = useMemo(() => {
-    return dataProvider.loading || configLoading;
-  }, [dataProvider.loading, configLoading]);
+    return dataProvider.loading || configLoading || !initialSynced;
+  }, [dataProvider.loading, configLoading, initialSynced]);
 
   useEffect(() => {
     if (loading) return;

@@ -38,11 +38,15 @@ import type { ReactNode } from "react";
 
 // LIST SEARCH PARAMS ---------------------------------------------------------------------------
 
+export type UseListContextSearchParamsReturn = {
+  initialSynced: boolean;
+};
+
 export type UseListContextSearchParams = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "searchParams">,
   options: UseListOptionsReturn<TItem>,
   configLoading: boolean
-) => void;
+) => UseListContextSearchParamsReturn;
 
 export type ListConfigSearchParamsReadParamsFn = GenericFn<[], URLSearchParams>;
 
