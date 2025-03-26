@@ -4,13 +4,13 @@ import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 
 import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "../../../../utils";
 /**
- * React component generated from bootstrap icon: `check-square-fill-bootstrap`.
+ * React component generated from bootstrap icon: `check-square-fill`.
  * Auto-generated before NPM release
  *
  * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const CheckSquareFillBootstrap = (props: CommonIconProps): JSX.Element => {
+export const CheckSquareFill = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {

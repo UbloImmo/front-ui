@@ -28,7 +28,7 @@ export const PiggyBank2Exclamation = (props: CommonIconProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <g clipPath="url(#clip0_1273_376)" >
+      <g clipPath="url(#clip0_1279_1671)" >
         <path
           d="M11.9971 6.60727C11.9971 6.88341 11.7732 7.10727 11.4971 7.10727C11.2209 7.10727 10.9971 6.88341 10.9971 6.60727C10.9971 6.33113 11.2209 6.10727 11.4971 6.10727C11.7732 6.10727 11.9971 6.33113 11.9971 6.60727Z"
           fill={color}
@@ -41,7 +41,7 @@ export const PiggyBank2Exclamation = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_1273_376" >
+        <clipPath id="clip0_1279_1671" >
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>

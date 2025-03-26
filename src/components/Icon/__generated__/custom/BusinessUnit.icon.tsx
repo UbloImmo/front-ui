@@ -28,7 +28,7 @@ export const BusinessUnit = (props: CommonIconProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <g clipPath="url(#clip0_941_589)" >
+      <g clipPath="url(#clip0_1279_1859)" >
         <path d="M11 13H10V14H11V13Z" fill={color} />
         <path d="M10 11H11V12H10V11Z" fill={color} />
         <path d="M3 12H2V13H3V12Z" fill={color} />
@@ -49,7 +49,7 @@ export const BusinessUnit = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_941_589" >
+        <clipPath id="clip0_1279_1859" >
           <rect width="16" height="16" rx="2" fill={color} />
         </clipPath>
       </defs>

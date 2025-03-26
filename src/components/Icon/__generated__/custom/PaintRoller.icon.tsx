@@ -28,7 +28,7 @@ export const PaintRoller = (props: CommonIconProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <g clipPath="url(#clip0_1055_142)" >
+      <g clipPath="url(#clip0_1279_1787)" >
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -37,7 +37,7 @@ export const PaintRoller = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_1055_142" >
+        <clipPath id="clip0_1279_1787" >
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>

@@ -28,7 +28,7 @@ export const JournalCheck = (props: CommonIconProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <g clipPath="url(#clip0_1222_578)" >
+      <g clipPath="url(#clip0_1279_1730)" >
         <path
           d="M4.22021 4.71997C4.22021 4.44383 4.44407 4.21997 4.72021 4.21997H8.00021C8.27636 4.21997 8.50021 4.44383 8.50021 4.71997C8.50021 4.99611 8.27636 5.21997 8.00021 5.21997H4.72021C4.44407 5.21997 4.22021 4.99611 4.22021 4.71997Z"
           fill={color}
@@ -45,7 +45,7 @@ export const JournalCheck = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_1222_578" >
+        <clipPath id="clip0_1279_1730" >
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>

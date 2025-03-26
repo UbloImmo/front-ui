@@ -29,8 +29,6 @@ export const HexagonCoreHalf = (props: CommonIconProps): JSX.Element => {
       data-testid="icon"
     >
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
         d="M8 3C7.89209 3 7.78417 3.02791 7.68748 3.08373L3.9375 5.31957C3.74412 5.43121 3.625 5.63754 3.625 5.86083V10.1391C3.625 10.3624 3.74412 10.5688 3.9375 10.6804L7.68748 12.9162C7.78417 12.9721 7.89209 13 8 13V3Z"
         fill={color}
       />

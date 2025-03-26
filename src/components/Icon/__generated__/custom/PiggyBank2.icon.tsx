@@ -28,7 +28,7 @@ export const PiggyBank2 = (props: CommonIconProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <g clipPath="url(#clip0_1273_381)" >
+      <g clipPath="url(#clip0_1279_1693)" >
         <path
           d="M3.29823 7.97913C3.51554 6.77939 3.954 6.11717 4.53407 5.7326C5.13681 5.33301 5.97917 5.17313 7.12956 5.17313C7.4057 5.17313 7.62956 4.94928 7.62956 4.67313C7.62956 4.39699 7.4057 4.17313 7.12956 4.17313C5.91989 4.17313 4.8338 4.33409 3.98151 4.89913C3.10654 5.47921 2.56338 6.42543 2.31424 7.8009C2.26503 8.07263 2.44541 8.3328 2.71713 8.38201C2.98885 8.43123 3.24902 8.25085 3.29823 7.97913Z"
           fill={color}
@@ -45,7 +45,7 @@ export const PiggyBank2 = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_1273_381" >
+        <clipPath id="clip0_1279_1693" >
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>

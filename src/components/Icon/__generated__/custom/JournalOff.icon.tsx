@@ -28,7 +28,7 @@ export const JournalOff = (props: CommonIconProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <g clipPath="url(#clip0_1222_595)" >
+      <g clipPath="url(#clip0_1279_1776)" >
         <path
           d="M4.72021 10.78C4.44407 10.78 4.22021 11.0039 4.22021 11.28C4.22021 11.5562 4.44407 11.78 4.72021 11.78H5.00021C5.27636 11.78 5.50021 11.5562 5.50021 11.28C5.50021 11.0039 5.27636 10.78 5.00021 10.78H4.72021Z"
           fill={color}
@@ -45,7 +45,7 @@ export const JournalOff = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_1222_595" >
+        <clipPath id="clip0_1279_1776" >
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>

@@ -28,7 +28,7 @@ export const AppsPlusFill = (props: CommonIconProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <g clipPath="url(#clip0_1152_65)" >
+      <g clipPath="url(#clip0_1279_1739)" >
         <path
           d="M2 0C0.895431 0 0 0.89543 0 2V5C0 6.10457 0.89543 7 2 7H5C6.10457 7 7 6.10457 7 5V2C7 0.895431 6.10457 0 5 0H2Z"
           fill={color}
@@ -47,7 +47,7 @@ export const AppsPlusFill = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_1152_65" >
+        <clipPath id="clip0_1279_1739" >
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>

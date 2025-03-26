@@ -526,7 +526,7 @@ export { CheckCircle } from "./CheckCircle.icon";
 export { CheckCircleFill } from "./CheckCircleFill.icon";
 export { CheckLg } from "./CheckLg.icon";
 export { CheckSquare } from "./CheckSquare.icon";
-export { CheckSquareFillBootstrap } from "./CheckSquareFillBootstrap.icon";
+export { CheckSquareFill } from "./CheckSquareFill.icon";
 export { ChevronBarContract } from "./ChevronBarContract.icon";
 export { ChevronBarDown } from "./ChevronBarDown.icon";
 export { ChevronBarExpand } from "./ChevronBarExpand.icon";

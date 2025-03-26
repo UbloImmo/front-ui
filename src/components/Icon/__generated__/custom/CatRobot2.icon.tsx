@@ -28,7 +28,7 @@ export const CatRobot2 = (props: CommonIconProps): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <g clipPath="url(#clip0_1152_105)" >
+      <g clipPath="url(#clip0_1279_1845)" >
         <path
           d="M4 9C4 9.55229 3.55228 10 3 10C2.44772 10 2 9.55229 2 9C2 8.44771 2.44772 8 3 8C3.55228 8 4 8.44771 4 9Z"
           fill={color}
@@ -49,7 +49,7 @@ export const CatRobot2 = (props: CommonIconProps): JSX.Element => {
         />
       </g>
       <defs>
-        <clipPath id="clip0_1152_105" >
+        <clipPath id="clip0_1279_1845" >
           <rect width="16" height="16" fill={color} />
         </clipPath>
       </defs>
