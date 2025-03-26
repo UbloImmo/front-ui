@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.26` Form component -> `v0.0.4` FormEditButton component
+  - Display modal close button when form is readonly
+
 ## 1.8.8 - 2025-03-25
 ### Fixed
 - `v0.0.5` List component
