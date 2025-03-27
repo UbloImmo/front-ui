@@ -1025,10 +1025,11 @@ const useFormSubmission = <TData extends object>(
    * @see {@link UseFormEditStateReturn[cancelEdition]}
    */
   const cancelEdition = useCallback<VoidFn>(() => {
-    if (!editState.isEditing || isSubmitting) return;
-    formData.setData(formData.initialData);
-    // formTables.resetTableRowIndexMap();
-    editState.stopEditing();
+    if (isSubmitting) return;
+    if (editState.isEditing) {
+      formData.setData(formData.initialData);
+      editState.stopEditing();
+    }
     if (onCancelled) onCancelled();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editState, formData, isSubmitting]);

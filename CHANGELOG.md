@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `0.0.27` Form component
+  - Always close modal when clicking of the close button, even when not editing 
+
 ## 1.8.10 - 2025-03-26
 ### Changed
 - Updated or added 74 new icon(s)
