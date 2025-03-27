@@ -1028,8 +1028,8 @@ const useFormSubmission = <TData extends object>(
     if (isSubmitting) return;
     if (editState.isEditing) {
       formData.setData(formData.initialData);
-      editState.stopEditing();
     }
+    editState.stopEditing();
     if (onCancelled) onCancelled();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editState, formData, isSubmitting]);
