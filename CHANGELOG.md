@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.8.11 - 2025-03-27
 ### Fixed
-
 - `0.0.27` Form component
-  - Always close modal when clicking of the close button, even when not editing 
+  - Always close modal when clicking of the close button, even when not editing
 
 ## 1.8.10 - 2025-03-26
 ### Changed
