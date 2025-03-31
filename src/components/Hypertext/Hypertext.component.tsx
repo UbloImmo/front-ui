@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { MouseEventHandler, useCallback, useMemo } from "react";
 import styled from "styled-components";
 
 import { hypertextStyle } from "./Hypertext.styles";
@@ -21,6 +21,7 @@ const defaultHypertextProps: DefaultHypertextProps = {
   title: "",
   href: "",
   color: "primary",
+  onClick: null,
 };
 
 /**
@@ -33,14 +34,16 @@ const defaultHypertextProps: DefaultHypertextProps = {
  */
 const Hypertext = (props: HypertextProps): JSX.Element => {
   const { warn } = useLogger("Hypertext");
-
   const mergedProps = useMergedProps(defaultHypertextProps, props);
   const testId = useTestId("hypertext");
   const styleProps = useStyleProps(mergedProps);
-  const { children, href, title, color } = mergedProps;
+  const { children, href, title, color, onClick } = mergedProps;
 
-  if (isEmptyString(href)) {
-    warn(`Missing required href, please provide a redirection link`);
+  // Only warn about missing href if onClick is not provided
+  if (isEmptyString(href) && !onClick) {
+    warn(
+      `Missing required href, please provide a redirection link or an onClick handler`
+    );
   }
 
   if (isEmptyString(title)) {
@@ -69,12 +72,25 @@ const Hypertext = (props: HypertextProps): JSX.Element => {
     return "primary-base";
   }, [color]);
 
+  const handleClick = useCallback<MouseEventHandler>(
+    (event) => {
+      // If onClick is provided, use it and prevent default link behavior
+      if (onClick) {
+        event.preventDefault();
+        onClick();
+      }
+      // Otherwise, let the default link behavior happen (href is used)
+    },
+    [onClick]
+  );
+
   return (
     <HypertextContainer
       title={title}
-      href={href}
+      href={href || "#"}
       target="_blank"
       rel="noreferrer"
+      onClick={handleClick}
       data-testid={testId}
       {...styleProps}
     >

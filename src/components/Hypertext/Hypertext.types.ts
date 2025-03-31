@@ -1,8 +1,9 @@
+import { Nullable, RequireAtLeastOne, VoidFn } from "@ubloimmo/front-util";
 import { ReactNode } from "react";
 
 import type { ColorKey } from "@types";
 
-export type HypertextProps = {
+type BaseHypertextProps = {
   /**
    * The Hypertext's rendered text.
    * @type {ReactNode}
@@ -12,9 +13,8 @@ export type HypertextProps = {
   /**
    * The Hypertext's destination URL.
    * @type {string}
-   * @required
    */
-  href: string;
+  href?: string;
   /**
    * The Hypertext's additional information when hovered.
    * @type {string}
@@ -27,6 +27,17 @@ export type HypertextProps = {
    * @default "primary"
    */
   color?: ColorKey;
+  /**
+   * The Hypertext's click handler.
+   * @type {Nullable<VoidFn>}
+   */
+  onClick?: Nullable<VoidFn>;
 };
 
-export type DefaultHypertextProps = Required<HypertextProps>;
+export type HypertextProps = BaseHypertextProps &
+  RequireAtLeastOne<{
+    href: string;
+    onClick: Nullable<VoidFn>;
+  }>;
+
+export type DefaultHypertextProps = Required<BaseHypertextProps>;
