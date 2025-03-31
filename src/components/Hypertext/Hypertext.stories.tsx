@@ -156,3 +156,45 @@ Colors.parameters = {
     }))
   ),
 };
+
+export const OnClickVsHref = (props: HypertextProps) => {
+  const defaultProps = useMergedProps(Hypertext.defaultProps, props);
+
+  const handleClick = () => {
+    alert("onClick handler was triggered!");
+  };
+
+  const variants = [
+    {
+      href: "https://www.ublo.immo/",
+    },
+    {
+      onClick: handleClick,
+    },
+  ];
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={variants}
+      of={Hypertext}
+      scaling={1}
+      propLabels
+    />
+  );
+};
+
+OnClickVsHref.parameters = {
+  docs: componentSource([
+    {
+      children: "Link with href (opens in new tab)",
+      href: "https://www.ublo.immo/",
+      title: "Uses href to redirect to Ublo's homepage",
+    },
+    {
+      children: "Link with onClick handler",
+      onClick: () => {},
+      title: "Uses onClick to execute a function",
+    },
+  ]),
+};
