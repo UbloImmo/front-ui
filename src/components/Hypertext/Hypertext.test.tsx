@@ -1,4 +1,4 @@
-import { expect } from "bun:test";
+import { expect, mock } from "bun:test";
 
 import { Hypertext } from "./Hypertext.component";
 import { HypertextProps } from "./Hypertext.types";
@@ -16,3 +16,27 @@ testComponentFactory<HypertextProps>("Hypertext", Hypertext, {
     },
   ],
 });
+
+const testHypertext = testComponentFactory<HypertextProps>(
+  "Hypertext",
+  Hypertext
+);
+
+// Test onClick functionality
+const onClick = mock(() => {});
+
+testHypertext({
+  children: "Click me",
+  href: "#",
+  title: "Test link",
+  onClick,
+})(
+  "should call onClick handler when clicked",
+  async ({ getByTestId }, { click }) => {
+    onClick.mockReset();
+    const hypertext = getByTestId("hypertext");
+
+    await click(hypertext);
+    expect(onClick).toHaveBeenCalled();
+  }
+);
