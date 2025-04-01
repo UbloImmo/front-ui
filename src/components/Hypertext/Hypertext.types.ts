@@ -11,11 +11,6 @@ type BaseHypertextProps = {
    */
   children: ReactNode;
   /**
-   * The Hypertext's destination URL.
-   * @type {string}
-   */
-  href?: string;
-  /**
    * The Hypertext's additional information when hovered.
    * @type {string}
    * @required
@@ -27,17 +22,18 @@ type BaseHypertextProps = {
    * @default "primary"
    */
   color?: ColorKey;
-  /**
-   * The Hypertext's click handler.
-   * @type {Nullable<VoidFn>}
-   */
-  onClick?: Nullable<VoidFn>;
 };
 
 export type HypertextProps = BaseHypertextProps &
   RequireAtLeastOne<{
-    href: string;
-    onClick: Nullable<VoidFn>;
+    /**
+     * The Hypertext's destination URL.
+     * @type {string}
+     */
+    href?: string;
+    /**
+     * The Hypertext's click handler.
+     * @type {Nullable<VoidFn>}
+     */
+    onClick?: Nullable<VoidFn>;
   }>;
-
-export type DefaultHypertextProps = Required<BaseHypertextProps>;
