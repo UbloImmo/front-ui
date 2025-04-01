@@ -2,12 +2,12 @@ import { css, type RuleSet } from "styled-components";
 
 import { cssVarUsage } from "@utils";
 
-import type { DefaultHypertextProps } from "./Hypertext.types";
+import type { HypertextProps } from "./Hypertext.types";
 import type { StyleProps } from "@types";
 
 export const hypertextStyle = ({
   $color,
-}: StyleProps<DefaultHypertextProps>): RuleSet => {
+}: StyleProps<HypertextProps>): RuleSet => {
   const textDecorationColor = cssVarUsage(
     $color === "gray" ? `${$color}-700-00` : `${$color}-base-00`
   );
