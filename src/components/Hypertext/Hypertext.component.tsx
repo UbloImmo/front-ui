@@ -2,7 +2,7 @@ import { MouseEventHandler, useCallback, useMemo } from "react";
 import styled from "styled-components";
 
 import { hypertextStyle } from "./Hypertext.styles";
-import { HypertextProps } from "./Hypertext.types";
+import { DefaultHypertextProps, HypertextProps } from "./Hypertext.types";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
@@ -17,7 +17,7 @@ import {
 
 import type { PaletteColor, StyleProps } from "@types";
 
-const defaultHypertextProps: HypertextProps = {
+const defaultHypertextProps: DefaultHypertextProps = {
   children: "[Hypertext]",
   title: "",
   href: "",
@@ -126,12 +126,10 @@ Hypertext.defaultProps = defaultHypertextProps;
 
 export { Hypertext };
 
-const HypertextContainer = styled.a<StyleProps<HypertextProps>>`
+const HypertextContainer = styled.a<StyleProps<DefaultHypertextProps>>`
   ${hypertextStyle};
 `;
 
-const HypertextButton = styled.button<StyleProps<HypertextProps>>`
+const HypertextButton = styled.button<StyleProps<DefaultHypertextProps>>`
   ${hypertextStyle};
-  background: none;
-  border: none;
 `;

@@ -2,12 +2,12 @@ import { css, type RuleSet } from "styled-components";
 
 import { cssVarUsage } from "@utils";
 
-import type { HypertextProps } from "./Hypertext.types";
+import type { DefaultHypertextProps } from "./Hypertext.types";
 import type { StyleProps } from "@types";
 
 export const hypertextStyle = ({
   $color,
-}: StyleProps<HypertextProps>): RuleSet => {
+}: StyleProps<DefaultHypertextProps>): RuleSet => {
   const textDecorationColor = cssVarUsage(
     $color === "gray" ? `${$color}-700-00` : `${$color}-base-00`
   );
@@ -22,6 +22,10 @@ export const hypertextStyle = ({
     min-width: min-content;
     cursor: pointer;
     text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
 
     &,
     & > span[data-testid="text"] {

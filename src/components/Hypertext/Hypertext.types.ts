@@ -37,3 +37,5 @@ export type HypertextProps = BaseHypertextProps &
      */
     onClick?: Nullable<VoidFn>;
   }>;
+
+export type DefaultHypertextProps = Required<HypertextProps>;
