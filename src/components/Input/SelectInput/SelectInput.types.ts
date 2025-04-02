@@ -129,10 +129,12 @@ export type SelectInputProps<
   /**
    * Whether the user can search for an option by typing
    *
+   * @remarks If "manual", filtering is expected to be handled entirely by the parent component
+   *
    * @default false
-   * @type {boolean}
+   * @type {boolean | "manual"}
    */
-  searchable?: boolean;
+  searchable?: boolean | "manual";
 
   /**
    * An optional custom Option component that gets rendered for each option

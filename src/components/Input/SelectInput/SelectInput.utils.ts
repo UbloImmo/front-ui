@@ -264,7 +264,7 @@ export const useSelectValue = <
   }, [flattenedOptions, internalValue]);
 
   const filteredOptions = useMemo(() => {
-    if (!mergedProps.searchable) {
+    if (!mergedProps.searchable || mergedProps.searchable === "manual") {
       return flattenedOptions;
     }
     if (
