@@ -10,7 +10,7 @@ import { inputTypes } from "../Input/Input.data";
 import { InputAssistiveText } from "../InputAssistiveText";
 import { InputLabel } from "../InputLabel";
 
-import { FlexColumnLayout } from "@/layouts/Flex";
+import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
 import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
 
 import type { FieldProps, FieldDefaultProps } from "./Field.types";
@@ -31,6 +31,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
   className: null,
   name: null,
   styleOverride: null,
+  suffix: null,
 };
 
 /**
@@ -104,13 +105,18 @@ const Field = <TType extends InputType>(
         overrideTestId
         htmlFor={labelHtmlFor}
       >
-        <Input
-          {...mergedProps}
-          id={inputId}
-          testId="field-input"
-          onChangeNative={updateValidityOnChange}
-          error={error}
-        />
+        <FlexRowLayout align="center" gap={"s-2"}>
+          <Input
+            {...mergedProps}
+            id={inputId}
+            testId="field-input"
+            onChangeNative={updateValidityOnChange}
+            error={error}
+          />
+          {mergedProps.suffix && (
+            <span data-testid="field-suffix">{mergedProps.suffix}</span>
+          )}
+        </FlexRowLayout>
       </InputLabel>
       {fieldAssistiveText.shouldDisplay && (
         <InputAssistiveText
