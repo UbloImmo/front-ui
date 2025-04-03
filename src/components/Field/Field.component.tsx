@@ -9,6 +9,7 @@ import { Input } from "../Input/Input.component";
 import { inputTypes } from "../Input/Input.data";
 import { InputAssistiveText } from "../InputAssistiveText";
 import { InputLabel } from "../InputLabel";
+import { Text } from "../Text";
 
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
 import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
@@ -105,7 +106,18 @@ const Field = <TType extends InputType>(
         overrideTestId
         htmlFor={labelHtmlFor}
       >
-        <FlexRowLayout align="center" gap={"s-2"}>
+        {mergedProps.suffix ? (
+          <FlexRowLayout align="center" gap={"s-2"} fill>
+            <Input
+              {...mergedProps}
+              id={inputId}
+              testId="field-input"
+              onChangeNative={updateValidityOnChange}
+              error={error}
+            />
+            <Text data-testid="field-suffix">{mergedProps.suffix}</Text>
+          </FlexRowLayout>
+        ) : (
           <Input
             {...mergedProps}
             id={inputId}
@@ -113,10 +125,7 @@ const Field = <TType extends InputType>(
             onChangeNative={updateValidityOnChange}
             error={error}
           />
-          {mergedProps.suffix && (
-            <span data-testid="field-suffix">{mergedProps.suffix}</span>
-          )}
-        </FlexRowLayout>
+        )}
       </InputLabel>
       {fieldAssistiveText.shouldDisplay && (
         <InputAssistiveText
