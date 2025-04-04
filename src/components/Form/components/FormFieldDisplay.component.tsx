@@ -9,6 +9,7 @@ import {
 
 import { Icon } from "@/components/Icon";
 import { InputLabel } from "@/components/InputLabel";
+import { Text } from "@/components/Text";
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
 
 import type { BuiltFieldProps } from "../Form.types";
@@ -26,7 +27,7 @@ import type { TooltipProps } from "@/components/Tooltip";
 export const FormFieldDisplay = <TType extends InputType>(
   props: BuiltFieldProps<TType>
 ): JSX.Element => {
-  const { label, type, error, errorText } = props;
+  const { label, type, error, errorText, suffix } = props;
   const displayContent = useMemo(() => {
     const content = computeFieldDisplayContent(type, props);
     if (isString(content)) return <FormFieldDisplayValue value={content} />;
@@ -72,6 +73,16 @@ export const FormFieldDisplay = <TType extends InputType>(
         testId="form-field-display-value"
       >
         {displayContent}
+        {suffix && (
+          <Text
+            testId="field-display-suffix"
+            overrideTestId
+            color="gray-700"
+            weight="medium"
+          >
+            {suffix}
+          </Text>
+        )}
       </FlexRowLayout>
     </FieldDisplayContainer>
   );
