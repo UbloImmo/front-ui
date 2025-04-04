@@ -28,7 +28,7 @@ const defaultHypertextProps: DefaultHypertextProps = {
 /**
  * Renders a hyperlink component with a text and an icon.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {HypertextProps} props - The hypertext's props
  * @return {JSX.Element} The rendered hypertext
@@ -85,13 +85,16 @@ const Hypertext = (props: HypertextProps): JSX.Element => {
     [onClick]
   );
 
-  const content = (
-    <FlexRowLayout align="center" gap="s-1">
-      <Text size="m" weight="medium" color={textColor} underline>
-        {children}
-      </Text>
-      <Icon name="BoxArrowUpRight" size="s-3" color={iconColor} />
-    </FlexRowLayout>
+  const content = useMemo(
+    () => (
+      <FlexRowLayout align="center" gap="s-1" inline>
+        <Text size="m" weight="medium" color={textColor} underline>
+          {children}
+        </Text>
+        <Icon name="BoxArrowUpRight" size="s-3" color={iconColor} />
+      </FlexRowLayout>
+    ),
+    [children, iconColor, textColor]
   );
 
   if (onClick) {

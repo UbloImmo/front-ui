@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.5` Hypertext component
+  - Restore inline-flex display for usage within text spans
+  - Only re-render content if children or colors have changed
+
 ## 1.8.13 - 2025-04-02
 ### Changed
 - `v0.0.4` Hypertext component
