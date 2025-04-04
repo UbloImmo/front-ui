@@ -115,7 +115,12 @@ const Field = <TType extends InputType>(
               onChangeNative={updateValidityOnChange}
               error={error}
             />
-            <Text testId="field-suffix" overrideTestId>
+            <Text
+              testId="field-suffix"
+              overrideTestId
+              color="gray-700"
+              weight="medium"
+            >
               {mergedProps.suffix}
             </Text>
           </FlexRowLayout>
