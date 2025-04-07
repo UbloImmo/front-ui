@@ -242,3 +242,23 @@ export const Controlled = (props: Partial<FieldProps<InputType>>) => {
     />
   );
 };
+
+const suffixes = [null, "€", "m²", "[suffix]"];
+
+export const WithSuffix = (props: FieldProps<InputType>) => {
+  const defaults = useMergedProps(
+    Field.defaultProps as Required<FieldProps<InputType>>,
+    props
+  );
+  return (
+    <ComponentVariants
+      variants={suffixes}
+      for="suffix"
+      of={Field}
+      defaults={defaults}
+      propLabels
+      scaling={1}
+      columns={2}
+    />
+  );
+};

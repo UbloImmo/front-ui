@@ -9,8 +9,9 @@ import { Input } from "../Input/Input.component";
 import { inputTypes } from "../Input/Input.data";
 import { InputAssistiveText } from "../InputAssistiveText";
 import { InputLabel } from "../InputLabel";
+import { Text } from "../Text";
 
-import { FlexColumnLayout } from "@/layouts/Flex";
+import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
 import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
 
 import type { FieldProps, FieldDefaultProps } from "./Field.types";
@@ -31,12 +32,13 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
   className: null,
   name: null,
   styleOverride: null,
+  suffix: null,
 };
 
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.10
+ * @version 0.0.11
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
@@ -104,13 +106,33 @@ const Field = <TType extends InputType>(
         overrideTestId
         htmlFor={labelHtmlFor}
       >
-        <Input
-          {...mergedProps}
-          id={inputId}
-          testId="field-input"
-          onChangeNative={updateValidityOnChange}
-          error={error}
-        />
+        {mergedProps.suffix ? (
+          <FlexRowLayout align="center" gap={"s-2"} fill>
+            <Input
+              {...mergedProps}
+              id={inputId}
+              testId="field-input"
+              onChangeNative={updateValidityOnChange}
+              error={error}
+            />
+            <Text
+              testId="field-suffix"
+              overrideTestId
+              color="gray-700"
+              weight="medium"
+            >
+              {mergedProps.suffix}
+            </Text>
+          </FlexRowLayout>
+        ) : (
+          <Input
+            {...mergedProps}
+            id={inputId}
+            testId="field-input"
+            onChangeNative={updateValidityOnChange}
+            error={error}
+          />
+        )}
       </InputLabel>
       {fieldAssistiveText.shouldDisplay && (
         <InputAssistiveText

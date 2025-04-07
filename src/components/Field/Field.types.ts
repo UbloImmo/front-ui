@@ -28,14 +28,21 @@ export type FieldAssistiveTextProps = Replace<
   }
 >;
 
-// TODO: add suffix prop
 export type FieldProps<
   TType extends InputType,
   TGenericValue extends NullishPrimitives = NullishPrimitives,
 > = GenericInputProps<TType, TGenericValue> &
   FieldAssistiveTextProps &
   Omit<StyleOverrideProps, "as"> &
-  FieldLabelProps;
+  FieldLabelProps & {
+    /**
+     * Text to display as a suffix after the input on the same line
+     *
+     * @type {Nullable<string>}
+     * @default null
+     */
+    suffix?: Nullable<string>;
+  };
 
 export type FieldDefaultProps<TType extends InputType = InputType> = Required<
   FieldProps<TType>
