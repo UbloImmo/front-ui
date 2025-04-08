@@ -432,6 +432,39 @@ export type FormTableTryDeletingRowFn<TRowData extends object> = VoidFn<
 >;
 
 /**
+ * A callback function that gets called for each row.
+ * Disables a row if it returns true
+ *
+ * @template {object} TRowValue - The type of a single row in the table's data
+ *
+ * @param {TRowValue} row - The row to check
+ * @param {number} rowIndex - The index of the row
+ *
+ * @returns {boolean | void} - Whether to disable the row or not
+ */
+export type FormTableDisableRowFn<TRowValue extends object> = GenericFn<
+  [row: TRowValue, rowIndex: number],
+  boolean | void
+>;
+
+/**
+ * A callback function that gets called for each row if provided.
+ * Overrides the modifiers of the row
+ *
+ * @template {object} TRowValue - The type of a single row in the table's data
+ *
+ * @param {TRowValue} row - The row to modify
+ * @param {number} rowIndex - The index of the row
+ *
+ * @returns {FormTableModifiers} - The modifiers of the row - gets merged with the table modifiers
+ */
+export type FormTableRowModifiersOverrideFn<TRowValue extends object> =
+  GenericFn<
+    [row: TRowValue, rowIndex: number],
+    Nullish<FormTableModifiers> | void
+  >;
+
+/**
  * Props needed to render a table in a form's content array
  *
  * @template {object} TData - The type of the form's data
@@ -461,6 +494,20 @@ export type FormTableProps<TData extends object> = {
                * @type {"table"}
                */
               kind: "table";
+              /**
+               * A callback function that gets called for each row.
+               * Disables a row if it returns true
+               *
+               * @type {FormTableDisableRowFn<TRowValue>}
+               */
+              disableRow?: FormTableDisableRowFn<TRowValue>;
+              /**
+               * A callback function that gets called for each row.
+               * Overrides the modifiers of the row
+               *
+               * @type {FormTableRowModifiersOverrideFn<TRowValue>}
+               */
+              overrideRowModifiers?: FormTableRowModifiersOverrideFn<TRowValue>;
               /**
                * The columns of the table. A list of fields that get translated to table columns.
                *
@@ -523,6 +570,10 @@ export type BuiltFormTableRow = {
    * The stable id of the row. Used to identify the row regardless of its index
    */
   stableId: string;
+  /**
+   * The modifiers of the row
+   */
+  modifiers: Required<FormTableModifiers>;
 };
 
 /**

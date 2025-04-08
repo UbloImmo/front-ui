@@ -33,7 +33,7 @@ const defaultSwitchProps: SwitchDefaultProps = {
 /**
  * A toggable component to use when we want the user to enable or disable an option or a feature
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {SwitchProps & TestIdProps} props - Switch component props
  * @returns {JSX.Element}
@@ -85,6 +85,11 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
 
   return (
     <FlexLayout testId={testId} gap="s-2" align="center" overrideTestId>
+      {withHelper && (
+        <Text weight="bold" color={textColor} uppercase>
+          {helperText}
+        </Text>
+      )}
       <SwitchContainer
         onClick={propagateOnChange}
         disabled={disabled}
@@ -105,12 +110,6 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
           data-active={isActive}
         />
       </SwitchContainer>
-
-      {withHelper && (
-        <Text weight="bold" color={textColor} uppercase>
-          {helperText}
-        </Text>
-      )}
     </FlexLayout>
   );
 };

@@ -93,6 +93,7 @@ import type {
   FormQueryFn,
   FormSchema,
   FormSource,
+  FormTableModifiers,
   FormTableProps,
   FormTableTryDeletingRowParams,
   FormValidation,
@@ -713,9 +714,31 @@ const useFormContent = <TData extends object>(
 
       const colSpans = t.columns?.map(({ layout }) => layout?.size ?? 1) ?? [];
 
+      const tableModifiers: Required<FormTableModifiers> = {
+        deletable: t?.deletable ?? false,
+        swappable: t?.swappable ?? false,
+      };
+
       // generate rows and cell fields from columns and array items
-      const rows = arrayValue.map((_, index): BuiltFormTableRow => {
+      const rows = arrayValue.map((rowData, index): BuiltFormTableRow => {
         const rowSource = `${t.source}.${index}`;
+        let baseDisabled = false;
+        if (t.disableRow) {
+          const disableResult = t.disableRow(
+            rowData as { data: string },
+            index
+          );
+          if (isBoolean(disableResult) && disableResult) {
+            baseDisabled = true;
+          }
+        }
+        const modifiers = t.overrideRowModifiers
+          ? {
+              ...tableModifiers,
+              ...(t.overrideRowModifiers(rowData as { data: string }, index) ??
+                {}),
+            }
+          : tableModifiers;
         const cells = (t.columns ?? [])
           .map(({ source, ...cell }) => {
             const cellSource = `${rowSource}.${source}`;
@@ -725,11 +748,15 @@ const useFormContent = <TData extends object>(
               id: cellSource,
             };
 
-            if (isFormCustomField<TData>(cellField))
-              return buildCustomFieldProps(cellField);
+            if (isFormCustomField<TData>(cellField)) {
+              const disabled = cellField.disabled || baseDisabled;
+              return buildCustomFieldProps({ ...cellField, disabled });
+            }
 
-            if (isFormField<TData>(cellField))
-              return buildFieldProps(cellField);
+            if (isFormField<TData>(cellField)) {
+              const disabled = cellField.disabled || baseDisabled;
+              return buildFieldProps({ ...cellField, disabled });
+            }
 
             logger.error(`Invalid table cell for source ${cellSource}`);
             return null;
@@ -742,6 +769,7 @@ const useFormContent = <TData extends object>(
           cells,
           id: rowSource,
           stableId: rowSource,
+          modifiers,
         };
       });
 
@@ -788,10 +816,7 @@ const useFormContent = <TData extends object>(
         assistiveText: t.assistiveText,
         required: isFieldRequired(tableFormSource, t.required),
         ...errorProps,
-        modifiers: {
-          deletable: t?.deletable ?? false,
-          swappable: t?.swappable ?? false,
-        },
+        modifiers: tableModifiers,
         deleteRow,
         appendRow,
         swapRows,

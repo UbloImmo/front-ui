@@ -24,6 +24,8 @@ import {
   type ZodType,
 } from "zod";
 
+import { isBetween, type TranslationContext } from "@utils";
+
 import type {
   BuiltFieldProps,
   BuiltFormContent,
@@ -46,7 +48,6 @@ import type {
   StableFormTableId,
 } from "./Form.types";
 import type { InputType } from "@/components/Input";
-import type { TranslationContext } from "@utils";
 
 /**
  * Checks if the given key is a valid array index key.
@@ -238,8 +239,8 @@ export const isFormDivider = <TData extends object>(
   const keys = objectKeys(content);
   if (keys.length === 0) return true;
   if (
-    keys.length === 1 &&
-    keys[0] === "label" &&
+    isBetween(keys.length, 1, 2) &&
+    keys.includes("label") &&
     (isString(content.label) || isNull(content.label))
   )
     return true;

@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
 import { Checkbox } from "../Checkbox";
 import { SelectInput } from "../Input";
@@ -49,7 +48,7 @@ const defaultFeatureSwitchProps: FeatureSwitchDefaultProps = {
  *
  * Provides informations about a feature that the user can activate, deactivate or select an option from a list.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {FeatureSwitchProps & TestIdProps} props - FeatureSwitch component props
  * @returns {JSX.Element}
@@ -88,14 +87,12 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
     }
     if (isFeatureSwitchSwitchVariant(propsWithVariant)) {
       return (
-        <SwitchContainer>
-          <Switch
-            withHelper
-            inactiveHelperText={tl.status.deactivated()}
-            activeHelperText={tl.status.activated()}
-            {...propsWithVariant}
-          />
-        </SwitchContainer>
+        <Switch
+          withHelper
+          inactiveHelperText={tl.status.deactivated()}
+          activeHelperText={tl.status.activated()}
+          {...propsWithVariant}
+        />
       );
     }
     return null;
@@ -145,7 +142,3 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
 FeatureSwitch.defaultProps = defaultFeatureSwitchProps;
 
 export { FeatureSwitch };
-
-const SwitchContainer = styled.div`
-  min-width: 8.25rem;
-`;

@@ -556,6 +556,16 @@ const formTableProps: FormTableProps<IdentityTable> = {
   layout: {
     size: 2,
   },
+  disableRow: (row, index) => {
+    return index > 0;
+  },
+  overrideRowModifiers: (row, index) => {
+    if (index > 0)
+      return {
+        deletable: false,
+        swappable: false,
+      };
+  },
   footer: {
     kind: "button",
     label: "Add row",

@@ -38,7 +38,7 @@ import type { Nullable } from "@ubloimmo/front-util";
  * A form table component that displays data in a tabular format with optional editing capabilities.
  * Supports row deletion, reordering via drag and drop, and dynamic row addition.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {BuiltFormTableProps} props - The props for the form table component
  * @returns {JSX.Element} The rendered form table component
@@ -57,7 +57,6 @@ export const FormTable = ({
   required,
   tooltip,
   compact,
-  modifiers,
   footer,
   columnsCount,
   deleteRow,
@@ -153,7 +152,7 @@ export const FormTable = ({
                 modifiers={[restrictToVerticalAxis, restrictToParentElement]}
               >
                 <SortableContext items={sortableItems}>
-                  {rows.map(({ cells, stableId, id }, index) => {
+                  {rows.map(({ cells, stableId, id, modifiers }, index) => {
                     const rowKey = `table-row-${stableId}-${index}`;
 
                     return (
