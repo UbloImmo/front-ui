@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.4` FeatureSwitch component
+  - Remove min-width wrapper around switch variant
+
+- `v0.0.5` Switch component
+  - Move helper labels to the left of the switch
+
 ### Added
 
 - `v0.0.28` Form component, `v0.0.3` FormTable internal component
