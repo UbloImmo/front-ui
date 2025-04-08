@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `v0.0.28` Form component, `v0.0.3` FormTable internal component
+  - Ability to disable or override modifiers per table row
+
 - `v0.0.11` Field component
   - Added `suffix` prop to display text after the input on the same line
 
