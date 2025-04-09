@@ -28,7 +28,7 @@ const defaultHypertextProps: DefaultHypertextProps = {
 /**
  * Renders a hyperlink component with a text and an icon.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {HypertextProps} props - The hypertext's props
  * @return {JSX.Element} The rendered hypertext
@@ -86,7 +86,7 @@ const Hypertext = (props: HypertextProps): JSX.Element => {
   );
 
   const content = (
-    <FlexRowLayout align="center" gap="s-1">
+    <FlexRowLayout align="center" gap="s-1" inline>
       <Text size="m" weight="medium" color={textColor} underline>
         {children}
       </Text>
