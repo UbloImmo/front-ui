@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.3` ListFilterPreset component
+  - Update styles while hovering, active & disabled
+  - Improve accessibity by setting the button's title dynamically
+
 ## 1.8.15 - 2025-04-10
 ### Fixed
 - `v0.0.5` Hypertext component
