@@ -17,13 +17,11 @@ import type { Logger } from "@ubloimmo/front-util";
  * @param {Logger} logger - Logger instance for warnings
  * @returns {FilterPreset<Record<string, unknown>>} The sanitized filter preset with wrapped callbacks
  */
-const useSanitizedFilterPreset = (
-  props: ListFilterPresetProps,
+const useSanitizedFilterPreset = <TItem extends object = object>(
+  props: ListFilterPresetProps<TItem>,
   logger: Logger
-): FilterPreset<Record<string, unknown>> => {
-  const { getFilterPresetBySignature } =
-    useListContext<Record<string, unknown>>();
-
+): FilterPreset<TItem> => {
+  const { getFilterPresetBySignature } = useListContext<TItem>();
   /**
    * Memoized filter preset that handles both direct preset and signature-based preset retrieval
    *
@@ -32,9 +30,7 @@ const useSanitizedFilterPreset = (
    * - Returns preset found by signature if signature exists
    * - Returns empty disabled preset as fallback
    */
-  const sanitizedFilterPreset = useMemo<
-    FilterPreset<Record<string, unknown>>
-  >(() => {
+  const sanitizedFilterPreset = useMemo<FilterPreset<TItem>>(() => {
     if (props.filterPreset) return props.filterPreset;
     if (props.signature) {
       const foundFilterPreset = getFilterPresetBySignature(props.signature);
@@ -43,13 +39,9 @@ const useSanitizedFilterPreset = (
     logger.warn(
       "No filter preset or signature provided, defaulting to an empty filter preset"
     );
-    const emptyData = filterPresetData<Record<string, unknown>>(
-      "[EMPTY FILTER PRESET]",
-      [],
-      {
-        disabled: true,
-      }
-    );
+    const emptyData = filterPresetData<TItem>("[EMPTY FILTER PRESET]", [], {
+      disabled: true,
+    });
     return {
       ...emptyData,
       select: () => {},
@@ -67,7 +59,7 @@ const useSanitizedFilterPreset = (
    *
    * @returns {FilterPreset<Record<string, unknown>>} The sanitized filter preset with wrapped callbacks
    */
-  return useMemo<FilterPreset<Record<string, unknown>>>(() => {
+  return useMemo<FilterPreset<TItem>>(() => {
     /**
      * Wrapper function that calls the filter preset's select function
      * and the onSelected callback if provided
@@ -104,7 +96,9 @@ const useSanitizedFilterPreset = (
   }, [sanitizedFilterPreset, props]);
 };
 
-export const useListFilterPreset = (props: ListFilterPresetProps) => {
+export const useListFilterPreset = <TItem extends object = object>(
+  props: ListFilterPresetProps<TItem>
+) => {
   const logger = useLogger("ListFilterPreset");
   const filterPreset = useSanitizedFilterPreset(props, logger);
 

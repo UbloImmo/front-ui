@@ -12,13 +12,24 @@ export const listFilterPresetButtonStyles = ({
   $disabled,
   $colorKey,
 }: ListFilterPresetStyleProps): RuleSet => {
+  const activeBorderColor: PaletteColorOrWhite = normalizeToPaletteColor(
+    $colorKey,
+    "medium"
+  );
+  const lightColor: PaletteColorOrWhite = normalizeToPaletteColor(
+    $colorKey,
+    "light"
+  );
+  const hoverBackgroundColor: PaletteColorOrWhite = $active
+    ? activeBorderColor
+    : lightColor;
   const backgroundColor: PaletteColorOrWhite = $active
     ? "white"
     : $disabled
       ? "gray-100"
       : "gray-50";
   const borderColor: PaletteColorOrWhite = $active
-    ? normalizeToPaletteColor($colorKey, "medium")
+    ? activeBorderColor
     : backgroundColor;
   return css`
     ${cssDimensions("fit-content", cssVarName("input-height"), true)};
@@ -26,6 +37,7 @@ export const listFilterPresetButtonStyles = ({
     min-width: 0;
     max-width: 100%;
     overflow: hidden;
+    cursor: pointer;
 
     background: ${cssVarUsage(backgroundColor)};
     padding: var(--s-3);
@@ -43,8 +55,17 @@ export const listFilterPresetButtonStyles = ({
     transition-duration: 300ms;
     transition-timing-function: var(--bezier);
 
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    & > span[data-testid="text filter-preset-button-label"] {
+      transition: color 300ms var(--bezier);
+    }
+
     &:hover:not(:disabled) {
       background: var(--white);
+      border: 1px solid ${cssVarUsage(hoverBackgroundColor)};
       transition-duration: 150ms;
     }
   `;
