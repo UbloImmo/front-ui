@@ -116,7 +116,7 @@ const StyleReset = styled.div`
         padding: 0;
         margin: 0;
         border: none;
-        ${typographyFontFace(true)}
+        ${typographyFontFace()}
       `
     )}
     ${notInUnstyled("h1", buildheadingOverrides("h1", "bold", "gray-900"))}
@@ -169,6 +169,7 @@ const StyleReset = styled.div`
   pre.prismjs span {
     .sb-unstyled:not(:has(&)) & {
       ${codeFontFace(true)};
+      font-weight: var(--text-weight-medium);
     }
   }
 
@@ -238,6 +239,7 @@ const StyleReset = styled.div`
   pre.prismjs {
     padding: var(--s-4) !important;
     ${codeFontFace(true)};
+    font-weight: var(--text-weight-medium);
 
     span:not(.token) {
       color: var(--primary-dark);
@@ -272,7 +274,8 @@ const StyleReset = styled.div`
     }
 
     .token.comment {
-      color: var(--gray-300);
+      color: var(--gray-400);
+      font-weight: var(--text-weight-regular);
       font-style: italic;
     }
 
@@ -305,6 +308,7 @@ const StyleReset = styled.div`
     .token.builtin,
     .token.operator {
       font-style: normal;
+      font-weight: var(--text-weight-bold);
     }
 
     .token.property {

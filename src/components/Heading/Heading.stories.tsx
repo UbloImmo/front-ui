@@ -206,3 +206,16 @@ Colors.args = {};
 Colors.parameters = {
   docs: componentSource(componentPropTemplate("color", colors)),
 };
+
+export const Fonts = (props: HeadingProps) => {
+  return (
+    <ComponentVariants
+      defaults={props}
+      variants={["sans", "code"]}
+      for="font"
+      of={HeadingSizeRenderer}
+      columns={2}
+      propLabels
+    />
+  );
+};

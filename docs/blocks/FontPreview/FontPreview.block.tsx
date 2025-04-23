@@ -5,9 +5,8 @@ import { Heading } from "../Typography";
 import { FlexColumnLayout } from "@layouts";
 import { capitalize } from "@utils";
 
-import type { HeadingSize, PaletteColor } from "@types";
+import type { HeadingSize, PaletteColor, TypographyFont } from "@types";
 
-const FONT_FAMILY = "Gilroy";
 const FONT_WEIGHTS = ["regular", "medium", "bold"] as const;
 
 const SIZE: HeadingSize = "h2";
@@ -19,22 +18,43 @@ const CHARACTERS = [
   "!@#$%^&*()",
 ];
 
+type FontPreviewProps = {
+  font?: TypographyFont;
+  fontName?: string;
+};
+
 /**
  * Renders a preview of the font with different weights and characters.
  *
  * @return {JSX.Element} The JSX element representing the font preview.
  */
-export const FontPreview = (): JSX.Element => {
+export const FontPreview = ({
+  font = "sans",
+  fontName = "Gilroy",
+}: FontPreviewProps): JSX.Element => {
   return (
     <FontPreviewBox>
       <FlexColumnLayout gap="s-8" align="start" justify="start">
         {FONT_WEIGHTS.map((weight) => (
           <FlexColumnLayout key={weight} gap={0} align="start" justify="start">
-            <Heading size={SIZE} weight={weight} color={COLOR}>
-              {FONT_FAMILY} {capitalize(weight)}
+            <Heading
+              size={SIZE}
+              weight={weight}
+              color={COLOR}
+              font={font}
+              className="font-preview-heading"
+            >
+              {fontName} {capitalize(weight)}
             </Heading>
             {CHARACTERS.map((char) => (
-              <Heading key={char} size={SIZE} weight={weight} color={COLOR}>
+              <Heading
+                key={char}
+                size={SIZE}
+                weight={weight}
+                color={COLOR}
+                font={font}
+                className="font-preview-heading"
+              >
                 {char}
               </Heading>
             ))}
@@ -51,7 +71,7 @@ const FontPreviewBox = styled.div`
   border-radius: var(--s-2);
   margin-top: var(--s-6) !important;
 
-  ${SIZE} {
+  & > div > div > span:has(${SIZE}) > ${SIZE}.font-preview-heading {
     margin: 0 !important;
   }
 `;

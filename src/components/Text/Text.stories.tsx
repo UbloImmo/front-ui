@@ -278,3 +278,16 @@ Capitalized.args = {};
 Capitalized.parameters = {
   docs: componentSource(componentPropTemplate("capitalized", booleans)),
 };
+
+export const Fonts = (props: TextProps) => {
+  return (
+    <ComponentVariants
+      defaults={props}
+      variants={["sans", "code"]}
+      for="font"
+      of={TextSizeRenderer}
+      columns={2}
+      propLabels
+    />
+  );
+};
