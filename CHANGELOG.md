@@ -7,16 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Changed
+## 1.8.16 - 2025-04-23
+### Added
+- New font: DM Mono
+- Support for it in all typography components
 
+### Changed
 - `v0.0.3` ListFilterPreset component
   - Update styles while hovering, active & disabled
   - Improve accessibity by setting the button's title dynamically
-
-### Added
-
-- New font: DM Mono
-- Support for it in all typography components
 
 ## 1.8.15 - 2025-04-10
 ### Fixed
