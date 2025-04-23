@@ -1,13 +1,13 @@
 import { css } from "styled-components";
 
-import { Gilroy } from "./fonts";
+import { DMMono, Gilroy } from "./fonts";
 
 import type { RuleSet } from "styled-components";
 
 export const fontFamilySets = {
   sans: `"Gilroy", "Helvetica", "Inter", "Arial", "Calibri",
   "Segoe UI", sans-serif`,
-  code: `"Fira Code", "Menlo", "Inconsolata", "Source Mono",
+  code: `"DMMono", "Fira Code", "Menlo", "Inconsolata", "Source Mono",
   "Consolas", ui-monospace, monospace`,
 } as const;
 
@@ -48,6 +48,7 @@ export const codeFontFace = (important?: boolean): RuleSet => {
 export const linkFontFace = (): RuleSet => {
   return css`
     ${Gilroy}
+    ${DMMono}
 
     * {
       font-synthesis: style;

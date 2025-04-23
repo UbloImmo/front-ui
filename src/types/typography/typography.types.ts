@@ -31,6 +31,8 @@ export type TypographyStyle = Record<
   string
 >;
 
+export type TypographyFont = "sans" | "code";
+
 export type TypographyAlignment = "left" | "center" | "right";
 
 export type TypographyProps = {
@@ -147,6 +149,12 @@ export type TypographyProps = {
    * @default undefined
    */
   id?: Nullable<string>;
+  /**
+   * The font family to use for the text contents.
+   *
+   * @default "sans"
+   */
+  font?: TypographyFont;
 } & StyleOverrideProps;
 
 export type TextProps = TypographyProps & {

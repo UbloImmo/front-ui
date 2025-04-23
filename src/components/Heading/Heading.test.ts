@@ -4,7 +4,7 @@ import { testComponentFactory } from "@/tests";
 
 import { Heading } from ".";
 
-import type { HeadingProps, HeadingSize } from "@types";
+import type { HeadingProps, HeadingSize, TypographyFont } from "@types";
 
 const testId = "heading";
 const testContent = "heading content";
@@ -31,6 +31,20 @@ const sizes: HeadingSize[] = ["h1", "h2", "h3", "h4"];
 sizes.forEach((size) => {
   testHeading({ size, children: testContent })(
     `should render a ${size} heading`,
+    ({ queryByTestId, queryByText }) => {
+      const heading = queryByTestId(testId);
+      expect(heading).toBeDefined();
+      const content = queryByText(testContent);
+      expect(content).toBeDefined();
+    }
+  );
+});
+
+const fonts: TypographyFont[] = ["sans", "code"];
+
+fonts.forEach((font) => {
+  testHeading({ font, children: testContent })(
+    `should render a ${font} heading`,
     ({ queryByTestId, queryByText }) => {
       const heading = queryByTestId(testId);
       expect(heading).toBeDefined();

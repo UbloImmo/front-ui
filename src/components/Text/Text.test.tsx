@@ -4,7 +4,7 @@ import { testComponentFactory } from "@/tests";
 
 import { Text } from ".";
 
-import type { TextSize } from "@types";
+import type { TextSize, TypographyFont } from "@types";
 
 const testId = "text";
 const testContent = "text content";
@@ -34,6 +34,20 @@ sizes.forEach((size) => {
     ({ queryByTestId, queryByText }) => {
       const heading = queryByTestId(testId);
       expect(heading).toBeDefined();
+      const content = queryByText(testContent);
+      expect(content).toBeDefined();
+    }
+  );
+});
+
+const fonts: TypographyFont[] = ["sans", "code"];
+
+fonts.forEach((font) => {
+  testText({ font, children: testContent })(
+    `should render a ${font} text`,
+    ({ queryByTestId, queryByText }) => {
+      const text = queryByTestId(testId);
+      expect(text).toBeDefined();
       const content = queryByText(testContent);
       expect(content).toBeDefined();
     }

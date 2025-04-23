@@ -9,7 +9,7 @@ import {
 import { css, type RuleSet } from "styled-components";
 
 import { typographyWeightMap } from "./typogaphy.weight";
-import { typographyFontFace } from "./typography.font";
+import { fontFamilySets } from "./typography.font";
 import { breakpointsPx } from "../sizes";
 import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "../utils";
 
@@ -114,6 +114,7 @@ export const sanitizeTypographyProps = (
     fill: props.fill ?? defaults.fill,
     id: props.id ?? null,
     lineClamp: props.lineClamp ?? defaults.lineClamp,
+    font: props.font ?? defaults.font,
   };
 };
 
@@ -194,6 +195,7 @@ export const buildTypographyStyle = (
       fill,
       noWrap,
       lineClamp,
+      font,
     } = sanitizeTypographyProps(defaults, fromStyleProps(props));
     const dekstopStyle = extractTypographyStyle("desktop", size, weight);
     const mobileStyle = extractTypographyStyle("mobile", size, weight);
@@ -214,11 +216,13 @@ export const buildTypographyStyle = (
     });
     const webkitLineClamp = isNumber(lineClamp) ? String(lineClamp) : null;
     const textOverflow = ellipsis ? "ellipsis" : dekstopStyle.textOverflow;
+    // runtime check to ensure the font is a valid font family
+    const fontFamily = fontFamilySets[font in fontFamilySets ? font : "sans"];
 
     const apply = applyRule(important);
 
     return css`
-      ${typographyFontFace(important)}
+      font-family: ${apply(fontFamily)};
       ${baseTypographyStyle(dekstopStyle, important)}
       font-size: ${apply(fontSize)};
       font-style: ${apply(fontStyle)};
@@ -284,4 +288,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   as: "span",
   styleOverride: null,
   lineClamp: null,
+  font: "sans",
 } as const;

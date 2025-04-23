@@ -19,7 +19,7 @@ const defaultTextProps: Required<TextProps> = {
 /**
  * Customizable, accessible global text.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {WithTestId<TextProps>} props - Text component props
  * @returns {JSX.Element}

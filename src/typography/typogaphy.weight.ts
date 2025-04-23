@@ -1,7 +1,8 @@
 import { texts } from "@ubloimmo/front-tokens";
 import { transformObject } from "@ubloimmo/front-util";
 
-import type { FontWeight, TypographyWeight } from "@types";
+import type { FontWeight } from "@/types/typography/font.types";
+import type { TypographyWeight } from "@/types/typography/typography.types";
 
 /**
  * Builds a typography weight map based on the generated text styles.

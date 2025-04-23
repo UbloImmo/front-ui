@@ -173,6 +173,7 @@ describe("typography", () => {
           lineClamp: null,
           as: "span",
           styleOverride: null,
+          font: "code",
         };
         const sanitizedProps = sanitizeTypographyProps(
           defaultProps,
