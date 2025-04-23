@@ -6,8 +6,9 @@ import medium from "./DMMono-Medium.woff2";
 import mediumItalic from "./DMMono-MediumItalic.woff2";
 import regular from "./DMMono-Regular.woff2";
 import regularItalic from "./DMMono-RegularItalic.woff2";
-import { fontFamily } from "../../font.utils";
-import { buildTypographyWeightMap } from "../../typogaphy.weight";
+
+import { fontFamily } from "@/typography/font.utils";
+import { buildTypographyWeightMap } from "@/typography/typogaphy.weight";
 
 const DMMonoFamily = fontFamily({
   fontFamily: "DMMono",

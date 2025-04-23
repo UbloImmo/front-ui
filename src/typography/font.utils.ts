@@ -2,7 +2,7 @@ import type {
   FontFaceDeclaration,
   FontFamilyDeclaration,
   FontStyleDeclaration,
-} from "@types";
+} from "@/types/typography/font.types";
 
 /**
  * Generates a CSS @font-face declaration string for a given font face configuration

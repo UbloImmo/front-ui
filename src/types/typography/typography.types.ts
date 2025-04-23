@@ -2,9 +2,8 @@ import { texts } from "@ubloimmo/front-tokens";
 
 import type { StyleOverrideProps } from "@/types/global/styles.types";
 import type { PaletteColor } from "@/types/themes/palette";
-import type { KeyOf, Nullable } from "@ubloimmo/front-util";
+import type { Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
-import type { fontFamilySets } from "@/typography";
 
 export type TypographyTokens = typeof texts;
 
@@ -32,7 +31,7 @@ export type TypographyStyle = Record<
   string
 >;
 
-export type TypographyFont = KeyOf<typeof fontFamilySets, string>;
+export type TypographyFont = "sans" | "code";
 
 export type TypographyAlignment = "left" | "center" | "right";
 
