@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.6` TableRow component
+  - Handle cases where style overrides are supplied through native `style` prop
+
 ## 1.8.16 - 2025-04-23
 ### Added
 - New font: DM Mono
