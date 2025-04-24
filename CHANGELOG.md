@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.8.17 - 2025-04-24
 ### Fixed
-
 - `v0.0.6` TableRow component
   - Handle cases where style overrides are supplied through native `style` prop
 
