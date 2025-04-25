@@ -461,6 +461,12 @@ export const useSelectInputIntersection = (
       observer.observe(optionsContainerRef.current);
     }
 
+    // reset the shift state when the options container is closed
+    // so that options always try to appear down from the input
+    if (!isOpen && isShifted) {
+      setIsShifted(false);
+    }
+
     return () => observer.disconnect();
   }, [isOpen, isShifted, wrapperRef]);
 
