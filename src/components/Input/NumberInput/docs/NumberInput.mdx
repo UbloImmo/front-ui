@@ -29,4 +29,18 @@ You can customize the increment value using the optional `step` property, enabli
 
 <Canvas of={NumberInputStories.Steps} />
 
+### Stepper buttons
+
+NumberInput shows stepper buttons by default. You can disable them by setting the `showStepper` property to `false`.
+
+> Clicking on a stepper button will increment / decrement the value by the amount specified in the `step` property.
+
+<Canvas of={NumberInputStories.NoStepper} />
+
+### Control icon
+
+Alternatively, you can replace the stepper buttons with an icon using the `controlIcon` property.
+
+<Canvas of={NumberInputStories.ControlIcon} />
+
 </Content>
