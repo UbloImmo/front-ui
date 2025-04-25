@@ -421,6 +421,8 @@ export const useSelectInputIntersection = (
   const [isShifted, setIsShifted] = useState<boolean>(false);
 
   useLayoutEffect(() => {
+    // do nothing if IntersectionObserver is not supported
+    if (!("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
