@@ -5,7 +5,10 @@ import { commonInputContainerStyles } from "../Input.styles";
 import { breakpointsPx } from "@/sizes";
 import { cssDimensions } from "@/utils/styles.utils";
 
-import type { SelectOptionItemStyleProps } from "./SelectInput.types";
+import type {
+  SelectInputOptionsContainerStyleProps,
+  SelectOptionItemStyleProps,
+} from "./SelectInput.types";
 import type { CommonInputStyleProps } from "../Input.types";
 
 export const selectInputStyles = (): RuleSet => {
@@ -52,11 +55,15 @@ export const selectInputContainerStyles = (
   }
 `;
 
-export const selectOptionContainerStyles = (): RuleSet => {
+export const selectOptionContainerStyles = ({
+  $reverse,
+}: SelectInputOptionsContainerStyleProps): RuleSet => {
+  const direction = $reverse ? "bottom" : "top";
+  const paddingProp = $reverse ? "padding-bottom" : "padding-top";
   return css`
     position: absolute;
-    top: calc(100% - var(--s-1));
-    padding-top: var(--s-1);
+    ${direction}: calc(100% - var(--s-1));
+    ${paddingProp}: var(--s-1);
     width: 100%;
     border-radius: 0 0 var(--s-1) var(--s-1);
     min-height: var(--s-8);
