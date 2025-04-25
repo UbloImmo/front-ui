@@ -32,6 +32,12 @@ export type SwitchProps = {
   inactiveHelperText?: Nullable<string>;
 
   /**
+   * The position of the helper text relative to the switch
+   * @default "start"
+   */
+  helperPosition?: "start" | "end";
+
+  /**
    * The Switch's callback.
    *
    * @type {Nullable<VoidFn<[boolean]>>}
