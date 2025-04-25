@@ -46,3 +46,17 @@ export const Steps: Story = {
     onChange: fn(),
   },
 };
+
+export const NoStepper: Story = {
+  args: {
+    placeholder: "Number input (no stepper)",
+    showStepper: false,
+  },
+};
+
+export const ControlIcon: Story = {
+  args: {
+    placeholder: "Number input (control icon)",
+    controlIcon: "Percent",
+  },
+};

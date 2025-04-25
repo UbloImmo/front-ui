@@ -17,13 +17,18 @@ import {
   useMemo,
   type RefObject,
   useLayoutEffect,
+  useRef,
 } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
 
+import { breakpoints } from "@/sizes";
+import { UNIT_PX } from "@types";
 import {
+  arrayOf,
   isEmptyString,
   isNonEmptyString,
+  toFixed,
   useLogger,
   useMergedProps,
 } from "@utils";
@@ -382,4 +387,94 @@ export const useSelectInputKeyboardEvents = (
       window.removeEventListener("keyup", onKeyUp);
     };
   }, [closeOptions, inputId, wrapperRef]);
+};
+
+const getDefaultWrapperHeight = () => {
+  return (window.innerHeight <= breakpoints.XS ? 10 : 8) * UNIT_PX;
+};
+
+const INTERSECTION_PADDING = 12;
+const INTERSECTION_THRESHOLD_COUNT = 20;
+const INTERSECTION_THRESHOLDS = arrayOf(INTERSECTION_THRESHOLD_COUNT, (index) =>
+  toFixed(index / INTERSECTION_THRESHOLD_COUNT, 2)
+);
+
+/**
+ * Hook that handles the intersection of the select input options container with the viewport.
+ * It automatically shifts the options container up or down when it would otherwise be clipped
+ * by the viewport boundaries.
+ *
+ * @param {boolean} isOpen - Whether the options container is open
+ * @param {RefObject<HTMLDivElement>} [wrapperRef] - Reference to the wrapper element
+ * @returns Object containing:
+ *   - isIntersecting: Whether the options container is intersecting with the viewport boundaries
+ *   - isShifted: Whether the options container should be shifted up to avoid clipping
+ *   - optionsContainerRef: Reference to attach to the options container element
+ */
+export const useSelectInputIntersection = (
+  isOpen: boolean,
+  wrapperRef?: RefObject<HTMLDivElement>
+) => {
+  const optionsContainerRef = useRef<HTMLDivElement>(null);
+
+  const [isIntersecting, setIsIntersecting] = useState<boolean>(false);
+  const [isShifted, setIsShifted] = useState<boolean>(false);
+
+  useLayoutEffect(() => {
+    // do nothing if IntersectionObserver is not supported
+    if (!("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        const intersecting = entry.intersectionRatio < 1;
+        // check if the element will intersect if shifted up
+        const height = entry.boundingClientRect.height;
+        const top = entry.boundingClientRect.top;
+        const rootTop = entry.rootBounds?.top ?? 0;
+        const rootBottom = entry.rootBounds?.bottom ?? window.innerHeight;
+        // get height of the wrapper, since we need to take it into account when shifting
+        const wrapperHeight =
+          wrapperRef?.current?.getBoundingClientRect().height ??
+          getDefaultWrapperHeight();
+        // compute needed available space to shift
+        const shiftedToTop =
+          top - height - wrapperHeight + INTERSECTION_PADDING;
+        const shiftedToBottom =
+          top + height + wrapperHeight - INTERSECTION_PADDING;
+        // check if we can shift
+        const canShift = isShifted
+          ? shiftedToBottom <= rootBottom
+          : shiftedToTop >= rootTop;
+        // check if we should shift
+        const shouldShift = canShift && intersecting;
+        setIsIntersecting(intersecting);
+        if (shouldShift) {
+          setIsShifted(!isShifted);
+        }
+      },
+      {
+        root: null,
+        threshold: INTERSECTION_THRESHOLDS,
+      }
+    );
+
+    if (optionsContainerRef.current) {
+      observer.observe(optionsContainerRef.current);
+    }
+
+    // reset the shift state when the options container is closed
+    // so that options always try to appear down from the input
+    if (!isOpen && isShifted) {
+      setIsShifted(false);
+    }
+
+    return () => observer.disconnect();
+  }, [isOpen, isShifted, wrapperRef]);
+
+  return {
+    isIntersecting,
+    isShifted,
+    optionsContainerRef,
+  };
 };

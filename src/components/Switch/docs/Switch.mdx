@@ -31,7 +31,7 @@ The `Switch` component includes an optional `disabled` property, which can be se
 
 <Canvas of={SwitchStories.Disabled} />
 
-### Adding an helper text
+### Adding a helper text
 
 To provide additional information about the active or inactive state of the `Switch` component, you can use the optional `withHelper`, along with the `activeHelperText` and `inactiveHelperText` properties. Here is an example :
 
@@ -46,5 +46,20 @@ To provide additional information about the active or inactive state of the `Swi
 When these properties are set, the helper text will be displayed to the right of the `Switch` component.
 
 <Canvas of={SwitchStories.WithHelper} />
+
+#### Helper text positioning
+
+The `helperPosition` property allows you to change the position of the helper text. It defaults to `start`.
+
+```ts
+{
+  withHelper: true,
+  helperPosition: "end",
+}
+```
+
+> This is useful in avoiding layout shift when the active and inactive helper texts have different lengths.
+
+<Canvas of={SwitchStories.HelperPosition} />
 
 </Content>

@@ -129,3 +129,20 @@ export const WithHelper = (props: SwitchProps) => {
 WithHelper.args = {
   withHelper: true,
 };
+
+const positionVariants = ["start", "end"] as const;
+
+export const HelperPosition = (props: SwitchProps) => {
+  return (
+    <ComponentVariants
+      of={Switch}
+      defaults={props}
+      variants={positionVariants.map((position) => ({
+        withHelper: true,
+        helperPosition: position,
+      }))}
+      propLabels
+      scaling={1}
+    />
+  );
+};

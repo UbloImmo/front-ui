@@ -17,16 +17,30 @@ import * as NumberInputStories from "../NumberInput.stories.tsx";
 
 <Canvas of={NumberInputStories.Default} />
 
-## Minimum and Maximum values
+### Minimum and Maximum values
 
 The optional properties `min` and `max` allow you to define a range of accepted values. In the example below, the minimum value is _1_ and the maximum value is _5_.
 
 <Canvas of={NumberInputStories.MinMaxValue} />
 
-## Steps
+### Steps
 
 You can customize the increment value using the optional `step` property, enabling users to conveniently adjust the value in preset increments. In the example below, the step is configured as `5`, resulting in the value being increased or decreased by 5 units at a time.
 
 <Canvas of={NumberInputStories.Steps} />
+
+### Stepper buttons
+
+NumberInput shows stepper buttons by default. You can disable them by setting the `showStepper` property to `false`.
+
+> Clicking on a stepper button will increment / decrement the value by the amount specified in the `step` property.
+
+<Canvas of={NumberInputStories.NoStepper} />
+
+### Control icon
+
+Alternatively, you can replace the stepper buttons with an icon using the `controlIcon` property.
+
+<Canvas of={NumberInputStories.ControlIcon} />
 
 </Content>

@@ -29,6 +29,7 @@ import {
 } from "../SelectInput/SelectInput.styles";
 import {
   isSelectOptionGroup,
+  useSelectInputIntersection,
   useSelectInputKeyboardEvents,
   useSelectOptions,
 } from "../SelectInput/SelectInput.utils";
@@ -47,6 +48,7 @@ import type {
 } from "./MultiSelectInput.types";
 import type { CommonInputStyleProps } from "../Input.types";
 import type {
+  SelectInputOptionsContainerStyleProps,
   SelectInputProps,
   SelectOption,
 } from "../SelectInput/SelectInput.types";
@@ -68,7 +70,7 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
 /**
  * Allows the user to select multiple values from a list of options.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {MultiSelectInputProps & TestIdProps} props - The props for the MultiSelectInput component
  *
@@ -225,6 +227,11 @@ const MultiSelectInput = <
 
   useSelectInputKeyboardEvents(wrapperRef, inputId, closeOptions);
 
+  const { isShifted, optionsContainerRef } = useSelectInputIntersection(
+    isOpen,
+    wrapperRef
+  );
+
   return (
     <MultiSelectInputWrapper
       reverse
@@ -239,6 +246,8 @@ const MultiSelectInput = <
           overrideTestId
           aria-haspopup="listbox"
           aria-expanded={isOpen}
+          ref={optionsContainerRef}
+          $reverse={isShifted}
         >
           {displayOptions.map((optionOrGroup, index) =>
             isSelectOptionGroup<TValue, TExtraData>(optionOrGroup) ? (
@@ -342,7 +351,9 @@ const MultiSelectInputWrapper = styled(FlexColumnLayout)`
   ${multiSelectWrapperStyles}
 `;
 
-const MultiSelectOptionsContainer = styled(FlexColumnLayout)`
+const MultiSelectOptionsContainer = styled(
+  FlexColumnLayout
+)<SelectInputOptionsContainerStyleProps>`
   ${selectOptionContainerStyles}
 `;
 

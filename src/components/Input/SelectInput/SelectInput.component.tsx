@@ -13,6 +13,7 @@ import {
 import {
   defaultSelectInputProps,
   isSelectOptionGroup,
+  useSelectInputIntersection,
   useSelectInputKeyboardEvents,
   useSelectOptions,
   useSelectValue,
@@ -41,14 +42,18 @@ import {
   useUikitTranslation,
 } from "@utils";
 
-import type { SelectInputProps, SelectOption } from "./SelectInput.types";
+import type {
+  SelectInputOptionsContainerStyleProps,
+  SelectInputProps,
+  SelectOption,
+} from "./SelectInput.types";
 import type { CommonInputStyleProps, InputProps } from "../Input.types";
 import type { TestIdProps } from "@types";
 
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.11
+ * @version 0.0.12
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -192,18 +197,26 @@ const SelectInput = <
     setInternalValue(null);
   }, [activeOption, disabled, isOpen, mergedProps.clearable, setInternalValue]);
 
+  const { isShifted, optionsContainerRef } = useSelectInputIntersection(
+    isOpen,
+    wrapperRef
+  );
+
   return (
     <SelectInputWrapper
       reverse
       ref={wrapperRef}
-      data-testid={`${testId}-wrapper`}
+      testId={`${testId}-wrapper`}
+      overrideTestId
     >
       {isOpen && (
         <SelectOptionsContainer
           role="listbox"
+          ref={optionsContainerRef}
           data-testid={`${testId}-options`}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
+          $reverse={isShifted}
         >
           {displayOptions.map((optionOrGroup, index) =>
             isSelectOptionGroup<TValue, TExtraData>(optionOrGroup) ? (
@@ -337,7 +350,7 @@ const SelectInputContainer = styled.div<CommonInputStyleProps>`
   ${selectInputContainerStyles}
 `;
 
-const SelectOptionsContainer = styled.div`
+const SelectOptionsContainer = styled.div<SelectInputOptionsContainerStyleProps>`
   ${selectOptionContainerStyles}
 `;
 

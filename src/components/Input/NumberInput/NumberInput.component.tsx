@@ -7,6 +7,7 @@ import {
   defaultCommonInputProps,
   StyledInputControlGroup,
   StyledInputGroupedControl,
+  StyledInputControl,
 } from "../Input.common";
 import {
   useInputOnChange,
@@ -42,12 +43,14 @@ const defaultNumberInputProps: DefaultNumberInputProps = {
   name: null,
   scale: 0,
   precision: 7,
+  showStepper: true,
+  controlIcon: null,
 };
 
 /**
  * Renders a number input component.
  *
- * @version 0.0.9
+ * @version 0.0.10
  *
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
@@ -207,6 +210,10 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
     return `(-\\s?)?[0-9]{0,${safePrecision}}([\\.,][0-9]{0,${safeScale}})?`;
   }, [safePrecision, safeScale]);
 
+  const showStepper = useMemo(() => {
+    return mergedProps.showStepper && !mergedProps.controlIcon;
+  }, [mergedProps.showStepper, mergedProps.controlIcon]);
+
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-number-container">
       <StyledNumberInput
@@ -229,32 +236,40 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
         id={id}
         {...inputStyles}
       />
-      <StyledInputControlGroup>
-        <StyledInputGroupedControl
-          {...inputStyles}
-          onClick={incrementValue}
-          data-testid="input-control-increment"
-          aria-label={controlLabels.increment}
-          title={controlLabels.increment}
-          role="button"
-          aria-disabled={mergedProps.disabled}
-          aria-roledescription="Bouton d'augmentation, permet d'augmenter la valeur"
-        >
-          <Icon name="ChevronUp" size="s-3" />
-        </StyledInputGroupedControl>
-        <StyledInputGroupedControl
-          {...inputStyles}
-          onClick={decrementValue}
-          data-testid="input-control-decrement"
-          aria-disabled={mergedProps.disabled}
-          aria-label={controlLabels.decrement}
-          title={controlLabels.decrement}
-          role="button"
-          aria-roledescription="Bouton de diminution, permet de diminuter la valeur"
-        >
-          <Icon name="ChevronDown" size="s-3" />
-        </StyledInputGroupedControl>
-      </StyledInputControlGroup>
+
+      {showStepper && (
+        <StyledInputControlGroup>
+          <StyledInputGroupedControl
+            {...inputStyles}
+            onClick={incrementValue}
+            data-testid="input-control-increment"
+            aria-label={controlLabels.increment}
+            title={controlLabels.increment}
+            role="button"
+            aria-disabled={mergedProps.disabled}
+            aria-roledescription="Bouton d'augmentation, permet d'augmenter la valeur"
+          >
+            <Icon name="ChevronUp" size="s-3" />
+          </StyledInputGroupedControl>
+          <StyledInputGroupedControl
+            {...inputStyles}
+            onClick={decrementValue}
+            data-testid="input-control-decrement"
+            aria-disabled={mergedProps.disabled}
+            aria-label={controlLabels.decrement}
+            title={controlLabels.decrement}
+            role="button"
+            aria-roledescription="Bouton de diminution, permet de diminuter la valeur"
+          >
+            <Icon name="ChevronDown" size="s-3" />
+          </StyledInputGroupedControl>
+        </StyledInputControlGroup>
+      )}
+      {mergedProps.controlIcon && (
+        <StyledInputControl {...inputStyles} data-testid={`${testId}-control`}>
+          <Icon name={mergedProps.controlIcon} />
+        </StyledInputControl>
+      )}
     </StyledInputContainer>
   );
 };
