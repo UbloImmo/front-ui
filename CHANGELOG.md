@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.12` SelectInput & `v0.0.3` MultiSelectInput components
+  - Detect viewport intersection when showing options, and implement a mechanism to shift it on top of the options if spacing allows it
+
+- `v0.0.10` NumberInput component
+  - Added a `showStepper` property to control whether to show the stepper buttons (defaults to `true`)
+  - Added a `controlIcon` property to replace the stepper buttons with an icon (defaults to `null`)
+
+- `v0.0.6` Switch component
+  - Added a `helperPosition` property to control whether to show the Switch's helper text before or after it.
+
 ## 1.8.17 - 2025-04-24
 ### Fixed
 - `v0.0.6` TableRow component
