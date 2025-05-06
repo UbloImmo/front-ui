@@ -26,7 +26,7 @@ import type { Nullable } from "@ubloimmo/front-util";
  * A component that displays a single filters
  * and allows interacting with it and its options.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {ListFilterProps} props
  * @returns {Nullable<JSX.Element>}

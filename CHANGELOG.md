@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.4` ListFilter component
+  - Take filter label length into account when deciding whether to render options on a seperate line when not multi select
+
 ## 1.8.18 - 2025-04-25
 ### Changed
 - `v0.0.12` SelectInput & `v0.0.3` MultiSelectInput components
