@@ -35,7 +35,7 @@ import {
 
 import type { ListFilterProps, ListFilterStyleProps } from "./ListFilter.types";
 
-const FILTER_OPTION_LABEL_MAX_SINGLE_LINE_LENGTH = 35;
+const FILTER_OPTION_LABEL_MAX_SINGLE_LINE_LENGTH = 34;
 
 /**
  * Hook that returns a sanitized filter based on the provided props.
@@ -351,7 +351,7 @@ export const useListFilter = (props: ListFilterProps) => {
       !filter.loading &&
       (filter.selectedOptions.length > 1 ||
         (filter.selectedOptions[0]?.label?.length ?? 0) >=
-          FILTER_OPTION_LABEL_MAX_SINGLE_LINE_LENGTH),
+          FILTER_OPTION_LABEL_MAX_SINGLE_LINE_LENGTH - filter.label.length),
     [filter]
   );
 
