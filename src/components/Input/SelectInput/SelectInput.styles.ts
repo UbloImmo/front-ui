@@ -95,6 +95,7 @@ const sharedSelectOptionContainerStyles = (): RuleSet => {
   return css`
     position: relative;
     cursor: pointer;
+    width: 100%;
 
     &:not(:first-child) {
       border-top: 1px solid var(--primary-light);
