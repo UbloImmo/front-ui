@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.15` SelectInput component
+  - Fixed generic type propagation
+
 ## 1.8.20 - 2025-05-15
 ### Changed
 - `v0.0.14` SelectInput component
