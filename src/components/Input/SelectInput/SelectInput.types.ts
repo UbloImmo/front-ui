@@ -85,20 +85,18 @@ export type FilterSelectOptionFn<
 /**
  * The custom component to render the selected option
  */
-export type CustomSelectedOptionComponent<TValue extends NullishPrimitives> =
-  FC<{
-    /**
-     * The value of the selected custom option
-     * @type {Nullable<TValue>}
-     */
-    value: Nullable<TValue>;
-
+export type CustomSelectedOptionComponent<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = FC<
+  SelectOption<TValue, TExtraData> & {
     /**
      * Whether the selection is disabled
      * @type {boolean}
      */
     disabled?: boolean;
-  }>;
+  }
+>;
 
 export type SelectInputProps<
   TValue extends NullishPrimitives,

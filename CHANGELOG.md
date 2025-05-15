@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.14` SelectInput component
+  - Update `CustomSelectOptionComponent` type so it may receive the whole selected option
+  - Allows for consuming extra data
+
 ## 1.8.19 - 2025-05-14
 ### Added
 - `v0.0.13` SelectInput & `v0.0.4` MultiSelectInput components
