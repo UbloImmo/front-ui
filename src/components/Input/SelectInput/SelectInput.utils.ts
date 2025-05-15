@@ -57,6 +57,7 @@ export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives>
     SelectedOption: null,
     controlIcon: "CaretDownFill",
     clearable: false,
+    onOptionChange: null,
   };
 
 export const useSelectOptions = <
@@ -339,12 +340,12 @@ export const useSelectValue = <
   }, [activeOption]);
 
   useEffect(() => {
-    if (!mergedProps.onChange) return;
-
     if (activeOption && activeOption.value !== mergedProps.value) {
-      mergedProps.onChange(activeOption.value);
+      mergedProps.onChange?.(activeOption.value);
+      mergedProps.onOptionChange?.(activeOption);
     } else if (internalValue !== mergedProps.value) {
-      mergedProps.onChange(null);
+      mergedProps.onChange?.(null);
+      mergedProps.onOptionChange?.(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeOption]);

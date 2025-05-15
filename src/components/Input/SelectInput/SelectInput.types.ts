@@ -131,6 +131,18 @@ export type CustomSelectedOptionComponent<
   }
 >;
 
+/**
+ * A function used to handle option changes
+ *
+ * @template {NullishPrimitives} TValue - The type of the value.
+ * @template {NullishPrimitives} TExtraData - The type of the extra data.
+ * @param {Nullable<SelectOption<TValue, TExtraData>>} option - The option that was selected or null
+ */
+export type SelectInputOnOptionChangeFn<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = VoidFn<[option: Nullable<SelectOption<TValue, TExtraData>>]>;
+
 export type SelectInputProps<
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
@@ -191,6 +203,13 @@ export type SelectInputProps<
    * @default false
    */
   clearable?: boolean;
+  /**
+   * Callback triggered when the selected option changes
+   *
+   * @type {Nullable<SelectInputOnOptionChangeFn<TValue, TExtraData>>}
+   * @default null
+   */
+  onOptionChange?: Nullable<SelectInputOnOptionChangeFn<TValue, TExtraData>>;
 };
 
 export type DefaultSelectInputProps<
