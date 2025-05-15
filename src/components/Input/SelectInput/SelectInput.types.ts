@@ -186,9 +186,9 @@ export type SelectInputProps<
   /**
    * The custom SelectedOption component that gets rendered for the selected option
    *
-   * @type {Nullable<CustomSelectedOptionComponent<TValue>>}
+   * @type {Nullable<CustomSelectedOptionComponent<TValue, TExtraData>>}
    */
-  SelectedOption?: Nullable<CustomSelectedOptionComponent<TValue>>;
+  SelectedOption?: Nullable<CustomSelectedOptionComponent<TValue, TExtraData>>;
   /**
    * The icon that gets displayed right of the control
    *
