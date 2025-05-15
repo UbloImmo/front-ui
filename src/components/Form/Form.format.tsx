@@ -70,8 +70,8 @@ const DisplaySelectValue = ({
 
   if (!optionValue) return noValue;
 
-  if (SelectedOption)
-    return <SelectedOption value={optionValue} disabled={disabled} />;
+  if (SelectedOption && option)
+    return <SelectedOption {...option} disabled={disabled} />;
 
   return <FormFieldDisplayValue value={option?.label ?? String(optionValue)} />;
 };
@@ -154,13 +154,22 @@ const displayIconPickerValue: FormDisplayValueFormatterFn<
   return <IconPickerItem name={value} active readonly />;
 };
 
+/**
+ * Displays the selected value for a search input field.
+ *
+ * @param {Object} props - The component props.
+ * @param {NullishPrimitives} props.fieldValue - The value of the field to display.
+ * @param {Object} props.props - The props passed to the SearchInput component.
+ * @param {SearchInputProps<NullishPrimitives>['options']} props.props.results - The options for the search input.
+ * @returns {ReactNode} A FormFieldDisplayValue component with the selected option's label, or a no-value placeholder.
+ */
 const DisplaySearchValue = ({
   fieldValue,
   props: { disabled, SelectedOption, results },
 }: {
   fieldValue: NullishPrimitives;
   props: SearchInputProps<NullishPrimitives>;
-}) => {
+}): ReactNode => {
   const { flattenedOptions, isLoading } = useSelectOptions({
     options: results ?? undefined,
     filterOption: null,
@@ -168,16 +177,17 @@ const DisplaySearchValue = ({
   if (!fieldValue) return <FormFieldDisplayValue value={noValue} />;
   if (isLoading) return <FieldSkeleton />;
 
-  const result =
+  const option =
     flattenedOptions.find(({ value }) => value === fieldValue) ?? null;
-  const resultValue = result?.value ?? fieldValue;
 
-  if (!resultValue) return <FormFieldDisplayValue value={noValue} />;
+  const optionValue = option?.value ?? fieldValue;
 
-  if (SelectedOption)
-    return <SelectedOption value={resultValue} disabled={disabled} />;
+  if (!optionValue) return <FormFieldDisplayValue value={noValue} />;
 
-  return <FormFieldDisplayValue value={result?.label ?? String(resultValue)} />;
+  if (SelectedOption && option)
+    return <SelectedOption {...option} disabled={disabled} />;
+
+  return <FormFieldDisplayValue value={option?.label ?? String(optionValue)} />;
 };
 
 /**
