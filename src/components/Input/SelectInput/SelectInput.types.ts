@@ -19,11 +19,44 @@ export type SelectOption<
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 > = {
+  /**
+   * The value of the option
+   *
+   * @type {Nullable<TValue>}
+   * @required
+   */
   value: TValue | null;
+  /**
+   * The label of the option
+   *
+   * @type {string}
+   * @required
+   */
   label: string;
+  /**
+   * Whether the option is disabled
+   *
+   * @type {boolean}
+   * @default false
+   */
   disabled?: boolean;
+  /**
+   * An optional icon to display left of the label
+   */
   icon?: IconName;
+  /**
+   * Whether the option is active
+   *
+   * @remarks Updated dynamically based on the parent SelectInput's state
+   * @type {boolean}
+   * @default false
+   */
   active?: boolean;
+  /**
+   * Any additional data to be passed alongside the option
+   *
+   * @type {TExtraData}
+   */
   extraData?: TExtraData;
 } & TestIdProps;
 
@@ -85,20 +118,30 @@ export type FilterSelectOptionFn<
 /**
  * The custom component to render the selected option
  */
-export type CustomSelectedOptionComponent<TValue extends NullishPrimitives> =
-  FC<{
-    /**
-     * The value of the selected custom option
-     * @type {Nullable<TValue>}
-     */
-    value: Nullable<TValue>;
-
+export type CustomSelectedOptionComponent<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = FC<
+  SelectOption<TValue, TExtraData> & {
     /**
      * Whether the selection is disabled
      * @type {boolean}
      */
     disabled?: boolean;
-  }>;
+  }
+>;
+
+/**
+ * A function used to handle option changes
+ *
+ * @template {NullishPrimitives} TValue - The type of the value.
+ * @template {NullishPrimitives} TExtraData - The type of the extra data.
+ * @param {Nullable<SelectOption<TValue, TExtraData>>} option - The option that was selected or null
+ */
+export type SelectInputOnOptionChangeFn<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = VoidFn<[option: Nullable<SelectOption<TValue, TExtraData>>]>;
 
 export type SelectInputProps<
   TValue extends NullishPrimitives,
@@ -125,7 +168,6 @@ export type SelectInputProps<
    * @type {Nullable<FilterSelectOptionFn<TValue, TExtraData>>}
    */
   filterOption?: Nullable<FilterSelectOptionFn<TValue, TExtraData>>;
-
   /**
    * Whether the user can search for an option by typing
    *
@@ -135,14 +177,12 @@ export type SelectInputProps<
    * @type {boolean | "manual"}
    */
   searchable?: boolean | "manual";
-
   /**
    * An optional custom Option component that gets rendered for each option
    *
    * @type {Nullable<CustomOptionComponent<TValue, TExtraData>>}
    */
   Option?: Nullable<CustomOptionComponent<TValue, TExtraData>>;
-
   /**
    * The custom SelectedOption component that gets rendered for the selected option
    *
@@ -156,7 +196,6 @@ export type SelectInputProps<
    * @default "CaretDownFill"
    */
   controlIcon?: IconName;
-
   /**
    * Whether the user can clear the selected option
    *
@@ -164,6 +203,13 @@ export type SelectInputProps<
    * @default false
    */
   clearable?: boolean;
+  /**
+   * Callback triggered when the selected option changes
+   *
+   * @type {Nullable<SelectInputOnOptionChangeFn<TValue, TExtraData>>}
+   * @default null
+   */
+  onOptionChange?: Nullable<SelectInputOnOptionChangeFn<TValue, TExtraData>>;
 };
 
 export type DefaultSelectInputProps<

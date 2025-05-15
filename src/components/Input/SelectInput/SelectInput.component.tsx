@@ -53,7 +53,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.13
+ * @version 0.0.14
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -278,7 +278,7 @@ const SelectInput = <
               SelectedOptionComponent ? (
                 <CustomSelectedOptionContainer>
                   <SelectedOptionComponent
-                    value={activeOption.value}
+                    {...activeOption}
                     disabled={disabled}
                   />
                 </CustomSelectedOptionContainer>
