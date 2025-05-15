@@ -190,13 +190,10 @@ const CustomOption: CustomOptionComponent<string, BadgeProps> = (option) => {
   );
 };
 
-const CustomSelectedOption: CustomSelectedOptionComponent<string> = ({
-  value,
-  disabled,
-}: {
-  value: Nullable<string>;
-  disabled?: boolean;
-}) => {
+const CustomSelectedOption: CustomSelectedOptionComponent<
+  string,
+  BadgeProps
+> = ({ value, disabled }: { value: Nullable<string>; disabled?: boolean }) => {
   if (disabled) {
     return (
       <CustomOptionContainer align="center" fill>
