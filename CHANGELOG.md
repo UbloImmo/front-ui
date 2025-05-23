@@ -7,14 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.8.23 - 2025-05-23
 ### Fixed
-
 - `v0.0.6` MultiSelectInput component
   - Allow deleting object options
-
 - `v0.0.8` Chip component
   - Avoid triggering parent forms on delete by setting button type to `button`
-
 - `v0.0.29` Form component
   - Fix display of multi-select, select & search fields in read mode
   - Fix display of edit button when displayed in read mode as modal
