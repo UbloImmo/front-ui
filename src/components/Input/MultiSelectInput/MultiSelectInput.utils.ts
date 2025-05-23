@@ -71,12 +71,19 @@ export const useMultiSelectValue = <
       if (isNull(optionValue)) {
         return;
       }
-      const copy = copySet(internalValue);
-      const hasBeenDeleted = copy.delete(optionValue);
-      // only update state if the option was selected in the first place
-      if (hasBeenDeleted) {
-        setInternalValue(copy);
+      const copy = new Set<TValue>();
+      for (const value of internalValue.values()) {
+        if (
+          value === optionValue ||
+          JSON.stringify(value) === JSON.stringify(optionValue)
+        )
+          continue;
+        copy.add(value);
       }
+
+      // only update state if the option was selected in the first place
+      if (copy.size === internalValue.size) return;
+      setInternalValue(copy);
     },
     [internalValue]
   );

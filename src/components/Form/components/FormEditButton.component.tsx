@@ -43,9 +43,9 @@ export const FormEditButton = (): JSX.Element => {
         secondary
         expandOnHover
       />
-      {asModal && (
+      {asModal && !(!isEditing && !readonly) && (
         <EditButton
-          $hidden={!isEditing && !readonly}
+          // $hidden={!isEditing && !readonly}
           onClick={cancelEdition}
           icon="XLg"
           title={closeLabel}
