@@ -10,6 +10,7 @@ import { Text } from "@/components/Text";
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout } from "@layouts";
+import { delay } from "@utils";
 
 import type {
   CustomOptionComponent,
@@ -268,23 +269,17 @@ const CustomOptionContainer = styled(FlexRowLayout)<{ $active?: boolean }>`
     `}
 `;
 
-const delayedOptions = (query: Nullable<string>) => {
+const delayedOptions = async (query: Nullable<string>) => {
   const optionsCopy = flattenSelectOptions(options);
-  return new Promise<SelectOptionOrGroup<string, BadgeProps>[]>((resolve) => {
-    setTimeout(() => {
-      if (!query) {
-        resolve(optionsCopy);
-        return;
-      }
-      resolve(optionsCopy.filter(({ label }) => label.includes(query)));
-    }, 3000);
-  });
+  await delay(1500);
+  if (!query) return optionsCopy;
+  return optionsCopy.filter(({ label }) => label.includes(query));
 };
 
 export const LoadingOptions: Story = {
   args: {
     options: delayedOptions,
-    searchable: true,
+    searchable: "manual",
   },
 };
 
