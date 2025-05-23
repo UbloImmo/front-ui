@@ -53,6 +53,18 @@ export const useMultiSelectValue = <
     [clearInternalValue, internalValue]
   );
 
+  // compare values using JSON.stringify to handle complex objects
+  const isSelectedOption = useCallback(
+    (optionValue: TValue): boolean => {
+      return !![...internalValue.values()].find(
+        (value) =>
+          value === optionValue ||
+          JSON.stringify(value) === JSON.stringify(optionValue)
+      );
+    },
+    [internalValue]
+  );
+
   const unselectOption = useCallback(
     (optionValue: Nullable<TValue>) => {
       // since null options clear the set, there is nothing to unselect;
@@ -71,16 +83,16 @@ export const useMultiSelectValue = <
 
   const activeOptions = useMemo(() => {
     return flattenedOptions.filter(
-      (option) => !isNull(option.value) && internalValue.has(option.value)
+      (option) => !isNull(option.value) && isSelectedOption(option.value)
     );
-  }, [flattenedOptions, internalValue]);
+  }, [flattenedOptions, isSelectedOption]);
 
   const displayOptions = useMemo(() => {
     return assignActiveOptions(options, (optionValue) =>
       // any null option is active if the set is empty, else it's active if the set has it
-      isNull(optionValue) ? !internalValue.size : internalValue.has(optionValue)
+      isNull(optionValue) ? !internalValue.size : isSelectedOption(optionValue)
     );
-  }, [options, internalValue]);
+  }, [options, internalValue, isSelectedOption]);
 
   useEffect(() => {
     if (!mergedProps.onChange) return;
@@ -97,6 +109,7 @@ export const useMultiSelectValue = <
     activeOptions,
     displayOptions,
     setInternalValue,
+    isSelectedOption,
     selectOption,
     unselectOption,
   };

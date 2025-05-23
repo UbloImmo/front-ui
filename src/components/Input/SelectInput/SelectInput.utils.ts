@@ -59,6 +59,7 @@ export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives>
     controlIcon: "CaretDownFill",
     clearable: false,
     onOptionChange: null,
+    alwaysDisplayActiveOption: false,
   };
 
 export const useSelectOptions = <
@@ -245,21 +246,52 @@ export const useSelectValue = <
   const [autoCompleteQuery, setAutoCompleteQuery] = useState<Nullish<string>>(
     mergedProps.searchable ? "" : null
   );
+
+  const findActiveOption = useCallback(
+    (optionValue: Nullable<TValue>) => {
+      const baseOption = flattenedOptions.find(
+        ({ value }) => value === optionValue
+      );
+      return (
+        baseOption ??
+        (!!activeOption && optionValue === activeOption?.value
+          ? activeOption
+          : null)
+      );
+    },
+    [activeOption, flattenedOptions]
+  );
+
   const setInternalValue = useCallback(
     (setValue: Nullable<TValue>) => {
-      const option =
-        flattenedOptions.find(({ value }) => value === setValue) ??
-        (!!activeOption && setValue === activeOption?.value
-          ? activeOption
-          : null);
+      const option = findActiveOption(setValue);
       startTransition(() => {
         _setInternalValue(setValue);
         setActiveOption(option);
         setAutoCompleteQuery(option?.label ?? null);
       });
     },
-    [flattenedOptions, activeOption]
+    [findActiveOption]
   );
+
+  const clearInternalValue = useCallback(() => {
+    startTransition(() => {
+      _setInternalValue(null);
+      setActiveOption(null);
+      setAutoCompleteQuery(null);
+    });
+  }, []);
+
+  // ensure active option tracks internal value when the options are updated
+  useEffect(() => {
+    if (!isNull(internalValue) && !activeOption) {
+      const option = findActiveOption(internalValue);
+      if (option) {
+        setActiveOption(option);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flattenedOptions]);
 
   useEffect(() => {
     if (mergedProps.uncontrolled) return;
@@ -317,13 +349,21 @@ export const useSelectValue = <
   >(() => {
     let rootOptions = isQuerying ? filteredOptions : flattenedOptions;
 
-    if (!rootOptions.length && !!activeOption) {
+    if (
+      !rootOptions.length &&
+      !!activeOption &&
+      mergedProps.alwaysDisplayActiveOption
+    ) {
       rootOptions = [activeOption];
     }
     const rootOptionValues = new Set(rootOptions.map(({ value }) => value));
 
     const referenceOptions: typeof options =
-      !!options.length || !activeOption ? options : [activeOption];
+      !!options.length ||
+      !activeOption ||
+      !mergedProps.alwaysDisplayActiveOption
+        ? options
+        : [activeOption];
     const referenceOptionsValues = new Set(
       referenceOptions.flatMap((o) =>
         isSelectOption(o) ? [o.value] : o.options.map((oo) => oo.value)
@@ -367,6 +407,7 @@ export const useSelectValue = <
     options,
     internalValue,
     activeOption,
+    mergedProps.alwaysDisplayActiveOption,
   ]);
 
   useEffect(() => {
@@ -385,6 +426,7 @@ export const useSelectValue = <
     setAutoCompleteQuery,
     internalValue,
     setInternalValue,
+    clearInternalValue,
     isQuerying,
     activeOption,
     displayOptions,

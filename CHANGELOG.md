@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `v0.0.5` MultiSelectInput component
+  - Correctly mark options with object values as active
+
 - `v0.0.16` SelectInput component
   - Rework querying mecanism to respect user query
   - Keep the selected option cached and always show it

@@ -71,6 +71,7 @@ const SelectInput = <
   const {
     displayOptions,
     setInternalValue,
+    clearInternalValue,
     activeOption,
     autoCompleteQuery,
     setAutoCompleteQuery,
@@ -194,8 +195,14 @@ const SelectInput = <
 
   const clearSelectedOption = useCallback(() => {
     if (disabled || !activeOption || !mergedProps.clearable || isOpen) return;
-    setInternalValue(null);
-  }, [activeOption, disabled, isOpen, mergedProps.clearable, setInternalValue]);
+    clearInternalValue();
+  }, [
+    activeOption,
+    disabled,
+    isOpen,
+    mergedProps.clearable,
+    clearInternalValue,
+  ]);
 
   const { isShifted, optionsContainerRef } = useSelectInputIntersection(
     isOpen,
