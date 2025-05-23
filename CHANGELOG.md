@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.16` SelectInput component
   - Rework querying mecanism to respect user query
-  - Keep the selected option cached and always show it 
+  - Keep the selected option cached and always show it
 
 ## 1.8.21 - 2025-05-15
 ### Fixed
