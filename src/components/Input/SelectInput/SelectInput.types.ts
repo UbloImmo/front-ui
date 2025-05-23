@@ -210,6 +210,13 @@ export type SelectInputProps<
    * @default null
    */
   onOptionChange?: Nullable<SelectInputOnOptionChangeFn<TValue, TExtraData>>;
+  /**
+   * Whether to always display the active option in the options list, even if it is not included in the given options
+   *
+   * @type {boolean}
+   * @default false
+   */
+  alwaysDisplayActiveOption?: boolean;
 };
 
 export type DefaultSelectInputProps<

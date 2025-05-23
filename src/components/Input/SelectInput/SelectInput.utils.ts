@@ -18,6 +18,7 @@ import {
   type RefObject,
   useLayoutEffect,
   useRef,
+  useTransition,
 } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
@@ -58,6 +59,7 @@ export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives>
     controlIcon: "CaretDownFill",
     clearable: false,
     onOptionChange: null,
+    alwaysDisplayActiveOption: false,
   };
 
 export const useSelectOptions = <
@@ -228,9 +230,68 @@ export const useSelectValue = <
   refetchOptions: RefetchSelectOptionsFn,
   isOpen: boolean
 ) => {
-  const [internalValue, setInternalValue] = useState<Nullable<TValue>>(
+  const [activeOption, setActiveOption] = useState<
+    Nullable<SelectOption<TValue, TExtraData>>
+  >(
+    flattenedOptions.find(
+      ({ value }) => value === (mergedProps.value ?? null)
+    ) ?? null
+  );
+  const [internalValue, _setInternalValue] = useState<Nullable<TValue>>(
     mergedProps.value ?? null
   );
+
+  const [_, startTransition] = useTransition();
+
+  const [autoCompleteQuery, setAutoCompleteQuery] = useState<Nullish<string>>(
+    mergedProps.searchable ? "" : null
+  );
+
+  const findActiveOption = useCallback(
+    (optionValue: Nullable<TValue>) => {
+      const baseOption = flattenedOptions.find(
+        ({ value }) => value === optionValue
+      );
+      return (
+        baseOption ??
+        (!!activeOption && optionValue === activeOption?.value
+          ? activeOption
+          : null)
+      );
+    },
+    [activeOption, flattenedOptions]
+  );
+
+  const setInternalValue = useCallback(
+    (setValue: Nullable<TValue>) => {
+      const option = findActiveOption(setValue);
+      startTransition(() => {
+        _setInternalValue(setValue);
+        setActiveOption(option);
+        setAutoCompleteQuery(option?.label ?? null);
+      });
+    },
+    [findActiveOption]
+  );
+
+  const clearInternalValue = useCallback(() => {
+    startTransition(() => {
+      _setInternalValue(null);
+      setActiveOption(null);
+      setAutoCompleteQuery(null);
+    });
+  }, []);
+
+  // ensure active option tracks internal value when the options are updated
+  useEffect(() => {
+    if (!isNull(internalValue) && !activeOption) {
+      const option = findActiveOption(internalValue);
+      if (option) {
+        setActiveOption(option);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flattenedOptions]);
 
   useEffect(() => {
     if (mergedProps.uncontrolled) return;
@@ -239,10 +300,6 @@ export const useSelectValue = <
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedProps.value, mergedProps.uncontrolled]);
-
-  const [autoCompleteQuery, setAutoCompleteQuery] = useState<Nullish<string>>(
-    mergedProps.searchable ? "" : null
-  );
 
   const isQuerying = useMemo(
     () => isString(autoCompleteQuery) && isNonEmptyString(autoCompleteQuery),
@@ -261,13 +318,7 @@ export const useSelectValue = <
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoCompleteQuery]);
-
-  const activeOption = useMemo(() => {
-    return (
-      flattenedOptions.find(({ value }) => value === internalValue) ?? null
-    );
-  }, [flattenedOptions, internalValue]);
+  }, [autoCompleteQuery, isOpen]);
 
   const filteredOptions = useMemo(() => {
     if (!mergedProps.searchable || mergedProps.searchable === "manual") {
@@ -296,54 +347,74 @@ export const useSelectValue = <
   const displayOptions = useMemo<
     SelectOptionOrGroup<TValue, TExtraData>[]
   >(() => {
-    const rootOptions = isQuerying ? filteredOptions : flattenedOptions;
+    let rootOptions = isQuerying ? filteredOptions : flattenedOptions;
+
+    if (
+      !rootOptions.length &&
+      !!activeOption &&
+      mergedProps.alwaysDisplayActiveOption
+    ) {
+      rootOptions = [activeOption];
+    }
+    const rootOptionValues = new Set(rootOptions.map(({ value }) => value));
+
+    const referenceOptions: typeof options =
+      !!options.length ||
+      !activeOption ||
+      !mergedProps.alwaysDisplayActiveOption
+        ? options
+        : [activeOption];
+    const referenceOptionsValues = new Set(
+      referenceOptions.flatMap((o) =>
+        isSelectOption(o) ? [o.value] : o.options.map((oo) => oo.value)
+      )
+    );
+
+    if (activeOption && !referenceOptionsValues.has(activeOption.value)) {
+      referenceOptions.push(activeOption);
+    }
+
+    const optionGroupsToDisplay: SelectOptionOrGroup<TValue, TExtraData>[] =
+      referenceOptions
+        .map((optionOrGroup) => {
+          if (isSelectOption(optionOrGroup)) {
+            if (rootOptionValues.has(optionOrGroup.value)) return optionOrGroup;
+            return null;
+          }
+          const groupOptions = optionOrGroup.options.filter((option) =>
+            rootOptionValues.has(option.value)
+          );
+          if (!groupOptions.length) return null;
+          if (!groupOptions.length) return null;
+
+          if (!groupOptions.length) return null;
+
+          return {
+            ...optionOrGroup,
+            options: groupOptions,
+          };
+        })
+        .filter((optionOrGroup) => !isNull(optionOrGroup));
 
     return assignActiveOptions(
-      options,
+      optionGroupsToDisplay,
       (optionValue) => optionValue === internalValue
-    )
-      .map((optionOrGroup) => {
-        if (isSelectOption(optionOrGroup)) {
-          return rootOptions.find(
-            (rootOption) => rootOption.value === optionOrGroup.value
-          )
-            ? optionOrGroup
-            : null;
-        }
-
-        const groupOptions = optionOrGroup.options.filter((groupOption) =>
-          rootOptions.find(
-            (rootOption) => rootOption.value === groupOption.value
-          )
-        );
-
-        if (!groupOptions.length) return null;
-
-        return {
-          ...optionOrGroup,
-          options: groupOptions,
-        };
-      })
-      .filter((optionOrGroup) => !isNull(optionOrGroup));
-  }, [isQuerying, filteredOptions, flattenedOptions, options, internalValue]);
-
-  useEffect(() => {
-    if (
-      activeOption &&
-      activeOption.label &&
-      activeOption.label !== autoCompleteQuery &&
-      !isQuerying
-    ) {
-      setAutoCompleteQuery(activeOption.label);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeOption]);
+    );
+  }, [
+    isQuerying,
+    filteredOptions,
+    flattenedOptions,
+    options,
+    internalValue,
+    activeOption,
+    mergedProps.alwaysDisplayActiveOption,
+  ]);
 
   useEffect(() => {
     if (activeOption && activeOption.value !== mergedProps.value) {
       mergedProps.onChange?.(activeOption.value);
       mergedProps.onOptionChange?.(activeOption);
-    } else if (internalValue !== mergedProps.value) {
+    } else if (internalValue !== mergedProps.value && isNull(internalValue)) {
       mergedProps.onChange?.(null);
       mergedProps.onOptionChange?.(null);
     }
@@ -355,6 +426,7 @@ export const useSelectValue = <
     setAutoCompleteQuery,
     internalValue,
     setInternalValue,
+    clearInternalValue,
     isQuerying,
     activeOption,
     displayOptions,

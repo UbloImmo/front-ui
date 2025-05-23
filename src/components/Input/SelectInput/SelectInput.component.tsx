@@ -53,7 +53,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.15
+ * @version 0.0.16
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -71,10 +71,10 @@ const SelectInput = <
   const {
     displayOptions,
     setInternalValue,
+    clearInternalValue,
     activeOption,
     autoCompleteQuery,
     setAutoCompleteQuery,
-    isQuerying,
   } = useSelectValue(
     mergedProps,
     options,
@@ -98,8 +98,10 @@ const SelectInput = <
       inputRef.current.blur();
     }
     setIsOpen(false);
-  }, [inputRef]);
-
+    if (!activeOption && autoCompleteQuery) {
+      setAutoCompleteQuery(null);
+    }
+  }, [inputRef, activeOption, autoCompleteQuery, setAutoCompleteQuery]);
   const openOptions = useCallback(() => {
     setIsOpen(true);
     if (inputRef.current) {
@@ -123,12 +125,11 @@ const SelectInput = <
     (option: SelectOption<TValue>) => {
       return () => {
         if (disabled || option.disabled) return;
-        if (isQuerying) setAutoCompleteQuery("");
-        closeOptions();
         setInternalValue(option.value);
+        closeOptions();
       };
     },
-    [disabled, isQuerying, setAutoCompleteQuery, closeOptions, setInternalValue]
+    [disabled, closeOptions, setInternalValue]
   );
 
   const onQueryChange = useInputOnChange<"text">(
@@ -194,8 +195,14 @@ const SelectInput = <
 
   const clearSelectedOption = useCallback(() => {
     if (disabled || !activeOption || !mergedProps.clearable || isOpen) return;
-    setInternalValue(null);
-  }, [activeOption, disabled, isOpen, mergedProps.clearable, setInternalValue]);
+    clearInternalValue();
+  }, [
+    activeOption,
+    disabled,
+    isOpen,
+    mergedProps.clearable,
+    clearInternalValue,
+  ]);
 
   const { isShifted, optionsContainerRef } = useSelectInputIntersection(
     isOpen,
