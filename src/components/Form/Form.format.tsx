@@ -61,13 +61,20 @@ const DisplaySelectValue = ({
     options,
     filterOption,
   });
+  console.log({ flattenedOptions, fieldValue, isLoading });
   if (!fieldValue) return noValue;
   if (isLoading) return <FieldSkeleton />;
+
   const option =
-    flattenedOptions.find(({ value }) => value === fieldValue) ?? null;
+    flattenedOptions.find(
+      ({ value }) =>
+        value === fieldValue ||
+        JSON.stringify(value) === JSON.stringify(fieldValue)
+    ) ?? null;
 
   const optionValue = option?.value ?? fieldValue;
 
+  console.log({ flattenedOptions, fieldValue, option, optionValue });
   if (!optionValue) return noValue;
 
   if (SelectedOption && option)
@@ -170,24 +177,13 @@ const DisplaySearchValue = ({
   fieldValue: NullishPrimitives;
   props: SearchInputProps<NullishPrimitives>;
 }): ReactNode => {
-  const { flattenedOptions, isLoading } = useSelectOptions({
+  const selectProps = {
     options: results ?? undefined,
-    filterOption: null,
-  });
-  if (!fieldValue) return <FormFieldDisplayValue value={noValue} />;
-  if (isLoading) return <FieldSkeleton />;
+    disabled,
+    SelectedOption,
+  };
 
-  const option =
-    flattenedOptions.find(({ value }) => value === fieldValue) ?? null;
-
-  const optionValue = option?.value ?? fieldValue;
-
-  if (!optionValue) return <FormFieldDisplayValue value={noValue} />;
-
-  if (SelectedOption && option)
-    return <SelectedOption {...option} disabled={disabled} />;
-
-  return <FormFieldDisplayValue value={option?.label ?? String(optionValue)} />;
+  return <DisplaySelectValue fieldValue={fieldValue} props={selectProps} />;
 };
 
 /**
@@ -212,8 +208,13 @@ const DisplayMultiSelectValue = ({
   });
   if (!fieldValue) return <FormFieldDisplayValue value={noValue} />;
   if (isLoading) return <FieldSkeleton />;
-  const activeOptions = flattenedOptions.filter(({ value }) =>
-    fieldValue.includes(value)
+  const stringifiedFieldValue = fieldValue.map((value) =>
+    JSON.stringify(value)
+  );
+  const activeOptions = flattenedOptions.filter(
+    ({ value }) =>
+      fieldValue.includes(value) ||
+      stringifiedFieldValue.includes(JSON.stringify(value))
   );
 
   return (
