@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.8.24 - 2025-05-27
+
 ## 1.8.23 - 2025-05-23
 ### Fixed
 - `v0.0.6` MultiSelectInput component
