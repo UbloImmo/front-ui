@@ -61,7 +61,7 @@ const DisplaySelectValue = ({
     options,
     filterOption,
   });
-  console.log({ flattenedOptions, fieldValue, isLoading });
+
   if (!fieldValue) return noValue;
   if (isLoading) return <FieldSkeleton />;
 
@@ -74,7 +74,6 @@ const DisplaySelectValue = ({
 
   const optionValue = option?.value ?? fieldValue;
 
-  console.log({ flattenedOptions, fieldValue, option, optionValue });
   if (!optionValue) return noValue;
 
   if (SelectedOption && option)
