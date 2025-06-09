@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.30` Form component
+  - Hide field kind `feature-switch` when `layout.hidden` is true.
+
 ## 1.8.24 - 2025-05-27
 
 ## 1.8.23 - 2025-05-23

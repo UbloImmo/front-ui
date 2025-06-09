@@ -15,6 +15,8 @@ export const FormFeatureSwitch = (props: BuiltFormFeatureSwitchProps) => {
     [baseDisabled, isEditing]
   );
 
+  if (layout.hidden) return null;
+
   return (
     <FormFieldGridItem
       columnEnd={layout.columnEnd}
