@@ -210,6 +210,182 @@ Matches, options filters and filter presets are, _you guessed it_, built using t
   Declaration order matters. Filters presets are displayed based on the order they were declared using the `filterPreset()` or `async.filterPreset()` methods.
 </Callout>
 
+## Searching via a text query
+
+Text queries are of course also supported by the List component, and may be configured through methods found in the `search` property returned by the `useListConfig()` hook.
+
+This part of the configuration holds properties that define how the text query is handled and passed to the data provider.
+
+### Shape of the search configuration
+
+The search configuration is a plain object with the shape:
+
+```tsx
+type ListSearchConfig<TItem extends object> = {
+  /**
+   * @default null
+   */
+  initialQuery?: Nullable<string>;
+  /**
+   * @default []
+   */
+  properties?: FilterProperty<TItem>[];
+  /**
+   * @default "contains"
+   */
+  strategy?: FilterSearchOperator;
+  /**
+   * @default true
+   */
+  searchAsOptions?: boolean;
+  /**
+   * @default 300
+   */
+  debounceDelay?: number;
+}
+```
+
+> All search configuration details may be set through dedicated methods (e.g. `search.initialQuery()`), or via a generic setter method (`search.set({ [property]: "value" })`).
+> The `search.set()` method allows setting multiple properties at once.
+
+#### Initial query
+
+By default, no text query is set. Should one need to set an initial query, the `initialQuery` property is where you want to look.
+
+```tsx
+import { useListConfig } from "@ubloimmo/uikit";
+
+const { search } = useListConfig(usePokemonData);
+
+// both are equivalent
+search.initialQuery("my initial query");
+search.set({ initialQuery: "my initial query" });
+```
+
+#### Search properties
+
+Since a text query only amounts to a string, we need to define which properties of the list's items it should be matched against.
+
+<Callout color="gray" icon={null}>
+Allowed properties are based on the list item's shape, and arethe same as the ones used to build filter option matches.
+</Callout>
+
+```tsx
+import { useListConfig } from "@ubloimmo/uikit";
+
+const { search } = useListConfig(usePokemonData);
+
+// both are equivalent
+search.properties("name", "types.0.type.name");
+search.set({ properties: ["name", "types.0.type.name"] });
+```
+
+<Callout color="warning">
+At least one property must be set for any text search to be sent to the data provider.
+</Callout>
+
+#### Search strategy
+
+The search strategy is used to determine how the text query should be matched against the properties.
+
+It corresponds to a subset of the comparison operators used to build filter option matches.
+
+The following strategies are available:
+- `"contains"`: The text query is matched against the properties using the `contains` comparison operator.
+- `"startsWith"`: The text query is matched against the properties using the `startsWith` comparison operator.
+- `"endsWith"`: The text query is matched against the properties using the `endsWith` comparison operator.
+
+```tsx
+import { useListConfig } from "@ubloimmo/uikit";
+
+const { search } = useListConfig(usePokemonData);
+
+// both are equivalent
+search.strategy("contains");
+search.set({ strategy: "contains" });
+```
+
+#### Search as options
+
+By default, the text query and its configuration are parsed and sent as an additional filter to the data provider,
+meaning no extra implementation is required to handle it.
+
+For example, given the query `"pikachu"` and the following configuration:
+
+```tsx
+{
+  properties: ["name", "types.0.type.name"],
+  stategy: "contains",
+}
+```
+
+The data provider's `filter()` method will receive an additional filter with a single option containing one match per property:
+```tsx
+{
+  selectedOptions: [
+    {
+      // ...rest of the option's data
+      matches: [
+        {
+          property: "name",
+          comparison: "contains",
+          value: "pikachu",
+        },
+        {
+          property: "types.0.type.name",
+          comparison: "contains",
+          value: "pikachu",
+        },
+      ]
+    }
+  ]
+}
+```
+
+> Setting `searchAsOptions` to `false` will disable this behavior, and the data provider's `filter()` method's first parameter's `filters` property **will not be hydrated** with the query, only the list's configured options-based fitlers.
+
+##### Consuming the query without `searchAsOptions`
+
+The data provider's `filter()` method's first parameter will **always** contain a `search` property alongside its other data (e.g. `filters`, `filterPresets`, `options`, etc.).
+It will be `null` when no valid search configuration was provided (e.g. no properties were set), or an object with the following shape:
+
+```tsx
+{
+  /**
+   * The active, debounced text query, or null if empty
+  */
+  query: string | null;
+  /**
+   * The properties the query is to be matched against,
+   * as defined in the list's search configuration
+  */
+  properties: FilterProperty[];
+  /**
+   * The search strategy used to match the query against the properties,
+   * as defined in the list's search configuration
+  */
+  strategy: "contains" | "startsWith" | "endsWith";
+}
+```
+
+> Note that all theses properties are not optional, and will always be present as long as `search` isn't null.
+> One could easily use them to recreate one or multiple matches if needed.
+
+#### Debouncing
+
+The text query is debounced by `300ms` by default, and the debounce delay can be configured using the `debounceDelay` property.
+
+```tsx
+import { useListConfig } from "@ubloimmo/uikit";
+
+const { search } = useListConfig(usePokemonData);
+
+search.debounceDelay(1000);
+search.set({ debounceDelay: 1000 });
+```
+
+> This setting only affects the frequency at which changing the query triggers a new call the the data provider's `filter()` method, not the underlying state's value.
+
 ## Search parameters
 
 You might want to show different initial filter options based on the link a user clicked to get to the page.
