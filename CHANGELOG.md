@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.6` List component
   - Always send selected options to data provider
-  - Always send query to data provider to avoid having to extract it from filters. 
- 
+  - Always send query to data provider to avoid having to extract it from filters.
+
 - `v0.0.2` ListFilterOptionItem component
   - Set `aria-label` and `title` based on option's label
   - Add support for long-label options (clamp to 3 lines)
