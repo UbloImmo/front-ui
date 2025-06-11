@@ -20,8 +20,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 /**
  * Renders a filter option's list item in a filter.
  *
- * @version 0.0.1
- *
+ * @version 0.0.2
  *
  * @template {object} TItem - The type of the list's items
  * @param {ListFilterOptionItemProps<TItem>} props - The component's props
@@ -58,7 +57,7 @@ export const ListFilterOptionItem = <TItem extends object = object>({
           ? "gray-800"
           : "gray-700",
       fill: true,
-      ellipsis: true,
+      lineClamp: 3,
     };
   }, [highlighted, option.disabled, option.selected]);
 
@@ -94,6 +93,8 @@ export const ListFilterOptionItem = <TItem extends object = object>({
       data-testid="list-filter-option"
       aria-selected={option.selected}
       aria-disabled={option.disabled}
+      aria-label={option.label}
+      title={option.label}
       role="option"
       data-option-signature={option.signature}
       data-selected={option.selected}

@@ -21,6 +21,8 @@ import type {
 const DATA_PROVIDER_TYPE = "paginated" as const;
 const NO_FILTERS_CONFIG: DataProviderFilterFnConfig<object> = {
   filters: [],
+  selectedOptions: [],
+  search: null,
 };
 const NO_FILTERS_CONFIG_SIGNATURE = JSON.stringify(NO_FILTERS_CONFIG);
 

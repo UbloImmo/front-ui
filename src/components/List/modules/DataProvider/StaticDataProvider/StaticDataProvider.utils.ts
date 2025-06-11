@@ -4,6 +4,7 @@ import {
   isNumber,
   isObject,
   isString,
+  type Optional,
 } from "@ubloimmo/front-util";
 import { isDate } from "date-fns";
 
@@ -231,7 +232,7 @@ export const filterItems = <TItem extends object>(
   const operator = config.operator ?? BooleanOperators.OR;
 
   // return all items by default
-  let filterFn: FilterFn<TItem> = () => true;
+  let filterFn: Optional<FilterFn<TItem>>;
 
   if (config.filter) {
     const filter = config.filter;
@@ -257,6 +258,16 @@ export const filterItems = <TItem extends object>(
   if (config.options) {
     const options = config.options;
     filterFn = (item) => itemMatchesOptions(item, options, operator);
+  }
+
+  // if no filter function is set, use the selected options
+  if (!filterFn && config.selectedOptions?.length) {
+    filterFn = (item) =>
+      itemMatchesOptions(item, config.selectedOptions, operator);
+  }
+  // if no filter function is set, use a default one that returns true
+  if (!filterFn) {
+    filterFn = () => true;
   }
 
   return items.filter(filterFn);

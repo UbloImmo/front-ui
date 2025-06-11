@@ -6,6 +6,7 @@ import {
   type ListSearchConfigDebounceDelaySetterFn,
   type ListSearchConfigInitialQuerySetterFn,
   type ListSearchConfigPropertiesSetterFn,
+  type ListSearchConfigSearchAsOptionsSetterFn,
   type ListSearchConfigSetterFn,
   type ListSearchConfigStrategySetterFn,
   type UseListSearchConfig,
@@ -26,6 +27,7 @@ const defaultSearchConfig = <TItem extends object>(): Required<
   strategy: "contains",
   properties: [],
   debounceDelay: 500,
+  searchAsOptions: true,
 });
 
 /**
@@ -99,6 +101,16 @@ export const useListConfigSearch: UseListSearchConfig = <
   );
 
   /**
+   * Updates just the search as options in the configuration
+   *
+   * @param {boolean} searchAsOptions - Whether the search query should be sent as bespoke options to the data provider
+   */
+  const searchAsOptions = useCallback<ListSearchConfigSearchAsOptionsSetterFn>(
+    (searchAsOptions = defaults.searchAsOptions) => set({ searchAsOptions }),
+    [defaults.searchAsOptions, set]
+  );
+
+  /**
    * Memoized object containing all the setter functions
    */
   const setters = useMemo<ListSearchConfigSetterFns<TItem>>(
@@ -108,8 +120,9 @@ export const useListConfigSearch: UseListSearchConfig = <
       strategy,
       initialQuery,
       debounceDelay,
+      searchAsOptions,
     }),
-    [set, properties, strategy, initialQuery, debounceDelay]
+    [set, properties, strategy, initialQuery, debounceDelay, searchAsOptions]
   );
 
   return { searchConfig, setters };

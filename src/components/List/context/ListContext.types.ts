@@ -26,10 +26,13 @@ import type {
   FilterSearchOperator,
   DataProviderFilterParam,
   DataProviderType,
+  DataProviderFilterFnConfig,
+  DataProviderFilterFnSearchConfig,
 } from "../modules";
 import type { UseDataArrayReturn } from "@types";
 import type {
   GenericFn,
+  MaybeAsyncFn,
   Nullable,
   Replace,
   VoidFn,
@@ -140,6 +143,18 @@ export type ListSearchConfig<TItem extends object> = {
    */
   strategy?: FilterSearchOperator;
   /**
+   * Whether the search query should be sent as bespoke options to the data provider
+   *
+   * @remarks
+   * If false, **pure** filter payloads sent to the data provider,
+   * without generated additions based on the query and search config.
+   *
+   * The search query and its configuration will always be sent seperately under `config.search`.
+   *
+   * @default true
+   */
+  searchAsOptions?: boolean;
+  /**
    * The debounce delay in milliseconds
    *
    * @type {number}
@@ -198,6 +213,16 @@ export type ListSearchConfigDebounceDelaySetterFn = VoidFn<
   [debounceDelay: number]
 >;
 
+/**
+ * Sets the list's search as options
+ *
+ * @param {boolean} searchAsOptions - Whether the search query should be sent as bespoke options to the data provider
+ * @returns {void}
+ */
+export type ListSearchConfigSearchAsOptionsSetterFn = VoidFn<
+  [searchAsOptions: boolean]
+>;
+
 export type ListSearchConfigSetterFns<TItem extends object> = {
   /**
    * Sets the whole search config
@@ -229,6 +254,12 @@ export type ListSearchConfigSetterFns<TItem extends object> = {
    * @see {@link ListSearchConfigDebounceDelaySetterFn}
    */
   debounceDelay: ListSearchConfigDebounceDelaySetterFn;
+  /**
+   * Sets the search as options
+   *
+   * @see {@link ListSearchConfigSearchAsOptionsSetterFn}
+   */
+  searchAsOptions: ListSearchConfigSearchAsOptionsSetterFn;
 };
 
 export type UseListSearchConfigReturn<TItem extends object> = {
@@ -468,9 +499,16 @@ export type UseListOptionsReturn<TItem extends object> = {
   applyOptions: ApplyOptionsFn<TItem>;
 };
 
+/**
+ * Internal callback to trigger the data provider's filter method after hydration with search query
+ */
+export type TriggerDataProviderFilterFn<TItem extends object> = MaybeAsyncFn<
+  [config: Omit<DataProviderFilterFnConfig<TItem>, "search">]
+>;
+
 export type UseListOptions = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "options" | "filters" | "operator">,
-  dataProvider: IDataProvider<TItem>
+  triggerDataProviderFilter: TriggerDataProviderFilterFn<TItem>
 ) => UseListOptionsReturn<TItem>;
 
 // LIST FILTER PRESETS ---------------------------------------------------------------------------
@@ -548,6 +586,12 @@ export type UseListSearchReturn<TItem extends object> = {
    * @type {UseListSearchChangeQueryFn}
    */
   changeQuery: UseListSearchChangeQueryFn;
+  /**
+   * The list's search config, hydrated with the search query
+   *
+   * @type {Nullable<DataProviderFilterFnSearchConfig<TItem>>}
+   */
+  hydratedSearchConfig: Nullable<DataProviderFilterFnSearchConfig<TItem>>;
 };
 
 export type UseListSearch = <TItem extends object>(

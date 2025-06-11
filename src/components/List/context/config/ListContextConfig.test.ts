@@ -596,6 +596,7 @@ const testListConfigSearch = () => {
   const strategy = "startsWith";
   const initialQuery = "test";
   const debounceDelay = 1000;
+  const searchAsOptions = false;
 
   testHook(
     "should set the search config at once",
@@ -607,6 +608,7 @@ const testListConfigSearch = () => {
         strategy,
         initialQuery,
         debounceDelay,
+        searchAsOptions,
       });
       rerender();
       expect(getResult().searchConfig).toEqual({
@@ -614,6 +616,7 @@ const testListConfigSearch = () => {
         strategy,
         initialQuery,
         debounceDelay,
+        searchAsOptions,
       });
     }
   );

@@ -6,8 +6,12 @@ import { useListOptions } from "./ListContext.options";
 import { useListContextSearch } from "./ListContext.search";
 import { useListContextSearchParams } from "./ListContext.searchParams";
 
-import type { ListContextConfig, ListContextValue } from "./ListContext.types";
-import type { DataProviderType } from "../modules";
+import type {
+  TriggerDataProviderFilterFn,
+  ListContextConfig,
+  ListContextValue,
+} from "./ListContext.types";
+import type { DataProviderFilterFnConfig, DataProviderType } from "../modules";
 
 export const useListContextStore = <
   TItem extends object,
@@ -23,13 +27,27 @@ export const useListContextStore = <
 
   const dataProvider = useDataProvider(setData);
 
-  const options = useListOptions(config, dataProvider);
+  const search = useListContextSearch(config);
+
+  const triggerDataProviderFilter = useCallback<
+    TriggerDataProviderFilterFn<TItem>
+  >(
+    (baseConfig) => {
+      const config = {
+        ...baseConfig,
+        search: search.hydratedSearchConfig,
+        selectedOptions: [],
+      } as DataProviderFilterFnConfig<TItem>;
+      dataProvider.filter(config);
+    },
+    [dataProvider, search.hydratedSearchConfig]
+  );
+
+  const options = useListOptions(config, triggerDataProviderFilter);
 
   const filters = useListFilters(config, options);
 
   const filterPresets = useListFilterPresets(config, options, dataProvider);
-
-  const search = useListContextSearch(config);
 
   const itemCount = useMemo(() => data.length, [data]);
 
@@ -78,9 +96,12 @@ export const useListContextStore = <
       return;
     }
 
-    options.applyOptions(optionsArray, search.queryFilters);
+    options.applyOptions(
+      optionsArray,
+      config.searchAsOptions ? search.queryFilters : undefined
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [optionsArray, loading, search.queryFilters]);
+  }, [optionsArray, loading, search.queryFilters, config.searchAsOptions]);
 
   return {
     ...filterPresets,

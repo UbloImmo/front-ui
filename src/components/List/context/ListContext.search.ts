@@ -7,6 +7,7 @@ import {
   DataProviderFilterParam,
   filterOptionData,
   filterOptionMatch,
+  type DataProviderFilterFnSearchConfig,
   type FilterOptionData,
   type FilterProperty,
   type FilterSearchOperator,
@@ -83,9 +84,23 @@ export const useListContextSearch: UseListSearch = <TItem extends object>({
     [query, setDebouncedQuery]
   );
 
+  const hydratedSearchConfig = useMemo<
+    Nullable<DataProviderFilterFnSearchConfig<TItem>>
+  >(() => {
+    if (!isArray(properties)) return null;
+    if (!properties.length) return null;
+    if (!strategy) return null;
+    return {
+      properties,
+      strategy,
+      query: debouncedQuery,
+    };
+  }, [debouncedQuery, properties, strategy]);
+
   return {
     query,
     queryFilters,
     changeQuery,
+    hydratedSearchConfig,
   };
 };
