@@ -36,7 +36,7 @@ const defaultChipProps: DefaultChipProps = {
 /**
  * An interactive `Badge` with a remove button, can be used as a filter tag.
  *
- * @version 0.0.8
+ * @version 0.0.9
  * @param {ChipProps} props - the props for the Chip component
  * @returns {JSX.Element} - the Chip component
  */
@@ -75,7 +75,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
 
   return (
     <ChipWrapper align="center" testId={testId} overrideTestId role="status">
-      <ChipContainer {...styledProps}>
+      <ChipContainer {...styledProps} title={label}>
         {icon && <Icon name={icon} size="s-3" color={iconColorStyle} />}
         <Text size="s" weight="medium" color={textColorStyle} ellipsis>
           {label}

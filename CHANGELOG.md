@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `v0.0.9` Badge component & `v0.0.9` Chip component
+  - Add HTML title attribute holding full label
+
 - `v0.0.6` List component
   - Always send selected options to data provider
   - Always send query to data provider to avoid having to extract it from filters.
