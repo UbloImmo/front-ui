@@ -1,8 +1,11 @@
-import type { ListSearchConfig } from "../../context";
 import type { Filter } from "../Filter/Filter.types";
 import type { FilterOptionData } from "../FilterOption/FilterOption.types";
 import type { FilterPreset } from "../FilterPreset/FilterPreset.types";
-import type { FilterBooleanOperator } from "../shared.types";
+import type {
+  FilterBooleanOperator,
+  FilterProperty,
+  FilterSearchOperator,
+} from "../shared.types";
 import type {
   AsyncFn,
   Enum,
@@ -29,9 +32,24 @@ export type DataProviderFilterParam<TItem extends object> = Replace<
  *
  * @template {object} TItem - The type of the items in the list
  */
-export type DataProviderFilterFnSearchConfig<TItem extends object> = Required<
-  Pick<ListSearchConfig<TItem>, "properties" | "strategy">
-> & {
+export type DataProviderFilterFnSearchConfig<TItem extends object> = {
+  /**
+   * The properties the search query should matched against
+   *
+   * @type {FilterProperty<TItem>[]}
+   */
+  properties: FilterProperty<TItem>[];
+  /**
+   * The search strategy used to match the search query against the properties
+   *
+   * @type {FilterSearchOperator}
+   */
+  strategy: FilterSearchOperator;
+  /**
+   * The active, debounced text query, or null if empty
+   *
+   * @type {Nullable<string>}
+   */
   query: Nullable<string>;
 };
 
