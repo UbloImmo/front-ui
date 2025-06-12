@@ -15,7 +15,7 @@ const componentSource = componentSourceFactory<SideMenuProps>(
 
 const meta = {
   component: SideMenu,
-  title: "Components/SideMenu/Stories",
+  title: "Components/Navigation/SideMenu/Stories",
   args: {
     // TODO
   },
