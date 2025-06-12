@@ -105,7 +105,7 @@ export type FormData<TData extends object> = DeepPartial<TData>;
  *
  * @param {boolean} isEditing - Whether the form is in edit mode
  */
-export type FormFieldLayoutHiddenFn = GenericFn<[boolean], boolean>;
+export type FormFieldLayoutHiddenFn = GenericFn<[isEditing: boolean], boolean>;
 
 export type FormFieldLayout = {
   /**

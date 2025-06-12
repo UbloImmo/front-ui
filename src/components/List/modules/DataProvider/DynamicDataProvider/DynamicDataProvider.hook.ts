@@ -39,6 +39,8 @@ export const useDynamicDataProvider: UseDynamicDataProviderFn = <
     params: [
       {
         filters: [],
+        selectedOptions: [],
+        search: null,
       },
     ],
     initialFetch: false,

@@ -5,7 +5,6 @@ import { BooleanOperators } from "../List.enums";
 import {
   type DataProviderFilterParam,
   type FilterOptionData,
-  type IDataProvider,
 } from "../modules";
 
 import { useDataArray } from "@utils";
@@ -13,6 +12,7 @@ import { useDataArray } from "@utils";
 import type {
   GetOptionBySignatureFn,
   ListContextConfig,
+  TriggerDataProviderFilterFn,
   UpdateOptionSelectionFn,
   UseListOptions,
   UseListOptionsReturn,
@@ -20,7 +20,7 @@ import type {
 
 export const useListOptions: UseListOptions = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "options" | "filters" | "operator">,
-  dataProvider: IDataProvider<TItem>
+  triggerDataProviderFilter: TriggerDataProviderFilterFn<TItem>
 ): UseListOptionsReturn<TItem> => {
   const options = useDataArray(config.options ?? [], true);
 
@@ -51,19 +51,22 @@ export const useListOptions: UseListOptions = <TItem extends object>(
         ...extraFilters,
       ];
       const operator = config.operator ?? BooleanOperators.AND;
+      const selectedOptions = updatedOptions.filter(({ selected }) => selected);
       if (filters?.length) {
-        dataProvider.filter({
+        triggerDataProviderFilter({
           filters,
           operator,
+          selectedOptions,
         });
         return;
       }
-      dataProvider.filter({
+      triggerDataProviderFilter({
         options: updatedOptions,
         operator,
+        selectedOptions,
       });
     },
-    [dataProvider, config.filters, config.operator]
+    [config.filters, config.operator, triggerDataProviderFilter]
   );
 
   const updateOptionSelection = useCallback<UpdateOptionSelectionFn>(

@@ -1,12 +1,17 @@
 import type { Filter } from "../Filter/Filter.types";
 import type { FilterOptionData } from "../FilterOption/FilterOption.types";
 import type { FilterPreset } from "../FilterPreset/FilterPreset.types";
-import type { FilterBooleanOperator } from "../shared.types";
+import type {
+  FilterBooleanOperator,
+  FilterProperty,
+  FilterSearchOperator,
+} from "../shared.types";
 import type {
   AsyncFn,
   Enum,
   GenericFn,
   MaybeAsyncFn,
+  Nullable,
   Replace,
   RequireAtLeastOne,
   VoidFn,
@@ -22,6 +27,32 @@ export type DataProviderFilterParam<TItem extends object> = Replace<
   }
 >;
 
+/**
+ * The search configuration for the data provider filter function
+ *
+ * @template {object} TItem - The type of the items in the list
+ */
+export type DataProviderFilterFnSearchConfig<TItem extends object> = {
+  /**
+   * The properties the search query should matched against
+   *
+   * @type {FilterProperty<TItem>[]}
+   */
+  properties: FilterProperty<TItem>[];
+  /**
+   * The search strategy used to match the search query against the properties
+   *
+   * @type {FilterSearchOperator}
+   */
+  strategy: FilterSearchOperator;
+  /**
+   * The active, debounced text query, or null if empty
+   *
+   * @type {Nullable<string>}
+   */
+  query: Nullable<string>;
+};
+
 export type DataProviderFilterFnConfig<TItem extends object> =
   RequireAtLeastOne<{
     /**
@@ -29,37 +60,37 @@ export type DataProviderFilterFnConfig<TItem extends object> =
      *
      * @type {DataProviderFilterParam<TItem>}
      */
-    filter: DataProviderFilterParam<TItem>;
+    filter?: DataProviderFilterParam<TItem>;
     /**
      * Multiple filters to apply to the items
      *
      * @type {DataProviderFilterParam<TItem>[]}
      */
-    filters: DataProviderFilterParam<TItem>[];
+    filters?: DataProviderFilterParam<TItem>[];
     /**
      * A single filter preset to apply to the items
      *
      * @type {Pick<FilterPreset<TItem>, "options" | "operator">}
      */
-    filterPreset: Pick<FilterPreset<TItem>, "options" | "operator">;
+    filterPreset?: Pick<FilterPreset<TItem>, "options" | "operator">;
     /**
      * Multiple filter presets to apply to the items
      *
      * @type {Pick<FilterPreset<TItem>, "options" | "operator">[]}
      */
-    filterPresets: Pick<FilterPreset<TItem>, "options" | "operator">[];
+    filterPresets?: Pick<FilterPreset<TItem>, "options" | "operator">[];
     /**
      * A single option to apply to the items
      *
      * @type {FilterOptionData<TItem>}
      */
-    option: FilterOptionData<TItem>;
+    option?: FilterOptionData<TItem>;
     /**
      * Multiple options to apply to the items
      *
      * @type {FilterOptionData<TItem>[]}
      */
-    options: FilterOptionData<TItem>[];
+    options?: FilterOptionData<TItem>[];
   }> & {
     /**
      * The operator to combine multiple filters, filter presets or options.
@@ -68,6 +99,28 @@ export type DataProviderFilterFnConfig<TItem extends object> =
      * @default "OR"
      */
     operator?: FilterBooleanOperator;
+    /**
+     * The selected options to apply to the items
+     *
+     * @remarks
+     * Always gets sent to the data provider, regardless of the filter or filter preset configuration shape.
+     *
+     * @type {FilterOptionData<TItem>[]}
+     * @default []
+     */
+    selectedOptions: FilterOptionData<TItem>[];
+
+    /**
+     * The search configuration to apply to the items
+     *
+     * @remarks
+     * Determined by the list's search configuration and dynamically hydrated.
+     * Is null if no search configuration is provided.
+     *
+     * @type {Nullable<DataProviderFilterFnSearchConfig<TItem>>}
+     * @default null
+     */
+    search: Nullable<DataProviderFilterFnSearchConfig<TItem>>;
   };
 
 export type DataProviderFilterFn<TItem extends object> = MaybeAsyncFn<

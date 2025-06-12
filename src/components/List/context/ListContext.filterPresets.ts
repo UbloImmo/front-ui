@@ -104,6 +104,8 @@ export const useListFilterPresets: UseListFilterPresets = <
           try {
             const count = await dataProvider.fetchCount({
               options: filterPresetOptions,
+              selectedOptions: filterPresetOptions,
+              search: null,
               operator,
             });
             return [signature, count];

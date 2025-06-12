@@ -11,6 +11,7 @@ import { Text } from "../Text/Text.component";
 
 import {
   isEmptyString,
+  useHtmlAttribute,
   useLogger,
   useMergedProps,
   useStyleProps,
@@ -32,7 +33,7 @@ const defaultBadgeProps: DefaultBadgeProps = {
  *
  * @remarks Badge shades are based on two sets of colors, light and dark, depending on the shade prop.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {BadgeProps} props - the props for the Badge component
  * @return {Nullable<JSX.Element>} the Badge component
@@ -56,13 +57,20 @@ const Badge = (props: BadgeProps & TestIdProps): Nullable<JSX.Element> => {
     return { iconColorStyle, textColorStyle };
   }, [color, shade]);
 
+  const title = useHtmlAttribute(label);
+
   if ((!label || isEmptyString(label)) && !icon) {
     warn("Both label and icon are missing, please provide at least one");
     return null;
   }
 
   return (
-    <BadgeContainer data-testid={testId} {...styledProps} role="status">
+    <BadgeContainer
+      data-testid={testId}
+      {...styledProps}
+      role="status"
+      title={title}
+    >
       {icon && (
         <Icon
           data-testid="badge-icon"

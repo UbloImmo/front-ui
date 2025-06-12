@@ -35,4 +35,5 @@ export const defaultListContextValue = <
   queryFilters: [],
   changeQuery: () => {},
   applyOptions: () => {},
+  hydratedSearchConfig: null,
 });

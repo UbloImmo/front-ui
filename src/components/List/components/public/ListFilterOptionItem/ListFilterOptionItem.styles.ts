@@ -1,15 +1,16 @@
 import { css } from "styled-components";
 
-import { cssDimensions } from "@/utils/styles.utils";
-import { cssVarName } from "@utils";
-
 import type { ListFilterOptionItemStyleProps } from "./ListFilterOptionItem.types";
 
 export const listFilterOptionItemStyles = (
   props: ListFilterOptionItemStyleProps
 ) => {
   return css`
-    ${cssDimensions("100%", cssVarName("input-height"), true)}
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: var(--input-height);
+    min-height: fit-content;
     padding: var(--s-2) var(--s-3);
     border-radius: var(--s-1);
     display: flex;

@@ -6,7 +6,6 @@ import {
   filterOptionData,
   filterOptionMatch,
   type FilterOptionData,
-  type IDataProvider,
 } from "../modules";
 
 import { testHookFactory } from "@/tests";
@@ -45,29 +44,15 @@ const testListOptions = () => {
   };
 
   const mockFilterFn = mock(() => {});
-  const mockRefetchFn = mock(async () => []);
-  const mockFetchCountFn = mock(() => 0);
-  const mockClearFn = mock(() => {});
-
-  const mockDataProvider: IDataProvider<MockItem> = {
-    filter: mockFilterFn,
-    data: [],
-    loading: false,
-    error: false,
-    refetch: mockRefetchFn,
-    fetchCount: mockFetchCountFn,
-    type: "static",
-    clear: mockClearFn,
-  };
 
   const testHookBase = testHookFactory<HookParams, HookReturn, Hook>(
     "useListOptions",
     useListOptions
   );
-  const testHookWithFilters = testHookBase(mockConfig, mockDataProvider);
+  const testHookWithFilters = testHookBase(mockConfig, mockFilterFn);
   const testHookWithoutFilters = testHookBase(
     { ...mockConfig, filters: [] },
-    mockDataProvider
+    mockFilterFn
   );
   const testHookWithMultiFilter = testHookBase(
     {
@@ -77,7 +62,7 @@ const testListOptions = () => {
         selected: true,
       })),
     },
-    mockDataProvider
+    mockFilterFn
   );
 
   testHookWithFilters("should return a valid object", (result) => {
