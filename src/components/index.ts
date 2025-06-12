@@ -34,6 +34,7 @@ export * from "./List";
 export * from "./Loading";
 export * from "./Modal";
 export * from "./Portal";
+export * from "./SideMenu";
 export * from "./SmallLoader";
 export * from "./StateIndicator";
 export * from "./StaticIcon";
