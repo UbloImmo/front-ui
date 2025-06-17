@@ -180,7 +180,7 @@
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@radix-ui/react-popover": "^1.1.1",
-    "@ubloimmo/front-tokens": "^0.1.40",
+    "@ubloimmo/front-tokens": "^0.1.43",
     "@ubloimmo/front-util": "^0.0.18",
     "big.js": "^6.2.2",
     "date-fns": "^3.6.0",
