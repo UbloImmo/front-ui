@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Updated `@ubloimmo/front-tokens` to `^0.1.43`
+
 ## 1.8.26 - 2025-06-12
 ### Changed
 - `v0.0.9` Badge component & `v0.0.9` Chip component
