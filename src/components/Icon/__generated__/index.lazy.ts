@@ -1401,6 +1401,8 @@ export const KeyFill = lazy(() => loadIcon("KeyFill"));
 export const Ladder = lazy(() => loadIcon("Ladder"));
 export const Lamp = lazy(() => loadIcon("Lamp"));
 export const LampFill = lazy(() => loadIcon("LampFill"));
+export const LampFillOff = lazy(() => loadIcon("LampFillOff"));
+export const LampOff = lazy(() => loadIcon("LampOff"));
 export const Laptop = lazy(() => loadIcon("Laptop"));
 export const LaptopFill = lazy(() => loadIcon("LaptopFill"));
 export const LayerBackward = lazy(() => loadIcon("LayerBackward"));

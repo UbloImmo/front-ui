@@ -124,6 +124,8 @@ export { Journal2 } from "./Journal2.icon";
 export { Journal2Off } from "./Journal2Off.icon";
 export { JournalCheck } from "./JournalCheck.icon";
 export { JournalOff } from "./JournalOff.icon";
+export { LampFillOff } from "./LampFillOff.icon";
+export { LampOff } from "./LampOff.icon";
 export { Link2 } from "./Link2.icon";
 export { Link2Break } from "./Link2Break.icon";
 export { MapOff } from "./MapOff.icon";
