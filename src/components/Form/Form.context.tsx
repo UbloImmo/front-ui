@@ -467,9 +467,13 @@ const useFormContent = <TData extends object>(
       if (!error) return validProps;
 
       const errorTranslation = formErrorTranslation(error, tl);
+      const errorText =
+        error.code === "custom"
+          ? error.message
+          : (baseErrorText ?? errorTranslation);
       return {
         error: baseError ?? true,
-        errorText: baseErrorText ?? errorTranslation,
+        errorText,
       };
     },
     [validation, tl]
