@@ -133,6 +133,17 @@ export const FormTable = ({
     [maxBodyHeight]
   );
 
+  const showRows = useMemo(() => {
+    if (
+      !isEditing &&
+      modifiers.selectable &&
+      modifiers.selectable.behavior === "filter"
+    ) {
+      return !!rows.filter(({ selected }) => selected).length;
+    }
+    return !!rows.length;
+  }, [isEditing, modifiers.selectable, rows]);
+
   if (layout.hidden) return null;
 
   return (
@@ -172,7 +183,7 @@ export const FormTable = ({
               sticky={stickyHeaderOrFooter}
             />
             <TableBody style="form">
-              {rows.length ? (
+              {showRows ? (
                 <DndContext
                   sensors={sensors}
                   onDragEnd={onDragEnd}
