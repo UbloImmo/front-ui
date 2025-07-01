@@ -385,7 +385,13 @@ export const FormFieldDisplayValue = ({
       gap={"s-2"}
     >
       {beforeChildren}
-      <Text color="gray-800" weight="medium" fill ellipsis={!isTextarea}>
+      <Text
+        color="gray-800"
+        weight="medium"
+        fill
+        ellipsis={!isTextarea}
+        title={value}
+      >
         {value}
       </Text>
       {afterChildren}
