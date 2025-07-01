@@ -1,4 +1,4 @@
-import { useCallback, useMemo, type ReactNode } from "react";
+import { CSSProperties, useCallback, useMemo, type ReactNode } from "react";
 import styled from "styled-components";
 
 import { FormTableFooterButton } from "./FormTableFooterButton.component";
@@ -9,11 +9,20 @@ import { TableCell, TableFooter, TableRow } from "@/layouts/Table";
 
 import type { FormTableFooterProps } from "../../../Form.types";
 
+/**
+ * The footer of the `FormTable` component.
+ *
+ * @version 0.0.2
+ *
+ * @param {FormTableFooterProps} props - The component props.
+ * @returns The footer component.
+ */
 export const FormTableFooter = ({
   footer,
   columnsCount,
   appendRow,
   tableData,
+  sticky,
 }: FormTableFooterProps) => {
   const { isEditing, disabled } = useFormContext();
 
@@ -46,8 +55,19 @@ export const FormTableFooter = ({
     return null;
   }, [appendRow, footerDisabled, footer, tableData]);
 
+  const styles = useMemo<CSSProperties>(
+    () =>
+      sticky
+        ? {
+            position: "sticky",
+            bottom: 0,
+          }
+        : {},
+    [sticky]
+  );
+
   return (
-    <TableFooter>
+    <TableFooter styleOverride={styles}>
       <TableRow>
         <FooterCell colSpan={columnsCount}>
           <FooterComponent />
@@ -59,4 +79,5 @@ export const FormTableFooter = ({
 
 const FooterCell = styled(TableCell)`
   padding: var(--s-1);
+  background: var(--white);
 `;

@@ -115,6 +115,7 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
         "@ubloimmo/front-tokens",
         "@ubloimmo/front-util",
         "react-international-phone",
+        "zod",
       ],
       output: {
         globals: {

@@ -1,13 +1,14 @@
 import type { StyleOverrideProps, StyleProps } from "@types";
+import type { Enum, Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 const _tableLayouts = ["auto", "fixed"] as const;
 
-export type TableLayout = (typeof _tableLayouts)[number];
+export type TableLayout = Enum<typeof _tableLayouts>;
 
 const _tableStyles = ["list", "form"] as const;
 
-export type TableStyle = (typeof _tableStyles)[number];
+export type TableStyle = Enum<typeof _tableStyles>;
 
 export type TableProps = {
   /**
@@ -22,6 +23,13 @@ export type TableProps = {
    * @default "auto"
    */
   layout?: TableLayout;
+  /**
+   * The table's id.
+   *
+   * @type {string}
+   * @default null
+   */
+  id?: Nullable<string>;
 } & Omit<StyleOverrideProps, "as">;
 
 export type TableDefaultProps = Required<TableProps>;

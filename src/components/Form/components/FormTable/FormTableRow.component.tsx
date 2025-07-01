@@ -15,28 +15,37 @@ import { isBuiltCustomFormField } from "../../Form.utils";
 import {
   RowDeleteButton,
   RowDragHandle,
-  type FormTableCellControls,
+  type FormTableCellControlsData,
+  FormTableCellControls,
   type FormTableCellControlsProps,
 } from "./FormTableCell/FormTableCellControls.component";
 import { FormTableCustomFieldCell } from "./FormTableCell/FormTableCustomFieldCell.component";
 
-import { TableRow } from "@/layouts/Table";
+import { Checkbox } from "@/components/Checkbox";
+import { FlexRowLayout } from "@/layouts/Flex";
+import { TableCell, TableRow } from "@/layouts/Table";
 import { BEZIER } from "@/themes";
-import { useStyleProps, useUikitTranslation, useStatic } from "@utils";
+import {
+  useStyleProps,
+  useUikitTranslation,
+  useStatic,
+  cssVarUsage,
+} from "@utils";
 
 import type {
   BuiltFormTableRow,
   FormTableModifiers,
-  DeleteTableRowFn,
+  BuiltFormTableModifiers,
+  BuiltFormTableCallbacks,
 } from "../../Form.types";
 import type { StyleProps } from "@types";
 
-type FormTableRowProps = BuiltFormTableRow & {
-  index: number;
-  modifiers: Required<FormTableModifiers>;
-  deleteRow: DeleteTableRowFn;
-  colSpans: number[];
-};
+type FormTableRowProps = BuiltFormTableRow &
+  Pick<BuiltFormTableCallbacks, "deleteRow" | "setRowSelection"> & {
+    index: number;
+    modifiers: BuiltFormTableModifiers;
+    colSpans: number[];
+  };
 
 export const FormTableRow = ({
   cells,
@@ -45,13 +54,20 @@ export const FormTableRow = ({
   id,
   stableId,
   deleteRow,
+  setRowSelection,
+  selected,
   colSpans,
 }: FormTableRowProps) => {
-  const { isEditing } = useFormContext();
+  const { isEditing, disabled } = useFormContext();
 
-  const mods = useMemo(
-    () => transformObject(modifiers, (modifier) => isEditing && modifier),
-    [modifiers, isEditing]
+  const mods = useMemo(() => {
+    const { selectable: _, ...rest } = modifiers;
+    return transformObject(rest, (modifier) => isEditing && modifier);
+  }, [modifiers, isEditing]);
+
+  const showSelectionCell = useMemo(
+    () => isEditing && modifiers.selectable,
+    [isEditing, modifiers.selectable]
   );
 
   const deleteSelf = useCallback(() => {
@@ -89,7 +105,7 @@ export const FormTableRow = ({
     [transform, transition]
   );
 
-  const controls = useMemo<Nullish<FormTableCellControls>>(() => {
+  const controls = useMemo<Nullish<FormTableCellControlsData>>(() => {
     if ((!mods.swappable && !mods.deletable) || !isEditing) return null;
     return {
       swappable: mods.swappable
@@ -128,11 +144,25 @@ export const FormTableRow = ({
       data-testid="form-table-row"
       data-row-index={index}
     >
+      {showSelectionCell && (
+        <TableCell
+          styleOverride={{ position: "relative", width: cssVarUsage("s-9") }}
+        >
+          <FormTableCellControls controls={controls} isFirst />
+          <SelectionCellInner align="center" justify="center" fill>
+            <Checkbox
+              onChange={(selected) => setRowSelection(index, !!selected)}
+              active={selected}
+              disabled={disabled}
+            />
+          </SelectionCellInner>
+        </TableCell>
+      )}
       {cells.map((cell, cellIndex) => {
         const cellKey = `table-cell-${cellIndex}`;
         const colSpan = colSpans[cellIndex] ?? 1;
         const isLast = cellIndex === cells.length - 1;
-        const isFirst = cellIndex === 0;
+        const isFirst = (showSelectionCell ? cellIndex + 1 : cellIndex) === 0;
         const controlsProps: FormTableCellControlsProps = {
           controls,
           isFirst,
@@ -163,7 +193,7 @@ export const FormTableRow = ({
 };
 
 type StyledTableRowProps = StyleProps<
-  FormTableModifiers & {
+  Omit<FormTableModifiers<object>, "selectable"> & {
     dragging?: boolean;
   }
 > & {
@@ -229,4 +259,11 @@ const StyledTableRow = styled(TableRow)<StyledTableRowProps>`
         }
       }
     `}
+`;
+
+const SelectionCellInner = styled(FlexRowLayout)`
+  background: var(--white);
+  min-height: var(--input-height);
+  border-top-left-radius: calc(var(--s-1) * 0.75);
+  border-bottom-left-radius: calc(var(--s-1) * 0.75);
 `;

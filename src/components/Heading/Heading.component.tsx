@@ -19,7 +19,7 @@ const defaultHeadingProps: Required<HeadingProps> = {
 /**
  * Customizable, accessible heading.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {WithTestId<HeadingProps>} props - Heading component props
  * @return {JSX.Element} - The styled heading component
@@ -30,6 +30,7 @@ const Heading = (props: HeadingProps & TestIdProps) => {
   const className = useClassName(props);
   const id = useHtmlAttribute(props.id);
   const style = useHtmlAttribute(props.styleOverride);
+  const title = useHtmlAttribute(props.title);
 
   return (
     <HeadingInner
@@ -39,6 +40,7 @@ const Heading = (props: HeadingProps & TestIdProps) => {
       data-testid={testId}
       className={className}
       style={style}
+      title={title}
     >
       {props.children}
     </HeadingInner>

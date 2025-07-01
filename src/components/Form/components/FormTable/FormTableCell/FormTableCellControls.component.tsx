@@ -5,7 +5,7 @@ import { Icon } from "@/components/Icon";
 import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import type { Nullable, Nullish, Optional, VoidFn } from "@ubloimmo/front-util";
 
-export type FormTableCellControls = {
+export type FormTableCellControlsData = {
   swappable?: Nullish<{
     setActivatorNodeRef: VoidFn<[Nullable<HTMLElement>]>;
     testId: string;
@@ -20,7 +20,7 @@ export type FormTableCellControls = {
 };
 
 export type FormTableCellControlsProps = {
-  controls?: Nullish<FormTableCellControls>;
+  controls?: Nullish<FormTableCellControlsData>;
   /**
    * Whether the controls get rendered in the first cell of the row
    */

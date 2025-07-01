@@ -115,6 +115,7 @@ export const sanitizeTypographyProps = (
     id: props.id ?? null,
     lineClamp: props.lineClamp ?? defaults.lineClamp,
     font: props.font ?? defaults.font,
+    title: props.title ?? null,
   };
 };
 
@@ -289,4 +290,5 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   styleOverride: null,
   lineClamp: null,
   font: "sans",
+  title: null,
 } as const;

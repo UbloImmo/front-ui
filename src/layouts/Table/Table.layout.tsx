@@ -23,12 +23,13 @@ const defaultTableProps: TableDefaultProps = {
   className: null,
   styleOverride: null,
   layout: "auto",
+  id: null,
 };
 
 /**
  * A structured layout element used to display data in rows and columns.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {TableProps & TestIdProps} props - Table component props
  * @returns {JSX.Element}
@@ -43,8 +44,11 @@ const Table = forwardRef<HTMLTableElement, TableProps & TestIdProps>(
     const styleProps = useStyleProps(mergedProps);
     const style = useHtmlAttribute(mergedProps.styleOverride);
 
+    const id = useHtmlAttribute(mergedProps.id);
+
     return (
       <TableLayout
+        id={id}
         data-testid={testId}
         className={className}
         style={style}
