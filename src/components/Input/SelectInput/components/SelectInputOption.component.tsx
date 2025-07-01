@@ -15,7 +15,7 @@ import {
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
 import { FlexRowLayout } from "@/layouts/Flex";
-import { useStyleProps, useTestId } from "@utils";
+import { useHtmlAttribute, useStyleProps, useTestId } from "@utils";
 
 import type {
   SelectOptionItemStyleProps,
@@ -68,6 +68,8 @@ const SelectInputOption = <
 
   const testId = useTestId("input-select-option", option);
 
+  const ariaDisabled = useHtmlAttribute(option.disabled ? true : null);
+
   if (Option)
     return (
       <CustomSelectOptionContainer
@@ -77,7 +79,7 @@ const SelectInputOption = <
         aria-selected={option.active}
         data-active={option.active}
         data-testid={testId}
-        aria-disabled={option.disabled}
+        aria-disabled={ariaDisabled}
         {...styleProps}
         tabIndex={option.disabled ? -1 : 0}
       >

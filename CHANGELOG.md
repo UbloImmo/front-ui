@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.17` SelectInput component
+  - Properly pass `aria-disabled` attribute to each select option by omitting it if option is enabled.
+
 ## 1.8.29 - 2025-07-01
 ### Added
 - `v0.0.10` Text component & `v0.0.9` Heading component
