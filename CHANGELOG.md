@@ -7,23 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.8.29 - 2025-07-01
 ### Added
-
 - `v0.0.10` Text component & `v0.0.9` Heading component
   - Add `title` property that maps to HTML `title` attribute.
-
 - `v0.0.32` Form component
   - Added new `selectable` modifier to form tables, that requires a boolean property to mutate and renders checkboxes for each row as well as a combined selection checkbox in the column's header.
   - Added new `maxBodyHeight` property to form tables, allowing for form table body-only scrolling, while keeping the table's header and footer sticky and visible.
 
-### Fixed
+### Changed
+- Build: updated `vite.config.build.ts` to exclude `zod` from bundle
 
+### Fixed
 - `v0.0.32` Form component
   - Tweaked form context's field error message handling by respecting manually set empty string `errorText`s.
-
-### Changed
-
-- Build: updated `vite.config.build.ts` to exclude `zod` from bundle
 
 ## 1.8.28 - 2025-06-27
 ### Changed
