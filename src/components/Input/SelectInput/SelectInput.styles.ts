@@ -105,7 +105,7 @@ const sharedSelectOptionContainerStyles = (): RuleSet => {
       position: relative;
     }
 
-    &[aria-disabled] {
+    &[aria-disabled="true"] {
       cursor: not-allowed;
 
       ${beforeBackgroundColorStyle}
@@ -165,7 +165,7 @@ export const selectOptionStyles = (): RuleSet => {
       position: relative;
     }
 
-    &:not([aria-disabled]):hover {
+    &:not([aria-disabled="true"]):hover {
       span[data-testid="input-select-option-label"] {
         transition-duration: 150ms;
         color: var(--primary-base);
