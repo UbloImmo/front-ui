@@ -8,7 +8,8 @@ import { Text } from "@/components/Text";
 import { FlexLayout } from "@/layouts/Flex";
 import { testComponentFactory } from "@/tests";
 
-import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
+import type { SelectOption } from "./SelectInput.types";
+import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 const testId = "input-select";
 const testSelectInput = testComponentFactory("SelectInput", SelectInput);
@@ -90,16 +91,8 @@ describe("Input", () => {
         <Badge label={option.label} />
       </FlexLayout>
     ),
-    SelectedOption: ({
-      value,
-    }: {
-      value: Nullable<NullishPrimitives>;
-      disabled?: boolean;
-    }) => {
-      const selectedOption = options.find((option) => option.value === value);
-      return selectedOption ? (
-        <Text>Selected: {selectedOption.label}</Text>
-      ) : null;
+    SelectedOption: ({ label }: SelectOption<NullishPrimitives>) => {
+      return <Text>Selected: {label}</Text>;
     },
   })(
     "should render selected option in custom component",
