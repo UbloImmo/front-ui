@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.32` Form component
   - Tweaked form context's field error message handling by respecting manually set empty string `errorText`s.
 
+### Changed
+
+- Build: updated `vite.config.build.ts` to exclude `zod` from bundle
+
 ## 1.8.28 - 2025-06-27
 ### Changed
 - `v0.0.31` Form component
