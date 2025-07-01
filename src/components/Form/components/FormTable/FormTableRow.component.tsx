@@ -25,7 +25,12 @@ import { Checkbox } from "@/components/Checkbox";
 import { FlexRowLayout } from "@/layouts/Flex";
 import { TableCell, TableRow } from "@/layouts/Table";
 import { BEZIER } from "@/themes";
-import { useStyleProps, useUikitTranslation, useStatic } from "@utils";
+import {
+  useStyleProps,
+  useUikitTranslation,
+  useStatic,
+  cssVarUsage,
+} from "@utils";
 
 import type {
   BuiltFormTableRow,
@@ -140,7 +145,9 @@ export const FormTableRow = ({
       data-row-index={index}
     >
       {showSelectionCell && (
-        <TableCell styleOverride={{ position: "relative" }}>
+        <TableCell
+          styleOverride={{ position: "relative", width: cssVarUsage("s-9") }}
+        >
           <FormTableCellControls controls={controls} isFirst />
           <SelectionCellInner align="center" justify="center" fill>
             <Checkbox
