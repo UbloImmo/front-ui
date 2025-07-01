@@ -14,7 +14,7 @@ import type { TestIdProps } from "@types";
  *
  * @version 0.0.4
  *
- * @param {TableProps} props - The component props.
+ * @param {TableBodyProps & TestIdProps} props - The component props.
  * @returns The table body component.
  */
 export const TableBody = forwardRef<

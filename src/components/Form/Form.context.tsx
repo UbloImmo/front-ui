@@ -69,6 +69,7 @@ import type {
   BuiltFormCustomFieldProps,
   BuiltFormFeatureSwitchProps,
   BuiltFormFieldLayoutProps,
+  BuiltFormTableModifiers,
   BuiltFormTableProps,
   BuiltFormTableRow,
   ComputeFormValidationFn,
@@ -94,7 +95,6 @@ import type {
   FormQueryFn,
   FormSchema,
   FormSource,
-  FormTableModifiers,
   FormTableProps,
   FormTableTryDeletingRowParams,
   FormValidation,
@@ -103,6 +103,8 @@ import type {
   IsFieldRequiredFn,
   MutateFormDataFn,
   PropagateChangeFn,
+  SetRowSelectionFn,
+  SetTableSelectionFn,
   SwapTableRowsFn,
   UseFormDataReturn,
   UseFormEditStateReturn,
@@ -110,6 +112,7 @@ import type {
   UseFormSubmissionReturn,
   UseFormValidationReturn,
 } from "./Form.types";
+import type { CheckboxStatus } from "../Checkbox";
 import type { GridEndPosition } from "@/layouts/GridItem";
 
 const FORM_DEBUG_FLAG = "FORM_DEBUG_ENABLED" as const;
@@ -472,8 +475,8 @@ const useFormContent = <TData extends object>(
         isString(baseErrorText) && isEmptyString(baseErrorText)
           ? ""
           : error.code === "custom"
-          ? error.message
-          : (baseErrorText ?? errorTranslation);
+            ? error.message
+            : (baseErrorText ?? errorTranslation);
       return {
         error: baseError ?? true,
         errorText,
@@ -682,6 +685,12 @@ const useFormContent = <TData extends object>(
         confirmDelete();
       };
 
+      const tableModifiers: BuiltFormTableModifiers = {
+        deletable: t?.deletable ?? false,
+        swappable: t?.swappable ?? false,
+        selectable: t?.selectable ?? false,
+      };
+
       /**
        * Appends a row to the table
        * @param {Partial<Record<string, unknown>>} newRow The new row to append
@@ -707,6 +716,49 @@ const useFormContent = <TData extends object>(
         );
       };
 
+      /**
+       * Sets the selection state of a row
+       * @param {number} rowIndex The index of the row to set the selection state of
+       * @param {boolean} selected The new selection state of the row
+       */
+      const setRowSelection: SetRowSelectionFn = (rowIndex, selected) => {
+        // abort if modifiers do not allow selection
+        if (!tableModifiers.selectable) return;
+        if (!tableModifiers.selectable.property) return;
+        const arrayCopy = [...arrayValue];
+        const row = arrayCopy[rowIndex];
+        // abort if row does not exist
+        if (!row) return;
+        // abort if row has a non-nullish boolean value in the selection property
+        if (tableModifiers.selectable.property in row) {
+          const selection = row[tableModifiers.selectable.property];
+          if (!isBoolean(selection) && !isNullish(selection)) return;
+        }
+        // get the row source & commit selection change
+        const rowSource = `${tableFormSource}.${rowIndex}.${tableModifiers.selectable.property}`;
+        formData.mutateFormData(
+          rowSource as FormSource<TData>,
+          selected as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
+        );
+      };
+
+      const setTableSelection: SetTableSelectionFn = (selected) => {
+        // abort if modifiers do not allow selection
+        if (!tableModifiers.selectable) return;
+        if (!isString(tableModifiers.selectable.property)) return;
+        const { property } = tableModifiers.selectable;
+        if (!arrayValue.length) return;
+        const arrayCopy = [...arrayValue];
+        const selectedArray: typeof arrayCopy = arrayCopy.map((rowValue) => ({
+          ...rowValue,
+          [property]: selected,
+        }));
+        formData.mutateFormData(
+          tableFormSource,
+          selectedArray as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
+        );
+      };
+
       const headers = t.columns.map(
         ({ label, tooltip, compact, required, source }): FieldLabelProps => ({
           label,
@@ -720,11 +772,6 @@ const useFormContent = <TData extends object>(
       );
 
       const colSpans = t.columns?.map(({ layout }) => layout?.size ?? 1) ?? [];
-
-      const tableModifiers: Required<FormTableModifiers> = {
-        deletable: t?.deletable ?? false,
-        swappable: t?.swappable ?? false,
-      };
 
       // generate rows and cell fields from columns and array items
       const rows = arrayValue.map((rowData, index): BuiltFormTableRow => {
@@ -772,13 +819,30 @@ const useFormContent = <TData extends object>(
             (cell): cell is BuiltFormTableRow["cells"][number] => !isNull(cell)
           );
 
+        const selected = tableModifiers.selectable
+          ? (getFieldValue(
+              `${rowSource}.${tableModifiers.selectable.property}` as DeepKeyOf<
+                FormData<TData>
+              >
+            ) ?? false)
+          : false;
+
         return {
           cells,
           id: rowSource,
           stableId: rowSource,
           modifiers,
+          selected,
         };
       });
+
+      const selectedRowCount = rows.filter(({ selected }) => selected).length;
+      const selected: CheckboxStatus =
+        selectedRowCount === rows.length
+          ? true
+          : selectedRowCount > 0
+            ? "mixed"
+            : false;
 
       const tableId = builtFormTableId(String(t.source), contentIndex);
 
@@ -819,6 +883,8 @@ const useFormContent = <TData extends object>(
           ...(t.layout ?? {}),
           size: formLayout.columns,
         }),
+        id: t.id ?? null,
+        maxBodyHeight: t.maxBodyHeight ?? null,
         label: t.label,
         assistiveText: t.assistiveText,
         required: isFieldRequired(tableFormSource, t.required),
@@ -827,11 +893,14 @@ const useFormContent = <TData extends object>(
         deleteRow,
         appendRow,
         swapRows,
+        setRowSelection,
+        setTableSelection,
         data: arrayValue,
         footer: footerWithTestId ?? null,
         columnsCount,
         EmptyCard: t.EmptyCard ?? null,
         tableLayout: t.tableLayout ?? "auto",
+        selected,
       };
     },
 

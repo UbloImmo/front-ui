@@ -1,4 +1,5 @@
 import type { ButtonProps } from "../Button";
+import type { CheckboxStatus } from "../Checkbox";
 import type { BadgeProps } from "@/components/Badge";
 import type { DividerProps } from "@/components/Divider";
 import type {
@@ -298,7 +299,7 @@ export type BuiltFieldProps<TType extends InputType> = FieldProps<TType> &
 
 // -------------------------------- TABLE -----------------------------------
 
-export type FormTableModifiers = {
+export type FormTableModifiers<TRowValue extends object> = {
   /**
    * Enables row deletion if provided
    *
@@ -315,7 +316,39 @@ export type FormTableModifiers = {
    * @default false
    */
   swappable?: boolean;
+  /**
+   * Enables row selection if provided.
+   * Prepends a checkbox column to each row.
+   *
+   * @type {boolean}
+   * @default false
+   */
+  selectable?:
+    | {
+        /**
+         * Each row's property to use to determine if it is selected.
+         * Must point to a nullish boolean.
+         *
+         * @type {DeepKeyOfType<TRowValue, Nullish<boolean>>}
+         * @required
+         */
+        property: DeepKeyOfType<TRowValue, Nullish<boolean>>;
+        /**
+         * The behavior to use when row selection is enabled.
+         *
+         * - `default`: The selectable property is mutated based on checkboxes. All rows, whether selected or not, are always displayed.
+         * - `filter`: Only selected rows are displayed when in `read` mode. All rows are displayed when in `edit` mode.
+         *
+         * @default "default"
+         */
+        behavior?: "default" | "filter";
+      }
+    | false;
 };
+
+export type BuiltFormTableModifiers = Required<
+  FormTableModifiers<Record<string, boolean>>
+>;
 
 export type FormTableCustomFooterProps<
   TRowValue extends Record<string, unknown>,
@@ -461,7 +494,7 @@ export type FormTableDisableRowFn<TRowValue extends object> = GenericFn<
 export type FormTableRowModifiersOverrideFn<TRowValue extends object> =
   GenericFn<
     [row: TRowValue, rowIndex: number],
-    Nullish<FormTableModifiers> | void
+    Nullish<FormTableModifiers<TRowValue>> | void
   >;
 
 /**
@@ -538,6 +571,14 @@ export type FormTableProps<TData extends object> = {
                */
               tableLayout?: TableLayout;
               /**
+               * The maximum height of the table's body.
+               * If set, the table's body will be scrollable if it exceeds this height.
+               *
+               * @type {Nullable<CssLength>}
+               * @default null
+               */
+              maxBodyHeight?: Nullable<CssLength>;
+              /**
                * A callback function that gets called when a row is being deleted.
                *
                * @remarks
@@ -547,10 +588,17 @@ export type FormTableProps<TData extends object> = {
                * @default undefined
                */
               tryDeletingRow?: FormTableTryDeletingRowFn<TRowValue>;
+              /**
+               * The table's id. Auto-generated with `useId()` if not provided.
+               *
+               * @type {Nullable<string>}
+               * @default null
+               */
+              id?: Nullable<string>;
             } & FieldLabelProps &
               FieldAssistiveTextProps &
               FormFieldLayoutProps &
-              FormTableModifiers
+              FormTableModifiers<TRowValue>
           : never
         : never
       : never
@@ -573,7 +621,11 @@ export type BuiltFormTableRow = {
   /**
    * The modifiers of the row
    */
-  modifiers: Required<FormTableModifiers>;
+  modifiers: BuiltFormTableModifiers;
+  /**
+   * Whether the row is selected, only set if the table is selectable
+   */
+  selected: boolean;
 };
 
 /**
@@ -586,6 +638,8 @@ export type BuiltFormTableCallbacks = {
   deleteRow: DeleteTableRowFn;
   appendRow: AppendTableRowFn<Record<string, unknown>>;
   swapRows: SwapTableRowsFn;
+  setRowSelection: SetRowSelectionFn;
+  setTableSelection: SetTableSelectionFn;
 };
 
 /**
@@ -595,17 +649,45 @@ export type FormTableFooterProps = {
   footer: AnyFormTableFooter<Record<string, unknown>>;
   columnsCount: number;
   tableData: Record<string, unknown>[];
+  sticky: boolean;
 } & Pick<BuiltFormTableCallbacks, "appendRow">;
 
 export type BuiltFormTableProps = {
+  /**
+   * Identifier for the table kind
+   */
   kind: "table";
+  /**
+   * A unique identifier for the table. Render-stable.
+   */
   stableId: StableFormTableId;
+  /**
+   * The table's headers
+   */
   headers: FieldLabelProps[];
+  /**
+   * The table's built rows
+   */
   rows: BuiltFormTableRow[];
+  /**
+   * The table's data
+   */
   data: Record<string, unknown>[];
-  modifiers: Required<FormTableModifiers>;
+  /**
+   * The table's modifiers
+   */
+  modifiers: BuiltFormTableModifiers;
+  /**
+   * The total number of columns in the table. Computed using the sum of each column's `layout.size` property.
+   */
   columnsCount: number;
+  /**
+   * The table footer's definition
+   */
   footer: Nullable<AnyFormTableFooter<Record<string, unknown>>>;
+  /**
+   * The component to render when the table is empty
+   */
   EmptyCard: Nullable<FC>;
   /**
    * A list of column widths, extracted from each column's `layout.size` property
@@ -618,6 +700,29 @@ export type BuiltFormTableProps = {
    * @default "auto"
    */
   tableLayout: TableLayout;
+  /**
+   * The maximum height of the table's body.
+   * If set, the table's body will be scrollable if it exceeds this height.
+   *
+   * @type {Nullable<CssLength>}
+   * @default null
+   */
+  maxBodyHeight: Nullable<CssLength>;
+  /**
+   * The selection state of the whole table.
+   * Only different from `false` if the table's `selectable` modifier is configured
+   *
+   * @type {CheckboxStatus}
+   * @default false
+   */
+  selected: CheckboxStatus;
+  /**
+   * The table's id. Auto-generated with `useId()` if not provided.
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
+  id: Nullable<string>;
 } & BuiltFormTableCallbacks &
   FieldAssistiveTextProps &
   BuiltFormFieldLayoutProps &
@@ -1372,12 +1477,44 @@ export type BuildFormFieldLayoutFn = GenericFn<
   BuiltFormFieldLayoutProps["layout"]
 >;
 
-export type DeleteTableRowFn = VoidFn<[number]>;
+/**
+ * Deletes a table row at a specific index
+ *
+ * @param {number} rowIndex - The index of the row to delete
+ */
+export type DeleteTableRowFn = VoidFn<[rowIndex: number]>;
 
+/**
+ * Appends a either a partial or complete new row to the table.
+ *
+ * @template {Record<string, unknown>} TRowValue - The type of the row value
+ * @param {Partial<TRowValue>} newRow - The new row to append
+ */
 export type AppendTableRowFn<TRowValue extends Record<string, unknown>> =
-  VoidFn<[Partial<TRowValue>]>;
+  VoidFn<[newRow: Partial<TRowValue>]>;
 
-export type SwapTableRowsFn = VoidFn<[number, number]>;
+/**
+ * Swaps the position of two table rows
+ *
+ * @param {number} oldIndex - The index of the row to swap from
+ * @param {number} newIndex - The index of the row to swap to
+ */
+export type SwapTableRowsFn = VoidFn<[oldIndex: number, newIndex: number]>;
+
+/**
+ * Sets the selection state of a table row
+ *
+ * @param {number} rowIndex - The index of the row to set the selection state of
+ * @param {boolean} selected - The new selection state of the row
+ */
+export type SetRowSelectionFn = VoidFn<[rowIndex: number, selected: boolean]>;
+
+/**
+ * Sets the selection state of the whole table
+ *
+ * @param {boolean} selected - The new selection state of the table
+ */
+export type SetTableSelectionFn = VoidFn<[selected: boolean]>;
 
 // -------------------------- DISPLAY TRANSFORMS -----------------------------
 

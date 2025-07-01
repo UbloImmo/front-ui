@@ -62,7 +62,7 @@ const InputAssistiveText = (
     <FlexRowLayout
       testId={testId}
       overrideTestId
-      fill
+      fill="row"
       justify="start"
       align="center"
       gap="s-1"

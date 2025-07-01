@@ -525,13 +525,17 @@ AsModal.parameters = {
 const identityTableSchema = z.object({
   profiles: z
     .array(
-      identitySchema.pick({
-        firstName: true,
-        lastName: true,
-        professionalInfo: true,
-        dateOfBirth: true,
-        numberOfChildren: true,
-      })
+      identitySchema
+        .pick({
+          firstName: true,
+          lastName: true,
+          professionalInfo: true,
+          dateOfBirth: true,
+          numberOfChildren: true,
+        })
+        .extend({
+          selected: z.boolean().nullish(),
+        })
     )
     .max(5),
 });
@@ -550,6 +554,11 @@ const formTableProps: FormTableProps<IdentityTable> = {
   label: "Renseignez le(s) propriétaire(s) du lot dans le tableau ci-dessous",
   deletable: true,
   swappable: true,
+  selectable: {
+    property: "selected",
+    behavior: "default",
+  },
+  maxBodyHeight: "200px",
   EmptyCard: () => {
     return <span>Empty card</span>;
   },
@@ -600,7 +609,6 @@ const formTableProps: FormTableProps<IdentityTable> = {
         fixedWidth: "140px",
       },
     },
-
     {
       type: "select",
       source: "professionalInfo.role",

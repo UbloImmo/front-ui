@@ -13,7 +13,8 @@ import {
   restrictToVerticalAxis,
 } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
-import { useCallback, useMemo } from "react";
+import { isNull, isNullish, type Nullable } from "@ubloimmo/front-util";
+import { useCallback, useId, useMemo, type ReactNode } from "react";
 
 import { useFormContext } from "../../Form.context";
 import { FormFieldGridItem } from "../FormFieldGridItem.component";
@@ -28,11 +29,10 @@ import { useFieldAssistiveText } from "@/components/Field/Field.utils";
 import { Icon } from "@/components/Icon";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { InputLabel } from "@/components/InputLabel";
-import { Table, TableBody } from "@/layouts/Table";
+import { Table, TableBody, TableScrollView } from "@/layouts/Table";
 import { isEmptyString } from "@utils";
 
 import type { TooltipProps } from "@/components/Tooltip";
-import type { Nullable } from "@ubloimmo/front-util";
 
 /**
  * A form table component that displays data in a tabular format with optional editing capabilities.
@@ -62,8 +62,14 @@ export const FormTable = ({
   deleteRow,
   appendRow,
   swapRows,
+  setRowSelection,
+  setTableSelection,
+  modifiers,
+  maxBodyHeight,
+  selected,
   EmptyCard,
   data,
+  id,
 }: BuiltFormTableProps) => {
   const { isEditing } = useFormContext();
 
@@ -114,6 +120,19 @@ export const FormTable = ({
     return label && !isEmptyString(label);
   }, [label]);
 
+  const dynamicColumnsCount = useMemo(() => {
+    if (isEditing && modifiers.selectable) return columnsCount + 1;
+    return columnsCount;
+  }, [columnsCount, isEditing, modifiers.selectable]);
+
+  const defaultId = useId();
+  const tableId = useMemo(() => id ?? defaultId, [id, defaultId]);
+
+  const stickyHeaderOrFooter = useMemo(
+    () => !isNullish(maxBodyHeight),
+    [maxBodyHeight]
+  );
+
   if (layout.hidden) return null;
 
   return (
@@ -139,53 +158,77 @@ export const FormTable = ({
             compact={!isEditing || compact}
             testId="field-label"
             overrideTestId
+            htmlFor={tableId}
           />
         )}
-        <Table layout={tableLayout}>
-          <FormTableHeader headers={headers} colSpans={colSpans} />
-          <TableBody>
-            {rows.length ? (
-              <DndContext
-                sensors={sensors}
-                onDragEnd={onDragEnd}
-                collisionDetection={closestCenter}
-                modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-              >
-                <SortableContext items={sortableItems}>
-                  {rows.map(({ cells, stableId, id, modifiers }, index) => {
-                    const rowKey = `table-row-${stableId}-${index}`;
+        <FormTableWrapper maxBodyHeight={maxBodyHeight}>
+          <Table layout={tableLayout} id={tableId}>
+            <FormTableHeader
+              headers={headers}
+              colSpans={colSpans}
+              modifiers={modifiers}
+              selected={selected}
+              setTableSelection={setTableSelection}
+              sticky={stickyHeaderOrFooter}
+            />
+            <TableBody style="form">
+              {rows.length ? (
+                <DndContext
+                  sensors={sensors}
+                  onDragEnd={onDragEnd}
+                  collisionDetection={closestCenter}
+                  modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+                >
+                  <SortableContext items={sortableItems}>
+                    {rows.map(
+                      (
+                        {
+                          cells,
+                          stableId,
+                          id,
+                          modifiers: rowModifiers,
+                          selected: rowSelected,
+                        },
+                        index
+                      ) => {
+                        const rowKey = `table-row-${stableId}-${index}`;
 
-                    return (
-                      <FormTableRow
-                        key={rowKey}
-                        modifiers={modifiers}
-                        id={id}
-                        stableId={stableId}
-                        cells={cells}
-                        index={index}
-                        deleteRow={deleteRow}
-                        colSpans={colSpans}
-                      />
-                    );
-                  })}
-                </SortableContext>
-              </DndContext>
-            ) : (
-              <FormTableEmptyState
-                EmptyCard={EmptyCard}
-                columnsCount={columnsCount}
+                        return (
+                          <FormTableRow
+                            key={rowKey}
+                            modifiers={rowModifiers}
+                            id={id}
+                            stableId={stableId}
+                            cells={cells}
+                            index={index}
+                            deleteRow={deleteRow}
+                            setRowSelection={setRowSelection}
+                            selected={rowSelected}
+                            colSpans={colSpans}
+                          />
+                        );
+                      }
+                    )}
+                  </SortableContext>
+                </DndContext>
+              ) : (
+                <FormTableEmptyState
+                  EmptyCard={EmptyCard}
+                  columnsCount={dynamicColumnsCount}
+                />
+              )}
+            </TableBody>
+            {footer && isEditing && (
+              <FormTableFooter
+                footer={footer}
+                tableData={data}
+                appendRow={appendRow}
+                columnsCount={dynamicColumnsCount}
+                sticky={stickyHeaderOrFooter}
               />
             )}
-          </TableBody>
-          {footer && isEditing && (
-            <FormTableFooter
-              footer={footer}
-              tableData={data}
-              appendRow={appendRow}
-              columnsCount={columnsCount}
-            />
-          )}
-        </Table>
+          </Table>
+        </FormTableWrapper>
         {tableAssistiveText.shouldDisplay && isEditing && (
           <InputAssistiveText
             assistiveText={tableAssistiveText.assistiveText}
@@ -197,5 +240,21 @@ export const FormTable = ({
         )}
       </FieldContainer>
     </FormFieldGridItem>
+  );
+};
+
+const FormTableWrapper = ({
+  maxBodyHeight,
+  children,
+}: Pick<BuiltFormTableProps, "maxBodyHeight"> & { children: ReactNode }) => {
+  if (isNull(maxBodyHeight)) return children;
+  return (
+    <TableScrollView
+      overflowDirection="y"
+      maxHeight={maxBodyHeight}
+      style="form"
+    >
+      {children}
+    </TableScrollView>
   );
 };
