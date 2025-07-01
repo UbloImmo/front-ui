@@ -7,6 +7,7 @@ import {
   isNull,
   isNullish,
   isObject,
+  isString,
   isUndefined,
   type DeepKeyOf,
   type DeepKeyOfType,
@@ -468,7 +469,9 @@ const useFormContent = <TData extends object>(
 
       const errorTranslation = formErrorTranslation(error, tl);
       const errorText =
-        error.code === "custom"
+        isString(baseErrorText) && isEmptyString(baseErrorText)
+          ? ""
+          : error.code === "custom"
           ? error.message
           : (baseErrorText ?? errorTranslation);
       return {
