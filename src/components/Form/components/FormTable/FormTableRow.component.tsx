@@ -53,7 +53,7 @@ export const FormTableRow = ({
   selected,
   colSpans,
 }: FormTableRowProps) => {
-  const { isEditing } = useFormContext();
+  const { isEditing, disabled } = useFormContext();
 
   const mods = useMemo(() => {
     const { selectable: _, ...rest } = modifiers;
@@ -146,6 +146,7 @@ export const FormTableRow = ({
             <Checkbox
               onChange={(selected) => setRowSelection(index, !!selected)}
               active={selected}
+              disabled={disabled}
             />
           </SelectionCellInner>
         </TableCell>

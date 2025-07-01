@@ -556,7 +556,7 @@ const formTableProps: FormTableProps<IdentityTable> = {
   swappable: true,
   selectable: {
     property: "selected",
-    behavior: "default",
+    behavior: "filter",
   },
   maxBodyHeight: "200px",
   EmptyCard: () => {

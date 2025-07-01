@@ -191,8 +191,16 @@ export const FormTable = ({
                         },
                         index
                       ) => {
+                        // hide row if selectable modifier is enabled and behavior is "filter" and row is not selected and not in edit mode
+                        if (
+                          modifiers.selectable &&
+                          modifiers.selectable.behavior === "filter" &&
+                          !rowSelected &&
+                          !isEditing
+                        )
+                          return null;
+                        // compute row key & render otherwise
                         const rowKey = `table-row-${stableId}-${index}`;
-
                         return (
                           <FormTableRow
                             key={rowKey}
