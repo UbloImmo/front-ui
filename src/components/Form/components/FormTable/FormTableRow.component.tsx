@@ -22,9 +22,9 @@ import {
 import { FormTableCustomFieldCell } from "./FormTableCell/FormTableCustomFieldCell.component";
 
 import { Checkbox } from "@/components/Checkbox";
+import { FlexRowLayout } from "@/layouts/Flex";
 import { TableCell, TableRow } from "@/layouts/Table";
 import { BEZIER } from "@/themes";
-import { FlexRowLayout } from "@layouts";
 import { useStyleProps, useUikitTranslation, useStatic } from "@utils";
 
 import type {
