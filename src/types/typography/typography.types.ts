@@ -155,6 +155,12 @@ export type TypographyProps = {
    * @default "sans"
    */
   font?: TypographyFont;
+  /**
+   * The HTML `title` attribute of the text / heading component.
+   *
+   * @default null
+   */
+  title?: Nullable<string>;
 } & StyleOverrideProps;
 
 export type TextProps = TypographyProps & {
