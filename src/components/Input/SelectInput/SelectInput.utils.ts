@@ -419,7 +419,7 @@ export const useSelectValue = <
       mergedProps.onOptionChange?.(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeOption]);
+  }, [activeOption, internalValue]);
 
   return {
     autoCompleteQuery,
