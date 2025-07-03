@@ -3,8 +3,11 @@ import styled from "styled-components";
 
 import { SideEntityMenuItem } from "./components/SideEntityMenuItem";
 import {
-  sideEntityMenuStyles,
+  sideEntityMenuContainerStyles,
   sideEntityMenuHeaderStyles,
+  sideEntityMenuTitleSectionStyles,
+  sideEntityMenuTitleTextStyles,
+  sideEntityMenuPinnedSpacerStyles,
 } from "./SideEntityMenu.styles";
 import { Heading } from "../Heading";
 import { Icon } from "../Icon";
@@ -14,7 +17,6 @@ import {
   useMergedProps,
   useHtmlAttribute,
   useClassName,
-  cssVarUsage,
 } from "@utils";
 
 import type {
@@ -104,19 +106,7 @@ const StyledSideEntityMenu = styled.div<{
   $width: string;
   $collapsedWidth: string;
 }>`
-  ${sideEntityMenuStyles}
-  width: ${({ $collapsedWidth }) => $collapsedWidth};
-  transition: width 0.2s ease-in-out;
-
-  /* Show all when hovering the entire menu */
-  &:hover {
-    width: ${({ $width }) => $width};
-
-    div[data-text-content] {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
+  ${sideEntityMenuContainerStyles}
 `;
 
 const StyledSideEntityMenuHeader = styled.div`
@@ -124,17 +114,13 @@ const StyledSideEntityMenuHeader = styled.div`
 `;
 
 const StyledTitleSection = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: ${cssVarUsage("s-2")};
+  ${sideEntityMenuTitleSectionStyles}
 `;
 
 const StyledTitleText = styled.div`
-  opacity: 0;
-  transition: opacity 0.2s ease;
+  ${sideEntityMenuTitleTextStyles}
 `;
 
 const StyledPinnedSpacer = styled.div`
-  height: 1rem;
+  ${sideEntityMenuPinnedSpacerStyles}
 `;
