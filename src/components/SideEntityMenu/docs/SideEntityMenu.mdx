@@ -1,0 +1,90 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Hypertext } from "@components";
+import { Content } from "@docs/containers";
+import * as SideEntityMenuStories from "../SideEntityMenu.stories.tsx";
+
+<Meta title="Components/Navigation/SideEntityMenu/Usage" />
+
+<ComponentInfo of={SideEntityMenuStories.Default} figmaId="4841-18032" />
+
+<Content>
+
+## Usage
+
+Need to create a collapsible side navigation menu for entity-specific actions and navigation?
+The `SideEntityMenu` provides a space-efficient, hover-expandable sidebar perfect for entity contexts.
+
+### Basic Usage
+
+The component displays as a narrow icon-only menu by default and expands to show full text labels when hovered.
+
+<Canvas of={SideEntityMenuStories.Default} />
+
+### Navigation Links
+
+#### Title Configuration
+
+The menu can display a title header with a configurable icon. Use the `title` prop to set the text and `titleIcon` to customize the icon.
+This header is not clickable and serves as information for the current entity.
+
+<Canvas of={SideEntityMenuStories.WithNonClickableTitle} />
+
+#### Menu Links
+
+The primary navigation items are defined through the `menuLinks` array. Each link supports:
+
+- Navigation URLs (`to` property)
+- Click handlers (`onClick` property)
+- Icons, titles, and various states
+- Pinned items for priority actions
+
+<Canvas of={SideEntityMenuStories.WithoutBackLinks} />
+
+#### Back Links
+
+Back navigation links appear in the header section and provide context for the current entity view.
+
+<Canvas of={SideEntityMenuStories.Default} />
+
+### Interactive Features
+
+#### Pinned Items
+
+Important actions can be pinned to the top of the menu with optional helper text.
+The pinned section is separated by spacing for visual hierarchy.
+
+> Pinned items appear first in the menu.
+
+#### Error States
+
+Menu items can display error states with visual indicators to highlight problematic actions.
+
+<Canvas of={SideEntityMenuStories.WithErrorState} />
+
+#### Disabled State
+
+The entire menu or individual items can be disabled to prevent interaction.
+
+<Canvas of={SideEntityMenuStories.WithIndividualDisabledItems} />
+
+#### Hidden Items
+
+Menu items can be conditionally hidden based on user permissions or context.
+
+<Canvas of={SideEntityMenuStories.WithHiddenItems} />
+
+### Menu Link Properties
+
+Each menu link supports the following configuration:
+
+- **`title`**: Display text (shown on hover)
+- **`icon`**: Icon name from the icon library
+- **`to`**: Navigation URL (for links)
+- **`onClick`**: Click handler (for actions)
+- **`pinned`**: Whether item appears in priority section
+- **`error`**: Error state styling (f.e. when necessary info missing after unit creation)
+- **`disabled`**: Individual item disable state (f.e. can be the case when creating a invoice model)
+- **`hidden`**: Hide item conditionally (f.e. can be the case when feature flagged)
+
+</Content>
