@@ -100,6 +100,8 @@ const SideEntityMenu = (
   );
 };
 
+SideEntityMenu.defaultProps = defaultSideEntityMenuProps;
+
 export { SideEntityMenu };
 
 const StyledSideEntityMenu = styled.div<{
