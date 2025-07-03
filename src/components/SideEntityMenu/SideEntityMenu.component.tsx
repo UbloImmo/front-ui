@@ -6,12 +6,15 @@ import {
   sideEntityMenuStyles,
   sideEntityMenuHeaderStyles,
 } from "./SideEntityMenu.styles";
+import { Heading } from "../Heading";
+import { Icon } from "../Icon";
 
 import {
   useTestId,
   useMergedProps,
   useHtmlAttribute,
   useClassName,
+  cssVarUsage,
 } from "@utils";
 
 import type {
@@ -25,6 +28,8 @@ const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
   backLinks: [],
   width: "15.5rem",
   collapsedWidth: "2.75rem",
+  title: null,
+  titleIcon: null,
 };
 
 /**
@@ -43,7 +48,8 @@ const SideEntityMenu = (
   const className = useClassName(props);
   const style = useHtmlAttribute(props.styleOverride);
 
-  const { menuLinks, backLinks, width, collapsedWidth } = mergedProps;
+  const { menuLinks, backLinks, width, collapsedWidth, title, titleIcon } =
+    mergedProps;
 
   // Add default icon to backlinks if not provided
   const backLinksWithIcons = backLinks.map((link) => ({
@@ -71,6 +77,17 @@ const SideEntityMenu = (
         </StyledSideEntityMenuHeader>
       )}
 
+      {title && titleIcon && (
+        <StyledTitleSection>
+          <Icon name={titleIcon} size="s-4" />
+          <StyledTitleText data-text-content>
+            <Heading size="h4" weight="bold">
+              {title}
+            </Heading>
+          </StyledTitleText>
+        </StyledTitleSection>
+      )}
+
       {menuLinks.map((link, index) => (
         <Fragment key={`menu-${index}`}>
           <SideEntityMenuItem link={link} index={index} />
@@ -91,8 +108,8 @@ const StyledSideEntityMenu = styled.div<{
   width: ${({ $collapsedWidth }) => $collapsedWidth};
   transition: width 0.2s ease-in-out;
 
-  /* Show all when hovering any menu item */
-  &:has(button:hover, a:hover) {
+  /* Show all when hovering the entire menu */
+  &:hover {
     width: ${({ $width }) => $width};
 
     div[data-text-content] {
@@ -104,6 +121,18 @@ const StyledSideEntityMenu = styled.div<{
 
 const StyledSideEntityMenuHeader = styled.div`
   ${sideEntityMenuHeaderStyles}
+`;
+
+const StyledTitleSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: ${cssVarUsage("s-2")};
+`;
+
+const StyledTitleText = styled.div`
+  opacity: 0;
+  transition: opacity 0.2s ease;
 `;
 
 const StyledPinnedSpacer = styled.div`
