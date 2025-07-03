@@ -32,6 +32,7 @@ const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
   collapsedWidth: "2.75rem",
   title: null,
   titleIcon: null,
+  activeItem: null,
 };
 
 /**
@@ -50,8 +51,15 @@ const SideEntityMenu = (
   const className = useClassName(props);
   const style = useHtmlAttribute(props.styleOverride);
 
-  const { menuLinks, backLinks, width, collapsedWidth, title, titleIcon } =
-    mergedProps;
+  const {
+    menuLinks,
+    backLinks,
+    width,
+    collapsedWidth,
+    title,
+    titleIcon,
+    activeItem,
+  } = mergedProps;
 
   // Add default icon to backlinks if not provided
   const backLinksWithIcons = backLinks.map((link) => ({
@@ -74,6 +82,7 @@ const SideEntityMenu = (
               key={`backlink-${index}`}
               link={link}
               index={index}
+              activeItem={activeItem}
             />
           ))}
         </StyledSideEntityMenuHeader>
@@ -92,7 +101,11 @@ const SideEntityMenu = (
 
       {menuLinks.map((link, index) => (
         <Fragment key={`menu-${index}`}>
-          <SideEntityMenuItem link={link} index={index} />
+          <SideEntityMenuItem
+            link={link}
+            index={index}
+            activeItem={activeItem}
+          />
           {link.pinned && index === 0 && <StyledPinnedSpacer />}
         </Fragment>
       ))}

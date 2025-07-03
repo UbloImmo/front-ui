@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { FC, useCallback } from "react";
 import styled from "styled-components";
 
@@ -23,19 +24,25 @@ import type { SideEntityMenuItemProps } from "../SideEntityMenu.types";
 export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   link,
   index = 0,
+  activeItem,
 }) => {
-  const handleClick = useCallback(() => {
-    if (link.disabled) return;
-    if (link.onClick) {
-      link.onClick();
-    }
-  }, [link]);
+  const handleClick = useCallback(
+    (event: React.MouseEvent) => {
+      if (link.disabled) return;
+      if (link.onClick) {
+        event.preventDefault(); // Prevent navigation when onClick is provided
+        link.onClick();
+      }
+    },
+    [link]
+  );
 
   if (link.hidden) return null;
 
   const isDisabled = link.disabled;
-  const isActive =
-    typeof window !== "undefined" && window.location.pathname === link.to;
+  const isActive = activeItem
+    ? activeItem === link.to
+    : typeof window !== "undefined" && window.location.pathname === link.to;
 
   const commonProps = {
     onClick: handleClick,
@@ -50,7 +57,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
 
   const menuItemContent = (
     <>
-      {isActive && <StyledMenuItemIndicator />}
+      {isActive && <StyledMenuItemIndicator layoutId="current" />}
       <StyledIconTextContainer>
         {link.icon && (
           <StyledMenuItemIcon>
@@ -146,7 +153,7 @@ const StyledErrorIcon = styled.div`
   ${menuItemErrorIconStyles}
 `;
 
-const StyledMenuItemIndicator = styled.div`
+const StyledMenuItemIndicator = styled(motion.div)`
   ${menuItemIndicatorStyles}
 `;
 

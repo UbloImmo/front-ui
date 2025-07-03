@@ -70,6 +70,11 @@ export type SideEntityMenuProps = StyleOverrideProps & {
    * @default "2.75rem"
    */
   collapsedWidth?: string;
+  /**
+   * The currently active menu item (by 'to' value)
+   * When provided, this takes precedence over URL-based active detection
+   */
+  activeItem?: Nullable<string>;
 };
 
 export type SideEntityMenuDefaultProps = Required<
@@ -80,6 +85,7 @@ export type SideEntityMenuDefaultProps = Required<
 > & {
   title?: Nullable<string>;
   titleIcon?: Nullable<IconName>;
+  activeItem?: Nullable<string>;
 };
 
 export type SideEntityMenuItemProps = {
@@ -91,4 +97,9 @@ export type SideEntityMenuItemProps = {
    * Index of the item for testing purposes
    */
   index?: number;
+  /**
+   * The currently active menu item (by 'to' value)
+   * When provided, this takes precedence over URL-based active detection
+   */
+  activeItem?: Nullable<string>;
 };

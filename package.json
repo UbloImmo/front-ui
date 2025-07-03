@@ -184,6 +184,7 @@
     "@ubloimmo/front-util": "^0.0.18",
     "big.js": "^6.2.2",
     "date-fns": "^3.6.0",
+    "framer-motion": "^12.23.0",
     "lodash": "^4.17.21",
     "react-day-picker": "^9.0.9",
     "react-international-phone": "^4.2.9",
