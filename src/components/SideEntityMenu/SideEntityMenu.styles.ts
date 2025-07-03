@@ -2,7 +2,7 @@ import { css } from "styled-components";
 
 import { cssVarUsage } from "@utils";
 
-export const sideEntityMenuStyles = css`
+const sideEntityMenuStyles = css`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
