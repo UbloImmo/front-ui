@@ -1,7 +1,6 @@
 import type { IconName } from "../Icon/Icon.types";
 import type { StyleOverrideProps } from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
-import type { ReactNode, FC } from "react";
 
 export type SideEntityMenuLink = {
   /**
@@ -30,10 +29,6 @@ export type SideEntityMenuLink = {
    */
   error?: boolean;
   /**
-   * Whether to show a border at the bottom
-   */
-  borderBottom?: boolean;
-  /**
    * Whether this item is hidden (f.e. can be the case when feature flagged)
    */
   hidden?: boolean;
@@ -41,10 +36,6 @@ export type SideEntityMenuLink = {
    * Whether this item is disabled (f.e. can be the case when creating a invoice model)
    */
   disabled?: boolean;
-  /**
-   * Custom slot content for the menu item
-   */
-  slot?: ReactNode | FC;
   /**
    * Click handler for the menu item
    */
