@@ -42,7 +42,6 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
     $disabled: isDisabled,
     $error: link.error,
     $head: link.head,
-    $borderBottom: link.borderBottom,
     tabIndex: isDisabled ? -1 : 0,
     "aria-disabled": isDisabled,
     "aria-current": (isActive ? "page" : undefined) as "page" | undefined,
@@ -111,9 +110,6 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
         <StyledErrorIcon data-text-content>
           <Icon name="CircleFill" size="0.5rem" color="error-base" />
         </StyledErrorIcon>
-      )}
-      {link.slot && (
-        <div>{typeof link.slot === "function" ? <link.slot /> : link.slot}</div>
       )}
     </>
   );
