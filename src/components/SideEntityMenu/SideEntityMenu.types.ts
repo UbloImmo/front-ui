@@ -1,0 +1,103 @@
+import type { IconName } from "../Icon/Icon.types";
+import type { StyleOverrideProps } from "@types";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { ReactNode, FC } from "react";
+
+export type SideEntityMenuLink = {
+  /**
+   * The title of the menu item
+   */
+  title: string;
+  /**
+   * The icon to display for the menu item
+   * For backlinks, defaults to "ArrowLeftShort" if not provided
+   */
+  icon?: IconName;
+  /**
+   * The URL or path to navigate to
+   */
+  to: string;
+  /**
+   * Whether this item is pinned (shown at the top with spacing after)
+   */
+  pinned?: boolean;
+  /**
+   * Whether this is a header item
+   */
+  head?: boolean;
+  /**
+   * Whether this item has an error state
+   */
+  error?: boolean;
+  /**
+   * Whether to show a border at the bottom
+   */
+  borderBottom?: boolean;
+  /**
+   * Whether this item is hidden (f.e. can be the case when feature flagged)
+   */
+  hidden?: boolean;
+  /**
+   * Whether this item is disabled (f.e. can be the case when creating a invoice model)
+   */
+  disabled?: boolean;
+  /**
+   * Custom slot content for the menu item
+   */
+  slot?: ReactNode | FC;
+  /**
+   * Click handler for the menu item
+   */
+  onClick?: VoidFn;
+};
+
+export type SideEntityMenuProps = StyleOverrideProps & {
+  /**
+   * The title to display in the menu header (this is only to give info about the entity)
+   */
+  title?: Nullable<string>;
+  /**
+   * The icon to display next to the title (this is only to give info about the entity)
+   */
+  titleIcon?: Nullable<IconName>;
+  /**
+   * Array of menu links to display
+   */
+  menuLinks: SideEntityMenuLink[];
+  /**
+   * Array of back links to display in the header
+   * Note: If no icon is provided for a backlink, "ArrowLeftShort" will be used as default
+   */
+  backLinks?: SideEntityMenuLink[];
+  /**
+   * Expanded width for the menu (when text is visible)
+   * @default "15.5rem"
+   */
+  width?: string;
+  /**
+   * Collapsed width for the menu (icons only)
+   * @default "2.75rem"
+   */
+  collapsedWidth?: string;
+};
+
+export type SideEntityMenuDefaultProps = Required<
+  Pick<
+    SideEntityMenuProps,
+    "menuLinks" | "backLinks" | "width" | "collapsedWidth"
+  >
+> & {
+  title?: Nullable<string>;
+  titleIcon?: Nullable<IconName>;
+};
+
+export type SideEntityMenuItemProps = {
+  /**
+   * The menu link data
+   */
+  link: SideEntityMenuLink;
+  /**
+   * Index of the item for testing purposes
+   */
+  index?: number;
+};
