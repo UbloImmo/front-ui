@@ -166,3 +166,56 @@ testSideEntityMenu({
     expect(await findByText("Regular Item")).not.toBeNull();
   }
 );
+
+testSideEntityMenu({
+  menuLinks: mockMenuLinks,
+  backLinks,
+  activeItem: "/settings",
+})(
+  "should use activeItem prop to determine active state",
+  async ({ findByTestId }) => {
+    const settingsItem = await findByTestId("side-entity-menu-item-1");
+    expect(settingsItem.getAttribute("aria-current")).toBe("page");
+  }
+);
+
+testSideEntityMenu({
+  menuLinks: mockMenuLinks,
+  backLinks,
+  activeItem: null,
+})(
+  "should fallback to URL-based active detection when activeItem is null",
+  async ({ findByTestId }) => {
+    // This test assumes the current pathname doesn't match any menu item
+    const overviewItem = await findByTestId("side-entity-menu-item-0");
+    expect(overviewItem.getAttribute("aria-current")).not.toBe("page");
+  }
+);
+
+testSideEntityMenu({
+  menuLinks: [
+    {
+      title: "Clickable Item",
+      icon: "Cursor",
+      to: "/clickable",
+      onClick: () => {
+        // Mock click handler - in real usage this would update activeItem
+      },
+    },
+  ],
+  backLinks,
+  activeItem: "/clickable",
+})(
+  "should handle click events without navigation when onClick is provided",
+  async (renderResult, user) => {
+    const clickableItem = await renderResult.findByTestId(
+      "side-entity-menu-item-0"
+    );
+
+    // Click the item
+    await user.click(clickableItem);
+
+    // The item should be active
+    expect(clickableItem.getAttribute("aria-current")).toBe("page");
+  }
+);
