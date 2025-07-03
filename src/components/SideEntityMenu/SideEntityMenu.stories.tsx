@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { SideEntityMenu } from "./SideEntityMenu.component";
 
 import { componentSourceFactory } from "@docs/docs.utils";
@@ -116,6 +118,28 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
   args: defaultEntityMenuProps,
   parameters: {
     docs: componentSource([defaultEntityMenuProps]),
@@ -123,6 +147,22 @@ export const Default: Story = {
 };
 
 export const WithoutBackLinks: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
   args: {
     menuLinks: mockMenuLinks,
     backLinks: [],
@@ -130,6 +170,30 @@ export const WithoutBackLinks: Story = {
 };
 
 export const WithErrorState: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>(
+      "/configuration-error"
+    );
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
   args: {
     menuLinks: [
       ...mockMenuLinks.slice(0, 3),
@@ -137,7 +201,7 @@ export const WithErrorState: Story = {
         title: "Configuration Error",
         icon: "ExclamationTriangle",
         error: true,
-        to: "/",
+        to: "/configuration-error",
       },
       ...mockMenuLinks.slice(3, 6),
     ],
@@ -146,6 +210,28 @@ export const WithErrorState: Story = {
 };
 
 export const WithNonClickableTitle: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/info");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
   args: {
     menuLinks: mockMenuLinksWithNonClickableTitle,
     title: "Organisation & collaborateurs",
@@ -155,6 +241,28 @@ export const WithNonClickableTitle: Story = {
 };
 
 export const WithHiddenItems: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/journal");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
   args: {
     backLinks: mockBackLinks,
     menuLinks: mockMenuLinks.map((link, index) => ({
@@ -165,6 +273,28 @@ export const WithHiddenItems: Story = {
 };
 
 export const WithIndividualDisabledItems: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: link.disabled ? undefined : () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
   args: {
     menuLinks: mockMenuLinks.map((link) => ({
       ...link,
@@ -177,24 +307,6 @@ export const WithIndividualDisabledItems: Story = {
       description: {
         story:
           "Shows individual menu items can be disabled while others remain active.",
-      },
-    },
-  },
-};
-
-export const WithActiveItem: Story = {
-  args: {
-    menuLinks: mockMenuLinks.map((link) => ({
-      ...link,
-      to: link.title === "Locataires et tiers" ? "/iframe.html" : link.to,
-    })),
-    backLinks: mockBackLinks,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Shows an active menu item with primary icon color, gray-700 text, and bold weight. The 'Locataires et tiers' item appears as active.",
       },
     },
   },
