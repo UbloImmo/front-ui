@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.18` SelectInput component
+  - Tie `onChange` call to internal value as well as activeOption to handle cases where options change dynamically multiple times per render
+
 ## 1.8.30 - 2025-07-01
 ### Fixed
 - `v0.0.17` SelectInput component
