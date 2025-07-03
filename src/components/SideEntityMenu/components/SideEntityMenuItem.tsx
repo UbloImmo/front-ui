@@ -1,6 +1,9 @@
 import { FC, useCallback } from "react";
 import styled from "styled-components";
 
+import { Heading } from "../../Heading";
+import { Icon } from "../../Icon";
+import { Text } from "../../Text";
 import {
   menuItemStyles,
   menuItemIconStyles,
@@ -11,8 +14,6 @@ import {
   menuItemTextContentStyles,
   menuItemIconTextContainerStyles,
 } from "../SideEntityMenu.styles";
-
-import { Icon, Text, Heading } from "@components";
 
 import type { SideEntityMenuItemProps } from "../SideEntityMenu.types";
 
