@@ -160,7 +160,6 @@ const StyledErrorIndicator = styled.div`
   justify-content: center;
   width: 0.5rem;
   height: 0.5rem;
-  opacity: 1;
   visibility: visible;
   transition:
     opacity 0.2s ease,
