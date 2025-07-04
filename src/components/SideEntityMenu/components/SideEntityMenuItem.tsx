@@ -67,7 +67,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
               name={link.icon}
               size="1rem"
               color={
-                isDisabled ? "gray-400" : isActive ? "primary-base" : "gray-600"
+                isDisabled ? "gray-400" : isActive ? "primary-base" : "gray-700"
               }
             />
             {link.error && (
@@ -83,9 +83,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
               <Heading
                 size="h4"
                 weight="bold"
-                color={
-                  isDisabled ? "gray-500" : isActive ? "gray-700" : "gray-900"
-                }
+                color={isActive ? "gray-700" : "gray-900"}
               >
                 {link.title}
               </Heading>
@@ -93,9 +91,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
               <Text
                 size="m"
                 weight={isActive ? "bold" : "regular"}
-                color={
-                  isDisabled ? "gray-500" : isActive ? "gray-700" : "gray-900"
-                }
+                color={isActive ? "gray-700" : "gray-900"}
               >
                 {link.title}
               </Text>
@@ -108,9 +104,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
           <Icon
             name="PinAngleFill"
             size="0.75rem"
-            color={
-              isDisabled ? "gray-400" : isActive ? "primary-base" : "gray-600"
-            }
+            color={isActive ? "primary-base" : "gray-700"}
           />
         </StyledPinIcon>
       )}
