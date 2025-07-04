@@ -7,7 +7,6 @@ import {
   sideEntityMenuHeaderStyles,
   sideEntityMenuTitleSectionStyles,
   sideEntityMenuTitleTextStyles,
-  sideEntityMenuPinnedSpacerStyles,
 } from "./SideEntityMenu.styles";
 import { Heading } from "../Heading";
 import { Icon } from "../Icon";
@@ -108,7 +107,6 @@ const SideEntityMenu = (
             testId={`side-entity-menu-item-${index}`}
             overrideTestId={true}
           />
-          {link.pinned && index === 0 && <StyledPinnedSpacer />}
         </Fragment>
       ))}
     </StyledSideEntityMenu>
@@ -136,8 +134,4 @@ const StyledTitleSection = styled.div`
 
 const StyledTitleText = styled.div`
   ${sideEntityMenuTitleTextStyles}
-`;
-
-const StyledPinnedSpacer = styled.div`
-  ${sideEntityMenuPinnedSpacerStyles}
 `;

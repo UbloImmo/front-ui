@@ -52,10 +52,6 @@ export const sideEntityMenuTitleTextStyles = css`
   transition: opacity 0.2s ease;
 `;
 
-export const sideEntityMenuPinnedSpacerStyles = css`
-  height: 1rem;
-`;
-
 export const menuItemStyles = css<{
   $disabled?: boolean;
   $error?: boolean;
