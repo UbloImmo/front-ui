@@ -16,6 +16,8 @@ import {
   menuItemIconTextContainerStyles,
 } from "../SideEntityMenu.styles";
 
+import { useTestId } from "@utils";
+
 import type { SideEntityMenuItemProps } from "../SideEntityMenu.types";
 
 /**
@@ -24,7 +26,10 @@ import type { SideEntityMenuItemProps } from "../SideEntityMenu.types";
 export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   link,
   activeItem,
+  ...props
 }) => {
+  const testId = useTestId("side-entity-menu-item", props);
+
   const handleClick = useCallback(
     (event: React.MouseEvent) => {
       if (link.disabled) return;
@@ -51,6 +56,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
     tabIndex: isDisabled ? -1 : 0,
     "aria-disabled": isDisabled,
     "aria-current": (isActive ? "page" : undefined) as "page" | undefined,
+    "data-testid": testId,
   };
 
   const menuItemContent = (

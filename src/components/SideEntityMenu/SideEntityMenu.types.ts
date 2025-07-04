@@ -1,5 +1,5 @@
 import type { IconName } from "../Icon/Icon.types";
-import type { StyleOverrideProps } from "@types";
+import type { StyleOverrideProps, TestIdProps } from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 export type SideEntityMenuLink = {
@@ -98,4 +98,4 @@ export type SideEntityMenuItemProps = {
    * When provided, this takes precedence over URL-based active detection
    */
   activeItem?: Nullable<string>;
-};
+} & TestIdProps;
