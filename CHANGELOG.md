@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.8.32 - 2025-07-04
 ### Fixed
-
 - `v0.0.19` SelectInput component
   - Pass autocomplete query as is when options reload upon props update.
 
