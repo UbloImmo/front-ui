@@ -81,7 +81,6 @@ const SideEntityMenu = (
             <SideEntityMenuItem
               key={`backlink-${index}`}
               link={link}
-              index={index}
               activeItem={activeItem}
             />
           ))}
@@ -101,11 +100,7 @@ const SideEntityMenu = (
 
       {menuLinks.map((link, index) => (
         <Fragment key={`menu-${index}`}>
-          <SideEntityMenuItem
-            link={link}
-            index={index}
-            activeItem={activeItem}
-          />
+          <SideEntityMenuItem link={link} activeItem={activeItem} />
           {link.pinned && index === 0 && <StyledPinnedSpacer />}
         </Fragment>
       ))}

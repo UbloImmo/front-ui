@@ -23,7 +23,6 @@ import type { SideEntityMenuItemProps } from "../SideEntityMenu.types";
  */
 export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   link,
-  index = 0,
   activeItem,
 }) => {
   const handleClick = useCallback(
@@ -52,7 +51,6 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
     tabIndex: isDisabled ? -1 : 0,
     "aria-disabled": isDisabled,
     "aria-current": (isActive ? "page" : undefined) as "page" | undefined,
-    "data-testid": `side-entity-menu-item-${index}`,
   };
 
   const menuItemContent = (

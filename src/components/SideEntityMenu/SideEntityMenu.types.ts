@@ -94,10 +94,6 @@ export type SideEntityMenuItemProps = {
    */
   link: SideEntityMenuLink;
   /**
-   * Index of the item for testing purposes
-   */
-  index?: number;
-  /**
    * The currently active menu item (by 'to' value)
    * When provided, this takes precedence over URL-based active detection
    */
