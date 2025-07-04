@@ -100,7 +100,8 @@ const MultiSelectInput = <
   const { inputRef } = useInputRef(mergedProps);
 
   const { options, flattenedOptions, isLoading } = useSelectOptions(
-    props as unknown as SelectInputProps<TValue, TExtraData>
+    props as unknown as SelectInputProps<TValue, TExtraData>,
+    null
   );
   const { displayOptions, activeOptions, selectOption, unselectOption } =
     useMultiSelectValue(mergedProps, options, flattenedOptions);
