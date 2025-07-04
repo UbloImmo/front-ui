@@ -8,6 +8,9 @@ const sideEntityMenuStyles = css`
   gap: 0.25rem;
   height: 100%;
   overflow: hidden;
+  padding: 0.25rem;
+  background-color: white;
+  border-radius: 0.5rem;
 `;
 
 export const sideEntityMenuContainerStyles = css<{
@@ -35,21 +38,12 @@ export const sideEntityMenuContainerStyles = css<{
   }
 `;
 
-export const sideEntityMenuHeaderStyles = css`
-  flex-shrink: 0;
-  border-bottom: 1px solid ${cssVarUsage("gray-200")};
-`;
-
 export const sideEntityMenuTitleSectionStyles = css`
   display: flex;
   align-items: center;
+  height: 2.5rem;
   gap: 0.75rem;
   padding: ${cssVarUsage("s-2")};
-`;
-
-export const sideEntityMenuTitleTextStyles = css`
-  opacity: 0;
-  transition: opacity 0.2s ease;
 `;
 
 export const menuItemStyles = css<{
@@ -71,11 +65,12 @@ export const menuItemStyles = css<{
   transition: background-color 0.2s ease;
 
   ${({ $borderBottom }) =>
-    $borderBottom && `border-bottom: 1px solid ${cssVarUsage("gray-200")}`};
+    $borderBottom &&
+    `border-bottom: 1px solid ${cssVarUsage("primary-light")}`};
 
   &:hover:not(:disabled) {
     background-color: ${({ $disabled }) =>
-      $disabled ? "transparent" : cssVarUsage("gray-100")};
+      $disabled ? "transparent" : cssVarUsage("primary-light")};
   }
 
   &:focus {
@@ -92,7 +87,9 @@ export const menuItemIconStyles = css`
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 1.25rem;
+  width: 1rem;
 `;
 
 export const menuItemTitleStyles = css`
@@ -111,19 +108,27 @@ export const menuItemTitleStyles = css`
 
 export const menuItemPinIconStyles = css`
   opacity: 0;
-  transition: opacity 0.2s ease;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 
   &:not([data-text-content]) {
     opacity: 1;
+    visibility: visible;
   }
 `;
 
 export const menuItemErrorIconStyles = css`
   opacity: 0;
-  transition: opacity 0.2s ease;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 
   &:not([data-text-content]) {
     opacity: 1;
+    visibility: visible;
   }
 `;
 

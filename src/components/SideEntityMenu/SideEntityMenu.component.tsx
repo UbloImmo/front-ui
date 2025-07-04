@@ -4,9 +4,7 @@ import styled from "styled-components";
 import { SideEntityMenuItem } from "./components/SideEntityMenuItem";
 import {
   sideEntityMenuContainerStyles,
-  sideEntityMenuHeaderStyles,
   sideEntityMenuTitleSectionStyles,
-  sideEntityMenuTitleTextStyles,
 } from "./SideEntityMenu.styles";
 import { Heading } from "../Heading";
 import { Icon } from "../Icon";
@@ -69,13 +67,13 @@ const SideEntityMenu = (
   return (
     <StyledSideEntityMenu
       data-testid={testId}
-      className={className}
+      className={`side-entity-menu-container ${className}`}
       style={style}
       $width={width}
       $collapsedWidth={collapsedWidth}
     >
       {backLinksWithIcons.length > 0 && (
-        <StyledSideEntityMenuHeader>
+        <>
           {backLinksWithIcons.map((link, index) => (
             <SideEntityMenuItem
               key={`backlink-${index}`}
@@ -85,17 +83,15 @@ const SideEntityMenu = (
               overrideTestId={true}
             />
           ))}
-        </StyledSideEntityMenuHeader>
+        </>
       )}
 
       {title && titleIcon && (
         <StyledTitleSection>
-          <Icon name={titleIcon} size="s-4" />
-          <StyledTitleText data-text-content>
-            <Heading size="h4" weight="bold">
-              {title}
-            </Heading>
-          </StyledTitleText>
+          <Icon name={titleIcon} size="s-5" />
+          <Heading size="h4" weight="bold">
+            {title}
+          </Heading>
         </StyledTitleSection>
       )}
 
@@ -124,14 +120,6 @@ const StyledSideEntityMenu = styled.div<{
   ${sideEntityMenuContainerStyles}
 `;
 
-const StyledSideEntityMenuHeader = styled.div`
-  ${sideEntityMenuHeaderStyles}
-`;
-
 const StyledTitleSection = styled.div`
   ${sideEntityMenuTitleSectionStyles}
-`;
-
-const StyledTitleText = styled.div`
-  ${sideEntityMenuTitleTextStyles}
 `;
