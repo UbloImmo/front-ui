@@ -57,10 +57,13 @@ const DisplaySelectValue = ({
   fieldValue: NullishPrimitives;
   props: SelectInputProps<NullishPrimitives>;
 }): ReactNode => {
-  const { flattenedOptions, isLoading } = useSelectOptions({
-    options,
-    filterOption,
-  });
+  const { flattenedOptions, isLoading } = useSelectOptions(
+    {
+      options,
+      filterOption,
+    },
+    null
+  );
 
   if (!fieldValue) return noValue;
   if (isLoading) return <FieldSkeleton />;
@@ -201,10 +204,13 @@ const DisplayMultiSelectValue = ({
   fieldValue: NullishPrimitives[];
   props: MultiSelectInputProps<NullishPrimitives>;
 }): ReactNode => {
-  const { flattenedOptions, isLoading } = useSelectOptions({
-    options,
-    filterOption: null,
-  });
+  const { flattenedOptions, isLoading } = useSelectOptions(
+    {
+      options,
+      filterOption: null,
+    },
+    null
+  );
   if (!fieldValue) return <FormFieldDisplayValue value={noValue} />;
   if (isLoading) return <FieldSkeleton />;
   const stringifiedFieldValue = fieldValue.map((value) =>
