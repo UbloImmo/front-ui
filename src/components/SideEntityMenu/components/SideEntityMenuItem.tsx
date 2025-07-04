@@ -44,9 +44,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   if (link.hidden) return null;
 
   const isDisabled = link.disabled;
-  const isActive = activeItem
-    ? activeItem === link.to
-    : typeof window !== "undefined" && window.location.pathname === link.to;
+  const isActive = activeItem === link.to;
 
   const commonProps = {
     onClick: handleClick,
