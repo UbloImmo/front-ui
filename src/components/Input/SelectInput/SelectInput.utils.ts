@@ -62,11 +62,25 @@ export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives>
     alwaysDisplayActiveOption: false,
   };
 
+export const useSelectAutoCompleteQuery = (
+  searchable?: Nullish<boolean | "manual">
+) => {
+  const [autoCompleteQuery, setAutoCompleteQuery] = useState<Nullable<string>>(
+    searchable ? "" : null
+  );
+
+  return {
+    autoCompleteQuery,
+    setAutoCompleteQuery,
+  };
+};
+
 export const useSelectOptions = <
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 >(
-  props: Pick<SelectInputProps<TValue, TExtraData>, "options" | "filterOption">
+  props: Pick<SelectInputProps<TValue, TExtraData>, "options" | "filterOption">,
+  autoCompleteQuery: Nullable<string>
 ) => {
   const logger = useLogger("SelectInput");
 
@@ -136,10 +150,16 @@ export const useSelectOptions = <
   }, [mergedProps.filterOption, options]);
 
   /**
-   * Effect used for loading initial select options if it is a function
+   * Effect used for loading initial select options if it is a function and / or it changes
+   * Passes the current autoComplete query on reload
+   *
+   * @todo
+   * Find out if this behavior is needed.
+   * If not, remove this useEffect's dependencies to make it only run on first render
    */
   useEffect(() => {
-    loadOptions(null);
+    loadOptions(autoCompleteQuery);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadOptions, mergedProps.options]);
 
   return {
@@ -228,7 +248,9 @@ export const useSelectValue = <
   options: SelectOptionOrGroup<TValue, TExtraData>[],
   flattenedOptions: SelectOption<TValue, TExtraData>[],
   refetchOptions: RefetchSelectOptionsFn,
-  isOpen: boolean
+  isOpen: boolean,
+  autoCompleteQuery: Nullable<string>,
+  setAutoCompleteQuery: VoidFn<[query: Nullable<string>]>
 ) => {
   const [activeOption, setActiveOption] = useState<
     Nullable<SelectOption<TValue, TExtraData>>
@@ -242,10 +264,6 @@ export const useSelectValue = <
   );
 
   const [_, startTransition] = useTransition();
-
-  const [autoCompleteQuery, setAutoCompleteQuery] = useState<Nullish<string>>(
-    mergedProps.searchable ? "" : null
-  );
 
   const findActiveOption = useCallback(
     (optionValue: Nullable<TValue>) => {
@@ -271,7 +289,7 @@ export const useSelectValue = <
         setAutoCompleteQuery(option?.label ?? null);
       });
     },
-    [findActiveOption]
+    [findActiveOption, setAutoCompleteQuery]
   );
 
   const clearInternalValue = useCallback(() => {
@@ -280,7 +298,7 @@ export const useSelectValue = <
       setActiveOption(null);
       setAutoCompleteQuery(null);
     });
-  }, []);
+  }, [setAutoCompleteQuery]);
 
   // ensure active option tracks internal value when the options are updated
   useEffect(() => {

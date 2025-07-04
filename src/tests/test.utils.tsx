@@ -5,7 +5,7 @@ import { describe, expect, it } from "bun:test";
 
 import type { TestHookOptions, TestHookUtils } from "@types";
 import type { GenericFn, MaybeAsyncFn, VoidFn } from "@ubloimmo/front-util";
-import type { FC, ReactNode } from "react";
+import { useRef, type FC, type ReactNode } from "react";
 
 /**
  *
@@ -95,7 +95,15 @@ export const testHookFactory = <
     };
 };
 
-type RenderResult = ReturnType<typeof render>;
+type RerenderWithPropsFn<TProps extends Record<string, unknown>> = VoidFn<
+  [TProps]
+>;
+
+type RenderResultStatic = ReturnType<typeof render>;
+type RenderResult<TProps extends Record<string, unknown>> =
+  RenderResultStatic & {
+    rerenderWithProps: RerenderWithPropsFn<TProps>;
+  };
 
 /**
  * Generates a test factory for a component.
@@ -112,7 +120,7 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
   Component: FC<TProps>,
   staticTests?: {
     props: TProps;
-    tests: { name: string; test: VoidFn<[RenderResult]> }[];
+    tests: { name: string; test: VoidFn<[RenderResultStatic]> }[];
   },
   Wrapper?: ({ children }: { children?: ReactNode }) => JSX.Element
 ) => {
@@ -132,14 +140,14 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
     //   cleanup();
     // });
     if (staticTests && staticTests.tests && staticTests.props) {
-      const renderFn = () =>
+      const renderFn = (testProps?: TProps) =>
         Wrapper
           ? render(
               <Wrapper>
-                <Component {...staticTests.props} />
+                <Component {...(testProps ?? staticTests.props)} />
               </Wrapper>
             )
-          : render(<Component {...staticTests.props} />);
+          : render(<Component {...(testProps ?? staticTests.props)} />);
       const renderResult = renderFn();
       staticTests.tests.forEach(({ name, test }) =>
         it(name, () => {
@@ -152,10 +160,12 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
 
   return (
       testProps: TProps
-    ): VoidFn<[string, MaybeAsyncFn<[RenderResult, UserEvent, TProps]>]> =>
+    ): VoidFn<
+      [string, MaybeAsyncFn<[RenderResult<TProps>, UserEvent, TProps]>]
+    > =>
     (
       testName: string,
-      tests: MaybeAsyncFn<[RenderResult, UserEvent, TProps]>
+      tests: MaybeAsyncFn<[RenderResult<TProps>, UserEvent, TProps]>
     ) => {
       describe(componentName, () => {
         const paramsStr = JSON.stringify(
@@ -164,19 +174,51 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
           )
         );
         const testlabel = `${testName} with params ${paramsStr}"`;
+
+        let instanceId = 1;
+
+        const InstanceWrapper = ({ children }: { children?: ReactNode }) => {
+          const id = useRef(instanceId++);
+          return (
+            <div>
+              <span data-testid="instance-id">{id.current}</span>
+              {children}
+            </div>
+          );
+        };
+
         it(testlabel, async () => {
           cleanup();
           const user = userEvent.setup();
           const renderFn = () =>
-            Wrapper
-              ? render(
+            render(
+              <InstanceWrapper>
+                {Wrapper ? (
                   <Wrapper>
                     <Component {...testProps} />
                   </Wrapper>
-                )
-              : render(<Component {...testProps} />);
+                ) : (
+                  <Component {...testProps} />
+                )}
+              </InstanceWrapper>
+            );
           const renderResult = renderFn();
-          await tests(renderResult, user, testProps);
+          const rerenderWithProps: RerenderWithPropsFn<TProps> = (
+            rerenderProps: TProps
+          ) => {
+            return renderResult.rerender(
+              <InstanceWrapper>
+                {Wrapper ? (
+                  <Wrapper>
+                    <Component {...rerenderProps} />
+                  </Wrapper>
+                ) : (
+                  <Component {...rerenderProps} />
+                )}
+              </InstanceWrapper>
+            );
+          };
+          await tests({ ...renderResult, rerenderWithProps }, user, testProps);
           cleanup();
         });
         cleanup();

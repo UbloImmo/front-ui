@@ -13,6 +13,7 @@ import {
 import {
   defaultSelectInputProps,
   isSelectOptionGroup,
+  useSelectAutoCompleteQuery,
   useSelectInputIntersection,
   useSelectInputKeyboardEvents,
   useSelectOptions,
@@ -53,7 +54,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.18
+ * @version 0.0.19
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -65,23 +66,21 @@ const SelectInput = <
   props: SelectInputProps<TValue, TExtraData> & TestIdProps
 ): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
+  const { autoCompleteQuery, setAutoCompleteQuery } =
+    useSelectAutoCompleteQuery(props?.searchable);
   const { options, flattenedOptions, mergedProps, refetchOptions, isLoading } =
-    useSelectOptions<TValue, TExtraData>(props);
+    useSelectOptions<TValue, TExtraData>(props, autoCompleteQuery);
 
-  const {
-    displayOptions,
-    setInternalValue,
-    clearInternalValue,
-    activeOption,
-    autoCompleteQuery,
-    setAutoCompleteQuery,
-  } = useSelectValue(
-    mergedProps,
-    options,
-    flattenedOptions,
-    refetchOptions,
-    isOpen
-  );
+  const { displayOptions, setInternalValue, clearInternalValue, activeOption } =
+    useSelectValue(
+      mergedProps,
+      options,
+      flattenedOptions,
+      refetchOptions,
+      isOpen,
+      autoCompleteQuery,
+      setAutoCompleteQuery
+    );
   const inputStyles = useInputStyles(mergedProps);
 
   const { placeholder, disabled, searchable } = mergedProps;

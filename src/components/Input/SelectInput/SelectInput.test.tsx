@@ -9,7 +9,7 @@ import { FlexLayout } from "@/layouts/Flex";
 import { testComponentFactory } from "@/tests";
 
 import type { SelectOption } from "./SelectInput.types";
-import type { NullishPrimitives } from "@ubloimmo/front-util";
+import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const testId = "input-select";
 const testSelectInput = testComponentFactory("SelectInput", SelectInput);
@@ -275,6 +275,42 @@ describe("Input", () => {
       await click(clearButton);
 
       expect(inputSelect.textContent).toBe("");
+    }
+  );
+
+  const asyncOptions = mock((_query: Nullable<string>) => options);
+  const asyncOptionsUpdated = mock((_query: Nullable<string>) => options);
+
+  testSelectInput({ options: asyncOptions, searchable: true, value: "1" })(
+    "should refetch options while keeping auto complete query when options are changed",
+    async (
+      { queryByTestId, queryAllByTestId, rerenderWithProps },
+      { click, keyboard }
+    ) => {
+      const inputSelect = queryByTestId(
+        `${testId}-button`
+      ) as HTMLButtonElement;
+      await click(inputSelect);
+      const searchableInput = queryByTestId(
+        `${testId}-query`
+      ) as HTMLInputElement;
+
+      const options = queryAllByTestId(`${testId}-option`);
+      expect(options).toHaveLength(3);
+
+      expect(searchableInput).not.toBeNull();
+
+      await click(searchableInput);
+      await keyboard("Banana");
+      expect(searchableInput.value).toBe("Banana");
+      expect(asyncOptions).toHaveBeenCalledWith("Banana");
+
+      rerenderWithProps({
+        options: asyncOptionsUpdated,
+        searchable: true,
+        value: "Banana",
+      });
+      expect(asyncOptionsUpdated).toHaveBeenCalledWith("Banana");
     }
   );
 });
