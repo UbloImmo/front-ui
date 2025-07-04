@@ -26,6 +26,12 @@ export const sideEntityMenuContainerStyles = css<{
       opacity: 1;
       visibility: visible;
     }
+
+    /* Hide error indicator on icon when expanded */
+    div[data-error-indicator] {
+      opacity: 0;
+      visibility: hidden;
+    }
   }
 `;
 

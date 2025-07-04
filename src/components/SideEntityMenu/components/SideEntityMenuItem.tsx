@@ -65,15 +65,14 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
               name={link.icon}
               size="1rem"
               color={
-                link.error
-                  ? "error-base"
-                  : isDisabled
-                    ? "gray-400"
-                    : isActive
-                      ? "primary-base"
-                      : "gray-600"
+                isDisabled ? "gray-400" : isActive ? "primary-base" : "gray-600"
               }
             />
+            {link.error && (
+              <StyledErrorIndicator data-error-indicator>
+                <Icon name="CircleFill" size="0.5rem" color="error-base" />
+              </StyledErrorIndicator>
+            )}
           </StyledMenuItemIcon>
         )}
         <StyledMenuItemTitle data-text-content>
@@ -139,6 +138,7 @@ const StyledMenuItemLink = styled.a<{
 
 const StyledMenuItemIcon = styled.div`
   ${menuItemIconStyles}
+  position: relative;
 `;
 
 const StyledMenuItemTitle = styled.div`
@@ -147,6 +147,22 @@ const StyledMenuItemTitle = styled.div`
 
 const StyledPinIcon = styled.div`
   ${menuItemPinIconStyles}
+`;
+
+const StyledErrorIndicator = styled.div`
+  position: absolute;
+  top: calc(var(--s-3) * -0.5);
+  right: calc(var(--s-3) * -0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.5rem;
+  height: 0.5rem;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 `;
 
 const StyledErrorIcon = styled.div`
