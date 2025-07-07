@@ -18,12 +18,13 @@ export const sideEntityMenuContainerStyles = css<{
   $collapsedWidth: string;
 }>`
   ${sideEntityMenuStyles}
-  width: ${({ $collapsedWidth }) => $collapsedWidth};
+  width: 100%;
+  /* width: ${({ $collapsedWidth }) => $collapsedWidth}; */
   transition: width 0.2s ease-in-out;
 
   /* Show all when hovering the entire menu */
   &:hover {
-    width: ${({ $width }) => $width};
+    /* width: ${({ $width }) => $width}; */
 
     div[data-text-content] {
       opacity: 1;

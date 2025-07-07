@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Pane } from "./Pane.component";
 import { FlexColumnLayout } from "../Flex";
 import { GridLayout } from "../Grid";
@@ -7,9 +9,10 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { breakpointLabels } from "@types";
 import { cssVarUsage } from "@utils";
 
-import { Button, Text } from "@components";
+import { Button, Text, SideEntityMenu } from "@components";
 
 import type { PaneProps } from "./Pane.types";
+import type { SideEntityMenuLink } from "../../components/SideEntityMenu/SideEntityMenu.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const componentSource = componentSourceFactory<PaneProps>(
@@ -113,5 +116,83 @@ export const DynamicContent: Story = {
         <Text noWrap>is collapsed: {isCollapsed ? "true" : "false"}</Text>
       </FlexColumnLayout>
     ),
+  },
+};
+
+// Mock data for SideEntityMenu integration
+const mockMenuLinks: SideEntityMenuLink[] = [
+  {
+    title: "Dossier 1234",
+    icon: "Folder2",
+    to: "/",
+    head: true,
+  },
+  {
+    title: "Journal du solde",
+    icon: "Abacus",
+    to: "/journal",
+    pinned: true,
+  },
+  {
+    title: "Appels de fonds & facturation",
+    icon: "Invoices2",
+    to: "/invoice",
+    pinned: true,
+  },
+  {
+    title: "Informations de paiement",
+    icon: "CreditCard",
+    to: "/payment",
+    pinned: true,
+  },
+  {
+    title: "Locataires et tiers",
+    icon: "EmojiSmile",
+    to: "/tenants",
+  },
+  {
+    title: "Lots",
+    icon: "Buildings",
+    to: "/lots",
+  },
+];
+
+const mockBackLinks: SideEntityMenuLink[] = [
+  {
+    title: "Dossiers de location",
+    to: "/folders",
+  },
+];
+
+export const WithSideEntityMenu: Story = {
+  render: (_args) => {
+    const [activeItem, setActiveItem] = useState<string>("/");
+
+    const menuLinksWithOnClick = mockMenuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <Pane
+        expandedWidth="15.5rem"
+        collapsedWidth="2.75rem"
+        dynamicContent={({ isCollapsed: _isCollapsed }) => (
+          <SideEntityMenu
+            menuLinks={menuLinksWithOnClick}
+            backLinks={mockBackLinks}
+            activeItem={activeItem}
+          />
+        )}
+      />
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates the integration of Pane with SideEntityMenu. The menu starts collapsed showing only icons, and expands on hover to reveal full text labels. This creates a space-efficient navigation that adapts to user interaction.",
+      },
+    },
   },
 };
