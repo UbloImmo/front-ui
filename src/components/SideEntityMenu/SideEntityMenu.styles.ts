@@ -9,7 +9,7 @@ const sideEntityMenuStyles = css`
   height: 100%;
   overflow: hidden;
   padding: 0.25rem;
-  background-color: white;
+  background-color: var(--white);
   border-radius: 0.5rem;
 `;
 
