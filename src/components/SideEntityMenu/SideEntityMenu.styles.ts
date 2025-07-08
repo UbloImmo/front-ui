@@ -17,6 +17,8 @@ export const menuItemStyles = css`
   text-decoration: none;
   background: var(--primary-light-00);
   transition: background-color 300ms var(--bezier);
+  border: none;
+  outline: none;
 
   border-radius: var(--s-1);
 
