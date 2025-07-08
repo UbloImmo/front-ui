@@ -1,4 +1,12 @@
-import { forwardRef, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Nullable } from "@ubloimmo/front-util";
+import {
+  forwardRef,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 
 import { paneContainerStyles, paneContentStyles } from "./Pane.styles";
@@ -34,6 +42,7 @@ const defaultPaneProps: PaneDefaultProps = {
   anchor: "left",
   top: 0,
   bottom: 0,
+  expandedRatio: 0.5,
 };
 
 /**
@@ -60,6 +69,7 @@ const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
       forceExpanded,
       top,
       bottom,
+      expandedRatio,
       dynamicContent: DynamicContent,
     } = mergedProps;
 
@@ -84,6 +94,20 @@ const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
       [expandedWidth]
     );
 
+    const collapsedWidthPx = useMemo(
+      () => extractPx(cssRemToCssPx(parseFixedLength(collapsedWidth))),
+      [collapsedWidth]
+    );
+
+    const diff = useMemo(
+      () => expandedWidthPx - collapsedWidthPx,
+      [expandedWidthPx, collapsedWidthPx]
+    );
+
+    const margin = useMemo(() => diff * expandedRatio, [diff, expandedRatio]);
+
+    const containerRef = useRef<Nullable<HTMLElement>>(null);
+
     useLayoutEffect(() => {
       if (contentRef.current) {
         const observer = new ResizeObserver((entries) => {
@@ -92,18 +116,38 @@ const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
           const size = entry.borderBoxSize.at(0);
           if (!size) return;
 
-          setIsCollapsed(size.inlineSize < expandedWidthPx);
+          setIsCollapsed(size.inlineSize < expandedWidthPx - margin);
+          if (containerRef.current) {
+            containerRef.current.style.setProperty(
+              "--pane-container-height",
+              `${size.blockSize}px`
+            );
+          }
         });
 
         observer.observe(contentRef.current);
 
         return () => observer.disconnect();
       }
-    }, [expandedWidthPx]);
+    }, [expandedWidthPx, margin]);
+
+    const assignContainerRef = useCallback(
+      (el: Nullable<HTMLElement>) => {
+        containerRef.current = el;
+        if (ref) {
+          if ("current" in ref) {
+            ref.current = el;
+          } else {
+            ref(el);
+          }
+        }
+      },
+      [ref]
+    );
 
     return (
       <PaneContainer
-        ref={ref}
+        ref={assignContainerRef}
         data-testid={testId}
         data-expanded={!isCollapsed}
         {...styleProps}
