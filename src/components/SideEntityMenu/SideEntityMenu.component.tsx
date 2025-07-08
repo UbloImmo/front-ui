@@ -6,8 +6,6 @@ import {
   sideEntityMenuContainerStyles,
   sideEntityMenuTitleSectionStyles,
 } from "./SideEntityMenu.styles";
-import { Heading } from "../Heading";
-import { Icon } from "../Icon";
 
 import {
   useTestId,
@@ -21,6 +19,8 @@ import type {
   SideEntityMenuDefaultProps,
 } from "./SideEntityMenu.types";
 import type { TestIdProps } from "@types";
+import { Pane } from "@layouts";
+import { Divider } from "../Divider";
 
 const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
   menuLinks: [],
@@ -65,12 +65,12 @@ const SideEntityMenu = (
   }));
 
   return (
-    <StyledSideEntityMenu
-      data-testid={testId}
-      className={`side-entity-menu-container ${className}`}
-      style={style}
-      $width={width}
-      $collapsedWidth={collapsedWidth}
+    <StyledSideEntityPane
+      expandedWidth={width}
+      collapsedWidth={collapsedWidth}
+      testId={testId}
+      overrideTestId
+      expandedBreakpoint="LG"
     >
       {backLinksWithIcons.length > 0 && (
         <>
@@ -81,18 +81,17 @@ const SideEntityMenu = (
               activeItem={activeItem}
               testId={`side-entity-menu-back-${index}`}
               overrideTestId={true}
+              isBacklink
             />
           ))}
+          <Divider />
         </>
       )}
 
       {title && titleIcon && (
-        <StyledTitleSection>
-          <Icon name={titleIcon} size="s-5" />
-          <Heading size="h4" weight="bold">
-            {title}
-          </Heading>
-        </StyledTitleSection>
+        <SideEntityMenuItem
+          link={{ isTitle: true, title, icon: titleIcon, head: true }}
+        />
       )}
 
       {menuLinks.map((link, index) => (
@@ -105,18 +104,59 @@ const SideEntityMenu = (
           />
         </Fragment>
       ))}
-    </StyledSideEntityMenu>
+    </StyledSideEntityPane>
   );
+
+  // return (
+  //   <StyledSideEntityMenu
+  //     data-testid={testId}
+  //     className={`side-entity-menu-container ${className}`}
+  //     style={style}
+  //     $width={width}
+  //     $collapsedWidth={collapsedWidth}
+  //   >
+  //     {backLinksWithIcons.length > 0 && (
+  //       <>
+  //         {backLinksWithIcons.map((link, index) => (
+  //           <SideEntityMenuItem
+  //             key={`backlink-${index}`}
+  //             link={link}
+  //             activeItem={activeItem}
+  //             testId={`side-entity-menu-back-${index}`}
+  //             overrideTestId={true}
+  //           />
+  //         ))}
+  //       </>
+  //     )}
+
+  //     {title && titleIcon && (
+  //       <StyledTitleSection>
+  //         <Icon name={titleIcon} size="s-5" />
+  //         <Heading size="h4" weight="bold">
+  //           {title}
+  //         </Heading>
+  //       </StyledTitleSection>
+  //     )}
+
+  //     {menuLinks.map((link, index) => (
+  //       <Fragment key={`menu-${index}`}>
+  //         <SideEntityMenuItem
+  //           link={link}
+  //           activeItem={activeItem}
+  //           testId={`side-entity-menu-item-${index}`}
+  //           overrideTestId={true}
+  //         />
+  //       </Fragment>
+  //     ))}
+  //   </StyledSideEntityMenu>
+  // );
 };
 
 SideEntityMenu.defaultProps = defaultSideEntityMenuProps;
 
 export { SideEntityMenu };
 
-const StyledSideEntityMenu = styled.div<{
-  $width: string;
-  $collapsedWidth: string;
-}>`
+const StyledSideEntityPane = styled(Pane)`
   ${sideEntityMenuContainerStyles}
 `;
 

@@ -5,3 +5,4 @@ export * from "./Popover";
 export * from "./Table";
 export * from "./Collapsible";
 export * from "./VirtualTable";
+export * from "./Pane";

@@ -76,7 +76,8 @@ const mockMenuLinks: SideEntityMenuLink[] = [
   },
   {
     title: "États des lieux",
-    icon: "Search",
+    // icon: "Search",
+    icon: "Square",
     to: "/inspections",
   },
   {

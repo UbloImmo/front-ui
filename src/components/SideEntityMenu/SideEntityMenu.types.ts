@@ -1,6 +1,11 @@
 import type { IconName } from "../Icon/Icon.types";
-import type { StyleOverrideProps, TestIdProps } from "@types";
-import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+import type {
+  CssLength,
+  FixedCssLength,
+  StyleOverrideProps,
+  TestIdProps,
+} from "@types";
+import type { Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 export type SideEntityMenuLink = {
   /**
@@ -42,6 +47,16 @@ export type SideEntityMenuLink = {
   onClick?: VoidFn;
 };
 
+type OmittedKeys = Extract<
+  keyof SideEntityMenuLink,
+  "to" | "onClick" | "pinned" | "disabled" | "error"
+>;
+
+export type SideEntityMenuTitle = Partial<Record<OmittedKeys, never>> &
+  Omit<SideEntityMenuLink, OmittedKeys> & {
+    isTitle: true;
+  };
+
 export type SideEntityMenuProps = StyleOverrideProps & {
   /**
    * The title to display in the menu header (this is only to give info about the entity)
@@ -64,12 +79,12 @@ export type SideEntityMenuProps = StyleOverrideProps & {
    * Expanded width for the menu (when text is visible)
    * @default "15.5rem"
    */
-  width?: string;
+  width?: FixedCssLength;
   /**
    * Collapsed width for the menu (icons only)
    * @default "2.75rem"
    */
-  collapsedWidth?: string;
+  collapsedWidth?: CssLength;
   /**
    * The currently active menu item (by 'to' value)
    * When provided, this takes precedence over URL-based active detection
@@ -92,10 +107,11 @@ export type SideEntityMenuItemProps = {
   /**
    * The menu link data
    */
-  link: SideEntityMenuLink;
+  link: SideEntityMenuLink | SideEntityMenuTitle;
   /**
    * The currently active menu item (by 'to' value)
    * When provided, this takes precedence over URL-based active detection
    */
   activeItem?: Nullable<string>;
+  isBacklink?: boolean;
 } & TestIdProps;

@@ -28,6 +28,7 @@ export const paneContainerStyles = ({
     )};
 
     width: var(--pane-container-width);
+    max-height: 100%;
     max-width: var(--pane-container-width);
     min-width: var(--pane-container-width);
     transition-property: width, min-width, max-width;
@@ -52,7 +53,10 @@ export const paneContainerStyles = ({
   `;
 };
 
-export const paneContentStyles = ({ $anchor }: PaneStyleProps) => css`
+export const paneContentStyles = ({
+  $anchor,
+  $headLess,
+}: PaneStyleProps) => css`
   position: absolute;
 
   top: 0;
@@ -67,8 +71,11 @@ export const paneContentStyles = ({ $anchor }: PaneStyleProps) => css`
     box-shadow 150ms var(--bezier);
   overflow: hidden;
 
-  background: var(--white);
-  border-radius: var(--s-2);
-  box-shadow: var(--pane-content-box-shadow);
-  padding: var(--pane-content-padding);
+  ${!$headLess &&
+  css`
+    background: var(--white);
+    border-radius: var(--s-2);
+    box-shadow: var(--pane-content-box-shadow);
+    padding: var(--pane-content-padding);
+  `}
 `;

@@ -104,13 +104,14 @@ const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
     return (
       <PaneContainer
         ref={ref}
-        className={className}
-        style={style}
         data-testid={testId}
+        data-expanded={!isCollapsed}
         {...styleProps}
       >
         <PaneContent
           ref={contentRef}
+          className={className}
+          style={style}
           data-testid="pane-content"
           {...styleProps}
         >

@@ -14,11 +14,13 @@ import {
   menuItemIndicatorStyles,
   menuItemTextContentStyles,
   menuItemIconTextContainerStyles,
+  menuItemErrorIndicatorStyles,
 } from "../SideEntityMenu.styles";
 
 import { useTestId } from "@utils";
 
 import type { SideEntityMenuItemProps } from "../SideEntityMenu.types";
+import type { PaletteColor } from "@types";
 
 /**
  * SideEntityMenuItem component for rendering individual menu items
@@ -26,6 +28,7 @@ import type { SideEntityMenuItemProps } from "../SideEntityMenu.types";
 export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   link,
   activeItem,
+  isBacklink,
   ...props
 }) => {
   const testId = useTestId("side-entity-menu-item", props);
@@ -43,76 +46,95 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
 
   if (link.hidden) return null;
 
-  const isDisabled = link.disabled;
-  const isActive = activeItem === link.to;
+  const isDisabled = link.disabled || !link.to;
+  const isActive = link.to ? activeItem === link.to : false;
 
   const commonProps = {
     onClick: handleClick,
-    $disabled: isDisabled,
-    $error: link.error,
-    $head: link.head,
     tabIndex: isDisabled ? -1 : 0,
     "aria-disabled": isDisabled,
     "aria-current": (isActive ? "page" : undefined) as "page" | undefined,
     "data-testid": testId,
   };
 
+  if ("isTitle" in link && link.isTitle) {
+    return (
+      <StyledMenuItemHeader {...commonProps} data-menu-header>
+        <StyledMenuItemIcon>
+          <Icon name={link.icon} size="s-5" color="gray-700" />
+        </StyledMenuItemIcon>
+        <StyledMenuItemTitle data-text-content>
+          <Heading
+            size="h4"
+            weight="bold"
+            color="gray-900"
+            fill
+            ellipsis
+            lineClamp={2}
+          >
+            {link.title}
+          </Heading>
+        </StyledMenuItemTitle>
+      </StyledMenuItemHeader>
+    );
+  }
+
+  const textColor: PaletteColor = isDisabled
+    ? "gray-500"
+    : isActive
+      ? "primary-base"
+      : "gray-900";
+
   const menuItemContent = (
     <>
       {isActive && <StyledMenuItemIndicator layoutId="current" />}
-      <StyledIconTextContainer>
-        {link.icon && (
-          <StyledMenuItemIcon>
-            <Icon
-              name={link.icon}
-              size="1rem"
-              color={
-                isDisabled ? "gray-400" : isActive ? "primary-base" : "gray-700"
-              }
-            />
-            {link.error && (
-              <StyledErrorIndicator data-error-indicator>
-                <Icon name="CircleFill" size="0.5rem" color="error-base" />
-              </StyledErrorIndicator>
-            )}
-          </StyledMenuItemIcon>
-        )}
-        <StyledMenuItemTitle data-text-content>
-          <StyledTextContent>
-            {link.head ? (
-              <Heading
-                size="h4"
-                weight="bold"
-                color={isActive ? "gray-700" : "gray-900"}
-              >
-                {link.title}
-              </Heading>
-            ) : (
-              <Text
-                size="m"
-                weight={isActive ? "bold" : "regular"}
-                color={isActive ? "gray-700" : "gray-900"}
-              >
-                {link.title}
-              </Text>
-            )}
-          </StyledTextContent>
-        </StyledMenuItemTitle>
-      </StyledIconTextContainer>
-      {link.pinned && (
-        <StyledPinIcon data-text-content>
+      {/* <StyledIconTextContainer> */}
+      {link.icon && (
+        <StyledMenuItemIcon>
           <Icon
-            name="PinAngleFill"
-            size="0.75rem"
-            color={isActive ? "primary-base" : "gray-700"}
+            name={link.icon}
+            size={link.head ? "s-5" : "s-4"}
+            color={
+              isDisabled ? "gray-400" : isActive ? "primary-base" : "gray-700"
+            }
           />
-        </StyledPinIcon>
+          {link.error && (
+            <StyledErrorIndicator data-error-indicator>
+              <Icon name="CircleFill" size="s-2" color="error-base" />
+            </StyledErrorIndicator>
+          )}
+        </StyledMenuItemIcon>
       )}
-      {link.error && (
-        <StyledErrorIcon data-text-content>
-          <Icon name="CircleFill" size="0.5rem" color="error-base" />
-        </StyledErrorIcon>
-      )}
+      <StyledMenuItemTitle data-text-content>
+        {link.head ? (
+          <Heading
+            size="h4"
+            weight="bold"
+            color={textColor}
+            fill
+            ellipsis
+            lineClamp={2}
+          >
+            {link.title}
+          </Heading>
+        ) : (
+          <Text
+            size={isBacklink ? "s" : "m"}
+            weight={isActive && !isBacklink ? "bold" : "medium"}
+            color={textColor}
+            fill
+            ellipsis
+            noWrap
+          >
+            {link.title}
+          </Text>
+        )}
+        {link.pinned && (
+          <Icon name="PinAngleFill" size="s-3" color="gray-700" />
+        )}
+        {link.error && <Icon name="CircleFill" size="s-2" color="error-base" />}
+      </StyledMenuItemTitle>
+      {/* </StyledIconTextContainer> */}
     </>
   );
 
@@ -123,12 +145,11 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   );
 };
 
-const StyledMenuItemLink = styled.a<{
-  $disabled?: boolean;
-  $error?: boolean;
-  $head?: boolean;
-  $borderBottom?: boolean;
-}>`
+const StyledMenuItemLink = styled.a`
+  ${menuItemStyles}
+`;
+
+const StyledMenuItemHeader = styled.div`
   ${menuItemStyles}
 `;
 
@@ -146,18 +167,7 @@ const StyledPinIcon = styled.div`
 `;
 
 const StyledErrorIndicator = styled.div`
-  position: absolute;
-  top: calc(var(--s-3) * -0.5);
-  right: calc(var(--s-3) * -0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 0.5rem;
-  height: 0.5rem;
-  visibility: visible;
-  transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
+  ${menuItemErrorIndicatorStyles}
 `;
 
 const StyledErrorIcon = styled.div`
