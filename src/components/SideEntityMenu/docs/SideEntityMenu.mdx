@@ -6,7 +6,7 @@ import * as SideEntityMenuStories from "../SideEntityMenu.stories.tsx";
 
 <Meta title="Components/Navigation/SideEntityMenu/Usage" />
 
-<ComponentInfo of={SideEntityMenuStories.Default} figmaId="4841-18032" />
+<ComponentInfo of={SideEntityMenuStories} figmaId="4841-18032" />
 
 <Content>
 
@@ -78,6 +78,57 @@ Menu items can be conditionally hidden based on user permissions or context.
 
 The menu supports both automatic URL-based active detection and controlled active state via the `activeItem` prop.
 When using the controlled approach, the active indicator smoothly animates between menu items.
+
+### Navigation Options
+
+The `SideEntityMenu` supports different navigation patterns depending on your application's routing approach:
+
+#### Standard HTML Navigation (Default)
+
+By default, menu items use standard HTML anchor tags with `href` attributes for navigation.
+This is suitable for server-side rendered applications or when you want browser-native navigation.
+
+#### React Router Integration
+
+For React Router applications, use the `navigate` prop to provide programmatic navigation:
+
+<Canvas of={SideEntityMenuStories.WithReactRouterNavigation} />
+
+```typescript
+import { useNavigate } from 'react-router-dom';
+
+const MyComponent = () => {
+  const navigate = useNavigate();
+
+  return (
+    <SideEntityMenu
+      menuLinks={menuLinks}
+      navigate={navigate}
+      activeItem={currentPath}
+    />
+  );
+};
+```
+
+#### Custom Click Handlers
+
+Individual menu items can override navigation with custom `onClick` handlers:
+
+```typescript
+const menuLinks = [
+  {
+    title: "Custom Action",
+    icon: "Settings",
+    to: "/settings",
+    onClick: () => {
+      // Custom logic here
+      console.log("Custom action triggered");
+    },
+  },
+];
+```
+
+**Navigation Priority**: `navigate` prop > `onClick` handler > default HTML navigation
 
 ### Menu Link Properties
 
