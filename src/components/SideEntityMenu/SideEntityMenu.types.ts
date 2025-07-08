@@ -1,10 +1,5 @@
 import type { IconName } from "../Icon/Icon.types";
-import type {
-  CssLength,
-  FixedCssLength,
-  StyleOverrideProps,
-  TestIdProps,
-} from "@types";
+import type { FixedCssLength, StyleOverrideProps, TestIdProps } from "@types";
 import type { Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 export type SideEntityMenuLink = {
@@ -90,6 +85,10 @@ export type SideEntityMenuProps = StyleOverrideProps & {
    * When provided, this takes precedence over URL-based active detection
    */
   activeItem?: Nullable<string>;
+  /**
+   * A callback to navigate to a given URL
+   */
+  navigate?: ((url: string) => void) | null;
 };
 
 export type SideEntityMenuDefaultProps = Required<
@@ -101,6 +100,7 @@ export type SideEntityMenuDefaultProps = Required<
   title?: Nullable<string>;
   titleIcon?: Nullable<IconName>;
   activeItem?: Nullable<string>;
+  navigate?: ((url: string) => void) | null;
 };
 
 export type SideEntityMenuItemProps = {
@@ -113,5 +113,9 @@ export type SideEntityMenuItemProps = {
    * When provided, this takes precedence over URL-based active detection
    */
   activeItem?: Nullable<string>;
+  /**
+   * A callback to navigate to a given URL
+   */
+  navigate?: ((url: string) => void) | null;
   isBacklink?: boolean;
 } & TestIdProps;
