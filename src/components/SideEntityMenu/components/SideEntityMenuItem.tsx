@@ -24,6 +24,7 @@ import type { PaletteColor } from "@types";
 export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   link,
   activeItem,
+  navigate,
   isBacklink,
   ...props
 }) => {
@@ -32,12 +33,18 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   const handleClick = useCallback(
     (event: React.MouseEvent) => {
       if (link.disabled) return;
-      if (link.onClick) {
+
+      // Priority: navigate prop > onClick > default navigation
+      if (navigate && link.to) {
+        event.preventDefault();
+        navigate(link.to);
+      } else if (link.onClick) {
         event.preventDefault(); // Prevent navigation when onClick is provided
         link.onClick();
       }
+      // If neither navigate nor onClick is provided, let the default anchor navigation work
     },
-    [link]
+    [link, navigate]
   );
 
   if (link.hidden) return null;
@@ -132,6 +139,15 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
     </>
   );
 
+  // Use button for programmatic navigation, anchor for standard navigation
+  if (navigate && link.to) {
+    return (
+      <StyledMenuItemButton {...commonProps}>
+        {menuItemContent}
+      </StyledMenuItemButton>
+    );
+  }
+
   return (
     <StyledMenuItemLink href={link.to} {...commonProps}>
       {menuItemContent}
@@ -140,6 +156,10 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
 };
 
 const StyledMenuItemLink = styled.a`
+  ${menuItemStyles}
+`;
+
+const StyledMenuItemButton = styled.button`
   ${menuItemStyles}
 `;
 

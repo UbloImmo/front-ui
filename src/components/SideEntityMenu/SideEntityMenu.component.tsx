@@ -53,6 +53,7 @@ const SideEntityMenu = (
     title,
     titleIcon,
     activeItem,
+    navigate,
   } = mergedProps;
 
   // Add default icon to backlinks if not provided
@@ -78,6 +79,7 @@ const SideEntityMenu = (
               key={`backlink-${index}`}
               link={link}
               activeItem={activeItem}
+              navigate={navigate}
               testId={`side-entity-menu-back-${index}`}
               overrideTestId={true}
               isBacklink
@@ -90,6 +92,7 @@ const SideEntityMenu = (
       {title && titleIcon && (
         <SideEntityMenuItem
           link={{ isTitle: true, title, icon: titleIcon, head: true }}
+          navigate={navigate}
         />
       )}
 
@@ -98,6 +101,7 @@ const SideEntityMenu = (
           <SideEntityMenuItem
             link={link}
             activeItem={activeItem}
+            navigate={navigate}
             testId={`side-entity-menu-item-${index}`}
             overrideTestId={true}
           />
