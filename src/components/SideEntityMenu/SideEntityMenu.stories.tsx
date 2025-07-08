@@ -107,13 +107,13 @@ const defaultEntityMenuProps: SideEntityMenuProps = {
   backLinks: mockBackLinks,
 };
 
-const meta: Meta<typeof SideEntityMenu> = {
+const meta = {
   title: "Components/Navigation/SideEntityMenu/Stories",
   component: SideEntityMenu,
   parameters: {
     docs: componentSource(),
   },
-};
+} satisfies Meta<typeof SideEntityMenu>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
