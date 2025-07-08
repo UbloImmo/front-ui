@@ -16,12 +16,13 @@ export const menuItemStyles = css`
   cursor: pointer;
   text-decoration: none;
   background: var(--primary-light-00);
-  transition: background-color 0.2s ease;
+  transition: background-color 300ms var(--bezier);
 
   border-radius: var(--s-1);
 
   &:hover:not([aria-disabled="true"], :disabled, [data-menu-header]) {
     background: var(--primary-light);
+    transition: background-color 150ms var(--bezier);
   }
 
   &[data-menu-header] {
@@ -53,7 +54,7 @@ export const menuItemIconStyles = css`
 
   svg,
   path {
-    transition: fill 150ms var(--bezier);
+    transition: fill 300ms var(--bezier);
   }
 `;
 
@@ -69,12 +70,15 @@ export const menuItemErrorIndicatorStyles = css`
   height: var(--s-2);
   visibility: visible;
   transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
+    opacity 300ms var(--bezier),
+    visibility 300ms var(--bezier);
 
   [data-expanded="true"] & {
     opacity: 0;
     visibility: hidden;
+    transition:
+      opacity 150ms var(--bezier),
+      visibility 150ms var(--bezier);
   }
 `;
 
@@ -84,7 +88,7 @@ export const menuItemTitleStyles = css`
   gap: var(--s-3);
   max-height: 100%;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 300ms var(--bezier);
   width: calc(var(--pane-expanded-width) - var(--pane-collapsed-width));
   min-width: calc(var(--pane-expanded-width) - var(--pane-collapsed-width));
   max-width: calc(var(--pane-expanded-width) - var(--pane-collapsed-width));
@@ -93,6 +97,7 @@ export const menuItemTitleStyles = css`
 
   [data-expanded="true"] & {
     opacity: 1;
+    transition: opacity 150ms var(--bezier);
   }
 `;
 
