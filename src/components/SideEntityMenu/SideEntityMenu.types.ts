@@ -84,7 +84,7 @@ export type SideEntityMenuProps = StyleOverrideProps & {
    * Collapsed width for the menu (icons only)
    * @default "2.75rem"
    */
-  collapsedWidth?: CssLength;
+  collapsedWidth?: FixedCssLength;
   /**
    * The currently active menu item (by 'to' value)
    * When provided, this takes precedence over URL-based active detection
