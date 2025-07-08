@@ -32,17 +32,25 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
 
   const handleClick = useCallback(
     (event: React.MouseEvent) => {
-      if (link.disabled) return;
+      if (link.disabled) {
+        event.preventDefault();
+        return;
+      }
 
-      // Priority: navigate prop > onClick > default navigation
       if (navigate && link.to) {
         event.preventDefault();
         navigate(link.to);
-      } else if (link.onClick) {
-        event.preventDefault(); // Prevent navigation when onClick is provided
-        link.onClick();
+        return;
       }
-      // If neither navigate nor onClick is provided, let the default anchor navigation work
+
+      if (link.onClick) {
+        event.preventDefault();
+        link.onClick();
+        return;
+      }
+
+      // Otherwise, let the browser handle the link naturally
+      // This supports cmd+click, ctrl+click, shift+click etc.
     },
     [link, navigate]
   );
@@ -139,15 +147,6 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
     </>
   );
 
-  // Use button for programmatic navigation, anchor for standard navigation
-  if (navigate && link.to) {
-    return (
-      <StyledMenuItemButton {...commonProps}>
-        {menuItemContent}
-      </StyledMenuItemButton>
-    );
-  }
-
   return (
     <StyledMenuItemLink href={link.to} {...commonProps}>
       {menuItemContent}
@@ -156,10 +155,6 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
 };
 
 const StyledMenuItemLink = styled.a`
-  ${menuItemStyles}
-`;
-
-const StyledMenuItemButton = styled.button`
   ${menuItemStyles}
 `;
 
