@@ -37,6 +37,14 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
         return;
       }
 
+      const hasModifiers =
+        event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0;
+
+      if (hasModifiers) {
+        // Let browser handle cmd+click, ctrl+click, shift+click, middle click, etc.
+        return;
+      }
+
       if (navigate && link.to) {
         event.preventDefault();
         navigate(link.to);
@@ -50,7 +58,6 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
       }
 
       // Otherwise, let the browser handle the link naturally
-      // This supports cmd+click, ctrl+click, shift+click etc.
     },
     [link, navigate]
   );
