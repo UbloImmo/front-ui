@@ -2,42 +2,10 @@ import { css } from "styled-components";
 
 import { cssVarUsage } from "@utils";
 
-const sideEntityMenuStyles = css`
+export const sideEntityMenuContainerStyles = css`
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  /* height: 100%; */
-  /* overflow: hidden; */
-  /* padding: 0.25rem; */
-  /* background-color: var(--white); */
-  /* border-radius: 0.5rem; */
-`;
-
-export const sideEntityMenuContainerStyles = css`
-  ${sideEntityMenuStyles}/* width: 100%; */
-  /* transition: width 0.2s ease-in-out; */
-
-  /* Show all when hovering the entire menu */
-  /* &:hover {
-    div[data-text-content] {
-      opacity: 1;
-      visibility: visible;
-    } */
-
-    /* Hide error indicator on icon when expanded
-    div[data-error-indicator] {
-      opacity: 0;
-      visibility: hidden;
-    } */
-  /* } */
-`;
-
-export const sideEntityMenuTitleSectionStyles = css`
-  display: flex;
-  align-items: center;
-  height: 2.5rem;
-  gap: 0.75rem;
-  padding: ${cssVarUsage("s-2")};
+  gap: var(--s-1);
 `;
 
 export const menuItemStyles = css`
@@ -71,12 +39,8 @@ export const menuItemStyles = css`
 `;
 
 export const menuItemIconStyles = css`
-  /* flex-shrink: 0; */
   display: flex;
-  /* align-items: center; */
   justify-content: center;
-  /* height: 1.25rem; */
-  /* width: 1rem; */
   padding: var(--s-3) var(--s-2);
   width: calc(var(--pane-collapsed-width) - var(--pane-content-padding) * 2);
   min-width: calc(
@@ -85,11 +49,8 @@ export const menuItemIconStyles = css`
   max-width: calc(
     var(--pane-collapsed-width) - var(--pane-content-padding) * 2
   );
-
-  /* outline: 1px solid red; */
-  /* outline-offset: -1px; */
-
   position: relative;
+
   svg,
   path {
     transition: fill 150ms var(--bezier);
@@ -128,49 +89,10 @@ export const menuItemTitleStyles = css`
   min-width: calc(var(--pane-expanded-width) - var(--pane-collapsed-width));
   max-width: calc(var(--pane-expanded-width) - var(--pane-collapsed-width));
 
-  /* outline: 1px solid blue;
-  outline-offset: -1px; */
   padding-right: var(--s-2);
 
   [data-expanded="true"] & {
     opacity: 1;
-    /* visibility: visible; */
-  }
-`;
-
-export const menuItemPinIconStyles = css`
-  opacity: 0;
-  /* visibility: hidden; */
-  transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
-
-  /* &:not([data-text-content]) {
-    opacity: 1;
-    visibility: visible;
-  } */
-
-  [data-expanded="true"] & {
-    opacity: 1;
-    /* visibility: visible; */
-  }
-`;
-
-export const menuItemErrorIconStyles = css`
-  opacity: 0;
-  /* visibility: hidden; */
-  transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
-
-  &:not([data-text-content]) {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  [data-expanded="true"] & {
-    opacity: 1;
-    /* visibility: visible; */
   }
 `;
 
@@ -182,31 +104,4 @@ export const menuItemIndicatorStyles = css`
   border-radius: var(--s-05);
   background-color: ${cssVarUsage("primary-base")};
   align-self: center;
-`;
-
-export const menuItemTextContentStyles = css`
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-  > * {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    line-height: 1;
-  }
-`;
-
-export const menuItemIconTextContainerStyles = css`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex: 1;
-  min-width: 0;
 `;
