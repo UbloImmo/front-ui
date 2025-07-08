@@ -26,10 +26,20 @@ export type PaneProps = {
   /**
    * The width of the pane when collapsed
    *
-   * @type {CssLength}
+   * @type {FixedCssLength;}
    * @default "s-11"
    */
-  collapsedWidth?: CssLength;
+  collapsedWidth?: FixedCssLength;
+  /**
+   * The ratio at which we consider the pane to be expanded
+   *
+   * must be between 0 and 1
+   * the greater the value, the earlier the pane will be considered expanded
+   * @type {number}
+   * @default 0.5
+   *
+   */
+  expandedRatio?: number;
   /**
    * The pane's content, always gets rendered
    *
