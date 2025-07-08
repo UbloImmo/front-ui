@@ -28,6 +28,7 @@ export const paneContainerStyles = ({
     )};
 
     width: var(--pane-container-width);
+    height: var(--pane-container-height);
     max-height: 100%;
     max-width: var(--pane-container-width);
     min-width: var(--pane-container-width);
