@@ -312,3 +312,31 @@ export const WithIndividualDisabledItems: Story = {
     },
   },
 };
+
+export const WithReactRouterNavigation: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/");
+
+    // Mock React Router navigate function
+    const mockNavigate = (url: string) => {
+      setActiveItem(url);
+    };
+
+    return (
+      <SideEntityMenu
+        {...args}
+        activeItem={activeItem}
+        navigate={mockNavigate}
+      />
+    );
+  },
+  args: defaultEntityMenuProps,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates using the navigate prop for React Router integration. Click menu items to see programmatic navigation in action.",
+      },
+    },
+  },
+};
