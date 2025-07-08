@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import styled from "styled-components";
 
 import { SideEntityMenuItem } from "./components/SideEntityMenuItem";
@@ -97,15 +96,14 @@ const SideEntityMenu = (
       )}
 
       {menuLinks.map((link, index) => (
-        <Fragment key={`menu-${index}`}>
-          <SideEntityMenuItem
-            link={link}
-            activeItem={activeItem}
-            navigate={navigate}
-            testId={`side-entity-menu-item-${index}`}
-            overrideTestId={true}
-          />
-        </Fragment>
+        <SideEntityMenuItem
+          key={`menu-${index}`}
+          link={link}
+          activeItem={activeItem}
+          navigate={navigate}
+          testId={`side-entity-menu-item-${index}`}
+          overrideTestId={true}
+        />
       ))}
     </StyledSideEntityPane>
   );
