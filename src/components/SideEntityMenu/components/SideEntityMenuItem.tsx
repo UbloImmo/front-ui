@@ -9,11 +9,7 @@ import {
   menuItemStyles,
   menuItemIconStyles,
   menuItemTitleStyles,
-  menuItemPinIconStyles,
-  menuItemErrorIconStyles,
   menuItemIndicatorStyles,
-  menuItemTextContentStyles,
-  menuItemIconTextContainerStyles,
   menuItemErrorIndicatorStyles,
 } from "../SideEntityMenu.styles";
 
@@ -88,7 +84,6 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   const menuItemContent = (
     <>
       {isActive && <StyledMenuItemIndicator layoutId="current" />}
-      {/* <StyledIconTextContainer> */}
       {link.icon && (
         <StyledMenuItemIcon>
           <Icon
@@ -134,7 +129,6 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
         )}
         {link.error && <Icon name="CircleFill" size="s-2" color="error-base" />}
       </StyledMenuItemTitle>
-      {/* </StyledIconTextContainer> */}
     </>
   );
 
@@ -162,26 +156,10 @@ const StyledMenuItemTitle = styled.div`
   ${menuItemTitleStyles}
 `;
 
-const StyledPinIcon = styled.div`
-  ${menuItemPinIconStyles}
-`;
-
 const StyledErrorIndicator = styled.div`
   ${menuItemErrorIndicatorStyles}
 `;
 
-const StyledErrorIcon = styled.div`
-  ${menuItemErrorIconStyles}
-`;
-
 const StyledMenuItemIndicator = styled(motion.div)`
   ${menuItemIndicatorStyles}
-`;
-
-const StyledTextContent = styled.div`
-  ${menuItemTextContentStyles}
-`;
-
-const StyledIconTextContainer = styled.div`
-  ${menuItemIconTextContainerStyles}
 `;

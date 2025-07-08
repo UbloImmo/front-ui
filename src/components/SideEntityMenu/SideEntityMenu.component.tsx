@@ -2,11 +2,10 @@ import { Fragment } from "react";
 import styled from "styled-components";
 
 import { SideEntityMenuItem } from "./components/SideEntityMenuItem";
-import {
-  sideEntityMenuContainerStyles,
-  sideEntityMenuTitleSectionStyles,
-} from "./SideEntityMenu.styles";
+import { sideEntityMenuContainerStyles } from "./SideEntityMenu.styles";
+import { Divider } from "../Divider";
 
+import { Pane } from "@layouts";
 import {
   useTestId,
   useMergedProps,
@@ -19,8 +18,6 @@ import type {
   SideEntityMenuDefaultProps,
 } from "./SideEntityMenu.types";
 import type { TestIdProps } from "@types";
-import { Pane } from "@layouts";
-import { Divider } from "../Divider";
 
 const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
   menuLinks: [],
@@ -69,6 +66,8 @@ const SideEntityMenu = (
       expandedWidth={width}
       collapsedWidth={collapsedWidth}
       testId={testId}
+      className={className}
+      styleOverride={style}
       overrideTestId
       expandedBreakpoint="LG"
     >
@@ -106,50 +105,6 @@ const SideEntityMenu = (
       ))}
     </StyledSideEntityPane>
   );
-
-  // return (
-  //   <StyledSideEntityMenu
-  //     data-testid={testId}
-  //     className={`side-entity-menu-container ${className}`}
-  //     style={style}
-  //     $width={width}
-  //     $collapsedWidth={collapsedWidth}
-  //   >
-  //     {backLinksWithIcons.length > 0 && (
-  //       <>
-  //         {backLinksWithIcons.map((link, index) => (
-  //           <SideEntityMenuItem
-  //             key={`backlink-${index}`}
-  //             link={link}
-  //             activeItem={activeItem}
-  //             testId={`side-entity-menu-back-${index}`}
-  //             overrideTestId={true}
-  //           />
-  //         ))}
-  //       </>
-  //     )}
-
-  //     {title && titleIcon && (
-  //       <StyledTitleSection>
-  //         <Icon name={titleIcon} size="s-5" />
-  //         <Heading size="h4" weight="bold">
-  //           {title}
-  //         </Heading>
-  //       </StyledTitleSection>
-  //     )}
-
-  //     {menuLinks.map((link, index) => (
-  //       <Fragment key={`menu-${index}`}>
-  //         <SideEntityMenuItem
-  //           link={link}
-  //           activeItem={activeItem}
-  //           testId={`side-entity-menu-item-${index}`}
-  //           overrideTestId={true}
-  //         />
-  //       </Fragment>
-  //     ))}
-  //   </StyledSideEntityMenu>
-  // );
 };
 
 SideEntityMenu.defaultProps = defaultSideEntityMenuProps;
@@ -158,8 +113,4 @@ export { SideEntityMenu };
 
 const StyledSideEntityPane = styled(Pane)`
   ${sideEntityMenuContainerStyles}
-`;
-
-const StyledTitleSection = styled.div`
-  ${sideEntityMenuTitleSectionStyles}
 `;
