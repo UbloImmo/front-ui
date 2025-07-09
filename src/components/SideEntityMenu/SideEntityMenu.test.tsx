@@ -52,8 +52,8 @@ testSideEntityMenu({ menuLinks, backLinks })(
 testSideEntityMenu({ menuLinks: mockMenuLinks, backLinks })(
   "should render menu links",
   async ({ findByTestId }) => {
-    expect(await findByTestId("side-entity-menu-item-0")).not.toBeNull();
-    expect(await findByTestId("side-entity-menu-item-1")).not.toBeNull();
+    expect(await findByTestId("side-entity-menu-regular-0")).not.toBeNull();
+    expect(await findByTestId("side-entity-menu-regular-1")).not.toBeNull();
   }
 );
 
@@ -174,7 +174,7 @@ testSideEntityMenu({
 })(
   "should use activeItem prop to determine active state",
   async ({ findByTestId }) => {
-    const settingsItem = await findByTestId("side-entity-menu-item-1");
+    const settingsItem = await findByTestId("side-entity-menu-regular-1");
     expect(settingsItem.getAttribute("aria-current")).toBe("page");
   }
 );
@@ -187,7 +187,7 @@ testSideEntityMenu({
   "should fallback to URL-based active detection when activeItem is null",
   async ({ findByTestId }) => {
     // This test assumes the current pathname doesn't match any menu item
-    const overviewItem = await findByTestId("side-entity-menu-item-0");
+    const overviewItem = await findByTestId("side-entity-menu-regular-0");
     expect(overviewItem.getAttribute("aria-current")).not.toBe("page");
   }
 );
@@ -209,7 +209,7 @@ testSideEntityMenu({
   "should handle click events without navigation when onClick is provided",
   async (renderResult, user) => {
     const clickableItem = await renderResult.findByTestId(
-      "side-entity-menu-item-0"
+      "side-entity-menu-regular-0"
     );
 
     // Click the item
