@@ -16,13 +16,13 @@ export const menuItemStyles = css`
   cursor: pointer;
   text-decoration: none;
   background: var(--primary-light-00);
-  transition: background-color 300ms var(--bezier);
+  transition: background 300ms var(--bezier);
 
   border-radius: var(--s-1);
 
   &:hover:not([aria-disabled="true"], :disabled, [data-menu-header]) {
     background: var(--primary-light);
-    transition: background-color 150ms var(--bezier);
+    transition-duration: 150ms var(--bezier);
   }
 
   &[data-menu-header] {
@@ -32,10 +32,6 @@ export const menuItemStyles = css`
   &:disabled:not([data-menu-header]),
   &[aria-disabled="true"]:not([data-menu-header]) {
     cursor: not-allowed;
-  }
-
-  &[aria-current="page"] {
-    font-weight: 600;
   }
 `;
 
