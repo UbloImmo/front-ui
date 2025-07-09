@@ -59,10 +59,14 @@ const SideEntityMenu = (
   } = mergedProps;
 
   // Add default icon to backlinks if not provided
-  const backLinksWithIcons = backLinks.map((link) => ({
+  const backLinksWithIcons = useMemo(
+    () =>
+      backLinks.map((link) => ({
         ...link,
         icon: link.icon || "ArrowLeftShort",
-  }));
+      })),
+    [backLinks]
+  );
 
   return (
     <StyledSideEntityPane
