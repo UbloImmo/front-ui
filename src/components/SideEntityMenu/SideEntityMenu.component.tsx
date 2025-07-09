@@ -68,6 +68,14 @@ const SideEntityMenu = (
     [backLinks]
   );
 
+  // Separate items by type: head, pinned, regular
+  const { headItems, pinnedItems, regularItems } = useMemo(() => {
+    const head = menuLinks.filter((link) => link.head);
+    const pinned = menuLinks.filter((link) => link.pinned && !link.head);
+    const regular = menuLinks.filter((link) => !link.pinned && !link.head);
+    return { headItems: head, pinnedItems: pinned, regularItems: regular };
+  }, [menuLinks]);
+
   return (
     <StyledSideEntityPane
       expandedWidth={width}
@@ -103,13 +111,41 @@ const SideEntityMenu = (
         />
       )}
 
-      {menuLinks.map((link, index) => (
+      {/* Render head items first */}
+      {headItems.map((link, index) => (
         <SideEntityMenuItem
-          key={`menu-${index}`}
+          key={`head-${index}`}
           link={link}
           activeItem={activeItem}
           navigate={navigate}
-          testId={`side-entity-menu-item-${index}`}
+          testId={`side-entity-menu-head-${index}`}
+          overrideTestId={true}
+        />
+      ))}
+
+      {/* Render pinned items */}
+      {pinnedItems.map((link, index) => (
+        <SideEntityMenuItem
+          key={`pinned-${index}`}
+          link={link}
+          activeItem={activeItem}
+          navigate={navigate}
+          testId={`side-entity-menu-pinned-${index}`}
+          overrideTestId={true}
+        />
+      ))}
+
+      {/* Add spacing after pinned items if there are regular items */}
+      {pinnedItems.length > 0 && regularItems.length > 0 && <StyledSeparator />}
+
+      {/* Render regular items */}
+      {regularItems.map((link, index) => (
+        <SideEntityMenuItem
+          key={`regular-${index}`}
+          link={link}
+          activeItem={activeItem}
+          navigate={navigate}
+          testId={`side-entity-menu-regular-${index}`}
           overrideTestId={true}
         />
       ))}
@@ -123,4 +159,8 @@ export { SideEntityMenu };
 
 const StyledSideEntityPane = styled(Pane)`
   ${sideEntityMenuContainerStyles}
+`;
+
+const StyledSeparator = styled.div`
+  height: 0.75rem;
 `;
