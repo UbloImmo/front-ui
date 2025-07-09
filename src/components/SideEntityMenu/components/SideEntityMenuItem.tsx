@@ -54,7 +54,6 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
       if (link.onClick) {
         event.preventDefault();
         link.onClick();
-        return;
       }
 
       // Otherwise, let the browser handle the link naturally
