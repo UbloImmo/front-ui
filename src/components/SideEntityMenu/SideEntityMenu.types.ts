@@ -1,5 +1,10 @@
 import type { IconName } from "../Icon/Icon.types";
-import type { FixedCssLength, StyleOverrideProps, TestIdProps } from "@types";
+import type {
+  BreakpointLabel,
+  FixedCssLength,
+  StyleOverrideProps,
+  TestIdProps,
+} from "@types";
 import type { Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 export type SideEntityMenuLink = {
@@ -98,12 +103,22 @@ export type SideEntityMenuProps = StyleOverrideProps & {
    * A callback to navigate to a given URL
    */
   navigate?: ((url: string) => void) | null;
+  /**
+   * The breakpoint at which the menu should be always expanded
+   * @default "MD"
+   */
+  expandedBreakpoint?: Nullable<BreakpointLabel>;
 };
 
 export type SideEntityMenuDefaultProps = Required<
   Pick<
     SideEntityMenuProps,
-    "menuLinks" | "backLinks" | "width" | "collapsedWidth" | "forceExpanded"
+    | "menuLinks"
+    | "backLinks"
+    | "width"
+    | "collapsedWidth"
+    | "forceExpanded"
+    | "expandedBreakpoint"
   >
 > & {
   title?: Nullable<string>;

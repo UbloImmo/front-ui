@@ -25,9 +25,11 @@ const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
   width: "15.5rem",
   collapsedWidth: "2.75rem",
   forceExpanded: false,
+  expandedBreakpoint: "MD",
   title: null,
   titleIcon: null,
   activeItem: null,
+  navigate: null,
 };
 
 /**
@@ -52,6 +54,7 @@ const SideEntityMenu = (
     width,
     collapsedWidth,
     forceExpanded,
+    expandedBreakpoint,
     title,
     titleIcon,
     activeItem,
@@ -85,7 +88,7 @@ const SideEntityMenu = (
       className={className}
       styleOverride={style}
       overrideTestId
-      expandedBreakpoint="LG"
+      expandedBreakpoint={expandedBreakpoint}
     >
       {backLinksWithIcons.length > 0 && (
         <>
