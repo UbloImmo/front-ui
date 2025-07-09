@@ -250,14 +250,14 @@ export const WithErrorState: Story = {
   },
   args: {
     menuLinks: [
-      ...mockMenuLinks.slice(0, 3),
+      ...mockMenuLinks.slice(0, 4),
       {
         title: "Configuration Error",
         icon: "ExclamationTriangle",
         error: true,
         to: "/configuration-error",
       },
-      ...mockMenuLinks.slice(3, 6),
+      ...mockMenuLinks.slice(4, 6),
     ],
     backLinks: mockBackLinks,
   },
