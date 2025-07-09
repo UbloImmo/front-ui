@@ -70,7 +70,7 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
 /**
  * Allows the user to select multiple values from a list of options.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {MultiSelectInputProps & TestIdProps} props - The props for the MultiSelectInput component
  *
@@ -239,6 +239,7 @@ const MultiSelectInput = <
       ref={wrapperRef}
       testId={testIds.root}
       overrideTestId
+      {...inputStyles}
     >
       {isOpen && (
         <MultiSelectOptionsContainer
@@ -348,7 +349,7 @@ MultiSelectInput.defaultProps = defaultMultiSelectInputProps;
 
 export { MultiSelectInput };
 
-const MultiSelectInputWrapper = styled(FlexColumnLayout)`
+const MultiSelectInputWrapper = styled(FlexColumnLayout)<CommonInputStyleProps>`
   ${multiSelectWrapperStyles}
 `;
 

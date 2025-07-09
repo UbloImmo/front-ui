@@ -144,7 +144,7 @@ const displayDateValue: FormDisplayValueFormatterFn<"date"> = (value) => {
  *   (e.g. "********"), or an empty string if the value is invalid.
  */
 const displayPasswordValue: FormDisplayValueFormatterFn<"password"> = (value) =>
-  arrayOf(value.length, () => "*").join("");
+  arrayOf(value.length, () => "･").join("");
 
 /**
  * A {@link FormDisplayValueFormatterFn} that displays an `icon-picker` field's value.

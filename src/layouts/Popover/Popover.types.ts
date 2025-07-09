@@ -132,6 +132,12 @@ export type UncontrolledPopoverProps = PopoverContentProps & {
    * @default false
    */
   fill?: boolean;
+  /**
+   * Whether the popover should at least take all available height
+   *
+   * @default false
+   */
+  fillHeight?: boolean;
 };
 
 export type ControlledPopoverPropsExtension = {
@@ -172,5 +178,5 @@ export type PopoverContentStyleProps = StyleProps<
 >;
 
 export type PopoverTriggerStyleProps = StyleProps<
-  Pick<UncontrolledPopoverProps, "fill">
+  Pick<UncontrolledPopoverProps, "fill" | "fillHeight">
 >;

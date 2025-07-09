@@ -24,6 +24,7 @@ export const popoverTriggerStyles = (): RuleSet => {
 
 export const popoverInnerTriggerStyles = ({
   $fill,
+  $fillHeight,
 }: PopoverTriggerStyleProps): RuleSet => {
   return css`
     width: fit-content;
@@ -31,6 +32,12 @@ export const popoverInnerTriggerStyles = ({
     ${$fill &&
     css`
       width: 100%;
+    `}
+
+    ${$fillHeight &&
+    css`
+      min-height: 100%;
+      height: inherit;
     `}
   `;
 };

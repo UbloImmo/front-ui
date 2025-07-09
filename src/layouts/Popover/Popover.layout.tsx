@@ -40,6 +40,7 @@ const defaultPopoverProps: PopoverDefaultProps = {
   sticky: "partial",
   wrapContent: false,
   fill: false,
+  fillHeight: false,
 };
 /**
  * Displays rich content in a portal.
@@ -73,7 +74,10 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
       {...controlledRootProps}
     >
       <PopoverTrigger asChild>
-        <PopoverInnerTrigger $fill={mergedProps.fill}>
+        <PopoverInnerTrigger
+          $fill={mergedProps.fill}
+          $fillHeight={mergedProps.fillHeight}
+        >
           {mergedProps.children}
         </PopoverInnerTrigger>
       </PopoverTrigger>

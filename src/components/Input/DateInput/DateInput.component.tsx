@@ -71,7 +71,7 @@ const defaultDateInputProps: DateInputDefaultProps = {
 /**
  * A simple date input combined with a Calendar.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {DateInputProps & TestIdProps} props - The input props.
  * @return {JSX.Element} The rendered date input component.
@@ -254,6 +254,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
         />
       }
       fill
+      fillHeight
       open={calendarShown && !inputDisabled}
       onOpenChange={toggleCalendarShown}
       align="end"

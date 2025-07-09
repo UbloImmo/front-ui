@@ -5,8 +5,10 @@ import { selectInputWrapperStyles } from "../SelectInput/SelectInput.styles";
 
 import type { CommonInputStyleProps } from "../Input.types";
 
-export const multiSelectWrapperStyles = (): RuleSet => css`
-  ${selectInputWrapperStyles}
+export const multiSelectWrapperStyles = (
+  props: CommonInputStyleProps
+): RuleSet => css`
+  ${selectInputWrapperStyles(props)}
   position: relative;
   width: 100%;
 
@@ -30,4 +32,11 @@ export const multiSelectInputElementStyles = (
   justify-content: start;
   height: fit-content !important;
   max-height: fit-content !important;
+
+  ${props.$table &&
+  css`
+    min-height: fit-content;
+    height: 100% !important;
+    max-height: inherit !important;
+  `}
 `;

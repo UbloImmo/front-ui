@@ -535,6 +535,7 @@ const identityTableSchema = z.object({
         })
         .extend({
           selected: z.boolean().nullish(),
+          tags: z.array(z.string()).nullish(),
         })
     )
     .max(5),
@@ -556,9 +557,8 @@ const formTableProps: FormTableProps<IdentityTable> = {
   swappable: true,
   selectable: {
     property: "selected",
-    behavior: "filter",
+    behavior: "default",
   },
-  maxBodyHeight: "200px",
   EmptyCard: () => {
     return <span>Empty card</span>;
   },
@@ -606,7 +606,7 @@ const formTableProps: FormTableProps<IdentityTable> = {
       label: "Last name",
       errorText: "Ceci est une erreur",
       layout: {
-        fixedWidth: "140px",
+        fixedWidth: "120px",
       },
     },
     {
@@ -614,6 +614,7 @@ const formTableProps: FormTableProps<IdentityTable> = {
       source: "professionalInfo.role",
       testId: "job-title-test-id",
       overrideTestId: true,
+      searchable: true,
       label: "Job title",
       options: [
         {
@@ -641,7 +642,7 @@ const formTableProps: FormTableProps<IdentityTable> = {
       ],
     },
     {
-      type: "text",
+      type: "date",
       source: "dateOfBirth",
       label: "Date of birth",
       placeholder: "Date of birth",

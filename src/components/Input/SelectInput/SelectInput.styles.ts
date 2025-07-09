@@ -11,7 +11,9 @@ import type {
 } from "./SelectInput.types";
 import type { CommonInputStyleProps } from "../Input.types";
 
-export const selectInputStyles = (): RuleSet => {
+export const selectInputStyles = ({
+  $table,
+}: CommonInputStyleProps): RuleSet => {
   return css`
     cursor: pointer;
     text-align: left;
@@ -27,14 +29,28 @@ export const selectInputStyles = (): RuleSet => {
     &:disabled > * {
       cursor: not-allowed;
     }
+
+    ${$table &&
+    css`
+      min-height: 100%;
+    `}
   `;
 };
 
-export const selectInputWrapperStyles = (): RuleSet => css`
+export const selectInputWrapperStyles = ({
+  $table,
+}: CommonInputStyleProps): RuleSet => css`
   position: relative;
   --input-height: var(--s-8);
   max-height: fit-content;
   width: 100%;
+
+  ${$table &&
+  css`
+    height: 100%;
+    max-height: 100%;
+    min-height: fit-content;
+  `}
 
   @media screen and (max-width: ${breakpointsPx.XS}) {
     --input-height: var(--s-10);
@@ -53,6 +69,12 @@ export const selectInputContainerStyles = (
   &[aria-expanded="true"] {
     z-index: 1;
   }
+
+  ${props.$table &&
+  css`
+    height: 100%;
+    max-height: unset;
+  `}
 `;
 
 export const selectOptionContainerStyles = ({

@@ -11,6 +11,7 @@ import type {
 export const commonInputContainerStyles = ({
   $error,
   $disabled,
+  $table,
 }: CommonInputStyleProps): RuleSet => css`
   position: relative;
   height: max-content;
@@ -51,6 +52,18 @@ export const commonInputContainerStyles = ({
     box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
     transition-duration: 150ms;
   }
+
+  ${$table &&
+  css`
+    height: 100%;
+    max-height: unset;
+
+    td:has(&) {
+      min-height: var(--input-height);
+      height: var(--input-height);
+      min-width: 6rem;
+    }
+  `}
 `;
 
 const commonInputControlStyles = ({
@@ -203,6 +216,14 @@ export const commonInputStyles = ({
     border-radius: 0;
     box-shadow: ${$error ? "var(--shadow-input-error-default)" : "none"};
     outline: none;
+    height: 100%;
+    max-height: unset;
+
+    td:has(&) {
+      min-height: var(--input-height);
+      height: var(--input-height);
+      min-width: 6rem;
+    }
 
     --cell-border-radius: calc(var(--s-1) - 1px);
 
