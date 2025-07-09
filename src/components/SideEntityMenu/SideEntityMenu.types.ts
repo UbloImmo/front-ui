@@ -110,22 +110,7 @@ export type SideEntityMenuProps = StyleOverrideProps & {
   expandedBreakpoint?: Nullable<BreakpointLabel>;
 };
 
-export type SideEntityMenuDefaultProps = Required<
-  Pick<
-    SideEntityMenuProps,
-    | "menuLinks"
-    | "backLinks"
-    | "width"
-    | "collapsedWidth"
-    | "forceExpanded"
-    | "expandedBreakpoint"
-  >
-> & {
-  title?: Nullable<string>;
-  titleIcon?: Nullable<IconName>;
-  activeItem?: Nullable<string>;
-  navigate?: ((url: string) => void) | null;
-};
+export type SideEntityMenuDefaultProps = Required<SideEntityMenuProps>;
 
 export type SideEntityMenuItemProps = {
   /**
