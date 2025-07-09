@@ -1,7 +1,5 @@
 import { css } from "styled-components";
 
-import { cssVarUsage } from "@utils";
-
 export const sideEntityMenuContainerStyles = css`
   display: flex;
   flex-direction: column;
@@ -64,14 +62,12 @@ export const menuItemErrorIndicatorStyles = css`
   justify-content: center;
   width: var(--s-2);
   height: var(--s-2);
-  visibility: visible;
   transition:
     opacity 300ms var(--bezier),
     visibility 300ms var(--bezier);
 
   [data-expanded="true"] & {
     opacity: 0;
-    visibility: hidden;
     transition:
       opacity 150ms var(--bezier),
       visibility 150ms var(--bezier);
@@ -103,6 +99,6 @@ export const menuItemIndicatorStyles = css`
   height: 1.25rem;
   width: var(--s-05);
   border-radius: var(--s-05);
-  background-color: ${cssVarUsage("primary-base")};
+  background: var(--primary-base);
   align-self: center;
 `;
