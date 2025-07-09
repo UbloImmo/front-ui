@@ -103,8 +103,20 @@ const mockBackLinks: SideEntityMenuLink[] = [
 ];
 
 const defaultEntityMenuProps: SideEntityMenuProps = {
-  menuLinks: mockMenuLinks,
-  backLinks: mockBackLinks,
+  menuLinks: [
+    {
+      title: "Dossier 1234",
+      icon: "Folder2",
+      to: "/",
+      head: true,
+    },
+  ],
+  backLinks: [
+    {
+      title: "Dossiers de location",
+      to: "/folders",
+    },
+  ],
 };
 
 const meta = {
@@ -167,6 +179,42 @@ export const WithoutBackLinks: Story = {
   args: {
     menuLinks: mockMenuLinks,
     backLinks: [],
+  },
+};
+
+export const OnlyBackLinks: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/folders");
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
+  args: {
+    menuLinks: [],
+    backLinks: [
+      {
+        title: "Dossiers de location",
+        to: "/folders",
+      },
+      {
+        title: "Tableau de bord",
+        to: "/dashboard",
+      },
+      {
+        title: "Organisations",
+        to: "/organizations",
+      },
+    ],
   },
 };
 
@@ -299,7 +347,9 @@ export const WithIndividualDisabledItems: Story = {
   args: {
     menuLinks: mockMenuLinks.map((link) => ({
       ...link,
-      disabled: link.title === "Paramètres de facturation",
+      disabled:
+        link.title === "Locataires et tiers" ||
+        link.title === "Paramètres de facturation",
     })),
     backLinks: mockBackLinks,
   },
