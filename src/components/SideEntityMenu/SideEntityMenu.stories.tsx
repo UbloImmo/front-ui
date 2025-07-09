@@ -203,16 +203,21 @@ export const OnlyBackLinks: Story = {
     menuLinks: [],
     backLinks: [
       {
-        title: "Dossiers de location",
-        to: "/folders",
+        title: "Retour à la liste des lots",
+        to: "/real-estate/units",
+        borderBottom: true,
       },
       {
-        title: "Tableau de bord",
-        to: "/dashboard",
+        title: "Super Groupe",
+        icon: "BackArrow",
+        to: "/real-estate/units?list-options=group1",
+        borderBottom: true,
       },
       {
-        title: "Organisations",
-        to: "/organizations",
+        title: "Sous-groupe A",
+        icon: "BackArrow",
+        to: "/real-estate/units?list-options=subgroup-a",
+        borderBottom: true,
       },
     ],
   },
