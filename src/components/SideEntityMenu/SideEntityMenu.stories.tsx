@@ -328,7 +328,7 @@ export const WithHiddenItems: Story = {
 
 export const WithIndividualDisabledItems: Story = {
   render: (args) => {
-    const [activeItem, setActiveItem] = useState<string>("/");
+    const [activeItem, setActiveItem] = useState<string>("/template");
 
     const menuLinksWithOnClick = args.menuLinks.map((link) => ({
       ...link,
@@ -350,13 +350,31 @@ export const WithIndividualDisabledItems: Story = {
     );
   },
   args: {
-    menuLinks: mockMenuLinks.map((link) => ({
-      ...link,
-      disabled:
-        link.title === "Locataires et tiers" ||
-        link.title === "Paramètres de facturation",
-    })),
-    backLinks: mockBackLinks,
+    menuLinks: [
+      {
+        title: "[Invoice template name]",
+        icon: "FileEarmarkRuled",
+        to: "/template",
+      },
+      {
+        title: "Réglages de la facture",
+        icon: "_1SquareFill",
+        to: "/settings",
+        disabled: true,
+      },
+      {
+        title: "Réglages du reçu",
+        icon: "_2SquareFill",
+        to: "/receipt-settings",
+        disabled: true,
+      },
+    ],
+    backLinks: [
+      {
+        title: "Liste des modèles",
+        to: "/templates",
+      },
+    ],
   },
   parameters: {
     docs: {
