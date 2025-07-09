@@ -61,7 +61,7 @@ export type SideEntityMenuTitle = Partial<Record<OmittedKeys, never>> &
     isTitle: true;
   };
 
-export type SideEntityMenuProps = StyleOverrideProps & {
+export type SideEntityMenuProps = Omit<StyleOverrideProps, "as"> & {
   /**
    * The title to display in the menu header (this is only to give info about the entity)
    */

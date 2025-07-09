@@ -30,6 +30,8 @@ const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
   titleIcon: null,
   activeItem: null,
   navigate: null,
+  className: null,
+  styleOverride: null,
 };
 
 /**
