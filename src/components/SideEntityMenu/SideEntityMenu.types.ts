@@ -81,6 +81,11 @@ export type SideEntityMenuProps = StyleOverrideProps & {
    */
   collapsedWidth?: FixedCssLength;
   /**
+   * Whether the menu should be forced to be expanded
+   * @default false
+   */
+  forceExpanded?: boolean;
+  /**
    * The currently active menu item (by 'to' value)
    * When provided, this takes precedence over URL-based active detection
    */
@@ -94,7 +99,7 @@ export type SideEntityMenuProps = StyleOverrideProps & {
 export type SideEntityMenuDefaultProps = Required<
   Pick<
     SideEntityMenuProps,
-    "menuLinks" | "backLinks" | "width" | "collapsedWidth"
+    "menuLinks" | "backLinks" | "width" | "collapsedWidth" | "forceExpanded"
   >
 > & {
   title?: Nullable<string>;

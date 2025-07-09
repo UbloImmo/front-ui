@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import styled from "styled-components";
 
 import { SideEntityMenuItem } from "./components/SideEntityMenuItem";
@@ -23,6 +24,7 @@ const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
   backLinks: [],
   width: "15.5rem",
   collapsedWidth: "2.75rem",
+  forceExpanded: false,
   title: null,
   titleIcon: null,
   activeItem: null,
@@ -49,6 +51,7 @@ const SideEntityMenu = (
     backLinks,
     width,
     collapsedWidth,
+    forceExpanded,
     title,
     titleIcon,
     activeItem,
@@ -57,14 +60,15 @@ const SideEntityMenu = (
 
   // Add default icon to backlinks if not provided
   const backLinksWithIcons = backLinks.map((link) => ({
-    ...link,
-    icon: link.icon || "ArrowLeftShort",
+        ...link,
+        icon: link.icon || "ArrowLeftShort",
   }));
 
   return (
     <StyledSideEntityPane
       expandedWidth={width}
       collapsedWidth={collapsedWidth}
+      forceExpanded={forceExpanded}
       testId={testId}
       className={className}
       styleOverride={style}
