@@ -1,0 +1,450 @@
+import { useState } from "react";
+
+import { SideEntityMenu } from "./SideEntityMenu.component";
+
+import { componentSourceFactory } from "@docs/docs.utils";
+
+import type {
+  SideEntityMenuProps,
+  SideEntityMenuLink,
+} from "./SideEntityMenu.types";
+import type { Meta, StoryObj } from "@storybook/react";
+
+const componentSource = componentSourceFactory<SideEntityMenuProps>(
+  "SideEntityMenu",
+  {
+    menuLinks: SideEntityMenu.defaultProps.menuLinks,
+    backLinks: SideEntityMenu.defaultProps.backLinks,
+  },
+  SideEntityMenu.defaultProps
+);
+
+// Mock data for the menu links
+const mockMenuLinks: SideEntityMenuLink[] = [
+  {
+    title: "Dossier 1234",
+    icon: "Folder2",
+    to: "/",
+    head: true,
+  },
+  {
+    title: "Journal du solde",
+    icon: "Abacus",
+    to: "/journal",
+    pinned: true,
+  },
+  {
+    title: "Appels de fonds & facturation",
+    icon: "Invoices2",
+    to: "/invoice",
+    pinned: true,
+  },
+  {
+    title: "Informations de paiement",
+    icon: "CreditCard",
+    to: "/payment",
+    pinned: true,
+  },
+  {
+    title: "Locataires et tiers",
+    icon: "EmojiSmile",
+    to: "/tenants",
+  },
+  {
+    title: "Lots",
+    icon: "Buildings",
+    to: "/lots",
+  },
+  {
+    title: "Loyer",
+    icon: "Coins",
+    to: "/rent",
+  },
+  {
+    title: "Indexation du loyer",
+    icon: "GraphUpArrow",
+    to: "/indexation",
+  },
+  {
+    title: "Contrat de location",
+    icon: "JournalMedical",
+    to: "/contract",
+  },
+  {
+    title: "Paramètres de facturation",
+    icon: "Sliders",
+    to: "/billing-settings",
+  },
+  {
+    title: "Assurances",
+    icon: "ShieldCheck",
+    to: "/insurance",
+  },
+  {
+    title: "États des lieux",
+    // icon: "Search",
+    icon: "Square",
+    to: "/inspections",
+  },
+  {
+    title: "Accès portail locataire",
+    icon: "DoorOpen",
+    to: "/portal-access",
+  },
+];
+
+const mockMenuLinksWithNonClickableTitle: SideEntityMenuLink[] = [
+  {
+    title: "Identité administrative",
+    to: "/info",
+    icon: "InfoCircle",
+  },
+];
+
+const mockBackLinks: SideEntityMenuLink[] = [
+  {
+    title: "Dossiers de location",
+    to: "/folders",
+  },
+];
+
+const defaultEntityMenuProps: SideEntityMenuProps = {
+  menuLinks: [
+    {
+      title: "Dossier 1234",
+      icon: "Folder2",
+      to: "/",
+      head: true,
+    },
+  ],
+  backLinks: [
+    {
+      title: "Dossiers de location",
+      to: "/folders",
+    },
+  ],
+};
+
+const withoutBackLinksProps: SideEntityMenuProps = {
+  menuLinks: mockMenuLinks,
+  backLinks: [],
+};
+
+const onlyBackLinksProps: SideEntityMenuProps = {
+  menuLinks: [],
+  backLinks: [
+    {
+      title: "Retour à la liste des lots",
+      to: "/real-estate/units",
+      borderBottom: true,
+    },
+    {
+      title: "Super Groupe",
+      icon: "BackArrow",
+      to: "/real-estate/units?list-options=group1",
+      borderBottom: true,
+    },
+    {
+      title: "Sous-groupe A",
+      icon: "BackArrow",
+      to: "/real-estate/units?list-options=subgroup-a",
+      borderBottom: true,
+    },
+  ],
+};
+
+const withErrorStateProps: SideEntityMenuProps = {
+  menuLinks: [
+    ...mockMenuLinks.slice(0, 4),
+    {
+      title: "Configuration Error",
+      icon: "ExclamationTriangle",
+      error: true,
+      to: "/configuration-error",
+    },
+    ...mockMenuLinks.slice(4, 6),
+  ],
+  backLinks: mockBackLinks,
+};
+
+const withNonClickableTitleProps: SideEntityMenuProps = {
+  menuLinks: mockMenuLinksWithNonClickableTitle,
+  title: "Organisation & collaborateurs",
+  titleIcon: "BusinessUnitFill2",
+  backLinks: mockBackLinks,
+};
+
+const withHiddenItemsProps: SideEntityMenuProps = {
+  backLinks: mockBackLinks,
+  menuLinks: mockMenuLinks.map((link, index) => ({
+    ...link,
+    hidden: index % 3 === 0,
+  })),
+};
+
+const withIndividualDisabledItemsProps: SideEntityMenuProps = {
+  menuLinks: [
+    {
+      title: "[Invoice template name]",
+      icon: "FileEarmarkRuled",
+      to: "/template",
+    },
+    {
+      title: "Réglages de la facture",
+      icon: "_1SquareFill",
+      to: "/settings",
+      disabled: true,
+    },
+    {
+      title: "Réglages du reçu",
+      icon: "_2SquareFill",
+      to: "/receipt-settings",
+      disabled: true,
+    },
+  ],
+  backLinks: [
+    {
+      title: "Liste des modèles",
+      to: "/templates",
+    },
+  ],
+};
+
+const meta = {
+  title: "Components/Navigation/SideEntityMenu/Stories",
+  component: SideEntityMenu,
+  parameters: {
+    docs: componentSource(),
+  },
+} satisfies Meta<typeof SideEntityMenu>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
+  args: defaultEntityMenuProps,
+  parameters: {
+    docs: componentSource([defaultEntityMenuProps]),
+  },
+};
+
+export const WithoutBackLinks: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
+  args: withoutBackLinksProps,
+  parameters: {
+    docs: componentSource([withoutBackLinksProps]),
+  },
+};
+
+export const OnlyBackLinks: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/folders");
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
+  args: onlyBackLinksProps,
+  parameters: {
+    docs: componentSource([onlyBackLinksProps]),
+  },
+};
+
+export const WithErrorState: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>(
+      "/configuration-error"
+    );
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
+  args: withErrorStateProps,
+  parameters: {
+    docs: componentSource([withErrorStateProps]),
+  },
+};
+
+export const WithNonClickableTitle: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/info");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
+  args: withNonClickableTitleProps,
+  parameters: {
+    docs: componentSource([withNonClickableTitleProps]),
+  },
+};
+
+export const WithHiddenItems: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/journal");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
+  args: withHiddenItemsProps,
+  parameters: {
+    docs: componentSource([withHiddenItemsProps]),
+  },
+};
+
+export const WithIndividualDisabledItems: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/template");
+
+    const menuLinksWithOnClick = args.menuLinks.map((link) => ({
+      ...link,
+      onClick: link.disabled ? undefined : () => setActiveItem(link.to),
+    }));
+
+    const backLinksWithOnClick = (args.backLinks || []).map((link) => ({
+      ...link,
+      onClick: () => setActiveItem(link.to),
+    }));
+
+    return (
+      <SideEntityMenu
+        {...args}
+        menuLinks={menuLinksWithOnClick}
+        backLinks={backLinksWithOnClick}
+        activeItem={activeItem}
+      />
+    );
+  },
+  args: withIndividualDisabledItemsProps,
+  parameters: {
+    docs: {
+      ...componentSource([withIndividualDisabledItemsProps]),
+      description: {
+        story:
+          "Shows individual menu items can be disabled while others remain active.",
+      },
+    },
+  },
+};
+
+export const WithReactRouterNavigation: Story = {
+  render: (args) => {
+    const [activeItem, setActiveItem] = useState<string>("/");
+
+    // Mock React Router navigate function
+    const mockNavigate = (url: string) => {
+      setActiveItem(url);
+    };
+
+    return (
+      <SideEntityMenu
+        {...args}
+        activeItem={activeItem}
+        navigate={mockNavigate}
+      />
+    );
+  },
+  args: defaultEntityMenuProps,
+  parameters: {
+    docs: {
+      ...componentSource([defaultEntityMenuProps]),
+      description: {
+        story:
+          "Demonstrates using the navigate prop for React Router integration. Click menu items to see programmatic navigation in action.",
+      },
+    },
+  },
+};
