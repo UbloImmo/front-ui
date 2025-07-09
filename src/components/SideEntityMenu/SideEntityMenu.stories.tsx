@@ -10,8 +10,14 @@ import type {
 } from "./SideEntityMenu.types";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const componentSource =
-  componentSourceFactory<SideEntityMenuProps>("SideEntityMenu");
+const componentSource = componentSourceFactory<SideEntityMenuProps>(
+  "SideEntityMenu",
+  {
+    menuLinks: SideEntityMenu.defaultProps.menuLinks,
+    backLinks: SideEntityMenu.defaultProps.backLinks,
+  },
+  SideEntityMenu.defaultProps
+);
 
 // Mock data for the menu links
 const mockMenuLinks: SideEntityMenuLink[] = [
@@ -119,6 +125,91 @@ const defaultEntityMenuProps: SideEntityMenuProps = {
   ],
 };
 
+const withoutBackLinksProps: SideEntityMenuProps = {
+  menuLinks: mockMenuLinks,
+  backLinks: [],
+};
+
+const onlyBackLinksProps: SideEntityMenuProps = {
+  menuLinks: [],
+  backLinks: [
+    {
+      title: "Retour à la liste des lots",
+      to: "/real-estate/units",
+      borderBottom: true,
+    },
+    {
+      title: "Super Groupe",
+      icon: "BackArrow",
+      to: "/real-estate/units?list-options=group1",
+      borderBottom: true,
+    },
+    {
+      title: "Sous-groupe A",
+      icon: "BackArrow",
+      to: "/real-estate/units?list-options=subgroup-a",
+      borderBottom: true,
+    },
+  ],
+};
+
+const withErrorStateProps: SideEntityMenuProps = {
+  menuLinks: [
+    ...mockMenuLinks.slice(0, 4),
+    {
+      title: "Configuration Error",
+      icon: "ExclamationTriangle",
+      error: true,
+      to: "/configuration-error",
+    },
+    ...mockMenuLinks.slice(4, 6),
+  ],
+  backLinks: mockBackLinks,
+};
+
+const withNonClickableTitleProps: SideEntityMenuProps = {
+  menuLinks: mockMenuLinksWithNonClickableTitle,
+  title: "Organisation & collaborateurs",
+  titleIcon: "BusinessUnitFill2",
+  backLinks: mockBackLinks,
+};
+
+const withHiddenItemsProps: SideEntityMenuProps = {
+  backLinks: mockBackLinks,
+  menuLinks: mockMenuLinks.map((link, index) => ({
+    ...link,
+    hidden: index % 3 === 0,
+  })),
+};
+
+const withIndividualDisabledItemsProps: SideEntityMenuProps = {
+  menuLinks: [
+    {
+      title: "[Invoice template name]",
+      icon: "FileEarmarkRuled",
+      to: "/template",
+    },
+    {
+      title: "Réglages de la facture",
+      icon: "_1SquareFill",
+      to: "/settings",
+      disabled: true,
+    },
+    {
+      title: "Réglages du reçu",
+      icon: "_2SquareFill",
+      to: "/receipt-settings",
+      disabled: true,
+    },
+  ],
+  backLinks: [
+    {
+      title: "Liste des modèles",
+      to: "/templates",
+    },
+  ],
+};
+
 const meta = {
   title: "Components/Navigation/SideEntityMenu/Stories",
   component: SideEntityMenu,
@@ -176,9 +267,9 @@ export const WithoutBackLinks: Story = {
       />
     );
   },
-  args: {
-    menuLinks: mockMenuLinks,
-    backLinks: [],
+  args: withoutBackLinksProps,
+  parameters: {
+    docs: componentSource([withoutBackLinksProps]),
   },
 };
 
@@ -199,27 +290,9 @@ export const OnlyBackLinks: Story = {
       />
     );
   },
-  args: {
-    menuLinks: [],
-    backLinks: [
-      {
-        title: "Retour à la liste des lots",
-        to: "/real-estate/units",
-        borderBottom: true,
-      },
-      {
-        title: "Super Groupe",
-        icon: "BackArrow",
-        to: "/real-estate/units?list-options=group1",
-        borderBottom: true,
-      },
-      {
-        title: "Sous-groupe A",
-        icon: "BackArrow",
-        to: "/real-estate/units?list-options=subgroup-a",
-        borderBottom: true,
-      },
-    ],
+  args: onlyBackLinksProps,
+  parameters: {
+    docs: componentSource([onlyBackLinksProps]),
   },
 };
 
@@ -248,18 +321,9 @@ export const WithErrorState: Story = {
       />
     );
   },
-  args: {
-    menuLinks: [
-      ...mockMenuLinks.slice(0, 4),
-      {
-        title: "Configuration Error",
-        icon: "ExclamationTriangle",
-        error: true,
-        to: "/configuration-error",
-      },
-      ...mockMenuLinks.slice(4, 6),
-    ],
-    backLinks: mockBackLinks,
+  args: withErrorStateProps,
+  parameters: {
+    docs: componentSource([withErrorStateProps]),
   },
 };
 
@@ -286,11 +350,9 @@ export const WithNonClickableTitle: Story = {
       />
     );
   },
-  args: {
-    menuLinks: mockMenuLinksWithNonClickableTitle,
-    title: "Organisation & collaborateurs",
-    titleIcon: "BusinessUnitFill2",
-    backLinks: mockBackLinks,
+  args: withNonClickableTitleProps,
+  parameters: {
+    docs: componentSource([withNonClickableTitleProps]),
   },
 };
 
@@ -317,12 +379,9 @@ export const WithHiddenItems: Story = {
       />
     );
   },
-  args: {
-    backLinks: mockBackLinks,
-    menuLinks: mockMenuLinks.map((link, index) => ({
-      ...link,
-      hidden: index % 3 === 0,
-    })),
+  args: withHiddenItemsProps,
+  parameters: {
+    docs: componentSource([withHiddenItemsProps]),
   },
 };
 
@@ -349,35 +408,10 @@ export const WithIndividualDisabledItems: Story = {
       />
     );
   },
-  args: {
-    menuLinks: [
-      {
-        title: "[Invoice template name]",
-        icon: "FileEarmarkRuled",
-        to: "/template",
-      },
-      {
-        title: "Réglages de la facture",
-        icon: "_1SquareFill",
-        to: "/settings",
-        disabled: true,
-      },
-      {
-        title: "Réglages du reçu",
-        icon: "_2SquareFill",
-        to: "/receipt-settings",
-        disabled: true,
-      },
-    ],
-    backLinks: [
-      {
-        title: "Liste des modèles",
-        to: "/templates",
-      },
-    ],
-  },
+  args: withIndividualDisabledItemsProps,
   parameters: {
     docs: {
+      ...componentSource([withIndividualDisabledItemsProps]),
       description: {
         story:
           "Shows individual menu items can be disabled while others remain active.",
@@ -406,6 +440,7 @@ export const WithReactRouterNavigation: Story = {
   args: defaultEntityMenuProps,
   parameters: {
     docs: {
+      ...componentSource([defaultEntityMenuProps]),
       description: {
         story:
           "Demonstrates using the navigate prop for React Router integration. Click menu items to see programmatic navigation in action.",
