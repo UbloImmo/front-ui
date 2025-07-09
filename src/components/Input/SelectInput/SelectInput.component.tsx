@@ -54,7 +54,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.0.19
+ * @version 0.0.20
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -210,6 +210,7 @@ const SelectInput = <
 
   return (
     <SelectInputWrapper
+      {...inputStyles}
       reverse
       ref={wrapperRef}
       testId={`${testId}-wrapper`}
@@ -282,14 +283,14 @@ const SelectInput = <
           >
             {activeOption ? (
               SelectedOptionComponent ? (
-                <CustomSelectedOptionContainer>
+                <CustomSelectedOptionContainer {...inputStyles}>
                   <SelectedOptionComponent
                     {...activeOption}
                     disabled={disabled}
                   />
                 </CustomSelectedOptionContainer>
               ) : (
-                <SelectedOptionContainer>
+                <SelectedOptionContainer {...inputStyles}>
                   {activeOption.icon && (
                     <Icon
                       name={activeOption.icon}
@@ -303,7 +304,7 @@ const SelectInput = <
                 </SelectedOptionContainer>
               )
             ) : (
-              <SelectedOptionContainer>
+              <SelectedOptionContainer {...inputStyles}>
                 <Text
                   weight="medium"
                   color="gray-400"
@@ -348,7 +349,7 @@ SelectInput.defaultProps = defaultSelectInputProps;
 
 export { SelectInput };
 
-const SelectInputWrapper = styled(FlexColumnLayout)`
+const SelectInputWrapper = styled(FlexColumnLayout)<CommonInputStyleProps>`
   ${selectInputWrapperStyles}
 `;
 
@@ -365,7 +366,7 @@ const StyledSelectInput = styled.button<CommonInputStyleProps>`
   ${selectInputStyles}
 `;
 
-const SelectedOptionContainer = styled.div`
+const SelectedOptionContainer = styled.div<CommonInputStyleProps>`
   ${selectInputStyles}
   padding: var(--s-2);
   padding-right: var(--s-8);
@@ -381,7 +382,7 @@ const ClearButton = styled(Button)`
   }
 `;
 
-const CustomSelectedOptionContainer = styled.div`
+const CustomSelectedOptionContainer = styled.div<CommonInputStyleProps>`
   ${selectInputStyles}
   padding-right: var(--s-6)
 `;

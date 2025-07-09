@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v0.0.3` DateInput, `v0.0.7` MultiSelectInput, `v0.0.20` SelectInput, `v0.0.8` Input components
+
 ## 1.9.0 - 2025-07-09
 ### Added
 - `v0.0.1` SideEntityMenu component
@@ -14,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - New side navigation menu component for entity-based navigation
 - `v0.0.1` Pane layout
   - Expandable & collapsible container
+  - Tweak styles to make most inputs take all available height in tables containing taller cells
 
 ## 1.8.32 - 2025-07-04
 ### Fixed

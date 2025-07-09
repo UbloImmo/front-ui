@@ -485,7 +485,7 @@ const getDefaultWrapperHeight = () => {
 };
 
 const INTERSECTION_PADDING = 12;
-const INTERSECTION_THRESHOLD_COUNT = 20;
+const INTERSECTION_THRESHOLD_COUNT = 10;
 const INTERSECTION_THRESHOLDS = arrayOf(INTERSECTION_THRESHOLD_COUNT, (index) =>
   toFixed(index / INTERSECTION_THRESHOLD_COUNT, 2)
 );
@@ -545,7 +545,7 @@ export const useSelectInputIntersection = (
         }
       },
       {
-        root: null,
+        root: window.document,
         threshold: INTERSECTION_THRESHOLDS,
       }
     );
