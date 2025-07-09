@@ -71,7 +71,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
       : typeof window !== "undefined" && window.location.pathname === link.to
     : false;
 
-  const commonProps = {
+  const linkProps = {
     onClick: handleClick,
     tabIndex: isDisabled ? -1 : 0,
     "aria-disabled": isDisabled,
@@ -81,7 +81,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
 
   if ("isTitle" in link && link.isTitle) {
     return (
-      <StyledMenuItemHeader {...commonProps} data-menu-header>
+      <StyledMenuItemHeader {...linkProps} data-menu-header>
         <StyledMenuItemIcon>
           <Icon name={link.icon} size="s-5" color="gray-700" />
         </StyledMenuItemIcon>
@@ -135,6 +135,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
             fill
             ellipsis
             lineClamp={2}
+            title={link.title}
           >
             {link.title}
           </Heading>
@@ -146,6 +147,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
             fill
             ellipsis
             noWrap
+            title={link.title}
           >
             {link.title}
           </Text>
@@ -159,7 +161,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   );
 
   return (
-    <StyledMenuItemLink href={link.to} {...commonProps}>
+    <StyledMenuItemLink href={link.to} {...linkProps}>
       {menuItemContent}
     </StyledMenuItemLink>
   );
