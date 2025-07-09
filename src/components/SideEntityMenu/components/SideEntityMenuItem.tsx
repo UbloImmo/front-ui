@@ -77,6 +77,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
     "aria-disabled": isDisabled,
     "aria-current": (isActive ? "page" : undefined) as "page" | undefined,
     "data-testid": testId,
+    "data-border-bottom": link.borderBottom,
   };
 
   if ("isTitle" in link && link.isTitle) {

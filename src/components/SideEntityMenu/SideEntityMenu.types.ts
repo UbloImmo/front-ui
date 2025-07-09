@@ -37,6 +37,10 @@ export type SideEntityMenuLink = {
    */
   disabled?: boolean;
   /**
+   * Whether this item should have a border bottom (typically used for backlinks)
+   */
+  borderBottom?: boolean;
+  /**
    * Click handler for the menu item
    */
   onClick?: VoidFn;

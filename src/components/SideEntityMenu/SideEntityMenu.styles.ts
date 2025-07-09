@@ -18,6 +18,11 @@ export const menuItemStyles = css`
 
   border-radius: var(--s-1);
 
+  &[data-border-bottom="true"] {
+    border-bottom: 1px solid var(--gray-200);
+    border-radius: var(--s-1) var(--s-1) 0 0;
+  }
+
   &:hover:not([aria-disabled="true"], :disabled, [data-menu-header]) {
     background: var(--primary-light);
     transition-duration: 150ms var(--bezier);
