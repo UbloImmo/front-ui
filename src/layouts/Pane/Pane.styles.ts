@@ -69,7 +69,8 @@ export const paneContentStyles = ({
   min-width: var(--pane-collapsed-width);
   transition:
     width 300ms var(--bezier),
-    box-shadow 150ms var(--bezier);
+    box-shadow 150ms var(--bezier),
+    padding 150ms var(--bezier);
   overflow: hidden;
 
   ${!$headLess &&

@@ -1,9 +1,26 @@
 import { css } from "styled-components";
 
-export const sideEntityMenuContainerStyles = css`
+import { breakpointsPx } from "@/sizes";
+
+import type { PaneProps } from "@layouts";
+import type { StyleProps } from "@types";
+
+export const sideEntityMenuContainerStyles = ({
+  $expandedBreakpoint,
+}: StyleProps<Pick<PaneProps, "expandedBreakpoint">>) => css`
   display: flex;
   flex-direction: column;
   gap: var(--s-1);
+
+  ${$expandedBreakpoint &&
+  $expandedBreakpoint in breakpointsPx &&
+  css`
+    @media only screen and (min-width: ${breakpointsPx[$expandedBreakpoint]}) {
+      background: var(--white-00);
+      box-shadow: none;
+      padding: var(--pane-content-padding) 0;
+    }
+  `}
 `;
 
 export const menuItemStyles = css`
