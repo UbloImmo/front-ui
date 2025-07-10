@@ -49,7 +49,7 @@ const defaultPaneProps: PaneDefaultProps = {
 /**
  * An expandable & collapsible pane wrapper layout with configurable styles & behavior
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {PaneProps & TestIdProps} props - Pane component props
  * @returns {JSX.Element}
