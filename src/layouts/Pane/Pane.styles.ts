@@ -11,11 +11,14 @@ export const paneContainerStyles = ({
   $expandedBreakpoint,
   $headLess,
   $forceExpanded,
+  $top,
+  $bottom,
 }: PaneStyleProps) => {
   const state = $forceExpanded ? "expanded" : "collapsed";
   return css`
     position: sticky;
-    top: 0;
+    top: ${cssLengthUsage($top)};
+    bottom: ${$bottom === "unset" ? "unset" : cssLengthUsage($bottom)};
     --pane-expanded-width: ${cssLengthUsage($expandedWidth)};
     --pane-collapsed-width: ${cssLengthUsage($collapsedWidth)};
     --pane-container-width: var(--pane-collapsed-width);

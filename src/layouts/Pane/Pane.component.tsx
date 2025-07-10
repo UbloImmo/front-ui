@@ -25,6 +25,7 @@ import {
   useHtmlAttribute,
   cssRemToCssPx,
   extractPx,
+  clamp,
 } from "@utils";
 
 import type { TestIdProps } from "@types";
@@ -41,14 +42,12 @@ const defaultPaneProps: PaneDefaultProps = {
   styleOverride: null,
   anchor: "left",
   top: 0,
-  bottom: 0,
+  bottom: "unset",
   expandedRatio: 0.5,
 };
 
 /**
- * Pane component
- *
- * TODO description
+ * An expandable & collapsible pane wrapper layout with configurable styles & behavior
  *
  * @version 0.0.1
  *
@@ -104,7 +103,10 @@ const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
       [expandedWidthPx, collapsedWidthPx]
     );
 
-    const margin = useMemo(() => diff * expandedRatio, [diff, expandedRatio]);
+    const margin = useMemo(
+      () => diff * clamp(expandedRatio, 0, 0.9999999999999999),
+      [diff, expandedRatio]
+    );
 
     const containerRef = useRef<Nullable<HTMLElement>>(null);
 
