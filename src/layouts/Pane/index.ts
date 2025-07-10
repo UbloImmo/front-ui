@@ -1,2 +1,2 @@
-export * from "./Pane.component";
+export * from "./Pane.layout";
 export type * from "./Pane.types";

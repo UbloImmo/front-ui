@@ -1,7 +1,7 @@
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
 import styled from "styled-components";
 
-import { Pane } from "./Pane.component";
+import { Pane } from "./Pane.layout";
 import { FlexLayout } from "../Flex";
 import { GridLayout } from "../Grid";
 import { GridItem } from "../GridItem";
