@@ -110,22 +110,6 @@ To avoid reporting itself to be expanded while it is still closed, the ratio is 
 
 <Canvas of={PaneStories.ExpandedRatio} /> 
 
-### Styling
-
-#### Headless mode
-
-Pane wraps its content in a white, rounded, padded card with a shadow by default. This can be disabled by setting the `headLess` property to `true`.
-
-A headless pane will render its content in a container with minimal styling, only just enought to ensure its positioning and dimensions.
-
-<Canvas of={PaneStories.Headless} />
-
-#### Custom styling
-
-By providing the `styleOverride` property with a CSS styles object, the pane content's wrapper may be styled with CSS.
-
-<Canvas of={PaneStories.Styling} />
-
 ### Expansion triggers
 
 To control whether to expand or collapse the pane, several triggers work hand in hand.
@@ -151,6 +135,24 @@ The `forceExpanded` property may be used to force the pane to be expanded, regar
 > This is useful when the pane is used in a context where its width is not controlled by the user, such as a sidebar.
 
 <Canvas of={PaneStories.ForceExpanded} />
+
+### Styling
+
+#### Headless mode
+
+Pane wraps its content in a white, rounded, padded card with a shadow by default. This can be disabled by setting the `headLess` property to `true`.
+
+A headless pane will render its content in a container with minimal styling, only just enought to ensure its positioning and dimensions.
+
+<Canvas of={PaneStories.Headless} />
+
+#### Custom styling
+
+By providing the `styleOverride` property with a CSS styles object, the pane content's wrapper may be styled with CSS.
+
+<Canvas of={PaneStories.Styling} />
+
+
 
 </Content>
 
