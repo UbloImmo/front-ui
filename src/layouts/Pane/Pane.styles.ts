@@ -32,6 +32,8 @@ export const paneContainerStyles = ({
 
     width: var(--pane-container-width);
     height: var(--pane-container-height);
+    min-height: var(--pane-container-height);
+    max-height: var(--pane-container-height);
     max-height: 100%;
     max-width: var(--pane-container-width);
     min-width: var(--pane-container-width);
@@ -66,7 +68,6 @@ export const paneContentStyles = ({
   top: 0;
   ${$anchor}: 0;
   min-height: fit-content;
-  max-height: 100%;
   width: var(--pane-content-width);
   max-width: var(--pane-expanded-width);
   min-width: var(--pane-collapsed-width);
