@@ -41,4 +41,5 @@ export * from "./StaticIcon";
 export * from "./SumLine";
 export * from "./Switch";
 export * from "./Text";
+export * from "./Toaster";
 export * from "./Tooltip";

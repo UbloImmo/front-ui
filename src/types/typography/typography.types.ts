@@ -39,10 +39,10 @@ export type TypographyProps = {
   /**
    * The color of the text contents
    *
-   * @type {PaletteColor}
+   * @type {PaletteColor | "inherit"}
    * @default "gray-900"
    */
-  color?: PaletteColor;
+  color?: PaletteColor | "inherit";
   /**
    * Whether or not the text contents should be *italic*
    *

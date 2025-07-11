@@ -229,7 +229,7 @@ export const buildTypographyStyle = (
       font-style: ${apply(fontStyle)};
       font-variation-settings: ${apply(fontItalic)};
       font-weight: ${apply(fontWeight)};
-      color: ${apply(cssVarUsage(color))};
+      color: ${apply(color === "inherit" ? "inherit" : cssVarUsage(color))};
       text-align: ${apply(align)};
       text-overflow: ${apply(textOverflow)};
       text-decoration: ${apply(textDecoration)};
