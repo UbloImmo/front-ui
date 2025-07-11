@@ -7,14 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.9.1 - 2025-07-11
 ### Changed
-
 - `v0.0.3` DateInput, `v0.0.7` MultiSelectInput, `v0.0.20` SelectInput, `v0.0.8` Input components
   - Tweak styles to make most inputs take all available height in tables containing taller cells
-
 - `v0.0.2` SideEntityMenu component
   - Update styles while expanded via breakpoint
-
 - `v0.0.2` Pane component
   - Update styles, write tests & documentation
 
