@@ -7,15 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Fixed
-
-- `v0.0.3` Pane component
-  - Fix bug where content would not appear in firefox due to max-height behavior in container
-
+## 1.9.2 - 2025-07-11
 ### Changed
-
 - `v0.0.3` SideEntityMenu component
   - Decrease menu item vertical padding from 12 to 8 pixels
+
+### Fixed
+- `v0.0.3` Pane component
+  - Fix bug where content would not appear in firefox due to max-height behavior in container
 
 ## 1.9.1 - 2025-07-11
 ### Changed
