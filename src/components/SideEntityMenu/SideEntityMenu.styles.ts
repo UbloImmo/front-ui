@@ -58,7 +58,7 @@ export const menuItemStyles = css`
 export const menuItemIconStyles = css`
   display: flex;
   justify-content: center;
-  padding: var(--s-2) var(--s-2);
+  padding: var(--s-2);
   width: calc(var(--pane-collapsed-width) - var(--pane-content-padding) * 2);
   min-width: calc(
     var(--pane-collapsed-width) - var(--pane-content-padding) * 2
