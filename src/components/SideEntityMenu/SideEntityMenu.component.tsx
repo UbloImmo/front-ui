@@ -37,7 +37,7 @@ const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
 /**
  * A side navigation menu component for entity-based navigation
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {SideEntityMenuProps & TestIdProps} props - SideEntityMenu component props
  * @returns {JSX.Element}

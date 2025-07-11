@@ -27,7 +27,7 @@ export const menuItemStyles = css`
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 2.5rem;
+  min-height: var(--s-9);
   cursor: pointer;
   text-decoration: none;
   background: var(--primary-light-00);
