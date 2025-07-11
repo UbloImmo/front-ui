@@ -102,6 +102,7 @@ type RerenderWithPropsFn<TProps extends Record<string, unknown>> = VoidFn<
 type RenderResultStatic = ReturnType<typeof render>;
 type RenderResult<TProps extends Record<string, unknown>> =
   RenderResultStatic & {
+    rerender: () => void;
     rerenderWithProps: RerenderWithPropsFn<TProps>;
   };
 
@@ -203,6 +204,18 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
               </InstanceWrapper>
             );
           const renderResult = renderFn();
+          const rerender = () =>
+            renderResult.rerender(
+              <InstanceWrapper>
+                {Wrapper ? (
+                  <Wrapper>
+                    <Component {...testProps} />
+                  </Wrapper>
+                ) : (
+                  <Component {...testProps} />
+                )}
+              </InstanceWrapper>
+            );
           const rerenderWithProps: RerenderWithPropsFn<TProps> = (
             rerenderProps: TProps
           ) => {
@@ -218,7 +231,11 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
               </InstanceWrapper>
             );
           };
-          await tests({ ...renderResult, rerenderWithProps }, user, testProps);
+          await tests(
+            { ...renderResult, rerenderWithProps, rerender },
+            user,
+            testProps
+          );
           cleanup();
         });
         cleanup();
