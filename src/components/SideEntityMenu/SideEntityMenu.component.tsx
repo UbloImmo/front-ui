@@ -5,7 +5,7 @@ import { SideEntityMenuItem } from "./components/SideEntityMenuItem";
 import { sideEntityMenuContainerStyles } from "./SideEntityMenu.styles";
 import { Divider } from "../Divider";
 
-import { Pane } from "@layouts";
+import { Pane, type PaneProps } from "@layouts";
 import {
   useTestId,
   useMergedProps,
@@ -17,7 +17,7 @@ import type {
   SideEntityMenuProps,
   SideEntityMenuDefaultProps,
 } from "./SideEntityMenu.types";
-import type { TestIdProps } from "@types";
+import type { StyleProps, TestIdProps } from "@types";
 
 const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
   menuLinks: [],
@@ -37,7 +37,7 @@ const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
 /**
  * A side navigation menu component for entity-based navigation
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {SideEntityMenuProps & TestIdProps} props - SideEntityMenu component props
  * @returns {JSX.Element}
@@ -91,6 +91,7 @@ const SideEntityMenu = (
       styleOverride={style}
       overrideTestId
       expandedBreakpoint={expandedBreakpoint}
+      $expandedBreakpoint={expandedBreakpoint}
     >
       {backLinksWithIcons.length > 0 && (
         <>
@@ -162,7 +163,9 @@ SideEntityMenu.defaultProps = defaultSideEntityMenuProps;
 
 export { SideEntityMenu };
 
-const StyledSideEntityPane = styled(Pane)`
+const StyledSideEntityPane = styled(Pane)<
+  StyleProps<Pick<PaneProps, "expandedBreakpoint">>
+>`
   ${sideEntityMenuContainerStyles}
 `;
 

@@ -27,7 +27,8 @@
     "allowJs": false,
     "strict": true,
     "types": [
-      "bun-types" // add Bun global
+      "bun-types", // add Bun global
+      "./matchers.d.ts"
     ]
   },
   "exclude": ["node_modules", "storybook-static", "dist", "src/components/Icon/__generated__/**/*"]

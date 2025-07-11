@@ -11,11 +11,14 @@ export const paneContainerStyles = ({
   $expandedBreakpoint,
   $headLess,
   $forceExpanded,
+  $top,
+  $bottom,
 }: PaneStyleProps) => {
   const state = $forceExpanded ? "expanded" : "collapsed";
   return css`
     position: sticky;
-    top: 0;
+    top: ${cssLengthUsage($top)};
+    bottom: ${$bottom === "unset" ? "unset" : cssLengthUsage($bottom)};
     --pane-expanded-width: ${cssLengthUsage($expandedWidth)};
     --pane-collapsed-width: ${cssLengthUsage($collapsedWidth)};
     --pane-container-width: var(--pane-collapsed-width);
@@ -69,7 +72,8 @@ export const paneContentStyles = ({
   min-width: var(--pane-collapsed-width);
   transition:
     width 300ms var(--bezier),
-    box-shadow 150ms var(--bezier);
+    box-shadow 150ms var(--bezier),
+    padding 150ms var(--bezier);
   overflow: hidden;
 
   ${!$headLess &&

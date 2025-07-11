@@ -94,10 +94,10 @@ export type PaneProps = {
   /**
    * The sticky bottom position of the pane
    *
-   * @type {CssLength}
-   * @default 0
+   * @type {CssLength | "unset"}
+   * @default "unset"
    */
-  bottom?: CssLength;
+  bottom?: CssLength | "unset";
 } & Omit<StyleOverrideProps, "as">;
 
 export type PaneDefaultProps = Required<PaneProps>;

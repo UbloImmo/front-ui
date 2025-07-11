@@ -12,7 +12,147 @@ import * as PaneStories from "../Pane.stories.tsx";
 
 ## Usage
 
-TODO
+`Pane` renders its content in a dynamic container, that can be expanded or collapsed in reaction to several triggers.
+By default, its contents will be drawn over other elements when expanded.
+
+> For convenience, examples in this page will show a colored background when the pane considers itself to be expanded.
+
+### Dimensions & Behavior
+
+A pane is governed by two seperate widths:
+
+- The `collapsedWidth` property defines the width of the pane when it is collapsed, and its overall minimum width.
+- The `expandedWidth` property defines the width of the pane when it is expanded.
+
+<br/>
+**Both take fixed CSS lengths as values.**
+
+<br/>
+The pane will report itself to be expanded when its current width is greater than its `collapsedWidth`. Exactly when can be adjusted with the `expandedRatio` property.
+
+A pane renders its content in an `aside` element, positioned to `sticky`. Its `top` and `bottom` properties may be used to adjust its position when overlowing a scroll container.
+
+#### Collapsed width
+
+The `collapsedWidth` property may be used to adjust the pane's minimum width, and its collapsed width.
+
+<Canvas of={PaneStories.CollapsedWidth} />
+
+#### Expanded width
+
+The `expandedWidth` property may be used to adjust the pane's expanded width.
+
+<Canvas of={PaneStories.ExpandedWidth} />
+
+#### Anchor
+
+The `anchor` property may be used to adjust where the pane's content is anchored to its container, and thus where it expands from.
+
+<Canvas of={PaneStories.Anchor} />
+
+
+### Pane content
+
+As any other layout, `Pane` may take `children` to render. These will be constrainted to the pane's current (expanded, collapsed or animating) width.
+
+> The Pane's height reacts to always match its content's height, meaning you only need to set a height on the content.
+
+<Canvas of={PaneStories.Default} />
+
+
+### Conditional rendering
+
+#### Using the `data-expanded` attribute
+
+Static children may make use of the layouts `data-expanded` attribute to influence styles. It will be set to `true` when the pane is expanded, and `false` when it is collapsed.
+
+> The [SideEntityMenu](?path=/docs/components-navigation-sideentitymenu-usage--docs) component makes use of this technique to hide some of its content until the pane is expanded.
+
+In the following example, the pane's content remains hidden until the pane is expanded.
+
+```css
+/* Hide the content by default */
+.pane-content {
+  opacity: 0;
+}
+/* Show the content when the pane is expanded */
+[data-expanded="true"] .pane-content {
+  opacity: 1;
+}
+```
+
+```tsx
+<Pane>
+  <div className="pane-content">
+    <Text>Pane content</Text>
+  </div>
+</Pane>
+```
+
+#### Using the `dynamicContent` property
+
+A pane's content may have to change entirely based on whether is is expanded or collapsed. In this case, only CSS might not be enough.
+By passing a dynamic content component to the `dynamicContent` prop, instead of `children`, the pane's content may be influenced by the pane's state on a JSX level.
+
+> The dynamic content will have access to a single `isCollasped` prop, that reflects the current state of the pane, regardless of the trigger that caused the expansion.
+
+<Canvas of={PaneStories.DynamicContent} />
+
+#### Adjusting the expansion ratio
+
+Whether the pane reports itself to be expanded or collapsed is entirely based on its current width, relative to its collapsed & expanded widths.
+
+The `expandedRatio` property may be used to adjust how soon the pane reports itself to be expanded. It takes in a number between `0` and `1`, and defaults to `0.5`
+
+> The closer to 0, the later the pane will report itself to be expanded. The closer to 1, the sooner it will report itself to be expanded.
+
+To avoid reporting itself to be expanded while it is still closed, the ratio is internally clamped between 0 and 0.9999999999999999.
+
+<Canvas of={PaneStories.ExpandedRatio} /> 
+
+### Expansion triggers
+
+To control whether to expand or collapse the pane, several triggers work hand in hand.
+
+#### Expanding on hover
+
+If currently collapsed, the pane will expand when hovered, and cover its neigbouring elements.
+
+<Canvas of={PaneStories.Default} />
+
+#### Expanding on breakpoint
+
+If the `expandedBreakpoint` property is set to a valid breakpoint, the pane and its container will expand when the viewport is at least as wide as the breakpoint.
+
+> When expanded via a breakpoint hit, the pane will not cover its neigbouring elements but push them aside.
+
+<Canvas of={PaneStories.Breakpoint} />
+
+#### Expanding via JS
+
+The `forceExpanded` property may be used to force the pane to be expanded, regardless of whether it is currently hovered or not.
+
+> This is useful when the pane is used in a context where its width is not controlled by the user, such as a sidebar.
+
+<Canvas of={PaneStories.ForceExpanded} />
+
+### Styling
+
+#### Headless mode
+
+Pane wraps its content in a white, rounded, padded card with a shadow by default. This can be disabled by setting the `headLess` property to `true`.
+
+A headless pane will render its content in a container with minimal styling, only just enought to ensure its positioning and dimensions.
+
+<Canvas of={PaneStories.Headless} />
+
+#### Custom styling
+
+By providing the `styleOverride` property with a CSS styles object, the pane content's wrapper may be styled with CSS.
+
+<Canvas of={PaneStories.Styling} />
+
+
 
 </Content>
 

@@ -6,5 +6,5 @@ jsxImportSource = "react"
 [test]
 # test coverage thresholds
 coverageThreshold = { lines = 0.97, functions = 1 }
-# load happydom package to ensure @testing-library/react compatibility
-preload = "./.happydom.ts"
+# load happydom package to ensure @testing-library/react compatibility & extend matchers with jest dom matchers
+preload = ["./.happydom.ts", "./.testing-library.ts"]
