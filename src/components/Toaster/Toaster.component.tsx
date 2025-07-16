@@ -17,7 +17,6 @@ import { useLogger, useMergedProps, useStatic } from "@utils";
 import type { TestIdProps } from "@types";
 
 const defaultToasterProps: ToasterDefaultProps = {
-  // TODO
   theme: "system",
   position: "bottom-center",
   visibleToasts: 3,
@@ -54,8 +53,6 @@ const Toaster = (props: ToasterProps & TestIdProps): JSX.Element => {
     expand,
     iconOverrides,
   } = useMergedProps(defaultToasterProps, props);
-  // const testId = useTestId("toaster", props);
-  // TODO
 
   const offsets = useMemo(
     () =>
@@ -88,8 +85,6 @@ const Toaster = (props: ToasterProps & TestIdProps): JSX.Element => {
       <ToasterStyles />
     </>
   );
-
-  // return <div data-testid={testId}>Toaster TODO</div>;
 };
 Toaster.defaultProps = defaultToasterProps;
 

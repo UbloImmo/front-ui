@@ -1,6 +1,6 @@
+import type { IconName } from "../Icon";
 import type { FixedCssLength } from "@types";
 import type { ToasterProps as SonnerToasterProps } from "sonner";
-import type { IconName } from "../Icon";
 
 type ToasterPosition = SonnerToasterProps["position"];
 
