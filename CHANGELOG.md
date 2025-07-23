@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `v0.0.6` InputAssistiveText component
-  - Set assistive text color to gray-600 when not in error state
+  - Replace assistive text color from gray-400 to gray-600 when not in error state
 
 ## 1.9.3 - 2025-07-11
 
