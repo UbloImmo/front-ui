@@ -24,7 +24,7 @@ const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
 /**
  * Renders an assistive text for the Input component based on the provided props.
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {InputAssistiveTextProps & TestIdProps} props - The properties for the assistive text.
  * @return {Nullable<JSX.Element>} The JSX element representing the assistive text.
@@ -42,7 +42,7 @@ const InputAssistiveText = (
   const testId = useTestId("assistive-text", props);
 
   const iconColor = useMemo<PaletteColor>(
-    () => (error ? "error-base" : "gray-400"),
+    () => (error ? "error-base" : "gray-600"),
     [error]
   );
 
@@ -75,7 +75,7 @@ const InputAssistiveText = (
           {errorText}
         </Text>
       ) : (
-        <Text size="xs" color="gray-400" testId="assistive-text" fill>
+        <Text size="xs" color="gray-600" testId="assistive-text" fill>
           {assistiveText}
         </Text>
       )}
