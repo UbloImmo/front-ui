@@ -73,6 +73,13 @@ export type ToasterProps = {
    */
   expand?: boolean;
   /**
+   * Whether to add a close button to all toasts.
+   *
+   * @default true
+   * @type {boolean}
+   */
+  closeButton?: boolean;
+  /**
    * A map of UI elements that should be rendered instead of the default icons.
    *
    * @type {ToasterIconOverrides}
