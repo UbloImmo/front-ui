@@ -26,6 +26,7 @@ import {
   cssRemToCssPx,
   extractPx,
   clamp,
+  cssPx,
 } from "@utils";
 
 import type { TestIdProps } from "@types";
@@ -49,7 +50,7 @@ const defaultPaneProps: PaneDefaultProps = {
 /**
  * An expandable & collapsible pane wrapper layout with configurable styles & behavior
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @param {PaneProps & TestIdProps} props - Pane component props
  * @returns {JSX.Element}
@@ -122,7 +123,7 @@ const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
           if (containerRef.current) {
             containerRef.current.style.setProperty(
               "--pane-container-height",
-              `${size.blockSize}px`
+              cssPx(size.blockSize)
             );
           }
         });

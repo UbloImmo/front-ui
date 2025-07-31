@@ -27,7 +27,7 @@ export const menuItemStyles = css`
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 2.5rem;
+  min-height: var(--s-9);
   cursor: pointer;
   text-decoration: none;
   background: var(--primary-light-00);
@@ -58,7 +58,7 @@ export const menuItemStyles = css`
 export const menuItemIconStyles = css`
   display: flex;
   justify-content: center;
-  padding: var(--s-3) var(--s-2);
+  padding: var(--s-2);
   width: calc(var(--pane-collapsed-width) - var(--pane-content-padding) * 2);
   min-width: calc(
     var(--pane-collapsed-width) - var(--pane-content-padding) * 2
@@ -108,6 +108,8 @@ export const menuItemTitleStyles = css`
   max-width: calc(var(--pane-expanded-width) - var(--pane-collapsed-width));
 
   padding-right: var(--s-2);
+  padding-top: var(--s-1);
+  padding-bottom: var(--s-1);
 
   [data-expanded="true"] & {
     opacity: 1;

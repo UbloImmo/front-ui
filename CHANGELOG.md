@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.9.4 - 2025-07-25
+### Changed
+- `v0.0.6` InputAssistiveText component
+  - Replace assistive text color from gray-400 to gray-600 when not in error state
+
+## 1.9.3 - 2025-07-11
+### Changed
+- `v0.0.4` SideEntityMenu component
+  - Decrease menu item min height from 40px (2.5rem) to s-9 (36px)
+
+## 1.9.2 - 2025-07-11
+### Changed
+- `v0.0.3` SideEntityMenu component
+  - Decrease menu item vertical padding from 12 to 8 pixels
+
+### Fixed
+- `v0.0.3` Pane component
+  - Fix bug where content would not appear in firefox due to max-height behavior in container
+
 ## 1.9.1 - 2025-07-11
 ### Changed
 - `v0.0.3` DateInput, `v0.0.7` MultiSelectInput, `v0.0.20` SelectInput, `v0.0.8` Input components
