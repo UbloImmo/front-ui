@@ -26,6 +26,7 @@ const defaultToasterProps: ToasterDefaultProps = {
   mobileOffset: "s-3",
   invert: false,
   expand: false,
+  closeButton: true,
   iconOverrides: {},
 };
 
@@ -51,6 +52,7 @@ const Toaster = (props: ToasterProps & TestIdProps): JSX.Element => {
     mobileOffset,
     invert,
     expand,
+    closeButton,
     iconOverrides,
   } = useMergedProps(defaultToasterProps, props);
 
@@ -80,6 +82,7 @@ const Toaster = (props: ToasterProps & TestIdProps): JSX.Element => {
         mobileOffset={offsets.mobileOffset}
         invert={invert}
         expand={expand}
+        closeButton={closeButton}
         icons={icons}
       />
       <ToasterStyles />
