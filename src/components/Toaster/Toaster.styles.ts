@@ -35,6 +35,17 @@ export const ToasterStyles = createGlobalStyle`
       ${buildTypographyStyle(toasterText)(toasterTextStyle)}
     }
   }
+
+  [data-sonner-toast] button {
+    position: absolute !important;
+    top: 50% !important;
+    right: 8px !important;
+    transform: translateY(-50%) !important;
+    left: auto !important;
+    margin: 0 !important;
+    background: transparent !important;
+  }
+
   [data-sonner-toaster][data-sonner-theme="light"] {
     --normal-bg: var(--white);
     --normal-border: var(--gray-100);
