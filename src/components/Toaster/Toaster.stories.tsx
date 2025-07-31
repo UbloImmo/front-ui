@@ -4,10 +4,10 @@ import { Toaster } from "./Toaster.component";
 import { Button } from "../Button";
 
 import { componentSourceFactory } from "@docs/docs.utils";
+import { delay } from "@utils";
 
 import type { ToasterProps } from "./Toaster.types";
 import type { Meta, StoryObj } from "@storybook/react";
-import { delay } from "@utils";
 
 const componentSource = componentSourceFactory<ToasterProps>(
   "Toaster",
