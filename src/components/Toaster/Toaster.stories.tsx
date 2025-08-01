@@ -1,10 +1,9 @@
-import { toast } from "sonner";
-
-import { Toaster } from "./Toaster.component";
 import { Button } from "../Button";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { delay } from "@utils";
+
+import { Toaster, toast } from "./";
 
 import type { ToasterProps } from "./Toaster.types";
 import type { Meta, StoryObj } from "@storybook/react";

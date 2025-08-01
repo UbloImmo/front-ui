@@ -1,10 +1,10 @@
 import { describe, expect, beforeEach, afterEach } from "bun:test";
-import { toast } from "sonner";
 
-import { Toaster } from "./Toaster.component";
 import { ToasterProps } from "./Toaster.types";
 
 import { testComponentFactory } from "@/tests";
+
+import { Toaster, toast } from "./";
 
 // Helper function for waiting
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
