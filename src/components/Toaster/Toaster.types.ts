@@ -89,6 +89,6 @@ export type ToasterProps = {
 
 export type ToasterDefaultProps = Required<ToasterProps>;
 
-export type ToastStatus = "success" | "info" | "warning" | "error" | "close";
+export type ToastStatus = "success" | "info" | "warning" | "error";
 
-export type ToasterIconMap = Record<ToastStatus, IconName>;
+export type ToasterIconMap = Record<ToastStatus | "closed", IconName>;
