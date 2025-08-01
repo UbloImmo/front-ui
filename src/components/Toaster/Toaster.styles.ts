@@ -39,7 +39,7 @@ export const ToasterStyles = createGlobalStyle`
   [data-sonner-toast] button[data-close-button] {
     position: absolute ;
     top: 50% !important;
-    right: 8px !important;
+    right: var(--s-2) !important;
     transform: translateY(-50%) !important;
     left: auto !important;
     margin: 0 !important;
