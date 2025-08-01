@@ -43,6 +43,8 @@ export const ToasterStyles = createGlobalStyle`
     transform: translateY(-50%) !important;
     left: auto !important;
     margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
     background: transparent !important;
   }
 
