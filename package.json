@@ -127,6 +127,7 @@
     "react-dom": "^18.3.1",
     "react-international-phone": "^4.2.9",
     "react-virtuoso": "^4.12.5",
+    "sonner": "^2.0.6",
     "styled-components": "^6.1.11",
     "typescript": "^5.5.4",
     "uuid": "^10.0.0",
@@ -191,6 +192,7 @@
     "react-day-picker": "^9.0.9",
     "react-international-phone": "^4.2.9",
     "react-virtuoso": "^4.12.5",
+    "sonner": "^2.0.6",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
   }

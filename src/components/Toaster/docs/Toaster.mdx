@@ -1,0 +1,176 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as ToasterStories from "../Toaster.stories.tsx";
+
+<Meta title="Components/Toaster/Usage" />
+
+<ComponentInfo of={ToasterStories} />
+
+<Content>
+
+## Usage
+
+The `Toaster` component displays toast notifications in your application. Built with [Sonner](https://sonner.emilkowal.ski/) toast library for React.
+
+### Setup
+
+1. **Add the Toaster component** at the root of your application:
+
+```tsx
+import { Toaster } from "@ubloimmo/uikit";
+
+function App() {
+  return (
+    <div>
+      {/* Your app content */}
+      <Toaster />
+    </div>
+  );
+}
+```
+
+2. **Use the toast function** anywhere in your application:
+
+```tsx
+import { toast } from "@ubloimmo/uikit";
+
+// Simple toast
+toast("Hello World!");
+
+// Typed toasts
+toast.success("Operation successful!");
+toast.error("Something went wrong!");
+toast.warning("Be careful!");
+toast.info("Information message");
+```
+
+### Toast Types
+
+#### Basic Toast
+
+```tsx
+toast("Simple message");
+```
+
+#### Typed Toasts
+
+```tsx
+toast.success("Success message");
+toast.error("Error message");
+toast.warning("Warning message");
+toast.info("Info message");
+```
+
+#### Toast with Description
+
+```tsx
+toast("Main message", {
+  description: "Additional details about the notification",
+});
+```
+
+#### Promise Toast
+
+Ideal for handling asynchronous operations:
+
+```tsx
+const saveData = async () => {
+  // Your async logic
+};
+
+toast.promise(saveData(), {
+  loading: "Saving...",
+  success: "Data saved successfully!",
+  error: "Failed to save data",
+});
+```
+
+### Test IDs & Identification
+
+You can assign identifiers and CSS classes for testing purposes:
+
+```tsx
+// With ID and className for tests
+toast("User created", {
+  id: "user-create-success",
+  className: "test-user-toast",
+});
+
+// For E2E tests
+toast.error("Validation failed", {
+  id: "validation-error",
+  className: "test-validation-error",
+});
+```
+
+> Use the `id` property to uniquely identify toasts and `className` to add custom CSS classes for styling or test selectors.
+
+### Advanced Options
+
+#### Custom Duration
+
+```tsx
+toast("Message", { duration: 10000 }); // 10 seconds
+toast("Permanent", { duration: Infinity }); // Until manually dismissed
+```
+
+#### Toast with Action
+
+```tsx
+toast("Download complete", {
+  action: {
+    label: "Open",
+    onClick: () => openFile(),
+  },
+});
+```
+
+#### Custom Toast
+
+```tsx
+toast.custom(
+  <div>
+    <h4>Custom Toast</h4>
+    <p>With custom content</p>
+  </div>
+);
+```
+
+### Programmatic Control
+
+#### Dismiss Specific Toast
+
+```tsx
+const toastId = toast("Message");
+toast.dismiss(toastId);
+```
+
+#### Dismiss All Toasts
+
+```tsx
+toast.dismiss();
+```
+
+#### Check if Toast is Active
+
+```tsx
+const toastId = toast("Message");
+const isActive = toast.isActive(toastId);
+```
+
+### Toaster Configuration
+
+The `Toaster` component can be configured with various properties:
+
+```tsx
+<Toaster
+  position="top-right"
+  richColors={true}
+  closeButton={true}
+  duration={5000}
+  theme="system"
+/>
+```
+
+</Content>
