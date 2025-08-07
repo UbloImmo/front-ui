@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Test ID support for testing
   - Promise-based toasts for async operations
 
+### Fixed
+
+- `v0.0.33` Form component
+  - Assign unique keys when mapping feature switches as part of content
+
 ## 1.9.4 - 2025-07-25
 
 ### Changed

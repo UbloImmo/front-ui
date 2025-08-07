@@ -36,7 +36,10 @@ export const FormFieldRenderer = <TData extends object>() => {
       }
       if (isBuiltFormFeatureSwitch(contentItem)) {
         return (
-          <FormFeatureSwitch {...contentItem} key={`form-feature-switch`} />
+          <FormFeatureSwitch
+            {...contentItem}
+            key={`form-feature-switch-${index}`}
+          />
         );
       }
       if (isBuiltCustomFormField(contentItem)) {
