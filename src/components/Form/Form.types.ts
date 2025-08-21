@@ -1747,7 +1747,9 @@ export type FormContainerStyleProps = StyleProps<
     }
 >;
 
-export type FormEditButtonStyleProps = StyleProps<{ hidden?: boolean }>;
+export type FormEditButtonStyleProps = Partial<
+  StyleProps<{ hidden?: boolean }>
+>;
 
 export type FormEditBannerStyleProps = StyleProps<
   Pick<UseFormEditStateReturn, "isEditing"> &
