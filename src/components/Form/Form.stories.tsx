@@ -500,8 +500,8 @@ export const AsModal = (props: FormStoryProps) => {
     <>
       <Form
         {...mergedProps}
-        title="Form in a modal"
-        asModal={{ reference: formModalRef }}
+        title="Form in a modal with a longer title"
+        asModal={{ reference: formModalRef, size: "s" }}
         defaultEditing="force"
         onSubmit={close}
       />
