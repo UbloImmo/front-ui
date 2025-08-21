@@ -8,7 +8,7 @@ import type { FontFaceDeclaration } from "@types";
 
 const fontData: FontFaceDeclaration = {
   fontFamily: "test",
-  src: "url",
+  src: "font-src-url.com",
   format: "opentype",
   weight: 500,
 };
