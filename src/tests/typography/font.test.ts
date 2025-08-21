@@ -2,7 +2,7 @@ import { objectValues } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
 
 import { fontFace, fontFamily } from "@/typography/font.utils";
-import { Gilroy } from "@/typography/fonts";
+import { DMMono, Gilroy } from "@/typography/fonts";
 
 import type { FontFaceDeclaration } from "@types";
 
@@ -60,6 +60,14 @@ describe("font", () => {
       expect(Gilroy).toBeFunction();
       expect(Gilroy).not.toThrow();
       expect(Gilroy()).toBeObject();
+    });
+  });
+
+  describe("DMMono", () => {
+    it("should be a valid font family", () => {
+      expect(DMMono).toBeFunction();
+      expect(DMMono).not.toThrow();
+      expect(DMMono()).toBeObject();
     });
   });
 });

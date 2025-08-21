@@ -28,7 +28,7 @@ export const fontFace = (declaration: FontFaceDeclaration): string => {
 };
 
 /**
- * Creates a function that generates multiple @font-face declarations for a font family
+ * Creates a function that generates multiple `@font-face` declarations for a font family
  * @param {FontFamilyDeclaration} familyDeclaration - The base font family configuration
  * @param {string} familyDeclaration.fontFamily - The name of the font family
  * @param {string} familyDeclaration.format - Format of the font files (e.g. "woff2")
