@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- `v0.0.34` Form component, `v0.0.5` FormEditButton component
+  - Tweak modal close button styles so as to not make the title overflow when expanding
+
 ## 1.9.5 - 2025-08-08
 ### Added
 - `v0.0.1` Toaster component
