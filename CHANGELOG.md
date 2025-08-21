@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.9.6 - 2025-08-21
 ### Fixed
-
 - `v0.0.34` Form component, `v0.0.5` FormEditButton component
   - Tweak modal close button styles so as to not make the title overflow when expanding
 
