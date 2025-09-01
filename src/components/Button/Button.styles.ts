@@ -193,6 +193,7 @@ const commonButtonStyles = ({
   iconPlacement,
   label,
   color,
+  loading,
 }: DefaultButtonProps): RuleSet => {
   return css`
     --button-size: var(--s-8);
@@ -246,12 +247,15 @@ const commonButtonStyles = ({
       }
     }
 
-    &:disabled,
-    &:disabled:hover {
-      cursor: not-allowed;
-      opacity: 0.33;
-      box-shadow: none;
-    }
+    ${!loading &&
+    css`
+      &:disabled,
+      &:disabled:hover {
+        cursor: not-allowed;
+        opacity: 0.33;
+        box-shadow: none;
+      }
+    `}
 
     // fix width if only icon
     &:has([data-testid="icon"]):not(:has(span[data-testid="text"])) {

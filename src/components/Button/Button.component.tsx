@@ -45,7 +45,7 @@ const defaultButtonProps: DefaultButtonProps = {
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.10
+ * @version 0.0.11
  *
  * @param {ButtonProps} props - the button's props
  * @returns {JSX.Element} the rendered button
@@ -80,6 +80,7 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
     expandOnHover,
     fullWidth,
     embedded,
+    loading,
   } = mergedProps;
   let { label } = mergedProps;
 
@@ -119,8 +120,9 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
       "data-testid": testId,
       "data-expandable": expandable,
       className,
-      disabled,
-      "aria-disabled": disabled,
+      disabled: disabled || loading,
+      "aria-disabled": disabled || loading,
+      "data-loading": loading,
       title: ariaTitle,
       "aria-label": ariaTitle,
       role: ariaRole,
@@ -132,6 +134,7 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
       className,
       disabled,
       expandable,
+      loading,
       style,
       styledProps,
       testId,
