@@ -1040,7 +1040,12 @@ const useFormSubmission = <TData extends object>(
     async (event?: FormEvent<HTMLFormElement>) => {
       event?.preventDefault();
       event?.stopPropagation();
-      if (modifiers.disabled || modifiers.readonly || !editState.isEditing)
+      if (
+        modifiers.disabled ||
+        modifiers.readonly ||
+        !editState.isEditing ||
+        isSubmitting
+      )
         return;
 
       if (!isFunction<FormOnSubmitFn<TData>>(onSubmit)) {
@@ -1108,6 +1113,7 @@ const useFormSubmission = <TData extends object>(
       modifiers.readonly,
       modifiers.validateOnSubmit,
       editState,
+      isSubmitting,
       onSubmit,
       validation,
       logger,
