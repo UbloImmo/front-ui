@@ -7,11 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.9.7 - 2025-09-01
 ### Fixed
-
 - `v0.0.35` Form component
   - Prevent rage-clicks by blocking onSubmit calls when isSubmitting is true
-
 - `v0.0.11` Button component
   - Make `loading` state disable the button via html property, so that usages in forms behave properly
   - Tweak styles so that loading + disabled buttons keep their opacity
