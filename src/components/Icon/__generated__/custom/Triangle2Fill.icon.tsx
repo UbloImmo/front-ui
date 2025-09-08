@@ -23,17 +23,22 @@ export const Triangle2Fill = (props: CommonIconProps): JSX.Element => {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 17 16"
+      viewBox="0 0 16 16"
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
       data-testid="icon"
     >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M9.00035 14.4363C8.55493 15.1879 7.46709 15.1879 7.02168 14.4363L0.162422 2.86127C-0.291856 2.09468 0.260673 1.125 1.15176 1.125L14.8703 1.125C15.7614 1.125 16.3139 2.09468 15.8596 2.86128L9.00035 14.4363Z"
-        fill={color}
-      />
+      <g clipPath="url(#clip0_1422_68)" >
+        <path
+          d="M6.83424 0H9.16112C9.3646 0 9.54777 0.123301 9.62436 0.311811L15.7181 15.3118C15.8517 15.6406 15.6098 16 15.2549 16H0.740493C0.385612 16 0.143691 15.6406 0.27726 15.3118L6.37101 0.311811C6.44759 0.123301 6.63077 0 6.83424 0Z"
+          fill={color}
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_1422_68" >
+          <rect width="16" height="16" fill={color} />
+        </clipPath>
+      </defs>
     </svg>
   );
 };
