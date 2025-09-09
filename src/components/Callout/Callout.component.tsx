@@ -12,7 +12,7 @@ import { Text } from "../Text";
 import { CalloutIcon } from "./components/CalloutIcon.component";
 
 import { FlexColumnLayout } from "@/layouts/Flex";
-import { PaletteColor, type TestIdProps } from "@types";
+import { PaletteColor, SpacingLabel, type TestIdProps } from "@types";
 import {
   useLogger,
   useTestId,
@@ -38,7 +38,7 @@ const defaultCalloutProps: CalloutDefaultProps = {
  * A card to display permanent feedback information.
  * Its color indicates the type of feedback.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {CalloutProps & TestIdProps} props - Callout component props
  * @returns {JSX.Element}
@@ -59,9 +59,15 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
     return isGrayColor(color)
       ? "gray-700"
       : size === "l"
-        ? `${color}-base`
+        ? color === "pending" || color === "warning"
+          ? `${color}-dark`
+          : `${color}-base`
         : `${color}-dark`;
   }, [color, size]);
+
+  const titleGap = useMemo<SpacingLabel | undefined>(() => {
+    return size === "l" ? "s-1" : undefined;
+  }, [size]);
 
   const styleProps = useStyleProps(mergedProps);
 
@@ -80,7 +86,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
     >
       {icon && <CalloutIcon {...mergedProps} />}
       <FlexColumnLayout fill gap="s-3">
-        <FlexColumnLayout fill>
+        <FlexColumnLayout fill gap={titleGap}>
           {title && (
             <Heading size="h4" color={titleColor} weight="bold" important>
               {title}
