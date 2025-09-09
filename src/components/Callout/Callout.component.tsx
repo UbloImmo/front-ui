@@ -12,7 +12,7 @@ import { Text } from "../Text";
 import { CalloutIcon } from "./components/CalloutIcon.component";
 
 import { FlexColumnLayout } from "@/layouts/Flex";
-import { PaletteColor, type TestIdProps } from "@types";
+import { PaletteColor, SpacingLabel, type TestIdProps } from "@types";
 import {
   useLogger,
   useTestId,
@@ -65,6 +65,10 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
         : `${color}-dark`;
   }, [color, size]);
 
+  const titleGap = useMemo<SpacingLabel | undefined>(() => {
+    return size === "l" ? "s-2" : undefined;
+  }, [size]);
+
   const styleProps = useStyleProps(mergedProps);
 
   if (!props.children) {
@@ -82,7 +86,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
     >
       {icon && <CalloutIcon {...mergedProps} />}
       <FlexColumnLayout fill gap="s-3">
-        <FlexColumnLayout fill gap={size === "l" ? "s-1" : undefined}>
+        <FlexColumnLayout fill gap={titleGap}>
           {title && (
             <Heading size="h4" color={titleColor} weight="bold" important>
               {title}
