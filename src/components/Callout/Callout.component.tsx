@@ -66,7 +66,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
   }, [color, size]);
 
   const titleGap = useMemo<SpacingLabel | undefined>(() => {
-    return size === "l" ? "s-2" : undefined;
+    return size === "l" ? "s-1" : undefined;
   }, [size]);
 
   const styleProps = useStyleProps(mergedProps);
