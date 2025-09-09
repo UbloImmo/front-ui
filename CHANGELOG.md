@@ -7,14 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.10.0 - 2025-09-09
+### Changed
+- Updated or added 34 new icon(s)
+- Updated `@ubloimmo/front-tokens` to `^0.1.46`
+
 ### Fixed
 - `v0.0.9` Callout component
   - Fix title color for `pending` and `warning` colors
   - Add gap between title and content for `l` size
-
-### Changed
-- Updated or added 34 new icon(s)
-- Updated `@ubloimmo/front-tokens` to `^0.1.46`
 
 ## 1.9.7 - 2025-09-01
 ### Fixed
