@@ -291,3 +291,21 @@ export const Fonts = (props: TextProps) => {
     />
   );
 };
+
+const children = ["Hello World", "Hello\nWorld", "Hello\n\n\nWorld"];
+export const LineBreaks = (props: TextProps) => {
+  return (
+    <ComponentVariants
+      defaults={props}
+      variants={children}
+      for="children"
+      columns={3}
+      of={Text}
+      propLabels
+    />
+  );
+};
+LineBreaks.args = {};
+LineBreaks.parameters = {
+  docs: componentSource(componentPropTemplate("children", children)),
+};
