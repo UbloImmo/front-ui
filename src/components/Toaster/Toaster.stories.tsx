@@ -15,7 +15,7 @@ const componentSource = componentSourceFactory<ToasterProps>(
 
 const meta = {
   component: Toaster,
-  title: "Components/Toaster/Stories",
+  title: "Components/Feedbacks/Toaster/Stories",
   decorators: [
     (Story) => (
       <>
