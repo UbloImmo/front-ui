@@ -7,11 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.10.1 - 2025-09-19
 ### Changed
-
 - `v0.0.11` Text component
   - Added support for multi-line string children. Strings get split on newline characters & rendered using break tags when applicable.
-
 - **DOCS**
   - Move Toaster stories & documentation to `Components/Feedbacks/` sub folder
 
