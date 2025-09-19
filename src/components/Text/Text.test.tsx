@@ -53,3 +53,13 @@ fonts.forEach((font) => {
     }
   );
 });
+
+testText({ children: "Hello\nWorld" })(
+  "should render a multi-line text with a single <br > tag",
+  ({ queryByTestId }) => {
+    const text = queryByTestId(testId);
+    expect(text).not.toBeNull();
+    const brs = text?.querySelectorAll("br");
+    expect(brs).toHaveLength(1);
+  }
+);

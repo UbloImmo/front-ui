@@ -14,6 +14,12 @@ import { cssRemToCssPx } from "@utils";
 
 ## Usage
 
+### Content
+
+Text accepts any valid React Node as its `children`. Strings that contain line breaks (`\n`) will automatically be split into multiple lines and rendered using `<br />` tags.
+
+<Canvas of={TextStories.LineBreaks} />
+
 ### Font size
 
 You can use one of the 3 preset sizes according to your needs.

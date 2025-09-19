@@ -1,3 +1,5 @@
+import { isString } from "@ubloimmo/front-util";
+import { Fragment, useMemo } from "react";
 import { styled } from "styled-components";
 
 import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
@@ -19,7 +21,7 @@ const defaultTextProps: Required<TextProps> = {
 /**
  * Customizable, accessible global text.
  *
- * @version 0.0.10
+ * @version 0.0.11
  *
  * @param {WithTestId<TextProps>} props - Text component props
  * @returns {JSX.Element}
@@ -31,6 +33,24 @@ const Text = (props: TextProps & TestIdProps): JSX.Element => {
   const id = useHtmlAttribute(props.id);
   const style = useHtmlAttribute(props.styleOverride);
   const title = useHtmlAttribute(props.title);
+
+  const content = useMemo<typeof props.children>(() => {
+    if (!isString(props.children)) return props.children;
+    if (!props.children.length) return props.children;
+
+    const newLine = "\n";
+    if (!props.children.includes(newLine)) return props.children;
+
+    const lines = props.children.split(newLine);
+    if (lines.length <= 1) return props.children;
+    return lines.map((line, index) => (
+      <Fragment key={`text-line-${index}`}>
+        {line}
+        {index < lines.length - 1 && <br />}
+      </Fragment>
+    ));
+  }, [props.children]);
+
   return (
     <TextInner
       data-testid={testId}
@@ -40,7 +60,7 @@ const Text = (props: TextProps & TestIdProps): JSX.Element => {
       {...innerProps}
       id={id}
     >
-      {props.children}
+      {content}
     </TextInner>
   );
 };
