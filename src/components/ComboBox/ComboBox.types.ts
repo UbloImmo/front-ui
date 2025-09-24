@@ -170,7 +170,14 @@ export type ComboBoxProps<TOptionValue extends NullishPrimitives> = {
    */
   optionDeleteLabel?: Nullable<string>;
 
-  // FIXME: add a required prop that prevents the user from clearing the selection
+  /**
+   * Whether at least one selected option is required.
+   * Enabling this property will prevent users from clearing the selection
+   *
+   * @type {boolean}
+   * @default false
+   */
+  required?: boolean;
 };
 
 export type ComboBoxDefaultProps<TOptionValue extends NullishPrimitives> =

@@ -44,12 +44,13 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
   onDelete: null,
   editLabel: null,
   deleteLabel: null,
+  required: false,
 };
 
 /**
  * A single clickable option in a ComboBox
  *
- * @version 0.0.10
+ * @version 0.0.11
  *
  * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
  * @returns {JSX.Element}
@@ -77,6 +78,7 @@ const ComboBoxButton = (
     onEdit,
     deleteLabel,
     editLabel,
+    required,
   } = mergedProps;
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -132,8 +134,9 @@ const ComboBoxButton = (
 
   const tl = useUikitTranslation();
   const ariaLabel = useMemo(() => {
+    if (active && required) return label;
     return tl.action[active ? "unselect" : "select"](label);
-  }, [active, label, tl.action]);
+  }, [active, label, tl.action, required]);
 
   const shouldDisplayContextMenu = useMemo(
     () => (editable || deletable) && !disabled,
@@ -169,12 +172,15 @@ const ComboBoxButton = (
     <ComboBoxButtonWrapper {...styleProps} role="listitem">
       <ComboBoxButtonContainer
         data-testid={testId}
+        data-active={active}
         onClick={onSelect}
         disabled={mergedProps.disabled}
         type="button"
         title={ariaLabel}
+        role="option"
         aria-label={ariaLabel}
         aria-disabled={mergedProps.disabled}
+        aria-selected={active}
       >
         {showIcon && (
           <ComboBoxIconContainer $active={active ?? false}>

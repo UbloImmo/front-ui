@@ -57,6 +57,9 @@ const meta = {
     disabled: {
       type: "boolean",
     },
+    readonly: {
+      type: "boolean",
+    },
   },
   parameters: {
     docs: componentSource(),
