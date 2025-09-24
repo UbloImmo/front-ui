@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- `v0.0.13` ComboBox component
+  - Rewritten selection logic
+    - Prevent infinite render loops
+    - Better handle object, class & array option values
+  - Added `required` property to disable un-selecting the last selected option manually. `value`-driven selection clears are still taken into account.
+
+- `v0.0.11` ComboBoxButton component
+  - Added `required` property to hide the "unselect" title & ARIA-label when active. Used to indicate that the parent ComboBox is required
+  - Improve ARIA accessibility
+
 ## 1.10.1 - 2025-09-19
 ### Changed
 - `v0.0.11` Text component
@@ -674,10 +685,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `v0.0.8` EntityInfoCard component
-  
+
   - Allow rendering AccountBalance
 - **BUILD**
-  
+
   - Run `docs:generate` script in the dockerfile before building the storybook
 - Rearrange components & layouts display in storybook by parent groups: `Actions`, `Feedbacks`, `Dialogs`, `Groups`, ...
 - `v0.0.10` SelectInput component
@@ -693,7 +704,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.0.1 - 2025-01-06
 ### Fixed
 - `v0.0.2` AccountBalance component
-  
+
   - Fixed responsive render
 
 ## 1.0.1 - 2025-01-06
@@ -765,10 +776,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New icons (`@ubloimmo/front-tokens@0.1.26`)
   - FolderSparkle
 - `v0.0.5` Action component
-  
+
   - Add `description` property to display a text underneath the action's label
 - `v0.0.2` Callout component
-  
+
   - Add `size` property (m, l), defaulting to `m`
 - `v0.0.3` Hypertext component
   - Add `color` property, defaulting to `primary`
@@ -805,7 +816,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.33.15 - 2024-11-12
 ### Added
 - `v0.0.1` FeatureSwitch component
-  
+
   - A component that allows the user to activate, deactivate or select an option from a list for a feature
 - `v0.0.5` StaticIcon component
   - `indicator` property to render an indicator on the top right corner of the container
@@ -1248,7 +1259,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.0.8` Button component
   - New `expandOnHover` property that requires both icon and label
 - `v0.0.4` SelectInput component
-  
+
   - add `Loading` component displaying when `isLoading` is true
   - add empty state text in `searchable` mode when there are no results
   - styles: fixed cursor `not-allowed` application on children elements when disabled
@@ -1527,14 +1538,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.11.0 - 2024-06-19
 ### Added
 - `v0.0.2` Loading component
-  
+
   - animation type `ProgressBar`
   - `className` & `TestId` props
 - `v0.0.1` SmallLoader component
 
 ### Fixed
 - `v0.0.4` NumberInput component
-  
+
   - prevent controls from changing value when input is `disabled`
 - `v0.0.4` StateIndicator component
   - styles: set overflow to hidden to disable scrollbar inside the component in Firefox
