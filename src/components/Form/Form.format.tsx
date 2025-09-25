@@ -1,6 +1,7 @@
 import {
   isArray,
   isNullish,
+  isNumber,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
 import { type FC, type ReactNode } from "react";
@@ -246,7 +247,7 @@ const DisplayMultiSelectValue = ({
 const formatNumberValue = (value: number, props: NumberInputProps) => {
   const safeScale = Math.max(props.scale ?? 0, 0);
   const inverseScaled = scaleNumber(value, -safeScale, props.precision);
-  if (!inverseScaled) return noValue;
+  if (!isNumber(inverseScaled)) return noValue;
   const finalNumber = safeScale
     ? inverseScaled.toFixed(safeScale)
     : inverseScaled;
