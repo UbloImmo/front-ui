@@ -76,6 +76,7 @@ The following enum values are valid:
 Additionally, `allowCreation` may receive a callback function that reacts to the input's current state and returns a boolean indicating whether to show the create button.
 Its single argument is an object containing the following properties:
 
+ - `query`: What the user has currently typed in the input's search box.
  - `isEmpty`: `true` if the options list shows no options (either because none were provided/loaded or none match the current user query).
  - `value`: The input's current value, or `null` if none is selected.
  - `activeOption`: The input's currently selected option, or `null` if no option matches the current value.
