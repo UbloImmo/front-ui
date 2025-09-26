@@ -1,4 +1,5 @@
 export * from "./color.utils";
+export * from "./comparison.utils.ts";
 export * from "./css.utils";
 export * from "./log.utils.ts";
 export * from "./number.utils";

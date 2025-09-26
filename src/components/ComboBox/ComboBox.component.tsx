@@ -16,10 +16,7 @@ import {
 } from "./ComboBox.types";
 import { ActionIcon, ActionIconProps } from "../ActionIcon";
 import { ComboBoxButton } from "../ComboBoxButton";
-import {
-  areComboBoxSelectionsDifferent,
-  compareComboBoxValues,
-} from "./Combobox.utils";
+import { areComboBoxSelectionsDifferent } from "./Combobox.utils";
 
 import { FlexLayout } from "@/layouts/Flex";
 import { GridLayout } from "@/layouts/Grid";
@@ -29,6 +26,7 @@ import {
   useMergedProps,
   useLogger,
   useUikitTranslation,
+  compare,
 } from "@utils";
 
 import type { TestIdProps } from "@types";
@@ -153,7 +151,7 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
       const newSelection = multi
         ? optionActive
           ? [...selection].filter((value) =>
-              compareComboBoxValues(value, option.value, (a, b) => a !== b)
+              compare(value, option.value, compare.neq)
             )
           : [...selection, option.value]
         : optionActive
