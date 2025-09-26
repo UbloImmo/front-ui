@@ -212,6 +212,10 @@ export type SelectInputAllowCreationFnArgs<
 > = [
   state: {
     /**
+     * What the user has currently typed in the input's search box
+     */
+    query: string;
+    /**
      * Whether the input shows no options
      */
     isEmpty: boolean;

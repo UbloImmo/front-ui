@@ -65,7 +65,7 @@ import type { TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -264,6 +264,7 @@ const SelectInput = <
       isFunction<SelectInputAllowCreationFn<TValue, TExtraData>>(allowCreation)
     ) {
       const result = allowCreation({
+        query: autoCompleteQuery,
         isEmpty: isEmptyResult,
         value: internalValue,
         activeOption,
