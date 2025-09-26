@@ -17,6 +17,7 @@ import {
   useSelectInputIntersection,
   useSelectInputKeyboardEvents,
   useSelectOptions,
+  useSelectUnknownValueIngestion,
   useSelectValue,
 } from "./SelectInput.utils";
 import { StyledInput, StyledInputControl } from "../Input.common";
@@ -37,6 +38,7 @@ import { Text } from "@/components/Text";
 import { FlexColumnLayout } from "@/layouts/Flex";
 import { cssDimensions } from "@/utils/styles.utils";
 import {
+  isNonEmptyString,
   useHtmlAttribute,
   useStatic,
   useTestId,
@@ -68,22 +70,39 @@ const SelectInput = <
   const [isOpen, setIsOpen] = useState(false);
   const { autoCompleteQuery, setAutoCompleteQuery } =
     useSelectAutoCompleteQuery(props?.searchable);
-  const { options, flattenedOptions, mergedProps, refetchOptions, isLoading } =
-    useSelectOptions<TValue, TExtraData>(props, autoCompleteQuery);
+  const {
+    options,
+    flattenedOptions,
+    mergedProps,
+    refetchOptions,
+    isLoading,
+    getCreateButtonProps,
+    createOption,
+    ingestValue,
+  } = useSelectOptions<TValue, TExtraData>(props, autoCompleteQuery);
 
-  const { displayOptions, setInternalValue, clearInternalValue, activeOption } =
-    useSelectValue(
-      mergedProps,
-      options,
-      flattenedOptions,
-      refetchOptions,
-      isOpen,
-      autoCompleteQuery,
-      setAutoCompleteQuery
-    );
+  const {
+    displayOptions,
+    setInternalValue,
+    internalValue,
+    clearInternalValue,
+    activeOption,
+  } = useSelectValue(
+    mergedProps,
+    options,
+    flattenedOptions,
+    refetchOptions,
+    isOpen,
+    autoCompleteQuery,
+    setAutoCompleteQuery
+  );
+
+  useSelectUnknownValueIngestion(ingestValue, isLoading, internalValue);
+
   const inputStyles = useInputStyles(mergedProps);
 
-  const { placeholder, disabled, searchable } = mergedProps;
+  const { placeholder, disabled, searchable, creatable, clearable } =
+    mergedProps;
 
   const inputId = useInputId(mergedProps);
 
@@ -193,20 +212,56 @@ const SelectInput = <
   const clearLabel = useStatic(tl.action.unselect);
 
   const clearSelectedOption = useCallback(() => {
-    if (disabled || !activeOption || !mergedProps.clearable || isOpen) return;
+    if (disabled || !activeOption || !clearable || isOpen) return;
     clearInternalValue();
-  }, [
-    activeOption,
-    disabled,
-    isOpen,
-    mergedProps.clearable,
-    clearInternalValue,
-  ]);
+  }, [activeOption, disabled, isOpen, clearable, clearInternalValue]);
 
   const { isShifted, optionsContainerRef } = useSelectInputIntersection(
     isOpen,
     wrapperRef
   );
+
+  const createOptionAndClose = useCallback(
+    async (query: string) => {
+      if (disabled || !creatable) return;
+      const option = await createOption(query);
+      if (option) {
+        setInternalValue(option.value);
+      }
+      closeOptions();
+    },
+    [closeOptions, creatable, createOption, disabled, setInternalValue]
+  );
+
+  const createOptionProps = useMemo(() => {
+    if (
+      !creatable ||
+      disabled ||
+      isLoading ||
+      !isNonEmptyString(autoCompleteQuery)
+    )
+      return null;
+    const optionProps = getCreateButtonProps(
+      autoCompleteQuery,
+      createOptionAndClose
+    );
+    switch (creatable.allowCreation) {
+      case "never":
+        return null;
+      case "always":
+        return optionProps;
+      default:
+        return isEmptyResult ? optionProps : null;
+    }
+  }, [
+    autoCompleteQuery,
+    creatable,
+    createOptionAndClose,
+    disabled,
+    getCreateButtonProps,
+    isEmptyResult,
+    isLoading,
+  ]);
 
   return (
     <SelectInputWrapper
@@ -241,6 +296,13 @@ const SelectInput = <
                 {...optionOrGroup}
               />
             )
+          )}
+          {createOptionProps && (
+            <SelectInputOption
+              {...createOptionProps}
+              testId={`${testId}-create-button`}
+              overrideTestId
+            />
           )}
           {isEmptyResult && (
             <AssistiveTextWrapper>
@@ -326,7 +388,7 @@ const SelectInput = <
         >
           {isOpen && isLoading ? (
             <Loading animation="BouncingBalls" size="s-4" />
-          ) : !isOpen && mergedProps.clearable && activeOption && !disabled ? (
+          ) : !isOpen && clearable && activeOption && !disabled ? (
             <ClearButton
               color="clear"
               secondary

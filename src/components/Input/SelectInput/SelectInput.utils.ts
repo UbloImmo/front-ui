@@ -1,5 +1,5 @@
 import {
-  Nullable,
+  type Nullable,
   isArray,
   isFunction,
   isNull,
@@ -9,6 +9,8 @@ import {
   type Nullish,
   type NullishPrimitives,
   type VoidFn,
+  AsyncFn,
+  isNullish,
 } from "@ubloimmo/front-util";
 import {
   useState,
@@ -19,6 +21,7 @@ import {
   useLayoutEffect,
   useRef,
   useTransition,
+  useReducer,
 } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
@@ -27,14 +30,19 @@ import { breakpoints } from "@/sizes";
 import { UNIT_PX } from "@types";
 import {
   arrayOf,
+  type ComparisonValue,
+  compare,
   isEmptyString,
   isNonEmptyString,
   toFixed,
   useLogger,
   useMergedProps,
+  useUikitTranslation,
 } from "@utils";
 
 import type {
+  SelectInputCreateOptionFn,
+  SelectInputIngestUnknowValueFn,
   DefaultSelectInputProps,
   RefetchSelectOptionsFn,
   SelectInputProps,
@@ -42,6 +50,8 @@ import type {
   SelectOptionGroup,
   SelectOptionOrGroup,
   SelectOptionsQueryFn,
+  SelectInputOptionProps,
+  SelectInputCreateButtonTemplateFn,
 } from "./SelectInput.types";
 
 export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives> =
@@ -60,8 +70,12 @@ export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives>
     clearable: false,
     onOptionChange: null,
     alwaysDisplayActiveOption: false,
+    creatable: false,
   };
 
+/**
+ * Manages the autoComplete query of a select input
+ */
 export const useSelectAutoCompleteQuery = (
   searchable?: Nullish<boolean | "manual">
 ) => {
@@ -75,11 +89,192 @@ export const useSelectAutoCompleteQuery = (
   };
 };
 
+const useSelectOptionCreation = <
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+>(
+  {
+    creatable: creatableBase,
+  }: Pick<SelectInputProps<TValue, TExtraData>, "creatable">,
+  internalOptions: SelectOptionOrGroup<TValue, TExtraData>[],
+  flattenedOptions: SelectOption<TValue, TExtraData>[],
+  isLoading: boolean
+) => {
+  const logger = useLogger("SelectInput::creation");
+  const creatable = useMemo(() => creatableBase || null, [creatableBase]);
+
+  /**
+   * Set of loaded option values for fast(ish) existence check
+   */
+  const loadedOptionValues = useMemo(
+    () =>
+      new Set<ComparisonValue<Nullable<TValue>>>(
+        flattenedOptions.map(({ value }) => compare.normalize(value))
+      ),
+    [flattenedOptions]
+  );
+
+  /**
+   * Checks whether a candidate value needs to be registered
+   */
+  const hasAlreadyBeenLoadedOrCreated = useCallback(
+    (
+      created: SelectOption<TValue, TExtraData>[],
+      valueToCheck: Nullable<TValue>
+    ) => {
+      const createdValues = new Set(
+        created.map(({ value }) => compare.normalize(value))
+      );
+      return createdValues
+        .union(loadedOptionValues)
+        .has(compare.normalize(valueToCheck));
+    },
+    [loadedOptionValues]
+  );
+
+  /**
+   * Reducer that handles created options and their registration
+   */
+  const [createdOptions, registerCreatedOption] = useReducer(
+    (
+      options: SelectOption<TValue, TExtraData>[],
+      optionToRegister: SelectOption<TValue, TExtraData>
+    ) => {
+      // abort if creatable is not enabled -> options is always []
+      if (!creatable) return options;
+      // ensure we don't already have this option, either created or internally loaded
+      if (hasAlreadyBeenLoadedOrCreated(options, optionToRegister.value))
+        return options;
+      // if all checks are successful, add the created option
+      return [...options, optionToRegister];
+    },
+    []
+  );
+
+  /**
+   * Creates a new option from a string label using `creatable.createOption`
+   */
+  const createOption = useCallback(
+    async (
+      label: string
+    ): Promise<Nullable<SelectOption<TValue, TExtraData>>> => {
+      try {
+        // abort if needed props are missing
+        if (!creatable) return null;
+        if (
+          !isFunction<SelectInputCreateOptionFn<TValue, TExtraData>>(
+            creatable.createOption
+          )
+        )
+          return null;
+        // create option using props callback
+        const createdOption = await creatable.createOption(label);
+        if (!createdOption) return null;
+        registerCreatedOption(createdOption);
+        // await delay(0);
+        return createdOption;
+      } catch (error) {
+        logger.error(error);
+        if (creatable?.onCreationError)
+          creatable.onCreationError(error as Error, label);
+        return null;
+      }
+    },
+    [creatable, logger]
+  );
+
+  /**
+   * Creates a new option from an ingested value using `creatable.ingestUnknownValue`
+   */
+  const ingestValue = useCallback(
+    async (unknownValue: TValue) => {
+      if (
+        !creatable ||
+        isLoading ||
+        !isFunction<SelectInputIngestUnknowValueFn<TValue, TExtraData>>(
+          creatable.ingestUnknownValue
+        ) ||
+        hasAlreadyBeenLoadedOrCreated(createdOptions, unknownValue)
+      )
+        return;
+      const ingestedOption = await creatable.ingestUnknownValue(unknownValue);
+      if (!ingestedOption) return;
+      registerCreatedOption(ingestedOption);
+    },
+    [creatable, createdOptions, hasAlreadyBeenLoadedOrCreated, isLoading]
+  );
+
+  /**
+   * Superset of internal options with created options appended
+   */
+  const mergedOptions = useMemo<
+    SelectOptionOrGroup<TValue, TExtraData>[]
+  >(() => {
+    if (!creatable || !createdOptions.length) return internalOptions;
+    if (isNonEmptyString(creatable.createdOptionsGroupLabel))
+      return internalOptions.concat([
+        {
+          label: creatable.createdOptionsGroupLabel,
+          options: createdOptions,
+        },
+      ]);
+    return internalOptions.concat(createdOptions);
+  }, [internalOptions, createdOptions, creatable]);
+
+  /**
+   * Superset of internal flattened options with created options appended
+   */
+  const mergedFlattenedOptions = useMemo(() => {
+    if (!creatable || !createdOptions.length) return flattenedOptions;
+    return flattenedOptions.concat(createdOptions);
+  }, [createdOptions, flattenedOptions, creatable]);
+
+  const tl = useUikitTranslation();
+
+  const getCreateButtonProps = useCallback(
+    (
+      autoCompleteQuery: string,
+      onSelectCallback: AsyncFn<[string], void>
+    ): SelectInputOptionProps<TValue, TExtraData> => {
+      const value = null;
+      const label = isFunction<SelectInputCreateButtonTemplateFn>(
+        creatable?.createButtonLabelTemplate
+      )
+        ? creatable.createButtonLabelTemplate(autoCompleteQuery)
+        : tl.action.create(`"${autoCompleteQuery}"`);
+      const style = creatable?.createButtonStyle ?? {};
+      const Option = creatable?.CustomCreateButton;
+      const onSelect = () => onSelectCallback(autoCompleteQuery);
+      return {
+        icon: "PlusCircle",
+        ...style,
+        value,
+        label,
+        Option,
+        onSelect,
+      };
+    },
+    [creatable, tl.action]
+  );
+
+  return {
+    createdOptions,
+    createOption,
+    ingestValue,
+    mergedOptions,
+    mergedFlattenedOptions,
+    getCreateButtonProps,
+  };
+};
+
 export const useSelectOptions = <
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 >(
-  props: Pick<SelectInputProps<TValue, TExtraData>, "options" | "filterOption">,
+  props: Pick<
+    SelectInputProps<TValue, TExtraData>,
+    "options" | "filterOption" | "creatable"
+  >,
   autoCompleteQuery: Nullable<string>
 ) => {
   const logger = useLogger("SelectInput");
@@ -91,6 +286,7 @@ export const useSelectOptions = <
     defaultSelectInputProps as DefaultSelectInputProps<TValue, TExtraData>,
     props
   );
+
   /**
    * Initial select options from props
    */
@@ -149,6 +345,14 @@ export const useSelectOptions = <
     return allOptions.filter(mergedProps.filterOption);
   }, [mergedProps.filterOption, options]);
 
+  const {
+    mergedOptions,
+    mergedFlattenedOptions,
+    createOption,
+    ingestValue,
+    getCreateButtonProps,
+  } = useSelectOptionCreation(props, options, flattenedOptions, isLoading);
+
   /**
    * Effect used for loading initial select options if it is a function and / or it changes
    * Passes the current autoComplete query on reload
@@ -163,12 +367,15 @@ export const useSelectOptions = <
   }, [loadOptions, mergedProps.options]);
 
   return {
-    options,
+    options: mergedOptions,
     initialOptions,
     isLoading,
     refetchOptions: loadOptions,
     mergedProps,
-    flattenedOptions,
+    flattenedOptions: mergedFlattenedOptions,
+    createOption,
+    ingestValue,
+    getCreateButtonProps,
   };
 };
 
@@ -240,6 +447,33 @@ export const flattenSelectOptions = <
   });
 };
 
+const getOptionByValue = <
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+>(
+  flatOptions: SelectOption<TValue, TExtraData>[],
+  targetValue: Nullable<TValue>
+) => {
+  const opt = flatOptions.find(({ value }) =>
+    compare(value, targetValue, compare.eq, "both")
+  );
+  return opt ?? null;
+};
+
+export const useSelectUnknownValueIngestion = <
+  TValue extends NullishPrimitives,
+>(
+  tryIngestingUnknownValue: AsyncFn<[unknownValue: TValue]>,
+  isLoading: boolean,
+  currentValue: Nullable<TValue>
+) => {
+  useEffect(() => {
+    if (isLoading || isNullish(currentValue)) return;
+    tryIngestingUnknownValue(currentValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, currentValue]);
+};
+
 export const useSelectValue = <
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
@@ -252,78 +486,52 @@ export const useSelectValue = <
   autoCompleteQuery: Nullable<string>,
   setAutoCompleteQuery: VoidFn<[query: Nullable<string>]>
 ) => {
-  const [activeOption, setActiveOption] = useState<
-    Nullable<SelectOption<TValue, TExtraData>>
-  >(
-    flattenedOptions.find(
-      ({ value }) => value === (mergedProps.value ?? null)
-    ) ?? null
-  );
   const [internalValue, _setInternalValue] = useState<Nullable<TValue>>(
     mergedProps.value ?? null
   );
 
-  const [_, startTransition] = useTransition();
+  const activeOption = useMemo<
+    Nullable<SelectOption<TValue, TExtraData>>
+  >(() => {
+    return getOptionByValue(flattenedOptions, internalValue);
+  }, [flattenedOptions, internalValue]);
 
-  const findActiveOption = useCallback(
-    (optionValue: Nullable<TValue>) => {
-      const baseOption = flattenedOptions.find(
-        ({ value }) => value === optionValue
-      );
-      return (
-        baseOption ??
-        (!!activeOption && optionValue === activeOption?.value
-          ? activeOption
-          : null)
-      );
-    },
-    [activeOption, flattenedOptions]
-  );
+  const [_, startTransition] = useTransition();
 
   const setInternalValue = useCallback(
     (setValue: Nullable<TValue>) => {
-      const option = findActiveOption(setValue);
       startTransition(() => {
         _setInternalValue(setValue);
-        setActiveOption(option);
+        const option = getOptionByValue(flattenedOptions, setValue);
         setAutoCompleteQuery(option?.label ?? null);
       });
     },
-    [findActiveOption, setAutoCompleteQuery]
+    [flattenedOptions, setAutoCompleteQuery]
   );
 
   const clearInternalValue = useCallback(() => {
     startTransition(() => {
       _setInternalValue(null);
-      setActiveOption(null);
       setAutoCompleteQuery(null);
     });
   }, [setAutoCompleteQuery]);
 
-  // ensure active option tracks internal value when the options are updated
-  useEffect(() => {
-    if (!isNull(internalValue) && !activeOption) {
-      const option = findActiveOption(internalValue);
-      if (option) {
-        setActiveOption(option);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [flattenedOptions]);
-
+  // track external value with internal state
   useEffect(() => {
     if (mergedProps.uncontrolled) return;
+
     if (mergedProps.value !== internalValue) {
       setInternalValue(mergedProps.value);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mergedProps.value, mergedProps.uncontrolled]);
+  }, [mergedProps.value]);
 
   const isQuerying = useMemo(
     () => isString(autoCompleteQuery) && isNonEmptyString(autoCompleteQuery),
     [autoCompleteQuery]
   );
 
+  // trigger options reload when query changes or select opens to an empty value when searchable
   useEffect(() => {
     if (
       isOpen &&
@@ -444,6 +652,7 @@ export const useSelectValue = <
     setAutoCompleteQuery,
     internalValue,
     setInternalValue,
+    // setInternalValueFromCreation,
     clearInternalValue,
     isQuerying,
     activeOption,
