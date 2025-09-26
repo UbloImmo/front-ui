@@ -1,4 +1,9 @@
-import { NullishPrimitives, isString } from "@ubloimmo/front-util";
+import {
+  NullishPrimitives,
+  isBoolean,
+  isFunction,
+  isString,
+} from "@ubloimmo/front-util";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
@@ -40,12 +45,14 @@ import { cssDimensions } from "@/utils/styles.utils";
 import {
   isNonEmptyString,
   useHtmlAttribute,
+  useLogger,
   useStatic,
   useTestId,
   useUikitTranslation,
 } from "@utils";
 
 import type {
+  SelectInputAllowCreationFn,
   SelectInputOptionsContainerStyleProps,
   SelectInputProps,
   SelectOption,
@@ -67,6 +74,7 @@ const SelectInput = <
 >(
   props: SelectInputProps<TValue, TExtraData> & TestIdProps
 ): JSX.Element => {
+  const logger = useLogger("SelectInput");
   const [isOpen, setIsOpen] = useState(false);
   const { autoCompleteQuery, setAutoCompleteQuery } =
     useSelectAutoCompleteQuery(props?.searchable);
@@ -233,6 +241,9 @@ const SelectInput = <
     [closeOptions, creatable, createOption, disabled, setInternalValue]
   );
 
+  /**
+   * Determines whether to display the create button & what its appearance should be
+   */
   const createOptionProps = useMemo(() => {
     if (
       !creatable ||
@@ -241,26 +252,41 @@ const SelectInput = <
       !isNonEmptyString(autoCompleteQuery)
     )
       return null;
+    let { allowCreation = "empty" } = creatable;
+    if (
+      isFunction<SelectInputAllowCreationFn<TValue, TExtraData>>(allowCreation)
+    ) {
+      const result = allowCreation({
+        isEmpty: isEmptyResult,
+        value: internalValue,
+        activeOption,
+      });
+      allowCreation = isBoolean(result) && result ? "always" : "never";
+    }
+    if (allowCreation === "never") return null;
     const optionProps = getCreateButtonProps(
       autoCompleteQuery,
       createOptionAndClose
     );
-    switch (creatable.allowCreation) {
-      case "never":
-        return null;
-      case "always":
-        return optionProps;
-      default:
-        return isEmptyResult ? optionProps : null;
-    }
+    if (allowCreation === "empty" && isEmptyResult)
+      return isEmptyResult ? optionProps : null;
+    if (allowCreation === "always") return optionProps;
+    logger.warn(
+      `Invalid value provided to creatable.allowCreation: ${allowCreation}`,
+      "allowCreation"
+    );
+    return null;
   }, [
+    activeOption,
     autoCompleteQuery,
     creatable,
     createOptionAndClose,
     disabled,
     getCreateButtonProps,
+    internalValue,
     isEmptyResult,
     isLoading,
+    logger,
   ]);
 
   return (

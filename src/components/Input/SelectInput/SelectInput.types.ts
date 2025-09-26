@@ -199,6 +199,34 @@ export type SelectInputOnOptionChangeFn<
 export type SelectInputAllowCreation = "always" | "never" | "empty";
 
 /**
+ * Arguments passed to {@link SelectInputAllowCreationFn}
+ */
+export type SelectInputAllowCreationFnArgs<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = [
+  state: {
+    /**
+     * Whether the input show no options
+     */
+    isEmpty: boolean;
+    /**
+     * The input's current value
+     */
+    value: Nullable<TValue>;
+    /**
+     * The input's current active option or null
+     */
+    activeOption: Nullable<SelectOption<TValue, TExtraData>>;
+  },
+];
+
+export type SelectInputAllowCreationFn<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = GenericFn<SelectInputAllowCreationFnArgs<TValue, TExtraData>, boolean>;
+
+/**
  * Select input prop group used to enable & customize creatable behavior
  */
 export type SelectInputCreatableProps<
@@ -232,13 +260,16 @@ export type SelectInputCreatableProps<
    * - `always`: Allow creation whether some or no options are displayed.
    * - `never`: Never allow creation (unknown values will still be ingested).
    * - `empty`: Only allow creation if no options are shown (either because none were provided/loaded or none match the user query).
+   * - A callback function that returns a boolean based on the input's current state
    *
    * @remarks
    * Creation will **always** be disallowed if the input is disabled or is loading`
    *
    * @default "empty"
    */
-  allowCreation?: Nullable<SelectInputAllowCreation>;
+  allowCreation?: Nullable<
+    SelectInputAllowCreation | SelectInputAllowCreationFn<TValue, TExtraData>
+  >;
   /**
    * If provided, overrides the label used in the create button.
    *
