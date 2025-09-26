@@ -1,3 +1,4 @@
+import { waitFor } from "@testing-library/react";
 import {
   objectEntries,
   type Nullable,
@@ -6,19 +7,17 @@ import {
 import { describe, expect, mock } from "bun:test";
 
 import { SelectInput } from "./SelectInput.component";
-
-import { Badge } from "@/components/Badge";
-import { Text } from "@/components/Text";
-import { FlexLayout } from "@/layouts/Flex";
-import { testComponentFactory } from "@/tests";
-
 import {
   SelectInputCreateButtonTemplateFn,
   SelectInputCreateOptionFn,
   SelectInputIngestUnknowValueFn,
   type SelectOption,
 } from "./SelectInput.types";
-import { waitFor } from "@testing-library/react";
+
+import { Badge } from "@/components/Badge";
+import { Text } from "@/components/Text";
+import { FlexLayout } from "@/layouts/Flex";
+import { testComponentFactory } from "@/tests";
 
 const testId = "input-select";
 const testSelectInput = testComponentFactory("SelectInput", SelectInput);
