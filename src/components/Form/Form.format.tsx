@@ -18,7 +18,10 @@ import { ComboBox } from "@/components/ComboBox";
 import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
 import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
-import { useSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
+import {
+  useSelectOptions,
+  useSelectUnknownValueIngestion,
+} from "@/components/Input/SelectInput/SelectInput.utils";
 import { FlexLayout, FlexRowLayout } from "@/layouts/Flex";
 import { breakpointsPx } from "@/sizes";
 import {
@@ -64,7 +67,7 @@ const DisplaySelectValue = ({
   fieldValue: NullishPrimitives;
   props: SelectInputProps<NullishPrimitives>;
 }): ReactNode => {
-  const { flattenedOptions, isLoading } = useSelectOptions(
+  const { flattenedOptions, isLoading, ingestValue } = useSelectOptions(
     {
       options,
       filterOption,
@@ -73,7 +76,8 @@ const DisplaySelectValue = ({
     null
   );
 
-  if (isNullish(fieldValue)) return noValue;
+  useSelectUnknownValueIngestion(ingestValue, isLoading, fieldValue ?? null);
+
   if (isLoading) return <FieldSkeleton />;
 
   const option =
