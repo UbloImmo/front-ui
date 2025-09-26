@@ -120,8 +120,6 @@ export const compare = Object.assign(comparison, {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   lte: (a: any, b: any) => a <= b,
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   /**
    * Normalizes a single value for comparison
    * @see {@link normalizeComparisonValue}
