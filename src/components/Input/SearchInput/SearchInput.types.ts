@@ -4,7 +4,10 @@ import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 export type SearchInputProps<
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
-> = Omit<SelectInputProps<TValue, TExtraData>, "searchable" | "options"> & {
+> = Omit<
+  SelectInputProps<TValue, TExtraData>,
+  "searchable" | "options" | "creatable"
+> & {
   /**
    * The list of results to display in the search input.
    *
