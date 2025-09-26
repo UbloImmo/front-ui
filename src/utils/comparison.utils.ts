@@ -138,7 +138,7 @@ export const compare = Object.assign(comparison, {
  * @remarks Always returns false for non-array `arr` parameter
  *
  * @template {any[]} TArr - The type of the array
- * @template {TArr[number] | any} TValue - The type of the value
+ * @template {TArr[number] | any} TValue - The type of the value
  *
  * @param {TArr} arr - The array to perform the check with
  * @param {Talue} value - The value to check with
