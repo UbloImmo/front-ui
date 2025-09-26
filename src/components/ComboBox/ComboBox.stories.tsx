@@ -8,6 +8,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import type { ComboBoxOption, ComboBoxProps } from "./ComboBox.types";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
+import { useReducer } from "react";
 
 const componentSource = componentSourceFactory<
   ComboBoxProps<NullishPrimitives>
@@ -142,13 +143,52 @@ export const ShowIcon = () => {
   );
 };
 
-export const Creatable: Story = {
-  args: {
-    creatable: true,
-    multi: true,
-    showIcon: false,
-    onCreate: fn(),
-  },
+export const Creatable: Story = (props: ComboBoxProps<NullishPrimitives>) => {
+  const [currentOptions, dispatch] = useReducer(
+    (
+      opts: ComboBoxOption<NullishPrimitives>[],
+      action: { type: "create" } | { type: "delete"; value: NullishPrimitives }
+    ) => {
+      if (action.type === "create") {
+        const newOption: ComboBoxOption<NullishPrimitives> = {
+          label: `[Created option ${opts.length + 1}`,
+          value: String(Date.now()),
+          deletable: true,
+        };
+        return [...opts, newOption];
+      }
+
+      if (action.type === "delete") {
+        return opts.filter(({ value }) => value !== action.value);
+      }
+
+      return opts;
+    },
+    options
+  );
+  const onCreate = () => {
+    props.onCreate?.();
+    dispatch({ type: "create" });
+  };
+  const onOptionDelete = (value: NullishPrimitives) => {
+    props.onOptionDelete?.(value);
+    dispatch({ type: "delete", value });
+  };
+  return (
+    <ComboBox
+      {...props}
+      options={currentOptions}
+      creatable
+      onCreate={onCreate}
+      onOptionDelete={onOptionDelete}
+    />
+  );
+};
+Creatable.args = {
+  creatable: true,
+  multi: true,
+  showIcon: false,
+  onCreate: fn(),
 };
 
 export const EditingAndDeletingOptions: Story = {
