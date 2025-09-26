@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `v0.0.37` Form component
   - Improve select options rendering while in read mode
+  - Integration unknown option ingestion
 
 ## 1.11.1 - 2025-09-25
 ### Fixed
