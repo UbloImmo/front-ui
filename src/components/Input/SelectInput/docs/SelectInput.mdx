@@ -94,9 +94,12 @@ Visuals may also be customized using the following **optional** nested propertie
 | ------------ | -------- | ---------------- |
 | \`createButtonLabelTemplate(query)\` | Callback (sync) | May be declared to override the create button's displayed label. Takes the current user query as argument and should return a user-readable string. |
 | \`createButtonStyle\` | \`Omit<SelectOption, "value" \| "label">\` | The create button is renderers as any other option. As such, its appearance may be customized the same way. |
-| \`CustomCreateButton\` | Component | May be provided to define a custom component to render the create button with. See the Custom component section for more details |
+| \`CustomCreateButton\` | Component | May be provided to define a custom component to render the create button with. See the Custom component section for more details. |
+| \`createdOptionsGroupLabel\` | string | If provided, will cause created options to be rendered under a bespoke option group, using the provided value as the group's label. |
 `}
 </Markdown>
+
+> Created options always appear after loaded options in the list.
 
 ### Customization
 
