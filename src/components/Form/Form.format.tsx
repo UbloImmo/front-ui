@@ -18,10 +18,19 @@ import { ComboBox } from "@/components/ComboBox";
 import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
 import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
-import { useSelectOptions } from "@/components/Input/SelectInput/SelectInput.utils";
+import {
+  useSelectOptions,
+  useSelectUnknownValueIngestion,
+} from "@/components/Input/SelectInput/SelectInput.utils";
 import { FlexLayout, FlexRowLayout } from "@/layouts/Flex";
 import { breakpointsPx } from "@/sizes";
-import { arrayOf, isEmptyString, isNonEmptyString } from "@utils";
+import {
+  arrayOf,
+  compare,
+  includes,
+  isEmptyString,
+  isNonEmptyString,
+} from "@utils";
 
 import type {
   FormDisplayValueFormatterFn,
@@ -53,27 +62,27 @@ const noValue = "—";
  */
 const DisplaySelectValue = ({
   fieldValue,
-  props: { options, SelectedOption, disabled, filterOption },
+  props: { options, SelectedOption, disabled, filterOption, creatable },
 }: {
   fieldValue: NullishPrimitives;
   props: SelectInputProps<NullishPrimitives>;
 }): ReactNode => {
-  const { flattenedOptions, isLoading } = useSelectOptions(
+  const { flattenedOptions, isLoading, ingestValue } = useSelectOptions(
     {
       options,
       filterOption,
+      creatable,
     },
     null
   );
 
-  if (!fieldValue) return noValue;
+  useSelectUnknownValueIngestion(ingestValue, isLoading, fieldValue ?? null);
+
   if (isLoading) return <FieldSkeleton />;
 
   const option =
-    flattenedOptions.find(
-      ({ value }) =>
-        value === fieldValue ||
-        JSON.stringify(value) === JSON.stringify(fieldValue)
+    flattenedOptions.find(({ value }) =>
+      compare(value, fieldValue, compare.eq, "both")
     ) ?? null;
 
   const optionValue = option?.value ?? fieldValue;
@@ -89,7 +98,7 @@ const DisplaySelectValue = ({
 /**
  * A {@link FormDisplayValueFormatterFn} that displays an `combobox` field's value.
  *
- * @param {InputValue} fieldValue - The value of the field to display.
+ * @param {InputValue} values - The value of the field to display.
  * @param {{ options: SelectOptionOrGroup[], direction: "row" | "column", columns: number | null }}
  *   props - The props object containing the options, the direction
  *   of the combobox (either "row" or "column"), and the number of
@@ -110,7 +119,7 @@ const displayComboBoxValue: FormDisplayValueFormatterFn<
   if (isNullish(values) || !options) return noValue;
   if (isArray(values)) {
     const displayOptions = options
-      .filter(({ value }) => values.includes(value))
+      .filter(({ value }) => includes(values, value, "both"))
       .map((option) => ({
         ...option,
         editable: false,
@@ -119,7 +128,9 @@ const displayComboBoxValue: FormDisplayValueFormatterFn<
     if (!displayOptions?.length) return noValue;
     return <ComboBox {...commonProps} options={displayOptions} />;
   }
-  const option = options.find(({ value }) => value === values);
+  const option = options.find(({ value }) =>
+    compare(value, values, compare.eq, "both")
+  );
   if (!option) return noValue;
   return <ComboBox {...commonProps} options={[option]} />;
 };
@@ -214,13 +225,8 @@ const DisplayMultiSelectValue = ({
   );
   if (!fieldValue) return <FormFieldDisplayValue value={noValue} />;
   if (isLoading) return <FieldSkeleton />;
-  const stringifiedFieldValue = fieldValue.map((value) =>
-    JSON.stringify(value)
-  );
-  const activeOptions = flattenedOptions.filter(
-    ({ value }) =>
-      fieldValue.includes(value) ||
-      stringifiedFieldValue.includes(JSON.stringify(value))
+  const activeOptions = flattenedOptions.filter(({ value }) =>
+    includes(fieldValue, value, "both")
   );
 
   return (

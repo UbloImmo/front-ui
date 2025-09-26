@@ -69,7 +69,13 @@ export type SelectOptionGroup<
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 > = {
+  /**
+   * The label to display above all options in the group
+   */
   label: string;
+  /**
+   * The group's options
+   */
   options: SelectOption<TValue, TExtraData>[];
 };
 
@@ -132,6 +138,53 @@ export type CustomSelectedOptionComponent<
 >;
 
 /**
+ * A function used to create a new option from a typed label or reject it, when in creatable mode
+ *
+ * @template {NullishPrimitives} TValue - The type of the value.
+ * @template {NullishPrimitives} TExtraData - The type of the extra data.
+ *
+ * @param {string} createdOptionLabel - The label typed by the user when creating a new option
+ * @returns {Nullable<SelectOption<TValue, TExtraData>>} The newly created option based on the label or null if no option should be created for this label
+ */
+export type SelectInputCreateOptionFn<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = MaybeAsyncFn<
+  [createdOptionLabel: string],
+  Nullable<SelectOption<TValue, TExtraData>>
+>;
+
+/**
+ * A function used to ingest an unknown value and convert it to an option or reject it.
+ *
+ * @template {NullishPrimitives} TValue - The type of the value.
+ * @template {NullishPrimitives} TExtraData - The type of the extra data.
+ *
+ * @param {TValue} unknownOptionValue - The value currently provided to the SelectInput, for which there are no known options
+ * @returns {SelectOption<TValue, TExtraData> | Promise<SelectOption<TValue, TExtraData>>} A {@link SelectOption} to represent the unkonwn value if accepted as valid,  or null otherwise. May be a Promise
+ */
+export type SelectInputIngestUnknowValueFn<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = MaybeAsyncFn<
+  [unknownOptionValue: TValue],
+  Nullable<SelectOption<TValue, TExtraData>>
+>;
+
+/**
+ * A function to customize the create button's label based on the current query
+ *
+ * @param {string} autoCompleteQuery - The current query and future label of the created option
+ * @returns {string} The replacement label to show the user, may be dynamic
+ *
+ * @default tl.action.create(`"${autoCompleteQuery}"`)
+ */
+export type SelectInputCreateButtonTemplateFn = GenericFn<
+  [autoCompleteQuery: string],
+  string
+>;
+
+/**
  * A function used to handle option changes
  *
  * @template {NullishPrimitives} TValue - The type of the value.
@@ -142,6 +195,135 @@ export type SelectInputOnOptionChangeFn<
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 > = VoidFn<[option: Nullable<SelectOption<TValue, TExtraData>>]>;
+
+export type SelectInputAllowCreation =
+  | "always"
+  | "never"
+  | "empty"
+  | "not-shown"
+  | "not-registered";
+
+/**
+ * Arguments passed to {@link SelectInputAllowCreationFn}
+ */
+export type SelectInputAllowCreationFnArgs<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = [
+  state: {
+    /**
+     * Whether the input shows no options
+     */
+    isEmpty: boolean;
+    /**
+     * The input's current value
+     */
+    value: Nullable<TValue>;
+    /**
+     * The input's current active option or null
+     */
+    activeOption: Nullable<SelectOption<TValue, TExtraData>>;
+    /**
+     * The input's currently displayed options
+     */
+    displayedOptions: SelectOptionOrGroup<TValue, TExtraData>[];
+    /**
+     * The input's currently registered (loaded + created) options
+     */
+    registeredOptions: SelectOption<TValue, TExtraData>[];
+    /**
+     * The input's currently loaded options
+     */
+    loadedOptions: SelectOption<TValue, TExtraData>[];
+    /**
+     * The input's currently created options
+     */
+    createdOptions: SelectOption<TValue, TExtraData>[];
+  },
+];
+
+/**
+ * A callback function that returns whether to show the "create option" button based on the input's current state
+ *
+ * @param {SelectInputAllowCreationFnArgs[0]} state - The current input's state
+ */
+export type SelectInputAllowCreationFn<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = GenericFn<SelectInputAllowCreationFnArgs<TValue, TExtraData>, boolean>;
+
+/**
+ * Select input prop group used to enable & customize creatable behavior
+ */
+export type SelectInputCreatableProps<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> = {
+  /**
+   * A callback function used to create a new option from a label, when in creatable mode
+   * @see {SelectInputCreateOptionFn}
+   *
+   * @required
+   */
+  createOption: SelectInputCreateOptionFn<TValue, TExtraData>;
+  /**
+   * A callback function used to ingest an unknown value and convert it to an option or reject it
+   * @see {SelectInputIngestUnknowValueFn}
+   *
+   * @required
+   */
+  ingestUnknownValue: SelectInputIngestUnknowValueFn<TValue, TExtraData>;
+  /**
+   * If set to a non-empty-string, will render created or onknown options in a dedicated option group.
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
+  createdOptionsGroupLabel?: Nullable<string>;
+  /**
+   * Controls when to enable the user to create a new option.
+   *
+   * - `always`: Allow creation whether some or no options are displayed.
+   * - `never`: Never allow creation (unknown values will still be ingested).
+   * - `empty`: Only allow creation if no options are shown (either because none were provided/loaded or none match the autocomplete query).
+   * - `not-shown`: Only allow creation if no shown shown options's label match the current autocomplete query.
+   * - `not-registered`: Only allow creation if no registerd option (either loaded or previously created) as a label that matches the current autocomplete query.
+   * - A callback function that returns a boolean based on the input's current state. @see {@link SelectInputAllowCreationFn}
+   *
+   * @remarks
+   * Creation will **always** be disallowed if the input is disabled or is loading`
+   *
+   * @default "not-registered"
+   */
+  allowCreation?: Nullable<
+    SelectInputAllowCreation | SelectInputAllowCreationFn<TValue, TExtraData>
+  >;
+  /**
+   * If provided, overrides the label used in the create button.
+   *
+   * @param {string} autoCompleteQuery - The current query and future label of the created option
+   * @returns {string} The replacement label to show the user, may be dynamic
+   *
+   * @default tl.action.create(`"${autoCompleteQuery}"`)
+   */
+  createButtonLabelTemplate?: Nullable<SelectInputCreateButtonTemplateFn>;
+  /**
+   * If provided, will override the appearance of the create button
+   */
+  createButtonStyle?: Nullable<
+    Omit<SelectOption<TValue, TExtraData>, "value" | "label">
+  >;
+  /**
+   * An optional override component to use when rendering the create button
+   *
+   * @type {Nullable<CustomOptionComponent<TValue, TExtraData>>}
+   */
+  CustomCreateButton?: Nullable<CustomOptionComponent<TValue, TExtraData>>;
+  /**
+   * Callback that gets called if an error occurs while calling `createOption`
+   */
+  onCreationError?: VoidFn<[error: Error, autoCompleteQuery: string]>;
+};
 
 export type SelectInputProps<
   TValue extends NullishPrimitives,
@@ -162,6 +344,8 @@ export type SelectInputProps<
   options?: SelectOptionsQuery<TValue, TExtraData>;
   /**
    * A function used to filter options based on external creteria
+   *
+   * @remarks Does not apply to options created through the `creatable` property
    *
    * @default null
    *
@@ -217,6 +401,13 @@ export type SelectInputProps<
    * @default false
    */
   alwaysDisplayActiveOption?: boolean;
+  /**
+   * Options used to control & enable the input's creatable behavior
+   *
+   * @type {Nullable<SelectInputCreatableProps<TValue, TExtraData>> | false}
+   * @default false
+   */
+  creatable?: Nullable<SelectInputCreatableProps<TValue, TExtraData>> | false;
 };
 
 export type DefaultSelectInputProps<

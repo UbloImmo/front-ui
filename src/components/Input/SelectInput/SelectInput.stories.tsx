@@ -322,3 +322,22 @@ export const Clearable: Story = {
     ],
   },
 };
+
+const creatableArgs: Story["args"] = {
+  placeholder: "Start typing to create an option",
+  creatable: {
+    createOption: (label) => ({ label, value: label }),
+    ingestUnknownValue: (value) => ({ label: String(value), value }),
+  },
+  options: [],
+  clearable: true,
+  searchable: true,
+  onChange: fn(),
+};
+
+export const Creatable: Story = {
+  args: creatableArgs,
+  parameters: {
+    docs: componentSource([creatableArgs]),
+  },
+};
