@@ -196,7 +196,12 @@ export type SelectInputOnOptionChangeFn<
   TExtraData extends NullishPrimitives = NullishPrimitives,
 > = VoidFn<[option: Nullable<SelectOption<TValue, TExtraData>>]>;
 
-export type SelectInputAllowCreation = "always" | "never" | "empty";
+export type SelectInputAllowCreation =
+  | "always"
+  | "never"
+  | "empty"
+  | "not-shown"
+  | "not-registered";
 
 /**
  * Arguments passed to {@link SelectInputAllowCreationFn}
@@ -207,7 +212,7 @@ export type SelectInputAllowCreationFnArgs<
 > = [
   state: {
     /**
-     * Whether the input show no options
+     * Whether the input shows no options
      */
     isEmpty: boolean;
     /**
@@ -218,9 +223,30 @@ export type SelectInputAllowCreationFnArgs<
      * The input's current active option or null
      */
     activeOption: Nullable<SelectOption<TValue, TExtraData>>;
+    /**
+     * The input's currently displayed options
+     */
+    displayedOptions: SelectOptionOrGroup<TValue, TExtraData>[];
+    /**
+     * The input's currently registered (loaded + created) options
+     */
+    registeredOptions: SelectOption<TValue, TExtraData>[];
+    /**
+     * The input's currently loaded options
+     */
+    loadedOptions: SelectOption<TValue, TExtraData>[];
+    /**
+     * The input's currently created options
+     */
+    createdOptions: SelectOption<TValue, TExtraData>[];
   },
 ];
 
+/**
+ * A callback function that returns whether to show the "create option" button based on the input's current state
+ *
+ * @param {SelectInputAllowCreationFnArgs[0]} state - The current input's state
+ */
 export type SelectInputAllowCreationFn<
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
@@ -259,13 +285,15 @@ export type SelectInputCreatableProps<
    *
    * - `always`: Allow creation whether some or no options are displayed.
    * - `never`: Never allow creation (unknown values will still be ingested).
-   * - `empty`: Only allow creation if no options are shown (either because none were provided/loaded or none match the user query).
-   * - A callback function that returns a boolean based on the input's current state
+   * - `empty`: Only allow creation if no options are shown (either because none were provided/loaded or none match the autocomplete query).
+   * - `not-shown`: Only allow creation if no shown shown options's label match the current autocomplete query.
+   * - `not-registered`: Only allow creation if no registerd option (either loaded or previously created) as a label that matches the current autocomplete query.
+   * - A callback function that returns a boolean based on the input's current state. @see {@link SelectInputAllowCreationFn}
    *
    * @remarks
    * Creation will **always** be disallowed if the input is disabled or is loading`
    *
-   * @default "empty"
+   * @default "not-registered"
    */
   allowCreation?: Nullable<
     SelectInputAllowCreation | SelectInputAllowCreationFn<TValue, TExtraData>

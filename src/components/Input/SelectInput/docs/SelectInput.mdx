@@ -63,20 +63,26 @@ To support various business logic specifics, the whole data flow and behavior is
 
 ##### Behavior
 
-When and if the createButton is shown is controlled through the `creatable.allowCreation` property. **Defaults to `empty`.**
+When and if the createButton is shown is controlled through the `creatable.allowCreation` property. **Defaults to `not-registered`.**
 
 The following enum values are valid:
 
  - `always`: Allow creation whether some or no options are displayed.
  - `never`: Never allow creation (unknown values will still be ingested).
- - `empty`: Only allow creation if no options are shown (either because none were provided/loaded or none match the current user query).
+ - `empty`: Only allow creation if no options are shown (either because none were provided/loaded or none match the current autocomplete query).
+ - `not-shown`: Only allow creation if no _shown_ options's label match the current autocomplete query
+ - `not-registered`: Only allow creation if no _registered_ option (either loaded or previously created) has a label that matches the current autocomplete query.
 
-Additionally, `allowCreation` may receive a callback function that reacts to the current input state and returns a boolean indicating whether to show the create button. Its single argument is an object containing the following properties:
+Additionally, `allowCreation` may receive a callback function that reacts to the input's current state and returns a boolean indicating whether to show the create button.
+Its single argument is an object containing the following properties:
 
- - `isEmpty`: `true` when the options list shows no options (either because none were provided/loaded or none match the current user query).
+ - `isEmpty`: `true` if the options list shows no options (either because none were provided/loaded or none match the current user query).
  - `value`: The input's current value, or `null` if none is selected.
  - `activeOption`: The input's currently selected option, or `null` if no option matches the current value.
-
+ - `displayedOptions`: The input's currently _displayed_ options.
+ - `registeredOptions`: The input's currently _registered_ (loaded + created) options.
+ - `loadedOptions`: The input's currently _loaded_ options.
+ - `createdOptions`: The input's currently _created_ options.
 
 ##### Visuals
 

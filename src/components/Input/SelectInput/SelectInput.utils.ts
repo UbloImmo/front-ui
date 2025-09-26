@@ -351,6 +351,7 @@ export const useSelectOptions = <
     createOption,
     ingestValue,
     getCreateButtonProps,
+    createdOptions,
   } = useSelectOptionCreation(props, options, flattenedOptions, isLoading);
 
   /**
@@ -373,6 +374,8 @@ export const useSelectOptions = <
     refetchOptions: loadOptions,
     mergedProps,
     flattenedOptions: mergedFlattenedOptions,
+    createdOptions,
+    loadedOptions: flattenedOptions,
     createOption,
     ingestValue,
     getCreateButtonProps,

@@ -2,6 +2,7 @@ import {
   NullishPrimitives,
   isBoolean,
   isFunction,
+  isNullish,
   isString,
 } from "@ubloimmo/front-util";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -17,6 +18,7 @@ import {
 } from "./SelectInput.styles";
 import {
   defaultSelectInputProps,
+  flattenSelectOptions,
   isSelectOptionGroup,
   useSelectAutoCompleteQuery,
   useSelectInputIntersection,
@@ -87,6 +89,8 @@ const SelectInput = <
     getCreateButtonProps,
     createOption,
     ingestValue,
+    createdOptions,
+    loadedOptions,
   } = useSelectOptions<TValue, TExtraData>(props, autoCompleteQuery);
 
   const {
@@ -252,7 +256,10 @@ const SelectInput = <
       !isNonEmptyString(autoCompleteQuery)
     )
       return null;
-    let { allowCreation = "empty" } = creatable;
+    let { allowCreation = "not-registered" } = creatable;
+    if (isNullish(allowCreation)) {
+      allowCreation = "not-registered";
+    }
     if (
       isFunction<SelectInputAllowCreationFn<TValue, TExtraData>>(allowCreation)
     ) {
@@ -260,6 +267,10 @@ const SelectInput = <
         isEmpty: isEmptyResult,
         value: internalValue,
         activeOption,
+        displayedOptions: displayOptions,
+        registeredOptions: flattenedOptions,
+        loadedOptions,
+        createdOptions,
       });
       allowCreation = isBoolean(result) && result ? "always" : "never";
     }
@@ -268,24 +279,47 @@ const SelectInput = <
       autoCompleteQuery,
       createOptionAndClose
     );
-    if (allowCreation === "empty" && isEmptyResult)
-      return isEmptyResult ? optionProps : null;
-    if (allowCreation === "always") return optionProps;
-    logger.warn(
-      `Invalid value provided to creatable.allowCreation: ${allowCreation}`,
-      "allowCreation"
-    );
-    return null;
+    switch (allowCreation) {
+      case "always":
+        return optionProps;
+      case "empty":
+        return isEmptyResult ? optionProps : null;
+      case "not-shown": {
+        const optionLabels = new Set(
+          flattenSelectOptions(displayOptions).map(({ label }) => label)
+        );
+        if (optionLabels.has(autoCompleteQuery)) return null;
+        return optionProps;
+      }
+      case "not-registered": {
+        const optionLabels = new Set(
+          flattenedOptions.map(({ label }) => label)
+        );
+        if (optionLabels.has(autoCompleteQuery)) return null;
+        return optionProps;
+      }
+      default: {
+        logger.warn(
+          `Invalid value provided to creatable.allowCreation: ${allowCreation}`,
+          "allowCreation"
+        );
+        return null;
+      }
+    }
   }, [
     activeOption,
     autoCompleteQuery,
     creatable,
     createOptionAndClose,
+    createdOptions,
     disabled,
+    displayOptions,
+    flattenedOptions,
     getCreateButtonProps,
     internalValue,
     isEmptyResult,
     isLoading,
+    loadedOptions,
     logger,
   ]);
 
