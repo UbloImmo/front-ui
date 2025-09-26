@@ -165,8 +165,13 @@ const useSelectOptionCreation = <
           !isFunction<SelectInputCreateOptionFn<TValue, TExtraData>>(
             creatable.createOption
           )
-        )
+        ) {
+          logger.warn(
+            "Missing required creatable.createOption() callback.",
+            "createOption"
+          );
           return null;
+        }
         // create option using props callback
         const createdOption = await creatable.createOption(label);
         if (!createdOption) return null;
@@ -191,17 +196,31 @@ const useSelectOptionCreation = <
       if (
         !creatable ||
         isLoading ||
-        !isFunction<SelectInputIngestUnknowValueFn<TValue, TExtraData>>(
-          creatable.ingestUnknownValue
-        ) ||
         hasAlreadyBeenLoadedOrCreated(createdOptions, unknownValue)
       )
         return;
+      if (
+        !isFunction<SelectInputIngestUnknowValueFn<TValue, TExtraData>>(
+          creatable.ingestUnknownValue
+        )
+      ) {
+        logger.warn(
+          "Missing required creatable.ingestUnknownValue() callback",
+          "injestValue"
+        );
+        return;
+      }
       const ingestedOption = await creatable.ingestUnknownValue(unknownValue);
       if (!ingestedOption) return;
       registerCreatedOption(ingestedOption);
     },
-    [creatable, createdOptions, hasAlreadyBeenLoadedOrCreated, isLoading]
+    [
+      creatable,
+      createdOptions,
+      hasAlreadyBeenLoadedOrCreated,
+      isLoading,
+      logger,
+    ]
   );
 
   /**
