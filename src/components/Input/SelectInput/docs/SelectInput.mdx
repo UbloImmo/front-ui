@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/blocks";
-import { ComponentInfo, Canvas } from "@docs/blocks";
+import { ComponentInfo, Canvas, Markdown } from "@docs/blocks";
 import { Content } from "@docs/containers";
 import * as SelectInputStories from "../SelectInput.stories.tsx";
 import { Icon } from "../../../Icon/Icon.component.tsx";
@@ -20,23 +20,89 @@ By default, all options in `SelectInput` are selectable. To restrict a user from
 
 <Canvas of={SelectInputStories.DisabledOptions} />
 
-### Searchable
+### Behavior
 
-To enable searching and filtering the options in `SelectInput`, you can set the searchable property to true. This allows users to type and search for specific options.
+#### Searchable
+
+To enable searching and filtering the options in `SelectInput`, you can set the `searchable` property to `true`. This allows users to type and search for specific options.
 
 <Canvas of={SelectInputStories.Searchable} />
 
-### Clearable
+##### External filtering
+
+Depending on the `options` callback implementation, options provided to the SelectInput may have already been filtered based on the `autoCompleteQuery` beforehand. Such results should (in most cases) not be filtered _again_.
+
+> To disable filtering but still render a search box when the user focuses the input, set the searchable property to `manual`.
+
+#### Clearable
 
 To allow the user to clear the selected option, you can set the `clearable` property to true.
 
 <Canvas of={SelectInputStories.Clearable} />
 
+#### Creatable
+
+New options may need to be created by users. To support this behavior, provide the `creatable` property group to SelectInput.
+
+> The creatable behavior is conditioned by two checks before being made available to users. **The Input should not be `disabled` and should be `searchable`**.
+
+<Canvas of={SelectInputStories.Creatable} />
+
+##### Data flow
+
+To support various business logic specifics, the whole data flow and behavior is made to be customizable through a couple of callback functions:
+
+<Markdown>{`
+| **Property** | **Type** | **Required** |  **Description** |
+| ------------ | -------- | ------------ | ---------------- |
+| \`createOption(query)\` | Callback (may be async) | [x] | Called when the user clicks on the "Create option" button. It takes the current search query and should return either a valid \`SelectOption\` object to be registered and made available, or \`null\` if the query is deemed to be invalid. |
+| \`ingestUnknownValue(value)\` | Callback (may be async) | [x] | Called when the SelectInput recieves a \`value\` not included in its currently loaded or created \`options\`. It takes the unknown value as an argument and should either return a valid \`SelectOption\` object to dynamically create a register, or \`null\` if the value is deemed to be invalid. |
+| \`onCreationError(error, query)\` | Callback (sync) | [ ] | Called if an error occurs while trying to create a new option. Most of the time, because of an error in \`createOption()\`. May be hooked into to, for instance, display an error toast or notification. |
+`}
+</Markdown>
+
+##### Behavior
+
+When and if the createButton is shown is controlled through the `creatable.allowCreation` property. **Defaults to `empty`.**
+
+The following enum values are valid:
+
+ - `always`: Allow creation whether some or no options are displayed.
+ - `never`: Never allow creation (unknown values will still be ingested).
+ - `empty`: Only allow creation if no options are shown (either because none were provided/loaded or none match the current user query).
+
+Additionally, `allowCreation` may receive a callback function that reacts to the current input state and returns a boolean indicating whether to show the create button. Its single argument is an object containing the following properties:
+
+ - `isEmpty`: `true` when the options list shows no options (either because none were provided/loaded or none match the current user query).
+ - `value`: The input's current value, or `null` if none is selected.
+ - `activeOption`: The input's currently selected option, or `null` if no option matches the current value.
+
+
+##### Visuals
+
+Visuals may also be customized using the following **optional** nested properties:
+
+<Markdown>
+{`
+| **Property** | **Type** |  **Description** |
+| ------------ | -------- | ---------------- |
+| \`createButtonLabelTemplate(query)\` | Callback (sync) | May be declared to override the create button's displayed label. Takes the current user query as argument and should return a user-readable string. |
+| \`createButtonStyle\` | \`Omit<SelectOption, "value" \| "label">\` | The create button is renderers as any other option. As such, its appearance may be customized the same way. |
+| \`CustomCreateButton\` | Component | May be provided to define a custom component to render the create button with. See the Custom component section for more details |
+`}
+</Markdown>
+
 ### Customization
 
-This input supports rendering arbitrary components for its options as well as its selected option.
+#### Option icon
 
-> Extra data can be passed each option, and as such to custom components through the `option.extraData` property.
+Each option may define its own `icon` to be rendered in the list and while selected.
+
+#### Custom component
+
+This input supports rendering arbitrary components for its options as well as its selected option. Provide a component to the `Option` propery to have it rendered for each option in the list. The same or another component may be set as `SelectedOption` to have it replace the input's default content while closed, not searching and non-empty.
+
+> Extra data can be passed to each option, and as such consumed by custom components through the `option.extraData` property.
 
 The input's height will scale according to its option's size. It is currently not possible to customize the appearance of the inner search input
 that is displayed on focus when the `searchable` property is enabled.
