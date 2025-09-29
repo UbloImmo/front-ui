@@ -47,6 +47,10 @@ const SelectInputOption = <
         : "gray-800";
   }, [option]);
 
+  const iconColor = useMemo<PaletteColor>(() => {
+    return option.disabled ? "gray-500" : (option.iconColor ?? contentColor);
+  }, [option.disabled, option.iconColor, contentColor]);
+
   const propagateSelection = useCallback<MouseEventHandler<HTMLDivElement>>(
     (event) => {
       event.preventDefault();
@@ -107,7 +111,7 @@ const SelectInputOption = <
         fill
       >
         {option.icon && (
-          <Icon name={option.icon} color={contentColor} size="s-3" />
+          <Icon name={option.icon} color={iconColor} size="s-3" />
         )}
         <Text
           {...textProps}
