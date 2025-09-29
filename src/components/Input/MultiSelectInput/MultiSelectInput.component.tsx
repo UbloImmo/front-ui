@@ -40,7 +40,12 @@ import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
-import { useTestId, useMergedProps, useUikitTranslation } from "@utils";
+import {
+  useTestId,
+  useMergedProps,
+  useUikitTranslation,
+  normalizeToColorKey,
+} from "@utils";
 
 import type {
   DefaultMultiSelectInputProps,
@@ -70,7 +75,7 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
 /**
  * Allows the user to select multiple values from a list of options.
  *
- * @version 0.0.7
+ * @version 0.0.8
  *
  * @param {MultiSelectInputProps & TestIdProps} props - The props for the MultiSelectInput component
  *
@@ -317,7 +322,10 @@ const MultiSelectInput = <
                       ? "error"
                       : option.disabled || disabled
                         ? "gray"
-                        : "primary"
+                        : normalizeToColorKey(
+                            option.iconColor ?? "primary",
+                            "primary"
+                          )
                   }
                   disabled={
                     (required && activeOptions.length <= 1) ||

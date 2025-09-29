@@ -989,10 +989,14 @@ const sharedOptions = [
   {
     label: "Option 1",
     value: "option1",
+    icon: "CircleFill" as const,
+    iconColor: "primary-base" as const,
   },
   {
     label: "Option 2",
     value: "option2",
+    icon: "TriangleFill" as const,
+    iconColor: "pending-dark" as const,
   },
   {
     label: "Option 3",

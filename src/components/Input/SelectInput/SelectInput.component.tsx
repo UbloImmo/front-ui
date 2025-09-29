@@ -44,6 +44,7 @@ import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import { FlexColumnLayout } from "@/layouts/Flex";
 import { cssDimensions } from "@/utils/styles.utils";
+import { PaletteColor, type TestIdProps } from "@types";
 import {
   isNonEmptyString,
   useHtmlAttribute,
@@ -60,12 +61,11 @@ import type {
   SelectOption,
 } from "./SelectInput.types";
 import type { CommonInputStyleProps, InputProps } from "../Input.types";
-import type { TestIdProps } from "@types";
 
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.1.1
+ * @version 0.1.2
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -201,9 +201,13 @@ const SelectInput = <
     [mergedProps]
   );
 
-  const valueTextColor = useMemo(() => {
+  const valueTextColor = useMemo<PaletteColor>(() => {
     return disabled ? "gray-700" : "gray-800";
   }, [disabled]);
+
+  const valueIconColor = useMemo<PaletteColor>(() => {
+    return disabled ? "gray-700" : (activeOption?.iconColor ?? valueTextColor);
+  }, [activeOption?.iconColor, disabled, valueTextColor]);
 
   const isEmptyResult = useMemo(() => {
     return !displayOptions.length;
@@ -417,7 +421,7 @@ const SelectInput = <
                   {activeOption.icon && (
                     <Icon
                       name={activeOption.icon}
-                      color={valueTextColor}
+                      color={valueIconColor}
                       size="s-3"
                     />
                   )}

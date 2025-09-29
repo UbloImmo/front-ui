@@ -9,6 +9,7 @@ import styled, { css } from "styled-components";
 
 import { Badge } from "../Badge";
 import { EnergyLabel } from "../EnergyLabel";
+import { Icon } from "../Icon";
 import { calculateEnergyScore } from "../Input/EnergyScoreInput/EnergyScoreInput.utils";
 import { Text } from "../Text";
 import { FieldSkeleton } from "./components/FieldSkeleton.component";
@@ -30,6 +31,7 @@ import {
   includes,
   isEmptyString,
   isNonEmptyString,
+  normalizeToColorKey,
 } from "@utils";
 
 import type {
@@ -92,7 +94,20 @@ const DisplaySelectValue = ({
   if (SelectedOption && option)
     return <SelectedOption {...option} disabled={disabled} />;
 
-  return <FormFieldDisplayValue value={option?.label ?? String(optionValue)} />;
+  const optionIcon = option?.icon ? (
+    <Icon
+      name={option.icon}
+      color={option.iconColor ?? "gray-800"}
+      size="s-3"
+    />
+  ) : null;
+
+  return (
+    <FormFieldDisplayValue
+      value={option?.label ?? String(optionValue)}
+      beforeChildren={optionIcon}
+    />
+  );
 };
 
 /**
@@ -231,12 +246,12 @@ const DisplayMultiSelectValue = ({
 
   return (
     <FlexRowLayout wrap fill gap="s-1" align="center">
-      {activeOptions.map(({ label, value, icon }) => (
+      {activeOptions.map(({ label, value, icon, iconColor }) => (
         <Badge
           key={`multi-select-badge-${value}`}
           icon={icon}
           label={label}
-          color="primary"
+          color={normalizeToColorKey(iconColor ?? "primary", "primary")}
         />
       ))}
     </FlexRowLayout>

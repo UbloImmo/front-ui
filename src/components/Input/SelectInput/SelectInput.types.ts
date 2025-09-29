@@ -3,7 +3,7 @@ import { InputProps, InputValue } from "../Input.types";
 import { IconName } from "@/components/Icon";
 import { StyleProps } from "@types";
 
-import type { TestIdProps } from "@types";
+import type { PaletteColor, TestIdProps } from "@types";
 import type {
   NullishPrimitives,
   MaybeAsyncFn,
@@ -44,6 +44,10 @@ export type SelectOption<
    * An optional icon to display left of the label
    */
   icon?: IconName;
+  /**
+   * The color of the option's icon
+   */
+  iconColor?: PaletteColor;
   /**
    * Whether the option is active
    *

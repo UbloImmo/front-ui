@@ -106,15 +106,18 @@ export const IconOptions: Story = {
         label: "I have an icon",
         value: "option-1",
         icon: "Triangle",
+        iconColor: "primary-medium",
       },
       {
         label: "Me too !",
         value: "option-2",
         icon: "EmojiWink",
+        iconColor: "primary-base",
       },
       {
         label: "...I don't 😢",
         value: "option-3",
+        iconColor: "gray-300",
       },
     ],
   },
