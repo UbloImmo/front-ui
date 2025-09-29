@@ -24,7 +24,7 @@ const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
 /**
  * Renders an assistive text for the Input component based on the provided props.
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {InputAssistiveTextProps & TestIdProps} props - The properties for the assistive text.
  * @return {Nullable<JSX.Element>} The JSX element representing the assistive text.
@@ -71,11 +71,23 @@ const InputAssistiveText = (
         <Icon name="SquircleInfo" size="s-3" color={iconColor} />
       )}
       {error && isNonEmptyString(errorText) ? (
-        <Text size="xs" color="error-base" testId="error-text" fill>
+        <Text
+          size="xs"
+          color="error-base"
+          testId="error-text"
+          fill
+          weight="medium"
+        >
           {errorText}
         </Text>
       ) : (
-        <Text size="xs" color="gray-600" testId="assistive-text" fill>
+        <Text
+          size="xs"
+          color="gray-600"
+          testId="assistive-text"
+          fill
+          weight="medium"
+        >
           {assistiveText}
         </Text>
       )}
