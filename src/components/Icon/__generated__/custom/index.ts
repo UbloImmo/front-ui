@@ -89,6 +89,7 @@ export { File2Clock } from "./File2Clock.icon";
 export { FileSignature } from "./FileSignature.icon";
 export { Fire } from "./Fire.icon";
 export { FireFill } from "./FireFill.icon";
+export { Folder2OpenFill } from "./Folder2OpenFill.icon";
 export { FolderSparkle } from "./FolderSparkle.icon";
 export { GeoAltOff } from "./GeoAltOff.icon";
 export { Grab } from "./Grab.icon";

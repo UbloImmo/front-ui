@@ -1171,6 +1171,7 @@ export const Flower3 = lazy(() => loadIcon("Flower3"));
 export const Folder = lazy(() => loadIcon("Folder"));
 export const Folder2 = lazy(() => loadIcon("Folder2"));
 export const Folder2Open = lazy(() => loadIcon("Folder2Open"));
+export const Folder2OpenFill = lazy(() => loadIcon("Folder2OpenFill"));
 export const FolderCheck = lazy(() => loadIcon("FolderCheck"));
 export const FolderFill = lazy(() => loadIcon("FolderFill"));
 export const FolderMinus = lazy(() => loadIcon("FolderMinus"));
