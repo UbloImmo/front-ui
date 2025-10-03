@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Updated `@ubloimmo/front-tokens` to `^0.1.47`
+
 ## 1.11.5 - 2025-09-30
 ### Changed
 - `v.0.0.7` InputAssistiveText component
