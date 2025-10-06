@@ -26,7 +26,7 @@ const defaultInfoBoxProps: InfoBoxDefaultProps = {
 /**
  * A small card to display contextual data.
  *
- * @version 0.0.3
+ * @version 0.0.4
  *
  * @param {InfoBoxProps & TestIdProps} props - InfoBox component props
  * @returns {JSX.Element}
@@ -67,10 +67,27 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
   return (
     <InfoBoxContainer testId={testId} align="center" gap="s-1" overrideTestId>
       <Icon name={icon} size="s-4" color={stateColor} />
-      <Text size="m" weight="bold" color={stateColor}>
+      <Text
+        size="m"
+        weight="bold"
+        color={stateColor}
+        align="center"
+        ellipsis
+        fill
+        lineClamp={3}
+      >
         {label}
       </Text>
-      <Text size="m" {...textProps} testId={`${testId}-text`} overrideTestId>
+      <Text
+        size="m"
+        {...textProps}
+        testId={`${testId}-text`}
+        overrideTestId
+        align="center"
+        ellipsis
+        lineClamp={3}
+        fill
+      >
         {displayInfo}
       </Text>
     </InfoBoxContainer>
