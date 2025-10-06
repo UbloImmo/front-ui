@@ -26,7 +26,7 @@ const defaultInfoBoxProps: InfoBoxDefaultProps = {
 /**
  * A small card to display contextual data.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {InfoBoxProps & TestIdProps} props - InfoBox component props
  * @returns {JSX.Element}
@@ -75,6 +75,7 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
         ellipsis
         fill
         lineClamp={3}
+        styleOverride={{ flex: "unset" }}
       >
         {label}
       </Text>
@@ -87,6 +88,7 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
         ellipsis
         lineClamp={3}
         fill
+        styleOverride={{ flex: "unset" }}
       >
         {displayInfo}
       </Text>
