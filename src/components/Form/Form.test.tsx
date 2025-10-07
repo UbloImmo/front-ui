@@ -6,9 +6,9 @@ import { Button } from "../Button";
 import { DialogProvider, useDialog } from "../Dialog";
 
 import { testComponentFactory } from "@/tests";
+import { delay } from "@utils";
 
 import type { FormData } from "./Form.types";
-import { delay } from "@utils";
 
 const FORM_MODAL_TEST_REF = "FORM_MODAL_TEST_REF";
 
