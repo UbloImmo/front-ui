@@ -1141,6 +1141,16 @@ export type FormDataProps<TData extends object> = {
    * @default null
    */
   onEditStateChanged?: Nullable<VoidFn<[boolean]>>;
+  /**
+   * Optional key that, if provided, causes a full form reload when updated
+   *
+   * @remarks
+   * Ignores `shouldMergeQueryData` and completely overwrites the form's data
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
+  reloadKey?: Nullable<string>;
 };
 
 /**

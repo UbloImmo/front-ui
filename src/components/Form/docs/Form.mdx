@@ -87,6 +87,19 @@ const staticData = {
 const MyStaticForm = () => <Form query={staticData} />;
 ```
 
+#### Handling data updates
+
+The form will refetch its own data using the provided `query` object or function every time it changes.
+
+By default, newly loaded data will be merged with the form's existing data if present, either because of exisiting user edits, or previous loads.
+This behavior can be turned controlled through the `shouldMergeQueryData` property. By setting it to `false`, newly loaded data will completely overwrite the form's current internal data.
+
+#### Forcing updates based on external changes
+
+An optional `reloadKey` property may be provided. When its value changes, it will trigger a complete reload of the form's data, regardless of the value of `shouldMergeQueryData`, behaving as if it is set to `false`.
+
+> This may be useful for reloading the form when e.g. the window's URL changes but the form doesn't get re-rendered.
+
 ### Debugging
 
 <Canvas of={FormStories.Debug} />

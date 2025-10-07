@@ -1,4 +1,4 @@
-import { expect } from "bun:test";
+import { expect, mock } from "bun:test";
 import { z } from "zod";
 
 import { Form } from "./Form.component";
@@ -8,6 +8,7 @@ import { DialogProvider, useDialog } from "../Dialog";
 import { testComponentFactory } from "@/tests";
 
 import type { FormData } from "./Form.types";
+import { delay } from "@utils";
 
 const FORM_MODAL_TEST_REF = "FORM_MODAL_TEST_REF";
 
@@ -105,6 +106,40 @@ testForm({
     expect(data[2].textContent).toBe("—");
   }
 );
+
+const mockQueryFn = mock(() => testData);
+
+testForm({
+  ...Form.defaultProps,
+  query: mockQueryFn,
+  schema: testSchema,
+  content: testFormContent,
+  defaultValues: testData,
+  reloadKey: "initial",
+})("should refetch when reloadKey changes", async ({ rerenderWithProps }) => {
+  await delay(0);
+  expect(mockQueryFn).toHaveBeenCalledTimes(1);
+  rerenderWithProps({
+    ...Form.defaultProps,
+    query: mockQueryFn,
+    schema: testSchema,
+    content: testFormContent,
+    defaultValues: testData,
+    reloadKey: "initial",
+  });
+  await delay(0);
+  expect(mockQueryFn).toHaveBeenCalledTimes(1);
+  rerenderWithProps({
+    ...Form.defaultProps,
+    query: mockQueryFn,
+    schema: testSchema,
+    content: testFormContent,
+    defaultValues: testData,
+    reloadKey: "changed",
+  });
+  await delay(0);
+  expect(mockQueryFn).toHaveBeenCalledTimes(2);
+});
 
 testFormAsModal({ ...Form.defaultProps })(
   "should render as modal when triggered",

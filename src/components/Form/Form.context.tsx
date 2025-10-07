@@ -25,6 +25,7 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useRef,
   useState,
   type Context,
   type FormEvent,
@@ -128,7 +129,7 @@ const FORM_DEBUG_FLAG = "FORM_DEBUG_ENABLED" as const;
  * @returns {UseFormDataReturn<TData>} - An object containing the form data, initial data, and methods for mutating and setting form data.
  */
 const useFormData = <TData extends object>(
-  props: FormProps<TData>,
+  props: FormDataProps<TData>,
   logger: Logger,
   modifiers: FormModifers
 ): UseFormDataReturn<TData> => {
@@ -151,7 +152,7 @@ const useFormData = <TData extends object>(
   /**
    * Internal form data
    */
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState<FormData<TData>>(initialData);
 
   /**
    * Loads form data from query into `data` and `initialData` states
@@ -189,13 +190,23 @@ const useFormData = <TData extends object>(
     [props.query]
   );
 
+  const reloadKey = useRef(props.reloadKey ?? null);
+
   /**
    * Effect used for loading initial form data if query is a function
    */
   useEffect(() => {
-    loadFormData(modifiers.shouldMergeQueryData);
+    if (
+      !isUndefined(props.reloadKey) &&
+      props.reloadKey !== reloadKey.current
+    ) {
+      reloadKey.current = props.reloadKey;
+      loadFormData(false);
+    } else {
+      loadFormData(modifiers.shouldMergeQueryData);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.query, loadFormData]);
+  }, [props.query, loadFormData, props.reloadKey]);
 
   /**
    * Mutates internal form data at the specified path with the specified value
@@ -212,7 +223,7 @@ const useFormData = <TData extends object>(
         logger.warn("Cannot mutate form data while loading");
         return data;
       }
-      if (props.readonly || props.disabled) {
+      if (modifiers.readonly || modifiers.disabled) {
         logger.warn("Form is readonly or disabled");
         return data;
       }
@@ -224,7 +235,7 @@ const useFormData = <TData extends object>(
       setData(mutated);
       return mutated;
     },
-    [data, isLoading, props, logger]
+    [data, isLoading, logger, modifiers]
   );
 
   return {

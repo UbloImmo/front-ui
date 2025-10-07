@@ -50,6 +50,7 @@ const defaultFormProps: FormDefaultProps<object> = {
   submitButtonStyle: {},
   bannerInfo: null,
   embedded: false,
+  reloadKey: null,
 };
 
 /**
