@@ -50,12 +50,13 @@ const defaultFormProps: FormDefaultProps<object> = {
   submitButtonStyle: {},
   bannerInfo: null,
   embedded: false,
+  reloadKey: null,
 };
 
 /**
  * A flexible yet expressive form renderer.
  *
- * @version 0.0.38
+ * @version 0.0.39
  *
  * @template {object} TData - The type of the form data
  *
