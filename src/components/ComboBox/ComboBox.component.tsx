@@ -54,7 +54,7 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
 /**
  * A group of ComboBoxButtons that act as a select or radio input.
  *
- * @version 0.0.13
+ * @version 0.0.14
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
  * @returns {JSX.Element}
@@ -105,7 +105,6 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
         bypassRequired = false,
       }: { newSelection: TOptionValue[]; bypassRequired?: boolean }
     ) => {
-      console.error("setSelection called", newSelection);
       // only trigger update when actual changes have been sent
       if (areComboBoxSelectionsDifferent(state, newSelection)) {
         // abort change if required & new selection is empty
