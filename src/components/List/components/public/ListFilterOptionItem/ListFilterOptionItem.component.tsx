@@ -62,7 +62,7 @@ export const ListFilterOptionItem = <TItem extends object = object>({
   }, [highlighted, option.disabled, option.selected]);
 
   const iconProps = useMemo<Nullable<IconProps>>(() => {
-    const name: Nullable<IconName> = option.icon
+    const name: IconName = option.icon
       ? option.icon
       : option.selected
         ? "CircleFill"
