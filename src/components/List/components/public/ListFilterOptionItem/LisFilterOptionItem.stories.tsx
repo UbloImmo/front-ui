@@ -31,7 +31,9 @@ const mockOption = (
   unselect: fn(),
 });
 
-const defaultOption: FilterOption<MockData> = mockOption("A single option");
+const defaultOption: FilterOption<MockData> = mockOption("A single option", {
+  icon: "Triangle",
+});
 
 const componentSource = componentSourceFactory<
   ListFilterOptionItemProps<MockData>,
@@ -68,20 +70,26 @@ export const Default: Story = {
 
 const selections: DetailConfigVariants<ListFilterOptionItemProps<MockData>> = [
   {
-    option: mockOption("Unselected single option"),
+    option: mockOption("Unselected single option", { icon: "Triangle" }),
     __propVariantLabel: "option.selected:false",
   },
   {
-    option: mockOption("Selected single option", { initial: true }),
+    option: mockOption("Selected single option", {
+      initial: true,
+      icon: "Triangle",
+    }),
     __propVariantLabel: "option.selected:true",
   },
   {
-    option: mockOption("Unselected multi option"),
+    option: mockOption("Unselected multi option", { icon: "Triangle" }),
     multi: true,
     __propVariantLabel: "option.selected:false, multi:true",
   },
   {
-    option: mockOption("Selected multi option", { initial: true }),
+    option: mockOption("Selected multi option", {
+      initial: true,
+      icon: "Triangle",
+    }),
     multi: true,
     __propVariantLabel: "option.selected:true, multi:true",
   },
@@ -101,7 +109,7 @@ export const Selections = () => {
 
 const icons: DetailConfigVariants<ListFilterOptionItemProps<MockData>> = [
   {
-    option: defaultOption,
+    option: mockOption("No icon option"),
     __propVariantLabel: "option.icon:null",
   },
   {
@@ -130,18 +138,21 @@ const colors: DetailConfigVariants<ListFilterOptionItemProps<MockData>> = [
   {
     option: mockOption("Primary option", {
       color: "primary",
+      icon: "Triangle",
     }),
     __propVariantLabel: "color:primary",
   },
   {
     option: mockOption("Warning option", {
       color: "warning-medium",
+      icon: "Triangle",
     }),
     __propVariantLabel: "color:warning-medium",
   },
   {
     option: mockOption("Success option", {
       color: "success-dark",
+      icon: "Triangle",
     }),
     __propVariantLabel: "color:success-dark",
   },
@@ -165,6 +176,7 @@ const disabled: DetailConfigVariants<ListFilterOptionItemProps<MockData>> =
   booleans.flatMap((disabled) => ({
     option: mockOption(`${disabled ? "Disabled" : "Enabled"} option`, {
       disabled,
+      icon: "Triangle",
     }),
     __propVariantLabel: `disabled:${disabled}`,
   }));
@@ -185,6 +197,7 @@ const fixed: DetailConfigVariants<ListFilterOptionItemProps<MockData>> =
   booleans.map((fixed) => ({
     option: mockOption(`${fixed ? "Fixed" : "Unfixed"} option`, {
       fixed,
+      icon: "Triangle",
     }),
     __propVariantLabel: `fixed:${fixed}`,
   }));
@@ -203,7 +216,9 @@ export const Fixed = () => {
 
 const multis: DetailConfigVariants<ListFilterOptionItemProps<MockData>> =
   booleans.map((multi) => ({
-    option: mockOption(`${multi ? "Multi" : "Single"} option`),
+    option: mockOption(`${multi ? "Multi" : "Single"} option`, {
+      icon: "Triangle",
+    }),
     multi,
     __propVariantLabel: `multi:${multi}`,
   }));
@@ -223,7 +238,8 @@ export const Multi = () => {
 const highlighted: DetailConfigVariants<ListFilterOptionItemProps<MockData>> =
   booleans.map((highlighted) => ({
     option: mockOption(
-      `${highlighted ? "Highlighted" : "Unhighlighted"} option`
+      `${highlighted ? "Highlighted" : "Unhighlighted"} option`,
+      { icon: "Triangle" }
     ),
     highlighted,
     __propVariantLabel: `highlighted:${highlighted}`,
@@ -248,7 +264,7 @@ const labels = [
 
 const labelVariants: DetailConfigVariants<ListFilterOptionItemProps<MockData>> =
   labels.map((label) => ({
-    option: mockOption(label),
+    option: mockOption(label, { icon: "Triangle" }),
     __propVariantLabel: `option.label:${label}`,
   }));
 

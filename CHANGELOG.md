@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- `v0.0.3` ListFilterOptionItem component
+  - Allow icon do not render when not provided
+
 ## 1.11.10 - 2025-10-10
 ### Fixed
 - `v0.0.14` ComboBox component

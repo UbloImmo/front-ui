@@ -20,7 +20,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 /**
  * Renders a filter option's list item in a filter.
  *
- * @version 0.0.2
+ * @version 0.0.3
  *
  * @template {object} TItem - The type of the list's items
  * @param {ListFilterOptionItemProps<TItem>} props - The component's props
@@ -62,7 +62,7 @@ export const ListFilterOptionItem = <TItem extends object = object>({
   }, [highlighted, option.disabled, option.selected]);
 
   const iconProps = useMemo<Nullable<IconProps>>(() => {
-    const name: IconName = option.icon
+    const name: Nullable<IconName> = option.icon
       ? option.icon
       : option.selected
         ? "CircleFill"
@@ -102,7 +102,7 @@ export const ListFilterOptionItem = <TItem extends object = object>({
       onClick={toggleOptionSelectionAndClose}
     >
       <FlexLayout fill direction="row" align="center" gap="s-2">
-        <Icon {...iconProps} key="option icon" />
+        {option.icon && <Icon {...iconProps} key="option icon" />}
         <Text {...textProps}>{option.label}</Text>
         {option.signature === CLEAR_FILTER_OPTION_SIGNATURE ? null : multi ? (
           <Checkbox
