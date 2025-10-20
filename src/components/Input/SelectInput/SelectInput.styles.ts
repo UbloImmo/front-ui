@@ -86,14 +86,14 @@ export const selectOptionContainerStyles = ({
     position: absolute;
     ${direction}: calc(100% - var(--s-1));
     ${paddingProp}: var(--s-1);
-    width: 100%;
+    width: max-content;
+    min-width: 100%;
     border-radius: 0 0 var(--s-1) var(--s-1);
     min-height: var(--s-8);
     max-height: calc(var(--s-8) * 7 + var(--s-1));
     height: fit-content;
     background-color: var(--white);
     overflow-y: auto;
-    overflow-x: hidden;
     box-shadow: var(--shadow-card-elevation-medium);
 
     &[aria-expanded="true"] {
