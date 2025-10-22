@@ -55,6 +55,7 @@ const scaleIn = keyframes`
 
 export const popoverContentStyles = ({
   $fitTriggerWidth,
+  $allowContentWidthOverride,
 }: PopoverContentStyleProps): RuleSet => {
   return css`
     width: fit-content;
@@ -72,11 +73,21 @@ export const popoverContentStyles = ({
     animation: ${scaleIn} 300ms var(--bezier);
 
     ${$fitTriggerWidth &&
+    $allowContentWidthOverride &&
     css`
       & > *:first-child {
-        min-width: var(--radix-tooltip-trigger-width);
-        max-width: var(--radix-tooltip-trigger-width);
-        width: var(--radix-tooltip-trigger-width);
+        min-width: var(--radix-popover-trigger-width);
+        width: fit-content;
+      }
+    `}
+
+    ${$fitTriggerWidth &&
+    !$allowContentWidthOverride &&
+    css`
+      & > *:first-child {
+        min-width: var(--radix-popover-trigger-width);
+        max-width: var(--radix-popover-trigger-width);
+        width: var(--radix-popover-trigger-width);
       }
     `};
   `;

@@ -37,6 +37,7 @@ const defaultPopoverProps: PopoverDefaultProps = {
   collisionBoundary: [],
   collisionPadding: 0,
   fitTriggerWidth: false,
+  allowContentWidthOverride: false,
   sticky: "partial",
   wrapContent: false,
   fill: false,
@@ -47,7 +48,7 @@ const defaultPopoverProps: PopoverDefaultProps = {
  *
  * Powered by [Radix-UI](https://www.radix-ui.com/docs/primitives/components/popover)
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {PopoverProps & TestIdProps} props - Popover component props
  * @returns {JSX.Element}
@@ -90,6 +91,7 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
         collisionPadding={collisionPadding}
         sticky={mergedProps.sticky}
         $fitTriggerWidth={mergedProps.fitTriggerWidth}
+        $allowContentWidthOverride={mergedProps.allowContentWidthOverride}
       >
         {mergedProps.wrapContent && content ? (
           <PopoverContentWrapper>{content}</PopoverContentWrapper>

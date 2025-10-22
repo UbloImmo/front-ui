@@ -8,17 +8,14 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
-import { SelectInputOption } from "./components/SelectInputOption.component";
-import { SelectInputOptionGroup } from "./components/SelectInputOptionGroup.component";
+import { SelectInputPopover } from "./components/SelectInputPopover.component";
 import {
   selectInputContainerStyles,
   selectInputStyles,
   selectInputWrapperStyles,
-  selectOptionContainerStyles,
 } from "./SelectInput.styles";
 import {
   defaultSelectInputProps,
-  flattenSelectOptions,
   isSelectOptionGroup,
   useSelectAutoCompleteQuery,
   useSelectInputIntersection,
@@ -39,7 +36,6 @@ import {
 
 import { Button } from "@/components/Button";
 import { Icon } from "@/components/Icon";
-import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import { FlexColumnLayout } from "@/layouts/Flex";
@@ -56,7 +52,6 @@ import {
 
 import type {
   SelectInputAllowCreationFn,
-  SelectInputOptionsContainerStyleProps,
   SelectInputProps,
   SelectOption,
 } from "./SelectInput.types";
@@ -65,7 +60,7 @@ import type { CommonInputStyleProps, InputProps } from "../Input.types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.1.2
+ * @version 0.1.3
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -232,10 +227,7 @@ const SelectInput = <
     clearInternalValue();
   }, [activeOption, disabled, isOpen, clearable, clearInternalValue]);
 
-  const { isShifted, optionsContainerRef } = useSelectInputIntersection(
-    isOpen,
-    wrapperRef
-  );
+  const { isShifted } = useSelectInputIntersection(isOpen, wrapperRef);
 
   const createOptionAndClose = useCallback(
     async (query: string) => {
@@ -291,7 +283,13 @@ const SelectInput = <
         return isEmptyResult ? optionProps : null;
       case "not-shown": {
         const optionLabels = new Set(
-          flattenSelectOptions(displayOptions).map(({ label }) => label)
+          displayOptions
+            .map((option) =>
+              isSelectOptionGroup<TValue, TExtraData>(option)
+                ? option.options.map(({ label }) => label)
+                : [option.label]
+            )
+            .flat()
         );
         if (optionLabels.has(autoCompleteQuery)) return null;
         return optionProps;
@@ -336,138 +334,114 @@ const SelectInput = <
       testId={`${testId}-wrapper`}
       overrideTestId
     >
-      {isOpen && (
-        <SelectOptionsContainer
-          role="listbox"
-          ref={optionsContainerRef}
-          data-testid={`${testId}-options`}
-          aria-haspopup="listbox"
-          aria-expanded={isOpen}
-          $reverse={isShifted}
-        >
-          {displayOptions.map((optionOrGroup, index) =>
-            isSelectOptionGroup<TValue, TExtraData>(optionOrGroup) ? (
-              <SelectInputOptionGroup
-                {...optionOrGroup}
-                onSelectOption={selectOptionAndClose}
-                key={`${optionOrGroup.label}-${index}`}
-                Option={OptionComponent}
-              />
-            ) : (
-              <SelectInputOption
-                key={`${optionOrGroup.value}-${index}`}
-                onSelect={selectOptionAndClose(optionOrGroup)}
-                Option={OptionComponent}
-                {...optionOrGroup}
-              />
-            )
-          )}
-          {createOptionProps && (
-            <SelectInputOption
-              {...createOptionProps}
-              testId={`${testId}-create-button`}
-              overrideTestId
-            />
-          )}
-          {isEmptyResult && (
-            <AssistiveTextWrapper>
-              <InputAssistiveText assistiveText={assistiveText} />
-            </AssistiveTextWrapper>
-          )}
-        </SelectOptionsContainer>
-      )}
-      <SelectInputContainer
-        {...inputStyles}
-        data-testid={testId}
-        aria-expanded={isOpen}
+      <SelectInputPopover
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        displayOptions={displayOptions}
+        onSelectOption={selectOptionAndClose}
+        Option={OptionComponent ?? undefined}
+        createOptionProps={createOptionProps}
+        isEmptyResult={isEmptyResult}
+        assistiveText={assistiveText}
+        isShifted={isShifted}
+        fitTriggerWidth={true}
+        fill={true}
+        allowContentWidthOverride={true}
+        testId={testId}
       >
-        {mergedProps.searchable && isOpen ? (
-          <StyledInput
-            {...inputStyles}
-            value={query}
-            onChange={onQueryChange}
-            data-testid={`${testId}-query`}
-            placeholder={placeholder}
-            disabled={disabled}
-            onFocus={openOptionsOnFocus}
-            onBlur={onBlur}
-            id={inputId}
-            ref={forwardRef}
-            autoComplete="none"
-            aria-expanded={isOpen}
-            tabIndex={0}
-          />
-        ) : (
-          <StyledSelectInput
-            {...inputStyles}
-            disabled={disabled}
-            onClick={toggleOptionList}
-            id={inputId}
-            data-testid={`${testId}-button`}
-            aria-expanded={isOpen}
-            type="button"
-            tabIndex={0}
-          >
-            {activeOption ? (
-              SelectedOptionComponent ? (
-                <CustomSelectedOptionContainer {...inputStyles}>
-                  <SelectedOptionComponent
-                    {...activeOption}
-                    disabled={disabled}
-                  />
-                </CustomSelectedOptionContainer>
-              ) : (
-                <SelectedOptionContainer {...inputStyles}>
-                  {activeOption.icon && (
-                    <Icon
-                      name={activeOption.icon}
-                      color={valueIconColor}
-                      size="s-3"
-                    />
-                  )}
-                  <Text weight="medium" color={valueTextColor} ellipsis fill>
-                    {activeOption.label}
-                  </Text>
-                </SelectedOptionContainer>
-              )
-            ) : (
-              <SelectedOptionContainer {...inputStyles}>
-                <Text
-                  weight="medium"
-                  color="gray-400"
-                  testId={`${testId}-placeholder`}
-                  aria-placeholder={placeholder}
-                  overrideTestId
-                  ellipsis
-                >
-                  {placeholder}
-                </Text>
-              </SelectedOptionContainer>
-            )}
-          </StyledSelectInput>
-        )}
-        <StyledInputControl
+        <SelectInputContainer
           {...inputStyles}
-          data-testid={`${testId}-control`}
-          onClick={activeOption ? clearSelectedOption : undefined}
+          data-testid={testId}
+          aria-expanded={isOpen}
         >
-          {isOpen && isLoading ? (
-            <Loading animation="BouncingBalls" size="s-4" />
-          ) : !isOpen && clearable && activeOption && !disabled ? (
-            <ClearButton
-              color="clear"
-              secondary
-              icon="XLg"
-              embedded
-              title={clearLabel}
-              testId={`${testId}-clear`}
-              overrideTestId
+          {mergedProps.searchable && isOpen ? (
+            <StyledInput
+              {...inputStyles}
+              value={query}
+              onChange={onQueryChange}
+              data-testid={`${testId}-query`}
+              placeholder={placeholder}
+              disabled={disabled}
+              onFocus={openOptionsOnFocus}
+              onBlur={onBlur}
+              id={inputId}
+              ref={forwardRef}
+              autoComplete="none"
+              aria-expanded={isOpen}
+              tabIndex={0}
             />
           ) : (
-            <Icon name={mergedProps.controlIcon} />
+            <StyledSelectInput
+              {...inputStyles}
+              disabled={disabled}
+              onClick={toggleOptionList}
+              id={inputId}
+              data-testid={`${testId}-button`}
+              aria-expanded={isOpen}
+              type="button"
+              tabIndex={0}
+            >
+              {activeOption ? (
+                SelectedOptionComponent ? (
+                  <CustomSelectedOptionContainer {...inputStyles}>
+                    <SelectedOptionComponent
+                      {...activeOption}
+                      disabled={disabled}
+                    />
+                  </CustomSelectedOptionContainer>
+                ) : (
+                  <SelectedOptionContainer {...inputStyles}>
+                    {activeOption.icon && (
+                      <Icon
+                        name={activeOption.icon}
+                        color={valueIconColor}
+                        size="s-3"
+                      />
+                    )}
+                    <Text weight="medium" color={valueTextColor} ellipsis fill>
+                      {activeOption.label}
+                    </Text>
+                  </SelectedOptionContainer>
+                )
+              ) : (
+                <SelectedOptionContainer {...inputStyles}>
+                  <Text
+                    weight="medium"
+                    color="gray-400"
+                    testId={`${testId}-placeholder`}
+                    aria-placeholder={placeholder}
+                    overrideTestId
+                    ellipsis
+                  >
+                    {placeholder}
+                  </Text>
+                </SelectedOptionContainer>
+              )}
+            </StyledSelectInput>
           )}
-        </StyledInputControl>
-      </SelectInputContainer>
+          <StyledInputControl
+            {...inputStyles}
+            data-testid={`${testId}-control`}
+            onClick={activeOption ? clearSelectedOption : undefined}
+          >
+            {isOpen && isLoading ? (
+              <Loading animation="BouncingBalls" size="s-4" />
+            ) : !isOpen && clearable && activeOption && !disabled ? (
+              <ClearButton
+                color="clear"
+                secondary
+                icon="XLg"
+                embedded
+                title={clearLabel}
+                testId={`${testId}-clear`}
+                overrideTestId
+              />
+            ) : (
+              <Icon name={mergedProps.controlIcon} />
+            )}
+          </StyledInputControl>
+        </SelectInputContainer>
+      </SelectInputPopover>
     </SelectInputWrapper>
   );
 };
@@ -482,10 +456,6 @@ const SelectInputWrapper = styled(FlexColumnLayout)<CommonInputStyleProps>`
 
 const SelectInputContainer = styled.div<CommonInputStyleProps>`
   ${selectInputContainerStyles}
-`;
-
-const SelectOptionsContainer = styled.div<SelectInputOptionsContainerStyleProps>`
-  ${selectOptionContainerStyles}
 `;
 
 const StyledSelectInput = styled.button<CommonInputStyleProps>`
@@ -512,8 +482,4 @@ const ClearButton = styled(Button)`
 const CustomSelectedOptionContainer = styled.div<CommonInputStyleProps>`
   ${selectInputStyles}
   padding-right: var(--s-6)
-`;
-
-const AssistiveTextWrapper = styled.div`
-  padding: var(--s-2);
 `;

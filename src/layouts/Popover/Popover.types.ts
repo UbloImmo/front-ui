@@ -121,6 +121,13 @@ export type UncontrolledPopoverProps = PopoverContentProps & {
    */
   fitTriggerWidth?: boolean;
   /**
+   * Whether to allow the popover content to grow wider than the trigger if content requires it.
+   * Only applies when fitTriggerWidth is true.
+   *
+   * @default false
+   */
+  allowContentWidthOverride?: boolean;
+  /**
    * Whether the popover is open by default
    *
    * @default false
@@ -174,7 +181,10 @@ export type PopoverDefaultProps =
   | ControlledPopoverDefaultProps;
 
 export type PopoverContentStyleProps = StyleProps<
-  Pick<UncontrolledPopoverProps, "fitTriggerWidth">
+  Pick<
+    UncontrolledPopoverProps,
+    "fitTriggerWidth" | "allowContentWidthOverride"
+  >
 >;
 
 export type PopoverTriggerStyleProps = StyleProps<
