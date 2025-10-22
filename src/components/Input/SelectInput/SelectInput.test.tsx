@@ -180,6 +180,8 @@ describe("Input", () => {
           queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement
         );
 
+        await delay(1);
+
         expect(inputSelect.textContent).toBe(`Selected: ${options[0].label}`);
       }
     );
