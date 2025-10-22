@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `SelectInput` dropdown options now expand in width to fit long labels (no wrapping), keeping single-line display without ellipsis truncation.
+- `v0.1.3` SelectInput, `v0.0.9` MultiSelectInput & `v0.0.6` SearchInput components
+  - dropdown options now expand in width to fit long labels (no wrapping), keeping single-line display without truncation.
+  - Refactored to use Popover layout when displaying options
+
+- `v0.0.2` Popover layout
+  - Compute the trigger's x & y position and inject them CSS variables (`--popover-trigger-left` & `--popover-trigger-top`) to be consumed when styling the popover's content
 
 ## 1.11.10 - 2025-10-10
 
