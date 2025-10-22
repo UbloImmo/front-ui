@@ -322,6 +322,11 @@ export const Clearable: Story = {
         label: "Third option",
         value: "option-3",
       },
+      {
+        label:
+          "Hello i am an option with an obnoxiously long, very ver long label that is sure to need more space than is alotted to my parent Select Input",
+        value: "option-4",
+      },
     ],
   },
 };

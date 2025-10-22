@@ -165,6 +165,7 @@ describe("Input", () => {
     })(
       prefix("should render selected option in custom component"),
       async ({ queryByTestId, queryAllByTestId }, { click }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
@@ -186,6 +187,7 @@ describe("Input", () => {
     testSelectInput({ options: groupOptions, searchable: false })(
       prefix("should show dropdown with group options on Click on the select"),
       async ({ queryByTestId }, { click }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
@@ -206,6 +208,7 @@ describe("Input", () => {
     testSelectInput({ options, searchable: false })(
       prefix("should close options dropdown on Click anywhere"),
       async ({ queryByTestId }, { click }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
@@ -255,15 +258,20 @@ describe("Input", () => {
     })(
       prefix("should trigger onChange with param when an option is selected"),
       async ({ queryByTestId, queryAllByTestId }, { click }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
 
         await click(inputSelect);
 
-        await click(
-          queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement
-        );
+        const option = queryAllByTestId(
+          `${testId}-option`
+        )?.[0] as HTMLDivElement;
+
+        expect(option).not.toBeNull();
+
+        await click(option);
 
         expect(inputSelect.getAttribute("aria-expanded")).toBe("false");
         expect(inputSelect?.textContent).toBe(options[0].label);
@@ -277,6 +285,7 @@ describe("Input", () => {
     testSelectInput({ options, searchable: true })(
       prefix("should render and be typable when searchable property is true"),
       async ({ queryByTestId }, { click, keyboard }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
@@ -295,6 +304,7 @@ describe("Input", () => {
     testSelectInput({ options: groupOptions, searchable: true })(
       prefix("should filter out options when typing in the search input"),
       async ({ queryByTestId, queryAllByTestId }, { click, keyboard }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;

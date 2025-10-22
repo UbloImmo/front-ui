@@ -336,6 +336,7 @@ const SelectInput = <
       isEmptyResult={isEmptyResult}
       assistiveText={assistiveText}
       testId={testId}
+      key="select-input-options-list"
     />
   );
 
