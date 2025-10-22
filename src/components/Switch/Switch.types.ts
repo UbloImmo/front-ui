@@ -44,6 +44,11 @@ export type SwitchProps = {
    * @default {null}
    */
   onChange?: Nullable<VoidFn<[boolean]>>;
+  /**
+   * When set to `true`, will hide the switch and only show the helper text
+   * @default false
+   */
+  readonly?: boolean;
 };
 
 export type SwitchDefaultProps = Required<SwitchProps>;

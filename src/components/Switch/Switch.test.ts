@@ -3,6 +3,8 @@ import { expect, mock } from "bun:test";
 import { Switch } from "./Switch.component";
 
 import { testComponentFactory } from "@/tests";
+import { queryByTestId } from "@storybook/test";
+import { SwitchProps } from "./Switch.types";
 
 const testSwitch = testComponentFactory("Switch", Switch);
 
@@ -87,5 +89,39 @@ testSwitch({ ...Switch.defaultProps, active: true, onChange })(
     expect(onChange).toHaveBeenCalled();
     expect(onChange).toHaveBeenCalledWith(false);
     onChange.mockReset();
+  }
+);
+
+const testSwitchDefault = testSwitch({});
+
+testSwitchDefault("should hide helper text", ({ queryByTestId }) => {
+  const helperText = queryByTestId("switch-helper");
+  expect(helperText).toBeNull();
+});
+
+testSwitch({ withHelper: true })(
+  "should show the helper text",
+  ({ queryByTestId }) => {
+    const helperText = queryByTestId("switch-helper");
+    expect(helperText).not.toBeNull();
+  }
+);
+
+const testSwitchReadonly = (overrides: SwitchProps = {}) =>
+  testSwitch({ readonly: true, ...overrides });
+
+testSwitchReadonly()(
+  "should hide the switch container",
+  ({ queryByTestId }) => {
+    const container = queryByTestId("switch-container");
+    expect(container).toBeNull();
+  }
+);
+
+testSwitchReadonly({ withHelper: false })(
+  "should still show the helper text",
+  ({ queryByTestId }) => {
+    const helperText = queryByTestId("switch-helper");
+    expect(helperText).not.toBeNull();
   }
 );
