@@ -18,3 +18,5 @@ export type RequiredNonNever<TObject extends Record<string, unknown>> = {
     DeepKeyOfType<TObject, Optional<never>>
   >]-?: NonOptional<TObject[TKey]>;
 };
+
+export type Vec2 = { x: number; y: number };

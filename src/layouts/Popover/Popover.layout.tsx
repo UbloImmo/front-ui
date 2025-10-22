@@ -1,11 +1,12 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { Nullable } from "@ubloimmo/front-util";
+import { useCallback, useRef } from "react";
 import styled from "styled-components";
 
 import {
   popoverContentStyles,
   popoverContentWrapperStyles,
   popoverInnerTriggerStyles,
-  popoverRootStyles,
   popoverTriggerStyles,
 } from "./Popover.styles";
 import {
@@ -24,7 +25,7 @@ import type {
   PopoverContentStyleProps,
   PopoverTriggerStyleProps,
 } from "./Popover.types";
-import type { TestIdProps } from "@types";
+import type { TestIdProps, Vec2 } from "@types";
 
 const defaultPopoverProps: PopoverDefaultProps = {
   align: "center",
@@ -37,17 +38,19 @@ const defaultPopoverProps: PopoverDefaultProps = {
   collisionBoundary: [],
   collisionPadding: 0,
   fitTriggerWidth: false,
+  allowContentWidthOverride: false,
   sticky: "partial",
   wrapContent: false,
   fill: false,
   fillHeight: false,
+  noFocus: false,
 };
 /**
  * Displays rich content in a portal.
  *
  * Powered by [Radix-UI](https://www.radix-ui.com/docs/primitives/components/popover)
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @param {PopoverProps & TestIdProps} props - Popover component props
  * @returns {JSX.Element}
@@ -59,6 +62,17 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
   >(defaultPopoverProps, props);
   const testId = useTestId("popover", props);
 
+  const offset = useRef<Nullable<Vec2>>(null);
+
+  const computeOffset = useCallback((anchorElement: Nullable<HTMLElement>) => {
+    if (!anchorElement) {
+      offset.current = null;
+      return;
+    }
+    const { x, y } = anchorElement.getBoundingClientRect();
+    offset.current = { x, y };
+  }, []);
+
   const controlledRootProps = useControlledPopoverProps(mergedProps);
   const content = usePopoverContent(mergedProps);
   const sideOffset = usePopoverOffset(mergedProps.sideOffset);
@@ -67,8 +81,15 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
     mergedProps.collisionPadding
   );
 
+  const onFocus = useCallback(
+    (e: Event) => {
+      if (mergedProps.noFocus) e.preventDefault();
+    },
+    [mergedProps.noFocus]
+  );
+
   return (
-    <PopoverRoot
+    <PopoverPrimitive.Root
       data-testid={testId}
       defaultOpen={mergedProps.defaultOpen}
       {...controlledRootProps}
@@ -77,6 +98,7 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
         <PopoverInnerTrigger
           $fill={mergedProps.fill}
           $fillHeight={mergedProps.fillHeight}
+          ref={computeOffset}
         >
           {mergedProps.children}
         </PopoverInnerTrigger>
@@ -90,6 +112,11 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
         collisionPadding={collisionPadding}
         sticky={mergedProps.sticky}
         $fitTriggerWidth={mergedProps.fitTriggerWidth}
+        $allowContentWidthOverride={mergedProps.allowContentWidthOverride}
+        $anchorOffset={offset.current}
+        onOpenAutoFocus={onFocus}
+        onCloseAutoFocus={onFocus}
+        onFocusOutside={onFocus}
       >
         {mergedProps.wrapContent && content ? (
           <PopoverContentWrapper>{content}</PopoverContentWrapper>
@@ -97,16 +124,12 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
           content
         )}
       </PopoverContent>
-    </PopoverRoot>
+    </PopoverPrimitive.Root>
   );
 };
 Popover.defaultProps = defaultPopoverProps;
 
 export { Popover };
-
-const PopoverRoot = styled(PopoverPrimitive.Root)`
-  ${popoverRootStyles}
-`;
 
 const PopoverTrigger = styled(PopoverPrimitive.Trigger)`
   ${popoverTriggerStyles}

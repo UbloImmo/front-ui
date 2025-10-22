@@ -1,16 +1,13 @@
+import { isNumber, transformObject } from "@ubloimmo/front-util";
 import { css, keyframes } from "styled-components";
+
+import { cssPx } from "@utils";
 
 import type {
   PopoverContentStyleProps,
   PopoverTriggerStyleProps,
 } from "./Popover.types";
 import type { RuleSet } from "styled-components";
-
-export const popoverRootStyles = (): RuleSet => {
-  return css`
-    // TODO: Add styles
-  `;
-};
 
 export const popoverTriggerStyles = (): RuleSet => {
   return css`
@@ -55,8 +52,16 @@ const scaleIn = keyframes`
 
 export const popoverContentStyles = ({
   $fitTriggerWidth,
+  $allowContentWidthOverride,
+  $anchorOffset,
 }: PopoverContentStyleProps): RuleSet => {
+  const cssOffset = transformObject(
+    $anchorOffset ?? { x: null, y: null },
+    (px) => (isNumber(px) ? cssPx(px) : ("unset" as const))
+  );
   return css`
+    --popover-trigger-left: ${cssOffset.x};
+    --popover-trigger-top: ${cssOffset.y};
     width: fit-content;
     height: fit-content;
     &:focus {
@@ -72,11 +77,22 @@ export const popoverContentStyles = ({
     animation: ${scaleIn} 300ms var(--bezier);
 
     ${$fitTriggerWidth &&
+    $allowContentWidthOverride &&
     css`
       & > *:first-child {
-        min-width: var(--radix-tooltip-trigger-width);
-        max-width: var(--radix-tooltip-trigger-width);
-        width: var(--radix-tooltip-trigger-width);
+        min-width: var(--radix-popover-trigger-width);
+        width: fit-content;
+        max-width: calc(100vw - var(--popover-trigger-left) - var(--s-3));
+      }
+    `}
+
+    ${$fitTriggerWidth &&
+    !$allowContentWidthOverride &&
+    css`
+      & > *:first-child {
+        min-width: var(--radix-popover-trigger-width);
+        width: var(--radix-popover-trigger-width);
+        max-width: var(--radix-popover-trigger-width);
       }
     `};
   `;

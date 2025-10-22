@@ -5,10 +5,7 @@ import { commonInputContainerStyles } from "../Input.styles";
 import { breakpointsPx } from "@/sizes";
 import { cssDimensions } from "@/utils/styles.utils";
 
-import type {
-  SelectInputOptionsContainerStyleProps,
-  SelectOptionItemStyleProps,
-} from "./SelectInput.types";
+import type { SelectOptionItemStyleProps } from "./SelectInput.types";
 import type { CommonInputStyleProps } from "../Input.types";
 
 export const selectInputStyles = ({
@@ -67,7 +64,7 @@ export const selectInputContainerStyles = (
   cursor: pointer;
 
   &[aria-expanded="true"] {
-    z-index: 1;
+    z-index: 11;
   }
 
   ${props.$table &&
@@ -77,23 +74,18 @@ export const selectInputContainerStyles = (
   `}
 `;
 
-export const selectOptionContainerStyles = ({
-  $reverse,
-}: SelectInputOptionsContainerStyleProps): RuleSet => {
-  const direction = $reverse ? "bottom" : "top";
-  const paddingProp = $reverse ? "padding-bottom" : "padding-top";
+export const selectOptionContainerStyles = (): RuleSet => {
   return css`
-    position: absolute;
-    ${direction}: calc(100% - var(--s-1));
-    ${paddingProp}: var(--s-1);
-    width: 100%;
-    border-radius: 0 0 var(--s-1) var(--s-1);
+    /*width: 100%;*/
+    width: max-content;
+    min-width: 100%;
+    border-radius: var(--s-1);
     min-height: var(--s-8);
     max-height: calc(var(--s-8) * 7 + var(--s-1));
     height: fit-content;
     background-color: var(--white);
     overflow-y: auto;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
     box-shadow: var(--shadow-card-elevation-medium);
 
     &[aria-expanded="true"] {

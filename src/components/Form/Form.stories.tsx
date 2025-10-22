@@ -639,6 +639,11 @@ const formTableProps: FormTableProps<IdentityTable> = {
           label: "Tester",
           value: "tester",
         },
+        {
+          label:
+            "A label that passes the column width and lets user see the whole text",
+          value: "long_label",
+        },
       ],
     },
     {

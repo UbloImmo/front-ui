@@ -31,7 +31,7 @@ const defaultSearchInputProps: SearchInputDefaultProps<NullishPrimitives> = {
 /**
  * An input designed for querying and retrieving information from a dataset by typing
  *
- * @version 0.0.5
+ * @version 0.0.6
  *
  * @param {SearchInputProps & TestIdProps} props - SearchInput component props
  * @returns {JSX.Element}

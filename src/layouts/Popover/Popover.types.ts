@@ -1,6 +1,6 @@
 import type { GridAlignment } from "@/layouts/Grid";
 import type { PopoverContentProps as PopoverPrimitiveContentProps } from "@radix-ui/react-popover";
-import type { Direction, FixedCssLength, StyleProps } from "@types";
+import type { Direction, FixedCssLength, StyleProps, Vec2 } from "@types";
 import type {
   GenericFn,
   NonNullish,
@@ -97,6 +97,7 @@ export type PopoverContentProps = {
    * @default false
    */
   wrapContent?: boolean;
+  noFocus?: boolean;
 };
 
 export type PopoverOnOpenChangeFn = VoidFn<[boolean]>;
@@ -120,6 +121,13 @@ export type UncontrolledPopoverProps = PopoverContentProps & {
    * @default false
    */
   fitTriggerWidth?: boolean;
+  /**
+   * Whether to allow the popover content to grow wider than the trigger if content requires it.
+   * Only applies when fitTriggerWidth is true.
+   *
+   * @default false
+   */
+  allowContentWidthOverride?: boolean;
   /**
    * Whether the popover is open by default
    *
@@ -174,7 +182,12 @@ export type PopoverDefaultProps =
   | ControlledPopoverDefaultProps;
 
 export type PopoverContentStyleProps = StyleProps<
-  Pick<UncontrolledPopoverProps, "fitTriggerWidth">
+  Pick<
+    UncontrolledPopoverProps,
+    "fitTriggerWidth" | "allowContentWidthOverride"
+  > & {
+    anchorOffset: Nullable<Vec2>;
+  }
 >;
 
 export type PopoverTriggerStyleProps = StyleProps<

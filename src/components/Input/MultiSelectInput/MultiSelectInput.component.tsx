@@ -23,13 +23,13 @@ import {
 import { useMultiSelectValue } from "./MultiSelectInput.utils";
 import { SelectInputOption } from "../SelectInput/components/SelectInputOption.component";
 import { SelectInputOptionGroup } from "../SelectInput/components/SelectInputOptionGroup.component";
+import { SelectInputPopover } from "../SelectInput/components/SelectInputPopover.component";
 import {
   selectInputContainerStyles,
   selectOptionContainerStyles,
 } from "../SelectInput/SelectInput.styles";
 import {
   isSelectOptionGroup,
-  useSelectInputIntersection,
   useSelectInputKeyboardEvents,
   useSelectOptions,
 } from "../SelectInput/SelectInput.utils";
@@ -53,7 +53,6 @@ import type {
 } from "./MultiSelectInput.types";
 import type { CommonInputStyleProps } from "../Input.types";
 import type {
-  SelectInputOptionsContainerStyleProps,
   SelectInputProps,
   SelectOption,
 } from "../SelectInput/SelectInput.types";
@@ -75,7 +74,7 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
 /**
  * Allows the user to select multiple values from a list of options.
  *
- * @version 0.0.8
+ * @version 0.0.9
  *
  * @param {MultiSelectInputProps & TestIdProps} props - The props for the MultiSelectInput component
  *
@@ -233,9 +232,48 @@ const MultiSelectInput = <
 
   useSelectInputKeyboardEvents(wrapperRef, inputId, closeOptions);
 
-  const { isShifted, optionsContainerRef } = useSelectInputIntersection(
-    isOpen,
-    wrapperRef
+  const OptionsList = useMemo(
+    () => (
+      <MultiSelectOptionsContainer
+        role="listbox"
+        testId={testIds.options}
+        overrideTestId
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+      >
+        {displayOptions.map((optionOrGroup, index) =>
+          isSelectOptionGroup<TValue, TExtraData>(optionOrGroup) ? (
+            <SelectInputOptionGroup<TValue, TExtraData>
+              {...optionOrGroup}
+              onSelectOption={selectOptionAndClose}
+              key={`${optionOrGroup.label}-${index}`}
+              Option={mergedProps.Option}
+            />
+          ) : (
+            <SelectInputOption<TValue, TExtraData>
+              key={`${optionOrGroup.value}-${index}`}
+              onSelect={selectOptionAndClose(optionOrGroup)}
+              Option={mergedProps.Option}
+              {...optionOrGroup}
+            />
+          )
+        )}
+        {noOptions && (
+          <AssistiveTextWrapper>
+            <InputAssistiveText assistiveText={assistiveText} />
+          </AssistiveTextWrapper>
+        )}
+      </MultiSelectOptionsContainer>
+    ),
+    [
+      assistiveText,
+      displayOptions,
+      isOpen,
+      mergedProps.Option,
+      noOptions,
+      selectOptionAndClose,
+      testIds.options,
+    ]
   );
 
   return (
@@ -246,109 +284,86 @@ const MultiSelectInput = <
       overrideTestId
       {...inputStyles}
     >
-      {isOpen && (
-        <MultiSelectOptionsContainer
-          role="listbox"
-          testId={testIds.options}
-          overrideTestId
-          aria-haspopup="listbox"
-          aria-expanded={isOpen}
-          ref={optionsContainerRef}
-          $reverse={isShifted}
-        >
-          {displayOptions.map((optionOrGroup, index) =>
-            isSelectOptionGroup<TValue, TExtraData>(optionOrGroup) ? (
-              <SelectInputOptionGroup<TValue, TExtraData>
-                {...optionOrGroup}
-                onSelectOption={selectOptionAndClose}
-                key={`${optionOrGroup.label}-${index}`}
-                Option={mergedProps.Option}
-              />
-            ) : (
-              <SelectInputOption<TValue, TExtraData>
-                key={`${optionOrGroup.value}-${index}`}
-                onSelect={selectOptionAndClose(optionOrGroup)}
-                Option={mergedProps.Option}
-                {...optionOrGroup}
-              />
-            )
-          )}
-          {noOptions && (
-            <AssistiveTextWrapper>
-              <InputAssistiveText assistiveText={assistiveText} />
-            </AssistiveTextWrapper>
-          )}
-        </MultiSelectOptionsContainer>
-      )}
-      <MultiSelectInputContainer
-        {...inputStyles}
-        aria-expanded={isOpen}
-        data-testid={testIds.container}
+      <SelectInputPopover
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        testId={testId}
+        content={OptionsList}
+        wrapperRef={wrapperRef}
       >
-        <MultiSelectInputElement
+        <MultiSelectInputContainer
           {...inputStyles}
-          onClick={toggleOptionsOnContainerClick}
-          data-testid={testIds.element}
-          id={inputId}
           aria-expanded={isOpen}
+          data-testid={testIds.container}
         >
-          {noValue ? (
-            <Text
-              weight="medium"
-              color="gray-400"
-              testId={testIds.placeholder}
-              overrideTestId
-              aria-placeholder={placeholder}
-              ellipsis
-            >
-              {placeholder}
-            </Text>
-          ) : (
-            <FlexRowLayout
-              fill
-              wrap
-              align="center"
-              gap="s-1"
-              testId={testIds.chips}
-              overrideTestId
-            >
-              {activeOptions.map((option, index) => (
-                <Chip
-                  key={`${option.value}-${index}`}
-                  label={option.label}
-                  icon={option.icon}
-                  color={
-                    error
-                      ? "error"
-                      : option.disabled || disabled
-                        ? "gray"
-                        : normalizeToColorKey(
-                            option.iconColor ?? "primary",
-                            "primary"
-                          )
-                  }
-                  disabled={
-                    (required && activeOptions.length <= 1) ||
-                    option.disabled ||
-                    disabled
-                  }
-                  testId={testIds.chip}
-                  overrideTestId
-                  deleteButtonTitle={tl.action.remove(option.label)}
-                  onDelete={deleteOptionFromChip(option)}
-                />
-              ))}
-            </FlexRowLayout>
-          )}
-        </MultiSelectInputElement>
-        <StyledInputControl {...inputStyles} data-testid={`${testId}-control`}>
-          {isOpen && isLoading ? (
-            <Loading animation="BouncingBalls" size="s-4" />
-          ) : (
-            <Icon name={mergedProps.controlIcon} />
-          )}
-        </StyledInputControl>
-      </MultiSelectInputContainer>
+          <MultiSelectInputElement
+            {...inputStyles}
+            onClick={toggleOptionsOnContainerClick}
+            data-testid={testIds.element}
+            id={inputId}
+            aria-expanded={isOpen}
+          >
+            {noValue ? (
+              <Text
+                weight="medium"
+                color="gray-400"
+                testId={testIds.placeholder}
+                overrideTestId
+                aria-placeholder={placeholder}
+                ellipsis
+              >
+                {placeholder}
+              </Text>
+            ) : (
+              <FlexRowLayout
+                fill
+                wrap
+                align="center"
+                gap="s-1"
+                testId={testIds.chips}
+                overrideTestId
+              >
+                {activeOptions.map((option, index) => (
+                  <Chip
+                    key={`${option.value}-${index}`}
+                    label={option.label}
+                    icon={option.icon}
+                    color={
+                      error
+                        ? "error"
+                        : option.disabled || disabled
+                          ? "gray"
+                          : normalizeToColorKey(
+                              option.iconColor ?? "primary",
+                              "primary"
+                            )
+                    }
+                    disabled={
+                      (required && activeOptions.length <= 1) ||
+                      option.disabled ||
+                      disabled
+                    }
+                    testId={testIds.chip}
+                    overrideTestId
+                    deleteButtonTitle={tl.action.remove(option.label)}
+                    onDelete={deleteOptionFromChip(option)}
+                  />
+                ))}
+              </FlexRowLayout>
+            )}
+          </MultiSelectInputElement>
+          <StyledInputControl
+            {...inputStyles}
+            data-testid={`${testId}-control`}
+          >
+            {isOpen && isLoading ? (
+              <Loading animation="BouncingBalls" size="s-4" />
+            ) : (
+              <Icon name={mergedProps.controlIcon} />
+            )}
+          </StyledInputControl>
+        </MultiSelectInputContainer>
+      </SelectInputPopover>
     </MultiSelectInputWrapper>
   );
 };
@@ -361,9 +376,7 @@ const MultiSelectInputWrapper = styled(FlexColumnLayout)<CommonInputStyleProps>`
   ${multiSelectWrapperStyles}
 `;
 
-const MultiSelectOptionsContainer = styled(
-  FlexColumnLayout
-)<SelectInputOptionsContainerStyleProps>`
+const MultiSelectOptionsContainer = styled(FlexColumnLayout)`
   ${selectOptionContainerStyles}
 `;
 

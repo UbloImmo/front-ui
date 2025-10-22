@@ -322,6 +322,11 @@ export const Clearable: Story = {
         label: "Third option",
         value: "option-3",
       },
+      {
+        label:
+          "Hello i am an option with an obnoxiously long, very ver long label that is sure to need more space than is alotted to my parent Select Input",
+        value: "option-4",
+      },
     ],
   },
 };
@@ -342,5 +347,22 @@ export const Creatable: Story = {
   args: creatableArgs,
   parameters: {
     docs: componentSource([creatableArgs]),
+  },
+};
+
+export const LongOptionNames: Story = {
+  args: {
+    options: [
+      {
+        label:
+          "Hello i am an option with an obnoxiously long, very ver long label that is sure to need more space than is alotted to my parent Select Input",
+        value: null,
+      },
+      {
+        label:
+          "Hello i am an option with an obnoxiously long, very ver long label that is sure to need more space than is alotted to my parent Select Input",
+        value: "option-2",
+      },
+    ],
   },
 };

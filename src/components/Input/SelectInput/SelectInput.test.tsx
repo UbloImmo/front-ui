@@ -18,15 +18,10 @@ import { Badge } from "@/components/Badge";
 import { Text } from "@/components/Text";
 import { FlexLayout } from "@/layouts/Flex";
 import { testComponentFactory } from "@/tests";
+import { delay } from "@utils";
 
 const testId = "input-select";
 const testSelectInput = testComponentFactory("SelectInput", SelectInput);
-
-// const options = [
-//   { label: "Apple", value: "1" },
-//   { label: "Banana", value: "2" },
-//   { label: "Cherry", value: "3", disabled: true },
-// ];
 
 const stringOptions = [
   {
@@ -170,6 +165,7 @@ describe("Input", () => {
     })(
       prefix("should render selected option in custom component"),
       async ({ queryByTestId, queryAllByTestId }, { click }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
@@ -184,6 +180,8 @@ describe("Input", () => {
           queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement
         );
 
+        await delay(1);
+
         expect(inputSelect.textContent).toBe(`Selected: ${options[0].label}`);
       }
     );
@@ -191,6 +189,7 @@ describe("Input", () => {
     testSelectInput({ options: groupOptions, searchable: false })(
       prefix("should show dropdown with group options on Click on the select"),
       async ({ queryByTestId }, { click }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
@@ -211,6 +210,7 @@ describe("Input", () => {
     testSelectInput({ options, searchable: false })(
       prefix("should close options dropdown on Click anywhere"),
       async ({ queryByTestId }, { click }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
@@ -260,15 +260,22 @@ describe("Input", () => {
     })(
       prefix("should trigger onChange with param when an option is selected"),
       async ({ queryByTestId, queryAllByTestId }, { click }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
 
         await click(inputSelect);
 
-        await click(
-          queryAllByTestId(`${testId}-option`)?.[0] as HTMLDivElement
-        );
+        const option = queryAllByTestId(
+          `${testId}-option`
+        )?.[0] as HTMLDivElement;
+
+        expect(option).not.toBeNull();
+
+        await click(option);
+
+        await delay(10);
 
         expect(inputSelect.getAttribute("aria-expanded")).toBe("false");
         expect(inputSelect?.textContent).toBe(options[0].label);
@@ -282,6 +289,7 @@ describe("Input", () => {
     testSelectInput({ options, searchable: true })(
       prefix("should render and be typable when searchable property is true"),
       async ({ queryByTestId }, { click, keyboard }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
@@ -292,7 +300,6 @@ describe("Input", () => {
 
         expect(searchableInput).not.toBeNull();
 
-        await click(searchableInput);
         await keyboard("test");
         expect(searchableInput.value).toBe("test");
       }
@@ -301,6 +308,7 @@ describe("Input", () => {
     testSelectInput({ options: groupOptions, searchable: true })(
       prefix("should filter out options when typing in the search input"),
       async ({ queryByTestId, queryAllByTestId }, { click, keyboard }) => {
+        await delay(10);
         const inputSelect = queryByTestId(
           `${testId}-button`
         ) as HTMLButtonElement;
@@ -314,7 +322,6 @@ describe("Input", () => {
 
         expect(searchableInput).not.toBeNull();
 
-        await click(searchableInput);
         await keyboard(options[1].label);
         expect(searchableInput.value).toBe(options[1].label);
 
@@ -338,8 +345,6 @@ describe("Input", () => {
 
         expect(searchableInput).not.toBeNull();
 
-        await click(searchableInput);
-
         const options = queryAllByTestId(`${testId}-option`);
         expect(options).toHaveLength(3);
       }
@@ -357,6 +362,8 @@ describe("Input", () => {
         const clearButton = queryByTestId(`${testId}-clear`) as HTMLDivElement;
         expect(clearButton).not.toBeNull();
         await click(clearButton);
+
+        await delay(10);
 
         expect(inputSelect.textContent).toBe("");
       }
@@ -390,7 +397,6 @@ describe("Input", () => {
 
         expect(searchableInput).not.toBeNull();
 
-        await click(searchableInput);
         await keyboard(options[1].label);
         expect(searchableInput.value).toBe(options[1].label);
         expect(asyncOptions).toHaveBeenCalledWith(options[1].label);
@@ -465,7 +471,6 @@ describe("Input", () => {
         expect(searchableInput).not.toBeNull();
 
         const unknownLabel = "Not created yet";
-        await click(searchableInput);
         await keyboard(unknownLabel);
         expect(searchableInput).toHaveValue(unknownLabel);
         expect(createButtonLabelTemplate).toHaveBeenCalledWith(unknownLabel);

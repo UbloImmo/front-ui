@@ -440,7 +440,3 @@ export type SelectInputOptionGroupProps<
 };
 
 export type RefetchSelectOptionsFn = AsyncFn<[Nullable<string>], void>;
-
-export type SelectInputOptionsContainerStyleProps = StyleProps<{
-  reverse?: boolean;
-}>;
