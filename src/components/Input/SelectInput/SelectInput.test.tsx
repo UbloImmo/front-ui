@@ -273,6 +273,8 @@ describe("Input", () => {
 
         await click(option);
 
+        await delay(10);
+
         expect(inputSelect.getAttribute("aria-expanded")).toBe("false");
         expect(inputSelect?.textContent).toBe(options[0].label);
 
