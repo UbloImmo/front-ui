@@ -349,7 +349,7 @@ describe("Input", () => {
         expect(clearButton).not.toBeNull();
         await click(clearButton);
 
-        await delay(0);
+        await delay(10);
 
         expect(inputSelect.textContent).toBe("");
       }
