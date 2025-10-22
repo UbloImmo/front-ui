@@ -63,6 +63,7 @@ const SelectInputPopover = ({
       sticky="always"
       fitTriggerWidth
       fill
+      fillHeight
       allowContentWidthOverride
       testId={popoverTestId}
       overrideTestId
