@@ -18,15 +18,10 @@ import { Badge } from "@/components/Badge";
 import { Text } from "@/components/Text";
 import { FlexLayout } from "@/layouts/Flex";
 import { testComponentFactory } from "@/tests";
+import { delay } from "@utils";
 
 const testId = "input-select";
 const testSelectInput = testComponentFactory("SelectInput", SelectInput);
-
-// const options = [
-//   { label: "Apple", value: "1" },
-//   { label: "Banana", value: "2" },
-//   { label: "Cherry", value: "3", disabled: true },
-// ];
 
 const stringOptions = [
   {
@@ -292,7 +287,6 @@ describe("Input", () => {
 
         expect(searchableInput).not.toBeNull();
 
-        await click(searchableInput);
         await keyboard("test");
         expect(searchableInput.value).toBe("test");
       }
@@ -314,7 +308,6 @@ describe("Input", () => {
 
         expect(searchableInput).not.toBeNull();
 
-        await click(searchableInput);
         await keyboard(options[1].label);
         expect(searchableInput.value).toBe(options[1].label);
 
@@ -338,8 +331,6 @@ describe("Input", () => {
 
         expect(searchableInput).not.toBeNull();
 
-        await click(searchableInput);
-
         const options = queryAllByTestId(`${testId}-option`);
         expect(options).toHaveLength(3);
       }
@@ -357,6 +348,8 @@ describe("Input", () => {
         const clearButton = queryByTestId(`${testId}-clear`) as HTMLDivElement;
         expect(clearButton).not.toBeNull();
         await click(clearButton);
+
+        await delay(0);
 
         expect(inputSelect.textContent).toBe("");
       }
@@ -390,7 +383,6 @@ describe("Input", () => {
 
         expect(searchableInput).not.toBeNull();
 
-        await click(searchableInput);
         await keyboard(options[1].label);
         expect(searchableInput.value).toBe(options[1].label);
         expect(asyncOptions).toHaveBeenCalledWith(options[1].label);
@@ -465,7 +457,6 @@ describe("Input", () => {
         expect(searchableInput).not.toBeNull();
 
         const unknownLabel = "Not created yet";
-        await click(searchableInput);
         await keyboard(unknownLabel);
         expect(searchableInput).toHaveValue(unknownLabel);
         expect(createButtonLabelTemplate).toHaveBeenCalledWith(unknownLabel);

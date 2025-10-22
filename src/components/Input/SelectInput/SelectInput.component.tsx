@@ -18,7 +18,6 @@ import {
   defaultSelectInputProps,
   isSelectOptionGroup,
   useSelectAutoCompleteQuery,
-  useSelectInputIntersection,
   useSelectInputKeyboardEvents,
   useSelectOptions,
   useSelectUnknownValueIngestion,
@@ -33,6 +32,7 @@ import {
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
+import { SelectInputOptionsList } from "./components/SelectInputOptionsList.component";
 
 import { Button } from "@/components/Button";
 import { Icon } from "@/components/Icon";
@@ -227,7 +227,7 @@ const SelectInput = <
     clearInternalValue();
   }, [activeOption, disabled, isOpen, clearable, clearInternalValue]);
 
-  const { isShifted } = useSelectInputIntersection(isOpen, wrapperRef);
+  // const { isShifted } = useSelectInputIntersection(isOpen, wrapperRef);
 
   const createOptionAndClose = useCallback(
     async (query: string) => {
@@ -326,6 +326,19 @@ const SelectInput = <
     logger,
   ]);
 
+  const OptionsList = (
+    <SelectInputOptionsList
+      open={isOpen}
+      displayOptions={displayOptions}
+      onSelectOption={selectOptionAndClose}
+      Option={OptionComponent ?? undefined}
+      createOptionProps={createOptionProps}
+      isEmptyResult={isEmptyResult}
+      assistiveText={assistiveText}
+      testId={testId}
+    />
+  );
+
   return (
     <SelectInputWrapper
       {...inputStyles}
@@ -337,17 +350,9 @@ const SelectInput = <
       <SelectInputPopover
         open={isOpen}
         onOpenChange={setIsOpen}
-        displayOptions={displayOptions}
-        onSelectOption={selectOptionAndClose}
-        Option={OptionComponent ?? undefined}
-        createOptionProps={createOptionProps}
-        isEmptyResult={isEmptyResult}
-        assistiveText={assistiveText}
-        isShifted={isShifted}
-        fitTriggerWidth={true}
-        fill={true}
-        allowContentWidthOverride={true}
+        content={OptionsList}
         testId={testId}
+        wrapperRef={wrapperRef}
       >
         <SelectInputContainer
           {...inputStyles}

@@ -688,24 +688,24 @@ export const useSelectInputKeyboardEvents = (
   closeOptions: VoidFn
 ) => {
   useLayoutEffect(() => {
-    const onPointerDown = (e: PointerEvent) => {
-      if (!e.target) return;
-      if ("id" in e.target && e.target.id === inputId) return;
-      if (!wrapperRef.current) return;
-      if (wrapperRef.current.contains(e.target as HTMLElement)) return;
+    // const onPointerDown = (e: PointerEvent) => {
+    //   if (!e.target) return;
+    //   if ("id" in e.target && e.target.id === inputId) return;
+    //   if (!wrapperRef.current) return;
+    //   if (wrapperRef.current.contains(e.target as HTMLElement)) return;
 
-      closeOptions();
-    };
+    //   closeOptions();
+    // };
 
     const onKeyUp = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         closeOptions();
       }
     };
-    window.addEventListener("pointerdown", onPointerDown);
+    // window.addEventListener("pointerdown", onPointerDown);
     window.addEventListener("keyup", onKeyUp);
     return () => {
-      window.removeEventListener("pointerdown", onPointerDown);
+      // window.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("keyup", onKeyUp);
     };
   }, [closeOptions, inputId, wrapperRef]);
