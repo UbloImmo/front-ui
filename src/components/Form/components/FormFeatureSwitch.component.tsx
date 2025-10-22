@@ -11,8 +11,13 @@ export const FormFeatureSwitch = (props: BuiltFormFeatureSwitchProps) => {
   const { layout, disabled: baseDisabled, ...rest } = props;
   const { isEditing } = useFormContext<object>();
   const disabled = useMemo(
-    () => baseDisabled || !isEditing,
-    [baseDisabled, isEditing]
+    () => baseDisabled || !isEditing || layout.readonly,
+    [baseDisabled, isEditing, layout.readonly]
+  );
+
+  const readonly = useMemo(
+    () => layout.readonly || !isEditing,
+    [isEditing, layout.readonly]
   );
 
   if (layout.hidden) return null;
@@ -25,7 +30,7 @@ export const FormFeatureSwitch = (props: BuiltFormFeatureSwitchProps) => {
       overrideTestId
       fill
     >
-      <FeatureSwitch {...rest} disabled={disabled} />
+      <FeatureSwitch {...rest} disabled={disabled} readonly={readonly} />
     </FormFieldGridItem>
   );
 };
