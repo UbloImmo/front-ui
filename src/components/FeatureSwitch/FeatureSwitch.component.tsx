@@ -42,13 +42,14 @@ const defaultFeatureSwitchProps: FeatureSwitchDefaultProps = {
   disabled: false,
   tooltip: null,
   variant: "switch",
+  readonly: false,
 };
 
 /**
  *
  * Provides informations about a feature that the user can activate, deactivate or select an option from a list.
  *
- * @version 0.0.4
+ * @version 0.0.5
  *
  * @param {FeatureSwitchProps & TestIdProps} props - FeatureSwitch component props
  * @returns {JSX.Element}

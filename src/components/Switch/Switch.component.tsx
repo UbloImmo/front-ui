@@ -12,6 +12,7 @@ import {
   useStyleProps,
   useStatic,
   useUikitTranslation,
+  isNonEmptyString,
 } from "@utils";
 
 import type {
@@ -29,12 +30,13 @@ const defaultSwitchProps: SwitchDefaultProps = {
   activeHelperText: null,
   inactiveHelperText: null,
   helperPosition: "start",
+  readonly: false,
 };
 
 /**
  * A toggable component to use when we want the user to enable or disable an option or a feature
  *
- * @version 0.0.6
+ * @version 0.0.7
  *
  * @param {SwitchProps & TestIdProps} props - Switch component props
  * @returns {JSX.Element}
@@ -56,13 +58,13 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
   const propagateOnChange = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
-      if (props.disabled) return;
+      if (mergedProps.disabled || mergedProps.readonly) return;
       const newActive = !isActive;
 
-      if (props.onChange) props.onChange(newActive);
+      if (mergedProps.onChange) mergedProps.onChange(newActive);
       setIsActive(newActive);
     },
-    [isActive, props]
+    [isActive, mergedProps]
   );
 
   const tl = useUikitTranslation();
@@ -84,39 +86,52 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
     return isActive && !disabled ? "primary-base" : "gray-600";
   }, [isActive, disabled]);
 
+  const showHelper = useMemo(() => {
+    if (!isNonEmptyString(helperText)) return false;
+    if (mergedProps.readonly) return true;
+    return withHelper;
+  }, [helperText, mergedProps.readonly, withHelper]);
+
   const Helper = useCallback(() => {
-    if (!withHelper || !helperText) return null;
     return (
-      <Text weight="bold" color={textColor} uppercase>
+      <Text
+        weight="bold"
+        color={textColor}
+        uppercase
+        testId={`${testId}-helper`}
+        overrideTestId
+      >
         {helperText}
       </Text>
     );
-  }, [withHelper, helperText, textColor]);
+  }, [helperText, textColor, testId]);
 
   return (
     <FlexLayout testId={testId} gap="s-2" align="center" overrideTestId>
-      {helperPosition === "start" && <Helper />}
-      <SwitchContainer
-        onClick={propagateOnChange}
-        disabled={disabled}
-        role="checkbox"
-        type="button"
-        aria-checked={isActive}
-        aria-disabled={disabled}
-        data-testid={`${testId}-container`}
-        data-active={isActive}
-        tabIndex={disabled ? -1 : 0}
-      >
-        <SwitchHandle
-          {...styleProps}
-          $active={isActive}
+      {showHelper && helperPosition === "start" && <Helper />}
+      {!mergedProps.readonly && (
+        <SwitchContainer
+          onClick={propagateOnChange}
+          disabled={disabled}
+          role="checkbox"
+          type="button"
           aria-checked={isActive}
           aria-disabled={disabled}
-          data-testid={`${testId}-handle`}
+          data-testid={`${testId}-container`}
           data-active={isActive}
-        />
-      </SwitchContainer>
-      {helperPosition === "end" && <Helper />}
+          tabIndex={disabled ? -1 : 0}
+        >
+          <SwitchHandle
+            {...styleProps}
+            $active={isActive}
+            aria-checked={isActive}
+            aria-disabled={disabled}
+            data-testid={`${testId}-handle`}
+            data-active={isActive}
+          />
+        </SwitchContainer>
+      )}
+      {showHelper && helperPosition === "end" && <Helper />}
     </FlexLayout>
   );
 };

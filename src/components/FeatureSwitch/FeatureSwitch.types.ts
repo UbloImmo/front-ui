@@ -56,6 +56,13 @@ export type FeatureSwitchCommonProps = {
    * @default null
    */
   tooltip?: Nullable<TooltipProps>;
+
+  /**
+   * Passthrough for {@link SwitchProps}'s `readonly` property
+   *
+   * @default false
+   */
+  readonly?: boolean;
 };
 
 /**

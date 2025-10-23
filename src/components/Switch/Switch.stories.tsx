@@ -146,3 +146,15 @@ export const HelperPosition = (props: SwitchProps) => {
     />
   );
 };
+
+const bools = [false, true];
+export const Readonly = (props: SwitchProps) => (
+  <ComponentVariants
+    for="readonly"
+    of={Switch}
+    defaults={props}
+    variants={bools}
+    propLabels
+    align="center"
+  />
+);
