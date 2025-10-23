@@ -1,10 +1,9 @@
 import { expect, mock } from "bun:test";
 
 import { Switch } from "./Switch.component";
+import { SwitchProps } from "./Switch.types";
 
 import { testComponentFactory } from "@/tests";
-import { queryByTestId } from "@storybook/test";
-import { SwitchProps } from "./Switch.types";
 
 const testSwitch = testComponentFactory("Switch", Switch);
 
