@@ -451,6 +451,7 @@ const FieldDisplayValueContainer = styled(FlexLayout)<{
   max-height: var(--container-height);
   height: var(--container-height);
   min-height: var(--container-height);
+  width: 100%;
 
   ${textAreaStyles}
 

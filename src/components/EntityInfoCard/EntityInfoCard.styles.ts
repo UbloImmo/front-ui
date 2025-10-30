@@ -27,6 +27,11 @@ export const entityCardHeadingStyles = (): RuleSet => css`
   width: 100%;
   flex: 1;
   margin-bottom: var(--s-3);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const entityCardStatusRowListStyles = (): RuleSet => css`
