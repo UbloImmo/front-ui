@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.11.12 - 2025-10-30
 ### Fixed
 - `v0.0.12` EntityInfoCardSection
   - Add text truncation styles in `entityCardHeadingStyles`
