@@ -39,7 +39,7 @@ export const defaultEntityInfoCardSectionProps: EntityInfoCardSectionDefaultProp
  *
  * Renders the section's content in a bordered, padded column.
  *
- * @version 0.0.11
+ * @version 0.0.12
  *
  * @param {EntityInfoCardSectionProps & EntityInfoCardCallbackProps & TestIdProps} props - the properties of the section
  */

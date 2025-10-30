@@ -9,7 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Set `width: 100%` for `FieldDisplayValueContainer` to ensure correct field display and prevent overflow issue
+- `v0.0.12` EntityInfoCardSection
+  - Add text truncation styles in `entityCardHeadingStyles`
+- `v0.0.5` FormField component
+  - Set `width: 100%` for `FieldDisplayValueContainer` to ensure correct field display and prevent overflow issue
 
 ## 1.11.11 - 2025-10-22
 
