@@ -60,7 +60,7 @@ import type { CommonInputStyleProps, InputProps } from "../Input.types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.1.3
+ * @version 0.1.4
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
