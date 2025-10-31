@@ -242,3 +242,29 @@ export const ControlIcon = () => {
     />
   );
 };
+
+export const Clearable: Story = {
+  args: {
+    placeholder: "Select options (with clear button)",
+    clearable: true,
+    value: ["option-1", "option-2"],
+    options: [
+      {
+        label: "Option 1",
+        value: "option-1",
+      },
+      {
+        label: "Option 2",
+        value: "option-2",
+      },
+      {
+        label: "Option 3",
+        value: "option-3",
+      },
+      {
+        label: "Option 4",
+        value: "option-4",
+      },
+    ],
+  },
+};

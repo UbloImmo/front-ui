@@ -34,17 +34,20 @@ import {
   useSelectOptions,
 } from "../SelectInput/SelectInput.utils";
 
+import { Button } from "@/components/Button";
 import { Chip } from "@/components/Chip";
 import { Icon } from "@/components/Icon";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
+import { cssDimensions } from "@/utils/styles.utils";
 import {
   useTestId,
   useMergedProps,
   useUikitTranslation,
   normalizeToColorKey,
+  useStatic,
 } from "@utils";
 
 import type {
@@ -69,12 +72,13 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
     filterOption: null,
     controlIcon: "CaretDownFill",
     Option: null,
+    clearable: false,
   };
 
 /**
  * Allows the user to select multiple values from a list of options.
  *
- * @version 0.0.9
+ * @version 0.0.10
  *
  * @param {MultiSelectInputProps & TestIdProps} props - The props for the MultiSelectInput component
  *
@@ -107,13 +111,18 @@ const MultiSelectInput = <
     props as unknown as SelectInputProps<TValue, TExtraData>,
     null
   );
-  const { displayOptions, activeOptions, selectOption, unselectOption } =
-    useMultiSelectValue(mergedProps, options, flattenedOptions);
+  const {
+    displayOptions,
+    activeOptions,
+    selectOption,
+    unselectOption,
+    clearInternalValue,
+  } = useMultiSelectValue(mergedProps, options, flattenedOptions);
 
   const inputStyles = useInputStyles(mergedProps);
   const inputId = useInputId(mergedProps);
 
-  const { placeholder, disabled, error, required } = mergedProps;
+  const { placeholder, disabled, error, required, clearable } = mergedProps;
 
   /**
    * Closes the options dropdown and blurs the input.
@@ -217,6 +226,8 @@ const MultiSelectInput = <
 
   const tl = useUikitTranslation();
 
+  const clearLabel = useStatic(tl.action.unselectAll);
+
   const assistiveText = useMemo(() => {
     if (isLoading) return tl.status.loading();
     return tl.status.empty();
@@ -229,6 +240,14 @@ const MultiSelectInput = <
   const noValue = useMemo(() => {
     return !activeOptions.length;
   }, [activeOptions]);
+
+  /**
+   * Clears all selected options.
+   */
+  const clearAllOptions = useCallback(() => {
+    if (disabled || !activeOptions.length || !clearable || isOpen) return;
+    clearInternalValue();
+  }, [activeOptions.length, disabled, isOpen, clearable, clearInternalValue]);
 
   useSelectInputKeyboardEvents(wrapperRef, inputId, closeOptions);
 
@@ -355,9 +374,20 @@ const MultiSelectInput = <
           <StyledInputControl
             {...inputStyles}
             data-testid={`${testId}-control`}
+            onClick={activeOptions.length ? clearAllOptions : undefined}
           >
             {isOpen && isLoading ? (
               <Loading animation="BouncingBalls" size="s-4" />
+            ) : !isOpen && clearable && activeOptions.length && !disabled ? (
+              <ClearButton
+                color="clear"
+                secondary
+                icon="XLg"
+                embedded
+                title={clearLabel}
+                testId={`${testId}-clear`}
+                overrideTestId
+              />
             ) : (
               <Icon name={mergedProps.controlIcon} />
             )}
@@ -390,4 +420,14 @@ const AssistiveTextWrapper = styled.div`
 
 const MultiSelectInputElement = styled.div<CommonInputStyleProps>`
   ${multiSelectInputElementStyles}
+`;
+
+const ClearButton = styled(Button)`
+  padding: 0 !important;
+  ${cssDimensions("min-content", "min-content", true, true)};
+
+  &:hover svg,
+  &:hover svg path {
+    fill: var(--error-medium) !important;
+  }
 `;

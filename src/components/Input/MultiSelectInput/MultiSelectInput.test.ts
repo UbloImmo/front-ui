@@ -173,6 +173,87 @@ testMultiSelectInput({
   }
 );
 
+describe("clearable", () => {
+  testMultiSelectInput({
+    options: options,
+    value: ["1", "2"],
+    clearable: true,
+    onChange,
+  })(
+    "should show clear button when clearable is true and options are selected",
+    async ({ queryByTestId }) => {
+      const clearButton = queryByTestId(`${testId}-clear`);
+      expect(clearButton).not.toBeNull();
+    }
+  );
+
+  testMultiSelectInput({
+    options: options,
+    value: ["1", "2"],
+    clearable: false,
+    onChange,
+  })(
+    "should not show clear button when clearable is false",
+    async ({ queryByTestId }) => {
+      const clearButton = queryByTestId(`${testId}-clear`);
+      expect(clearButton).toBeNull();
+    }
+  );
+
+  testMultiSelectInput({
+    options: options,
+    clearable: true,
+    onChange,
+  })(
+    "should not show clear button when no options are selected",
+    async ({ queryByTestId }) => {
+      const clearButton = queryByTestId(`${testId}-clear`);
+      expect(clearButton).toBeNull();
+    }
+  );
+
+  testMultiSelectInput({
+    options: options,
+    value: ["1", "2"],
+    clearable: true,
+    onChange,
+  })(
+    "should clear all selected options when clear button is clicked",
+    async ({ queryByTestId }, { click }) => {
+      const inputSelect = queryByTestId(
+        `${testId}-element`
+      ) as HTMLButtonElement;
+
+      expect(inputSelect.textContent).toContain("Option 1");
+      expect(inputSelect.textContent).toContain("Option 2");
+
+      const clearButton = queryByTestId(`${testId}-clear`) as HTMLButtonElement;
+      expect(clearButton).not.toBeNull();
+
+      await click(clearButton);
+
+      expect(inputSelect.textContent).not.toContain("Option 1");
+      expect(inputSelect.textContent).not.toContain("Option 2");
+      expect(onChange).toHaveBeenCalledWith([]);
+      onChange.mockReset();
+    }
+  );
+
+  testMultiSelectInput({
+    options: options,
+    value: ["1", "2"],
+    clearable: true,
+    disabled: true,
+    onChange,
+  })(
+    "should not show clear button when input is disabled",
+    async ({ queryByTestId }) => {
+      const clearButton = queryByTestId(`${testId}-clear`);
+      expect(clearButton).toBeNull();
+    }
+  );
+});
+
 const testUseMultiSelectValue = () => {
   type Hook = typeof useMultiSelectValue;
   const testHook = testHookFactory<Parameters<Hook>, ReturnType<Hook>, Hook>(
@@ -192,6 +273,17 @@ const testUseMultiSelectValue = () => {
 
     result.selectOption(null);
     expect(result.internalValue.size).toBe(0);
+  });
+
+  testHook(
+    {
+      ...MultiSelectInput.defaultProps,
+      onChange,
+    },
+    [],
+    []
+  )("should expose clearInternalValue function", (result) => {
+    expect(result.clearInternalValue).toBeInstanceOf(Function);
   });
 };
 
