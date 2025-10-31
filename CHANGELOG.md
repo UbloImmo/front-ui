@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- `v0.1.4` SelectInput component
+  - Ignore accents when filtering options for searchable mode
+
 ## 1.11.13 - 2025-10-31
 ### Added
 - `v0.0.10` MultiSelectInput component

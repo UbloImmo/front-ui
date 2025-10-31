@@ -140,6 +140,10 @@ export const Searchable: Story = {
         label: "Third option",
         value: "option-3",
       },
+      {
+        label: "Dernière option (avec accent)",
+        value: "option-4",
+      },
     ],
   },
 };

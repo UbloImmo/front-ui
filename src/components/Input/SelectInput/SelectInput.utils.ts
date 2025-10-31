@@ -581,9 +581,19 @@ export const useSelectValue = <
     }
 
     return flattenedOptions.filter((option) => {
-      return option.label
+      // use "NFD" unicode normalization to decompose the string into its base characters and accents
+      // and delete all accents with a regex
+      const normalizedLabel = option.label
         .toLowerCase()
-        .includes(autoCompleteQuery?.toLowerCase() ?? "");
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+      const normalizedQuery = (autoCompleteQuery ?? "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+      return normalizedLabel.includes(normalizedQuery);
     });
   }, [
     activeOption,
