@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.11.13 - 2025-10-31
 ### Added
 - `v0.0.10` MultiSelectInput component
   - Add `clearable` property to allow clearing the selected options
