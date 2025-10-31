@@ -246,7 +246,7 @@ export const ControlIcon = () => {
 export const Clearable: Story = {
   args: {
     placeholder: "Select options (with clear button)",
-    isClearable: true,
+    clearable: true,
     value: ["option-1", "option-2"],
     options: [
       {

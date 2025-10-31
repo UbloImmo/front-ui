@@ -50,7 +50,7 @@ export type MultiSelectInputProps<
    * @type {boolean}
    * @default false
    */
-  isClearable?: boolean;
+  clearable?: boolean;
 };
 
 export type DefaultMultiSelectInputProps<

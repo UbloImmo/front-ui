@@ -72,7 +72,7 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
     filterOption: null,
     controlIcon: "CaretDownFill",
     Option: null,
-    isClearable: false,
+    clearable: false,
   };
 
 /**
@@ -122,7 +122,7 @@ const MultiSelectInput = <
   const inputStyles = useInputStyles(mergedProps);
   const inputId = useInputId(mergedProps);
 
-  const { placeholder, disabled, error, required, isClearable } = mergedProps;
+  const { placeholder, disabled, error, required, clearable } = mergedProps;
 
   /**
    * Closes the options dropdown and blurs the input.
@@ -245,9 +245,9 @@ const MultiSelectInput = <
    * Clears all selected options.
    */
   const clearAllOptions = useCallback(() => {
-    if (disabled || !activeOptions.length || !isClearable || isOpen) return;
+    if (disabled || !activeOptions.length || !clearable || isOpen) return;
     clearInternalValue();
-  }, [activeOptions.length, disabled, isOpen, isClearable, clearInternalValue]);
+  }, [activeOptions.length, disabled, isOpen, clearable, clearInternalValue]);
 
   useSelectInputKeyboardEvents(wrapperRef, inputId, closeOptions);
 
@@ -378,7 +378,7 @@ const MultiSelectInput = <
           >
             {isOpen && isLoading ? (
               <Loading animation="BouncingBalls" size="s-4" />
-            ) : !isOpen && isClearable && activeOptions.length && !disabled ? (
+            ) : !isOpen && clearable && activeOptions.length && !disabled ? (
               <ClearButton
                 color="clear"
                 secondary
