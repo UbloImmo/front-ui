@@ -119,5 +119,6 @@ export const useMultiSelectValue = <
     isSelectedOption,
     selectOption,
     unselectOption,
+    clearInternalValue,
   };
 };
