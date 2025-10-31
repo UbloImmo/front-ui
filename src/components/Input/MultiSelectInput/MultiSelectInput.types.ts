@@ -44,6 +44,13 @@ export type MultiSelectInputProps<
    * @type {Nullable<CustomOptionComponent<TValue, TExtraData>>}
    */
   Option?: Nullable<CustomOptionComponent<TValue, TExtraData>>;
+  /**
+   * Whether the user can clear all selected options
+   *
+   * @type {boolean}
+   * @default false
+   */
+  isClearable?: boolean;
 };
 
 export type DefaultMultiSelectInputProps<
