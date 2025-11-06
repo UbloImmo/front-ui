@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.11.15 - 2025-11-06
 ### Fixed
 - Add "fr-FR" locale option to toLocaleDateString method in displayDateValue function (computeFieldDisplayContent) to format dates correctly for browsers with US locale settings ("dd/mm/yyyy" instead "mm/dd/yyyy")
 
