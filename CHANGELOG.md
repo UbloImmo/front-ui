@@ -8,8 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Fixed
-- `0.0.6` FormField & `0.0.4` FormTable
-  - Add "fr-FR" option in toLocaleDateString method in displayDateValue function for computeFieldDisplayContent to format correctly date for english browser ("dd/mm/yyyy" instead "mm/dd/yyyy")
+- Add "fr-FR" locale option to toLocaleDateString method in displayDateValue function (computeFieldDisplayContent) to format dates correctly for browsers with US locale settings ("dd/mm/yyyy" instead "mm/dd/yyyy")
 
 ## 1.11.14 - 2025-10-31
 ### Changed
