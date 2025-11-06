@@ -159,7 +159,7 @@ const displayComboBoxValue: FormDisplayValueFormatterFn<
  */
 const displayDateValue: FormDisplayValueFormatterFn<"date"> = (value) => {
   const date = normalizeToDate(value);
-  if (date) return date.toLocaleDateString();
+  if (date) return date.toLocaleDateString("fr-FR");
   return "Invalid date";
 };
 

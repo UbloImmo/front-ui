@@ -582,7 +582,7 @@ const formTableProps: FormTableProps<IdentityTable> = {
       return {
         lastName: String(Math.round(Math.random() * 100)),
         firstName: String(Math.round(Math.random() * 100)),
-        dateOfBirth: "1990-01-01",
+        dateOfBirth: "1990-01-31",
         numberOfChildren: 0,
         professionalInfo: {
           role: "tester",
@@ -670,7 +670,7 @@ const commonTableFormProps: FormProps<IdentityTable> = {
       {
         firstName: "John has a very very very long name",
         lastName: "Doe",
-        dateOfBirth: "1990-01-01",
+        dateOfBirth: "1990-01-31",
         numberOfChildren: 0,
         professionalInfo: {
           role: "tester",
@@ -1012,7 +1012,7 @@ const sharedOptions = [
 const queryData: FormData<AllFieldsData> = {
   text: "Text",
   select: sharedOptions[0].value,
-  date: "2024-01-01",
+  date: "2024-01-31",
   iconPicker: "Square",
   comboBox: "option1",
   multiSelect: sharedOptions.slice(0, 2).map(({ value }) => value),
