@@ -36,8 +36,6 @@ const defaultMonthYearInputProps: MonthYearInputDefaultProps = {
   onBlur: null,
   onChangeNative: null,
   name: null,
-  min: null,
-  max: null,
 };
 
 /**
