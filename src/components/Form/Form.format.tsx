@@ -11,6 +11,7 @@ import { Badge } from "../Badge";
 import { EnergyLabel } from "../EnergyLabel";
 import { Icon } from "../Icon";
 import { calculateEnergyScore } from "../Input/EnergyScoreInput/EnergyScoreInput.utils";
+import { yearMonthToMonthYear } from "../Input/MonthYearInput/MonthYearInput.utils";
 import { Text } from "../Text";
 import { FieldSkeleton } from "./components/FieldSkeleton.component";
 import { scaleNumber } from "../Input/NumberInput/NumberInput.utils";
@@ -161,6 +162,18 @@ const displayDateValue: FormDisplayValueFormatterFn<"date"> = (value) => {
   const date = normalizeToDate(value);
   if (date) return date.toLocaleDateString("fr-FR");
   return "Invalid date";
+};
+
+/**
+ * A {@link FormDisplayValueFormatterFn} that displays a `month-year` field's value.
+ *
+ * @param {InputValue} value - The value of the field to display (in YYYY-MM format).
+ * @returns {string} A string representation of the month/year
+ *   (e.g. "01/2025"), or "—" if the value is invalid.
+ */
+const displayMonthYearValue: FormDisplayValueFormatterFn<"month-year"> = (value) => {
+  const displayValue = yearMonthToMonthYear(value);
+  return displayValue ?? noValue;
 };
 
 /**
@@ -350,6 +363,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
     <DisplaySelectValue fieldValue={fieldValue} props={props} />
   ),
   date: displayDateValue,
+  "month-year": displayMonthYearValue,
   combobox: displayComboBoxValue,
   "icon-picker": displayIconPickerValue,
   search: (fieldValue, props) => () => (
