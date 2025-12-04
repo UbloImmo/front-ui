@@ -14,6 +14,7 @@ export const inputTypes = [
   "textarea",
   "select",
   "date",
+  "month-year",
   "combobox",
   "icon-picker",
   "search",

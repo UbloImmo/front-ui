@@ -7,6 +7,7 @@ import { EmailInput } from "./EmailInput";
 import { EnergyScoreInput } from "./EnergyScoreInput";
 import { IconPickerInput } from "./IconPickerInput";
 import { inputTypes } from "./Input.data";
+import { MonthYearInput } from "./MonthYearInput";
 import { MultiSelectInput } from "./MultiSelectInput";
 import { NumberInput } from "./NumberInput";
 import { PasswordInput } from "./PasswordInput";
@@ -41,6 +42,7 @@ const inputComponentMap = <
   textarea: TextAreaInput,
   select: SelectInput<TGenericValue>,
   date: DateInput,
+  "month-year": MonthYearInput,
   combobox: ComboBoxInput<TGenericValue>,
   "icon-picker": IconPickerInput,
   search: SearchInput<TGenericValue>,

@@ -13,6 +13,7 @@ export * from "./TextInput";
 export * from "./TextAreaInput";
 export * from "./SelectInput";
 export * from "./DateInput";
+export * from "./MonthYearInput";
 export * from "./ComboBoxInput";
 export * from "./IconPickerInput";
 export * from "./SearchInput";
