@@ -974,6 +974,7 @@ const allFieldsSchema = z.object({
   text: z.string(),
   select: z.string(),
   date: z.string(),
+  monthYear: z.string(),
   iconPicker: z.enum(["Square", "Triangle", "Circle"]),
   comboBox: z.string(),
   multiSelect: z.array(z.string()),
@@ -1026,6 +1027,7 @@ const queryData: FormData<AllFieldsData> = {
   search: sharedOptions[0].value,
   searchText: "Search",
   energyScore: 12,
+  monthYear: "2025-01",
 };
 
 const allFieldsIcons: IconName[] = ["Square", "Triangle", "Circle"];
@@ -1050,6 +1052,11 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       label: "Date",
       type: "date",
       source: "date",
+    },
+    {
+      label: "Month Year",
+      type: "month-year",
+      source: "monthYear",
     },
     {
       label: "Icon Picker",
