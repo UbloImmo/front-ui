@@ -133,19 +133,8 @@ const MonthYearInput = (
     [mergedProps]
   );
 
-  const onFocus = useCallback(() => {
-    if (inputElement) {
-      setCursorPosition(inputElement.selectionStart ?? 0);
-    }
-  }, [inputElement]);
-
-  const onSelect = useCallback(() => {
-    if (inputElement) {
-      setCursorPosition(inputElement.selectionStart ?? 0);
-    }
-  }, [inputElement]);
-
-  const onClick = useCallback(() => {
+  // Update cursor position for keyboard controls
+  const updateCursorPosition = useCallback(() => {
     if (inputElement) {
       setCursorPosition(inputElement.selectionStart ?? 0);
     }
@@ -206,16 +195,15 @@ const MonthYearInput = (
       type="text"
       onChange={onChange}
       onBlur={onBlur}
-      onFocus={onFocus}
-      onSelect={onSelect}
-      onClick={onClick}
+      onFocus={updateCursorPosition}
+      onSelect={updateCursorPosition}
+      onClick={updateCursorPosition}
       onKeyDown={onKeyDown}
       placeholder={mergedProps.placeholder || "MM/YYYY"}
       disabled={mergedProps.disabled}
       required={mergedProps.required}
       ref={handleRef}
       autoComplete={autoComplete}
-      pattern="(0[1-9]|1[0-2])\/[0-9]{4}"
       id={id}
       maxLength={7}
       {...inputStyles}
