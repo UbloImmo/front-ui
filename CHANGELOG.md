@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- `v0.0.1` MonthYearInput component
+  - New input component for selecting month and year without day precision
+  - Auto-formatting: typing "122025" becomes "12/2025"
+  - Display format: MM/YYYY (user-friendly)
+  - Output format: YYYY-MM (backend-compatible)
+  - Keyboard controls: Arrow up/down to increment/decrement month or year based on cursor position
+  - Validation: Month must be 01-12, year must start with 1-9
+  - Full integration with Form component and Field component
+  - Comprehensive test coverage with 33 passing tests
+
 ## 1.11.15 - 2025-11-06
 ### Fixed
 - Add "fr-FR" locale option to toLocaleDateString method in displayDateValue function (computeFieldDisplayContent) to format dates correctly for browsers with US locale settings ("dd/mm/yyyy" instead "mm/dd/yyyy")
