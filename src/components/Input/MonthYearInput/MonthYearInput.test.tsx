@@ -176,6 +176,21 @@ describe("Input", () => {
       expect(input.placeholder).toBe("MM/YYYY");
     });
 
+    testDefaultProps(
+      "should have aria-label for accessibility",
+      ({ getByTestId }) => {
+        const input = getByTestId(testId) as HTMLInputElement;
+        expect(input.getAttribute("aria-label")).toBe(
+          "Month and year input. Format: MM/YYYY. Valid years: 1000 to 2999. You can use arrow keys to increment or decrement values."
+        );
+      }
+    );
+
+    testDefaultProps("should have numeric inputMode", ({ getByTestId }) => {
+      const input = getByTestId(testId) as HTMLInputElement;
+      expect(input.getAttribute("inputMode")).toBe("numeric");
+    });
+
     const onChange = mock(() => {});
 
     const testControlled = testMonthYearInput({

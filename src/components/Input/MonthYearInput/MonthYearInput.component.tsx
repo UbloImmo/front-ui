@@ -206,6 +206,9 @@ const MonthYearInput = (
       autoComplete={autoComplete}
       id={id}
       maxLength={7}
+      aria-label="Month and year input. Format: MM/YYYY. Valid years: 1000 to 2999. You can use arrow keys to increment or decrement values."
+      aria-invalid={mergedProps.error ? "true" : undefined}
+      inputMode="numeric"
       {...inputStyles}
     />
   );

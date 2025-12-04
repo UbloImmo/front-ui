@@ -17,7 +17,7 @@ export const isValidMonthYearStr = (value: unknown): value is string => {
   const monthNum = parseInt(month!, 10);
   const yearNum = parseInt(year!, 10);
 
-  return monthNum >= 1 && monthNum <= 12 && yearNum >= 1000 && yearNum <= 9999;
+  return monthNum >= 1 && monthNum <= 12 && yearNum >= 1000 && yearNum <= 2999;
 };
 
 /**
@@ -34,7 +34,7 @@ export const isValidYearMonthStr = (value: unknown): value is string => {
   const monthNum = parseInt(month!, 10);
   const yearNum = parseInt(year!, 10);
 
-  return monthNum >= 1 && monthNum <= 12 && yearNum >= 1000 && yearNum <= 9999;
+  return monthNum >= 1 && monthNum <= 12 && yearNum >= 1000 && yearNum <= 2999;
 };
 
 /**
@@ -148,6 +148,23 @@ export const autoFormatMonthYear = (input: string): string => {
     return `${month}/`;
   }
 
+  // Validate year progressively as it's being typed
+  if (year.length > 0) {
+    const yearNum = parseInt(year, 10);
+
+    // First digit must be 1 or 2 (for range 1000-2999)
+    if (year.length === 1 && yearNum > 2) {
+      return `${month}/`;
+    }
+
+    // If complete year, validate full range
+    if (year.length === 4) {
+      if (yearNum < 1000 || yearNum > 2999) {
+        return `${month}/`;
+      }
+    }
+  }
+
   return `${month}/${year}`;
 };
 
@@ -190,7 +207,7 @@ export const incrementMonthOrYear = (
     // Increment/decrement year
     year += increment;
     if (year < 1000) year = 1000;
-    if (year > 9999) year = 9999;
+    if (year > 2999) year = 2999;
   }
 
   return `${String(month).padStart(2, "0")}/${year}`;
