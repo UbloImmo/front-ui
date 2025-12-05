@@ -62,17 +62,23 @@ const MonthYearInput = (
   const [inputElement, setInputElement] =
     useState<Nullable<HTMLInputElement>>(null);
 
-  // Update innerValue if form value changes externally
+  // Track if we're in the middle of user editing to prevent external updates
+  const [isUserTyping, setisUserTyping] = useState<boolean>(false);
+
+  // Update innerValue if form value changes externally (but not during user editing)
   useEffect(() => {
+    if (isUserTyping) return;
+
     const outerValue = yearMonthToMonthYear(mergedProps.value) ?? "";
     if (outerValue !== innerValue) {
       setInnerValue(outerValue);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mergedProps.value]);
+  }, [mergedProps.value, isUserTyping]);
 
   const setInnerValueAndPropagate = useCallback(
     (value: Nullable<string>) => {
+      setisUserTyping(true);
       const rawValue = value ?? "";
       const isDeleting = rawValue.length < innerValue.length;
 
@@ -81,9 +87,11 @@ const MonthYearInput = (
         setInnerValue(rawValue);
 
         if (isFunction<InputOnChangeFn<"month-year">>(mergedProps.onChange)) {
-          const digitsOnly = rawValue.replace(/\D/g, "");
-          // Only propagate if it could become valid (has some digits) or is empty
-          if (digitsOnly === "") {
+          // Always propagate null when deleting, unless it's a valid complete value
+          if (isValidMonthYearStr(rawValue)) {
+            const outputValue = formatMonthYearForBackend(rawValue);
+            mergedProps.onChange(outputValue);
+          } else {
             mergedProps.onChange(null);
           }
         }
@@ -100,7 +108,7 @@ const MonthYearInput = (
           // Convert MM/YYYY to YYYY-MM for backend
           const outputValue = formatMonthYearForBackend(formattedValue);
           mergedProps.onChange(outputValue);
-        } else if (formattedValue === "") {
+        } else {
           mergedProps.onChange(null);
         }
       }
@@ -125,6 +133,7 @@ const MonthYearInput = (
 
   const onBlur = useCallback<NativeInputOnBlurFn>(
     (event) => {
+      setisUserTyping(false);
       if (isFunction<NativeInputOnBlurFn>(mergedProps.onBlur)) {
         mergedProps.onBlur(event);
       }

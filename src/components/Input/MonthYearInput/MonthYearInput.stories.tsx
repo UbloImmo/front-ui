@@ -15,12 +15,6 @@ const meta = {
     value: {
       type: "string",
     },
-    min: {
-      type: "string",
-    },
-    max: {
-      type: "string",
-    },
   },
 } satisfies Meta<typeof MonthYearInput>;
 
@@ -30,5 +24,19 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     placeholder: "MM/YYYY",
+  },
+};
+
+export const WithValue: Story = {
+  args: {
+    value: "2025-13",
+    placeholder: "MM/YYYY",
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    value: "2025-12",
+    disabled: true,
   },
 };
