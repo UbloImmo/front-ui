@@ -14,9 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Display format: MM/YYYY (user-friendly)
   - Output format: YYYY-MM (backend-compatible)
   - Keyboard controls: Arrow up/down to increment/decrement month or year based on cursor position
-  - Validation: Month must be 01-12, year must start with 1-9
+  - Validation: Month must be 01-12, year must be 1000-2999
+  - Accessibility features: descriptive aria-label with format instructions, aria-invalid for error states, inputMode="numeric" for mobile keyboards
   - Full integration with Form component and Field component
-  - Comprehensive test coverage with 33 passing tests
+  - Comprehensive test coverage with 35 passing tests
 
 ## 1.11.15 - 2025-11-06
 ### Fixed
