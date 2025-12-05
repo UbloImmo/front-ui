@@ -5,6 +5,7 @@ import type { CurrencyInputProps } from "./CurrencyInput";
 import type { DateInputProps } from "./DateInput/DateInput.types";
 import type { IconPickerInputProps } from "./IconPickerInput";
 import type { InputType, InputProps } from "./Input.types";
+import type { MonthYearInputProps } from "./MonthYearInput/MonthYearInput.types";
 import type { MultiSelectInputProps } from "./MultiSelectInput/MultiSelectInput.types";
 import type { NumberInputProps } from "./NumberInput/NumberInput.types";
 import type { PasswordInputProps } from "./PasswordInput/PasswordInput.types";
@@ -25,6 +26,7 @@ type SpecificInputPropsMap<
   textarea: TextAreaInputProps;
   select: SelectInputProps<TGenericValue>;
   date: DateInputProps;
+  "month-year": MonthYearInputProps;
   combobox: ComboBoxInputProps<TGenericValue>;
   "icon-picker": IconPickerInputProps;
   search: SearchInputProps<TGenericValue>;

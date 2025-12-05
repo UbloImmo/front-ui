@@ -1,0 +1,78 @@
+import { Meta } from "@storybook/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as MonthYearInputStories from "../MonthYearInput.stories.tsx";
+
+<Meta title="Components/Forms/Input/MonthYearInput/Usage" />
+
+<ComponentInfo of={MonthYearInputStories} />
+
+<Content>
+
+## Usage
+
+`MonthYearInput` component is an interactive single-line text-field for selecting a month and year, a specific type of [Input](?path=/docs/components-forms-input-usage--docs).
+It is commonly used in form layouts when you need month/year precision without day selection (e.g., credit card expiry dates, invoice terms, accounting/financiel reports, best-before dates).
+
+### Value & Formatting
+
+`MonthYearInput` is initialized without a value.
+
+#### Display Format
+
+The user always sees and types in **`MM/YYYY`** format (e.g., `12/2025`).
+
+#### Output Format
+
+The component outputs to the backend in **`YYYY-MM`** format (e.g., `2025-12`).
+
+> This separation ensures a user-friendly display while maintaining ISO-compatible backend data.
+
+### Auto-formatting
+
+The input includes intelligent auto-formatting to enhance user experience:
+
+- **Automatic padding**: Typing `2` becomes `02/` (adds leading zero and slash)
+- **Automatic slash**: After entering 2 valid month digits, the `/` appears automatically
+- **Smart validation**:
+  - Month must be between `01-12` (prevents `00` and values > `12`)
+  - Year must start with `1-9` (prevents leading zeros like `0123`)
+- **Seamless typing**: Type `122025` and it formats to `12/2025` automatically
+
+<Canvas of={MonthYearInputStories.Default} />
+
+### User input
+
+This input uses a native `<input type="text" />` with custom masking and validation logic.
+
+#### Typing
+
+Users can type naturally, and the input will auto-format as they go:
+
+1. Type `1` → stays as `1`
+2. Type `2` → becomes `12/` (slash added automatically)
+3. Type `2025` → becomes `12/2025`
+
+You can also delete characters including the slash using backspace.
+
+#### Using the keyboard arrows
+
+Focus the input and position your cursor on either the month or year section, then use arrow keys to increment/decrement:
+
+- **Arrow Up (↑)**: Increment the focused value
+- **Arrow Down (↓)**: Decrement the focused value
+
+**Month behavior:**
+
+- Cycles through `01-12`
+- Wraps around: `12` + 1 = `01` (and increments year)
+- Wraps backward: `01` - 1 = `12` (and decrements year)
+
+**Year behavior:**
+
+- Increments/decrements by 1
+- Range: `1000-9999`
+
+> You can increment month/year even with partial input. Missing values default to `01` for month and current year for year.
+
+</Content>
