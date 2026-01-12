@@ -1343,6 +1343,33 @@ export type MutateFormDataFn<TData extends object> = <
 ) => FormData<TData>;
 
 /**
+ * Type of the mutation payload used by {@link BatchMutateFormDataFn}
+ *
+ * An object containing {@link FormSource}s as keys and the value to set them as values.
+ */
+export type BatchMutationPayload<TData extends object> = {
+  [TSource in FormSource<TData>]?: DeepValueOf<
+    CompleteFormData<TData>,
+    TSource
+  > extends infer TValue
+    ? Nullable<TValue>
+    : never;
+};
+
+/**
+ * Mutates form data multiple fields at a time
+ *
+ * @template {object} TData - The type of the {@link FormData}
+ *
+ * @param {BatchMutationPayload<TData>} mutation - An object containing a mapping of which fields to mutate and their respective value.
+ *
+ * @returns {FormData<TData>} The mutated {@link FormData}
+ */
+export type BatchMutateFormDataFn<TData extends object> = (
+  mutation: BatchMutationPayload<TData>
+) => FormData<TData>;
+
+/**
  * Builds a {@link FieldProps} object from a {@link FormFieldProps} object,
  * links its `value`, `onChange`, `disabled`, `required`, `error` and `errorText` properties with the form data & schema.
  *
@@ -1601,6 +1628,14 @@ export type UseFormDataReturn<TData extends object> = {
    * @type {MutateFormDataFn<TData>}
    */
   mutateFormData: MutateFormDataFn<TData>;
+  /**
+   * Mutates the form's internal data at multiple specific `sources`.
+   *
+   * A batch version of {@link mutateFormData}.
+   *
+   * @type {BatchMutateFormDataFn<TData>}
+   */
+  batchMutateFormData: BatchMutateFormDataFn<TData>;
   /**
    * Flag indicating whether the form is still loading its initial data
    *
