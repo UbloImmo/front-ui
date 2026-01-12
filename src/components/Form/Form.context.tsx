@@ -268,7 +268,7 @@ const useFormData = <TData extends object>(
       let mutated = { ...data };
       for (const [source, value] of entries) {
         mutated = setObjectValue(
-          data as CompleteFormData<TData>,
+          mutated as CompleteFormData<TData>,
           source,
           value as DeepValueOf<CompleteFormData<TData>, typeof source>
         ) as typeof mutated;
