@@ -1,6 +1,8 @@
 import { arrayMove } from "@dnd-kit/sortable";
 import {
-  DeepValueOf,
+  type DeepKeyOf,
+  type DeepKeyOfType,
+  type DeepValueOf,
   deepValueOf,
   isBoolean,
   isFunction,
@@ -9,17 +11,19 @@ import {
   isObject,
   isString,
   isUndefined,
-  type DeepKeyOf,
-  type DeepKeyOfType,
   type Logger,
   type Nullable,
   type Nullish,
   type NullishPrimitives,
+  objectEntries,
   type VoidFn,
 } from "@ubloimmo/front-util";
 import { isEqual, merge } from "lodash";
 import {
+  type Context,
   createContext,
+  type FormEvent,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -27,11 +31,9 @@ import {
   useReducer,
   useRef,
   useState,
-  type Context,
-  type FormEvent,
-  type ReactNode,
 } from "react";
 
+import { useDialogManager } from "../Dialog";
 import {
   buildFormText,
   builtFormTableId,
@@ -46,7 +48,6 @@ import {
   isSchemaFieldRequired,
   setObjectValue,
 } from "./Form.utils";
-import { useDialogManager } from "../Dialog";
 
 import {
   cssLengthUsage,
@@ -56,10 +57,12 @@ import {
   useUikitTranslation,
 } from "@utils";
 
+import type { CheckboxStatus } from "../Checkbox";
 import type { FieldLabelProps } from "../Field";
 import type { InputOnChangeFn, InputType } from "../Input";
 import type {
   AppendTableRowFn,
+  BatchMutateFormDataFn,
   BuildCustomFieldPropsFn,
   BuildFieldPropsFn,
   BuildFormFeatureSwitchFn,
@@ -73,6 +76,7 @@ import type {
   BuiltFormTableModifiers,
   BuiltFormTableProps,
   BuiltFormTableRow,
+  CompleteFormData,
   ComputeFormValidationFn,
   CustomFormInputProps,
   DefaultFormLayoutProps,
@@ -113,7 +117,6 @@ import type {
   UseFormSubmissionReturn,
   UseFormValidationReturn,
 } from "./Form.types";
-import type { CheckboxStatus } from "../Checkbox";
 import type { GridEndPosition } from "@/layouts/GridItem";
 
 const FORM_DEBUG_FLAG = "FORM_DEBUG_ENABLED" as const;
@@ -238,12 +241,51 @@ const useFormData = <TData extends object>(
     [data, isLoading, logger, modifiers]
   );
 
+  /**
+   * Mutates form data at specified paths with respective values, all in one setState call.
+   *
+   * @param {BatchMutateFormDataFn<TData>} mutation - Object containing sources for keys and their data as values.
+   * @returns {FormData<TData>} - The mutated form data
+   */
+  const batchMutateFormData = useCallback<BatchMutateFormDataFn<TData>>(
+    (mutation) => {
+      if (isLoading) {
+        logger.warn(
+          "Cannot mutate form data while loading",
+          "batchMutateFormData"
+        );
+        return data;
+      }
+
+      if (modifiers.readonly || modifiers.disabled) {
+        logger.warn("Form is readonly or disabled", "batchMutateFormData");
+        return data;
+      }
+      const entries = objectEntries(mutation);
+      if (!entries.length) {
+        logger.warn("Empty mutation payload", "batchMutateFormData");
+      }
+      let mutated = { ...data };
+      for (const [source, value] of entries) {
+        mutated = setObjectValue(
+          data as CompleteFormData<TData>,
+          source,
+          value as DeepValueOf<CompleteFormData<TData>, typeof source>
+        ) as typeof mutated;
+      }
+      setData(mutated);
+      return mutated;
+    },
+    [data, isLoading, logger, modifiers]
+  );
+
   return {
     data,
     initialData,
     setData,
     setInitialData,
     mutateFormData,
+    batchMutateFormData,
     isLoading,
     setIsLoading,
   };
@@ -1318,6 +1360,7 @@ const defaultFormContext: FormContext<object> = {
   setData: () => {},
   setInitialData: () => {},
   mutateFormData: () => ({}),
+  batchMutateFormData: () => ({}),
   isLoading: false,
   setIsLoading: () => {},
   isSubmitting: false,
