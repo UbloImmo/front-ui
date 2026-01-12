@@ -1,5 +1,11 @@
 import { fn } from "@storybook/test";
-import { isArray, objectFromEntries } from "@ubloimmo/front-util";
+import {
+  isArray,
+  isNull,
+  isNumber,
+  Nullable,
+  objectFromEntries,
+} from "@ubloimmo/front-util";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 
@@ -10,7 +16,7 @@ import { DialogProvider, useDialog } from "../Dialog";
 import { FeatureSwitch } from "../FeatureSwitch";
 import { Heading } from "../Heading";
 import { Icon, type IconName } from "../Icon";
-import { Input } from "../Input";
+import { Input, NumberInput } from "../Input";
 import { isFormField } from "./Form.utils";
 import { Hypertext } from "../Hypertext";
 import { Modal } from "../Modal";
@@ -35,6 +41,7 @@ import type {
   FormTableTryDeletingRowParams,
 } from "./Form.types";
 import type { Meta, StoryObj } from "@storybook/react";
+import { useFormContext } from "./Form.context";
 
 const addressSchema = z.object({
   number: z.number().nullish(),
@@ -1138,4 +1145,96 @@ export const AllFields = () => {
 };
 AllFields.parameters = {
   docs: componentSource([allFieldsFormProps as FormStoryProps]),
+};
+
+type BatchUpdateData = {
+  number: number;
+  derived: {
+    double: number;
+    triple: number;
+    half: number;
+  };
+  flipFlop: boolean;
+};
+
+const BatchInput = ({
+  onChange: _,
+  value: __,
+  ...props
+}: CustomFormInputProps<number>) => {
+  const { batchMutateFormData, data } = useFormContext<BatchUpdateData>();
+  const onChange = (value: Nullable<number>) => {
+    if (isNull(value)) {
+      batchMutateFormData({
+        number: null,
+        "derived.double": null,
+        "derived.triple": null,
+        "derived.half": null,
+        flipFlop: !data.flipFlop,
+      });
+      return;
+    }
+    batchMutateFormData({
+      number: value,
+      "derived.double": value * 2,
+      "derived.triple": value * 3,
+      "derived.half": value * 0.5,
+      flipFlop: !data.flipFlop,
+    });
+  };
+  return <NumberInput {...props} uncontrolled onChange={onChange} />;
+};
+
+const content: FormContent<BatchUpdateData>[] = [
+  {
+    label: "Combined input (batch",
+    source: "number",
+    CustomInput: BatchInput,
+    layout: {
+      size: 2,
+    },
+  },
+  {
+    label: "Number",
+    type: "number",
+    source: "number",
+    layout: {
+      readonly: true,
+    },
+  },
+  {
+    label: "Double",
+    type: "number",
+    source: "derived.double",
+    layout: {
+      readonly: true,
+    },
+  },
+  {
+    label: "Triple",
+    type: "number",
+    source: "derived.triple",
+    layout: {
+      readonly: true,
+    },
+  },
+  {
+    label: "Half",
+    type: "number",
+    source: "derived.half",
+    layout: {
+      readonly: true,
+    },
+  },
+  {
+    kind: "feature-switch",
+    source: "flipFlop",
+    variant: "switch",
+    label: "Flip flop",
+    disabled: true,
+  },
+];
+
+export const BatchUpdate = () => {
+  return <Form<BatchUpdateData> title="Batch update demo" content={content} />;
 };
