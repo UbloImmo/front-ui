@@ -171,7 +171,9 @@ const displayDateValue: FormDisplayValueFormatterFn<"date"> = (value) => {
  * @returns {string} A string representation of the month/year
  *   (e.g. "01/2025"), or "—" if the value is invalid.
  */
-const displayMonthYearValue: FormDisplayValueFormatterFn<"month-year"> = (value) => {
+const displayMonthYearValue: FormDisplayValueFormatterFn<"month-year"> = (
+  value
+) => {
   const displayValue = yearMonthToMonthYear(value);
   return displayValue ?? noValue;
 };
