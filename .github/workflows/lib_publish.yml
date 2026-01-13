@@ -8,6 +8,10 @@ on:
         required: false
         type: boolean
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   publish_lib:
     name: Build & Publish NPM package
@@ -61,9 +65,7 @@ jobs:
 
       - name: Build & Publish package
         id: package_publish
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
 
   trigger_release:
     name: "Trigger release"
