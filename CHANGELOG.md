@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Internal: Updated publishing process to make it more secure, in accordance with NPM policy changes
+
 ## 1.12.2 - 2026-01-13
 ### Fixed
 - Internal: Automated lib publishing workflow
