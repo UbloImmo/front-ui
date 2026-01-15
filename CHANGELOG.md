@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.12.3-beta.0 - 2026-01-15
 ### Changed
-
 - Internal: Updated publishing process to make it more secure, in accordance with NPM policy changes
 
 ## 1.12.2 - 2026-01-13
