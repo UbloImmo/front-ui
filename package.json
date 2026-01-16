@@ -49,7 +49,7 @@
   "homepage": "https://github.com/UbloImmo/front-ui",
   "repository": {
     "type": "git",
-    "url": "https://github.com/UbloImmo/front-ui"
+    "url": "git+https://github.com/UbloImmo/front-ui.git"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
