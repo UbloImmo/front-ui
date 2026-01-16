@@ -71,12 +71,12 @@ jobs:
       - name: Build & Publish package (pre release)
         id: package_publish_pre_release
         if: ${{ inputs.pre-release }}
-        run: npm publish --provenance --access public --tag beta
+        run: npm publish --access public --tag beta
 
       - name: Build & Publish package
         id: package_publish
         if: ${{ !(inputs.pre-release) }}
-        run: npm publish --provenance --access public
+        run: npm publish --access public
 
   trigger_release:
     name: "Trigger release"
