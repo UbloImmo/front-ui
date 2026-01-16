@@ -71,7 +71,7 @@ jobs:
       - name: Build & Publish package (pre release)
         id: package_publish_pre_release
         if: ${{ inputs.pre-release }}
-        run: npm publish --provenance --access publis --tag beta
+        run: npm publish --provenance --access public --tag beta
 
       - name: Build & Publish package
         id: package_publish
