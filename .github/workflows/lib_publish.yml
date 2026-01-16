@@ -42,6 +42,11 @@ jobs:
           node-version: "20.x"
           registry-url: "https://registry.npmjs.org"
 
+      # Ensure latest npm (11.5.1) or later for trusted publishing
+      - name: Install latest NPM
+        id: npm_install_latest
+        run: npm install -g npm@latest
+
       - name: Check node
         id: node_check
         run: |
