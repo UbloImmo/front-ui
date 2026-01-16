@@ -68,8 +68,14 @@ jobs:
         id: install_deps
         run: bun install
 
+      - name: Build & Publish package (pre release)
+        id: package_publish_pre_release
+        if: ${{ inputs.pre-release }}
+        run: npm publish --provenance --access publis --tag beta
+
       - name: Build & Publish package
         id: package_publish
+        if: ${{ !(inputs.pre-release) }}
         run: npm publish --provenance --access public
 
   trigger_release:
