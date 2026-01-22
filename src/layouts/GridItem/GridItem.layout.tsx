@@ -1,21 +1,11 @@
 import { forwardRef } from "react";
-import styled from "styled-components";
 
-import { gridItemStyles } from "./GridItem.styles";
+import { useGridItemStyle } from "./GridItem.styles";
 import { useGridItemPosition } from "./GridItem.utils";
 
-import {
-  useClassName,
-  useHtmlAttribute,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { useTestId } from "@utils";
 
-import type {
-  GridItemDefaultProps,
-  GridItemProps,
-  GridItemStyleProps,
-} from "./GridItem.types";
+import type { GridItemDefaultProps, GridItemProps } from "./GridItem.types";
 import type { TestIdProps } from "@types";
 
 const defaultGridItemProps: GridItemDefaultProps = {
@@ -37,7 +27,7 @@ const defaultGridItemProps: GridItemDefaultProps = {
 /**
  * Renders a grid item with the specified position and children.
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {GridItemProps} props - The props for the grid item.
  * @param {Optional<GridStartPosition>} props.rowStart - The start position of the row.
@@ -56,13 +46,10 @@ const GridItem = forwardRef<HTMLDivElement, GridItemProps & TestIdProps>(
   ): JSX.Element => {
     const testId = useTestId("grid-item", props as TestIdProps);
     const position = useGridItemPosition(defaultGridItemProps, props);
-    const styleProps = useStyleProps(position);
-    const className = useClassName(props);
-    const style = useHtmlAttribute(props.styleOverride);
+    const { className, style } = useGridItemStyle(position);
+    const Element = position.as;
     return (
-      <GridItemContainer
-        {...styleProps}
-        as={props.as ?? "div"}
+      <Element
         data-testid={testId}
         className={className}
         style={style}
@@ -75,14 +62,10 @@ const GridItem = forwardRef<HTMLDivElement, GridItemProps & TestIdProps>(
         data-fill={position.fill}
       >
         {props.children}
-      </GridItemContainer>
+      </Element>
     );
   }
 );
 GridItem.defaultProps = defaultGridItemProps;
 
 export { GridItem };
-
-const GridItemContainer = styled.div<GridItemStyleProps>`
-  ${gridItemStyles}
-`;
