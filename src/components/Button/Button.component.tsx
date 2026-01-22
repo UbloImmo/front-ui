@@ -1,26 +1,27 @@
 import { isNull, isString } from "@ubloimmo/front-util";
-import { useCallback, useMemo, type MouseEventHandler } from "react";
-import styled from "styled-components";
-
 import {
-  buildButtonStyles,
-  buildButtonLoadingContainerStyles,
-} from "./Button.styles";
+  MouseEvent,
+  useCallback,
+  useMemo,
+  type MouseEventHandler,
+} from "react";
+
 import { Icon } from "../Icon";
 import { Loading } from "../Loading/Loading.component";
 import { Text } from "../Text";
+import styles from "./Button.module.css";
 
 import {
   useClassName,
+  useCssClasses,
   useHtmlAttribute,
   useLogger,
   useMergedProps,
-  useStyleProps,
   useTestId,
 } from "@utils";
 
 import type { ButtonProps, DefaultButtonProps } from "./Button.types";
-import type { StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 
 const defaultButtonProps: DefaultButtonProps = {
   type: "button",
@@ -45,7 +46,7 @@ const defaultButtonProps: DefaultButtonProps = {
 /**
  * A simple, clickable, responsive & accessible button.
  *
- * @version 0.0.11
+ * @version 0.1.0
  *
  * @param {ButtonProps} props - the button's props
  * @returns {JSX.Element} the rendered button
@@ -56,15 +57,17 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
     defaultButtonProps,
     props
   );
-  const styledProps = useStyleProps(mergedProps);
   const testId = useTestId<ButtonProps>("button", props);
   const className = useClassName(props);
   const style = useHtmlAttribute(props.styleOverride);
 
-  const onClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
+  const onClick = useCallback<
+    MouseEventHandler<HTMLButtonElement | HTMLDivElement>
+  >(
     (event) => {
       if (mergedProps.disabled) return;
-      if (mergedProps.onClickNative) mergedProps.onClickNative(event);
+      if (mergedProps.onClickNative)
+        mergedProps.onClickNative(event as MouseEvent<HTMLButtonElement>);
       if (mergedProps.loading || isNull(mergedProps.onClick)) return;
       mergedProps.onClick();
     },
@@ -79,8 +82,11 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
     type,
     expandOnHover,
     fullWidth,
+    iconPlacement,
     embedded,
+    secondary,
     loading,
+    color,
   } = mergedProps;
   let { label } = mergedProps;
 
@@ -114,13 +120,24 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
     label = "[Label]";
   }
 
+  const classNames = useCssClasses(
+    styles.button,
+    [styles.primary, !secondary],
+    [styles.secondary, secondary],
+    [styles["full-width"], fullWidth],
+    [styles.loading, loading],
+    [styles.expandable, expandable],
+    className
+  );
+
   const commonProps = useMemo(
     () => ({
-      ...styledProps,
       "data-testid": testId,
       "data-expandable": expandable,
-      className,
+      "data-color": color,
+      className: classNames,
       disabled: disabled || loading,
+      "data-icon-placement": iconPlacement,
       "aria-disabled": disabled || loading,
       "data-loading": loading,
       title: ariaTitle,
@@ -131,12 +148,13 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
     [
       ariaRole,
       ariaTitle,
-      className,
+      classNames,
+      color,
       disabled,
       expandable,
+      iconPlacement,
       loading,
       style,
-      styledProps,
       testId,
     ]
   );
@@ -144,48 +162,35 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
   const buttonContent = useMemo(() => {
     return (
       <>
-        {icon && <Icon name={icon} size="1rem" />}
+        {icon && <Icon name={icon} size="s-4" />}
         {label && label.length > 0 && (
-          <Text size="m" weight="medium">
+          <Text size="m" weight="medium" color="inherit">
             {label}
           </Text>
         )}
-        <StyledButtonLoadingContainer {...styledProps}>
-          <Loading animation="BouncingBalls" size="s-3" />
-        </StyledButtonLoadingContainer>
+        {loading && (
+          <div className={styles["button-loading-container"]}>
+            <Loading animation="BouncingBalls" size="s-3" />
+          </div>
+        )}
       </>
     );
-  }, [icon, label, styledProps]);
+  }, [icon, label, loading]);
 
   if (embedded)
     return (
-      <StyledEmbeddedButton
-        {...commonProps}
-        onClick={onClick as unknown as MouseEventHandler<HTMLDivElement>}
-      >
+      <div {...commonProps} onClick={onClick}>
         {buttonContent}
-      </StyledEmbeddedButton>
+      </div>
     );
 
   return (
-    <StyledButton {...commonProps} onClick={onClick} type={type}>
+    <button {...commonProps} onClick={onClick} type={type}>
       {buttonContent}
-    </StyledButton>
+    </button>
   );
 };
 
 Button.defaultProps = defaultButtonProps;
 
 export { Button };
-
-const StyledEmbeddedButton = styled.div<StyleProps<DefaultButtonProps>>`
-  ${buildButtonStyles}
-`;
-
-const StyledButton = styled.button<StyleProps<DefaultButtonProps>>`
-  ${buildButtonStyles}
-`;
-
-const StyledButtonLoadingContainer = styled.div<StyleProps<DefaultButtonProps>>`
-  ${buildButtonLoadingContainerStyles}
-`;
