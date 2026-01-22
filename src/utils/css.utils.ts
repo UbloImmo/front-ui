@@ -1,8 +1,20 @@
-import { isArray, isNumber, isString, isUndefined } from "@ubloimmo/front-util";
+import {
+  isArray,
+  isNumber,
+  isObject,
+  isString,
+  isUndefined,
+  Nullish,
+  objectFromEntries,
+  Optional,
+  Predicate,
+} from "@ubloimmo/front-util";
+import { useMemo } from "react";
 
-import { isNonEmptyString } from "./string.utils";
+import { isEmptyString, isNonEmptyString } from "./string.utils";
 import { SPACING_PREFIX } from "../types";
 import { isPaletteColor } from "./color.utils";
+import { isMap } from "./comparison.utils";
 
 import type {
   CssCh,
@@ -402,4 +414,65 @@ export const cssColorMix = (
   const a = normalizeColor(colorA);
   const b = normalizeColor(colorB);
   return `color-mix(in ${colorSpace}, ${a}, ${b})`;
+};
+
+type CssClassRecord = Record<string, boolean> | Map<string, boolean>;
+type CssClassArray = (Nullish<string> | [className: string, active: boolean])[];
+type CssClassInput = CssClassArray | [CssClassRecord];
+
+/**
+ * Predicate typescript function that checks whether a provided {@link CssClassInput} contains a single {@link CssClassRecord}
+ *
+ * @param {CssClassInput} classes — css class input value to check
+ * @returns — true if the value corresponds to a {@link CssClassRecord}
+ */
+const isClassRecord = (classes: CssClassInput): classes is [CssClassRecord] => {
+  return (
+    isArray(classes) &&
+    classes.length === 1 &&
+    !isArray(classes[0]) &&
+    (isObject(classes[0]) || isMap(classes[0]))
+  );
+};
+
+const isClassArray = isArray as Predicate<CssClassArray>;
+
+/**
+ * Combines multiple Css classes into a single string
+ *
+ * @param {CssClassInput} classes - List of classes to combine
+ * @returns {Optional<string>} A concatenated string containing all provided active classes or undefined if none active
+ */
+export const cssClasses = (...classes: CssClassInput): Optional<string> => {
+  let classStr = "";
+
+  const appendClass = (classKey: string) => {
+    classStr += ` ${classKey}`;
+  };
+
+  if (isClassRecord(classes)) {
+    const record: Record<string, boolean> = isMap(classes[0])
+      ? objectFromEntries(Array.from(classes[0].entries()))
+      : classes[0];
+    for (const classKey in record) {
+      const active = record[classKey];
+      if (active) appendClass(classKey);
+    }
+    if (isEmptyString(classStr)) return undefined;
+    return classStr.trim();
+  }
+
+  for (const item of classes) {
+    if (isString(item)) appendClass(item);
+    if (!isClassArray(item)) continue;
+    const [classKey, active] = item;
+    if (active) appendClass(classKey);
+  }
+
+  if (isEmptyString(classStr)) return undefined;
+  return classStr.trim();
+};
+
+export const useCssClasses = (...classes: CssClassInput) => {
+  return useMemo(() => cssClasses(...classes), [classes]);
 };
