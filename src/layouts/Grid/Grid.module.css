@@ -1,0 +1,41 @@
+.grid {
+  --template-columns: repeat(12, 1fr);
+  --template-rows: unset;
+  --column-gap: var(--s-4);
+  --row-gap: var(--s-4);
+  --grid-align: start;
+  --grid-justify: start;
+
+  display: grid;
+
+  &.inline {
+    display: inline-grid;
+  }
+
+  grid-template-columns: var(--template-columns);
+  grid-template-rows: var(--template-rows);
+  column-gap: var(--column-gap);
+  row-gap: var(--row-gap);
+  align-items: var(--grid-align);
+  justify-content: var(--grid-justify);
+
+  &.dense {
+    grid-auto-flow: dense;
+  }
+  &.row {
+    grid-auto-flow: row;
+    &.dense {
+      grid-auto-flow: row dense;
+    }
+  }
+  &.column {
+    grid-auto-flow: column;
+    &.dense {
+      grid-auto-flow: row dense;
+    }
+  }
+
+  &.fill {
+    width: 100%;
+  }
+}

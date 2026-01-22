@@ -1,9 +1,8 @@
-import styled from "styled-components";
+import { forwardRef } from "react";
 
-import { buildGridLayoutStyle } from "./Grid.styles";
+import { useGridLayoutStyle } from "./Grid.styles";
 
 import {
-  useClassName,
   useHtmlAttribute,
   useMergedProps,
   useStyleProps,
@@ -11,7 +10,7 @@ import {
 } from "@utils";
 
 import type { GridLayoutDefaultProps, GridLayoutProps } from "./Grid.types";
-import type { StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 
 const defaultGridLayoutProps: GridLayoutDefaultProps = {
   flow: "row",
@@ -33,36 +32,35 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
 /**
  * A grid wrapper layout with default `row` flow and 12 columns
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
- * @param {GridLayoutProps} [props = defaultGridLayoutProps] - optional props
+ * @param {GridLayoutProps & TestIdProps} [props = defaultGridLayoutProps] - optional props
  * @return {JSX.Element} The styled grid wrapper
  */
-const GridLayout = (props: GridLayoutProps & TestIdProps): JSX.Element => {
-  const mergedProps = useMergedProps(defaultGridLayoutProps, props);
-  const innerProps = useStyleProps(mergedProps);
-  const testId = useTestId("grid", props);
-  const className = useClassName(props);
-  const role = useHtmlAttribute(mergedProps.role);
-  const id = useHtmlAttribute(mergedProps.id);
-  const style = useHtmlAttribute(mergedProps.styleOverride);
-  return (
-    <GridLayoutInner
-      {...innerProps}
-      data-testid={testId}
-      role={role}
-      className={className}
-      id={id}
-      style={style}
-    >
-      {props.children}
-    </GridLayoutInner>
-  );
-};
+const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps & TestIdProps>(
+  (props, ref): JSX.Element => {
+    const mergedProps = useMergedProps(defaultGridLayoutProps, props);
+    const innerProps = useStyleProps(mergedProps);
+    const testId = useTestId("grid", props);
+    const role = useHtmlAttribute(mergedProps.role);
+    const id = useHtmlAttribute(mergedProps.id);
+    const Element = mergedProps.as;
+    const { className, style } = useGridLayoutStyle(mergedProps);
+    return (
+      <Element
+        {...innerProps}
+        data-testid={testId}
+        role={role}
+        className={className}
+        id={id}
+        style={style}
+        ref={ref}
+      >
+        {props.children}
+      </Element>
+    );
+  }
+);
 GridLayout.defaultProps = defaultGridLayoutProps;
 
 export { GridLayout };
-
-const GridLayoutInner = styled.div<StyleProps<GridLayoutProps>>`
-  ${buildGridLayoutStyle(defaultGridLayoutProps)}
-`;
