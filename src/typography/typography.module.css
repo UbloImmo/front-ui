@@ -1,0 +1,144 @@
+.text {
+  --text-line-clamp: unset;
+
+  display: inline-block;
+  font-style: normal;
+  text-underline-offset: var(--s-1);
+  text-decoration-thickness: 1px;
+  color: inherit;
+  text-align: left;
+  font-family: "Gilroy", "Helvetica", "Inter", "Arial", "Calibri", "Segoe UI",
+    sans-serif;
+  transition: color 150ms var(--bezier);
+
+  &.heading {
+    display: block;
+  }
+
+  &.font {
+    &.sans {
+      font-family: "Gilroy", "Helvetica", "Inter", "Arial", "Calibri",
+        "Segoe UI", sans-serif;
+      &.important {
+        font-family: "Gilroy", "Helvetica", "Inter", "Arial", "Calibri",
+          "Segoe UI", sans-serif !important;
+      }
+    }
+    &.code {
+      font-family: "DMMono", "Fira Code", "Menlo", "Inconsolata", "Source Mono",
+        "Consolas", ui-monospace, monospace;
+      &.important {
+        font-family: "DMMono", "Fira Code", "Menlo", "Inconsolata",
+          "Source Mono", "Consolas", ui-monospace, monospace !important;
+      }
+    }
+  }
+
+  &.italic {
+    font-style: italic;
+    font-variation-settings: "ital" 1;
+    &.important {
+      font-style: italic !important;
+      font-variation-settings: "ital" 1 !important;
+    }
+  }
+
+  &.underline {
+    text-decoration: underline;
+    &.important {
+      text-decoration: underline !important;
+    }
+  }
+
+  &.overline {
+    text-decoration: overline;
+    &.important {
+      text-decoration: overline !important;
+    }
+  }
+
+  &.line-trough {
+    text-decoration: line-trough;
+    &.important {
+      text-decoration: line-trough !important;
+    }
+  }
+
+  &.ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+    flex: 1;
+    white-space: nowrap;
+    &.important {
+      text-overflow: ellipsis !important;
+      overflow: hidden !important;
+      max-width: 100% !important;
+      flex: 1 !important;
+      white-space: nowrap !important;
+    }
+  }
+
+  &.uppercase {
+    text-transform: uppercase;
+    &.important {
+      text-transform: uppercase !important;
+    }
+  }
+
+  &.capitalized {
+    text-transform: capitalize;
+    &.important {
+      text-transform: capitalize !important;
+    }
+  }
+
+  &.align[data-align="left"] {
+    text-align: left;
+    &.important {
+      text-align: left !important;
+    }
+  }
+
+  &.align[data-align="right"] {
+    text-align: right;
+    &.important {
+      text-align: right !important;
+    }
+  }
+
+  &.align[data-align="center"] {
+    text-align: center;
+    &.important {
+      text-align: center !important;
+    }
+  }
+
+  &.fill {
+    width: 100%;
+    &.important {
+      width: 100% !important;
+    }
+  }
+
+  &.no-wrap {
+    white-space: nowrap;
+    &.important {
+      white-space: nowrap !important;
+    }
+  }
+
+  &.line-clamp {
+    display: -webkit-box;
+    line-clamp: var(--text-line-clamp);
+    -webkit-box-orient: vertical;
+    white-space: normal;
+
+    &.important {
+      display: -webkit-box !important;
+      line-clamp: var(--text-line-clamp) !important;
+      -webkit-box-orient: vertical !important;
+      white-space: normal !important;
+    }
+  }
+}
