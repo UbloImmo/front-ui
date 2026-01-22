@@ -1,21 +1,15 @@
 import { forwardRef } from "react";
-import styled from "styled-components";
 
-import { buildFlexLayoutStyle } from "./Flex.styles";
+import { useFlexLayoutStyle } from "./Flex.styles";
 
-import {
-  useClassName,
-  useHtmlAttribute,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type {
   FlexDirectionLayoutProps,
   FlexLayoutDefaultProps,
   FlexLayoutProps,
 } from "./Flex.types";
-import type { StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 
 const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   direction: "row",
@@ -37,7 +31,7 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
 /**
  * A flexbox wrapper layout, with default properties direction set to `row`, align and justify set to `start`
  *
- * @version 0.0.4
+ * @version 0.1.0
  * @param {FlexLayoutProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */
@@ -45,24 +39,25 @@ export const FlexLayout = forwardRef<
   HTMLDivElement,
   FlexLayoutProps & TestIdProps
 >((props: FlexLayoutProps & TestIdProps, ref): JSX.Element => {
-  const innerProps = useStyleProps(props);
   const testId = useTestId("flex", props);
-  const className = useClassName(props);
-  const style = useHtmlAttribute(props.styleOverride);
   const id = useHtmlAttribute(props.id ?? null);
+
+  const mergedProps = useMergedProps(defaultFlexLayoutProps, props);
+  const { className, style } = useFlexLayoutStyle(mergedProps);
+
+  const Element = mergedProps.as;
+
   return (
-    <FlexLayoutInner
-      {...innerProps}
+    <Element
       ref={ref}
       data-testid={testId}
       className={className}
       style={style}
       id={id}
       role={props.role ?? undefined}
-      as={props.as ?? "div"}
     >
       {props.children}
-    </FlexLayoutInner>
+    </Element>
   );
 });
 
@@ -96,7 +91,3 @@ export const FlexColumnLayout = forwardRef<
 });
 
 FlexLayout.defaultProps = defaultFlexLayoutProps;
-
-const FlexLayoutInner = styled.div<StyleProps<FlexLayoutProps>>`
-  ${buildFlexLayoutStyle(defaultFlexLayoutProps)}
-`;

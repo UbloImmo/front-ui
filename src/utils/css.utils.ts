@@ -9,7 +9,7 @@ import {
   Optional,
   Predicate,
 } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { CSSProperties, useMemo } from "react";
 
 import { isEmptyString, isNonEmptyString } from "./string.utils";
 import { SPACING_PREFIX } from "../types";
@@ -475,4 +475,32 @@ export const cssClasses = (...classes: CssClassInput): Optional<string> => {
 
 export const useCssClasses = (...classes: CssClassInput) => {
   return useMemo(() => cssClasses(...classes), [classes]);
+};
+
+export const cssVariables = (
+  variables: Record<string, Optional<string | number>>
+): CSSProperties => {
+  const vars: Record<string, string> = {};
+
+  for (const varName in variables) {
+    const value = variables[varName];
+    if (isUndefined(value)) continue;
+    vars[cssVarName(varName)] = String(value);
+  }
+
+  return vars as CSSProperties;
+};
+
+export const useCssVariables = (
+  variables: Record<string, Optional<string | number>>,
+  override?: Nullish<CSSProperties>
+): CSSProperties => {
+  return useMemo(() => {
+    const vars = cssVariables(variables);
+    if (!override) return vars;
+    return {
+      ...vars,
+      override,
+    };
+  }, [variables, override]);
 };

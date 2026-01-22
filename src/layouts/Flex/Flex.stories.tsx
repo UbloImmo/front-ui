@@ -97,6 +97,7 @@ const justify: FlexAlignment[] = [
   "space-between",
   "end",
   "space-evenly",
+  "stretch",
 ];
 
 export const Justify = (props: Partial<FlexLayoutProps>) => {

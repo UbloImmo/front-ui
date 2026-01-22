@@ -1,16 +1,8 @@
-import { StyleFunction, css, type RuleSet } from "styled-components";
+import styles from "./Flex.module.css";
 
-import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "@utils";
+import { cssLengthUsage, useCssClasses, useCssVariables } from "@utils";
 
-import type {
-  FlexAlignment,
-  FlexDirection,
-  FlexFill,
-  FlexLayoutDefaultProps,
-  FlexLayoutProps,
-  FlexWrap,
-} from "./Flex.types";
-import type { StyleProps } from "@types";
+import type { FlexAlignment, FlexLayoutDefaultProps } from "./Flex.types";
 
 /**
  * A function that returns the flex alignment class based on the given alignment.
@@ -19,86 +11,46 @@ import type { StyleProps } from "@types";
  * @return {string} the flex alignment class
  */
 const flexAlignment = (alignment: FlexAlignment): string => {
-  if (alignment === "end" || alignment === "stretch") {
+  if (alignment === "end" || alignment === "start") {
     return `flex-${alignment}`;
   }
   return alignment;
 };
 
 /**
- * Returns the flex direction with optional reverse order.
- *
- * @param {FlexDirection} direction - the primary flex direction
- * @param {boolean} reverse - whether to apply reverse order
- * @return {string} the flex direction with optional reverse order
- */
-const flexDirection = (direction: FlexDirection, reverse: boolean): string => {
-  if (reverse) {
-    return [direction, "reverse"].join("-");
-  }
-  return direction;
-};
-
-/**
- * A function that determines the flex wrap value based on the input.
- *
- * @param {FlexWrap} wrap - the type of flex wrap
- * @return {string} the corresponding flex wrap value
- */
-const flexWrap = (wrap: FlexWrap): string => {
-  if (!wrap) return "nowrap";
-  if (wrap === "reverse") return "wrap-reverse";
-  return "wrap";
-};
-
-/**
- * Generates a RuleSet based on the provided FlexFill value.
- *
- * @param {FlexFill} fill - The value determining how to fill the flex.
- * @return {RuleSet} The generated RuleSet based on the FlexFill value.
- */
-const flexFill = (fill: FlexFill): RuleSet => {
-  const xFill = css`
-    width: 100%;
-  `;
-  const yFill = css`
-    height: 100%;
-  `;
-  if (fill === true)
-    return css`
-      ${xFill}
-      ${yFill}
-    `;
-  if (fill === "row") return xFill;
-  if (fill === "column") return yFill;
-  return css``;
-};
-
-/**
  * Builds the `FlexLayout` style declaration based on the provided default props and props.
  *
- * @param {FlexLayoutDefaultProps} defaultProps - the default props for the flex layout
- * @return {StyleFunction<FlexLayoutProps>} a style function for flex layout props
+ * @param {FlexLayoutDefaultProps} props - the default props for the flex layout
+ * @returns CSS classes & styles for the flex layout
  */
-export const buildFlexLayoutStyle =
-  (
-    defaultProps: FlexLayoutDefaultProps
-  ): StyleFunction<StyleProps<FlexLayoutProps>> =>
-  (props) => {
-    const { direction, gap, justify, align, wrap, reverse, inline, fill } =
-      mergeDefaultProps(
-        defaultProps,
-        fromStyleProps(props as StyleProps<FlexLayoutProps>)
-      );
+export function useFlexLayoutStyle(props: FlexLayoutDefaultProps) {
+  const className = useCssClasses(
+    styles.flex,
+    [styles.inline, props.inline],
+    styles[props.direction],
+    [styles.reverse, props.reverse],
+    [styles.fill, props.fill === true],
+    [styles["fill-column"], props.fill === "column"],
+    [styles["fill-row"], props.fill === "row"],
+    !props.wrap
+      ? undefined
+      : props.wrap === "reverse"
+        ? styles["wrap-reverse"]
+        : styles.wrap,
+    props.className
+  );
 
-    const display = inline ? "inline-flex" : "flex";
-    return css`
-      display: ${display};
-      flex-direction: ${flexDirection(direction, reverse)};
-      gap: ${cssLengthUsage(gap)};
-      align-items: ${flexAlignment(align)};
-      justify-content: ${flexAlignment(justify)};
-      flex-wrap: ${flexWrap(wrap)};
-      ${flexFill(fill)}
-    `;
+  const style = useCssVariables(
+    {
+      "flex-gap": cssLengthUsage(props.gap),
+      "flex-align": flexAlignment(props.align),
+      "flex-justify": flexAlignment(props.justify),
+    },
+    props.styleOverride
+  );
+
+  return {
+    className,
+    style,
   };
+}
