@@ -1,4 +1,5 @@
 import type { KeyOf, Nullish } from "@ubloimmo/front-util";
+import { ElementType } from "react";
 import type {
   CSSProperties,
   SupportedHTMLElements,
@@ -20,7 +21,7 @@ export type StyleOverrideProps = {
    *
    * @default undefined
    */
-  as?: Nullish<SupportedHTMLElements>;
+  as?: ElementType;
   /**
    * Any additional css properties to apply
    *
