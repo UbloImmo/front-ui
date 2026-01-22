@@ -6,12 +6,21 @@ import {
   transformObject,
   type GenericFn,
 } from "@ubloimmo/front-util";
+import { type CSSProperties, useMemo } from "react";
 import { css, type RuleSet } from "styled-components";
 
 import { typographyWeightMap } from "./typogaphy.weight";
 import { fontFamilySets } from "./typography.font";
 import { breakpointsPx } from "../sizes";
-import { cssRem, cssVarUsage, extractRem, fromStyleProps } from "../utils";
+import {
+  cssClasses,
+  cssRem,
+  cssVarUsage,
+  extractRem,
+  fromStyleProps,
+} from "../utils";
+import generatedStyles from "./__generated__/typography-tokens.module.css";
+import styles from "./typography.module.css";
 
 import type {
   TypographyProps,
@@ -143,9 +152,11 @@ const extractTypographyStyle = (
  * @returns {(value: string) => string} - a function that takes a CSS value
  * and returns a CSS declaration
  */
-const applyRule = (important?: boolean) => (value: string) => {
-  return important ? `${value} !important` : value;
-};
+const applyRule =
+  (important?: boolean): ((value: string) => string) =>
+  (value: string) => {
+    return important ? `${value} !important` : value;
+  };
 
 /**
  * Takes a typography style object and returns a styled component CSS declaration
@@ -292,3 +303,102 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   font: "sans",
   title: null,
 } as const;
+
+export const useTypographyStyles = (
+  props: AnyTypographyProps,
+  isHeading = false
+) => {
+  const {
+    size,
+    weight,
+    color, // handled via data-color
+    italic,
+    underline,
+    overline,
+    lineThrough,
+    important,
+    ellipsis,
+    uppercase,
+    capitalized,
+    align, // handled via data-align
+    fill,
+    noWrap,
+    lineClamp, // set via css variable injection
+    font,
+  } = useMemo(
+    () =>
+      sanitizeTypographyProps({ ...defaultTypographyProps, size: "m" }, props),
+    [props]
+  );
+
+  const dataAttrs = useMemo(() => {
+    const colorAttr = color === "inherit" ? undefined : color;
+
+    return {
+      "data-color": colorAttr,
+      "data-align": align !== "left" ? align : undefined,
+    };
+  }, [align, color]);
+
+  const style = useMemo<CSSProperties>(() => {
+    const override: CSSProperties = props.styleOverride ?? {};
+    if (!lineClamp) return override;
+    return {
+      ...override,
+      "--text-line-clamp": String(lineClamp),
+    } as CSSProperties;
+  }, [lineClamp, props.styleOverride]);
+
+  const className = useMemo(() => {
+    const generated =
+      `text-${size}-${weight}` satisfies keyof typeof generatedStyles;
+    const generatedClass = generatedStyles[generated];
+    const fontClass = styles[font];
+
+    return cssClasses(
+      styles.text,
+      styles.font,
+      fontClass,
+      generatedClass,
+      generatedStyles["text-color"],
+      styles.align,
+      [styles.heading, isHeading],
+      [styles.italic, italic],
+      [styles["line-trough"], lineThrough],
+      [styles.underline, underline],
+      [styles.overline, overline],
+      [styles.ellipsis, ellipsis],
+      [styles.uppercase, uppercase],
+      [styles.capitalized, capitalized],
+      [styles.fill, fill],
+      [styles["no-wrap"], noWrap],
+      [styles["line-clamp"], !!lineClamp],
+      [styles.important, important],
+      [generatedStyles.important, important],
+      props.className
+    );
+  }, [
+    capitalized,
+    ellipsis,
+    fill,
+    font,
+    important,
+    isHeading,
+    italic,
+    lineClamp,
+    lineThrough,
+    noWrap,
+    overline,
+    props.className,
+    size,
+    underline,
+    uppercase,
+    weight,
+  ]);
+
+  return {
+    className,
+    style,
+    ...dataAttrs,
+  };
+};
