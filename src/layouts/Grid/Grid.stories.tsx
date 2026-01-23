@@ -7,7 +7,7 @@ import { ComponentVariants } from "../../../docs/blocks/ComponentVariants";
 
 import { arrayOf } from "@/utils/array.utils";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
   component: GridLayout,

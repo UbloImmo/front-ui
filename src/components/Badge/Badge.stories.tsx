@@ -10,7 +10,7 @@ import { useMergedProps } from "../../utils";
 import { ComponentVariants } from "@docs/blocks";
 import { ColorPalette } from "@types";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const args = {
   ...Badge.defaultProps,

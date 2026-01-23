@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import styled, { css } from "styled-components";
 
 import { MultiSelectInput } from "./MultiSelectInput.component";
@@ -16,7 +16,7 @@ import type {
   SelectOptionOrGroup,
 } from "../SelectInput";
 import type { IconName } from "@/components/Icon";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<

@@ -1,4 +1,4 @@
-import { Source } from "@storybook/blocks";
+import { Source } from "@storybook/addon-docs/blocks";
 import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 

@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import styled from "styled-components";
 
 import { Modal } from "./Modal.component";
@@ -9,7 +9,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { mergeDefaultProps } from "@utils";
 
 import type { ModalProps } from "./Modal.types";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 
 const ref = "modal-story";

@@ -2,7 +2,7 @@ import { SmallLoader } from "./SmallLoader.component";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory(
   "SmallLoader",

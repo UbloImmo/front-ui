@@ -8,7 +8,7 @@ import type {
   SideEntityMenuProps,
   SideEntityMenuLink,
 } from "./SideEntityMenu.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<SideEntityMenuProps>(
   "SideEntityMenu",

@@ -8,7 +8,7 @@ import { useMergedProps } from "@utils";
 import { Badge, StateIndicator, Button, Field } from "@components";
 
 import type { PopoverProps } from "./Popover.types";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<PopoverProps>(
   "Popover",

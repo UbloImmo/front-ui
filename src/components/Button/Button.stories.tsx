@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import { isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
@@ -15,7 +15,7 @@ import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { DirectionHorizontal } from "@types";
 
 const defaultMockProps = {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react-vite";
 import { isString } from "@ubloimmo/front-util";
 import styled from "styled-components";
 

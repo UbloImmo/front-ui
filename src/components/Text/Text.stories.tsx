@@ -10,7 +10,7 @@ import { useMergedProps } from "@utils";
 
 import { Text } from ".";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type {
   ColorKey,
   PaletteColor,

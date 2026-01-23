@@ -5,7 +5,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { AccountBalanceProps } from "./AccountBalance.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const args = {
   ...AccountBalance.defaultProps,

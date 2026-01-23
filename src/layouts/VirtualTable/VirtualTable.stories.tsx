@@ -19,7 +19,7 @@ import type {
   VirtualTableOverscan,
   VirtualTableProps,
 } from "./VirtualTable.types";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 
 const STORY_DATA_LENGTH = 1000;
 const WINDOW_SCROLL_DATA_LENGTH = 200;

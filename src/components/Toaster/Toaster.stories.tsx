@@ -6,7 +6,7 @@ import { delay } from "@utils";
 import { Toaster, toast } from "./";
 
 import type { ToasterProps } from "./Toaster.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<ToasterProps>(
   "Toaster",

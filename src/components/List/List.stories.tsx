@@ -9,7 +9,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { ListProps } from "./List.types";
 import type { DataProviderType } from "./modules/DataProvider/DataProvider.types";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<ListProps<object>>(
   "List",

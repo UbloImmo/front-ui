@@ -109,7 +109,7 @@ export const storybookUrl = (baseUrl) => {
  */
 export const imports = () => {
   return lines(
-    `import { Meta } from "@storybook/blocks";`,
+    `import { Meta } from "@storybook/addon-docs/blocks";`,
     `import { Content, Header } from "@docs/containers";`,
     `import { HeaderInfo, Text } from "@docs/blocks";`,
     `import { FlexLayout, GridLayout } from "@/layouts";`,

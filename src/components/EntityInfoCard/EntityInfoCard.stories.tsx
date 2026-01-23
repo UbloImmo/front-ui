@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import {
   objectEntries,
   objectFromEntries,
@@ -34,7 +34,7 @@ import type {
   EntityInfoCardSectionProps,
   EntityStatusRow,
 } from "./EntityInfoCard.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<EntityInfoCardProps>(
   "EntityInfoCard",

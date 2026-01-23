@@ -6,7 +6,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { StateIndicatorProps } from "./StateIndicator.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ColorKeyOrWhite } from "@types";
 
 const componentTemplate = componentSourceFactory(

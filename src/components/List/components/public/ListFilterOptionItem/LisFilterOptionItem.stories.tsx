@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { ListFilterOptionItem } from "./ListFilterOptionItem.component";
 
@@ -12,7 +12,7 @@ import { ComponentVariants, type DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { ListFilterOptionItemProps } from "./ListFilterOptionItem.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 type MockData = {
   value: number;

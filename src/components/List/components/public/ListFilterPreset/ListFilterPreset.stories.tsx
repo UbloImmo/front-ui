@@ -13,7 +13,7 @@ import {
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 
 type MockData = { value: number };
 

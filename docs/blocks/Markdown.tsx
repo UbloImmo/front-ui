@@ -1,4 +1,4 @@
-import { Markdown as SBMarkdown } from "@storybook/blocks";
+import { Markdown as SBMarkdown } from "@storybook/addon-docs/blocks";
 import { useMemo } from "react";
 import styled, { css } from "styled-components";
 

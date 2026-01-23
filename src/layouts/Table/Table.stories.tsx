@@ -16,7 +16,7 @@ import { arrayOf } from "@utils";
 import { Avatar, Badge, Text } from "@components";
 
 import type { TableProps } from "./Table.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 
 const HeaderExample: ReactNode = (

@@ -8,7 +8,7 @@ import { useMergedProps } from "../../utils";
 
 import { ComponentVariants } from "@docs/blocks";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {

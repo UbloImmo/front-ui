@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import { addDays } from "date-fns";
 
 import { Calendar } from "./Calendar.component";
@@ -9,7 +9,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useStatic } from "@utils";
 
 import type { CalendarProps } from "./Calendar.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CalendarProps>(
   "Calendar",

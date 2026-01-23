@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Hypertext } from "./Hypertext.component";
 import { HypertextProps } from "./Hypertext.types";

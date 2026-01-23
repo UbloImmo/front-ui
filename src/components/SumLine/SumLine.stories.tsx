@@ -10,7 +10,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexColumnLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
-import type { Meta, StoryFn, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 
 const source = componentSourceFactory<SumLineProps>(
   "SumLine",

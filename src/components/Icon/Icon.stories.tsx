@@ -9,7 +9,7 @@ import { FlexRowLayout } from "../../layouts";
 import { ComponentVariants } from "@docs/blocks";
 
 import type { IconProps } from "./Icon.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ColorPalette, PaletteColor, SpacingLabel } from "@types";
 
 const meta = {

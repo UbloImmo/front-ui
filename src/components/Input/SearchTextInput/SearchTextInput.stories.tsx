@@ -10,7 +10,7 @@ import { ComponentVariants } from "@docs/blocks";
 import { FlexColumnLayout, GridLayout } from "@layouts";
 
 import type { SearchTextInputProps } from "./SearchTextInput.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {

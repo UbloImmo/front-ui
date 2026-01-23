@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import { useMemo, useState } from "react";
 
 import { Checkbox } from "./Checkbox.component";
@@ -10,7 +10,7 @@ import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { arrayOf } from "@utils";
 
 import type { CheckboxProps, CheckboxStatus } from "./Checkbox.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CheckboxProps>(
   "Checkbox",

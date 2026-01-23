@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import { useReducer } from "react";
 
 import { ComboBox } from "./ComboBox.component";
@@ -7,7 +7,7 @@ import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { ComboBoxOption, ComboBoxProps } from "./ComboBox.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<

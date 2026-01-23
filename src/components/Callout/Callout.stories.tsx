@@ -14,7 +14,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CalloutProps>(
   "Callout",

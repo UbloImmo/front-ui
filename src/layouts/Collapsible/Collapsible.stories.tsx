@@ -10,7 +10,7 @@ import type {
   CollapsibleDefaultProps,
   CollapsibleProps,
 } from "./Collapsible.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CollapsibleProps>(
   "Collapsible",

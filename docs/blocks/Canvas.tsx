@@ -1,4 +1,4 @@
-import { Canvas as SBCanvas, Unstyled } from "@storybook/blocks";
+import { Canvas as SBCanvas, Unstyled } from "@storybook/addon-docs/blocks";
 import styled, { css } from "styled-components";
 
 import { typographyFontFace } from "@/typography";

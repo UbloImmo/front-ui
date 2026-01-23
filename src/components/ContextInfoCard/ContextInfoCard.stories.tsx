@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react-vite";
 
 import { ContextInfoCard } from "./ContextInfoCard.component";
 import { Text } from "../Text";

@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { ContextMenu } from "./ContextMenu.component";
 import { Button } from "../Button";
@@ -13,7 +13,7 @@ import type {
   ContextMenuItemData,
   ContextMenuProps,
 } from "./ContextMenu.types";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<ContextMenuProps>(
   "ContextMenu",

@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import { useCallback, useEffect, useState } from "react";
 
 import { CurrencyInput } from "./CurrencyInput.component";
@@ -9,7 +9,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { Currency, CurrencyInputProps } from "./CurrencyInput.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CurrencyInputProps>(
   "CurrencyInput",

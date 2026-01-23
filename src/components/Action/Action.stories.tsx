@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { Action } from "./Action.component";
 import { allIconNames } from "../Icon/Icon.types";
@@ -10,7 +10,7 @@ import type { ActionColor, ActionProps, ActionSize } from "./Action.types";
 import type { IconName } from "../Icon";
 import type { StaticIconIndicator } from "../StaticIcon";
 import type { TooltipProps } from "../Tooltip";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {

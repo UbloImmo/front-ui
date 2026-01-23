@@ -1,4 +1,4 @@
-import { create } from "@storybook/theming/create";
+import { create } from "storybook/theming/create";
 
 import { buildTheme } from "../src/themes";
 import { fontFamilySets } from "../src/typography/typography.font";

@@ -5,7 +5,7 @@ import { SpacingLabel, type PaletteColor } from "@types";
 import { useMergedProps } from "@utils";
 
 import type { LoadingAnimation, LoadingProps } from "./Loading.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const animations: LoadingAnimation[] = [
   "BouncingBalls",

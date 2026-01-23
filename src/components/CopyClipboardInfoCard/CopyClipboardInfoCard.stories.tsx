@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { CopyClipboardInfoCard } from "./CopyClipboardInfoCard.component";
 import { allIconNames } from "../Icon/Icon.types";
@@ -8,7 +8,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { CopyClipboardInfoCardProps } from "./CopyClipboardInfoCard.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CopyClipboardInfoCardProps>(
   "CopyClipboardInfoCard"

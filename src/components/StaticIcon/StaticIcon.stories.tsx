@@ -11,7 +11,7 @@ import type {
   StaticIconSize,
 } from "./StaticIcon.types";
 import type { IconName } from "../Icon";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ColorKeyOrWhite } from "@types";
 
 const componentSource = componentSourceFactory("StaticIcon", undefined);

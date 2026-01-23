@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import {
   isArray,
   isNull,
@@ -40,7 +40,7 @@ import type {
   FormTableTryDeletingRowFn,
   FormTableTryDeletingRowParams,
 } from "./Form.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const addressSchema = z.object({
   number: z.number().nullish(),

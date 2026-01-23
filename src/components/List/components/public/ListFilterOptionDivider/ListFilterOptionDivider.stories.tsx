@@ -6,7 +6,7 @@ import type {
   ListFilterOptionDividerProps,
   ListFilterOptionDividerDefaultProps,
 } from "./ListFilterOptionDivider.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<
   ListFilterOptionDividerProps,

@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { ActionIcon } from "./ActionIcon.component";
 import { allIconNames, type IconName } from "../Icon/Icon.types";
@@ -13,7 +13,7 @@ import type {
   ActionIconProps,
   ActionIconSize,
 } from "./ActionIcon.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const defaultMockProps = {
   ...ActionIcon.defaultProps,

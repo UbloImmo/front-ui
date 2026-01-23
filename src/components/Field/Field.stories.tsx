@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import { useState } from "react";
 
 import { Field } from "./Field.component";
@@ -11,7 +11,7 @@ import { useMergedProps } from "@utils";
 import type { FieldProps } from "./Field.types";
 import type { InputType, InputValue } from "../Input";
 import type { InputLabelTooltipProps } from "../InputLabel";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<FieldProps<InputType>>(

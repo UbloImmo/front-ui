@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import styled, { css } from "styled-components";
 
 import { Dialog } from "./Dialog.component";
@@ -11,7 +11,7 @@ import { mergeDefaultProps, useMergedProps } from "@utils";
 import { Heading, Text, Button, TextInput } from "@components";
 
 import type { DialogProps, DialogReference } from "./Dialog.types";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 
 const meta = {

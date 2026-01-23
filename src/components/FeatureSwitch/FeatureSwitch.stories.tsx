@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 import styled from "styled-components";
 
 import { FeatureSwitch } from "./FeatureSwitch.component";
@@ -16,7 +16,7 @@ import { useMergedProps } from "@utils";
 
 import type { IconName } from "../Icon";
 import type { TooltipProps } from "../Tooltip";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<

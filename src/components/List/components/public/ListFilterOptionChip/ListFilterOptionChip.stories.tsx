@@ -15,7 +15,7 @@ import type {
   ListFilterOptionChipProps,
 } from "./ListFilterOptionChip.types";
 import type { IconName } from "@/components/Icon";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import type { ColorKey } from "@types";
 
 type MockData = { value: number };

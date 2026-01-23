@@ -15,7 +15,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
-import type { Meta, StoryFn, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import type { ColorKey } from "@types";
 
 const assetNames = objectKeys(assetsIndex);

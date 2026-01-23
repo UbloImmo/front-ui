@@ -5,7 +5,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { AvatarProps, AvatarPropsCount, AvatarSize } from "./Avatar.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { FC } from "react";
 
 const componentSource = componentSourceFactory<AvatarProps>(

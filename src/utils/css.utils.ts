@@ -491,6 +491,12 @@ export const cssVariables = (
   return vars as CSSProperties;
 };
 
+export const cssStyles = (
+  ...styles: Nullish<CSSProperties>[]
+): CSSProperties => {
+  return Object.assign({}, ...styles.filter(isObject));
+};
+
 export const useCssVariables = (
   variables: Record<string, Optional<string | number>>,
   override?: Nullish<CSSProperties>

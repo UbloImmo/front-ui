@@ -3,7 +3,7 @@ import { useState } from "react";
 import { EmailInput } from "./EmailInput.component";
 
 import type { InputProps } from "../Input.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {

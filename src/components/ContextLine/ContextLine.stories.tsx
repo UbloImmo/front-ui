@@ -15,7 +15,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexLayout } from "@layouts";
 import { arrayOf, useMergedProps } from "@utils";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { NonOptional } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 

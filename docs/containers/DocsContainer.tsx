@@ -1,4 +1,4 @@
-import { DocsContainer as SBDocsContainer } from "@storybook/blocks";
+import { DocsContainer as SBDocsContainer } from "@storybook/addon-docs/blocks";
 import { isArray, isString, type Optional } from "@ubloimmo/front-util";
 import styled, { css, type RuleSet } from "styled-components";
 

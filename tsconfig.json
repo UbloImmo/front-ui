@@ -24,7 +24,11 @@
       "@docs/*": ["docs/*"],
       "@/*": ["src/*"],
     },
-    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+      },
+    ],
     "allowJs": false,
     "strict": true,
     "types": [

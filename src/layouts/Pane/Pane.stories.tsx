@@ -19,7 +19,7 @@ import type {
   PaneDynamicContentProps,
   PaneProps,
 } from "./Pane.types";
-import type { Meta, StoryFn, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 
 const defaultProps: PaneDefaultProps = {
   expandedWidth: "15rem",
