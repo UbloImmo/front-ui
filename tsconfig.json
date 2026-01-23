@@ -36,6 +36,9 @@
       "./matchers.d.ts",
     ],
   },
+  "typeAcquisition": {
+    "enable": true,
+  },
   "exclude": [
     "node_modules",
     "storybook-static",
