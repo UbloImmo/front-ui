@@ -9,7 +9,7 @@ import {
 import { Icon } from "../Icon";
 import { Loading } from "../Loading/Loading.component";
 import { Text } from "../Text";
-import styles from "./Button.module.css";
+import styles from "./Button.module.scss";
 
 import {
   useClassName,
