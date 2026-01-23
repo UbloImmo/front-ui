@@ -1,3 +1,5 @@
+@use "@/sizes/breakpoints.scss";
+
 .button {
   --button-size: var(--s-8);
   --padding-vertical: calc(var(--button-size) / 4);
@@ -206,9 +208,7 @@
     opacity: 0.33;
     box-shadow: none;
   }
-  /* TODO: find a way to reuse breakpoints */
-  /* BREAKPOINT USED: XS */
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: breakpoints.$breakpoint-xs) {
     --button-size: var(--s-13);
     --padding-vertical: var(--s-4);
     --padding-horizontal-label: var(--s-6);
@@ -233,7 +233,7 @@
   &.expandable:not(.full-width) {
     --padding-vertical: calc((var(--button-size) / 4) - var(--s-05) + 1px);
 
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: breakpoints.$breakpoint-xs) {
       --padding-vertical: calc(var(--s-4) + 1px);
     }
 
