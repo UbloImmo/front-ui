@@ -3,12 +3,12 @@ import { css, type RuleSet } from "styled-components";
 import styles from "../../Table.module.scss";
 
 import { parseFixedLength } from "@/sizes/size.utils";
+import { useCssClasses, useCssVariables } from "@utils";
 
 import type {
   TableHeaderProps,
   TableHeaderStyleProps,
 } from "./TableHeader.types";
-import { useCssClasses, useCssVariables } from "@utils";
 
 export const tableHeaderStyles = ({
   $sticky,
