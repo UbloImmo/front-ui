@@ -491,12 +491,6 @@ export const cssVariables = (
   return vars as CSSProperties;
 };
 
-export const cssStyles = (
-  ...styles: Nullish<CSSProperties>[]
-): CSSProperties => {
-  return Object.assign({}, ...styles.filter(isObject));
-};
-
 export const useCssVariables = (
   variables: Record<string, Optional<string | number>>,
   override?: Nullish<CSSProperties>
@@ -510,3 +504,15 @@ export const useCssVariables = (
     };
   }, [variables, override]);
 };
+
+export const cssStyles = (
+  ...styles: Nullish<CSSProperties>[]
+): CSSProperties => {
+  return Object.assign({}, ...styles.filter(isObject));
+};
+
+export const useCssStyles: typeof cssStyles = (...styles) => {
+  return useMemo(() => cssStyles(...styles), [styles]);
+};
+
+export const isCssProperties = isObject as Predicate<CSSProperties>;
