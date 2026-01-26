@@ -19,8 +19,8 @@ import {
   extractRem,
   fromStyleProps,
 } from "../utils";
-import generatedStyles from "./__generated__/typography-tokens.module.css";
-import styles from "./typography.module.css";
+import generatedStyles from "./__generated__/typography-tokens.module.scss";
+import styles from "./typography.module.scss";
 
 import type {
   TypographyProps,

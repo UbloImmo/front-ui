@@ -1,0 +1,27 @@
+@mixin dimensions(
+  $width: auto,
+  $height: auto,
+  $include-min-max: false,
+  $important: false
+) {
+  width: $width;
+  height: $height;
+  @if $important {
+    width: $width !important;
+    height: $height !important;
+  }
+
+  @if $include-min-max {
+    max-width: $width;
+    min-width: $width;
+    max-height: $height;
+    min-height: $height;
+
+    @if $important {
+      max-width: $width !important;
+      min-width: $width !important;
+      max-height: $height !important;
+      min-height: $height !important;
+    }
+  }
+}

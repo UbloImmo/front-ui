@@ -8,7 +8,7 @@ import {
   isAvatarPropsWithUrl,
 } from "./Avatar.utils";
 import { Tooltip } from "../Tooltip";
-import styles from "./Avatar.module.css";
+import styles from "./Avatar.module.scss";
 
 import { Heading } from "@/components/Heading";
 import { Text } from "@/components/Text";
