@@ -27,6 +27,7 @@ const listFilterPresetCollectionDefaultProps: ListFilterPresetCollectionDefaultP
     className: null,
     as: "div",
     styleOverride: null,
+    overflow: "unset",
   };
 
 export const useListFilterPresetCollection = (
