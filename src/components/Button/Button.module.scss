@@ -1,4 +1,4 @@
-@use "@/sizes/breakpoints.scss";
+@use "../../sizes/breakpoints.scss" as breakpoints;
 
 .button {
   --button-size: var(--s-8);

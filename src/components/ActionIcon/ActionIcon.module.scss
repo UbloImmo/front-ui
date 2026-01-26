@@ -1,5 +1,5 @@
-@use "@/styles/mixins.scss";
-@use "@/sizes/breakpoints.scss";
+@use "../../styles/mixins.scss";
+@use "../../sizes/breakpoints.scss";
 
 .action-icon {
   --action-icon-background: var(--white);

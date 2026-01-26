@@ -42,7 +42,8 @@
       "types": "./dist/sizes/index.d.ts",
       "import": "./dist/sizes.js",
       "default": "./dist/sizes.js"
-    }
+    },
+    "./core.css": "./dist/@ubloimmo/uikit.css"
   },
   "license": "SEE LICENSE IN LICENSE",
   "author": "Jean-Nicolas Veigel <art.jnveigel@gmail.com>",
