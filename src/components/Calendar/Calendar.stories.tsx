@@ -1,5 +1,5 @@
-import { fn } from "storybook/test";
 import { addDays } from "date-fns";
+import { fn } from "storybook/test";
 
 import { Calendar } from "./Calendar.component";
 import { _2Square } from "../Icon/__generated__";

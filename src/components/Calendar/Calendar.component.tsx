@@ -10,9 +10,8 @@ import { compareAsc } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DayPicker as ReactDayPicker } from "react-day-picker";
-import styled from "styled-components";
 
-import { calendarWrapperStyles } from "./Calendar.styles";
+import styles from "./Calendar.module.scss";
 import { defaultCalendarAssistiveTextTemplate } from "./Calendar.utils";
 import { CalendarFooter } from "./components/CalendarFooter.component";
 import { CalendarNav } from "./components/CalendarNav.component";
@@ -53,7 +52,7 @@ const defaultCalendarProps: CalendarDefaultProps = {
 /**
  * A simple, customizable calendar. Based on [react-day-picker](https://github.com/gpbl/react-day-picker)
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @param {CalendarProps & TestIdProps} props - Calendar component props
  * @returns {JSX.Element}
@@ -194,7 +193,7 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
   debug({ disabled, minMax });
 
   return (
-    <CalendarWrapper data-testid={testId}>
+    <div className={styles.calendar} data-testid={testId}>
       <ReactDayPicker
         {...dayPickerProps}
         showOutsideDays={numberOfMonths > 1}
@@ -209,13 +208,9 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
         }}
         footer={assistiveText}
       />
-    </CalendarWrapper>
+    </div>
   );
 };
 Calendar.defaultProps = defaultCalendarProps;
 
 export { Calendar };
-
-const CalendarWrapper = styled.div`
-  ${calendarWrapperStyles}
-`;
