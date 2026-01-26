@@ -1,14 +1,8 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { Nullable } from "@ubloimmo/front-util";
 import { useCallback, useRef } from "react";
-import styled from "styled-components";
 
-import {
-  popoverContentStyles,
-  popoverContentWrapperStyles,
-  popoverInnerTriggerStyles,
-  popoverTriggerStyles,
-} from "./Popover.styles";
+import { usePopoverLayoutStyles } from "./Popover.styles";
 import {
   useControlledPopoverProps,
   usePopoverCollisionPadding,
@@ -19,12 +13,7 @@ import {
 import { Text } from "@/components/Text";
 import { useTestId, useMergedProps } from "@utils";
 
-import type {
-  PopoverProps,
-  PopoverDefaultProps,
-  PopoverContentStyleProps,
-  PopoverTriggerStyleProps,
-} from "./Popover.types";
+import type { PopoverProps, PopoverDefaultProps } from "./Popover.types";
 import type { TestIdProps, Vec2 } from "@types";
 
 const defaultPopoverProps: PopoverDefaultProps = {
@@ -45,12 +34,13 @@ const defaultPopoverProps: PopoverDefaultProps = {
   fillHeight: false,
   noFocus: false,
 };
+
 /**
  * Displays rich content in a portal.
  *
  * Powered by [Radix-UI](https://www.radix-ui.com/docs/primitives/components/popover)
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @param {PopoverProps & TestIdProps} props - Popover component props
  * @returns {JSX.Element}
@@ -88,22 +78,27 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
     [mergedProps.noFocus]
   );
 
+  const styles = usePopoverLayoutStyles(mergedProps, offset.current);
+
   return (
     <PopoverPrimitive.Root
       data-testid={testId}
       defaultOpen={mergedProps.defaultOpen}
       {...controlledRootProps}
     >
-      <PopoverTrigger asChild>
-        <PopoverInnerTrigger
-          $fill={mergedProps.fill}
-          $fillHeight={mergedProps.fillHeight}
-          ref={computeOffset}
-        >
+      <PopoverPrimitive.Trigger
+        asChild
+        className={styles.popoverTrigger}
+        data-testid="popover-trigger"
+      >
+        <div className={styles.popoverTriggerInner} ref={computeOffset}>
           {mergedProps.children}
-        </PopoverInnerTrigger>
-      </PopoverTrigger>
-      <PopoverContent
+        </div>
+      </PopoverPrimitive.Trigger>
+      <PopoverPrimitive.Content
+        data-testid="popover-content"
+        className={styles.popoverContent.className}
+        style={styles.popoverContent.style}
         side={mergedProps.side}
         sideOffset={sideOffset}
         align={mergedProps.align}
@@ -111,40 +106,24 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
         collisionBoundary={mergedProps.collisionBoundary}
         collisionPadding={collisionPadding}
         sticky={mergedProps.sticky}
-        $fitTriggerWidth={mergedProps.fitTriggerWidth}
-        $allowContentWidthOverride={mergedProps.allowContentWidthOverride}
-        $anchorOffset={offset.current}
         onOpenAutoFocus={onFocus}
         onCloseAutoFocus={onFocus}
         onFocusOutside={onFocus}
       >
         {mergedProps.wrapContent && content ? (
-          <PopoverContentWrapper>{content}</PopoverContentWrapper>
+          <div
+            className={styles.popoverContentWrapper}
+            data-testid="popover-content-wrapper"
+          >
+            {content}
+          </div>
         ) : (
           content
         )}
-      </PopoverContent>
+      </PopoverPrimitive.Content>
     </PopoverPrimitive.Root>
   );
 };
 Popover.defaultProps = defaultPopoverProps;
 
 export { Popover };
-
-const PopoverTrigger = styled(PopoverPrimitive.Trigger)`
-  ${popoverTriggerStyles}
-`;
-
-const PopoverInnerTrigger = styled.div<PopoverTriggerStyleProps>`
-  ${popoverInnerTriggerStyles}
-`;
-
-const PopoverContent = styled(
-  PopoverPrimitive.Content
-)<PopoverContentStyleProps>`
-  ${popoverContentStyles}
-`;
-
-const PopoverContentWrapper = styled.div`
-  ${popoverContentWrapperStyles}
-`;
