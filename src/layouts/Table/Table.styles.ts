@@ -1,6 +1,10 @@
 import { css, type RuleSet } from "styled-components";
 
-import type { TableStyleProps } from "./Table.types";
+import styles from "./Table.module.scss";
+
+import { useCssClasses, useCssStyles } from "@utils";
+
+import type { TableDefaultProps, TableStyleProps } from "./Table.types";
 
 export const tableLayoutStyles = ({ $layout }: TableStyleProps): RuleSet => {
   return css`
@@ -12,3 +16,17 @@ export const tableLayoutStyles = ({ $layout }: TableStyleProps): RuleSet => {
     table-layout: ${$layout};
   `;
 };
+
+export function useTableLayoutStyle(props: TableDefaultProps) {
+  const className = useCssClasses(
+    styles.table,
+    [styles.fixed, props.layout === "fixed"],
+    props.className
+  );
+
+  const style = useCssStyles(props.styleOverride);
+  return {
+    className,
+    style,
+  };
+}

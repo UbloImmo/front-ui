@@ -1,7 +1,7 @@
 import type { TableProps, TableStyle } from "../../Table.types";
 import type { StyleProps } from "@types";
 
-export type TableBodyProps = TableProps & {
+export type TableBodyProps = Omit<TableProps, "layout"> & {
   /**
    * the table body's style
    * @type {TableStyle}

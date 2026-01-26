@@ -1,8 +1,14 @@
 import { css, type RuleSet } from "styled-components";
 
+import styles from "../../Table.module.scss";
+
 import { parseFixedLength } from "@/sizes/size.utils";
 
-import type { TableHeaderStyleProps } from "./TableHeader.types";
+import type {
+  TableHeaderProps,
+  TableHeaderStyleProps,
+} from "./TableHeader.types";
+import { useCssClasses, useCssVariables } from "@utils";
 
 export const tableHeaderStyles = ({
   $sticky,
@@ -20,3 +26,23 @@ export const tableHeaderStyles = ({
     }
   `;
 };
+
+export function useTableHeaderStyle(props: Required<TableHeaderProps>) {
+  const className = useCssClasses(
+    styles["table-header"],
+    [styles.sticky, props.sticky],
+    props.className
+  );
+
+  const style = useCssVariables(
+    {
+      "table-header-top": parseFixedLength(props.top),
+    },
+    props.styleOverride
+  );
+
+  return {
+    className,
+    style,
+  };
+}

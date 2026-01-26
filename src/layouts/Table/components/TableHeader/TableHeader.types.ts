@@ -1,7 +1,7 @@
 import type { TableProps } from "../../Table.types";
 import type { FixedCssLength, StyleProps } from "@types";
 
-export type TableHeaderProps = TableProps & {
+export type TableHeaderProps = Omit<TableProps, "layout"> & {
   /**
    * Whether the header should be stickyÅ
    *

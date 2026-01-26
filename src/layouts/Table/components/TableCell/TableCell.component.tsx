@@ -1,17 +1,15 @@
 import { forwardRef } from "react";
-import styled from "styled-components";
 
-import { tableCellStyles } from "./TableCell.styles";
+import styles from "../../Table.module.scss";
 
 import {
-  useClassName,
+  useCssClasses,
   useHtmlAttribute,
   useMergedProps,
-  useStyleProps,
   useTestId,
 } from "@utils";
 
-import type { TableCellProps, TableCellStyleProps } from "./TableCell.types";
+import type { TableCellProps } from "./TableCell.types";
 import type { TestIdProps } from "@types";
 
 const defaultTableCellProps: Required<TableCellProps> = {
@@ -25,7 +23,7 @@ const defaultTableCellProps: Required<TableCellProps> = {
 /**
  * A table cell component. Used in `TableRow`.
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @param {CellProps} props - The props for the component.
  * @return {JSX.Element} The rendered table cell.
@@ -36,28 +34,25 @@ const TableCell = forwardRef<
 >((props: TableCellProps & TestIdProps, ref): JSX.Element => {
   const mergedProps = useMergedProps(defaultTableCellProps, props);
 
-  const styleProps = useStyleProps(mergedProps);
-  const className = useClassName(mergedProps);
+  const className = useCssClasses(
+    styles["table-cell"],
+    [styles.padded, mergedProps.padded],
+    mergedProps.className
+  );
   const style = useHtmlAttribute(mergedProps.styleOverride);
-
   const testId = useTestId("table-cell", props);
 
   return (
-    <StyledTableCell
+    <td
       colSpan={mergedProps.colSpan}
       data-testid={testId}
       className={className}
       style={style}
       ref={ref}
-      {...styleProps}
     >
       {props.children}
-    </StyledTableCell>
+    </td>
   );
 });
 
 export { TableCell };
-
-const StyledTableCell = styled.td<TableCellStyleProps>`
-  ${tableCellStyles}
-`;

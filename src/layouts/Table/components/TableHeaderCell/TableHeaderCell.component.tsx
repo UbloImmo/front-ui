@@ -1,42 +1,46 @@
-import { forwardRef, type ForwardedRef } from "react";
-import styled from "styled-components";
+import { forwardRef } from "react";
 
-import { tableHeaderCellStyles } from "./TableHeaderCell.styles";
+import styles from "../../Table.module.scss";
 
 import {
-  useClassName,
+  useCssClasses,
   useHtmlAttribute,
   useMergedProps,
   useTestId,
 } from "@utils";
 
-import type { TableCellProps } from "../TableCell";
+import type { TableHeaderCellProps } from "./TableHeaderCell.types";
 import type { TestIdProps } from "@types";
 
-const defaultTableHeaderCellProps: TableCellProps = {
+const defaultTableHeaderCellProps: Required<TableHeaderCellProps> = {
   children: null,
   colSpan: 1,
+  className: null,
+  styleOverride: null,
 };
 
 /**
  * A table header cell component to label the corresponding column, used in `TableHeader`.
  *
- * @version 0.0.5
+ * @version 0.1.0
  *
  * @param {CellProps} props - The props for the component.
  * @return {JSX.Element} The rendered table header cell.
  */
 export const TableHeaderCell = forwardRef<
   HTMLTableCellElement,
-  TableCellProps & TestIdProps
->((props: TableCellProps & TestIdProps, ref): JSX.Element => {
+  TableHeaderCellProps & TestIdProps
+>((props, ref): JSX.Element => {
   const mergedProps = useMergedProps(defaultTableHeaderCellProps, props);
   const testId = useTestId("table-header-cell", props);
-  const className = useClassName(props);
+  const className = useCssClasses(
+    styles["table-header-cell"],
+    mergedProps.className
+  );
   const style = useHtmlAttribute(props.styleOverride);
 
   return (
-    <StyledTableHeaderCell
+    <th
       colSpan={mergedProps.colSpan}
       data-testid={testId}
       className={className}
@@ -44,12 +48,6 @@ export const TableHeaderCell = forwardRef<
       ref={ref}
     >
       <div data-testid="table-header-cell-inner">{props.children}</div>
-    </StyledTableHeaderCell>
+    </th>
   );
 });
-
-const StyledTableHeaderCell = styled.th<{
-  ref: ForwardedRef<HTMLTableCellElement>;
-}>`
-  ${tableHeaderCellStyles}
-`;

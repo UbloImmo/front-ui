@@ -130,6 +130,17 @@ const meta = {
   args: {
     children: DefaultExample,
   },
+  argTypes: {
+    layout: {
+      options: ["fixed", "auto"],
+    },
+    id: {
+      type: "string",
+    },
+    className: {
+      type: "string",
+    },
+  },
   parameters: {
     docs: componentSource(),
   },
