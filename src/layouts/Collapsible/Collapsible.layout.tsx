@@ -1,17 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
 
-import {
-  caretContainerStyles,
-  collapsibleContainerStyles,
-} from "./Collapsible.styles";
+import { useCollapsibleLayoutStyle } from "./Collapsible.styles";
 import { Icon } from "../../components/Icon";
 import { FlexRowLayout } from "../Flex";
 
 import { useMergedProps, useTestId } from "@utils";
 
 import type {
-  CollapsibleContainerStyleProps,
   CollapsibleDefaultProps,
   CollapsibleProps,
 } from "./Collapsible.types";
@@ -71,19 +66,20 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedProps.open]);
 
+  const styles = useCollapsibleLayoutStyle(mergedProps);
+
   return (
     <>
-      <CollapsibleContainer
+      <FlexRowLayout
+        className={styles.collapsible}
         testId={testId}
         overrideTestId
         align="center"
         fill
         aria-expanded={isOpen}
-        $compact={compact}
-        $disabled={disabled}
-        {...mergedProps}
       >
-        <CaretContainer
+        <button
+          className={styles.caret}
           aria-expanded={isOpen}
           data-testid={`${testId}-caret`}
           onClick={toggleCollapsible}
@@ -92,12 +88,12 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
           type="button"
         >
           <Icon name="CaretRightFill" size="s-2" color={iconColor} />
-        </CaretContainer>
+        </button>
         {children}
-      </CollapsibleContainer>
+      </FlexRowLayout>
 
       {subCollapsibles && isOpen && (
-        <SubCollapsibleContainer>
+        <div className={styles.subContainer}>
           {subCollapsibles.map((collapsible, index) => {
             const subCollapsibleTestId = `sub${testId}-${index}`;
 
@@ -111,7 +107,7 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
               />
             );
           })}
-        </SubCollapsibleContainer>
+        </div>
       )}
       {content && isOpen && <>{content}</>}
     </>
@@ -120,19 +116,3 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
 Collapsible.defaultProps = defaultCollapsibleProps;
 
 export { Collapsible };
-
-const CollapsibleContainer = styled(
-  FlexRowLayout
-)<CollapsibleContainerStyleProps>`
-  ${collapsibleContainerStyles}
-`;
-
-const CaretContainer = styled.button`
-  ${caretContainerStyles}
-`;
-
-const SubCollapsibleContainer = styled.div`
-  padding-left: var(--s-4);
-  width: 100%;
-  max-width: 100%;
-`;
