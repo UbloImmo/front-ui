@@ -500,7 +500,7 @@ export const useCssVariables = (
     if (!override) return vars;
     return {
       ...vars,
-      override,
+      ...override,
     };
   }, [variables, override]);
 };
