@@ -1,11 +1,5 @@
-import { useMemo } from "react";
-import styled from "styled-components";
-
-import {
-  badgeStyle,
-  badgeShadeStyleMap,
-  grayBadgeShadeStyleMap,
-} from "./Badge.styles";
+import styles from "./Badge.module.scss";
+import { useBadgeStyle } from "./Badge.styles";
 import { Icon } from "../Icon/Icon.component";
 import { Text } from "../Text/Text.component";
 
@@ -14,12 +8,11 @@ import {
   useHtmlAttribute,
   useLogger,
   useMergedProps,
-  useStyleProps,
   useTestId,
 } from "@utils";
 
 import type { BadgeProps, DefaultBadgeProps } from "./Badge.types";
-import type { PaletteColor, StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultBadgeProps: DefaultBadgeProps = {
@@ -27,13 +20,16 @@ const defaultBadgeProps: DefaultBadgeProps = {
   icon: null,
   color: "primary",
   shade: "light",
+  className: null,
+  styleOverride: null,
 };
+
 /**
  * Renders a Badge component, with an optionnal Icon and a required Text.
  *
  * @remarks Badge shades are based on two sets of colors, light and dark, depending on the shade prop.
  *
- * @version 0.0.9
+ * @version 0.1.0
  *
  * @param {BadgeProps} props - the props for the Badge component
  * @return {Nullable<JSX.Element>} the Badge component
@@ -42,20 +38,10 @@ const defaultBadgeProps: DefaultBadgeProps = {
 const Badge = (props: BadgeProps & TestIdProps): Nullable<JSX.Element> => {
   const { warn } = useLogger("Badge");
   const mergedProps = useMergedProps(defaultBadgeProps, props);
-  const styledProps = useStyleProps(mergedProps);
   const testId = useTestId<TestIdProps>("badge", props);
-  const { color, shade, label, icon } = mergedProps;
-  const { iconColorStyle, textColorStyle } = useMemo(() => {
-    const { iconColor, textColor } =
-      color === "gray"
-        ? grayBadgeShadeStyleMap[shade]
-        : badgeShadeStyleMap[shade];
+  const { label, icon } = mergedProps;
 
-    const iconColorStyle = `${color}-${iconColor}` as PaletteColor;
-    const textColorStyle = `${color}-${textColor}` as PaletteColor;
-
-    return { iconColorStyle, textColorStyle };
-  }, [color, shade]);
+  const { className, style, iconColor, textColor } = useBadgeStyle(mergedProps);
 
   const title = useHtmlAttribute(label);
 
@@ -65,32 +51,36 @@ const Badge = (props: BadgeProps & TestIdProps): Nullable<JSX.Element> => {
   }
 
   return (
-    <BadgeContainer
+    <div
+      className={className}
+      style={style}
       data-testid={testId}
-      {...styledProps}
       role="status"
       title={title}
     >
       {icon && (
         <Icon
           data-testid="badge-icon"
-          color={iconColorStyle}
+          color={iconColor}
           name={icon}
           size="s-3"
         />
       )}
       {label && !isEmptyString(label) && (
-        <Text size="s" color={textColorStyle} weight="medium" fill ellipsis>
+        <Text
+          className={styles["badge-text"]}
+          size="s"
+          color={textColor}
+          weight="medium"
+          fill
+          ellipsis
+        >
           {label}
         </Text>
       )}
-    </BadgeContainer>
+    </div>
   );
 };
 
 Badge.defaultProps = defaultBadgeProps;
 export { Badge };
-
-const BadgeContainer = styled.div<StyleProps<DefaultBadgeProps>>`
-  ${badgeStyle}
-`;

@@ -1,0 +1,33 @@
+.shell,
+.badge {
+  padding: 0 var(--s-2);
+  border-radius: var(--s-3);
+  gap: var(--s-1);
+  display: flex;
+  align-items: center;
+  height: var(--s-5);
+  max-height: var(--s-5);
+  min-height: var(--s-5);
+  max-width: max-content;
+  user-select: none;
+  overflow: hidden;
+
+  transition-property: background, border;
+  transition-duration: 300ms;
+  transition-timing-function: var(--bezier);
+
+  .badge-text {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    overflow-y: hidden;
+  }
+}
+
+.badge {
+  --badge-border-color: var(--primary-medium);
+  --badge-background-color: var(--primary-light);
+
+  border: 1px solid var(--badge-border-color);
+  background: var(--badge-background-color);
+}

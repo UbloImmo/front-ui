@@ -1,11 +1,11 @@
 import { Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import { IconName } from "..";
 import { Badge } from "./Badge.component";
 import { BadgeProps, BadgeShade } from "./Badge.types";
 import { FlexRowLayout } from "../../layouts";
 import { useMergedProps } from "../../utils";
+import { allIconNames, type IconName } from "../Icon/Icon.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { ColorPalette } from "@types";
@@ -21,6 +21,20 @@ const meta = {
   title: "Components/States/Badge/Stories",
   component: Badge,
   args,
+  argTypes: {
+    icon: {
+      options: allIconNames,
+    },
+    color: {
+      options: ["success", "error", "warning", "pending", "gray"],
+    },
+    shade: {
+      options: ["light", "dark"],
+    },
+    className: {
+      type: "string",
+    },
+  },
   decorators: [
     (Story) => (
       <FlexRowLayout gap="s-4" align="center" justify="start" wrap>

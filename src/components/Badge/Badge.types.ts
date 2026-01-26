@@ -3,6 +3,7 @@ import type {
   ColorKey,
   DefaultPaletteColorShadeKey,
   GrayscalePaletteColorShadeKey,
+  StyleOverrideProps,
 } from "@types";
 import type { Enum, Nullable, RequireAtLeastOne } from "@ubloimmo/front-util";
 
@@ -40,7 +41,7 @@ export type BadgeProps = RequireAtLeastOne<{
    * @default "light"
    */
   shade?: BadgeShade;
-};
+} & Omit<StyleOverrideProps, "as">;
 
 export type DefaultBadgeProps = Required<BadgeProps>;
 
