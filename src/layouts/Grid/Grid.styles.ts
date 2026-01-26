@@ -63,7 +63,8 @@ export function useGridLayoutStyle(props: GridLayoutDefaultProps) {
     [styles.fill, props.fill],
     [styles.row, props.flow.includes("row")],
     [styles.column, props.flow.includes("column")],
-    [styles.dense, props.flow.includes("dense")]
+    [styles.dense, props.flow.includes("dense")],
+    props.className
   );
   const gaps = gridGap(props.gap);
   const style = useCssVariables(
