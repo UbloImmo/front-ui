@@ -1,68 +1,74 @@
-import { RuleSet, css } from "styled-components";
+import { useMemo } from "react";
 
-import { ChipProps } from "./Chip.types";
-import { commonBadgeStyles } from "../Badge/Badge.styles";
+import styles from "./Chip.module.scss";
+import badgeStyles from "../Badge/Badge.module.scss";
+import { getBadgeStyleMap } from "../Badge/Badge.styles";
 
-import { fromStyleProps, isGrayColor } from "@utils";
+import {
+  cssClasses,
+  cssStyles,
+  cssVariables,
+  cssVarUsage,
+  isGrayColor,
+} from "@utils";
 
-import type { PaletteColor, StyleProps } from "@types";
+import type { DefaultChipProps } from "./Chip.types";
+import type { PaletteColor } from "@types";
 
-export const buildChipContainerStyles = (
-  props: StyleProps<ChipProps>
-): RuleSet => {
-  const { iconPlacement, color, disabled } = fromStyleProps(props);
-
-  const borderColorShade = isGrayColor(color) ? "300" : "medium";
-  const borderColor = `${color}-${borderColorShade}` as PaletteColor;
-  const backgroundColor = isGrayColor(color) ? "50" : "light";
-  const background = `${color}-${backgroundColor}` as PaletteColor;
-
-  return css`
-    ${commonBadgeStyles}
-    max-width: 100%;
-    flex-direction: ${iconPlacement === "left" ? "row" : "row-reverse"};
-    border: 1px solid var(--${borderColor});
-    background-color: var(--${background});
-    border-radius: var(--s-1) 0 0 var(--s-1);
-    ${disabled &&
-    css`
-      border-radius: var(--s-1);
-    `}
-  `;
-};
-
-export const buildChipButtonStyles = ({
-  $color,
-}: StyleProps<ChipProps>): RuleSet => css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--s-5);
-  width: var(--s-5);
-  max-width: var(--s-5);
-  min-width: var(--s-5);
-  max-height: var(--s-5);
-  min-height: var(--s-5);
-  border-radius: 0 var(--s-1) var(--s-1) 0;
-  margin-left: -1px;
-  border: 1px solid var(--${$color}-${isGrayColor($color) ? "300" : "medium"});
-  background-color: var(--${$color}-light);
-  transition-duration: 300ms;
-  transition-timing-function: ease-out;
-  transition-property: background-color, fill;
-
-  &:hover {
-    background-color: var(
-      --${$color}-${isGrayColor($color) ? "300" : "medium"}
+export function useChipStyle({
+  color,
+  className: cn,
+  iconPlacement,
+  disabled,
+  styleOverride,
+}: Pick<
+  DefaultChipProps,
+  "color" | "className" | "iconPlacement" | "disabled" | "styleOverride"
+>) {
+  const classes = useMemo(() => {
+    const wrapper = cssClasses(styles["chip-wrapper"], cn);
+    const chip = cssClasses(
+      badgeStyles.shell,
+      styles.chip,
+      [styles["icon-right"], iconPlacement === "right"],
+      [styles.disabled, disabled]
     );
-    transition-duration: 150ms;
+    const button = cssClasses(styles["chip-button"]);
+    const label = cssClasses(badgeStyles["badge-text"]);
+    return {
+      wrapper,
+      chip,
+      button,
+      label,
+    };
+  }, [cn, disabled, iconPlacement]);
 
-    svg {
-      fill: var(--${$color}-${isGrayColor($color) ? "800" : "dark"});
-    }
-  }
-`;
+  const { style, colors } = useMemo(() => {
+    const { iconColor, textColor, backgroundColor } = getBadgeStyleMap(
+      color,
+      "light"
+    );
+    const borderColorShade = isGrayColor(color) ? "300" : "medium";
+    const iconHoverShade = isGrayColor(color) ? "800" : "dark";
 
-export const buildChipWrapperStyles = () => css`
-  max-width: 100%;
-`;
+    const border = `${color}-${borderColorShade}` as PaletteColor;
+    const background = `${color}-${backgroundColor}` as PaletteColor;
+    const text = `${color}-${textColor}` as PaletteColor;
+    const icon = `${color}-${iconColor}` as PaletteColor;
+    const iconHover = `${color}-${iconHoverShade}` as PaletteColor;
+
+    const vars = cssVariables({
+      "chip-border-color": cssVarUsage(border),
+      "chip-background-color": cssVarUsage(background),
+      "chip-button-icon-hover-color": cssVarUsage(iconHover),
+    });
+    const style = cssStyles(vars, styleOverride);
+
+    return {
+      style,
+      colors: { border, background, text, icon, iconHover },
+    };
+  }, [color, styleOverride]);
+
+  return { classes, style, colors };
+}

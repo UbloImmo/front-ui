@@ -1,7 +1,7 @@
 import { IconName } from "../Icon";
 
 import type { DirectionHorizontal } from "@/types/global/direction.types";
-import type { ColorKey } from "@types";
+import type { ColorKey, StyleOverrideProps } from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 export type ChipProps = {
@@ -47,6 +47,6 @@ export type ChipProps = {
    * @default false
    */
   disabled?: boolean;
-};
+} & Omit<StyleOverrideProps, "as">;
 
 export type DefaultChipProps = Required<ChipProps>;

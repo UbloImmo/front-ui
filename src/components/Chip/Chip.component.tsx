@@ -1,12 +1,7 @@
 import { isNull } from "@ubloimmo/front-util";
 import { MouseEventHandler, useCallback, useMemo } from "react";
-import styled from "styled-components";
 
-import {
-  buildChipContainerStyles,
-  buildChipButtonStyles,
-  buildChipWrapperStyles,
-} from "./Chip.styles";
+import { useChipStyle } from "./Chip.styles";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
@@ -21,7 +16,7 @@ import {
 } from "@utils";
 
 import type { ChipProps, DefaultChipProps } from "./Chip.types";
-import type { PaletteColor, StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 
 const defaultChipProps: DefaultChipProps = {
   label: "[Chip]",
@@ -31,12 +26,14 @@ const defaultChipProps: DefaultChipProps = {
   onDelete: null,
   deleteButtonTitle: null,
   disabled: false,
+  className: null,
+  styleOverride: null,
 };
 
 /**
  * An interactive `Badge` with a remove button, can be used as a filter tag.
  *
- * @version 0.0.9
+ * @version 0.1.0
  * @param {ChipProps} props - the props for the Chip component
  * @returns {JSX.Element} - the Chip component
  */
@@ -45,7 +42,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("chip", props);
 
-  const { label, icon, color, deleteButtonTitle, disabled } = mergedProps;
+  const { label, icon, deleteButtonTitle, disabled } = mergedProps;
   const { warn } = useLogger("Chip");
 
   const tl = useUikitTranslation();
@@ -63,27 +60,37 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
     [mergedProps]
   );
 
-  const { iconColorStyle, textColorStyle } = useMemo(() => {
-    const iconColorStyle = `${color}-base` as PaletteColor;
-    const textColorStyle = `${color}-dark` as PaletteColor;
-    return { iconColorStyle, textColorStyle };
-  }, [color]);
+  const { colors, style, classes } = useChipStyle(mergedProps);
 
   if (!props.label || isEmptyString(props.label)) {
     warn(`Missing required label, defaulting to ${defaultChipProps.label}`);
   }
 
   return (
-    <ChipWrapper align="center" testId={testId} overrideTestId role="status">
-      <ChipContainer {...styledProps} title={label}>
-        {icon && <Icon name={icon} size="s-3" color={iconColorStyle} />}
-        <Text size="s" weight="medium" color={textColorStyle} ellipsis>
+    <FlexRowLayout
+      className={classes.wrapper}
+      styleOverride={style}
+      align="center"
+      testId={testId}
+      overrideTestId
+      role="status"
+    >
+      <div className={classes.chip} {...styledProps} title={label}>
+        {icon && <Icon name={icon} size="s-3" color={colors.icon} />}
+        <Text
+          className={classes.label}
+          size="s"
+          weight="medium"
+          color={colors.text}
+          ellipsis
+        >
           {label}
         </Text>
-      </ChipContainer>
+      </div>
 
       {!disabled && (
-        <ChipButton
+        <button
+          className={classes.button}
           {...styledProps}
           onClick={onDelete}
           onMouseDown={onDelete}
@@ -92,24 +99,12 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
           title={deleteLabel}
           aria-label={deleteLabel}
         >
-          <Icon name="X" size="s-4" color={iconColorStyle} />
-        </ChipButton>
+          <Icon name="X" size="s-4" color={colors.icon} />
+        </button>
       )}
-    </ChipWrapper>
+    </FlexRowLayout>
   );
 };
 
 Chip.defaultProps = defaultChipProps;
 export { Chip };
-
-const ChipContainer = styled.div<StyleProps<DefaultChipProps>>`
-  ${buildChipContainerStyles}
-`;
-
-const ChipButton = styled.button<StyleProps<DefaultChipProps>>`
-  ${buildChipButtonStyles}
-`;
-
-const ChipWrapper = styled(FlexRowLayout)`
-  ${buildChipWrapperStyles}
-`;

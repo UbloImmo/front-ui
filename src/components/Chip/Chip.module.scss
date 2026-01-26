@@ -1,0 +1,58 @@
+.chip-wrapper {
+  --chip-background-color: var(--primary-light);
+  --chip-border-color: var(--primary-medium);
+  --chip-button-icon-hover-color: var(--primary-dark);
+  max-width: 100%;
+}
+
+.chip {
+  max-width: 100%;
+  flex-direction: row;
+
+  &.icon-right {
+    flex-direction: row-reverse;
+  }
+  border: 1px solid var(--chip-border-color);
+  background: var(--chip-background-color);
+  border-radius: var(--s-1) 0 0 var(--s-1);
+
+  &.disabled {
+    border-radius: var(--s-1);
+  }
+}
+
+.chip-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: var(--s-5);
+  width: var(--s-5);
+  max-width: var(--s-5);
+  min-width: var(--s-5);
+  max-height: var(--s-5);
+  min-height: var(--s-5);
+  border-radius: 0 var(--s-1) var(--s-1) 0;
+  margin-left: -1px;
+  border: 1px solid var(--chip-border-color);
+  background: var(--chip-background-color);
+  transition:
+    background 300ms var(--bezier),
+    border-color 300ms var(--bezier);
+
+  svg[data-testid="icon"],
+  svg[data-testid="icon"] path {
+    transition: fill 300ms var(--bezier);
+  }
+
+  &:hover {
+    background: var(--chip-border-color);
+    transition-duration: 150ms;
+
+    svg[data-testid="icon"],
+    svg[data-testid="icon"] path {
+      transition-duration: 150ms;
+      fill: var(--chip-button-icon-hover-color);
+    }
+  }
+}
