@@ -1,29 +1,36 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import { accountBalanceStyle } from "./AccountBalance.styles";
 import { Heading } from "../Heading";
 import { Text } from "../Text";
+import styles from "./AccountBalance.module.scss";
 import { formatAmount } from "./AccountBalance.utils";
 
-import { StyleProps, type TestIdProps } from "@types";
-import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
+import {
+  useLogger,
+  useTestId,
+  useMergedProps,
+  useCssClasses,
+  useCssStyles,
+} from "@utils";
 
 import type {
   AccountBalanceProps,
   AccountBalanceDefaultProps,
 } from "./AccountBalance.types";
+import type { TestIdProps } from "@types";
 
 const defaultAccountBalanceProps: AccountBalanceDefaultProps = {
-  title: "Titre",
+  title: "Title",
   value: null,
   compact: true,
+  className: null,
+  styleOverride: null,
 };
 
 /**
  * Render a component to display the account balance with correct format and € currency in the entity info card for rental folder.
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @param {AccountBalanceProps & TestIdProps} props - AccountBalance component props
  * @returns {JSX.Element}
@@ -33,8 +40,12 @@ const AccountBalance = (
 ): JSX.Element => {
   const { warn } = useLogger("AccountBalance", { hideLogs: true });
   const mergedProps = useMergedProps(defaultAccountBalanceProps, props);
-  const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("account-balance", props);
+  const className = useCssClasses(
+    styles["account-balance"],
+    mergedProps.className
+  );
+  const style = useCssStyles(mergedProps.styleOverride);
 
   if (!props.title) warn("Missing title prop");
 
@@ -44,7 +55,7 @@ const AccountBalance = (
   );
 
   return (
-    <AccountBalanceContainer data-testid={testId} {...styledProps}>
+    <div className={className} style={style} data-testid={testId}>
       <Text
         size="m"
         color="gray-800"
@@ -65,13 +76,9 @@ const AccountBalance = (
       >
         {formattedValue}
       </Heading>
-    </AccountBalanceContainer>
+    </div>
   );
 };
 AccountBalance.defaultProps = defaultAccountBalanceProps;
 
 export { AccountBalance };
-
-const AccountBalanceContainer = styled.div<StyleProps<AccountBalanceProps>>`
-  ${accountBalanceStyle}
-`;

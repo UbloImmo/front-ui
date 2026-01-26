@@ -28,7 +28,7 @@ testAccountBalance({
   ...AccountBalance.defaultProps,
 })("should render with default props", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
-  expect(queryByTestId("account-balance-title")?.textContent).toBe("Titre :");
+  expect(queryByTestId("account-balance-title")?.textContent).toBe("Title :");
   expect(queryByTestId("account-balance-value")?.textContent).toBe("— €");
 });
 

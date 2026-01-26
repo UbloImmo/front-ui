@@ -1,3 +1,4 @@
+import { StyleOverrideProps } from "@types";
 import { Nullable } from "@ubloimmo/front-util";
 
 export type AccountBalanceProps = {
@@ -24,6 +25,6 @@ export type AccountBalanceProps = {
    * @default true
    */
   compact?: boolean;
-};
+} & Omit<StyleOverrideProps, "as">;
 
 export type AccountBalanceDefaultProps = Required<AccountBalanceProps>;
