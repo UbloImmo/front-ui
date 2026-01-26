@@ -1,8 +1,7 @@
 import { type VoidFn, isFunction, type Nullable } from "@ubloimmo/front-util";
 import { type MouseEventHandler, useCallback, useMemo, useState } from "react";
-import styled from "styled-components";
 
-import { actionContainerStyles } from "./Action.styles";
+import { useActionStyles } from "./Action.styles";
 import {
   ActionCard,
   ActionCentered,
@@ -10,21 +9,12 @@ import {
   ActionLarge,
 } from "./components";
 
-import {
-  isEmptyString,
-  useClassName,
-  useHtmlAttribute,
-  useLogger,
-  useMergedProps,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { isEmptyString, useLogger, useMergedProps, useTestId } from "@utils";
 
 import type { BadgeProps } from "../Badge";
 import type { TooltipProps } from "../Tooltip";
 import type {
   ActionProps,
-  ActionStyledProps,
   DefaultActionProps,
   SizedActionMap,
 } from "./Action.types";
@@ -66,7 +56,7 @@ const sizedActionMap: SizedActionMap = {
 /**
  * An action button with an icon, label and optional badge
  *
- * @version 0.0.9
+ * @version 0.1.0
  *
  * @param {ActionProps} props - The component's props
  * @returns {JSX.Element}
@@ -76,9 +66,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
 
   const mergedProps = useMergedProps(defaultActionProps, props, true);
   const testId = useTestId("action", props);
-  const styleProps = useStyleProps({ ...mergedProps, testId });
-  const className = useClassName(props);
-  const style = useHtmlAttribute(props.styleOverride);
+  const { className, style } = useActionStyles(mergedProps);
 
   if (!props.icon) {
     warn(`Missing required icon, defaulting to ${defaultActionProps.icon}`);
@@ -144,7 +132,7 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
   }, [mergedProps.size, warn]);
 
   return (
-    <ActionContainer
+    <button
       data-testid={testId}
       type="button"
       title={mergedProps.title ?? mergedProps.label}
@@ -154,7 +142,6 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
       disabled={mergedProps.disabled}
       className={className}
       style={style}
-      {...styleProps}
     >
       <SizedAction
         {...mergedProps}
@@ -164,14 +151,10 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
         badgeProps={badgeProps}
         iconTooltipProps={iconTooltipProps}
       />
-    </ActionContainer>
+    </button>
   );
 };
 
 Action.defaultProps = defaultActionProps;
 
 export { Action };
-
-const ActionContainer = styled.button<ActionStyledProps>`
-  ${actionContainerStyles}
-`;

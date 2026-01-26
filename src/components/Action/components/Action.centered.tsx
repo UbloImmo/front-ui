@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 
+import styles from "../Action.module.scss";
+
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
 import { FlexLayout } from "@/layouts/Flex";
@@ -39,7 +41,12 @@ export const ActionCentered = ({
   return (
     <FlexLayout fill direction="row" align="center" justify="center" gap="s-2">
       <Icon name={icon} size="s-4" color={iconColor} />
-      <Text testId={`${testId}-label`} overrideTestId {...textProps}>
+      <Text
+        className={styles["action-label"]}
+        testId={`${testId}-label`}
+        overrideTestId
+        {...textProps}
+      >
         {label}
       </Text>
     </FlexLayout>
