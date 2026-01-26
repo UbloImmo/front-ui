@@ -1,9 +1,5 @@
 import type { KeyOf, Nullish } from "@ubloimmo/front-util";
-import { ElementType } from "react";
-import type {
-  CSSProperties,
-  SupportedHTMLElements,
-} from "styled-components/dist/types";
+import type { ElementType, CSSProperties } from "react";
 
 export type StylePropName<TPropName extends string> = `$${TPropName}`;
 
