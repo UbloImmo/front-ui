@@ -4,6 +4,7 @@
   --flex-gap: 0;
   --flex-dir: row;
   --flex-wrap: nowrap;
+  --flex-overflow: unset;
 
   display: flex;
   align-items: var(--flex-align);
@@ -11,6 +12,7 @@
   flex-direction: var(--flex-dir);
   flex-wrap: var(--flex-wrap);
   gap: var(--flex-gap);
+  overflow: var(--flex-overflow);
 
   &.inline {
     display: inline-flex;

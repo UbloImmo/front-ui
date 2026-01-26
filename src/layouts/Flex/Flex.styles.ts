@@ -45,6 +45,7 @@ export function useFlexLayoutStyle(props: FlexLayoutDefaultProps) {
       "flex-gap": cssLengthUsage(props.gap),
       "flex-align": flexAlignment(props.align),
       "flex-justify": flexAlignment(props.justify),
+      "flex-overflow": props.overflow,
     },
     props.styleOverride
   );

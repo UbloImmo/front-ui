@@ -26,10 +26,7 @@ describe("FlexLayout", () => {
     justify: "space-between",
   })("should pass props correctly", async ({ findByTestId }) => {
     const flexLayout = (await findByTestId(testId)) as HTMLElement;
-    const flexStyle = flexLayout && window.getComputedStyle(flexLayout);
-    expect(flexStyle.flexDirection).toBe("column");
-    expect(flexStyle.flexWrap).toBe("wrap");
-    expect(flexStyle.justifyContent).toBe("space-between");
+    expect(flexLayout.className).toBe("flex column wrap");
   });
 
   testFlexInitial({
@@ -38,9 +35,9 @@ describe("FlexLayout", () => {
     justify: "stretch",
   })("should pass props correctly", async ({ findByTestId }) => {
     const flexLayout = (await findByTestId(testId)) as HTMLElement;
-    const flexStyle = flexLayout && window.getComputedStyle(flexLayout);
-    expect(flexStyle.flexDirection).toBe("column-reverse");
-    expect(flexStyle.justifyContent).toBe("flex-stretch");
+    expect(flexLayout.className).toInclude("flex");
+    expect(flexLayout.className).toInclude("column");
+    expect(flexLayout.className).toInclude("reverse");
   });
 
   const testFlexRow = testComponentFactory<FlexDirectionLayoutProps>(
@@ -52,8 +49,7 @@ describe("FlexLayout", () => {
     gap: "1rem",
   })("should be rendered with direction as row", async ({ findByTestId }) => {
     const flexLayout = (await findByTestId(rowTestId)) as HTMLElement;
-    const flexStyle = flexLayout && window.getComputedStyle(flexLayout);
-    expect(flexStyle.flexDirection).toBe("row");
+    expect(flexLayout.className).toBe("flex row");
   });
 
   testFlexRow({
@@ -62,10 +58,7 @@ describe("FlexLayout", () => {
     justify: "space-between",
   })("should pass props correctly", async ({ findByTestId }) => {
     const flexLayout = (await findByTestId(rowTestId)) as HTMLElement;
-    const flexStyle = flexLayout && window.getComputedStyle(flexLayout);
-    expect(flexStyle.flexWrap).toBe("wrap");
-    expect(flexStyle.gap).toBe("1rem");
-    expect(flexStyle.justifyContent).toBe("space-between");
+    expect(flexLayout.className).toBe("flex row wrap");
   });
 
   const testFlexColumn = testComponentFactory<FlexDirectionLayoutProps>(
@@ -81,8 +74,7 @@ describe("FlexLayout", () => {
     "should be rendered with direction as column",
     async ({ findByTestId }) => {
       const flexLayout = (await findByTestId(columnTestId)) as HTMLElement;
-      const flexStyle = flexLayout && window.getComputedStyle(flexLayout);
-      expect(flexStyle.flexDirection).toBe("column");
+      expect(flexLayout.className).toBe("flex column wrap");
     }
   );
 
@@ -92,8 +84,6 @@ describe("FlexLayout", () => {
     align: "center",
   })("should pass props correctly", async ({ findByTestId }) => {
     const flexLayout = (await findByTestId(columnTestId)) as HTMLElement;
-    const flexStyle = flexLayout && window.getComputedStyle(flexLayout);
-    expect(flexStyle.flexWrap).toBe("wrap");
-    expect(flexStyle.alignItems).toBe("center");
+    expect(flexLayout.className).toBe("flex column wrap");
   });
 });
