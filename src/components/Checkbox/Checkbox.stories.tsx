@@ -1,5 +1,5 @@
-import { fn } from "storybook/test";
 import { useMemo, useState } from "react";
+import { fn } from "storybook/test";
 
 import { Checkbox } from "./Checkbox.component";
 import { Text } from "../Text";

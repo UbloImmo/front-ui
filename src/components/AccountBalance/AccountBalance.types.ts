@@ -1,5 +1,6 @@
-import { StyleOverrideProps } from "@types";
 import { Nullable } from "@ubloimmo/front-util";
+
+import { StyleOverrideProps } from "@types";
 
 export type AccountBalanceProps = {
   /**

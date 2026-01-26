@@ -67,7 +67,7 @@ export const FlexLayout = forwardRef<
 });
 
 /**
- * A {@link FlexLayout} variant with fixed `row` directionS
+ * A {@link FlexLayout} variant with fixed `row` direction
  *
  * @param {FlexDirectionLayoutProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper

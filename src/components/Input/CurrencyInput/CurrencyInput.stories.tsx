@@ -1,5 +1,5 @@
-import { fn } from "storybook/test";
 import { useCallback, useEffect, useState } from "react";
+import { fn } from "storybook/test";
 
 import { CurrencyInput } from "./CurrencyInput.component";
 

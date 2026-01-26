@@ -1,5 +1,5 @@
-import { fn } from "storybook/test";
 import { useReducer } from "react";
+import { fn } from "storybook/test";
 
 import { ComboBox } from "./ComboBox.component";
 

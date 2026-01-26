@@ -1,5 +1,5 @@
-import { fn } from "storybook/test";
 import { useState } from "react";
+import { fn } from "storybook/test";
 
 import { Field } from "./Field.component";
 import { inputTypes } from "../Input/Input.data";

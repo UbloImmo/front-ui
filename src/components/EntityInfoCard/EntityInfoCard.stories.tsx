@@ -1,9 +1,9 @@
-import { fn } from "storybook/test";
 import {
   objectEntries,
   objectFromEntries,
   type Nullable,
 } from "@ubloimmo/front-util";
+import { fn } from "storybook/test";
 
 import { EntityInfoCard } from "./EntityInfoCard.component";
 

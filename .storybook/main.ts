@@ -15,10 +15,14 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
 
-  addons: ["@storybook/addon-links", {
-    name: "@storybook/addon-docs",
-    options: { transcludeMarkdown: true },
-  }, "@storybook/addon-a11y"],
+  addons: [
+    "@storybook/addon-links",
+    {
+      name: "@storybook/addon-docs",
+      options: { transcludeMarkdown: true },
+    },
+    "@storybook/addon-a11y",
+  ],
 
   framework: {
     name: "@storybook/react-vite",

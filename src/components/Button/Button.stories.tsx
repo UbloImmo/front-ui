@@ -1,6 +1,6 @@
-import { fn } from "storybook/test";
 import { isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
+import { fn } from "storybook/test";
 
 import { Button } from "./Button.component";
 import {
