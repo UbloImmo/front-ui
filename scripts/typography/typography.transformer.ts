@@ -1,5 +1,5 @@
 import { texts, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
-import { objectEntries } from "@ubloimmo/front-util";
+import { objectEntries, objectKeys } from "@ubloimmo/front-util";
 
 import { breakpointsPx } from "@/sizes";
 import { BreakpointLabel } from "@types";
@@ -25,8 +25,8 @@ type TypographyRule = {
 
 type TypographyRuleMap = Map<string, TypographyRule>;
 type TypographyRuleMaps = {
-  desktop: TypographyRuleMap;
-  mobile: TypographyRuleMap;
+  rules: TypographyRuleMap;
+  mixins: TypographyRuleMap;
 };
 
 const EXCLUDED_RULES = [
@@ -65,29 +65,68 @@ function appendImportant(ruleStr: string) {
 function importantRuleset(ruleStr: string) {
   return `&.important {\n${indentLines(appendImportant(ruleStr))}\n}`;
 }
+function getTypoRule(
+  breakpoint: TypographyBreakpoint,
+  size: TypographySize,
+  weight: TypographyWeight
+) {
+  const { css } = texts[breakpoint][size][weight];
+  const name = `text-${size}-${weight}`;
+  const ruleStr = [
+    ...parseCssRules(css.rules),
+    `font-size: ${cssVarUsage(`text-${size}`)};`,
+    `font-weight: ${cssVarUsage(`text-weight-${weight}`)};`,
+  ].join("\n");
+
+  return { name, ruleStr };
+}
 
 export function parseRules(): TypographyRuleMaps {
-  const desktop: TypographyRuleMap = new Map();
-  const mobile: TypographyRuleMap = new Map();
+  const rules: TypographyRuleMap = new Map();
+  const mixins: TypographyRuleMap = new Map();
 
   // aggregate rules
-  for (const [breakpoint, sizes] of objectEntries(texts)) {
-    for (const [size, weights] of objectEntries(sizes)) {
-      for (const [weight, { css }] of objectEntries(weights)) {
-        const className = `text-${size}-${weight}`;
-        const ruleStr = [
-          ...parseCssRules(css.rules),
-          `font-size: ${cssVarUsage(`text-${size}`)};`,
-          `font-weight: ${cssVarUsage(`text-weight-${weight}`)};`,
-        ].join("\n");
-        const rule = `.${className} {\n${indentLines([ruleStr, importantRuleset(ruleStr)].join("\n"))}\n}`;
-        const rules = breakpoint === "desktop" ? desktop : mobile;
-        rules.set(className, { rule, size, weight, className });
-      }
+  // for (const [breakpoint, sizes] of objectEntries(texts)) {
+  for (const [size, weights] of objectEntries(texts.desktop)) {
+    for (const weight of objectKeys(weights)) {
+      // const className = `text-${size}-${weight}`;
+      // const ruleStr = [
+      //   ...parseCssRules(css.rules),
+      //   `font-size: ${cssVarUsage(`text-${size}`)};`,
+      //   `font-weight: ${cssVarUsage(`text-weight-${weight}`)};`,
+      // ].join("\n");
+      const desktop = getTypoRule("desktop", size, weight);
+      const mobile = getTypoRule("mobile", size, weight);
+
+      const className = desktop.name;
+      const mixinName = `m-${desktop.name}`;
+      const mixin = `@mixin ${mixinName}($important: false) {\n${indentLines(
+        [
+          desktop.ruleStr,
+          `@if $important {\n${indentLines(appendImportant(desktop.ruleStr))}\n}`,
+          mediaQuery(
+            [
+              mobile.ruleStr,
+              `@if $important {\n${indentLines(appendImportant(mobile.ruleStr))}\n}`,
+            ].join("\n")
+          ),
+        ].join("\n")
+      )}\n}`.trim();
+      mixins.set(className, { rule: mixin.trim(), size, weight, className });
+
+      // const rule = `.${className} {\n${indentLines([ruleStr, importantRuleset(ruleStr)].join("\n"))}\n}`;
+      const rule = `.${className} {\n${indentLines(
+        [
+          `@include ${mixinName};`,
+          `&.important {\n${indentLines(`@include ${mixinName}(true);`)}\n}`,
+        ].join("\n")
+      )}\n}`.trim();
+      rules.set(className, { rule, size, weight, className });
     }
   }
+  // }
 
-  return { desktop, mobile };
+  return { rules, mixins };
 }
 function mediaQuery(content: string, breakpointLabel: BreakpointLabel = "XS") {
   const indentedContent = content
@@ -97,21 +136,25 @@ function mediaQuery(content: string, breakpointLabel: BreakpointLabel = "XS") {
   return `@media only screen and (max-width: ${breakpointsPx[breakpointLabel]}) {\n${indentedContent}\n}`;
 }
 
-export function formatRules({ mobile, desktop }: TypographyRuleMaps) {
+export function formatRules({ rules, mixins }: TypographyRuleMaps) {
   let ruleStr = "";
   // append desktop rules
-  desktop.forEach(({ rule }) => {
+  mixins.forEach(({ rule, className }) => {
     ruleStr += `\n${rule}`;
+    const mixinRule = rules.get(className);
+    if (!mixinRule) return;
+    ruleStr += `\n${mixinRule.rule}`;
+    ruleStr += "\n";
   });
 
-  // append mobile media queries
-  let mobileRuleStr = "";
-  mobile.forEach(({ rule }) => {
-    mobileRuleStr += `\n${rule}`;
-  });
+  // // append mobile media queries
+  // let mobileRuleStr = "";
+  // mobile.forEach(({ rule }) => {
+  //   mobileRuleStr += `\n${rule}`;
+  // });
 
-  mobileRuleStr.trim();
-  ruleStr += `\n${mediaQuery(mobileRuleStr.trim())}`;
+  // mobileRuleStr.trim();
+  // ruleStr += `\n${mediaQuery(mobileRuleStr.trim())}`;
 
   return ruleStr.trim();
 }
