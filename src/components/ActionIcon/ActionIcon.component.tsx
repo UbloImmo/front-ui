@@ -1,25 +1,16 @@
 import { isFunction } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
-import styled from "styled-components";
 
 import {
-  actionIconContainerStyles,
   actionIconIconColorMap,
+  useActionIconStyle,
 } from "./ActionIcon.styles";
 import { Icon } from "../Icon";
 
-import {
-  useClassName,
-  useHtmlAttribute,
-  useLogger,
-  useMergedProps,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { useLogger, useMergedProps, useStyleProps, useTestId } from "@utils";
 
 import type {
   ActionIconProps,
-  ActionIconStyleProps,
   DefaultActionIconProps,
 } from "./ActionIcon.types";
 import type { IconProps } from "../Icon";
@@ -42,7 +33,7 @@ const defaultActionIconProps: DefaultActionIconProps = {
  *
  * No label, no tags, just an icon.
  *
- * @version 0.0.5
+ * @version 0.1.0
  *
  * @param {ActionIconProps & TestIdProps} props - The properties for the action icon
  * @return {JSX.Element} The rendered action icon component
@@ -86,11 +77,10 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
     if (isFunction<VoidFn>(mergedProps.onClick)) mergedProps.onClick();
   }, [mergedProps]);
 
-  const className = useClassName(mergedProps);
-  const style = useHtmlAttribute(props.styleOverride);
+  const { style, className } = useActionIconStyle(mergedProps);
 
   return (
-    <ActionIconContainer
+    <button
       {...styleProps}
       className={className}
       data-testid={testId}
@@ -104,12 +94,8 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
       style={style}
     >
       <Icon {...iconProps} />
-    </ActionIconContainer>
+    </button>
   );
 };
 ActionIcon.defaultProps = defaultActionIconProps;
 export { ActionIcon };
-
-const ActionIconContainer = styled.button<ActionIconStyleProps>`
-  ${actionIconContainerStyles}
-`;
