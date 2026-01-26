@@ -12,13 +12,7 @@ import styles from "./Avatar.module.css";
 
 import { Heading } from "@/components/Heading";
 import { Text } from "@/components/Text";
-import {
-  useTestId,
-  useMergedProps,
-  useStyleProps,
-  useLogger,
-  useCssClasses,
-} from "@utils";
+import { useTestId, useMergedProps, useLogger, useCssClasses } from "@utils";
 
 import type { AvatarProps, AvatarDefaultProps } from "./Avatar.types";
 import type { PaletteColor, TestIdProps } from "@types";
@@ -49,7 +43,6 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
     props
   );
 
-  const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("avatar", props as TestIdProps);
 
   /**
@@ -104,7 +97,6 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
         className={className}
         data-size={mergedProps.size}
         data-testid={testId}
-        {...styledProps}
       >
         {isAvatarPropsWithUrl(mergedProps) && textContent ? (
           <img
@@ -138,7 +130,7 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
         )}
       </div>
     ),
-    [className, mergedProps, testId, styledProps, textContent, textColor]
+    [className, mergedProps, testId, textContent, textColor]
   );
 
   const tooltipContent = useMemo<Nullable<ReactNode>>(() => {
