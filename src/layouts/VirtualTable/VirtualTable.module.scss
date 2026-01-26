@@ -1,0 +1,41 @@
+.virtal-table {
+  min-width: 100%;
+  max-width: max-content;
+  width: unset;
+}
+
+.virtual-table-row {
+  --fixed-item-height: unset;
+  height: var(--fixed-item-height);
+  min-height: var(--fixed-item-height);
+  max-height: var(--fixed-item-height);
+
+  // styles since virtualized lists make these unreliable
+  &.list,
+  &.list > td {
+    background: var(--white);
+  }
+
+  // apply background based on injected css class
+
+  &.even,
+  &.even > td {
+    background: var(--gray-50);
+  }
+
+  // re-apply hover styles
+  &.clickable:hover,
+  &.clickable:hover > td {
+    background: var(--primary-light);
+  }
+}
+
+.virtual-table-cell {
+  --fixed-width: unset;
+
+  &.fixed-width {
+    width: var(--fixed-width);
+    min-width: var(--fixed-width);
+    max-width: var(--fixed-width);
+  }
+}

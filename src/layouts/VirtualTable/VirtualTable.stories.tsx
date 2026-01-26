@@ -152,6 +152,7 @@ const useWindowScrollProps: VirtualTableProps<StoryData> = {
   ...storyProps,
   data: generateStoryData(WINDOW_SCROLL_DATA_LENGTH),
   useWindowScroll: true,
+  onItemClick: (_item) => {},
   height: null,
 };
 
