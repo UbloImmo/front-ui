@@ -1,18 +1,19 @@
 import { CSSProperties, useCallback, useMemo, type ReactNode } from "react";
-import styled from "styled-components";
 
 import { FormTableFooterButton } from "./FormTableFooterButton.component";
 import { FormTableFooterSelect } from "./FormTableFooterSelect.component";
 import { useFormContext } from "../../../Form.context";
+import styles from "../FormTable.module.scss";
 
 import { TableCell, TableFooter, TableRow } from "@/layouts/Table";
+import { useCssClasses } from "@utils";
 
 import type { FormTableFooterProps } from "../../../Form.types";
 
 /**
  * The footer of the `FormTable` component.
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @param {FormTableFooterProps} props - The component props.
  * @returns The footer component.
@@ -55,7 +56,7 @@ export const FormTableFooter = ({
     return null;
   }, [appendRow, footerDisabled, footer, tableData]);
 
-  const styles = useMemo<CSSProperties>(
+  const styleOverride = useMemo<CSSProperties>(
     () =>
       sticky
         ? {
@@ -66,18 +67,15 @@ export const FormTableFooter = ({
     [sticky]
   );
 
+  const className = useCssClasses(styles["form-table-footer-cell"]);
+
   return (
-    <TableFooter styleOverride={styles}>
+    <TableFooter styleOverride={styleOverride}>
       <TableRow>
-        <FooterCell colSpan={columnsCount}>
+        <TableCell className={className} colSpan={columnsCount}>
           <FooterComponent />
-        </FooterCell>
+        </TableCell>
       </TableRow>
     </TableFooter>
   );
 };
-
-const FooterCell = styled(TableCell)`
-  padding: var(--s-1);
-  background: var(--white);
-`;

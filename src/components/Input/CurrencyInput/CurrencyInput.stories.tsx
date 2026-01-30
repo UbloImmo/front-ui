@@ -33,14 +33,7 @@ const decorators: Meta<typeof CurrencyInput>["decorators"] = (
     },
     [setValue, context]
   );
-  return (
-    <CurrencyInput
-      {...context.args}
-      value={value}
-      onChange={onChange}
-      placeholder="test"
-    />
-  );
+  return <CurrencyInput {...context.args} value={value} onChange={onChange} />;
 };
 
 const meta = {
@@ -133,8 +126,8 @@ export const MinMaxValue = (props: Partial<FieldProps<"currency">>) => {
 };
 
 MinMaxValue.args = {
-  args: {
-    placeholder: "Currency input",
-    onChange: fn(),
-  },
+  placeholder: "Currency input",
+  onChange: fn(),
+  min: 1,
+  max: 5,
 };

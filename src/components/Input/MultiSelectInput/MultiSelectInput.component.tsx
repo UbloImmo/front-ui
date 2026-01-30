@@ -12,24 +12,19 @@ import {
   useRef,
   useState,
 } from "react";
-import styled from "styled-components";
 
 import { defaultCommonInputProps, StyledInputControl } from "../Input.common";
 import { useInputId, useInputRef, useInputStyles } from "../Input.utils";
 import {
-  multiSelectInputElementStyles,
-  multiSelectWrapperStyles,
+  useMultiSelectInputContainerClassName,
+  useMultiSelectInputElementClassName,
+  useMultiSelectWrapperClassName,
 } from "./MultiSelectInput.styles";
 import { useMultiSelectValue } from "./MultiSelectInput.utils";
-import { SelectInputOption } from "../SelectInput/components/SelectInputOption.component";
-import { SelectInputOptionGroup } from "../SelectInput/components/SelectInputOptionGroup.component";
+import { SelectInputOptionsList } from "../SelectInput/components/SelectInputOptionsList.component";
 import { SelectInputPopover } from "../SelectInput/components/SelectInputPopover.component";
+import { useSelectInputClearButtonClassName } from "../SelectInput/SelectInput.styles";
 import {
-  selectInputContainerStyles,
-  selectOptionContainerStyles,
-} from "../SelectInput/SelectInput.styles";
-import {
-  isSelectOptionGroup,
   useSelectInputKeyboardEvents,
   useSelectOptions,
 } from "../SelectInput/SelectInput.utils";
@@ -37,11 +32,9 @@ import {
 import { Button } from "@/components/Button";
 import { Chip } from "@/components/Chip";
 import { Icon } from "@/components/Icon";
-import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
-import { cssDimensions } from "@/utils/styles.utils";
 import {
   useTestId,
   useMergedProps,
@@ -54,7 +47,6 @@ import type {
   DefaultMultiSelectInputProps,
   MultiSelectInputProps,
 } from "./MultiSelectInput.types";
-import type { CommonInputStyleProps } from "../Input.types";
 import type {
   SelectInputProps,
   SelectOption,
@@ -78,7 +70,7 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
 /**
  * Allows the user to select multiple values from a list of options.
  *
- * @version 0.0.10
+ * @version 0.1.0
  *
  * @param {MultiSelectInputProps & TestIdProps} props - The props for the MultiSelectInput component
  *
@@ -251,57 +243,31 @@ const MultiSelectInput = <
 
   useSelectInputKeyboardEvents(wrapperRef, inputId, closeOptions);
 
-  const OptionsList = useMemo(
-    () => (
-      <MultiSelectOptionsContainer
-        role="listbox"
-        testId={testIds.options}
-        overrideTestId
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-      >
-        {displayOptions.map((optionOrGroup, index) =>
-          isSelectOptionGroup<TValue, TExtraData>(optionOrGroup) ? (
-            <SelectInputOptionGroup<TValue, TExtraData>
-              {...optionOrGroup}
-              onSelectOption={selectOptionAndClose}
-              key={`${optionOrGroup.label}-${index}`}
-              Option={mergedProps.Option}
-            />
-          ) : (
-            <SelectInputOption<TValue, TExtraData>
-              key={`${optionOrGroup.value}-${index}`}
-              onSelect={selectOptionAndClose(optionOrGroup)}
-              Option={mergedProps.Option}
-              {...optionOrGroup}
-            />
-          )
-        )}
-        {noOptions && (
-          <AssistiveTextWrapper>
-            <InputAssistiveText assistiveText={assistiveText} />
-          </AssistiveTextWrapper>
-        )}
-      </MultiSelectOptionsContainer>
-    ),
-    [
-      assistiveText,
-      displayOptions,
-      isOpen,
-      mergedProps.Option,
-      noOptions,
-      selectOptionAndClose,
-      testIds.options,
-    ]
+  const OptionsList = (
+    <SelectInputOptionsList
+      open={isOpen}
+      displayOptions={displayOptions}
+      onSelectOption={selectOptionAndClose}
+      Option={mergedProps.Option ?? undefined}
+      isEmptyResult={noOptions}
+      assistiveText={assistiveText}
+      testId={testId}
+      key="multi-select-input-options-list"
+    />
   );
 
+  const wrapper = useMultiSelectWrapperClassName(inputStyles);
+  const element = useMultiSelectInputElementClassName(inputStyles);
+  const container = useMultiSelectInputContainerClassName(inputStyles);
+  const clearButton = useSelectInputClearButtonClassName();
+
   return (
-    <MultiSelectInputWrapper
+    <FlexColumnLayout
+      className={wrapper}
       reverse
       ref={wrapperRef}
       testId={testIds.root}
       overrideTestId
-      {...inputStyles}
     >
       <SelectInputPopover
         open={isOpen}
@@ -310,13 +276,14 @@ const MultiSelectInput = <
         content={OptionsList}
         wrapperRef={wrapperRef}
       >
-        <MultiSelectInputContainer
+        <div
+          className={container}
           {...inputStyles}
           aria-expanded={isOpen}
           data-testid={testIds.container}
         >
-          <MultiSelectInputElement
-            {...inputStyles}
+          <div
+            className={element}
             onClick={toggleOptionsOnContainerClick}
             data-testid={testIds.element}
             id={inputId}
@@ -370,7 +337,7 @@ const MultiSelectInput = <
                 ))}
               </FlexRowLayout>
             )}
-          </MultiSelectInputElement>
+          </div>
           <StyledInputControl
             {...inputStyles}
             data-testid={`${testId}-control`}
@@ -378,8 +345,9 @@ const MultiSelectInput = <
           >
             {isOpen && isLoading ? (
               <Loading animation="BouncingBalls" size="s-4" />
-            ) : !isOpen && clearable && activeOptions.length && !disabled ? (
-              <ClearButton
+            ) : !isOpen && clearable && !!activeOptions.length && !disabled ? (
+              <Button
+                className={clearButton}
                 color="clear"
                 secondary
                 icon="XLg"
@@ -392,42 +360,12 @@ const MultiSelectInput = <
               <Icon name={mergedProps.controlIcon} />
             )}
           </StyledInputControl>
-        </MultiSelectInputContainer>
+        </div>
       </SelectInputPopover>
-    </MultiSelectInputWrapper>
+    </FlexColumnLayout>
   );
 };
 
 MultiSelectInput.defaultProps = defaultMultiSelectInputProps;
 
 export { MultiSelectInput };
-
-const MultiSelectInputWrapper = styled(FlexColumnLayout)<CommonInputStyleProps>`
-  ${multiSelectWrapperStyles}
-`;
-
-const MultiSelectOptionsContainer = styled(FlexColumnLayout)`
-  ${selectOptionContainerStyles}
-`;
-
-const MultiSelectInputContainer = styled.div<CommonInputStyleProps>`
-  ${selectInputContainerStyles}
-`;
-
-const AssistiveTextWrapper = styled.div`
-  padding: var(--s-2);
-`;
-
-const MultiSelectInputElement = styled.div<CommonInputStyleProps>`
-  ${multiSelectInputElementStyles}
-`;
-
-const ClearButton = styled(Button)`
-  padding: 0 !important;
-  ${cssDimensions("min-content", "min-content", true, true)};
-
-  &:hover svg,
-  &:hover svg path {
-    fill: var(--error-medium) !important;
-  }
-`;

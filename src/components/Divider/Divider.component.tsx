@@ -1,20 +1,12 @@
 import { isNull, isString } from "@ubloimmo/front-util";
-import { useMemo } from "react";
-import styled from "styled-components";
+import { useCallback, useMemo } from "react";
 
-import { dividerLineStyles } from "./Divider.styles";
+import { useDividerStyles } from "./Divider.styles";
 
 import { Heading } from "@/components/Heading";
 import { Text } from "@/components/Text";
 import { FlexRowLayout } from "@/layouts/Flex";
-import {
-  useTestId,
-  useMergedProps,
-  useStyleProps,
-  useLogger,
-  useClassName,
-  useHtmlAttribute,
-} from "@utils";
+import { useTestId, useMergedProps, useStyleProps, useLogger } from "@utils";
 
 import type { DividerProps, DividerDefaultProps } from "./Divider.types";
 import type { TestIdProps } from "@types";
@@ -32,7 +24,7 @@ const defaultDividerProps: DividerDefaultProps = {
  *
  * A horizontal line that can be used to separate content, with an optional label.
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {DividerProps & TestIdProps} props - Divider component props
  * @returns {JSX.Element}
@@ -43,8 +35,7 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
   const { justify } = mergedProps;
   const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("divider", props);
-  const className = useClassName(props);
-  const style = useHtmlAttribute(props.styleOverride);
+  const { classNames, style } = useDividerStyles(mergedProps);
 
   const label = useMemo(() => {
     if (isString(mergedProps.label) || isNull(mergedProps.label))
@@ -53,9 +44,14 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
     return null;
   }, [error, mergedProps.label]);
 
+  const Line = useCallback(
+    () => <div className={classNames.line} data-testid="divider-line" />,
+    [classNames.line]
+  );
+
   return (
     <FlexRowLayout
-      className={className}
+      className={classNames.wrapper}
       testId={testId}
       overrideTestId
       as={mergedProps.as}
@@ -68,7 +64,7 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
     >
       {label && justify === "center" ? (
         <>
-          <DividerLine data-testid="divider-line" />
+          <Line />
           <Text
             size="s"
             color="gray-400"
@@ -90,14 +86,10 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
           {label}
         </Heading>
       ) : null}
-      <DividerLine data-testid="divider-line" />
+      <Line />
     </FlexRowLayout>
   );
 };
 Divider.defaultProps = defaultDividerProps;
 
 export { Divider };
-
-const DividerLine = styled.div`
-  ${dividerLineStyles}
-`;

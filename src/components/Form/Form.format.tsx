@@ -5,11 +5,11 @@ import {
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
 import { type FC, type ReactNode } from "react";
-import styled, { css } from "styled-components";
 
 import { Badge } from "../Badge";
 import { EnergyLabel } from "../EnergyLabel";
 import { Icon } from "../Icon";
+import styles from "./Form.module.scss";
 import { calculateEnergyScore } from "../Input/EnergyScoreInput/EnergyScoreInput.utils";
 import { yearMonthToMonthYear } from "../Input/MonthYearInput/MonthYearInput.utils";
 import { Text } from "../Text";
@@ -25,7 +25,6 @@ import {
   useSelectUnknownValueIngestion,
 } from "@/components/Input/SelectInput/SelectInput.utils";
 import { FlexLayout, FlexRowLayout } from "@/layouts/Flex";
-import { breakpointsPx } from "@/sizes";
 import {
   arrayOf,
   compare,
@@ -33,6 +32,7 @@ import {
   isEmptyString,
   isNonEmptyString,
   normalizeToColorKey,
+  useCssClasses,
 } from "@utils";
 
 import type {
@@ -420,12 +420,16 @@ export const FormFieldDisplayValue = ({
   beforeChildren?: ReactNode;
   afterChildren?: ReactNode;
 }) => {
+  const className = useCssClasses(styles["form-field-display-value"], [
+    styles.textarea,
+    !!isTextarea,
+  ]);
   return (
-    <FieldDisplayValueContainer
+    <FlexLayout
+      className={className}
       justify="start"
       align="center"
       wrap={isTextarea}
-      $isTextarea={isTextarea}
       gap={"s-2"}
     >
       {beforeChildren}
@@ -439,43 +443,6 @@ export const FormFieldDisplayValue = ({
         {value}
       </Text>
       {afterChildren}
-    </FieldDisplayValueContainer>
+    </FlexLayout>
   );
 };
-
-const textAreaStyles = ({ $isTextarea }: { $isTextarea?: boolean }) =>
-  $isTextarea
-    ? css`
-        display: block;
-        height: auto;
-        max-height: 8rem;
-        overflow-y: auto;
-      `
-    : css``;
-
-const FieldDisplayValueContainer = styled(FlexLayout)<{
-  $isTextarea?: boolean;
-}>`
-  --container-height: var(--s-8);
-  --container-height-mobile: calc(var(--container-height) + var(--s-2));
-
-  align-self: start;
-
-  td:has(&) & {
-    --container-height: var(--s-6);
-  }
-  max-height: var(--container-height);
-  height: var(--container-height);
-  min-height: var(--container-height);
-  width: 100%;
-
-  ${textAreaStyles}
-
-  @media screen and (max-width: ${breakpointsPx.XS}) {
-    max-height: var(--container-height-mobile);
-    height: var(--container-height-mobile);
-    min-height: var(--container-height-mobile);
-
-    ${textAreaStyles}
-  }
-`;

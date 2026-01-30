@@ -23,6 +23,10 @@ export type TableRowProps = {
    * @default "form"
    */
   style?: TableStyle;
+  /**
+   * The id of the row
+   */
+  id?: Nullable<string>;
 } & Omit<StyleOverrideProps, "as">;
 
 export type TableRowStyleProps = StyleProps<

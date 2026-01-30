@@ -1,42 +1,33 @@
-import { css, type RuleSet } from "styled-components";
+import { useInputClassName, useInputContainerClassName } from "../Input.styles";
+import styles from "./MultiSelectInput.module.scss";
+import {
+  useSelectInputContainerClassName,
+  useSelectInputWrapperClassName,
+} from "../SelectInput/SelectInput.styles";
 
-import { commonInputStyles } from "../Input.styles";
-import { selectInputWrapperStyles } from "../SelectInput/SelectInput.styles";
+import { useCssClasses } from "@utils";
 
 import type { CommonInputStyleProps } from "../Input.types";
 
-export const multiSelectWrapperStyles = (
+export function useMultiSelectWrapperClassName(props: CommonInputStyleProps) {
+  const base = useSelectInputWrapperClassName(props);
+  return useCssClasses(base, styles["multi-select-input-wrapper"]);
+}
+
+export function useMultiSelectInputElementClassName(
   props: CommonInputStyleProps
-): RuleSet => css`
-  ${selectInputWrapperStyles(props)}
-  position: relative;
-  width: 100%;
+) {
+  const base = useInputClassName(props);
+  return useCssClasses(base, styles["multi-select-input-element"], [
+    styles.table,
+    props.$table,
+  ]);
+}
 
-  &:has([aria-expanded="true"]) {
-    &,
-    & [aria-expanded="true"] {
-      z-index: 2;
-    }
-  }
-`;
-
-export const multiSelectInputElementStyles = (
+export function useMultiSelectInputContainerClassName(
   props: CommonInputStyleProps
-): RuleSet => css`
-  ${commonInputStyles(props)}
-  // vertical padding (6px) equal to input height minus chip height
-  padding: 0.375rem var(--s-2);
-  padding-right: var(--s-8);
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  height: fit-content !important;
-  max-height: fit-content !important;
-
-  ${props.$table &&
-  css`
-    min-height: fit-content;
-    height: 100% !important;
-    max-height: inherit !important;
-  `}
-`;
+) {
+  const base = useInputContainerClassName(props);
+  const select = useSelectInputContainerClassName(props);
+  return useCssClasses(base, select);
+}

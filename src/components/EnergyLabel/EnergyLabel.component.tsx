@@ -1,10 +1,8 @@
-import styled from "styled-components";
-
-import { energyLabelStyle } from "./EnergyLabel.styles";
+import { useEnergyLabelStyles } from "./EnergyLabel.styles";
 import { Text } from "../Text";
 
-import { StyleProps, type TestIdProps } from "@types";
-import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
+import { type TestIdProps } from "@types";
+import { useLogger, useTestId, useMergedProps } from "@utils";
 
 import type {
   EnergyLabelProps,
@@ -20,7 +18,7 @@ const defaultEnergyLabelProps: EnergyLabelDefaultProps = {
 /**
  * Renders a EnergyLabel component, with required Type, and optional Value and State.
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @param {EnergyLabelProps & TestIdProps} props - EnergyLabel component props
  * @returns {JSX.Element}
@@ -28,25 +26,28 @@ const defaultEnergyLabelProps: EnergyLabelDefaultProps = {
 const EnergyLabel = (props: EnergyLabelProps & TestIdProps): JSX.Element => {
   const { log, warn } = useLogger("EnergyLabel", { hideLogs: true });
   const mergedProps = useMergedProps(defaultEnergyLabelProps, props);
-  const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("energy-label", props);
 
   log(mergedProps);
 
+  const { classNames } = useEnergyLabelStyles(mergedProps);
+
   if (!props.type) warn("Missing type prop");
 
   return (
-    <EnergyLabelContainer data-testid={testId} {...styledProps} role="status">
-      <Text weight="bold" testId="energy-label-value" overrideTestId>
+    <div className={classNames.box} data-testid={testId} role="status">
+      <Text
+        className={classNames.label}
+        weight="bold"
+        align="center"
+        testId="energy-label-value"
+        overrideTestId
+      >
         {mergedProps.value || "-"}
       </Text>
-    </EnergyLabelContainer>
+    </div>
   );
 };
 
 EnergyLabel.defaultProps = defaultEnergyLabelProps;
 export { EnergyLabel };
-
-const EnergyLabelContainer = styled.div<StyleProps<EnergyLabelProps>>`
-  ${energyLabelStyle}
-`;

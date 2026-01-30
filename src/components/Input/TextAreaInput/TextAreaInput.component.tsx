@@ -1,8 +1,7 @@
 import { isString } from "@ubloimmo/front-util";
-import { ChangeEventHandler, FocusEventHandler } from "react";
 
-import { StyledTextArea } from "./TextAreaInput.styles";
-import { defaultCommonInputProps } from "../Input.common";
+import { useTextAreaInputClassName } from "./TextAreaInput.styles";
+import { defaultCommonInputProps, StyledInputContainer } from "../Input.common";
 import {
   useInputId,
   useInputOnChange,
@@ -18,6 +17,7 @@ import type {
   TextAreaInputProps,
 } from "./TextAreaInput.types";
 import type { TestIdProps } from "@types";
+import type { ChangeEventHandler, FocusEventHandler } from "react";
 
 const defaultTextAreaInputProps: TextAreaInputDefaultProps = {
   ...defaultCommonInputProps,
@@ -31,7 +31,7 @@ const defaultTextAreaInputProps: TextAreaInputDefaultProps = {
 /**
  * A multi-line text input.
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @param {TextAreaInputProps & TestIdProps} props - TextAreaInput component props
  * @returns {JSX.Element}
@@ -42,6 +42,7 @@ const TextAreaInput = (
   const mergedProps = useMergedProps(defaultTextAreaInputProps, props);
   const testId = useTestId("input-textarea", props);
   const inputStyles = useInputStyles(mergedProps);
+  const className = useTextAreaInputClassName(inputStyles, mergedProps.resize);
   const value = useInputValue<"textarea">(mergedProps.value, props);
 
   const onChange = useInputOnChange<"textarea">(
@@ -59,21 +60,25 @@ const TextAreaInput = (
   const id = useInputId(mergedProps);
 
   return (
-    <StyledTextArea
-      data-testid={testId}
-      value={value}
-      name={mergedProps.name ?? undefined}
-      disabled={mergedProps.disabled}
-      placeholder={mergedProps.placeholder}
-      required={mergedProps.required}
-      onChange={onChange}
-      onBlur={onBlur}
-      ref={forwardRef}
-      autoComplete={autoComplete}
-      id={id}
+    <StyledInputContainer
       {...inputStyles}
-      $resize={mergedProps.resize}
-    />
+      data-testid="input-textarea-container"
+    >
+      <textarea
+        className={className}
+        data-testid={testId}
+        value={value}
+        name={mergedProps.name ?? undefined}
+        disabled={mergedProps.disabled}
+        placeholder={mergedProps.placeholder}
+        required={mergedProps.required}
+        onChange={onChange}
+        onBlur={onBlur}
+        ref={forwardRef}
+        autoComplete={autoComplete}
+        id={id}
+      />
+    </StyledInputContainer>
   );
 };
 TextAreaInput.defaultProps = defaultTextAreaInputProps;

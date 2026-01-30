@@ -1,3 +1,5 @@
+import { StyleOverrideProps } from "@types";
+
 import type { BadgeProps } from "../Badge";
 import type { StaticIconProps } from "../StaticIcon";
 import type { NonOptional, Nullable } from "@ubloimmo/front-util";
@@ -63,6 +65,6 @@ export type ContextLineProps = {
    * @default false
    */
   compact?: boolean;
-};
+} & Omit<StyleOverrideProps, "as">;
 
 export type ContextLineDefaultProps = Required<ContextLineProps>;

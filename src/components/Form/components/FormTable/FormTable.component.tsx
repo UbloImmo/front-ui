@@ -38,12 +38,11 @@ import type { TooltipProps } from "@/components/Tooltip";
  * A form table component that displays data in a tabular format with optional editing capabilities.
  * Supports row deletion, reordering via drag and drop, and dynamic row addition.
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @param {BuiltFormTableProps} props - The props for the form table component
  * @returns {JSX.Element} The rendered form table component
  */
-
 export const FormTable = ({
   rows,
   layout,

@@ -56,3 +56,10 @@ export type StyleProps<TProps extends Record<string, unknown>> = {
     ? never
     : TProps[TPropName];
 };
+
+/**
+ * A property object containing only a `className`.
+ *
+ * @see {@link StyleOverrideProps}
+ */
+export type ClassNameOverrideProps = Pick<StyleOverrideProps, "className">;

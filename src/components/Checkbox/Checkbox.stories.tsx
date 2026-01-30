@@ -123,10 +123,11 @@ export const Mixed = () => {
   };
 
   const allChecked = useMemo<CheckboxStatus>(() => {
-    return items.every(({ checked }) => checked) ||
-      items.some(({ checked }) => checked)
-      ? "mixed"
-      : false;
+    return items.every(({ checked }) => checked)
+      ? true
+      : items.some(({ checked }) => checked)
+        ? "mixed"
+        : false;
   }, [items]);
 
   return (

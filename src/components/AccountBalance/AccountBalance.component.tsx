@@ -59,6 +59,7 @@ const AccountBalance = (
       <Text
         size="m"
         color="gray-800"
+        weight="medium"
         fill
         ellipsis
         testId={`${testId}-title`}

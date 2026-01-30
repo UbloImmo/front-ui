@@ -14,9 +14,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import styled from "styled-components";
 
-import { dateInputStyles } from "./DateInput.styles";
+import styles from "./DateInput.module.scss";
 import {
   dateFormatters,
   isValidDateNativeStr,
@@ -43,7 +42,13 @@ import {
 import { Calendar, type CalendarOnChangeFn } from "@/components/Calendar";
 import { Icon } from "@/components/Icon";
 import { Popover } from "@/layouts/Popover";
-import { useHtmlAttribute, useLogger, useMergedProps, useTestId } from "@utils";
+import {
+  useCssClasses,
+  useHtmlAttribute,
+  useLogger,
+  useMergedProps,
+  useTestId,
+} from "@utils";
 
 import type { DateInputDefaultProps, DateInputProps } from "./DateInput.types";
 import type {
@@ -71,7 +76,7 @@ const defaultDateInputProps: DateInputDefaultProps = {
 /**
  * A simple date input combined with a Calendar.
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @param {DateInputProps & TestIdProps} props - The input props.
  * @return {JSX.Element} The rendered date input component.
@@ -158,6 +163,12 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
     [calendarShown, inputRef, isFocused]
   );
 
+  const toggleCalendarShownOnClick = useCallback<
+    MouseEventHandler<HTMLDivElement>
+  >(() => {
+    toggleCalendarShown();
+  }, [toggleCalendarShown]);
+
   debug({ innerDateStr, computedDateISO, outerValue: mergedProps.value });
 
   const onFocus = useCallback<NativeInputOnBlurFn>((e) => {
@@ -239,6 +250,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
   }, [mergedProps]);
 
   const id = useInputId(mergedProps);
+  const className = useCssClasses(styles["date-input"]);
 
   return (
     <Popover
@@ -261,7 +273,8 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
       collisionPadding="s-1"
     >
       <StyledInputContainer {...inputStyles} data-testid="input-date-container">
-        <StyledDateInput
+        <StyledInput
+          className={className}
           data-testid={testId}
           value={dynamicInputValue}
           type={inputType}
@@ -285,7 +298,7 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
             {...inputStyles}
             $noFocus
             data-testid="input-control"
-            onClick={toggleCalendarShown}
+            onClick={toggleCalendarShownOnClick}
             title="Pick a date"
             aria-label="Pick a date"
             role="button"
@@ -302,7 +315,3 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
 DateInput.defaultProps = defaultDateInputProps;
 
 export { DateInput };
-
-const StyledDateInput = styled(StyledInput)`
-  ${dateInputStyles}
-`;

@@ -7,7 +7,7 @@
   --justify: auto;
 
   grid-row: var(--row-start) / var(--row-end);
-  grid-row: var(--column-start) / var(--column-end);
+  grid-column: var(--column-start) / var(--column-end);
   align-self: var(--align);
   justify-self: var(--justify);
 

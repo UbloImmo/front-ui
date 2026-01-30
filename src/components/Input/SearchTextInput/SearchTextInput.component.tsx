@@ -34,7 +34,7 @@ const defaultSearchTextInputProps: DefaultSearchTextInputProps = {
 /**
  * Renders a text input component with a search icon.
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @param {SearchTextInputProps} props - SearchTextInput component props
  * @returns {JSX.Element}

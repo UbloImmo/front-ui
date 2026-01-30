@@ -1,8 +1,7 @@
 import { isString } from "@ubloimmo/front-util";
 import { useCallback, useMemo, type MouseEventHandler } from "react";
-import styled from "styled-components";
 
-import { contextMenuItemStyles } from "./ContextMenuItem.styles";
+import { useContextMenuItemStyles } from "./ContextMenuItem.styles";
 
 import { Action } from "@/components/Action";
 import { Text } from "@/components/Text";
@@ -32,7 +31,7 @@ const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
 /**
  * Renders a single button or action in a ContextMenu
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @param {ContextMenuItemProps & TestIdProps} props - ContextMenu component props
  * @returns {JSX.Element}
@@ -40,14 +39,13 @@ const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
 const ContextMenuItem = (
   props: ContextMenuItemProps & TestIdProps
 ): JSX.Element => {
-  const { warn, debug } = useLogger("ContextMenu", {
-    hideDebug: true,
-  });
+  const { warn } = useLogger("ContextMenu");
   const { disabled, index, ...mergedProps } = useMergedProps(
     defaultContextMenuItemProps,
     props
   );
   const testId = useTestId("context-menu-item", props);
+  const { classNames, style } = useContextMenuItemStyles(mergedProps);
 
   const onClick = useHtmlAttribute(mergedProps.onClick);
 
@@ -59,9 +57,6 @@ const ContextMenuItem = (
     },
     [onClick]
   );
-
-  debug(mergedProps);
-  const style = useHtmlAttribute(mergedProps.styleOverride);
 
   const tabIndex = useMemo(
     () => (disabled ? -1 : index + 1),
@@ -75,7 +70,8 @@ const ContextMenuItem = (
 
   if (mergedProps.size === "m")
     return (
-      <StyledAction
+      <Action
+        className={classNames.m}
         size="default"
         label={mergedProps.label}
         icon={mergedProps.icon ?? "Cursor"}
@@ -91,14 +87,17 @@ const ContextMenuItem = (
     );
 
   return (
-    <ContextMenuItemContainer
+    <button
+      type="button"
+      className={classNames.s}
+      style={style}
       data-testid={testId}
       disabled={disabled}
       onClick={onSmallItemClick}
       tabIndex={tabIndex}
-      style={style}
     >
       <Text
+        className={classNames.label}
         color={disabled ? "gray-600" : "gray-800"}
         weight="bold"
         size="m"
@@ -108,17 +107,9 @@ const ContextMenuItem = (
       >
         {mergedProps.label}
       </Text>
-    </ContextMenuItemContainer>
+    </button>
   );
 };
 ContextMenuItem.defaultProps = defaultContextMenuItemProps;
 
 export { ContextMenuItem };
-
-const ContextMenuItemContainer = styled.button`
-  ${contextMenuItemStyles}
-`;
-
-const StyledAction = styled(Action)`
-  min-width: 25rem;
-`;

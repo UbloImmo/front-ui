@@ -5,14 +5,9 @@ import {
   type VoidFn,
 } from "@ubloimmo/front-util";
 import { useEffect, useRef } from "react";
-import styled from "styled-components";
 
 import { useDialog } from "./Dialog.context";
-import {
-  dialogOverlayStyles,
-  dialogContentStyles,
-  dialogWrapperStyles,
-} from "./Dialog.styles";
+import { useDialogStyles } from "./Dialog.styles";
 import { Portal } from "../Portal";
 
 import { mergeDefaultProps, useLogger, useTestId } from "@utils";
@@ -34,7 +29,7 @@ const defaultDialogProps: DefaultDialogProps = {
  *
  * Controlled by a parent `DialogProvider`.
  *
- * @version 0.0.7
+ * @version 0.1.0
  *
  * @param {DialogProps & TestIdProps} props - the properties for the Dialog component
  * @returns {Nullable<JSX.Element>} the rendered dialog or null if closed
@@ -46,6 +41,7 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
     props
   );
   const testId = useTestId("dialog-content", props);
+  const { classNames } = useDialogStyles();
   const { isOpen, isRegistered, portalRoot, close, register, unregister, set } =
     useDialog(reference);
 
@@ -95,20 +91,22 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
   if (!isOpen) return null;
   return (
     <Portal rootSelector={portalRoot}>
-      <DialogOverlay
+      <div
+        className={classNames.overlay}
         aria-hidden="true"
         data-testid="dialog-overlay"
         onClick={close}
       />
-      <DialogWrapper data-testid="dialog-wrapper">
-        <DialogContent
+      <div className={classNames.wrapper} data-testid="dialog-wrapper">
+        <div
+          className={classNames.content}
           aria-label="dialog content"
           role="dialog"
           data-testid={testId}
         >
           {children}
-        </DialogContent>
-      </DialogWrapper>
+        </div>
+      </div>
     </Portal>
   );
 };
@@ -116,15 +114,3 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
 Dialog.defaultProps = defaultDialogProps;
 
 export { Dialog };
-
-const DialogOverlay = styled.div`
-  ${dialogOverlayStyles}
-`;
-
-const DialogWrapper = styled.div`
-  ${dialogWrapperStyles}
-`;
-
-const DialogContent = styled.div`
-  ${dialogContentStyles}
-`;

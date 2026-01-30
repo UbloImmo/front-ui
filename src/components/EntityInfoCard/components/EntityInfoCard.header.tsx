@@ -1,13 +1,11 @@
-import styled from "styled-components";
-
-import { entityCardHeaderStyles } from "../EntityInfoCard.styles";
+import styles from "../EntityInfoCard.module.scss";
 
 import { AccountBalance } from "@/components/AccountBalance";
 import { ActionIcon } from "@/components/ActionIcon";
 import { ContextMenu } from "@/components/ContextMenu";
 import { StateIndicator } from "@/components/StateIndicator";
 import { FlexRowLayout } from "@/layouts/Flex";
-import { useLogger, useMergedProps, useTestId } from "@utils";
+import { useCssClasses, useLogger, useMergedProps, useTestId } from "@utils";
 
 import type {
   EntityInfoCardHeaderDefaultProps,
@@ -29,10 +27,9 @@ export const defaultEntityInfoCardHeaderProps: EntityInfoCardHeaderDefaultProps 
 /**
  * Displays the header of an entity info card.
  *
- * @version 0.0.11
+ * @version 0.1.0
  *
  * @param {EntityInfoCardHeaderProps & TestIdProps} props - EntityInfoCardHeader component props
- * @returns {JSX.Element}
  */
 export const EntityInfoCardHeader = (
   props: EntityInfoCardHeaderProps & TestIdProps
@@ -44,6 +41,7 @@ export const EntityInfoCardHeader = (
     testId: props.testId,
     overrideTestId: props.overrideTestId,
   });
+  const className = useCssClasses(styles["entity-info-card-header"]);
 
   const hasState = Boolean(mergedProps.state);
   const hasAccountBalance = Boolean(mergedProps.accountBalance);
@@ -54,7 +52,14 @@ export const EntityInfoCardHeader = (
   }
 
   return (
-    <EntityCardHeader testId={`${testId}-header`} overrideTestId fill gap="s-1">
+    <FlexRowLayout
+      as="header"
+      className={className}
+      testId={`${testId}-header`}
+      overrideTestId
+      fill
+      gap="s-1"
+    >
       {mergedProps.accountBalance ? (
         <AccountBalance
           {...mergedProps.accountBalance}
@@ -87,10 +92,6 @@ export const EntityInfoCardHeader = (
           {...mergedProps.contextMenu}
         />
       )}
-    </EntityCardHeader>
+    </FlexRowLayout>
   );
 };
-
-const EntityCardHeader = styled(FlexRowLayout)`
-  ${entityCardHeaderStyles}
-`;

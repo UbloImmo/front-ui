@@ -13,6 +13,7 @@ const defaultTableRowProps: Required<TableRowProps> = {
   style: "form",
   className: null,
   styleOverride: null,
+  id: null,
 };
 
 /**
@@ -34,10 +35,12 @@ export const TableRow = forwardRef<
     className: _,
     style: __,
     styleOverride: ___,
+    id: rowId,
     ...restProps
   } = mergedProps;
 
   const onClickHandler = useHtmlAttribute(onClick);
+  const id = useHtmlAttribute(rowId);
 
   return (
     <tr
@@ -45,6 +48,7 @@ export const TableRow = forwardRef<
       data-testid={testId}
       className={className}
       style={style}
+      id={id}
       onClick={onClickHandler}
       {...restProps}
     >

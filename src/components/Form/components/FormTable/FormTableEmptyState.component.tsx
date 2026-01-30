@@ -19,6 +19,8 @@ import type { BuiltFormTableProps } from "../../Form.types";
  * The empty state is wrapped in a single table row, which spans the whole table
  * width.
  *
+ * @version 0.1.0
+ *
  * @param {Object} props The component props.
  * @param {JSX.Element | null} [props.EmptyCard] The EmptyCard component to render.
  * @param {number} props.columnsCount The number of columns in the table.

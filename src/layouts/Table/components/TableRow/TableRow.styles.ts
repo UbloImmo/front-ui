@@ -13,7 +13,7 @@ export function useTableRowStyle(
   const className = useCssClasses(
     styles["table-row"],
     [styles.list, props.style === "list"],
-    [styles.form, props.style === "form"],
+    [styles.form, props.style !== "list"],
     [styles.clickable, !!props.onClick],
     props.className
   );

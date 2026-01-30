@@ -6,13 +6,15 @@ import {
   isString,
 } from "@ubloimmo/front-util";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import styled from "styled-components";
 
 import { SelectInputPopover } from "./components/SelectInputPopover.component";
 import {
-  selectInputContainerStyles,
-  selectInputStyles,
-  selectInputWrapperStyles,
+  useSelectInputButtonClassName,
+  useSelectInputClearButtonClassName,
+  useSelectInputContainerClassName,
+  useSelectInputSelectedCustomOptionClassName,
+  useSelectInputSelectedOptionClassName,
+  useSelectInputWrapperClassName,
 } from "./SelectInput.styles";
 import {
   defaultSelectInputProps,
@@ -23,8 +25,11 @@ import {
   useSelectUnknownValueIngestion,
   useSelectValue,
 } from "./SelectInput.utils";
-import { StyledInput, StyledInputControl } from "../Input.common";
-import { commonInputStyles } from "../Input.styles";
+import {
+  StyledInput,
+  StyledInputContainer,
+  StyledInputControl,
+} from "../Input.common";
 import {
   useInputId,
   useInputOnChange,
@@ -39,8 +44,6 @@ import { Icon } from "@/components/Icon";
 import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import { FlexColumnLayout } from "@/layouts/Flex";
-import { cssDimensions } from "@/utils/styles.utils";
-import { PaletteColor, type TestIdProps } from "@types";
 import {
   isNonEmptyString,
   useHtmlAttribute,
@@ -55,12 +58,13 @@ import type {
   SelectInputProps,
   SelectOption,
 } from "./SelectInput.types";
-import type { CommonInputStyleProps, InputProps } from "../Input.types";
+import type { InputProps } from "../Input.types";
+import type { PaletteColor, TestIdProps } from "@types";
 
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.1.4
+ * @version 0.2.0
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
@@ -340,9 +344,17 @@ const SelectInput = <
     />
   );
 
+  const wrapper = useSelectInputWrapperClassName(inputStyles);
+  const container = useSelectInputContainerClassName(inputStyles);
+  const button = useSelectInputButtonClassName(inputStyles);
+  const selected = useSelectInputSelectedOptionClassName(inputStyles);
+  const selectedCustom =
+    useSelectInputSelectedCustomOptionClassName(inputStyles);
+  const clearButton = useSelectInputClearButtonClassName();
+
   return (
-    <SelectInputWrapper
-      {...inputStyles}
+    <FlexColumnLayout
+      className={wrapper}
       reverse
       ref={wrapperRef}
       testId={`${testId}-wrapper`}
@@ -355,8 +367,9 @@ const SelectInput = <
         testId={testId}
         wrapperRef={wrapperRef}
       >
-        <SelectInputContainer
+        <StyledInputContainer
           {...inputStyles}
+          className={container}
           data-testid={testId}
           aria-expanded={isOpen}
         >
@@ -377,8 +390,8 @@ const SelectInput = <
               tabIndex={0}
             />
           ) : (
-            <StyledSelectInput
-              {...inputStyles}
+            <button
+              className={button}
               disabled={disabled}
               onClick={toggleOptionList}
               id={inputId}
@@ -389,14 +402,14 @@ const SelectInput = <
             >
               {activeOption ? (
                 SelectedOptionComponent ? (
-                  <CustomSelectedOptionContainer {...inputStyles}>
+                  <div className={selectedCustom}>
                     <SelectedOptionComponent
                       {...activeOption}
                       disabled={disabled}
                     />
-                  </CustomSelectedOptionContainer>
+                  </div>
                 ) : (
-                  <SelectedOptionContainer {...inputStyles}>
+                  <div className={selected}>
                     {activeOption.icon && (
                       <Icon
                         name={activeOption.icon}
@@ -407,10 +420,10 @@ const SelectInput = <
                     <Text weight="medium" color={valueTextColor} ellipsis fill>
                       {activeOption.label}
                     </Text>
-                  </SelectedOptionContainer>
+                  </div>
                 )
               ) : (
-                <SelectedOptionContainer {...inputStyles}>
+                <div className={selected}>
                   <Text
                     weight="medium"
                     color="gray-400"
@@ -421,9 +434,9 @@ const SelectInput = <
                   >
                     {placeholder}
                   </Text>
-                </SelectedOptionContainer>
+                </div>
               )}
-            </StyledSelectInput>
+            </button>
           )}
           <StyledInputControl
             {...inputStyles}
@@ -433,7 +446,8 @@ const SelectInput = <
             {isOpen && isLoading ? (
               <Loading animation="BouncingBalls" size="s-4" />
             ) : !isOpen && clearable && activeOption && !disabled ? (
-              <ClearButton
+              <Button
+                className={clearButton}
                 color="clear"
                 secondary
                 icon="XLg"
@@ -446,46 +460,12 @@ const SelectInput = <
               <Icon name={mergedProps.controlIcon} />
             )}
           </StyledInputControl>
-        </SelectInputContainer>
+        </StyledInputContainer>
       </SelectInputPopover>
-    </SelectInputWrapper>
+    </FlexColumnLayout>
   );
 };
 
 SelectInput.defaultProps = defaultSelectInputProps;
 
 export { SelectInput };
-
-const SelectInputWrapper = styled(FlexColumnLayout)<CommonInputStyleProps>`
-  ${selectInputWrapperStyles}
-`;
-
-const SelectInputContainer = styled.div<CommonInputStyleProps>`
-  ${selectInputContainerStyles}
-`;
-
-const StyledSelectInput = styled.button<CommonInputStyleProps>`
-  ${commonInputStyles}
-  ${selectInputStyles}
-`;
-
-const SelectedOptionContainer = styled.div<CommonInputStyleProps>`
-  ${selectInputStyles}
-  padding: var(--s-2);
-  padding-right: var(--s-8);
-`;
-
-const ClearButton = styled(Button)`
-  padding: 0 !important;
-  ${cssDimensions("min-content", "min-content", true, true)};
-
-  &:hover svg,
-  &:hover svg path {
-    fill: var(--error-medium) !important;
-  }
-`;
-
-const CustomSelectedOptionContainer = styled.div<CommonInputStyleProps>`
-  ${selectInputStyles}
-  padding-right: var(--s-6)
-`;

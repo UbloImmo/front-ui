@@ -1,0 +1,62 @@
+@use "../../styles/mixins.scss";
+
+.icon-picker {
+  overflow-x: auto;
+  @include mixins.no-scrollbar;
+}
+
+.icon-picker-item {
+  --item-background: var(--white);
+  --item-border: var(--primary-light);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include mixins.dimensions(var(--s-8), var(--s-8), true);
+  border-radius: var(--s-05);
+  background: var(--item-background);
+  border: 1px solid var(--item-border);
+
+  transition:
+    background 300ms var(--bezier),
+    border-color 300ms var(--bezier);
+  box-shadow: var(--shadow-button);
+
+  &.active {
+    --item-background: var(--primary-light);
+    --item-border: var(--primary-medium);
+  }
+
+  svg[data-testid="icon"] {
+    transition: fill 300ms var(--bezier);
+  }
+
+  &:not(.readonly) {
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      --item-border: var(--primary-medium);
+
+      &.active {
+        --item-border: var(--primary-base);
+      }
+
+      svg[data-testid="icon"] {
+        transition-duration: 150ms;
+        fill: var(--primary-dark);
+      }
+    }
+  }
+
+  &:disabled {
+    --item-border: transparent;
+    --item-background: var(--gray-50);
+    box-shadow: none;
+    cursor: not-allowed;
+
+    &.active {
+      --item-border: var(--gray-300);
+      --item-background: var(--gray-100);
+    }
+  }
+}

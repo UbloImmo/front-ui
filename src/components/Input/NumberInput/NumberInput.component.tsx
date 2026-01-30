@@ -1,13 +1,13 @@
-import { isNumber, isString } from "@ubloimmo/front-util";
+import { isNumber, isString, Nullable } from "@ubloimmo/front-util";
 import { useCallback, useMemo, type KeyboardEventHandler } from "react";
 
-import { StyledNumberInput } from "./NumberInput.styles";
 import {
   StyledInputContainer,
   defaultCommonInputProps,
   StyledInputControlGroup,
   StyledInputGroupedControl,
   StyledInputControl,
+  StyledInput,
 } from "../Input.common";
 import {
   useInputOnChange,
@@ -17,11 +17,14 @@ import {
   useInputId,
 } from "../Input.utils";
 import { scaleNumber, transformNumber } from "./NumberInput.utils";
+import { NativeInputValue } from "../Input.types";
+import styles from "./NumberInput.module.scss";
 
 import { Icon } from "@/components/Icon";
 import {
   clamp,
   isEmptyString,
+  useCssClasses,
   useHtmlAttribute,
   useMergedProps,
   useTestId,
@@ -50,7 +53,7 @@ const defaultNumberInputProps: DefaultNumberInputProps = {
 /**
  * Renders a number input component.
  *
- * @version 0.0.10
+ * @version 0.1.0
  *
  * @param {NumberInputProps} props - The props for the NumberInput component.
  * @return {JSX.Element} The rendered NumberInput component.
@@ -102,7 +105,7 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
      * @param {NativeInputValue} nativeValue - The raw input value.
      * @returns {Nullable<number>} The transformed and clamped value, or null if invalid.
      */
-    (nativeValue) => {
+    (nativeValue: NativeInputValue): Nullable<number> => {
       const parsed = transformNumber(nativeValue);
       if (!isNumber(parsed)) return null;
       const clamped = clamp(parsed, mergedProps.min, mergedProps.max);
@@ -214,9 +217,12 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
     return mergedProps.showStepper && !mergedProps.controlIcon;
   }, [mergedProps.showStepper, mergedProps.controlIcon]);
 
+  const className = useCssClasses(styles["number-input"]);
+
   return (
     <StyledInputContainer {...inputStyles} data-testid="input-number-container">
-      <StyledNumberInput
+      <StyledInput
+        className={className}
         data-testid={testId}
         value={value}
         onChange={onChange}

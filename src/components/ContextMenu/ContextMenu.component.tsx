@@ -1,33 +1,28 @@
 import { isBoolean, isFunction, type VoidFn } from "@ubloimmo/front-util";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
 
 import {
   ContextMenuItem,
   type ContextMenuItemProps,
   ContextMenuArrow,
 } from "./components";
-import {
-  contextMenuActionIconStyles,
-  contextMenuStyles,
-} from "./ContextMenu.styles";
-import {
-  type ContextMenuProps,
-  type ContextMenuDefaultProps,
-  ContextMenuStyleProps,
-  type ContextMenuActionIconStyleProps,
-} from "./ContextMenu.types";
+import { useContextMenuStyles } from "./ContextMenu.styles";
 import { ActionIcon } from "../ActionIcon";
 
 import { FlexColumnLayout } from "@/layouts/Flex";
 import { Popover } from "@/layouts/Popover";
-import { FixedCssLength, type TestIdProps } from "@types";
 import {
   useLogger,
   useTestId,
   useMergedProps,
   useUikitTranslation,
 } from "@utils";
+
+import type {
+  ContextMenuProps,
+  ContextMenuDefaultProps,
+} from "./ContextMenu.types";
+import type { FixedCssLength, TestIdProps } from "@types";
 
 const defaultContextMenuProps: ContextMenuDefaultProps = {
   ...Popover.defaultProps,
@@ -54,6 +49,8 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
     useMergedProps(defaultContextMenuProps, props);
   const testId = useTestId("context-menu", props);
   const [open, setOpen] = useState(disabled ? false : mergedProps.defaultOpen);
+
+  const { classNames } = useContextMenuStyles({ size }, open);
 
   const onItemClick = useCallback(
     (item: ContextMenuItemProps) => () => {
@@ -112,21 +109,23 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
   const PovoverContent = useCallback(
     () => (
       <>
-        <ContextMenuContainer data-testid={testId} $size={size}>
-          <FlexColumnLayout gap={isMediumSize ? "s-1" : 0} fill>
-            {menuItems.map((item, index) => (
-              <ContextMenuItem
-                key={`context-menu-item-${index}-${item.label}`}
-                {...item}
-                index={index}
-              />
-            ))}
-          </FlexColumnLayout>
-        </ContextMenuContainer>
+        <FlexColumnLayout
+          className={classNames.menu}
+          testId={testId}
+          overrideTestId
+        >
+          {menuItems.map((item, index) => (
+            <ContextMenuItem
+              key={`context-menu-item-${index}-${item.label}`}
+              {...item}
+              index={index}
+            />
+          ))}
+        </FlexColumnLayout>
         {!isMediumSize && <ContextMenuArrow />}
       </>
     ),
-    [testId, size, isMediumSize, menuItems]
+    [isMediumSize, classNames.menu, testId, menuItems]
   );
 
   const tl = useUikitTranslation();
@@ -138,17 +137,17 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
   const PopoverChildren = useMemo(() => {
     if (children) return children;
     return (
-      <ContextMenuActionIcon
+      <ActionIcon
+        className={classNames.action}
         icon={icon}
         color="white"
-        $open={open}
         disabled={disabled}
         testId="context-menu-trigger"
         overrideTestId
         title={actionIconTitle}
       />
     );
-  }, [children, icon, open, disabled, actionIconTitle]);
+  }, [children, classNames.action, icon, disabled, actionIconTitle]);
 
   return (
     <Popover
@@ -172,13 +171,3 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
 ContextMenu.defaultProps = defaultContextMenuProps;
 
 export { ContextMenu };
-
-const ContextMenuContainer = styled.div<ContextMenuStyleProps>`
-  ${contextMenuStyles}
-`;
-
-const ContextMenuActionIcon = styled(
-  ActionIcon
-)<ContextMenuActionIconStyleProps>`
-  ${contextMenuActionIconStyles}
-`;

@@ -46,7 +46,11 @@ const GridItem = forwardRef<HTMLDivElement, GridItemProps & TestIdProps>(
   ): JSX.Element => {
     const testId = useTestId("grid-item", props as TestIdProps);
     const position = useGridItemPosition(defaultGridItemProps, props);
-    const { className, style } = useGridItemStyle(position);
+    const { className, style } = useGridItemStyle({
+      ...position,
+      className: props.className ?? null,
+      styleOverride: props.styleOverride ?? null,
+    });
     const Element = position.as;
     return (
       <Element

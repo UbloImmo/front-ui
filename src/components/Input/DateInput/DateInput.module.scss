@@ -1,6 +1,4 @@
-import { css, type RuleSet } from "styled-components";
-
-export const dateInputStyles = (): RuleSet => css`
+.date-input {
   vertical-align: center;
 
   &::-webkit-inner-spin-button {
@@ -32,4 +30,4 @@ export const dateInputStyles = (): RuleSet => css`
       outline: none;
     }
   }
-`;
+}

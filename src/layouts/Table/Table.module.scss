@@ -1,4 +1,5 @@
 @use "../../sizes/breakpoints.scss";
+@use "../../styles/mixins.scss";
 
 .table {
   width: 100%;
@@ -157,11 +158,7 @@
   max-height: var(--table-scroll-view-max-height);
   width: 100%;
 
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-  }
+  @include mixins.no-scrollbar;
 
   overflow-x: visible;
   overflow-y: visible;

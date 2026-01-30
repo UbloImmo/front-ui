@@ -1,20 +1,22 @@
-import { MouseEvent, useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
-
 import {
-  buildActiveIconContainerStyles,
-  buildCheckboxContainerStyles,
-} from "./Checkbox.styles";
+  type MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+import { useCheckboxStyle } from "./Checkbox.styles";
 import { Icon } from "../Icon";
 
-import { StyleProps, type TestIdProps } from "@types";
-import { useTestId, useMergedProps, useStyleProps } from "@utils";
+import { useTestId, useMergedProps } from "@utils";
 
 import type {
   CheckboxProps,
   CheckboxDefaultProps,
   CheckboxStatus,
 } from "./Checkbox.types";
+import type { TestIdProps } from "@types";
 
 const defaultCheckboxProps: CheckboxDefaultProps = {
   active: false,
@@ -25,7 +27,7 @@ const defaultCheckboxProps: CheckboxDefaultProps = {
 /**
  * A simple checkbox that let users select multiple options from a set of items, or mark one individual item as selected
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @param {CheckboxProps & TestIdProps} props - Checkbox component props
  * @returns {JSX.Element}
@@ -33,8 +35,9 @@ const defaultCheckboxProps: CheckboxDefaultProps = {
 const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultCheckboxProps, props);
   const { disabled, onChange } = mergedProps;
-  const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("checkbox", props);
+
+  const { classNames, attrs } = useCheckboxStyle(mergedProps);
 
   const [isActive, setIsActive] = useState<CheckboxStatus>(
     mergedProps.active ?? false
@@ -72,16 +75,21 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
   );
 
   return (
-    <CheckboxContainer
+    <div
+      className={classNames.checkbox}
       data-testid={testId}
+      {...attrs}
       onClick={propagateOnChange}
       aria-checked={isActive}
       aria-disabled={disabled}
     >
-      <ActiveIconContainer {...styleProps} $active={isActive}>
+      <div
+        className={classNames.iconContainer}
+        data-testid={`${testId}-icon-container`}
+      >
         <Icon name="CheckSquareFill" color={iconColor} />
         <Icon name="DashSquareFill" color={iconColor} />
-      </ActiveIconContainer>
+      </div>
 
       <input
         type="checkbox"
@@ -93,17 +101,9 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
         onChange={() => {}}
       />
       <Icon name="Square" color={iconColor} />
-    </CheckboxContainer>
+    </div>
   );
 };
 Checkbox.defaultProps = defaultCheckboxProps;
 
 export { Checkbox };
-
-const CheckboxContainer = styled.div`
-  ${buildCheckboxContainerStyles}
-`;
-
-const ActiveIconContainer = styled.div<StyleProps<CheckboxDefaultProps>>`
-  ${buildActiveIconContainerStyles}
-`;

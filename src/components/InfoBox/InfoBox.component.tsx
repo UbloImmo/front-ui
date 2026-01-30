@@ -1,9 +1,8 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import { infoBoxStyles } from "./InfoBox.styles";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
+import styles from "./InfoBox.module.scss";
 
 import { FlexColumnLayout } from "@/layouts/Flex";
 import {
@@ -12,6 +11,7 @@ import {
   useMergedProps,
   isNonEmptyString,
   useUikitTranslation,
+  useCssClasses,
 } from "@utils";
 
 import type { InfoBoxProps, InfoBoxDefaultProps } from "./InfoBox.types";
@@ -26,7 +26,7 @@ const defaultInfoBoxProps: InfoBoxDefaultProps = {
 /**
  * A small card to display contextual data.
  *
- * @version 0.0.5
+ * @version 0.1.0
  *
  * @param {InfoBoxProps & TestIdProps} props - InfoBox component props
  * @returns {JSX.Element}
@@ -37,6 +37,7 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
   const { icon, label, info } = mergedProps;
   const tl = useUikitTranslation();
   const testId = useTestId("info-box", props);
+  const className = useCssClasses(styles["info-box"]);
 
   const stateColor = useMemo(() => {
     return info ? "gray-800" : "gray-500";
@@ -65,7 +66,13 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
   }
 
   return (
-    <InfoBoxContainer testId={testId} align="center" gap="s-1" overrideTestId>
+    <FlexColumnLayout
+      className={className}
+      testId={testId}
+      align="center"
+      gap="s-1"
+      overrideTestId
+    >
       <Icon name={icon} size="s-4" color={stateColor} />
       <Text
         size="m"
@@ -92,13 +99,9 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
       >
         {displayInfo}
       </Text>
-    </InfoBoxContainer>
+    </FlexColumnLayout>
   );
 };
 InfoBox.defaultProps = defaultInfoBoxProps;
 
 export { InfoBox };
-
-const InfoBoxContainer = styled(FlexColumnLayout)`
-  ${infoBoxStyles}
-`;

@@ -1,5 +1,7 @@
 import {
+  GenericFn,
   isArray,
+  isFunction,
   isNumber,
   isObject,
   isString,
@@ -20,6 +22,7 @@ import type {
   CssCh,
   CssColorMix,
   CssColorSpace,
+  CssDeg,
   CssFr,
   CssLength,
   CssLengthUsage,
@@ -181,6 +184,16 @@ export const cssVarUsage = (name: string): CssVarUsage =>
  */
 export const cssFr = (fr: number): CssFr => {
   return `${fr}fr`;
+};
+
+/**
+ * Returns a {@link CssDeg} string with the given number.
+ *
+ * @param {number} deg - The number to be concatenated with 'deg'.
+ * @return {CssDeg} The string with the concatenated number and 'deg' unit.
+ */
+export const cssDeg = (deg: number): CssDeg => {
+  return `${deg}deg`;
 };
 
 /**
@@ -416,8 +429,13 @@ export const cssColorMix = (
   return `color-mix(in ${colorSpace}, ${a}, ${b})`;
 };
 
-type CssClassRecord = Record<string, boolean> | Map<string, boolean>;
-type CssClassArray = (Nullish<string> | [className: string, active: boolean])[];
+type CssClassRecord =
+  | Record<string, Nullish<boolean>>
+  | Map<string, Nullish<boolean>>;
+type CssClassArray = (
+  | Nullish<string>
+  | [className: string, active: Nullish<boolean>]
+)[];
 type CssClassInput = CssClassArray | [CssClassRecord];
 
 /**
@@ -437,21 +455,35 @@ const isClassRecord = (classes: CssClassInput): classes is [CssClassRecord] => {
 
 const isClassArray = isArray as Predicate<CssClassArray>;
 
+// TODO: add unit tests for newly added utils (cssClasses, cssStyles, cssVariables)
+
 /**
  * Combines multiple Css classes into a single string
  *
  * @param {CssClassInput} classes - List of classes to combine
  * @returns {Optional<string>} A concatenated string containing all provided active classes or undefined if none active
+ *
+ * @example
+ * cssClasses("base", "secondary", ["not-included", false], ["included", true])
+ * // -> "base secondary included"
+ * cssClasses("base", "secondary", "included")
+ * // -> "base secondary included"
+ * cssClasses({ base: true, secondary: true, "not-included": false, included: true })
+ * // -> "base secondary included"
  */
 export const cssClasses = (...classes: CssClassInput): Optional<string> => {
+  if (!classes.length) return undefined;
+
   let classStr = "";
 
   const appendClass = (classKey: string) => {
     classStr += ` ${classKey}`;
   };
 
+  if (classes.length === 1 && isNonEmptyString(classes[0])) return classes[0];
+
   if (isClassRecord(classes)) {
-    const record: Record<string, boolean> = isMap(classes[0])
+    const record: Record<string, Nullish<boolean>> = isMap(classes[0])
       ? objectFromEntries(Array.from(classes[0].entries()))
       : classes[0];
     for (const classKey in record) {
@@ -463,7 +495,7 @@ export const cssClasses = (...classes: CssClassInput): Optional<string> => {
   }
 
   for (const item of classes) {
-    if (isString(item)) appendClass(item);
+    if (isNonEmptyString(item)) appendClass(item);
     if (!isClassArray(item)) continue;
     const [classKey, active] = item;
     if (active) appendClass(classKey);
@@ -492,11 +524,18 @@ export const cssVariables = (
 };
 
 export const useCssVariables = (
-  variables: Record<string, Optional<string | number>>,
+  variables:
+    | Record<string, Optional<string | number>>
+    | GenericFn<[], Record<string, Optional<string | number>>>,
   override?: Nullish<CSSProperties>
 ): CSSProperties => {
   return useMemo(() => {
-    const vars = cssVariables(variables);
+    const baseVars = isFunction<
+      GenericFn<[], Record<string, Optional<string | number>>>
+    >(variables)
+      ? variables()
+      : variables;
+    const vars = cssVariables(baseVars);
     if (!override) return vars;
     return {
       ...vars,

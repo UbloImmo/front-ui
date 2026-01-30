@@ -1,9 +1,13 @@
+import { useMemo } from "react";
 import { css, type RuleSet } from "styled-components";
 
-import { cssVarUsage } from "@utils";
+import styles from "./ContextMenu.module.scss";
+
+import { cssClasses, cssVarUsage } from "@utils";
 
 import type {
   ContextMenuActionIconStyleProps,
+  ContextMenuDefaultProps,
   ContextMenuStyleProps,
 } from "./ContextMenu.types";
 
@@ -40,3 +44,20 @@ export const contextMenuActionIconStyles = ({
     }
   `}
 `;
+
+export function useContextMenuStyles(
+  { size }: Pick<ContextMenuDefaultProps, "size">,
+  open: boolean
+) {
+  const classNames = useMemo(
+    () => ({
+      menu: cssClasses(styles["context-menu"], styles[size]),
+      action: cssClasses(styles["context-menu-action"], [styles.open, open]),
+    }),
+    [open, size]
+  );
+
+  return {
+    classNames,
+  };
+}

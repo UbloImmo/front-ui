@@ -1,12 +1,16 @@
-import { css, RuleSet } from "styled-components";
+import styles from "./Callout.module.scss";
 
-import { IconName } from "../Icon";
+import {
+  cssVarUsage,
+  isGrayColor,
+  useCssClasses,
+  useCssVariables,
+} from "@utils";
 
-import { cssVarUsage } from "@utils";
+import type { IconName } from "../Icon";
+import type { CalloutColor, CalloutDefaultProps } from "./Callout.types";
 
-import type { CalloutColor, CalloutStyleProps } from "./Callout.types";
-
-export const computeCalloutIconNames: Record<CalloutColor, IconName> = {
+export const calloutIconNames: Record<CalloutColor, IconName> = {
   primary: "InfoSquareFill",
   warning: "QuestionSquareFill",
   pending: "HourglassSplit",
@@ -14,61 +18,34 @@ export const computeCalloutIconNames: Record<CalloutColor, IconName> = {
   error: "ExclamationSquareFill",
 };
 
-export const calloutStyle = ({ $color, $size }: CalloutStyleProps): RuleSet => {
-  const background = cssVarUsage(
-    $size === "l" ? "white" : $color === "gray" ? "gray-50" : `${$color}-light`
+export function useCalloutStyle(props: CalloutDefaultProps) {
+  const className = useCssClasses(
+    styles.callout,
+    styles[props.size],
+    props.className
   );
 
-  const borderColor = cssVarUsage(
-    $color === "gray"
-      ? "gray-600"
-      : $size === "l"
-        ? `${$color}-medium`
-        : `${$color}-base`
-  );
+  const style = useCssVariables(() => {
+    const background = cssVarUsage(
+      props.size === "l"
+        ? "white"
+        : isGrayColor(props.color)
+          ? "gray-50"
+          : `${props.color}-light`
+    );
+    const border = cssVarUsage(
+      isGrayColor(props.color)
+        ? "gray-600"
+        : props.size === "l"
+          ? `${props.color}-medium`
+          : `${props.color}-base`
+    );
 
-  const borderRadius = cssVarUsage(`s-${$size === "l" ? 2 : 1}`);
+    return {
+      "callout-background": background,
+      "callout-border": border,
+    };
+  }, props.styleOverride);
 
-  const flexLayout =
-    $size === "l"
-      ? css`
-          flex-direction: column;
-          align-items: start;
-          padding: var(--s-8);
-        `
-      : css`
-          flex-direction: row;
-          align-items: center;
-          padding: var(--s-3) var(--s-4);
-        `;
-
-  return css`
-    display: flex;
-    ${flexLayout}
-    gap: var(--s-3);
-    min-height: var(--s-10);
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    border-radius: ${borderRadius};
-    background-color: ${background};
-    position: relative;
-    overflow: hidden;
-
-    ${$size === "l" &&
-    css`
-      outline: 1px solid ${borderColor};
-      outline-offset: -1px;
-    `}
-
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      right: unset;
-      height: 100%;
-      width: var(--s-1);
-      background: ${borderColor};
-    }
-  `;
-};
+  return { className, style };
+}

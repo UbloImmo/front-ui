@@ -1,20 +1,24 @@
-import { useId, useMemo } from "react";
-import styled from "styled-components";
+import { CSSProperties, ReactNode, useId, useMemo } from "react";
 
-import { emptyStateCardAssetDefaultProps } from "./assets.defaults";
+import { emptyStateCardAssetDefaultProps } from "../assets.defaults";
+import styles from "./EmptyBox.module.scss";
 
-import { Icon } from "@/components/Icon";
-import { cssDimensions } from "@/utils/styles.utils";
+import { Icon, type IconProps } from "@/components/Icon";
 import {
   cssColorMix,
+  cssDeg,
   cssPx,
+  cssVariables,
   cssVarUsage,
   normalizeToPaletteColor,
+  useCssClasses,
+  useCssVariables,
   useMergedProps,
+  useStatic,
 } from "@utils";
 
-import type { EmptyStateCardAssetProps } from "./assets.types";
-import type { ColorKey, PaletteColor, CssDeg, CssPx, StyleProps } from "@types";
+import type { EmptyStateCardAssetProps } from "../assets.types";
+import type { ColorKey, PaletteColor, SpacingLabel } from "@types";
 
 const ASSET_HEIGHT = 121;
 const ASSET_WIDTH = 132;
@@ -27,11 +31,66 @@ const SVG_LAYER_PROPS = {
   xmlns: "http://www.w3.org/2000/svg",
 };
 
+interface IconTransform {
+  x: number;
+  y: number;
+  angle: number;
+  opacity: number;
+  size: SpacingLabel;
+}
+
+const MAIN_ICON_TRANSFORM: IconTransform = {
+  x: 45.5,
+  y: 60.5,
+  angle: 14.28,
+  opacity: 1,
+  size: "s-8",
+};
+
+const ICON_TRANSFORMS: IconTransform[] = [
+  {
+    x: 75.5,
+    y: 34,
+    angle: 1.58,
+    opacity: 0.5,
+    size: "s-6",
+  },
+  {
+    x: 27.5,
+    y: 30,
+    angle: -24.15,
+    opacity: 0.5,
+    size: "s-4",
+  },
+  {
+    x: 59.3,
+    y: 10,
+    angle: 29.85,
+    opacity: 0.5,
+    size: "s-4" satisfies SpacingLabel,
+  },
+];
+
+function placeIcon({ x, y, angle, opacity, size }: IconTransform): {
+  style: CSSProperties;
+  size: SpacingLabel;
+} {
+  return {
+    style: cssVariables({
+      opacity,
+      x: cssPx(x),
+      y: cssPx(y),
+      angle: cssDeg(angle),
+    }),
+    size,
+  };
+}
+
 /**
  * Hook that generates color values for the EmptyBox asset based on a theme color
  *
  * @param {ColorKey} color - The base color key to generate colors from
- * @returns {object} Object containing calculated color values:
+ * @returns Object containing calculated color values:
  *   - dotColor: Blended color for dots
  *   - darkerLight: Darker variant of light color
  *   - darkMedium: Dark variant of medium color
@@ -213,6 +272,50 @@ const Defs = ({
   );
 };
 
+const PlacedIcon = ({
+  style,
+  ...iconProps
+}: IconProps & { style: CSSProperties }) => {
+  const modifier = useCssClasses(styles["asset-icon-modifier"]);
+  return (
+    <div className={modifier} style={style}>
+      <Icon {...iconProps} />
+    </div>
+  );
+};
+
+const SvgLayer = ({ children }: { children: ReactNode }) => {
+  return (
+    <svg {...SVG_LAYER_PROPS} className={styles["asset-svg"]}>
+      {children}
+    </svg>
+  );
+};
+
+const DivLayer = ({ children }: { children: ReactNode }) => {
+  return <div className={styles["asset-div"]}>{children}</div>;
+};
+
+const EmptyBoxIcons = ({ name, color }: Pick<IconProps, "name" | "color">) => {
+  const className = useCssClasses(styles["asset-div"]);
+
+  const icons = useStatic(() => ICON_TRANSFORMS.map(placeIcon));
+
+  return (
+    <div className={className}>
+      {icons.map(({ size, style }, index) => (
+        <PlacedIcon
+          size={size}
+          style={style}
+          color={color}
+          name={name}
+          key={`icon-${index}`}
+        />
+      ))}
+    </div>
+  );
+};
+
 /**
  * An empty box illustration asset for the EmptyStateCard component
  *
@@ -221,7 +324,7 @@ const Defs = ({
  * @param {PaletteColor} props.color - The color theme for the illustration
  * @returns {JSX.Element} The rendered empty box illustration
  */
-export const EmptyBox = (props: EmptyStateCardAssetProps) => {
+export const EmptyBox = (props: EmptyStateCardAssetProps): JSX.Element => {
   const { icon, color } = useMergedProps(
     emptyStateCardAssetDefaultProps,
     props
@@ -234,14 +337,23 @@ export const EmptyBox = (props: EmptyStateCardAssetProps) => {
   const colors = useEmptyBoxAssetColors(color);
   const { backdrop, dotColor, lightestBase, darkMedium } = colors;
 
+  const iconTransform = useStatic(placeIcon(MAIN_ICON_TRANSFORM));
+  const style = useCssVariables({
+    "asset-width": cssPx(ASSET_WIDTH),
+    "asset-height": cssPx(ASSET_HEIGHT),
+  });
+  const className = useCssClasses(styles["asset-container"]);
+
   const gradientIds = useEmptyBoxAssetGradientIds();
 
   return (
-    <AssetContainer
+    <div
+      className={className}
+      style={style}
       data-testid="empty-state-card-asset"
       data-asset-name="EmptyBox"
     >
-      <SvgLayer {...SVG_LAYER_PROPS}>
+      <SvgLayer>
         <Defs colors={colors} gradientIds={gradientIds} />
         <path
           fillRule="evenodd"
@@ -291,13 +403,14 @@ export const EmptyBox = (props: EmptyStateCardAssetProps) => {
           fill="var(--gray-50)"
         />
       </SvgLayer>
-
       <DivLayer>
-        <IconModifier $x="45.5px" $y="60.5px" $angle="14.28deg" $opacity={1}>
-          <Icon name={icon} size="s-8" color={iconColor} />
-        </IconModifier>
+        <PlacedIcon
+          style={iconTransform.style}
+          size={iconTransform.size}
+          name={icon}
+          color={iconColor}
+        />
       </DivLayer>
-
       <SvgLayer {...SVG_LAYER_PROPS}>
         <Defs colors={colors} gradientIds={gradientIds} />
         <path
@@ -339,45 +452,7 @@ export const EmptyBox = (props: EmptyStateCardAssetProps) => {
           fill={`url(#${gradientIds.gradient7})`}
         />
       </SvgLayer>
-
-      <DivLayer>
-        <IconModifier $x="75.5px" $y="34px" $angle="1.58deg" $opacity={0.5}>
-          <Icon name={icon} size="s-6" color={iconColor} />
-        </IconModifier>
-        <IconModifier $x="27.5px" $y="30px" $angle="-24.15deg" $opacity={0.5}>
-          <Icon name={icon} size="s-4" color={iconColor} />
-        </IconModifier>
-        <IconModifier $x="59.3px" $y="10px" $angle="29.85deg" $opacity={0.5}>
-          <Icon name={icon} size="s-4" color={iconColor} />
-        </IconModifier>
-      </DivLayer>
-    </AssetContainer>
+      <EmptyBoxIcons name={icon} color={iconColor} />
+    </div>
   );
 };
-
-const AssetContainer = styled.div`
-  position: relative;
-  ${cssDimensions(cssPx(ASSET_WIDTH), cssPx(ASSET_HEIGHT), true)}
-`;
-
-const SvgLayer = styled.svg`
-  position: absolute;
-  inset: 0;
-`;
-
-const DivLayer = styled.div`
-  position: absolute;
-  inset: 0;
-`;
-
-const IconModifier = styled.div<
-  StyleProps<{ x: CssPx; y: CssPx; angle?: CssDeg; opacity?: number }>
->`
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(${({ $x }) => $x}, ${({ $y }) => $y})
-    rotate(${({ $angle }) => $angle ?? "0deg"});
-  transform-origin: center center;
-  opacity: ${({ $opacity }) => $opacity ?? 1};
-`;

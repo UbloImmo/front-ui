@@ -1,0 +1,11 @@
+@use "../../styles/mixins.scss";
+
+.icon-fallback {
+  --size: var(--s-4);
+  @include mixins.dimensions(var(--size), var(--size), true);
+  opacity: 0;
+  pointer-events: none;
+  background: none;
+  color: none;
+  fill: none;
+}

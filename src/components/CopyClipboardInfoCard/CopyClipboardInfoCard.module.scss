@@ -1,0 +1,76 @@
+.copy-clipboard-info-card {
+  min-height: var(--s-10);
+  padding: var(--s-2) var(--s-3);
+  background: var(--gray-50);
+  border-radius: var(--s-1);
+  border: 1px solid var(--primary-medium-00);
+  position: relative;
+  transition: border-color 300ms ease-out 0s;
+  padding-right: var(--s-8);
+
+  &:not(.empty):hover {
+    border-color: var(--primary-medium);
+    transition-duration: 150ms;
+
+    // target copy icon
+    & > .copy-clipboard-info-card-icon-container {
+      transition-duration: 150ms;
+      pointer-events: all;
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+}
+
+.copy-clipboard-info-card-icon-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: var(--s-3);
+  opacity: 0;
+  transition: opacity 300ms var(--bezier) 0s;
+  pointer-events: none;
+  height: var(--s-4);
+  width: var(--s-4);
+
+  & svg[data-testid="icon"] {
+    transition: fill 300ms var(--bezier);
+  }
+
+  &:hover svg[data-testid="icon"] {
+    transition-duration: 150ms;
+    fill: var(--primary-dark);
+  }
+}
+
+.copy-clipboard-info-card-link {
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+  font-size: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  max-width: 100%;
+  width: max-content;
+  cursor: pointer;
+}
+
+.copy-clipboard-info-card-label {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+
+  &:has(.copy-clipboard-info-card-link) {
+    transition:
+      color 300ms var(--bezier) 0s,
+      text-decoration-color 300ms var(--bezier) 0s;
+    // needed to show underline while in ellipsis
+    padding: var(--s-05) 0;
+  }
+
+  &:has(.copy-clipboard-info-card-link:hover) {
+    transition-duration: 150ms;
+    color: var(--primary-base);
+    text-decoration-color: var(--primary-medium);
+  }
+}

@@ -1,6 +1,10 @@
 import { isString } from "@ubloimmo/front-util";
 
-import { StyledInput, defaultCommonInputProps } from "../Input.common";
+import {
+  StyledInput,
+  StyledInputContainer,
+  defaultCommonInputProps,
+} from "../Input.common";
 import {
   useInputId,
   useInputOnChange,
@@ -47,20 +51,22 @@ const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
   const autoComplete = useHtmlAttribute(mergedProps.autoComplete);
   const id = useInputId(mergedProps);
   return (
-    <StyledInput
-      data-testid={testId}
-      value={value}
-      type="text"
-      onChange={onChange}
-      onBlur={onBlur}
-      placeholder={mergedProps.placeholder}
-      required={mergedProps.required}
-      disabled={mergedProps.disabled}
-      autoComplete={autoComplete}
-      ref={forwardRef}
-      id={id}
-      {...inputStyles}
-    />
+    <StyledInputContainer {...inputStyles} data-testid="input-text-container">
+      <StyledInput
+        data-testid={testId}
+        value={value}
+        type="text"
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={mergedProps.placeholder}
+        required={mergedProps.required}
+        disabled={mergedProps.disabled}
+        autoComplete={autoComplete}
+        ref={forwardRef}
+        id={id}
+        {...inputStyles}
+      />
+    </StyledInputContainer>
   );
 };
 

@@ -1,24 +1,42 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import { IconPickerItemStyles } from "./IconPickerItem.styles";
+import { useIconPickerItemStyles } from "./IconPickerItem.styles";
 import {
+  IconPickerItemDefaultProps,
   IconPickerItemProps,
-  IconPickerItemStyleProps,
 } from "./IconPickerItem.types";
 
 import { Icon } from "@/components/Icon/Icon.component";
 import { TestIdProps } from "@types";
-import { useStyleProps, useTestId } from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
+const defaultIconPickerItemProps: IconPickerItemDefaultProps = {
+  name: "Circle",
+  disabled: false,
+  active: false,
+  onClick: () => {},
+  readonly: false,
+};
+
+/**
+ * Renders a single icon and its selection state in the context of an IconPicker.
+ *
+ * Propagates click event to parent.
+ *
+ * @version 0.1.0
+ *
+ * @param {IconPickerItemProps & TestIdProps} props - Component property
+ * @returns Rendered property
+ */
 export const IconPickerItem = (
   props: IconPickerItemProps & TestIdProps
 ): JSX.Element => {
-  const styleProps = useStyleProps(props);
+  const mergedProps = useMergedProps(defaultIconPickerItemProps, props);
 
-  const { disabled, active } = props;
+  const { disabled, active } = mergedProps;
 
   const testId = useTestId("icon-picker-item", props);
+  const { className } = useIconPickerItemStyles(mergedProps);
 
   const iconColor = useMemo(() => {
     return active
@@ -31,18 +49,14 @@ export const IconPickerItem = (
   }, [active, disabled]);
 
   return (
-    <IconPickerItemButton
+    <button
+      className={className}
       type="button"
       data-testid={testId}
       disabled={props.disabled}
       onClick={props.onClick}
-      {...styleProps}
     >
       <Icon name={props.name} size="s-4" color={iconColor} />
-    </IconPickerItemButton>
+    </button>
   );
 };
-
-const IconPickerItemButton = styled.button<IconPickerItemStyleProps>`
-  ${IconPickerItemStyles}
-`;

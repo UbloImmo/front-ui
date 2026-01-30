@@ -5,10 +5,13 @@ import {
   type Nullable,
 } from "@ubloimmo/front-util";
 import { useCallback, useMemo, useState } from "react";
-import styled from "styled-components";
 
-import { EnergyLabel } from "../../EnergyLabel/EnergyLabel.component";
-import { defaultCommonInputProps, StyledInputContainer } from "../Input.common";
+import {
+  defaultCommonInputProps,
+  StyledInput,
+  StyledInputContainer,
+} from "../Input.common";
+import styles from "./EnergyScoreInput.module.scss";
 import { calculateEnergyScore } from "./EnergyScoreInput.utils";
 import {
   useInputId,
@@ -17,10 +20,11 @@ import {
   useInputStyles,
   useInputValue,
 } from "../Input.utils";
-import { StyledNumberInput } from "../NumberInput/NumberInput.styles";
+import numberInputStyles from "../NumberInput/NumberInput.module.scss";
 
 import {
-  EnergyLabelState,
+  EnergyLabel,
+  type EnergyLabelState,
   type EnergyLabelValue,
 } from "@/components/EnergyLabel";
 import {
@@ -29,6 +33,7 @@ import {
   useHtmlAttribute,
   clamp,
   useLogger,
+  useCssClasses,
 } from "@utils";
 
 import type {
@@ -53,7 +58,7 @@ const defaultEnergyScoreInputProps: DefaultEnergyScoreInputProps = {
  * Renders an energy score input component that combines a NumberInput with an EnergyLabel.
  * The component calculates DPE/Climate score based on numeric input.
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @param {EnergyScoreInputProps} props - The input props.
  * @return {JSX.Element} The rendered energy score input component.
@@ -134,9 +139,17 @@ const EnergyScoreInput = (
     );
   }
 
+  const container = useCssClasses(styles["energy-score-input-container"]);
+  const className = useCssClasses(numberInputStyles["number-input"]);
+
   return (
-    <StyledContainer {...inputStyles}>
-      <StyledNumberInput
+    <StyledInputContainer
+      className={container}
+      {...inputStyles}
+      data-testid="input-energy-score-container"
+    >
+      <StyledInput
+        className={className}
         data-testid={testId}
         type="number"
         min={mergedProps.min}
@@ -159,19 +172,10 @@ const EnergyScoreInput = (
         type={scoreType}
         value={currentTag}
       />
-    </StyledContainer>
+    </StyledInputContainer>
   );
 };
 
 EnergyScoreInput.defaultProps = defaultEnergyScoreInputProps;
 
 export { EnergyScoreInput };
-
-const StyledContainer = styled(StyledInputContainer)`
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  gap: var(--s-1);
-`;

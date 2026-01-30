@@ -1,48 +1,27 @@
-import { css, RuleSet } from "styled-components";
+import { useMemo } from "react";
 
-export const contextInfoCardContainerStyles = (): RuleSet => css`
-  border-radius: var(--s-2);
-  padding: var(--s-4);
-  background: var(--gray-50);
-  width: 100%;
-`;
+import styles from "./ContextInfoCard.module.scss";
+import { ContextInfoCardProps } from "./ContextInfoCard.types";
 
-export const contextInfoCardContainerLinkStyles = (): RuleSet => css`
-  ${contextInfoCardContainerStyles}
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--s-5);
-  position: relative;
-  border: 1px solid var(--primary-medium-00);
-  transition-property: border-color;
-  transition-duration: 300ms;
-  transition-timing-function: var(--bezier);
-  text-decoration: none;
+import { cssClasses, useCssStyles } from "@utils";
 
-  &,
-  & * {
-    cursor: pointer;
-  }
+export function useContextInfoCardStyles(
+  props: Required<ContextInfoCardProps>
+) {
+  const classNames = useMemo(
+    () => ({
+      card: cssClasses(styles["context-info-card"], props.className),
+      cardLink: cssClasses(
+        styles["context-info-card"],
+        styles["context-info-card-link"],
+        props.className
+      ),
+      iconContainer: cssClasses(styles["context-info-card-icon-container"]),
+    }),
+    [props.className]
+  );
 
-  [data-testid="context-info-card-icon-container"] svg,
-  [data-testid="context-info-card-icon-container"] svg path {
-    transition: fill 150ms var(--bezier);
-  }
+  const style = useCssStyles(props.styleOverride);
 
-  &:hover {
-    transition-duration: 150ms;
-    border-color: var(--primary-medium);
-
-    [data-testid="context-info-card-icon-container"] svg,
-    [data-testid="context-info-card-icon-container"] svg path {
-      fill: var(--primary-base);
-    }
-  }
-`;
-
-export const contextInfoCardIconContainerStyles = (): RuleSet => css`
-  pointer-events: none;
-  align-self: flex-start;
-`;
+  return { classNames, style };
+}

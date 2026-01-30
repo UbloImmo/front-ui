@@ -1,0 +1,166 @@
+@use "../../sizes/breakpoints.scss";
+@use "../../styles/mixins.scss";
+
+.combobox-button-wrapper {
+  --combobox-button-background: var(--white);
+
+  --combobox-button-border-color: var(--primary-medium);
+  --combobox-button-min-height: var(--s-8);
+
+  --combobox-button-height: var(--combobox-button-min-height);
+
+  --combobox-button-active-icon-opacity: 0;
+  --combobox-button-inactive-icon-opacity: 1;
+
+  &.has-description {
+    --combobox-button-height: fit-content;
+  }
+
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 1fr;
+  background: none;
+  border-radius: var(--s-1);
+
+  &.fill {
+    flex: 1;
+
+    & > .combobox-button {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+    }
+  }
+
+  &:not(:has(.combobox-button):disabled) {
+    box-shadow: var(--shadow-button);
+  }
+
+  &:not(:has(.combobox-button:disabled)):hover {
+    transition-duration: 150ms;
+    --combobox-button-border-color: var(--primary-base);
+  }
+
+  // has context menu
+  &:has(div[type="button"]) {
+    & > .combobox-button {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    & > div[type="button"] {
+      min-height: var(--combobox-button-min-height);
+      height: 100%;
+    }
+  }
+
+  // make button take full width when no context menu rendered
+  &:not(:has(div[type="button"])) > .combobox-button {
+    grid-column-end: -1;
+  }
+
+  @media only screen and (max-width: breakpoints.$breakpoint-xs) {
+    --combobox-button-min-height: var(--s-10);
+  }
+
+  .combobox-button {
+    min-height: var(--combobox-button-min-height);
+    height: var(--combobox-button-height);
+    max-height: var(--combobox-button-height);
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--s-2);
+    cursor: pointer;
+    background: var(--combobox-button-background);
+    padding: var(--s-2) var(--s-4);
+    border-radius: var(--s-1);
+    border: 1px solid var(--combobox-button-border-color);
+    transition:
+      300ms background ease-out 0s,
+      300ms border-color ease-out 0s;
+    overflow: hidden;
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    .combobox-button-label {
+      overflow: hidden;
+    }
+
+    .combobox-button-content {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .combobox-button-icons {
+      position: relative;
+      @include mixins.dimensions(var(--s-4), var(--s-4), true);
+
+      & > svg[data-testid="icon"] {
+        position: absolute;
+        inset: 0;
+        transition:
+          opacity 150ms var(--bezier),
+          fill 300ms var(--bezier);
+
+        &:first-child {
+          opacity: var(--combobox-button-inactive-icon-opacity);
+        }
+
+        &:last-child {
+          opacity: var(--combobox-button-active-icon-opacity);
+        }
+      }
+    }
+  }
+
+  .combobox-button-menu-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: var(--s-8);
+    min-width: var(--s-8);
+    max-width: var(--s-8);
+    min-height: var(--combobox-button-min-height);
+    border: 1px solid var(--combobox-button-border-color);
+    border-left: none;
+    background: var(--combobox-button-background);
+    border-top-right-radius: var(--s-1);
+    border-bottom-right-radius: var(--s-1);
+    transition:
+      300ms background var(--bezier) 0s,
+      300ms border-color var(--bezier) 0s;
+
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+    cursor: pointer;
+
+    & > svg[data-testid="icon"] {
+      transition: 300ms fill var(--bezier);
+      fill: var(--combobox-button-border-color);
+    }
+  }
+
+  &.active {
+    --combobox-button-background: var(--primary-light);
+    --combobox-button-active-icon-opacity: 1;
+    --combobox-button-inactive-icon-opacity: 0;
+  }
+
+  &:has(.combobox-button:disabled) {
+    --combobox-button-background: var(--gray-50);
+    --combobox-button-border-color: var(--gray-300);
+
+    & .combobox-button-icons svg[data-testid="icon"],
+    & .combobox-button-menu-trigger svg[data-testid="icon"] {
+      fill: var(--gray-400);
+    }
+  }
+}

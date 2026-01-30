@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import {
   isNonEmptyString,
-  useClassName,
   useHtmlAttribute,
   useLogger,
   useMergedProps,
@@ -11,7 +10,10 @@ import {
 } from "../../utils";
 import { Text } from "../Text/Text.component";
 import { Tooltip } from "../Tooltip";
-import { inputLabelStyles, inputLabelTextStyles } from "./InputLabel.styles";
+import {
+  inputLabelTextStyles,
+  useInputLabelClassNames,
+} from "./InputLabel.styles";
 
 import { FlexRowLayout } from "@/layouts/Flex";
 
@@ -34,7 +36,8 @@ const defaultInputLabelProps: DefaultInputLabelProps = {
 
 /**
  * Renders an input label component, to be used in association with the Input component.
- * @version 0.0.8
+ *
+ * @version 0.1.0
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
@@ -46,9 +49,9 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
     props
   );
   const testId = useTestId("input-label", props);
-  const className = useClassName(mergedProps);
   const { label, required } = mergedProps;
   const style = useHtmlAttribute(props.styleOverride);
+  const classNames = useInputLabelClassNames(required, mergedProps.className);
 
   if (!isNonEmptyString(label)) {
     warn("InputLabel must have a defined label.");
@@ -62,36 +65,33 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
   const htmlFor = useHtmlAttribute(mergedProps.htmlFor);
 
   return (
-    <InnerInputLabel
+    <label
       htmlFor={htmlFor}
-      className={className}
+      className={classNames.label}
       data-testid={testId}
       data-required={String(required)}
       style={style}
     >
       <FlexRowLayout align="center" gap="s-2" justify={justify}>
-        <InputLabelText
+        <Text
+          className={classNames.text}
           color="gray-600"
           size="s"
           testId="input-label-text"
-          $required={required}
         >
           {label}
-        </InputLabelText>
+        </Text>
         {mergedProps.tooltip && <Tooltip {...mergedProps.tooltip} />}
       </FlexRowLayout>
       {mergedProps.children}
-    </InnerInputLabel>
+    </label>
   );
 };
 
 InputLabel.defaultProps = defaultInputLabelProps;
 export { InputLabel };
 
-const InnerInputLabel = styled.label`
-  ${inputLabelStyles}
-`;
-
+// FIXME: finish removal of styled-components in List components, then delete this
 export const InputLabelText = styled(Text)<
   StyleProps<Pick<InputLabelProps, "required">>
 >`

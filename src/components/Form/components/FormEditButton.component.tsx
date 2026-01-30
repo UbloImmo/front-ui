@@ -1,17 +1,15 @@
-import styled from "styled-components";
+import { useMemo } from "react";
 
 import { useFormContext } from "../Form.context";
-import { formEditButtonStyles } from "../Form.styles";
+import styles from "../Form.module.scss";
 
 import { Button } from "@/components/Button";
-import { useStatic, useUikitTranslation } from "@utils";
-
-import type { FormEditButtonStyleProps } from "../Form.types";
+import { cssClasses, useStatic, useUikitTranslation } from "@utils";
 
 /**
  * Renders a form's edit button and hides it based on edit state.
  *
- * @version 0.0.5
+ * @version 0.1.0
  * @private
  *
  * @return {JSX.Element} The rendered form edit button component.
@@ -30,10 +28,23 @@ export const FormEditButton = (): JSX.Element => {
   const label = useStatic(tl.action.edit);
   const closeLabel = useStatic(tl.action.close);
 
+  const classNames = useMemo(
+    () => ({
+      edit: cssClasses(styles["form-edit-button"], [
+        styles.hidden,
+        isEditing || readonly,
+      ]),
+      closeContainer: cssClasses(styles["form-close-button-container"]),
+      closeGhost: cssClasses(styles["form-close-button-ghost"], styles.hidden),
+      close: cssClasses(styles["form-close-button"]),
+    }),
+    [isEditing, readonly]
+  );
+
   return (
     <>
-      <EditButton
-        $hidden={isEditing || readonly}
+      <Button
+        className={classNames.edit}
         onClick={startEditing}
         disabled={isLoading}
         icon="Pen"
@@ -44,14 +55,15 @@ export const FormEditButton = (): JSX.Element => {
         expandOnHover
       />
       {asModal && !(!isEditing && !readonly) && (
-        <CloseButtonContainer>
-          <CloseButtonGhost
-            $hidden
+        <div className={classNames.closeContainer}>
+          <Button
+            className={classNames.closeGhost}
             icon="XLg"
             testId="form-modal-close-ghost"
             color="black"
           />
-          <CloseButton
+          <Button
+            className={classNames.close}
             onClick={cancelEdition}
             icon="XLg"
             title={closeLabel}
@@ -60,27 +72,8 @@ export const FormEditButton = (): JSX.Element => {
             color="black"
             expandOnHover
           />
-        </CloseButtonContainer>
+        </div>
       )}
     </>
   );
 };
-
-const EditButton = styled(Button)<FormEditButtonStyleProps>`
-  ${formEditButtonStyles}
-`;
-
-const CloseButtonContainer = styled.div`
-  position: relative;
-`;
-
-const CloseButtonGhost = styled(EditButton)`
-  opacity: 0;
-  pointer-events: none;
-`;
-
-const CloseButton = styled(EditButton)`
-  position: absolute;
-  inset: 0;
-  left: unset;
-`;

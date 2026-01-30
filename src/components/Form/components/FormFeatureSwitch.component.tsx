@@ -7,6 +7,14 @@ import { FeatureSwitch } from "@/components/FeatureSwitch";
 
 import type { BuiltFormFeatureSwitchProps } from "../Form.types";
 
+/**
+ * Renders a {@link FeatureSwitch} in the context of a Form
+ *
+ * @version 0.1.0
+ *
+ * @param {BuiltFormFeatureSwitchProps} props - Feature switch field definition
+ * @returns Wrapped {@link FeatureSwitch}
+ */
 export const FormFeatureSwitch = (props: BuiltFormFeatureSwitchProps) => {
   const { layout, disabled: baseDisabled, ...rest } = props;
   const { isEditing } = useFormContext<object>();

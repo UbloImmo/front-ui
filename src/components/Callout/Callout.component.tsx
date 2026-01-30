@@ -1,27 +1,15 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import { calloutStyle } from "./Callout.styles";
-import {
-  type CalloutProps,
-  type CalloutDefaultProps,
-  CalloutStyleProps,
-} from "./Callout.types";
+import { useCalloutStyle } from "./Callout.styles";
 import { Heading } from "../Heading";
 import { Text } from "../Text";
 import { CalloutIcon } from "./components/CalloutIcon.component";
 
 import { FlexColumnLayout } from "@/layouts/Flex";
 import { PaletteColor, SpacingLabel, type TestIdProps } from "@types";
-import {
-  useLogger,
-  useTestId,
-  useMergedProps,
-  useStyleProps,
-  useClassName,
-  isGrayColor,
-  useHtmlAttribute,
-} from "@utils";
+import { useLogger, useTestId, useMergedProps, isGrayColor } from "@utils";
+
+import type { CalloutProps, CalloutDefaultProps } from "./Callout.types";
 
 const defaultCalloutProps: CalloutDefaultProps = {
   children: "[label]",
@@ -38,7 +26,7 @@ const defaultCalloutProps: CalloutDefaultProps = {
  * A card to display permanent feedback information.
  * Its color indicates the type of feedback.
  *
- * @version 0.0.9
+ * @version 0.1.0
  *
  * @param {CalloutProps & TestIdProps} props - Callout component props
  * @returns {JSX.Element}
@@ -48,8 +36,8 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultCalloutProps, props);
   const { color, size, title, icon, children } = mergedProps;
   const testId = useTestId("callout", props);
-  const className = useClassName(mergedProps);
-  const style = useHtmlAttribute(props.styleOverride);
+
+  const { className, style } = useCalloutStyle(mergedProps);
 
   const textColor = useMemo<PaletteColor>(() => {
     return color === "gray" ? "gray-700" : `${color}-dark`;
@@ -69,8 +57,6 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
     return size === "l" ? "s-1" : undefined;
   }, [size]);
 
-  const styleProps = useStyleProps(mergedProps);
-
   if (!props.children) {
     warn(
       `Missing required children, defaulting to ${defaultCalloutProps.children}`
@@ -78,12 +64,7 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
   }
 
   return (
-    <CalloutContainer
-      {...styleProps}
-      data-testid={testId}
-      className={className}
-      style={style}
-    >
+    <div data-testid={testId} className={className} style={style}>
       {icon && <CalloutIcon {...mergedProps} />}
       <FlexColumnLayout fill gap="s-3">
         <FlexColumnLayout fill gap={titleGap}>
@@ -97,13 +78,9 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
           </Text>
         </FlexColumnLayout>
       </FlexColumnLayout>
-    </CalloutContainer>
+    </div>
   );
 };
 Callout.defaultProps = defaultCalloutProps;
 
 export { Callout };
-
-const CalloutContainer = styled.div<CalloutStyleProps>`
-  ${calloutStyle}
-`;

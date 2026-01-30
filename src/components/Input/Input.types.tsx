@@ -14,6 +14,7 @@ import type {
   DetailedHTMLProps,
   HTMLInputAutoCompleteAttribute,
   InputHTMLAttributes,
+  MouseEventHandler,
   MutableRefObject,
   Ref,
   RefCallback,
@@ -251,7 +252,7 @@ export type CommonInputStyleProps = StyleProps<
 >;
 
 export type InputControlStyleProps = CommonInputStyleProps & {
-  onClick?: VoidFn;
+  onClick?: VoidFn | MouseEventHandler<HTMLDivElement>;
   $anchor?: DirectionHorizontal;
   $noFocus?: boolean;
 };

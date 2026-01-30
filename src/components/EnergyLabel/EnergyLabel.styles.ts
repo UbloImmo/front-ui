@@ -1,74 +1,20 @@
-import { css } from "styled-components";
+import { isNull } from "@ubloimmo/front-util";
+import { useMemo } from "react";
 
-import {
-  EnergyLabelProps,
-  EnergyLabelType,
-  EnergyLabelValue,
-} from "./EnergyLabel.types";
+import styles from "./EnergyLabel.module.scss";
+import { EnergyLabelDefaultProps } from "./EnergyLabel.types";
 
-import { breakpointsPx } from "@/sizes";
-import { cssDimensions } from "@/utils/styles.utils";
-import { HexColorOpaque, StyleProps } from "@types";
-import { cssVarUsage, fromStyleProps } from "@utils";
+import { useCssClasses } from "@utils";
 
-type EnergyLabelColors = Record<
-  EnergyLabelType,
-  Record<EnergyLabelValue, HexColorOpaque>
->;
+export function useEnergyLabelStyles(props: EnergyLabelDefaultProps) {
+  const box = useCssClasses(
+    styles["energy-label"],
+    styles[props.type],
+    styles[props.value ?? "A"],
+    [styles.active, props.state === "active" && !isNull(props.value)]
+  );
 
-const colors: EnergyLabelColors = {
-  DPE: {
-    A: "#009C6D",
-    B: "#52B153",
-    C: "#78BD76",
-    D: "#E3D600",
-    E: "#F0B50F",
-    F: "#EB8235",
-    G: "#D7221F",
-  },
-  GES: {
-    A: "#A4DBF8",
-    B: "#8CB4D3",
-    C: "#7792B1",
-    D: "#606F8F",
-    E: "#4D5271",
-    F: "#393551",
-    G: "#281B35",
-  },
-};
-const getBackgroundColor = (type: EnergyLabelType, value: EnergyLabelValue) => {
-  return colors[type][value];
-};
+  const label = useCssClasses(styles["energy-label-value"]);
 
-export const energyLabelStyle = (props: StyleProps<EnergyLabelProps>) => {
-  const { type, value, state } = fromStyleProps<EnergyLabelProps>(props);
-
-  const activeState = state === "active" && value;
-
-  const backgroundColor = activeState
-    ? getBackgroundColor(type, value)
-    : cssVarUsage("gray-50");
-
-  const textColor = activeState ? "white" : cssVarUsage("gray-600");
-
-  return css`
-    ${cssDimensions("s-6", "s-8", true)}
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    span[data-testid="energy-label-value"] {
-      color: ${textColor};
-    }
-    background: ${backgroundColor};
-    border-radius: var(--s-1);
-    user-select: none;
-    ${!activeState &&
-    css`
-      border: 1px solid var(--gray-300);
-    `}
-
-    @media only screen and (max-width: ${breakpointsPx.XS}) {
-      ${cssDimensions("s-8", "s-10", true)}
-    }
-  `;
-};
+  return useMemo(() => ({ classNames: { box, label } }), [box, label]);
+}

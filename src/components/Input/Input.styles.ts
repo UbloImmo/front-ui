@@ -1,255 +1,83 @@
-import { css, type RuleSet } from "styled-components";
+import styles from "./Input.module.scss";
 
-import { breakpointsPx } from "@/sizes";
+import { useCssClasses } from "@utils";
 
 import type {
   CommonInputStyleProps,
   InputControlAnchorProps,
   InputControlStyleProps,
 } from "./Input.types";
+import type { ClassNameOverrideProps } from "@types";
 
-export const commonInputContainerStyles = ({
+export function useInputContainerClassName({
   $error,
   $disabled,
   $table,
-}: CommonInputStyleProps): RuleSet => css`
-  position: relative;
-  height: max-content;
-  width: 100%;
-  max-width: 100%;
-  --control-color: var(--${$error ? "error-dark" : "gray-600"});
+  className,
+}: CommonInputStyleProps & ClassNameOverrideProps) {
+  return useCssClasses(
+    styles["input-container"],
+    [styles.error, $error],
+    [styles.disabled, $disabled],
+    [styles.table, $table],
+    className
+  );
+}
 
-  &:has(input:focus:not(:disabled)),
-  &:has([aria-expanded="true"]),
-  &[aria-expanded="true"] {
-    --control-color: var(--${$error ? "error-base" : "primary-base"});
-  }
-
-  &:has(input:disabled) {
-    --control-color: var(--gray-400);
-
-    * {
-      cursor: not-allowed;
-    }
-  }
-
-  ${$disabled &&
-  css`
-    --control-color: var(--gray-400);
-    * {
-      cursor: not-allowed;
-    }
-  `}
-
-  ${!$disabled &&
-  css`
-    &:hover > *:first-child {
-      box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
-    }
-  `}
-
-  &:hover input:not(:disabled) {
-    box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
-    transition-duration: 150ms;
-  }
-
-  ${$table &&
-  css`
-    height: 100%;
-    max-height: unset;
-
-    td:has(&) {
-      min-height: var(--input-height);
-      height: var(--input-height);
-      min-width: 6rem;
-    }
-  `}
-`;
-
-const commonInputControlStyles = ({
+export function useInputControlGroupClassName({
   $anchor = "right",
-}: InputControlAnchorProps): RuleSet => css`
-  border: none;
-  padding: 0;
-  background: none;
-  ${$anchor}: var(--s-2);
+  $noFocus,
+  className,
+}: InputControlAnchorProps & ClassNameOverrideProps) {
+  return useCssClasses(
+    styles["input-control-group"],
+    styles[`anchor-${$anchor}`],
+    [styles["no-focus"], $noFocus],
+    className
+  );
+}
 
-  svg {
-    fill: var(--control-color);
-    transition: fill 150ms ease-out 0s;
-  }
-`;
-
-export const inputControlGroupStyles = (
-  props: InputControlAnchorProps
-): RuleSet => css`
-  ${commonInputControlStyles(props)}
-  position: absolute;
-  top: var(--s-2);
-  bottom: var(--s-2);
-  width: var(--s-3);
-  transform: unset;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  ${props.$noFocus &&
-  css`
-    pointer-events: all;
-  `}
-`;
-
-export const inputControlStyles = ({
+export function useInputControlClassName({
+  $anchor = "right",
   onClick,
-  ...props
-}: InputControlStyleProps): RuleSet => css`
-  ${commonInputControlStyles(props)}
-  position: absolute;
-  height: var(--s-4); // center vertically;
-  top: 50%;
-  transform: translateY(-50%);
-  width: var(--s-4);
-  min-width: max-content;
-  pointer-events: ${onClick ? "all" : "none"};
-  cursor: ${!onClick ? "default" : props.$disabled ? "not-allowed" : "pointer"};
-`;
+  $disabled,
+  className,
+}: InputControlStyleProps & ClassNameOverrideProps) {
+  return useCssClasses(
+    styles["input-control"],
+    styles[`anchor-${$anchor}`],
+    [styles.clickable, !!onClick],
+    [styles.disabled, $disabled],
+    className
+  );
+}
 
-export const inputGroupedControlStyles = ({
+export function useInputGroupedControlClassName({
+  $anchor = "right",
   onClick,
-  ...props
-}: InputControlStyleProps): RuleSet => css`
-  ${commonInputControlStyles(props)}
-  width: var(--s-4);
-  height: max-content;
-  flex: 1;
-  min-width: max-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: ${!onClick ? "none" : "auto"};
-  cursor: ${!onClick ? "default" : props.$disabled ? "not-allowed" : "pointer"};
-`;
+  $disabled,
+  className,
+}: InputControlStyleProps & ClassNameOverrideProps) {
+  return useCssClasses(
+    styles["input-grouped-control"],
+    styles[`anchor-${$anchor}`],
+    [styles.clickable, !!onClick],
+    [styles.disabled, $disabled],
+    className
+  );
+}
 
-const commonInputDisabledStyles = ({
-  $error,
-}: Pick<CommonInputStyleProps, "$error">): RuleSet => css`
-  background: var(--gray-50);
-  color: var(--gray-600);
-  box-shadow: var(--shadow-input-${$error ? "error-default" : "disabled"});
-
-  &::placeholder {
-    color: var(--gray-400);
-  }
-`;
-
-export const commonInputStyles = ({
+export function useInputClassName({
   $error,
   $table,
   $disabled,
-}: CommonInputStyleProps): RuleSet => css`
-  max-height: var(--s-8);
-  height: var(--s-8);
-  min-height: var(--s-8);
-  min-width: 6rem;
-  width: 100%;
-  max-width: 100%;
-  padding: var(--s-2);
-  border-radius: var(--s-1);
-  border: none;
-  outline: none;
-  background: var(--white);
-  font-size: var(--text-m);
-  font-weight: var(--text-weight-regular);
-  color: var(--${$error ? "error-dark" : "gray-800"});
-  box-shadow: var(--shadow-input-${$error ? "error" : "default"}-default);
-  outline-offset: -2px;
-  outline-width: 3px;
-  outline: none;
-
-  &,
-  &::placeholder {
-    transition-property: box-shadow, outline, background, color;
-    transition-duration: 300ms;
-    transition-timing-function: ease-out;
-    transition-delay: 0s;
-  }
-
-  // wrap in js prop for non-input markup
-  ${!$disabled &&
-  css`
-    &:focus:not(:disabled),
-    &[aria-expanded="true"]:not(:disabled) {
-      color: var(--gray-800);
-      box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
-      outline: 1px solid var(--${$error ? "error" : "primary"}-base-25);
-    }
-
-    &:hover:not(:disabled) {
-      box-shadow: var(--shadow-input-${$error ? "error" : "default"}-focus);
-    }
-  `}
-
-  &::placeholder {
-    color: var(--gray-400);
-  }
-
-  ${$disabled &&
-  css`
-    ${commonInputDisabledStyles({ $error })}
-  `}
-
-  &:disabled {
-    ${commonInputDisabledStyles({ $error })}
-  }
-
-  &:hover,
-  &:focus,
-  &:disabled {
-    &,
-    &::placeholder {
-      transition-duration: 150ms;
-    }
-  }
-
-  ${$table &&
-  css`
-    border-radius: 0;
-    box-shadow: ${$error ? "var(--shadow-input-error-default)" : "none"};
-    outline: none;
-    height: 100%;
-    max-height: unset;
-
-    td:has(&) {
-      min-height: var(--input-height);
-      height: var(--input-height);
-      min-width: 6rem;
-    }
-
-    --cell-border-radius: calc(var(--s-1) - 1px);
-
-    tr:first-child > td:has(&):first-child & {
-      border-top-left-radius: var(--cell-border-radius);
-    }
-
-    tr:first-child > td:has(&):last-of-type & {
-      border-top-right-radius: var(--cell-border-radius);
-    }
-
-    tbody:last-child > tr:last-of-type > td:has(&):first-child & {
-      border-bottom-left-radius: var(--cell-border-radius);
-    }
-
-    tbody:last-child > tr:last-of-type > td:has(&):last-of-type & {
-      border-bottom-right-radius: var(--cell-border-radius);
-    }
-  `}
-
-  @media screen and (max-width: ${breakpointsPx.XS}) {
-    &:not(textarea) {
-      max-height: var(--s-10);
-      height: var(--s-10);
-    }
-    min-height: var(--s-10);
-    font-weight: var(--text-weight-medium);
-  }
-`;
+  className,
+}: CommonInputStyleProps & ClassNameOverrideProps) {
+  return useCssClasses(
+    styles.input,
+    [styles.error, $error],
+    [styles.table, $table],
+    [styles.disabled, $disabled],
+    className
+  );
+}

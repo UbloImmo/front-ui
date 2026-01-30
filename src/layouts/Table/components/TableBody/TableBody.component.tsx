@@ -38,7 +38,7 @@ export const TableBody = forwardRef<
 
   const className = useCssClasses(
     styles["table-body"],
-    [styles.form, mergedProps.style === "form"],
+    [styles.form, mergedProps.style !== "list"],
     mergedProps.className
   );
   const styleProperties = useHtmlAttribute(mergedProps.styleOverride);

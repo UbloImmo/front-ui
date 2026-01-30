@@ -1,4 +1,3 @@
-import { type NullishPrimitives } from "@ubloimmo/front-util";
 import { useCallback } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
@@ -12,6 +11,7 @@ import type {
   ComboBoxInputProps,
 } from "./ComboBoxInput.types";
 import type { TestIdProps } from "@types";
+import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 const defaultComboBoxInputProps: ComboBoxInputDefaultProps<NullishPrimitives> =
   {
@@ -31,7 +31,7 @@ const defaultComboBoxInputProps: ComboBoxInputDefaultProps<NullishPrimitives> =
  *
  * @remarks Use {@link ComboBox} if you need a combobox, instead of this component.
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @param {ComboBoxInputProps & TestIdProps} props - ComboBoxInput component props
  * @returns {JSX.Element}

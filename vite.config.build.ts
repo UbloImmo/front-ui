@@ -3,7 +3,6 @@ import { resolve } from "node:path";
 import { mergeConfig } from "vite";
 import banner from "vite-plugin-banner";
 import dts from "vite-plugin-dts";
-import dynamicImportVars from "vite-plugin-dynamic-import";
 
 import { version, name } from "./package.json";
 import sbViteConfig from "./vite.config";

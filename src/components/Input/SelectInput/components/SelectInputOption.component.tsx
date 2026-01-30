@@ -4,27 +4,22 @@ import {
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
 import { type MouseEventHandler, useCallback, useMemo } from "react";
-import styled from "styled-components";
 
-import {
-  customSelectOptionStyles,
-  selectOptionLabelContainerStyles,
-  selectOptionStyles,
-} from "../SelectInput.styles";
+import { useSelectInputOptionClassNames } from "../SelectInput.styles";
 
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
 import { FlexRowLayout } from "@/layouts/Flex";
 import { useHtmlAttribute, useStyleProps, useTestId } from "@utils";
 
-import type {
-  SelectOptionItemStyleProps,
-  SelectInputOptionProps,
-} from "../SelectInput.types";
+import type { SelectInputOptionProps } from "../SelectInput.types";
 import type { PaletteColor, TextProps } from "@types";
 
 /**
  * Renders a single select option
+ *
+ * @version 0.1.0
+ *
  * @template {NullishPrimitives} TValue - The option's value
  * @param {SelectInputOptionProps<TValue>} props - The option to render and its `onSelect` callback
  * @returns JSX.Element
@@ -71,12 +66,14 @@ const SelectInputOption = <
   );
 
   const testId = useTestId("input-select-option", option);
+  const classNames = useSelectInputOptionClassNames(option.active);
 
   const ariaDisabled = useHtmlAttribute(option.disabled ? true : null);
 
   if (Option)
     return (
-      <CustomSelectOptionContainer
+      <div
+        className={classNames.custom}
         title={option.label}
         role="option"
         onClick={propagateSelection}
@@ -88,23 +85,23 @@ const SelectInputOption = <
         tabIndex={option.disabled ? -1 : 0}
       >
         <Option {...option} />
-      </CustomSelectOptionContainer>
+      </div>
     );
 
   return (
-    <SelectOptionContainer
+    <div
+      className={classNames.option}
       role="option"
       onClick={propagateSelection}
       aria-selected={option.active}
       data-active={option.active}
       data-testid={testId}
       aria-disabled={option.disabled}
-      {...styleProps}
       tabIndex={option.disabled ? -1 : 0}
       title={option.label}
     >
-      <SelectOptionValueContainer
-        {...styleProps}
+      <FlexRowLayout
+        className={classNames.value}
         align="center"
         justify="start"
         gap="s-1"
@@ -114,6 +111,7 @@ const SelectInputOption = <
           <Icon name={option.icon} color={iconColor} size="s-3" />
         )}
         <Text
+          className={classNames.label}
           {...textProps}
           testId="input-select-option-label"
           overrideTestId
@@ -121,25 +119,11 @@ const SelectInputOption = <
         >
           {option.label}
         </Text>
-      </SelectOptionValueContainer>
+      </FlexRowLayout>
 
       {option.active && <Icon name="Check" color={contentColor} size="s-4" />}
-    </SelectOptionContainer>
+    </div>
   );
 };
 
 export { SelectInputOption };
-
-const SelectOptionContainer = styled.div<SelectOptionItemStyleProps>`
-  ${selectOptionStyles}
-`;
-
-const CustomSelectOptionContainer = styled.div<SelectOptionItemStyleProps>`
-  ${customSelectOptionStyles}
-`;
-
-const SelectOptionValueContainer = styled(
-  FlexRowLayout
-)<SelectOptionItemStyleProps>`
-  ${selectOptionLabelContainerStyles}
-`;

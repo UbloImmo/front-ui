@@ -1,18 +1,12 @@
 import { isFunction, isNull } from "@ubloimmo/front-util";
-import { useRef, useMemo, useCallback, ChangeEventHandler } from "react";
+import { useRef, useMemo, useCallback, type ChangeEventHandler } from "react";
 import {
   CountrySelector,
-  ParsedCountry,
+  type ParsedCountry,
   defaultCountries,
   usePhoneInput,
 } from "react-international-phone";
-import styled from "styled-components";
 
-import {
-  phoneInputContainerStyles,
-  phoneInputStyles,
-  reactInternalPhoneStyle,
-} from "./PhoneInput.styles";
 import { FRENCH_PHONE_PREFIX, defaultToFrenchPhone } from "./PhoneInput.utils";
 import {
   StyledInput,
@@ -20,8 +14,14 @@ import {
   defaultCommonInputProps,
 } from "../Input.common";
 import { useInputId, useInputRef, useInputStyles } from "../Input.utils";
+import styles from "./PhoneInput.module.scss";
 
-import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
+import {
+  useCssClasses,
+  useHtmlAttribute,
+  useMergedProps,
+  useTestId,
+} from "@utils";
 
 import type {
   DefaultInputProps,
@@ -43,7 +43,7 @@ const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
  * Renders a international phone input component.
  * Does international phone formatting on the input value.
  *
- * @version 0.0.7
+ * @version 0.1.0
  * @param {InputProps<"phone">} props - The input props.
  * @return {JSX.Element} The rendered phone input component.
  */
@@ -103,10 +103,19 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
   const onBlur = useHtmlAttribute(mergedProps.onBlur);
 
   const inputStyles = useInputStyles(mergedProps);
+  const className = useCssClasses(styles["phone-input"]);
+  const container = useCssClasses(
+    styles["phone-input-container"],
+    styles["phone-input-overrides"]
+  );
   const id = useInputId(mergedProps);
 
   return (
-    <PhoneInputContainer {...inputStyles} data-testid="input-phone-container">
+    <StyledInputContainer
+      className={container}
+      {...inputStyles}
+      data-testid="input-phone-container"
+    >
       <CountrySelector
         selectedCountry={country.iso2}
         onSelect={changeCountryOnSelect}
@@ -114,7 +123,8 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
         disabled={mergedProps.disabled}
         data-testid="input-phone-control"
       />
-      <StyledPhoneInput
+      <StyledInput
+        className={className}
         data-testid={testId}
         {...inputStyles}
         ref={forwardRef}
@@ -126,18 +136,9 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
         type="tel"
         id={id}
       />
-    </PhoneInputContainer>
+    </StyledInputContainer>
   );
 };
 
 PhoneInput.defaultProps = defaultPhoneInputProps;
 export { PhoneInput };
-
-const PhoneInputContainer = styled(StyledInputContainer)`
-  ${phoneInputContainerStyles}
-  ${reactInternalPhoneStyle}
-`;
-
-const StyledPhoneInput = styled(StyledInput)`
-  ${phoneInputStyles}
-`;

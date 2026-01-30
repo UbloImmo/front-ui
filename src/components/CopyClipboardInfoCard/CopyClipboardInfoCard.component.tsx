@@ -1,13 +1,7 @@
 import { isNullish, isString } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
-import styled from "styled-components";
 
-import {
-  copyClipboardInfoCardContainerStyles,
-  copyClipboardInfoCardIconContainerStyles,
-  copyClipboardInfoCardLabelStyles,
-  copyClipboardInfoCardLinkStyles,
-} from "./CopyClipboardInfoCard.styles";
+import { useCopyClipboardInfoCardStyles } from "./CopyClipboardInfoCard.styles";
 import { copyToClipboard } from "./CopyClipboardInfoCard.utils";
 import { Tooltip } from "../Tooltip";
 
@@ -26,7 +20,6 @@ import {
 import type {
   CopyClipboardInfoCardProps,
   CopyClipboardInfoCardDefaultProps,
-  CopyClipboardInfoCardStyleProps,
 } from "./CopyClipboardInfoCard.types";
 import type { PaletteColor, TextProps, TestIdProps } from "@types";
 
@@ -41,7 +34,7 @@ const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
 /**
  * A single, clickable card that displays information and allows the user to copy it to the clipboard.
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {CopyClipboardInfoCardProps & TestIdProps} props - CopyClipboardInfoCard component props
  * @returns {JSX.Element}
@@ -57,6 +50,7 @@ const CopyClipboardInfoCard = (
     () => isNullish(mergedProps.info) || isEmptyString(mergedProps.info),
     [mergedProps.info]
   );
+  const { classNames } = useCopyClipboardInfoCardStyles(isEmpty);
 
   const contentColor = useMemo<PaletteColor>(
     () => (isEmpty ? "gray-500" : "gray-800"),
@@ -110,17 +104,18 @@ const CopyClipboardInfoCard = (
   );
 
   return (
-    <CopyClipboardInfoCardContainer
+    <FlexRowLayout
+      className={classNames.card}
       testId={testId}
       overrideTestId
       gap="s-2"
       align="center"
       justify="start"
       fill
-      $isEmpty={isEmpty}
     >
       <Icon {...iconProps} />
-      <CopyClipboardInfoCardLabel
+      <Text
+        className={classNames.label}
         testId={`${testId}-info`}
         overrideTestId
         size="m"
@@ -129,20 +124,24 @@ const CopyClipboardInfoCard = (
         {...textProps}
       >
         {mergedProps.href && !isEmpty ? (
-          <CopyClipboardInfoCardLink
+          <a
+            className={classNames.link}
             href={mergedProps.href}
+            title={mergedProps.info ?? undefined}
             target="_blank"
             data-testid={`${testId}-link`}
+            rel="noreferrer"
           >
             {info}
-          </CopyClipboardInfoCardLink>
+          </a>
         ) : (
           info
         )}
-      </CopyClipboardInfoCardLabel>
+      </Text>
 
       {!isEmpty && (
-        <CopyClipboardInfoCardIconContainer
+        <div
+          className={classNames.icon}
           data-testid="copy-clipboard-info-card-icon-container"
           onClick={copyInfo}
           title={tooltipLabel}
@@ -155,29 +154,11 @@ const CopyClipboardInfoCard = (
           >
             <Icon name="Files" color="primary-base" size="s-4" />
           </Tooltip>
-        </CopyClipboardInfoCardIconContainer>
+        </div>
       )}
-    </CopyClipboardInfoCardContainer>
+    </FlexRowLayout>
   );
 };
 CopyClipboardInfoCard.defaultProps = defaultCopyClipboardInfoCardProps;
 
 export { CopyClipboardInfoCard };
-
-const CopyClipboardInfoCardLabel = styled(Text)`
-  ${copyClipboardInfoCardLabelStyles}
-`;
-
-const CopyClipboardInfoCardLink = styled.a`
-  ${copyClipboardInfoCardLinkStyles}
-`;
-
-const CopyClipboardInfoCardContainer = styled(
-  FlexRowLayout
-)<CopyClipboardInfoCardStyleProps>`
-  ${copyClipboardInfoCardContainerStyles}
-`;
-
-const CopyClipboardInfoCardIconContainer = styled.div`
-  ${copyClipboardInfoCardIconContainerStyles}
-`;

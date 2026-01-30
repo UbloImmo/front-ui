@@ -1,9 +1,8 @@
 import { useMemo, type ReactNode } from "react";
-import styled from "styled-components";
 
 import * as assetsIndex from "./assets";
 import { emptyStateCardAssetDefaultProps } from "./assets/assets.defaults";
-import { emptyStateCardStyles } from "./EmptyStateCard.styles";
+import { useEmptyStateCardStyles } from "./EmptyStateCard.styles";
 import { useFormContext } from "../Form";
 import { Heading } from "../Heading";
 import { Text } from "../Text";
@@ -14,13 +13,11 @@ import {
   useMergedProps,
   useUikitTranslation,
   normalizeToPaletteColor,
-  useStyleProps,
 } from "@utils";
 
 import type {
   EmptyStateCardProps,
   EmptyStateCardDefaultProps,
-  EmptyStateCardStyleProps,
 } from "./EmptyStateCard.types";
 import type { TestIdProps } from "@types";
 
@@ -31,12 +28,14 @@ const defaultEmptyStateCardProps: EmptyStateCardDefaultProps = {
   description: null,
   editingDescription: null,
   transparent: false,
+  className: null,
+  styleOverride: null,
 };
 
 /**
  * Notifies the user that there are no results in a list / page.
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @param {EmptyStateCardProps & TestIdProps} props - EmptyStateCard component props
  * @returns {JSX.Element}
@@ -44,16 +43,14 @@ const defaultEmptyStateCardProps: EmptyStateCardDefaultProps = {
 const EmptyStateCard = (
   props: EmptyStateCardProps & TestIdProps
 ): JSX.Element => {
-  const {
-    asset,
-    title,
-    description,
-    editingDescription,
-    transparent,
-    ...assetProps
-  } = useMergedProps(defaultEmptyStateCardProps, props);
   const { isEditing } = useFormContext();
   const testId = useTestId("empty-state-card", props);
+
+  const mergedProps = useMergedProps(defaultEmptyStateCardProps, props);
+  const { className, style } = useEmptyStateCardStyles(mergedProps);
+
+  const { asset, title, description, editingDescription, icon, color } =
+    mergedProps;
 
   const tl = useUikitTranslation();
 
@@ -68,8 +65,8 @@ const EmptyStateCard = (
   }, [title, tl]);
 
   const headingColor = useMemo(
-    () => normalizeToPaletteColor(assetProps.color, "dark"),
-    [assetProps.color]
+    () => normalizeToPaletteColor(color, "dark"),
+    [color]
   );
 
   const displayDescription = useMemo<ReactNode>(() => {
@@ -79,19 +76,18 @@ const EmptyStateCard = (
     return desc;
   }, [description, editingDescription, isEditing]);
 
-  const styleProps = useStyleProps({ transparent });
-
   return (
-    <Card
+    <FlexColumnLayout
+      className={className}
+      styleOverride={style}
       testId={testId}
       overrideTestId
       fill="row"
       align="center"
       justify="center"
       gap="s-1"
-      {...styleProps}
     >
-      {Asset && <Asset {...assetProps} />}
+      {Asset && <Asset icon={icon} color={color} />}
       <Heading
         size="h4"
         weight="medium"
@@ -116,13 +112,9 @@ const EmptyStateCard = (
           {displayDescription}
         </Text>
       )}
-    </Card>
+    </FlexColumnLayout>
   );
 };
 EmptyStateCard.defaultProps = defaultEmptyStateCardProps;
 
 export { EmptyStateCard };
-
-const Card = styled(FlexColumnLayout)<EmptyStateCardStyleProps>`
-  ${emptyStateCardStyles}
-`;

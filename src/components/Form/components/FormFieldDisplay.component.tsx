@@ -1,16 +1,17 @@
 import { isFunction, isString, type Nullable } from "@ubloimmo/front-util";
 import { useMemo, type FC } from "react";
-import styled from "styled-components";
 
 import {
   computeFieldDisplayContent,
   FormFieldDisplayValue,
 } from "../Form.format";
+import styles from "../Form.module.scss";
 
 import { Icon } from "@/components/Icon";
 import { InputLabel } from "@/components/InputLabel";
 import { Text } from "@/components/Text";
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
+import { useCssClasses } from "@utils";
 
 import type { BuiltFieldProps } from "../Form.types";
 import type { InputType } from "@/components/Input";
@@ -49,8 +50,11 @@ export const FormFieldDisplay = <TType extends InputType>(
     };
   }, [error, errorText]);
 
+  const className = useCssClasses(styles["form-field-display"]);
+
   return (
-    <FieldDisplayContainer
+    <FlexColumnLayout
+      className={className}
       testId="form-field-display"
       overrideTestId
       gap="s-2"
@@ -84,15 +88,6 @@ export const FormFieldDisplay = <TType extends InputType>(
           </Text>
         )}
       </FlexRowLayout>
-    </FieldDisplayContainer>
+    </FlexColumnLayout>
   );
 };
-
-const FieldDisplayContainer = styled(FlexColumnLayout)`
-  input,
-  textarea,
-  select,
-  label {
-    width: 100%;
-  }
-`;

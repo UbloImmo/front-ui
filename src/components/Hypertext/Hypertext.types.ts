@@ -1,7 +1,7 @@
 import { Nullable, RequireAtLeastOne, VoidFn } from "@ubloimmo/front-util";
 import { ReactNode } from "react";
 
-import type { ColorKey } from "@types";
+import type { ColorKey, StyleOverrideProps } from "@types";
 
 type BaseHypertextProps = {
   /**
@@ -22,7 +22,7 @@ type BaseHypertextProps = {
    * @default "primary"
    */
   color?: ColorKey;
-};
+} & Omit<StyleOverrideProps, "as">;
 
 export type HypertextProps = BaseHypertextProps &
   RequireAtLeastOne<{

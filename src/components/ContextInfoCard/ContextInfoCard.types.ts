@@ -3,6 +3,8 @@ import { ReactNode } from "react";
 
 import { StaticIconProps } from "../StaticIcon/StaticIcon.types";
 
+import { StyleOverrideProps } from "@types";
+
 type ContextInfoCardStaticIconProps = Omit<StaticIconProps, "stroke" | "size">;
 
 export type ContextInfoCardProps = {
@@ -54,4 +56,4 @@ export type ContextInfoCardProps = {
    * @default null
    */
   content?: Nullable<ReactNode>;
-};
+} & Omit<StyleOverrideProps, "as">;

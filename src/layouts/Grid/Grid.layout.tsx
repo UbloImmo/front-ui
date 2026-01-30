@@ -2,12 +2,7 @@ import { forwardRef } from "react";
 
 import { useGridLayoutStyle } from "./Grid.styles";
 
-import {
-  useHtmlAttribute,
-  useMergedProps,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type { GridLayoutDefaultProps, GridLayoutProps } from "./Grid.types";
 import type { TestIdProps } from "@types";
@@ -40,7 +35,6 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
 const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps & TestIdProps>(
   (props, ref): JSX.Element => {
     const mergedProps = useMergedProps(defaultGridLayoutProps, props);
-    const innerProps = useStyleProps(mergedProps);
     const testId = useTestId("grid", props);
     const role = useHtmlAttribute(mergedProps.role);
     const id = useHtmlAttribute(mergedProps.id);
@@ -48,7 +42,6 @@ const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps & TestIdProps>(
     const { className, style } = useGridLayoutStyle(mergedProps);
     return (
       <Element
-        {...innerProps}
         data-testid={testId}
         role={role}
         className={className}

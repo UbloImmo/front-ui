@@ -1,57 +1,17 @@
-import styled from "styled-components";
-
 import { SelectInputOption } from "./SelectInputOption.component";
 import { SelectInputOptionGroup } from "./SelectInputOptionGroup.component";
-import { selectOptionContainerStyles } from "../SelectInput.styles";
+import { useSelectInputOptionListClassNames } from "../SelectInput.styles";
 import { isSelectOptionGroup } from "../SelectInput.utils";
 
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 
-import type { SelectOption, SelectOptionOrGroup } from "../SelectInput.types";
-import type { TestIdProps } from "@types";
+import type { SelectInputOptionsListProps } from "../SelectInput.types";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
-
-/**
- * Props for the SelectInputPopover component
- */
-export interface SelectInputOptionsListProps<
-  TValue extends NullishPrimitives,
-  TExtraData extends NullishPrimitives = NullishPrimitives,
-> extends TestIdProps {
-  /**
-   * Whether the options list is open
-   */
-  open: boolean;
-  /**
-   * Array of options or option groups to display
-   */
-  displayOptions: SelectOptionOrGroup<TValue, TExtraData>[];
-  /**
-   * Function to handle option selection
-   */
-  onSelectOption: (option: SelectOption<TValue>) => () => void;
-  /**
-   * Custom option component
-   */
-  Option?: React.FunctionComponent<SelectOption<TValue, TExtraData>>;
-  /**
-   * Props for creating a new option
-   */
-  createOptionProps?: SelectOption<TValue> | null;
-  /**
-   * Whether there are no results to display
-   */
-  isEmptyResult: boolean;
-  /**
-   * Assistive text to show when there are no results
-   */
-  assistiveText: string;
-}
 
 /**
  * A Popover wrapper for SelectInput options that handles positioning and collision detection
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @template TValue - The option value type
  * @template TExtraData - The extra data type for option groups
@@ -71,8 +31,10 @@ const SelectInputOptionsList = <
   assistiveText,
   testId,
 }: SelectInputOptionsListProps<TValue, TExtraData>): JSX.Element => {
+  const classNames = useSelectInputOptionListClassNames();
   return (
-    <SelectOptionsContainer
+    <div
+      className={classNames.list}
       role="listbox"
       data-testid={`${testId}-options`}
       aria-haspopup="listbox"
@@ -106,20 +68,12 @@ const SelectInputOptionsList = <
         />
       )}
       {isEmptyResult && (
-        <AssistiveTextWrapper>
+        <div className={classNames.assistive}>
           <InputAssistiveText assistiveText={assistiveText} />
-        </AssistiveTextWrapper>
+        </div>
       )}
-    </SelectOptionsContainer>
+    </div>
   );
 };
 
 export { SelectInputOptionsList };
-
-const SelectOptionsContainer = styled.div`
-  ${selectOptionContainerStyles}
-`;
-
-const AssistiveTextWrapper = styled.div`
-  padding: var(--s-2);
-`;

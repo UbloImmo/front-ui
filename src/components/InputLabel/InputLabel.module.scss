@@ -1,0 +1,23 @@
+.input-label-text {
+  transition: color 300ms var(--bezier);
+
+  &.required::after {
+    content: " *";
+    color: var(--warning-base);
+  }
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+
+  & .input-label-text {
+    transition: color 150ms ease-out 0s;
+  }
+
+  &:has(input:focus, textarea:focus, select:focus) .input-label-text {
+    transition-duration: 150ms;
+    color: var(--gray-800);
+  }
+}

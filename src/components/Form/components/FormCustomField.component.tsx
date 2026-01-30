@@ -27,6 +27,8 @@ import type { Nullable } from "@ubloimmo/front-util";
  * The component uses the {@link useFormContext} hook to get the current form
  * context and the {@link useInputId} hook to get a unique id for the input.
  *
+ * @version 0.1.0
+ *
  * @param {BuiltFormCustomFieldProps} props - The component props.
  * @returns {Nullable<JSX.Element>} The rendered component.
  */

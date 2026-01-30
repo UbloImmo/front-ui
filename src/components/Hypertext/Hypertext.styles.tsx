@@ -1,77 +1,38 @@
-import { css, type RuleSet } from "styled-components";
+import { useMemo } from "react";
 
-import { cssVarUsage } from "@utils";
+import styles from "./Hypertext.module.scss";
+
+import {
+  cssStyles,
+  cssVariables,
+  cssVarUsage,
+  isGrayColor,
+  useCssClasses,
+} from "@utils";
 
 import type { DefaultHypertextProps } from "./Hypertext.types";
-import type { StyleProps } from "@types";
 
-export const hypertextStyle = ({
-  $color,
-}: StyleProps<DefaultHypertextProps>): RuleSet => {
-  const textDecorationColor = cssVarUsage(
-    $color === "gray" ? `${$color}-700-00` : `${$color}-base-00`
-  );
+export function useHypertextStyle(
+  props: Pick<DefaultHypertextProps, "color" | "className" | "styleOverride">
+) {
+  const className = useCssClasses(styles.hypertext, props.className);
 
-  const hoverColor = cssVarUsage(
-    $color === "gray" ? `${$color}-900` : `${$color}-dark`
-  );
+  const style = useMemo(() => {
+    const isGray = isGrayColor(props.color);
+    const decorationColor = cssVarUsage(
+      isGray ? "gray-700-00" : `${props.color}-base-00`
+    );
+    const hoverColor = cssVarUsage(isGray ? "gray-900" : `${props.color}-dark`);
 
-  return css`
-    display: inline;
-    width: min-content;
-    min-width: min-content;
-    cursor: pointer;
-    text-decoration: none;
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
+    const vars = cssVariables({
+      "text-decoration-color": decorationColor,
+      "text-hover-color": hoverColor,
+    });
+    return cssStyles(vars, props.styleOverride);
+  }, [props.color, props.styleOverride]);
 
-    &,
-    & > span[data-testid="text"] {
-      font-size: inherit;
-      font-weight: inherit;
-      line-height: inherit;
-      letter-spacing: inherit;
-    }
-
-    & > span[data-testid="text"] {
-      text-decoration-color: ${textDecorationColor};
-      display: inherit;
-      transition:
-        color 300ms var(--bezier),
-        text-decoration-color 300ms var(--bezier);
-    }
-
-    & > span,
-    & > svg,
-    & > svg > path {
-      transition-duration: 300ms;
-      transition-property: color, fill;
-      transition-timing-function: var(--bezier);
-    }
-
-    & > svg[data-testid="icon"]:last-child {
-      margin-left: var(--s-1);
-      display: inline-block;
-    }
-
-    &:hover {
-      & > span[data-testid="text"],
-      & > svg[data-testid="icon"]:last-child,
-      & > svg[data-testid="icon"]:last-child > path {
-        transition-duration: 150ms;
-      }
-
-      & > span[data-testid="text"] {
-        color: ${hoverColor};
-        text-decoration-color: ${hoverColor};
-      }
-
-      & > svg[data-testid="icon"]:last-child,
-      & > svg[data-testid="icon"]:last-child > path {
-        fill: ${hoverColor};
-      }
-    }
-  `;
-};
+  return {
+    className,
+    style,
+  };
+}

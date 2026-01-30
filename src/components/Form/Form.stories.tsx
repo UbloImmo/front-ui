@@ -733,6 +733,9 @@ export const TableTryDeletingRow = (props: FormStoryProps) => {
     return [
       {
         ...formTableProps,
+        selectable: false,
+        deletable: true,
+        swappable: true,
         tryDeletingRow,
       },
     ];

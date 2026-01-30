@@ -190,10 +190,10 @@ export type BuiltFormFieldLayoutProps = {
 /**
  * Props for components that use the form field's fixed width layout property
  *
- * @type {StyleProps<Pick<BuiltFormFieldLayout, "fixedWidth">>}
+ * @type {Partial<Pick<BuiltFormFieldLayout, "fixedWidth">>}
  */
 export type BuiltFormFieldLayoutFixedWidthProp = Partial<
-  StyleProps<Pick<BuiltFormFieldLayout, "fixedWidth">>
+  Pick<BuiltFormFieldLayout, "fixedWidth">
 >;
 
 /**
@@ -1784,6 +1784,9 @@ export type FormContext<TData extends object> = UseFormDataReturn<TData> &
 
 // ------------------------------- STYLE -----------------------------------
 
+/**
+ * @deprecated styled-components
+ */
 export type FormContainerStyleProps = StyleProps<
   Pick<FormModifers, "readonly" | "disabled"> &
     Pick<UseFormEditStateReturn, "isEditing"> & {
@@ -1792,14 +1795,23 @@ export type FormContainerStyleProps = StyleProps<
     }
 >;
 
+/**
+ * @deprecated styled-components
+ */
 export type FormEditButtonStyleProps = Partial<
   StyleProps<{ hidden?: boolean }>
 >;
 
+/**
+ * @deprecated styled-components
+ */
 export type FormEditBannerStyleProps = StyleProps<
   Pick<UseFormEditStateReturn, "isEditing"> &
     Pick<UseFormSubmissionReturn, "isSubmitting"> &
     Pick<UseFormDataReturn<object>, "isLoading">
 >;
 
+/**
+ * @deprecated styled-components
+ */
 export type FormDebugPreStyleProps = StyleProps<{ color: ColorKey }>;

@@ -1,19 +1,15 @@
-import styled from "styled-components";
+import { Nullish } from "@ubloimmo/front-util";
 
-import { commonInputStyles } from "../Input.styles";
+import { useInputClassName } from "../Input.styles";
+import styles from "./TextAreaInput.module.scss";
+import { CommonInputStyleProps } from "../Input.types";
 
-import { breakpointsPx } from "@/sizes";
+import { useCssClasses } from "@utils";
 
-import type { TextAreaInputStyleProps } from "./TextAreaInput.types";
-
-export const StyledTextArea = styled.textarea<TextAreaInputStyleProps>`
-  ${commonInputStyles}
-  resize: ${({ $resize }) => ($resize ? "vertical" : "none")};
-  max-height: unset;
-  height: var(--s-16);
-  min-height: var(--s-16);
-
-  @media screen and (max-width: ${breakpointsPx.XS}) {
-    min-height: var(--s-20);
-  }
-`;
+export function useTextAreaInputClassName(
+  props: CommonInputStyleProps,
+  resize: Nullish<boolean>
+) {
+  const base = useInputClassName(props);
+  return useCssClasses(base, styles["textarea-input"], [styles.resize, resize]);
+}

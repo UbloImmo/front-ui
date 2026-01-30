@@ -1,0 +1,118 @@
+.form-table-row-control {
+  --control-hover-color: var(--primary-base);
+  position: absolute;
+  inset: 0;
+  width: var(--s-6);
+  height: 100%;
+
+  background: none;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 300ms var(--bezier);
+  z-index: 1;
+
+  svg[data-testid="icon"] {
+    transition: fill 300ms var(--bezier);
+  }
+
+  &:hover svg[data-testid="icon"],
+  &:hover svg[data-testid="icon"] path {
+    transition-duration: 150ms;
+    fill: var(--control-hover-color);
+  }
+}
+
+.form-table-row-delete-button {
+  --control-hover-color: var(--error-base);
+  left: unset;
+  translate: var(--s-6);
+
+  cursor: pointer;
+}
+
+.form-table-row-drag-handle {
+  --control-hover-color: var(--primary-base);
+  right: unset;
+  translate: calc(var(--s-6) * -1);
+
+  cursor: grab;
+}
+
+.form-table-row {
+  position: relative;
+
+  & > td {
+    max-width: 0; // allow cells to shrink
+  }
+
+  &.deletable:not(.dragging):hover .form-table-row-delete-button {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &.swappable:hover .form-table-row-drag-handle,
+  &.swappable.dragging .form-table-row-drag-handle {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &.swappable.dragging {
+    background: var(--white);
+    border: 2px solid var(--primary-medium);
+    box-shadow: var(--shadow-card-elevation-medium);
+    transition:
+      box-shadow 150ms var(--bezier),
+      border 150ms var(--bezier);
+    z-index: 1;
+
+    & > td {
+      border-color: var(--primary-medium);
+      border-top: 1px solid var(--primary-medium) !important;
+      border-bottom: 1px solid var(--primary-medium) !important;
+
+      &:first-child {
+        border-left: none;
+        border-top-left-radius: var(--s-1) !important;
+        border-bottom-left-radius: var(--s-1) !important;
+      }
+
+      &:last-of-type {
+        border-right: none;
+        border-top-right-radius: var(--s-1) !important;
+        border-bottom-right-radius: var(--s-1) !important;
+      }
+    }
+  }
+}
+
+.form-table-row-selection-cell {
+  background: var(--white);
+  min-height: var(--input-height);
+  border-top-left-radius: calc(var(--s-1) * 0.75);
+  border-bottom-left-radius: calc(var(--s-1) * 0.75);
+}
+
+.form-table-cell {
+  position: relative;
+}
+
+.form-table-footer-cell {
+  padding: var(--s-1);
+  background: var(--white);
+}
+
+.form-table-footer-button {
+  border-radius: var(--s-05);
+}
+
+.form-table-header-label-text {
+  white-space: nowrap;
+  min-width: max-content;
+}

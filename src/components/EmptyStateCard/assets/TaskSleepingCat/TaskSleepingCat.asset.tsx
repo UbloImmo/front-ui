@@ -1,7 +1,7 @@
 import { transformObject } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import { emptyStateCardAssetDefaultProps } from "./assets.defaults";
+import { emptyStateCardAssetDefaultProps } from "../assets.defaults";
 
 import {
   cssColorMix,
@@ -12,7 +12,7 @@ import {
   useStatic,
 } from "@utils";
 
-import type { EmptyStateCardAssetProps } from "./assets.types";
+import type { EmptyStateCardAssetProps } from "../assets.types";
 import type { PaletteColor } from "@types";
 
 export const TaskSleepingCat = (props: EmptyStateCardAssetProps) => {
