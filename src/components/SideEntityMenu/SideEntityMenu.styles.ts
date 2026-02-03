@@ -1,128 +1,49 @@
-import { css } from "styled-components";
+import styles from "./SideEntityMenu.module.scss";
 
-import { breakpointsPx } from "@/sizes";
+import { isNonNullish, useCssClasses, useStatic } from "@utils";
 
-import type { PaneProps } from "@layouts";
-import type { StyleProps } from "@types";
+import type { SideEntityMenuDefaultProps } from "./SideEntityMenu.types";
 
-export const sideEntityMenuContainerStyles = ({
-  $expandedBreakpoint,
-}: StyleProps<Pick<PaneProps, "expandedBreakpoint">>) => css`
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-1);
-
-  ${$expandedBreakpoint &&
-  $expandedBreakpoint in breakpointsPx &&
-  css`
-    @media only screen and (min-width: ${breakpointsPx[$expandedBreakpoint]}) {
-      background: var(--white-00);
-      box-shadow: none;
-      padding: var(--pane-content-padding) 0;
-    }
-  `}
-`;
-
-export const menuItemStyles = css`
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: var(--s-9);
-  cursor: pointer;
-  text-decoration: none;
-  background: var(--primary-light-00);
-  transition: background 300ms var(--bezier);
-
-  border-radius: var(--s-1);
-
-  &[data-border-bottom="true"] {
-    border-bottom: 1px solid var(--gray-200);
-    border-radius: var(--s-1) var(--s-1) 0 0;
-  }
-
-  &:hover:not([aria-disabled="true"], :disabled, [data-menu-header]) {
-    background: var(--primary-light);
-    transition-duration: 150ms var(--bezier);
-  }
-
-  &[data-menu-header] {
-    cursor: default;
-  }
-
-  &:disabled:not([data-menu-header]),
-  &[aria-disabled="true"]:not([data-menu-header]) {
-    cursor: not-allowed;
-  }
-`;
-
-export const menuItemIconStyles = css`
-  display: flex;
-  justify-content: center;
-  padding: var(--s-2);
-  width: calc(var(--pane-collapsed-width) - var(--pane-content-padding) * 2);
-  min-width: calc(
-    var(--pane-collapsed-width) - var(--pane-content-padding) * 2
+function useSideEntityMenuClassName({
+  expandedBreakpoint,
+  className,
+}: Pick<
+  SideEntityMenuDefaultProps,
+  "className" | "expandedBreakpoint" | "styleOverride"
+>) {
+  return useCssClasses(
+    styles["side-entity-menu"],
+    [styles["has-breakpoint"], isNonNullish(expandedBreakpoint)],
+    isNonNullish(expandedBreakpoint)
+      ? styles[`breakpoint-${expandedBreakpoint}`]
+      : null,
+    className
   );
-  max-width: calc(
-    var(--pane-collapsed-width) - var(--pane-content-padding) * 2
+}
+
+export function useSideEntityMenuClassnames(
+  props: Pick<
+    SideEntityMenuDefaultProps,
+    "className" | "expandedBreakpoint" | "styleOverride"
+  >
+) {
+  const pane = useSideEntityMenuClassName(props);
+  const separator = useCssClasses(styles["side-entity-menu-separator"]);
+
+  return {
+    pane,
+    separator,
+  };
+}
+
+export function useSideEntityMenuItemClassNames() {
+  const icon = useCssClasses(styles["side-entity-menu-item-icon"]);
+  const item = useCssClasses(styles["side-entity-menu-item"]);
+  const indicator = useCssClasses(styles["side-entity-menu-item-indicator"]);
+  const errorIndicator = useCssClasses(
+    styles["side-entity-menu-item-error-indicator"]
   );
-  position: relative;
+  const title = useCssClasses(styles["side-entity-menu-item-title"]);
 
-  svg,
-  path {
-    transition: fill 300ms var(--bezier);
-  }
-`;
-
-export const menuItemErrorIndicatorStyles = css`
-  position: absolute;
-  top: calc(50% - var(--s-2));
-  translate: 50% -50%;
-  right: calc(50% - var(--s-2));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--s-2);
-  height: var(--s-2);
-  transition:
-    opacity 300ms var(--bezier),
-    visibility 300ms var(--bezier);
-
-  [data-expanded="true"] & {
-    opacity: 0;
-    transition:
-      opacity 150ms var(--bezier),
-      visibility 150ms var(--bezier);
-  }
-`;
-
-export const menuItemTitleStyles = css`
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  max-height: 100%;
-  opacity: 0;
-  transition: opacity 300ms var(--bezier);
-  width: calc(var(--pane-expanded-width) - var(--pane-collapsed-width));
-  min-width: calc(var(--pane-expanded-width) - var(--pane-collapsed-width));
-  max-width: calc(var(--pane-expanded-width) - var(--pane-collapsed-width));
-
-  padding-right: var(--s-2);
-  padding-top: var(--s-1);
-  padding-bottom: var(--s-1);
-
-  [data-expanded="true"] & {
-    opacity: 1;
-    transition: opacity 150ms var(--bezier);
-  }
-`;
-
-export const menuItemIndicatorStyles = css`
-  position: absolute;
-  left: 0;
-  height: 1.25rem;
-  width: var(--s-05);
-  border-radius: var(--s-05);
-  background: var(--primary-base);
-  align-self: center;
-`;
+  return useStatic({ icon, item, indicator, errorIndicator, title });
+}

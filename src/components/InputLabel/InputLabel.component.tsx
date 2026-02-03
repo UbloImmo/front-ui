@@ -10,10 +10,7 @@ import {
 } from "../../utils";
 import { Text } from "../Text/Text.component";
 import { Tooltip } from "../Tooltip";
-import {
-  inputLabelTextStyles,
-  useInputLabelClassNames,
-} from "./InputLabel.styles";
+import { useInputLabelClassNames } from "./InputLabel.styles";
 
 import { FlexRowLayout } from "@/layouts/Flex";
 
@@ -21,7 +18,7 @@ import type {
   DefaultInputLabelProps,
   InputLabelProps,
 } from "./InputLabel.types";
-import type { StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 
 const defaultInputLabelProps: DefaultInputLabelProps = {
   label: "[Input label]",
@@ -90,10 +87,3 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
 
 InputLabel.defaultProps = defaultInputLabelProps;
 export { InputLabel };
-
-// FIXME: finish removal of styled-components in List components, then delete this
-export const InputLabelText = styled(Text)<
-  StyleProps<Pick<InputLabelProps, "required">>
->`
-  ${inputLabelTextStyles}
-`;

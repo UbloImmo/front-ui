@@ -24,7 +24,7 @@ const _cursors = [
   "copy",
 ] as const;
 
-export type ToolitipCursor = Enum<typeof _cursors>;
+export type TooltipCursor = Enum<typeof _cursors>;
 
 export type TooltipProps = {
   /**
@@ -67,11 +67,12 @@ export type TooltipProps = {
    *
    * @default "help"
    */
-  cursor?: ToolitipCursor;
+  cursor?: TooltipCursor;
 };
 
 export type DefaultTooltipProps = Required<TooltipProps>;
 
+/** @deprecated styled-components */
 export type TooltipWrapperStyleProps = StyleProps<
   Pick<DefaultTooltipProps, "cursor">
 >;

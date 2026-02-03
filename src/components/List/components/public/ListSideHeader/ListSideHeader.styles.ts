@@ -1,4 +1,9 @@
+import { Nullish } from "@ubloimmo/front-util";
 import { css, type RuleSet } from "styled-components";
+
+import styles from "./ListSideHeader.module.scss";
+
+import { cssClasses, useStatic } from "@utils";
 
 export const headerContainerStyles = (): RuleSet => css`
   display: flex;
@@ -17,3 +22,10 @@ export const headerTitleContainerStyles = (): RuleSet => css`
     padding-bottom: var(--s-4);
   }
 `;
+
+export function useListSideHeaderClassNames(className: Nullish<string>) {
+  return useStatic(() => ({
+    container: cssClasses(styles["list-side-header"], className),
+    titleContainer: cssClasses(styles["list-side-header-title-container"]),
+  }));
+}

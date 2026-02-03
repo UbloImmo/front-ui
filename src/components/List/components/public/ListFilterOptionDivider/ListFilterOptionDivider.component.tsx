@@ -1,9 +1,4 @@
-import styled from "styled-components";
-
-import {
-  listFilterOptionDividerLabelContainerStyles,
-  listFilterOptionDividerStyles,
-} from "./ListFilterOptionDivider.styles";
+import { useListFilterOptionDividerClassNames } from "./ListFilterOptionDivider.styles";
 
 import { Text } from "@/components/Text";
 import { useLogger, useMergedProps } from "@utils";
@@ -17,7 +12,7 @@ const defaultListFilterOptionDivider: Required<ListFilterOptionDividerProps> = {
 /**
  * Renders a divider with a label between list filter options
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @param {ListFilterOptionDividerProps} props - The component props
  * @param {string} props.label - The text label to display in the divider
@@ -25,10 +20,12 @@ const defaultListFilterOptionDivider: Required<ListFilterOptionDividerProps> = {
  */
 export const ListFilterOptionDivider = (
   props: ListFilterOptionDividerProps
-) => {
+): JSX.Element => {
   const { warn } = useLogger("ListFilterOptionDivider");
 
   const mergedProps = useMergedProps(defaultListFilterOptionDivider, props);
+
+  const classNames = useListFilterOptionDividerClassNames();
 
   if (!props.label) {
     warn(
@@ -37,12 +34,13 @@ export const ListFilterOptionDivider = (
   }
 
   return (
-    <DividerContainer
+    <li
+      className={classNames.container}
       data-testid="list-filter-option-divider"
       data-divider-label={mergedProps.label}
       role="heading"
     >
-      <DividerLabelContainer>
+      <div className={classNames.labelContainer}>
         <Text
           size="s"
           weight="bold"
@@ -55,15 +53,7 @@ export const ListFilterOptionDivider = (
         >
           {mergedProps.label}
         </Text>
-      </DividerLabelContainer>
-    </DividerContainer>
+      </div>
+    </li>
   );
 };
-
-const DividerContainer = styled.li`
-  ${listFilterOptionDividerStyles}
-`;
-
-const DividerLabelContainer = styled.div`
-  ${listFilterOptionDividerLabelContainerStyles}
-`;

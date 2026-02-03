@@ -1,25 +1,20 @@
 import { motion } from "framer-motion";
-import { FC, useCallback } from "react";
-import styled from "styled-components";
+import { FC, useCallback, useMemo } from "react";
 
 import { Heading } from "../../Heading";
 import { Icon } from "../../Icon";
 import { Text } from "../../Text";
-import {
-  menuItemStyles,
-  menuItemIconStyles,
-  menuItemTitleStyles,
-  menuItemIndicatorStyles,
-  menuItemErrorIndicatorStyles,
-} from "../SideEntityMenu.styles";
+import { useSideEntityMenuItemClassNames } from "../SideEntityMenu.styles";
 
-import { useTestId } from "@utils";
+import { isDefined, isNonNullish, useTestId } from "@utils";
 
 import type { SideEntityMenuItemProps } from "../SideEntityMenu.types";
 import type { PaletteColor } from "@types";
 
 /**
  * SideEntityMenuItem component for rendering individual menu items
+ *
+ * @version 0.1.0
  */
 export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   link,
@@ -29,6 +24,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
   ...props
 }) => {
   const testId = useTestId("side-entity-menu-item", props);
+  const classNames = useSideEntityMenuItemClassNames();
 
   const handleClick = useCallback(
     (event: React.MouseEvent) => {
@@ -61,32 +57,38 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
     [link, navigate]
   );
 
-  if (link.hidden) return null;
-
-  const isDisabled = link.disabled || !link.to;
+  const isDisabled = useMemo(
+    () => link.disabled || !link.to,
+    [link.disabled, link.to]
+  );
 
   const isActive = link.to
-    ? activeItem !== null && activeItem !== undefined
+    ? isNonNullish(activeItem)
       ? activeItem === link.to
-      : typeof window !== "undefined" && window.location.pathname === link.to
+      : isDefined(window) && window.location.pathname === link.to
     : false;
 
-  const linkProps = {
-    onClick: handleClick,
-    tabIndex: isDisabled ? -1 : 0,
-    "aria-disabled": isDisabled,
-    "aria-current": (isActive ? "page" : undefined) as "page" | undefined,
-    "data-testid": testId,
-    "data-border-bottom": link.borderBottom,
-  };
+  const linkProps = useMemo(
+    () => ({
+      onClick: handleClick,
+      tabIndex: isDisabled ? -1 : 0,
+      "aria-disabled": isDisabled,
+      "aria-current": (isActive ? "page" : undefined) as "page" | undefined,
+      "data-testid": testId,
+      "data-border-bottom": link.borderBottom,
+    }),
+    [handleClick, isActive, isDisabled, link.borderBottom, testId]
+  );
+
+  if (link.hidden) return null;
 
   if ("isTitle" in link && link.isTitle) {
     return (
-      <StyledMenuItemHeader {...linkProps} data-menu-header>
-        <StyledMenuItemIcon>
+      <div className={classNames.item} {...linkProps} data-menu-header>
+        <div className={classNames.icon}>
           <Icon name={link.icon} size="s-5" color="gray-700" />
-        </StyledMenuItemIcon>
-        <StyledMenuItemTitle data-text-content>
+        </div>
+        <div className={classNames.title} data-text-content>
           <Heading
             size="h4"
             weight="bold"
@@ -97,8 +99,8 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
           >
             {link.title}
           </Heading>
-        </StyledMenuItemTitle>
-      </StyledMenuItemHeader>
+        </div>
+      </div>
     );
   }
 
@@ -110,9 +112,11 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
 
   const menuItemContent = (
     <>
-      {isActive && <StyledMenuItemIndicator layoutId="current" />}
+      {isActive && (
+        <motion.div className={classNames.indicator} layoutId="current" />
+      )}
       {link.icon && (
-        <StyledMenuItemIcon>
+        <div className={classNames.icon}>
           <Icon
             name={link.icon}
             size={link.head ? "s-5" : "s-4"}
@@ -121,13 +125,13 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
             }
           />
           {link.error && (
-            <StyledErrorIndicator data-error-indicator>
+            <div className={classNames.errorIndicator} data-error-indicator>
               <Icon name="CircleFill" size="s-2" color="error-base" />
-            </StyledErrorIndicator>
+            </div>
           )}
-        </StyledMenuItemIcon>
+        </div>
       )}
-      <StyledMenuItemTitle data-text-content>
+      <div className={classNames.title} data-text-content>
         {link.head ? (
           <Heading
             size="h4"
@@ -157,38 +161,13 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
           <Icon name="PinAngleFill" size="s-3" color="gray-700" />
         )}
         {link.error && <Icon name="CircleFill" size="s-2" color="error-base" />}
-      </StyledMenuItemTitle>
+      </div>
     </>
   );
 
   return (
-    <StyledMenuItemLink href={link.to} {...linkProps}>
+    <a className={classNames.item} href={link.to} {...linkProps}>
       {menuItemContent}
-    </StyledMenuItemLink>
+    </a>
   );
 };
-
-const StyledMenuItemLink = styled.a`
-  ${menuItemStyles}
-`;
-
-const StyledMenuItemHeader = styled.div`
-  ${menuItemStyles}
-`;
-
-const StyledMenuItemIcon = styled.div`
-  ${menuItemIconStyles}
-  position: relative;
-`;
-
-const StyledMenuItemTitle = styled.div`
-  ${menuItemTitleStyles}
-`;
-
-const StyledErrorIndicator = styled.div`
-  ${menuItemErrorIndicatorStyles}
-`;
-
-const StyledMenuItemIndicator = styled(motion.div)`
-  ${menuItemIndicatorStyles}
-`;

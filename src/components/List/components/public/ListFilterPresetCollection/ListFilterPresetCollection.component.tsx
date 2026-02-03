@@ -11,7 +11,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 /**
  * A component that displays a collection of filter presets.
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @param {ListFilterPresetCollectionProps & TestIdProps} props
  * @returns {Nullable<JSX.Element>}

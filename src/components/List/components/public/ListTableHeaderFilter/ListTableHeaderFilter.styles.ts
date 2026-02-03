@@ -1,80 +1,51 @@
-import { css, type RuleSet } from "styled-components";
+import { useMemo } from "react";
 
-import { cssDimensions } from "@/utils/styles.utils";
+import styles from "./ListTableHeaderFilter.module.scss";
 
-import type { ListTableHeaderFilterStyleProps } from "./ListTableHeaderFilter.types";
+import { getInputLabelTextClassName } from "@/components/InputLabel/InputLabel.styles";
+import { useCssClasses, useStatic } from "@utils";
 
-export const listTableHeaderFilterStyles = ({
-  $hideLabel,
-}: ListTableHeaderFilterStyleProps): RuleSet => css`
-  cursor: pointer;
+import type { ClassNameOverrideProps } from "@types";
+import type { Nullish } from "@ubloimmo/front-util";
 
-  div > button > svg[data-testid="icon"] {
-    &,
-    & path {
-      transition:
-        fill 300ms var(--beizer),
-        opacity 150ms var(--beizer);
-      fill: var(--primary-medium);
-    }
-  }
+function useListTableHeaderFilterClassName(
+  hideLabel: Nullish<boolean>,
+  className: Nullish<string>
+) {
+  return useCssClasses(
+    styles["list-table-header-filter"],
+    [styles["hide-label"], hideLabel],
+    className
+  );
+}
 
-  &:hover div > button > svg[data-testid="icon"] {
-    &,
-    & path {
-      transition-duration: 150ms;
-      fill: var(--primary-base);
-    }
-  }
+function useListTableHeaderFilterLabelClassName() {
+  const text = useStatic(() => getInputLabelTextClassName(false));
+  return useCssClasses(text, styles["list-table-header-filter-label"]);
+}
 
-  & [data-list-filter] {
-    width: var(--radix-popover-trigger-width);
-  }
+function useListTableHeaderFilterButtonClassName(active: Nullish<boolean>) {
+  return useCssClasses(styles["list-table-header-filter-button"], [
+    styles.active,
+    active,
+  ]);
+}
 
-  ${$hideLabel &&
-  css`
-    width: var(--s-10);
-  `}
-`;
+export function useListTableHeaderFilterClassNames({
+  active,
+  hideLabel,
+  className,
+}: Record<"active" | "hideLabel", Nullish<boolean>> & ClassNameOverrideProps) {
+  const cell = useListTableHeaderFilterClassName(hideLabel, className);
+  const label = useListTableHeaderFilterLabelClassName();
+  const button = useListTableHeaderFilterButtonClassName(active);
 
-export const listTableHeaderFilterLabelStyles = (): RuleSet => css`
-  min-width: max-content;
-`;
-
-export const listTableHeaderFilterButtonStyles = ({
-  $active,
-}: {
-  $active?: boolean;
-}): RuleSet => css`
-  all: unset;
-  cursor: pointer;
-  cursor: pointer;
-  position: relative;
-  ${cssDimensions("s-4", "s-4", true)};
-
-  & > svg[data-testid="icon"] {
-    position: absolute;
-    inset: 0;
-  }
-
-  & > svg[data-testid="icon"]:first-child {
-    opacity: 1;
-  }
-  & > svg[data-testid="icon"]:last-child {
-    opacity: 0;
-  }
-
-  ${$active &&
-  css`
-    & > svg[data-testid="icon"]:first-child {
-      opacity: 0;
-    }
-    & > svg[data-testid="icon"]:last-child {
-      opacity: 1;
-      &,
-      & path {
-        fill: var(--primary-base);
-      }
-    }
-  `}
-`;
+  return useMemo(
+    () => ({
+      cell,
+      label,
+      button,
+    }),
+    [cell, label, button]
+  );
+}

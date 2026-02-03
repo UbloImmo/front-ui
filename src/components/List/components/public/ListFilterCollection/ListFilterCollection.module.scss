@@ -1,0 +1,35 @@
+@use "../../../../../styles/mixins.scss";
+
+.list-filter-collection {
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card-default);
+  border-radius: var(--s-2);
+  overflow: hidden;
+  width: 100%;
+}
+
+.list-filter-collection-title-container {
+  padding: var(--s-4) var(--s-4) var(--s-3);
+
+  &:last-child {
+    padding-bottom: var(--s-4);
+  }
+}
+
+.list-filter-collection-filters {
+  padding: 0 var(--s-1) var(--s-1);
+}
+
+.list-filter-collection-clear-button {
+  padding: 0 !important;
+
+  @include mixins.dimensions(fit-content, fit-content, true);
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+  }
+}

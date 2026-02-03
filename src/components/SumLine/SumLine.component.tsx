@@ -1,19 +1,14 @@
 import { useMemo } from "react";
-import { styled } from "styled-components";
 
 import { formatAmount } from "../AccountBalance";
 import { Heading } from "../Heading";
 import { Text } from "../Text";
-import { sumLineContainerStyles, sumLineHeadingStyles } from "./SumLine.styles";
+import { useSumLineClassNames } from "./SumLine.styles";
 
 import { FlexRowLayout } from "@/layouts/Flex";
-import { useMergedProps, useTestId, useClassName, useStyleProps } from "@utils";
+import { useMergedProps, useTestId, useStyleProps } from "@utils";
 
-import type {
-  SumLineDefaultProps,
-  SumLineProps,
-  SumlineStyleProps,
-} from "./SumLine.types";
+import type { SumLineDefaultProps, SumLineProps } from "./SumLine.types";
 import type { TestIdProps, StyleOverrideProps } from "@types";
 
 const defaultSumLineProps: SumLineDefaultProps = {
@@ -28,7 +23,7 @@ const defaultSumLineProps: SumLineDefaultProps = {
 /**
  * Displays a single number value with a label, a unit and a period
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @param {SumLineProps & TestIdProps & Omit<StyleOverrideProps, "as">} props - The component's props
  */
@@ -40,7 +35,7 @@ const SumLine = (
     props
   );
   const testId = useTestId("sum-line", props);
-  const className = useClassName(props);
+  const classNames = useSumLineClassNames(size, props.className);
 
   const labelTestId = useMemo(() => `${testId}-label`, [testId]);
   const valueTestId = useMemo(() => `${testId}-value`, [testId]);
@@ -62,8 +57,8 @@ const SumLine = (
   const styleProps = useStyleProps({ size });
 
   return (
-    <SumLineContainer
-      className={className}
+    <FlexRowLayout
+      className={classNames.container}
       styleOverride={props.styleOverride}
       testId={testId}
       overrideTestId
@@ -85,7 +80,8 @@ const SumLine = (
       </Text>
       <FlexRowLayout align="center" justify="end" gap="s-2">
         {size === "l" ? (
-          <SumLineHeading
+          <Heading
+            className={classNames.heading}
             size="h2"
             color="gray-800"
             weight="bold"
@@ -94,7 +90,7 @@ const SumLine = (
             noWrap
           >
             {displayValue}
-          </SumLineHeading>
+          </Heading>
         ) : (
           <Text
             color="gray-800"
@@ -119,18 +115,10 @@ const SumLine = (
           </Text>
         )}
       </FlexRowLayout>
-    </SumLineContainer>
+    </FlexRowLayout>
   );
 };
 
 SumLine.defaultProps = defaultSumLineProps;
 
 export { SumLine };
-
-const SumLineContainer = styled(FlexRowLayout)<SumlineStyleProps>`
-  ${sumLineContainerStyles}
-`;
-
-const SumLineHeading = styled(Heading)`
-  ${sumLineHeadingStyles}
-`;

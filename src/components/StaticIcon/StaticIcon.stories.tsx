@@ -16,6 +16,16 @@ import type { ColorKeyOrWhite } from "@types";
 
 const componentSource = componentSourceFactory("StaticIcon", undefined);
 
+const colors: ColorKeyOrWhite[] = [
+  "primary",
+  "success",
+  "pending",
+  "warning",
+  "error",
+  "gray",
+  "white",
+];
+
 const meta: Meta<typeof StaticIcon> = {
   title: "Components/Iconography/StaticIcon/Stories",
   component: StaticIcon,
@@ -30,6 +40,9 @@ const meta: Meta<typeof StaticIcon> = {
     size: {
       options: ["xs", "s", "m", "l"],
     },
+    color: {
+      options: colors,
+    },
   },
 } satisfies Meta<typeof StaticIcon>;
 
@@ -40,15 +53,6 @@ export const Default: Story = {
   args: StaticIcon.defaultProps,
 };
 
-const colors: ColorKeyOrWhite[] = [
-  "primary",
-  "success",
-  "pending",
-  "warning",
-  "error",
-  "gray",
-  "white",
-];
 export const Colors = (props: Partial<StaticIconProps>) => {
   const defaultProps = useMergedProps(StaticIcon.defaultProps, props);
 

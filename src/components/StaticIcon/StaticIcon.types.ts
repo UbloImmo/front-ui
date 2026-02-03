@@ -1,7 +1,13 @@
 import type { IconName, IconProps } from "../Icon/Icon.types";
 import type { TooltipProps } from "../Tooltip";
 import type { ExtendedComponentSize } from "@/types/themes/sizes/sizes.types";
-import type { SpacingLabel, ColorKeyOrWhite, StyleOverrideProps } from "@types";
+import type {
+  SpacingLabel,
+  ColorKeyOrWhite,
+  StyleOverrideProps,
+  PaletteColorOrWhite,
+  PaletteColor,
+} from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 export type StaticIconSize = Exclude<ExtendedComponentSize, "xl">;
@@ -62,4 +68,10 @@ export type DefaultStaticIconProps = Required<StaticIconProps>;
 export type StaticIconContainerStyle = {
   borderRadius: SpacingLabel;
   size: SpacingLabel;
+};
+
+export type StaticIconColors = {
+  bg: PaletteColorOrWhite;
+  border: PaletteColorOrWhite;
+  icon: PaletteColor;
 };

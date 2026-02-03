@@ -14,6 +14,8 @@ import type { FilterOptionData } from "@/components/List/modules";
 /**
  * Displays a badge based on a list item's property and the list's options.
  *
+ * @version 0.1.0
+ *
  * @template {object} TItem - The type of the list item
  * @param {ListFilterOptionBadgeProps<TItem>} props - The component props
  *

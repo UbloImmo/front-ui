@@ -10,8 +10,10 @@ import {
   type FilterOption,
   type FilterPreset,
 } from "@/components/List/modules";
-import { ComponentVariants } from "@docs/blocks";
+import { ComponentVariants, PropVariant } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
+import { ColorKey } from "@types";
+import { normalizeToPaletteColor } from "@utils";
 
 import type { Meta } from "@storybook/react-vite";
 
@@ -76,17 +78,24 @@ export const Active = () => (
   />
 );
 
+const disabledVariants: PropVariant<ListFilterPresetProps<MockData>>[] = [
+  {
+    __propVariantLabel: "filterPreset.disabled:false",
+    filterPreset,
+  },
+  {
+    __propVariantLabel: "filterPreset.disabled:true",
+    filterPreset: {
+      ...filterPreset,
+      disabled: true,
+    },
+  },
+];
+
 export const Disabled = () => (
   <ComponentVariants
-    for="filterPreset"
     of={ListFilterPreset<MockData>}
-    variants={[
-      filterPreset,
-      {
-        ...filterPreset,
-        disabled: true,
-      },
-    ]}
+    variants={disabledVariants}
     defaults={defaultProps}
     propLabels
   />
@@ -101,3 +110,34 @@ export const Toggle = () => {
   };
   return <ListFilterPreset filterPreset={preset} />;
 };
+
+const colorKeys: ColorKey[] = [
+  "primary",
+  "gray",
+  "success",
+  "pending",
+  "warning",
+  "error",
+];
+
+const colorVariants: PropVariant<ListFilterPresetProps<MockData>>[] =
+  colorKeys.map(
+    (colorKey): PropVariant<ListFilterPresetProps<MockData>> => ({
+      __propVariantLabel: `filterPreset.color:${colorKey} active:true`,
+      filterPreset: {
+        ...filterPreset,
+        colorKey,
+        paletteColor: normalizeToPaletteColor(colorKey),
+        active: true,
+      },
+    })
+  );
+
+export const Colors = () => (
+  <ComponentVariants
+    of={ListFilterPreset<MockData>}
+    variants={colorVariants}
+    defaults={defaultProps}
+    propLabels
+  />
+);

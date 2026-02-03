@@ -1,9 +1,11 @@
+import { fn } from "storybook/test";
+
 import { Button } from "../Button";
+import { Toaster } from "./Toaster.component";
+import { toast } from "./Toaster.utils";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { delay } from "@utils";
-
-import { Toaster, toast } from "./";
 
 import type { ToasterProps } from "./Toaster.types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
@@ -23,9 +25,9 @@ const meta = {
         <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
           <Button
             onClick={() =>
-              toast("Basic toast with close button", {
+              toast("Basic toast", {
                 id: "basic-toast",
-                className: "test-toast-basic",
+                className: "test-toast-success",
               })
             }
             label="Basic toast"
@@ -68,10 +70,18 @@ const meta = {
           />
           <Button
             onClick={() =>
-              toast.promise(delay(3000), {
-                loading: "Loading",
-                success: "Success!",
-                error: "Error!",
+              toast.promise(delay(3_000), {
+                loading: "Loading...",
+                success: () => ({
+                  message: "Success!",
+                  description: "Promise resolved!",
+                }),
+                error: () => ({
+                  message: "Error!",
+                  description: "something went wrong",
+                }),
+                id: "loading-toast",
+                description: "Promise is pending",
               })
             }
             label="Promise toast"
@@ -96,6 +106,30 @@ const meta = {
             }
             label="Toast with description"
           />
+          <Button
+            onClick={() =>
+              toast.success("Succes toast with description", {
+                description: "This is a detailed description for the toast",
+                id: "success-toast-with-description",
+                className: "test-toast-description",
+              })
+            }
+            label="Success toast with description"
+          />
+          <Button
+            onClick={() =>
+              toast.error("Toast with action", {
+                id: "basic-toast-action",
+                className: "test-toast-basic",
+                description: "test",
+                action: {
+                  onClick: fn(),
+                  label: "Action",
+                },
+              })
+            }
+            label="Toast with action"
+          />
         </div>
       </>
     ),
@@ -113,5 +147,17 @@ export const Default: Story = {};
 export const WithoutCloseButton: Story = {
   args: {
     closeButton: false,
+  },
+};
+
+export const RichColors: Story = {
+  args: {
+    richColors: true,
+  },
+};
+
+export const Inverted: Story = {
+  args: {
+    invert: true,
   },
 };

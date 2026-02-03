@@ -1,0 +1,58 @@
+@use "../../../../../styles/mixins.scss";
+
+.list-filter-preset {
+  --bg-disabled: var(--gray-100);
+  --bg-default: var(--gray-50);
+  --bg-active: var(--white);
+  --bg: var(--bg-default);
+  --border-default: var(--primary-light);
+  --border-active: var(--primary-medium);
+  --border: var(--bg);
+  --border-hover: var(--border-default);
+
+  @include mixins.dimensions(fit-content, var(--input-height), true);
+
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  cursor: pointer;
+
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  box-shadow: var(--shadow-button);
+  padding: var(--s-3);
+  padding-left: var(--s-4);
+  border-radius: var(--s-1);
+
+  background: var(--bg);
+  border: 1px solid var(--border);
+
+  transition-property: background, border;
+  transition-duration: 300ms;
+  transition-timing-function: var(--bezier);
+
+  & > span[data-testid="text filter-preset-button-label"] {
+    transition: color 300ms var(--bezier);
+  }
+
+  &:disabled {
+    --bg: var(--bg-disabled);
+    cursor: not-allowed;
+  }
+
+  &.active {
+    --border-hover: var(--border-active);
+    --border: var(--border-active);
+    --bg: var(--bg-active);
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--white);
+    border: 1px solid var(--border-hover);
+    transition-duration: 150ms;
+  }
+}

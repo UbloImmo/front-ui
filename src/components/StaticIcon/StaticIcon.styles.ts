@@ -1,14 +1,23 @@
+import { useMemo } from "react";
 import { css, type RuleSet } from "styled-components";
 
+import styles from "./StaticIcon.module.scss";
+
 import { cssDimensions } from "@/utils/styles.utils";
-import { cssVarUsage, fromStyleProps } from "@utils";
+import {
+  cssVarUsage,
+  fromStyleProps,
+  useCssClasses,
+  useCssVariables,
+} from "@utils";
 
 import type {
   DefaultStaticIconProps,
+  StaticIconColors,
   StaticIconContainerStyle,
   StaticIconSize,
 } from "./StaticIcon.types";
-import type { CssRem, StyleProps } from "@types";
+import type { ColorKeyOrWhite, CssRem, StyleProps } from "@types";
 import type { ValueMap } from "@ubloimmo/front-util";
 
 export const staticIconSizeToContainerStyleMap: ValueMap<
@@ -75,6 +84,58 @@ export const staticIconStyle = (props: StyleProps<DefaultStaticIconProps>) => {
     transition: background 150ms ease-out 0s;
   `;
 };
+
+export function getStaticIconColors(color: ColorKeyOrWhite): StaticIconColors {
+  if (color === "white")
+    return {
+      bg: "white",
+      border: "gray-100",
+      icon: "gray-500",
+    };
+
+  if (color === "gray")
+    return {
+      bg: "gray-50",
+      border: "gray-300",
+      icon: "gray-600",
+    };
+
+  return {
+    bg: `${color}-light`,
+    border: `${color}-medium`,
+    icon: `${color}-base`,
+  };
+}
+
+export function useStaticIconStyles(
+  colors: StaticIconColors,
+  props: DefaultStaticIconProps
+) {
+  const indicator = useCssClasses(styles["static-icon-indicator"]);
+  const container = useCssClasses(
+    styles["static-icon"],
+    styles[`size-${props.size}`],
+    [styles.stroke, props.stroke],
+    props.className
+  );
+  const classNames = useMemo(
+    () => ({ container, indicator }),
+    [container, indicator]
+  );
+
+  const style = useCssVariables(
+    {
+      bg: cssVarUsage(colors.bg),
+      "border-color": cssVarUsage(colors.border),
+    },
+    props.styleOverride
+  );
+
+  return {
+    classNames,
+    style,
+  };
+}
 
 export const staticIconIndicatorContainerStyle = (): RuleSet => css`
   ${cssDimensions("10px", "10px", true)}

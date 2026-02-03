@@ -1,0 +1,27 @@
+.sum-line {
+  --padding-vertical: var(--s-3);
+
+  padding: var(--padding-vertical) 0;
+
+  &:first-child {
+    border-top: 1px solid var(--primary-base);
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--primary-light);
+  }
+
+  &.size-m {
+    --padding-vertical: var(--s-3);
+  }
+
+  &.size-l {
+    --padding-vertical: var(--s-1);
+  }
+}
+
+.sum-line-heading {
+  font-size: var(--s-9); // 36 pixels
+  letter-spacing: 0.03125rem; // 0.5 pixels
+  line-height: 3.25rem; // 52 pixels
+}

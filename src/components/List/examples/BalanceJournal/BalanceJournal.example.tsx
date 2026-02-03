@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { CSSProperties } from "react";
 
 import { useBalanceJournalConfig } from "./BalanceJournal.config";
 import {
@@ -10,20 +10,21 @@ import { List } from "../../List.component";
 
 import { Button, Heading, Input, Text } from "@/components";
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
+import { cssVarUsage } from "@utils";
 
-const Card = styled(FlexColumnLayout)`
-  padding: var(--s-8);
-  background: var(--white);
-  box-shadow: var(--shadow-card-default);
-  border-radius: var(--s-2);
-`;
+const cardStyle: CSSProperties = {
+  padding: cssVarUsage("s-8"),
+  background: cssVarUsage("white"),
+  boxShadow: cssVarUsage("shadow-card-default"),
+  borderRadius: cssVarUsage("s-2"),
+};
 
 const BalanceJournalContent = () => {
   const { config } = useBalanceJournalConfig();
   const { startDate, setStartDate, endDate, setEndDate } =
     useBalanceJournalContext();
   return (
-    <Card gap="s-6">
+    <FlexColumnLayout styleOverride={cardStyle} gap="s-6">
       <FlexRowLayout justify="space-between" fill align="center">
         <Heading size="h4" weight="bold" color="gray-900">
           Balance journal
@@ -51,7 +52,7 @@ const BalanceJournalContent = () => {
       <List config={config}>
         <BalanceJournalRenderer />
       </List>
-    </Card>
+    </FlexColumnLayout>
   );
 };
 

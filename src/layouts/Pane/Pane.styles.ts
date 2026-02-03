@@ -15,8 +15,7 @@ export function usePaneLayoutStyle(props: PaneDefaultProps) {
       styles.pane,
       breakpoint,
       [styles["force-expanded"], props.forceExpanded],
-      [styles.headless, props.headLess],
-      props.className
+      [styles.headless, props.headLess]
     );
 
     const style = cssStyles(
@@ -35,7 +34,6 @@ export function usePaneLayoutStyle(props: PaneDefaultProps) {
     };
   }, [
     props.bottom,
-    props.className,
     props.collapsedWidth,
     props.expandedBreakpoint,
     props.expandedWidth,
@@ -47,7 +45,11 @@ export function usePaneLayoutStyle(props: PaneDefaultProps) {
   const paneContent = useMemo(() => {
     const anchor = styles[`anchor-${props.anchor}`];
 
-    const className = cssClasses(styles["pane-content"], anchor);
+    const className = cssClasses(
+      styles["pane-content"],
+      anchor,
+      props.className
+    );
 
     const style = cssStyles(props.styleOverride);
 
@@ -55,7 +57,7 @@ export function usePaneLayoutStyle(props: PaneDefaultProps) {
       className,
       style,
     };
-  }, [props.anchor, props.styleOverride]);
+  }, [props.anchor, props.className, props.styleOverride]);
 
   return {
     pane,

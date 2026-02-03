@@ -370,6 +370,7 @@ const appendGlobalStyle = ({
         color-scheme: light dark;
       `}
       --white: ${lightDarkSupport ? "light-dark(white, black)" : "white"};
+      --white-00: rgb(from var(--white) r g b / 0);
       --white-05: rgb(from var(--white) r g b / 0.05);
       --white-10: rgb(from var(--white) r g b / 0.1);
       --white-15: rgb(from var(--white) r g b / 0.15);

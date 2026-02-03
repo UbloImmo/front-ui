@@ -1,13 +1,6 @@
 import { Fragment, useCallback, type MouseEvent } from "react";
-import styled from "styled-components";
 
-import {
-  listFilterContainerStyles,
-  listFilterHeaderStyles,
-  listFilterOptionChipsStyles,
-  listFilterOptionsListStyles,
-  listFilterQueryInputContainerStyles,
-} from "./ListFilter.styles";
+import { useListFilterClassNames } from "./ListFilter.styles";
 import { ListFilterOptionChip } from "../ListFilterOptionChip/ListFilterOptionChip.component";
 import { ListFilterOptionItem } from "../ListFilterOptionItem";
 import { useListFilter } from "./ListFilter.utils";
@@ -19,14 +12,14 @@ import { Loading } from "@/components/Loading";
 import { Text } from "@/components/Text";
 import { FlexLayout } from "@/layouts/Flex";
 
-import type { ListFilterStyleProps, ListFilterProps } from "./ListFilter.types";
+import type { ListFilterProps } from "./ListFilter.types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 /**
  * A component that displays a single filters
  * and allows interacting with it and its options.
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {ListFilterProps} props
  * @returns {Nullable<JSX.Element>}
@@ -48,6 +41,8 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
     isQuerying,
   } = useListFilter(props);
 
+  const classNames = useListFilterClassNames(styleProps);
+
   const openOptionsOnClick = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
       event.stopPropagation();
@@ -60,18 +55,15 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
   if (filter.hidden) return null;
 
   return (
-    <ListFilterContainer
-      {...styleProps}
+    <FlexLayout
+      className={classNames.container}
       testId={filter.testId}
       overrideTestId
       fill
       direction="column"
     >
       {open && !filter.loading ? (
-        <ListFilterQueryInputContainer
-          {...styleProps}
-          onSubmit={selectOptionOnEnter}
-        >
+        <form className={classNames.query} onSubmit={selectOptionOnEnter}>
           <Input
             type="search-text"
             placeholder={filter.label}
@@ -81,10 +73,10 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
             testId="filter-query-input"
             overrideTestId
           />
-        </ListFilterQueryInputContainer>
+        </form>
       ) : (
-        <ListFilterHeader
-          {...styleProps}
+        <header
+          className={classNames.header}
           data-testid="list-filter-label-container"
           onClick={openOptionsOnClick}
         >
@@ -105,8 +97,8 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
                 size="s-3"
               />
             ) : filter.active ? (
-              <ListFilterOptionChips
-                {...styleProps}
+              <FlexLayout
+                className={classNames.chips}
                 direction="row"
                 gap="s-1"
                 wrap
@@ -122,7 +114,7 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
                       key={option.signature}
                     />
                   ))}
-              </ListFilterOptionChips>
+              </FlexLayout>
             ) : (
               <FlexLayout align="center" gap="s-2" justify="end">
                 <Text color="gray-600" testId="filter-empty-label">
@@ -132,10 +124,10 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
               </FlexLayout>
             )}
           </FlexLayout>
-        </ListFilterHeader>
+        </header>
       )}
-      <ListFilterOptionsList
-        {...styleProps}
+      <ul
+        className={classNames.options}
         data-testid="list-filter-options-list"
         role="listbox"
       >
@@ -163,27 +155,7 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
             </Fragment>
           );
         })}
-      </ListFilterOptionsList>
-    </ListFilterContainer>
+      </ul>
+    </FlexLayout>
   );
 };
-
-const ListFilterContainer = styled(FlexLayout)<ListFilterStyleProps>`
-  ${listFilterContainerStyles}
-`;
-
-const ListFilterHeader = styled.div<ListFilterStyleProps>`
-  ${listFilterHeaderStyles}
-`;
-
-const ListFilterOptionsList = styled.ul<ListFilterStyleProps>`
-  ${listFilterOptionsListStyles}
-`;
-
-const ListFilterOptionChips = styled(FlexLayout)<ListFilterStyleProps>`
-  ${listFilterOptionChipsStyles}
-`;
-
-const ListFilterQueryInputContainer = styled.form`
-  ${listFilterQueryInputContainerStyles}
-`;

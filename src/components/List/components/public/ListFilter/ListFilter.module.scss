@@ -1,0 +1,162 @@
+@use "../../../../../sizes/breakpoints.scss";
+@use "../../../../../styles/mixins.scss";
+
+$option-height: var(--input-height);
+$max-visible-elements: 7;
+$option-gap: var(--s-1);
+$options-list-padding: var(--s-1);
+
+$header-height: var(--s-10);
+$header-height-mobile: var(--s-12);
+$max-options-height: calc(
+  $option-height * $max-visible-elements + $option-gap *
+    ($max-visible-elements - 1) + $options-list-padding * 2
+);
+
+.list-filter-container {
+  --filter-background: var(--gray-50);
+  --filter-radius: var(--s-1);
+  --filter-max-height: $header-height;
+  --filter-header-height: $header-height;
+
+  background: var(--filter-background);
+  border-radius: var(--filter-radius);
+  min-height: var(--filter-header-height);
+  max-height: var(--filter-max-height);
+  min-width: 17rem !important;
+
+  transition-property: background, box-shadow, max-height, height, margin-top,
+    margin-bottom;
+  transition-duration: 300ms;
+  transition-timing-function: var(--bezier);
+  margin: 0;
+
+  &.active.multi {
+    --filter-max-heigth: calc-size(fit-content, size);
+  }
+
+  &:not(.disabled):not(.open) {
+    cursor: pointer;
+
+    &:hover {
+      background: var(--primary-light-50);
+      transition-duration: 150ms;
+      box-shadow: var(--shadow-card-elevation-low);
+    }
+  }
+
+  &.open {
+    --filter-max-height: calc(
+      var(--filter-header-height) + $max-options-height
+    );
+    --filter-radius: var(--s-2);
+    --filter-background: var(--white);
+
+    transition-duration: 150ms;
+    box-shadow: var(--shadow-card-elevation-medium);
+
+    &:not(:first-child) {
+      margin-top: var(--s-1);
+    }
+    &:not(:last-child) {
+      margin-bottom: var(--s-1);
+    }
+  }
+
+  &.loading {
+    cursor: wait;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+
+  @media only screen and (max-width: breakpoints.$breakpoint-xs) {
+    --filter-header-height: $header-height-mobile;
+  }
+}
+
+.list-filter-header {
+  --list-filter-header-height: var(--filter-header-height);
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  padding: var(--s-3) var(--s-4);
+
+  &.multi {
+    --list-filter-header-height: fit-content;
+  }
+
+  @include mixins.dimensions(100%, var(--list-filter-header-height), true);
+  min-height: var(--filter-header-height);
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: var(--s-1);
+}
+
+.list-filter-option-chips {
+  max-width: 100%;
+}
+
+.list-filter-options-list {
+  overflow-y: hidden;
+  max-height: 0;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  height: calc-size(max-content, size);
+  width: 100%;
+
+  &.open {
+    overflow-y: auto;
+    max-height: $max-options-height;
+    padding: var(--s-1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  transition-property: height, padding, opacity;
+  transition-duration: 300ms;
+  transition-timing-function: var(--bezier);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--s-1);
+
+  scrollbar-width: thin;
+}
+
+.list-filter-query-input-container {
+  border-bottom: 1px solid var(--primary-light);
+
+  &,
+  & > div,
+  & > div > input[type="text"] {
+    @include mixins.dimensions(100%, var(--filter-header-height), true);
+  }
+
+  & input[type="text"] {
+    background: none;
+    padding-left: var(--s-4);
+    padding-right: var(--s-4);
+
+    &,
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      box-shadow: none;
+      border: none;
+      outline: none;
+    }
+  }
+
+  [data-testid="filter-query-input-control"] {
+    right: var(--s-4);
+  }
+}

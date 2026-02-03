@@ -105,6 +105,8 @@ export const useListFilterCollection = (
     return filters.some(({ active }) => active);
   }, [filters]);
 
+  const clearBtnHidden = useMemo(() => !hasActiveFilters, [hasActiveFilters]);
+
   const { ref, id } = useListFilterCollectionEvents(setOpenFilterSignature);
 
   return {
@@ -120,5 +122,6 @@ export const useListFilterCollection = (
     id,
     hasActiveFilters,
     clearDisplayedFilters,
+    clearBtnHidden,
   };
 };

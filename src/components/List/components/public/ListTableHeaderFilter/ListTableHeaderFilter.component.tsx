@@ -1,20 +1,12 @@
 import { isObject, isString, type Nullable } from "@ubloimmo/front-util";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import styled from "styled-components";
 
 import { ListFilter } from "../ListFilter";
-import {
-  listTableHeaderFilterButtonStyles,
-  listTableHeaderFilterLabelStyles,
-  listTableHeaderFilterStyles,
-} from "./ListTableHeaderFilter.styles";
+import { useListTableHeaderFilterClassNames } from "./ListTableHeaderFilter.styles";
 
 import { Icon } from "@/components/Icon";
-import {
-  InputLabelText,
-  type InputLabelTextStyleProps,
-} from "@/components/InputLabel";
 import { useListContext } from "@/components/List/context";
+import { Text } from "@/components/Text";
 import { Tooltip, type TooltipProps } from "@/components/Tooltip";
 import { FlexRowLayout } from "@/layouts/Flex";
 import {
@@ -31,23 +23,20 @@ import {
   useUikitTranslation,
 } from "@utils";
 
-import type {
-  ListTableHeaderFilterProps,
-  ListTableHeaderFilterStyleProps,
-} from "./ListTableHeaderFilter.types";
-import type { TestIdProps, TextProps } from "@types";
+import type { ListTableHeaderFilterProps } from "./ListTableHeaderFilter.types";
+import type { TestIdProps } from "@types";
 
 /**
  * Allows controlling a list filter from a table header cell.
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @param {ListTableHeaderFilterProps} props - ListTableHeaderFilter component props
  * @returns {JSX.Element}
  */
 export const ListTableHeaderFilter = (
   props: ListTableHeaderFilterProps & TestIdProps
-) => {
+): JSX.Element => {
   const { getFilterBySignature, loading } = useListContext();
 
   const [open, setOpen] = useState(false);
@@ -121,21 +110,31 @@ export const ListTableHeaderFilter = (
     [props.hideLabel]
   );
 
+  const classNames = useListTableHeaderFilterClassNames({
+    active: filter?.active,
+    hideLabel: props.hideLabel,
+    className: props.className,
+  });
+
   if (!filter)
     return (
-      <TableHeaderCell colSpan={props.colSpan} className={props.className}>
+      <TableHeaderCell
+        styleOverride={props.styleOverride}
+        colSpan={props.colSpan}
+        className={props.className}
+      >
         {props.fallbackLabel}
       </TableHeaderCell>
     );
 
   return (
-    <FilterHeaderCell
+    <TableHeaderCell
       ref={cellRef}
       testId={testId}
       colSpan={props.colSpan}
-      className={props.className}
+      className={classNames.cell}
       overrideTestId
-      $hideLabel={props.hideLabel}
+      styleOverride={props.styleOverride}
     >
       <Popover
         open={open}
@@ -162,25 +161,25 @@ export const ListTableHeaderFilter = (
           ref={triggerRef}
         >
           {!props.hideLabel && (
-            <TableHeaderLabelText
+            <Text
+              className={classNames.label}
               color="gray-800"
               size="m"
               weight="bold"
               testId="input-label-text"
-              $required={false}
               noWrap
             >
               {filter?.label ?? props.fallbackLabel}
-            </TableHeaderLabelText>
+            </Text>
           )}
           <FlexRowLayout align="center" justify="end" gap="s-2">
             {!props.hideLabel && props.tooltip && (
               <Tooltip {...props.tooltip} iconColor="primary-medium" />
             )}
             <Tooltip {...filterTooltipProps}>
-              <FilterButton
+              <button
+                className={classNames.button}
                 data-testid={`${testId}-trigger`}
-                $active={filter?.active}
                 type="button"
                 disabled={filter.disabled}
               >
@@ -190,27 +189,11 @@ export const ListTableHeaderFilter = (
                   name="FilterCircleFill"
                   color="primary-medium"
                 />
-              </FilterButton>
+              </button>
             </Tooltip>
           </FlexRowLayout>
         </FlexRowLayout>
       </Popover>
-    </FilterHeaderCell>
+    </TableHeaderCell>
   );
 };
-
-const FilterHeaderCell = styled(
-  TableHeaderCell
-)<ListTableHeaderFilterStyleProps>`
-  ${listTableHeaderFilterStyles}
-`;
-
-const TableHeaderLabelText = styled(InputLabelText)<
-  InputLabelTextStyleProps & TextProps
->`
-  ${listTableHeaderFilterLabelStyles}
-`;
-
-const FilterButton = styled.button<{ $active?: boolean }>`
-  ${listTableHeaderFilterButtonStyles}
-`;

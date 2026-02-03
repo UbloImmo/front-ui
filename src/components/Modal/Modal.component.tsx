@@ -1,8 +1,7 @@
 import { VoidFn, type Nullable } from "@ubloimmo/front-util";
 import { useCallback, useId, useMemo } from "react";
-import styled from "styled-components";
 
-import { modalButtonStyles, modalCardStyles } from "./Modal.styles";
+import { useModalClassNames } from "./Modal.styles";
 
 import { Button } from "@/components/Button";
 import { Dialog, useDialogManager } from "@/components/Dialog";
@@ -16,11 +15,7 @@ import {
   useStatic,
 } from "@utils";
 
-import type {
-  ModalProps,
-  ModalDefaultProps,
-  ModalStyleProps,
-} from "./Modal.types";
+import type { ModalProps, ModalDefaultProps } from "./Modal.types";
 import type { TestIdProps } from "@types";
 
 const defaultModalProps: ModalDefaultProps = {
@@ -33,7 +28,7 @@ const defaultModalProps: ModalDefaultProps = {
 /**
  * A simple modal with a title and close button. Built on top of [Dialog](/?path=/docs/components-dialog-usage--docs)
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {ModalProps & TestIdProps} props - Modal component props
  * @returns {Nullable<JSX.Element>}
@@ -44,6 +39,7 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
   const testId = useTestId("modal", props);
   const tl = useUikitTranslation();
   const closeLabel = useStatic(tl.action.close);
+  const classNames = useModalClassNames(mergedProps.size);
 
   const defaultReference = useId();
 
@@ -72,8 +68,9 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
       onOpened={mergedProps.onOpened}
       portalRoot={mergedProps.portalRoot}
     >
-      <Card $size={mergedProps.size}>
-        <CloseButton
+      <div className={classNames.card} data-testid="modal-card">
+        <Button
+          className={classNames.button}
           color="black"
           icon="XLg"
           onClick={closeDialogOnClick}
@@ -98,18 +95,10 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
           )}
           {mergedProps.children}
         </FlexColumnLayout>
-      </Card>
+      </div>
     </Dialog>
   );
 };
 Modal.defaultProps = defaultModalProps;
 
 export { Modal };
-
-const Card = styled.div<ModalStyleProps>`
-  ${modalCardStyles}
-`;
-
-const CloseButton = styled(Button)`
-  ${modalButtonStyles}
-`;

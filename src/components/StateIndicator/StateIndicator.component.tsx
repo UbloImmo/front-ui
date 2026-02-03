@@ -1,19 +1,17 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
 import {
   computeStateIndicatorColors,
-  stateIndicatorStyle,
+  useStateIndicatorStyles,
 } from "./StateIndicator.styles";
 
 import { Icon, type IconProps } from "@/components/Icon";
 import { Text } from "@/components/Text";
-import { useMergedProps, useStyleProps, useTestId } from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
 import type {
   DefaultStateIndicatorProps,
   StateIndicatorProps,
-  StateIndicatorStyleProps,
 } from "./StateIndicator.types";
 import type { TextProps, TestIdProps } from "@types";
 
@@ -21,13 +19,16 @@ const defaultStateIndicatorProps: DefaultStateIndicatorProps = {
   label: "[Label]",
   color: "primary",
   icon: "Circle",
+  className: null,
+  styleOverride: null,
+  as: "div",
 };
 
 /**
  * Essentially a blown up `Badge` that fills its container
  * and has an extra `white` color.
  *
- * @version 0.0.5
+ * @version 0.1.0
  *
  * @param {TestIdProps & StateIndicatorProps} props - the state indicator props
  * @returns {JSX.Element} - the state indicator markup
@@ -41,7 +42,10 @@ const StateIndicator = (
     () => computeStateIndicatorColors(mergedProps.color),
     [mergedProps]
   );
-  const styleProps = useStyleProps(colors);
+  const { className, style, labelClassName } = useStateIndicatorStyles(
+    colors,
+    mergedProps
+  );
 
   const iconProps = useMemo<IconProps>(() => {
     return {
@@ -49,7 +53,7 @@ const StateIndicator = (
       color: colors.icon,
       size: "s-3",
     };
-  }, [mergedProps, colors]);
+  }, [mergedProps.icon, colors]);
 
   const TextProps = useMemo<TextProps>(() => {
     return {
@@ -58,19 +62,24 @@ const StateIndicator = (
       color: colors.label,
       ellipsis: true,
     };
-  }, [colors]);
+  }, [colors.label]);
+
+  const Element = mergedProps.as;
 
   return (
-    <StateIndicatorContainer {...styleProps} data-testid={testId} role="status">
+    <Element
+      className={className}
+      style={style}
+      data-testid={testId}
+      role="status"
+    >
       <Icon {...iconProps} />
-      <Text {...TextProps}>{mergedProps.label}</Text>
-    </StateIndicatorContainer>
+      <Text className={labelClassName} {...TextProps}>
+        {mergedProps.label}
+      </Text>
+    </Element>
   );
 };
 StateIndicator.defaultProps = defaultStateIndicatorProps;
 
 export { StateIndicator };
-
-const StateIndicatorContainer = styled.div<StateIndicatorStyleProps>`
-  ${stateIndicatorStyle}
-`;

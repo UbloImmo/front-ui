@@ -44,6 +44,7 @@ export const Animations = (props: LoadingProps) => {
       of={Loading}
       align="center"
       scaling={1.1}
+      propLabels
     />
   );
 };
@@ -63,6 +64,7 @@ export const Sizes = (props: LoadingProps) => {
       of={Loading}
       align="center"
       scaling={1.2}
+      propLabels
     />
   );
 };
@@ -91,7 +93,10 @@ export const Colors = (props: LoadingProps) => {
       for="color"
       of={Loading}
       align="center"
+      justify="center"
       scaling={1.1}
+      columns={4}
+      propLabels
     />
   );
 };

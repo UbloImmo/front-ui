@@ -59,4 +59,5 @@ export type SumLineProps = {
 
 export type SumLineDefaultProps = Required<SumLineProps>;
 
+/** @deprecated styled-components */
 export type SumlineStyleProps = StyleProps<Pick<SumLineDefaultProps, "size">>;

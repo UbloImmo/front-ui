@@ -1,6 +1,5 @@
 import { isNumber, isString, type Nullable } from "@ubloimmo/front-util";
-import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 
 import {
   ListFilterCollection,
@@ -38,7 +37,14 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@/layouts/Table";
-import { arrayOf, capitalize, delay, useStatic } from "@utils";
+import {
+  arrayOf,
+  capitalize,
+  cssPx,
+  cssVarUsage,
+  delay,
+  useStatic,
+} from "@utils";
 
 type Pokemon = {
   id: number;
@@ -412,6 +418,13 @@ const usePokemonListConfig = (
 
   return config;
 };
+
+const spriteStyle: CSSProperties = {
+  aspectRatio: "1/1",
+  height: cssVarUsage("s-12"),
+  cursor: "help",
+};
+
 const Renderer = () => {
   const { data } = useListContext<Pokemon>();
 
@@ -452,7 +465,8 @@ const Renderer = () => {
               <TableCell padded>
                 <FlexLayout direction="row" fill align="center" justify="start">
                   {pokemon.sprites.front_default && (
-                    <Sprite
+                    <img
+                      style={spriteStyle}
                       src={pokemon.sprites.front_default}
                       onClick={() => setAudioUrl(pokemon.cries.latest)}
                     />
@@ -488,30 +502,24 @@ const Renderer = () => {
   );
 };
 
-const LoadingContainer = styled.div`
-  width: 100%;
-  position: sticky;
-  inset: 0;
-  bottom: unset;
-`;
+const loadingContainerStyle: CSSProperties = {
+  width: "100%",
+  position: "sticky",
+  inset: 0,
+  bottom: "unset",
+};
 
-const LoadingFill = styled(Loading)`
-  width: 100%;
-`;
-
-const Sprite = styled.img`
-  aspect-ratio: 1/1;
-  height: var(--s-12);
-  cursor: help;
-`;
+const loadingFillStyle: CSSProperties = {
+  width: "100%",
+};
 
 const LoadingBar = () => {
   const { dataProvider } = useListContext<Pokemon>();
   if (!dataProvider.loading) return null;
   return (
-    <LoadingContainer>
-      <LoadingFill animation="ProgressBar" />
-    </LoadingContainer>
+    <div style={loadingContainerStyle}>
+      <Loading styleOverride={loadingFillStyle} animation="ProgressBar" />
+    </div>
   );
 };
 
@@ -540,6 +548,16 @@ export type PokemonListExampleProps = {
   dataProvider?: Exclude<DataProviderType, "custom">;
 };
 
+const sideViewWidth = cssPx(340);
+const sideViewStyles: CSSProperties = {
+  width: sideViewWidth,
+  maxWidth: sideViewWidth,
+  minWidth: sideViewWidth,
+  position: "sticky",
+  top: cssVarUsage("s-2"),
+  left: 0,
+};
+
 export const PokemonListExample = ({
   dataProvider = "static",
 }: PokemonListExampleProps) => {
@@ -549,11 +567,16 @@ export const PokemonListExample = ({
     <ListContextProvider config={config}>
       <FlexLayout direction="row" fill gap="s-3">
         <List>
-          <SideView direction="column" fill gap="s-3">
+          <FlexLayout
+            styleOverride={sideViewStyles}
+            direction="column"
+            fill
+            gap="s-3"
+          >
             <ListSideHeader title="Pokedex" />
             <SearchBox />
             <ListFilterCollection title="Attributes" />
-          </SideView>
+          </FlexLayout>
           <FlexLayout fill direction="column" gap="s-2">
             <ListFilterPresetCollection />
             <LoadingBar />
@@ -565,11 +588,3 @@ export const PokemonListExample = ({
     </ListContextProvider>
   );
 };
-
-const SideView = styled(FlexLayout)`
-  width: 340px;
-  min-width: 340px;
-  position: sticky;
-  top: var(--s-2);
-  left: 0;
-`;

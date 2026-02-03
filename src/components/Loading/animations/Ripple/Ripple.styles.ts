@@ -1,54 +1,25 @@
-import { css, keyframes, type StyleFunction } from "styled-components";
+import styles from "./Ripple.module.scss";
 
 import { parseFixedLength } from "@/sizes/size.utils";
-import { cssVarUsage } from "@utils";
+import { cssVarUsage, useCssClasses, useCssVariables } from "@utils";
 
 import type { LoadingAnimationProps } from "../Loading.animations.types";
-import type { StyleProps } from "@types";
 
-const cssAnim = keyframes`
-  from {
-    transform: scale(0);
-    opacity: 1;
-  }
-  to {
-    transform: scale(1);
-    opacity: 0;
-  }
-`;
+export function useRippleStyles({
+  className: cn,
+  color,
+  size,
+  styleOverride,
+}: LoadingAnimationProps) {
+  const style = useCssVariables(
+    () => ({
+      size: parseFixedLength(size),
+      color: cssVarUsage(color),
+    }),
+    styleOverride
+  );
 
-export const rippleStyle: StyleFunction<StyleProps<LoadingAnimationProps>> = ({
-  $size,
-  $color,
-}) => {
-  const size = parseFixedLength($size);
-  return css`
-    width: ${size};
-    min-width: ${size};
-    max-width: ${size};
-    height: ${size};
-    min-height: ${size};
-    max-height: ${size};
-    display: inline-block;
-    position: relative;
-    background: none;
-    cursor: progress;
-    border-radius: 50%;
+  const className = useCssClasses(styles.ripple, cn);
 
-    &::after,
-    &:before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      box-sizing: border-box;
-      border-radius: 50%;
-      background: ${cssVarUsage($color)};
-      opacity: 0;
-      animation: ${cssAnim} 1800ms ease-in-out infinite running;
-    }
-    &:after {
-      animation-duration: 900ms;
-      animation-delay: 900ms;
-    }
-  `;
-};
+  return { className, style };
+}

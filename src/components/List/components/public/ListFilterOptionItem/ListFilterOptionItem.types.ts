@@ -42,5 +42,6 @@ export type ListFilterOptionItemProps<TItem extends object = object> = {
   closeFilter?: VoidFn;
 } & ListFilterOptionItemHighlightProps;
 
+/** @deprecated styled-components */
 export type ListFilterOptionItemStyleProps =
   StyleProps<ListFilterOptionItemHighlightProps>;

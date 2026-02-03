@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { CSSProperties } from "react";
 
 import { DefaultListItem } from "./Default.types";
 import { useListContext } from "../../context";
@@ -12,12 +12,18 @@ import {
   TableRow,
   TableScrollView,
 } from "@/layouts/Table";
+import { cssRem } from "@utils";
+
+const containerStyle: CSSProperties = {
+  height: cssRem(10),
+  maxHeight: "100%",
+};
 
 export const DefaultListRenderer = () => {
   const { data } = useListContext<DefaultListItem>();
 
   return (
-    <Container>
+    <TableScrollView styleOverride={containerStyle}>
       <Table>
         <TableHeader sticky>
           <TableHeaderCell>Value</TableHeaderCell>
@@ -36,11 +42,6 @@ export const DefaultListRenderer = () => {
           })}
         </TableBody>
       </Table>
-    </Container>
+    </TableScrollView>
   );
 };
-
-const Container = styled(TableScrollView)`
-  height: 10rem;
-  max-height: 100%;
-`;

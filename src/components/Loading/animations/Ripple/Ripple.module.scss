@@ -1,0 +1,40 @@
+@use "../../../../styles/mixins.scss";
+
+@keyframes ripple {
+  from {
+    scale: 0.2;
+    opacity: 1;
+  }
+  to {
+    scale: 1;
+    opacity: 0.2;
+  }
+}
+
+.ripple {
+  --size: var(--s-4);
+  --color: var(--primary-base);
+  @include mixins.dimensions(var(--size), var(--size), true);
+
+  display: block;
+  position: relative;
+  background: none;
+  cursor: progress;
+  border-radius: 50%;
+
+  &::after,
+  &:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--color);
+    opacity: 0;
+    animation: ripple 900ms var(--bezier) infinite alternate running;
+  }
+  &:after {
+    animation-duration: 450ms;
+    animation-delay: 450ms;
+  }
+}

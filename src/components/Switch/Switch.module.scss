@@ -1,0 +1,81 @@
+@use "../../styles/mixins.scss";
+
+@keyframes switch-active {
+  25% {
+    scale: 1.2 0.8;
+  }
+  100% {
+    scale: 1;
+    translate: var(--translate-x) 0;
+  }
+}
+
+@keyframes switch-inactive {
+  25% {
+    scale: 1.2 0.8;
+  }
+  100% {
+    scale: 1;
+    translate: 0;
+  }
+}
+
+.switch {
+  --padding: 0.1875rem; // 3px
+  --translate-x: calc(var(--s-4) + var(--padding) / 2);
+
+  cursor: pointer;
+  width: var(--s-10);
+  max-width: var(--s-10);
+  min-width: var(--s-10);
+  height: 1.375rem;
+  border-radius: var(--s-5);
+  padding: var(--padding);
+  border: none;
+  transition: background-color 300ms ease;
+  background-color: var(--gray-200);
+
+  &[aria-checked="true"] {
+    background-color: var(--primary-base);
+
+    &:disabled {
+      background-color: var(--gray-500);
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.switch-handle {
+  --handle-bg: var(--white);
+
+  width: var(--s-4);
+  height: var(--s-4);
+  min-width: var(--s-4);
+  min-height: var(--s-4);
+  border-radius: var(--s-2);
+  background: var(--handle-bg);
+  transform-origin: center center;
+
+  cursor: inherit;
+
+  .switch:disabled & {
+    &[aria-checked] {
+      --handle-bg: var(--gray-200);
+    }
+    &[aria-checked="false"] {
+      --handle-bg: var(--gray-400);
+    }
+  }
+
+  &[aria-checked] {
+    animation: switch-active 300ms var(--bezier) forwards;
+  }
+
+  &[aria-checked="false"] {
+    animation: switch-inactive 300ms var(--bezier) forwards;
+    translate: var(--translate-x) 0;
+  }
+}
