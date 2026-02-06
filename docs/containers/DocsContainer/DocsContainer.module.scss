@@ -140,6 +140,7 @@
       background: var(--gray-50-80);
       border: 1px solid var(--gray-100-50);
       box-shadow: none;
+      margin: var(--s-4) 0 var(--s-8);
 
       div:has(> button) {
         bottom: var(--s-1);
@@ -167,6 +168,14 @@
           }
         }
       }
+    }
+
+    [data-testid="docs-header"] pre:has(> .docblock-source) {
+      width: 100%;
+    }
+    [data-testid="docs-header"] .docblock-source {
+      background: var(--white);
+      margin: 0;
     }
   }
 }
