@@ -430,8 +430,9 @@ function injectGlobalStyle(styleStr: string) {
 }
 
 /**
- * Global style component that parses the `styled-components` {@link Theme},
- * transforms it into global CSS variables using {@link useGlobalStyle} and injects them into the document.
+ * Global style component that parses the uikit-'s global {@link Theme},
+ * transforms it into global CSS variables using {@link useFormattedGlobalStyle},
+ * and injects them into the documen with {@link injectGlobalStyle}.
  *
  * @see useGlobalStyle
  *
