@@ -11,7 +11,6 @@ import {
   useCssClasses,
   useMergedProps,
   useStatic,
-  useStyleProps,
   useUikitTranslation,
   type TranslationKey,
 } from "@utils";
@@ -47,7 +46,6 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
     isValid,
     submitForm,
   } = useFormContext();
-  const styleProps = useStyleProps({ isEditing, isLoading, isSubmitting });
 
   const className = useCssClasses(styles["form-edit-banner"], [
     styles.editing,
@@ -91,7 +89,6 @@ export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
       justify="space-between"
       testId="form-edit-banner"
       overrideTestId
-      {...styleProps}
     >
       {mergedProps.bannerInfo ? (
         <FlexRowLayout

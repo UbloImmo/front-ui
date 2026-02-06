@@ -93,11 +93,7 @@ const ComponentPropsTableHeader = (): JSX.Element => {
     <TableHeader>
       <TableRow>
         {columns.map((column, index) => (
-          <TableHeaderCell key={`${column}-${index}`}>
-            <Text size="s" weight="medium" color="gray-800" important>
-              {column}
-            </Text>
-          </TableHeaderCell>
+          <TableHeaderCell key={`${column}-${index}`}>{column}</TableHeaderCell>
         ))}
       </TableRow>
     </TableHeader>
@@ -121,7 +117,7 @@ const ComponentPropRow = ({
   const textColor = useMemo(() => (todo ? "gray-400" : "gray-800"), [todo]);
   return (
     <TableRow $todo={todo} $required={required}>
-      <TableCell>
+      <TableCell $raw>
         <Text
           size="m"
           weight={todo ? "regular" : required ? "bold" : "medium"}
@@ -132,15 +128,15 @@ const ComponentPropRow = ({
           {name}
         </Text>
       </TableCell>
-      <TableCell>
+      <TableCell $raw>
         <Source code={type} />
       </TableCell>
-      <TableCell>
+      <TableCell $raw>
         <Text size="m" color={textColor} important>
           <code>{defaultValue}</code>
         </Text>
       </TableCell>
-      <TableCell>
+      <TableCell $raw>
         <Text size="m" color={textColor} important>
           <Markdown>{description}</Markdown>
         </Text>

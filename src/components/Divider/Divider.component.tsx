@@ -6,7 +6,7 @@ import { useDividerStyles } from "./Divider.styles";
 import { Heading } from "@/components/Heading";
 import { Text } from "@/components/Text";
 import { FlexRowLayout } from "@/layouts/Flex";
-import { useTestId, useMergedProps, useStyleProps, useLogger } from "@utils";
+import { useTestId, useMergedProps, useLogger } from "@utils";
 
 import type { DividerProps, DividerDefaultProps } from "./Divider.types";
 import type { TestIdProps } from "@types";
@@ -33,7 +33,6 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
   const { error } = useLogger("Divider");
   const mergedProps = useMergedProps(defaultDividerProps, props);
   const { justify } = mergedProps;
-  const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("divider", props);
   const { classNames, style } = useDividerStyles(mergedProps);
 
@@ -55,7 +54,6 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
       testId={testId}
       overrideTestId
       as={mergedProps.as}
-      {...styleProps}
       gap="s-2"
       align="center"
       justify="center"

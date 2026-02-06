@@ -20,7 +20,7 @@ export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
     <FlexColumnLayout gap="s-3" align="start" justify="start">
       <FlexColumnLayout gap={0} align="start" justify="start">
         {parent && !isEmptyString(parent) && (
-          <Text size="xs" color="primary-medium" weight="medium">
+          <Text size="xs" color="primary-base" weight="medium">
             {parent}
           </Text>
         )}

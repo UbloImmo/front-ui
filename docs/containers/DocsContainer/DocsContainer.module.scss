@@ -170,6 +170,20 @@
       }
     }
 
+    table .docblock-source {
+      background: none;
+      border: none;
+      margin: 0;
+
+      pre.prismjs {
+        padding: 0 !important;
+      }
+
+      div:has(> button) {
+        display: none;
+      }
+    }
+
     [data-testid="docs-header"] pre:has(> .docblock-source) {
       width: 100%;
     }

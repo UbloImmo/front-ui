@@ -1,5 +1,4 @@
 import { fn } from "storybook/test";
-import styled from "styled-components";
 
 import { FeatureSwitch } from "./FeatureSwitch.component";
 import { type FeatureSwitchProps } from "./FeatureSwitch.types";
@@ -11,8 +10,12 @@ import { Text } from "../Text";
 
 import { ComponentVariants, type DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
-import { FlexColumnLayout, FlexRowLayout } from "@layouts";
-import { useMergedProps } from "@utils";
+import {
+  FlexColumnLayout,
+  FlexDirectionLayoutProps,
+  FlexRowLayout,
+} from "@layouts";
+import { cssVarUsage, useCssStyles, useMergedProps } from "@utils";
 
 import type { IconName } from "../Icon";
 import type { TooltipProps } from "../Tooltip";
@@ -90,9 +93,13 @@ const options = [
   },
 ];
 
-const Container = styled(FlexRowLayout)`
-  margin: var(--s-2);
-`;
+// const Container = styled(FlexRowLayout)`
+//   margin: var(--s-2);
+// `;
+const Container = (props: FlexDirectionLayoutProps) => {
+  const style = useCssStyles({ margin: cssVarUsage("s-2") });
+  return <FlexRowLayout {...props} styleOverride={style} />;
+};
 
 const variants: DetailConfigVariants<FeatureSwitchProps<NullishPrimitives>> = [
   {
@@ -182,14 +189,15 @@ Compact.parameters = {
   ),
 };
 
-const CustomDescription = styled(FlexColumnLayout)`
-  margin-top: var(--s-3);
-`;
-
 const descriptionVariants = [
   null,
   "This is a simple description, just a plain text to provide more information about the feature.",
-  <CustomDescription key="custom" fill gap="s-3">
+  <FlexColumnLayout
+    styleOverride={{ marginTop: cssVarUsage("s-2") }}
+    key="custom"
+    fill
+    gap="s-3"
+  >
     <Divider />
     <FlexRowLayout fill gap="s-3" align="center">
       <Avatar
@@ -206,7 +214,7 @@ const descriptionVariants = [
     <div>
       <Hypertext href="#">Additional link</Hypertext>
     </div>
-  </CustomDescription>,
+  </FlexColumnLayout>,
 ];
 
 export const Description = () => {

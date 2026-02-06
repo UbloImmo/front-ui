@@ -1,0 +1,13 @@
+.zone {
+  background: var(--gray-50);
+  min-height: 100px;
+  padding: var(--s-3);
+  border-radius: var(--s-1);
+  border: 1px dashed var(--gray-200);
+  overflow: hidden;
+  transition: background 150ms var(--bezier);
+
+  [data-expanded="true"] & {
+    background: var(--primary-light);
+  }
+}

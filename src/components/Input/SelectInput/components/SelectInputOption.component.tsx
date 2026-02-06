@@ -10,7 +10,7 @@ import { useSelectInputOptionClassNames } from "../SelectInput.styles";
 import { Icon } from "@/components/Icon";
 import { Text } from "@/components/Text";
 import { FlexRowLayout } from "@/layouts/Flex";
-import { useHtmlAttribute, useStyleProps, useTestId } from "@utils";
+import { useHtmlAttribute, useTestId } from "@utils";
 
 import type { SelectInputOptionProps } from "../SelectInput.types";
 import type { PaletteColor, TextProps } from "@types";
@@ -32,8 +32,6 @@ const SelectInputOption = <
   onSelect,
   ...option
 }: SelectInputOptionProps<TValue, TExtraData>): JSX.Element => {
-  const styleProps = useStyleProps(option);
-
   const contentColor = useMemo<PaletteColor>(() => {
     return option.disabled
       ? "gray-500"
@@ -81,7 +79,6 @@ const SelectInputOption = <
         data-active={option.active}
         data-testid={testId}
         aria-disabled={ariaDisabled}
-        {...styleProps}
         tabIndex={option.disabled ? -1 : 0}
       >
         <Option {...option} />

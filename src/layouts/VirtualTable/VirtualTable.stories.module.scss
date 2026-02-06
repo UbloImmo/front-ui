@@ -1,0 +1,6 @@
+.custom-header-cell {
+  & > div {
+    background: var(--success-light);
+    border-color: var(--success-base);
+  }
+}

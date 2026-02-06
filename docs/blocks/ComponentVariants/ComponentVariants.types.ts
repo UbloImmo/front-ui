@@ -63,6 +63,13 @@ export type PropVariant<TComponentProps extends Record<string, unknown>> =
     __propVariantLabel: string;
   };
 
+export type PropVariantInternal<
+  TComponentProps extends Record<string, unknown>,
+> = {
+  componentProps: TComponentProps;
+  variantLabel: string;
+};
+
 export type ComponentVariantsConfig<
   TComponentProps extends Record<string, unknown>,
   TPropKey extends keyof TComponentProps,

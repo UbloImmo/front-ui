@@ -1,10 +1,10 @@
 import { faker as VirtualTableStories } from "@faker-js/faker";
-import styled from "styled-components";
 
 import { defaultVirtualTableProps } from "./VirtualTable.defaults";
 import { VirtualTable } from "./VirtualTable.layout";
 import { FlexRowLayout } from "../Flex";
 import { TableHeaderCell, type TableStyle } from "../Table";
+import styles from "./VirtualTable.stories.module.scss";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
@@ -187,13 +187,13 @@ Overscan.parameters = {
   ),
 };
 
-const styles: TableStyle[] = ["list", "form"];
+const tableStyles: TableStyle[] = ["list", "form"];
 
 export const Styles = () => (
   <ComponentVariants
     defaults={storyProps}
     of={VirtualTable<StoryData>}
-    variants={styles}
+    variants={tableStyles}
     for="style"
     columns={1}
     propLabels
@@ -201,19 +201,12 @@ export const Styles = () => (
 );
 Styles.parameters = {
   docs: componentSource(
-    styles.map((style) => ({
+    tableStyles.map((style) => ({
       ...storyProps,
       style,
     }))
   ),
 };
-
-const ReplacementCell = styled(TableHeaderCell)`
-  & > div {
-    background: var(--success-light);
-    border-color: var(--success-base);
-  }
-`;
 
 const headerProps: VirtualTableProps<StoryData> = {
   ...storyProps,
@@ -246,14 +239,14 @@ const headerProps: VirtualTableProps<StoryData> = {
     {
       HeaderContent: {
         ReplacementCell: () => (
-          <ReplacementCell>
+          <TableHeaderCell className={styles["custom-header-cell"]}>
             <FlexRowLayout align="center" fill="row" justify="start" gap="s-1">
               <Icon name="Stars" color="success-medium" size="s-3" />
               <Text color="success-dark" italic weight="bold">
                 Replaced cell
               </Text>
             </FlexRowLayout>
-          </ReplacementCell>
+          </TableHeaderCell>
         ),
       },
       CellContent: () => null,

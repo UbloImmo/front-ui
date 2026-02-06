@@ -1,11 +1,11 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
 import { GridLayout } from "./Grid.layout";
 import { GridFlow, GridGap, GridLayoutProps, GridTemplate } from "./Grid.types";
 import { ComponentVariants } from "../../../docs/blocks/ComponentVariants";
 
 import { arrayOf } from "@/utils/array.utils";
+import { useCssStyles } from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
@@ -17,25 +17,43 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const GridItem = styled.div`
-  background-color: var(--primary-medium);
-  box-shadow: var(--shadow-button);
-  border-radius: var(--s-1);
-  min-width: var(--s-10);
-  min-height: var(--s-10);
-`;
+const GridItem = ({
+  first,
+  last,
+  span,
+}: {
+  first?: boolean;
+  last?: boolean;
+  span?: boolean;
+}) => {
+  const style = useCssStyles(
+    {
+      backgroundColor: "var(--primary-medium)",
+      boxShadow: "var(--shadow-button)",
+      borderRadius: "var(--s-1)",
+      minWidth: "var(--s-10)",
+      minHeight: "var(--s-10)",
+    },
+    span
+      ? {
+          gridColumn: "span 4",
+        }
+      : null,
+    first
+      ? {
+          gridRow: "span 2",
+          height: "100%",
+        }
+      : null,
+    last
+      ? {
+          gridColumn: "span 8",
+        }
+      : null
+  );
 
-const GridItemSpans = styled(GridItem)`
-  grid-column: span 4;
-  &:first-child {
-    grid-row: span 2;
-    height: 100%;
-  }
-
-  &:nth-child(4) {
-    grid-column: span 8;
-  }
-`;
+  return <div style={style} />;
+};
 
 export const SampleGridItems = arrayOf(4, (index) => <GridItem key={index} />);
 
@@ -152,7 +170,9 @@ Flow.args = {
 
 export const Spans: Story = {
   args: {
-    children: arrayOf(4, (index) => <GridItemSpans key={index} />),
+    children: arrayOf(4, (index) => (
+      <GridItem span first={!index} last={index === 3} key={index} />
+    )),
     rows: 2,
   },
 };

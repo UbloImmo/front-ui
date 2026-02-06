@@ -1,5 +1,4 @@
 import { fn } from "storybook/test";
-import styled, { css } from "styled-components";
 
 import { MultiSelectInput } from "./MultiSelectInput.component";
 import { flattenSelectOptions } from "../SelectInput/SelectInput.utils";
@@ -8,7 +7,8 @@ import { Badge, type BadgeProps } from "@/components/Badge";
 import { Text } from "@/components/Text";
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
-import { FlexRowLayout } from "@layouts";
+import { type FlexDirectionLayoutProps, FlexRowLayout } from "@layouts";
+import { useCssStyles } from "@utils";
 
 import type { MultiSelectInputProps } from "./MultiSelectInput.types";
 import type {
@@ -144,7 +144,12 @@ export const GroupOptions: Story = {
 
 const CustomOption: CustomOptionComponent<string, BadgeProps> = (option) => {
   return (
-    <CustomOptionContainer justify="space-between" align="center" fill>
+    <CustomOptionContainer
+      justify="space-between"
+      align="center"
+      fill
+      $active={option.active}
+    >
       <Text>{option.label}</Text>
       <Badge {...option.extraData} />
     </CustomOptionContainer>
@@ -195,15 +200,16 @@ export const CustomComponents = (
   );
 };
 
-const CustomOptionContainer = styled(FlexRowLayout)<{ $active?: boolean }>`
-  padding: var(--s-2);
-
-  ${({ $active }) =>
-    $active &&
-    css`
-      background-color: var(--primary-light);
-    `}
-`;
+const CustomOptionContainer = ({
+  $active,
+  ...props
+}: FlexDirectionLayoutProps & { $active?: boolean }) => {
+  const style = useCssStyles(
+    { padding: "var(--s-2)" },
+    $active ? { background: "var(--primary-light)" } : undefined
+  );
+  return <FlexRowLayout {...props} styleOverride={style} />;
+};
 
 const delayedOptions = (query: Nullable<string>) => {
   const optionsCopy = flattenSelectOptions(options);

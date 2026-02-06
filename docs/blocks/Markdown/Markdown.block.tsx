@@ -1,6 +1,7 @@
 import { Markdown as SBMarkdown } from "@storybook/addon-docs/blocks";
 import { useMemo } from "react";
 
+import { Input } from "../Input";
 import {
   Em,
   Strong,
@@ -14,6 +15,14 @@ import {
   Hr,
 } from "../Typography";
 import styles from "./Markdown.module.scss";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from "../Table";
 
 import { useCssClasses } from "@utils";
 
@@ -43,6 +52,13 @@ export const markdownOverrides = (color?: PaletteColor) => ({
   ul: Ul,
   li: Li,
   hr: Hr,
+  table: Table,
+  tbody: TableBody,
+  td: TableCell,
+  thead: TableHeader,
+  th: TableHeaderCell,
+  tr: TableRow,
+  input: Input,
 });
 
 /**

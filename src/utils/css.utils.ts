@@ -2,6 +2,7 @@ import {
   GenericFn,
   isArray,
   isFunction,
+  isNullish,
   isNumber,
   isObject,
   isString,
@@ -505,33 +506,85 @@ export const cssClasses = (...classes: CssClassInput): Optional<string> => {
   return classStr.trim();
 };
 
-export const useCssClasses = (...classes: CssClassInput) => {
-  return useMemo(() => cssClasses(...classes), [classes]);
+/**
+ * Memoized {@link cssClasses} utility. Combines multiple Css classes into a single string.
+ * @param {CssClassInput} classes - List of classes to combine
+ * @returns {Optional<string>} A concatenated string containing all provided active classes or undefined if none active
+ *
+ * @example
+ * useCssClasses("base", "secondary", ["not-included", false], ["included", true])
+ * // -> "base secondary included"
+ * useCssClasses("base", "secondary", "included")
+ * // -> "base secondary included"
+ * uCssClasses({ base: true, secondary: true, "not-included": false, included: true })
+ * // -> "base secondary included"
+ */
+export const useCssClasses = (...classes: CssClassInput): Optional<string> => {
+  return useMemo<Optional<string>>(() => cssClasses(...classes), [classes]);
 };
 
+/**
+ * Builds a {@link CSSProperties} CSS styles object containing CSS variable assignements from an object.
+ * Keys are variable names and get prepended with `--`.
+ * Filters `null` & `undefined` values out before stringifying them.
+ *
+ * @param {Record<string, Nullish<string | number>>} variables - CSS variable declarations
+ * @returns {CSSProperties} Valid CSS style object holding CSS variable declarations.
+ *
+ * @example
+ * const vars = cssVariables({
+ *   size: "2rem",
+ *   "my-color": "red",
+ *   padding: null,
+ *   margin: undefined
+ * });
+ * console.log(vars);
+ * // { "--size": "2rem", "--my-color": "red" };
+ */
 export const cssVariables = (
-  variables: Record<string, Optional<string | number>>
+  variables: Record<string, Nullish<string | number>>
 ): CSSProperties => {
   const vars: Record<string, string> = {};
 
   for (const varName in variables) {
     const value = variables[varName];
-    if (isUndefined(value)) continue;
+    if (isNullish(value)) continue;
     vars[cssVarName(varName)] = String(value);
   }
 
   return vars as CSSProperties;
 };
 
+/**
+ * Augmented version of {@link cssVariables} in hook form.
+ * Takes an additional `override` argument.
+ *
+ * @param {Record<string, Nullish<string | number>> | GenericFn<[], Record<string, Nullish<string | number>>>} variables - Either an object containing CSS varaibles to transform or a synchronous function returning one.
+ * @param {Nullish<CSSProperties>} [override] - Optional style object to spread into the returned styles.
+ * @returns {CSSProperties} - Valid CSS style object holding CSS variable declarations and overrides (if provided).
+ *
+ * @example
+ * const styles = useCssVariables({
+ *   size: "2rem",
+ *   "my-color": "red",
+ *   padding: null,
+ *   margin: undefined
+ * }, {
+ *  marginTop: "2px",
+ *  background: "blue",
+ * });
+ * console.log(styles);
+ * // { "--size": "2rem", "--my-color": "red", marginTop: "2px", background: "blue" };
+ */
 export const useCssVariables = (
   variables:
-    | Record<string, Optional<string | number>>
-    | GenericFn<[], Record<string, Optional<string | number>>>,
+    | Record<string, Nullish<string | number>>
+    | GenericFn<[], Record<string, Nullish<string | number>>>,
   override?: Nullish<CSSProperties>
 ): CSSProperties => {
   return useMemo(() => {
     const baseVars = isFunction<
-      GenericFn<[], Record<string, Optional<string | number>>>
+      GenericFn<[], Record<string, Nullish<string | number>>>
     >(variables)
       ? variables()
       : variables;

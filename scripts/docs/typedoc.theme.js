@@ -32,7 +32,7 @@ function sanitizeComments(str) {
     return placeholder;
   });
   // If line starts with a > treat it as a blockquote
-  // Otherwise escape all <, > and =
+  // Otherwise escape all <, > and
   str = str
     // escape =
     .replace(/=/g, "\\=")

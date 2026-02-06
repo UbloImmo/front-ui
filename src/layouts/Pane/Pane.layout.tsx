@@ -129,14 +129,12 @@ const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
         style={pane.style}
         data-testid={testId}
         data-expanded={!isCollapsed}
-        // {...styleProps}
       >
         <section
           ref={contentRef}
           className={paneContent.className}
           style={paneContent.style}
           data-testid="pane-content"
-          // {...styleProps}
         >
           {mergedProps.children}
           {DynamicContent && <DynamicContent isCollapsed={isCollapsed} />}

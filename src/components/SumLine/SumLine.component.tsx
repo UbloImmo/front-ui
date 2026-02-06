@@ -6,7 +6,7 @@ import { Text } from "../Text";
 import { useSumLineClassNames } from "./SumLine.styles";
 
 import { FlexRowLayout } from "@/layouts/Flex";
-import { useMergedProps, useTestId, useStyleProps } from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
 import type { SumLineDefaultProps, SumLineProps } from "./SumLine.types";
 import type { TestIdProps, StyleOverrideProps } from "@types";
@@ -54,8 +54,6 @@ const SumLine = (
     return `/ ${period}`;
   }, [period]);
 
-  const styleProps = useStyleProps({ size });
-
   return (
     <FlexRowLayout
       className={classNames.container}
@@ -66,7 +64,6 @@ const SumLine = (
       fill="row"
       gap="s-2"
       justify="space-between"
-      {...styleProps}
     >
       <Text
         color="gray-700"

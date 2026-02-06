@@ -7,7 +7,7 @@ import {
 } from "./ActionIcon.styles";
 import { Icon } from "../Icon";
 
-import { useLogger, useMergedProps, useStyleProps, useTestId } from "@utils";
+import { useLogger, useMergedProps, useTestId } from "@utils";
 
 import type {
   ActionIconProps,
@@ -44,7 +44,6 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
     defaultActionIconProps,
     props
   );
-  const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("action-icon", props);
 
   if (!props.icon) {
@@ -81,7 +80,6 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
 
   return (
     <button
-      {...styleProps}
       className={className}
       data-testid={testId}
       disabled={mergedProps.disabled}

@@ -1,11 +1,11 @@
 import { isNumber, isObject, isString, type KeyOf } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 
 import styles from "./ComponentVariants.module.scss";
 import {
   ComponentVariantsConfig,
   ComponentVariantsDetailedConfig,
-  PropVariant,
+  PropVariantInternal,
 } from "./ComponentVariants.types";
 
 import { FlexLayout, GridLayout } from "@/layouts";
@@ -49,46 +49,54 @@ export const ComponentVariants = <
     | ComponentVariantsConfig<TComponentProps, TPropKey>
     | ComponentVariantsDetailedConfig<TComponentProps>
 ): JSX.Element => {
-  const propVariants = useMemo<PropVariant<TComponentProps>[]>(() => {
+  const propVariants = useMemo<PropVariantInternal<TComponentProps>[]>(() => {
     if (isDetailedConfig(props)) {
       return props.variants.map(
-        (variant): PropVariant<TComponentProps> => ({
-          ...props.defaults,
-          ...variant,
-          __propVariantLabel: isString(variant?.__propVariantLabel)
+        (variant): PropVariantInternal<TComponentProps> => ({
+          componentProps: {
+            ...props.defaults,
+            ...variant,
+          },
+          variantLabel: isString(variant?.__propVariantLabel)
             ? variant.__propVariantLabel
             : JSON.stringify(variant).replace(/"/g, ""),
         })
       );
     }
 
-    return props.variants.map((variant): PropVariant<TComponentProps> => {
-      const isCompound =
-        isObject(variant) &&
-        "value" in variant &&
-        "label" in variant &&
-        isString(variant.label) &&
-        (typeof variant.value === typeof props.defaults[props.for] ||
-          props.forceCompound);
-      if (isCompound)
+    return props.variants.map(
+      (variant): PropVariantInternal<TComponentProps> => {
+        const isCompound =
+          isObject(variant) &&
+          "value" in variant &&
+          "label" in variant &&
+          isString(variant.label) &&
+          (typeof variant.value === typeof props.defaults[props.for] ||
+            props.forceCompound);
+        if (isCompound)
+          return {
+            componentProps: {
+              ...props.defaults,
+              [props.for]: variant.value,
+            },
+            variantLabel: variant.label,
+          };
+        let label = JSON.stringify(variant).replace(/"/g, "");
+        if (props.propLabels) {
+          label = `${props.for}:${label}`;
+        }
         return {
-          ...props.defaults,
-          [props.for]: variant.value,
-          __propVariantLabel: variant.label,
+          componentProps: {
+            ...props.defaults,
+            [props.for]: variant,
+          },
+          variantLabel: label,
         };
-      let label = JSON.stringify(variant).replace(/"/g, "");
-      if (props.propLabels) {
-        label = `${props.for}:${label}`;
       }
-      return {
-        ...props.defaults,
-        [props.for]: variant,
-        __propVariantLabel: label,
-      };
-    });
+    );
   }, [props]);
 
-  const Component = useMemo(() => {
+  const Component = useMemo<FC<TComponentProps>>(() => {
     return props.of;
   }, [props.of]);
 
@@ -147,18 +155,18 @@ export const ComponentVariants = <
   return (
     <div className={container}>
       <Wrapper>
-        {propVariants.map((variantProps, index) => (
+        {propVariants.map(({ variantLabel, componentProps }, index) => (
           <article
-            key={`${variantProps.__propVariantLabel}-${index}`}
+            key={`${variantLabel}-${index}`}
             className={wrapper.className}
             style={wrapper.style}
           >
             <div className={componentContainer}>
-              <Component {...variantProps} />
+              <Component {...componentProps} />
             </div>
             <div className={labelContainer}>
               <Text size="xs" color="gray-600" weight="medium">
-                <code>{variantProps.__propVariantLabel}</code>
+                <code>{variantLabel}</code>
               </Text>
             </div>
           </article>
