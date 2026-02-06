@@ -150,6 +150,7 @@
     "pre-push": "./scripts/pre-push.sh || bun test:all",
     "icons:generate": "bun scripts/svg/index.ts && bun test:lint:fix",
     "typography:generate": "bun scripts/typography/index.ts && bun test:lint:fix",
+    "tokens:generate": "bun icons:generate && bun typography:generate && bun test:lint:fix",
     "prepublishOnly": "bun lib:build",
     "uninstall": "rm -rf node_modules",
     "reinstall": "bun run uninstall && bun install",
@@ -191,6 +192,7 @@
     "react-international-phone": "^4.2.9",
     "react-virtuoso": "^4.12.5",
     "sonner": "^2.0.6",
+    "ts-dedent": "^2.2.0",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
   }
