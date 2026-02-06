@@ -3,12 +3,13 @@ import { useMemo } from "react";
 import { FormFieldGridItem } from "./FormFieldGridItem.component";
 import { useFormContext } from "../Form.context";
 
-import { FieldContainer } from "@/components/Field";
+import fieldStyles from "@/components/Field/Field.module.scss";
 import { useFieldAssistiveText } from "@/components/Field/Field.utils";
 import { Icon } from "@/components/Icon";
 import { useInputId } from "@/components/Input";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { InputLabel, InputLabelProps } from "@/components/InputLabel";
+import { FlexColumnLayout } from "@layouts";
 import { isEmptyString } from "@utils";
 
 import type { BuiltFormCustomFieldProps } from "../Form.types";
@@ -98,7 +99,8 @@ export const FormCustomField = (
       overrideTestId
       fill
     >
-      <FieldContainer
+      <FlexColumnLayout
+        className={fieldStyles.field}
         testId="form-custom-field"
         overrideTestId
         data-field-type="custom"
@@ -125,7 +127,7 @@ export const FormCustomField = (
             overrideTestId
           />
         )}
-      </FieldContainer>
+      </FlexColumnLayout>
     </FormFieldGridItem>
   );
 };

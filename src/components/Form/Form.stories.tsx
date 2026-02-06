@@ -565,6 +565,8 @@ const formTableProps: FormTableProps<IdentityTable> = {
     property: "selected",
     behavior: "default",
   },
+  error: true,
+  errorText: "heya",
   EmptyCard: () => {
     return <span>Empty card</span>;
   },

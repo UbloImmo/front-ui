@@ -24,11 +24,12 @@ import { FormTableRow } from "./FormTableRow.component";
 import { type BuiltFormTableProps } from "../../Form.types";
 import { FormTableFooter } from "./FormTableFooter/FormTableFooter.component";
 
-import { FieldContainer } from "@/components/Field";
+import fieldStyles from "@/components/Field/Field.module.scss";
 import { useFieldAssistiveText } from "@/components/Field/Field.utils";
 import { Icon } from "@/components/Icon";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { InputLabel } from "@/components/InputLabel";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { Table, TableBody, TableScrollView } from "@/layouts/Table";
 import { isEmptyString } from "@utils";
 
@@ -153,7 +154,8 @@ export const FormTable = ({
       overrideTestId
       fill
     >
-      <FieldContainer
+      <FlexColumnLayout
+        className={fieldStyles.field}
         testId="form-custom-field"
         overrideTestId
         data-field-type="custom"
@@ -256,7 +258,7 @@ export const FormTable = ({
             overrideTestId
           />
         )}
-      </FieldContainer>
+      </FlexColumnLayout>
     </FormFieldGridItem>
   );
 };

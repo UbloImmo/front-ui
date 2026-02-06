@@ -1,6 +1,5 @@
 import { isFunction } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
-import styled from "styled-components";
 
 import { useFieldAssistiveText, useFieldValidity } from "./Field.utils";
 import { NativeInputOnChangeFn, useInputId } from "../Input";
@@ -150,12 +149,3 @@ const Field = <TType extends InputType>(
 Field.defaultProps = defaultFieldProps;
 
 export { Field };
-
-export const FieldContainer = styled(FlexColumnLayout)`
-  input,
-  textarea,
-  select,
-  label {
-    width: 100%;
-  }
-`;

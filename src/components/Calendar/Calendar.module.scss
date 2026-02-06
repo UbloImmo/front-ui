@@ -436,3 +436,13 @@
     }
   }
 }
+
+.calendar-nav {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: var(--rdp-nav-height);
+}

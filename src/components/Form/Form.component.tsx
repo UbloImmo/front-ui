@@ -10,12 +10,7 @@ import { FormProvider, useFormContext } from "./Form.context";
 import { Dialog } from "../Dialog";
 import styles from "./Form.module.scss";
 
-import {
-  useTestId,
-  useMergedProps,
-  useStyleProps,
-  useCssClasses,
-} from "@utils";
+import { useTestId, useMergedProps, useCssClasses } from "@utils";
 
 import type {
   FormDefaultProps,
@@ -149,17 +144,8 @@ const InnerFormContainer = ({
   embedded,
   ...props
 }: FormLayoutProps & TestIdProps & { children: ReactNode }): JSX.Element => {
-  const { isEditing, readonly, disabled, submitForm, asModal } =
-    useFormContext();
+  const { isEditing, submitForm, asModal } = useFormContext();
   const testId = useTestId("form", props);
-
-  const styleProps = useStyleProps({
-    isEditing,
-    readonly,
-    disabled,
-    asModal: !!asModal,
-    size: asModal?.size ?? "m",
-  });
 
   const className = useCssClasses(
     styles.form,
@@ -170,19 +156,14 @@ const InnerFormContainer = ({
 
   if (embedded) {
     return (
-      <div className={className} data-testid={testId} {...styleProps}>
+      <div className={className} data-testid={testId}>
         {children}
       </div>
     );
   }
 
   return (
-    <form
-      className={className}
-      data-testid={testId}
-      onSubmit={submitForm}
-      {...styleProps}
-    >
+    <form className={className} data-testid={testId} onSubmit={submitForm}>
       {children}
     </form>
   );

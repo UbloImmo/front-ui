@@ -65,6 +65,8 @@ export type ContextMenuProps = {
 
 export type ContextMenuDefaultProps = Required<ContextMenuProps>;
 
+/** @deprecated styled-components */
 export type ContextMenuStyleProps = StyleProps<Pick<ContextMenuProps, "size">>;
 
+/** @deprecated styled-components */
 export type ContextMenuActionIconStyleProps = StyleProps<{ open?: boolean }>;
