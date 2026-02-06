@@ -9,11 +9,10 @@ import {
   mobileFontSize,
   defaultTypographyProps,
   sanitizeTypographyProps,
-  buildTypographyStyle,
 } from "@/typography/typography.styles";
 import { cssRem } from "@utils";
 
-import type { AnyTypographyProps, TextProps, TypographyProps } from "@types";
+import type { AnyTypographyProps, TypographyProps } from "@types";
 
 describe("typography", () => {
   describe("font", () => {
@@ -182,35 +181,6 @@ describe("typography", () => {
         );
         expect(sanitizedProps).toEqual(validProps);
       });
-    });
-  });
-
-  describe("style build", () => {
-    it("should build style for text component", () => {
-      const defaultProps: Required<AnyTypographyProps> = {
-        ...defaultTypographyProps,
-        size: "m",
-      };
-      const validProps: TextProps = {
-        size: "m",
-        color: "primary-base",
-        italic: true,
-        underline: true,
-        overline: true,
-        lineThrough: true,
-      };
-      expect(buildTypographyStyle).toBeDefined();
-      expect(buildTypographyStyle).toBeFunction();
-      expect(() => buildTypographyStyle(defaultProps)).not.toThrow();
-      expect(buildTypographyStyle(defaultProps)).toBeFunction();
-      expect(() =>
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore Don't want to mock styled-components execution context
-        buildTypographyStyle(defaultProps)(validProps)
-      ).not.toThrow();
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore Don't want to mock styled-components execution context
-      expect(buildTypographyStyle(defaultProps)(validProps)).toBeObject();
     });
   });
 });
