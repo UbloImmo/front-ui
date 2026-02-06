@@ -80,7 +80,7 @@ This is what a minimal feature complete setup might look like:
 
 #### `theme.ts`
 
-```ts
+```tsx
 import type { GetThemeOverridesFn } from "@ubloimmo/uikit";
 // this can be an async function
 export const getTheme: GetThemeOverridesFn = () => ({
@@ -90,21 +90,21 @@ export const getTheme: GetThemeOverridesFn = () => ({
       base: "#4a4e69",
       medium: "#9a8c98",
       light: "#c9ada7",
-    }
-  }
-})
+    },
+  },
+});
 ```
 
 #### `translations.ts`
 
-```ts
+```tsx
 import type { TranslationMap } from "@ubloimmo/uikit";
 
 export const translations: TranslationMap = {
   save: "Sauvegarder",
   cancel: "Annuler",
   close: "Fermer",
-}
+};
 ```
 
 #### `AppProviders.tsx`
@@ -121,17 +121,15 @@ import type { ReactNode } from "react";
 
 type AppProviderProps = {
   children: ReactNode;
-}
+};
 
 export const AppProviders = ({ children }: AppProviderProps) => (
   <ThemeProvider getOverridesFn={getTheme}>
     <UikitTranslationProvider translations={translations}>
-      <DialogProvider>
-        {children}
-      </DialogProvider>
+      <DialogProvider>{children}</DialogProvider>
     </UikitTranslationProvider>
   </ThemeProvider>
-)
+);
 ```
 
 #### `App.tsx`
@@ -139,11 +137,7 @@ export const AppProviders = ({ children }: AppProviderProps) => (
 ```tsx
 import { AppProviders } from "./AppProviders.tsx";
 
-export const App = () => (
-  <AppProviders>
-    {/* Your app */}
-  </AppProviders>
-)
+export const App = () => <AppProviders>{/* Your app */}</AppProviders>;
 ```
 
 ## Usage
@@ -165,7 +159,7 @@ import { useReducer } from "react"
 
 export const MyPage = () => {
   const [count, incrementCount] = useReducer((n: number) => n + 1, 0);
-  
+
   return (
     <main>
       <FlexColumnLayout gap="s-5">
