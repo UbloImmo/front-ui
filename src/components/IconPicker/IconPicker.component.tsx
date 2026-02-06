@@ -1,7 +1,6 @@
 import { isArray } from "@ubloimmo/front-util";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { IconName } from "../Icon/Icon.types";
 import { IconPickerItem } from "./components/IconPickerItem/IconPickerItem.component";
 import styles from "./IconPicker.module.scss";
 
@@ -12,6 +11,7 @@ import type {
   IconPickerProps,
   IconPickerDefaultProps,
 } from "./IconPicker.types";
+import type { IconName } from "../Icon/Icon.types";
 import type { TestIdProps } from "@types";
 
 const defaultIconPickerProps: IconPickerDefaultProps = {
