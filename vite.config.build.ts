@@ -111,7 +111,6 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
       // plugins: [dynamicImportVars()],
       external: [
         "react",
-        "styled-components",
         "react-dom",
         "react-bootstrap-icons",
         "@ubloimmo/front-tokens",
@@ -123,8 +122,7 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
-          "bootstrap-icons": "BootstrapIcons",
-          "styled-components": "styled",
+          // "bootstrap-icons": "BootstrapIcons",
         },
         dir: "dist",
         compact: true,
