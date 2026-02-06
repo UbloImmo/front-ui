@@ -1,6 +1,4 @@
 import {
-  isFunction,
-  Logger,
   type Nullable,
   type Nullish,
   type Optional,
@@ -11,7 +9,7 @@ import { useMemo, type LazyExoticComponent } from "react";
 import { parseFixedLength } from "@/sizes/size.utils";
 import { cssRem, isCssLengthUsage } from "@utils";
 
-import type { GeneratedIcon, IconName, MissingIcon } from "./Icon.types";
+import type { GeneratedIcon, MissingIcon } from "./Icon.types";
 import type { CssPx, CssRem, FixedCssLength } from "@types";
 
 /**
@@ -50,72 +48,24 @@ export const useIconSize = (
 };
 
 /**
- * Loads an icon based on the provided name, trying different locations and types of icons.
- *
- * @param {IconName} name - The name of the icon to load.
- * @return {Promise<{ default: GeneratedIcon | MissingIcon }>} The loaded icon or a missing icon placeholder.
- */
-export const loadIcon = async (
-  name: IconName
-): Promise<{ default: GeneratedIcon | MissingIcon }> => {
-  const missingIcon: MissingIcon = () => <div />;
-  missingIcon.__missing = true;
-  const missingImport = { default: missingIcon };
-  const { warn } = Logger({
-    spacing: 0,
-  });
-
-  // Try loading icon in a targeted way to enable tree shaking
-  try {
-    // try as custom icon
-    const { [name]: customIcon } = await import(
-      `./__generated__/custom/${name}.icon.tsx`
-    );
-    if (customIcon && isFunction<GeneratedIcon>(customIcon))
-      return { default: customIcon };
-  } catch (_e) {
-    // fail silently
-  }
-  // then try as bootstrap icon
-  try {
-    const { [name]: bootstrapIcon } = await import(
-      `./__generated__/bootstrap/${name}.icon.tsx`
-    );
-    // finally using generated icon index
-    if (bootstrapIcon && isFunction<GeneratedIcon>(bootstrapIcon))
-      return { default: bootstrapIcon };
-  } catch (_e) {
-    // fail silently
-  }
-  try {
-    const { [name]: anyIcon } = await import(`./__generated__`);
-    // finally using generated icon index
-    if (anyIcon && isFunction<GeneratedIcon>(anyIcon))
-      return { default: anyIcon };
-  } catch (_e) {
-    // flag return import as missing
-    warn(`Failed to import icon "${name}"`);
-    return missingImport;
-  }
-  warn(`Failed to import icon "${name}"`);
-  return missingImport;
-};
-
-/**
  * Type guard to check if an icon is a missing icon placeholder.
  *
  * @param {Nullish<GeneratedIcon | MissingIcon>} icon - The icon component to check
  * @returns {boolean} True if the icon is a missing icon placeholder, false otherwise
  */
 export const isMissingIcon = (
-  icon: Nullish<LazyExoticComponent<GeneratedIcon | MissingIcon>>
+  icon: Nullish<
+    LazyExoticComponent<GeneratedIcon | MissingIcon> | GeneratedIcon
+  >
 ): icon is LazyExoticComponent<MissingIcon> => {
   return Boolean(!icon || ("__missing" in icon && icon.__missing));
 };
 
 export const isGeneratedIcon = (
   icon: Nullable<
-    LazyExoticComponent<GeneratedIcon> | LazyExoticComponent<MissingIcon>
+    | LazyExoticComponent<GeneratedIcon>
+    | LazyExoticComponent<MissingIcon>
+    | GeneratedIcon
   >
 ): icon is LazyExoticComponent<GeneratedIcon> => {
   return Boolean(icon && !isMissingIcon(icon));

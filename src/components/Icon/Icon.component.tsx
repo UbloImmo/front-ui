@@ -1,5 +1,6 @@
 import { useMemo, Suspense, type LazyExoticComponent } from "react";
 
+// import * as allIcons from "./__generated__";
 import * as lazyIcons from "./__generated__/index.lazy.ts";
 import styles from "./Icon.module.scss";
 import {

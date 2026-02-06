@@ -2,11 +2,20 @@ import { rm } from "node:fs/promises";
 
 import { Logger } from "@ubloimmo/front-util";
 
-import { FileDescription, NormalizedIconFileDeclaration } from "./svg.types";
+import {
+  ExtendedIconFileDeclaration,
+  FileDescription,
+  NormalizedIconFileDeclaration,
+} from "./svg.types";
+
+import { delay } from "@utils";
 const ROOT_DIR_PATH = "src/components/Icon/__generated__";
 
-const BOOTSTRAP_ICONS_DIR_PATH = `${ROOT_DIR_PATH}/bootstrap`;
-const CUSTOM_ICONS_DIR_PATH = `${ROOT_DIR_PATH}/custom`;
+const BOOTSTRAP_DIR = "bootstrap";
+const CUSTOM_DIR = "custom";
+
+const BOOTSTRAP_ICONS_DIR_PATH = `${ROOT_DIR_PATH}/${BOOTSTRAP_DIR}`;
+const CUSTOM_ICONS_DIR_PATH = `${ROOT_DIR_PATH}/${CUSTOM_DIR}`;
 
 const logger = Logger();
 
@@ -51,33 +60,6 @@ const iconFileName = (componentName: string) => {
 };
 
 /**
- * Generates a file description for the local icon index.
- *
- * @param {NormalizedIconFileDeclaration[]} files - the array of normalized icon file declarations
- * @param {string} rootDirPath - the root directory path
- * @return {FileDescription} the generated file description
- */
-const generateLocalIconIndex = (
-  files: NormalizedIconFileDeclaration[],
-  rootDirPath: string
-): FileDescription => {
-  const contents = [
-    ...files
-      .sort((a, b) => a.componentName.localeCompare(b.componentName))
-      .map(({ componentName }) => {
-        const name = iconFileName(componentName);
-        return `export { ${componentName} } from "./${name}";`;
-      }),
-    "",
-  ].join("\n");
-  const path = `${rootDirPath}/index.ts`;
-  return {
-    contents,
-    path,
-  };
-};
-
-/**
  * Asynchronously exports generated SVG files based on the provided icon files, root directory path, and dry run flag.
  *
  * @param {NormalizedIconFileDeclaration[]} iconFiles - The array of normalized icon file declarations
@@ -97,57 +79,57 @@ export const exportGeneratedSvgFiles = async (
     };
   });
 
-  const iconsAndIndex: FileDescription[] = [
-    ...files,
-    generateLocalIconIndex(iconFiles, rootDirPath),
-  ];
+  const iconsAndIndex: FileDescription[] = [...files];
 
   await writeMultipleFiles(iconsAndIndex, dryRun);
 };
 
 /**
- * Generates the root icon index file description.
+ * Generates a file description for the lazy icon index.
  *
- * @param {string} rootDirPath - The root directory path
- * @return {FileDescription} The file description object
+ * @param {ExtendedIconFileDeclaration[]} files - the array of normalized icon file declarations
+ * @param {string} rootDirPath - the root directory path
+ * @return {FileDescription} the generated file description
  */
-const generateRootIconIndex = (rootDirPath: string): FileDescription => {
-  const indexPaths = ["bootstrap", "custom"];
-  const contents = [
-    ...indexPaths.map((path) => {
-      return `export * from "./${path}";`;
-    }),
-    "",
-  ].join("\n");
-  const path = `${rootDirPath}/index.ts`;
+const generateLazyIconIndex = (
+  files: ExtendedIconFileDeclaration[],
+  rootDirPath: string
+): FileDescription => {
+  const imports = [`import { lazy } from "react";`];
 
+  const exports = files.map(({ componentName, rootDir }) => {
+    return `export const ${componentName} = lazy(() => import("./${rootDir}/${componentName}.icon.tsx"));`;
+  });
+
+  const contents = [...imports, "", ...exports, ""].join("\n");
+  const path = `${rootDirPath}/index.lazy.ts`;
   return {
     contents,
     path,
   };
 };
 
-/**
- * Generates a file description for the lazy icon index.
- *
- * @param {NormalizedIconFileDeclaration[]} files - the array of normalized icon file declarations
- * @param {string} rootDirPath - the root directory path
- * @return {FileDescription} the generated file description
- */
-const generateLazyIconIndex = (
-  files: NormalizedIconFileDeclaration[],
+const generateIconNameTypeDefs = (
+  allIcons: NormalizedIconFileDeclaration[],
   rootDirPath: string
 ): FileDescription => {
-  const imports = [
-    `import { lazy } from "react";`,
-    `import { loadIcon } from "../Icon.utils";`,
-  ];
-  const exports = files.map(({ componentName }) => {
-    return `export const ${componentName} = lazy(() => loadIcon("${componentName}"));`;
-  });
+  const imports = `import type { Enum } from "@ubloimmo/front-util";`;
+  let nameArray = "export const generatedIconNames = [";
+  for (let i = 0; i < allIcons.length; i++) {
+    const { componentName } = allIcons[i];
+    if (!i) {
+      nameArray += `"${componentName}"`;
+      continue;
+    }
+    nameArray += `, "${componentName}"`;
+  }
+  nameArray += "] as const;";
+  const typeStr =
+    "export type GeneratedIconName = Enum<typeof generatedIconNames>;";
 
-  const contents = [...imports, "", ...exports, ""].join("\n");
-  const path = `${rootDirPath}/index.lazy.ts`;
+  const contents = [imports, "", nameArray, "", typeStr].join("\n");
+
+  const path = `${rootDirPath}/iconName.types.ts`;
   return {
     contents,
     path,
@@ -204,23 +186,37 @@ export const exportSvgFiles = async (
     await rm(CUSTOM_ICONS_DIR_PATH, { recursive: true, force: true });
   }
 
+  await delay(150);
+
   // write all icon files
   await exportGeneratedSvgFiles(
     bootstrapIcons,
     BOOTSTRAP_ICONS_DIR_PATH,
     dryRun
   );
+  await delay(150);
   await exportGeneratedSvgFiles(customIcons, CUSTOM_ICONS_DIR_PATH, dryRun);
 
-  const allIcons = [...bootstrapIcons, ...customIcons].sort((a, b) =>
-    a.componentName.localeCompare(b.componentName)
-  );
+  const allIcons: ExtendedIconFileDeclaration[] = [
+    ...bootstrapIcons.map(
+      (icon): ExtendedIconFileDeclaration => ({
+        ...icon,
+        rootDir: BOOTSTRAP_DIR,
+      })
+    ),
+    ...customIcons.map(
+      (icon): ExtendedIconFileDeclaration => ({
+        ...icon,
+        rootDir: CUSTOM_DIR,
+      })
+    ),
+  ].sort((a, b) => a.componentName.localeCompare(b.componentName));
 
   await writeMultipleFiles(
     [
-      generateRootIconIndex(ROOT_DIR_PATH),
       generateCommonTypesDefs(ROOT_DIR_PATH),
       generateLazyIconIndex(allIcons, ROOT_DIR_PATH),
+      generateIconNameTypeDefs(allIcons, ROOT_DIR_PATH),
     ],
     dryRun
   );

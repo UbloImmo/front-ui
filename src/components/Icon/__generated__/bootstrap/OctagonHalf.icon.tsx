@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 
 import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "../../../../utils";
+
 /**
  * React component generated from bootstrap icon: `octagon-half`.
  * Auto-generated before NPM release
@@ -10,7 +11,7 @@ import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "../../../../util
  * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const OctagonHalf = (props: CommonIconProps): JSX.Element => {
+const OctagonHalf = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {
@@ -32,3 +33,5 @@ export const OctagonHalf = (props: CommonIconProps): JSX.Element => {
     </svg>
   );
 };
+
+export default OctagonHalf;
