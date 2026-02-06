@@ -1,3 +1,5 @@
+import dedent from "ts-dedent";
+
 import type {
   FontFaceDeclaration,
   FontFamilyDeclaration,
@@ -16,7 +18,7 @@ import type {
  */
 export const fontFace = (declaration: FontFaceDeclaration): string => {
   if (!declaration) return "";
-  return `
+  return dedent`
     @font-face {
       font-family: "${declaration.fontFamily}";
       src: url("${declaration.src}") format("${declaration.format}");
@@ -35,8 +37,10 @@ export const fontFace = (declaration: FontFaceDeclaration): string => {
  * @returns {(styleDeclarations: FontStyleDeclaration[]) => string} Function that takes style declarations and returns CSS @font-face declarations
  */
 export const fontFamily =
-  (familyDeclaration: FontFamilyDeclaration) =>
-  (styleDeclarations: FontStyleDeclaration[]) =>
+  (
+    familyDeclaration: FontFamilyDeclaration
+  ): ((styleDeclarations: FontStyleDeclaration[]) => string) =>
+  (styleDeclarations) =>
     (styleDeclarations ?? [])
       .map((styleDeclaration) =>
         fontFace({
@@ -44,4 +48,4 @@ export const fontFamily =
           ...styleDeclaration,
         })
       )
-      .join("");
+      .join("\n");

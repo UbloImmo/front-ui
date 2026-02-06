@@ -1,24 +1,9 @@
 import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
-import {
-  isNumber,
-  isString,
-  objectKeys,
-  transformObject,
-  type GenericFn,
-} from "@ubloimmo/front-util";
+import { objectKeys, Optional } from "@ubloimmo/front-util";
 import { type CSSProperties, useMemo } from "react";
-import { css, type RuleSet } from "styled-components";
 
 import { typographyWeightMap } from "./typogaphy.weight";
-import { fontFamilySets } from "./typography.font";
-import { breakpointsPx } from "../sizes";
-import {
-  cssClasses,
-  cssRem,
-  cssVarUsage,
-  extractRem,
-  fromStyleProps,
-} from "../utils";
+import { cssClasses, cssRem, extractRem } from "../utils";
 import generatedStyles from "./__generated__/typography-tokens.module.scss";
 import styles from "./typography.module.scss";
 
@@ -27,10 +12,7 @@ import type {
   TypographyWeight,
   AnyTypographyProps,
   CssRem,
-  StyleProps,
   TypographySize,
-  TypographyBreakpoint,
-  TypographyStyle,
   HeadingSize,
 } from "@types";
 
@@ -128,158 +110,6 @@ export const sanitizeTypographyProps = (
   };
 };
 
-/**
- * Extracts the typography style object from the texts object given a breakpoint, size and weight.
- *
- * @param {TypographyBreakpoint} breakpoint - the breakpoint
- * @param {TypographySize} size - the size
- * @param {TypographyWeight} weight - the weight
- * @return {TypographyStyle} the extracted typography style
- */
-const extractTypographyStyle = (
-  breakpoint: TypographyBreakpoint,
-  size: TypographySize,
-  weight: TypographyWeight
-): TypographyStyle => {
-  return texts[breakpoint][size][weight].css.style;
-};
-
-/**
- * Creates a function that takes a CSS value and returns a CSS declaration.
- * If important is true, adds !important to the declaration.
- *
- * @param {boolean} [important=false] - whether to add !important to the declaration
- * @returns {(value: string) => string} - a function that takes a CSS value
- * and returns a CSS declaration
- */
-const applyRule =
-  (important?: boolean): ((value: string) => string) =>
-  (value: string) => {
-    return important ? `${value} !important` : value;
-  };
-
-/**
- * Takes a typography style object and returns a styled component CSS declaration
- * that only includes the letter spacing, text indent, line height and font feature settings.
- *
- * @param {TypographyStyle} style - the typography style object
- * @param {boolean} [important=false] - whether to add !important to the CSS declaration
- * @returns {RuleSet} - a styled component CSS declaration
- */
-const baseTypographyStyle = (
-  style: TypographyStyle,
-  important?: boolean
-): RuleSet => {
-  const { letterSpacing, textIndent, lineHeight, fontFeatureSettings } =
-    transformObject(style, applyRule(important));
-
-  return css`
-    letter-spacing: ${letterSpacing};
-    text-indent: ${textIndent};
-    line-height: ${lineHeight};
-    font-feature-settings: ${fontFeatureSettings};
-  `;
-};
-
-/**
- * Builds a typography style based on the provided defaults.
- *
- * @param {Required<AnyTypographyProps>} defaults - the default typography props
- * @return {StyleFunction<TextProps | HeadingProps>} the style function for text or heading props
- */
-export const buildTypographyStyle = (
-  defaults: Required<AnyTypographyProps>
-): GenericFn<[StyleProps<AnyTypographyProps>], RuleSet> => {
-  return (props) => {
-    const {
-      size,
-      weight,
-      color,
-      italic,
-      underline,
-      overline,
-      lineThrough,
-      important,
-      ellipsis,
-      uppercase,
-      capitalized,
-      align,
-      fill,
-      noWrap,
-      lineClamp,
-      font,
-    } = sanitizeTypographyProps(defaults, fromStyleProps(props));
-    const dekstopStyle = extractTypographyStyle("desktop", size, weight);
-    const mobileStyle = extractTypographyStyle("mobile", size, weight);
-
-    const fontSize = cssVarUsage(`text-${size}`);
-    const fontWeight = cssVarUsage(`text-weight-${weight.toLowerCase()}`);
-    const fontStyle = (italic ?? defaults.italic) ? "italic" : "normal";
-    const fontItalic = `"ital" ${(italic ?? defaults.italic) ? 1 : 0}`;
-    const textTransform = uppercase
-      ? "uppercase"
-      : capitalized
-        ? "capitalize"
-        : "none";
-    const textDecoration = typographyTextDecoration({
-      lineThrough,
-      underline,
-      overline,
-    });
-    const webkitLineClamp = isNumber(lineClamp) ? String(lineClamp) : null;
-    const textOverflow = ellipsis ? "ellipsis" : dekstopStyle.textOverflow;
-    // runtime check to ensure the font is a valid font family
-    const fontFamily = fontFamilySets[font in fontFamilySets ? font : "sans"];
-
-    const apply = applyRule(important);
-
-    return css`
-      font-family: ${apply(fontFamily)};
-      ${baseTypographyStyle(dekstopStyle, important)}
-      font-size: ${apply(fontSize)};
-      font-style: ${apply(fontStyle)};
-      font-variation-settings: ${apply(fontItalic)};
-      font-weight: ${apply(fontWeight)};
-      color: ${apply(color === "inherit" ? "inherit" : cssVarUsage(color))};
-      text-align: ${apply(align)};
-      text-overflow: ${apply(textOverflow)};
-      text-decoration: ${apply(textDecoration)};
-      text-transform: ${apply(textTransform)};
-      text-underline-offset: 0.25em;
-      text-decoration-thickness: 1px;
-
-      @media only screen and (max-width: ${breakpointsPx.XS}) {
-        ${baseTypographyStyle(mobileStyle, important)}
-      }
-
-      ${(noWrap || ellipsis) &&
-      css`
-        white-space: ${apply("nowrap")};
-      `}
-
-      ${ellipsis &&
-      css`
-        overflow: ${apply("hidden")};
-        max-width: ${apply("100%")};
-        flex: 1;
-      `}
-      ${fill &&
-      css`
-        width: ${apply("100%")};
-      `}
-
-      ${isString(webkitLineClamp) &&
-      css`
-        display: ${apply("-webkit-box")};
-        line-clamp: ${apply(webkitLineClamp)};
-        -webkit-line-clamp: ${apply(webkitLineClamp)};
-        -webkit-box-orient: ${apply("vertical")};
-        white-space: ${apply("normal")};
-      `}
-    `;
-  };
-};
-
 export const defaultTypographyProps: Required<TypographyProps> = {
   weight: "regular",
   color: "gray-900",
@@ -304,10 +134,20 @@ export const defaultTypographyProps: Required<TypographyProps> = {
   title: null,
 } as const;
 
+/**
+ * Builds a typography component's element's style properties based based on its properties object
+ *
+ * @param {AnyTypographyProps} props - the typography props
+ * @param {boolean} [isHeading=false] - the default typography props
+ * @return {{ style: CSSProperties; className: Optional<string> } & Record<`data-${string}`, Optional<string>>} the style function for text or heading props
+ */
 export const useTypographyStyles = (
   props: AnyTypographyProps,
-  isHeading = false
-) => {
+  isHeading: boolean = false
+): { style: CSSProperties; className: Optional<string> } & Record<
+  `data-${string}`,
+  Optional<string>
+> => {
   const {
     size,
     weight,

@@ -733,6 +733,23 @@
   }
 }
 
+@mixin font-sans($important: false) {
+  font-family: "Gilroy", "Helvetica", "Inter", "Arial", "Calibri", "Segoe UI",
+    sans-serif;
+  @if $important {
+    font-family: "Gilroy", "Helvetica", "Inter", "Arial", "Calibri", "Segoe UI",
+      sans-serif !important;
+  }
+}
+@mixin font-code($important: false) {
+  font-family: "DMMono", "Fira Code", "Menlo", "Inconsolata", "Source Mono",
+    "Consolas", ui-monospace, monospace;
+  @if $important {
+    font-family: "DMMono", "Fira Code", "Menlo", "Inconsolata", "Source Mono",
+      "Consolas", ui-monospace, monospace !important;
+  }
+}
+
 .text-color {
   color: inherit;
 }

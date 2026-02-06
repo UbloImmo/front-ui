@@ -1,3 +1,5 @@
+@use "./__generated__/typography-tokens.module.scss" as typo;
+
 .text {
   --text-line-clamp: unset;
 
@@ -7,8 +9,7 @@
   text-decoration-thickness: 1px;
   color: inherit;
   text-align: left;
-  font-family: "Gilroy", "Helvetica", "Inter", "Arial", "Calibri", "Segoe UI",
-    sans-serif;
+  @include typo.font-sans;
   transition: color 150ms var(--bezier);
 
   &.heading {
@@ -17,19 +18,15 @@
 
   &.font {
     &.sans {
-      font-family: "Gilroy", "Helvetica", "Inter", "Arial", "Calibri",
-        "Segoe UI", sans-serif;
+      @include typo.font-sans;
       &.important {
-        font-family: "Gilroy", "Helvetica", "Inter", "Arial", "Calibri",
-          "Segoe UI", sans-serif !important;
+        @include typo.font-sans(true);
       }
     }
     &.code {
-      font-family: "DMMono", "Fira Code", "Menlo", "Inconsolata", "Source Mono",
-        "Consolas", ui-monospace, monospace;
+      @include typo.font-code;
       &.important {
-        font-family: "DMMono", "Fira Code", "Menlo", "Inconsolata",
-          "Source Mono", "Consolas", ui-monospace, monospace !important;
+        @include typo.font-code(true);
       }
     }
   }

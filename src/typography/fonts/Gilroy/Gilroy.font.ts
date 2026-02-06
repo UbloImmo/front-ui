@@ -1,5 +1,3 @@
-import { css } from "styled-components";
-
 import bold from "./Gilroy-Bold.woff2";
 import boldItalic from "./Gilroy-BoldItalic.woff2";
 import medium from "./Gilroy-Medium.woff2";
@@ -17,7 +15,7 @@ const GilroyFamily = fontFamily({
 export const Gilroy = () => {
   const weights = buildTypographyWeightMap();
 
-  const fontFaces = GilroyFamily([
+  return GilroyFamily([
     {
       src: bold,
       weight: weights.bold,
@@ -46,7 +44,4 @@ export const Gilroy = () => {
       italic: true,
     },
   ]);
-  return css`
-    ${fontFaces}
-  `;
 };
