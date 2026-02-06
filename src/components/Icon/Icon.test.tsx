@@ -1,11 +1,10 @@
 import { cleanup, render } from "@testing-library/react";
-import { objectKeys } from "@ubloimmo/front-util";
 import { afterEach, describe, expect, it, mock } from "bun:test";
 
-import * as generated from "./__generated__";
 import { Icon } from "./Icon.component";
 import { useIconSize } from "./Icon.utils.tsx";
 import { ThemeProvider } from "../../themes";
+import { GENERATED_ICON_NAMES } from "./__generated__/iconName.types.ts";
 
 import { testHookFactory } from "@/tests";
 import { isCssRem } from "@utils";
@@ -145,7 +144,7 @@ describe("Icon", () => {
     expect(await findByTestId("icon-fallback")).not.toBeNull();
   });
 
-  objectKeys(generated).forEach((iconName) => {
+  GENERATED_ICON_NAMES.forEach((iconName) => {
     it(`sould render the generated icon: "${iconName}"`, async () => {
       const { findByTestId } = render(<Icon name={iconName} />);
       const icon = await findByTestId("icon");

@@ -110,24 +110,55 @@ const generateLazyIconIndex = (
 };
 
 const generateIconNameTypeDefs = (
-  allIcons: NormalizedIconFileDeclaration[],
+  customIcons: NormalizedIconFileDeclaration[],
+  bootstrapIcons: NormalizedIconFileDeclaration[],
   rootDirPath: string
 ): FileDescription => {
   const imports = `import type { Enum } from "@ubloimmo/front-util";`;
-  let nameArray = "export const generatedIconNames = [";
-  for (let i = 0; i < allIcons.length; i++) {
-    const { componentName } = allIcons[i];
-    if (!i) {
-      nameArray += `"${componentName}"`;
-      continue;
-    }
-    nameArray += `, "${componentName}"`;
-  }
-  nameArray += "] as const;";
-  const typeStr =
-    "export type GeneratedIconName = Enum<typeof generatedIconNames>;";
 
-  const contents = [imports, "", nameArray, "", typeStr].join("\n");
+  function buildIconNameTypeDef(
+    arrayName: string,
+    typeName: string,
+    icons: NormalizedIconFileDeclaration[]
+  ) {
+    const readonlyArrayName = `${arrayName}_READONLY`;
+    let readonlyNameArray = `const ${readonlyArrayName} = [`;
+    const sortedIcons = icons.sort((a, b) =>
+      a.componentName.localeCompare(b.name)
+    );
+    for (let i = 0; i < sortedIcons.length; i++) {
+      const { componentName } = sortedIcons[i];
+      if (!i) {
+        readonlyNameArray += `"${componentName}"`;
+        continue;
+      }
+      readonlyNameArray += `, "${componentName}"`;
+    }
+    readonlyNameArray += "] as const;";
+    const typeStr = `export type ${typeName} = Enum<typeof ${readonlyArrayName}>;`;
+    const nameArray = `export const ${arrayName} = ${readonlyArrayName} as unknown as ${typeName}[];`;
+
+    return [readonlyNameArray, "", typeStr, "", nameArray].join("\n");
+  }
+
+  const customStr = buildIconNameTypeDef(
+    "CUSTOM_ICON_NAMES",
+    "CustomIconName",
+    customIcons
+  );
+  const bootstrapStr = buildIconNameTypeDef(
+    "BOOTSTRAP_ICON_NAMES",
+    "BootstrapIconName",
+    bootstrapIcons
+  );
+
+  const allArrayStr = `export const GENERATED_ICON_NAMES = [...CUSTOM_ICON_NAMES, ...BOOTSTRAP_ICON_NAMES];`;
+  const allTypeStr = `export type GeneratedIconName = CustomIconName | BootstrapIconName;`;
+  const allStr = [allArrayStr, "", allTypeStr].join("\n");
+
+  const contents = [imports, "", customStr, "", bootstrapStr, "", allStr].join(
+    "\n"
+  );
 
   const path = `${rootDirPath}/iconName.types.ts`;
   return {
@@ -216,7 +247,7 @@ export const exportSvgFiles = async (
     [
       generateCommonTypesDefs(ROOT_DIR_PATH),
       generateLazyIconIndex(allIcons, ROOT_DIR_PATH),
-      generateIconNameTypeDefs(allIcons, ROOT_DIR_PATH),
+      generateIconNameTypeDefs(customIcons, bootstrapIcons, ROOT_DIR_PATH),
     ],
     dryRun
   );

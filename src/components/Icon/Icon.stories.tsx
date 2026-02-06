@@ -1,10 +1,11 @@
-import { objectKeys } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import * as BootstrapIcons from "./__generated__/bootstrap";
-import * as CustomIcons from "./__generated__/custom";
 import { Icon } from "./Icon.component";
 import { FlexRowLayout } from "../../layouts";
+import {
+  BOOTSTRAP_ICON_NAMES,
+  CUSTOM_ICON_NAMES,
+} from "./__generated__/iconName.types";
 
 import { ComponentVariants } from "@docs/blocks";
 
@@ -101,10 +102,6 @@ Sizes.args = {
 };
 
 export const Bootstrap = (props: Partial<IconProps>) => {
-  const names = useMemo(() => {
-    return objectKeys(BootstrapIcons);
-  }, []);
-
   const defaultProps = useMemo(() => {
     return {
       ...Icon.defaultProps,
@@ -115,7 +112,7 @@ export const Bootstrap = (props: Partial<IconProps>) => {
   return (
     <ComponentVariants
       defaults={defaultProps}
-      variants={names}
+      variants={BOOTSTRAP_ICON_NAMES}
       for="name"
       of={Icon}
     />
@@ -127,10 +124,6 @@ Bootstrap.args = {
 };
 
 export const Custom = (props: Partial<IconProps>) => {
-  const names = useMemo(() => {
-    return objectKeys(CustomIcons);
-  }, []);
-
   const defaultProps = useMemo(() => {
     return {
       ...Icon.defaultProps,
@@ -141,7 +134,7 @@ export const Custom = (props: Partial<IconProps>) => {
   return (
     <ComponentVariants
       defaults={defaultProps}
-      variants={names}
+      variants={CUSTOM_ICON_NAMES}
       for="name"
       of={Icon}
     />

@@ -2,7 +2,6 @@ import { addDays } from "date-fns";
 import { fn } from "storybook/test";
 
 import { Calendar } from "./Calendar.component";
-import { _2Square } from "../Icon/__generated__";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";

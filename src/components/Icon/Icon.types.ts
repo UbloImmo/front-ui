@@ -3,7 +3,7 @@ import { GenericFn } from "@ubloimmo/front-util";
 import { CommonIconProps } from "./__generated__/common.types";
 import {
   type GeneratedIconName,
-  generatedIconNames,
+  GENERATED_ICON_NAMES,
 } from "./__generated__/iconName.types";
 
 import {
@@ -16,7 +16,7 @@ import {
 
 export type IconName = GeneratedIconName;
 
-export const allIconNames = generatedIconNames as unknown as IconName[];
+export const allIconNames = GENERATED_ICON_NAMES;
 
 export type GeneratedIcon = GenericFn<[CommonIconProps], JSX.Element>;
 
