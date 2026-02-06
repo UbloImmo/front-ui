@@ -86,6 +86,7 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
       // rollupTypes: true,
       insertTypesEntry: true,
       copyDtsFiles: true,
+      outDir: "dist/types",
     }),
     banner({
       content: chunkBanner,
@@ -93,6 +94,7 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
   ],
   build: {
     outDir: "dist",
+    emptyOutDir: true,
     lib: {
       entry: {
         themes: resolve(__dirname, "src", "themes/index.ts"),
@@ -105,6 +107,7 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
         index: resolve(__dirname, "src", "index.ts"),
       },
       formats: ["es"],
+      cssFileName: "style",
       fileName: name,
     },
     rollupOptions: {
@@ -114,9 +117,26 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
         "react-dom",
         "@ubloimmo/front-tokens",
         "@ubloimmo/front-util",
+        "@radix-ui/react-popover",
         "react-international-phone",
         "zod",
+        "framer-motion",
+        "react-day-picker",
+        "react-virtuoso",
+        "sonner",
+        "ts-dedent",
+        "uuid",
+        "@dnd-kit/core",
+        "@dnd-kit/modifiers",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "big.js",
+        "date-fns",
+        "lodash",
       ],
+      jsx: {
+        mode: "automatic",
+      },
       output: {
         globals: {
           react: "React",
@@ -125,12 +145,14 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
         },
         dir: "dist",
         compact: true,
-        entryFileNames: "[name]-[hash].js",
-        chunkFileNames: "[name]-[hash].js",
-        assetFileNames: "[name].[ext]",
+        entryFileNames: "[name].js",
+        chunkFileNames: "chunks/[hash].js",
+        assetFileNames: "assets/[name].[ext]",
         // preserveModules: true,
         // preserveModulesRoot: "src",
+        validate: true,
       },
     },
   },
+  assetsInclude: ["**/*.woff2"],
 });

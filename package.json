@@ -9,41 +9,41 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./themes": {
-      "types": "./dist/themes/index.d.ts",
+      "types": "./dist/types/themes/index.d.ts",
       "import": "./dist/themes.js",
       "default": "./dist/themes.js"
     },
     "./utils": {
-      "types": "./dist/utils/index.d.ts",
+      "types": "./dist/types/utils/index.d.ts",
       "import": "./dist/utils.js",
       "default": "./dist/utils.js"
     },
     "./components": {
-      "types": "./dist/components/index.d.ts",
+      "types": "./dist/types/components/index.d.ts",
       "import": "./dist/components.js",
       "default": "./dist/components.js"
     },
     "./layouts": {
-      "types": "./dist/layouts/index.d.ts",
+      "types": "./dist/types/layouts/index.d.ts",
       "import": "./dist/layouts.js",
       "default": "./dist/layouts.js"
     },
     "./fonts": {
-      "types": "./dist/typography/fonts/index.d.ts",
+      "types": "./dist/types/typography/fonts/index.d.ts",
       "import": "./dist/fonts.js",
       "default": "./dist/fonts.js"
     },
     "./sizes": {
-      "types": "./dist/sizes/index.d.ts",
+      "types": "./dist/types/sizes/index.d.ts",
       "import": "./dist/sizes.js",
       "default": "./dist/sizes.js"
     },
-    "./core.css": "./dist/@ubloimmo/uikit.css"
+    "./core.css": "./dist/assets/style.css"
   },
   "license": "SEE LICENSE IN LICENSE",
   "author": "Jean-Nicolas Veigel <art.jnveigel@gmail.com>",
