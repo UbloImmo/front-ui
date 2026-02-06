@@ -1,9 +1,8 @@
-import styled from "styled-components";
-
-import { Text } from "./Typography";
+import { Text } from "../Typography";
+import styles from "./HeaderInfo.module.scss";
 
 import { FlexColumnLayout } from "@/layouts";
-import { isEmptyString } from "@utils";
+import { isEmptyString, useCssClasses } from "@utils";
 
 import { Heading } from "@components";
 
@@ -16,6 +15,7 @@ type HeaderInfoProps = {
 };
 
 export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
+  const className = useCssClasses(styles["info-heading"]);
   return (
     <FlexColumnLayout gap="s-3" align="start" justify="start">
       <FlexColumnLayout gap={0} align="start" justify="start">
@@ -24,9 +24,15 @@ export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
             {parent}
           </Text>
         )}
-        <InfoHeading size="h1" color="primary-dark" weight="bold" important>
+        <Heading
+          className={className}
+          size="h1"
+          color="primary-dark"
+          weight="bold"
+          important
+        >
           {title}
-        </InfoHeading>
+        </Heading>
       </FlexColumnLayout>
 
       {children && (
@@ -37,7 +43,3 @@ export const HeaderInfo = ({ title, parent, children }: HeaderInfoProps) => {
     </FlexColumnLayout>
   );
 };
-
-const InfoHeading = styled(Heading)`
-  word-break: break-word;
-`;

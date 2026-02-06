@@ -1,12 +1,11 @@
 import { linkTo } from "@storybook/addon-links";
 import { useCallback, useLayoutEffect, useMemo, useState } from "react";
-import styled from "styled-components";
 
-import { Canvas } from "./Canvas";
-import { HeaderInfo } from "./HeaderInfo";
-import { Markdown } from "./Markdown";
-import { Text } from "./Typography";
-import { Header } from "../containers";
+import { Header } from "../../containers";
+import { Canvas } from "../Canvas";
+import { HeaderInfo } from "../HeaderInfo";
+import { Markdown } from "../Markdown";
+import { Text } from "../Typography";
 
 import { FlexLayout, GridLayout } from "@/layouts";
 import { parseJsDoc } from "@docs/docs.utils";
@@ -121,7 +120,7 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
       parent
         .replaceAll("Components", "components")
         .replaceAll("Layouts", "layouts")
-        .split("/");
+        .split("/")[0];
 
     return `${GITHUB_TEMPLATE}${parentLink}/${title}`;
   }, [title, parent]);
@@ -211,14 +210,7 @@ export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
         </Text>
       </GridLayout>
 
-      <CanvasContainer>
-        <Canvas of={props.of.Default} horizontal inHeader />
-      </CanvasContainer>
+      <Canvas of={props.of.Default} horizontal inHeader fillWidth />
     </Header>
   );
 };
-
-const CanvasContainer = styled.div`
-  width: 100%;
-  flex: 1;
-`;

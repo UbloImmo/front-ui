@@ -1,0 +1,54 @@
+.color-shade-grid {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) repeat(auto-fit, minmax(0, 1fr));
+  grid-template-rows: minmax(0, max-content) repeat(auto-fit, minmax(0, 1fr));
+  gap: var(--s-05);
+  padding: var(--s-1);
+  background: var(--white);
+  border-radius: var(--s-1);
+  overflow: hidden;
+}
+
+.color-shade {
+  --background: var(--primary-base);
+  --row-start: 1;
+  --column-start: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--s-1);
+  flex: 1;
+  padding: var(--s-8) var(--s-2);
+  background: var(--background);
+  grid-column: var(--column-start) / span 1;
+  grid-row: var(--row-start) / span 1;
+  border-radius: var(--s-1);
+  margin: 0;
+
+  transition: all 600ms var(--bezier) 0s;
+  transform: scale(1);
+
+  & > span {
+    filter: blur(var(--s-2));
+    opacity: 0;
+    transition: all 150ms var(--bezier) 0s;
+  }
+
+  & > span > code {
+    background: none !important;
+  }
+
+  &:hover {
+    border-radius: var(--s-3);
+    transform: scale(1.2);
+    transition-duration: 300ms;
+    z-index: 2;
+  }
+
+  &:hover span {
+    opacity: 1;
+    filter: blur(0);
+    transition-duration: 450ms;
+  }
+}

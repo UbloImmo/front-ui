@@ -1,6 +1,5 @@
-import styled from "styled-components";
-
 import { Heading } from "../Typography";
+import { useFontPreviewClassNames } from "./FontPreview.styles";
 
 import { FlexColumnLayout } from "@layouts";
 import { capitalize } from "@utils";
@@ -32,17 +31,23 @@ export const FontPreview = ({
   font = "sans",
   fontName = "Gilroy",
 }: FontPreviewProps): JSX.Element => {
+  const classNames = useFontPreviewClassNames();
   return (
-    <FontPreviewBox>
+    <div className={classNames.box}>
       <FlexColumnLayout gap="s-8" align="start" justify="start">
         {FONT_WEIGHTS.map((weight) => (
-          <FlexColumnLayout key={weight} gap={0} align="start" justify="start">
+          <FlexColumnLayout
+            key={weight}
+            gap="s-2"
+            align="start"
+            justify="start"
+          >
             <Heading
               size={SIZE}
               weight={weight}
               color={COLOR}
               font={font}
-              className="font-preview-heading"
+              className={classNames.heading}
             >
               {fontName} {capitalize(weight)}
             </Heading>
@@ -53,7 +58,7 @@ export const FontPreview = ({
                 weight={weight}
                 color={COLOR}
                 font={font}
-                className="font-preview-heading"
+                className={classNames.heading}
               >
                 {char}
               </Heading>
@@ -61,17 +66,6 @@ export const FontPreview = ({
           </FlexColumnLayout>
         ))}
       </FlexColumnLayout>
-    </FontPreviewBox>
+    </div>
   );
 };
-
-const FontPreviewBox = styled.div`
-  background: var(--gray-50);
-  padding: var(--s-8) var(--s-4);
-  border-radius: var(--s-2);
-  margin-top: var(--s-6) !important;
-
-  & > div > div > span:has(${SIZE}) > ${SIZE}.font-preview-heading {
-    margin: 0 !important;
-  }
-`;

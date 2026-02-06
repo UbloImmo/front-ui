@@ -1,0 +1,169 @@
+@use "../../../src/typography/__generated__/typography-tokens.module.scss" as
+  typo;
+
+.canvas {
+  --padding: var(--s-8);
+
+  & > div {
+    margin-top: var(--s-6);
+    margin-bottom: var(--s-8);
+  }
+
+  &.in-header > div {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &.fill-width,
+  *:has(> &.fill-width) {
+    width: 100%;
+    flex: 1;
+  }
+
+  & > :global(.sbdocs-preview) {
+    box-shadow: none;
+    background: var(--gray-50-50);
+    border: none;
+    outline: 1px solid var(--gray-50);
+    border-radius: var(--s-2);
+    overflow: visible;
+  }
+
+  // story show/hide code button container
+  :global(.docs-story) > div:has(:global(.docblock-code-toggle)),
+  // code block button container
+  :global(.sbdocs-preview):has(:global(.docblock-code-toggle--expanded)) > div:not(:global(.docs-story)) *:has(> button) {
+    right: var(--s-1);
+    bottom: var(--s-1);
+    background: none;
+    z-index: unset;
+  }
+
+  & :global(.docblock-code-toggle) {
+    @include typo.m-text-xs-bold;
+    @include typo.font-code;
+    padding: var(--s-05) var(--s-3);
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    border-radius: var(--s-6);
+    box-shadow: var(--shadow-button) !important;
+    width: auto;
+    border: 1px solid transparent;
+    transition:
+      color 300ms var(--bezier) 0s,
+      border-color 300ms var(--bezier) 0s;
+
+    &:hover {
+      transition-duration: 150ms;
+      border-color: var(--primary-medium);
+      color: var(--primary-base);
+    }
+
+    &:global(.docblock-code-toggle--expanded) {
+      background: var(--primary-medium);
+      color: var(--primary-light);
+      width: max-content;
+    }
+
+    &:hover {
+      border-color: var(--primary-medium);
+    }
+  }
+
+  :global(.docs-story) {
+    border-radius: 0;
+    overflow: visible;
+
+    // story container has generated classname
+    & > div:first-child {
+      padding: var(--padding);
+      overflow: visible;
+    }
+
+    & :global(.innerZoomElementWrapper) > div {
+      border-width: 0 !important;
+    }
+  }
+
+  &.overflow-hidden {
+    overflow: hidden;
+    & :global(.docs-story) > div:first-child {
+      overflow: hidden;
+    }
+  }
+
+  // code preview has generated classname
+  :global(.sbdocs-preview):has(:global(.docblock-code-toggle--expanded))
+    > div:not(:global(.docs-story)) {
+    background: var(--primary-light-50);
+    border-radius: 0;
+    border-bottom-left-radius: var(--s-2);
+    border-bottom-right-radius: var(--s-2);
+    box-shadow: none;
+
+    :global(.prismjs) {
+      padding: var(--padding);
+    }
+  }
+
+  // same story for copy button
+  :global(.sbdocs-preview):has(:global(.docblock-code-toggle--expanded))
+    > div:not(:global(.docs-story))
+    button {
+    @include typo.m-text-xs-bold;
+    @include typo.font-code;
+    padding: var(--s-05) var(--s-3);
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    border-radius: var(--s-6);
+    box-shadow: var(--shadow-button) !important;
+    width: auto;
+    border: 1px solid transparent;
+    transition:
+      color 300ms var(--bezier) 0s,
+      border-color 300ms var(--bezier) 0s;
+
+    &:hover {
+      transition-duration: 150ms;
+      border-color: var(--primary-medium);
+      color: var(--primary-base);
+    }
+  }
+
+  &.horizontal {
+    // code preview has generated classname
+    :global(.sbdocs-preview):has(:global(.docblock-code-toggle--expanded))
+      > div:not(:global(.docs-story)) {
+      border-radius: none;
+      border-bottom-left-radius: var(--s-2);
+      border-top-left-radius: var(--s-2);
+    }
+
+    @media screen and (min-width: 600px) {
+      :global(.sbdocs-preview) {
+        display: flex;
+        flex-direction: row-reverse;
+      }
+
+      :global(.docs-story) {
+        flex: 1;
+      }
+
+      :global(.sbdocs-preview):has(:global(.docblock-code-toggle--expanded))
+        > div:not(.docs-story) {
+        flex: 1;
+      }
+    }
+  }
+
+  &.in-header {
+    & :global(.sbdocs-preview) {
+      background: var(--white);
+    }
+    // code preview has generated classname
+    :global(.sbdocs-preview):has(:global(.docblock-code-toggle--expanded))
+      > div:not(:global(.docs-story)) {
+      background: var(--primary-light-75);
+    }
+  }
+}

@@ -1,3 +1,3 @@
-import styled from "styled-components";
+import type { ElementType } from "react";
 
-export const TableBody = styled.tbody``;
+export const TableBody: ElementType = "tbody";

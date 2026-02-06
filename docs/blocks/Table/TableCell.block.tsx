@@ -1,38 +1,30 @@
-import styled from "styled-components";
+import styles from "./Table.block.module.scss";
 
-type TableCellProps = {
+import { useCssClasses } from "@utils";
+
+import type { DetailedHTMLProps, TdHTMLAttributes } from "react";
+
+type TableCellStyleProps = {
   $center?: boolean;
 };
 
-export const TableCell = styled.td<TableCellProps>`
-  background: var(--white-50);
-  border-radius: var(--s-1);
-  border: none !important;
-  padding: var(--s-2) !important;
-  display: table-cell;
-  width: max-content;
-  vertical-align: ${({ $center }) => ($center ? "center" : "top")};
-  transition: background 300ms ease-out 0s;
+type TableCellElementProps = DetailedHTMLProps<
+  TdHTMLAttributes<HTMLTableCellElement>,
+  HTMLTableCellElement
+>;
 
-  span:has(*) {
-    margin: 0 !important;
-  }
-  // normalize stacked margins
-  span:not(:has(*:not(code))) {
-    margin: var(--s-1) 0 !important;
-  }
+type TableCellProps = TableCellElementProps & TableCellStyleProps;
 
-  [data-testid="badge"] span {
-    margin: 0 !important;
-  }
+export const TableCell = ({
+  $center,
+  className: cn,
+  ...props
+}: TableCellProps) => {
+  const className = useCssClasses(
+    styles["table-cell"],
+    [styles.center, $center],
+    cn
+  );
 
-  &:nth-child(3) code {
-    background: none;
-    border: none;
-    white-space: nowrap;
-  }
-
-  &:last-child {
-    min-width: 16rem;
-  }
-`;
+  return <td className={className} {...props} />;
+};

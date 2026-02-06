@@ -1,17 +1,16 @@
-import { styled } from "styled-components";
+import styles from "./Table.block.module.scss";
 
-export const Table = styled.table`
-  display: block;
-  max-width: 100%;
-  width: max-content;
-  margin-top: var(--s-6) !important;
-  margin-bottom: var(--s-8) !important;
-  border-radius: var(--s-2);
-  background: var(--gray-50) !important;
-  padding: var(--s-1) var(--s-1) 0 !important;
-  border-collapse: separate !important;
-  border-spacing: var(--s-1) var(--s-2) !important;
-  border: none !important;
-  overflow-y: hidden !important;
-  overflow-x: auto !important;
-`;
+import { useCssClasses } from "@utils";
+
+import type { DetailedHTMLProps, HTMLAttributes } from "react";
+
+type TableElementProps = DetailedHTMLProps<
+  HTMLAttributes<HTMLTableElement>,
+  HTMLTableElement
+>;
+
+export const Table = ({ className: cn, ...props }: TableElementProps) => {
+  const className = useCssClasses(styles["table"], cn);
+
+  return <table className={className} {...props} />;
+};

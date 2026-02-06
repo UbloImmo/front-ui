@@ -1,12 +1,13 @@
 import { objectKeys, isNull } from "@ubloimmo/front-util";
 import { useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
 
-import { ComponentVariants } from "./ComponentVariants";
+import { ComponentVariants } from "../ComponentVariants";
+import styles from "./IconSearch.module.scss";
 
 import { Icon, TextInput } from "@/components";
 import * as BootstrapIcons from "@/components/Icon/__generated__/bootstrap";
 import * as CustomIcons from "@/components/Icon/__generated__/custom";
+import { cssClasses, useStatic } from "@utils";
 
 import type { Nullable } from "@ubloimmo/front-util";
 
@@ -53,17 +54,24 @@ export const IconSearch = () => {
       .sort();
   }, [filter, normalizedQuery, custom, bootstrap, all]);
 
+  const classNames = useStatic(() => ({
+    container: cssClasses(styles["icon-search-list-container"]),
+    wrapper: cssClasses(styles["icon-search-list-wrapper"]),
+    header: cssClasses(styles["icon-search-list-header"]),
+    list: cssClasses(styles["icon-search-list"]),
+  }));
+
   return (
-    <ListContainer>
-      <ListHeader>
+    <section className={classNames.container}>
+      <header className={classNames.header}>
         <TextInput
           value={query}
           onChange={setQuery}
           placeholder="Search for an icon"
         />
-      </ListHeader>
-      <ListWrapper>
-        <List>
+      </header>
+      <section className={classNames.wrapper}>
+        <div className={classNames.list}>
           <ComponentVariants
             defaults={{ ...Icon.defaultProps, size: "s-8" }}
             variants={results}
@@ -71,38 +79,10 @@ export const IconSearch = () => {
             justify="space-around"
             of={Icon}
             gap={1}
+            scaling={1.2}
           />
-        </List>
-      </ListWrapper>
-    </ListContainer>
+        </div>
+      </section>
+    </section>
   );
 };
-
-const ListContainer = styled.div`
-  position: relative;
-  border-radius: var(--s-2);
-  padding-top: var(--s-10);
-`;
-
-const ListWrapper = styled.div`
-  padding: 0 var(--s-2) var(--s-2);
-  background: var(--gray-50);
-`;
-
-const List = styled.div`
-  padding: var(--s-6);
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: var(--white);
-  border-radius: var(--s-1);
-`;
-
-const ListHeader = styled.header`
-  position: sticky;
-  top: 0;
-  z-index: 4;
-  background: var(--gray-50);
-  padding: var(--s-2) var(--s-2);
-  border-top-right-radius: var(--s-2);
-  border-top-left-radius: var(--s-2);
-`;

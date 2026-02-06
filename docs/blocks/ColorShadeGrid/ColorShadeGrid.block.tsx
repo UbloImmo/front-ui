@@ -1,10 +1,12 @@
 import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo, useReducer } from "react";
-import styled from "styled-components";
 
-import { rgbaColorConverter } from "@utils";
+import styles from "./ColorShadeGrid.module.scss";
 
-import { Text } from "@components";
+import { GridItem } from "@layouts";
+import { rgbaColorConverter, useCssClasses, useCssVariables } from "@utils";
+
+import { Checkbox, Text } from "@components";
 
 import type {
   DefaultPaletteColorShadeKey,
@@ -68,25 +70,35 @@ export const ColorShadeGrid = ({
 
     return shades;
   }, [color, colorName, showOpacity]);
+
+  const className = useCssClasses(styles["color-shade-grid"]);
+
   return (
-    <ShadeGridContainer>
-      <GridItem $x={1} $y={1} $justify="start">
-        <input
-          type="checkbox"
-          checked={showOpacity}
-          onChange={toggleShowOpacity}
-          title="show opacity"
-        />
+    <div className={className}>
+      <GridItem columnStart={1} rowStart={1} justify="start" align="center">
+        <Checkbox onChange={toggleShowOpacity} active={showOpacity} />
       </GridItem>
       {shades.map(({ name }, index) => (
-        <GridItem key={name} $x={index + 2} $y={1} $justify="center">
+        <GridItem
+          key={name}
+          columnStart={index + 2}
+          rowStart={1}
+          justify="center"
+          align="center"
+        >
           <Text color="gray-600" important size="s">
             {name}
           </Text>
         </GridItem>
       ))}
       {shades[0].shades.map(({ name }, index) => (
-        <GridItem key={name} $x={1} $y={index + 2} $justify="end">
+        <GridItem
+          key={name}
+          columnStart={1}
+          rowStart={index + 2}
+          justify="end"
+          align="center"
+        >
           <Text color="gray-600" important size="xs">
             {name}
           </Text>
@@ -114,7 +126,7 @@ export const ColorShadeGrid = ({
           );
         });
       })}
-    </ShadeGridContainer>
+    </div>
   );
 };
 
@@ -143,100 +155,23 @@ const ColorShadeSwatch = ({
   textColor,
 }: ColorShadeSwatchProps) => {
   const hex = rgbaColorConverter.strToHex(color);
+  const className = useCssClasses(styles["color-shade"]);
+  const style = useCssVariables({
+    background: color,
+    "column-start": x,
+    "row-start": y,
+  });
 
   return (
-    <ShadeContainer $background={color} $x={x} $y={y}>
+    <div className={className} style={style}>
       <Text weight="medium" size="s" color={textColor} important>
         {colorName}
       </Text>
       {opacity && (
-        <Text size="xs" color={textColor} important>
-          <code>{hex}</code>
+        <Text size="xs" color={textColor} important font="code">
+          {hex}
         </Text>
       )}
-    </ShadeContainer>
+    </div>
   );
 };
-
-const ShadeGridContainer = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, max-content) repeat(auto-fit, minmax(0, 1fr));
-  grid-template-rows: minmax(0, max-content) repeat(auto-fit, minmax(0, 1fr));
-  gap: var(--s-05);
-  padding: var(--s-1);
-  background: var(--white);
-  border-radius: var(--s-1);
-  overflow: hidden;
-`;
-
-const ShadeContainer = styled.div.attrs<{
-  $background: string;
-  $x: number;
-  $y: number;
-}>((props) => ({
-  style: {
-    background: props.$background,
-    gridRowStart: props.$y,
-    gridColumnStart: props.$x,
-  },
-}))`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: var(--s-1);
-  flex: 1;
-  padding: 2rem 0.5rem;
-  grid-column-end: span 1;
-  grid-row-end: span 1;
-  border-radius: var(--s-1);
-  margin: 0;
-
-  transition: all 600ms ease-out 0s;
-  transform: scale(1);
-
-  & > span {
-    filter: blur(var(--s-2));
-    opacity: 0;
-    transition: all 150ms ease-out 0s;
-  }
-
-  & > span > code {
-    background: none !important;
-  }
-
-  &:hover {
-    border-radius: var(--s-3);
-    transform: scale(1.2);
-    transition-duration: 300ms;
-    z-index: 2;
-  }
-
-  &:hover span {
-    opacity: 1;
-    filter: blur(0);
-    transition-duration: 450ms;
-  }
-`;
-
-const GridItem = styled.div.attrs<{
-  $x: number;
-  $y: number;
-  $justify: string;
-}>((props) => ({
-  style: {
-    gridRowStart: props.$y,
-    gridColumnStart: props.$x,
-    justifySelf: props.$justify,
-  },
-}))`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: var(--s-1);
-  flex: 1;
-  padding: 0.5rem;
-  grid-column-end: span 1;
-  grid-row-end: span 1;
-`;

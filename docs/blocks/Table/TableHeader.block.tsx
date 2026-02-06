@@ -1,9 +1,19 @@
-import styled from "styled-components";
+import styles from "./Table.block.module.scss";
 
-export const TableHeader = styled.thead`
-  border-top-left-radius: var(--s-2);
-  border-top-right-radius: var(--s-2);
-  overflow-y: hidden !important;
-  background: var(--gray-50) !important;
-  border: none !important;
-`;
+import { useCssClasses } from "@utils";
+
+import type { DetailedHTMLProps, HTMLAttributes } from "react";
+
+type TableHeaderElementProps = DetailedHTMLProps<
+  HTMLAttributes<HTMLTableSectionElement>,
+  HTMLTableSectionElement
+>;
+
+export const TableHeader = ({
+  className: cn,
+  ...props
+}: TableHeaderElementProps) => {
+  const className = useCssClasses(styles["table-header"], cn);
+
+  return <thead className={className} {...props} />;
+};

@@ -1,16 +1,30 @@
 import { Markdown as SBMarkdown } from "@storybook/addon-docs/blocks";
 import { useMemo } from "react";
-import styled, { css } from "styled-components";
 
-import { Em, Strong, specificHeading, textOfSize } from "./Typography";
+import {
+  Em,
+  Strong,
+  specificHeading,
+  textOfSize,
+  Code,
+  BlockQuote,
+  A,
+  Ul,
+  Li,
+  Hr,
+} from "../Typography";
+import styles from "./Markdown.module.scss";
 
-import type { PaletteColor, StyleProps } from "@types";
+import { useCssClasses } from "@utils";
+
+import type { PaletteColor } from "@types";
+
+type SBMarkdownProps = Parameters<typeof SBMarkdown>[0];
 
 type MarkdownProps = {
-  children?: string;
   inline?: boolean;
   color?: PaletteColor;
-};
+} & SBMarkdownProps;
 
 export const markdownOverrides = (color?: PaletteColor) => ({
   h1: specificHeading("h1", "bold", color ?? "gray-900"),
@@ -23,6 +37,12 @@ export const markdownOverrides = (color?: PaletteColor) => ({
   p: textOfSize("m", "regular", color ?? "gray-700"),
   em: Em,
   strong: Strong,
+  code: Code,
+  blockquote: BlockQuote,
+  a: A,
+  ul: Ul,
+  li: Li,
+  hr: Hr,
 });
 
 /**
@@ -35,41 +55,27 @@ export const markdownOverrides = (color?: PaletteColor) => ({
  * @param {color} props.color - The color of the text. If none is provided, will use default colors for each parsed element.
  * @return {JSX.Element} The rendered Markdown component.
  */
-export const Markdown = ({ children, inline, color }: MarkdownProps) => {
+export const Markdown = ({
+  children,
+  inline,
+  color,
+  className,
+  ...props
+}: MarkdownProps) => {
   const options = useMemo(
     () => ({
       overrides: markdownOverrides(color),
     }),
     [color]
   );
+  const klass = useCssClasses(
+    styles.markdown,
+    [styles.inline, inline],
+    className
+  );
   return (
-    <MarkdownStyle $inline={inline}>
-      <SBMarkdown options={options}>{children ?? ""}</SBMarkdown>
-    </MarkdownStyle>
+    <SBMarkdown className={klass} options={options} {...props}>
+      {children ?? ""}
+    </SBMarkdown>
   );
 };
-
-const MarkdownStyle = styled.div<StyleProps<Pick<MarkdownProps, "inline">>>`
-  & * {
-    color: inherit !important;
-    font-size: inherit !important;
-    line-height: inherit !important;
-  }
-
-  & span,
-  & p {
-    color: inherit !important;
-    font-size: inherit !important;
-    line-height: inherit !important;
-  }
-
-  ${({ $inline }) =>
-    $inline &&
-    css`
-      display: inline !important;
-
-      span {
-        display: inline !important;
-      }
-    `}
-`;

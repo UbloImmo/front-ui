@@ -2,7 +2,7 @@ import { Source } from "@storybook/addon-docs/blocks";
 import { objectEntries } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import { Markdown } from "./Markdown";
+import { Markdown } from "../Markdown";
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
-} from "./Table";
+} from "../Table";
 
 import { formatPropInfo } from "@docs/docs.utils";
 import { useStatic } from "@utils";

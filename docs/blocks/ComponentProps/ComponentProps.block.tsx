@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { ObjectDocTable } from "./ObjectDocTable";
+import { ObjectDocTable } from "../ObjectDocTable";
 
 import type { ComponentStory } from "@docs/docs.types";
 

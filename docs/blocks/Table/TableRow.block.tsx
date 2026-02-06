@@ -1,36 +1,31 @@
-import styled, { css } from "styled-components";
+import styles from "./Table.block.module.scss";
+
+import { useCssClasses } from "@utils";
 
 import type { ParsedPropInfo } from "@docs/docs.types";
 import type { StyleProps } from "@types";
+import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
-export const TableRow = styled.tr<
-  Partial<StyleProps<Pick<ParsedPropInfo, "todo" | "required">>>
->`
-  ${({ $todo }) =>
-    $todo
-      ? css`
-          & > td {
-            opacity: 0.5;
-            background: none;
-          }
-        `
-      : css`
-          &:hover td {
-            background: var(--primary-light-50);
-            transition-duration: 150ms;
+type TableRowElementProps = DetailedHTMLProps<
+  HTMLAttributes<HTMLTableRowElement>,
+  HTMLTableRowElement
+>;
 
-            &:first-child {
-              background: var(--primary-light);
-            }
-          }
-        `}
-  ${({ $required }) =>
-    $required &&
-    css`
-      & > td {
-        background: var(--white);
-      }
-    `}
+type TableRowProps = TableRowElementProps &
+  Partial<StyleProps<Pick<ParsedPropInfo, "todo" | "required">>>;
 
-  background: none !important;
-`;
+export const TableRow = ({
+  className: cn,
+  $todo,
+  $required,
+  ...props
+}: TableRowProps) => {
+  const className = useCssClasses(
+    styles["table-row"],
+    [styles.todo, $todo],
+    [styles.required, $required],
+    cn
+  );
+
+  return <tr className={className} {...props} />;
+};

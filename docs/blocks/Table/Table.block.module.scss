@@ -1,0 +1,91 @@
+.table {
+  display: block;
+  max-width: 100%;
+  width: max-content;
+  margin-top: var(--s-6) !important;
+  margin-bottom: var(--s-8) !important;
+  border-radius: var(--s-2);
+  background: var(--gray-50) !important;
+  padding: var(--s-1) var(--s-1) 0 !important;
+  border-collapse: separate !important;
+  border-spacing: var(--s-1) var(--s-2) !important;
+  border: none !important;
+  overflow-y: hidden !important;
+  overflow-x: auto !important;
+}
+
+.table-cell {
+  background: var(--white-50);
+  border-radius: var(--s-1);
+  border: none !important;
+  padding: var(--s-2) !important;
+  display: table-cell;
+  width: max-content;
+  vertical-align: top;
+
+  &.center {
+    vertical-align: center;
+  }
+  transition: background 300ms ease-out 0s;
+
+  span:has(*) {
+    margin: 0 !important;
+  }
+  // normalize stacked margins
+  span:not(:has(*:not(code))) {
+    margin: var(--s-1) 0 !important;
+  }
+
+  [data-testid="badge"] span {
+    margin: 0 !important;
+  }
+
+  &:nth-child(3) code {
+    background: none;
+    border: none;
+    white-space: nowrap;
+  }
+
+  &:last-child {
+    min-width: 16rem;
+  }
+}
+
+.table-header {
+  border-top-left-radius: var(--s-2);
+  border-top-right-radius: var(--s-2);
+  overflow-y: hidden !important;
+  background: var(--gray-50) !important;
+  border: none !important;
+}
+
+.table-header-cell {
+  text-transform: capitalize;
+  padding: 0 var(--s-2) !important;
+  text-align: left;
+  background: none !important;
+  border: none !important;
+  display: table-cell;
+}
+
+.table-row {
+  background: none !important;
+
+  &.todo > td {
+    opacity: 0.5;
+    background: none;
+  }
+
+  &:not(.todo):hover > td {
+    background: var(--primary-light-50);
+    transition-duration: 150ms;
+
+    &:first-child {
+      background: var(--primary-light);
+    }
+  }
+
+  &.required > td {
+    background: var(--white);
+  }
+}

@@ -1,0 +1,14 @@
+.font-preview {
+  background: var(--gray-50);
+  padding: var(--s-8) var(--s-4);
+  border-radius: var(--s-2);
+  margin-top: var(--s-6) !important;
+
+  & > div > div > span:has(h2) > h2.font-preview-heading {
+    margin: 0 !important;
+  }
+}
+
+.font-preview-heading {
+  margin: 0 !important;
+}

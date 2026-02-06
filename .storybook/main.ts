@@ -22,6 +22,7 @@ const config: StorybookConfig = {
       options: { transcludeMarkdown: true },
     },
     "@storybook/addon-a11y",
+    "@storybook/addon-themes",
   ],
 
   framework: {

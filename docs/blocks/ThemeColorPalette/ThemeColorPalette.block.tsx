@@ -1,12 +1,14 @@
 import { transformObject } from "@ubloimmo/front-util";
-import React, { useMemo, useReducer, type ReactNode } from "react";
-import styled, { useTheme } from "styled-components";
+import { useMemo, useReducer, type ReactNode } from "react";
 
-import { ColorShadeGrid } from "./ColorShadeGrid";
-import { Pre } from "./Typography";
+import { ColorShadeGrid } from "../ColorShadeGrid";
+import { Pre } from "../Typography";
+import styles from "./ThemeColorPalette.module.scss";
 
 import { Button, Heading } from "@/components";
 import { FlexLayout } from "@/layouts";
+import { useTheme } from "@/themes";
+import { useCssClasses } from "@utils";
 
 import type {
   ColorPalette as CPalette,
@@ -38,7 +40,7 @@ export const ThemeColorShades = ({
   title?: string;
   initShowOpacity?: boolean;
   children?: ReactNode;
-}) => {
+}): JSX.Element => {
   const theme = useTheme();
   const [showCodePreview, toggleShowCodePreview] = useReducer(
     (state) => !state,
@@ -55,18 +57,31 @@ export const ThemeColorShades = ({
     };
   }, [colorKey, theme]);
 
+  const container = useCssClasses(styles["block-container"]);
+  const section = useCssClasses(styles["block-section"]);
+
   return (
-    <BlockContainer>
-      <BlockSection align="baseline" justify="space-between" gap="s-3">
-        <BlockSection align="baseline" justify="start" gap="s-3">
+    <div className={container}>
+      <FlexLayout
+        className={section}
+        align="baseline"
+        justify="space-between"
+        gap="s-3"
+      >
+        <FlexLayout
+          className={section}
+          align="baseline"
+          justify="start"
+          gap="s-3"
+        >
           <Heading important size="h4" weight="medium">
             {title ?? colorKey}
           </Heading>
           <Pre $background={lightShade} $foreground={darkShade} $padded={false}>
             theme.{colorKey}
           </Pre>
-        </BlockSection>
-        <BlockSection align="center" gap="s-2" justify="end">
+        </FlexLayout>
+        <FlexLayout className={section} align="center" gap="s-2" justify="end">
           <Button
             secondary={showCodePreview}
             onClick={toggleShowCodePreview}
@@ -77,9 +92,13 @@ export const ThemeColorShades = ({
             onClick={toggleShowCodePreview}
             label="Code"
           />
-        </BlockSection>
-      </BlockSection>
-      {children && <BlockSection direction="column">{children}</BlockSection>}
+        </FlexLayout>
+      </FlexLayout>
+      {children && (
+        <FlexLayout className={section} direction="column">
+          {children}
+        </FlexLayout>
+      )}
       {showCodePreview ? (
         <ThemeColorCodePreview
           color={color}
@@ -94,7 +113,7 @@ export const ThemeColorShades = ({
           initShowOpacity={initShowOpacity}
         />
       )}
-    </BlockContainer>
+    </div>
   );
 };
 
@@ -146,18 +165,3 @@ const ThemeColorCodePreview = ({
     </Pre>
   );
 };
-
-const BlockContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-4);
-  padding: var(--s-2);
-  background: var(--gray-50);
-  border-radius: var(--s-2);
-  overflow: hidden;
-  margin: var(--s-8) 0 !important;
-`;
-
-const BlockSection = styled(FlexLayout)`
-  flex: 1;
-`;
