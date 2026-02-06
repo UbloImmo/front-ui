@@ -8,7 +8,6 @@ export const Input = (
     HTMLInputElement
   >
 ) => {
-  console.log(props.type);
   if (props.type === "checkbox") {
     return <Checkbox active={props.checked} disabled={props.disabled} />;
   }
