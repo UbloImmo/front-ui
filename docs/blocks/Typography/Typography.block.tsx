@@ -1,4 +1,4 @@
-import { CodeOrSourceMdx } from "@storybook/addon-docs/blocks";
+import { AnchorMdx, CodeOrSourceMdx } from "@storybook/addon-docs/blocks";
 import { isString } from "@ubloimmo/front-util";
 import {
   AnchorHTMLAttributes,
@@ -10,7 +10,6 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
-import { components } from "storybook/internal/components";
 
 import styles from "./Typography.module.scss";
 import { Callout } from "../Callout";
@@ -196,8 +195,6 @@ export const Code = ({
   return <code className={klass} {...props} />;
 };
 
-const Anchor = components.a;
-
 export const A = ({
   className,
   href,
@@ -213,9 +210,16 @@ export const A = ({
     [children]
   );
   return (
-    <Anchor className={klass} href={href} title={props.title} {...props}>
+    <AnchorMdx
+      // @ts-expect-error className is properly propagated by storybook block, just missing in its type def
+      // see https://github.com/storybookjs/storybook/blob/next/code/addons/docs/src/blocks/blocks/mdx.tsx#L98
+      className={klass}
+      href={href ?? ""}
+      title={props.title}
+      {...props}
+    >
       {content}
-    </Anchor>
+    </AnchorMdx>
   );
 };
 
