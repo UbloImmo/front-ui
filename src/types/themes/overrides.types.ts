@@ -13,30 +13,33 @@ export type OrganizationAssets = {
   };
 };
 
+type PaletteOverrides = {
+  dark: HexColorOpaque;
+  medium?: Nullish<HexColorOpaque>;
+  base: HexColorOpaque;
+  light: HexColorOpaque;
+};
+
 export type LegacyOverrides = {
   organization: OrganizationAssets;
   palette: {
-    primary: {
-      dark: HexColorOpaque;
-      medium?: Nullish<HexColorOpaque>;
-      base: HexColorOpaque;
-      light: HexColorOpaque;
-    };
+    primary: PaletteOverrides;
   };
 };
 
 export type OrganizationData = {
+  /**
+   * Name of the organization.
+   */
   name: Nullable<string>;
+  /**
+   * Organization-specific assets (logo, images, favicons)
+   */
   assets: OrganizationAssets;
 };
 
 export type OrganizationOverrides = OrganizationData & {
-  palette: {
-    dark: HexColorOpaque;
-    medium?: Nullish<HexColorOpaque>;
-    base: HexColorOpaque;
-    light: HexColorOpaque;
-  };
+  palette: PaletteOverrides;
 };
 
 export type ThemeOverride = {

@@ -7,7 +7,7 @@ import type {
 } from "./palette/palette.types";
 
 /**
- * Styled-components theme
+ * Global UiKit theme
  *
  * Includes all properties of {@link ColorPalette} and keeps {@link LegacyPalette} under the `palette` key.
  *

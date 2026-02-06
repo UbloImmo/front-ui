@@ -1,31 +1,37 @@
 import { isNull, isNullish } from "@ubloimmo/front-util";
-import { useMemo, useState, useEffect, useRef } from "react";
 import {
-  ThemeProvider as StyledThemeProvider,
-  useTheme as useStyledTheme,
-} from "styled-components";
+  useMemo,
+  useState,
+  useEffect,
+  useRef,
+  createContext,
+  useContext,
+} from "react";
 
 import { GlobalStyle } from "./GlobalStyle";
 import { useLogger } from "../../utils";
 import { applyFavicon, buildTheme } from "../theme";
 
 import type { Theme, ThemeOverride, ThemeProviderProps } from "@types";
-import type { GenericFn, Nullable } from "@ubloimmo/front-util";
+import type { Nullable } from "@ubloimmo/front-util";
+
+type ThemeStoreParams = Pick<
+  ThemeProviderProps,
+  "getOverridesFn" | "_forceTheme" | "noFavicon" | "faviconLinkSelectors"
+>;
 
 /**
- * ThemeProvider component to provide `styled-components` theme to the children components.
+ * Loads & returns a reference to the app's global theme.
  *
- * @param {ThemeProviderProps} props - The provider's props
- * @return {JSX.Element} The styled theme provider component with the provided theme.
+ * @param {ThemeStoreParams} options - Theming options.
+ * @returns {Theme} The loaded & possibly overridden theme.
  */
-export const ThemeProvider = ({
-  children,
+function useThemeStore({
   getOverridesFn,
   _forceTheme = "primary",
   noFavicon = false,
   faviconLinkSelectors,
-  lightDarkSupport,
-}: ThemeProviderProps): JSX.Element => {
+}: ThemeStoreParams): Theme {
   const { warn, debug } = useLogger("ThemeProvider");
   const [overrides, setOverrides] = useState<Nullable<ThemeOverride>>(null);
   const overridesFetched = useRef(false);
@@ -61,32 +67,43 @@ export const ThemeProvider = ({
       overridesFetched.current = true;
     };
     fetchOverrides();
-  }, [
-    getOverridesFn,
-    overrides,
-    warn,
-    overridesFetched,
-    faviconLinkSelectors,
-    debug,
-    noFavicon,
-  ]);
+  }, [getOverridesFn, overrides, faviconLinkSelectors, debug, noFavicon, warn]);
 
-  const theme = useMemo(
+  return useMemo<Theme>(
     () => buildTheme(overrides, _forceTheme),
     [overrides, _forceTheme]
   );
+}
+
+/**
+ * Global context that holds the current theme
+ */
+const THEME_CONTEXT = createContext<Theme>(buildTheme(null, "primary"));
+
+/**
+ * ThemeProvider component to provide theme context to the children components.
+ *
+ * @param {ThemeProviderProps} props - The provider's props
+ * @return {JSX.Element} The styled theme provider component with the provided theme.
+ */
+export const ThemeProvider = ({
+  children,
+  lightDarkSupport,
+  ...themeProps
+}: ThemeProviderProps): JSX.Element => {
+  const theme = useThemeStore(themeProps);
 
   return (
-    <StyledThemeProvider theme={theme}>
+    <THEME_CONTEXT.Provider value={theme}>
       <GlobalStyle theme={theme} lightDarkSupport={lightDarkSupport} />
       {children}
-    </StyledThemeProvider>
+    </THEME_CONTEXT.Provider>
   );
 };
 
 /**
- * A re-export of `styled-components`' `useTheme` hook , typed to return {@link Theme}
+ * Returns a reference to the app's current theme
  *
  * @returns {Theme}
  */
-export const useTheme = useStyledTheme as GenericFn<[], Theme>;
+export const useTheme = (): Theme => useContext(THEME_CONTEXT);
