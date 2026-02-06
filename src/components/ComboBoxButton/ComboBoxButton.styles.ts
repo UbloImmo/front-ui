@@ -5,7 +5,6 @@ import styles from "./ComboboxButton.module.scss";
 import { cssClasses, isNonEmptyString } from "@utils";
 
 import type { ComboBoxButtonDefaultProps } from "./ComboBoxButton.types";
-import type { IconName } from "../Icon";
 
 export function useComboBoxButtonStyles({
   active,
@@ -30,15 +29,15 @@ export function useComboBoxButtonStyles({
     [active, description, fill]
   );
 
-  const icons = useMemo<Record<"active" | "inactive", IconName>>(() => {
+  const icons = useMemo(() => {
     if (multi)
       return {
-        active: "CheckSquareFill",
-        inactive: "Square",
+        active: "CheckSquareFill" as const,
+        inactive: "Square" as const,
       };
     return {
-      active: "CheckCircleFill",
-      inactive: "Circle",
+      active: "CheckCircleFill" as const,
+      inactive: "Circle" as const,
     };
   }, [multi]);
 
