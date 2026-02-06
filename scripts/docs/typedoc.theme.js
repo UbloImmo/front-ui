@@ -21,6 +21,9 @@ const pageFooter = (_page) => {
  * @returns {string}
  */
 function sanitizeComments(str) {
+  /**
+   * @type {string[]}
+   */
   const codeBlocks = [];
   const placeholder = "___CODEBLOCKPLACEHOLDER___";
   // Replace code blocks with placeholders
@@ -93,6 +96,10 @@ class MDXThemeContext extends MarkdownThemeContext {
     return URL_PREFIX.test(url) ? url : storybookUrl(url);
   }
 
+  /**
+   *
+   * @param {MarkdownTheme} theme
+   */
   constructor(theme, page, options) {
     super(theme, page, options);
     this.options.setValue("disableSources", true);

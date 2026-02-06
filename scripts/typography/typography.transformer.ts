@@ -2,6 +2,7 @@ import { texts, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
 import { objectEntries, objectKeys } from "@ubloimmo/front-util";
 
 import { breakpointsPx } from "@/sizes";
+import { fontFamilySets } from "@/typography";
 import { BreakpointLabel } from "@types";
 import { cssVarUsage } from "@utils";
 
@@ -19,8 +20,6 @@ type TypographyWeight =
 type TypographyRule = {
   rule: string;
   className: string;
-  size: TypographySize;
-  weight: TypographyWeight;
 };
 
 type TypographyRuleMap = Map<string, TypographyRule>;
@@ -41,6 +40,8 @@ const EXCLUDED_RULES = [
   "font-size",
   "font-weight",
 ];
+
+const FONT_FAMILIES = fontFamilySets;
 
 function parseCssRules(ruleStr: string) {
   return ruleStr
@@ -86,15 +87,8 @@ export function parseRules(): TypographyRuleMaps {
   const mixins: TypographyRuleMap = new Map();
 
   // aggregate rules
-  // for (const [breakpoint, sizes] of objectEntries(texts)) {
   for (const [size, weights] of objectEntries(texts.desktop)) {
     for (const weight of objectKeys(weights)) {
-      // const className = `text-${size}-${weight}`;
-      // const ruleStr = [
-      //   ...parseCssRules(css.rules),
-      //   `font-size: ${cssVarUsage(`text-${size}`)};`,
-      //   `font-weight: ${cssVarUsage(`text-weight-${weight}`)};`,
-      // ].join("\n");
       const desktop = getTypoRule("desktop", size, weight);
       const mobile = getTypoRule("mobile", size, weight);
 
@@ -112,19 +106,30 @@ export function parseRules(): TypographyRuleMaps {
           ),
         ].join("\n")
       )}\n}`.trim();
-      mixins.set(className, { rule: mixin.trim(), size, weight, className });
+      mixins.set(className, { rule: mixin.trim(), className });
 
-      // const rule = `.${className} {\n${indentLines([ruleStr, importantRuleset(ruleStr)].join("\n"))}\n}`;
       const rule = `.${className} {\n${indentLines(
         [
           `@include ${mixinName};`,
           `&.important {\n${indentLines(`@include ${mixinName}(true);`)}\n}`,
         ].join("\n")
       )}\n}`.trim();
-      rules.set(className, { rule, size, weight, className });
+      rules.set(className, { rule, className });
     }
   }
-  // }
+
+  // create font rules
+  for (const [name, fonts] of objectEntries(FONT_FAMILIES)) {
+    const ruleStr = `font-family: ${fonts};`;
+    const mixinName = `font-${name}`;
+    const mixin = `@mixin ${mixinName}($important: false) {\n${indentLines(
+      [
+        ruleStr,
+        `@if $important {\n${indentLines(appendImportant(ruleStr))}\n}`,
+      ].join("\n")
+    )}\n}`;
+    mixins.set(mixinName, { rule: mixin.trim(), className: mixinName });
+  }
 
   return { rules, mixins };
 }
@@ -138,7 +143,7 @@ function mediaQuery(content: string, breakpointLabel: BreakpointLabel = "XS") {
 
 export function formatRules({ rules, mixins }: TypographyRuleMaps) {
   let ruleStr = "";
-  // append desktop rules
+
   mixins.forEach(({ rule, className }) => {
     ruleStr += `\n${rule}`;
     const mixinRule = rules.get(className);
@@ -146,15 +151,6 @@ export function formatRules({ rules, mixins }: TypographyRuleMaps) {
     ruleStr += `\n${mixinRule.rule}`;
     ruleStr += "\n";
   });
-
-  // // append mobile media queries
-  // let mobileRuleStr = "";
-  // mobile.forEach(({ rule }) => {
-  //   mobileRuleStr += `\n${rule}`;
-  // });
-
-  // mobileRuleStr.trim();
-  // ruleStr += `\n${mediaQuery(mobileRuleStr.trim())}`;
 
   return ruleStr.trim();
 }

@@ -183,6 +183,11 @@ export function unEscapeChars(str) {
  * @returns {string}
  */
 export function codeBlock(content) {
+  /**
+   *
+   * @param {string} content
+   * @returns {string}
+   */
   const trimLastLine = (content) => {
     const lines = content.split("\n");
     return lines
