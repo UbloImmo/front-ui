@@ -65,7 +65,7 @@ const color = {
     "[shade]": {
       "hex": "#fff",
       "rgba": "rgba(255, 255, 255, 1)",
-      "opacity": (alpha: number) => `rgba(255, 255, 255, ${alpha / 100})` 
+      "opacity": (alpha: number) => `rgba(255, 255, 255, ${alpha / 100})`
     }
   }
 }
@@ -79,7 +79,7 @@ Colors and shades can be used through various ways.
 
 ```tsx
 // import the `useTheme` hook as usual
-import { useTheme } from "styled-components";
+import { useTheme } from "@/themes";
 
 const MyComponent = () => {
   // get theme from provider
@@ -103,7 +103,7 @@ const MyComponent = () => {
 
 Colors are made available as regular CSS variables globally, under the name `[color]-[shade]`
 
-This is also valid inside `styled-components` rulesets.
+This is also valid inside CSS-in-JS rulesets.
 
 ```css
 .badge.success {
