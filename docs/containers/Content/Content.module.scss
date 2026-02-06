@@ -1,0 +1,11 @@
+.content {
+  padding: var(--s-4);
+  padding-bottom: 6rem;
+  width: 100%;
+  max-width: 70rem;
+
+  & > [data-testid="text"] {
+    display: inline-block !important;
+    width: 100%;
+  }
+}

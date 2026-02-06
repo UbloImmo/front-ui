@@ -1,8 +1,8 @@
-import styled from "styled-components";
-
-import { Content } from "./Content";
+import { Content } from "../Content";
+import styles from "./Header.module.scss";
 
 import { FlexColumnLayout } from "@/layouts";
+import { useCssClasses } from "@utils";
 
 import type { ReactNode } from "react";
 
@@ -17,23 +17,14 @@ type HeaderProps = {
  * @return {ReactNode} The rendered content component.
  */
 export const Header = ({ children }: HeaderProps) => {
+  const className = useCssClasses(styles.header);
   return (
-    <Container data-testid="docs-header">
+    <header className={className} data-testid="docs-header">
       <Content>
         <FlexColumnLayout gap="s-8" align="start" justify="start">
           {children}
         </FlexColumnLayout>
       </Content>
-    </Container>
+    </header>
   );
 };
-
-const Container = styled.header`
-  padding: 0 0 var(--s-8);
-  background: var(--primary-light-35);
-  box-shadow: var(--border-bottom);
-
-  & [data-layout="docs-content"] {
-    padding-bottom: var(--s-4);
-  }
-`;

@@ -1,6 +1,7 @@
-import styled from "styled-components";
+import styles from "./Content.module.scss";
 
 import { FlexColumnLayout } from "@/layouts";
+import { useCssClasses } from "@utils";
 
 import type { ReactNode } from "react";
 
@@ -15,20 +16,16 @@ type ContentProps = {
  * @return {ReactNode} The rendered content component.
  */
 export const Content = ({ children }: ContentProps) => {
+  const className = useCssClasses(styles.content);
   return (
     <FlexColumnLayout
       align="center"
       justify="start"
       data-layout="docs-content-container"
     >
-      <ContentContainer data-layout="docs-content">{children}</ContentContainer>
+      <main className={className} data-layout="docs-content">
+        {children}
+      </main>
     </FlexColumnLayout>
   );
 };
-
-const ContentContainer = styled.main`
-  padding: var(--s-4);
-  padding-bottom: 6rem;
-  width: 100%;
-  max-width: 70rem;
-`;

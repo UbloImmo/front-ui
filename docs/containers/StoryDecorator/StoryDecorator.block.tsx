@@ -28,17 +28,19 @@ type StorybookThemeProviderProps = {
 export const StorybookThemeProvider = ({
   theme,
   children,
-}: StorybookThemeProviderProps) => (
-  <ThemeProvider
-    _forceTheme={theme.client}
-    faviconLinkSelectors={{ x16: 'link[rel="icon"]' }}
-    lightDarkSupport
-  >
-    <UikitTranslationProvider>
-      <DialogProvider portalRoot="#dialog-root">{children}</DialogProvider>
-    </UikitTranslationProvider>
-  </ThemeProvider>
-);
+}: StorybookThemeProviderProps) => {
+  return (
+    <ThemeProvider
+      _forceTheme={theme.client}
+      faviconLinkSelectors={{ x16: 'link[rel="icon"]' }}
+      lightDarkSupport
+    >
+      <UikitTranslationProvider>
+        <DialogProvider portalRoot="#dialog-root">{children}</DialogProvider>
+      </UikitTranslationProvider>
+    </ThemeProvider>
+  );
+};
 
 const getStoryThemes = () => {
   const storyThemes = objectFromEntries(
