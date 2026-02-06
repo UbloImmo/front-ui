@@ -34,4 +34,5 @@ export type TableProps = {
 
 export type TableDefaultProps = Required<TableProps>;
 
+/** @deprecated styled-components */
 export type TableStyleProps = StyleProps<TableDefaultProps>;

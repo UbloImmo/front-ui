@@ -18,6 +18,7 @@ export type TableHeaderProps = Omit<TableProps, "layout"> & {
   top?: FixedCssLength;
 };
 
+/** @deprecated styled-components */
 export type TableHeaderStyleProps = StyleProps<
   Required<Pick<TableHeaderProps, "sticky" | "top">>
 >;

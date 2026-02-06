@@ -34,6 +34,7 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
  * A flexbox wrapper layout, with default properties direction set to `row`, align and justify set to `start`
  *
  * @version 0.1.0
+ *
  * @param {FlexLayoutProps & TestId & AriaProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */

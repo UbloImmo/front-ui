@@ -5,8 +5,7 @@ import {
   type Nullable,
   type Optional,
 } from "@ubloimmo/front-util";
-import { useMemo } from "react";
-import { CSSProperties } from "styled-components";
+import { useMemo, type CSSProperties } from "react";
 
 import {
   VirtualTableFooterContent,
