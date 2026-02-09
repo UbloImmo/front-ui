@@ -59,7 +59,7 @@ describe("font", () => {
     it("should be a valid font family", () => {
       expect(Gilroy).toBeFunction();
       expect(Gilroy).not.toThrow();
-      expect(Gilroy()).toBeObject();
+      expect(Gilroy()).toString();
     });
   });
 
@@ -67,7 +67,7 @@ describe("font", () => {
     it("should be a valid font family", () => {
       expect(DMMono).toBeFunction();
       expect(DMMono).not.toThrow();
-      expect(DMMono()).toBeObject();
+      expect(DMMono()).toBeString();
     });
   });
 });

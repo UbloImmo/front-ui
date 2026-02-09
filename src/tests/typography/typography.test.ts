@@ -20,14 +20,14 @@ describe("typography", () => {
       expect(typographyFontFace).toBeDefined();
       expect(typographyFontFace).toBeFunction();
       expect(() => typographyFontFace()).not.toThrow();
-      expect(typographyFontFace()).toBeObject();
+      expect(typographyFontFace()).toBeString();
     });
 
     it("should link font face", () => {
       expect(linkFontFace).toBeDefined();
       expect(linkFontFace).toBeFunction();
       expect(() => linkFontFace()).not.toThrow();
-      expect(linkFontFace()).toBeObject();
+      expect(linkFontFace()).toBeString();
     });
   });
 

@@ -90,7 +90,7 @@ describe("global style", () => {
       expect(cssReset).toBeDefined();
       expect(cssReset).toBeFunction();
       expect(cssReset).not.toThrow();
-      expect(cssReset()).toBeObject();
+      expect(cssReset()).toBeString();
     });
   });
 
