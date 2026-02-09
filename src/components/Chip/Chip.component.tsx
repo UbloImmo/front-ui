@@ -10,7 +10,6 @@ import {
   isEmptyString,
   useLogger,
   useMergedProps,
-  useStyleProps,
   useTestId,
   useUikitTranslation,
 } from "@utils";
@@ -39,7 +38,6 @@ const defaultChipProps: DefaultChipProps = {
  */
 const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultChipProps, props);
-  const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("chip", props);
 
   const { label, icon, deleteButtonTitle, disabled } = mergedProps;
@@ -75,7 +73,7 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
       overrideTestId
       role="status"
     >
-      <div className={classes.chip} {...styledProps} title={label}>
+      <div className={classes.chip} title={label}>
         {icon && <Icon name={icon} size="s-3" color={colors.icon} />}
         <Text
           className={classes.label}
@@ -91,7 +89,6 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
       {!disabled && (
         <button
           className={classes.button}
-          {...styledProps}
           onClick={onDelete}
           onMouseDown={onDelete}
           data-testid="chip-button"

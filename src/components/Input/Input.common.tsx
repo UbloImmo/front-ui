@@ -157,13 +157,13 @@ export const StyledInputControl = forwardRef<
 export const StyledInputControlGroup = forwardRef<
   HTMLDivElement,
   InputControlAnchorProps & DivElementProps
->(({ $anchor, $noFocus, className: cn, ...props }, ref) => {
+>(({ $anchor, $noFocus, onClick, className: cn }, ref) => {
   const className = useInputControlGroupClassName({
     $anchor,
     $noFocus,
     className: cn,
   });
-  return <div className={className} ref={ref} {...props} />;
+  return <div className={className} onClick={onClick} ref={ref} />;
 });
 
 /**

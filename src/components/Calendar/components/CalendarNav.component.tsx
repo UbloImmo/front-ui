@@ -6,7 +6,7 @@ import styles from "../Calendar.module.scss";
 import { Button } from "@/components/Button";
 import { useCssClasses } from "@utils";
 
-export const CalendarNav = ({ className: cn, ...props }: NavProps) => {
+export const CalendarNav = ({ className: cn }: NavProps) => {
   const { goToMonth, nextMonth, previousMonth } = useDayPicker();
   const goToNextMonth = useCallback(() => {
     if (nextMonth) goToMonth(nextMonth);
@@ -17,7 +17,7 @@ export const CalendarNav = ({ className: cn, ...props }: NavProps) => {
   }, [goToMonth, previousMonth]);
   const className = useCssClasses(styles["calendar-nav"], cn);
   return (
-    <nav className={className} {...props}>
+    <nav className={className}>
       <Button
         icon="ChevronLeft"
         color="clear"
