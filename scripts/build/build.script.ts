@@ -12,13 +12,13 @@ await $`vite build --config vite.config.build.ts`;
 
 logger.info("Overwriting index.d.ts file", "Build");
 const INDEX_DTS_CONTENT = dedent`
-  export * from "./components";
-  export * from "./fonts";
-  export * from "./layouts";
-  export * from "./sizes";
-  export * from "./themes";
-  export * from "./types";
-  export * from "./utils";
+  export * from "./components.d";
+  export * from "./fonts.d";
+  export * from "./layouts.d";
+  export * from "./sizes.d";
+  export * from "./themes.d";
+  export * from "./types.d";
+  export * from "./utils.d";
 `;
 const INDEX_DTS_PATH = path.resolve(
   process.cwd(),
