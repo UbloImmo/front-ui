@@ -278,7 +278,6 @@ const MultiSelectInput = <
       >
         <div
           className={container}
-          {...inputStyles}
           aria-expanded={isOpen}
           data-testid={testIds.container}
         >
