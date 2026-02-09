@@ -64,7 +64,7 @@ import type { LoadingAnimationProps } from "../../Loading.types";
  */
 export const Anim = (props: LoadingAnimationProps): JSX.Element => {
   // compute styles
-  const { style, className } = useStyleProps(props);
+  const { style, className } = useAnimStyles(props);
   // Apply styles to your animation
   // The returned element & structure is up to you
   return <svg style={style} className={className} data-testid={props.testId} />;
