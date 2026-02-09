@@ -115,7 +115,9 @@ export const Units = (props: Partial<SumLineProps>) => {
   );
 };
 Sizes.parameters = {
-  docs: source(sumLineUnits.map((unit) => ({ ...SumLine.__DEFAULT_PROPS, unit }))),
+  docs: source(
+    sumLineUnits.map((unit) => ({ ...SumLine.__DEFAULT_PROPS, unit }))
+  ),
 };
 
 const periods = ["month", "year", "quarter", "tenant"];
@@ -135,7 +137,9 @@ export const Periods = (props: Partial<SumLineProps>) => {
   );
 };
 Periods.parameters = {
-  docs: source(periods.map((period) => ({ ...SumLine.__DEFAULT_PROPS, period }))),
+  docs: source(
+    periods.map((period) => ({ ...SumLine.__DEFAULT_PROPS, period }))
+  ),
 };
 
 export const Compact = (props: Partial<SumLineProps>) => {
