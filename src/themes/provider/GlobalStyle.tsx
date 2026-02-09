@@ -387,7 +387,7 @@ function useFormattedGlobalStyle({
     const fontFace = linkFontFace();
     const reset = cssReset();
     const icons = iconOverflow();
-    const lightDark = lightDarkSupport ? "color-sceme: light dark;" : "";
+    const lightDark = lightDarkSupport ? "color-scheme: light dark;" : "";
     const queries = mediaQueries?.length ? mediaQueries.join("\n") : "";
     return dedent`
     ${fontFace}
