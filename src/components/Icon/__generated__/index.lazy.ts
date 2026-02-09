@@ -1,2274 +1,2275 @@
 import { lazy } from "react";
 
-export const _0Circle = lazy(() => import("./bootstrap/_0Circle.icon.tsx"));
-export const _0CircleFill = lazy(() => import("./bootstrap/_0CircleFill.icon.tsx"));
-export const _0Square = lazy(() => import("./bootstrap/_0Square.icon.tsx"));
-export const _0SquareFill = lazy(() => import("./bootstrap/_0SquareFill.icon.tsx"));
-export const _123 = lazy(() => import("./bootstrap/_123.icon.tsx"));
-export const _1Circle = lazy(() => import("./bootstrap/_1Circle.icon.tsx"));
-export const _1CircleFill = lazy(() => import("./bootstrap/_1CircleFill.icon.tsx"));
-export const _1Square = lazy(() => import("./bootstrap/_1Square.icon.tsx"));
-export const _1SquareFill = lazy(() => import("./bootstrap/_1SquareFill.icon.tsx"));
-export const _2Circle = lazy(() => import("./bootstrap/_2Circle.icon.tsx"));
-export const _2CircleFill = lazy(() => import("./bootstrap/_2CircleFill.icon.tsx"));
-export const _2Square = lazy(() => import("./bootstrap/_2Square.icon.tsx"));
-export const _2SquareFill = lazy(() => import("./bootstrap/_2SquareFill.icon.tsx"));
-export const _3Circle = lazy(() => import("./bootstrap/_3Circle.icon.tsx"));
-export const _3CircleFill = lazy(() => import("./bootstrap/_3CircleFill.icon.tsx"));
-export const _3Square = lazy(() => import("./bootstrap/_3Square.icon.tsx"));
-export const _3SquareFill = lazy(() => import("./bootstrap/_3SquareFill.icon.tsx"));
-export const _4Circle = lazy(() => import("./bootstrap/_4Circle.icon.tsx"));
-export const _4CircleFill = lazy(() => import("./bootstrap/_4CircleFill.icon.tsx"));
-export const _4Square = lazy(() => import("./bootstrap/_4Square.icon.tsx"));
-export const _4SquareFill = lazy(() => import("./bootstrap/_4SquareFill.icon.tsx"));
-export const _5Circle = lazy(() => import("./bootstrap/_5Circle.icon.tsx"));
-export const _5CircleFill = lazy(() => import("./bootstrap/_5CircleFill.icon.tsx"));
-export const _5Square = lazy(() => import("./bootstrap/_5Square.icon.tsx"));
-export const _5SquareFill = lazy(() => import("./bootstrap/_5SquareFill.icon.tsx"));
-export const _6Circle = lazy(() => import("./bootstrap/_6Circle.icon.tsx"));
-export const _6CircleFill = lazy(() => import("./bootstrap/_6CircleFill.icon.tsx"));
-export const _6Square = lazy(() => import("./bootstrap/_6Square.icon.tsx"));
-export const _6SquareFill = lazy(() => import("./bootstrap/_6SquareFill.icon.tsx"));
-export const _7Circle = lazy(() => import("./bootstrap/_7Circle.icon.tsx"));
-export const _7CircleFill = lazy(() => import("./bootstrap/_7CircleFill.icon.tsx"));
-export const _7Square = lazy(() => import("./bootstrap/_7Square.icon.tsx"));
-export const _7SquareFill = lazy(() => import("./bootstrap/_7SquareFill.icon.tsx"));
-export const _8Circle = lazy(() => import("./bootstrap/_8Circle.icon.tsx"));
-export const _8CircleFill = lazy(() => import("./bootstrap/_8CircleFill.icon.tsx"));
-export const _8Square = lazy(() => import("./bootstrap/_8Square.icon.tsx"));
-export const _8SquareFill = lazy(() => import("./bootstrap/_8SquareFill.icon.tsx"));
-export const _9Circle = lazy(() => import("./bootstrap/_9Circle.icon.tsx"));
-export const _9CircleFill = lazy(() => import("./bootstrap/_9CircleFill.icon.tsx"));
-export const _9Square = lazy(() => import("./bootstrap/_9Square.icon.tsx"));
-export const _9SquareFill = lazy(() => import("./bootstrap/_9SquareFill.icon.tsx"));
-export const Abacus = lazy(() => import("./custom/Abacus.icon.tsx"));
-export const Activity = lazy(() => import("./bootstrap/Activity.icon.tsx"));
-export const Airplane = lazy(() => import("./bootstrap/Airplane.icon.tsx"));
-export const AirplaneEngines = lazy(() => import("./bootstrap/AirplaneEngines.icon.tsx"));
-export const AirplaneEnginesFill = lazy(() => import("./bootstrap/AirplaneEnginesFill.icon.tsx"));
-export const AirplaneFill = lazy(() => import("./bootstrap/AirplaneFill.icon.tsx"));
-export const Alarm = lazy(() => import("./bootstrap/Alarm.icon.tsx"));
-export const AlarmFill = lazy(() => import("./bootstrap/AlarmFill.icon.tsx"));
-export const Alexa = lazy(() => import("./bootstrap/Alexa.icon.tsx"));
-export const AlignBottom = lazy(() => import("./bootstrap/AlignBottom.icon.tsx"));
-export const AlignCenter = lazy(() => import("./bootstrap/AlignCenter.icon.tsx"));
-export const AlignEnd = lazy(() => import("./bootstrap/AlignEnd.icon.tsx"));
-export const AlignMiddle = lazy(() => import("./bootstrap/AlignMiddle.icon.tsx"));
-export const AlignStart = lazy(() => import("./bootstrap/AlignStart.icon.tsx"));
-export const AlignTop = lazy(() => import("./bootstrap/AlignTop.icon.tsx"));
-export const Alipay = lazy(() => import("./bootstrap/Alipay.icon.tsx"));
-export const Alphabet = lazy(() => import("./bootstrap/Alphabet.icon.tsx"));
-export const AlphabetUppercase = lazy(() => import("./bootstrap/AlphabetUppercase.icon.tsx"));
-export const Alt = lazy(() => import("./bootstrap/Alt.icon.tsx"));
-export const Amazon = lazy(() => import("./bootstrap/Amazon.icon.tsx"));
-export const Amd = lazy(() => import("./bootstrap/Amd.icon.tsx"));
-export const Android = lazy(() => import("./bootstrap/Android.icon.tsx"));
-export const Android2 = lazy(() => import("./bootstrap/Android2.icon.tsx"));
-export const App = lazy(() => import("./bootstrap/App.icon.tsx"));
-export const AppIndicator = lazy(() => import("./bootstrap/AppIndicator.icon.tsx"));
-export const Apple = lazy(() => import("./bootstrap/Apple.icon.tsx"));
-export const Apps = lazy(() => import("./custom/Apps.icon.tsx"));
-export const AppsFill = lazy(() => import("./custom/AppsFill.icon.tsx"));
-export const AppsPlus = lazy(() => import("./custom/AppsPlus.icon.tsx"));
-export const AppsPlusFill = lazy(() => import("./custom/AppsPlusFill.icon.tsx"));
-export const Archive = lazy(() => import("./bootstrap/Archive.icon.tsx"));
-export const ArchiveFill = lazy(() => import("./bootstrap/ArchiveFill.icon.tsx"));
-export const Arrow90DegDown = lazy(() => import("./bootstrap/Arrow90DegDown.icon.tsx"));
-export const Arrow90DegLeft = lazy(() => import("./bootstrap/Arrow90DegLeft.icon.tsx"));
-export const Arrow90DegRight = lazy(() => import("./bootstrap/Arrow90DegRight.icon.tsx"));
-export const Arrow90DegUp = lazy(() => import("./bootstrap/Arrow90DegUp.icon.tsx"));
-export const ArrowBarDown = lazy(() => import("./bootstrap/ArrowBarDown.icon.tsx"));
-export const ArrowBarLeft = lazy(() => import("./bootstrap/ArrowBarLeft.icon.tsx"));
-export const ArrowBarRight = lazy(() => import("./bootstrap/ArrowBarRight.icon.tsx"));
-export const ArrowBarUp = lazy(() => import("./bootstrap/ArrowBarUp.icon.tsx"));
-export const ArrowClockwise = lazy(() => import("./bootstrap/ArrowClockwise.icon.tsx"));
-export const ArrowCounterclockwise = lazy(() => import("./bootstrap/ArrowCounterclockwise.icon.tsx"));
-export const ArrowDown = lazy(() => import("./bootstrap/ArrowDown.icon.tsx"));
-export const ArrowDownCircle = lazy(() => import("./bootstrap/ArrowDownCircle.icon.tsx"));
-export const ArrowDownCircleFill = lazy(() => import("./bootstrap/ArrowDownCircleFill.icon.tsx"));
-export const ArrowDownLeft = lazy(() => import("./bootstrap/ArrowDownLeft.icon.tsx"));
-export const ArrowDownLeftCircle = lazy(() => import("./bootstrap/ArrowDownLeftCircle.icon.tsx"));
-export const ArrowDownLeftCircleFill = lazy(() => import("./bootstrap/ArrowDownLeftCircleFill.icon.tsx"));
-export const ArrowDownLeftSquare = lazy(() => import("./bootstrap/ArrowDownLeftSquare.icon.tsx"));
-export const ArrowDownLeftSquareFill = lazy(() => import("./bootstrap/ArrowDownLeftSquareFill.icon.tsx"));
-export const ArrowDownRight = lazy(() => import("./bootstrap/ArrowDownRight.icon.tsx"));
-export const ArrowDownRightCircle = lazy(() => import("./bootstrap/ArrowDownRightCircle.icon.tsx"));
-export const ArrowDownRightCircleFill = lazy(() => import("./bootstrap/ArrowDownRightCircleFill.icon.tsx"));
-export const ArrowDownRightSquare = lazy(() => import("./bootstrap/ArrowDownRightSquare.icon.tsx"));
-export const ArrowDownRightSquareFill = lazy(() => import("./bootstrap/ArrowDownRightSquareFill.icon.tsx"));
-export const ArrowDownShort = lazy(() => import("./bootstrap/ArrowDownShort.icon.tsx"));
-export const ArrowDownSquare = lazy(() => import("./bootstrap/ArrowDownSquare.icon.tsx"));
-export const ArrowDownSquareFill = lazy(() => import("./bootstrap/ArrowDownSquareFill.icon.tsx"));
-export const ArrowDownUp = lazy(() => import("./bootstrap/ArrowDownUp.icon.tsx"));
-export const ArrowLeft = lazy(() => import("./bootstrap/ArrowLeft.icon.tsx"));
-export const ArrowLeftCircle = lazy(() => import("./bootstrap/ArrowLeftCircle.icon.tsx"));
-export const ArrowLeftCircleFill = lazy(() => import("./bootstrap/ArrowLeftCircleFill.icon.tsx"));
-export const ArrowLeftRight = lazy(() => import("./bootstrap/ArrowLeftRight.icon.tsx"));
-export const ArrowLeftShort = lazy(() => import("./bootstrap/ArrowLeftShort.icon.tsx"));
-export const ArrowLeftSquare = lazy(() => import("./bootstrap/ArrowLeftSquare.icon.tsx"));
-export const ArrowLeftSquareFill = lazy(() => import("./bootstrap/ArrowLeftSquareFill.icon.tsx"));
-export const ArrowRepeat = lazy(() => import("./bootstrap/ArrowRepeat.icon.tsx"));
-export const ArrowReturnLeft = lazy(() => import("./bootstrap/ArrowReturnLeft.icon.tsx"));
-export const ArrowReturnRight = lazy(() => import("./bootstrap/ArrowReturnRight.icon.tsx"));
-export const ArrowRight = lazy(() => import("./bootstrap/ArrowRight.icon.tsx"));
-export const ArrowRightCircle = lazy(() => import("./bootstrap/ArrowRightCircle.icon.tsx"));
-export const ArrowRightCircleFill = lazy(() => import("./bootstrap/ArrowRightCircleFill.icon.tsx"));
-export const ArrowRightShort = lazy(() => import("./bootstrap/ArrowRightShort.icon.tsx"));
-export const ArrowRightSquare = lazy(() => import("./bootstrap/ArrowRightSquare.icon.tsx"));
-export const ArrowRightSquareFill = lazy(() => import("./bootstrap/ArrowRightSquareFill.icon.tsx"));
-export const Arrows = lazy(() => import("./bootstrap/Arrows.icon.tsx"));
-export const ArrowsAngleContract = lazy(() => import("./bootstrap/ArrowsAngleContract.icon.tsx"));
-export const ArrowsAngleExpand = lazy(() => import("./bootstrap/ArrowsAngleExpand.icon.tsx"));
-export const ArrowsCollapse = lazy(() => import("./bootstrap/ArrowsCollapse.icon.tsx"));
-export const ArrowsCollapseVertical = lazy(() => import("./bootstrap/ArrowsCollapseVertical.icon.tsx"));
-export const ArrowsExpand = lazy(() => import("./bootstrap/ArrowsExpand.icon.tsx"));
-export const ArrowsExpandVertical = lazy(() => import("./bootstrap/ArrowsExpandVertical.icon.tsx"));
-export const ArrowsFullscreen = lazy(() => import("./bootstrap/ArrowsFullscreen.icon.tsx"));
-export const ArrowsMove = lazy(() => import("./bootstrap/ArrowsMove.icon.tsx"));
-export const ArrowsVertical = lazy(() => import("./bootstrap/ArrowsVertical.icon.tsx"));
-export const ArrowThroughHeart = lazy(() => import("./bootstrap/ArrowThroughHeart.icon.tsx"));
-export const ArrowThroughHeartFill = lazy(() => import("./bootstrap/ArrowThroughHeartFill.icon.tsx"));
-export const ArrowUp = lazy(() => import("./bootstrap/ArrowUp.icon.tsx"));
-export const ArrowUpCircle = lazy(() => import("./bootstrap/ArrowUpCircle.icon.tsx"));
-export const ArrowUpCircleFill = lazy(() => import("./bootstrap/ArrowUpCircleFill.icon.tsx"));
-export const ArrowUpLeft = lazy(() => import("./bootstrap/ArrowUpLeft.icon.tsx"));
-export const ArrowUpLeftCircle = lazy(() => import("./bootstrap/ArrowUpLeftCircle.icon.tsx"));
-export const ArrowUpLeftCircleFill = lazy(() => import("./bootstrap/ArrowUpLeftCircleFill.icon.tsx"));
-export const ArrowUpLeftSquare = lazy(() => import("./bootstrap/ArrowUpLeftSquare.icon.tsx"));
-export const ArrowUpLeftSquareFill = lazy(() => import("./bootstrap/ArrowUpLeftSquareFill.icon.tsx"));
-export const ArrowUpRight = lazy(() => import("./bootstrap/ArrowUpRight.icon.tsx"));
-export const ArrowUpRightCircle = lazy(() => import("./bootstrap/ArrowUpRightCircle.icon.tsx"));
-export const ArrowUpRightCircleFill = lazy(() => import("./bootstrap/ArrowUpRightCircleFill.icon.tsx"));
-export const ArrowUpRightSquare = lazy(() => import("./bootstrap/ArrowUpRightSquare.icon.tsx"));
-export const ArrowUpRightSquareFill = lazy(() => import("./bootstrap/ArrowUpRightSquareFill.icon.tsx"));
-export const ArrowUpShort = lazy(() => import("./bootstrap/ArrowUpShort.icon.tsx"));
-export const ArrowUpSquare = lazy(() => import("./bootstrap/ArrowUpSquare.icon.tsx"));
-export const ArrowUpSquareFill = lazy(() => import("./bootstrap/ArrowUpSquareFill.icon.tsx"));
-export const AspectRatio = lazy(() => import("./bootstrap/AspectRatio.icon.tsx"));
-export const AspectRatioFill = lazy(() => import("./bootstrap/AspectRatioFill.icon.tsx"));
-export const Asterisk = lazy(() => import("./bootstrap/Asterisk.icon.tsx"));
-export const At = lazy(() => import("./bootstrap/At.icon.tsx"));
-export const Award = lazy(() => import("./bootstrap/Award.icon.tsx"));
-export const AwardFill = lazy(() => import("./bootstrap/AwardFill.icon.tsx"));
-export const Back = lazy(() => import("./bootstrap/Back.icon.tsx"));
-export const BackArrow = lazy(() => import("./custom/BackArrow.icon.tsx"));
-export const Backpack = lazy(() => import("./bootstrap/Backpack.icon.tsx"));
-export const Backpack2 = lazy(() => import("./bootstrap/Backpack2.icon.tsx"));
-export const Backpack2Fill = lazy(() => import("./bootstrap/Backpack2Fill.icon.tsx"));
-export const Backpack3 = lazy(() => import("./bootstrap/Backpack3.icon.tsx"));
-export const Backpack3Fill = lazy(() => import("./bootstrap/Backpack3Fill.icon.tsx"));
-export const Backpack4 = lazy(() => import("./bootstrap/Backpack4.icon.tsx"));
-export const Backpack4Fill = lazy(() => import("./bootstrap/Backpack4Fill.icon.tsx"));
-export const BackpackFill = lazy(() => import("./bootstrap/BackpackFill.icon.tsx"));
-export const Backspace = lazy(() => import("./bootstrap/Backspace.icon.tsx"));
-export const BackspaceFill = lazy(() => import("./bootstrap/BackspaceFill.icon.tsx"));
-export const BackspaceReverse = lazy(() => import("./bootstrap/BackspaceReverse.icon.tsx"));
-export const BackspaceReverseFill = lazy(() => import("./bootstrap/BackspaceReverseFill.icon.tsx"));
-export const Badge3D = lazy(() => import("./bootstrap/Badge3D.icon.tsx"));
-export const Badge3dFill = lazy(() => import("./bootstrap/Badge3dFill.icon.tsx"));
-export const Badge4K = lazy(() => import("./bootstrap/Badge4K.icon.tsx"));
-export const Badge4kFill = lazy(() => import("./bootstrap/Badge4kFill.icon.tsx"));
-export const Badge8K = lazy(() => import("./bootstrap/Badge8K.icon.tsx"));
-export const Badge8kFill = lazy(() => import("./bootstrap/Badge8kFill.icon.tsx"));
-export const BadgeAd = lazy(() => import("./bootstrap/BadgeAd.icon.tsx"));
-export const BadgeAdFill = lazy(() => import("./bootstrap/BadgeAdFill.icon.tsx"));
-export const BadgeAr = lazy(() => import("./bootstrap/BadgeAr.icon.tsx"));
-export const BadgeArFill = lazy(() => import("./bootstrap/BadgeArFill.icon.tsx"));
-export const BadgeCc = lazy(() => import("./bootstrap/BadgeCc.icon.tsx"));
-export const BadgeCcFill = lazy(() => import("./bootstrap/BadgeCcFill.icon.tsx"));
-export const BadgeHd = lazy(() => import("./bootstrap/BadgeHd.icon.tsx"));
-export const BadgeHdFill = lazy(() => import("./bootstrap/BadgeHdFill.icon.tsx"));
-export const BadgeSd = lazy(() => import("./bootstrap/BadgeSd.icon.tsx"));
-export const BadgeSdFill = lazy(() => import("./bootstrap/BadgeSdFill.icon.tsx"));
-export const BadgeTm = lazy(() => import("./bootstrap/BadgeTm.icon.tsx"));
-export const BadgeTmFill = lazy(() => import("./bootstrap/BadgeTmFill.icon.tsx"));
-export const BadgeVo = lazy(() => import("./bootstrap/BadgeVo.icon.tsx"));
-export const BadgeVoFill = lazy(() => import("./bootstrap/BadgeVoFill.icon.tsx"));
-export const BadgeVr = lazy(() => import("./bootstrap/BadgeVr.icon.tsx"));
-export const BadgeVrFill = lazy(() => import("./bootstrap/BadgeVrFill.icon.tsx"));
-export const BadgeWc = lazy(() => import("./bootstrap/BadgeWc.icon.tsx"));
-export const BadgeWcFill = lazy(() => import("./bootstrap/BadgeWcFill.icon.tsx"));
-export const Bag = lazy(() => import("./bootstrap/Bag.icon.tsx"));
-export const BagCheck = lazy(() => import("./bootstrap/BagCheck.icon.tsx"));
-export const BagCheckFill = lazy(() => import("./bootstrap/BagCheckFill.icon.tsx"));
-export const BagDash = lazy(() => import("./bootstrap/BagDash.icon.tsx"));
-export const BagDashFill = lazy(() => import("./bootstrap/BagDashFill.icon.tsx"));
-export const BagFill = lazy(() => import("./bootstrap/BagFill.icon.tsx"));
-export const BagHeart = lazy(() => import("./bootstrap/BagHeart.icon.tsx"));
-export const BagHeartFill = lazy(() => import("./bootstrap/BagHeartFill.icon.tsx"));
-export const BagPlus = lazy(() => import("./bootstrap/BagPlus.icon.tsx"));
-export const BagPlusFill = lazy(() => import("./bootstrap/BagPlusFill.icon.tsx"));
-export const BagX = lazy(() => import("./bootstrap/BagX.icon.tsx"));
-export const BagXFill = lazy(() => import("./bootstrap/BagXFill.icon.tsx"));
-export const Balloon = lazy(() => import("./bootstrap/Balloon.icon.tsx"));
-export const BalloonFill = lazy(() => import("./bootstrap/BalloonFill.icon.tsx"));
-export const BalloonHeart = lazy(() => import("./bootstrap/BalloonHeart.icon.tsx"));
-export const BalloonHeartFill = lazy(() => import("./bootstrap/BalloonHeartFill.icon.tsx"));
-export const Ban = lazy(() => import("./bootstrap/Ban.icon.tsx"));
-export const Bandaid = lazy(() => import("./bootstrap/Bandaid.icon.tsx"));
-export const BandaidFill = lazy(() => import("./bootstrap/BandaidFill.icon.tsx"));
-export const BanFill = lazy(() => import("./bootstrap/BanFill.icon.tsx"));
-export const Bank = lazy(() => import("./bootstrap/Bank.icon.tsx"));
-export const Bank2 = lazy(() => import("./bootstrap/Bank2.icon.tsx"));
-export const BarChart = lazy(() => import("./bootstrap/BarChart.icon.tsx"));
-export const BarChartFill = lazy(() => import("./bootstrap/BarChartFill.icon.tsx"));
-export const BarChartLine = lazy(() => import("./bootstrap/BarChartLine.icon.tsx"));
-export const BarChartLineFill = lazy(() => import("./bootstrap/BarChartLineFill.icon.tsx"));
-export const BarChartSteps = lazy(() => import("./bootstrap/BarChartSteps.icon.tsx"));
-export const Basket = lazy(() => import("./bootstrap/Basket.icon.tsx"));
-export const Basket2 = lazy(() => import("./bootstrap/Basket2.icon.tsx"));
-export const Basket2Fill = lazy(() => import("./bootstrap/Basket2Fill.icon.tsx"));
-export const Basket3 = lazy(() => import("./bootstrap/Basket3.icon.tsx"));
-export const Basket3Fill = lazy(() => import("./bootstrap/Basket3Fill.icon.tsx"));
-export const BasketFill = lazy(() => import("./bootstrap/BasketFill.icon.tsx"));
-export const Battery = lazy(() => import("./bootstrap/Battery.icon.tsx"));
-export const BatteryCharging = lazy(() => import("./bootstrap/BatteryCharging.icon.tsx"));
-export const BatteryFull = lazy(() => import("./bootstrap/BatteryFull.icon.tsx"));
-export const BatteryHalf = lazy(() => import("./bootstrap/BatteryHalf.icon.tsx"));
-export const Behance = lazy(() => import("./bootstrap/Behance.icon.tsx"));
-export const Bell = lazy(() => import("./bootstrap/Bell.icon.tsx"));
-export const BellFill = lazy(() => import("./bootstrap/BellFill.icon.tsx"));
-export const BellSlash = lazy(() => import("./bootstrap/BellSlash.icon.tsx"));
-export const BellSlashFill = lazy(() => import("./bootstrap/BellSlashFill.icon.tsx"));
-export const Bezier = lazy(() => import("./bootstrap/Bezier.icon.tsx"));
-export const Bezier2 = lazy(() => import("./bootstrap/Bezier2.icon.tsx"));
-export const Bicycle = lazy(() => import("./bootstrap/Bicycle.icon.tsx"));
-export const BinaryTree = lazy(() => import("./custom/BinaryTree.icon.tsx"));
-export const Bing = lazy(() => import("./bootstrap/Bing.icon.tsx"));
-export const Binoculars = lazy(() => import("./bootstrap/Binoculars.icon.tsx"));
-export const BinocularsFill = lazy(() => import("./bootstrap/BinocularsFill.icon.tsx"));
-export const BlockquoteLeft = lazy(() => import("./bootstrap/BlockquoteLeft.icon.tsx"));
-export const BlockquoteRight = lazy(() => import("./bootstrap/BlockquoteRight.icon.tsx"));
-export const Bluetooth = lazy(() => import("./bootstrap/Bluetooth.icon.tsx"));
-export const BodyText = lazy(() => import("./bootstrap/BodyText.icon.tsx"));
-export const Book = lazy(() => import("./bootstrap/Book.icon.tsx"));
-export const BookFill = lazy(() => import("./bootstrap/BookFill.icon.tsx"));
-export const BookHalf = lazy(() => import("./bootstrap/BookHalf.icon.tsx"));
-export const Bookmark = lazy(() => import("./bootstrap/Bookmark.icon.tsx"));
-export const BookmarkCheck = lazy(() => import("./bootstrap/BookmarkCheck.icon.tsx"));
-export const BookmarkCheckFill = lazy(() => import("./bootstrap/BookmarkCheckFill.icon.tsx"));
-export const BookmarkDash = lazy(() => import("./bootstrap/BookmarkDash.icon.tsx"));
-export const BookmarkDashFill = lazy(() => import("./bootstrap/BookmarkDashFill.icon.tsx"));
-export const BookmarkFill = lazy(() => import("./bootstrap/BookmarkFill.icon.tsx"));
-export const BookmarkHeart = lazy(() => import("./bootstrap/BookmarkHeart.icon.tsx"));
-export const BookmarkHeartFill = lazy(() => import("./bootstrap/BookmarkHeartFill.icon.tsx"));
-export const BookmarkPlus = lazy(() => import("./bootstrap/BookmarkPlus.icon.tsx"));
-export const BookmarkPlusFill = lazy(() => import("./bootstrap/BookmarkPlusFill.icon.tsx"));
-export const Bookmarks = lazy(() => import("./bootstrap/Bookmarks.icon.tsx"));
-export const BookmarksFill = lazy(() => import("./bootstrap/BookmarksFill.icon.tsx"));
-export const BookmarkStar = lazy(() => import("./bootstrap/BookmarkStar.icon.tsx"));
-export const BookmarkStarFill = lazy(() => import("./bootstrap/BookmarkStarFill.icon.tsx"));
-export const BookmarkX = lazy(() => import("./bootstrap/BookmarkX.icon.tsx"));
-export const BookmarkXFill = lazy(() => import("./bootstrap/BookmarkXFill.icon.tsx"));
-export const Bookshelf = lazy(() => import("./bootstrap/Bookshelf.icon.tsx"));
-export const Boombox = lazy(() => import("./bootstrap/Boombox.icon.tsx"));
-export const BoomboxFill = lazy(() => import("./bootstrap/BoomboxFill.icon.tsx"));
-export const Bootstrap = lazy(() => import("./bootstrap/Bootstrap.icon.tsx"));
-export const BootstrapFill = lazy(() => import("./bootstrap/BootstrapFill.icon.tsx"));
-export const BootstrapReboot = lazy(() => import("./bootstrap/BootstrapReboot.icon.tsx"));
-export const Border = lazy(() => import("./bootstrap/Border.icon.tsx"));
-export const BorderAll = lazy(() => import("./bootstrap/BorderAll.icon.tsx"));
-export const BorderBottom = lazy(() => import("./bootstrap/BorderBottom.icon.tsx"));
-export const BorderCenter = lazy(() => import("./bootstrap/BorderCenter.icon.tsx"));
-export const BorderInner = lazy(() => import("./bootstrap/BorderInner.icon.tsx"));
-export const BorderLeft = lazy(() => import("./bootstrap/BorderLeft.icon.tsx"));
-export const BorderMiddle = lazy(() => import("./bootstrap/BorderMiddle.icon.tsx"));
-export const BorderOuter = lazy(() => import("./bootstrap/BorderOuter.icon.tsx"));
-export const BorderRight = lazy(() => import("./bootstrap/BorderRight.icon.tsx"));
-export const BorderStyle = lazy(() => import("./bootstrap/BorderStyle.icon.tsx"));
-export const BorderTop = lazy(() => import("./bootstrap/BorderTop.icon.tsx"));
-export const BorderWidth = lazy(() => import("./bootstrap/BorderWidth.icon.tsx"));
-export const BoundingBox = lazy(() => import("./bootstrap/BoundingBox.icon.tsx"));
-export const BoundingBoxCircles = lazy(() => import("./bootstrap/BoundingBoxCircles.icon.tsx"));
-export const Box = lazy(() => import("./bootstrap/Box.icon.tsx"));
-export const Box2 = lazy(() => import("./bootstrap/Box2.icon.tsx"));
-export const Box2Fill = lazy(() => import("./bootstrap/Box2Fill.icon.tsx"));
-export const Box2Heart = lazy(() => import("./bootstrap/Box2Heart.icon.tsx"));
-export const Box2HeartFill = lazy(() => import("./bootstrap/Box2HeartFill.icon.tsx"));
-export const BoxArrowDown = lazy(() => import("./bootstrap/BoxArrowDown.icon.tsx"));
-export const BoxArrowDownLeft = lazy(() => import("./bootstrap/BoxArrowDownLeft.icon.tsx"));
-export const BoxArrowDownRight = lazy(() => import("./bootstrap/BoxArrowDownRight.icon.tsx"));
-export const BoxArrowInDown = lazy(() => import("./bootstrap/BoxArrowInDown.icon.tsx"));
-export const BoxArrowInDownLeft = lazy(() => import("./bootstrap/BoxArrowInDownLeft.icon.tsx"));
-export const BoxArrowInDownRight = lazy(() => import("./bootstrap/BoxArrowInDownRight.icon.tsx"));
-export const BoxArrowInLeft = lazy(() => import("./bootstrap/BoxArrowInLeft.icon.tsx"));
-export const BoxArrowInRight = lazy(() => import("./bootstrap/BoxArrowInRight.icon.tsx"));
-export const BoxArrowInUp = lazy(() => import("./bootstrap/BoxArrowInUp.icon.tsx"));
-export const BoxArrowInUpLeft = lazy(() => import("./bootstrap/BoxArrowInUpLeft.icon.tsx"));
-export const BoxArrowInUpRight = lazy(() => import("./bootstrap/BoxArrowInUpRight.icon.tsx"));
-export const BoxArrowLeft = lazy(() => import("./bootstrap/BoxArrowLeft.icon.tsx"));
-export const BoxArrowRight = lazy(() => import("./bootstrap/BoxArrowRight.icon.tsx"));
-export const BoxArrowUp = lazy(() => import("./bootstrap/BoxArrowUp.icon.tsx"));
-export const BoxArrowUpLeft = lazy(() => import("./bootstrap/BoxArrowUpLeft.icon.tsx"));
-export const BoxArrowUpRight = lazy(() => import("./bootstrap/BoxArrowUpRight.icon.tsx"));
-export const Boxes = lazy(() => import("./bootstrap/Boxes.icon.tsx"));
-export const BoxFill = lazy(() => import("./bootstrap/BoxFill.icon.tsx"));
-export const BoxSeam = lazy(() => import("./bootstrap/BoxSeam.icon.tsx"));
-export const BoxSeamFill = lazy(() => import("./bootstrap/BoxSeamFill.icon.tsx"));
-export const Braces = lazy(() => import("./bootstrap/Braces.icon.tsx"));
-export const BracesAsterisk = lazy(() => import("./bootstrap/BracesAsterisk.icon.tsx"));
-export const Bricks = lazy(() => import("./bootstrap/Bricks.icon.tsx"));
-export const Briefcase = lazy(() => import("./bootstrap/Briefcase.icon.tsx"));
-export const BriefcaseFill = lazy(() => import("./bootstrap/BriefcaseFill.icon.tsx"));
-export const BrightnessAltHigh = lazy(() => import("./bootstrap/BrightnessAltHigh.icon.tsx"));
-export const BrightnessAltHighFill = lazy(() => import("./bootstrap/BrightnessAltHighFill.icon.tsx"));
-export const BrightnessAltLow = lazy(() => import("./bootstrap/BrightnessAltLow.icon.tsx"));
-export const BrightnessAltLowFill = lazy(() => import("./bootstrap/BrightnessAltLowFill.icon.tsx"));
-export const BrightnessHigh = lazy(() => import("./bootstrap/BrightnessHigh.icon.tsx"));
-export const BrightnessHighFill = lazy(() => import("./bootstrap/BrightnessHighFill.icon.tsx"));
-export const BrightnessLow = lazy(() => import("./bootstrap/BrightnessLow.icon.tsx"));
-export const BrightnessLowFill = lazy(() => import("./bootstrap/BrightnessLowFill.icon.tsx"));
-export const Brilliance = lazy(() => import("./bootstrap/Brilliance.icon.tsx"));
-export const Broadcast = lazy(() => import("./bootstrap/Broadcast.icon.tsx"));
-export const BroadcastPin = lazy(() => import("./bootstrap/BroadcastPin.icon.tsx"));
-export const BrowserChrome = lazy(() => import("./bootstrap/BrowserChrome.icon.tsx"));
-export const BrowserEdge = lazy(() => import("./bootstrap/BrowserEdge.icon.tsx"));
-export const BrowserFirefox = lazy(() => import("./bootstrap/BrowserFirefox.icon.tsx"));
-export const BrowserSafari = lazy(() => import("./bootstrap/BrowserSafari.icon.tsx"));
-export const Brush = lazy(() => import("./bootstrap/Brush.icon.tsx"));
-export const BrushFill = lazy(() => import("./bootstrap/BrushFill.icon.tsx"));
-export const Bucket = lazy(() => import("./bootstrap/Bucket.icon.tsx"));
-export const BucketFill = lazy(() => import("./bootstrap/BucketFill.icon.tsx"));
-export const Bug = lazy(() => import("./bootstrap/Bug.icon.tsx"));
-export const BugFill = lazy(() => import("./bootstrap/BugFill.icon.tsx"));
-export const Building = lazy(() => import("./bootstrap/Building.icon.tsx"));
-export const BuildingAdd = lazy(() => import("./bootstrap/BuildingAdd.icon.tsx"));
-export const BuildingBlocks = lazy(() => import("./custom/BuildingBlocks.icon.tsx"));
-export const BuildingBlocksFill = lazy(() => import("./custom/BuildingBlocksFill.icon.tsx"));
-export const BuildingCheck = lazy(() => import("./bootstrap/BuildingCheck.icon.tsx"));
-export const BuildingDash = lazy(() => import("./bootstrap/BuildingDash.icon.tsx"));
-export const BuildingDown = lazy(() => import("./bootstrap/BuildingDown.icon.tsx"));
-export const BuildingExclamation = lazy(() => import("./bootstrap/BuildingExclamation.icon.tsx"));
-export const BuildingFill = lazy(() => import("./bootstrap/BuildingFill.icon.tsx"));
-export const BuildingFillAdd = lazy(() => import("./bootstrap/BuildingFillAdd.icon.tsx"));
-export const BuildingFillCheck = lazy(() => import("./bootstrap/BuildingFillCheck.icon.tsx"));
-export const BuildingFillDash = lazy(() => import("./bootstrap/BuildingFillDash.icon.tsx"));
-export const BuildingFillDown = lazy(() => import("./bootstrap/BuildingFillDown.icon.tsx"));
-export const BuildingFillExclamation = lazy(() => import("./bootstrap/BuildingFillExclamation.icon.tsx"));
-export const BuildingFillGear = lazy(() => import("./bootstrap/BuildingFillGear.icon.tsx"));
-export const BuildingFillLock = lazy(() => import("./bootstrap/BuildingFillLock.icon.tsx"));
-export const BuildingFillSlash = lazy(() => import("./bootstrap/BuildingFillSlash.icon.tsx"));
-export const BuildingFillUp = lazy(() => import("./bootstrap/BuildingFillUp.icon.tsx"));
-export const BuildingFillX = lazy(() => import("./bootstrap/BuildingFillX.icon.tsx"));
-export const BuildingGear = lazy(() => import("./bootstrap/BuildingGear.icon.tsx"));
-export const BuildingLock = lazy(() => import("./bootstrap/BuildingLock.icon.tsx"));
-export const Buildings = lazy(() => import("./bootstrap/Buildings.icon.tsx"));
-export const BuildingsFill = lazy(() => import("./bootstrap/BuildingsFill.icon.tsx"));
-export const BuildingSlash = lazy(() => import("./bootstrap/BuildingSlash.icon.tsx"));
-export const BuildingUp = lazy(() => import("./bootstrap/BuildingUp.icon.tsx"));
-export const BuildingX = lazy(() => import("./bootstrap/BuildingX.icon.tsx"));
-export const Bullseye = lazy(() => import("./bootstrap/Bullseye.icon.tsx"));
-export const BusFront = lazy(() => import("./bootstrap/BusFront.icon.tsx"));
-export const BusFrontFill = lazy(() => import("./bootstrap/BusFrontFill.icon.tsx"));
-export const BusinessUnit = lazy(() => import("./custom/BusinessUnit.icon.tsx"));
-export const BusinessUnitFill = lazy(() => import("./custom/BusinessUnitFill.icon.tsx"));
-export const BusinessUnitFill2 = lazy(() => import("./custom/BusinessUnitFill2.icon.tsx"));
-export const Cake = lazy(() => import("./bootstrap/Cake.icon.tsx"));
-export const Cake2 = lazy(() => import("./bootstrap/Cake2.icon.tsx"));
-export const Cake2Fill = lazy(() => import("./bootstrap/Cake2Fill.icon.tsx"));
-export const CakeFill = lazy(() => import("./bootstrap/CakeFill.icon.tsx"));
-export const Calculator = lazy(() => import("./bootstrap/Calculator.icon.tsx"));
-export const CalculatorFill = lazy(() => import("./bootstrap/CalculatorFill.icon.tsx"));
-export const Calendar = lazy(() => import("./bootstrap/Calendar.icon.tsx"));
-export const Calendar2 = lazy(() => import("./bootstrap/Calendar2.icon.tsx"));
-export const Calendar2Check = lazy(() => import("./bootstrap/Calendar2Check.icon.tsx"));
-export const Calendar2CheckFill = lazy(() => import("./bootstrap/Calendar2CheckFill.icon.tsx"));
-export const Calendar2Date = lazy(() => import("./bootstrap/Calendar2Date.icon.tsx"));
-export const Calendar2DateFill = lazy(() => import("./bootstrap/Calendar2DateFill.icon.tsx"));
-export const Calendar2Day = lazy(() => import("./bootstrap/Calendar2Day.icon.tsx"));
-export const Calendar2DayFill = lazy(() => import("./bootstrap/Calendar2DayFill.icon.tsx"));
-export const Calendar2Event = lazy(() => import("./bootstrap/Calendar2Event.icon.tsx"));
-export const Calendar2EventFill = lazy(() => import("./bootstrap/Calendar2EventFill.icon.tsx"));
-export const Calendar2Fill = lazy(() => import("./bootstrap/Calendar2Fill.icon.tsx"));
-export const Calendar2Heart = lazy(() => import("./bootstrap/Calendar2Heart.icon.tsx"));
-export const Calendar2HeartFill = lazy(() => import("./bootstrap/Calendar2HeartFill.icon.tsx"));
-export const Calendar2Minus = lazy(() => import("./bootstrap/Calendar2Minus.icon.tsx"));
-export const Calendar2MinusFill = lazy(() => import("./bootstrap/Calendar2MinusFill.icon.tsx"));
-export const Calendar2Month = lazy(() => import("./bootstrap/Calendar2Month.icon.tsx"));
-export const Calendar2MonthFill = lazy(() => import("./bootstrap/Calendar2MonthFill.icon.tsx"));
-export const Calendar2Plus = lazy(() => import("./bootstrap/Calendar2Plus.icon.tsx"));
-export const Calendar2PlusFill = lazy(() => import("./bootstrap/Calendar2PlusFill.icon.tsx"));
-export const Calendar2Range = lazy(() => import("./bootstrap/Calendar2Range.icon.tsx"));
-export const Calendar2RangeFill = lazy(() => import("./bootstrap/Calendar2RangeFill.icon.tsx"));
-export const Calendar2Week = lazy(() => import("./bootstrap/Calendar2Week.icon.tsx"));
-export const Calendar2WeekFill = lazy(() => import("./bootstrap/Calendar2WeekFill.icon.tsx"));
-export const Calendar2X = lazy(() => import("./bootstrap/Calendar2X.icon.tsx"));
-export const Calendar2XFill = lazy(() => import("./bootstrap/Calendar2XFill.icon.tsx"));
-export const Calendar3 = lazy(() => import("./bootstrap/Calendar3.icon.tsx"));
-export const Calendar3Event = lazy(() => import("./bootstrap/Calendar3Event.icon.tsx"));
-export const Calendar3EventFill = lazy(() => import("./bootstrap/Calendar3EventFill.icon.tsx"));
-export const Calendar3Fill = lazy(() => import("./bootstrap/Calendar3Fill.icon.tsx"));
-export const Calendar3Range = lazy(() => import("./bootstrap/Calendar3Range.icon.tsx"));
-export const Calendar3RangeFill = lazy(() => import("./bootstrap/Calendar3RangeFill.icon.tsx"));
-export const Calendar3Week = lazy(() => import("./bootstrap/Calendar3Week.icon.tsx"));
-export const Calendar3WeekFill = lazy(() => import("./bootstrap/Calendar3WeekFill.icon.tsx"));
-export const Calendar4 = lazy(() => import("./bootstrap/Calendar4.icon.tsx"));
-export const Calendar4Event = lazy(() => import("./bootstrap/Calendar4Event.icon.tsx"));
-export const Calendar4Range = lazy(() => import("./bootstrap/Calendar4Range.icon.tsx"));
-export const Calendar4Week = lazy(() => import("./bootstrap/Calendar4Week.icon.tsx"));
-export const CalendarCheck = lazy(() => import("./bootstrap/CalendarCheck.icon.tsx"));
-export const CalendarCheckFill = lazy(() => import("./bootstrap/CalendarCheckFill.icon.tsx"));
-export const CalendarDate = lazy(() => import("./bootstrap/CalendarDate.icon.tsx"));
-export const CalendarDateFill = lazy(() => import("./bootstrap/CalendarDateFill.icon.tsx"));
-export const CalendarDay = lazy(() => import("./bootstrap/CalendarDay.icon.tsx"));
-export const CalendarDayFill = lazy(() => import("./bootstrap/CalendarDayFill.icon.tsx"));
-export const CalendarEvent = lazy(() => import("./bootstrap/CalendarEvent.icon.tsx"));
-export const CalendarEventFill = lazy(() => import("./bootstrap/CalendarEventFill.icon.tsx"));
-export const CalendarFill = lazy(() => import("./bootstrap/CalendarFill.icon.tsx"));
-export const CalendarGraph = lazy(() => import("./custom/CalendarGraph.icon.tsx"));
-export const CalendarHeart = lazy(() => import("./bootstrap/CalendarHeart.icon.tsx"));
-export const CalendarHeartFill = lazy(() => import("./bootstrap/CalendarHeartFill.icon.tsx"));
-export const CalendarMinus = lazy(() => import("./bootstrap/CalendarMinus.icon.tsx"));
-export const CalendarMinusFill = lazy(() => import("./bootstrap/CalendarMinusFill.icon.tsx"));
-export const CalendarMonth = lazy(() => import("./bootstrap/CalendarMonth.icon.tsx"));
-export const CalendarMonthFill = lazy(() => import("./bootstrap/CalendarMonthFill.icon.tsx"));
-export const CalendarPlus = lazy(() => import("./bootstrap/CalendarPlus.icon.tsx"));
-export const CalendarPlusFill = lazy(() => import("./bootstrap/CalendarPlusFill.icon.tsx"));
-export const CalendarRange = lazy(() => import("./bootstrap/CalendarRange.icon.tsx"));
-export const CalendarRangeFill = lazy(() => import("./bootstrap/CalendarRangeFill.icon.tsx"));
-export const CalendarWeek = lazy(() => import("./bootstrap/CalendarWeek.icon.tsx"));
-export const CalendarWeekFill = lazy(() => import("./bootstrap/CalendarWeekFill.icon.tsx"));
-export const CalendarX = lazy(() => import("./bootstrap/CalendarX.icon.tsx"));
-export const CalendarXFill = lazy(() => import("./bootstrap/CalendarXFill.icon.tsx"));
-export const Camera = lazy(() => import("./bootstrap/Camera.icon.tsx"));
-export const Camera2 = lazy(() => import("./bootstrap/Camera2.icon.tsx"));
-export const CameraFill = lazy(() => import("./bootstrap/CameraFill.icon.tsx"));
-export const CameraReels = lazy(() => import("./bootstrap/CameraReels.icon.tsx"));
-export const CameraReelsFill = lazy(() => import("./bootstrap/CameraReelsFill.icon.tsx"));
-export const CameraVideo = lazy(() => import("./bootstrap/CameraVideo.icon.tsx"));
-export const CameraVideoFill = lazy(() => import("./bootstrap/CameraVideoFill.icon.tsx"));
-export const CameraVideoOff = lazy(() => import("./bootstrap/CameraVideoOff.icon.tsx"));
-export const CameraVideoOffFill = lazy(() => import("./bootstrap/CameraVideoOffFill.icon.tsx"));
-export const Capslock = lazy(() => import("./bootstrap/Capslock.icon.tsx"));
-export const CapslockFill = lazy(() => import("./bootstrap/CapslockFill.icon.tsx"));
-export const Capsule = lazy(() => import("./bootstrap/Capsule.icon.tsx"));
-export const CapsulePill = lazy(() => import("./bootstrap/CapsulePill.icon.tsx"));
-export const CardChecklist = lazy(() => import("./bootstrap/CardChecklist.icon.tsx"));
-export const CardHeading = lazy(() => import("./bootstrap/CardHeading.icon.tsx"));
-export const CardImage = lazy(() => import("./bootstrap/CardImage.icon.tsx"));
-export const CardList = lazy(() => import("./bootstrap/CardList.icon.tsx"));
-export const CardText = lazy(() => import("./bootstrap/CardText.icon.tsx"));
-export const CaretDown = lazy(() => import("./bootstrap/CaretDown.icon.tsx"));
-export const CaretDownFill = lazy(() => import("./bootstrap/CaretDownFill.icon.tsx"));
-export const CaretDownSquare = lazy(() => import("./bootstrap/CaretDownSquare.icon.tsx"));
-export const CaretDownSquareFill = lazy(() => import("./bootstrap/CaretDownSquareFill.icon.tsx"));
-export const CaretLeft = lazy(() => import("./bootstrap/CaretLeft.icon.tsx"));
-export const CaretLeftFill = lazy(() => import("./bootstrap/CaretLeftFill.icon.tsx"));
-export const CaretLeftSquare = lazy(() => import("./bootstrap/CaretLeftSquare.icon.tsx"));
-export const CaretLeftSquareFill = lazy(() => import("./bootstrap/CaretLeftSquareFill.icon.tsx"));
-export const CaretRight = lazy(() => import("./bootstrap/CaretRight.icon.tsx"));
-export const CaretRightFill = lazy(() => import("./bootstrap/CaretRightFill.icon.tsx"));
-export const CaretRightSquare = lazy(() => import("./bootstrap/CaretRightSquare.icon.tsx"));
-export const CaretRightSquareFill = lazy(() => import("./bootstrap/CaretRightSquareFill.icon.tsx"));
-export const CaretUp = lazy(() => import("./bootstrap/CaretUp.icon.tsx"));
-export const CaretUpFill = lazy(() => import("./bootstrap/CaretUpFill.icon.tsx"));
-export const CaretUpSquare = lazy(() => import("./bootstrap/CaretUpSquare.icon.tsx"));
-export const CaretUpSquareFill = lazy(() => import("./bootstrap/CaretUpSquareFill.icon.tsx"));
-export const CarFront = lazy(() => import("./bootstrap/CarFront.icon.tsx"));
-export const CarFrontFill = lazy(() => import("./bootstrap/CarFrontFill.icon.tsx"));
-export const Cart = lazy(() => import("./bootstrap/Cart.icon.tsx"));
-export const Cart2 = lazy(() => import("./bootstrap/Cart2.icon.tsx"));
-export const Cart3 = lazy(() => import("./bootstrap/Cart3.icon.tsx"));
-export const Cart4 = lazy(() => import("./bootstrap/Cart4.icon.tsx"));
-export const CartCheck = lazy(() => import("./bootstrap/CartCheck.icon.tsx"));
-export const CartCheckFill = lazy(() => import("./bootstrap/CartCheckFill.icon.tsx"));
-export const CartDash = lazy(() => import("./bootstrap/CartDash.icon.tsx"));
-export const CartDashFill = lazy(() => import("./bootstrap/CartDashFill.icon.tsx"));
-export const CartFill = lazy(() => import("./bootstrap/CartFill.icon.tsx"));
-export const CartPlus = lazy(() => import("./bootstrap/CartPlus.icon.tsx"));
-export const CartPlusFill = lazy(() => import("./bootstrap/CartPlusFill.icon.tsx"));
-export const CartX = lazy(() => import("./bootstrap/CartX.icon.tsx"));
-export const CartXFill = lazy(() => import("./bootstrap/CartXFill.icon.tsx"));
-export const Cash = lazy(() => import("./bootstrap/Cash.icon.tsx"));
-export const CashCoin = lazy(() => import("./bootstrap/CashCoin.icon.tsx"));
-export const CashStack = lazy(() => import("./bootstrap/CashStack.icon.tsx"));
-export const Cassette = lazy(() => import("./bootstrap/Cassette.icon.tsx"));
-export const CassetteFill = lazy(() => import("./bootstrap/CassetteFill.icon.tsx"));
-export const Cast = lazy(() => import("./bootstrap/Cast.icon.tsx"));
-export const CatRobot = lazy(() => import("./custom/CatRobot.icon.tsx"));
-export const CatRobot2 = lazy(() => import("./custom/CatRobot2.icon.tsx"));
-export const CatRobot2Off = lazy(() => import("./custom/CatRobot2Off.icon.tsx"));
-export const CatRobotOff = lazy(() => import("./custom/CatRobotOff.icon.tsx"));
-export const CcCircle = lazy(() => import("./bootstrap/CcCircle.icon.tsx"));
-export const CcCircleFill = lazy(() => import("./bootstrap/CcCircleFill.icon.tsx"));
-export const CCircle = lazy(() => import("./bootstrap/CCircle.icon.tsx"));
-export const CCircleFill = lazy(() => import("./bootstrap/CCircleFill.icon.tsx"));
-export const CcSquare = lazy(() => import("./bootstrap/CcSquare.icon.tsx"));
-export const CcSquareFill = lazy(() => import("./bootstrap/CcSquareFill.icon.tsx"));
-export const Chat = lazy(() => import("./bootstrap/Chat.icon.tsx"));
-export const ChatDots = lazy(() => import("./bootstrap/ChatDots.icon.tsx"));
-export const ChatDotsFill = lazy(() => import("./bootstrap/ChatDotsFill.icon.tsx"));
-export const ChatFill = lazy(() => import("./bootstrap/ChatFill.icon.tsx"));
-export const ChatHeart = lazy(() => import("./bootstrap/ChatHeart.icon.tsx"));
-export const ChatHeartFill = lazy(() => import("./bootstrap/ChatHeartFill.icon.tsx"));
-export const ChatLeft = lazy(() => import("./bootstrap/ChatLeft.icon.tsx"));
-export const ChatLeftDots = lazy(() => import("./bootstrap/ChatLeftDots.icon.tsx"));
-export const ChatLeftDotsFill = lazy(() => import("./bootstrap/ChatLeftDotsFill.icon.tsx"));
-export const ChatLeftFill = lazy(() => import("./bootstrap/ChatLeftFill.icon.tsx"));
-export const ChatLeftHeart = lazy(() => import("./bootstrap/ChatLeftHeart.icon.tsx"));
-export const ChatLeftHeartFill = lazy(() => import("./bootstrap/ChatLeftHeartFill.icon.tsx"));
-export const ChatLeftQuote = lazy(() => import("./bootstrap/ChatLeftQuote.icon.tsx"));
-export const ChatLeftQuoteFill = lazy(() => import("./bootstrap/ChatLeftQuoteFill.icon.tsx"));
-export const ChatLeftText = lazy(() => import("./bootstrap/ChatLeftText.icon.tsx"));
-export const ChatLeftTextFill = lazy(() => import("./bootstrap/ChatLeftTextFill.icon.tsx"));
-export const ChatQuote = lazy(() => import("./bootstrap/ChatQuote.icon.tsx"));
-export const ChatQuoteFill = lazy(() => import("./bootstrap/ChatQuoteFill.icon.tsx"));
-export const ChatRight = lazy(() => import("./bootstrap/ChatRight.icon.tsx"));
-export const ChatRightDots = lazy(() => import("./bootstrap/ChatRightDots.icon.tsx"));
-export const ChatRightDotsFill = lazy(() => import("./bootstrap/ChatRightDotsFill.icon.tsx"));
-export const ChatRightFill = lazy(() => import("./bootstrap/ChatRightFill.icon.tsx"));
-export const ChatRightHeart = lazy(() => import("./bootstrap/ChatRightHeart.icon.tsx"));
-export const ChatRightHeartFill = lazy(() => import("./bootstrap/ChatRightHeartFill.icon.tsx"));
-export const ChatRightQuote = lazy(() => import("./bootstrap/ChatRightQuote.icon.tsx"));
-export const ChatRightQuoteFill = lazy(() => import("./bootstrap/ChatRightQuoteFill.icon.tsx"));
-export const ChatRightText = lazy(() => import("./bootstrap/ChatRightText.icon.tsx"));
-export const ChatRightTextFill = lazy(() => import("./bootstrap/ChatRightTextFill.icon.tsx"));
-export const ChatSquare = lazy(() => import("./bootstrap/ChatSquare.icon.tsx"));
-export const ChatSquareDots = lazy(() => import("./bootstrap/ChatSquareDots.icon.tsx"));
-export const ChatSquareDotsFill = lazy(() => import("./bootstrap/ChatSquareDotsFill.icon.tsx"));
-export const ChatSquareFill = lazy(() => import("./bootstrap/ChatSquareFill.icon.tsx"));
-export const ChatSquareHeart = lazy(() => import("./bootstrap/ChatSquareHeart.icon.tsx"));
-export const ChatSquareHeartFill = lazy(() => import("./bootstrap/ChatSquareHeartFill.icon.tsx"));
-export const ChatSquareQuote = lazy(() => import("./bootstrap/ChatSquareQuote.icon.tsx"));
-export const ChatSquareQuoteFill = lazy(() => import("./bootstrap/ChatSquareQuoteFill.icon.tsx"));
-export const ChatSquareText = lazy(() => import("./bootstrap/ChatSquareText.icon.tsx"));
-export const ChatSquareTextFill = lazy(() => import("./bootstrap/ChatSquareTextFill.icon.tsx"));
-export const ChatText = lazy(() => import("./bootstrap/ChatText.icon.tsx"));
-export const ChatTextFill = lazy(() => import("./bootstrap/ChatTextFill.icon.tsx"));
-export const Check = lazy(() => import("./bootstrap/Check.icon.tsx"));
-export const Check2 = lazy(() => import("./bootstrap/Check2.icon.tsx"));
-export const Check2All = lazy(() => import("./bootstrap/Check2All.icon.tsx"));
-export const Check2Circle = lazy(() => import("./bootstrap/Check2Circle.icon.tsx"));
-export const Check2Square = lazy(() => import("./bootstrap/Check2Square.icon.tsx"));
-export const CheckAll = lazy(() => import("./bootstrap/CheckAll.icon.tsx"));
-export const CheckCircle = lazy(() => import("./bootstrap/CheckCircle.icon.tsx"));
-export const CheckCircleFill = lazy(() => import("./bootstrap/CheckCircleFill.icon.tsx"));
-export const CheckLg = lazy(() => import("./bootstrap/CheckLg.icon.tsx"));
-export const CheckSquare = lazy(() => import("./bootstrap/CheckSquare.icon.tsx"));
-export const CheckSquareFill = lazy(() => import("./bootstrap/CheckSquareFill.icon.tsx"));
-export const ChevronBarContract = lazy(() => import("./bootstrap/ChevronBarContract.icon.tsx"));
-export const ChevronBarDown = lazy(() => import("./bootstrap/ChevronBarDown.icon.tsx"));
-export const ChevronBarExpand = lazy(() => import("./bootstrap/ChevronBarExpand.icon.tsx"));
-export const ChevronBarLeft = lazy(() => import("./bootstrap/ChevronBarLeft.icon.tsx"));
-export const ChevronBarRight = lazy(() => import("./bootstrap/ChevronBarRight.icon.tsx"));
-export const ChevronBarUp = lazy(() => import("./bootstrap/ChevronBarUp.icon.tsx"));
-export const ChevronCompactDown = lazy(() => import("./bootstrap/ChevronCompactDown.icon.tsx"));
-export const ChevronCompactLeft = lazy(() => import("./bootstrap/ChevronCompactLeft.icon.tsx"));
-export const ChevronCompactRight = lazy(() => import("./bootstrap/ChevronCompactRight.icon.tsx"));
-export const ChevronCompactUp = lazy(() => import("./bootstrap/ChevronCompactUp.icon.tsx"));
-export const ChevronContract = lazy(() => import("./bootstrap/ChevronContract.icon.tsx"));
-export const ChevronDoubleDown = lazy(() => import("./bootstrap/ChevronDoubleDown.icon.tsx"));
-export const ChevronDoubleLeft = lazy(() => import("./bootstrap/ChevronDoubleLeft.icon.tsx"));
-export const ChevronDoubleRight = lazy(() => import("./bootstrap/ChevronDoubleRight.icon.tsx"));
-export const ChevronDoubleUp = lazy(() => import("./bootstrap/ChevronDoubleUp.icon.tsx"));
-export const ChevronDown = lazy(() => import("./bootstrap/ChevronDown.icon.tsx"));
-export const ChevronExpand = lazy(() => import("./bootstrap/ChevronExpand.icon.tsx"));
-export const ChevronLeft = lazy(() => import("./bootstrap/ChevronLeft.icon.tsx"));
-export const ChevronRight = lazy(() => import("./bootstrap/ChevronRight.icon.tsx"));
-export const ChevronUp = lazy(() => import("./bootstrap/ChevronUp.icon.tsx"));
-export const Circle = lazy(() => import("./bootstrap/Circle.icon.tsx"));
-export const Circle2NdHalf = lazy(() => import("./custom/Circle2NdHalf.icon.tsx"));
-export const CircleCore = lazy(() => import("./custom/CircleCore.icon.tsx"));
-export const CircleCore2NdHalf = lazy(() => import("./custom/CircleCore2NdHalf.icon.tsx"));
-export const CircleCoreHalf = lazy(() => import("./custom/CircleCoreHalf.icon.tsx"));
-export const CircleDashed = lazy(() => import("./custom/CircleDashed.icon.tsx"));
-export const CircleFill = lazy(() => import("./bootstrap/CircleFill.icon.tsx"));
-export const CircleHalf = lazy(() => import("./bootstrap/CircleHalf.icon.tsx"));
-export const CircleSquare = lazy(() => import("./bootstrap/CircleSquare.icon.tsx"));
-export const Clipboard = lazy(() => import("./bootstrap/Clipboard.icon.tsx"));
-export const Clipboard2 = lazy(() => import("./bootstrap/Clipboard2.icon.tsx"));
-export const Clipboard2Check = lazy(() => import("./bootstrap/Clipboard2Check.icon.tsx"));
-export const Clipboard2CheckFill = lazy(() => import("./bootstrap/Clipboard2CheckFill.icon.tsx"));
-export const Clipboard2Data = lazy(() => import("./bootstrap/Clipboard2Data.icon.tsx"));
-export const Clipboard2DataFill = lazy(() => import("./bootstrap/Clipboard2DataFill.icon.tsx"));
-export const Clipboard2Fill = lazy(() => import("./bootstrap/Clipboard2Fill.icon.tsx"));
-export const Clipboard2Heart = lazy(() => import("./bootstrap/Clipboard2Heart.icon.tsx"));
-export const Clipboard2HeartFill = lazy(() => import("./bootstrap/Clipboard2HeartFill.icon.tsx"));
-export const Clipboard2Minus = lazy(() => import("./bootstrap/Clipboard2Minus.icon.tsx"));
-export const Clipboard2MinusFill = lazy(() => import("./bootstrap/Clipboard2MinusFill.icon.tsx"));
-export const Clipboard2Plus = lazy(() => import("./bootstrap/Clipboard2Plus.icon.tsx"));
-export const Clipboard2PlusFill = lazy(() => import("./bootstrap/Clipboard2PlusFill.icon.tsx"));
-export const Clipboard2Pulse = lazy(() => import("./bootstrap/Clipboard2Pulse.icon.tsx"));
-export const Clipboard2PulseFill = lazy(() => import("./bootstrap/Clipboard2PulseFill.icon.tsx"));
-export const Clipboard2X = lazy(() => import("./bootstrap/Clipboard2X.icon.tsx"));
-export const Clipboard2XFill = lazy(() => import("./bootstrap/Clipboard2XFill.icon.tsx"));
-export const ClipboardCheck = lazy(() => import("./bootstrap/ClipboardCheck.icon.tsx"));
-export const ClipboardCheckFill = lazy(() => import("./bootstrap/ClipboardCheckFill.icon.tsx"));
-export const ClipboardData = lazy(() => import("./bootstrap/ClipboardData.icon.tsx"));
-export const ClipboardDataFill = lazy(() => import("./bootstrap/ClipboardDataFill.icon.tsx"));
-export const ClipboardFill = lazy(() => import("./bootstrap/ClipboardFill.icon.tsx"));
-export const ClipboardHeart = lazy(() => import("./bootstrap/ClipboardHeart.icon.tsx"));
-export const ClipboardHeartFill = lazy(() => import("./bootstrap/ClipboardHeartFill.icon.tsx"));
-export const ClipboardMinus = lazy(() => import("./bootstrap/ClipboardMinus.icon.tsx"));
-export const ClipboardMinusFill = lazy(() => import("./bootstrap/ClipboardMinusFill.icon.tsx"));
-export const ClipboardPlus = lazy(() => import("./bootstrap/ClipboardPlus.icon.tsx"));
-export const ClipboardPlusFill = lazy(() => import("./bootstrap/ClipboardPlusFill.icon.tsx"));
-export const ClipboardPulse = lazy(() => import("./bootstrap/ClipboardPulse.icon.tsx"));
-export const ClipboardX = lazy(() => import("./bootstrap/ClipboardX.icon.tsx"));
-export const ClipboardXFill = lazy(() => import("./bootstrap/ClipboardXFill.icon.tsx"));
-export const Clock = lazy(() => import("./bootstrap/Clock.icon.tsx"));
-export const ClockFill = lazy(() => import("./bootstrap/ClockFill.icon.tsx"));
-export const ClockHistory = lazy(() => import("./bootstrap/ClockHistory.icon.tsx"));
-export const Cloud = lazy(() => import("./bootstrap/Cloud.icon.tsx"));
-export const CloudArrowDown = lazy(() => import("./bootstrap/CloudArrowDown.icon.tsx"));
-export const CloudArrowDownFill = lazy(() => import("./bootstrap/CloudArrowDownFill.icon.tsx"));
-export const CloudArrowUp = lazy(() => import("./bootstrap/CloudArrowUp.icon.tsx"));
-export const CloudArrowUpFill = lazy(() => import("./bootstrap/CloudArrowUpFill.icon.tsx"));
-export const CloudCheck = lazy(() => import("./bootstrap/CloudCheck.icon.tsx"));
-export const CloudCheckFill = lazy(() => import("./bootstrap/CloudCheckFill.icon.tsx"));
-export const CloudDownload = lazy(() => import("./bootstrap/CloudDownload.icon.tsx"));
-export const CloudDownloadFill = lazy(() => import("./bootstrap/CloudDownloadFill.icon.tsx"));
-export const CloudDrizzle = lazy(() => import("./bootstrap/CloudDrizzle.icon.tsx"));
-export const CloudDrizzleFill = lazy(() => import("./bootstrap/CloudDrizzleFill.icon.tsx"));
-export const CloudFill = lazy(() => import("./bootstrap/CloudFill.icon.tsx"));
-export const CloudFog = lazy(() => import("./bootstrap/CloudFog.icon.tsx"));
-export const CloudFog2 = lazy(() => import("./bootstrap/CloudFog2.icon.tsx"));
-export const CloudFog2Fill = lazy(() => import("./bootstrap/CloudFog2Fill.icon.tsx"));
-export const CloudFogFill = lazy(() => import("./bootstrap/CloudFogFill.icon.tsx"));
-export const CloudHail = lazy(() => import("./bootstrap/CloudHail.icon.tsx"));
-export const CloudHailFill = lazy(() => import("./bootstrap/CloudHailFill.icon.tsx"));
-export const CloudHaze = lazy(() => import("./bootstrap/CloudHaze.icon.tsx"));
-export const CloudHaze2 = lazy(() => import("./bootstrap/CloudHaze2.icon.tsx"));
-export const CloudHaze2Fill = lazy(() => import("./bootstrap/CloudHaze2Fill.icon.tsx"));
-export const CloudHazeFill = lazy(() => import("./bootstrap/CloudHazeFill.icon.tsx"));
-export const CloudLightning = lazy(() => import("./bootstrap/CloudLightning.icon.tsx"));
-export const CloudLightningFill = lazy(() => import("./bootstrap/CloudLightningFill.icon.tsx"));
-export const CloudLightningRain = lazy(() => import("./bootstrap/CloudLightningRain.icon.tsx"));
-export const CloudLightningRainFill = lazy(() => import("./bootstrap/CloudLightningRainFill.icon.tsx"));
-export const CloudMinus = lazy(() => import("./bootstrap/CloudMinus.icon.tsx"));
-export const CloudMinusFill = lazy(() => import("./bootstrap/CloudMinusFill.icon.tsx"));
-export const CloudMoon = lazy(() => import("./bootstrap/CloudMoon.icon.tsx"));
-export const CloudMoonFill = lazy(() => import("./bootstrap/CloudMoonFill.icon.tsx"));
-export const CloudPlus = lazy(() => import("./bootstrap/CloudPlus.icon.tsx"));
-export const CloudPlusFill = lazy(() => import("./bootstrap/CloudPlusFill.icon.tsx"));
-export const CloudRain = lazy(() => import("./bootstrap/CloudRain.icon.tsx"));
-export const CloudRainFill = lazy(() => import("./bootstrap/CloudRainFill.icon.tsx"));
-export const CloudRainHeavy = lazy(() => import("./bootstrap/CloudRainHeavy.icon.tsx"));
-export const CloudRainHeavyFill = lazy(() => import("./bootstrap/CloudRainHeavyFill.icon.tsx"));
-export const Clouds = lazy(() => import("./bootstrap/Clouds.icon.tsx"));
-export const CloudsFill = lazy(() => import("./bootstrap/CloudsFill.icon.tsx"));
-export const CloudSlash = lazy(() => import("./bootstrap/CloudSlash.icon.tsx"));
-export const CloudSlashFill = lazy(() => import("./bootstrap/CloudSlashFill.icon.tsx"));
-export const CloudSleet = lazy(() => import("./bootstrap/CloudSleet.icon.tsx"));
-export const CloudSleetFill = lazy(() => import("./bootstrap/CloudSleetFill.icon.tsx"));
-export const CloudSnow = lazy(() => import("./bootstrap/CloudSnow.icon.tsx"));
-export const CloudSnowFill = lazy(() => import("./bootstrap/CloudSnowFill.icon.tsx"));
-export const CloudSun = lazy(() => import("./bootstrap/CloudSun.icon.tsx"));
-export const CloudSunFill = lazy(() => import("./bootstrap/CloudSunFill.icon.tsx"));
-export const CloudUpload = lazy(() => import("./bootstrap/CloudUpload.icon.tsx"));
-export const CloudUploadFill = lazy(() => import("./bootstrap/CloudUploadFill.icon.tsx"));
-export const Cloudy = lazy(() => import("./bootstrap/Cloudy.icon.tsx"));
-export const CloudyFill = lazy(() => import("./bootstrap/CloudyFill.icon.tsx"));
-export const Code = lazy(() => import("./bootstrap/Code.icon.tsx"));
-export const CodeSlash = lazy(() => import("./bootstrap/CodeSlash.icon.tsx"));
-export const CodeSquare = lazy(() => import("./bootstrap/CodeSquare.icon.tsx"));
-export const Coin = lazy(() => import("./bootstrap/Coin.icon.tsx"));
-export const Coins = lazy(() => import("./custom/Coins.icon.tsx"));
-export const CoinsCheck = lazy(() => import("./custom/CoinsCheck.icon.tsx"));
-export const CoinsIn = lazy(() => import("./custom/CoinsIn.icon.tsx"));
-export const CoinsLink = lazy(() => import("./custom/CoinsLink.icon.tsx"));
-export const CoinsOff = lazy(() => import("./custom/CoinsOff.icon.tsx"));
-export const CoinsOut = lazy(() => import("./custom/CoinsOut.icon.tsx"));
-export const CoinsRisk = lazy(() => import("./custom/CoinsRisk.icon.tsx"));
-export const Collection = lazy(() => import("./bootstrap/Collection.icon.tsx"));
-export const CollectionFill = lazy(() => import("./bootstrap/CollectionFill.icon.tsx"));
-export const CollectionPlay = lazy(() => import("./bootstrap/CollectionPlay.icon.tsx"));
-export const CollectionPlayFill = lazy(() => import("./bootstrap/CollectionPlayFill.icon.tsx"));
-export const Columns = lazy(() => import("./bootstrap/Columns.icon.tsx"));
-export const ColumnsGap = lazy(() => import("./bootstrap/ColumnsGap.icon.tsx"));
-export const Command = lazy(() => import("./bootstrap/Command.icon.tsx"));
-export const Compass = lazy(() => import("./bootstrap/Compass.icon.tsx"));
-export const CompassFill = lazy(() => import("./bootstrap/CompassFill.icon.tsx"));
-export const Cone = lazy(() => import("./bootstrap/Cone.icon.tsx"));
-export const ConeStriped = lazy(() => import("./bootstrap/ConeStriped.icon.tsx"));
-export const ConeStriped2 = lazy(() => import("./custom/ConeStriped2.icon.tsx"));
-export const ConeStripedFill2 = lazy(() => import("./custom/ConeStripedFill2.icon.tsx"));
-export const Controller = lazy(() => import("./bootstrap/Controller.icon.tsx"));
-export const Convexe = lazy(() => import("./custom/Convexe.icon.tsx"));
-export const ConvexeArrowDown = lazy(() => import("./custom/ConvexeArrowDown.icon.tsx"));
-export const ConvexeArrowDownFill = lazy(() => import("./custom/ConvexeArrowDownFill.icon.tsx"));
-export const ConvexeArrowLeft = lazy(() => import("./custom/ConvexeArrowLeft.icon.tsx"));
-export const ConvexeArrowLeftFill = lazy(() => import("./custom/ConvexeArrowLeftFill.icon.tsx"));
-export const ConvexeArrowRight = lazy(() => import("./custom/ConvexeArrowRight.icon.tsx"));
-export const ConvexeArrowRightFill = lazy(() => import("./custom/ConvexeArrowRightFill.icon.tsx"));
-export const ConvexeArrowUp = lazy(() => import("./custom/ConvexeArrowUp.icon.tsx"));
-export const ConvexeArrowUpFill = lazy(() => import("./custom/ConvexeArrowUpFill.icon.tsx"));
-export const ConvexeCheck = lazy(() => import("./custom/ConvexeCheck.icon.tsx"));
-export const ConvexeCheckAll = lazy(() => import("./custom/ConvexeCheckAll.icon.tsx"));
-export const ConvexeCheckAllFill = lazy(() => import("./custom/ConvexeCheckAllFill.icon.tsx"));
-export const ConvexeCheckFill = lazy(() => import("./custom/ConvexeCheckFill.icon.tsx"));
-export const ConvexeClock = lazy(() => import("./custom/ConvexeClock.icon.tsx"));
-export const ConvexeClockFill = lazy(() => import("./custom/ConvexeClockFill.icon.tsx"));
-export const ConvexeCore = lazy(() => import("./custom/ConvexeCore.icon.tsx"));
-export const ConvexeCore2NdHalf = lazy(() => import("./custom/ConvexeCore2NdHalf.icon.tsx"));
-export const ConvexeCoreHalf = lazy(() => import("./custom/ConvexeCoreHalf.icon.tsx"));
-export const ConvexeEarmark = lazy(() => import("./custom/ConvexeEarmark.icon.tsx"));
-export const ConvexeExclamation = lazy(() => import("./custom/ConvexeExclamation.icon.tsx"));
-export const ConvexeExclamationFill = lazy(() => import("./custom/ConvexeExclamationFill.icon.tsx"));
-export const ConvexeFill = lazy(() => import("./custom/ConvexeFill.icon.tsx"));
-export const ConvexeInfo = lazy(() => import("./custom/ConvexeInfo.icon.tsx"));
-export const ConvexeInfoFill = lazy(() => import("./custom/ConvexeInfoFill.icon.tsx"));
-export const ConvexeOff = lazy(() => import("./custom/ConvexeOff.icon.tsx"));
-export const ConvexeOffFill = lazy(() => import("./custom/ConvexeOffFill.icon.tsx"));
-export const ConvexeSepa = lazy(() => import("./custom/ConvexeSepa.icon.tsx"));
-export const ConvexeSepaFill = lazy(() => import("./custom/ConvexeSepaFill.icon.tsx"));
-export const ConvexeSepaOff = lazy(() => import("./custom/ConvexeSepaOff.icon.tsx"));
-export const ConvexeSepaOffFill = lazy(() => import("./custom/ConvexeSepaOffFill.icon.tsx"));
-export const ConvexeTimer = lazy(() => import("./custom/ConvexeTimer.icon.tsx"));
-export const ConvexeX = lazy(() => import("./custom/ConvexeX.icon.tsx"));
-export const ConvexeXFill = lazy(() => import("./custom/ConvexeXFill.icon.tsx"));
-export const Cookie = lazy(() => import("./bootstrap/Cookie.icon.tsx"));
-export const Copy = lazy(() => import("./bootstrap/Copy.icon.tsx"));
-export const Cpu = lazy(() => import("./bootstrap/Cpu.icon.tsx"));
-export const CpuFill = lazy(() => import("./bootstrap/CpuFill.icon.tsx"));
-export const CreditCard = lazy(() => import("./bootstrap/CreditCard.icon.tsx"));
-export const CreditCard2Back = lazy(() => import("./bootstrap/CreditCard2Back.icon.tsx"));
-export const CreditCard2BackFill = lazy(() => import("./bootstrap/CreditCard2BackFill.icon.tsx"));
-export const CreditCard2Front = lazy(() => import("./bootstrap/CreditCard2Front.icon.tsx"));
-export const CreditCard2FrontFill = lazy(() => import("./bootstrap/CreditCard2FrontFill.icon.tsx"));
-export const CreditCardFill = lazy(() => import("./bootstrap/CreditCardFill.icon.tsx"));
-export const Crop = lazy(() => import("./bootstrap/Crop.icon.tsx"));
-export const Crosshair = lazy(() => import("./bootstrap/Crosshair.icon.tsx"));
-export const Crosshair2 = lazy(() => import("./bootstrap/Crosshair2.icon.tsx"));
-export const CSquare = lazy(() => import("./bootstrap/CSquare.icon.tsx"));
-export const CSquareFill = lazy(() => import("./bootstrap/CSquareFill.icon.tsx"));
-export const Cup = lazy(() => import("./bootstrap/Cup.icon.tsx"));
-export const CupFill = lazy(() => import("./bootstrap/CupFill.icon.tsx"));
-export const CupHot = lazy(() => import("./bootstrap/CupHot.icon.tsx"));
-export const CupHotFill = lazy(() => import("./bootstrap/CupHotFill.icon.tsx"));
-export const CupStraw = lazy(() => import("./bootstrap/CupStraw.icon.tsx"));
-export const CurrencyBitcoin = lazy(() => import("./bootstrap/CurrencyBitcoin.icon.tsx"));
-export const CurrencyDollar = lazy(() => import("./bootstrap/CurrencyDollar.icon.tsx"));
-export const CurrencyEuro = lazy(() => import("./bootstrap/CurrencyEuro.icon.tsx"));
-export const CurrencyExchange = lazy(() => import("./bootstrap/CurrencyExchange.icon.tsx"));
-export const CurrencyPound = lazy(() => import("./bootstrap/CurrencyPound.icon.tsx"));
-export const CurrencyRupee = lazy(() => import("./bootstrap/CurrencyRupee.icon.tsx"));
-export const CurrencyYen = lazy(() => import("./bootstrap/CurrencyYen.icon.tsx"));
-export const Cursor = lazy(() => import("./bootstrap/Cursor.icon.tsx"));
-export const CursorFill = lazy(() => import("./bootstrap/CursorFill.icon.tsx"));
-export const CursorText = lazy(() => import("./bootstrap/CursorText.icon.tsx"));
-export const Dash = lazy(() => import("./bootstrap/Dash.icon.tsx"));
-export const DashCircle = lazy(() => import("./bootstrap/DashCircle.icon.tsx"));
-export const DashCircleDotted = lazy(() => import("./bootstrap/DashCircleDotted.icon.tsx"));
-export const DashCircleFill = lazy(() => import("./bootstrap/DashCircleFill.icon.tsx"));
-export const DashLg = lazy(() => import("./bootstrap/DashLg.icon.tsx"));
-export const DashSquare = lazy(() => import("./bootstrap/DashSquare.icon.tsx"));
-export const DashSquareDotted = lazy(() => import("./bootstrap/DashSquareDotted.icon.tsx"));
-export const DashSquareFill = lazy(() => import("./bootstrap/DashSquareFill.icon.tsx"));
-export const Database = lazy(() => import("./bootstrap/Database.icon.tsx"));
-export const DatabaseAdd = lazy(() => import("./bootstrap/DatabaseAdd.icon.tsx"));
-export const DatabaseCheck = lazy(() => import("./bootstrap/DatabaseCheck.icon.tsx"));
-export const DatabaseDash = lazy(() => import("./bootstrap/DatabaseDash.icon.tsx"));
-export const DatabaseDown = lazy(() => import("./bootstrap/DatabaseDown.icon.tsx"));
-export const DatabaseExclamation = lazy(() => import("./bootstrap/DatabaseExclamation.icon.tsx"));
-export const DatabaseFill = lazy(() => import("./bootstrap/DatabaseFill.icon.tsx"));
-export const DatabaseFillAdd = lazy(() => import("./bootstrap/DatabaseFillAdd.icon.tsx"));
-export const DatabaseFillCheck = lazy(() => import("./bootstrap/DatabaseFillCheck.icon.tsx"));
-export const DatabaseFillDash = lazy(() => import("./bootstrap/DatabaseFillDash.icon.tsx"));
-export const DatabaseFillDown = lazy(() => import("./bootstrap/DatabaseFillDown.icon.tsx"));
-export const DatabaseFillExclamation = lazy(() => import("./bootstrap/DatabaseFillExclamation.icon.tsx"));
-export const DatabaseFillGear = lazy(() => import("./bootstrap/DatabaseFillGear.icon.tsx"));
-export const DatabaseFillLock = lazy(() => import("./bootstrap/DatabaseFillLock.icon.tsx"));
-export const DatabaseFillSlash = lazy(() => import("./bootstrap/DatabaseFillSlash.icon.tsx"));
-export const DatabaseFillUp = lazy(() => import("./bootstrap/DatabaseFillUp.icon.tsx"));
-export const DatabaseFillX = lazy(() => import("./bootstrap/DatabaseFillX.icon.tsx"));
-export const DatabaseGear = lazy(() => import("./bootstrap/DatabaseGear.icon.tsx"));
-export const DatabaseLock = lazy(() => import("./bootstrap/DatabaseLock.icon.tsx"));
-export const DatabaseSlash = lazy(() => import("./bootstrap/DatabaseSlash.icon.tsx"));
-export const DatabaseUp = lazy(() => import("./bootstrap/DatabaseUp.icon.tsx"));
-export const DatabaseX = lazy(() => import("./bootstrap/DatabaseX.icon.tsx"));
-export const DeviceHdd = lazy(() => import("./bootstrap/DeviceHdd.icon.tsx"));
-export const DeviceHddFill = lazy(() => import("./bootstrap/DeviceHddFill.icon.tsx"));
-export const DeviceSsd = lazy(() => import("./bootstrap/DeviceSsd.icon.tsx"));
-export const DeviceSsdFill = lazy(() => import("./bootstrap/DeviceSsdFill.icon.tsx"));
-export const Diagram2 = lazy(() => import("./bootstrap/Diagram2.icon.tsx"));
-export const Diagram2Fill = lazy(() => import("./bootstrap/Diagram2Fill.icon.tsx"));
-export const Diagram3 = lazy(() => import("./bootstrap/Diagram3.icon.tsx"));
-export const Diagram3Fill = lazy(() => import("./bootstrap/Diagram3Fill.icon.tsx"));
-export const Diamond = lazy(() => import("./bootstrap/Diamond.icon.tsx"));
-export const DiamondCore = lazy(() => import("./custom/DiamondCore.icon.tsx"));
-export const DiamondCore2NdHalf = lazy(() => import("./custom/DiamondCore2NdHalf.icon.tsx"));
-export const DiamondCoreHalf = lazy(() => import("./custom/DiamondCoreHalf.icon.tsx"));
-export const DiamondCorner = lazy(() => import("./custom/DiamondCorner.icon.tsx"));
-export const DiamondDashed = lazy(() => import("./custom/DiamondDashed.icon.tsx"));
-export const DiamondFill = lazy(() => import("./bootstrap/DiamondFill.icon.tsx"));
-export const DiamondHalf = lazy(() => import("./bootstrap/DiamondHalf.icon.tsx"));
-export const DiamondKey = lazy(() => import("./custom/DiamondKey.icon.tsx"));
-export const DiamondKeyFill = lazy(() => import("./custom/DiamondKeyFill.icon.tsx"));
-export const DiamondOff = lazy(() => import("./custom/DiamondOff.icon.tsx"));
-export const DiamondOffFill = lazy(() => import("./custom/DiamondOffFill.icon.tsx"));
-export const Diamonds = lazy(() => import("./custom/Diamonds.icon.tsx"));
-export const DiamondsDots = lazy(() => import("./custom/DiamondsDots.icon.tsx"));
-export const DiamondsGrid = lazy(() => import("./custom/DiamondsGrid.icon.tsx"));
-export const DiamondsIntersect = lazy(() => import("./custom/DiamondsIntersect.icon.tsx"));
-export const DiamondsLayers = lazy(() => import("./custom/DiamondsLayers.icon.tsx"));
-export const DiamondsLayers2 = lazy(() => import("./custom/DiamondsLayers2.icon.tsx"));
-export const DiamondsLayersKey = lazy(() => import("./custom/DiamondsLayersKey.icon.tsx"));
-export const DiamondsLayersKey2 = lazy(() => import("./custom/DiamondsLayersKey2.icon.tsx"));
-export const DiamondsStripes = lazy(() => import("./custom/DiamondsStripes.icon.tsx"));
-export const Dice1 = lazy(() => import("./bootstrap/Dice1.icon.tsx"));
-export const Dice1Fill = lazy(() => import("./bootstrap/Dice1Fill.icon.tsx"));
-export const Dice2 = lazy(() => import("./bootstrap/Dice2.icon.tsx"));
-export const Dice2Fill = lazy(() => import("./bootstrap/Dice2Fill.icon.tsx"));
-export const Dice3 = lazy(() => import("./bootstrap/Dice3.icon.tsx"));
-export const Dice3Fill = lazy(() => import("./bootstrap/Dice3Fill.icon.tsx"));
-export const Dice4 = lazy(() => import("./bootstrap/Dice4.icon.tsx"));
-export const Dice4Fill = lazy(() => import("./bootstrap/Dice4Fill.icon.tsx"));
-export const Dice5 = lazy(() => import("./bootstrap/Dice5.icon.tsx"));
-export const Dice5Fill = lazy(() => import("./bootstrap/Dice5Fill.icon.tsx"));
-export const Dice6 = lazy(() => import("./bootstrap/Dice6.icon.tsx"));
-export const Dice6Fill = lazy(() => import("./bootstrap/Dice6Fill.icon.tsx"));
-export const Disc = lazy(() => import("./bootstrap/Disc.icon.tsx"));
-export const DiscFill = lazy(() => import("./bootstrap/DiscFill.icon.tsx"));
-export const Discord = lazy(() => import("./bootstrap/Discord.icon.tsx"));
-export const Display = lazy(() => import("./bootstrap/Display.icon.tsx"));
-export const DisplayFill = lazy(() => import("./bootstrap/DisplayFill.icon.tsx"));
-export const Displayport = lazy(() => import("./bootstrap/Displayport.icon.tsx"));
-export const DisplayportFill = lazy(() => import("./bootstrap/DisplayportFill.icon.tsx"));
-export const DistributeHorizontal = lazy(() => import("./bootstrap/DistributeHorizontal.icon.tsx"));
-export const DistributeVertical = lazy(() => import("./bootstrap/DistributeVertical.icon.tsx"));
-export const DoorClosed = lazy(() => import("./bootstrap/DoorClosed.icon.tsx"));
-export const DoorClosedFill = lazy(() => import("./bootstrap/DoorClosedFill.icon.tsx"));
-export const DoorMoveIn = lazy(() => import("./custom/DoorMoveIn.icon.tsx"));
-export const DoorMoveOut = lazy(() => import("./custom/DoorMoveOut.icon.tsx"));
-export const DoorOpen = lazy(() => import("./bootstrap/DoorOpen.icon.tsx"));
-export const DoorOpenFill = lazy(() => import("./bootstrap/DoorOpenFill.icon.tsx"));
-export const Dot = lazy(() => import("./bootstrap/Dot.icon.tsx"));
-export const Download = lazy(() => import("./bootstrap/Download.icon.tsx"));
-export const Dpad = lazy(() => import("./bootstrap/Dpad.icon.tsx"));
-export const DpadFill = lazy(() => import("./bootstrap/DpadFill.icon.tsx"));
-export const Dribbble = lazy(() => import("./bootstrap/Dribbble.icon.tsx"));
-export const Dropbox = lazy(() => import("./bootstrap/Dropbox.icon.tsx"));
-export const Droplet = lazy(() => import("./bootstrap/Droplet.icon.tsx"));
-export const DropletFill = lazy(() => import("./bootstrap/DropletFill.icon.tsx"));
-export const DropletHalf = lazy(() => import("./bootstrap/DropletHalf.icon.tsx"));
-export const Duffle = lazy(() => import("./bootstrap/Duffle.icon.tsx"));
-export const DuffleFill = lazy(() => import("./bootstrap/DuffleFill.icon.tsx"));
-export const Ear = lazy(() => import("./bootstrap/Ear.icon.tsx"));
-export const Earbuds = lazy(() => import("./bootstrap/Earbuds.icon.tsx"));
-export const EarFill = lazy(() => import("./bootstrap/EarFill.icon.tsx"));
-export const Easel = lazy(() => import("./bootstrap/Easel.icon.tsx"));
-export const Easel2 = lazy(() => import("./bootstrap/Easel2.icon.tsx"));
-export const Easel2Fill = lazy(() => import("./bootstrap/Easel2Fill.icon.tsx"));
-export const Easel3 = lazy(() => import("./bootstrap/Easel3.icon.tsx"));
-export const Easel3Fill = lazy(() => import("./bootstrap/Easel3Fill.icon.tsx"));
-export const EaselFill = lazy(() => import("./bootstrap/EaselFill.icon.tsx"));
-export const Egg = lazy(() => import("./bootstrap/Egg.icon.tsx"));
-export const EggFill = lazy(() => import("./bootstrap/EggFill.icon.tsx"));
-export const EggFried = lazy(() => import("./bootstrap/EggFried.icon.tsx"));
-export const Eject = lazy(() => import("./bootstrap/Eject.icon.tsx"));
-export const EjectFill = lazy(() => import("./bootstrap/EjectFill.icon.tsx"));
-export const EmojiAngry = lazy(() => import("./bootstrap/EmojiAngry.icon.tsx"));
-export const EmojiAngryFill = lazy(() => import("./bootstrap/EmojiAngryFill.icon.tsx"));
-export const EmojiAstonished = lazy(() => import("./bootstrap/EmojiAstonished.icon.tsx"));
-export const EmojiAstonishedFill = lazy(() => import("./bootstrap/EmojiAstonishedFill.icon.tsx"));
-export const EmojiDizzy = lazy(() => import("./bootstrap/EmojiDizzy.icon.tsx"));
-export const EmojiDizzyFill = lazy(() => import("./bootstrap/EmojiDizzyFill.icon.tsx"));
-export const EmojiExpressionless = lazy(() => import("./bootstrap/EmojiExpressionless.icon.tsx"));
-export const EmojiExpressionlessFill = lazy(() => import("./bootstrap/EmojiExpressionlessFill.icon.tsx"));
-export const EmojiFrown = lazy(() => import("./bootstrap/EmojiFrown.icon.tsx"));
-export const EmojiFrownFill = lazy(() => import("./bootstrap/EmojiFrownFill.icon.tsx"));
-export const EmojiGrimace = lazy(() => import("./bootstrap/EmojiGrimace.icon.tsx"));
-export const EmojiGrimaceFill = lazy(() => import("./bootstrap/EmojiGrimaceFill.icon.tsx"));
-export const EmojiGrin = lazy(() => import("./bootstrap/EmojiGrin.icon.tsx"));
-export const EmojiGrinFill = lazy(() => import("./bootstrap/EmojiGrinFill.icon.tsx"));
-export const EmojiHeartEyes = lazy(() => import("./bootstrap/EmojiHeartEyes.icon.tsx"));
-export const EmojiHeartEyesFill = lazy(() => import("./bootstrap/EmojiHeartEyesFill.icon.tsx"));
-export const EmojiKiss = lazy(() => import("./bootstrap/EmojiKiss.icon.tsx"));
-export const EmojiKissFill = lazy(() => import("./bootstrap/EmojiKissFill.icon.tsx"));
-export const EmojiLaughing = lazy(() => import("./bootstrap/EmojiLaughing.icon.tsx"));
-export const EmojiLaughingFill = lazy(() => import("./bootstrap/EmojiLaughingFill.icon.tsx"));
-export const EmojiNeutral = lazy(() => import("./bootstrap/EmojiNeutral.icon.tsx"));
-export const EmojiNeutralFill = lazy(() => import("./bootstrap/EmojiNeutralFill.icon.tsx"));
-export const EmojiSmile = lazy(() => import("./bootstrap/EmojiSmile.icon.tsx"));
-export const EmojiSmileFill = lazy(() => import("./bootstrap/EmojiSmileFill.icon.tsx"));
-export const EmojiSmileUpsideDown = lazy(() => import("./bootstrap/EmojiSmileUpsideDown.icon.tsx"));
-export const EmojiSmileUpsideDownFill = lazy(() => import("./bootstrap/EmojiSmileUpsideDownFill.icon.tsx"));
-export const EmojiSunglasses = lazy(() => import("./bootstrap/EmojiSunglasses.icon.tsx"));
-export const EmojiSunglassesFill = lazy(() => import("./bootstrap/EmojiSunglassesFill.icon.tsx"));
-export const EmojiSurprise = lazy(() => import("./bootstrap/EmojiSurprise.icon.tsx"));
-export const EmojiSurpriseFill = lazy(() => import("./bootstrap/EmojiSurpriseFill.icon.tsx"));
-export const EmojiTear = lazy(() => import("./bootstrap/EmojiTear.icon.tsx"));
-export const EmojiTearFill = lazy(() => import("./bootstrap/EmojiTearFill.icon.tsx"));
-export const EmojiWink = lazy(() => import("./bootstrap/EmojiWink.icon.tsx"));
-export const EmojiWinkFill = lazy(() => import("./bootstrap/EmojiWinkFill.icon.tsx"));
-export const Envelope = lazy(() => import("./bootstrap/Envelope.icon.tsx"));
-export const EnvelopeArrowDown = lazy(() => import("./bootstrap/EnvelopeArrowDown.icon.tsx"));
-export const EnvelopeArrowDownFill = lazy(() => import("./bootstrap/EnvelopeArrowDownFill.icon.tsx"));
-export const EnvelopeArrowUp = lazy(() => import("./bootstrap/EnvelopeArrowUp.icon.tsx"));
-export const EnvelopeArrowUpFill = lazy(() => import("./bootstrap/EnvelopeArrowUpFill.icon.tsx"));
-export const EnvelopeAt = lazy(() => import("./bootstrap/EnvelopeAt.icon.tsx"));
-export const EnvelopeAtFill = lazy(() => import("./bootstrap/EnvelopeAtFill.icon.tsx"));
-export const EnvelopeCheck = lazy(() => import("./bootstrap/EnvelopeCheck.icon.tsx"));
-export const EnvelopeCheckFill = lazy(() => import("./bootstrap/EnvelopeCheckFill.icon.tsx"));
-export const EnvelopeDash = lazy(() => import("./bootstrap/EnvelopeDash.icon.tsx"));
-export const EnvelopeDashFill = lazy(() => import("./bootstrap/EnvelopeDashFill.icon.tsx"));
-export const EnvelopeExclamation = lazy(() => import("./bootstrap/EnvelopeExclamation.icon.tsx"));
-export const EnvelopeExclamationFill = lazy(() => import("./bootstrap/EnvelopeExclamationFill.icon.tsx"));
-export const EnvelopeFill = lazy(() => import("./bootstrap/EnvelopeFill.icon.tsx"));
-export const EnvelopeHeart = lazy(() => import("./bootstrap/EnvelopeHeart.icon.tsx"));
-export const EnvelopeHeartFill = lazy(() => import("./bootstrap/EnvelopeHeartFill.icon.tsx"));
-export const EnvelopeOpen = lazy(() => import("./bootstrap/EnvelopeOpen.icon.tsx"));
-export const EnvelopeOpenFill = lazy(() => import("./bootstrap/EnvelopeOpenFill.icon.tsx"));
-export const EnvelopeOpenHeart = lazy(() => import("./bootstrap/EnvelopeOpenHeart.icon.tsx"));
-export const EnvelopeOpenHeartFill = lazy(() => import("./bootstrap/EnvelopeOpenHeartFill.icon.tsx"));
-export const EnvelopePaper = lazy(() => import("./bootstrap/EnvelopePaper.icon.tsx"));
-export const EnvelopePaperFill = lazy(() => import("./bootstrap/EnvelopePaperFill.icon.tsx"));
-export const EnvelopePaperHeart = lazy(() => import("./bootstrap/EnvelopePaperHeart.icon.tsx"));
-export const EnvelopePaperHeartFill = lazy(() => import("./bootstrap/EnvelopePaperHeartFill.icon.tsx"));
-export const EnvelopePlus = lazy(() => import("./bootstrap/EnvelopePlus.icon.tsx"));
-export const EnvelopePlusFill = lazy(() => import("./bootstrap/EnvelopePlusFill.icon.tsx"));
-export const EnvelopeSlash = lazy(() => import("./bootstrap/EnvelopeSlash.icon.tsx"));
-export const EnvelopeSlashFill = lazy(() => import("./bootstrap/EnvelopeSlashFill.icon.tsx"));
-export const EnvelopeX = lazy(() => import("./bootstrap/EnvelopeX.icon.tsx"));
-export const EnvelopeXFill = lazy(() => import("./bootstrap/EnvelopeXFill.icon.tsx"));
-export const Eraser = lazy(() => import("./bootstrap/Eraser.icon.tsx"));
-export const EraserFill = lazy(() => import("./bootstrap/EraserFill.icon.tsx"));
-export const Escape = lazy(() => import("./bootstrap/Escape.icon.tsx"));
-export const Ethernet = lazy(() => import("./bootstrap/Ethernet.icon.tsx"));
-export const EvFront = lazy(() => import("./bootstrap/EvFront.icon.tsx"));
-export const EvFrontFill = lazy(() => import("./bootstrap/EvFrontFill.icon.tsx"));
-export const EvStation = lazy(() => import("./bootstrap/EvStation.icon.tsx"));
-export const EvStationFill = lazy(() => import("./bootstrap/EvStationFill.icon.tsx"));
-export const Exclamation = lazy(() => import("./bootstrap/Exclamation.icon.tsx"));
-export const ExclamationCircle = lazy(() => import("./bootstrap/ExclamationCircle.icon.tsx"));
-export const ExclamationCircleFill = lazy(() => import("./bootstrap/ExclamationCircleFill.icon.tsx"));
-export const ExclamationDiamond = lazy(() => import("./bootstrap/ExclamationDiamond.icon.tsx"));
-export const ExclamationDiamondFill = lazy(() => import("./bootstrap/ExclamationDiamondFill.icon.tsx"));
-export const ExclamationLg = lazy(() => import("./bootstrap/ExclamationLg.icon.tsx"));
-export const ExclamationOctagon = lazy(() => import("./bootstrap/ExclamationOctagon.icon.tsx"));
-export const ExclamationOctagonFill = lazy(() => import("./bootstrap/ExclamationOctagonFill.icon.tsx"));
-export const ExclamationSquare = lazy(() => import("./bootstrap/ExclamationSquare.icon.tsx"));
-export const ExclamationSquareFill = lazy(() => import("./bootstrap/ExclamationSquareFill.icon.tsx"));
-export const ExclamationTriangle = lazy(() => import("./bootstrap/ExclamationTriangle.icon.tsx"));
-export const ExclamationTriangleFill = lazy(() => import("./bootstrap/ExclamationTriangleFill.icon.tsx"));
-export const Exclude = lazy(() => import("./bootstrap/Exclude.icon.tsx"));
-export const Explicit = lazy(() => import("./bootstrap/Explicit.icon.tsx"));
-export const ExplicitFill = lazy(() => import("./bootstrap/ExplicitFill.icon.tsx"));
-export const Exposure = lazy(() => import("./bootstrap/Exposure.icon.tsx"));
-export const Eye = lazy(() => import("./bootstrap/Eye.icon.tsx"));
-export const Eyedropper = lazy(() => import("./bootstrap/Eyedropper.icon.tsx"));
-export const EyeFill = lazy(() => import("./bootstrap/EyeFill.icon.tsx"));
-export const Eyeglasses = lazy(() => import("./bootstrap/Eyeglasses.icon.tsx"));
-export const EyeSlash = lazy(() => import("./bootstrap/EyeSlash.icon.tsx"));
-export const EyeSlashFill = lazy(() => import("./bootstrap/EyeSlashFill.icon.tsx"));
-export const Facebook = lazy(() => import("./bootstrap/Facebook.icon.tsx"));
-export const Fan = lazy(() => import("./bootstrap/Fan.icon.tsx"));
-export const FastForward = lazy(() => import("./bootstrap/FastForward.icon.tsx"));
-export const FastForwardBtn = lazy(() => import("./bootstrap/FastForwardBtn.icon.tsx"));
-export const FastForwardBtnFill = lazy(() => import("./bootstrap/FastForwardBtnFill.icon.tsx"));
-export const FastForwardCircle = lazy(() => import("./bootstrap/FastForwardCircle.icon.tsx"));
-export const FastForwardCircleFill = lazy(() => import("./bootstrap/FastForwardCircleFill.icon.tsx"));
-export const FastForwardFill = lazy(() => import("./bootstrap/FastForwardFill.icon.tsx"));
-export const Feather = lazy(() => import("./bootstrap/Feather.icon.tsx"));
-export const Feather2 = lazy(() => import("./bootstrap/Feather2.icon.tsx"));
-export const Feather3 = lazy(() => import("./custom/Feather3.icon.tsx"));
-export const Figma = lazy(() => import("./custom/Figma.icon.tsx"));
-export const FigmaFill = lazy(() => import("./custom/FigmaFill.icon.tsx"));
-export const File = lazy(() => import("./bootstrap/File.icon.tsx"));
-export const File2Clock = lazy(() => import("./custom/File2Clock.icon.tsx"));
-export const FileArrowDown = lazy(() => import("./bootstrap/FileArrowDown.icon.tsx"));
-export const FileArrowDownFill = lazy(() => import("./bootstrap/FileArrowDownFill.icon.tsx"));
-export const FileArrowUp = lazy(() => import("./bootstrap/FileArrowUp.icon.tsx"));
-export const FileArrowUpFill = lazy(() => import("./bootstrap/FileArrowUpFill.icon.tsx"));
-export const FileBarGraph = lazy(() => import("./bootstrap/FileBarGraph.icon.tsx"));
-export const FileBarGraphFill = lazy(() => import("./bootstrap/FileBarGraphFill.icon.tsx"));
-export const FileBinary = lazy(() => import("./bootstrap/FileBinary.icon.tsx"));
-export const FileBinaryFill = lazy(() => import("./bootstrap/FileBinaryFill.icon.tsx"));
-export const FileBreak = lazy(() => import("./bootstrap/FileBreak.icon.tsx"));
-export const FileBreakFill = lazy(() => import("./bootstrap/FileBreakFill.icon.tsx"));
-export const FileCheck = lazy(() => import("./bootstrap/FileCheck.icon.tsx"));
-export const FileCheckFill = lazy(() => import("./bootstrap/FileCheckFill.icon.tsx"));
-export const FileCode = lazy(() => import("./bootstrap/FileCode.icon.tsx"));
-export const FileCodeFill = lazy(() => import("./bootstrap/FileCodeFill.icon.tsx"));
-export const FileDiff = lazy(() => import("./bootstrap/FileDiff.icon.tsx"));
-export const FileDiffFill = lazy(() => import("./bootstrap/FileDiffFill.icon.tsx"));
-export const FileEarmark = lazy(() => import("./bootstrap/FileEarmark.icon.tsx"));
-export const FileEarmarkArrowDown = lazy(() => import("./bootstrap/FileEarmarkArrowDown.icon.tsx"));
-export const FileEarmarkArrowDownFill = lazy(() => import("./bootstrap/FileEarmarkArrowDownFill.icon.tsx"));
-export const FileEarmarkArrowUp = lazy(() => import("./bootstrap/FileEarmarkArrowUp.icon.tsx"));
-export const FileEarmarkArrowUpFill = lazy(() => import("./bootstrap/FileEarmarkArrowUpFill.icon.tsx"));
-export const FileEarmarkBarGraph = lazy(() => import("./bootstrap/FileEarmarkBarGraph.icon.tsx"));
-export const FileEarmarkBarGraphFill = lazy(() => import("./bootstrap/FileEarmarkBarGraphFill.icon.tsx"));
-export const FileEarmarkBinary = lazy(() => import("./bootstrap/FileEarmarkBinary.icon.tsx"));
-export const FileEarmarkBinaryFill = lazy(() => import("./bootstrap/FileEarmarkBinaryFill.icon.tsx"));
-export const FileEarmarkBreak = lazy(() => import("./bootstrap/FileEarmarkBreak.icon.tsx"));
-export const FileEarmarkBreakFill = lazy(() => import("./bootstrap/FileEarmarkBreakFill.icon.tsx"));
-export const FileEarmarkCheck = lazy(() => import("./bootstrap/FileEarmarkCheck.icon.tsx"));
-export const FileEarmarkCheckFill = lazy(() => import("./bootstrap/FileEarmarkCheckFill.icon.tsx"));
-export const FileEarmarkCode = lazy(() => import("./bootstrap/FileEarmarkCode.icon.tsx"));
-export const FileEarmarkCodeFill = lazy(() => import("./bootstrap/FileEarmarkCodeFill.icon.tsx"));
-export const FileEarmarkDiff = lazy(() => import("./bootstrap/FileEarmarkDiff.icon.tsx"));
-export const FileEarmarkDiffFill = lazy(() => import("./bootstrap/FileEarmarkDiffFill.icon.tsx"));
-export const FileEarmarkEasel = lazy(() => import("./bootstrap/FileEarmarkEasel.icon.tsx"));
-export const FileEarmarkEaselFill = lazy(() => import("./bootstrap/FileEarmarkEaselFill.icon.tsx"));
-export const FileEarmarkExcel = lazy(() => import("./bootstrap/FileEarmarkExcel.icon.tsx"));
-export const FileEarmarkExcelFill = lazy(() => import("./bootstrap/FileEarmarkExcelFill.icon.tsx"));
-export const FileEarmarkFill = lazy(() => import("./bootstrap/FileEarmarkFill.icon.tsx"));
-export const FileEarmarkFont = lazy(() => import("./bootstrap/FileEarmarkFont.icon.tsx"));
-export const FileEarmarkFontFill = lazy(() => import("./bootstrap/FileEarmarkFontFill.icon.tsx"));
-export const FileEarmarkImage = lazy(() => import("./bootstrap/FileEarmarkImage.icon.tsx"));
-export const FileEarmarkImageFill = lazy(() => import("./bootstrap/FileEarmarkImageFill.icon.tsx"));
-export const FileEarmarkLock = lazy(() => import("./bootstrap/FileEarmarkLock.icon.tsx"));
-export const FileEarmarkLock2 = lazy(() => import("./bootstrap/FileEarmarkLock2.icon.tsx"));
-export const FileEarmarkLock2Fill = lazy(() => import("./bootstrap/FileEarmarkLock2Fill.icon.tsx"));
-export const FileEarmarkLockFill = lazy(() => import("./bootstrap/FileEarmarkLockFill.icon.tsx"));
-export const FileEarmarkMedical = lazy(() => import("./bootstrap/FileEarmarkMedical.icon.tsx"));
-export const FileEarmarkMedicalFill = lazy(() => import("./bootstrap/FileEarmarkMedicalFill.icon.tsx"));
-export const FileEarmarkMinus = lazy(() => import("./bootstrap/FileEarmarkMinus.icon.tsx"));
-export const FileEarmarkMinusFill = lazy(() => import("./bootstrap/FileEarmarkMinusFill.icon.tsx"));
-export const FileEarmarkMusic = lazy(() => import("./bootstrap/FileEarmarkMusic.icon.tsx"));
-export const FileEarmarkMusicFill = lazy(() => import("./bootstrap/FileEarmarkMusicFill.icon.tsx"));
-export const FileEarmarkPdf = lazy(() => import("./bootstrap/FileEarmarkPdf.icon.tsx"));
-export const FileEarmarkPdfFill = lazy(() => import("./bootstrap/FileEarmarkPdfFill.icon.tsx"));
-export const FileEarmarkPerson = lazy(() => import("./bootstrap/FileEarmarkPerson.icon.tsx"));
-export const FileEarmarkPersonFill = lazy(() => import("./bootstrap/FileEarmarkPersonFill.icon.tsx"));
-export const FileEarmarkPlay = lazy(() => import("./bootstrap/FileEarmarkPlay.icon.tsx"));
-export const FileEarmarkPlayFill = lazy(() => import("./bootstrap/FileEarmarkPlayFill.icon.tsx"));
-export const FileEarmarkPlus = lazy(() => import("./bootstrap/FileEarmarkPlus.icon.tsx"));
-export const FileEarmarkPlusFill = lazy(() => import("./bootstrap/FileEarmarkPlusFill.icon.tsx"));
-export const FileEarmarkPost = lazy(() => import("./bootstrap/FileEarmarkPost.icon.tsx"));
-export const FileEarmarkPostFill = lazy(() => import("./bootstrap/FileEarmarkPostFill.icon.tsx"));
-export const FileEarmarkPpt = lazy(() => import("./bootstrap/FileEarmarkPpt.icon.tsx"));
-export const FileEarmarkPptFill = lazy(() => import("./bootstrap/FileEarmarkPptFill.icon.tsx"));
-export const FileEarmarkRichtext = lazy(() => import("./bootstrap/FileEarmarkRichtext.icon.tsx"));
-export const FileEarmarkRichtextFill = lazy(() => import("./bootstrap/FileEarmarkRichtextFill.icon.tsx"));
-export const FileEarmarkRuled = lazy(() => import("./bootstrap/FileEarmarkRuled.icon.tsx"));
-export const FileEarmarkRuledFill = lazy(() => import("./bootstrap/FileEarmarkRuledFill.icon.tsx"));
-export const FileEarmarkSlides = lazy(() => import("./bootstrap/FileEarmarkSlides.icon.tsx"));
-export const FileEarmarkSlidesFill = lazy(() => import("./bootstrap/FileEarmarkSlidesFill.icon.tsx"));
-export const FileEarmarkSpreadsheet = lazy(() => import("./bootstrap/FileEarmarkSpreadsheet.icon.tsx"));
-export const FileEarmarkSpreadsheetFill = lazy(() => import("./bootstrap/FileEarmarkSpreadsheetFill.icon.tsx"));
-export const FileEarmarkText = lazy(() => import("./bootstrap/FileEarmarkText.icon.tsx"));
-export const FileEarmarkTextFill = lazy(() => import("./bootstrap/FileEarmarkTextFill.icon.tsx"));
-export const FileEarmarkWord = lazy(() => import("./bootstrap/FileEarmarkWord.icon.tsx"));
-export const FileEarmarkWordFill = lazy(() => import("./bootstrap/FileEarmarkWordFill.icon.tsx"));
-export const FileEarmarkX = lazy(() => import("./bootstrap/FileEarmarkX.icon.tsx"));
-export const FileEarmarkXFill = lazy(() => import("./bootstrap/FileEarmarkXFill.icon.tsx"));
-export const FileEarmarkZip = lazy(() => import("./bootstrap/FileEarmarkZip.icon.tsx"));
-export const FileEarmarkZipFill = lazy(() => import("./bootstrap/FileEarmarkZipFill.icon.tsx"));
-export const FileEasel = lazy(() => import("./bootstrap/FileEasel.icon.tsx"));
-export const FileEaselFill = lazy(() => import("./bootstrap/FileEaselFill.icon.tsx"));
-export const FileExcel = lazy(() => import("./bootstrap/FileExcel.icon.tsx"));
-export const FileExcelFill = lazy(() => import("./bootstrap/FileExcelFill.icon.tsx"));
-export const FileFill = lazy(() => import("./bootstrap/FileFill.icon.tsx"));
-export const FileFont = lazy(() => import("./bootstrap/FileFont.icon.tsx"));
-export const FileFontFill = lazy(() => import("./bootstrap/FileFontFill.icon.tsx"));
-export const FileImage = lazy(() => import("./bootstrap/FileImage.icon.tsx"));
-export const FileImageFill = lazy(() => import("./bootstrap/FileImageFill.icon.tsx"));
-export const FileLock = lazy(() => import("./bootstrap/FileLock.icon.tsx"));
-export const FileLock2 = lazy(() => import("./bootstrap/FileLock2.icon.tsx"));
-export const FileLock2Fill = lazy(() => import("./bootstrap/FileLock2Fill.icon.tsx"));
-export const FileLockFill = lazy(() => import("./bootstrap/FileLockFill.icon.tsx"));
-export const FileMedical = lazy(() => import("./bootstrap/FileMedical.icon.tsx"));
-export const FileMedicalFill = lazy(() => import("./bootstrap/FileMedicalFill.icon.tsx"));
-export const FileMinus = lazy(() => import("./bootstrap/FileMinus.icon.tsx"));
-export const FileMinusFill = lazy(() => import("./bootstrap/FileMinusFill.icon.tsx"));
-export const FileMusic = lazy(() => import("./bootstrap/FileMusic.icon.tsx"));
-export const FileMusicFill = lazy(() => import("./bootstrap/FileMusicFill.icon.tsx"));
-export const FilePdf = lazy(() => import("./bootstrap/FilePdf.icon.tsx"));
-export const FilePdfFill = lazy(() => import("./bootstrap/FilePdfFill.icon.tsx"));
-export const FilePerson = lazy(() => import("./bootstrap/FilePerson.icon.tsx"));
-export const FilePersonFill = lazy(() => import("./bootstrap/FilePersonFill.icon.tsx"));
-export const FilePlay = lazy(() => import("./bootstrap/FilePlay.icon.tsx"));
-export const FilePlayFill = lazy(() => import("./bootstrap/FilePlayFill.icon.tsx"));
-export const FilePlus = lazy(() => import("./bootstrap/FilePlus.icon.tsx"));
-export const FilePlusFill = lazy(() => import("./bootstrap/FilePlusFill.icon.tsx"));
-export const FilePost = lazy(() => import("./bootstrap/FilePost.icon.tsx"));
-export const FilePostFill = lazy(() => import("./bootstrap/FilePostFill.icon.tsx"));
-export const FilePpt = lazy(() => import("./bootstrap/FilePpt.icon.tsx"));
-export const FilePptFill = lazy(() => import("./bootstrap/FilePptFill.icon.tsx"));
-export const FileRichtext = lazy(() => import("./bootstrap/FileRichtext.icon.tsx"));
-export const FileRichtextFill = lazy(() => import("./bootstrap/FileRichtextFill.icon.tsx"));
-export const FileRuled = lazy(() => import("./bootstrap/FileRuled.icon.tsx"));
-export const FileRuledFill = lazy(() => import("./bootstrap/FileRuledFill.icon.tsx"));
-export const Files = lazy(() => import("./bootstrap/Files.icon.tsx"));
-export const FilesAlt = lazy(() => import("./bootstrap/FilesAlt.icon.tsx"));
-export const FileSignature = lazy(() => import("./custom/FileSignature.icon.tsx"));
-export const FileSlides = lazy(() => import("./bootstrap/FileSlides.icon.tsx"));
-export const FileSlidesFill = lazy(() => import("./bootstrap/FileSlidesFill.icon.tsx"));
-export const FileSpreadsheet = lazy(() => import("./bootstrap/FileSpreadsheet.icon.tsx"));
-export const FileSpreadsheetFill = lazy(() => import("./bootstrap/FileSpreadsheetFill.icon.tsx"));
-export const FileText = lazy(() => import("./bootstrap/FileText.icon.tsx"));
-export const FileTextFill = lazy(() => import("./bootstrap/FileTextFill.icon.tsx"));
-export const FiletypeAac = lazy(() => import("./bootstrap/FiletypeAac.icon.tsx"));
-export const FiletypeAi = lazy(() => import("./bootstrap/FiletypeAi.icon.tsx"));
-export const FiletypeBmp = lazy(() => import("./bootstrap/FiletypeBmp.icon.tsx"));
-export const FiletypeCs = lazy(() => import("./bootstrap/FiletypeCs.icon.tsx"));
-export const FiletypeCss = lazy(() => import("./bootstrap/FiletypeCss.icon.tsx"));
-export const FiletypeCsv = lazy(() => import("./bootstrap/FiletypeCsv.icon.tsx"));
-export const FiletypeDoc = lazy(() => import("./bootstrap/FiletypeDoc.icon.tsx"));
-export const FiletypeDocx = lazy(() => import("./bootstrap/FiletypeDocx.icon.tsx"));
-export const FiletypeExe = lazy(() => import("./bootstrap/FiletypeExe.icon.tsx"));
-export const FiletypeGif = lazy(() => import("./bootstrap/FiletypeGif.icon.tsx"));
-export const FiletypeHeic = lazy(() => import("./bootstrap/FiletypeHeic.icon.tsx"));
-export const FiletypeHtml = lazy(() => import("./bootstrap/FiletypeHtml.icon.tsx"));
-export const FiletypeJava = lazy(() => import("./bootstrap/FiletypeJava.icon.tsx"));
-export const FiletypeJpg = lazy(() => import("./bootstrap/FiletypeJpg.icon.tsx"));
-export const FiletypeJs = lazy(() => import("./bootstrap/FiletypeJs.icon.tsx"));
-export const FiletypeJson = lazy(() => import("./bootstrap/FiletypeJson.icon.tsx"));
-export const FiletypeJsx = lazy(() => import("./bootstrap/FiletypeJsx.icon.tsx"));
-export const FiletypeKey = lazy(() => import("./bootstrap/FiletypeKey.icon.tsx"));
-export const FiletypeM4P = lazy(() => import("./bootstrap/FiletypeM4P.icon.tsx"));
-export const FiletypeMd = lazy(() => import("./bootstrap/FiletypeMd.icon.tsx"));
-export const FiletypeMdx = lazy(() => import("./bootstrap/FiletypeMdx.icon.tsx"));
-export const FiletypeMov = lazy(() => import("./bootstrap/FiletypeMov.icon.tsx"));
-export const FiletypeMp3 = lazy(() => import("./bootstrap/FiletypeMp3.icon.tsx"));
-export const FiletypeMp4 = lazy(() => import("./bootstrap/FiletypeMp4.icon.tsx"));
-export const FiletypeOtf = lazy(() => import("./bootstrap/FiletypeOtf.icon.tsx"));
-export const FiletypePdf = lazy(() => import("./bootstrap/FiletypePdf.icon.tsx"));
-export const FiletypePhp = lazy(() => import("./bootstrap/FiletypePhp.icon.tsx"));
-export const FiletypePng = lazy(() => import("./bootstrap/FiletypePng.icon.tsx"));
-export const FiletypePpt = lazy(() => import("./bootstrap/FiletypePpt.icon.tsx"));
-export const FiletypePptx = lazy(() => import("./bootstrap/FiletypePptx.icon.tsx"));
-export const FiletypePsd = lazy(() => import("./bootstrap/FiletypePsd.icon.tsx"));
-export const FiletypePy = lazy(() => import("./bootstrap/FiletypePy.icon.tsx"));
-export const FiletypeRaw = lazy(() => import("./bootstrap/FiletypeRaw.icon.tsx"));
-export const FiletypeRb = lazy(() => import("./bootstrap/FiletypeRb.icon.tsx"));
-export const FiletypeSass = lazy(() => import("./bootstrap/FiletypeSass.icon.tsx"));
-export const FiletypeScss = lazy(() => import("./bootstrap/FiletypeScss.icon.tsx"));
-export const FiletypeSh = lazy(() => import("./bootstrap/FiletypeSh.icon.tsx"));
-export const FiletypeSql = lazy(() => import("./bootstrap/FiletypeSql.icon.tsx"));
-export const FiletypeSvg = lazy(() => import("./bootstrap/FiletypeSvg.icon.tsx"));
-export const FiletypeTiff = lazy(() => import("./bootstrap/FiletypeTiff.icon.tsx"));
-export const FiletypeTsx = lazy(() => import("./bootstrap/FiletypeTsx.icon.tsx"));
-export const FiletypeTtf = lazy(() => import("./bootstrap/FiletypeTtf.icon.tsx"));
-export const FiletypeTxt = lazy(() => import("./bootstrap/FiletypeTxt.icon.tsx"));
-export const FiletypeWav = lazy(() => import("./bootstrap/FiletypeWav.icon.tsx"));
-export const FiletypeWoff = lazy(() => import("./bootstrap/FiletypeWoff.icon.tsx"));
-export const FiletypeXls = lazy(() => import("./bootstrap/FiletypeXls.icon.tsx"));
-export const FiletypeXlsx = lazy(() => import("./bootstrap/FiletypeXlsx.icon.tsx"));
-export const FiletypeXml = lazy(() => import("./bootstrap/FiletypeXml.icon.tsx"));
-export const FiletypeYml = lazy(() => import("./bootstrap/FiletypeYml.icon.tsx"));
-export const FileWord = lazy(() => import("./bootstrap/FileWord.icon.tsx"));
-export const FileWordFill = lazy(() => import("./bootstrap/FileWordFill.icon.tsx"));
-export const FileX = lazy(() => import("./bootstrap/FileX.icon.tsx"));
-export const FileXFill = lazy(() => import("./bootstrap/FileXFill.icon.tsx"));
-export const FileZip = lazy(() => import("./bootstrap/FileZip.icon.tsx"));
-export const FileZipFill = lazy(() => import("./bootstrap/FileZipFill.icon.tsx"));
-export const Film = lazy(() => import("./bootstrap/Film.icon.tsx"));
-export const Filter = lazy(() => import("./bootstrap/Filter.icon.tsx"));
-export const FilterCircle = lazy(() => import("./bootstrap/FilterCircle.icon.tsx"));
-export const FilterCircleFill = lazy(() => import("./bootstrap/FilterCircleFill.icon.tsx"));
-export const FilterLeft = lazy(() => import("./bootstrap/FilterLeft.icon.tsx"));
-export const FilterRight = lazy(() => import("./bootstrap/FilterRight.icon.tsx"));
-export const FilterSquare = lazy(() => import("./bootstrap/FilterSquare.icon.tsx"));
-export const FilterSquareFill = lazy(() => import("./bootstrap/FilterSquareFill.icon.tsx"));
-export const Fingerprint = lazy(() => import("./bootstrap/Fingerprint.icon.tsx"));
-export const Fire = lazy(() => import("./custom/Fire.icon.tsx"));
-export const FireBootstrap = lazy(() => import("./bootstrap/FireBootstrap.icon.tsx"));
-export const FireFill = lazy(() => import("./custom/FireFill.icon.tsx"));
-export const Flag = lazy(() => import("./bootstrap/Flag.icon.tsx"));
-export const FlagFill = lazy(() => import("./bootstrap/FlagFill.icon.tsx"));
-export const Floppy = lazy(() => import("./bootstrap/Floppy.icon.tsx"));
-export const Floppy2 = lazy(() => import("./bootstrap/Floppy2.icon.tsx"));
-export const Floppy2Fill = lazy(() => import("./bootstrap/Floppy2Fill.icon.tsx"));
-export const FloppyFill = lazy(() => import("./bootstrap/FloppyFill.icon.tsx"));
-export const Flower1 = lazy(() => import("./bootstrap/Flower1.icon.tsx"));
-export const Flower2 = lazy(() => import("./bootstrap/Flower2.icon.tsx"));
-export const Flower3 = lazy(() => import("./bootstrap/Flower3.icon.tsx"));
-export const Folder = lazy(() => import("./bootstrap/Folder.icon.tsx"));
-export const Folder2 = lazy(() => import("./bootstrap/Folder2.icon.tsx"));
-export const Folder2Open = lazy(() => import("./bootstrap/Folder2Open.icon.tsx"));
-export const Folder2OpenFill = lazy(() => import("./custom/Folder2OpenFill.icon.tsx"));
-export const FolderCheck = lazy(() => import("./bootstrap/FolderCheck.icon.tsx"));
-export const FolderFill = lazy(() => import("./bootstrap/FolderFill.icon.tsx"));
-export const FolderMinus = lazy(() => import("./bootstrap/FolderMinus.icon.tsx"));
-export const FolderPlus = lazy(() => import("./bootstrap/FolderPlus.icon.tsx"));
-export const FolderSparkle = lazy(() => import("./custom/FolderSparkle.icon.tsx"));
-export const FolderSymlink = lazy(() => import("./bootstrap/FolderSymlink.icon.tsx"));
-export const FolderSymlinkFill = lazy(() => import("./bootstrap/FolderSymlinkFill.icon.tsx"));
-export const FolderX = lazy(() => import("./bootstrap/FolderX.icon.tsx"));
-export const Fonts = lazy(() => import("./bootstrap/Fonts.icon.tsx"));
-export const Forward = lazy(() => import("./bootstrap/Forward.icon.tsx"));
-export const ForwardFill = lazy(() => import("./bootstrap/ForwardFill.icon.tsx"));
-export const Front = lazy(() => import("./bootstrap/Front.icon.tsx"));
-export const FuelPump = lazy(() => import("./bootstrap/FuelPump.icon.tsx"));
-export const FuelPumpDiesel = lazy(() => import("./bootstrap/FuelPumpDiesel.icon.tsx"));
-export const FuelPumpDieselFill = lazy(() => import("./bootstrap/FuelPumpDieselFill.icon.tsx"));
-export const FuelPumpFill = lazy(() => import("./bootstrap/FuelPumpFill.icon.tsx"));
-export const Fullscreen = lazy(() => import("./bootstrap/Fullscreen.icon.tsx"));
-export const FullscreenExit = lazy(() => import("./bootstrap/FullscreenExit.icon.tsx"));
-export const Funnel = lazy(() => import("./bootstrap/Funnel.icon.tsx"));
-export const FunnelFill = lazy(() => import("./bootstrap/FunnelFill.icon.tsx"));
-export const Gear = lazy(() => import("./bootstrap/Gear.icon.tsx"));
-export const GearFill = lazy(() => import("./bootstrap/GearFill.icon.tsx"));
-export const GearWide = lazy(() => import("./bootstrap/GearWide.icon.tsx"));
-export const GearWideConnected = lazy(() => import("./bootstrap/GearWideConnected.icon.tsx"));
-export const Gem = lazy(() => import("./bootstrap/Gem.icon.tsx"));
-export const GenderAmbiguous = lazy(() => import("./bootstrap/GenderAmbiguous.icon.tsx"));
-export const GenderFemale = lazy(() => import("./bootstrap/GenderFemale.icon.tsx"));
-export const GenderMale = lazy(() => import("./bootstrap/GenderMale.icon.tsx"));
-export const GenderNeuter = lazy(() => import("./bootstrap/GenderNeuter.icon.tsx"));
-export const GenderTrans = lazy(() => import("./bootstrap/GenderTrans.icon.tsx"));
-export const Geo = lazy(() => import("./bootstrap/Geo.icon.tsx"));
-export const GeoAlt = lazy(() => import("./bootstrap/GeoAlt.icon.tsx"));
-export const GeoAltFill = lazy(() => import("./bootstrap/GeoAltFill.icon.tsx"));
-export const GeoAltOff = lazy(() => import("./custom/GeoAltOff.icon.tsx"));
-export const GeoFill = lazy(() => import("./bootstrap/GeoFill.icon.tsx"));
-export const Gift = lazy(() => import("./bootstrap/Gift.icon.tsx"));
-export const GiftFill = lazy(() => import("./bootstrap/GiftFill.icon.tsx"));
-export const Git = lazy(() => import("./bootstrap/Git.icon.tsx"));
-export const Github = lazy(() => import("./bootstrap/Github.icon.tsx"));
-export const Gitlab = lazy(() => import("./bootstrap/Gitlab.icon.tsx"));
-export const Globe = lazy(() => import("./bootstrap/Globe.icon.tsx"));
-export const Globe2 = lazy(() => import("./bootstrap/Globe2.icon.tsx"));
-export const GlobeAmericas = lazy(() => import("./bootstrap/GlobeAmericas.icon.tsx"));
-export const GlobeAsiaAustralia = lazy(() => import("./bootstrap/GlobeAsiaAustralia.icon.tsx"));
-export const GlobeCentralSouthAsia = lazy(() => import("./bootstrap/GlobeCentralSouthAsia.icon.tsx"));
-export const GlobeEuropeAfrica = lazy(() => import("./bootstrap/GlobeEuropeAfrica.icon.tsx"));
-export const Google = lazy(() => import("./bootstrap/Google.icon.tsx"));
-export const GooglePlay = lazy(() => import("./bootstrap/GooglePlay.icon.tsx"));
-export const GpuCard = lazy(() => import("./bootstrap/GpuCard.icon.tsx"));
-export const Grab = lazy(() => import("./custom/Grab.icon.tsx"));
-export const GrabHorizontal = lazy(() => import("./custom/GrabHorizontal.icon.tsx"));
-export const GraphDown = lazy(() => import("./bootstrap/GraphDown.icon.tsx"));
-export const GraphDownArrow = lazy(() => import("./bootstrap/GraphDownArrow.icon.tsx"));
-export const GraphUp = lazy(() => import("./bootstrap/GraphUp.icon.tsx"));
-export const GraphUpArrow = lazy(() => import("./bootstrap/GraphUpArrow.icon.tsx"));
-export const Grid = lazy(() => import("./bootstrap/Grid.icon.tsx"));
-export const Grid1X2 = lazy(() => import("./bootstrap/Grid1X2.icon.tsx"));
-export const Grid1X2Fill = lazy(() => import("./bootstrap/Grid1X2Fill.icon.tsx"));
-export const Grid3X2 = lazy(() => import("./bootstrap/Grid3X2.icon.tsx"));
-export const Grid3X2Gap = lazy(() => import("./bootstrap/Grid3X2Gap.icon.tsx"));
-export const Grid3X2GapFill = lazy(() => import("./bootstrap/Grid3X2GapFill.icon.tsx"));
-export const Grid3X3 = lazy(() => import("./bootstrap/Grid3X3.icon.tsx"));
-export const Grid3X3Gap = lazy(() => import("./bootstrap/Grid3X3Gap.icon.tsx"));
-export const Grid3X3GapFill = lazy(() => import("./bootstrap/Grid3X3GapFill.icon.tsx"));
-export const GridFill = lazy(() => import("./bootstrap/GridFill.icon.tsx"));
-export const GripHorizontal = lazy(() => import("./bootstrap/GripHorizontal.icon.tsx"));
-export const GripVertical = lazy(() => import("./bootstrap/GripVertical.icon.tsx"));
-export const Hammer = lazy(() => import("./bootstrap/Hammer.icon.tsx"));
-export const Hand = lazy(() => import("./custom/Hand.icon.tsx"));
-export const Handbag = lazy(() => import("./bootstrap/Handbag.icon.tsx"));
-export const HandbagFill = lazy(() => import("./bootstrap/HandbagFill.icon.tsx"));
-export const HandFinger = lazy(() => import("./custom/HandFinger.icon.tsx"));
-export const HandFinger45Deg = lazy(() => import("./custom/HandFinger45Deg.icon.tsx"));
-export const HandFingerRight = lazy(() => import("./custom/HandFingerRight.icon.tsx"));
-export const HandIndex = lazy(() => import("./bootstrap/HandIndex.icon.tsx"));
-export const HandIndexFill = lazy(() => import("./bootstrap/HandIndexFill.icon.tsx"));
-export const HandIndexThumb = lazy(() => import("./bootstrap/HandIndexThumb.icon.tsx"));
-export const HandIndexThumbFill = lazy(() => import("./bootstrap/HandIndexThumbFill.icon.tsx"));
-export const HandOff = lazy(() => import("./custom/HandOff.icon.tsx"));
-export const HandThumbsDown = lazy(() => import("./bootstrap/HandThumbsDown.icon.tsx"));
-export const HandThumbsDownFill = lazy(() => import("./bootstrap/HandThumbsDownFill.icon.tsx"));
-export const HandThumbsUp = lazy(() => import("./bootstrap/HandThumbsUp.icon.tsx"));
-export const HandThumbsUpFill = lazy(() => import("./bootstrap/HandThumbsUpFill.icon.tsx"));
-export const Hash = lazy(() => import("./bootstrap/Hash.icon.tsx"));
-export const HCircle = lazy(() => import("./bootstrap/HCircle.icon.tsx"));
-export const HCircleFill = lazy(() => import("./bootstrap/HCircleFill.icon.tsx"));
-export const Hdd = lazy(() => import("./bootstrap/Hdd.icon.tsx"));
-export const HddFill = lazy(() => import("./bootstrap/HddFill.icon.tsx"));
-export const HddNetwork = lazy(() => import("./bootstrap/HddNetwork.icon.tsx"));
-export const HddNetworkFill = lazy(() => import("./bootstrap/HddNetworkFill.icon.tsx"));
-export const HddRack = lazy(() => import("./bootstrap/HddRack.icon.tsx"));
-export const HddRackFill = lazy(() => import("./bootstrap/HddRackFill.icon.tsx"));
-export const HddStack = lazy(() => import("./bootstrap/HddStack.icon.tsx"));
-export const HddStackFill = lazy(() => import("./bootstrap/HddStackFill.icon.tsx"));
-export const Hdmi = lazy(() => import("./bootstrap/Hdmi.icon.tsx"));
-export const HdmiFill = lazy(() => import("./bootstrap/HdmiFill.icon.tsx"));
-export const Headphones = lazy(() => import("./bootstrap/Headphones.icon.tsx"));
-export const Headset = lazy(() => import("./bootstrap/Headset.icon.tsx"));
-export const HeadsetVr = lazy(() => import("./bootstrap/HeadsetVr.icon.tsx"));
-export const Heart = lazy(() => import("./bootstrap/Heart.icon.tsx"));
-export const HeartArrow = lazy(() => import("./bootstrap/HeartArrow.icon.tsx"));
-export const Heartbreak = lazy(() => import("./bootstrap/Heartbreak.icon.tsx"));
-export const HeartbreakFill = lazy(() => import("./bootstrap/HeartbreakFill.icon.tsx"));
-export const HeartFill = lazy(() => import("./bootstrap/HeartFill.icon.tsx"));
-export const HeartHalf = lazy(() => import("./bootstrap/HeartHalf.icon.tsx"));
-export const HeartPulse = lazy(() => import("./bootstrap/HeartPulse.icon.tsx"));
-export const HeartPulseFill = lazy(() => import("./bootstrap/HeartPulseFill.icon.tsx"));
-export const Hearts = lazy(() => import("./bootstrap/Hearts.icon.tsx"));
-export const Heptagon = lazy(() => import("./bootstrap/Heptagon.icon.tsx"));
-export const HeptagonFill = lazy(() => import("./bootstrap/HeptagonFill.icon.tsx"));
-export const HeptagonHalf = lazy(() => import("./bootstrap/HeptagonHalf.icon.tsx"));
-export const Hexagon = lazy(() => import("./bootstrap/Hexagon.icon.tsx"));
-export const Hexagon2NdHalf = lazy(() => import("./custom/Hexagon2NdHalf.icon.tsx"));
-export const HexagonArrowDown = lazy(() => import("./custom/HexagonArrowDown.icon.tsx"));
-export const HexagonArrowDownFill = lazy(() => import("./custom/HexagonArrowDownFill.icon.tsx"));
-export const HexagonArrowRight = lazy(() => import("./custom/HexagonArrowRight.icon.tsx"));
-export const HexagonArrowRightFill = lazy(() => import("./custom/HexagonArrowRightFill.icon.tsx"));
-export const HexagonCore = lazy(() => import("./custom/HexagonCore.icon.tsx"));
-export const HexagonCore2NdHalf = lazy(() => import("./custom/HexagonCore2NdHalf.icon.tsx"));
-export const HexagonCoreHalf = lazy(() => import("./custom/HexagonCoreHalf.icon.tsx"));
-export const HexagonDashed = lazy(() => import("./custom/HexagonDashed.icon.tsx"));
-export const HexagonFill = lazy(() => import("./bootstrap/HexagonFill.icon.tsx"));
-export const HexagonHalf = lazy(() => import("./bootstrap/HexagonHalf.icon.tsx"));
-export const HexagonOff = lazy(() => import("./custom/HexagonOff.icon.tsx"));
-export const HexagonOffFill = lazy(() => import("./custom/HexagonOffFill.icon.tsx"));
-export const HexagonQuestion = lazy(() => import("./custom/HexagonQuestion.icon.tsx"));
-export const HexagonQuestionFill = lazy(() => import("./custom/HexagonQuestionFill.icon.tsx"));
-export const Highlighter = lazy(() => import("./bootstrap/Highlighter.icon.tsx"));
-export const Highlights = lazy(() => import("./bootstrap/Highlights.icon.tsx"));
-export const Hospital = lazy(() => import("./bootstrap/Hospital.icon.tsx"));
-export const HospitalFill = lazy(() => import("./bootstrap/HospitalFill.icon.tsx"));
-export const Hourglass = lazy(() => import("./bootstrap/Hourglass.icon.tsx"));
-export const HourglassBottom = lazy(() => import("./bootstrap/HourglassBottom.icon.tsx"));
-export const HourglassSplit = lazy(() => import("./bootstrap/HourglassSplit.icon.tsx"));
-export const HourglassTop = lazy(() => import("./bootstrap/HourglassTop.icon.tsx"));
-export const House = lazy(() => import("./bootstrap/House.icon.tsx"));
-export const HouseAdd = lazy(() => import("./bootstrap/HouseAdd.icon.tsx"));
-export const HouseAddFill = lazy(() => import("./bootstrap/HouseAddFill.icon.tsx"));
-export const HouseCheck = lazy(() => import("./bootstrap/HouseCheck.icon.tsx"));
-export const HouseCheckFill = lazy(() => import("./bootstrap/HouseCheckFill.icon.tsx"));
-export const HouseDash = lazy(() => import("./bootstrap/HouseDash.icon.tsx"));
-export const HouseDashFill = lazy(() => import("./bootstrap/HouseDashFill.icon.tsx"));
-export const HouseDoor = lazy(() => import("./bootstrap/HouseDoor.icon.tsx"));
-export const HouseDoorFill = lazy(() => import("./bootstrap/HouseDoorFill.icon.tsx"));
-export const HouseDown = lazy(() => import("./bootstrap/HouseDown.icon.tsx"));
-export const HouseDownFill = lazy(() => import("./bootstrap/HouseDownFill.icon.tsx"));
-export const HouseExclamation = lazy(() => import("./bootstrap/HouseExclamation.icon.tsx"));
-export const HouseExclamationFill = lazy(() => import("./bootstrap/HouseExclamationFill.icon.tsx"));
-export const HouseFill = lazy(() => import("./bootstrap/HouseFill.icon.tsx"));
-export const HouseGear = lazy(() => import("./bootstrap/HouseGear.icon.tsx"));
-export const HouseGearFill = lazy(() => import("./bootstrap/HouseGearFill.icon.tsx"));
-export const HouseHeart = lazy(() => import("./bootstrap/HouseHeart.icon.tsx"));
-export const HouseHeartFill = lazy(() => import("./bootstrap/HouseHeartFill.icon.tsx"));
-export const HouseLock = lazy(() => import("./bootstrap/HouseLock.icon.tsx"));
-export const HouseLockFill = lazy(() => import("./bootstrap/HouseLockFill.icon.tsx"));
-export const Houses = lazy(() => import("./bootstrap/Houses.icon.tsx"));
-export const HousesFill = lazy(() => import("./bootstrap/HousesFill.icon.tsx"));
-export const HouseSlash = lazy(() => import("./bootstrap/HouseSlash.icon.tsx"));
-export const HouseSlashFill = lazy(() => import("./bootstrap/HouseSlashFill.icon.tsx"));
-export const HouseUp = lazy(() => import("./bootstrap/HouseUp.icon.tsx"));
-export const HouseUpFill = lazy(() => import("./bootstrap/HouseUpFill.icon.tsx"));
-export const HouseX = lazy(() => import("./bootstrap/HouseX.icon.tsx"));
-export const HouseXFill = lazy(() => import("./bootstrap/HouseXFill.icon.tsx"));
-export const Hr = lazy(() => import("./bootstrap/Hr.icon.tsx"));
-export const HSquare = lazy(() => import("./bootstrap/HSquare.icon.tsx"));
-export const HSquareFill = lazy(() => import("./bootstrap/HSquareFill.icon.tsx"));
-export const Hurricane = lazy(() => import("./bootstrap/Hurricane.icon.tsx"));
-export const Hypnotize = lazy(() => import("./bootstrap/Hypnotize.icon.tsx"));
-export const Image = lazy(() => import("./bootstrap/Image.icon.tsx"));
-export const ImageAlt = lazy(() => import("./bootstrap/ImageAlt.icon.tsx"));
-export const ImageFill = lazy(() => import("./bootstrap/ImageFill.icon.tsx"));
-export const Images = lazy(() => import("./bootstrap/Images.icon.tsx"));
-export const Inbox = lazy(() => import("./bootstrap/Inbox.icon.tsx"));
-export const Inboxes = lazy(() => import("./bootstrap/Inboxes.icon.tsx"));
-export const InboxesFill = lazy(() => import("./bootstrap/InboxesFill.icon.tsx"));
-export const InboxFill = lazy(() => import("./bootstrap/InboxFill.icon.tsx"));
-export const Incognito = lazy(() => import("./bootstrap/Incognito.icon.tsx"));
-export const Indent = lazy(() => import("./bootstrap/Indent.icon.tsx"));
-export const InfinityBootstrap = lazy(() => import("./bootstrap/InfinityBootstrap.icon.tsx"));
-export const Info = lazy(() => import("./bootstrap/Info.icon.tsx"));
-export const InfoCircle = lazy(() => import("./bootstrap/InfoCircle.icon.tsx"));
-export const InfoCircleFill = lazy(() => import("./bootstrap/InfoCircleFill.icon.tsx"));
-export const InfoLg = lazy(() => import("./bootstrap/InfoLg.icon.tsx"));
-export const InfoSquare = lazy(() => import("./bootstrap/InfoSquare.icon.tsx"));
-export const InfoSquareFill = lazy(() => import("./bootstrap/InfoSquareFill.icon.tsx"));
-export const InputCursor = lazy(() => import("./bootstrap/InputCursor.icon.tsx"));
-export const InputCursorText = lazy(() => import("./bootstrap/InputCursorText.icon.tsx"));
-export const Instagram = lazy(() => import("./bootstrap/Instagram.icon.tsx"));
-export const Intercom = lazy(() => import("./custom/Intercom.icon.tsx"));
-export const IntercomFill = lazy(() => import("./custom/IntercomFill.icon.tsx"));
-export const Intersect = lazy(() => import("./bootstrap/Intersect.icon.tsx"));
-export const Invoice = lazy(() => import("./custom/Invoice.icon.tsx"));
-export const Invoice2 = lazy(() => import("./custom/Invoice2.icon.tsx"));
-export const Invoice2In = lazy(() => import("./custom/Invoice2In.icon.tsx"));
-export const Invoice2Out = lazy(() => import("./custom/Invoice2Out.icon.tsx"));
-export const InvoiceClock = lazy(() => import("./custom/InvoiceClock.icon.tsx"));
-export const InvoiceDraft = lazy(() => import("./custom/InvoiceDraft.icon.tsx"));
-export const InvoicePdf = lazy(() => import("./custom/InvoicePdf.icon.tsx"));
-export const Invoices = lazy(() => import("./custom/Invoices.icon.tsx"));
-export const Invoices2 = lazy(() => import("./custom/Invoices2.icon.tsx"));
-export const InvoicesLink = lazy(() => import("./custom/InvoicesLink.icon.tsx"));
-export const Journal = lazy(() => import("./custom/Journal.icon.tsx"));
-export const Journal2 = lazy(() => import("./custom/Journal2.icon.tsx"));
-export const Journal2Off = lazy(() => import("./custom/Journal2Off.icon.tsx"));
-export const JournalAlbum = lazy(() => import("./bootstrap/JournalAlbum.icon.tsx"));
-export const JournalArrowDown = lazy(() => import("./bootstrap/JournalArrowDown.icon.tsx"));
-export const JournalArrowUp = lazy(() => import("./bootstrap/JournalArrowUp.icon.tsx"));
-export const JournalBookmark = lazy(() => import("./bootstrap/JournalBookmark.icon.tsx"));
-export const JournalBookmarkFill = lazy(() => import("./bootstrap/JournalBookmarkFill.icon.tsx"));
-export const JournalBootstrap = lazy(() => import("./bootstrap/JournalBootstrap.icon.tsx"));
-export const JournalCheck = lazy(() => import("./custom/JournalCheck.icon.tsx"));
-export const JournalCheckBootstrap = lazy(() => import("./bootstrap/JournalCheckBootstrap.icon.tsx"));
-export const JournalCode = lazy(() => import("./bootstrap/JournalCode.icon.tsx"));
-export const JournalMedical = lazy(() => import("./bootstrap/JournalMedical.icon.tsx"));
-export const JournalMinus = lazy(() => import("./bootstrap/JournalMinus.icon.tsx"));
-export const JournalOff = lazy(() => import("./custom/JournalOff.icon.tsx"));
-export const JournalPlus = lazy(() => import("./bootstrap/JournalPlus.icon.tsx"));
-export const JournalRichtext = lazy(() => import("./bootstrap/JournalRichtext.icon.tsx"));
-export const Journals = lazy(() => import("./bootstrap/Journals.icon.tsx"));
-export const JournalText = lazy(() => import("./bootstrap/JournalText.icon.tsx"));
-export const JournalX = lazy(() => import("./bootstrap/JournalX.icon.tsx"));
-export const Joystick = lazy(() => import("./bootstrap/Joystick.icon.tsx"));
-export const Justify = lazy(() => import("./bootstrap/Justify.icon.tsx"));
-export const JustifyLeft = lazy(() => import("./bootstrap/JustifyLeft.icon.tsx"));
-export const JustifyRight = lazy(() => import("./bootstrap/JustifyRight.icon.tsx"));
-export const Kanban = lazy(() => import("./bootstrap/Kanban.icon.tsx"));
-export const KanbanFill = lazy(() => import("./bootstrap/KanbanFill.icon.tsx"));
-export const Key = lazy(() => import("./bootstrap/Key.icon.tsx"));
-export const Keyboard = lazy(() => import("./bootstrap/Keyboard.icon.tsx"));
-export const KeyboardFill = lazy(() => import("./bootstrap/KeyboardFill.icon.tsx"));
-export const KeyFill = lazy(() => import("./bootstrap/KeyFill.icon.tsx"));
-export const Ladder = lazy(() => import("./bootstrap/Ladder.icon.tsx"));
-export const Lamp = lazy(() => import("./bootstrap/Lamp.icon.tsx"));
-export const LampFill = lazy(() => import("./bootstrap/LampFill.icon.tsx"));
-export const LampFillOff = lazy(() => import("./custom/LampFillOff.icon.tsx"));
-export const LampOff = lazy(() => import("./custom/LampOff.icon.tsx"));
-export const Laptop = lazy(() => import("./bootstrap/Laptop.icon.tsx"));
-export const LaptopFill = lazy(() => import("./bootstrap/LaptopFill.icon.tsx"));
-export const LayerBackward = lazy(() => import("./bootstrap/LayerBackward.icon.tsx"));
-export const LayerForward = lazy(() => import("./bootstrap/LayerForward.icon.tsx"));
-export const Layers = lazy(() => import("./bootstrap/Layers.icon.tsx"));
-export const LayersFill = lazy(() => import("./bootstrap/LayersFill.icon.tsx"));
-export const LayersHalf = lazy(() => import("./bootstrap/LayersHalf.icon.tsx"));
-export const LayoutSidebar = lazy(() => import("./bootstrap/LayoutSidebar.icon.tsx"));
-export const LayoutSidebarInset = lazy(() => import("./bootstrap/LayoutSidebarInset.icon.tsx"));
-export const LayoutSidebarInsetReverse = lazy(() => import("./bootstrap/LayoutSidebarInsetReverse.icon.tsx"));
-export const LayoutSidebarReverse = lazy(() => import("./bootstrap/LayoutSidebarReverse.icon.tsx"));
-export const LayoutSplit = lazy(() => import("./bootstrap/LayoutSplit.icon.tsx"));
-export const LayoutTextSidebar = lazy(() => import("./bootstrap/LayoutTextSidebar.icon.tsx"));
-export const LayoutTextSidebarReverse = lazy(() => import("./bootstrap/LayoutTextSidebarReverse.icon.tsx"));
-export const LayoutTextWindow = lazy(() => import("./bootstrap/LayoutTextWindow.icon.tsx"));
-export const LayoutTextWindowReverse = lazy(() => import("./bootstrap/LayoutTextWindowReverse.icon.tsx"));
-export const LayoutThreeColumns = lazy(() => import("./bootstrap/LayoutThreeColumns.icon.tsx"));
-export const LayoutWtf = lazy(() => import("./bootstrap/LayoutWtf.icon.tsx"));
-export const LifePreserver = lazy(() => import("./bootstrap/LifePreserver.icon.tsx"));
-export const Lightbulb = lazy(() => import("./bootstrap/Lightbulb.icon.tsx"));
-export const LightbulbFill = lazy(() => import("./bootstrap/LightbulbFill.icon.tsx"));
-export const LightbulbOff = lazy(() => import("./bootstrap/LightbulbOff.icon.tsx"));
-export const LightbulbOffFill = lazy(() => import("./bootstrap/LightbulbOffFill.icon.tsx"));
-export const Lightning = lazy(() => import("./bootstrap/Lightning.icon.tsx"));
-export const LightningCharge = lazy(() => import("./bootstrap/LightningCharge.icon.tsx"));
-export const LightningChargeFill = lazy(() => import("./bootstrap/LightningChargeFill.icon.tsx"));
-export const LightningFill = lazy(() => import("./bootstrap/LightningFill.icon.tsx"));
-export const Line = lazy(() => import("./bootstrap/Line.icon.tsx"));
-export const Link = lazy(() => import("./bootstrap/Link.icon.tsx"));
-export const Link2 = lazy(() => import("./custom/Link2.icon.tsx"));
-export const Link2Break = lazy(() => import("./custom/Link2Break.icon.tsx"));
-export const Link45Deg = lazy(() => import("./bootstrap/Link45Deg.icon.tsx"));
-export const Linkedin = lazy(() => import("./bootstrap/Linkedin.icon.tsx"));
-export const List = lazy(() => import("./bootstrap/List.icon.tsx"));
-export const ListCheck = lazy(() => import("./bootstrap/ListCheck.icon.tsx"));
-export const ListColumns = lazy(() => import("./bootstrap/ListColumns.icon.tsx"));
-export const ListColumnsReverse = lazy(() => import("./bootstrap/ListColumnsReverse.icon.tsx"));
-export const ListNested = lazy(() => import("./bootstrap/ListNested.icon.tsx"));
-export const ListOl = lazy(() => import("./bootstrap/ListOl.icon.tsx"));
-export const ListStars = lazy(() => import("./bootstrap/ListStars.icon.tsx"));
-export const ListTask = lazy(() => import("./bootstrap/ListTask.icon.tsx"));
-export const ListUl = lazy(() => import("./bootstrap/ListUl.icon.tsx"));
-export const Lock = lazy(() => import("./bootstrap/Lock.icon.tsx"));
-export const LockFill = lazy(() => import("./bootstrap/LockFill.icon.tsx"));
-export const Luggage = lazy(() => import("./bootstrap/Luggage.icon.tsx"));
-export const LuggageFill = lazy(() => import("./bootstrap/LuggageFill.icon.tsx"));
-export const Lungs = lazy(() => import("./bootstrap/Lungs.icon.tsx"));
-export const LungsFill = lazy(() => import("./bootstrap/LungsFill.icon.tsx"));
-export const Magic = lazy(() => import("./bootstrap/Magic.icon.tsx"));
-export const Magnet = lazy(() => import("./bootstrap/Magnet.icon.tsx"));
-export const MagnetFill = lazy(() => import("./bootstrap/MagnetFill.icon.tsx"));
-export const Mailbox = lazy(() => import("./bootstrap/Mailbox.icon.tsx"));
-export const Mailbox2 = lazy(() => import("./bootstrap/Mailbox2.icon.tsx"));
-export const Mailbox2Flag = lazy(() => import("./bootstrap/Mailbox2Flag.icon.tsx"));
-export const MailboxFlag = lazy(() => import("./bootstrap/MailboxFlag.icon.tsx"));
-export const Map = lazy(() => import("./bootstrap/Map.icon.tsx"));
-export const MapFill = lazy(() => import("./bootstrap/MapFill.icon.tsx"));
-export const MapOff = lazy(() => import("./custom/MapOff.icon.tsx"));
-export const Markdown = lazy(() => import("./bootstrap/Markdown.icon.tsx"));
-export const MarkdownFill = lazy(() => import("./bootstrap/MarkdownFill.icon.tsx"));
-export const MarkerTip = lazy(() => import("./bootstrap/MarkerTip.icon.tsx"));
-export const Mask = lazy(() => import("./bootstrap/Mask.icon.tsx"));
-export const Mastodon = lazy(() => import("./bootstrap/Mastodon.icon.tsx"));
-export const MeasuringTape = lazy(() => import("./custom/MeasuringTape.icon.tsx"));
-export const MeasuringTapeFill = lazy(() => import("./custom/MeasuringTapeFill.icon.tsx"));
-export const Medium = lazy(() => import("./bootstrap/Medium.icon.tsx"));
-export const Megaphone = lazy(() => import("./bootstrap/Megaphone.icon.tsx"));
-export const MegaphoneFill = lazy(() => import("./bootstrap/MegaphoneFill.icon.tsx"));
-export const Memory = lazy(() => import("./bootstrap/Memory.icon.tsx"));
-export const MenuApp = lazy(() => import("./bootstrap/MenuApp.icon.tsx"));
-export const MenuAppFill = lazy(() => import("./bootstrap/MenuAppFill.icon.tsx"));
-export const MenuButton = lazy(() => import("./bootstrap/MenuButton.icon.tsx"));
-export const MenuButtonFill = lazy(() => import("./bootstrap/MenuButtonFill.icon.tsx"));
-export const MenuButtonWide = lazy(() => import("./bootstrap/MenuButtonWide.icon.tsx"));
-export const MenuButtonWideFill = lazy(() => import("./bootstrap/MenuButtonWideFill.icon.tsx"));
-export const MenuDown = lazy(() => import("./bootstrap/MenuDown.icon.tsx"));
-export const MenuUp = lazy(() => import("./bootstrap/MenuUp.icon.tsx"));
-export const Messenger = lazy(() => import("./bootstrap/Messenger.icon.tsx"));
-export const Meta = lazy(() => import("./bootstrap/Meta.icon.tsx"));
-export const Mic = lazy(() => import("./bootstrap/Mic.icon.tsx"));
-export const MicFill = lazy(() => import("./bootstrap/MicFill.icon.tsx"));
-export const MicMute = lazy(() => import("./bootstrap/MicMute.icon.tsx"));
-export const MicMuteFill = lazy(() => import("./bootstrap/MicMuteFill.icon.tsx"));
-export const Microsoft = lazy(() => import("./bootstrap/Microsoft.icon.tsx"));
-export const MicrosoftTeams = lazy(() => import("./bootstrap/MicrosoftTeams.icon.tsx"));
-export const Minecart = lazy(() => import("./bootstrap/Minecart.icon.tsx"));
-export const MinecartLoaded = lazy(() => import("./bootstrap/MinecartLoaded.icon.tsx"));
-export const Modem = lazy(() => import("./bootstrap/Modem.icon.tsx"));
-export const ModemFill = lazy(() => import("./bootstrap/ModemFill.icon.tsx"));
-export const Moisture = lazy(() => import("./bootstrap/Moisture.icon.tsx"));
-export const Moon = lazy(() => import("./bootstrap/Moon.icon.tsx"));
-export const MoonFill = lazy(() => import("./bootstrap/MoonFill.icon.tsx"));
-export const MoonStars = lazy(() => import("./bootstrap/MoonStars.icon.tsx"));
-export const MoonStarsFill = lazy(() => import("./bootstrap/MoonStarsFill.icon.tsx"));
-export const Mortarboard = lazy(() => import("./bootstrap/Mortarboard.icon.tsx"));
-export const MortarboardFill = lazy(() => import("./bootstrap/MortarboardFill.icon.tsx"));
-export const Motherboard = lazy(() => import("./bootstrap/Motherboard.icon.tsx"));
-export const MotherboardFill = lazy(() => import("./bootstrap/MotherboardFill.icon.tsx"));
-export const Mouse = lazy(() => import("./bootstrap/Mouse.icon.tsx"));
-export const Mouse2 = lazy(() => import("./bootstrap/Mouse2.icon.tsx"));
-export const Mouse2Fill = lazy(() => import("./bootstrap/Mouse2Fill.icon.tsx"));
-export const Mouse3 = lazy(() => import("./bootstrap/Mouse3.icon.tsx"));
-export const Mouse3Fill = lazy(() => import("./bootstrap/Mouse3Fill.icon.tsx"));
-export const MouseFill = lazy(() => import("./bootstrap/MouseFill.icon.tsx"));
-export const MusicNote = lazy(() => import("./bootstrap/MusicNote.icon.tsx"));
-export const MusicNoteBeamed = lazy(() => import("./bootstrap/MusicNoteBeamed.icon.tsx"));
-export const MusicNoteList = lazy(() => import("./bootstrap/MusicNoteList.icon.tsx"));
-export const MusicPlayer = lazy(() => import("./bootstrap/MusicPlayer.icon.tsx"));
-export const MusicPlayerFill = lazy(() => import("./bootstrap/MusicPlayerFill.icon.tsx"));
-export const Newspaper = lazy(() => import("./bootstrap/Newspaper.icon.tsx"));
-export const NintendoSwitch = lazy(() => import("./bootstrap/NintendoSwitch.icon.tsx"));
-export const NodeMinus = lazy(() => import("./bootstrap/NodeMinus.icon.tsx"));
-export const NodeMinusFill = lazy(() => import("./bootstrap/NodeMinusFill.icon.tsx"));
-export const NodePlus = lazy(() => import("./bootstrap/NodePlus.icon.tsx"));
-export const NodePlusFill = lazy(() => import("./bootstrap/NodePlusFill.icon.tsx"));
-export const NoiseReduction = lazy(() => import("./bootstrap/NoiseReduction.icon.tsx"));
-export const Nut = lazy(() => import("./bootstrap/Nut.icon.tsx"));
-export const NutFill = lazy(() => import("./bootstrap/NutFill.icon.tsx"));
-export const Nvidia = lazy(() => import("./bootstrap/Nvidia.icon.tsx"));
-export const Nvme = lazy(() => import("./bootstrap/Nvme.icon.tsx"));
-export const NvmeFill = lazy(() => import("./bootstrap/NvmeFill.icon.tsx"));
-export const Octagon = lazy(() => import("./bootstrap/Octagon.icon.tsx"));
-export const OctagonFill = lazy(() => import("./bootstrap/OctagonFill.icon.tsx"));
-export const OctagonHalf = lazy(() => import("./bootstrap/OctagonHalf.icon.tsx"));
-export const Opencollective = lazy(() => import("./bootstrap/Opencollective.icon.tsx"));
-export const OpticalAudio = lazy(() => import("./bootstrap/OpticalAudio.icon.tsx"));
-export const OpticalAudioFill = lazy(() => import("./bootstrap/OpticalAudioFill.icon.tsx"));
-export const Option = lazy(() => import("./bootstrap/Option.icon.tsx"));
-export const Outlet = lazy(() => import("./bootstrap/Outlet.icon.tsx"));
-export const PaintBucket = lazy(() => import("./bootstrap/PaintBucket.icon.tsx"));
-export const PaintRoller = lazy(() => import("./custom/PaintRoller.icon.tsx"));
-export const PaintRollerFill = lazy(() => import("./custom/PaintRollerFill.icon.tsx"));
-export const Palette = lazy(() => import("./bootstrap/Palette.icon.tsx"));
-export const Palette2 = lazy(() => import("./bootstrap/Palette2.icon.tsx"));
-export const PaletteFill = lazy(() => import("./bootstrap/PaletteFill.icon.tsx"));
-export const Paperclip = lazy(() => import("./bootstrap/Paperclip.icon.tsx"));
-export const Paragraph = lazy(() => import("./bootstrap/Paragraph.icon.tsx"));
-export const Pass = lazy(() => import("./bootstrap/Pass.icon.tsx"));
-export const PassFill = lazy(() => import("./bootstrap/PassFill.icon.tsx"));
-export const Passport = lazy(() => import("./bootstrap/Passport.icon.tsx"));
-export const PassportFill = lazy(() => import("./bootstrap/PassportFill.icon.tsx"));
-export const PatchCheck = lazy(() => import("./bootstrap/PatchCheck.icon.tsx"));
-export const PatchCheckFill = lazy(() => import("./bootstrap/PatchCheckFill.icon.tsx"));
-export const PatchExclamation = lazy(() => import("./bootstrap/PatchExclamation.icon.tsx"));
-export const PatchExclamationFill = lazy(() => import("./bootstrap/PatchExclamationFill.icon.tsx"));
-export const PatchMinus = lazy(() => import("./bootstrap/PatchMinus.icon.tsx"));
-export const PatchMinusFill = lazy(() => import("./bootstrap/PatchMinusFill.icon.tsx"));
-export const PatchPlus = lazy(() => import("./bootstrap/PatchPlus.icon.tsx"));
-export const PatchPlusFill = lazy(() => import("./bootstrap/PatchPlusFill.icon.tsx"));
-export const PatchQuestion = lazy(() => import("./bootstrap/PatchQuestion.icon.tsx"));
-export const PatchQuestionFill = lazy(() => import("./bootstrap/PatchQuestionFill.icon.tsx"));
-export const Pause = lazy(() => import("./bootstrap/Pause.icon.tsx"));
-export const PauseBtn = lazy(() => import("./bootstrap/PauseBtn.icon.tsx"));
-export const PauseBtnFill = lazy(() => import("./bootstrap/PauseBtnFill.icon.tsx"));
-export const PauseCircle = lazy(() => import("./bootstrap/PauseCircle.icon.tsx"));
-export const PauseCircleFill = lazy(() => import("./bootstrap/PauseCircleFill.icon.tsx"));
-export const PauseFill = lazy(() => import("./bootstrap/PauseFill.icon.tsx"));
-export const Paypal = lazy(() => import("./bootstrap/Paypal.icon.tsx"));
-export const Pc = lazy(() => import("./bootstrap/Pc.icon.tsx"));
-export const PcDisplay = lazy(() => import("./bootstrap/PcDisplay.icon.tsx"));
-export const PcDisplayHorizontal = lazy(() => import("./bootstrap/PcDisplayHorizontal.icon.tsx"));
-export const PcHorizontal = lazy(() => import("./bootstrap/PcHorizontal.icon.tsx"));
-export const PciCard = lazy(() => import("./bootstrap/PciCard.icon.tsx"));
-export const PciCardNetwork = lazy(() => import("./bootstrap/PciCardNetwork.icon.tsx"));
-export const PciCardSound = lazy(() => import("./bootstrap/PciCardSound.icon.tsx"));
-export const PCircle = lazy(() => import("./bootstrap/PCircle.icon.tsx"));
-export const PCircleFill = lazy(() => import("./bootstrap/PCircleFill.icon.tsx"));
-export const Peace = lazy(() => import("./bootstrap/Peace.icon.tsx"));
-export const PeaceFill = lazy(() => import("./bootstrap/PeaceFill.icon.tsx"));
-export const Pen = lazy(() => import("./bootstrap/Pen.icon.tsx"));
-export const Pencil = lazy(() => import("./bootstrap/Pencil.icon.tsx"));
-export const PencilFill = lazy(() => import("./bootstrap/PencilFill.icon.tsx"));
-export const PencilSquare = lazy(() => import("./bootstrap/PencilSquare.icon.tsx"));
-export const PenFill = lazy(() => import("./bootstrap/PenFill.icon.tsx"));
-export const PenOff = lazy(() => import("./custom/PenOff.icon.tsx"));
-export const PenOffFill = lazy(() => import("./custom/PenOffFill.icon.tsx"));
-export const Pentagon = lazy(() => import("./bootstrap/Pentagon.icon.tsx"));
-export const PentagonFill = lazy(() => import("./bootstrap/PentagonFill.icon.tsx"));
-export const PentagonHalf = lazy(() => import("./bootstrap/PentagonHalf.icon.tsx"));
-export const People = lazy(() => import("./bootstrap/People.icon.tsx"));
-export const PeopleFill = lazy(() => import("./bootstrap/PeopleFill.icon.tsx"));
-export const Percent = lazy(() => import("./bootstrap/Percent.icon.tsx"));
-export const Person = lazy(() => import("./bootstrap/Person.icon.tsx"));
-export const PersonAdd = lazy(() => import("./bootstrap/PersonAdd.icon.tsx"));
-export const PersonArmsUp = lazy(() => import("./bootstrap/PersonArmsUp.icon.tsx"));
-export const PersonBadge = lazy(() => import("./bootstrap/PersonBadge.icon.tsx"));
-export const PersonBadgeFill = lazy(() => import("./bootstrap/PersonBadgeFill.icon.tsx"));
-export const PersonBoundingBox = lazy(() => import("./bootstrap/PersonBoundingBox.icon.tsx"));
-export const PersonCheck = lazy(() => import("./bootstrap/PersonCheck.icon.tsx"));
-export const PersonCheckFill = lazy(() => import("./bootstrap/PersonCheckFill.icon.tsx"));
-export const PersonCircle = lazy(() => import("./bootstrap/PersonCircle.icon.tsx"));
-export const PersonDash = lazy(() => import("./bootstrap/PersonDash.icon.tsx"));
-export const PersonDashFill = lazy(() => import("./bootstrap/PersonDashFill.icon.tsx"));
-export const PersonDown = lazy(() => import("./bootstrap/PersonDown.icon.tsx"));
-export const PersonExclamation = lazy(() => import("./bootstrap/PersonExclamation.icon.tsx"));
-export const PersonFill = lazy(() => import("./bootstrap/PersonFill.icon.tsx"));
-export const PersonFillAdd = lazy(() => import("./bootstrap/PersonFillAdd.icon.tsx"));
-export const PersonFillCheck = lazy(() => import("./bootstrap/PersonFillCheck.icon.tsx"));
-export const PersonFillDash = lazy(() => import("./bootstrap/PersonFillDash.icon.tsx"));
-export const PersonFillDown = lazy(() => import("./bootstrap/PersonFillDown.icon.tsx"));
-export const PersonFillExclamation = lazy(() => import("./bootstrap/PersonFillExclamation.icon.tsx"));
-export const PersonFillGear = lazy(() => import("./bootstrap/PersonFillGear.icon.tsx"));
-export const PersonFillLock = lazy(() => import("./bootstrap/PersonFillLock.icon.tsx"));
-export const PersonFillSlash = lazy(() => import("./bootstrap/PersonFillSlash.icon.tsx"));
-export const PersonFillUp = lazy(() => import("./bootstrap/PersonFillUp.icon.tsx"));
-export const PersonFillX = lazy(() => import("./bootstrap/PersonFillX.icon.tsx"));
-export const PersonGear = lazy(() => import("./bootstrap/PersonGear.icon.tsx"));
-export const PersonHeart = lazy(() => import("./bootstrap/PersonHeart.icon.tsx"));
-export const PersonHearts = lazy(() => import("./bootstrap/PersonHearts.icon.tsx"));
-export const PersonLinesFill = lazy(() => import("./bootstrap/PersonLinesFill.icon.tsx"));
-export const PersonLock = lazy(() => import("./bootstrap/PersonLock.icon.tsx"));
-export const PersonPlus = lazy(() => import("./bootstrap/PersonPlus.icon.tsx"));
-export const PersonPlusFill = lazy(() => import("./bootstrap/PersonPlusFill.icon.tsx"));
-export const PersonRaisedHand = lazy(() => import("./bootstrap/PersonRaisedHand.icon.tsx"));
-export const PersonRolodex = lazy(() => import("./bootstrap/PersonRolodex.icon.tsx"));
-export const PersonSlash = lazy(() => import("./bootstrap/PersonSlash.icon.tsx"));
-export const PersonSquare = lazy(() => import("./bootstrap/PersonSquare.icon.tsx"));
-export const PersonStanding = lazy(() => import("./bootstrap/PersonStanding.icon.tsx"));
-export const PersonStandingDress = lazy(() => import("./bootstrap/PersonStandingDress.icon.tsx"));
-export const PersonUp = lazy(() => import("./bootstrap/PersonUp.icon.tsx"));
-export const PersonVcard = lazy(() => import("./bootstrap/PersonVcard.icon.tsx"));
-export const PersonVcardFill = lazy(() => import("./bootstrap/PersonVcardFill.icon.tsx"));
-export const PersonVideo = lazy(() => import("./bootstrap/PersonVideo.icon.tsx"));
-export const PersonVideo2 = lazy(() => import("./bootstrap/PersonVideo2.icon.tsx"));
-export const PersonVideo3 = lazy(() => import("./bootstrap/PersonVideo3.icon.tsx"));
-export const PersonWalking = lazy(() => import("./bootstrap/PersonWalking.icon.tsx"));
-export const PersonWheelchair = lazy(() => import("./bootstrap/PersonWheelchair.icon.tsx"));
-export const PersonWorkspace = lazy(() => import("./bootstrap/PersonWorkspace.icon.tsx"));
-export const PersonX = lazy(() => import("./bootstrap/PersonX.icon.tsx"));
-export const PersonXFill = lazy(() => import("./bootstrap/PersonXFill.icon.tsx"));
-export const Phone = lazy(() => import("./bootstrap/Phone.icon.tsx"));
-export const PhoneFill = lazy(() => import("./bootstrap/PhoneFill.icon.tsx"));
-export const PhoneFlip = lazy(() => import("./bootstrap/PhoneFlip.icon.tsx"));
-export const PhoneLandscape = lazy(() => import("./bootstrap/PhoneLandscape.icon.tsx"));
-export const PhoneLandscapeFill = lazy(() => import("./bootstrap/PhoneLandscapeFill.icon.tsx"));
-export const PhoneVibrate = lazy(() => import("./bootstrap/PhoneVibrate.icon.tsx"));
-export const PhoneVibrateFill = lazy(() => import("./bootstrap/PhoneVibrateFill.icon.tsx"));
-export const PieChart = lazy(() => import("./bootstrap/PieChart.icon.tsx"));
-export const PieChartFill = lazy(() => import("./bootstrap/PieChartFill.icon.tsx"));
-export const PiggyBank = lazy(() => import("./bootstrap/PiggyBank.icon.tsx"));
-export const PiggyBank2 = lazy(() => import("./custom/PiggyBank2.icon.tsx"));
-export const PiggyBank2Check = lazy(() => import("./custom/PiggyBank2Check.icon.tsx"));
-export const PiggyBank2Coin = lazy(() => import("./custom/PiggyBank2Coin.icon.tsx"));
-export const PiggyBank2Exclamation = lazy(() => import("./custom/PiggyBank2Exclamation.icon.tsx"));
-export const PiggyBank2In = lazy(() => import("./custom/PiggyBank2In.icon.tsx"));
-export const PiggyBank2Off = lazy(() => import("./custom/PiggyBank2Off.icon.tsx"));
-export const PiggyBank2Out = lazy(() => import("./custom/PiggyBank2Out.icon.tsx"));
-export const PiggyBankFill = lazy(() => import("./bootstrap/PiggyBankFill.icon.tsx"));
-export const Pin = lazy(() => import("./bootstrap/Pin.icon.tsx"));
-export const PinAngle = lazy(() => import("./bootstrap/PinAngle.icon.tsx"));
-export const PinAngleFill = lazy(() => import("./bootstrap/PinAngleFill.icon.tsx"));
-export const PinFill = lazy(() => import("./bootstrap/PinFill.icon.tsx"));
-export const PinMap = lazy(() => import("./bootstrap/PinMap.icon.tsx"));
-export const PinMapFill = lazy(() => import("./bootstrap/PinMapFill.icon.tsx"));
-export const Pinterest = lazy(() => import("./bootstrap/Pinterest.icon.tsx"));
-export const Pip = lazy(() => import("./bootstrap/Pip.icon.tsx"));
-export const PipFill = lazy(() => import("./bootstrap/PipFill.icon.tsx"));
-export const Play = lazy(() => import("./bootstrap/Play.icon.tsx"));
-export const PlayBtn = lazy(() => import("./bootstrap/PlayBtn.icon.tsx"));
-export const PlayBtnFill = lazy(() => import("./bootstrap/PlayBtnFill.icon.tsx"));
-export const PlayCircle = lazy(() => import("./bootstrap/PlayCircle.icon.tsx"));
-export const PlayCircleFill = lazy(() => import("./bootstrap/PlayCircleFill.icon.tsx"));
-export const PlayFill = lazy(() => import("./bootstrap/PlayFill.icon.tsx"));
-export const Playstation = lazy(() => import("./bootstrap/Playstation.icon.tsx"));
-export const Plug = lazy(() => import("./bootstrap/Plug.icon.tsx"));
-export const PlugFill = lazy(() => import("./bootstrap/PlugFill.icon.tsx"));
-export const Plugin = lazy(() => import("./bootstrap/Plugin.icon.tsx"));
-export const Plus = lazy(() => import("./bootstrap/Plus.icon.tsx"));
-export const PlusCircle = lazy(() => import("./bootstrap/PlusCircle.icon.tsx"));
-export const PlusCircleDotted = lazy(() => import("./bootstrap/PlusCircleDotted.icon.tsx"));
-export const PlusCircleFill = lazy(() => import("./bootstrap/PlusCircleFill.icon.tsx"));
-export const PlusLg = lazy(() => import("./bootstrap/PlusLg.icon.tsx"));
-export const PlusSlashMinus = lazy(() => import("./bootstrap/PlusSlashMinus.icon.tsx"));
-export const PlusSquare = lazy(() => import("./bootstrap/PlusSquare.icon.tsx"));
-export const PlusSquareDotted = lazy(() => import("./bootstrap/PlusSquareDotted.icon.tsx"));
-export const PlusSquareFill = lazy(() => import("./bootstrap/PlusSquareFill.icon.tsx"));
-export const Postage = lazy(() => import("./bootstrap/Postage.icon.tsx"));
-export const PostageFill = lazy(() => import("./bootstrap/PostageFill.icon.tsx"));
-export const PostageHeart = lazy(() => import("./bootstrap/PostageHeart.icon.tsx"));
-export const PostageHeartFill = lazy(() => import("./bootstrap/PostageHeartFill.icon.tsx"));
-export const Postcard = lazy(() => import("./bootstrap/Postcard.icon.tsx"));
-export const PostcardFill = lazy(() => import("./bootstrap/PostcardFill.icon.tsx"));
-export const PostcardHeart = lazy(() => import("./bootstrap/PostcardHeart.icon.tsx"));
-export const PostcardHeartFill = lazy(() => import("./bootstrap/PostcardHeartFill.icon.tsx"));
-export const Power = lazy(() => import("./bootstrap/Power.icon.tsx"));
-export const Prescription = lazy(() => import("./bootstrap/Prescription.icon.tsx"));
-export const Prescription2 = lazy(() => import("./bootstrap/Prescription2.icon.tsx"));
-export const Printer = lazy(() => import("./bootstrap/Printer.icon.tsx"));
-export const PrinterFill = lazy(() => import("./bootstrap/PrinterFill.icon.tsx"));
-export const Projector = lazy(() => import("./bootstrap/Projector.icon.tsx"));
-export const ProjectorFill = lazy(() => import("./bootstrap/ProjectorFill.icon.tsx"));
-export const ProrataCalendar = lazy(() => import("./custom/ProrataCalendar.icon.tsx"));
-export const ProrataCalendarFill = lazy(() => import("./custom/ProrataCalendarFill.icon.tsx"));
-export const PSquare = lazy(() => import("./bootstrap/PSquare.icon.tsx"));
-export const PSquareFill = lazy(() => import("./bootstrap/PSquareFill.icon.tsx"));
-export const Puzzle = lazy(() => import("./bootstrap/Puzzle.icon.tsx"));
-export const PuzzleFill = lazy(() => import("./bootstrap/PuzzleFill.icon.tsx"));
-export const QrCode = lazy(() => import("./bootstrap/QrCode.icon.tsx"));
-export const QrCodeScan = lazy(() => import("./bootstrap/QrCodeScan.icon.tsx"));
-export const Question = lazy(() => import("./bootstrap/Question.icon.tsx"));
-export const QuestionCircle = lazy(() => import("./bootstrap/QuestionCircle.icon.tsx"));
-export const QuestionCircleFill = lazy(() => import("./bootstrap/QuestionCircleFill.icon.tsx"));
-export const QuestionDiamond = lazy(() => import("./bootstrap/QuestionDiamond.icon.tsx"));
-export const QuestionDiamondFill = lazy(() => import("./bootstrap/QuestionDiamondFill.icon.tsx"));
-export const QuestionLg = lazy(() => import("./bootstrap/QuestionLg.icon.tsx"));
-export const QuestionOctagon = lazy(() => import("./bootstrap/QuestionOctagon.icon.tsx"));
-export const QuestionOctagonFill = lazy(() => import("./bootstrap/QuestionOctagonFill.icon.tsx"));
-export const QuestionSquare = lazy(() => import("./bootstrap/QuestionSquare.icon.tsx"));
-export const QuestionSquareFill = lazy(() => import("./bootstrap/QuestionSquareFill.icon.tsx"));
-export const Quora = lazy(() => import("./bootstrap/Quora.icon.tsx"));
-export const Quote = lazy(() => import("./bootstrap/Quote.icon.tsx"));
-export const Radar = lazy(() => import("./bootstrap/Radar.icon.tsx"));
-export const Radioactive = lazy(() => import("./bootstrap/Radioactive.icon.tsx"));
-export const Rainbow = lazy(() => import("./bootstrap/Rainbow.icon.tsx"));
-export const RCircle = lazy(() => import("./bootstrap/RCircle.icon.tsx"));
-export const RCircleFill = lazy(() => import("./bootstrap/RCircleFill.icon.tsx"));
-export const Receipt = lazy(() => import("./bootstrap/Receipt.icon.tsx"));
-export const Receipt2 = lazy(() => import("./custom/Receipt2.icon.tsx"));
-export const ReceiptClock = lazy(() => import("./custom/ReceiptClock.icon.tsx"));
-export const ReceiptCutoff = lazy(() => import("./bootstrap/ReceiptCutoff.icon.tsx"));
-export const ReceiptDraft = lazy(() => import("./custom/ReceiptDraft.icon.tsx"));
-export const ReceiptOff2 = lazy(() => import("./custom/ReceiptOff2.icon.tsx"));
-export const ReceiptPdf = lazy(() => import("./custom/ReceiptPdf.icon.tsx"));
-export const Reception0 = lazy(() => import("./bootstrap/Reception0.icon.tsx"));
-export const Reception1 = lazy(() => import("./bootstrap/Reception1.icon.tsx"));
-export const Reception2 = lazy(() => import("./bootstrap/Reception2.icon.tsx"));
-export const Reception3 = lazy(() => import("./bootstrap/Reception3.icon.tsx"));
-export const Reception4 = lazy(() => import("./bootstrap/Reception4.icon.tsx"));
-export const Record = lazy(() => import("./bootstrap/Record.icon.tsx"));
-export const Record2 = lazy(() => import("./bootstrap/Record2.icon.tsx"));
-export const Record2Fill = lazy(() => import("./bootstrap/Record2Fill.icon.tsx"));
-export const RecordBtn = lazy(() => import("./bootstrap/RecordBtn.icon.tsx"));
-export const RecordBtnFill = lazy(() => import("./bootstrap/RecordBtnFill.icon.tsx"));
-export const RecordCircle = lazy(() => import("./bootstrap/RecordCircle.icon.tsx"));
-export const RecordCircleFill = lazy(() => import("./bootstrap/RecordCircleFill.icon.tsx"));
-export const RecordFill = lazy(() => import("./bootstrap/RecordFill.icon.tsx"));
-export const Recycle = lazy(() => import("./bootstrap/Recycle.icon.tsx"));
-export const Reddit = lazy(() => import("./bootstrap/Reddit.icon.tsx"));
-export const Regex = lazy(() => import("./bootstrap/Regex.icon.tsx"));
-export const Repeat = lazy(() => import("./bootstrap/Repeat.icon.tsx"));
-export const Repeat1 = lazy(() => import("./bootstrap/Repeat1.icon.tsx"));
-export const Reply = lazy(() => import("./bootstrap/Reply.icon.tsx"));
-export const ReplyAll = lazy(() => import("./bootstrap/ReplyAll.icon.tsx"));
-export const ReplyAllFill = lazy(() => import("./bootstrap/ReplyAllFill.icon.tsx"));
-export const ReplyFill = lazy(() => import("./bootstrap/ReplyFill.icon.tsx"));
-export const Rewind = lazy(() => import("./bootstrap/Rewind.icon.tsx"));
-export const RewindBtn = lazy(() => import("./bootstrap/RewindBtn.icon.tsx"));
-export const RewindBtnFill = lazy(() => import("./bootstrap/RewindBtnFill.icon.tsx"));
-export const RewindCircle = lazy(() => import("./bootstrap/RewindCircle.icon.tsx"));
-export const RewindCircleFill = lazy(() => import("./bootstrap/RewindCircleFill.icon.tsx"));
-export const RewindFill = lazy(() => import("./bootstrap/RewindFill.icon.tsx"));
-export const Robot = lazy(() => import("./bootstrap/Robot.icon.tsx"));
-export const Rocket = lazy(() => import("./bootstrap/Rocket.icon.tsx"));
-export const RocketFill = lazy(() => import("./bootstrap/RocketFill.icon.tsx"));
-export const RocketTakeoff = lazy(() => import("./bootstrap/RocketTakeoff.icon.tsx"));
-export const RocketTakeoffFill = lazy(() => import("./bootstrap/RocketTakeoffFill.icon.tsx"));
-export const Router = lazy(() => import("./bootstrap/Router.icon.tsx"));
-export const RouterFill = lazy(() => import("./bootstrap/RouterFill.icon.tsx"));
-export const RSquare = lazy(() => import("./bootstrap/RSquare.icon.tsx"));
-export const RSquareFill = lazy(() => import("./bootstrap/RSquareFill.icon.tsx"));
-export const Rss = lazy(() => import("./bootstrap/Rss.icon.tsx"));
-export const RssFill = lazy(() => import("./bootstrap/RssFill.icon.tsx"));
-export const Rulers = lazy(() => import("./bootstrap/Rulers.icon.tsx"));
-export const Safe = lazy(() => import("./bootstrap/Safe.icon.tsx"));
-export const Safe2 = lazy(() => import("./bootstrap/Safe2.icon.tsx"));
-export const Safe2Fill = lazy(() => import("./bootstrap/Safe2Fill.icon.tsx"));
-export const SafeFill = lazy(() => import("./bootstrap/SafeFill.icon.tsx"));
-export const Save = lazy(() => import("./bootstrap/Save.icon.tsx"));
-export const Save2 = lazy(() => import("./bootstrap/Save2.icon.tsx"));
-export const Save2Fill = lazy(() => import("./bootstrap/Save2Fill.icon.tsx"));
-export const SaveFill = lazy(() => import("./bootstrap/SaveFill.icon.tsx"));
-export const Scissors = lazy(() => import("./bootstrap/Scissors.icon.tsx"));
-export const Scooter = lazy(() => import("./bootstrap/Scooter.icon.tsx"));
-export const Screwdriver = lazy(() => import("./bootstrap/Screwdriver.icon.tsx"));
-export const SdCard = lazy(() => import("./bootstrap/SdCard.icon.tsx"));
-export const SdCardFill = lazy(() => import("./bootstrap/SdCardFill.icon.tsx"));
-export const Search = lazy(() => import("./bootstrap/Search.icon.tsx"));
-export const SearchHeart = lazy(() => import("./bootstrap/SearchHeart.icon.tsx"));
-export const SearchHeartFill = lazy(() => import("./bootstrap/SearchHeartFill.icon.tsx"));
-export const SegmentedNav = lazy(() => import("./bootstrap/SegmentedNav.icon.tsx"));
-export const Send = lazy(() => import("./bootstrap/Send.icon.tsx"));
-export const SendArrowDown = lazy(() => import("./bootstrap/SendArrowDown.icon.tsx"));
-export const SendArrowDownFill = lazy(() => import("./bootstrap/SendArrowDownFill.icon.tsx"));
-export const SendArrowUp = lazy(() => import("./bootstrap/SendArrowUp.icon.tsx"));
-export const SendArrowUpFill = lazy(() => import("./bootstrap/SendArrowUpFill.icon.tsx"));
-export const SendCheck = lazy(() => import("./bootstrap/SendCheck.icon.tsx"));
-export const SendCheckFill = lazy(() => import("./bootstrap/SendCheckFill.icon.tsx"));
-export const SendDash = lazy(() => import("./bootstrap/SendDash.icon.tsx"));
-export const SendDashFill = lazy(() => import("./bootstrap/SendDashFill.icon.tsx"));
-export const SendExclamation = lazy(() => import("./bootstrap/SendExclamation.icon.tsx"));
-export const SendExclamationFill = lazy(() => import("./bootstrap/SendExclamationFill.icon.tsx"));
-export const SendFill = lazy(() => import("./bootstrap/SendFill.icon.tsx"));
-export const SendPlus = lazy(() => import("./bootstrap/SendPlus.icon.tsx"));
-export const SendPlusFill = lazy(() => import("./bootstrap/SendPlusFill.icon.tsx"));
-export const SendSlash = lazy(() => import("./bootstrap/SendSlash.icon.tsx"));
-export const SendSlashFill = lazy(() => import("./bootstrap/SendSlashFill.icon.tsx"));
-export const SendX = lazy(() => import("./bootstrap/SendX.icon.tsx"));
-export const SendXFill = lazy(() => import("./bootstrap/SendXFill.icon.tsx"));
-export const Server = lazy(() => import("./bootstrap/Server.icon.tsx"));
-export const Shadows = lazy(() => import("./bootstrap/Shadows.icon.tsx"));
-export const Share = lazy(() => import("./bootstrap/Share.icon.tsx"));
-export const ShareFill = lazy(() => import("./bootstrap/ShareFill.icon.tsx"));
-export const Shelves = lazy(() => import("./custom/Shelves.icon.tsx"));
-export const Shield = lazy(() => import("./bootstrap/Shield.icon.tsx"));
-export const ShieldCheck = lazy(() => import("./bootstrap/ShieldCheck.icon.tsx"));
-export const ShieldExclamation = lazy(() => import("./bootstrap/ShieldExclamation.icon.tsx"));
-export const ShieldFill = lazy(() => import("./bootstrap/ShieldFill.icon.tsx"));
-export const ShieldFillCheck = lazy(() => import("./bootstrap/ShieldFillCheck.icon.tsx"));
-export const ShieldFillExclamation = lazy(() => import("./bootstrap/ShieldFillExclamation.icon.tsx"));
-export const ShieldFillMinus = lazy(() => import("./bootstrap/ShieldFillMinus.icon.tsx"));
-export const ShieldFillPlus = lazy(() => import("./bootstrap/ShieldFillPlus.icon.tsx"));
-export const ShieldFillX = lazy(() => import("./bootstrap/ShieldFillX.icon.tsx"));
-export const ShieldLock = lazy(() => import("./bootstrap/ShieldLock.icon.tsx"));
-export const ShieldLockFill = lazy(() => import("./bootstrap/ShieldLockFill.icon.tsx"));
-export const ShieldMinus = lazy(() => import("./bootstrap/ShieldMinus.icon.tsx"));
-export const ShieldPlus = lazy(() => import("./bootstrap/ShieldPlus.icon.tsx"));
-export const ShieldShaded = lazy(() => import("./bootstrap/ShieldShaded.icon.tsx"));
-export const ShieldSlash = lazy(() => import("./bootstrap/ShieldSlash.icon.tsx"));
-export const ShieldSlashFill = lazy(() => import("./bootstrap/ShieldSlashFill.icon.tsx"));
-export const ShieldX = lazy(() => import("./bootstrap/ShieldX.icon.tsx"));
-export const Shift = lazy(() => import("./bootstrap/Shift.icon.tsx"));
-export const ShiftFill = lazy(() => import("./bootstrap/ShiftFill.icon.tsx"));
-export const Shop = lazy(() => import("./bootstrap/Shop.icon.tsx"));
-export const ShopWindow = lazy(() => import("./bootstrap/ShopWindow.icon.tsx"));
-export const Shuffle = lazy(() => import("./bootstrap/Shuffle.icon.tsx"));
-export const Signal = lazy(() => import("./bootstrap/Signal.icon.tsx"));
-export const SignDeadEnd = lazy(() => import("./bootstrap/SignDeadEnd.icon.tsx"));
-export const SignDeadEndFill = lazy(() => import("./bootstrap/SignDeadEndFill.icon.tsx"));
-export const SignDoNotEnter = lazy(() => import("./bootstrap/SignDoNotEnter.icon.tsx"));
-export const SignDoNotEnterFill = lazy(() => import("./bootstrap/SignDoNotEnterFill.icon.tsx"));
-export const SignIntersection = lazy(() => import("./bootstrap/SignIntersection.icon.tsx"));
-export const SignIntersectionFill = lazy(() => import("./bootstrap/SignIntersectionFill.icon.tsx"));
-export const SignIntersectionSide = lazy(() => import("./bootstrap/SignIntersectionSide.icon.tsx"));
-export const SignIntersectionSideFill = lazy(() => import("./bootstrap/SignIntersectionSideFill.icon.tsx"));
-export const SignIntersectionT = lazy(() => import("./bootstrap/SignIntersectionT.icon.tsx"));
-export const SignIntersectionTFill = lazy(() => import("./bootstrap/SignIntersectionTFill.icon.tsx"));
-export const SignIntersectionY = lazy(() => import("./bootstrap/SignIntersectionY.icon.tsx"));
-export const SignIntersectionYFill = lazy(() => import("./bootstrap/SignIntersectionYFill.icon.tsx"));
-export const SignMergeLeft = lazy(() => import("./bootstrap/SignMergeLeft.icon.tsx"));
-export const SignMergeLeftFill = lazy(() => import("./bootstrap/SignMergeLeftFill.icon.tsx"));
-export const SignMergeRight = lazy(() => import("./bootstrap/SignMergeRight.icon.tsx"));
-export const SignMergeRightFill = lazy(() => import("./bootstrap/SignMergeRightFill.icon.tsx"));
-export const SignNoLeftTurn = lazy(() => import("./bootstrap/SignNoLeftTurn.icon.tsx"));
-export const SignNoLeftTurnFill = lazy(() => import("./bootstrap/SignNoLeftTurnFill.icon.tsx"));
-export const SignNoParking = lazy(() => import("./bootstrap/SignNoParking.icon.tsx"));
-export const SignNoParkingFill = lazy(() => import("./bootstrap/SignNoParkingFill.icon.tsx"));
-export const SignNoRightTurn = lazy(() => import("./bootstrap/SignNoRightTurn.icon.tsx"));
-export const SignNoRightTurnFill = lazy(() => import("./bootstrap/SignNoRightTurnFill.icon.tsx"));
-export const Signpost = lazy(() => import("./bootstrap/Signpost.icon.tsx"));
-export const Signpost2 = lazy(() => import("./bootstrap/Signpost2.icon.tsx"));
-export const Signpost2Fill = lazy(() => import("./bootstrap/Signpost2Fill.icon.tsx"));
-export const SignpostFill = lazy(() => import("./bootstrap/SignpostFill.icon.tsx"));
-export const SignpostSplit = lazy(() => import("./bootstrap/SignpostSplit.icon.tsx"));
-export const SignpostSplitFill = lazy(() => import("./bootstrap/SignpostSplitFill.icon.tsx"));
-export const SignRailroad = lazy(() => import("./bootstrap/SignRailroad.icon.tsx"));
-export const SignRailroadFill = lazy(() => import("./bootstrap/SignRailroadFill.icon.tsx"));
-export const SignStop = lazy(() => import("./bootstrap/SignStop.icon.tsx"));
-export const SignStopFill = lazy(() => import("./bootstrap/SignStopFill.icon.tsx"));
-export const SignStopLights = lazy(() => import("./bootstrap/SignStopLights.icon.tsx"));
-export const SignStopLightsFill = lazy(() => import("./bootstrap/SignStopLightsFill.icon.tsx"));
-export const SignTurnLeft = lazy(() => import("./bootstrap/SignTurnLeft.icon.tsx"));
-export const SignTurnLeftFill = lazy(() => import("./bootstrap/SignTurnLeftFill.icon.tsx"));
-export const SignTurnRight = lazy(() => import("./bootstrap/SignTurnRight.icon.tsx"));
-export const SignTurnRightFill = lazy(() => import("./bootstrap/SignTurnRightFill.icon.tsx"));
-export const SignTurnSlightLeft = lazy(() => import("./bootstrap/SignTurnSlightLeft.icon.tsx"));
-export const SignTurnSlightLeftFill = lazy(() => import("./bootstrap/SignTurnSlightLeftFill.icon.tsx"));
-export const SignTurnSlightRight = lazy(() => import("./bootstrap/SignTurnSlightRight.icon.tsx"));
-export const SignTurnSlightRightFill = lazy(() => import("./bootstrap/SignTurnSlightRightFill.icon.tsx"));
-export const SignYield = lazy(() => import("./bootstrap/SignYield.icon.tsx"));
-export const SignYieldFill = lazy(() => import("./bootstrap/SignYieldFill.icon.tsx"));
-export const Sim = lazy(() => import("./bootstrap/Sim.icon.tsx"));
-export const SimFill = lazy(() => import("./bootstrap/SimFill.icon.tsx"));
-export const SimSlash = lazy(() => import("./bootstrap/SimSlash.icon.tsx"));
-export const SimSlashFill = lazy(() => import("./bootstrap/SimSlashFill.icon.tsx"));
-export const SinaWeibo = lazy(() => import("./bootstrap/SinaWeibo.icon.tsx"));
-export const SkipBackward = lazy(() => import("./bootstrap/SkipBackward.icon.tsx"));
-export const SkipBackwardBtn = lazy(() => import("./bootstrap/SkipBackwardBtn.icon.tsx"));
-export const SkipBackwardBtnFill = lazy(() => import("./bootstrap/SkipBackwardBtnFill.icon.tsx"));
-export const SkipBackwardCircle = lazy(() => import("./bootstrap/SkipBackwardCircle.icon.tsx"));
-export const SkipBackwardCircleFill = lazy(() => import("./bootstrap/SkipBackwardCircleFill.icon.tsx"));
-export const SkipBackwardFill = lazy(() => import("./bootstrap/SkipBackwardFill.icon.tsx"));
-export const SkipEnd = lazy(() => import("./bootstrap/SkipEnd.icon.tsx"));
-export const SkipEndBtn = lazy(() => import("./bootstrap/SkipEndBtn.icon.tsx"));
-export const SkipEndBtnFill = lazy(() => import("./bootstrap/SkipEndBtnFill.icon.tsx"));
-export const SkipEndCircle = lazy(() => import("./bootstrap/SkipEndCircle.icon.tsx"));
-export const SkipEndCircleFill = lazy(() => import("./bootstrap/SkipEndCircleFill.icon.tsx"));
-export const SkipEndFill = lazy(() => import("./bootstrap/SkipEndFill.icon.tsx"));
-export const SkipForward = lazy(() => import("./bootstrap/SkipForward.icon.tsx"));
-export const SkipForwardBtn = lazy(() => import("./bootstrap/SkipForwardBtn.icon.tsx"));
-export const SkipForwardBtnFill = lazy(() => import("./bootstrap/SkipForwardBtnFill.icon.tsx"));
-export const SkipForwardCircle = lazy(() => import("./bootstrap/SkipForwardCircle.icon.tsx"));
-export const SkipForwardCircleFill = lazy(() => import("./bootstrap/SkipForwardCircleFill.icon.tsx"));
-export const SkipForwardFill = lazy(() => import("./bootstrap/SkipForwardFill.icon.tsx"));
-export const SkipStart = lazy(() => import("./bootstrap/SkipStart.icon.tsx"));
-export const SkipStartBtn = lazy(() => import("./bootstrap/SkipStartBtn.icon.tsx"));
-export const SkipStartBtnFill = lazy(() => import("./bootstrap/SkipStartBtnFill.icon.tsx"));
-export const SkipStartCircle = lazy(() => import("./bootstrap/SkipStartCircle.icon.tsx"));
-export const SkipStartCircleFill = lazy(() => import("./bootstrap/SkipStartCircleFill.icon.tsx"));
-export const SkipStartFill = lazy(() => import("./bootstrap/SkipStartFill.icon.tsx"));
-export const Skype = lazy(() => import("./bootstrap/Skype.icon.tsx"));
-export const Slack = lazy(() => import("./bootstrap/Slack.icon.tsx"));
-export const Slash = lazy(() => import("./bootstrap/Slash.icon.tsx"));
-export const SlashCircle = lazy(() => import("./bootstrap/SlashCircle.icon.tsx"));
-export const SlashCircleFill = lazy(() => import("./bootstrap/SlashCircleFill.icon.tsx"));
-export const SlashCircleFillV2 = lazy(() => import("./custom/SlashCircleFillV2.icon.tsx"));
-export const SlashCircleV2 = lazy(() => import("./custom/SlashCircleV2.icon.tsx"));
-export const SlashLg = lazy(() => import("./bootstrap/SlashLg.icon.tsx"));
-export const SlashSquare = lazy(() => import("./bootstrap/SlashSquare.icon.tsx"));
-export const SlashSquareFill = lazy(() => import("./bootstrap/SlashSquareFill.icon.tsx"));
-export const SlashSquareFillV2 = lazy(() => import("./custom/SlashSquareFillV2.icon.tsx"));
-export const SlashSquareV2 = lazy(() => import("./custom/SlashSquareV2.icon.tsx"));
-export const Sliders = lazy(() => import("./bootstrap/Sliders.icon.tsx"));
-export const Sliders2 = lazy(() => import("./bootstrap/Sliders2.icon.tsx"));
-export const Sliders2Vertical = lazy(() => import("./bootstrap/Sliders2Vertical.icon.tsx"));
-export const Smartwatch = lazy(() => import("./bootstrap/Smartwatch.icon.tsx"));
-export const Snapchat = lazy(() => import("./bootstrap/Snapchat.icon.tsx"));
-export const Snow = lazy(() => import("./bootstrap/Snow.icon.tsx"));
-export const Snow2 = lazy(() => import("./bootstrap/Snow2.icon.tsx"));
-export const Snow3 = lazy(() => import("./bootstrap/Snow3.icon.tsx"));
-export const SortAlphaDown = lazy(() => import("./bootstrap/SortAlphaDown.icon.tsx"));
-export const SortAlphaDownAlt = lazy(() => import("./bootstrap/SortAlphaDownAlt.icon.tsx"));
-export const SortAlphaUp = lazy(() => import("./bootstrap/SortAlphaUp.icon.tsx"));
-export const SortAlphaUpAlt = lazy(() => import("./bootstrap/SortAlphaUpAlt.icon.tsx"));
-export const SortDown = lazy(() => import("./bootstrap/SortDown.icon.tsx"));
-export const SortDownAlt = lazy(() => import("./bootstrap/SortDownAlt.icon.tsx"));
-export const SortNumericDown = lazy(() => import("./bootstrap/SortNumericDown.icon.tsx"));
-export const SortNumericDownAlt = lazy(() => import("./bootstrap/SortNumericDownAlt.icon.tsx"));
-export const SortNumericUp = lazy(() => import("./bootstrap/SortNumericUp.icon.tsx"));
-export const SortNumericUpAlt = lazy(() => import("./bootstrap/SortNumericUpAlt.icon.tsx"));
-export const SortUp = lazy(() => import("./bootstrap/SortUp.icon.tsx"));
-export const SortUpAlt = lazy(() => import("./bootstrap/SortUpAlt.icon.tsx"));
-export const Soundwave = lazy(() => import("./bootstrap/Soundwave.icon.tsx"));
-export const Sourceforge = lazy(() => import("./bootstrap/Sourceforge.icon.tsx"));
-export const Speaker = lazy(() => import("./bootstrap/Speaker.icon.tsx"));
-export const SpeakerFill = lazy(() => import("./bootstrap/SpeakerFill.icon.tsx"));
-export const Speedometer = lazy(() => import("./bootstrap/Speedometer.icon.tsx"));
-export const Speedometer2 = lazy(() => import("./bootstrap/Speedometer2.icon.tsx"));
-export const Spellcheck = lazy(() => import("./bootstrap/Spellcheck.icon.tsx"));
-export const Spotify = lazy(() => import("./bootstrap/Spotify.icon.tsx"));
-export const Square = lazy(() => import("./bootstrap/Square.icon.tsx"));
-export const SquareFill = lazy(() => import("./bootstrap/SquareFill.icon.tsx"));
-export const SquareHalf = lazy(() => import("./bootstrap/SquareHalf.icon.tsx"));
-export const Squircle = lazy(() => import("./custom/Squircle.icon.tsx"));
-export const SquircleArrowBottom = lazy(() => import("./custom/SquircleArrowBottom.icon.tsx"));
-export const SquircleArrowBottomFill = lazy(() => import("./custom/SquircleArrowBottomFill.icon.tsx"));
-export const SquircleArrowLeft = lazy(() => import("./custom/SquircleArrowLeft.icon.tsx"));
-export const SquircleArrowLeftFill = lazy(() => import("./custom/SquircleArrowLeftFill.icon.tsx"));
-export const SquircleArrowRight = lazy(() => import("./custom/SquircleArrowRight.icon.tsx"));
-export const SquircleArrowRightFill = lazy(() => import("./custom/SquircleArrowRightFill.icon.tsx"));
-export const SquircleArrowTop = lazy(() => import("./custom/SquircleArrowTop.icon.tsx"));
-export const SquircleArrowTopFill = lazy(() => import("./custom/SquircleArrowTopFill.icon.tsx"));
-export const SquircleCheck = lazy(() => import("./custom/SquircleCheck.icon.tsx"));
-export const SquircleCheckAll = lazy(() => import("./custom/SquircleCheckAll.icon.tsx"));
-export const SquircleCheckAllFill = lazy(() => import("./custom/SquircleCheckAllFill.icon.tsx"));
-export const SquircleCheckFill = lazy(() => import("./custom/SquircleCheckFill.icon.tsx"));
-export const SquircleClock = lazy(() => import("./custom/SquircleClock.icon.tsx"));
-export const SquircleClockFill = lazy(() => import("./custom/SquircleClockFill.icon.tsx"));
-export const SquircleCore = lazy(() => import("./custom/SquircleCore.icon.tsx"));
-export const SquircleCore2NdHalf = lazy(() => import("./custom/SquircleCore2NdHalf.icon.tsx"));
-export const SquircleCoreHalf = lazy(() => import("./custom/SquircleCoreHalf.icon.tsx"));
-export const SquircleDraft = lazy(() => import("./custom/SquircleDraft.icon.tsx"));
-export const SquircleExclamation = lazy(() => import("./custom/SquircleExclamation.icon.tsx"));
-export const SquircleExclamationFill = lazy(() => import("./custom/SquircleExclamationFill.icon.tsx"));
-export const SquircleFill = lazy(() => import("./custom/SquircleFill.icon.tsx"));
-export const SquircleInfo = lazy(() => import("./custom/SquircleInfo.icon.tsx"));
-export const SquircleInfoFill = lazy(() => import("./custom/SquircleInfoFill.icon.tsx"));
-export const SquircleLink = lazy(() => import("./custom/SquircleLink.icon.tsx"));
-export const SquircleLinkFill = lazy(() => import("./custom/SquircleLinkFill.icon.tsx"));
-export const SquircleOff = lazy(() => import("./custom/SquircleOff.icon.tsx"));
-export const SquircleOffFill = lazy(() => import("./custom/SquircleOffFill.icon.tsx"));
-export const SquircleX = lazy(() => import("./custom/SquircleX.icon.tsx"));
-export const SquircleXFill = lazy(() => import("./custom/SquircleXFill.icon.tsx"));
-export const Stack = lazy(() => import("./bootstrap/Stack.icon.tsx"));
-export const StackOverflow = lazy(() => import("./bootstrap/StackOverflow.icon.tsx"));
-export const Star = lazy(() => import("./bootstrap/Star.icon.tsx"));
-export const StarFill = lazy(() => import("./bootstrap/StarFill.icon.tsx"));
-export const StarHalf = lazy(() => import("./bootstrap/StarHalf.icon.tsx"));
-export const Stars = lazy(() => import("./bootstrap/Stars.icon.tsx"));
-export const Steam = lazy(() => import("./bootstrap/Steam.icon.tsx"));
-export const Stickies = lazy(() => import("./bootstrap/Stickies.icon.tsx"));
-export const StickiesFill = lazy(() => import("./bootstrap/StickiesFill.icon.tsx"));
-export const Sticky = lazy(() => import("./bootstrap/Sticky.icon.tsx"));
-export const StickyFill = lazy(() => import("./bootstrap/StickyFill.icon.tsx"));
-export const Stop = lazy(() => import("./bootstrap/Stop.icon.tsx"));
-export const StopBtn = lazy(() => import("./bootstrap/StopBtn.icon.tsx"));
-export const StopBtnFill = lazy(() => import("./bootstrap/StopBtnFill.icon.tsx"));
-export const StopCircle = lazy(() => import("./bootstrap/StopCircle.icon.tsx"));
-export const StopCircleFill = lazy(() => import("./bootstrap/StopCircleFill.icon.tsx"));
-export const StopFill = lazy(() => import("./bootstrap/StopFill.icon.tsx"));
-export const Stoplights = lazy(() => import("./bootstrap/Stoplights.icon.tsx"));
-export const StoplightsFill = lazy(() => import("./bootstrap/StoplightsFill.icon.tsx"));
-export const Stopwatch = lazy(() => import("./bootstrap/Stopwatch.icon.tsx"));
-export const StopwatchFill = lazy(() => import("./bootstrap/StopwatchFill.icon.tsx"));
-export const Strava = lazy(() => import("./bootstrap/Strava.icon.tsx"));
-export const Stripe = lazy(() => import("./bootstrap/Stripe.icon.tsx"));
-export const Subscript = lazy(() => import("./bootstrap/Subscript.icon.tsx"));
-export const Substack = lazy(() => import("./bootstrap/Substack.icon.tsx"));
-export const Subtract = lazy(() => import("./bootstrap/Subtract.icon.tsx"));
-export const Suitcase = lazy(() => import("./bootstrap/Suitcase.icon.tsx"));
-export const Suitcase2 = lazy(() => import("./bootstrap/Suitcase2.icon.tsx"));
-export const Suitcase2Fill = lazy(() => import("./bootstrap/Suitcase2Fill.icon.tsx"));
-export const SuitcaseFill = lazy(() => import("./bootstrap/SuitcaseFill.icon.tsx"));
-export const SuitcaseLg = lazy(() => import("./bootstrap/SuitcaseLg.icon.tsx"));
-export const SuitcaseLgFill = lazy(() => import("./bootstrap/SuitcaseLgFill.icon.tsx"));
-export const SuitClub = lazy(() => import("./bootstrap/SuitClub.icon.tsx"));
-export const SuitClubFill = lazy(() => import("./bootstrap/SuitClubFill.icon.tsx"));
-export const SuitDiamond = lazy(() => import("./bootstrap/SuitDiamond.icon.tsx"));
-export const SuitDiamondFill = lazy(() => import("./bootstrap/SuitDiamondFill.icon.tsx"));
-export const SuitHeart = lazy(() => import("./bootstrap/SuitHeart.icon.tsx"));
-export const SuitHeartFill = lazy(() => import("./bootstrap/SuitHeartFill.icon.tsx"));
-export const SuitSpade = lazy(() => import("./bootstrap/SuitSpade.icon.tsx"));
-export const SuitSpadeFill = lazy(() => import("./bootstrap/SuitSpadeFill.icon.tsx"));
-export const Sun = lazy(() => import("./bootstrap/Sun.icon.tsx"));
-export const SunFill = lazy(() => import("./bootstrap/SunFill.icon.tsx"));
-export const Sunglasses = lazy(() => import("./bootstrap/Sunglasses.icon.tsx"));
-export const Sunrise = lazy(() => import("./bootstrap/Sunrise.icon.tsx"));
-export const SunriseFill = lazy(() => import("./bootstrap/SunriseFill.icon.tsx"));
-export const Sunset = lazy(() => import("./bootstrap/Sunset.icon.tsx"));
-export const SunsetFill = lazy(() => import("./bootstrap/SunsetFill.icon.tsx"));
-export const Superscript = lazy(() => import("./bootstrap/Superscript.icon.tsx"));
-export const SymmetryHorizontal = lazy(() => import("./bootstrap/SymmetryHorizontal.icon.tsx"));
-export const SymmetryVertical = lazy(() => import("./bootstrap/SymmetryVertical.icon.tsx"));
-export const Table = lazy(() => import("./bootstrap/Table.icon.tsx"));
-export const Tablet = lazy(() => import("./bootstrap/Tablet.icon.tsx"));
-export const TabletFill = lazy(() => import("./bootstrap/TabletFill.icon.tsx"));
-export const TabletLandscape = lazy(() => import("./bootstrap/TabletLandscape.icon.tsx"));
-export const TabletLandscapeFill = lazy(() => import("./bootstrap/TabletLandscapeFill.icon.tsx"));
-export const Tag = lazy(() => import("./bootstrap/Tag.icon.tsx"));
-export const TagFill = lazy(() => import("./bootstrap/TagFill.icon.tsx"));
-export const Tags = lazy(() => import("./bootstrap/Tags.icon.tsx"));
-export const TagsFill = lazy(() => import("./bootstrap/TagsFill.icon.tsx"));
-export const TaxiFront = lazy(() => import("./bootstrap/TaxiFront.icon.tsx"));
-export const TaxiFrontFill = lazy(() => import("./bootstrap/TaxiFrontFill.icon.tsx"));
-export const Telegram = lazy(() => import("./bootstrap/Telegram.icon.tsx"));
-export const Telephone = lazy(() => import("./bootstrap/Telephone.icon.tsx"));
-export const TelephoneFill = lazy(() => import("./bootstrap/TelephoneFill.icon.tsx"));
-export const TelephoneForward = lazy(() => import("./bootstrap/TelephoneForward.icon.tsx"));
-export const TelephoneForwardFill = lazy(() => import("./bootstrap/TelephoneForwardFill.icon.tsx"));
-export const TelephoneInbound = lazy(() => import("./bootstrap/TelephoneInbound.icon.tsx"));
-export const TelephoneInboundFill = lazy(() => import("./bootstrap/TelephoneInboundFill.icon.tsx"));
-export const TelephoneMinus = lazy(() => import("./bootstrap/TelephoneMinus.icon.tsx"));
-export const TelephoneMinusFill = lazy(() => import("./bootstrap/TelephoneMinusFill.icon.tsx"));
-export const TelephoneOutbound = lazy(() => import("./bootstrap/TelephoneOutbound.icon.tsx"));
-export const TelephoneOutboundFill = lazy(() => import("./bootstrap/TelephoneOutboundFill.icon.tsx"));
-export const TelephonePlus = lazy(() => import("./bootstrap/TelephonePlus.icon.tsx"));
-export const TelephonePlusFill = lazy(() => import("./bootstrap/TelephonePlusFill.icon.tsx"));
-export const TelephoneX = lazy(() => import("./bootstrap/TelephoneX.icon.tsx"));
-export const TelephoneXFill = lazy(() => import("./bootstrap/TelephoneXFill.icon.tsx"));
-export const TencentQq = lazy(() => import("./bootstrap/TencentQq.icon.tsx"));
-export const Terminal = lazy(() => import("./bootstrap/Terminal.icon.tsx"));
-export const TerminalDash = lazy(() => import("./bootstrap/TerminalDash.icon.tsx"));
-export const TerminalFill = lazy(() => import("./bootstrap/TerminalFill.icon.tsx"));
-export const TerminalPlus = lazy(() => import("./bootstrap/TerminalPlus.icon.tsx"));
-export const TerminalSplit = lazy(() => import("./bootstrap/TerminalSplit.icon.tsx"));
-export const TerminalX = lazy(() => import("./bootstrap/TerminalX.icon.tsx"));
-export const TestPipe = lazy(() => import("./custom/TestPipe.icon.tsx"));
-export const TestPipeFill = lazy(() => import("./custom/TestPipeFill.icon.tsx"));
-export const Textarea = lazy(() => import("./bootstrap/Textarea.icon.tsx"));
-export const TextareaResize = lazy(() => import("./bootstrap/TextareaResize.icon.tsx"));
-export const TextareaT = lazy(() => import("./bootstrap/TextareaT.icon.tsx"));
-export const TextCenter = lazy(() => import("./bootstrap/TextCenter.icon.tsx"));
-export const TextIndentLeft = lazy(() => import("./bootstrap/TextIndentLeft.icon.tsx"));
-export const TextIndentRight = lazy(() => import("./bootstrap/TextIndentRight.icon.tsx"));
-export const TextLeft = lazy(() => import("./bootstrap/TextLeft.icon.tsx"));
-export const TextParagraph = lazy(() => import("./bootstrap/TextParagraph.icon.tsx"));
-export const TextRight = lazy(() => import("./bootstrap/TextRight.icon.tsx"));
-export const TextWrap = lazy(() => import("./bootstrap/TextWrap.icon.tsx"));
-export const Thermometer = lazy(() => import("./bootstrap/Thermometer.icon.tsx"));
-export const ThermometerFire3 = lazy(() => import("./custom/ThermometerFire3.icon.tsx"));
-export const ThermometerHalf = lazy(() => import("./bootstrap/ThermometerHalf.icon.tsx"));
-export const ThermometerHigh = lazy(() => import("./bootstrap/ThermometerHigh.icon.tsx"));
-export const ThermometerLow = lazy(() => import("./bootstrap/ThermometerLow.icon.tsx"));
-export const ThermometerSnow = lazy(() => import("./bootstrap/ThermometerSnow.icon.tsx"));
-export const ThermometerSun = lazy(() => import("./bootstrap/ThermometerSun.icon.tsx"));
-export const Threads = lazy(() => import("./bootstrap/Threads.icon.tsx"));
-export const ThreadsFill = lazy(() => import("./bootstrap/ThreadsFill.icon.tsx"));
-export const ThreeDots = lazy(() => import("./bootstrap/ThreeDots.icon.tsx"));
-export const ThreeDotsVertical = lazy(() => import("./bootstrap/ThreeDotsVertical.icon.tsx"));
-export const Thunderbolt = lazy(() => import("./bootstrap/Thunderbolt.icon.tsx"));
-export const ThunderboltFill = lazy(() => import("./bootstrap/ThunderboltFill.icon.tsx"));
-export const Ticket = lazy(() => import("./bootstrap/Ticket.icon.tsx"));
-export const TicketDetailed = lazy(() => import("./bootstrap/TicketDetailed.icon.tsx"));
-export const TicketDetailedFill = lazy(() => import("./bootstrap/TicketDetailedFill.icon.tsx"));
-export const TicketFill = lazy(() => import("./bootstrap/TicketFill.icon.tsx"));
-export const TicketPerforated = lazy(() => import("./bootstrap/TicketPerforated.icon.tsx"));
-export const TicketPerforatedFill = lazy(() => import("./bootstrap/TicketPerforatedFill.icon.tsx"));
-export const Tiktok = lazy(() => import("./bootstrap/Tiktok.icon.tsx"));
-export const Toggle2Off = lazy(() => import("./bootstrap/Toggle2Off.icon.tsx"));
-export const Toggle2On = lazy(() => import("./bootstrap/Toggle2On.icon.tsx"));
-export const ToggleOff = lazy(() => import("./bootstrap/ToggleOff.icon.tsx"));
-export const ToggleOn = lazy(() => import("./bootstrap/ToggleOn.icon.tsx"));
-export const Toggles = lazy(() => import("./bootstrap/Toggles.icon.tsx"));
-export const Toggles2 = lazy(() => import("./bootstrap/Toggles2.icon.tsx"));
-export const Tools = lazy(() => import("./bootstrap/Tools.icon.tsx"));
-export const Tornado = lazy(() => import("./bootstrap/Tornado.icon.tsx"));
-export const TrainFreightFront = lazy(() => import("./bootstrap/TrainFreightFront.icon.tsx"));
-export const TrainFreightFrontFill = lazy(() => import("./bootstrap/TrainFreightFrontFill.icon.tsx"));
-export const TrainFront = lazy(() => import("./bootstrap/TrainFront.icon.tsx"));
-export const TrainFrontFill = lazy(() => import("./bootstrap/TrainFrontFill.icon.tsx"));
-export const TrainLightrailFront = lazy(() => import("./bootstrap/TrainLightrailFront.icon.tsx"));
-export const TrainLightrailFrontFill = lazy(() => import("./bootstrap/TrainLightrailFrontFill.icon.tsx"));
-export const Translate = lazy(() => import("./bootstrap/Translate.icon.tsx"));
-export const Transparency = lazy(() => import("./bootstrap/Transparency.icon.tsx"));
-export const Trash = lazy(() => import("./bootstrap/Trash.icon.tsx"));
-export const Trash2 = lazy(() => import("./bootstrap/Trash2.icon.tsx"));
-export const Trash2Fill = lazy(() => import("./bootstrap/Trash2Fill.icon.tsx"));
-export const Trash3 = lazy(() => import("./bootstrap/Trash3.icon.tsx"));
-export const Trash3Fill = lazy(() => import("./bootstrap/Trash3Fill.icon.tsx"));
-export const Trash3Off = lazy(() => import("./custom/Trash3Off.icon.tsx"));
-export const Trash3OffFill = lazy(() => import("./custom/Trash3OffFill.icon.tsx"));
-export const TrashFill = lazy(() => import("./bootstrap/TrashFill.icon.tsx"));
-export const Tree = lazy(() => import("./bootstrap/Tree.icon.tsx"));
-export const TreeFill = lazy(() => import("./bootstrap/TreeFill.icon.tsx"));
-export const Trello = lazy(() => import("./bootstrap/Trello.icon.tsx"));
-export const Triangle = lazy(() => import("./bootstrap/Triangle.icon.tsx"));
-export const Triangle2 = lazy(() => import("./custom/Triangle2.icon.tsx"));
-export const Triangle2ArrowDown = lazy(() => import("./custom/Triangle2ArrowDown.icon.tsx"));
-export const Triangle2ArrowDownFill = lazy(() => import("./custom/Triangle2ArrowDownFill.icon.tsx"));
-export const Triangle2ArrowIn = lazy(() => import("./custom/Triangle2ArrowIn.icon.tsx"));
-export const Triangle2ArrowOut = lazy(() => import("./custom/Triangle2ArrowOut.icon.tsx"));
-export const Triangle2Check = lazy(() => import("./custom/Triangle2Check.icon.tsx"));
-export const Triangle2CheckFill = lazy(() => import("./custom/Triangle2CheckFill.icon.tsx"));
-export const Triangle2Dashed = lazy(() => import("./custom/Triangle2Dashed.icon.tsx"));
-export const Triangle2Destroyed = lazy(() => import("./custom/Triangle2Destroyed.icon.tsx"));
-export const Triangle2DestroyedFill = lazy(() => import("./custom/Triangle2DestroyedFill.icon.tsx"));
-export const Triangle2Exclamation = lazy(() => import("./custom/Triangle2Exclamation.icon.tsx"));
-export const Triangle2ExclamationFill = lazy(() => import("./custom/Triangle2ExclamationFill.icon.tsx"));
-export const Triangle2Fill = lazy(() => import("./custom/Triangle2Fill.icon.tsx"));
-export const Triangle2Heavy = lazy(() => import("./custom/Triangle2Heavy.icon.tsx"));
-export const Triangle2Plus = lazy(() => import("./custom/Triangle2Plus.icon.tsx"));
-export const Triangle2PlusFill = lazy(() => import("./custom/Triangle2PlusFill.icon.tsx"));
-export const Triangle2Question = lazy(() => import("./custom/Triangle2Question.icon.tsx"));
-export const Triangle2QuestionFill = lazy(() => import("./custom/Triangle2QuestionFill.icon.tsx"));
-export const Triangle2Shadows = lazy(() => import("./custom/Triangle2Shadows.icon.tsx"));
-export const Triangle2Strips = lazy(() => import("./custom/Triangle2Strips.icon.tsx"));
-export const Triangle2StripsFill = lazy(() => import("./custom/Triangle2StripsFill.icon.tsx"));
-export const Triangle2X = lazy(() => import("./custom/Triangle2X.icon.tsx"));
-export const Triangle2XFill = lazy(() => import("./custom/Triangle2XFill.icon.tsx"));
-export const TriangleFill = lazy(() => import("./bootstrap/TriangleFill.icon.tsx"));
-export const TriangleHalf = lazy(() => import("./bootstrap/TriangleHalf.icon.tsx"));
-export const Trophy = lazy(() => import("./bootstrap/Trophy.icon.tsx"));
-export const TrophyFill = lazy(() => import("./bootstrap/TrophyFill.icon.tsx"));
-export const TropicalStorm = lazy(() => import("./bootstrap/TropicalStorm.icon.tsx"));
-export const Truck = lazy(() => import("./bootstrap/Truck.icon.tsx"));
-export const TruckFlatbed = lazy(() => import("./bootstrap/TruckFlatbed.icon.tsx"));
-export const TruckFront = lazy(() => import("./bootstrap/TruckFront.icon.tsx"));
-export const TruckFrontFill = lazy(() => import("./bootstrap/TruckFrontFill.icon.tsx"));
-export const Tsunami = lazy(() => import("./bootstrap/Tsunami.icon.tsx"));
-export const Tv = lazy(() => import("./bootstrap/Tv.icon.tsx"));
-export const TvFill = lazy(() => import("./bootstrap/TvFill.icon.tsx"));
-export const Twitch = lazy(() => import("./bootstrap/Twitch.icon.tsx"));
-export const Twitter = lazy(() => import("./bootstrap/Twitter.icon.tsx"));
-export const TwitterX = lazy(() => import("./bootstrap/TwitterX.icon.tsx"));
-export const Type = lazy(() => import("./bootstrap/Type.icon.tsx"));
-export const TypeBold = lazy(() => import("./bootstrap/TypeBold.icon.tsx"));
-export const TypeH1 = lazy(() => import("./bootstrap/TypeH1.icon.tsx"));
-export const TypeH2 = lazy(() => import("./bootstrap/TypeH2.icon.tsx"));
-export const TypeH3 = lazy(() => import("./bootstrap/TypeH3.icon.tsx"));
-export const TypeH4 = lazy(() => import("./bootstrap/TypeH4.icon.tsx"));
-export const TypeH5 = lazy(() => import("./bootstrap/TypeH5.icon.tsx"));
-export const TypeH6 = lazy(() => import("./bootstrap/TypeH6.icon.tsx"));
-export const TypeItalic = lazy(() => import("./bootstrap/TypeItalic.icon.tsx"));
-export const TypeStrikethrough = lazy(() => import("./bootstrap/TypeStrikethrough.icon.tsx"));
-export const TypeUnderline = lazy(() => import("./bootstrap/TypeUnderline.icon.tsx"));
-export const Ubuntu = lazy(() => import("./bootstrap/Ubuntu.icon.tsx"));
-export const UiChecks = lazy(() => import("./bootstrap/UiChecks.icon.tsx"));
-export const UiChecksGrid = lazy(() => import("./bootstrap/UiChecksGrid.icon.tsx"));
-export const UiRadios = lazy(() => import("./bootstrap/UiRadios.icon.tsx"));
-export const UiRadiosGrid = lazy(() => import("./bootstrap/UiRadiosGrid.icon.tsx"));
-export const Umbrella = lazy(() => import("./bootstrap/Umbrella.icon.tsx"));
-export const UmbrellaFill = lazy(() => import("./bootstrap/UmbrellaFill.icon.tsx"));
-export const Unindent = lazy(() => import("./bootstrap/Unindent.icon.tsx"));
-export const Union = lazy(() => import("./bootstrap/Union.icon.tsx"));
-export const UnitLayout = lazy(() => import("./custom/UnitLayout.icon.tsx"));
-export const UnitTemplate = lazy(() => import("./custom/UnitTemplate.icon.tsx"));
-export const Unity = lazy(() => import("./bootstrap/Unity.icon.tsx"));
-export const UniversalAccess = lazy(() => import("./bootstrap/UniversalAccess.icon.tsx"));
-export const UniversalAccessCircle = lazy(() => import("./bootstrap/UniversalAccessCircle.icon.tsx"));
-export const Unlock = lazy(() => import("./bootstrap/Unlock.icon.tsx"));
-export const UnlockFill = lazy(() => import("./bootstrap/UnlockFill.icon.tsx"));
-export const Upc = lazy(() => import("./bootstrap/Upc.icon.tsx"));
-export const UpcScan = lazy(() => import("./bootstrap/UpcScan.icon.tsx"));
-export const Upload = lazy(() => import("./bootstrap/Upload.icon.tsx"));
-export const Usb = lazy(() => import("./bootstrap/Usb.icon.tsx"));
-export const UsbC = lazy(() => import("./bootstrap/UsbC.icon.tsx"));
-export const UsbCFill = lazy(() => import("./bootstrap/UsbCFill.icon.tsx"));
-export const UsbDrive = lazy(() => import("./bootstrap/UsbDrive.icon.tsx"));
-export const UsbDriveFill = lazy(() => import("./bootstrap/UsbDriveFill.icon.tsx"));
-export const UsbFill = lazy(() => import("./bootstrap/UsbFill.icon.tsx"));
-export const UsbMicro = lazy(() => import("./bootstrap/UsbMicro.icon.tsx"));
-export const UsbMicroFill = lazy(() => import("./bootstrap/UsbMicroFill.icon.tsx"));
-export const UsbMini = lazy(() => import("./bootstrap/UsbMini.icon.tsx"));
-export const UsbMiniFill = lazy(() => import("./bootstrap/UsbMiniFill.icon.tsx"));
-export const UsbPlug = lazy(() => import("./bootstrap/UsbPlug.icon.tsx"));
-export const UsbPlugFill = lazy(() => import("./bootstrap/UsbPlugFill.icon.tsx"));
-export const UsbSymbol = lazy(() => import("./bootstrap/UsbSymbol.icon.tsx"));
-export const Valentine = lazy(() => import("./bootstrap/Valentine.icon.tsx"));
-export const Valentine2 = lazy(() => import("./bootstrap/Valentine2.icon.tsx"));
-export const VectorPen = lazy(() => import("./bootstrap/VectorPen.icon.tsx"));
-export const ViewList = lazy(() => import("./bootstrap/ViewList.icon.tsx"));
-export const ViewStacked = lazy(() => import("./bootstrap/ViewStacked.icon.tsx"));
-export const Vignette = lazy(() => import("./bootstrap/Vignette.icon.tsx"));
-export const Vimeo = lazy(() => import("./bootstrap/Vimeo.icon.tsx"));
-export const Vinyl = lazy(() => import("./bootstrap/Vinyl.icon.tsx"));
-export const VinylFill = lazy(() => import("./bootstrap/VinylFill.icon.tsx"));
-export const Virus = lazy(() => import("./bootstrap/Virus.icon.tsx"));
-export const Virus2 = lazy(() => import("./bootstrap/Virus2.icon.tsx"));
-export const Voicemail = lazy(() => import("./bootstrap/Voicemail.icon.tsx"));
-export const VolumeDown = lazy(() => import("./bootstrap/VolumeDown.icon.tsx"));
-export const VolumeDownFill = lazy(() => import("./bootstrap/VolumeDownFill.icon.tsx"));
-export const VolumeMute = lazy(() => import("./bootstrap/VolumeMute.icon.tsx"));
-export const VolumeMuteFill = lazy(() => import("./bootstrap/VolumeMuteFill.icon.tsx"));
-export const VolumeOff = lazy(() => import("./bootstrap/VolumeOff.icon.tsx"));
-export const VolumeOffFill = lazy(() => import("./bootstrap/VolumeOffFill.icon.tsx"));
-export const VolumeUp = lazy(() => import("./bootstrap/VolumeUp.icon.tsx"));
-export const VolumeUpFill = lazy(() => import("./bootstrap/VolumeUpFill.icon.tsx"));
-export const Vr = lazy(() => import("./bootstrap/Vr.icon.tsx"));
-export const Wallet = lazy(() => import("./bootstrap/Wallet.icon.tsx"));
-export const Wallet2 = lazy(() => import("./bootstrap/Wallet2.icon.tsx"));
-export const WalletFill = lazy(() => import("./bootstrap/WalletFill.icon.tsx"));
-export const Watch = lazy(() => import("./bootstrap/Watch.icon.tsx"));
-export const Water = lazy(() => import("./bootstrap/Water.icon.tsx"));
-export const Webcam = lazy(() => import("./bootstrap/Webcam.icon.tsx"));
-export const WebcamFill = lazy(() => import("./bootstrap/WebcamFill.icon.tsx"));
-export const Wechat = lazy(() => import("./bootstrap/Wechat.icon.tsx"));
-export const Whatsapp = lazy(() => import("./bootstrap/Whatsapp.icon.tsx"));
-export const Wifi = lazy(() => import("./bootstrap/Wifi.icon.tsx"));
-export const Wifi1 = lazy(() => import("./bootstrap/Wifi1.icon.tsx"));
-export const Wifi2 = lazy(() => import("./bootstrap/Wifi2.icon.tsx"));
-export const WifiOff = lazy(() => import("./bootstrap/WifiOff.icon.tsx"));
-export const Wikipedia = lazy(() => import("./bootstrap/Wikipedia.icon.tsx"));
-export const Wind = lazy(() => import("./bootstrap/Wind.icon.tsx"));
-export const Window = lazy(() => import("./custom/Window.icon.tsx"));
-export const WindowBootstrap = lazy(() => import("./bootstrap/WindowBootstrap.icon.tsx"));
-export const WindowDash = lazy(() => import("./bootstrap/WindowDash.icon.tsx"));
-export const WindowDesktop = lazy(() => import("./bootstrap/WindowDesktop.icon.tsx"));
-export const WindowDock = lazy(() => import("./bootstrap/WindowDock.icon.tsx"));
-export const WindowFullscreen = lazy(() => import("./bootstrap/WindowFullscreen.icon.tsx"));
-export const WindowPlus = lazy(() => import("./bootstrap/WindowPlus.icon.tsx"));
-export const Windows = lazy(() => import("./bootstrap/Windows.icon.tsx"));
-export const WindowSidebar = lazy(() => import("./bootstrap/WindowSidebar.icon.tsx"));
-export const WindowSplit = lazy(() => import("./bootstrap/WindowSplit.icon.tsx"));
-export const WindowStack = lazy(() => import("./bootstrap/WindowStack.icon.tsx"));
-export const WindowX = lazy(() => import("./bootstrap/WindowX.icon.tsx"));
-export const Wordpress = lazy(() => import("./bootstrap/Wordpress.icon.tsx"));
-export const Wrench = lazy(() => import("./bootstrap/Wrench.icon.tsx"));
-export const WrenchAdjustable = lazy(() => import("./bootstrap/WrenchAdjustable.icon.tsx"));
-export const WrenchAdjustableCircle = lazy(() => import("./bootstrap/WrenchAdjustableCircle.icon.tsx"));
-export const WrenchAdjustableCircleFill = lazy(() => import("./bootstrap/WrenchAdjustableCircleFill.icon.tsx"));
-export const X = lazy(() => import("./bootstrap/X.icon.tsx"));
-export const Xbox = lazy(() => import("./bootstrap/Xbox.icon.tsx"));
-export const XCircle = lazy(() => import("./bootstrap/XCircle.icon.tsx"));
-export const XCircleFill = lazy(() => import("./bootstrap/XCircleFill.icon.tsx"));
-export const XDiamond = lazy(() => import("./bootstrap/XDiamond.icon.tsx"));
-export const XDiamondFill = lazy(() => import("./bootstrap/XDiamondFill.icon.tsx"));
-export const XLg = lazy(() => import("./bootstrap/XLg.icon.tsx"));
-export const XOctagon = lazy(() => import("./bootstrap/XOctagon.icon.tsx"));
-export const XOctagonFill = lazy(() => import("./bootstrap/XOctagonFill.icon.tsx"));
-export const XSquare = lazy(() => import("./bootstrap/XSquare.icon.tsx"));
-export const XSquareFill = lazy(() => import("./bootstrap/XSquareFill.icon.tsx"));
-export const Yelp = lazy(() => import("./bootstrap/Yelp.icon.tsx"));
-export const YinYang = lazy(() => import("./bootstrap/YinYang.icon.tsx"));
-export const Youtube = lazy(() => import("./bootstrap/Youtube.icon.tsx"));
-export const ZoomIn = lazy(() => import("./bootstrap/ZoomIn.icon.tsx"));
-export const ZoomOut = lazy(() => import("./bootstrap/ZoomOut.icon.tsx"));
+export const iconIndex = {
+  _0Circle: lazy(() => import("./bootstrap/_0Circle.icon.tsx")),
+  _0CircleFill: lazy(() => import("./bootstrap/_0CircleFill.icon.tsx")),
+  _0Square: lazy(() => import("./bootstrap/_0Square.icon.tsx")),
+  _0SquareFill: lazy(() => import("./bootstrap/_0SquareFill.icon.tsx")),
+  _123: lazy(() => import("./bootstrap/_123.icon.tsx")),
+  _1Circle: lazy(() => import("./bootstrap/_1Circle.icon.tsx")),
+  _1CircleFill: lazy(() => import("./bootstrap/_1CircleFill.icon.tsx")),
+  _1Square: lazy(() => import("./bootstrap/_1Square.icon.tsx")),
+  _1SquareFill: lazy(() => import("./bootstrap/_1SquareFill.icon.tsx")),
+  _2Circle: lazy(() => import("./bootstrap/_2Circle.icon.tsx")),
+  _2CircleFill: lazy(() => import("./bootstrap/_2CircleFill.icon.tsx")),
+  _2Square: lazy(() => import("./bootstrap/_2Square.icon.tsx")),
+  _2SquareFill: lazy(() => import("./bootstrap/_2SquareFill.icon.tsx")),
+  _3Circle: lazy(() => import("./bootstrap/_3Circle.icon.tsx")),
+  _3CircleFill: lazy(() => import("./bootstrap/_3CircleFill.icon.tsx")),
+  _3Square: lazy(() => import("./bootstrap/_3Square.icon.tsx")),
+  _3SquareFill: lazy(() => import("./bootstrap/_3SquareFill.icon.tsx")),
+  _4Circle: lazy(() => import("./bootstrap/_4Circle.icon.tsx")),
+  _4CircleFill: lazy(() => import("./bootstrap/_4CircleFill.icon.tsx")),
+  _4Square: lazy(() => import("./bootstrap/_4Square.icon.tsx")),
+  _4SquareFill: lazy(() => import("./bootstrap/_4SquareFill.icon.tsx")),
+  _5Circle: lazy(() => import("./bootstrap/_5Circle.icon.tsx")),
+  _5CircleFill: lazy(() => import("./bootstrap/_5CircleFill.icon.tsx")),
+  _5Square: lazy(() => import("./bootstrap/_5Square.icon.tsx")),
+  _5SquareFill: lazy(() => import("./bootstrap/_5SquareFill.icon.tsx")),
+  _6Circle: lazy(() => import("./bootstrap/_6Circle.icon.tsx")),
+  _6CircleFill: lazy(() => import("./bootstrap/_6CircleFill.icon.tsx")),
+  _6Square: lazy(() => import("./bootstrap/_6Square.icon.tsx")),
+  _6SquareFill: lazy(() => import("./bootstrap/_6SquareFill.icon.tsx")),
+  _7Circle: lazy(() => import("./bootstrap/_7Circle.icon.tsx")),
+  _7CircleFill: lazy(() => import("./bootstrap/_7CircleFill.icon.tsx")),
+  _7Square: lazy(() => import("./bootstrap/_7Square.icon.tsx")),
+  _7SquareFill: lazy(() => import("./bootstrap/_7SquareFill.icon.tsx")),
+  _8Circle: lazy(() => import("./bootstrap/_8Circle.icon.tsx")),
+  _8CircleFill: lazy(() => import("./bootstrap/_8CircleFill.icon.tsx")),
+  _8Square: lazy(() => import("./bootstrap/_8Square.icon.tsx")),
+  _8SquareFill: lazy(() => import("./bootstrap/_8SquareFill.icon.tsx")),
+  _9Circle: lazy(() => import("./bootstrap/_9Circle.icon.tsx")),
+  _9CircleFill: lazy(() => import("./bootstrap/_9CircleFill.icon.tsx")),
+  _9Square: lazy(() => import("./bootstrap/_9Square.icon.tsx")),
+  _9SquareFill: lazy(() => import("./bootstrap/_9SquareFill.icon.tsx")),
+  Abacus: lazy(() => import("./custom/Abacus.icon.tsx")),
+  Activity: lazy(() => import("./bootstrap/Activity.icon.tsx")),
+  Airplane: lazy(() => import("./bootstrap/Airplane.icon.tsx")),
+  AirplaneEngines: lazy(() => import("./bootstrap/AirplaneEngines.icon.tsx")),
+  AirplaneEnginesFill: lazy(() => import("./bootstrap/AirplaneEnginesFill.icon.tsx")),
+  AirplaneFill: lazy(() => import("./bootstrap/AirplaneFill.icon.tsx")),
+  Alarm: lazy(() => import("./bootstrap/Alarm.icon.tsx")),
+  AlarmFill: lazy(() => import("./bootstrap/AlarmFill.icon.tsx")),
+  Alexa: lazy(() => import("./bootstrap/Alexa.icon.tsx")),
+  AlignBottom: lazy(() => import("./bootstrap/AlignBottom.icon.tsx")),
+  AlignCenter: lazy(() => import("./bootstrap/AlignCenter.icon.tsx")),
+  AlignEnd: lazy(() => import("./bootstrap/AlignEnd.icon.tsx")),
+  AlignMiddle: lazy(() => import("./bootstrap/AlignMiddle.icon.tsx")),
+  AlignStart: lazy(() => import("./bootstrap/AlignStart.icon.tsx")),
+  AlignTop: lazy(() => import("./bootstrap/AlignTop.icon.tsx")),
+  Alipay: lazy(() => import("./bootstrap/Alipay.icon.tsx")),
+  Alphabet: lazy(() => import("./bootstrap/Alphabet.icon.tsx")),
+  AlphabetUppercase: lazy(() => import("./bootstrap/AlphabetUppercase.icon.tsx")),
+  Alt: lazy(() => import("./bootstrap/Alt.icon.tsx")),
+  Amazon: lazy(() => import("./bootstrap/Amazon.icon.tsx")),
+  Amd: lazy(() => import("./bootstrap/Amd.icon.tsx")),
+  Android: lazy(() => import("./bootstrap/Android.icon.tsx")),
+  Android2: lazy(() => import("./bootstrap/Android2.icon.tsx")),
+  App: lazy(() => import("./bootstrap/App.icon.tsx")),
+  AppIndicator: lazy(() => import("./bootstrap/AppIndicator.icon.tsx")),
+  Apple: lazy(() => import("./bootstrap/Apple.icon.tsx")),
+  Apps: lazy(() => import("./custom/Apps.icon.tsx")),
+  AppsFill: lazy(() => import("./custom/AppsFill.icon.tsx")),
+  AppsPlus: lazy(() => import("./custom/AppsPlus.icon.tsx")),
+  AppsPlusFill: lazy(() => import("./custom/AppsPlusFill.icon.tsx")),
+  Archive: lazy(() => import("./bootstrap/Archive.icon.tsx")),
+  ArchiveFill: lazy(() => import("./bootstrap/ArchiveFill.icon.tsx")),
+  Arrow90DegDown: lazy(() => import("./bootstrap/Arrow90DegDown.icon.tsx")),
+  Arrow90DegLeft: lazy(() => import("./bootstrap/Arrow90DegLeft.icon.tsx")),
+  Arrow90DegRight: lazy(() => import("./bootstrap/Arrow90DegRight.icon.tsx")),
+  Arrow90DegUp: lazy(() => import("./bootstrap/Arrow90DegUp.icon.tsx")),
+  ArrowBarDown: lazy(() => import("./bootstrap/ArrowBarDown.icon.tsx")),
+  ArrowBarLeft: lazy(() => import("./bootstrap/ArrowBarLeft.icon.tsx")),
+  ArrowBarRight: lazy(() => import("./bootstrap/ArrowBarRight.icon.tsx")),
+  ArrowBarUp: lazy(() => import("./bootstrap/ArrowBarUp.icon.tsx")),
+  ArrowClockwise: lazy(() => import("./bootstrap/ArrowClockwise.icon.tsx")),
+  ArrowCounterclockwise: lazy(() => import("./bootstrap/ArrowCounterclockwise.icon.tsx")),
+  ArrowDown: lazy(() => import("./bootstrap/ArrowDown.icon.tsx")),
+  ArrowDownCircle: lazy(() => import("./bootstrap/ArrowDownCircle.icon.tsx")),
+  ArrowDownCircleFill: lazy(() => import("./bootstrap/ArrowDownCircleFill.icon.tsx")),
+  ArrowDownLeft: lazy(() => import("./bootstrap/ArrowDownLeft.icon.tsx")),
+  ArrowDownLeftCircle: lazy(() => import("./bootstrap/ArrowDownLeftCircle.icon.tsx")),
+  ArrowDownLeftCircleFill: lazy(() => import("./bootstrap/ArrowDownLeftCircleFill.icon.tsx")),
+  ArrowDownLeftSquare: lazy(() => import("./bootstrap/ArrowDownLeftSquare.icon.tsx")),
+  ArrowDownLeftSquareFill: lazy(() => import("./bootstrap/ArrowDownLeftSquareFill.icon.tsx")),
+  ArrowDownRight: lazy(() => import("./bootstrap/ArrowDownRight.icon.tsx")),
+  ArrowDownRightCircle: lazy(() => import("./bootstrap/ArrowDownRightCircle.icon.tsx")),
+  ArrowDownRightCircleFill: lazy(() => import("./bootstrap/ArrowDownRightCircleFill.icon.tsx")),
+  ArrowDownRightSquare: lazy(() => import("./bootstrap/ArrowDownRightSquare.icon.tsx")),
+  ArrowDownRightSquareFill: lazy(() => import("./bootstrap/ArrowDownRightSquareFill.icon.tsx")),
+  ArrowDownShort: lazy(() => import("./bootstrap/ArrowDownShort.icon.tsx")),
+  ArrowDownSquare: lazy(() => import("./bootstrap/ArrowDownSquare.icon.tsx")),
+  ArrowDownSquareFill: lazy(() => import("./bootstrap/ArrowDownSquareFill.icon.tsx")),
+  ArrowDownUp: lazy(() => import("./bootstrap/ArrowDownUp.icon.tsx")),
+  ArrowLeft: lazy(() => import("./bootstrap/ArrowLeft.icon.tsx")),
+  ArrowLeftCircle: lazy(() => import("./bootstrap/ArrowLeftCircle.icon.tsx")),
+  ArrowLeftCircleFill: lazy(() => import("./bootstrap/ArrowLeftCircleFill.icon.tsx")),
+  ArrowLeftRight: lazy(() => import("./bootstrap/ArrowLeftRight.icon.tsx")),
+  ArrowLeftShort: lazy(() => import("./bootstrap/ArrowLeftShort.icon.tsx")),
+  ArrowLeftSquare: lazy(() => import("./bootstrap/ArrowLeftSquare.icon.tsx")),
+  ArrowLeftSquareFill: lazy(() => import("./bootstrap/ArrowLeftSquareFill.icon.tsx")),
+  ArrowRepeat: lazy(() => import("./bootstrap/ArrowRepeat.icon.tsx")),
+  ArrowReturnLeft: lazy(() => import("./bootstrap/ArrowReturnLeft.icon.tsx")),
+  ArrowReturnRight: lazy(() => import("./bootstrap/ArrowReturnRight.icon.tsx")),
+  ArrowRight: lazy(() => import("./bootstrap/ArrowRight.icon.tsx")),
+  ArrowRightCircle: lazy(() => import("./bootstrap/ArrowRightCircle.icon.tsx")),
+  ArrowRightCircleFill: lazy(() => import("./bootstrap/ArrowRightCircleFill.icon.tsx")),
+  ArrowRightShort: lazy(() => import("./bootstrap/ArrowRightShort.icon.tsx")),
+  ArrowRightSquare: lazy(() => import("./bootstrap/ArrowRightSquare.icon.tsx")),
+  ArrowRightSquareFill: lazy(() => import("./bootstrap/ArrowRightSquareFill.icon.tsx")),
+  Arrows: lazy(() => import("./bootstrap/Arrows.icon.tsx")),
+  ArrowsAngleContract: lazy(() => import("./bootstrap/ArrowsAngleContract.icon.tsx")),
+  ArrowsAngleExpand: lazy(() => import("./bootstrap/ArrowsAngleExpand.icon.tsx")),
+  ArrowsCollapse: lazy(() => import("./bootstrap/ArrowsCollapse.icon.tsx")),
+  ArrowsCollapseVertical: lazy(() => import("./bootstrap/ArrowsCollapseVertical.icon.tsx")),
+  ArrowsExpand: lazy(() => import("./bootstrap/ArrowsExpand.icon.tsx")),
+  ArrowsExpandVertical: lazy(() => import("./bootstrap/ArrowsExpandVertical.icon.tsx")),
+  ArrowsFullscreen: lazy(() => import("./bootstrap/ArrowsFullscreen.icon.tsx")),
+  ArrowsMove: lazy(() => import("./bootstrap/ArrowsMove.icon.tsx")),
+  ArrowsVertical: lazy(() => import("./bootstrap/ArrowsVertical.icon.tsx")),
+  ArrowThroughHeart: lazy(() => import("./bootstrap/ArrowThroughHeart.icon.tsx")),
+  ArrowThroughHeartFill: lazy(() => import("./bootstrap/ArrowThroughHeartFill.icon.tsx")),
+  ArrowUp: lazy(() => import("./bootstrap/ArrowUp.icon.tsx")),
+  ArrowUpCircle: lazy(() => import("./bootstrap/ArrowUpCircle.icon.tsx")),
+  ArrowUpCircleFill: lazy(() => import("./bootstrap/ArrowUpCircleFill.icon.tsx")),
+  ArrowUpLeft: lazy(() => import("./bootstrap/ArrowUpLeft.icon.tsx")),
+  ArrowUpLeftCircle: lazy(() => import("./bootstrap/ArrowUpLeftCircle.icon.tsx")),
+  ArrowUpLeftCircleFill: lazy(() => import("./bootstrap/ArrowUpLeftCircleFill.icon.tsx")),
+  ArrowUpLeftSquare: lazy(() => import("./bootstrap/ArrowUpLeftSquare.icon.tsx")),
+  ArrowUpLeftSquareFill: lazy(() => import("./bootstrap/ArrowUpLeftSquareFill.icon.tsx")),
+  ArrowUpRight: lazy(() => import("./bootstrap/ArrowUpRight.icon.tsx")),
+  ArrowUpRightCircle: lazy(() => import("./bootstrap/ArrowUpRightCircle.icon.tsx")),
+  ArrowUpRightCircleFill: lazy(() => import("./bootstrap/ArrowUpRightCircleFill.icon.tsx")),
+  ArrowUpRightSquare: lazy(() => import("./bootstrap/ArrowUpRightSquare.icon.tsx")),
+  ArrowUpRightSquareFill: lazy(() => import("./bootstrap/ArrowUpRightSquareFill.icon.tsx")),
+  ArrowUpShort: lazy(() => import("./bootstrap/ArrowUpShort.icon.tsx")),
+  ArrowUpSquare: lazy(() => import("./bootstrap/ArrowUpSquare.icon.tsx")),
+  ArrowUpSquareFill: lazy(() => import("./bootstrap/ArrowUpSquareFill.icon.tsx")),
+  AspectRatio: lazy(() => import("./bootstrap/AspectRatio.icon.tsx")),
+  AspectRatioFill: lazy(() => import("./bootstrap/AspectRatioFill.icon.tsx")),
+  Asterisk: lazy(() => import("./bootstrap/Asterisk.icon.tsx")),
+  At: lazy(() => import("./bootstrap/At.icon.tsx")),
+  Award: lazy(() => import("./bootstrap/Award.icon.tsx")),
+  AwardFill: lazy(() => import("./bootstrap/AwardFill.icon.tsx")),
+  Back: lazy(() => import("./bootstrap/Back.icon.tsx")),
+  BackArrow: lazy(() => import("./custom/BackArrow.icon.tsx")),
+  Backpack: lazy(() => import("./bootstrap/Backpack.icon.tsx")),
+  Backpack2: lazy(() => import("./bootstrap/Backpack2.icon.tsx")),
+  Backpack2Fill: lazy(() => import("./bootstrap/Backpack2Fill.icon.tsx")),
+  Backpack3: lazy(() => import("./bootstrap/Backpack3.icon.tsx")),
+  Backpack3Fill: lazy(() => import("./bootstrap/Backpack3Fill.icon.tsx")),
+  Backpack4: lazy(() => import("./bootstrap/Backpack4.icon.tsx")),
+  Backpack4Fill: lazy(() => import("./bootstrap/Backpack4Fill.icon.tsx")),
+  BackpackFill: lazy(() => import("./bootstrap/BackpackFill.icon.tsx")),
+  Backspace: lazy(() => import("./bootstrap/Backspace.icon.tsx")),
+  BackspaceFill: lazy(() => import("./bootstrap/BackspaceFill.icon.tsx")),
+  BackspaceReverse: lazy(() => import("./bootstrap/BackspaceReverse.icon.tsx")),
+  BackspaceReverseFill: lazy(() => import("./bootstrap/BackspaceReverseFill.icon.tsx")),
+  Badge3D: lazy(() => import("./bootstrap/Badge3D.icon.tsx")),
+  Badge3dFill: lazy(() => import("./bootstrap/Badge3dFill.icon.tsx")),
+  Badge4K: lazy(() => import("./bootstrap/Badge4K.icon.tsx")),
+  Badge4kFill: lazy(() => import("./bootstrap/Badge4kFill.icon.tsx")),
+  Badge8K: lazy(() => import("./bootstrap/Badge8K.icon.tsx")),
+  Badge8kFill: lazy(() => import("./bootstrap/Badge8kFill.icon.tsx")),
+  BadgeAd: lazy(() => import("./bootstrap/BadgeAd.icon.tsx")),
+  BadgeAdFill: lazy(() => import("./bootstrap/BadgeAdFill.icon.tsx")),
+  BadgeAr: lazy(() => import("./bootstrap/BadgeAr.icon.tsx")),
+  BadgeArFill: lazy(() => import("./bootstrap/BadgeArFill.icon.tsx")),
+  BadgeCc: lazy(() => import("./bootstrap/BadgeCc.icon.tsx")),
+  BadgeCcFill: lazy(() => import("./bootstrap/BadgeCcFill.icon.tsx")),
+  BadgeHd: lazy(() => import("./bootstrap/BadgeHd.icon.tsx")),
+  BadgeHdFill: lazy(() => import("./bootstrap/BadgeHdFill.icon.tsx")),
+  BadgeSd: lazy(() => import("./bootstrap/BadgeSd.icon.tsx")),
+  BadgeSdFill: lazy(() => import("./bootstrap/BadgeSdFill.icon.tsx")),
+  BadgeTm: lazy(() => import("./bootstrap/BadgeTm.icon.tsx")),
+  BadgeTmFill: lazy(() => import("./bootstrap/BadgeTmFill.icon.tsx")),
+  BadgeVo: lazy(() => import("./bootstrap/BadgeVo.icon.tsx")),
+  BadgeVoFill: lazy(() => import("./bootstrap/BadgeVoFill.icon.tsx")),
+  BadgeVr: lazy(() => import("./bootstrap/BadgeVr.icon.tsx")),
+  BadgeVrFill: lazy(() => import("./bootstrap/BadgeVrFill.icon.tsx")),
+  BadgeWc: lazy(() => import("./bootstrap/BadgeWc.icon.tsx")),
+  BadgeWcFill: lazy(() => import("./bootstrap/BadgeWcFill.icon.tsx")),
+  Bag: lazy(() => import("./bootstrap/Bag.icon.tsx")),
+  BagCheck: lazy(() => import("./bootstrap/BagCheck.icon.tsx")),
+  BagCheckFill: lazy(() => import("./bootstrap/BagCheckFill.icon.tsx")),
+  BagDash: lazy(() => import("./bootstrap/BagDash.icon.tsx")),
+  BagDashFill: lazy(() => import("./bootstrap/BagDashFill.icon.tsx")),
+  BagFill: lazy(() => import("./bootstrap/BagFill.icon.tsx")),
+  BagHeart: lazy(() => import("./bootstrap/BagHeart.icon.tsx")),
+  BagHeartFill: lazy(() => import("./bootstrap/BagHeartFill.icon.tsx")),
+  BagPlus: lazy(() => import("./bootstrap/BagPlus.icon.tsx")),
+  BagPlusFill: lazy(() => import("./bootstrap/BagPlusFill.icon.tsx")),
+  BagX: lazy(() => import("./bootstrap/BagX.icon.tsx")),
+  BagXFill: lazy(() => import("./bootstrap/BagXFill.icon.tsx")),
+  Balloon: lazy(() => import("./bootstrap/Balloon.icon.tsx")),
+  BalloonFill: lazy(() => import("./bootstrap/BalloonFill.icon.tsx")),
+  BalloonHeart: lazy(() => import("./bootstrap/BalloonHeart.icon.tsx")),
+  BalloonHeartFill: lazy(() => import("./bootstrap/BalloonHeartFill.icon.tsx")),
+  Ban: lazy(() => import("./bootstrap/Ban.icon.tsx")),
+  Bandaid: lazy(() => import("./bootstrap/Bandaid.icon.tsx")),
+  BandaidFill: lazy(() => import("./bootstrap/BandaidFill.icon.tsx")),
+  BanFill: lazy(() => import("./bootstrap/BanFill.icon.tsx")),
+  Bank: lazy(() => import("./bootstrap/Bank.icon.tsx")),
+  Bank2: lazy(() => import("./bootstrap/Bank2.icon.tsx")),
+  BarChart: lazy(() => import("./bootstrap/BarChart.icon.tsx")),
+  BarChartFill: lazy(() => import("./bootstrap/BarChartFill.icon.tsx")),
+  BarChartLine: lazy(() => import("./bootstrap/BarChartLine.icon.tsx")),
+  BarChartLineFill: lazy(() => import("./bootstrap/BarChartLineFill.icon.tsx")),
+  BarChartSteps: lazy(() => import("./bootstrap/BarChartSteps.icon.tsx")),
+  Basket: lazy(() => import("./bootstrap/Basket.icon.tsx")),
+  Basket2: lazy(() => import("./bootstrap/Basket2.icon.tsx")),
+  Basket2Fill: lazy(() => import("./bootstrap/Basket2Fill.icon.tsx")),
+  Basket3: lazy(() => import("./bootstrap/Basket3.icon.tsx")),
+  Basket3Fill: lazy(() => import("./bootstrap/Basket3Fill.icon.tsx")),
+  BasketFill: lazy(() => import("./bootstrap/BasketFill.icon.tsx")),
+  Battery: lazy(() => import("./bootstrap/Battery.icon.tsx")),
+  BatteryCharging: lazy(() => import("./bootstrap/BatteryCharging.icon.tsx")),
+  BatteryFull: lazy(() => import("./bootstrap/BatteryFull.icon.tsx")),
+  BatteryHalf: lazy(() => import("./bootstrap/BatteryHalf.icon.tsx")),
+  Behance: lazy(() => import("./bootstrap/Behance.icon.tsx")),
+  Bell: lazy(() => import("./bootstrap/Bell.icon.tsx")),
+  BellFill: lazy(() => import("./bootstrap/BellFill.icon.tsx")),
+  BellSlash: lazy(() => import("./bootstrap/BellSlash.icon.tsx")),
+  BellSlashFill: lazy(() => import("./bootstrap/BellSlashFill.icon.tsx")),
+  Bezier: lazy(() => import("./bootstrap/Bezier.icon.tsx")),
+  Bezier2: lazy(() => import("./bootstrap/Bezier2.icon.tsx")),
+  Bicycle: lazy(() => import("./bootstrap/Bicycle.icon.tsx")),
+  BinaryTree: lazy(() => import("./custom/BinaryTree.icon.tsx")),
+  Bing: lazy(() => import("./bootstrap/Bing.icon.tsx")),
+  Binoculars: lazy(() => import("./bootstrap/Binoculars.icon.tsx")),
+  BinocularsFill: lazy(() => import("./bootstrap/BinocularsFill.icon.tsx")),
+  BlockquoteLeft: lazy(() => import("./bootstrap/BlockquoteLeft.icon.tsx")),
+  BlockquoteRight: lazy(() => import("./bootstrap/BlockquoteRight.icon.tsx")),
+  Bluetooth: lazy(() => import("./bootstrap/Bluetooth.icon.tsx")),
+  BodyText: lazy(() => import("./bootstrap/BodyText.icon.tsx")),
+  Book: lazy(() => import("./bootstrap/Book.icon.tsx")),
+  BookFill: lazy(() => import("./bootstrap/BookFill.icon.tsx")),
+  BookHalf: lazy(() => import("./bootstrap/BookHalf.icon.tsx")),
+  Bookmark: lazy(() => import("./bootstrap/Bookmark.icon.tsx")),
+  BookmarkCheck: lazy(() => import("./bootstrap/BookmarkCheck.icon.tsx")),
+  BookmarkCheckFill: lazy(() => import("./bootstrap/BookmarkCheckFill.icon.tsx")),
+  BookmarkDash: lazy(() => import("./bootstrap/BookmarkDash.icon.tsx")),
+  BookmarkDashFill: lazy(() => import("./bootstrap/BookmarkDashFill.icon.tsx")),
+  BookmarkFill: lazy(() => import("./bootstrap/BookmarkFill.icon.tsx")),
+  BookmarkHeart: lazy(() => import("./bootstrap/BookmarkHeart.icon.tsx")),
+  BookmarkHeartFill: lazy(() => import("./bootstrap/BookmarkHeartFill.icon.tsx")),
+  BookmarkPlus: lazy(() => import("./bootstrap/BookmarkPlus.icon.tsx")),
+  BookmarkPlusFill: lazy(() => import("./bootstrap/BookmarkPlusFill.icon.tsx")),
+  Bookmarks: lazy(() => import("./bootstrap/Bookmarks.icon.tsx")),
+  BookmarksFill: lazy(() => import("./bootstrap/BookmarksFill.icon.tsx")),
+  BookmarkStar: lazy(() => import("./bootstrap/BookmarkStar.icon.tsx")),
+  BookmarkStarFill: lazy(() => import("./bootstrap/BookmarkStarFill.icon.tsx")),
+  BookmarkX: lazy(() => import("./bootstrap/BookmarkX.icon.tsx")),
+  BookmarkXFill: lazy(() => import("./bootstrap/BookmarkXFill.icon.tsx")),
+  Bookshelf: lazy(() => import("./bootstrap/Bookshelf.icon.tsx")),
+  Boombox: lazy(() => import("./bootstrap/Boombox.icon.tsx")),
+  BoomboxFill: lazy(() => import("./bootstrap/BoomboxFill.icon.tsx")),
+  Bootstrap: lazy(() => import("./bootstrap/Bootstrap.icon.tsx")),
+  BootstrapFill: lazy(() => import("./bootstrap/BootstrapFill.icon.tsx")),
+  BootstrapReboot: lazy(() => import("./bootstrap/BootstrapReboot.icon.tsx")),
+  Border: lazy(() => import("./bootstrap/Border.icon.tsx")),
+  BorderAll: lazy(() => import("./bootstrap/BorderAll.icon.tsx")),
+  BorderBottom: lazy(() => import("./bootstrap/BorderBottom.icon.tsx")),
+  BorderCenter: lazy(() => import("./bootstrap/BorderCenter.icon.tsx")),
+  BorderInner: lazy(() => import("./bootstrap/BorderInner.icon.tsx")),
+  BorderLeft: lazy(() => import("./bootstrap/BorderLeft.icon.tsx")),
+  BorderMiddle: lazy(() => import("./bootstrap/BorderMiddle.icon.tsx")),
+  BorderOuter: lazy(() => import("./bootstrap/BorderOuter.icon.tsx")),
+  BorderRight: lazy(() => import("./bootstrap/BorderRight.icon.tsx")),
+  BorderStyle: lazy(() => import("./bootstrap/BorderStyle.icon.tsx")),
+  BorderTop: lazy(() => import("./bootstrap/BorderTop.icon.tsx")),
+  BorderWidth: lazy(() => import("./bootstrap/BorderWidth.icon.tsx")),
+  BoundingBox: lazy(() => import("./bootstrap/BoundingBox.icon.tsx")),
+  BoundingBoxCircles: lazy(() => import("./bootstrap/BoundingBoxCircles.icon.tsx")),
+  Box: lazy(() => import("./bootstrap/Box.icon.tsx")),
+  Box2: lazy(() => import("./bootstrap/Box2.icon.tsx")),
+  Box2Fill: lazy(() => import("./bootstrap/Box2Fill.icon.tsx")),
+  Box2Heart: lazy(() => import("./bootstrap/Box2Heart.icon.tsx")),
+  Box2HeartFill: lazy(() => import("./bootstrap/Box2HeartFill.icon.tsx")),
+  BoxArrowDown: lazy(() => import("./bootstrap/BoxArrowDown.icon.tsx")),
+  BoxArrowDownLeft: lazy(() => import("./bootstrap/BoxArrowDownLeft.icon.tsx")),
+  BoxArrowDownRight: lazy(() => import("./bootstrap/BoxArrowDownRight.icon.tsx")),
+  BoxArrowInDown: lazy(() => import("./bootstrap/BoxArrowInDown.icon.tsx")),
+  BoxArrowInDownLeft: lazy(() => import("./bootstrap/BoxArrowInDownLeft.icon.tsx")),
+  BoxArrowInDownRight: lazy(() => import("./bootstrap/BoxArrowInDownRight.icon.tsx")),
+  BoxArrowInLeft: lazy(() => import("./bootstrap/BoxArrowInLeft.icon.tsx")),
+  BoxArrowInRight: lazy(() => import("./bootstrap/BoxArrowInRight.icon.tsx")),
+  BoxArrowInUp: lazy(() => import("./bootstrap/BoxArrowInUp.icon.tsx")),
+  BoxArrowInUpLeft: lazy(() => import("./bootstrap/BoxArrowInUpLeft.icon.tsx")),
+  BoxArrowInUpRight: lazy(() => import("./bootstrap/BoxArrowInUpRight.icon.tsx")),
+  BoxArrowLeft: lazy(() => import("./bootstrap/BoxArrowLeft.icon.tsx")),
+  BoxArrowRight: lazy(() => import("./bootstrap/BoxArrowRight.icon.tsx")),
+  BoxArrowUp: lazy(() => import("./bootstrap/BoxArrowUp.icon.tsx")),
+  BoxArrowUpLeft: lazy(() => import("./bootstrap/BoxArrowUpLeft.icon.tsx")),
+  BoxArrowUpRight: lazy(() => import("./bootstrap/BoxArrowUpRight.icon.tsx")),
+  Boxes: lazy(() => import("./bootstrap/Boxes.icon.tsx")),
+  BoxFill: lazy(() => import("./bootstrap/BoxFill.icon.tsx")),
+  BoxSeam: lazy(() => import("./bootstrap/BoxSeam.icon.tsx")),
+  BoxSeamFill: lazy(() => import("./bootstrap/BoxSeamFill.icon.tsx")),
+  Braces: lazy(() => import("./bootstrap/Braces.icon.tsx")),
+  BracesAsterisk: lazy(() => import("./bootstrap/BracesAsterisk.icon.tsx")),
+  Bricks: lazy(() => import("./bootstrap/Bricks.icon.tsx")),
+  Briefcase: lazy(() => import("./bootstrap/Briefcase.icon.tsx")),
+  BriefcaseFill: lazy(() => import("./bootstrap/BriefcaseFill.icon.tsx")),
+  BrightnessAltHigh: lazy(() => import("./bootstrap/BrightnessAltHigh.icon.tsx")),
+  BrightnessAltHighFill: lazy(() => import("./bootstrap/BrightnessAltHighFill.icon.tsx")),
+  BrightnessAltLow: lazy(() => import("./bootstrap/BrightnessAltLow.icon.tsx")),
+  BrightnessAltLowFill: lazy(() => import("./bootstrap/BrightnessAltLowFill.icon.tsx")),
+  BrightnessHigh: lazy(() => import("./bootstrap/BrightnessHigh.icon.tsx")),
+  BrightnessHighFill: lazy(() => import("./bootstrap/BrightnessHighFill.icon.tsx")),
+  BrightnessLow: lazy(() => import("./bootstrap/BrightnessLow.icon.tsx")),
+  BrightnessLowFill: lazy(() => import("./bootstrap/BrightnessLowFill.icon.tsx")),
+  Brilliance: lazy(() => import("./bootstrap/Brilliance.icon.tsx")),
+  Broadcast: lazy(() => import("./bootstrap/Broadcast.icon.tsx")),
+  BroadcastPin: lazy(() => import("./bootstrap/BroadcastPin.icon.tsx")),
+  BrowserChrome: lazy(() => import("./bootstrap/BrowserChrome.icon.tsx")),
+  BrowserEdge: lazy(() => import("./bootstrap/BrowserEdge.icon.tsx")),
+  BrowserFirefox: lazy(() => import("./bootstrap/BrowserFirefox.icon.tsx")),
+  BrowserSafari: lazy(() => import("./bootstrap/BrowserSafari.icon.tsx")),
+  Brush: lazy(() => import("./bootstrap/Brush.icon.tsx")),
+  BrushFill: lazy(() => import("./bootstrap/BrushFill.icon.tsx")),
+  Bucket: lazy(() => import("./bootstrap/Bucket.icon.tsx")),
+  BucketFill: lazy(() => import("./bootstrap/BucketFill.icon.tsx")),
+  Bug: lazy(() => import("./bootstrap/Bug.icon.tsx")),
+  BugFill: lazy(() => import("./bootstrap/BugFill.icon.tsx")),
+  Building: lazy(() => import("./bootstrap/Building.icon.tsx")),
+  BuildingAdd: lazy(() => import("./bootstrap/BuildingAdd.icon.tsx")),
+  BuildingBlocks: lazy(() => import("./custom/BuildingBlocks.icon.tsx")),
+  BuildingBlocksFill: lazy(() => import("./custom/BuildingBlocksFill.icon.tsx")),
+  BuildingCheck: lazy(() => import("./bootstrap/BuildingCheck.icon.tsx")),
+  BuildingDash: lazy(() => import("./bootstrap/BuildingDash.icon.tsx")),
+  BuildingDown: lazy(() => import("./bootstrap/BuildingDown.icon.tsx")),
+  BuildingExclamation: lazy(() => import("./bootstrap/BuildingExclamation.icon.tsx")),
+  BuildingFill: lazy(() => import("./bootstrap/BuildingFill.icon.tsx")),
+  BuildingFillAdd: lazy(() => import("./bootstrap/BuildingFillAdd.icon.tsx")),
+  BuildingFillCheck: lazy(() => import("./bootstrap/BuildingFillCheck.icon.tsx")),
+  BuildingFillDash: lazy(() => import("./bootstrap/BuildingFillDash.icon.tsx")),
+  BuildingFillDown: lazy(() => import("./bootstrap/BuildingFillDown.icon.tsx")),
+  BuildingFillExclamation: lazy(() => import("./bootstrap/BuildingFillExclamation.icon.tsx")),
+  BuildingFillGear: lazy(() => import("./bootstrap/BuildingFillGear.icon.tsx")),
+  BuildingFillLock: lazy(() => import("./bootstrap/BuildingFillLock.icon.tsx")),
+  BuildingFillSlash: lazy(() => import("./bootstrap/BuildingFillSlash.icon.tsx")),
+  BuildingFillUp: lazy(() => import("./bootstrap/BuildingFillUp.icon.tsx")),
+  BuildingFillX: lazy(() => import("./bootstrap/BuildingFillX.icon.tsx")),
+  BuildingGear: lazy(() => import("./bootstrap/BuildingGear.icon.tsx")),
+  BuildingLock: lazy(() => import("./bootstrap/BuildingLock.icon.tsx")),
+  Buildings: lazy(() => import("./bootstrap/Buildings.icon.tsx")),
+  BuildingsFill: lazy(() => import("./bootstrap/BuildingsFill.icon.tsx")),
+  BuildingSlash: lazy(() => import("./bootstrap/BuildingSlash.icon.tsx")),
+  BuildingUp: lazy(() => import("./bootstrap/BuildingUp.icon.tsx")),
+  BuildingX: lazy(() => import("./bootstrap/BuildingX.icon.tsx")),
+  Bullseye: lazy(() => import("./bootstrap/Bullseye.icon.tsx")),
+  BusFront: lazy(() => import("./bootstrap/BusFront.icon.tsx")),
+  BusFrontFill: lazy(() => import("./bootstrap/BusFrontFill.icon.tsx")),
+  BusinessUnit: lazy(() => import("./custom/BusinessUnit.icon.tsx")),
+  BusinessUnitFill: lazy(() => import("./custom/BusinessUnitFill.icon.tsx")),
+  BusinessUnitFill2: lazy(() => import("./custom/BusinessUnitFill2.icon.tsx")),
+  Cake: lazy(() => import("./bootstrap/Cake.icon.tsx")),
+  Cake2: lazy(() => import("./bootstrap/Cake2.icon.tsx")),
+  Cake2Fill: lazy(() => import("./bootstrap/Cake2Fill.icon.tsx")),
+  CakeFill: lazy(() => import("./bootstrap/CakeFill.icon.tsx")),
+  Calculator: lazy(() => import("./bootstrap/Calculator.icon.tsx")),
+  CalculatorFill: lazy(() => import("./bootstrap/CalculatorFill.icon.tsx")),
+  Calendar: lazy(() => import("./bootstrap/Calendar.icon.tsx")),
+  Calendar2: lazy(() => import("./bootstrap/Calendar2.icon.tsx")),
+  Calendar2Check: lazy(() => import("./bootstrap/Calendar2Check.icon.tsx")),
+  Calendar2CheckFill: lazy(() => import("./bootstrap/Calendar2CheckFill.icon.tsx")),
+  Calendar2Date: lazy(() => import("./bootstrap/Calendar2Date.icon.tsx")),
+  Calendar2DateFill: lazy(() => import("./bootstrap/Calendar2DateFill.icon.tsx")),
+  Calendar2Day: lazy(() => import("./bootstrap/Calendar2Day.icon.tsx")),
+  Calendar2DayFill: lazy(() => import("./bootstrap/Calendar2DayFill.icon.tsx")),
+  Calendar2Event: lazy(() => import("./bootstrap/Calendar2Event.icon.tsx")),
+  Calendar2EventFill: lazy(() => import("./bootstrap/Calendar2EventFill.icon.tsx")),
+  Calendar2Fill: lazy(() => import("./bootstrap/Calendar2Fill.icon.tsx")),
+  Calendar2Heart: lazy(() => import("./bootstrap/Calendar2Heart.icon.tsx")),
+  Calendar2HeartFill: lazy(() => import("./bootstrap/Calendar2HeartFill.icon.tsx")),
+  Calendar2Minus: lazy(() => import("./bootstrap/Calendar2Minus.icon.tsx")),
+  Calendar2MinusFill: lazy(() => import("./bootstrap/Calendar2MinusFill.icon.tsx")),
+  Calendar2Month: lazy(() => import("./bootstrap/Calendar2Month.icon.tsx")),
+  Calendar2MonthFill: lazy(() => import("./bootstrap/Calendar2MonthFill.icon.tsx")),
+  Calendar2Plus: lazy(() => import("./bootstrap/Calendar2Plus.icon.tsx")),
+  Calendar2PlusFill: lazy(() => import("./bootstrap/Calendar2PlusFill.icon.tsx")),
+  Calendar2Range: lazy(() => import("./bootstrap/Calendar2Range.icon.tsx")),
+  Calendar2RangeFill: lazy(() => import("./bootstrap/Calendar2RangeFill.icon.tsx")),
+  Calendar2Week: lazy(() => import("./bootstrap/Calendar2Week.icon.tsx")),
+  Calendar2WeekFill: lazy(() => import("./bootstrap/Calendar2WeekFill.icon.tsx")),
+  Calendar2X: lazy(() => import("./bootstrap/Calendar2X.icon.tsx")),
+  Calendar2XFill: lazy(() => import("./bootstrap/Calendar2XFill.icon.tsx")),
+  Calendar3: lazy(() => import("./bootstrap/Calendar3.icon.tsx")),
+  Calendar3Event: lazy(() => import("./bootstrap/Calendar3Event.icon.tsx")),
+  Calendar3EventFill: lazy(() => import("./bootstrap/Calendar3EventFill.icon.tsx")),
+  Calendar3Fill: lazy(() => import("./bootstrap/Calendar3Fill.icon.tsx")),
+  Calendar3Range: lazy(() => import("./bootstrap/Calendar3Range.icon.tsx")),
+  Calendar3RangeFill: lazy(() => import("./bootstrap/Calendar3RangeFill.icon.tsx")),
+  Calendar3Week: lazy(() => import("./bootstrap/Calendar3Week.icon.tsx")),
+  Calendar3WeekFill: lazy(() => import("./bootstrap/Calendar3WeekFill.icon.tsx")),
+  Calendar4: lazy(() => import("./bootstrap/Calendar4.icon.tsx")),
+  Calendar4Event: lazy(() => import("./bootstrap/Calendar4Event.icon.tsx")),
+  Calendar4Range: lazy(() => import("./bootstrap/Calendar4Range.icon.tsx")),
+  Calendar4Week: lazy(() => import("./bootstrap/Calendar4Week.icon.tsx")),
+  CalendarCheck: lazy(() => import("./bootstrap/CalendarCheck.icon.tsx")),
+  CalendarCheckFill: lazy(() => import("./bootstrap/CalendarCheckFill.icon.tsx")),
+  CalendarDate: lazy(() => import("./bootstrap/CalendarDate.icon.tsx")),
+  CalendarDateFill: lazy(() => import("./bootstrap/CalendarDateFill.icon.tsx")),
+  CalendarDay: lazy(() => import("./bootstrap/CalendarDay.icon.tsx")),
+  CalendarDayFill: lazy(() => import("./bootstrap/CalendarDayFill.icon.tsx")),
+  CalendarEvent: lazy(() => import("./bootstrap/CalendarEvent.icon.tsx")),
+  CalendarEventFill: lazy(() => import("./bootstrap/CalendarEventFill.icon.tsx")),
+  CalendarFill: lazy(() => import("./bootstrap/CalendarFill.icon.tsx")),
+  CalendarGraph: lazy(() => import("./custom/CalendarGraph.icon.tsx")),
+  CalendarHeart: lazy(() => import("./bootstrap/CalendarHeart.icon.tsx")),
+  CalendarHeartFill: lazy(() => import("./bootstrap/CalendarHeartFill.icon.tsx")),
+  CalendarMinus: lazy(() => import("./bootstrap/CalendarMinus.icon.tsx")),
+  CalendarMinusFill: lazy(() => import("./bootstrap/CalendarMinusFill.icon.tsx")),
+  CalendarMonth: lazy(() => import("./bootstrap/CalendarMonth.icon.tsx")),
+  CalendarMonthFill: lazy(() => import("./bootstrap/CalendarMonthFill.icon.tsx")),
+  CalendarPlus: lazy(() => import("./bootstrap/CalendarPlus.icon.tsx")),
+  CalendarPlusFill: lazy(() => import("./bootstrap/CalendarPlusFill.icon.tsx")),
+  CalendarRange: lazy(() => import("./bootstrap/CalendarRange.icon.tsx")),
+  CalendarRangeFill: lazy(() => import("./bootstrap/CalendarRangeFill.icon.tsx")),
+  CalendarWeek: lazy(() => import("./bootstrap/CalendarWeek.icon.tsx")),
+  CalendarWeekFill: lazy(() => import("./bootstrap/CalendarWeekFill.icon.tsx")),
+  CalendarX: lazy(() => import("./bootstrap/CalendarX.icon.tsx")),
+  CalendarXFill: lazy(() => import("./bootstrap/CalendarXFill.icon.tsx")),
+  Camera: lazy(() => import("./bootstrap/Camera.icon.tsx")),
+  Camera2: lazy(() => import("./bootstrap/Camera2.icon.tsx")),
+  CameraFill: lazy(() => import("./bootstrap/CameraFill.icon.tsx")),
+  CameraReels: lazy(() => import("./bootstrap/CameraReels.icon.tsx")),
+  CameraReelsFill: lazy(() => import("./bootstrap/CameraReelsFill.icon.tsx")),
+  CameraVideo: lazy(() => import("./bootstrap/CameraVideo.icon.tsx")),
+  CameraVideoFill: lazy(() => import("./bootstrap/CameraVideoFill.icon.tsx")),
+  CameraVideoOff: lazy(() => import("./bootstrap/CameraVideoOff.icon.tsx")),
+  CameraVideoOffFill: lazy(() => import("./bootstrap/CameraVideoOffFill.icon.tsx")),
+  Capslock: lazy(() => import("./bootstrap/Capslock.icon.tsx")),
+  CapslockFill: lazy(() => import("./bootstrap/CapslockFill.icon.tsx")),
+  Capsule: lazy(() => import("./bootstrap/Capsule.icon.tsx")),
+  CapsulePill: lazy(() => import("./bootstrap/CapsulePill.icon.tsx")),
+  CardChecklist: lazy(() => import("./bootstrap/CardChecklist.icon.tsx")),
+  CardHeading: lazy(() => import("./bootstrap/CardHeading.icon.tsx")),
+  CardImage: lazy(() => import("./bootstrap/CardImage.icon.tsx")),
+  CardList: lazy(() => import("./bootstrap/CardList.icon.tsx")),
+  CardText: lazy(() => import("./bootstrap/CardText.icon.tsx")),
+  CaretDown: lazy(() => import("./bootstrap/CaretDown.icon.tsx")),
+  CaretDownFill: lazy(() => import("./bootstrap/CaretDownFill.icon.tsx")),
+  CaretDownSquare: lazy(() => import("./bootstrap/CaretDownSquare.icon.tsx")),
+  CaretDownSquareFill: lazy(() => import("./bootstrap/CaretDownSquareFill.icon.tsx")),
+  CaretLeft: lazy(() => import("./bootstrap/CaretLeft.icon.tsx")),
+  CaretLeftFill: lazy(() => import("./bootstrap/CaretLeftFill.icon.tsx")),
+  CaretLeftSquare: lazy(() => import("./bootstrap/CaretLeftSquare.icon.tsx")),
+  CaretLeftSquareFill: lazy(() => import("./bootstrap/CaretLeftSquareFill.icon.tsx")),
+  CaretRight: lazy(() => import("./bootstrap/CaretRight.icon.tsx")),
+  CaretRightFill: lazy(() => import("./bootstrap/CaretRightFill.icon.tsx")),
+  CaretRightSquare: lazy(() => import("./bootstrap/CaretRightSquare.icon.tsx")),
+  CaretRightSquareFill: lazy(() => import("./bootstrap/CaretRightSquareFill.icon.tsx")),
+  CaretUp: lazy(() => import("./bootstrap/CaretUp.icon.tsx")),
+  CaretUpFill: lazy(() => import("./bootstrap/CaretUpFill.icon.tsx")),
+  CaretUpSquare: lazy(() => import("./bootstrap/CaretUpSquare.icon.tsx")),
+  CaretUpSquareFill: lazy(() => import("./bootstrap/CaretUpSquareFill.icon.tsx")),
+  CarFront: lazy(() => import("./bootstrap/CarFront.icon.tsx")),
+  CarFrontFill: lazy(() => import("./bootstrap/CarFrontFill.icon.tsx")),
+  Cart: lazy(() => import("./bootstrap/Cart.icon.tsx")),
+  Cart2: lazy(() => import("./bootstrap/Cart2.icon.tsx")),
+  Cart3: lazy(() => import("./bootstrap/Cart3.icon.tsx")),
+  Cart4: lazy(() => import("./bootstrap/Cart4.icon.tsx")),
+  CartCheck: lazy(() => import("./bootstrap/CartCheck.icon.tsx")),
+  CartCheckFill: lazy(() => import("./bootstrap/CartCheckFill.icon.tsx")),
+  CartDash: lazy(() => import("./bootstrap/CartDash.icon.tsx")),
+  CartDashFill: lazy(() => import("./bootstrap/CartDashFill.icon.tsx")),
+  CartFill: lazy(() => import("./bootstrap/CartFill.icon.tsx")),
+  CartPlus: lazy(() => import("./bootstrap/CartPlus.icon.tsx")),
+  CartPlusFill: lazy(() => import("./bootstrap/CartPlusFill.icon.tsx")),
+  CartX: lazy(() => import("./bootstrap/CartX.icon.tsx")),
+  CartXFill: lazy(() => import("./bootstrap/CartXFill.icon.tsx")),
+  Cash: lazy(() => import("./bootstrap/Cash.icon.tsx")),
+  CashCoin: lazy(() => import("./bootstrap/CashCoin.icon.tsx")),
+  CashStack: lazy(() => import("./bootstrap/CashStack.icon.tsx")),
+  Cassette: lazy(() => import("./bootstrap/Cassette.icon.tsx")),
+  CassetteFill: lazy(() => import("./bootstrap/CassetteFill.icon.tsx")),
+  Cast: lazy(() => import("./bootstrap/Cast.icon.tsx")),
+  CatRobot: lazy(() => import("./custom/CatRobot.icon.tsx")),
+  CatRobot2: lazy(() => import("./custom/CatRobot2.icon.tsx")),
+  CatRobot2Off: lazy(() => import("./custom/CatRobot2Off.icon.tsx")),
+  CatRobotOff: lazy(() => import("./custom/CatRobotOff.icon.tsx")),
+  CcCircle: lazy(() => import("./bootstrap/CcCircle.icon.tsx")),
+  CcCircleFill: lazy(() => import("./bootstrap/CcCircleFill.icon.tsx")),
+  CCircle: lazy(() => import("./bootstrap/CCircle.icon.tsx")),
+  CCircleFill: lazy(() => import("./bootstrap/CCircleFill.icon.tsx")),
+  CcSquare: lazy(() => import("./bootstrap/CcSquare.icon.tsx")),
+  CcSquareFill: lazy(() => import("./bootstrap/CcSquareFill.icon.tsx")),
+  Chat: lazy(() => import("./bootstrap/Chat.icon.tsx")),
+  ChatDots: lazy(() => import("./bootstrap/ChatDots.icon.tsx")),
+  ChatDotsFill: lazy(() => import("./bootstrap/ChatDotsFill.icon.tsx")),
+  ChatFill: lazy(() => import("./bootstrap/ChatFill.icon.tsx")),
+  ChatHeart: lazy(() => import("./bootstrap/ChatHeart.icon.tsx")),
+  ChatHeartFill: lazy(() => import("./bootstrap/ChatHeartFill.icon.tsx")),
+  ChatLeft: lazy(() => import("./bootstrap/ChatLeft.icon.tsx")),
+  ChatLeftDots: lazy(() => import("./bootstrap/ChatLeftDots.icon.tsx")),
+  ChatLeftDotsFill: lazy(() => import("./bootstrap/ChatLeftDotsFill.icon.tsx")),
+  ChatLeftFill: lazy(() => import("./bootstrap/ChatLeftFill.icon.tsx")),
+  ChatLeftHeart: lazy(() => import("./bootstrap/ChatLeftHeart.icon.tsx")),
+  ChatLeftHeartFill: lazy(() => import("./bootstrap/ChatLeftHeartFill.icon.tsx")),
+  ChatLeftQuote: lazy(() => import("./bootstrap/ChatLeftQuote.icon.tsx")),
+  ChatLeftQuoteFill: lazy(() => import("./bootstrap/ChatLeftQuoteFill.icon.tsx")),
+  ChatLeftText: lazy(() => import("./bootstrap/ChatLeftText.icon.tsx")),
+  ChatLeftTextFill: lazy(() => import("./bootstrap/ChatLeftTextFill.icon.tsx")),
+  ChatQuote: lazy(() => import("./bootstrap/ChatQuote.icon.tsx")),
+  ChatQuoteFill: lazy(() => import("./bootstrap/ChatQuoteFill.icon.tsx")),
+  ChatRight: lazy(() => import("./bootstrap/ChatRight.icon.tsx")),
+  ChatRightDots: lazy(() => import("./bootstrap/ChatRightDots.icon.tsx")),
+  ChatRightDotsFill: lazy(() => import("./bootstrap/ChatRightDotsFill.icon.tsx")),
+  ChatRightFill: lazy(() => import("./bootstrap/ChatRightFill.icon.tsx")),
+  ChatRightHeart: lazy(() => import("./bootstrap/ChatRightHeart.icon.tsx")),
+  ChatRightHeartFill: lazy(() => import("./bootstrap/ChatRightHeartFill.icon.tsx")),
+  ChatRightQuote: lazy(() => import("./bootstrap/ChatRightQuote.icon.tsx")),
+  ChatRightQuoteFill: lazy(() => import("./bootstrap/ChatRightQuoteFill.icon.tsx")),
+  ChatRightText: lazy(() => import("./bootstrap/ChatRightText.icon.tsx")),
+  ChatRightTextFill: lazy(() => import("./bootstrap/ChatRightTextFill.icon.tsx")),
+  ChatSquare: lazy(() => import("./bootstrap/ChatSquare.icon.tsx")),
+  ChatSquareDots: lazy(() => import("./bootstrap/ChatSquareDots.icon.tsx")),
+  ChatSquareDotsFill: lazy(() => import("./bootstrap/ChatSquareDotsFill.icon.tsx")),
+  ChatSquareFill: lazy(() => import("./bootstrap/ChatSquareFill.icon.tsx")),
+  ChatSquareHeart: lazy(() => import("./bootstrap/ChatSquareHeart.icon.tsx")),
+  ChatSquareHeartFill: lazy(() => import("./bootstrap/ChatSquareHeartFill.icon.tsx")),
+  ChatSquareQuote: lazy(() => import("./bootstrap/ChatSquareQuote.icon.tsx")),
+  ChatSquareQuoteFill: lazy(() => import("./bootstrap/ChatSquareQuoteFill.icon.tsx")),
+  ChatSquareText: lazy(() => import("./bootstrap/ChatSquareText.icon.tsx")),
+  ChatSquareTextFill: lazy(() => import("./bootstrap/ChatSquareTextFill.icon.tsx")),
+  ChatText: lazy(() => import("./bootstrap/ChatText.icon.tsx")),
+  ChatTextFill: lazy(() => import("./bootstrap/ChatTextFill.icon.tsx")),
+  Check: lazy(() => import("./bootstrap/Check.icon.tsx")),
+  Check2: lazy(() => import("./bootstrap/Check2.icon.tsx")),
+  Check2All: lazy(() => import("./bootstrap/Check2All.icon.tsx")),
+  Check2Circle: lazy(() => import("./bootstrap/Check2Circle.icon.tsx")),
+  Check2Square: lazy(() => import("./bootstrap/Check2Square.icon.tsx")),
+  CheckAll: lazy(() => import("./bootstrap/CheckAll.icon.tsx")),
+  CheckCircle: lazy(() => import("./bootstrap/CheckCircle.icon.tsx")),
+  CheckCircleFill: lazy(() => import("./bootstrap/CheckCircleFill.icon.tsx")),
+  CheckLg: lazy(() => import("./bootstrap/CheckLg.icon.tsx")),
+  CheckSquare: lazy(() => import("./bootstrap/CheckSquare.icon.tsx")),
+  CheckSquareFill: lazy(() => import("./bootstrap/CheckSquareFill.icon.tsx")),
+  ChevronBarContract: lazy(() => import("./bootstrap/ChevronBarContract.icon.tsx")),
+  ChevronBarDown: lazy(() => import("./bootstrap/ChevronBarDown.icon.tsx")),
+  ChevronBarExpand: lazy(() => import("./bootstrap/ChevronBarExpand.icon.tsx")),
+  ChevronBarLeft: lazy(() => import("./bootstrap/ChevronBarLeft.icon.tsx")),
+  ChevronBarRight: lazy(() => import("./bootstrap/ChevronBarRight.icon.tsx")),
+  ChevronBarUp: lazy(() => import("./bootstrap/ChevronBarUp.icon.tsx")),
+  ChevronCompactDown: lazy(() => import("./bootstrap/ChevronCompactDown.icon.tsx")),
+  ChevronCompactLeft: lazy(() => import("./bootstrap/ChevronCompactLeft.icon.tsx")),
+  ChevronCompactRight: lazy(() => import("./bootstrap/ChevronCompactRight.icon.tsx")),
+  ChevronCompactUp: lazy(() => import("./bootstrap/ChevronCompactUp.icon.tsx")),
+  ChevronContract: lazy(() => import("./bootstrap/ChevronContract.icon.tsx")),
+  ChevronDoubleDown: lazy(() => import("./bootstrap/ChevronDoubleDown.icon.tsx")),
+  ChevronDoubleLeft: lazy(() => import("./bootstrap/ChevronDoubleLeft.icon.tsx")),
+  ChevronDoubleRight: lazy(() => import("./bootstrap/ChevronDoubleRight.icon.tsx")),
+  ChevronDoubleUp: lazy(() => import("./bootstrap/ChevronDoubleUp.icon.tsx")),
+  ChevronDown: lazy(() => import("./bootstrap/ChevronDown.icon.tsx")),
+  ChevronExpand: lazy(() => import("./bootstrap/ChevronExpand.icon.tsx")),
+  ChevronLeft: lazy(() => import("./bootstrap/ChevronLeft.icon.tsx")),
+  ChevronRight: lazy(() => import("./bootstrap/ChevronRight.icon.tsx")),
+  ChevronUp: lazy(() => import("./bootstrap/ChevronUp.icon.tsx")),
+  Circle: lazy(() => import("./bootstrap/Circle.icon.tsx")),
+  Circle2NdHalf: lazy(() => import("./custom/Circle2NdHalf.icon.tsx")),
+  CircleCore: lazy(() => import("./custom/CircleCore.icon.tsx")),
+  CircleCore2NdHalf: lazy(() => import("./custom/CircleCore2NdHalf.icon.tsx")),
+  CircleCoreHalf: lazy(() => import("./custom/CircleCoreHalf.icon.tsx")),
+  CircleDashed: lazy(() => import("./custom/CircleDashed.icon.tsx")),
+  CircleFill: lazy(() => import("./bootstrap/CircleFill.icon.tsx")),
+  CircleHalf: lazy(() => import("./bootstrap/CircleHalf.icon.tsx")),
+  CircleSquare: lazy(() => import("./bootstrap/CircleSquare.icon.tsx")),
+  Clipboard: lazy(() => import("./bootstrap/Clipboard.icon.tsx")),
+  Clipboard2: lazy(() => import("./bootstrap/Clipboard2.icon.tsx")),
+  Clipboard2Check: lazy(() => import("./bootstrap/Clipboard2Check.icon.tsx")),
+  Clipboard2CheckFill: lazy(() => import("./bootstrap/Clipboard2CheckFill.icon.tsx")),
+  Clipboard2Data: lazy(() => import("./bootstrap/Clipboard2Data.icon.tsx")),
+  Clipboard2DataFill: lazy(() => import("./bootstrap/Clipboard2DataFill.icon.tsx")),
+  Clipboard2Fill: lazy(() => import("./bootstrap/Clipboard2Fill.icon.tsx")),
+  Clipboard2Heart: lazy(() => import("./bootstrap/Clipboard2Heart.icon.tsx")),
+  Clipboard2HeartFill: lazy(() => import("./bootstrap/Clipboard2HeartFill.icon.tsx")),
+  Clipboard2Minus: lazy(() => import("./bootstrap/Clipboard2Minus.icon.tsx")),
+  Clipboard2MinusFill: lazy(() => import("./bootstrap/Clipboard2MinusFill.icon.tsx")),
+  Clipboard2Plus: lazy(() => import("./bootstrap/Clipboard2Plus.icon.tsx")),
+  Clipboard2PlusFill: lazy(() => import("./bootstrap/Clipboard2PlusFill.icon.tsx")),
+  Clipboard2Pulse: lazy(() => import("./bootstrap/Clipboard2Pulse.icon.tsx")),
+  Clipboard2PulseFill: lazy(() => import("./bootstrap/Clipboard2PulseFill.icon.tsx")),
+  Clipboard2X: lazy(() => import("./bootstrap/Clipboard2X.icon.tsx")),
+  Clipboard2XFill: lazy(() => import("./bootstrap/Clipboard2XFill.icon.tsx")),
+  ClipboardCheck: lazy(() => import("./bootstrap/ClipboardCheck.icon.tsx")),
+  ClipboardCheckFill: lazy(() => import("./bootstrap/ClipboardCheckFill.icon.tsx")),
+  ClipboardData: lazy(() => import("./bootstrap/ClipboardData.icon.tsx")),
+  ClipboardDataFill: lazy(() => import("./bootstrap/ClipboardDataFill.icon.tsx")),
+  ClipboardFill: lazy(() => import("./bootstrap/ClipboardFill.icon.tsx")),
+  ClipboardHeart: lazy(() => import("./bootstrap/ClipboardHeart.icon.tsx")),
+  ClipboardHeartFill: lazy(() => import("./bootstrap/ClipboardHeartFill.icon.tsx")),
+  ClipboardMinus: lazy(() => import("./bootstrap/ClipboardMinus.icon.tsx")),
+  ClipboardMinusFill: lazy(() => import("./bootstrap/ClipboardMinusFill.icon.tsx")),
+  ClipboardPlus: lazy(() => import("./bootstrap/ClipboardPlus.icon.tsx")),
+  ClipboardPlusFill: lazy(() => import("./bootstrap/ClipboardPlusFill.icon.tsx")),
+  ClipboardPulse: lazy(() => import("./bootstrap/ClipboardPulse.icon.tsx")),
+  ClipboardX: lazy(() => import("./bootstrap/ClipboardX.icon.tsx")),
+  ClipboardXFill: lazy(() => import("./bootstrap/ClipboardXFill.icon.tsx")),
+  Clock: lazy(() => import("./bootstrap/Clock.icon.tsx")),
+  ClockFill: lazy(() => import("./bootstrap/ClockFill.icon.tsx")),
+  ClockHistory: lazy(() => import("./bootstrap/ClockHistory.icon.tsx")),
+  Cloud: lazy(() => import("./bootstrap/Cloud.icon.tsx")),
+  CloudArrowDown: lazy(() => import("./bootstrap/CloudArrowDown.icon.tsx")),
+  CloudArrowDownFill: lazy(() => import("./bootstrap/CloudArrowDownFill.icon.tsx")),
+  CloudArrowUp: lazy(() => import("./bootstrap/CloudArrowUp.icon.tsx")),
+  CloudArrowUpFill: lazy(() => import("./bootstrap/CloudArrowUpFill.icon.tsx")),
+  CloudCheck: lazy(() => import("./bootstrap/CloudCheck.icon.tsx")),
+  CloudCheckFill: lazy(() => import("./bootstrap/CloudCheckFill.icon.tsx")),
+  CloudDownload: lazy(() => import("./bootstrap/CloudDownload.icon.tsx")),
+  CloudDownloadFill: lazy(() => import("./bootstrap/CloudDownloadFill.icon.tsx")),
+  CloudDrizzle: lazy(() => import("./bootstrap/CloudDrizzle.icon.tsx")),
+  CloudDrizzleFill: lazy(() => import("./bootstrap/CloudDrizzleFill.icon.tsx")),
+  CloudFill: lazy(() => import("./bootstrap/CloudFill.icon.tsx")),
+  CloudFog: lazy(() => import("./bootstrap/CloudFog.icon.tsx")),
+  CloudFog2: lazy(() => import("./bootstrap/CloudFog2.icon.tsx")),
+  CloudFog2Fill: lazy(() => import("./bootstrap/CloudFog2Fill.icon.tsx")),
+  CloudFogFill: lazy(() => import("./bootstrap/CloudFogFill.icon.tsx")),
+  CloudHail: lazy(() => import("./bootstrap/CloudHail.icon.tsx")),
+  CloudHailFill: lazy(() => import("./bootstrap/CloudHailFill.icon.tsx")),
+  CloudHaze: lazy(() => import("./bootstrap/CloudHaze.icon.tsx")),
+  CloudHaze2: lazy(() => import("./bootstrap/CloudHaze2.icon.tsx")),
+  CloudHaze2Fill: lazy(() => import("./bootstrap/CloudHaze2Fill.icon.tsx")),
+  CloudHazeFill: lazy(() => import("./bootstrap/CloudHazeFill.icon.tsx")),
+  CloudLightning: lazy(() => import("./bootstrap/CloudLightning.icon.tsx")),
+  CloudLightningFill: lazy(() => import("./bootstrap/CloudLightningFill.icon.tsx")),
+  CloudLightningRain: lazy(() => import("./bootstrap/CloudLightningRain.icon.tsx")),
+  CloudLightningRainFill: lazy(() => import("./bootstrap/CloudLightningRainFill.icon.tsx")),
+  CloudMinus: lazy(() => import("./bootstrap/CloudMinus.icon.tsx")),
+  CloudMinusFill: lazy(() => import("./bootstrap/CloudMinusFill.icon.tsx")),
+  CloudMoon: lazy(() => import("./bootstrap/CloudMoon.icon.tsx")),
+  CloudMoonFill: lazy(() => import("./bootstrap/CloudMoonFill.icon.tsx")),
+  CloudPlus: lazy(() => import("./bootstrap/CloudPlus.icon.tsx")),
+  CloudPlusFill: lazy(() => import("./bootstrap/CloudPlusFill.icon.tsx")),
+  CloudRain: lazy(() => import("./bootstrap/CloudRain.icon.tsx")),
+  CloudRainFill: lazy(() => import("./bootstrap/CloudRainFill.icon.tsx")),
+  CloudRainHeavy: lazy(() => import("./bootstrap/CloudRainHeavy.icon.tsx")),
+  CloudRainHeavyFill: lazy(() => import("./bootstrap/CloudRainHeavyFill.icon.tsx")),
+  Clouds: lazy(() => import("./bootstrap/Clouds.icon.tsx")),
+  CloudsFill: lazy(() => import("./bootstrap/CloudsFill.icon.tsx")),
+  CloudSlash: lazy(() => import("./bootstrap/CloudSlash.icon.tsx")),
+  CloudSlashFill: lazy(() => import("./bootstrap/CloudSlashFill.icon.tsx")),
+  CloudSleet: lazy(() => import("./bootstrap/CloudSleet.icon.tsx")),
+  CloudSleetFill: lazy(() => import("./bootstrap/CloudSleetFill.icon.tsx")),
+  CloudSnow: lazy(() => import("./bootstrap/CloudSnow.icon.tsx")),
+  CloudSnowFill: lazy(() => import("./bootstrap/CloudSnowFill.icon.tsx")),
+  CloudSun: lazy(() => import("./bootstrap/CloudSun.icon.tsx")),
+  CloudSunFill: lazy(() => import("./bootstrap/CloudSunFill.icon.tsx")),
+  CloudUpload: lazy(() => import("./bootstrap/CloudUpload.icon.tsx")),
+  CloudUploadFill: lazy(() => import("./bootstrap/CloudUploadFill.icon.tsx")),
+  Cloudy: lazy(() => import("./bootstrap/Cloudy.icon.tsx")),
+  CloudyFill: lazy(() => import("./bootstrap/CloudyFill.icon.tsx")),
+  Code: lazy(() => import("./bootstrap/Code.icon.tsx")),
+  CodeSlash: lazy(() => import("./bootstrap/CodeSlash.icon.tsx")),
+  CodeSquare: lazy(() => import("./bootstrap/CodeSquare.icon.tsx")),
+  Coin: lazy(() => import("./bootstrap/Coin.icon.tsx")),
+  Coins: lazy(() => import("./custom/Coins.icon.tsx")),
+  CoinsCheck: lazy(() => import("./custom/CoinsCheck.icon.tsx")),
+  CoinsIn: lazy(() => import("./custom/CoinsIn.icon.tsx")),
+  CoinsLink: lazy(() => import("./custom/CoinsLink.icon.tsx")),
+  CoinsOff: lazy(() => import("./custom/CoinsOff.icon.tsx")),
+  CoinsOut: lazy(() => import("./custom/CoinsOut.icon.tsx")),
+  CoinsRisk: lazy(() => import("./custom/CoinsRisk.icon.tsx")),
+  Collection: lazy(() => import("./bootstrap/Collection.icon.tsx")),
+  CollectionFill: lazy(() => import("./bootstrap/CollectionFill.icon.tsx")),
+  CollectionPlay: lazy(() => import("./bootstrap/CollectionPlay.icon.tsx")),
+  CollectionPlayFill: lazy(() => import("./bootstrap/CollectionPlayFill.icon.tsx")),
+  Columns: lazy(() => import("./bootstrap/Columns.icon.tsx")),
+  ColumnsGap: lazy(() => import("./bootstrap/ColumnsGap.icon.tsx")),
+  Command: lazy(() => import("./bootstrap/Command.icon.tsx")),
+  Compass: lazy(() => import("./bootstrap/Compass.icon.tsx")),
+  CompassFill: lazy(() => import("./bootstrap/CompassFill.icon.tsx")),
+  Cone: lazy(() => import("./bootstrap/Cone.icon.tsx")),
+  ConeStriped: lazy(() => import("./bootstrap/ConeStriped.icon.tsx")),
+  ConeStriped2: lazy(() => import("./custom/ConeStriped2.icon.tsx")),
+  ConeStripedFill2: lazy(() => import("./custom/ConeStripedFill2.icon.tsx")),
+  Controller: lazy(() => import("./bootstrap/Controller.icon.tsx")),
+  Convexe: lazy(() => import("./custom/Convexe.icon.tsx")),
+  ConvexeArrowDown: lazy(() => import("./custom/ConvexeArrowDown.icon.tsx")),
+  ConvexeArrowDownFill: lazy(() => import("./custom/ConvexeArrowDownFill.icon.tsx")),
+  ConvexeArrowLeft: lazy(() => import("./custom/ConvexeArrowLeft.icon.tsx")),
+  ConvexeArrowLeftFill: lazy(() => import("./custom/ConvexeArrowLeftFill.icon.tsx")),
+  ConvexeArrowRight: lazy(() => import("./custom/ConvexeArrowRight.icon.tsx")),
+  ConvexeArrowRightFill: lazy(() => import("./custom/ConvexeArrowRightFill.icon.tsx")),
+  ConvexeArrowUp: lazy(() => import("./custom/ConvexeArrowUp.icon.tsx")),
+  ConvexeArrowUpFill: lazy(() => import("./custom/ConvexeArrowUpFill.icon.tsx")),
+  ConvexeCheck: lazy(() => import("./custom/ConvexeCheck.icon.tsx")),
+  ConvexeCheckAll: lazy(() => import("./custom/ConvexeCheckAll.icon.tsx")),
+  ConvexeCheckAllFill: lazy(() => import("./custom/ConvexeCheckAllFill.icon.tsx")),
+  ConvexeCheckFill: lazy(() => import("./custom/ConvexeCheckFill.icon.tsx")),
+  ConvexeClock: lazy(() => import("./custom/ConvexeClock.icon.tsx")),
+  ConvexeClockFill: lazy(() => import("./custom/ConvexeClockFill.icon.tsx")),
+  ConvexeCore: lazy(() => import("./custom/ConvexeCore.icon.tsx")),
+  ConvexeCore2NdHalf: lazy(() => import("./custom/ConvexeCore2NdHalf.icon.tsx")),
+  ConvexeCoreHalf: lazy(() => import("./custom/ConvexeCoreHalf.icon.tsx")),
+  ConvexeEarmark: lazy(() => import("./custom/ConvexeEarmark.icon.tsx")),
+  ConvexeExclamation: lazy(() => import("./custom/ConvexeExclamation.icon.tsx")),
+  ConvexeExclamationFill: lazy(() => import("./custom/ConvexeExclamationFill.icon.tsx")),
+  ConvexeFill: lazy(() => import("./custom/ConvexeFill.icon.tsx")),
+  ConvexeInfo: lazy(() => import("./custom/ConvexeInfo.icon.tsx")),
+  ConvexeInfoFill: lazy(() => import("./custom/ConvexeInfoFill.icon.tsx")),
+  ConvexeOff: lazy(() => import("./custom/ConvexeOff.icon.tsx")),
+  ConvexeOffFill: lazy(() => import("./custom/ConvexeOffFill.icon.tsx")),
+  ConvexeSepa: lazy(() => import("./custom/ConvexeSepa.icon.tsx")),
+  ConvexeSepaFill: lazy(() => import("./custom/ConvexeSepaFill.icon.tsx")),
+  ConvexeSepaOff: lazy(() => import("./custom/ConvexeSepaOff.icon.tsx")),
+  ConvexeSepaOffFill: lazy(() => import("./custom/ConvexeSepaOffFill.icon.tsx")),
+  ConvexeTimer: lazy(() => import("./custom/ConvexeTimer.icon.tsx")),
+  ConvexeX: lazy(() => import("./custom/ConvexeX.icon.tsx")),
+  ConvexeXFill: lazy(() => import("./custom/ConvexeXFill.icon.tsx")),
+  Cookie: lazy(() => import("./bootstrap/Cookie.icon.tsx")),
+  Copy: lazy(() => import("./bootstrap/Copy.icon.tsx")),
+  Cpu: lazy(() => import("./bootstrap/Cpu.icon.tsx")),
+  CpuFill: lazy(() => import("./bootstrap/CpuFill.icon.tsx")),
+  CreditCard: lazy(() => import("./bootstrap/CreditCard.icon.tsx")),
+  CreditCard2Back: lazy(() => import("./bootstrap/CreditCard2Back.icon.tsx")),
+  CreditCard2BackFill: lazy(() => import("./bootstrap/CreditCard2BackFill.icon.tsx")),
+  CreditCard2Front: lazy(() => import("./bootstrap/CreditCard2Front.icon.tsx")),
+  CreditCard2FrontFill: lazy(() => import("./bootstrap/CreditCard2FrontFill.icon.tsx")),
+  CreditCardFill: lazy(() => import("./bootstrap/CreditCardFill.icon.tsx")),
+  Crop: lazy(() => import("./bootstrap/Crop.icon.tsx")),
+  Crosshair: lazy(() => import("./bootstrap/Crosshair.icon.tsx")),
+  Crosshair2: lazy(() => import("./bootstrap/Crosshair2.icon.tsx")),
+  CSquare: lazy(() => import("./bootstrap/CSquare.icon.tsx")),
+  CSquareFill: lazy(() => import("./bootstrap/CSquareFill.icon.tsx")),
+  Cup: lazy(() => import("./bootstrap/Cup.icon.tsx")),
+  CupFill: lazy(() => import("./bootstrap/CupFill.icon.tsx")),
+  CupHot: lazy(() => import("./bootstrap/CupHot.icon.tsx")),
+  CupHotFill: lazy(() => import("./bootstrap/CupHotFill.icon.tsx")),
+  CupStraw: lazy(() => import("./bootstrap/CupStraw.icon.tsx")),
+  CurrencyBitcoin: lazy(() => import("./bootstrap/CurrencyBitcoin.icon.tsx")),
+  CurrencyDollar: lazy(() => import("./bootstrap/CurrencyDollar.icon.tsx")),
+  CurrencyEuro: lazy(() => import("./bootstrap/CurrencyEuro.icon.tsx")),
+  CurrencyExchange: lazy(() => import("./bootstrap/CurrencyExchange.icon.tsx")),
+  CurrencyPound: lazy(() => import("./bootstrap/CurrencyPound.icon.tsx")),
+  CurrencyRupee: lazy(() => import("./bootstrap/CurrencyRupee.icon.tsx")),
+  CurrencyYen: lazy(() => import("./bootstrap/CurrencyYen.icon.tsx")),
+  Cursor: lazy(() => import("./bootstrap/Cursor.icon.tsx")),
+  CursorFill: lazy(() => import("./bootstrap/CursorFill.icon.tsx")),
+  CursorText: lazy(() => import("./bootstrap/CursorText.icon.tsx")),
+  Dash: lazy(() => import("./bootstrap/Dash.icon.tsx")),
+  DashCircle: lazy(() => import("./bootstrap/DashCircle.icon.tsx")),
+  DashCircleDotted: lazy(() => import("./bootstrap/DashCircleDotted.icon.tsx")),
+  DashCircleFill: lazy(() => import("./bootstrap/DashCircleFill.icon.tsx")),
+  DashLg: lazy(() => import("./bootstrap/DashLg.icon.tsx")),
+  DashSquare: lazy(() => import("./bootstrap/DashSquare.icon.tsx")),
+  DashSquareDotted: lazy(() => import("./bootstrap/DashSquareDotted.icon.tsx")),
+  DashSquareFill: lazy(() => import("./bootstrap/DashSquareFill.icon.tsx")),
+  Database: lazy(() => import("./bootstrap/Database.icon.tsx")),
+  DatabaseAdd: lazy(() => import("./bootstrap/DatabaseAdd.icon.tsx")),
+  DatabaseCheck: lazy(() => import("./bootstrap/DatabaseCheck.icon.tsx")),
+  DatabaseDash: lazy(() => import("./bootstrap/DatabaseDash.icon.tsx")),
+  DatabaseDown: lazy(() => import("./bootstrap/DatabaseDown.icon.tsx")),
+  DatabaseExclamation: lazy(() => import("./bootstrap/DatabaseExclamation.icon.tsx")),
+  DatabaseFill: lazy(() => import("./bootstrap/DatabaseFill.icon.tsx")),
+  DatabaseFillAdd: lazy(() => import("./bootstrap/DatabaseFillAdd.icon.tsx")),
+  DatabaseFillCheck: lazy(() => import("./bootstrap/DatabaseFillCheck.icon.tsx")),
+  DatabaseFillDash: lazy(() => import("./bootstrap/DatabaseFillDash.icon.tsx")),
+  DatabaseFillDown: lazy(() => import("./bootstrap/DatabaseFillDown.icon.tsx")),
+  DatabaseFillExclamation: lazy(() => import("./bootstrap/DatabaseFillExclamation.icon.tsx")),
+  DatabaseFillGear: lazy(() => import("./bootstrap/DatabaseFillGear.icon.tsx")),
+  DatabaseFillLock: lazy(() => import("./bootstrap/DatabaseFillLock.icon.tsx")),
+  DatabaseFillSlash: lazy(() => import("./bootstrap/DatabaseFillSlash.icon.tsx")),
+  DatabaseFillUp: lazy(() => import("./bootstrap/DatabaseFillUp.icon.tsx")),
+  DatabaseFillX: lazy(() => import("./bootstrap/DatabaseFillX.icon.tsx")),
+  DatabaseGear: lazy(() => import("./bootstrap/DatabaseGear.icon.tsx")),
+  DatabaseLock: lazy(() => import("./bootstrap/DatabaseLock.icon.tsx")),
+  DatabaseSlash: lazy(() => import("./bootstrap/DatabaseSlash.icon.tsx")),
+  DatabaseUp: lazy(() => import("./bootstrap/DatabaseUp.icon.tsx")),
+  DatabaseX: lazy(() => import("./bootstrap/DatabaseX.icon.tsx")),
+  DeviceHdd: lazy(() => import("./bootstrap/DeviceHdd.icon.tsx")),
+  DeviceHddFill: lazy(() => import("./bootstrap/DeviceHddFill.icon.tsx")),
+  DeviceSsd: lazy(() => import("./bootstrap/DeviceSsd.icon.tsx")),
+  DeviceSsdFill: lazy(() => import("./bootstrap/DeviceSsdFill.icon.tsx")),
+  Diagram2: lazy(() => import("./bootstrap/Diagram2.icon.tsx")),
+  Diagram2Fill: lazy(() => import("./bootstrap/Diagram2Fill.icon.tsx")),
+  Diagram3: lazy(() => import("./bootstrap/Diagram3.icon.tsx")),
+  Diagram3Fill: lazy(() => import("./bootstrap/Diagram3Fill.icon.tsx")),
+  Diamond: lazy(() => import("./bootstrap/Diamond.icon.tsx")),
+  DiamondCore: lazy(() => import("./custom/DiamondCore.icon.tsx")),
+  DiamondCore2NdHalf: lazy(() => import("./custom/DiamondCore2NdHalf.icon.tsx")),
+  DiamondCoreHalf: lazy(() => import("./custom/DiamondCoreHalf.icon.tsx")),
+  DiamondCorner: lazy(() => import("./custom/DiamondCorner.icon.tsx")),
+  DiamondDashed: lazy(() => import("./custom/DiamondDashed.icon.tsx")),
+  DiamondFill: lazy(() => import("./bootstrap/DiamondFill.icon.tsx")),
+  DiamondHalf: lazy(() => import("./bootstrap/DiamondHalf.icon.tsx")),
+  DiamondKey: lazy(() => import("./custom/DiamondKey.icon.tsx")),
+  DiamondKeyFill: lazy(() => import("./custom/DiamondKeyFill.icon.tsx")),
+  DiamondOff: lazy(() => import("./custom/DiamondOff.icon.tsx")),
+  DiamondOffFill: lazy(() => import("./custom/DiamondOffFill.icon.tsx")),
+  Diamonds: lazy(() => import("./custom/Diamonds.icon.tsx")),
+  DiamondsDots: lazy(() => import("./custom/DiamondsDots.icon.tsx")),
+  DiamondsGrid: lazy(() => import("./custom/DiamondsGrid.icon.tsx")),
+  DiamondsIntersect: lazy(() => import("./custom/DiamondsIntersect.icon.tsx")),
+  DiamondsLayers: lazy(() => import("./custom/DiamondsLayers.icon.tsx")),
+  DiamondsLayers2: lazy(() => import("./custom/DiamondsLayers2.icon.tsx")),
+  DiamondsLayersKey: lazy(() => import("./custom/DiamondsLayersKey.icon.tsx")),
+  DiamondsLayersKey2: lazy(() => import("./custom/DiamondsLayersKey2.icon.tsx")),
+  DiamondsStripes: lazy(() => import("./custom/DiamondsStripes.icon.tsx")),
+  Dice1: lazy(() => import("./bootstrap/Dice1.icon.tsx")),
+  Dice1Fill: lazy(() => import("./bootstrap/Dice1Fill.icon.tsx")),
+  Dice2: lazy(() => import("./bootstrap/Dice2.icon.tsx")),
+  Dice2Fill: lazy(() => import("./bootstrap/Dice2Fill.icon.tsx")),
+  Dice3: lazy(() => import("./bootstrap/Dice3.icon.tsx")),
+  Dice3Fill: lazy(() => import("./bootstrap/Dice3Fill.icon.tsx")),
+  Dice4: lazy(() => import("./bootstrap/Dice4.icon.tsx")),
+  Dice4Fill: lazy(() => import("./bootstrap/Dice4Fill.icon.tsx")),
+  Dice5: lazy(() => import("./bootstrap/Dice5.icon.tsx")),
+  Dice5Fill: lazy(() => import("./bootstrap/Dice5Fill.icon.tsx")),
+  Dice6: lazy(() => import("./bootstrap/Dice6.icon.tsx")),
+  Dice6Fill: lazy(() => import("./bootstrap/Dice6Fill.icon.tsx")),
+  Disc: lazy(() => import("./bootstrap/Disc.icon.tsx")),
+  DiscFill: lazy(() => import("./bootstrap/DiscFill.icon.tsx")),
+  Discord: lazy(() => import("./bootstrap/Discord.icon.tsx")),
+  Display: lazy(() => import("./bootstrap/Display.icon.tsx")),
+  DisplayFill: lazy(() => import("./bootstrap/DisplayFill.icon.tsx")),
+  Displayport: lazy(() => import("./bootstrap/Displayport.icon.tsx")),
+  DisplayportFill: lazy(() => import("./bootstrap/DisplayportFill.icon.tsx")),
+  DistributeHorizontal: lazy(() => import("./bootstrap/DistributeHorizontal.icon.tsx")),
+  DistributeVertical: lazy(() => import("./bootstrap/DistributeVertical.icon.tsx")),
+  DoorClosed: lazy(() => import("./bootstrap/DoorClosed.icon.tsx")),
+  DoorClosedFill: lazy(() => import("./bootstrap/DoorClosedFill.icon.tsx")),
+  DoorMoveIn: lazy(() => import("./custom/DoorMoveIn.icon.tsx")),
+  DoorMoveOut: lazy(() => import("./custom/DoorMoveOut.icon.tsx")),
+  DoorOpen: lazy(() => import("./bootstrap/DoorOpen.icon.tsx")),
+  DoorOpenFill: lazy(() => import("./bootstrap/DoorOpenFill.icon.tsx")),
+  Dot: lazy(() => import("./bootstrap/Dot.icon.tsx")),
+  Download: lazy(() => import("./bootstrap/Download.icon.tsx")),
+  Dpad: lazy(() => import("./bootstrap/Dpad.icon.tsx")),
+  DpadFill: lazy(() => import("./bootstrap/DpadFill.icon.tsx")),
+  Dribbble: lazy(() => import("./bootstrap/Dribbble.icon.tsx")),
+  Dropbox: lazy(() => import("./bootstrap/Dropbox.icon.tsx")),
+  Droplet: lazy(() => import("./bootstrap/Droplet.icon.tsx")),
+  DropletFill: lazy(() => import("./bootstrap/DropletFill.icon.tsx")),
+  DropletHalf: lazy(() => import("./bootstrap/DropletHalf.icon.tsx")),
+  Duffle: lazy(() => import("./bootstrap/Duffle.icon.tsx")),
+  DuffleFill: lazy(() => import("./bootstrap/DuffleFill.icon.tsx")),
+  Ear: lazy(() => import("./bootstrap/Ear.icon.tsx")),
+  Earbuds: lazy(() => import("./bootstrap/Earbuds.icon.tsx")),
+  EarFill: lazy(() => import("./bootstrap/EarFill.icon.tsx")),
+  Easel: lazy(() => import("./bootstrap/Easel.icon.tsx")),
+  Easel2: lazy(() => import("./bootstrap/Easel2.icon.tsx")),
+  Easel2Fill: lazy(() => import("./bootstrap/Easel2Fill.icon.tsx")),
+  Easel3: lazy(() => import("./bootstrap/Easel3.icon.tsx")),
+  Easel3Fill: lazy(() => import("./bootstrap/Easel3Fill.icon.tsx")),
+  EaselFill: lazy(() => import("./bootstrap/EaselFill.icon.tsx")),
+  Egg: lazy(() => import("./bootstrap/Egg.icon.tsx")),
+  EggFill: lazy(() => import("./bootstrap/EggFill.icon.tsx")),
+  EggFried: lazy(() => import("./bootstrap/EggFried.icon.tsx")),
+  Eject: lazy(() => import("./bootstrap/Eject.icon.tsx")),
+  EjectFill: lazy(() => import("./bootstrap/EjectFill.icon.tsx")),
+  EmojiAngry: lazy(() => import("./bootstrap/EmojiAngry.icon.tsx")),
+  EmojiAngryFill: lazy(() => import("./bootstrap/EmojiAngryFill.icon.tsx")),
+  EmojiAstonished: lazy(() => import("./bootstrap/EmojiAstonished.icon.tsx")),
+  EmojiAstonishedFill: lazy(() => import("./bootstrap/EmojiAstonishedFill.icon.tsx")),
+  EmojiDizzy: lazy(() => import("./bootstrap/EmojiDizzy.icon.tsx")),
+  EmojiDizzyFill: lazy(() => import("./bootstrap/EmojiDizzyFill.icon.tsx")),
+  EmojiExpressionless: lazy(() => import("./bootstrap/EmojiExpressionless.icon.tsx")),
+  EmojiExpressionlessFill: lazy(() => import("./bootstrap/EmojiExpressionlessFill.icon.tsx")),
+  EmojiFrown: lazy(() => import("./bootstrap/EmojiFrown.icon.tsx")),
+  EmojiFrownFill: lazy(() => import("./bootstrap/EmojiFrownFill.icon.tsx")),
+  EmojiGrimace: lazy(() => import("./bootstrap/EmojiGrimace.icon.tsx")),
+  EmojiGrimaceFill: lazy(() => import("./bootstrap/EmojiGrimaceFill.icon.tsx")),
+  EmojiGrin: lazy(() => import("./bootstrap/EmojiGrin.icon.tsx")),
+  EmojiGrinFill: lazy(() => import("./bootstrap/EmojiGrinFill.icon.tsx")),
+  EmojiHeartEyes: lazy(() => import("./bootstrap/EmojiHeartEyes.icon.tsx")),
+  EmojiHeartEyesFill: lazy(() => import("./bootstrap/EmojiHeartEyesFill.icon.tsx")),
+  EmojiKiss: lazy(() => import("./bootstrap/EmojiKiss.icon.tsx")),
+  EmojiKissFill: lazy(() => import("./bootstrap/EmojiKissFill.icon.tsx")),
+  EmojiLaughing: lazy(() => import("./bootstrap/EmojiLaughing.icon.tsx")),
+  EmojiLaughingFill: lazy(() => import("./bootstrap/EmojiLaughingFill.icon.tsx")),
+  EmojiNeutral: lazy(() => import("./bootstrap/EmojiNeutral.icon.tsx")),
+  EmojiNeutralFill: lazy(() => import("./bootstrap/EmojiNeutralFill.icon.tsx")),
+  EmojiSmile: lazy(() => import("./bootstrap/EmojiSmile.icon.tsx")),
+  EmojiSmileFill: lazy(() => import("./bootstrap/EmojiSmileFill.icon.tsx")),
+  EmojiSmileUpsideDown: lazy(() => import("./bootstrap/EmojiSmileUpsideDown.icon.tsx")),
+  EmojiSmileUpsideDownFill: lazy(() => import("./bootstrap/EmojiSmileUpsideDownFill.icon.tsx")),
+  EmojiSunglasses: lazy(() => import("./bootstrap/EmojiSunglasses.icon.tsx")),
+  EmojiSunglassesFill: lazy(() => import("./bootstrap/EmojiSunglassesFill.icon.tsx")),
+  EmojiSurprise: lazy(() => import("./bootstrap/EmojiSurprise.icon.tsx")),
+  EmojiSurpriseFill: lazy(() => import("./bootstrap/EmojiSurpriseFill.icon.tsx")),
+  EmojiTear: lazy(() => import("./bootstrap/EmojiTear.icon.tsx")),
+  EmojiTearFill: lazy(() => import("./bootstrap/EmojiTearFill.icon.tsx")),
+  EmojiWink: lazy(() => import("./bootstrap/EmojiWink.icon.tsx")),
+  EmojiWinkFill: lazy(() => import("./bootstrap/EmojiWinkFill.icon.tsx")),
+  Envelope: lazy(() => import("./bootstrap/Envelope.icon.tsx")),
+  EnvelopeArrowDown: lazy(() => import("./bootstrap/EnvelopeArrowDown.icon.tsx")),
+  EnvelopeArrowDownFill: lazy(() => import("./bootstrap/EnvelopeArrowDownFill.icon.tsx")),
+  EnvelopeArrowUp: lazy(() => import("./bootstrap/EnvelopeArrowUp.icon.tsx")),
+  EnvelopeArrowUpFill: lazy(() => import("./bootstrap/EnvelopeArrowUpFill.icon.tsx")),
+  EnvelopeAt: lazy(() => import("./bootstrap/EnvelopeAt.icon.tsx")),
+  EnvelopeAtFill: lazy(() => import("./bootstrap/EnvelopeAtFill.icon.tsx")),
+  EnvelopeCheck: lazy(() => import("./bootstrap/EnvelopeCheck.icon.tsx")),
+  EnvelopeCheckFill: lazy(() => import("./bootstrap/EnvelopeCheckFill.icon.tsx")),
+  EnvelopeDash: lazy(() => import("./bootstrap/EnvelopeDash.icon.tsx")),
+  EnvelopeDashFill: lazy(() => import("./bootstrap/EnvelopeDashFill.icon.tsx")),
+  EnvelopeExclamation: lazy(() => import("./bootstrap/EnvelopeExclamation.icon.tsx")),
+  EnvelopeExclamationFill: lazy(() => import("./bootstrap/EnvelopeExclamationFill.icon.tsx")),
+  EnvelopeFill: lazy(() => import("./bootstrap/EnvelopeFill.icon.tsx")),
+  EnvelopeHeart: lazy(() => import("./bootstrap/EnvelopeHeart.icon.tsx")),
+  EnvelopeHeartFill: lazy(() => import("./bootstrap/EnvelopeHeartFill.icon.tsx")),
+  EnvelopeOpen: lazy(() => import("./bootstrap/EnvelopeOpen.icon.tsx")),
+  EnvelopeOpenFill: lazy(() => import("./bootstrap/EnvelopeOpenFill.icon.tsx")),
+  EnvelopeOpenHeart: lazy(() => import("./bootstrap/EnvelopeOpenHeart.icon.tsx")),
+  EnvelopeOpenHeartFill: lazy(() => import("./bootstrap/EnvelopeOpenHeartFill.icon.tsx")),
+  EnvelopePaper: lazy(() => import("./bootstrap/EnvelopePaper.icon.tsx")),
+  EnvelopePaperFill: lazy(() => import("./bootstrap/EnvelopePaperFill.icon.tsx")),
+  EnvelopePaperHeart: lazy(() => import("./bootstrap/EnvelopePaperHeart.icon.tsx")),
+  EnvelopePaperHeartFill: lazy(() => import("./bootstrap/EnvelopePaperHeartFill.icon.tsx")),
+  EnvelopePlus: lazy(() => import("./bootstrap/EnvelopePlus.icon.tsx")),
+  EnvelopePlusFill: lazy(() => import("./bootstrap/EnvelopePlusFill.icon.tsx")),
+  EnvelopeSlash: lazy(() => import("./bootstrap/EnvelopeSlash.icon.tsx")),
+  EnvelopeSlashFill: lazy(() => import("./bootstrap/EnvelopeSlashFill.icon.tsx")),
+  EnvelopeX: lazy(() => import("./bootstrap/EnvelopeX.icon.tsx")),
+  EnvelopeXFill: lazy(() => import("./bootstrap/EnvelopeXFill.icon.tsx")),
+  Eraser: lazy(() => import("./bootstrap/Eraser.icon.tsx")),
+  EraserFill: lazy(() => import("./bootstrap/EraserFill.icon.tsx")),
+  Escape: lazy(() => import("./bootstrap/Escape.icon.tsx")),
+  Ethernet: lazy(() => import("./bootstrap/Ethernet.icon.tsx")),
+  EvFront: lazy(() => import("./bootstrap/EvFront.icon.tsx")),
+  EvFrontFill: lazy(() => import("./bootstrap/EvFrontFill.icon.tsx")),
+  EvStation: lazy(() => import("./bootstrap/EvStation.icon.tsx")),
+  EvStationFill: lazy(() => import("./bootstrap/EvStationFill.icon.tsx")),
+  Exclamation: lazy(() => import("./bootstrap/Exclamation.icon.tsx")),
+  ExclamationCircle: lazy(() => import("./bootstrap/ExclamationCircle.icon.tsx")),
+  ExclamationCircleFill: lazy(() => import("./bootstrap/ExclamationCircleFill.icon.tsx")),
+  ExclamationDiamond: lazy(() => import("./bootstrap/ExclamationDiamond.icon.tsx")),
+  ExclamationDiamondFill: lazy(() => import("./bootstrap/ExclamationDiamondFill.icon.tsx")),
+  ExclamationLg: lazy(() => import("./bootstrap/ExclamationLg.icon.tsx")),
+  ExclamationOctagon: lazy(() => import("./bootstrap/ExclamationOctagon.icon.tsx")),
+  ExclamationOctagonFill: lazy(() => import("./bootstrap/ExclamationOctagonFill.icon.tsx")),
+  ExclamationSquare: lazy(() => import("./bootstrap/ExclamationSquare.icon.tsx")),
+  ExclamationSquareFill: lazy(() => import("./bootstrap/ExclamationSquareFill.icon.tsx")),
+  ExclamationTriangle: lazy(() => import("./bootstrap/ExclamationTriangle.icon.tsx")),
+  ExclamationTriangleFill: lazy(() => import("./bootstrap/ExclamationTriangleFill.icon.tsx")),
+  Exclude: lazy(() => import("./bootstrap/Exclude.icon.tsx")),
+  Explicit: lazy(() => import("./bootstrap/Explicit.icon.tsx")),
+  ExplicitFill: lazy(() => import("./bootstrap/ExplicitFill.icon.tsx")),
+  Exposure: lazy(() => import("./bootstrap/Exposure.icon.tsx")),
+  Eye: lazy(() => import("./bootstrap/Eye.icon.tsx")),
+  Eyedropper: lazy(() => import("./bootstrap/Eyedropper.icon.tsx")),
+  EyeFill: lazy(() => import("./bootstrap/EyeFill.icon.tsx")),
+  Eyeglasses: lazy(() => import("./bootstrap/Eyeglasses.icon.tsx")),
+  EyeSlash: lazy(() => import("./bootstrap/EyeSlash.icon.tsx")),
+  EyeSlashFill: lazy(() => import("./bootstrap/EyeSlashFill.icon.tsx")),
+  Facebook: lazy(() => import("./bootstrap/Facebook.icon.tsx")),
+  Fan: lazy(() => import("./bootstrap/Fan.icon.tsx")),
+  FastForward: lazy(() => import("./bootstrap/FastForward.icon.tsx")),
+  FastForwardBtn: lazy(() => import("./bootstrap/FastForwardBtn.icon.tsx")),
+  FastForwardBtnFill: lazy(() => import("./bootstrap/FastForwardBtnFill.icon.tsx")),
+  FastForwardCircle: lazy(() => import("./bootstrap/FastForwardCircle.icon.tsx")),
+  FastForwardCircleFill: lazy(() => import("./bootstrap/FastForwardCircleFill.icon.tsx")),
+  FastForwardFill: lazy(() => import("./bootstrap/FastForwardFill.icon.tsx")),
+  Feather: lazy(() => import("./bootstrap/Feather.icon.tsx")),
+  Feather2: lazy(() => import("./bootstrap/Feather2.icon.tsx")),
+  Feather3: lazy(() => import("./custom/Feather3.icon.tsx")),
+  Figma: lazy(() => import("./custom/Figma.icon.tsx")),
+  FigmaFill: lazy(() => import("./custom/FigmaFill.icon.tsx")),
+  File: lazy(() => import("./bootstrap/File.icon.tsx")),
+  File2Clock: lazy(() => import("./custom/File2Clock.icon.tsx")),
+  FileArrowDown: lazy(() => import("./bootstrap/FileArrowDown.icon.tsx")),
+  FileArrowDownFill: lazy(() => import("./bootstrap/FileArrowDownFill.icon.tsx")),
+  FileArrowUp: lazy(() => import("./bootstrap/FileArrowUp.icon.tsx")),
+  FileArrowUpFill: lazy(() => import("./bootstrap/FileArrowUpFill.icon.tsx")),
+  FileBarGraph: lazy(() => import("./bootstrap/FileBarGraph.icon.tsx")),
+  FileBarGraphFill: lazy(() => import("./bootstrap/FileBarGraphFill.icon.tsx")),
+  FileBinary: lazy(() => import("./bootstrap/FileBinary.icon.tsx")),
+  FileBinaryFill: lazy(() => import("./bootstrap/FileBinaryFill.icon.tsx")),
+  FileBreak: lazy(() => import("./bootstrap/FileBreak.icon.tsx")),
+  FileBreakFill: lazy(() => import("./bootstrap/FileBreakFill.icon.tsx")),
+  FileCheck: lazy(() => import("./bootstrap/FileCheck.icon.tsx")),
+  FileCheckFill: lazy(() => import("./bootstrap/FileCheckFill.icon.tsx")),
+  FileCode: lazy(() => import("./bootstrap/FileCode.icon.tsx")),
+  FileCodeFill: lazy(() => import("./bootstrap/FileCodeFill.icon.tsx")),
+  FileDiff: lazy(() => import("./bootstrap/FileDiff.icon.tsx")),
+  FileDiffFill: lazy(() => import("./bootstrap/FileDiffFill.icon.tsx")),
+  FileEarmark: lazy(() => import("./bootstrap/FileEarmark.icon.tsx")),
+  FileEarmarkArrowDown: lazy(() => import("./bootstrap/FileEarmarkArrowDown.icon.tsx")),
+  FileEarmarkArrowDownFill: lazy(() => import("./bootstrap/FileEarmarkArrowDownFill.icon.tsx")),
+  FileEarmarkArrowUp: lazy(() => import("./bootstrap/FileEarmarkArrowUp.icon.tsx")),
+  FileEarmarkArrowUpFill: lazy(() => import("./bootstrap/FileEarmarkArrowUpFill.icon.tsx")),
+  FileEarmarkBarGraph: lazy(() => import("./bootstrap/FileEarmarkBarGraph.icon.tsx")),
+  FileEarmarkBarGraphFill: lazy(() => import("./bootstrap/FileEarmarkBarGraphFill.icon.tsx")),
+  FileEarmarkBinary: lazy(() => import("./bootstrap/FileEarmarkBinary.icon.tsx")),
+  FileEarmarkBinaryFill: lazy(() => import("./bootstrap/FileEarmarkBinaryFill.icon.tsx")),
+  FileEarmarkBreak: lazy(() => import("./bootstrap/FileEarmarkBreak.icon.tsx")),
+  FileEarmarkBreakFill: lazy(() => import("./bootstrap/FileEarmarkBreakFill.icon.tsx")),
+  FileEarmarkCheck: lazy(() => import("./bootstrap/FileEarmarkCheck.icon.tsx")),
+  FileEarmarkCheckFill: lazy(() => import("./bootstrap/FileEarmarkCheckFill.icon.tsx")),
+  FileEarmarkCode: lazy(() => import("./bootstrap/FileEarmarkCode.icon.tsx")),
+  FileEarmarkCodeFill: lazy(() => import("./bootstrap/FileEarmarkCodeFill.icon.tsx")),
+  FileEarmarkDiff: lazy(() => import("./bootstrap/FileEarmarkDiff.icon.tsx")),
+  FileEarmarkDiffFill: lazy(() => import("./bootstrap/FileEarmarkDiffFill.icon.tsx")),
+  FileEarmarkEasel: lazy(() => import("./bootstrap/FileEarmarkEasel.icon.tsx")),
+  FileEarmarkEaselFill: lazy(() => import("./bootstrap/FileEarmarkEaselFill.icon.tsx")),
+  FileEarmarkExcel: lazy(() => import("./bootstrap/FileEarmarkExcel.icon.tsx")),
+  FileEarmarkExcelFill: lazy(() => import("./bootstrap/FileEarmarkExcelFill.icon.tsx")),
+  FileEarmarkFill: lazy(() => import("./bootstrap/FileEarmarkFill.icon.tsx")),
+  FileEarmarkFont: lazy(() => import("./bootstrap/FileEarmarkFont.icon.tsx")),
+  FileEarmarkFontFill: lazy(() => import("./bootstrap/FileEarmarkFontFill.icon.tsx")),
+  FileEarmarkImage: lazy(() => import("./bootstrap/FileEarmarkImage.icon.tsx")),
+  FileEarmarkImageFill: lazy(() => import("./bootstrap/FileEarmarkImageFill.icon.tsx")),
+  FileEarmarkLock: lazy(() => import("./bootstrap/FileEarmarkLock.icon.tsx")),
+  FileEarmarkLock2: lazy(() => import("./bootstrap/FileEarmarkLock2.icon.tsx")),
+  FileEarmarkLock2Fill: lazy(() => import("./bootstrap/FileEarmarkLock2Fill.icon.tsx")),
+  FileEarmarkLockFill: lazy(() => import("./bootstrap/FileEarmarkLockFill.icon.tsx")),
+  FileEarmarkMedical: lazy(() => import("./bootstrap/FileEarmarkMedical.icon.tsx")),
+  FileEarmarkMedicalFill: lazy(() => import("./bootstrap/FileEarmarkMedicalFill.icon.tsx")),
+  FileEarmarkMinus: lazy(() => import("./bootstrap/FileEarmarkMinus.icon.tsx")),
+  FileEarmarkMinusFill: lazy(() => import("./bootstrap/FileEarmarkMinusFill.icon.tsx")),
+  FileEarmarkMusic: lazy(() => import("./bootstrap/FileEarmarkMusic.icon.tsx")),
+  FileEarmarkMusicFill: lazy(() => import("./bootstrap/FileEarmarkMusicFill.icon.tsx")),
+  FileEarmarkPdf: lazy(() => import("./bootstrap/FileEarmarkPdf.icon.tsx")),
+  FileEarmarkPdfFill: lazy(() => import("./bootstrap/FileEarmarkPdfFill.icon.tsx")),
+  FileEarmarkPerson: lazy(() => import("./bootstrap/FileEarmarkPerson.icon.tsx")),
+  FileEarmarkPersonFill: lazy(() => import("./bootstrap/FileEarmarkPersonFill.icon.tsx")),
+  FileEarmarkPlay: lazy(() => import("./bootstrap/FileEarmarkPlay.icon.tsx")),
+  FileEarmarkPlayFill: lazy(() => import("./bootstrap/FileEarmarkPlayFill.icon.tsx")),
+  FileEarmarkPlus: lazy(() => import("./bootstrap/FileEarmarkPlus.icon.tsx")),
+  FileEarmarkPlusFill: lazy(() => import("./bootstrap/FileEarmarkPlusFill.icon.tsx")),
+  FileEarmarkPost: lazy(() => import("./bootstrap/FileEarmarkPost.icon.tsx")),
+  FileEarmarkPostFill: lazy(() => import("./bootstrap/FileEarmarkPostFill.icon.tsx")),
+  FileEarmarkPpt: lazy(() => import("./bootstrap/FileEarmarkPpt.icon.tsx")),
+  FileEarmarkPptFill: lazy(() => import("./bootstrap/FileEarmarkPptFill.icon.tsx")),
+  FileEarmarkRichtext: lazy(() => import("./bootstrap/FileEarmarkRichtext.icon.tsx")),
+  FileEarmarkRichtextFill: lazy(() => import("./bootstrap/FileEarmarkRichtextFill.icon.tsx")),
+  FileEarmarkRuled: lazy(() => import("./bootstrap/FileEarmarkRuled.icon.tsx")),
+  FileEarmarkRuledFill: lazy(() => import("./bootstrap/FileEarmarkRuledFill.icon.tsx")),
+  FileEarmarkSlides: lazy(() => import("./bootstrap/FileEarmarkSlides.icon.tsx")),
+  FileEarmarkSlidesFill: lazy(() => import("./bootstrap/FileEarmarkSlidesFill.icon.tsx")),
+  FileEarmarkSpreadsheet: lazy(() => import("./bootstrap/FileEarmarkSpreadsheet.icon.tsx")),
+  FileEarmarkSpreadsheetFill: lazy(() => import("./bootstrap/FileEarmarkSpreadsheetFill.icon.tsx")),
+  FileEarmarkText: lazy(() => import("./bootstrap/FileEarmarkText.icon.tsx")),
+  FileEarmarkTextFill: lazy(() => import("./bootstrap/FileEarmarkTextFill.icon.tsx")),
+  FileEarmarkWord: lazy(() => import("./bootstrap/FileEarmarkWord.icon.tsx")),
+  FileEarmarkWordFill: lazy(() => import("./bootstrap/FileEarmarkWordFill.icon.tsx")),
+  FileEarmarkX: lazy(() => import("./bootstrap/FileEarmarkX.icon.tsx")),
+  FileEarmarkXFill: lazy(() => import("./bootstrap/FileEarmarkXFill.icon.tsx")),
+  FileEarmarkZip: lazy(() => import("./bootstrap/FileEarmarkZip.icon.tsx")),
+  FileEarmarkZipFill: lazy(() => import("./bootstrap/FileEarmarkZipFill.icon.tsx")),
+  FileEasel: lazy(() => import("./bootstrap/FileEasel.icon.tsx")),
+  FileEaselFill: lazy(() => import("./bootstrap/FileEaselFill.icon.tsx")),
+  FileExcel: lazy(() => import("./bootstrap/FileExcel.icon.tsx")),
+  FileExcelFill: lazy(() => import("./bootstrap/FileExcelFill.icon.tsx")),
+  FileFill: lazy(() => import("./bootstrap/FileFill.icon.tsx")),
+  FileFont: lazy(() => import("./bootstrap/FileFont.icon.tsx")),
+  FileFontFill: lazy(() => import("./bootstrap/FileFontFill.icon.tsx")),
+  FileImage: lazy(() => import("./bootstrap/FileImage.icon.tsx")),
+  FileImageFill: lazy(() => import("./bootstrap/FileImageFill.icon.tsx")),
+  FileLock: lazy(() => import("./bootstrap/FileLock.icon.tsx")),
+  FileLock2: lazy(() => import("./bootstrap/FileLock2.icon.tsx")),
+  FileLock2Fill: lazy(() => import("./bootstrap/FileLock2Fill.icon.tsx")),
+  FileLockFill: lazy(() => import("./bootstrap/FileLockFill.icon.tsx")),
+  FileMedical: lazy(() => import("./bootstrap/FileMedical.icon.tsx")),
+  FileMedicalFill: lazy(() => import("./bootstrap/FileMedicalFill.icon.tsx")),
+  FileMinus: lazy(() => import("./bootstrap/FileMinus.icon.tsx")),
+  FileMinusFill: lazy(() => import("./bootstrap/FileMinusFill.icon.tsx")),
+  FileMusic: lazy(() => import("./bootstrap/FileMusic.icon.tsx")),
+  FileMusicFill: lazy(() => import("./bootstrap/FileMusicFill.icon.tsx")),
+  FilePdf: lazy(() => import("./bootstrap/FilePdf.icon.tsx")),
+  FilePdfFill: lazy(() => import("./bootstrap/FilePdfFill.icon.tsx")),
+  FilePerson: lazy(() => import("./bootstrap/FilePerson.icon.tsx")),
+  FilePersonFill: lazy(() => import("./bootstrap/FilePersonFill.icon.tsx")),
+  FilePlay: lazy(() => import("./bootstrap/FilePlay.icon.tsx")),
+  FilePlayFill: lazy(() => import("./bootstrap/FilePlayFill.icon.tsx")),
+  FilePlus: lazy(() => import("./bootstrap/FilePlus.icon.tsx")),
+  FilePlusFill: lazy(() => import("./bootstrap/FilePlusFill.icon.tsx")),
+  FilePost: lazy(() => import("./bootstrap/FilePost.icon.tsx")),
+  FilePostFill: lazy(() => import("./bootstrap/FilePostFill.icon.tsx")),
+  FilePpt: lazy(() => import("./bootstrap/FilePpt.icon.tsx")),
+  FilePptFill: lazy(() => import("./bootstrap/FilePptFill.icon.tsx")),
+  FileRichtext: lazy(() => import("./bootstrap/FileRichtext.icon.tsx")),
+  FileRichtextFill: lazy(() => import("./bootstrap/FileRichtextFill.icon.tsx")),
+  FileRuled: lazy(() => import("./bootstrap/FileRuled.icon.tsx")),
+  FileRuledFill: lazy(() => import("./bootstrap/FileRuledFill.icon.tsx")),
+  Files: lazy(() => import("./bootstrap/Files.icon.tsx")),
+  FilesAlt: lazy(() => import("./bootstrap/FilesAlt.icon.tsx")),
+  FileSignature: lazy(() => import("./custom/FileSignature.icon.tsx")),
+  FileSlides: lazy(() => import("./bootstrap/FileSlides.icon.tsx")),
+  FileSlidesFill: lazy(() => import("./bootstrap/FileSlidesFill.icon.tsx")),
+  FileSpreadsheet: lazy(() => import("./bootstrap/FileSpreadsheet.icon.tsx")),
+  FileSpreadsheetFill: lazy(() => import("./bootstrap/FileSpreadsheetFill.icon.tsx")),
+  FileText: lazy(() => import("./bootstrap/FileText.icon.tsx")),
+  FileTextFill: lazy(() => import("./bootstrap/FileTextFill.icon.tsx")),
+  FiletypeAac: lazy(() => import("./bootstrap/FiletypeAac.icon.tsx")),
+  FiletypeAi: lazy(() => import("./bootstrap/FiletypeAi.icon.tsx")),
+  FiletypeBmp: lazy(() => import("./bootstrap/FiletypeBmp.icon.tsx")),
+  FiletypeCs: lazy(() => import("./bootstrap/FiletypeCs.icon.tsx")),
+  FiletypeCss: lazy(() => import("./bootstrap/FiletypeCss.icon.tsx")),
+  FiletypeCsv: lazy(() => import("./bootstrap/FiletypeCsv.icon.tsx")),
+  FiletypeDoc: lazy(() => import("./bootstrap/FiletypeDoc.icon.tsx")),
+  FiletypeDocx: lazy(() => import("./bootstrap/FiletypeDocx.icon.tsx")),
+  FiletypeExe: lazy(() => import("./bootstrap/FiletypeExe.icon.tsx")),
+  FiletypeGif: lazy(() => import("./bootstrap/FiletypeGif.icon.tsx")),
+  FiletypeHeic: lazy(() => import("./bootstrap/FiletypeHeic.icon.tsx")),
+  FiletypeHtml: lazy(() => import("./bootstrap/FiletypeHtml.icon.tsx")),
+  FiletypeJava: lazy(() => import("./bootstrap/FiletypeJava.icon.tsx")),
+  FiletypeJpg: lazy(() => import("./bootstrap/FiletypeJpg.icon.tsx")),
+  FiletypeJs: lazy(() => import("./bootstrap/FiletypeJs.icon.tsx")),
+  FiletypeJson: lazy(() => import("./bootstrap/FiletypeJson.icon.tsx")),
+  FiletypeJsx: lazy(() => import("./bootstrap/FiletypeJsx.icon.tsx")),
+  FiletypeKey: lazy(() => import("./bootstrap/FiletypeKey.icon.tsx")),
+  FiletypeM4P: lazy(() => import("./bootstrap/FiletypeM4P.icon.tsx")),
+  FiletypeMd: lazy(() => import("./bootstrap/FiletypeMd.icon.tsx")),
+  FiletypeMdx: lazy(() => import("./bootstrap/FiletypeMdx.icon.tsx")),
+  FiletypeMov: lazy(() => import("./bootstrap/FiletypeMov.icon.tsx")),
+  FiletypeMp3: lazy(() => import("./bootstrap/FiletypeMp3.icon.tsx")),
+  FiletypeMp4: lazy(() => import("./bootstrap/FiletypeMp4.icon.tsx")),
+  FiletypeOtf: lazy(() => import("./bootstrap/FiletypeOtf.icon.tsx")),
+  FiletypePdf: lazy(() => import("./bootstrap/FiletypePdf.icon.tsx")),
+  FiletypePhp: lazy(() => import("./bootstrap/FiletypePhp.icon.tsx")),
+  FiletypePng: lazy(() => import("./bootstrap/FiletypePng.icon.tsx")),
+  FiletypePpt: lazy(() => import("./bootstrap/FiletypePpt.icon.tsx")),
+  FiletypePptx: lazy(() => import("./bootstrap/FiletypePptx.icon.tsx")),
+  FiletypePsd: lazy(() => import("./bootstrap/FiletypePsd.icon.tsx")),
+  FiletypePy: lazy(() => import("./bootstrap/FiletypePy.icon.tsx")),
+  FiletypeRaw: lazy(() => import("./bootstrap/FiletypeRaw.icon.tsx")),
+  FiletypeRb: lazy(() => import("./bootstrap/FiletypeRb.icon.tsx")),
+  FiletypeSass: lazy(() => import("./bootstrap/FiletypeSass.icon.tsx")),
+  FiletypeScss: lazy(() => import("./bootstrap/FiletypeScss.icon.tsx")),
+  FiletypeSh: lazy(() => import("./bootstrap/FiletypeSh.icon.tsx")),
+  FiletypeSql: lazy(() => import("./bootstrap/FiletypeSql.icon.tsx")),
+  FiletypeSvg: lazy(() => import("./bootstrap/FiletypeSvg.icon.tsx")),
+  FiletypeTiff: lazy(() => import("./bootstrap/FiletypeTiff.icon.tsx")),
+  FiletypeTsx: lazy(() => import("./bootstrap/FiletypeTsx.icon.tsx")),
+  FiletypeTtf: lazy(() => import("./bootstrap/FiletypeTtf.icon.tsx")),
+  FiletypeTxt: lazy(() => import("./bootstrap/FiletypeTxt.icon.tsx")),
+  FiletypeWav: lazy(() => import("./bootstrap/FiletypeWav.icon.tsx")),
+  FiletypeWoff: lazy(() => import("./bootstrap/FiletypeWoff.icon.tsx")),
+  FiletypeXls: lazy(() => import("./bootstrap/FiletypeXls.icon.tsx")),
+  FiletypeXlsx: lazy(() => import("./bootstrap/FiletypeXlsx.icon.tsx")),
+  FiletypeXml: lazy(() => import("./bootstrap/FiletypeXml.icon.tsx")),
+  FiletypeYml: lazy(() => import("./bootstrap/FiletypeYml.icon.tsx")),
+  FileWord: lazy(() => import("./bootstrap/FileWord.icon.tsx")),
+  FileWordFill: lazy(() => import("./bootstrap/FileWordFill.icon.tsx")),
+  FileX: lazy(() => import("./bootstrap/FileX.icon.tsx")),
+  FileXFill: lazy(() => import("./bootstrap/FileXFill.icon.tsx")),
+  FileZip: lazy(() => import("./bootstrap/FileZip.icon.tsx")),
+  FileZipFill: lazy(() => import("./bootstrap/FileZipFill.icon.tsx")),
+  Film: lazy(() => import("./bootstrap/Film.icon.tsx")),
+  Filter: lazy(() => import("./bootstrap/Filter.icon.tsx")),
+  FilterCircle: lazy(() => import("./bootstrap/FilterCircle.icon.tsx")),
+  FilterCircleFill: lazy(() => import("./bootstrap/FilterCircleFill.icon.tsx")),
+  FilterLeft: lazy(() => import("./bootstrap/FilterLeft.icon.tsx")),
+  FilterRight: lazy(() => import("./bootstrap/FilterRight.icon.tsx")),
+  FilterSquare: lazy(() => import("./bootstrap/FilterSquare.icon.tsx")),
+  FilterSquareFill: lazy(() => import("./bootstrap/FilterSquareFill.icon.tsx")),
+  Fingerprint: lazy(() => import("./bootstrap/Fingerprint.icon.tsx")),
+  Fire: lazy(() => import("./custom/Fire.icon.tsx")),
+  FireBootstrap: lazy(() => import("./bootstrap/FireBootstrap.icon.tsx")),
+  FireFill: lazy(() => import("./custom/FireFill.icon.tsx")),
+  Flag: lazy(() => import("./bootstrap/Flag.icon.tsx")),
+  FlagFill: lazy(() => import("./bootstrap/FlagFill.icon.tsx")),
+  Floppy: lazy(() => import("./bootstrap/Floppy.icon.tsx")),
+  Floppy2: lazy(() => import("./bootstrap/Floppy2.icon.tsx")),
+  Floppy2Fill: lazy(() => import("./bootstrap/Floppy2Fill.icon.tsx")),
+  FloppyFill: lazy(() => import("./bootstrap/FloppyFill.icon.tsx")),
+  Flower1: lazy(() => import("./bootstrap/Flower1.icon.tsx")),
+  Flower2: lazy(() => import("./bootstrap/Flower2.icon.tsx")),
+  Flower3: lazy(() => import("./bootstrap/Flower3.icon.tsx")),
+  Folder: lazy(() => import("./bootstrap/Folder.icon.tsx")),
+  Folder2: lazy(() => import("./bootstrap/Folder2.icon.tsx")),
+  Folder2Open: lazy(() => import("./bootstrap/Folder2Open.icon.tsx")),
+  Folder2OpenFill: lazy(() => import("./custom/Folder2OpenFill.icon.tsx")),
+  FolderCheck: lazy(() => import("./bootstrap/FolderCheck.icon.tsx")),
+  FolderFill: lazy(() => import("./bootstrap/FolderFill.icon.tsx")),
+  FolderMinus: lazy(() => import("./bootstrap/FolderMinus.icon.tsx")),
+  FolderPlus: lazy(() => import("./bootstrap/FolderPlus.icon.tsx")),
+  FolderSparkle: lazy(() => import("./custom/FolderSparkle.icon.tsx")),
+  FolderSymlink: lazy(() => import("./bootstrap/FolderSymlink.icon.tsx")),
+  FolderSymlinkFill: lazy(() => import("./bootstrap/FolderSymlinkFill.icon.tsx")),
+  FolderX: lazy(() => import("./bootstrap/FolderX.icon.tsx")),
+  Fonts: lazy(() => import("./bootstrap/Fonts.icon.tsx")),
+  Forward: lazy(() => import("./bootstrap/Forward.icon.tsx")),
+  ForwardFill: lazy(() => import("./bootstrap/ForwardFill.icon.tsx")),
+  Front: lazy(() => import("./bootstrap/Front.icon.tsx")),
+  FuelPump: lazy(() => import("./bootstrap/FuelPump.icon.tsx")),
+  FuelPumpDiesel: lazy(() => import("./bootstrap/FuelPumpDiesel.icon.tsx")),
+  FuelPumpDieselFill: lazy(() => import("./bootstrap/FuelPumpDieselFill.icon.tsx")),
+  FuelPumpFill: lazy(() => import("./bootstrap/FuelPumpFill.icon.tsx")),
+  Fullscreen: lazy(() => import("./bootstrap/Fullscreen.icon.tsx")),
+  FullscreenExit: lazy(() => import("./bootstrap/FullscreenExit.icon.tsx")),
+  Funnel: lazy(() => import("./bootstrap/Funnel.icon.tsx")),
+  FunnelFill: lazy(() => import("./bootstrap/FunnelFill.icon.tsx")),
+  Gear: lazy(() => import("./bootstrap/Gear.icon.tsx")),
+  GearFill: lazy(() => import("./bootstrap/GearFill.icon.tsx")),
+  GearWide: lazy(() => import("./bootstrap/GearWide.icon.tsx")),
+  GearWideConnected: lazy(() => import("./bootstrap/GearWideConnected.icon.tsx")),
+  Gem: lazy(() => import("./bootstrap/Gem.icon.tsx")),
+  GenderAmbiguous: lazy(() => import("./bootstrap/GenderAmbiguous.icon.tsx")),
+  GenderFemale: lazy(() => import("./bootstrap/GenderFemale.icon.tsx")),
+  GenderMale: lazy(() => import("./bootstrap/GenderMale.icon.tsx")),
+  GenderNeuter: lazy(() => import("./bootstrap/GenderNeuter.icon.tsx")),
+  GenderTrans: lazy(() => import("./bootstrap/GenderTrans.icon.tsx")),
+  Geo: lazy(() => import("./bootstrap/Geo.icon.tsx")),
+  GeoAlt: lazy(() => import("./bootstrap/GeoAlt.icon.tsx")),
+  GeoAltFill: lazy(() => import("./bootstrap/GeoAltFill.icon.tsx")),
+  GeoAltOff: lazy(() => import("./custom/GeoAltOff.icon.tsx")),
+  GeoFill: lazy(() => import("./bootstrap/GeoFill.icon.tsx")),
+  Gift: lazy(() => import("./bootstrap/Gift.icon.tsx")),
+  GiftFill: lazy(() => import("./bootstrap/GiftFill.icon.tsx")),
+  Git: lazy(() => import("./bootstrap/Git.icon.tsx")),
+  Github: lazy(() => import("./bootstrap/Github.icon.tsx")),
+  Gitlab: lazy(() => import("./bootstrap/Gitlab.icon.tsx")),
+  Globe: lazy(() => import("./bootstrap/Globe.icon.tsx")),
+  Globe2: lazy(() => import("./bootstrap/Globe2.icon.tsx")),
+  GlobeAmericas: lazy(() => import("./bootstrap/GlobeAmericas.icon.tsx")),
+  GlobeAsiaAustralia: lazy(() => import("./bootstrap/GlobeAsiaAustralia.icon.tsx")),
+  GlobeCentralSouthAsia: lazy(() => import("./bootstrap/GlobeCentralSouthAsia.icon.tsx")),
+  GlobeEuropeAfrica: lazy(() => import("./bootstrap/GlobeEuropeAfrica.icon.tsx")),
+  Google: lazy(() => import("./bootstrap/Google.icon.tsx")),
+  GooglePlay: lazy(() => import("./bootstrap/GooglePlay.icon.tsx")),
+  GpuCard: lazy(() => import("./bootstrap/GpuCard.icon.tsx")),
+  Grab: lazy(() => import("./custom/Grab.icon.tsx")),
+  GrabHorizontal: lazy(() => import("./custom/GrabHorizontal.icon.tsx")),
+  GraphDown: lazy(() => import("./bootstrap/GraphDown.icon.tsx")),
+  GraphDownArrow: lazy(() => import("./bootstrap/GraphDownArrow.icon.tsx")),
+  GraphUp: lazy(() => import("./bootstrap/GraphUp.icon.tsx")),
+  GraphUpArrow: lazy(() => import("./bootstrap/GraphUpArrow.icon.tsx")),
+  Grid: lazy(() => import("./bootstrap/Grid.icon.tsx")),
+  Grid1X2: lazy(() => import("./bootstrap/Grid1X2.icon.tsx")),
+  Grid1X2Fill: lazy(() => import("./bootstrap/Grid1X2Fill.icon.tsx")),
+  Grid3X2: lazy(() => import("./bootstrap/Grid3X2.icon.tsx")),
+  Grid3X2Gap: lazy(() => import("./bootstrap/Grid3X2Gap.icon.tsx")),
+  Grid3X2GapFill: lazy(() => import("./bootstrap/Grid3X2GapFill.icon.tsx")),
+  Grid3X3: lazy(() => import("./bootstrap/Grid3X3.icon.tsx")),
+  Grid3X3Gap: lazy(() => import("./bootstrap/Grid3X3Gap.icon.tsx")),
+  Grid3X3GapFill: lazy(() => import("./bootstrap/Grid3X3GapFill.icon.tsx")),
+  GridFill: lazy(() => import("./bootstrap/GridFill.icon.tsx")),
+  GripHorizontal: lazy(() => import("./bootstrap/GripHorizontal.icon.tsx")),
+  GripVertical: lazy(() => import("./bootstrap/GripVertical.icon.tsx")),
+  Hammer: lazy(() => import("./bootstrap/Hammer.icon.tsx")),
+  Hand: lazy(() => import("./custom/Hand.icon.tsx")),
+  Handbag: lazy(() => import("./bootstrap/Handbag.icon.tsx")),
+  HandbagFill: lazy(() => import("./bootstrap/HandbagFill.icon.tsx")),
+  HandFinger: lazy(() => import("./custom/HandFinger.icon.tsx")),
+  HandFinger45Deg: lazy(() => import("./custom/HandFinger45Deg.icon.tsx")),
+  HandFingerRight: lazy(() => import("./custom/HandFingerRight.icon.tsx")),
+  HandIndex: lazy(() => import("./bootstrap/HandIndex.icon.tsx")),
+  HandIndexFill: lazy(() => import("./bootstrap/HandIndexFill.icon.tsx")),
+  HandIndexThumb: lazy(() => import("./bootstrap/HandIndexThumb.icon.tsx")),
+  HandIndexThumbFill: lazy(() => import("./bootstrap/HandIndexThumbFill.icon.tsx")),
+  HandOff: lazy(() => import("./custom/HandOff.icon.tsx")),
+  HandThumbsDown: lazy(() => import("./bootstrap/HandThumbsDown.icon.tsx")),
+  HandThumbsDownFill: lazy(() => import("./bootstrap/HandThumbsDownFill.icon.tsx")),
+  HandThumbsUp: lazy(() => import("./bootstrap/HandThumbsUp.icon.tsx")),
+  HandThumbsUpFill: lazy(() => import("./bootstrap/HandThumbsUpFill.icon.tsx")),
+  Hash: lazy(() => import("./bootstrap/Hash.icon.tsx")),
+  HCircle: lazy(() => import("./bootstrap/HCircle.icon.tsx")),
+  HCircleFill: lazy(() => import("./bootstrap/HCircleFill.icon.tsx")),
+  Hdd: lazy(() => import("./bootstrap/Hdd.icon.tsx")),
+  HddFill: lazy(() => import("./bootstrap/HddFill.icon.tsx")),
+  HddNetwork: lazy(() => import("./bootstrap/HddNetwork.icon.tsx")),
+  HddNetworkFill: lazy(() => import("./bootstrap/HddNetworkFill.icon.tsx")),
+  HddRack: lazy(() => import("./bootstrap/HddRack.icon.tsx")),
+  HddRackFill: lazy(() => import("./bootstrap/HddRackFill.icon.tsx")),
+  HddStack: lazy(() => import("./bootstrap/HddStack.icon.tsx")),
+  HddStackFill: lazy(() => import("./bootstrap/HddStackFill.icon.tsx")),
+  Hdmi: lazy(() => import("./bootstrap/Hdmi.icon.tsx")),
+  HdmiFill: lazy(() => import("./bootstrap/HdmiFill.icon.tsx")),
+  Headphones: lazy(() => import("./bootstrap/Headphones.icon.tsx")),
+  Headset: lazy(() => import("./bootstrap/Headset.icon.tsx")),
+  HeadsetVr: lazy(() => import("./bootstrap/HeadsetVr.icon.tsx")),
+  Heart: lazy(() => import("./bootstrap/Heart.icon.tsx")),
+  HeartArrow: lazy(() => import("./bootstrap/HeartArrow.icon.tsx")),
+  Heartbreak: lazy(() => import("./bootstrap/Heartbreak.icon.tsx")),
+  HeartbreakFill: lazy(() => import("./bootstrap/HeartbreakFill.icon.tsx")),
+  HeartFill: lazy(() => import("./bootstrap/HeartFill.icon.tsx")),
+  HeartHalf: lazy(() => import("./bootstrap/HeartHalf.icon.tsx")),
+  HeartPulse: lazy(() => import("./bootstrap/HeartPulse.icon.tsx")),
+  HeartPulseFill: lazy(() => import("./bootstrap/HeartPulseFill.icon.tsx")),
+  Hearts: lazy(() => import("./bootstrap/Hearts.icon.tsx")),
+  Heptagon: lazy(() => import("./bootstrap/Heptagon.icon.tsx")),
+  HeptagonFill: lazy(() => import("./bootstrap/HeptagonFill.icon.tsx")),
+  HeptagonHalf: lazy(() => import("./bootstrap/HeptagonHalf.icon.tsx")),
+  Hexagon: lazy(() => import("./bootstrap/Hexagon.icon.tsx")),
+  Hexagon2NdHalf: lazy(() => import("./custom/Hexagon2NdHalf.icon.tsx")),
+  HexagonArrowDown: lazy(() => import("./custom/HexagonArrowDown.icon.tsx")),
+  HexagonArrowDownFill: lazy(() => import("./custom/HexagonArrowDownFill.icon.tsx")),
+  HexagonArrowRight: lazy(() => import("./custom/HexagonArrowRight.icon.tsx")),
+  HexagonArrowRightFill: lazy(() => import("./custom/HexagonArrowRightFill.icon.tsx")),
+  HexagonCore: lazy(() => import("./custom/HexagonCore.icon.tsx")),
+  HexagonCore2NdHalf: lazy(() => import("./custom/HexagonCore2NdHalf.icon.tsx")),
+  HexagonCoreHalf: lazy(() => import("./custom/HexagonCoreHalf.icon.tsx")),
+  HexagonDashed: lazy(() => import("./custom/HexagonDashed.icon.tsx")),
+  HexagonFill: lazy(() => import("./bootstrap/HexagonFill.icon.tsx")),
+  HexagonHalf: lazy(() => import("./bootstrap/HexagonHalf.icon.tsx")),
+  HexagonOff: lazy(() => import("./custom/HexagonOff.icon.tsx")),
+  HexagonOffFill: lazy(() => import("./custom/HexagonOffFill.icon.tsx")),
+  HexagonQuestion: lazy(() => import("./custom/HexagonQuestion.icon.tsx")),
+  HexagonQuestionFill: lazy(() => import("./custom/HexagonQuestionFill.icon.tsx")),
+  Highlighter: lazy(() => import("./bootstrap/Highlighter.icon.tsx")),
+  Highlights: lazy(() => import("./bootstrap/Highlights.icon.tsx")),
+  Hospital: lazy(() => import("./bootstrap/Hospital.icon.tsx")),
+  HospitalFill: lazy(() => import("./bootstrap/HospitalFill.icon.tsx")),
+  Hourglass: lazy(() => import("./bootstrap/Hourglass.icon.tsx")),
+  HourglassBottom: lazy(() => import("./bootstrap/HourglassBottom.icon.tsx")),
+  HourglassSplit: lazy(() => import("./bootstrap/HourglassSplit.icon.tsx")),
+  HourglassTop: lazy(() => import("./bootstrap/HourglassTop.icon.tsx")),
+  House: lazy(() => import("./bootstrap/House.icon.tsx")),
+  HouseAdd: lazy(() => import("./bootstrap/HouseAdd.icon.tsx")),
+  HouseAddFill: lazy(() => import("./bootstrap/HouseAddFill.icon.tsx")),
+  HouseCheck: lazy(() => import("./bootstrap/HouseCheck.icon.tsx")),
+  HouseCheckFill: lazy(() => import("./bootstrap/HouseCheckFill.icon.tsx")),
+  HouseDash: lazy(() => import("./bootstrap/HouseDash.icon.tsx")),
+  HouseDashFill: lazy(() => import("./bootstrap/HouseDashFill.icon.tsx")),
+  HouseDoor: lazy(() => import("./bootstrap/HouseDoor.icon.tsx")),
+  HouseDoorFill: lazy(() => import("./bootstrap/HouseDoorFill.icon.tsx")),
+  HouseDown: lazy(() => import("./bootstrap/HouseDown.icon.tsx")),
+  HouseDownFill: lazy(() => import("./bootstrap/HouseDownFill.icon.tsx")),
+  HouseExclamation: lazy(() => import("./bootstrap/HouseExclamation.icon.tsx")),
+  HouseExclamationFill: lazy(() => import("./bootstrap/HouseExclamationFill.icon.tsx")),
+  HouseFill: lazy(() => import("./bootstrap/HouseFill.icon.tsx")),
+  HouseGear: lazy(() => import("./bootstrap/HouseGear.icon.tsx")),
+  HouseGearFill: lazy(() => import("./bootstrap/HouseGearFill.icon.tsx")),
+  HouseHeart: lazy(() => import("./bootstrap/HouseHeart.icon.tsx")),
+  HouseHeartFill: lazy(() => import("./bootstrap/HouseHeartFill.icon.tsx")),
+  HouseLock: lazy(() => import("./bootstrap/HouseLock.icon.tsx")),
+  HouseLockFill: lazy(() => import("./bootstrap/HouseLockFill.icon.tsx")),
+  Houses: lazy(() => import("./bootstrap/Houses.icon.tsx")),
+  HousesFill: lazy(() => import("./bootstrap/HousesFill.icon.tsx")),
+  HouseSlash: lazy(() => import("./bootstrap/HouseSlash.icon.tsx")),
+  HouseSlashFill: lazy(() => import("./bootstrap/HouseSlashFill.icon.tsx")),
+  HouseUp: lazy(() => import("./bootstrap/HouseUp.icon.tsx")),
+  HouseUpFill: lazy(() => import("./bootstrap/HouseUpFill.icon.tsx")),
+  HouseX: lazy(() => import("./bootstrap/HouseX.icon.tsx")),
+  HouseXFill: lazy(() => import("./bootstrap/HouseXFill.icon.tsx")),
+  Hr: lazy(() => import("./bootstrap/Hr.icon.tsx")),
+  HSquare: lazy(() => import("./bootstrap/HSquare.icon.tsx")),
+  HSquareFill: lazy(() => import("./bootstrap/HSquareFill.icon.tsx")),
+  Hurricane: lazy(() => import("./bootstrap/Hurricane.icon.tsx")),
+  Hypnotize: lazy(() => import("./bootstrap/Hypnotize.icon.tsx")),
+  Image: lazy(() => import("./bootstrap/Image.icon.tsx")),
+  ImageAlt: lazy(() => import("./bootstrap/ImageAlt.icon.tsx")),
+  ImageFill: lazy(() => import("./bootstrap/ImageFill.icon.tsx")),
+  Images: lazy(() => import("./bootstrap/Images.icon.tsx")),
+  Inbox: lazy(() => import("./bootstrap/Inbox.icon.tsx")),
+  Inboxes: lazy(() => import("./bootstrap/Inboxes.icon.tsx")),
+  InboxesFill: lazy(() => import("./bootstrap/InboxesFill.icon.tsx")),
+  InboxFill: lazy(() => import("./bootstrap/InboxFill.icon.tsx")),
+  Incognito: lazy(() => import("./bootstrap/Incognito.icon.tsx")),
+  Indent: lazy(() => import("./bootstrap/Indent.icon.tsx")),
+  InfinityBootstrap: lazy(() => import("./bootstrap/InfinityBootstrap.icon.tsx")),
+  Info: lazy(() => import("./bootstrap/Info.icon.tsx")),
+  InfoCircle: lazy(() => import("./bootstrap/InfoCircle.icon.tsx")),
+  InfoCircleFill: lazy(() => import("./bootstrap/InfoCircleFill.icon.tsx")),
+  InfoLg: lazy(() => import("./bootstrap/InfoLg.icon.tsx")),
+  InfoSquare: lazy(() => import("./bootstrap/InfoSquare.icon.tsx")),
+  InfoSquareFill: lazy(() => import("./bootstrap/InfoSquareFill.icon.tsx")),
+  InputCursor: lazy(() => import("./bootstrap/InputCursor.icon.tsx")),
+  InputCursorText: lazy(() => import("./bootstrap/InputCursorText.icon.tsx")),
+  Instagram: lazy(() => import("./bootstrap/Instagram.icon.tsx")),
+  Intercom: lazy(() => import("./custom/Intercom.icon.tsx")),
+  IntercomFill: lazy(() => import("./custom/IntercomFill.icon.tsx")),
+  Intersect: lazy(() => import("./bootstrap/Intersect.icon.tsx")),
+  Invoice: lazy(() => import("./custom/Invoice.icon.tsx")),
+  Invoice2: lazy(() => import("./custom/Invoice2.icon.tsx")),
+  Invoice2In: lazy(() => import("./custom/Invoice2In.icon.tsx")),
+  Invoice2Out: lazy(() => import("./custom/Invoice2Out.icon.tsx")),
+  InvoiceClock: lazy(() => import("./custom/InvoiceClock.icon.tsx")),
+  InvoiceDraft: lazy(() => import("./custom/InvoiceDraft.icon.tsx")),
+  InvoicePdf: lazy(() => import("./custom/InvoicePdf.icon.tsx")),
+  Invoices: lazy(() => import("./custom/Invoices.icon.tsx")),
+  Invoices2: lazy(() => import("./custom/Invoices2.icon.tsx")),
+  InvoicesLink: lazy(() => import("./custom/InvoicesLink.icon.tsx")),
+  Journal: lazy(() => import("./custom/Journal.icon.tsx")),
+  Journal2: lazy(() => import("./custom/Journal2.icon.tsx")),
+  Journal2Off: lazy(() => import("./custom/Journal2Off.icon.tsx")),
+  JournalAlbum: lazy(() => import("./bootstrap/JournalAlbum.icon.tsx")),
+  JournalArrowDown: lazy(() => import("./bootstrap/JournalArrowDown.icon.tsx")),
+  JournalArrowUp: lazy(() => import("./bootstrap/JournalArrowUp.icon.tsx")),
+  JournalBookmark: lazy(() => import("./bootstrap/JournalBookmark.icon.tsx")),
+  JournalBookmarkFill: lazy(() => import("./bootstrap/JournalBookmarkFill.icon.tsx")),
+  JournalBootstrap: lazy(() => import("./bootstrap/JournalBootstrap.icon.tsx")),
+  JournalCheck: lazy(() => import("./custom/JournalCheck.icon.tsx")),
+  JournalCheckBootstrap: lazy(() => import("./bootstrap/JournalCheckBootstrap.icon.tsx")),
+  JournalCode: lazy(() => import("./bootstrap/JournalCode.icon.tsx")),
+  JournalMedical: lazy(() => import("./bootstrap/JournalMedical.icon.tsx")),
+  JournalMinus: lazy(() => import("./bootstrap/JournalMinus.icon.tsx")),
+  JournalOff: lazy(() => import("./custom/JournalOff.icon.tsx")),
+  JournalPlus: lazy(() => import("./bootstrap/JournalPlus.icon.tsx")),
+  JournalRichtext: lazy(() => import("./bootstrap/JournalRichtext.icon.tsx")),
+  Journals: lazy(() => import("./bootstrap/Journals.icon.tsx")),
+  JournalText: lazy(() => import("./bootstrap/JournalText.icon.tsx")),
+  JournalX: lazy(() => import("./bootstrap/JournalX.icon.tsx")),
+  Joystick: lazy(() => import("./bootstrap/Joystick.icon.tsx")),
+  Justify: lazy(() => import("./bootstrap/Justify.icon.tsx")),
+  JustifyLeft: lazy(() => import("./bootstrap/JustifyLeft.icon.tsx")),
+  JustifyRight: lazy(() => import("./bootstrap/JustifyRight.icon.tsx")),
+  Kanban: lazy(() => import("./bootstrap/Kanban.icon.tsx")),
+  KanbanFill: lazy(() => import("./bootstrap/KanbanFill.icon.tsx")),
+  Key: lazy(() => import("./bootstrap/Key.icon.tsx")),
+  Keyboard: lazy(() => import("./bootstrap/Keyboard.icon.tsx")),
+  KeyboardFill: lazy(() => import("./bootstrap/KeyboardFill.icon.tsx")),
+  KeyFill: lazy(() => import("./bootstrap/KeyFill.icon.tsx")),
+  Ladder: lazy(() => import("./bootstrap/Ladder.icon.tsx")),
+  Lamp: lazy(() => import("./bootstrap/Lamp.icon.tsx")),
+  LampFill: lazy(() => import("./bootstrap/LampFill.icon.tsx")),
+  LampFillOff: lazy(() => import("./custom/LampFillOff.icon.tsx")),
+  LampOff: lazy(() => import("./custom/LampOff.icon.tsx")),
+  Laptop: lazy(() => import("./bootstrap/Laptop.icon.tsx")),
+  LaptopFill: lazy(() => import("./bootstrap/LaptopFill.icon.tsx")),
+  LayerBackward: lazy(() => import("./bootstrap/LayerBackward.icon.tsx")),
+  LayerForward: lazy(() => import("./bootstrap/LayerForward.icon.tsx")),
+  Layers: lazy(() => import("./bootstrap/Layers.icon.tsx")),
+  LayersFill: lazy(() => import("./bootstrap/LayersFill.icon.tsx")),
+  LayersHalf: lazy(() => import("./bootstrap/LayersHalf.icon.tsx")),
+  LayoutSidebar: lazy(() => import("./bootstrap/LayoutSidebar.icon.tsx")),
+  LayoutSidebarInset: lazy(() => import("./bootstrap/LayoutSidebarInset.icon.tsx")),
+  LayoutSidebarInsetReverse: lazy(() => import("./bootstrap/LayoutSidebarInsetReverse.icon.tsx")),
+  LayoutSidebarReverse: lazy(() => import("./bootstrap/LayoutSidebarReverse.icon.tsx")),
+  LayoutSplit: lazy(() => import("./bootstrap/LayoutSplit.icon.tsx")),
+  LayoutTextSidebar: lazy(() => import("./bootstrap/LayoutTextSidebar.icon.tsx")),
+  LayoutTextSidebarReverse: lazy(() => import("./bootstrap/LayoutTextSidebarReverse.icon.tsx")),
+  LayoutTextWindow: lazy(() => import("./bootstrap/LayoutTextWindow.icon.tsx")),
+  LayoutTextWindowReverse: lazy(() => import("./bootstrap/LayoutTextWindowReverse.icon.tsx")),
+  LayoutThreeColumns: lazy(() => import("./bootstrap/LayoutThreeColumns.icon.tsx")),
+  LayoutWtf: lazy(() => import("./bootstrap/LayoutWtf.icon.tsx")),
+  LifePreserver: lazy(() => import("./bootstrap/LifePreserver.icon.tsx")),
+  Lightbulb: lazy(() => import("./bootstrap/Lightbulb.icon.tsx")),
+  LightbulbFill: lazy(() => import("./bootstrap/LightbulbFill.icon.tsx")),
+  LightbulbOff: lazy(() => import("./bootstrap/LightbulbOff.icon.tsx")),
+  LightbulbOffFill: lazy(() => import("./bootstrap/LightbulbOffFill.icon.tsx")),
+  Lightning: lazy(() => import("./bootstrap/Lightning.icon.tsx")),
+  LightningCharge: lazy(() => import("./bootstrap/LightningCharge.icon.tsx")),
+  LightningChargeFill: lazy(() => import("./bootstrap/LightningChargeFill.icon.tsx")),
+  LightningFill: lazy(() => import("./bootstrap/LightningFill.icon.tsx")),
+  Line: lazy(() => import("./bootstrap/Line.icon.tsx")),
+  Link: lazy(() => import("./bootstrap/Link.icon.tsx")),
+  Link2: lazy(() => import("./custom/Link2.icon.tsx")),
+  Link2Break: lazy(() => import("./custom/Link2Break.icon.tsx")),
+  Link45Deg: lazy(() => import("./bootstrap/Link45Deg.icon.tsx")),
+  Linkedin: lazy(() => import("./bootstrap/Linkedin.icon.tsx")),
+  List: lazy(() => import("./bootstrap/List.icon.tsx")),
+  ListCheck: lazy(() => import("./bootstrap/ListCheck.icon.tsx")),
+  ListColumns: lazy(() => import("./bootstrap/ListColumns.icon.tsx")),
+  ListColumnsReverse: lazy(() => import("./bootstrap/ListColumnsReverse.icon.tsx")),
+  ListNested: lazy(() => import("./bootstrap/ListNested.icon.tsx")),
+  ListOl: lazy(() => import("./bootstrap/ListOl.icon.tsx")),
+  ListStars: lazy(() => import("./bootstrap/ListStars.icon.tsx")),
+  ListTask: lazy(() => import("./bootstrap/ListTask.icon.tsx")),
+  ListUl: lazy(() => import("./bootstrap/ListUl.icon.tsx")),
+  Lock: lazy(() => import("./bootstrap/Lock.icon.tsx")),
+  LockFill: lazy(() => import("./bootstrap/LockFill.icon.tsx")),
+  Luggage: lazy(() => import("./bootstrap/Luggage.icon.tsx")),
+  LuggageFill: lazy(() => import("./bootstrap/LuggageFill.icon.tsx")),
+  Lungs: lazy(() => import("./bootstrap/Lungs.icon.tsx")),
+  LungsFill: lazy(() => import("./bootstrap/LungsFill.icon.tsx")),
+  Magic: lazy(() => import("./bootstrap/Magic.icon.tsx")),
+  Magnet: lazy(() => import("./bootstrap/Magnet.icon.tsx")),
+  MagnetFill: lazy(() => import("./bootstrap/MagnetFill.icon.tsx")),
+  Mailbox: lazy(() => import("./bootstrap/Mailbox.icon.tsx")),
+  Mailbox2: lazy(() => import("./bootstrap/Mailbox2.icon.tsx")),
+  Mailbox2Flag: lazy(() => import("./bootstrap/Mailbox2Flag.icon.tsx")),
+  MailboxFlag: lazy(() => import("./bootstrap/MailboxFlag.icon.tsx")),
+  Map: lazy(() => import("./bootstrap/Map.icon.tsx")),
+  MapFill: lazy(() => import("./bootstrap/MapFill.icon.tsx")),
+  MapOff: lazy(() => import("./custom/MapOff.icon.tsx")),
+  Markdown: lazy(() => import("./bootstrap/Markdown.icon.tsx")),
+  MarkdownFill: lazy(() => import("./bootstrap/MarkdownFill.icon.tsx")),
+  MarkerTip: lazy(() => import("./bootstrap/MarkerTip.icon.tsx")),
+  Mask: lazy(() => import("./bootstrap/Mask.icon.tsx")),
+  Mastodon: lazy(() => import("./bootstrap/Mastodon.icon.tsx")),
+  MeasuringTape: lazy(() => import("./custom/MeasuringTape.icon.tsx")),
+  MeasuringTapeFill: lazy(() => import("./custom/MeasuringTapeFill.icon.tsx")),
+  Medium: lazy(() => import("./bootstrap/Medium.icon.tsx")),
+  Megaphone: lazy(() => import("./bootstrap/Megaphone.icon.tsx")),
+  MegaphoneFill: lazy(() => import("./bootstrap/MegaphoneFill.icon.tsx")),
+  Memory: lazy(() => import("./bootstrap/Memory.icon.tsx")),
+  MenuApp: lazy(() => import("./bootstrap/MenuApp.icon.tsx")),
+  MenuAppFill: lazy(() => import("./bootstrap/MenuAppFill.icon.tsx")),
+  MenuButton: lazy(() => import("./bootstrap/MenuButton.icon.tsx")),
+  MenuButtonFill: lazy(() => import("./bootstrap/MenuButtonFill.icon.tsx")),
+  MenuButtonWide: lazy(() => import("./bootstrap/MenuButtonWide.icon.tsx")),
+  MenuButtonWideFill: lazy(() => import("./bootstrap/MenuButtonWideFill.icon.tsx")),
+  MenuDown: lazy(() => import("./bootstrap/MenuDown.icon.tsx")),
+  MenuUp: lazy(() => import("./bootstrap/MenuUp.icon.tsx")),
+  Messenger: lazy(() => import("./bootstrap/Messenger.icon.tsx")),
+  Meta: lazy(() => import("./bootstrap/Meta.icon.tsx")),
+  Mic: lazy(() => import("./bootstrap/Mic.icon.tsx")),
+  MicFill: lazy(() => import("./bootstrap/MicFill.icon.tsx")),
+  MicMute: lazy(() => import("./bootstrap/MicMute.icon.tsx")),
+  MicMuteFill: lazy(() => import("./bootstrap/MicMuteFill.icon.tsx")),
+  Microsoft: lazy(() => import("./bootstrap/Microsoft.icon.tsx")),
+  MicrosoftTeams: lazy(() => import("./bootstrap/MicrosoftTeams.icon.tsx")),
+  Minecart: lazy(() => import("./bootstrap/Minecart.icon.tsx")),
+  MinecartLoaded: lazy(() => import("./bootstrap/MinecartLoaded.icon.tsx")),
+  Modem: lazy(() => import("./bootstrap/Modem.icon.tsx")),
+  ModemFill: lazy(() => import("./bootstrap/ModemFill.icon.tsx")),
+  Moisture: lazy(() => import("./bootstrap/Moisture.icon.tsx")),
+  Moon: lazy(() => import("./bootstrap/Moon.icon.tsx")),
+  MoonFill: lazy(() => import("./bootstrap/MoonFill.icon.tsx")),
+  MoonStars: lazy(() => import("./bootstrap/MoonStars.icon.tsx")),
+  MoonStarsFill: lazy(() => import("./bootstrap/MoonStarsFill.icon.tsx")),
+  Mortarboard: lazy(() => import("./bootstrap/Mortarboard.icon.tsx")),
+  MortarboardFill: lazy(() => import("./bootstrap/MortarboardFill.icon.tsx")),
+  Motherboard: lazy(() => import("./bootstrap/Motherboard.icon.tsx")),
+  MotherboardFill: lazy(() => import("./bootstrap/MotherboardFill.icon.tsx")),
+  Mouse: lazy(() => import("./bootstrap/Mouse.icon.tsx")),
+  Mouse2: lazy(() => import("./bootstrap/Mouse2.icon.tsx")),
+  Mouse2Fill: lazy(() => import("./bootstrap/Mouse2Fill.icon.tsx")),
+  Mouse3: lazy(() => import("./bootstrap/Mouse3.icon.tsx")),
+  Mouse3Fill: lazy(() => import("./bootstrap/Mouse3Fill.icon.tsx")),
+  MouseFill: lazy(() => import("./bootstrap/MouseFill.icon.tsx")),
+  MusicNote: lazy(() => import("./bootstrap/MusicNote.icon.tsx")),
+  MusicNoteBeamed: lazy(() => import("./bootstrap/MusicNoteBeamed.icon.tsx")),
+  MusicNoteList: lazy(() => import("./bootstrap/MusicNoteList.icon.tsx")),
+  MusicPlayer: lazy(() => import("./bootstrap/MusicPlayer.icon.tsx")),
+  MusicPlayerFill: lazy(() => import("./bootstrap/MusicPlayerFill.icon.tsx")),
+  Newspaper: lazy(() => import("./bootstrap/Newspaper.icon.tsx")),
+  NintendoSwitch: lazy(() => import("./bootstrap/NintendoSwitch.icon.tsx")),
+  NodeMinus: lazy(() => import("./bootstrap/NodeMinus.icon.tsx")),
+  NodeMinusFill: lazy(() => import("./bootstrap/NodeMinusFill.icon.tsx")),
+  NodePlus: lazy(() => import("./bootstrap/NodePlus.icon.tsx")),
+  NodePlusFill: lazy(() => import("./bootstrap/NodePlusFill.icon.tsx")),
+  NoiseReduction: lazy(() => import("./bootstrap/NoiseReduction.icon.tsx")),
+  Nut: lazy(() => import("./bootstrap/Nut.icon.tsx")),
+  NutFill: lazy(() => import("./bootstrap/NutFill.icon.tsx")),
+  Nvidia: lazy(() => import("./bootstrap/Nvidia.icon.tsx")),
+  Nvme: lazy(() => import("./bootstrap/Nvme.icon.tsx")),
+  NvmeFill: lazy(() => import("./bootstrap/NvmeFill.icon.tsx")),
+  Octagon: lazy(() => import("./bootstrap/Octagon.icon.tsx")),
+  OctagonFill: lazy(() => import("./bootstrap/OctagonFill.icon.tsx")),
+  OctagonHalf: lazy(() => import("./bootstrap/OctagonHalf.icon.tsx")),
+  Opencollective: lazy(() => import("./bootstrap/Opencollective.icon.tsx")),
+  OpticalAudio: lazy(() => import("./bootstrap/OpticalAudio.icon.tsx")),
+  OpticalAudioFill: lazy(() => import("./bootstrap/OpticalAudioFill.icon.tsx")),
+  Option: lazy(() => import("./bootstrap/Option.icon.tsx")),
+  Outlet: lazy(() => import("./bootstrap/Outlet.icon.tsx")),
+  PaintBucket: lazy(() => import("./bootstrap/PaintBucket.icon.tsx")),
+  PaintRoller: lazy(() => import("./custom/PaintRoller.icon.tsx")),
+  PaintRollerFill: lazy(() => import("./custom/PaintRollerFill.icon.tsx")),
+  Palette: lazy(() => import("./bootstrap/Palette.icon.tsx")),
+  Palette2: lazy(() => import("./bootstrap/Palette2.icon.tsx")),
+  PaletteFill: lazy(() => import("./bootstrap/PaletteFill.icon.tsx")),
+  Paperclip: lazy(() => import("./bootstrap/Paperclip.icon.tsx")),
+  Paragraph: lazy(() => import("./bootstrap/Paragraph.icon.tsx")),
+  Pass: lazy(() => import("./bootstrap/Pass.icon.tsx")),
+  PassFill: lazy(() => import("./bootstrap/PassFill.icon.tsx")),
+  Passport: lazy(() => import("./bootstrap/Passport.icon.tsx")),
+  PassportFill: lazy(() => import("./bootstrap/PassportFill.icon.tsx")),
+  PatchCheck: lazy(() => import("./bootstrap/PatchCheck.icon.tsx")),
+  PatchCheckFill: lazy(() => import("./bootstrap/PatchCheckFill.icon.tsx")),
+  PatchExclamation: lazy(() => import("./bootstrap/PatchExclamation.icon.tsx")),
+  PatchExclamationFill: lazy(() => import("./bootstrap/PatchExclamationFill.icon.tsx")),
+  PatchMinus: lazy(() => import("./bootstrap/PatchMinus.icon.tsx")),
+  PatchMinusFill: lazy(() => import("./bootstrap/PatchMinusFill.icon.tsx")),
+  PatchPlus: lazy(() => import("./bootstrap/PatchPlus.icon.tsx")),
+  PatchPlusFill: lazy(() => import("./bootstrap/PatchPlusFill.icon.tsx")),
+  PatchQuestion: lazy(() => import("./bootstrap/PatchQuestion.icon.tsx")),
+  PatchQuestionFill: lazy(() => import("./bootstrap/PatchQuestionFill.icon.tsx")),
+  Pause: lazy(() => import("./bootstrap/Pause.icon.tsx")),
+  PauseBtn: lazy(() => import("./bootstrap/PauseBtn.icon.tsx")),
+  PauseBtnFill: lazy(() => import("./bootstrap/PauseBtnFill.icon.tsx")),
+  PauseCircle: lazy(() => import("./bootstrap/PauseCircle.icon.tsx")),
+  PauseCircleFill: lazy(() => import("./bootstrap/PauseCircleFill.icon.tsx")),
+  PauseFill: lazy(() => import("./bootstrap/PauseFill.icon.tsx")),
+  Paypal: lazy(() => import("./bootstrap/Paypal.icon.tsx")),
+  Pc: lazy(() => import("./bootstrap/Pc.icon.tsx")),
+  PcDisplay: lazy(() => import("./bootstrap/PcDisplay.icon.tsx")),
+  PcDisplayHorizontal: lazy(() => import("./bootstrap/PcDisplayHorizontal.icon.tsx")),
+  PcHorizontal: lazy(() => import("./bootstrap/PcHorizontal.icon.tsx")),
+  PciCard: lazy(() => import("./bootstrap/PciCard.icon.tsx")),
+  PciCardNetwork: lazy(() => import("./bootstrap/PciCardNetwork.icon.tsx")),
+  PciCardSound: lazy(() => import("./bootstrap/PciCardSound.icon.tsx")),
+  PCircle: lazy(() => import("./bootstrap/PCircle.icon.tsx")),
+  PCircleFill: lazy(() => import("./bootstrap/PCircleFill.icon.tsx")),
+  Peace: lazy(() => import("./bootstrap/Peace.icon.tsx")),
+  PeaceFill: lazy(() => import("./bootstrap/PeaceFill.icon.tsx")),
+  Pen: lazy(() => import("./bootstrap/Pen.icon.tsx")),
+  Pencil: lazy(() => import("./bootstrap/Pencil.icon.tsx")),
+  PencilFill: lazy(() => import("./bootstrap/PencilFill.icon.tsx")),
+  PencilSquare: lazy(() => import("./bootstrap/PencilSquare.icon.tsx")),
+  PenFill: lazy(() => import("./bootstrap/PenFill.icon.tsx")),
+  PenOff: lazy(() => import("./custom/PenOff.icon.tsx")),
+  PenOffFill: lazy(() => import("./custom/PenOffFill.icon.tsx")),
+  Pentagon: lazy(() => import("./bootstrap/Pentagon.icon.tsx")),
+  PentagonFill: lazy(() => import("./bootstrap/PentagonFill.icon.tsx")),
+  PentagonHalf: lazy(() => import("./bootstrap/PentagonHalf.icon.tsx")),
+  People: lazy(() => import("./bootstrap/People.icon.tsx")),
+  PeopleFill: lazy(() => import("./bootstrap/PeopleFill.icon.tsx")),
+  Percent: lazy(() => import("./bootstrap/Percent.icon.tsx")),
+  Person: lazy(() => import("./bootstrap/Person.icon.tsx")),
+  PersonAdd: lazy(() => import("./bootstrap/PersonAdd.icon.tsx")),
+  PersonArmsUp: lazy(() => import("./bootstrap/PersonArmsUp.icon.tsx")),
+  PersonBadge: lazy(() => import("./bootstrap/PersonBadge.icon.tsx")),
+  PersonBadgeFill: lazy(() => import("./bootstrap/PersonBadgeFill.icon.tsx")),
+  PersonBoundingBox: lazy(() => import("./bootstrap/PersonBoundingBox.icon.tsx")),
+  PersonCheck: lazy(() => import("./bootstrap/PersonCheck.icon.tsx")),
+  PersonCheckFill: lazy(() => import("./bootstrap/PersonCheckFill.icon.tsx")),
+  PersonCircle: lazy(() => import("./bootstrap/PersonCircle.icon.tsx")),
+  PersonDash: lazy(() => import("./bootstrap/PersonDash.icon.tsx")),
+  PersonDashFill: lazy(() => import("./bootstrap/PersonDashFill.icon.tsx")),
+  PersonDown: lazy(() => import("./bootstrap/PersonDown.icon.tsx")),
+  PersonExclamation: lazy(() => import("./bootstrap/PersonExclamation.icon.tsx")),
+  PersonFill: lazy(() => import("./bootstrap/PersonFill.icon.tsx")),
+  PersonFillAdd: lazy(() => import("./bootstrap/PersonFillAdd.icon.tsx")),
+  PersonFillCheck: lazy(() => import("./bootstrap/PersonFillCheck.icon.tsx")),
+  PersonFillDash: lazy(() => import("./bootstrap/PersonFillDash.icon.tsx")),
+  PersonFillDown: lazy(() => import("./bootstrap/PersonFillDown.icon.tsx")),
+  PersonFillExclamation: lazy(() => import("./bootstrap/PersonFillExclamation.icon.tsx")),
+  PersonFillGear: lazy(() => import("./bootstrap/PersonFillGear.icon.tsx")),
+  PersonFillLock: lazy(() => import("./bootstrap/PersonFillLock.icon.tsx")),
+  PersonFillSlash: lazy(() => import("./bootstrap/PersonFillSlash.icon.tsx")),
+  PersonFillUp: lazy(() => import("./bootstrap/PersonFillUp.icon.tsx")),
+  PersonFillX: lazy(() => import("./bootstrap/PersonFillX.icon.tsx")),
+  PersonGear: lazy(() => import("./bootstrap/PersonGear.icon.tsx")),
+  PersonHeart: lazy(() => import("./bootstrap/PersonHeart.icon.tsx")),
+  PersonHearts: lazy(() => import("./bootstrap/PersonHearts.icon.tsx")),
+  PersonLinesFill: lazy(() => import("./bootstrap/PersonLinesFill.icon.tsx")),
+  PersonLock: lazy(() => import("./bootstrap/PersonLock.icon.tsx")),
+  PersonPlus: lazy(() => import("./bootstrap/PersonPlus.icon.tsx")),
+  PersonPlusFill: lazy(() => import("./bootstrap/PersonPlusFill.icon.tsx")),
+  PersonRaisedHand: lazy(() => import("./bootstrap/PersonRaisedHand.icon.tsx")),
+  PersonRolodex: lazy(() => import("./bootstrap/PersonRolodex.icon.tsx")),
+  PersonSlash: lazy(() => import("./bootstrap/PersonSlash.icon.tsx")),
+  PersonSquare: lazy(() => import("./bootstrap/PersonSquare.icon.tsx")),
+  PersonStanding: lazy(() => import("./bootstrap/PersonStanding.icon.tsx")),
+  PersonStandingDress: lazy(() => import("./bootstrap/PersonStandingDress.icon.tsx")),
+  PersonUp: lazy(() => import("./bootstrap/PersonUp.icon.tsx")),
+  PersonVcard: lazy(() => import("./bootstrap/PersonVcard.icon.tsx")),
+  PersonVcardFill: lazy(() => import("./bootstrap/PersonVcardFill.icon.tsx")),
+  PersonVideo: lazy(() => import("./bootstrap/PersonVideo.icon.tsx")),
+  PersonVideo2: lazy(() => import("./bootstrap/PersonVideo2.icon.tsx")),
+  PersonVideo3: lazy(() => import("./bootstrap/PersonVideo3.icon.tsx")),
+  PersonWalking: lazy(() => import("./bootstrap/PersonWalking.icon.tsx")),
+  PersonWheelchair: lazy(() => import("./bootstrap/PersonWheelchair.icon.tsx")),
+  PersonWorkspace: lazy(() => import("./bootstrap/PersonWorkspace.icon.tsx")),
+  PersonX: lazy(() => import("./bootstrap/PersonX.icon.tsx")),
+  PersonXFill: lazy(() => import("./bootstrap/PersonXFill.icon.tsx")),
+  Phone: lazy(() => import("./bootstrap/Phone.icon.tsx")),
+  PhoneFill: lazy(() => import("./bootstrap/PhoneFill.icon.tsx")),
+  PhoneFlip: lazy(() => import("./bootstrap/PhoneFlip.icon.tsx")),
+  PhoneLandscape: lazy(() => import("./bootstrap/PhoneLandscape.icon.tsx")),
+  PhoneLandscapeFill: lazy(() => import("./bootstrap/PhoneLandscapeFill.icon.tsx")),
+  PhoneVibrate: lazy(() => import("./bootstrap/PhoneVibrate.icon.tsx")),
+  PhoneVibrateFill: lazy(() => import("./bootstrap/PhoneVibrateFill.icon.tsx")),
+  PieChart: lazy(() => import("./bootstrap/PieChart.icon.tsx")),
+  PieChartFill: lazy(() => import("./bootstrap/PieChartFill.icon.tsx")),
+  PiggyBank: lazy(() => import("./bootstrap/PiggyBank.icon.tsx")),
+  PiggyBank2: lazy(() => import("./custom/PiggyBank2.icon.tsx")),
+  PiggyBank2Check: lazy(() => import("./custom/PiggyBank2Check.icon.tsx")),
+  PiggyBank2Coin: lazy(() => import("./custom/PiggyBank2Coin.icon.tsx")),
+  PiggyBank2Exclamation: lazy(() => import("./custom/PiggyBank2Exclamation.icon.tsx")),
+  PiggyBank2In: lazy(() => import("./custom/PiggyBank2In.icon.tsx")),
+  PiggyBank2Off: lazy(() => import("./custom/PiggyBank2Off.icon.tsx")),
+  PiggyBank2Out: lazy(() => import("./custom/PiggyBank2Out.icon.tsx")),
+  PiggyBankFill: lazy(() => import("./bootstrap/PiggyBankFill.icon.tsx")),
+  Pin: lazy(() => import("./bootstrap/Pin.icon.tsx")),
+  PinAngle: lazy(() => import("./bootstrap/PinAngle.icon.tsx")),
+  PinAngleFill: lazy(() => import("./bootstrap/PinAngleFill.icon.tsx")),
+  PinFill: lazy(() => import("./bootstrap/PinFill.icon.tsx")),
+  PinMap: lazy(() => import("./bootstrap/PinMap.icon.tsx")),
+  PinMapFill: lazy(() => import("./bootstrap/PinMapFill.icon.tsx")),
+  Pinterest: lazy(() => import("./bootstrap/Pinterest.icon.tsx")),
+  Pip: lazy(() => import("./bootstrap/Pip.icon.tsx")),
+  PipFill: lazy(() => import("./bootstrap/PipFill.icon.tsx")),
+  Play: lazy(() => import("./bootstrap/Play.icon.tsx")),
+  PlayBtn: lazy(() => import("./bootstrap/PlayBtn.icon.tsx")),
+  PlayBtnFill: lazy(() => import("./bootstrap/PlayBtnFill.icon.tsx")),
+  PlayCircle: lazy(() => import("./bootstrap/PlayCircle.icon.tsx")),
+  PlayCircleFill: lazy(() => import("./bootstrap/PlayCircleFill.icon.tsx")),
+  PlayFill: lazy(() => import("./bootstrap/PlayFill.icon.tsx")),
+  Playstation: lazy(() => import("./bootstrap/Playstation.icon.tsx")),
+  Plug: lazy(() => import("./bootstrap/Plug.icon.tsx")),
+  PlugFill: lazy(() => import("./bootstrap/PlugFill.icon.tsx")),
+  Plugin: lazy(() => import("./bootstrap/Plugin.icon.tsx")),
+  Plus: lazy(() => import("./bootstrap/Plus.icon.tsx")),
+  PlusCircle: lazy(() => import("./bootstrap/PlusCircle.icon.tsx")),
+  PlusCircleDotted: lazy(() => import("./bootstrap/PlusCircleDotted.icon.tsx")),
+  PlusCircleFill: lazy(() => import("./bootstrap/PlusCircleFill.icon.tsx")),
+  PlusLg: lazy(() => import("./bootstrap/PlusLg.icon.tsx")),
+  PlusSlashMinus: lazy(() => import("./bootstrap/PlusSlashMinus.icon.tsx")),
+  PlusSquare: lazy(() => import("./bootstrap/PlusSquare.icon.tsx")),
+  PlusSquareDotted: lazy(() => import("./bootstrap/PlusSquareDotted.icon.tsx")),
+  PlusSquareFill: lazy(() => import("./bootstrap/PlusSquareFill.icon.tsx")),
+  Postage: lazy(() => import("./bootstrap/Postage.icon.tsx")),
+  PostageFill: lazy(() => import("./bootstrap/PostageFill.icon.tsx")),
+  PostageHeart: lazy(() => import("./bootstrap/PostageHeart.icon.tsx")),
+  PostageHeartFill: lazy(() => import("./bootstrap/PostageHeartFill.icon.tsx")),
+  Postcard: lazy(() => import("./bootstrap/Postcard.icon.tsx")),
+  PostcardFill: lazy(() => import("./bootstrap/PostcardFill.icon.tsx")),
+  PostcardHeart: lazy(() => import("./bootstrap/PostcardHeart.icon.tsx")),
+  PostcardHeartFill: lazy(() => import("./bootstrap/PostcardHeartFill.icon.tsx")),
+  Power: lazy(() => import("./bootstrap/Power.icon.tsx")),
+  Prescription: lazy(() => import("./bootstrap/Prescription.icon.tsx")),
+  Prescription2: lazy(() => import("./bootstrap/Prescription2.icon.tsx")),
+  Printer: lazy(() => import("./bootstrap/Printer.icon.tsx")),
+  PrinterFill: lazy(() => import("./bootstrap/PrinterFill.icon.tsx")),
+  Projector: lazy(() => import("./bootstrap/Projector.icon.tsx")),
+  ProjectorFill: lazy(() => import("./bootstrap/ProjectorFill.icon.tsx")),
+  ProrataCalendar: lazy(() => import("./custom/ProrataCalendar.icon.tsx")),
+  ProrataCalendarFill: lazy(() => import("./custom/ProrataCalendarFill.icon.tsx")),
+  PSquare: lazy(() => import("./bootstrap/PSquare.icon.tsx")),
+  PSquareFill: lazy(() => import("./bootstrap/PSquareFill.icon.tsx")),
+  Puzzle: lazy(() => import("./bootstrap/Puzzle.icon.tsx")),
+  PuzzleFill: lazy(() => import("./bootstrap/PuzzleFill.icon.tsx")),
+  QrCode: lazy(() => import("./bootstrap/QrCode.icon.tsx")),
+  QrCodeScan: lazy(() => import("./bootstrap/QrCodeScan.icon.tsx")),
+  Question: lazy(() => import("./bootstrap/Question.icon.tsx")),
+  QuestionCircle: lazy(() => import("./bootstrap/QuestionCircle.icon.tsx")),
+  QuestionCircleFill: lazy(() => import("./bootstrap/QuestionCircleFill.icon.tsx")),
+  QuestionDiamond: lazy(() => import("./bootstrap/QuestionDiamond.icon.tsx")),
+  QuestionDiamondFill: lazy(() => import("./bootstrap/QuestionDiamondFill.icon.tsx")),
+  QuestionLg: lazy(() => import("./bootstrap/QuestionLg.icon.tsx")),
+  QuestionOctagon: lazy(() => import("./bootstrap/QuestionOctagon.icon.tsx")),
+  QuestionOctagonFill: lazy(() => import("./bootstrap/QuestionOctagonFill.icon.tsx")),
+  QuestionSquare: lazy(() => import("./bootstrap/QuestionSquare.icon.tsx")),
+  QuestionSquareFill: lazy(() => import("./bootstrap/QuestionSquareFill.icon.tsx")),
+  Quora: lazy(() => import("./bootstrap/Quora.icon.tsx")),
+  Quote: lazy(() => import("./bootstrap/Quote.icon.tsx")),
+  Radar: lazy(() => import("./bootstrap/Radar.icon.tsx")),
+  Radioactive: lazy(() => import("./bootstrap/Radioactive.icon.tsx")),
+  Rainbow: lazy(() => import("./bootstrap/Rainbow.icon.tsx")),
+  RCircle: lazy(() => import("./bootstrap/RCircle.icon.tsx")),
+  RCircleFill: lazy(() => import("./bootstrap/RCircleFill.icon.tsx")),
+  Receipt: lazy(() => import("./bootstrap/Receipt.icon.tsx")),
+  Receipt2: lazy(() => import("./custom/Receipt2.icon.tsx")),
+  ReceiptClock: lazy(() => import("./custom/ReceiptClock.icon.tsx")),
+  ReceiptCutoff: lazy(() => import("./bootstrap/ReceiptCutoff.icon.tsx")),
+  ReceiptDraft: lazy(() => import("./custom/ReceiptDraft.icon.tsx")),
+  ReceiptOff2: lazy(() => import("./custom/ReceiptOff2.icon.tsx")),
+  ReceiptPdf: lazy(() => import("./custom/ReceiptPdf.icon.tsx")),
+  Reception0: lazy(() => import("./bootstrap/Reception0.icon.tsx")),
+  Reception1: lazy(() => import("./bootstrap/Reception1.icon.tsx")),
+  Reception2: lazy(() => import("./bootstrap/Reception2.icon.tsx")),
+  Reception3: lazy(() => import("./bootstrap/Reception3.icon.tsx")),
+  Reception4: lazy(() => import("./bootstrap/Reception4.icon.tsx")),
+  Record: lazy(() => import("./bootstrap/Record.icon.tsx")),
+  Record2: lazy(() => import("./bootstrap/Record2.icon.tsx")),
+  Record2Fill: lazy(() => import("./bootstrap/Record2Fill.icon.tsx")),
+  RecordBtn: lazy(() => import("./bootstrap/RecordBtn.icon.tsx")),
+  RecordBtnFill: lazy(() => import("./bootstrap/RecordBtnFill.icon.tsx")),
+  RecordCircle: lazy(() => import("./bootstrap/RecordCircle.icon.tsx")),
+  RecordCircleFill: lazy(() => import("./bootstrap/RecordCircleFill.icon.tsx")),
+  RecordFill: lazy(() => import("./bootstrap/RecordFill.icon.tsx")),
+  Recycle: lazy(() => import("./bootstrap/Recycle.icon.tsx")),
+  Reddit: lazy(() => import("./bootstrap/Reddit.icon.tsx")),
+  Regex: lazy(() => import("./bootstrap/Regex.icon.tsx")),
+  Repeat: lazy(() => import("./bootstrap/Repeat.icon.tsx")),
+  Repeat1: lazy(() => import("./bootstrap/Repeat1.icon.tsx")),
+  Reply: lazy(() => import("./bootstrap/Reply.icon.tsx")),
+  ReplyAll: lazy(() => import("./bootstrap/ReplyAll.icon.tsx")),
+  ReplyAllFill: lazy(() => import("./bootstrap/ReplyAllFill.icon.tsx")),
+  ReplyFill: lazy(() => import("./bootstrap/ReplyFill.icon.tsx")),
+  Rewind: lazy(() => import("./bootstrap/Rewind.icon.tsx")),
+  RewindBtn: lazy(() => import("./bootstrap/RewindBtn.icon.tsx")),
+  RewindBtnFill: lazy(() => import("./bootstrap/RewindBtnFill.icon.tsx")),
+  RewindCircle: lazy(() => import("./bootstrap/RewindCircle.icon.tsx")),
+  RewindCircleFill: lazy(() => import("./bootstrap/RewindCircleFill.icon.tsx")),
+  RewindFill: lazy(() => import("./bootstrap/RewindFill.icon.tsx")),
+  Robot: lazy(() => import("./bootstrap/Robot.icon.tsx")),
+  Rocket: lazy(() => import("./bootstrap/Rocket.icon.tsx")),
+  RocketFill: lazy(() => import("./bootstrap/RocketFill.icon.tsx")),
+  RocketTakeoff: lazy(() => import("./bootstrap/RocketTakeoff.icon.tsx")),
+  RocketTakeoffFill: lazy(() => import("./bootstrap/RocketTakeoffFill.icon.tsx")),
+  Router: lazy(() => import("./bootstrap/Router.icon.tsx")),
+  RouterFill: lazy(() => import("./bootstrap/RouterFill.icon.tsx")),
+  RSquare: lazy(() => import("./bootstrap/RSquare.icon.tsx")),
+  RSquareFill: lazy(() => import("./bootstrap/RSquareFill.icon.tsx")),
+  Rss: lazy(() => import("./bootstrap/Rss.icon.tsx")),
+  RssFill: lazy(() => import("./bootstrap/RssFill.icon.tsx")),
+  Rulers: lazy(() => import("./bootstrap/Rulers.icon.tsx")),
+  Safe: lazy(() => import("./bootstrap/Safe.icon.tsx")),
+  Safe2: lazy(() => import("./bootstrap/Safe2.icon.tsx")),
+  Safe2Fill: lazy(() => import("./bootstrap/Safe2Fill.icon.tsx")),
+  SafeFill: lazy(() => import("./bootstrap/SafeFill.icon.tsx")),
+  Save: lazy(() => import("./bootstrap/Save.icon.tsx")),
+  Save2: lazy(() => import("./bootstrap/Save2.icon.tsx")),
+  Save2Fill: lazy(() => import("./bootstrap/Save2Fill.icon.tsx")),
+  SaveFill: lazy(() => import("./bootstrap/SaveFill.icon.tsx")),
+  Scissors: lazy(() => import("./bootstrap/Scissors.icon.tsx")),
+  Scooter: lazy(() => import("./bootstrap/Scooter.icon.tsx")),
+  Screwdriver: lazy(() => import("./bootstrap/Screwdriver.icon.tsx")),
+  SdCard: lazy(() => import("./bootstrap/SdCard.icon.tsx")),
+  SdCardFill: lazy(() => import("./bootstrap/SdCardFill.icon.tsx")),
+  Search: lazy(() => import("./bootstrap/Search.icon.tsx")),
+  SearchHeart: lazy(() => import("./bootstrap/SearchHeart.icon.tsx")),
+  SearchHeartFill: lazy(() => import("./bootstrap/SearchHeartFill.icon.tsx")),
+  SegmentedNav: lazy(() => import("./bootstrap/SegmentedNav.icon.tsx")),
+  Send: lazy(() => import("./bootstrap/Send.icon.tsx")),
+  SendArrowDown: lazy(() => import("./bootstrap/SendArrowDown.icon.tsx")),
+  SendArrowDownFill: lazy(() => import("./bootstrap/SendArrowDownFill.icon.tsx")),
+  SendArrowUp: lazy(() => import("./bootstrap/SendArrowUp.icon.tsx")),
+  SendArrowUpFill: lazy(() => import("./bootstrap/SendArrowUpFill.icon.tsx")),
+  SendCheck: lazy(() => import("./bootstrap/SendCheck.icon.tsx")),
+  SendCheckFill: lazy(() => import("./bootstrap/SendCheckFill.icon.tsx")),
+  SendDash: lazy(() => import("./bootstrap/SendDash.icon.tsx")),
+  SendDashFill: lazy(() => import("./bootstrap/SendDashFill.icon.tsx")),
+  SendExclamation: lazy(() => import("./bootstrap/SendExclamation.icon.tsx")),
+  SendExclamationFill: lazy(() => import("./bootstrap/SendExclamationFill.icon.tsx")),
+  SendFill: lazy(() => import("./bootstrap/SendFill.icon.tsx")),
+  SendPlus: lazy(() => import("./bootstrap/SendPlus.icon.tsx")),
+  SendPlusFill: lazy(() => import("./bootstrap/SendPlusFill.icon.tsx")),
+  SendSlash: lazy(() => import("./bootstrap/SendSlash.icon.tsx")),
+  SendSlashFill: lazy(() => import("./bootstrap/SendSlashFill.icon.tsx")),
+  SendX: lazy(() => import("./bootstrap/SendX.icon.tsx")),
+  SendXFill: lazy(() => import("./bootstrap/SendXFill.icon.tsx")),
+  Server: lazy(() => import("./bootstrap/Server.icon.tsx")),
+  Shadows: lazy(() => import("./bootstrap/Shadows.icon.tsx")),
+  Share: lazy(() => import("./bootstrap/Share.icon.tsx")),
+  ShareFill: lazy(() => import("./bootstrap/ShareFill.icon.tsx")),
+  Shelves: lazy(() => import("./custom/Shelves.icon.tsx")),
+  Shield: lazy(() => import("./bootstrap/Shield.icon.tsx")),
+  ShieldCheck: lazy(() => import("./bootstrap/ShieldCheck.icon.tsx")),
+  ShieldExclamation: lazy(() => import("./bootstrap/ShieldExclamation.icon.tsx")),
+  ShieldFill: lazy(() => import("./bootstrap/ShieldFill.icon.tsx")),
+  ShieldFillCheck: lazy(() => import("./bootstrap/ShieldFillCheck.icon.tsx")),
+  ShieldFillExclamation: lazy(() => import("./bootstrap/ShieldFillExclamation.icon.tsx")),
+  ShieldFillMinus: lazy(() => import("./bootstrap/ShieldFillMinus.icon.tsx")),
+  ShieldFillPlus: lazy(() => import("./bootstrap/ShieldFillPlus.icon.tsx")),
+  ShieldFillX: lazy(() => import("./bootstrap/ShieldFillX.icon.tsx")),
+  ShieldLock: lazy(() => import("./bootstrap/ShieldLock.icon.tsx")),
+  ShieldLockFill: lazy(() => import("./bootstrap/ShieldLockFill.icon.tsx")),
+  ShieldMinus: lazy(() => import("./bootstrap/ShieldMinus.icon.tsx")),
+  ShieldPlus: lazy(() => import("./bootstrap/ShieldPlus.icon.tsx")),
+  ShieldShaded: lazy(() => import("./bootstrap/ShieldShaded.icon.tsx")),
+  ShieldSlash: lazy(() => import("./bootstrap/ShieldSlash.icon.tsx")),
+  ShieldSlashFill: lazy(() => import("./bootstrap/ShieldSlashFill.icon.tsx")),
+  ShieldX: lazy(() => import("./bootstrap/ShieldX.icon.tsx")),
+  Shift: lazy(() => import("./bootstrap/Shift.icon.tsx")),
+  ShiftFill: lazy(() => import("./bootstrap/ShiftFill.icon.tsx")),
+  Shop: lazy(() => import("./bootstrap/Shop.icon.tsx")),
+  ShopWindow: lazy(() => import("./bootstrap/ShopWindow.icon.tsx")),
+  Shuffle: lazy(() => import("./bootstrap/Shuffle.icon.tsx")),
+  Signal: lazy(() => import("./bootstrap/Signal.icon.tsx")),
+  SignDeadEnd: lazy(() => import("./bootstrap/SignDeadEnd.icon.tsx")),
+  SignDeadEndFill: lazy(() => import("./bootstrap/SignDeadEndFill.icon.tsx")),
+  SignDoNotEnter: lazy(() => import("./bootstrap/SignDoNotEnter.icon.tsx")),
+  SignDoNotEnterFill: lazy(() => import("./bootstrap/SignDoNotEnterFill.icon.tsx")),
+  SignIntersection: lazy(() => import("./bootstrap/SignIntersection.icon.tsx")),
+  SignIntersectionFill: lazy(() => import("./bootstrap/SignIntersectionFill.icon.tsx")),
+  SignIntersectionSide: lazy(() => import("./bootstrap/SignIntersectionSide.icon.tsx")),
+  SignIntersectionSideFill: lazy(() => import("./bootstrap/SignIntersectionSideFill.icon.tsx")),
+  SignIntersectionT: lazy(() => import("./bootstrap/SignIntersectionT.icon.tsx")),
+  SignIntersectionTFill: lazy(() => import("./bootstrap/SignIntersectionTFill.icon.tsx")),
+  SignIntersectionY: lazy(() => import("./bootstrap/SignIntersectionY.icon.tsx")),
+  SignIntersectionYFill: lazy(() => import("./bootstrap/SignIntersectionYFill.icon.tsx")),
+  SignMergeLeft: lazy(() => import("./bootstrap/SignMergeLeft.icon.tsx")),
+  SignMergeLeftFill: lazy(() => import("./bootstrap/SignMergeLeftFill.icon.tsx")),
+  SignMergeRight: lazy(() => import("./bootstrap/SignMergeRight.icon.tsx")),
+  SignMergeRightFill: lazy(() => import("./bootstrap/SignMergeRightFill.icon.tsx")),
+  SignNoLeftTurn: lazy(() => import("./bootstrap/SignNoLeftTurn.icon.tsx")),
+  SignNoLeftTurnFill: lazy(() => import("./bootstrap/SignNoLeftTurnFill.icon.tsx")),
+  SignNoParking: lazy(() => import("./bootstrap/SignNoParking.icon.tsx")),
+  SignNoParkingFill: lazy(() => import("./bootstrap/SignNoParkingFill.icon.tsx")),
+  SignNoRightTurn: lazy(() => import("./bootstrap/SignNoRightTurn.icon.tsx")),
+  SignNoRightTurnFill: lazy(() => import("./bootstrap/SignNoRightTurnFill.icon.tsx")),
+  Signpost: lazy(() => import("./bootstrap/Signpost.icon.tsx")),
+  Signpost2: lazy(() => import("./bootstrap/Signpost2.icon.tsx")),
+  Signpost2Fill: lazy(() => import("./bootstrap/Signpost2Fill.icon.tsx")),
+  SignpostFill: lazy(() => import("./bootstrap/SignpostFill.icon.tsx")),
+  SignpostSplit: lazy(() => import("./bootstrap/SignpostSplit.icon.tsx")),
+  SignpostSplitFill: lazy(() => import("./bootstrap/SignpostSplitFill.icon.tsx")),
+  SignRailroad: lazy(() => import("./bootstrap/SignRailroad.icon.tsx")),
+  SignRailroadFill: lazy(() => import("./bootstrap/SignRailroadFill.icon.tsx")),
+  SignStop: lazy(() => import("./bootstrap/SignStop.icon.tsx")),
+  SignStopFill: lazy(() => import("./bootstrap/SignStopFill.icon.tsx")),
+  SignStopLights: lazy(() => import("./bootstrap/SignStopLights.icon.tsx")),
+  SignStopLightsFill: lazy(() => import("./bootstrap/SignStopLightsFill.icon.tsx")),
+  SignTurnLeft: lazy(() => import("./bootstrap/SignTurnLeft.icon.tsx")),
+  SignTurnLeftFill: lazy(() => import("./bootstrap/SignTurnLeftFill.icon.tsx")),
+  SignTurnRight: lazy(() => import("./bootstrap/SignTurnRight.icon.tsx")),
+  SignTurnRightFill: lazy(() => import("./bootstrap/SignTurnRightFill.icon.tsx")),
+  SignTurnSlightLeft: lazy(() => import("./bootstrap/SignTurnSlightLeft.icon.tsx")),
+  SignTurnSlightLeftFill: lazy(() => import("./bootstrap/SignTurnSlightLeftFill.icon.tsx")),
+  SignTurnSlightRight: lazy(() => import("./bootstrap/SignTurnSlightRight.icon.tsx")),
+  SignTurnSlightRightFill: lazy(() => import("./bootstrap/SignTurnSlightRightFill.icon.tsx")),
+  SignYield: lazy(() => import("./bootstrap/SignYield.icon.tsx")),
+  SignYieldFill: lazy(() => import("./bootstrap/SignYieldFill.icon.tsx")),
+  Sim: lazy(() => import("./bootstrap/Sim.icon.tsx")),
+  SimFill: lazy(() => import("./bootstrap/SimFill.icon.tsx")),
+  SimSlash: lazy(() => import("./bootstrap/SimSlash.icon.tsx")),
+  SimSlashFill: lazy(() => import("./bootstrap/SimSlashFill.icon.tsx")),
+  SinaWeibo: lazy(() => import("./bootstrap/SinaWeibo.icon.tsx")),
+  SkipBackward: lazy(() => import("./bootstrap/SkipBackward.icon.tsx")),
+  SkipBackwardBtn: lazy(() => import("./bootstrap/SkipBackwardBtn.icon.tsx")),
+  SkipBackwardBtnFill: lazy(() => import("./bootstrap/SkipBackwardBtnFill.icon.tsx")),
+  SkipBackwardCircle: lazy(() => import("./bootstrap/SkipBackwardCircle.icon.tsx")),
+  SkipBackwardCircleFill: lazy(() => import("./bootstrap/SkipBackwardCircleFill.icon.tsx")),
+  SkipBackwardFill: lazy(() => import("./bootstrap/SkipBackwardFill.icon.tsx")),
+  SkipEnd: lazy(() => import("./bootstrap/SkipEnd.icon.tsx")),
+  SkipEndBtn: lazy(() => import("./bootstrap/SkipEndBtn.icon.tsx")),
+  SkipEndBtnFill: lazy(() => import("./bootstrap/SkipEndBtnFill.icon.tsx")),
+  SkipEndCircle: lazy(() => import("./bootstrap/SkipEndCircle.icon.tsx")),
+  SkipEndCircleFill: lazy(() => import("./bootstrap/SkipEndCircleFill.icon.tsx")),
+  SkipEndFill: lazy(() => import("./bootstrap/SkipEndFill.icon.tsx")),
+  SkipForward: lazy(() => import("./bootstrap/SkipForward.icon.tsx")),
+  SkipForwardBtn: lazy(() => import("./bootstrap/SkipForwardBtn.icon.tsx")),
+  SkipForwardBtnFill: lazy(() => import("./bootstrap/SkipForwardBtnFill.icon.tsx")),
+  SkipForwardCircle: lazy(() => import("./bootstrap/SkipForwardCircle.icon.tsx")),
+  SkipForwardCircleFill: lazy(() => import("./bootstrap/SkipForwardCircleFill.icon.tsx")),
+  SkipForwardFill: lazy(() => import("./bootstrap/SkipForwardFill.icon.tsx")),
+  SkipStart: lazy(() => import("./bootstrap/SkipStart.icon.tsx")),
+  SkipStartBtn: lazy(() => import("./bootstrap/SkipStartBtn.icon.tsx")),
+  SkipStartBtnFill: lazy(() => import("./bootstrap/SkipStartBtnFill.icon.tsx")),
+  SkipStartCircle: lazy(() => import("./bootstrap/SkipStartCircle.icon.tsx")),
+  SkipStartCircleFill: lazy(() => import("./bootstrap/SkipStartCircleFill.icon.tsx")),
+  SkipStartFill: lazy(() => import("./bootstrap/SkipStartFill.icon.tsx")),
+  Skype: lazy(() => import("./bootstrap/Skype.icon.tsx")),
+  Slack: lazy(() => import("./bootstrap/Slack.icon.tsx")),
+  Slash: lazy(() => import("./bootstrap/Slash.icon.tsx")),
+  SlashCircle: lazy(() => import("./bootstrap/SlashCircle.icon.tsx")),
+  SlashCircleFill: lazy(() => import("./bootstrap/SlashCircleFill.icon.tsx")),
+  SlashCircleFillV2: lazy(() => import("./custom/SlashCircleFillV2.icon.tsx")),
+  SlashCircleV2: lazy(() => import("./custom/SlashCircleV2.icon.tsx")),
+  SlashLg: lazy(() => import("./bootstrap/SlashLg.icon.tsx")),
+  SlashSquare: lazy(() => import("./bootstrap/SlashSquare.icon.tsx")),
+  SlashSquareFill: lazy(() => import("./bootstrap/SlashSquareFill.icon.tsx")),
+  SlashSquareFillV2: lazy(() => import("./custom/SlashSquareFillV2.icon.tsx")),
+  SlashSquareV2: lazy(() => import("./custom/SlashSquareV2.icon.tsx")),
+  Sliders: lazy(() => import("./bootstrap/Sliders.icon.tsx")),
+  Sliders2: lazy(() => import("./bootstrap/Sliders2.icon.tsx")),
+  Sliders2Vertical: lazy(() => import("./bootstrap/Sliders2Vertical.icon.tsx")),
+  Smartwatch: lazy(() => import("./bootstrap/Smartwatch.icon.tsx")),
+  Snapchat: lazy(() => import("./bootstrap/Snapchat.icon.tsx")),
+  Snow: lazy(() => import("./bootstrap/Snow.icon.tsx")),
+  Snow2: lazy(() => import("./bootstrap/Snow2.icon.tsx")),
+  Snow3: lazy(() => import("./bootstrap/Snow3.icon.tsx")),
+  SortAlphaDown: lazy(() => import("./bootstrap/SortAlphaDown.icon.tsx")),
+  SortAlphaDownAlt: lazy(() => import("./bootstrap/SortAlphaDownAlt.icon.tsx")),
+  SortAlphaUp: lazy(() => import("./bootstrap/SortAlphaUp.icon.tsx")),
+  SortAlphaUpAlt: lazy(() => import("./bootstrap/SortAlphaUpAlt.icon.tsx")),
+  SortDown: lazy(() => import("./bootstrap/SortDown.icon.tsx")),
+  SortDownAlt: lazy(() => import("./bootstrap/SortDownAlt.icon.tsx")),
+  SortNumericDown: lazy(() => import("./bootstrap/SortNumericDown.icon.tsx")),
+  SortNumericDownAlt: lazy(() => import("./bootstrap/SortNumericDownAlt.icon.tsx")),
+  SortNumericUp: lazy(() => import("./bootstrap/SortNumericUp.icon.tsx")),
+  SortNumericUpAlt: lazy(() => import("./bootstrap/SortNumericUpAlt.icon.tsx")),
+  SortUp: lazy(() => import("./bootstrap/SortUp.icon.tsx")),
+  SortUpAlt: lazy(() => import("./bootstrap/SortUpAlt.icon.tsx")),
+  Soundwave: lazy(() => import("./bootstrap/Soundwave.icon.tsx")),
+  Sourceforge: lazy(() => import("./bootstrap/Sourceforge.icon.tsx")),
+  Speaker: lazy(() => import("./bootstrap/Speaker.icon.tsx")),
+  SpeakerFill: lazy(() => import("./bootstrap/SpeakerFill.icon.tsx")),
+  Speedometer: lazy(() => import("./bootstrap/Speedometer.icon.tsx")),
+  Speedometer2: lazy(() => import("./bootstrap/Speedometer2.icon.tsx")),
+  Spellcheck: lazy(() => import("./bootstrap/Spellcheck.icon.tsx")),
+  Spotify: lazy(() => import("./bootstrap/Spotify.icon.tsx")),
+  Square: lazy(() => import("./bootstrap/Square.icon.tsx")),
+  SquareFill: lazy(() => import("./bootstrap/SquareFill.icon.tsx")),
+  SquareHalf: lazy(() => import("./bootstrap/SquareHalf.icon.tsx")),
+  Squircle: lazy(() => import("./custom/Squircle.icon.tsx")),
+  SquircleArrowBottom: lazy(() => import("./custom/SquircleArrowBottom.icon.tsx")),
+  SquircleArrowBottomFill: lazy(() => import("./custom/SquircleArrowBottomFill.icon.tsx")),
+  SquircleArrowLeft: lazy(() => import("./custom/SquircleArrowLeft.icon.tsx")),
+  SquircleArrowLeftFill: lazy(() => import("./custom/SquircleArrowLeftFill.icon.tsx")),
+  SquircleArrowRight: lazy(() => import("./custom/SquircleArrowRight.icon.tsx")),
+  SquircleArrowRightFill: lazy(() => import("./custom/SquircleArrowRightFill.icon.tsx")),
+  SquircleArrowTop: lazy(() => import("./custom/SquircleArrowTop.icon.tsx")),
+  SquircleArrowTopFill: lazy(() => import("./custom/SquircleArrowTopFill.icon.tsx")),
+  SquircleCheck: lazy(() => import("./custom/SquircleCheck.icon.tsx")),
+  SquircleCheckAll: lazy(() => import("./custom/SquircleCheckAll.icon.tsx")),
+  SquircleCheckAllFill: lazy(() => import("./custom/SquircleCheckAllFill.icon.tsx")),
+  SquircleCheckFill: lazy(() => import("./custom/SquircleCheckFill.icon.tsx")),
+  SquircleClock: lazy(() => import("./custom/SquircleClock.icon.tsx")),
+  SquircleClockFill: lazy(() => import("./custom/SquircleClockFill.icon.tsx")),
+  SquircleCore: lazy(() => import("./custom/SquircleCore.icon.tsx")),
+  SquircleCore2NdHalf: lazy(() => import("./custom/SquircleCore2NdHalf.icon.tsx")),
+  SquircleCoreHalf: lazy(() => import("./custom/SquircleCoreHalf.icon.tsx")),
+  SquircleDraft: lazy(() => import("./custom/SquircleDraft.icon.tsx")),
+  SquircleExclamation: lazy(() => import("./custom/SquircleExclamation.icon.tsx")),
+  SquircleExclamationFill: lazy(() => import("./custom/SquircleExclamationFill.icon.tsx")),
+  SquircleFill: lazy(() => import("./custom/SquircleFill.icon.tsx")),
+  SquircleInfo: lazy(() => import("./custom/SquircleInfo.icon.tsx")),
+  SquircleInfoFill: lazy(() => import("./custom/SquircleInfoFill.icon.tsx")),
+  SquircleLink: lazy(() => import("./custom/SquircleLink.icon.tsx")),
+  SquircleLinkFill: lazy(() => import("./custom/SquircleLinkFill.icon.tsx")),
+  SquircleOff: lazy(() => import("./custom/SquircleOff.icon.tsx")),
+  SquircleOffFill: lazy(() => import("./custom/SquircleOffFill.icon.tsx")),
+  SquircleX: lazy(() => import("./custom/SquircleX.icon.tsx")),
+  SquircleXFill: lazy(() => import("./custom/SquircleXFill.icon.tsx")),
+  Stack: lazy(() => import("./bootstrap/Stack.icon.tsx")),
+  StackOverflow: lazy(() => import("./bootstrap/StackOverflow.icon.tsx")),
+  Star: lazy(() => import("./bootstrap/Star.icon.tsx")),
+  StarFill: lazy(() => import("./bootstrap/StarFill.icon.tsx")),
+  StarHalf: lazy(() => import("./bootstrap/StarHalf.icon.tsx")),
+  Stars: lazy(() => import("./bootstrap/Stars.icon.tsx")),
+  Steam: lazy(() => import("./bootstrap/Steam.icon.tsx")),
+  Stickies: lazy(() => import("./bootstrap/Stickies.icon.tsx")),
+  StickiesFill: lazy(() => import("./bootstrap/StickiesFill.icon.tsx")),
+  Sticky: lazy(() => import("./bootstrap/Sticky.icon.tsx")),
+  StickyFill: lazy(() => import("./bootstrap/StickyFill.icon.tsx")),
+  Stop: lazy(() => import("./bootstrap/Stop.icon.tsx")),
+  StopBtn: lazy(() => import("./bootstrap/StopBtn.icon.tsx")),
+  StopBtnFill: lazy(() => import("./bootstrap/StopBtnFill.icon.tsx")),
+  StopCircle: lazy(() => import("./bootstrap/StopCircle.icon.tsx")),
+  StopCircleFill: lazy(() => import("./bootstrap/StopCircleFill.icon.tsx")),
+  StopFill: lazy(() => import("./bootstrap/StopFill.icon.tsx")),
+  Stoplights: lazy(() => import("./bootstrap/Stoplights.icon.tsx")),
+  StoplightsFill: lazy(() => import("./bootstrap/StoplightsFill.icon.tsx")),
+  Stopwatch: lazy(() => import("./bootstrap/Stopwatch.icon.tsx")),
+  StopwatchFill: lazy(() => import("./bootstrap/StopwatchFill.icon.tsx")),
+  Strava: lazy(() => import("./bootstrap/Strava.icon.tsx")),
+  Stripe: lazy(() => import("./bootstrap/Stripe.icon.tsx")),
+  Subscript: lazy(() => import("./bootstrap/Subscript.icon.tsx")),
+  Substack: lazy(() => import("./bootstrap/Substack.icon.tsx")),
+  Subtract: lazy(() => import("./bootstrap/Subtract.icon.tsx")),
+  Suitcase: lazy(() => import("./bootstrap/Suitcase.icon.tsx")),
+  Suitcase2: lazy(() => import("./bootstrap/Suitcase2.icon.tsx")),
+  Suitcase2Fill: lazy(() => import("./bootstrap/Suitcase2Fill.icon.tsx")),
+  SuitcaseFill: lazy(() => import("./bootstrap/SuitcaseFill.icon.tsx")),
+  SuitcaseLg: lazy(() => import("./bootstrap/SuitcaseLg.icon.tsx")),
+  SuitcaseLgFill: lazy(() => import("./bootstrap/SuitcaseLgFill.icon.tsx")),
+  SuitClub: lazy(() => import("./bootstrap/SuitClub.icon.tsx")),
+  SuitClubFill: lazy(() => import("./bootstrap/SuitClubFill.icon.tsx")),
+  SuitDiamond: lazy(() => import("./bootstrap/SuitDiamond.icon.tsx")),
+  SuitDiamondFill: lazy(() => import("./bootstrap/SuitDiamondFill.icon.tsx")),
+  SuitHeart: lazy(() => import("./bootstrap/SuitHeart.icon.tsx")),
+  SuitHeartFill: lazy(() => import("./bootstrap/SuitHeartFill.icon.tsx")),
+  SuitSpade: lazy(() => import("./bootstrap/SuitSpade.icon.tsx")),
+  SuitSpadeFill: lazy(() => import("./bootstrap/SuitSpadeFill.icon.tsx")),
+  Sun: lazy(() => import("./bootstrap/Sun.icon.tsx")),
+  SunFill: lazy(() => import("./bootstrap/SunFill.icon.tsx")),
+  Sunglasses: lazy(() => import("./bootstrap/Sunglasses.icon.tsx")),
+  Sunrise: lazy(() => import("./bootstrap/Sunrise.icon.tsx")),
+  SunriseFill: lazy(() => import("./bootstrap/SunriseFill.icon.tsx")),
+  Sunset: lazy(() => import("./bootstrap/Sunset.icon.tsx")),
+  SunsetFill: lazy(() => import("./bootstrap/SunsetFill.icon.tsx")),
+  Superscript: lazy(() => import("./bootstrap/Superscript.icon.tsx")),
+  SymmetryHorizontal: lazy(() => import("./bootstrap/SymmetryHorizontal.icon.tsx")),
+  SymmetryVertical: lazy(() => import("./bootstrap/SymmetryVertical.icon.tsx")),
+  Table: lazy(() => import("./bootstrap/Table.icon.tsx")),
+  Tablet: lazy(() => import("./bootstrap/Tablet.icon.tsx")),
+  TabletFill: lazy(() => import("./bootstrap/TabletFill.icon.tsx")),
+  TabletLandscape: lazy(() => import("./bootstrap/TabletLandscape.icon.tsx")),
+  TabletLandscapeFill: lazy(() => import("./bootstrap/TabletLandscapeFill.icon.tsx")),
+  Tag: lazy(() => import("./bootstrap/Tag.icon.tsx")),
+  TagFill: lazy(() => import("./bootstrap/TagFill.icon.tsx")),
+  Tags: lazy(() => import("./bootstrap/Tags.icon.tsx")),
+  TagsFill: lazy(() => import("./bootstrap/TagsFill.icon.tsx")),
+  TaxiFront: lazy(() => import("./bootstrap/TaxiFront.icon.tsx")),
+  TaxiFrontFill: lazy(() => import("./bootstrap/TaxiFrontFill.icon.tsx")),
+  Telegram: lazy(() => import("./bootstrap/Telegram.icon.tsx")),
+  Telephone: lazy(() => import("./bootstrap/Telephone.icon.tsx")),
+  TelephoneFill: lazy(() => import("./bootstrap/TelephoneFill.icon.tsx")),
+  TelephoneForward: lazy(() => import("./bootstrap/TelephoneForward.icon.tsx")),
+  TelephoneForwardFill: lazy(() => import("./bootstrap/TelephoneForwardFill.icon.tsx")),
+  TelephoneInbound: lazy(() => import("./bootstrap/TelephoneInbound.icon.tsx")),
+  TelephoneInboundFill: lazy(() => import("./bootstrap/TelephoneInboundFill.icon.tsx")),
+  TelephoneMinus: lazy(() => import("./bootstrap/TelephoneMinus.icon.tsx")),
+  TelephoneMinusFill: lazy(() => import("./bootstrap/TelephoneMinusFill.icon.tsx")),
+  TelephoneOutbound: lazy(() => import("./bootstrap/TelephoneOutbound.icon.tsx")),
+  TelephoneOutboundFill: lazy(() => import("./bootstrap/TelephoneOutboundFill.icon.tsx")),
+  TelephonePlus: lazy(() => import("./bootstrap/TelephonePlus.icon.tsx")),
+  TelephonePlusFill: lazy(() => import("./bootstrap/TelephonePlusFill.icon.tsx")),
+  TelephoneX: lazy(() => import("./bootstrap/TelephoneX.icon.tsx")),
+  TelephoneXFill: lazy(() => import("./bootstrap/TelephoneXFill.icon.tsx")),
+  TencentQq: lazy(() => import("./bootstrap/TencentQq.icon.tsx")),
+  Terminal: lazy(() => import("./bootstrap/Terminal.icon.tsx")),
+  TerminalDash: lazy(() => import("./bootstrap/TerminalDash.icon.tsx")),
+  TerminalFill: lazy(() => import("./bootstrap/TerminalFill.icon.tsx")),
+  TerminalPlus: lazy(() => import("./bootstrap/TerminalPlus.icon.tsx")),
+  TerminalSplit: lazy(() => import("./bootstrap/TerminalSplit.icon.tsx")),
+  TerminalX: lazy(() => import("./bootstrap/TerminalX.icon.tsx")),
+  TestPipe: lazy(() => import("./custom/TestPipe.icon.tsx")),
+  TestPipeFill: lazy(() => import("./custom/TestPipeFill.icon.tsx")),
+  Textarea: lazy(() => import("./bootstrap/Textarea.icon.tsx")),
+  TextareaResize: lazy(() => import("./bootstrap/TextareaResize.icon.tsx")),
+  TextareaT: lazy(() => import("./bootstrap/TextareaT.icon.tsx")),
+  TextCenter: lazy(() => import("./bootstrap/TextCenter.icon.tsx")),
+  TextIndentLeft: lazy(() => import("./bootstrap/TextIndentLeft.icon.tsx")),
+  TextIndentRight: lazy(() => import("./bootstrap/TextIndentRight.icon.tsx")),
+  TextLeft: lazy(() => import("./bootstrap/TextLeft.icon.tsx")),
+  TextParagraph: lazy(() => import("./bootstrap/TextParagraph.icon.tsx")),
+  TextRight: lazy(() => import("./bootstrap/TextRight.icon.tsx")),
+  TextWrap: lazy(() => import("./bootstrap/TextWrap.icon.tsx")),
+  Thermometer: lazy(() => import("./bootstrap/Thermometer.icon.tsx")),
+  ThermometerFire3: lazy(() => import("./custom/ThermometerFire3.icon.tsx")),
+  ThermometerHalf: lazy(() => import("./bootstrap/ThermometerHalf.icon.tsx")),
+  ThermometerHigh: lazy(() => import("./bootstrap/ThermometerHigh.icon.tsx")),
+  ThermometerLow: lazy(() => import("./bootstrap/ThermometerLow.icon.tsx")),
+  ThermometerSnow: lazy(() => import("./bootstrap/ThermometerSnow.icon.tsx")),
+  ThermometerSun: lazy(() => import("./bootstrap/ThermometerSun.icon.tsx")),
+  Threads: lazy(() => import("./bootstrap/Threads.icon.tsx")),
+  ThreadsFill: lazy(() => import("./bootstrap/ThreadsFill.icon.tsx")),
+  ThreeDots: lazy(() => import("./bootstrap/ThreeDots.icon.tsx")),
+  ThreeDotsVertical: lazy(() => import("./bootstrap/ThreeDotsVertical.icon.tsx")),
+  Thunderbolt: lazy(() => import("./bootstrap/Thunderbolt.icon.tsx")),
+  ThunderboltFill: lazy(() => import("./bootstrap/ThunderboltFill.icon.tsx")),
+  Ticket: lazy(() => import("./bootstrap/Ticket.icon.tsx")),
+  TicketDetailed: lazy(() => import("./bootstrap/TicketDetailed.icon.tsx")),
+  TicketDetailedFill: lazy(() => import("./bootstrap/TicketDetailedFill.icon.tsx")),
+  TicketFill: lazy(() => import("./bootstrap/TicketFill.icon.tsx")),
+  TicketPerforated: lazy(() => import("./bootstrap/TicketPerforated.icon.tsx")),
+  TicketPerforatedFill: lazy(() => import("./bootstrap/TicketPerforatedFill.icon.tsx")),
+  Tiktok: lazy(() => import("./bootstrap/Tiktok.icon.tsx")),
+  Toggle2Off: lazy(() => import("./bootstrap/Toggle2Off.icon.tsx")),
+  Toggle2On: lazy(() => import("./bootstrap/Toggle2On.icon.tsx")),
+  ToggleOff: lazy(() => import("./bootstrap/ToggleOff.icon.tsx")),
+  ToggleOn: lazy(() => import("./bootstrap/ToggleOn.icon.tsx")),
+  Toggles: lazy(() => import("./bootstrap/Toggles.icon.tsx")),
+  Toggles2: lazy(() => import("./bootstrap/Toggles2.icon.tsx")),
+  Tools: lazy(() => import("./bootstrap/Tools.icon.tsx")),
+  Tornado: lazy(() => import("./bootstrap/Tornado.icon.tsx")),
+  TrainFreightFront: lazy(() => import("./bootstrap/TrainFreightFront.icon.tsx")),
+  TrainFreightFrontFill: lazy(() => import("./bootstrap/TrainFreightFrontFill.icon.tsx")),
+  TrainFront: lazy(() => import("./bootstrap/TrainFront.icon.tsx")),
+  TrainFrontFill: lazy(() => import("./bootstrap/TrainFrontFill.icon.tsx")),
+  TrainLightrailFront: lazy(() => import("./bootstrap/TrainLightrailFront.icon.tsx")),
+  TrainLightrailFrontFill: lazy(() => import("./bootstrap/TrainLightrailFrontFill.icon.tsx")),
+  Translate: lazy(() => import("./bootstrap/Translate.icon.tsx")),
+  Transparency: lazy(() => import("./bootstrap/Transparency.icon.tsx")),
+  Trash: lazy(() => import("./bootstrap/Trash.icon.tsx")),
+  Trash2: lazy(() => import("./bootstrap/Trash2.icon.tsx")),
+  Trash2Fill: lazy(() => import("./bootstrap/Trash2Fill.icon.tsx")),
+  Trash3: lazy(() => import("./bootstrap/Trash3.icon.tsx")),
+  Trash3Fill: lazy(() => import("./bootstrap/Trash3Fill.icon.tsx")),
+  Trash3Off: lazy(() => import("./custom/Trash3Off.icon.tsx")),
+  Trash3OffFill: lazy(() => import("./custom/Trash3OffFill.icon.tsx")),
+  TrashFill: lazy(() => import("./bootstrap/TrashFill.icon.tsx")),
+  Tree: lazy(() => import("./bootstrap/Tree.icon.tsx")),
+  TreeFill: lazy(() => import("./bootstrap/TreeFill.icon.tsx")),
+  Trello: lazy(() => import("./bootstrap/Trello.icon.tsx")),
+  Triangle: lazy(() => import("./bootstrap/Triangle.icon.tsx")),
+  Triangle2: lazy(() => import("./custom/Triangle2.icon.tsx")),
+  Triangle2ArrowDown: lazy(() => import("./custom/Triangle2ArrowDown.icon.tsx")),
+  Triangle2ArrowDownFill: lazy(() => import("./custom/Triangle2ArrowDownFill.icon.tsx")),
+  Triangle2ArrowIn: lazy(() => import("./custom/Triangle2ArrowIn.icon.tsx")),
+  Triangle2ArrowOut: lazy(() => import("./custom/Triangle2ArrowOut.icon.tsx")),
+  Triangle2Check: lazy(() => import("./custom/Triangle2Check.icon.tsx")),
+  Triangle2CheckFill: lazy(() => import("./custom/Triangle2CheckFill.icon.tsx")),
+  Triangle2Dashed: lazy(() => import("./custom/Triangle2Dashed.icon.tsx")),
+  Triangle2Destroyed: lazy(() => import("./custom/Triangle2Destroyed.icon.tsx")),
+  Triangle2DestroyedFill: lazy(() => import("./custom/Triangle2DestroyedFill.icon.tsx")),
+  Triangle2Exclamation: lazy(() => import("./custom/Triangle2Exclamation.icon.tsx")),
+  Triangle2ExclamationFill: lazy(() => import("./custom/Triangle2ExclamationFill.icon.tsx")),
+  Triangle2Fill: lazy(() => import("./custom/Triangle2Fill.icon.tsx")),
+  Triangle2Heavy: lazy(() => import("./custom/Triangle2Heavy.icon.tsx")),
+  Triangle2Plus: lazy(() => import("./custom/Triangle2Plus.icon.tsx")),
+  Triangle2PlusFill: lazy(() => import("./custom/Triangle2PlusFill.icon.tsx")),
+  Triangle2Question: lazy(() => import("./custom/Triangle2Question.icon.tsx")),
+  Triangle2QuestionFill: lazy(() => import("./custom/Triangle2QuestionFill.icon.tsx")),
+  Triangle2Shadows: lazy(() => import("./custom/Triangle2Shadows.icon.tsx")),
+  Triangle2Strips: lazy(() => import("./custom/Triangle2Strips.icon.tsx")),
+  Triangle2StripsFill: lazy(() => import("./custom/Triangle2StripsFill.icon.tsx")),
+  Triangle2X: lazy(() => import("./custom/Triangle2X.icon.tsx")),
+  Triangle2XFill: lazy(() => import("./custom/Triangle2XFill.icon.tsx")),
+  TriangleFill: lazy(() => import("./bootstrap/TriangleFill.icon.tsx")),
+  TriangleHalf: lazy(() => import("./bootstrap/TriangleHalf.icon.tsx")),
+  Trophy: lazy(() => import("./bootstrap/Trophy.icon.tsx")),
+  TrophyFill: lazy(() => import("./bootstrap/TrophyFill.icon.tsx")),
+  TropicalStorm: lazy(() => import("./bootstrap/TropicalStorm.icon.tsx")),
+  Truck: lazy(() => import("./bootstrap/Truck.icon.tsx")),
+  TruckFlatbed: lazy(() => import("./bootstrap/TruckFlatbed.icon.tsx")),
+  TruckFront: lazy(() => import("./bootstrap/TruckFront.icon.tsx")),
+  TruckFrontFill: lazy(() => import("./bootstrap/TruckFrontFill.icon.tsx")),
+  Tsunami: lazy(() => import("./bootstrap/Tsunami.icon.tsx")),
+  Tv: lazy(() => import("./bootstrap/Tv.icon.tsx")),
+  TvFill: lazy(() => import("./bootstrap/TvFill.icon.tsx")),
+  Twitch: lazy(() => import("./bootstrap/Twitch.icon.tsx")),
+  Twitter: lazy(() => import("./bootstrap/Twitter.icon.tsx")),
+  TwitterX: lazy(() => import("./bootstrap/TwitterX.icon.tsx")),
+  Type: lazy(() => import("./bootstrap/Type.icon.tsx")),
+  TypeBold: lazy(() => import("./bootstrap/TypeBold.icon.tsx")),
+  TypeH1: lazy(() => import("./bootstrap/TypeH1.icon.tsx")),
+  TypeH2: lazy(() => import("./bootstrap/TypeH2.icon.tsx")),
+  TypeH3: lazy(() => import("./bootstrap/TypeH3.icon.tsx")),
+  TypeH4: lazy(() => import("./bootstrap/TypeH4.icon.tsx")),
+  TypeH5: lazy(() => import("./bootstrap/TypeH5.icon.tsx")),
+  TypeH6: lazy(() => import("./bootstrap/TypeH6.icon.tsx")),
+  TypeItalic: lazy(() => import("./bootstrap/TypeItalic.icon.tsx")),
+  TypeStrikethrough: lazy(() => import("./bootstrap/TypeStrikethrough.icon.tsx")),
+  TypeUnderline: lazy(() => import("./bootstrap/TypeUnderline.icon.tsx")),
+  Ubuntu: lazy(() => import("./bootstrap/Ubuntu.icon.tsx")),
+  UiChecks: lazy(() => import("./bootstrap/UiChecks.icon.tsx")),
+  UiChecksGrid: lazy(() => import("./bootstrap/UiChecksGrid.icon.tsx")),
+  UiRadios: lazy(() => import("./bootstrap/UiRadios.icon.tsx")),
+  UiRadiosGrid: lazy(() => import("./bootstrap/UiRadiosGrid.icon.tsx")),
+  Umbrella: lazy(() => import("./bootstrap/Umbrella.icon.tsx")),
+  UmbrellaFill: lazy(() => import("./bootstrap/UmbrellaFill.icon.tsx")),
+  Unindent: lazy(() => import("./bootstrap/Unindent.icon.tsx")),
+  Union: lazy(() => import("./bootstrap/Union.icon.tsx")),
+  UnitLayout: lazy(() => import("./custom/UnitLayout.icon.tsx")),
+  UnitTemplate: lazy(() => import("./custom/UnitTemplate.icon.tsx")),
+  Unity: lazy(() => import("./bootstrap/Unity.icon.tsx")),
+  UniversalAccess: lazy(() => import("./bootstrap/UniversalAccess.icon.tsx")),
+  UniversalAccessCircle: lazy(() => import("./bootstrap/UniversalAccessCircle.icon.tsx")),
+  Unlock: lazy(() => import("./bootstrap/Unlock.icon.tsx")),
+  UnlockFill: lazy(() => import("./bootstrap/UnlockFill.icon.tsx")),
+  Upc: lazy(() => import("./bootstrap/Upc.icon.tsx")),
+  UpcScan: lazy(() => import("./bootstrap/UpcScan.icon.tsx")),
+  Upload: lazy(() => import("./bootstrap/Upload.icon.tsx")),
+  Usb: lazy(() => import("./bootstrap/Usb.icon.tsx")),
+  UsbC: lazy(() => import("./bootstrap/UsbC.icon.tsx")),
+  UsbCFill: lazy(() => import("./bootstrap/UsbCFill.icon.tsx")),
+  UsbDrive: lazy(() => import("./bootstrap/UsbDrive.icon.tsx")),
+  UsbDriveFill: lazy(() => import("./bootstrap/UsbDriveFill.icon.tsx")),
+  UsbFill: lazy(() => import("./bootstrap/UsbFill.icon.tsx")),
+  UsbMicro: lazy(() => import("./bootstrap/UsbMicro.icon.tsx")),
+  UsbMicroFill: lazy(() => import("./bootstrap/UsbMicroFill.icon.tsx")),
+  UsbMini: lazy(() => import("./bootstrap/UsbMini.icon.tsx")),
+  UsbMiniFill: lazy(() => import("./bootstrap/UsbMiniFill.icon.tsx")),
+  UsbPlug: lazy(() => import("./bootstrap/UsbPlug.icon.tsx")),
+  UsbPlugFill: lazy(() => import("./bootstrap/UsbPlugFill.icon.tsx")),
+  UsbSymbol: lazy(() => import("./bootstrap/UsbSymbol.icon.tsx")),
+  Valentine: lazy(() => import("./bootstrap/Valentine.icon.tsx")),
+  Valentine2: lazy(() => import("./bootstrap/Valentine2.icon.tsx")),
+  VectorPen: lazy(() => import("./bootstrap/VectorPen.icon.tsx")),
+  ViewList: lazy(() => import("./bootstrap/ViewList.icon.tsx")),
+  ViewStacked: lazy(() => import("./bootstrap/ViewStacked.icon.tsx")),
+  Vignette: lazy(() => import("./bootstrap/Vignette.icon.tsx")),
+  Vimeo: lazy(() => import("./bootstrap/Vimeo.icon.tsx")),
+  Vinyl: lazy(() => import("./bootstrap/Vinyl.icon.tsx")),
+  VinylFill: lazy(() => import("./bootstrap/VinylFill.icon.tsx")),
+  Virus: lazy(() => import("./bootstrap/Virus.icon.tsx")),
+  Virus2: lazy(() => import("./bootstrap/Virus2.icon.tsx")),
+  Voicemail: lazy(() => import("./bootstrap/Voicemail.icon.tsx")),
+  VolumeDown: lazy(() => import("./bootstrap/VolumeDown.icon.tsx")),
+  VolumeDownFill: lazy(() => import("./bootstrap/VolumeDownFill.icon.tsx")),
+  VolumeMute: lazy(() => import("./bootstrap/VolumeMute.icon.tsx")),
+  VolumeMuteFill: lazy(() => import("./bootstrap/VolumeMuteFill.icon.tsx")),
+  VolumeOff: lazy(() => import("./bootstrap/VolumeOff.icon.tsx")),
+  VolumeOffFill: lazy(() => import("./bootstrap/VolumeOffFill.icon.tsx")),
+  VolumeUp: lazy(() => import("./bootstrap/VolumeUp.icon.tsx")),
+  VolumeUpFill: lazy(() => import("./bootstrap/VolumeUpFill.icon.tsx")),
+  Vr: lazy(() => import("./bootstrap/Vr.icon.tsx")),
+  Wallet: lazy(() => import("./bootstrap/Wallet.icon.tsx")),
+  Wallet2: lazy(() => import("./bootstrap/Wallet2.icon.tsx")),
+  WalletFill: lazy(() => import("./bootstrap/WalletFill.icon.tsx")),
+  Watch: lazy(() => import("./bootstrap/Watch.icon.tsx")),
+  Water: lazy(() => import("./bootstrap/Water.icon.tsx")),
+  Webcam: lazy(() => import("./bootstrap/Webcam.icon.tsx")),
+  WebcamFill: lazy(() => import("./bootstrap/WebcamFill.icon.tsx")),
+  Wechat: lazy(() => import("./bootstrap/Wechat.icon.tsx")),
+  Whatsapp: lazy(() => import("./bootstrap/Whatsapp.icon.tsx")),
+  Wifi: lazy(() => import("./bootstrap/Wifi.icon.tsx")),
+  Wifi1: lazy(() => import("./bootstrap/Wifi1.icon.tsx")),
+  Wifi2: lazy(() => import("./bootstrap/Wifi2.icon.tsx")),
+  WifiOff: lazy(() => import("./bootstrap/WifiOff.icon.tsx")),
+  Wikipedia: lazy(() => import("./bootstrap/Wikipedia.icon.tsx")),
+  Wind: lazy(() => import("./bootstrap/Wind.icon.tsx")),
+  Window: lazy(() => import("./custom/Window.icon.tsx")),
+  WindowBootstrap: lazy(() => import("./bootstrap/WindowBootstrap.icon.tsx")),
+  WindowDash: lazy(() => import("./bootstrap/WindowDash.icon.tsx")),
+  WindowDesktop: lazy(() => import("./bootstrap/WindowDesktop.icon.tsx")),
+  WindowDock: lazy(() => import("./bootstrap/WindowDock.icon.tsx")),
+  WindowFullscreen: lazy(() => import("./bootstrap/WindowFullscreen.icon.tsx")),
+  WindowPlus: lazy(() => import("./bootstrap/WindowPlus.icon.tsx")),
+  Windows: lazy(() => import("./bootstrap/Windows.icon.tsx")),
+  WindowSidebar: lazy(() => import("./bootstrap/WindowSidebar.icon.tsx")),
+  WindowSplit: lazy(() => import("./bootstrap/WindowSplit.icon.tsx")),
+  WindowStack: lazy(() => import("./bootstrap/WindowStack.icon.tsx")),
+  WindowX: lazy(() => import("./bootstrap/WindowX.icon.tsx")),
+  Wordpress: lazy(() => import("./bootstrap/Wordpress.icon.tsx")),
+  Wrench: lazy(() => import("./bootstrap/Wrench.icon.tsx")),
+  WrenchAdjustable: lazy(() => import("./bootstrap/WrenchAdjustable.icon.tsx")),
+  WrenchAdjustableCircle: lazy(() => import("./bootstrap/WrenchAdjustableCircle.icon.tsx")),
+  WrenchAdjustableCircleFill: lazy(() => import("./bootstrap/WrenchAdjustableCircleFill.icon.tsx")),
+  X: lazy(() => import("./bootstrap/X.icon.tsx")),
+  Xbox: lazy(() => import("./bootstrap/Xbox.icon.tsx")),
+  XCircle: lazy(() => import("./bootstrap/XCircle.icon.tsx")),
+  XCircleFill: lazy(() => import("./bootstrap/XCircleFill.icon.tsx")),
+  XDiamond: lazy(() => import("./bootstrap/XDiamond.icon.tsx")),
+  XDiamondFill: lazy(() => import("./bootstrap/XDiamondFill.icon.tsx")),
+  XLg: lazy(() => import("./bootstrap/XLg.icon.tsx")),
+  XOctagon: lazy(() => import("./bootstrap/XOctagon.icon.tsx")),
+  XOctagonFill: lazy(() => import("./bootstrap/XOctagonFill.icon.tsx")),
+  XSquare: lazy(() => import("./bootstrap/XSquare.icon.tsx")),
+  XSquareFill: lazy(() => import("./bootstrap/XSquareFill.icon.tsx")),
+  Yelp: lazy(() => import("./bootstrap/Yelp.icon.tsx")),
+  YinYang: lazy(() => import("./bootstrap/YinYang.icon.tsx")),
+  Youtube: lazy(() => import("./bootstrap/Youtube.icon.tsx")),
+  ZoomIn: lazy(() => import("./bootstrap/ZoomIn.icon.tsx")),
+  ZoomOut: lazy(() => import("./bootstrap/ZoomOut.icon.tsx")),}

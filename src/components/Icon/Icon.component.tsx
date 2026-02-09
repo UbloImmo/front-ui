@@ -1,7 +1,6 @@
 import { useMemo, Suspense, type LazyExoticComponent } from "react";
 
-// import * as allIcons from "./__generated__";
-import * as lazyIcons from "./__generated__/index.lazy.ts";
+import { iconIndex } from "./__generated__/index.lazy.ts";
 import styles from "./Icon.module.scss";
 import {
   DefaultIconProps,
@@ -45,7 +44,7 @@ const Icon = (props: IconProps): JSX.Element => {
       LazyExoticComponent<GeneratedIcon> | LazyExoticComponent<MissingIcon>
     >
   >(() => {
-    return lazyIcons[name] ?? null;
+    return iconIndex[name] ?? null;
   }, [name]);
 
   // sanitize size before passing it as svg width & height

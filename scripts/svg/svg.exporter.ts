@@ -97,11 +97,15 @@ const generateLazyIconIndex = (
 ): FileDescription => {
   const imports = [`import { lazy } from "react";`];
 
-  const exports = files.map(({ componentName, rootDir }) => {
-    return `export const ${componentName} = lazy(() => import("./${rootDir}/${componentName}.icon.tsx"));`;
-  });
+  let indexMap = `export const iconIndex = {`;
 
-  const contents = [...imports, "", ...exports, ""].join("\n");
+  for (const { componentName, rootDir } of files) {
+    indexMap += `\n  ${componentName}: lazy(() => import("./${rootDir}/${componentName}.icon.tsx")),`;
+  }
+
+  indexMap += "}";
+
+  const contents = [...imports, "", indexMap].join("\n");
   const path = `${rootDirPath}/index.lazy.ts`;
   return {
     contents,
