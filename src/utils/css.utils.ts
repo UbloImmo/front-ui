@@ -326,7 +326,13 @@ export const cssLengthUsage = (length: CssLength): CssLengthUsage => {
   if (isNumber(length)) {
     return cssRem(length);
   }
-  if (isCssPx(length) || isCssRem(length) || isCssCh(length)) {
+  if (
+    isCssPx(length) ||
+    isCssRem(length) ||
+    isCssCh(length) ||
+    isCssPercent(length) ||
+    isCssFr(length)
+  ) {
     return length;
   }
   if (isSpacingLabel(length)) {
@@ -348,6 +354,8 @@ export const isCssLengthUsage = (value: unknown): value is CssLengthUsage => {
     isCssPx(value) ||
     isCssRem(value) ||
     isSpacingLabel(value) ||
+    isCssPercent(value) ||
+    isCssFr(value) ||
     isCssCh(value)
   );
 };
@@ -546,6 +554,8 @@ export const cssVariables = (
 ): CSSProperties => {
   const vars: Record<string, string> = {};
 
+  if (!variables) return vars;
+
   for (const varName in variables) {
     const value = variables[varName];
     if (isNullish(value)) continue;
@@ -597,14 +607,33 @@ export const useCssVariables = (
   }, [variables, override]);
 };
 
+/**
+ * Merges multiple CSS style objects into one, overriding properties is needed.
+ * @param {Nullish<CSSProperties>[]} ...styles - List of css style objects to merge
+ * @returns {CSSProperties} Merged CSS style object
+ */
 export const cssStyles = (
   ...styles: Nullish<CSSProperties>[]
 ): CSSProperties => {
+  if (!styles || !styles.length) return {};
   return Object.assign({}, ...styles.filter(isObject));
 };
 
-export const useCssStyles: typeof cssStyles = (...styles) => {
+/**
+ * Memoized version of {@link cssStyles}
+ * @param {Nullish<CSSProperties>[]} ...styles - List of css style objects to merge
+ * @returns {CSSProperties} Merged CSS style object
+ */
+export const useCssStyles: typeof cssStyles = (
+  ...styles: Nullish<CSSProperties>[]
+): CSSProperties => {
   return useMemo(() => cssStyles(...styles), [styles]);
 };
 
-export const isCssProperties = isObject as Predicate<CSSProperties>;
+/**
+ * Naive type predicate that tells typescript if a value is a {@link CSSProperties} object
+ * by checking if it is any JS object and not an array
+ */
+export const isCssProperties: Predicate<CSSProperties> = (
+  value: unknown
+): value is CSSProperties => isObject(value) && !isArray(value);
