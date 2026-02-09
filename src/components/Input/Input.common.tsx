@@ -195,7 +195,6 @@ export const StyledInputGroupedControl = forwardRef<
     },
     ref
   ) => {
-    console.log(props, children);
     const className = useInputGroupedControlClassName({
       className: cn,
       $error,
