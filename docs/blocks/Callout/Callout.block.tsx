@@ -1,8 +1,6 @@
-import { isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
 import styles from "./Callout.block.module.scss";
-import { Markdown } from "../Markdown";
 import { flattenTypographyChildren } from "../Typography/Typography.utils";
 
 import { type CalloutProps, Callout as UikitCallout } from "@components";
@@ -17,7 +15,7 @@ export const Callout = ({
   }, [children]);
   return (
     <UikitCallout className={styles.callout} {...props} color={color}>
-      {isString(content) ? <Markdown>{content}</Markdown> : (content ?? "")}
+      {content ?? ""}
     </UikitCallout>
   );
 };
