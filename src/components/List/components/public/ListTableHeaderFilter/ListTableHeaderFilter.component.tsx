@@ -176,21 +176,23 @@ export const ListTableHeaderFilter = (
             {!props.hideLabel && props.tooltip && (
               <Tooltip {...props.tooltip} iconColor="primary-medium" />
             )}
-            <Tooltip {...filterTooltipProps}>
-              <button
-                className={classNames.button}
-                data-testid={`${testId}-trigger`}
-                type="button"
-                disabled={filter.disabled}
-              >
-                <Icon size="s-4" name="FilterCircle" color="primary-medium" />
-                <Icon
-                  size="s-4"
-                  name="FilterCircleFill"
-                  color="primary-medium"
-                />
-              </button>
-            </Tooltip>
+            {!!filterTooltipProps && (
+              <Tooltip {...filterTooltipProps}>
+                <button
+                  className={classNames.button}
+                  data-testid={`${testId}-trigger`}
+                  type="button"
+                  disabled={filter.disabled}
+                >
+                  <Icon size="s-4" name="FilterCircle" color="primary-medium" />
+                  <Icon
+                    size="s-4"
+                    name="FilterCircleFill"
+                    color="primary-medium"
+                  />
+                </button>
+              </Tooltip>
+            )}
           </FlexRowLayout>
         </FlexRowLayout>
       </Popover>

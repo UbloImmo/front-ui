@@ -97,7 +97,7 @@ export const Content = (props: Partial<TooltipProps>) => {
 
 const children = [
   { value: null, label: "null" },
-  { value: <Badge />, label: "Badge" },
+  { value: <Badge label="badge" />, label: "Badge" },
   { value: <Text>Text</Text>, label: "Text" },
 ];
 

@@ -82,7 +82,7 @@ export const SideEntityMenuItem: FC<SideEntityMenuItemProps> = ({
 
   if (link.hidden) return null;
 
-  if ("isTitle" in link && link.isTitle) {
+  if ("isTitle" in link && link.isTitle && link.icon) {
     return (
       <div className={classNames.item} {...linkProps} data-menu-header>
         <div className={classNames.icon}>

@@ -31,7 +31,7 @@ export type TooltipProps = {
    * The wrapped content by the tooltip
    * @required
    */
-  children: ReactNode;
+  children?: ReactNode;
   /**
    * The text or element displayed in the tooltip
    * @required

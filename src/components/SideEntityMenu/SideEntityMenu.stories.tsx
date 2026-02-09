@@ -142,13 +142,11 @@ const onlyBackLinksProps: SideEntityMenuProps = {
       title: "Super Groupe",
       icon: "BackArrow",
       to: "/real-estate/units?list-options=group1",
-      borderBottom: true,
     },
     {
       title: "Sous-groupe A",
       icon: "BackArrow",
       to: "/real-estate/units?list-options=subgroup-a",
-      borderBottom: true,
     },
   ],
 };

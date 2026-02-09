@@ -302,7 +302,9 @@ const descriptions: (string | NonOptional<ReactNode>)[] = [
     I even contain an icon <Icon size="s-2" name="Airplane" /> !
   </>,
   <>
-    <Hypertext href="#">I am a link</Hypertext>
+    <Hypertext title="link" href="#">
+      I am a link
+    </Hypertext>
   </>,
 ];
 

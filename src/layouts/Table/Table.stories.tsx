@@ -121,6 +121,7 @@ const ListStyleExample: ReactNode = (
 
 const componentSource = componentSourceFactory<TableProps>(
   "Table",
+  {},
   Table.__DEFAULT_PROPS
 );
 

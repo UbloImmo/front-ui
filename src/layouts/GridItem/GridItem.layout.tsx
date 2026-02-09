@@ -39,7 +39,11 @@ const defaultGridItemProps: GridItemDefaultProps = {
  * @param {ReactNode} props.children - The children to render inside the grid item.
  * @return {JSX.Element} The rendered grid item.
  */
-const GridItem = forwardRef<HTMLDivElement, GridItemProps & TestIdProps>(
+const GridItem = forwardRef<
+  HTMLDivElement,
+  GridItemProps & TestIdProps,
+  GridItemDefaultProps
+>(
   (
     props: GridItemProps & TestIdProps = defaultGridItemProps,
     ref

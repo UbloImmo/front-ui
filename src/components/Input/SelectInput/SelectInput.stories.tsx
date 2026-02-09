@@ -192,7 +192,7 @@ const CustomOption: CustomOptionComponent<string, BadgeProps> = (option) => {
   return (
     <CustomOptionContainer justify="space-between" align="center" fill>
       <Text>{option.label}</Text>
-      <Badge {...option.extraData} />
+      {!!option.extraData && <Badge {...option.extraData} />}
     </CustomOptionContainer>
   );
 };

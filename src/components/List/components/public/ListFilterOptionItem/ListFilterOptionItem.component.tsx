@@ -60,7 +60,7 @@ export const ListFilterOptionItem = <TItem extends object = object>({
     };
   }, [highlighted, option.disabled, option.selected]);
 
-  const iconProps = useMemo<Nullable<IconProps>>(() => {
+  const iconProps = useMemo<IconProps>(() => {
     const name: IconName = option.icon
       ? option.icon
       : option.selected

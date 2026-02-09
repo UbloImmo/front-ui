@@ -32,7 +32,11 @@ const buildLabeledElementsList = (label: string) => {
   return [
     <Button key="button" label={"Button " + label} color="black" />,
     <Badge key="badge" label={"Badge " + label} />,
-    <StateIndicator key="state-indicator" label={"State Indicator " + label} />,
+    <StateIndicator
+      icon="Circle"
+      key="state-indicator"
+      label={"State Indicator " + label}
+    />,
     <Field key="field" type="text" label={"Field " + label} />,
   ];
 };

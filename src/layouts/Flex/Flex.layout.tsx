@@ -40,7 +40,8 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
  */
 export const FlexLayout = forwardRef<
   HTMLDivElement,
-  FlexLayoutProps & TestIdProps & AriaProps
+  FlexLayoutProps & TestIdProps & AriaProps,
+  FlexLayoutDefaultProps
 >((props, ref): JSX.Element => {
   const testId = useTestId("flex", props);
   const id = useHtmlAttribute(props.id ?? null);
@@ -66,6 +67,7 @@ export const FlexLayout = forwardRef<
     </Element>
   );
 });
+FlexLayout.__DEFAULT_PROPS = defaultFlexLayoutProps;
 
 /**
  * A {@link FlexLayout} variant with fixed `row` direction
@@ -95,5 +97,3 @@ export const FlexColumnLayout = forwardRef<
   const testId = useTestId("flex-column", props);
   return <FlexLayout {...props} ref={ref} direction="column" testId={testId} />;
 });
-
-FlexLayout.__DEFAULT_PROPS = defaultFlexLayoutProps;

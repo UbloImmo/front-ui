@@ -212,7 +212,9 @@ const descriptionVariants = [
       </Text>
     </FlexRowLayout>
     <div>
-      <Hypertext href="#">Additional link</Hypertext>
+      <Hypertext title="additional link" href="#">
+        Additional link
+      </Hypertext>
     </div>
   </FlexColumnLayout>,
 ];

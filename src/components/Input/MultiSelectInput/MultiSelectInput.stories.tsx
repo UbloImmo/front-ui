@@ -151,7 +151,7 @@ const CustomOption: CustomOptionComponent<string, BadgeProps> = (option) => {
       $active={option.active}
     >
       <Text>{option.label}</Text>
-      <Badge {...option.extraData} />
+      {!!option.extraData && <Badge {...option.extraData} />}
     </CustomOptionContainer>
   );
 };

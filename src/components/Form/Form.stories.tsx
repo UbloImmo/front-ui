@@ -456,6 +456,7 @@ const customInputFeatureSwitch = ({
   disabled,
 }: CustomFormInputProps<boolean>) => (
   <FeatureSwitch
+    label="Feature"
     onChange={onChange}
     value={value}
     disabled={disabled}
@@ -966,9 +967,11 @@ const infoBannerFormProps: FormProps<object> = {
   bannerInfo: (
     <>
       This information can contain any element, even&nbsp;
-      <Hypertext href="#">hypertexts</Hypertext>. It can be a lengthy
-      explanation of the form&apos;s purpose, instructions on how to fill it
-      out, or any other relevant details.
+      <Hypertext title="a hypertext" href="#">
+        hypertexts
+      </Hypertext>
+      . It can be a lengthy explanation of the form&apos;s purpose, instructions
+      on how to fill it out, or any other relevant details.
     </>
   ),
   defaultEditing: true,

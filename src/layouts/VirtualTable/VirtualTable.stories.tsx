@@ -277,7 +277,7 @@ const cellProps: VirtualTableProps<StoryData> = {
     },
     {
       HeaderContent: "Button",
-      CellContent: () => <Button>Click me</Button>,
+      CellContent: () => <Button label="click me" />,
     },
     {
       HeaderContent: "Icon",

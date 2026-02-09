@@ -1026,14 +1026,16 @@ export type FormHeaderProps = {
 
 export type FormModalProps = {
   /**
-   * Optional {@link ModalProps} to display in a modal
+   * Optional {@link ModalProps} to display in a modal. Reference is required
    *
    * @remarks providing valid Modal props will render the form in a `Modal` component.
    *
-   * @type {Nullable<Omit<ModalProps, "title">>}
+   * @type {Nullable<Omit<Replace<ModalProps, "reference", { reference: string }>, "title">>}
    * @default null
    */
-  asModal?: Nullable<Omit<ModalProps, "title">>;
+  asModal?: Nullable<
+    Omit<Replace<ModalProps, "reference", { reference: string }>, "title">
+  >;
 };
 
 export type FormGridProps = {
