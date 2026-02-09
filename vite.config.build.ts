@@ -1,8 +1,9 @@
 import { resolve } from "node:path";
 
+import dedent from "ts-dedent";
+import dts from "unplugin-dts/vite";
 import { mergeConfig } from "vite";
 import banner from "vite-plugin-banner";
-import dts from "vite-plugin-dts";
 
 import { version, name } from "./package.json";
 import sbViteConfig from "./vite.config";
@@ -74,6 +75,8 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
       exclude: [
         "node_modules/**",
         "src/tests/**",
+        "storybook-static",
+        "dist",
         "docs",
         "scripts",
         ".storybook",
@@ -81,12 +84,13 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
         "**/*.test.ts",
         "**/*.test.tsx",
         "tsdoc.json",
+        "test.types.ts",
       ],
       tsconfigPath: "./tsconfig.json",
-      // rollupTypes: true,
+      bundleTypes: true,
       insertTypesEntry: true,
       copyDtsFiles: true,
-      outDir: "dist/types",
+      outDirs: "dist/types",
     }),
     banner({
       content: chunkBanner,
