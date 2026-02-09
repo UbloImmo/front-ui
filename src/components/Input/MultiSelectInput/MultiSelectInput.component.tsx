@@ -366,6 +366,6 @@ const MultiSelectInput = <
   );
 };
 
-MultiSelectInput.defaultProps = defaultMultiSelectInputProps;
+MultiSelectInput.__DEFAULT_PROPS = defaultMultiSelectInputProps;
 
 export { MultiSelectInput };

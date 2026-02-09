@@ -15,7 +15,7 @@ import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 const source = componentSourceFactory<SumLineProps>(
   "SumLine",
   undefined,
-  SumLine.defaultProps
+  SumLine.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -70,16 +70,16 @@ export const MultipleSumLines: StoryFn<typeof meta> = (props) => (
 );
 MultiSumLine.parameters = {
   docs: source([
-    SumLine.defaultProps,
-    SumLine.defaultProps,
-    { ...SumLine.defaultProps, size: "l" },
+    SumLine.__DEFAULT_PROPS,
+    SumLine.__DEFAULT_PROPS,
+    { ...SumLine.__DEFAULT_PROPS, size: "l" },
   ]),
 };
 
 const sizes: SumLineSize[] = ["m", "l"];
 
 export const Sizes = (props: Partial<SumLineProps>) => {
-  const defaultProps = useMergedProps(SumLine.defaultProps, props);
+  const defaultProps = useMergedProps(SumLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -94,14 +94,14 @@ export const Sizes = (props: Partial<SumLineProps>) => {
 };
 Sizes.parameters = {
   docs: source([
-    SumLine.defaultProps,
-    SumLine.defaultProps,
-    { ...SumLine.defaultProps, size: "l" },
+    SumLine.__DEFAULT_PROPS,
+    SumLine.__DEFAULT_PROPS,
+    { ...SumLine.__DEFAULT_PROPS, size: "l" },
   ]),
 };
 
 export const Units = (props: Partial<SumLineProps>) => {
-  const defaultProps = useMergedProps(SumLine.defaultProps, props);
+  const defaultProps = useMergedProps(SumLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -115,13 +115,13 @@ export const Units = (props: Partial<SumLineProps>) => {
   );
 };
 Sizes.parameters = {
-  docs: source(sumLineUnits.map((unit) => ({ ...SumLine.defaultProps, unit }))),
+  docs: source(sumLineUnits.map((unit) => ({ ...SumLine.__DEFAULT_PROPS, unit }))),
 };
 
 const periods = ["month", "year", "quarter", "tenant"];
 
 export const Periods = (props: Partial<SumLineProps>) => {
-  const defaultProps = useMergedProps(SumLine.defaultProps, props);
+  const defaultProps = useMergedProps(SumLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -135,11 +135,11 @@ export const Periods = (props: Partial<SumLineProps>) => {
   );
 };
 Periods.parameters = {
-  docs: source(periods.map((period) => ({ ...SumLine.defaultProps, period }))),
+  docs: source(periods.map((period) => ({ ...SumLine.__DEFAULT_PROPS, period }))),
 };
 
 export const Compact = (props: Partial<SumLineProps>) => {
-  const defaultProps = useMergedProps(SumLine.defaultProps, props);
+  const defaultProps = useMergedProps(SumLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -154,8 +154,8 @@ export const Compact = (props: Partial<SumLineProps>) => {
 };
 Compact.parameters = {
   docs: source([
-    SumLine.defaultProps,
-    { ...SumLine.defaultProps, compact: true },
+    SumLine.__DEFAULT_PROPS,
+    { ...SumLine.__DEFAULT_PROPS, compact: true },
   ]),
 };
 
@@ -166,7 +166,7 @@ const labels = [
   "Another very long label that is very likely to be truncated",
 ];
 export const Labels = (props: Partial<SumLineProps>) => {
-  const defaultProps = useMergedProps(SumLine.defaultProps, props);
+  const defaultProps = useMergedProps(SumLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -180,13 +180,13 @@ export const Labels = (props: Partial<SumLineProps>) => {
   );
 };
 Labels.parameters = {
-  docs: source(labels.map((label) => ({ ...SumLine.defaultProps, label }))),
+  docs: source(labels.map((label) => ({ ...SumLine.__DEFAULT_PROPS, label }))),
 };
 
 const values = [0, 7897, 123456789, 99999999900];
 
 export const Values = (props: Partial<SumLineProps>) => {
-  const defaultProps = useMergedProps(SumLine.defaultProps, props);
+  const defaultProps = useMergedProps(SumLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -200,5 +200,5 @@ export const Values = (props: Partial<SumLineProps>) => {
   );
 };
 Values.parameters = {
-  docs: source(values.map((value) => ({ ...SumLine.defaultProps, value }))),
+  docs: source(values.map((value) => ({ ...SumLine.__DEFAULT_PROPS, value }))),
 };

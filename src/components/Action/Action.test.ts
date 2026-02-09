@@ -17,7 +17,7 @@ const testAction = testComponentFactory("Action", Action);
 
 const onClick = mock(() => {});
 
-const testDefaultAction = testAction({ ...Action.defaultProps, onClick });
+const testDefaultAction = testAction({ ...Action.__DEFAULT_PROPS, onClick });
 
 testDefaultAction("should render", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
@@ -25,7 +25,7 @@ testDefaultAction("should render", ({ queryByTestId }) => {
 });
 
 testAction({
-  ...Action.defaultProps,
+  ...Action.__DEFAULT_PROPS,
   badgeLabel: "Badge",
 })("should render a badge", async ({ findByTestId }) => {
   expect(await findByTestId(testId)).not.toBeNull();
@@ -34,7 +34,7 @@ testAction({
 });
 
 testAction({
-  ...Action.defaultProps,
+  ...Action.__DEFAULT_PROPS,
   size: "large",
 })("should render the large size", async ({ findByTestId }) => {
   expect(await findByTestId(testId)).not.toBeNull();
@@ -50,7 +50,7 @@ testDefaultAction(
 );
 
 testAction({
-  ...Action.defaultProps,
+  ...Action.__DEFAULT_PROPS,
   iconTooltip: {
     content: "A tooltip on an action",
   },
@@ -60,7 +60,7 @@ testAction({
 });
 
 testAction({
-  ...Action.defaultProps,
+  ...Action.__DEFAULT_PROPS,
   description: "A description",
   size: "large",
 })("should render a description with a large size", ({ queryByTestId }) => {
@@ -69,7 +69,7 @@ testAction({
 });
 
 testAction({
-  ...Action.defaultProps,
+  ...Action.__DEFAULT_PROPS,
   description: "A description",
 })(
   "should not render a description with a default size",
@@ -82,7 +82,7 @@ testAction({
 global.console.warn = mock(() => {});
 
 testAction({
-  ...Action.defaultProps,
+  ...Action.__DEFAULT_PROPS,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore need this to check for unhandled props
   icon: null,
@@ -93,7 +93,7 @@ testAction({
 });
 
 testAction({
-  ...Action.defaultProps,
+  ...Action.__DEFAULT_PROPS,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore need this to check for unhandled props
   label: null,
@@ -104,7 +104,7 @@ testAction({
 });
 
 testAction({
-  ...Action.defaultProps,
+  ...Action.__DEFAULT_PROPS,
   description: "A description",
   size: "default",
 })(
@@ -118,7 +118,7 @@ testAction({
 );
 
 testAction({
-  ...Action.defaultProps,
+  ...Action.__DEFAULT_PROPS,
   indicator: {
     name: "Circle2NdHalf",
     color: "pending-base",

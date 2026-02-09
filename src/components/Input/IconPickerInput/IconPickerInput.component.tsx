@@ -14,7 +14,7 @@ import type {
 } from "./IconPickerInput.types";
 
 const defaultIconPickerInputProps: IconPickerInputDefaultProps = {
-  ...IconPicker.defaultProps,
+  ...IconPicker.__DEFAULT_PROPS,
   ...defaultCommonInputProps,
   name: null,
   value: null,
@@ -61,6 +61,6 @@ const IconPickerInput = (
   );
 };
 
-IconPickerInput.defaultProps = defaultIconPickerInputProps;
+IconPickerInput.__DEFAULT_PROPS = defaultIconPickerInputProps;
 
 export { IconPickerInput };

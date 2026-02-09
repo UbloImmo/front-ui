@@ -8,18 +8,18 @@ const testCollapsible = testComponentFactory("Collapsible", Collapsible);
 const testId = "collapsible";
 
 const subCollapsible = {
-  ...Collapsible.defaultProps,
+  ...Collapsible.__DEFAULT_PROPS,
   children: "Collapsible children",
 };
 
-testCollapsible(Collapsible.defaultProps)(
+testCollapsible(Collapsible.__DEFAULT_PROPS)(
   "should render",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
   }
 );
 
-testCollapsible({ ...Collapsible.defaultProps, subCollapsibles: null })(
+testCollapsible({ ...Collapsible.__DEFAULT_PROPS, subCollapsibles: null })(
   "should not expand when no subCollapsibles",
   async ({ queryByTestId }, { click }) => {
     const collapsibleCaret = queryByTestId(
@@ -37,7 +37,7 @@ testCollapsible({ ...Collapsible.defaultProps, subCollapsibles: null })(
 const onOpenChange = mock(() => {});
 
 testCollapsible({
-  ...Collapsible.defaultProps,
+  ...Collapsible.__DEFAULT_PROPS,
   onOpenChange,
   subCollapsibles: [subCollapsible, subCollapsible],
 })(

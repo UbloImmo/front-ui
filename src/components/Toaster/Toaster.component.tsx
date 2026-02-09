@@ -88,6 +88,6 @@ const Toaster = (props: ToasterProps & TestIdProps): JSX.Element => {
     />
   );
 };
-Toaster.defaultProps = defaultToasterProps;
+Toaster.__DEFAULT_PROPS = defaultToasterProps;
 
 export { Toaster };

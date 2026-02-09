@@ -110,6 +110,6 @@ const ContextMenuItem = (
     </button>
   );
 };
-ContextMenuItem.defaultProps = defaultContextMenuItemProps;
+ContextMenuItem.__DEFAULT_PROPS = defaultContextMenuItemProps;
 
 export { ContextMenuItem };

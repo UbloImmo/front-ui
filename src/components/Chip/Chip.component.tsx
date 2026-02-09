@@ -103,5 +103,5 @@ const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
   );
 };
 
-Chip.defaultProps = defaultChipProps;
+Chip.__DEFAULT_PROPS = defaultChipProps;
 export { Chip };

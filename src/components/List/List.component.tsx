@@ -29,6 +29,6 @@ const List = <TItem extends object>(props: ListProps<TItem>): JSX.Element => {
     </ListProviderWrapper>
   );
 };
-List.defaultProps = defaultListProps;
+List.__DEFAULT_PROPS = defaultListProps;
 
 export { List };

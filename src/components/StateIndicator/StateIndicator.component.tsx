@@ -80,6 +80,6 @@ const StateIndicator = (
     </Element>
   );
 };
-StateIndicator.defaultProps = defaultStateIndicatorProps;
+StateIndicator.__DEFAULT_PROPS = defaultStateIndicatorProps;
 
 export { StateIndicator };

@@ -8,7 +8,7 @@ import type { AccountBalanceProps } from "./AccountBalance.types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const args = {
-  ...AccountBalance.defaultProps,
+  ...AccountBalance.__DEFAULT_PROPS,
 };
 
 const componentSource = componentSourceFactory<AccountBalanceProps>(
@@ -17,7 +17,7 @@ const componentSource = componentSourceFactory<AccountBalanceProps>(
     title: "Titre",
     value: 999_999,
   },
-  AccountBalance.defaultProps
+  AccountBalance.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -96,7 +96,7 @@ const valueVariants = [
 ];
 
 export const Value = (props: AccountBalanceProps) => {
-  const mergedProps = useMergedProps(AccountBalance.defaultProps, props);
+  const mergedProps = useMergedProps(AccountBalance.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}

@@ -111,6 +111,6 @@ const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
   );
 };
 
-Dialog.defaultProps = defaultDialogProps;
+Dialog.__DEFAULT_PROPS = defaultDialogProps;
 
 export { Dialog };

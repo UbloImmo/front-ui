@@ -11,7 +11,7 @@ const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe("Toaster", () => {
   const testToaster = testComponentFactory<ToasterProps>("Toaster", Toaster, {
-    props: Toaster.defaultProps,
+    props: Toaster.__DEFAULT_PROPS,
     tests: [
       {
         name: "should render component",
@@ -32,7 +32,7 @@ describe("Toaster", () => {
     toast.dismiss();
   });
 
-  testToaster({ ...Toaster.defaultProps })(
+  testToaster({ ...Toaster.__DEFAULT_PROPS })(
     "should render with default props",
     ({ container }) => {
       // Component should render without throwing errors
@@ -58,7 +58,7 @@ describe("Toaster", () => {
   );
 
   // Test toast creation and ID functionality - THE KEY TEST!
-  testToaster({ ...Toaster.defaultProps })(
+  testToaster({ ...Toaster.__DEFAULT_PROPS })(
     "should create toast with custom ID and className",
     async ({ container }) => {
       // Create a toast with custom ID
@@ -83,7 +83,7 @@ describe("Toaster", () => {
     }
   );
 
-  testToaster({ ...Toaster.defaultProps })(
+  testToaster({ ...Toaster.__DEFAULT_PROPS })(
     "should create different types of toasts with custom classes",
     async ({ container }) => {
       // Test different toast types with IDs and classes
@@ -115,7 +115,7 @@ describe("Toaster", () => {
     }
   );
 
-  testToaster({ ...Toaster.defaultProps })(
+  testToaster({ ...Toaster.__DEFAULT_PROPS })(
     "should create toast with description and custom ID",
     async ({ container }) => {
       toast("Main message", {

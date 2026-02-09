@@ -12,7 +12,7 @@ import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   ComboBoxProps<NullishPrimitives>
->("ComboBox", ComboBox.defaultProps);
+>("ComboBox", ComboBox.__DEFAULT_PROPS);
 
 const options: ComboBoxOption<NullishPrimitives>[] = [
   {

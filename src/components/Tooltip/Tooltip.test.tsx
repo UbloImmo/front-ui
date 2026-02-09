@@ -16,7 +16,7 @@ describe("Tooltip", () => {
   global.console.warn = mock(() => {});
 
   testTooltip({
-    ...Tooltip.defaultProps,
+    ...Tooltip.__DEFAULT_PROPS,
   })("should render with default props", ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
   });
@@ -43,7 +43,7 @@ describe("Tooltip", () => {
   });
 
   testTooltip({
-    ...Tooltip.defaultProps,
+    ...Tooltip.__DEFAULT_PROPS,
     content: <Badge label="test" />,
   })("should render with JSX in content props", ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();

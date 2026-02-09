@@ -154,6 +154,6 @@ const SideEntityMenu = (
   );
 };
 
-SideEntityMenu.defaultProps = defaultSideEntityMenuProps;
+SideEntityMenu.__DEFAULT_PROPS = defaultSideEntityMenuProps;
 
 export { SideEntityMenu };

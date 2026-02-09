@@ -12,7 +12,7 @@ import type { ColorKey } from "@types";
 
 const componentSource = componentSourceFactory<HypertextProps>(
   "Hypertext",
-  Hypertext.defaultProps
+  Hypertext.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -40,7 +40,7 @@ const texts = [
 ];
 
 export const TextLengths = (props: HypertextProps) => {
-  const defaultProps = useMergedProps(Hypertext.defaultProps, props);
+  const defaultProps = useMergedProps(Hypertext.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -76,7 +76,7 @@ const HypertextInTextRenderer = (props: HypertextProps) => {
 };
 
 export const HypertextInText = (props: HypertextProps) => {
-  const defaultProps = useMergedProps(Hypertext.defaultProps, props);
+  const defaultProps = useMergedProps(Hypertext.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={defaultProps}
@@ -91,7 +91,7 @@ export const HypertextInText = (props: HypertextProps) => {
 HypertextInText.parameters = {
   docs: componentSource(
     texts.map((text) => ({
-      ...Hypertext.defaultProps,
+      ...Hypertext.__DEFAULT_PROPS,
       children: text,
     }))
   ),
@@ -100,7 +100,7 @@ HypertextInText.parameters = {
 const urls = ["https://www.ublo.immo/", "https://www.google.com/"];
 
 export const Redirection = (props: HypertextProps) => {
-  const defaultProps = useMergedProps(Hypertext.defaultProps, props);
+  const defaultProps = useMergedProps(Hypertext.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={defaultProps}
@@ -120,7 +120,7 @@ Redirection.args = {
 Redirection.parameters = {
   docs: componentSource(
     urls.map((url) => ({
-      ...Hypertext.defaultProps,
+      ...Hypertext.__DEFAULT_PROPS,
       href: url,
     }))
   ),
@@ -136,7 +136,7 @@ const colors: ColorKey[] = [
 ];
 
 export const Colors = (props: HypertextProps) => {
-  const defaultProps = useMergedProps(Hypertext.defaultProps, props);
+  const defaultProps = useMergedProps(Hypertext.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={defaultProps}
@@ -151,14 +151,14 @@ export const Colors = (props: HypertextProps) => {
 Colors.parameters = {
   docs: componentSource(
     colors.map((color) => ({
-      ...Hypertext.defaultProps,
+      ...Hypertext.__DEFAULT_PROPS,
       color,
     }))
   ),
 };
 
 export const OnClickVsHref = (props: HypertextProps) => {
-  const defaultProps = useMergedProps(Hypertext.defaultProps, props);
+  const defaultProps = useMergedProps(Hypertext.__DEFAULT_PROPS, props);
 
   const handleClick = () => {
     alert("onClick handler was triggered!");

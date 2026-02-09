@@ -14,7 +14,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CheckboxProps>(
   "Checkbox",
-  Checkbox.defaultProps
+  Checkbox.__DEFAULT_PROPS
 );
 
 const checkboxStatus: CheckboxStatus[] = [true, "mixed", false];
@@ -53,7 +53,7 @@ export const States = () => {
     <ComponentVariants
       of={Checkbox}
       for="active"
-      defaults={Checkbox.defaultProps}
+      defaults={Checkbox.__DEFAULT_PROPS}
       variants={checkboxStatus}
       propLabels
     />
@@ -82,7 +82,7 @@ export const Disabled = () => {
   return (
     <ComponentVariants
       of={Checkbox}
-      defaults={Checkbox.defaultProps}
+      defaults={Checkbox.__DEFAULT_PROPS}
       variants={disabledStates}
       propLabels
     />

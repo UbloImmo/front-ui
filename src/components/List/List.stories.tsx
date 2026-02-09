@@ -14,7 +14,7 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 const componentSource = componentSourceFactory<ListProps<object>>(
   "List",
   {},
-  List.defaultProps
+  List.__DEFAULT_PROPS
 );
 
 const meta = {

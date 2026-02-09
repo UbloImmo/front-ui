@@ -21,7 +21,7 @@ import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   MultiSelectInputProps<NullishPrimitives>
->("MultiSelectInput", MultiSelectInput.defaultProps);
+>("MultiSelectInput", MultiSelectInput.__DEFAULT_PROPS);
 
 const meta = {
   component: MultiSelectInput,

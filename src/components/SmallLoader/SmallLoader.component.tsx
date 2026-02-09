@@ -30,6 +30,6 @@ const SmallLoader = (props: TestIdProps & LoadingProps): JSX.Element => {
   );
 };
 
-SmallLoader.defaultProps = {};
+SmallLoader.__DEFAULT_PROPS = {};
 
 export { SmallLoader };

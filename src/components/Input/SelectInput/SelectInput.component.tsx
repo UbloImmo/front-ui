@@ -466,6 +466,6 @@ const SelectInput = <
   );
 };
 
-SelectInput.defaultProps = defaultSelectInputProps;
+SelectInput.__DEFAULT_PROPS = defaultSelectInputProps;
 
 export { SelectInput };

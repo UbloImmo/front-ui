@@ -49,5 +49,5 @@ const EnergyLabel = (props: EnergyLabelProps & TestIdProps): JSX.Element => {
   );
 };
 
-EnergyLabel.defaultProps = defaultEnergyLabelProps;
+EnergyLabel.__DEFAULT_PROPS = defaultEnergyLabelProps;
 export { EnergyLabel };

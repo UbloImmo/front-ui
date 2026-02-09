@@ -36,6 +36,6 @@ const Portal = (props: PortalProps): Nullable<ReactPortal> => {
   return createPortal(children, root);
 };
 
-Portal.defaultProps = defaultPortalProps;
+Portal.__DEFAULT_PROPS = defaultPortalProps;
 
 export { Portal };

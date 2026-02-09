@@ -14,7 +14,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CollapsibleProps>(
   "Collapsible",
-  Collapsible.defaultProps
+  Collapsible.__DEFAULT_PROPS
 );
 
 const defaultChildren = <Text>[children]</Text>;
@@ -34,7 +34,7 @@ const customChildren2 = (
 );
 
 const defaultCollapsibleComponent = {
-  ...Collapsible.defaultProps,
+  ...Collapsible.__DEFAULT_PROPS,
   children: defaultChildren,
 };
 
@@ -68,7 +68,7 @@ const CustomSubCollapsibles: CollapsibleDefaultProps[] = [
     children: customChildren2,
     subCollapsibles: [
       {
-        ...Collapsible.defaultProps,
+        ...Collapsible.__DEFAULT_PROPS,
         children: customChildren,
       },
     ],

@@ -95,5 +95,5 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
     </button>
   );
 };
-ActionIcon.defaultProps = defaultActionIconProps;
+ActionIcon.__DEFAULT_PROPS = defaultActionIconProps;
 export { ActionIcon };

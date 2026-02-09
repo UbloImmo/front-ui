@@ -118,6 +118,6 @@ const Hypertext = (props: HypertextProps): JSX.Element => {
   );
 };
 
-Hypertext.defaultProps = defaultHypertextProps;
+Hypertext.__DEFAULT_PROPS = defaultHypertextProps;
 
 export { Hypertext };

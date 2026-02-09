@@ -76,7 +76,7 @@ const optionSets = {
   mixed: mixedOptions,
 };
 
-testComboBox({ ...ComboBox.defaultProps })(
+testComboBox({ ...ComboBox.__DEFAULT_PROPS })(
   "should render",
   ({ queryByTestId }) => {
     expect(queryByTestId("combo-box")).not.toBeNull();
@@ -98,7 +98,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
     cb as Mock<VoidFn>;
   const initMock = () => mock<VoidFn>(() => {});
 
-  testComboBox({ ...ComboBox.defaultProps, options })(
+  testComboBox({ ...ComboBox.__DEFAULT_PROPS, options })(
     prefix("should render options"),
     ({ queryByTestId, queryByText }) => {
       expect(queryByTestId("combo-box")).not.toBeNull();
@@ -109,7 +109,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   );
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     value: firstOption.value,
   })(
@@ -125,7 +125,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   );
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     multi: true,
     value: optionValues(firstTwoOptions),
@@ -145,7 +145,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
     }
   );
 
-  testComboBox({ ...ComboBox.defaultProps, options, onChange: initMock() })(
+  testComboBox({ ...ComboBox.__DEFAULT_PROPS, options, onChange: initMock() })(
     prefix("should select option on click"),
     async ({ findAllByTestId }, { click }, { onChange: cb }) => {
       const onChange = castMock(cb);
@@ -160,7 +160,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   );
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     onChange: initMock(),
     multi: true,
@@ -187,7 +187,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   );
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     value: optionValues(firstTwoOptions),
     onChange: initMock(),
@@ -213,7 +213,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   );
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     value: optionValues(firstTwoOptions),
     onChange: initMock(),
@@ -241,7 +241,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   );
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     value: firstOption.value,
     onChange: initMock(),
@@ -261,7 +261,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   );
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     value: [firstOption],
     onChange: initMock(),
@@ -286,7 +286,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   const onCreate1 = mock<VoidFn>(() => {});
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     creatable: true,
     onCreate: onCreate1,
@@ -309,7 +309,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   const onCreate2 = mock<VoidFn>(() => {});
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     creatable: true,
     multi: true,
@@ -331,7 +331,7 @@ objectEntries(optionSets).forEach(([setName, options]) => {
   );
 
   testComboBox({
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options,
     columns: 2,
   })("should display options in columns", async ({ queryByTestId }) => {

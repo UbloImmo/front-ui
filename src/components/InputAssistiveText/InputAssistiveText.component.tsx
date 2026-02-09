@@ -95,5 +95,5 @@ const InputAssistiveText = (
   );
 };
 
-InputAssistiveText.defaultProps = defaultInputAssistiveTextProps;
+InputAssistiveText.__DEFAULT_PROPS = defaultInputAssistiveTextProps;
 export { InputAssistiveText };

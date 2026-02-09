@@ -80,6 +80,6 @@ const AccountBalance = (
     </div>
   );
 };
-AccountBalance.defaultProps = defaultAccountBalanceProps;
+AccountBalance.__DEFAULT_PROPS = defaultAccountBalanceProps;
 
 export { AccountBalance };

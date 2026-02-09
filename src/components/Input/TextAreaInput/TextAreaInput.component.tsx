@@ -81,6 +81,6 @@ const TextAreaInput = (
     </StyledInputContainer>
   );
 };
-TextAreaInput.defaultProps = defaultTextAreaInputProps;
+TextAreaInput.__DEFAULT_PROPS = defaultTextAreaInputProps;
 
 export { TextAreaInput };

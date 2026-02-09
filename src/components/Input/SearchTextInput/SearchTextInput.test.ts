@@ -14,7 +14,7 @@ describe("Input", () => {
     "SearchTextInput",
     SearchTextInput,
     {
-      props: SearchTextInput.defaultProps,
+      props: SearchTextInput.__DEFAULT_PROPS,
       tests: [
         {
           name: "should render",

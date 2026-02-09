@@ -263,7 +263,7 @@ const testUseMultiSelectValue = () => {
 
   testHook(
     {
-      ...MultiSelectInput.defaultProps,
+      ...MultiSelectInput.__DEFAULT_PROPS,
       onChange,
     },
     [],
@@ -277,7 +277,7 @@ const testUseMultiSelectValue = () => {
 
   testHook(
     {
-      ...MultiSelectInput.defaultProps,
+      ...MultiSelectInput.__DEFAULT_PROPS,
       onChange,
     },
     [],

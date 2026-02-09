@@ -141,6 +141,6 @@ const ContextInfoCard = (
   );
 };
 
-ContextInfoCard.defaultProps = defaultContextInfoCardProps;
+ContextInfoCard.__DEFAULT_PROPS = defaultContextInfoCardProps;
 
 export { ContextInfoCard };

@@ -89,7 +89,7 @@ const ${component_name} = (props: ${component_name}Props & TestIdProps): JSX.Ele
     <div data-testid={testId}>${component_name} TODO</div>
   )
 }
-${component_name}.defaultProps = default${component_name}Props;
+${component_name}.__DEFAULT_PROPS = default${component_name}Props;
 
 export { ${component_name} };
 "
@@ -110,7 +110,7 @@ const componentSource = componentSourceFactory<${component_name}Props>(
   {
     // TODO
   },
-  ${component_name}.defaultProps
+  ${component_name}.__DEFAULT_PROPS
 );
 
 const meta = {

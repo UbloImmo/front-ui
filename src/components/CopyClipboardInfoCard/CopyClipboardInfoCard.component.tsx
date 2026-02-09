@@ -24,7 +24,7 @@ import type {
 import type { PaletteColor, TextProps, TestIdProps } from "@types";
 
 const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
-  ...InfoBox.defaultProps,
+  ...InfoBox.__DEFAULT_PROPS,
   copyData: null,
   href: null,
   copyTooltipLabel: null,
@@ -159,6 +159,6 @@ const CopyClipboardInfoCard = (
     </FlexRowLayout>
   );
 };
-CopyClipboardInfoCard.defaultProps = defaultCopyClipboardInfoCardProps;
+CopyClipboardInfoCard.__DEFAULT_PROPS = defaultCopyClipboardInfoCardProps;
 
 export { CopyClipboardInfoCard };

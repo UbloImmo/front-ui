@@ -114,6 +114,6 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
     </FlexLayout>
   );
 };
-Switch.defaultProps = defaultSwitchProps;
+Switch.__DEFAULT_PROPS = defaultSwitchProps;
 
 export { Switch };

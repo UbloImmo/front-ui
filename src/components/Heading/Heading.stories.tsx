@@ -23,7 +23,7 @@ const lorem = "The quick brown fox jumps over the lazy dog.";
 const componentSource = componentSourceFactory<HeadingProps>(
   "Heading",
   { children: lorem },
-  Heading.defaultProps
+  Heading.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -45,7 +45,7 @@ export const Default: Story = {};
 const sizes: HeadingSize[] = ["h1", "h2", "h3", "h4"];
 
 export const Sizes = (props: HeadingProps) => {
-  const mergedProps = useMergedProps(Heading.defaultProps, props);
+  const mergedProps = useMergedProps(Heading.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -83,7 +83,7 @@ const HeadingSizeRenderer = (props: HeadingProps) => {
 
 const weights: TypographyWeight[] = ["regular", "medium", "bold"] as const;
 export const Weights = (props: HeadingProps) => {
-  const mergedProps = useMergedProps(Heading.defaultProps, props);
+  const mergedProps = useMergedProps(Heading.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -105,7 +105,7 @@ Weights.parameters = {
 
 const booleans = [false, true];
 export const Italic = (props: HeadingProps) => {
-  const mergedProps = useMergedProps(Heading.defaultProps, props);
+  const mergedProps = useMergedProps(Heading.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -126,7 +126,7 @@ Italic.parameters = {
 };
 
 export const Decorations = (props: HeadingProps) => {
-  const mergedProps = useMergedProps(Heading.defaultProps, props);
+  const mergedProps = useMergedProps(Heading.__DEFAULT_PROPS, props);
   return (
     <GridLayout columns={["1fr"]}>
       <ComponentVariants
@@ -186,7 +186,7 @@ const colors: PaletteColor[] = [
   "error-dark",
 ];
 export const Colors: Story = (props: HeadingProps) => {
-  const mergedProps = useMergedProps(Heading.defaultProps, props);
+  const mergedProps = useMergedProps(Heading.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants

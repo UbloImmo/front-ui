@@ -49,6 +49,6 @@ const Text = (props: TextProps & TestIdProps): JSX.Element => {
     </span>
   );
 };
-Text.defaultProps = defaultTextProps;
+Text.__DEFAULT_PROPS = defaultTextProps;
 
 export { Text };

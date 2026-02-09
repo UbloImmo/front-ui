@@ -53,6 +53,6 @@ const Heading = (props: HeadingProps & TestIdProps): JSX.Element => {
   }
 };
 
-Heading.defaultProps = defaultHeadingProps;
+Heading.__DEFAULT_PROPS = defaultHeadingProps;
 
 export { Heading };

@@ -67,7 +67,7 @@ const gaps: GridGap[] = ["s-1", "24px", "3rem", 4];
 export const Gap = (props: Partial<GridLayoutProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...GridLayout.defaultProps,
+      ...GridLayout.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -91,7 +91,7 @@ const columns: GridTemplate[] = [2, 4, ["1fr", "2fr"], "unset"];
 export const Columns = (props: Partial<GridLayoutProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...GridLayout.defaultProps,
+      ...GridLayout.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -118,7 +118,7 @@ const rows: GridTemplate[] = [2, "unset"];
 export const Rows = (props: Partial<GridLayoutProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...GridLayout.defaultProps,
+      ...GridLayout.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -146,7 +146,7 @@ const flow: GridFlow[] = ["row", "column"];
 export const Flow = (props: Partial<GridLayoutProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...GridLayout.defaultProps,
+      ...GridLayout.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);

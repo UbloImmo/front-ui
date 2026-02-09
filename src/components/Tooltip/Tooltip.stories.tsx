@@ -43,7 +43,7 @@ const Container = ({ children }: { children?: ReactNode }) => {
 };
 
 export const Directions = (props: Partial<TooltipProps>) => {
-  const defaultProps = useMergedProps(Tooltip.defaultProps, props);
+  const defaultProps = useMergedProps(Tooltip.__DEFAULT_PROPS, props);
   return (
     <Container>
       <ComponentVariants
@@ -77,7 +77,7 @@ const contents = [
   },
 ];
 export const Content = (props: Partial<TooltipProps>) => {
-  const defaultProps = useMergedProps(Tooltip.defaultProps, props);
+  const defaultProps = useMergedProps(Tooltip.__DEFAULT_PROPS, props);
 
   return (
     <Container>
@@ -102,7 +102,7 @@ const children = [
 ];
 
 export const Children = (props: Partial<TooltipProps>) => {
-  const defaultProps = useMergedProps(Tooltip.defaultProps, props);
+  const defaultProps = useMergedProps(Tooltip.__DEFAULT_PROPS, props);
   return (
     <Container>
       <ComponentVariants
@@ -146,7 +146,7 @@ const TooltipIntersectionRenderer = (props: TooltipProps) => {
 
 const intersectionRoots = [null, "#intersection-root"];
 export const IntersectionRoots = (props: Partial<TooltipProps>) => {
-  const defaultProps = useMergedProps(Tooltip.defaultProps, {
+  const defaultProps = useMergedProps(Tooltip.__DEFAULT_PROPS, {
     ...props,
     direction: props.direction ?? "top",
   });

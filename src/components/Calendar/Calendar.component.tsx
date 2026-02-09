@@ -211,6 +211,6 @@ const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
     </div>
   );
 };
-Calendar.defaultProps = defaultCalendarProps;
+Calendar.__DEFAULT_PROPS = defaultCalendarProps;
 
 export { Calendar };

@@ -207,6 +207,6 @@ const ComboBoxButton = (
   );
 };
 
-ComboBoxButton.defaultProps = defaultComboBoxButtonProps;
+ComboBoxButton.__DEFAULT_PROPS = defaultComboBoxButtonProps;
 
 export { ComboBoxButton };

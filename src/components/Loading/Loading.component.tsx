@@ -54,6 +54,6 @@ const Loading = (props: LoadingProps & TestIdProps): Nullable<JSX.Element> => {
   );
 };
 
-Loading.defaultProps = defaultLoadingProps;
+Loading.__DEFAULT_PROPS = defaultLoadingProps;
 
 export { Loading };

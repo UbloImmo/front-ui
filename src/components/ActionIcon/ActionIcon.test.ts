@@ -14,7 +14,7 @@ const testActionIcon = testComponentFactory<ActionIconProps>(
   ActionIcon
 );
 
-testActionIcon(ActionIcon.defaultProps)(
+testActionIcon(ActionIcon.__DEFAULT_PROPS)(
   "should render",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
@@ -22,7 +22,7 @@ testActionIcon(ActionIcon.defaultProps)(
 );
 
 const onClick = mock<VoidFn>(() => {});
-testActionIcon({ ...ActionIcon.defaultProps, onClick })(
+testActionIcon({ ...ActionIcon.__DEFAULT_PROPS, onClick })(
   "should trigger onClick",
   async ({ findByTestId }, { click }) => {
     onClick.mockReset();
@@ -35,7 +35,7 @@ testActionIcon({ ...ActionIcon.defaultProps, onClick })(
   }
 );
 
-testActionIcon({ ...ActionIcon.defaultProps, disabled: true })(
+testActionIcon({ ...ActionIcon.__DEFAULT_PROPS, disabled: true })(
   "should not trigger onClick",
   async ({ findByTestId }, { click }) => {
     onClick.mockReset();
@@ -53,7 +53,7 @@ global.console.error = mock(() => {});
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore need this to check for unhandled props
-testActionIcon({ ...ActionIcon.defaultProps, icon: null })(
+testActionIcon({ ...ActionIcon.__DEFAULT_PROPS, icon: null })(
   "should error if missing required icon",
   async ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
@@ -64,7 +64,7 @@ testActionIcon({ ...ActionIcon.defaultProps, icon: null })(
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore need this to check for unhandled props
-testActionIcon({ ...ActionIcon.defaultProps, title: null })(
+testActionIcon({ ...ActionIcon.__DEFAULT_PROPS, title: null })(
   "should warn if missing required title",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();

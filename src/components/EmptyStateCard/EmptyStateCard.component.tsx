@@ -115,6 +115,6 @@ const EmptyStateCard = (
     </FlexColumnLayout>
   );
 };
-EmptyStateCard.defaultProps = defaultEmptyStateCardProps;
+EmptyStateCard.__DEFAULT_PROPS = defaultEmptyStateCardProps;
 
 export { EmptyStateCard };

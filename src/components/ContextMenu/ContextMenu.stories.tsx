@@ -20,7 +20,7 @@ const componentSource = componentSourceFactory<ContextMenuProps>(
   {
     items: [] as ContextMenuProps["items"],
   },
-  ContextMenu.defaultProps
+  ContextMenu.__DEFAULT_PROPS
 );
 
 const items: ContextMenuItemData[] = [

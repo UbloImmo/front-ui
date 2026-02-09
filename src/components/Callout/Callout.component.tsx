@@ -81,6 +81,6 @@ const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
     </div>
   );
 };
-Callout.defaultProps = defaultCalloutProps;
+Callout.__DEFAULT_PROPS = defaultCalloutProps;
 
 export { Callout };

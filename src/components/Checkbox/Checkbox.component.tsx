@@ -104,6 +104,6 @@ const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
     </div>
   );
 };
-Checkbox.defaultProps = defaultCheckboxProps;
+Checkbox.__DEFAULT_PROPS = defaultCheckboxProps;
 
 export { Checkbox };

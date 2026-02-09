@@ -19,7 +19,7 @@ import type { ModalProps, ModalDefaultProps } from "./Modal.types";
 import type { TestIdProps } from "@types";
 
 const defaultModalProps: ModalDefaultProps = {
-  ...Dialog.defaultProps,
+  ...Dialog.__DEFAULT_PROPS,
   reference: null,
   title: null,
   size: "m",
@@ -99,6 +99,6 @@ const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
     </Dialog>
   );
 };
-Modal.defaultProps = defaultModalProps;
+Modal.__DEFAULT_PROPS = defaultModalProps;
 
 export { Modal };

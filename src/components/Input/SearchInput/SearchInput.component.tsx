@@ -67,6 +67,6 @@ const SearchInput = <
     />
   );
 };
-SearchInput.defaultProps = defaultSearchInputProps;
+SearchInput.__DEFAULT_PROPS = defaultSearchInputProps;
 
 export { SearchInput };

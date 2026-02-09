@@ -87,6 +87,6 @@ const SearchTextInput = (
     </StyledInputContainer>
   );
 };
-SearchTextInput.defaultProps = defaultSearchTextInputProps;
+SearchTextInput.__DEFAULT_PROPS = defaultSearchTextInputProps;
 
 export { SearchTextInput };

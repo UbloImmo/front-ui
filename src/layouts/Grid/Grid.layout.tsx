@@ -54,6 +54,6 @@ const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps & TestIdProps>(
     );
   }
 );
-GridLayout.defaultProps = defaultGridLayoutProps;
+GridLayout.__DEFAULT_PROPS = defaultGridLayoutProps;
 
 export { GridLayout };

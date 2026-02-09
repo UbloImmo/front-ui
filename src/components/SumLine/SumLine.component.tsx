@@ -116,6 +116,6 @@ const SumLine = (
   );
 };
 
-SumLine.defaultProps = defaultSumLineProps;
+SumLine.__DEFAULT_PROPS = defaultSumLineProps;
 
 export { SumLine };

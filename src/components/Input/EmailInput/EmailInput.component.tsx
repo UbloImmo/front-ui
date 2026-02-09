@@ -81,6 +81,6 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
   );
 };
 
-EmailInput.defaultProps = defaultEmailInputProps;
+EmailInput.__DEFAULT_PROPS = defaultEmailInputProps;
 
 export { EmailInput };

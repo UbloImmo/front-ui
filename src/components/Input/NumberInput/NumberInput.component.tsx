@@ -280,6 +280,6 @@ const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
   );
 };
 
-NumberInput.defaultProps = defaultNumberInputProps;
+NumberInput.__DEFAULT_PROPS = defaultNumberInputProps;
 
 export { NumberInput };

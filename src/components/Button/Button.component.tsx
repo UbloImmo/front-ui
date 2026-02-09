@@ -191,6 +191,6 @@ const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
   );
 };
 
-Button.defaultProps = defaultButtonProps;
+Button.__DEFAULT_PROPS = defaultButtonProps;
 
 export { Button };

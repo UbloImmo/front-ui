@@ -10,7 +10,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 const componentSource = componentSourceFactory<DividerProps>(
   "Divider",
   {},
-  Divider.defaultProps
+  Divider.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -44,7 +44,7 @@ export const Default: Story = {};
 const labels = [null, "Divider label"];
 
 export const Labels = (props: DividerProps) => {
-  const mergedProps = useMergedProps(Divider.defaultProps, props);
+  const mergedProps = useMergedProps(Divider.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -63,7 +63,7 @@ Labels.parameters = {
 };
 
 export const Justify = (props: DividerProps) => {
-  const mergedProps = useMergedProps(Divider.defaultProps, props);
+  const mergedProps = useMergedProps(Divider.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}

@@ -45,7 +45,7 @@ const Table = forwardRef<HTMLTableElement, TableProps & TestIdProps>(
     );
   }
 );
-Table.defaultProps = defaultTableProps;
+Table.__DEFAULT_PROPS = defaultTableProps;
 Table.displayName = "Table";
 
 export { Table };

@@ -124,6 +124,6 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
     </PopoverPrimitive.Root>
   );
 };
-Popover.defaultProps = defaultPopoverProps;
+Popover.__DEFAULT_PROPS = defaultPopoverProps;
 
 export { Popover };

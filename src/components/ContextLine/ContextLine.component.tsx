@@ -99,6 +99,6 @@ const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
   );
 };
 
-ContextLine.defaultProps = defaultContextLineProps;
+ContextLine.__DEFAULT_PROPS = defaultContextLineProps;
 
 export { ContextLine };

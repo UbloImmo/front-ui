@@ -15,7 +15,7 @@ const componentSource = componentSourceFactory<CalendarProps>(
   {
     // TODO
   },
-  Calendar.defaultProps
+  Calendar.__DEFAULT_PROPS
 );
 
 const meta = {

@@ -10,13 +10,13 @@ const testContextLine = testComponentFactory("ContextLine", ContextLine);
 const testId = "context-line";
 
 testContextLine({
-  ...ContextLine.defaultProps,
+  ...ContextLine.__DEFAULT_PROPS,
 })("should render with default props", async ({ findByTestId }) => {
   expect(await findByTestId(testId)).not.toBeNull();
 });
 
 testContextLine({
-  ...ContextLine.defaultProps,
+  ...ContextLine.__DEFAULT_PROPS,
   label: "[Label]",
 })("should render with label", async ({ findByTestId }) => {
   const element = await findByTestId("context-line-label");
@@ -25,7 +25,7 @@ testContextLine({
 });
 
 testContextLine({
-  ...ContextLine.defaultProps,
+  ...ContextLine.__DEFAULT_PROPS,
   label: "[Label]",
   children: <Badge label="Badge" color="primary" />,
 })("should render children and label", async ({ findByText, findByTestId }) => {

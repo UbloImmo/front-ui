@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory(
   "SmallLoader",
-  SmallLoader.defaultProps
+  SmallLoader.__DEFAULT_PROPS
 );
 
 const meta = {

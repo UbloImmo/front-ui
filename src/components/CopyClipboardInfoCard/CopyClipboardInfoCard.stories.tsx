@@ -44,7 +44,7 @@ type Story = StoryObj<typeof meta>;
 export const Default = {} as Story;
 
 export const Info = (props: CopyClipboardInfoCardProps) => {
-  const mergedProps = useMergedProps(CopyClipboardInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(CopyClipboardInfoCard.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -58,7 +58,7 @@ export const Info = (props: CopyClipboardInfoCardProps) => {
 };
 
 export const Empty = (props: CopyClipboardInfoCardProps) => {
-  const mergedProps = useMergedProps(CopyClipboardInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(CopyClipboardInfoCard.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -72,7 +72,7 @@ export const Empty = (props: CopyClipboardInfoCardProps) => {
 };
 
 export const Href = (props: CopyClipboardInfoCardProps) => {
-  const mergedProps = useMergedProps(CopyClipboardInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(CopyClipboardInfoCard.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -86,7 +86,7 @@ export const Href = (props: CopyClipboardInfoCardProps) => {
 };
 
 export const Icon = (props: CopyClipboardInfoCardProps) => {
-  const mergedProps = useMergedProps(CopyClipboardInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(CopyClipboardInfoCard.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -100,7 +100,7 @@ export const Icon = (props: CopyClipboardInfoCardProps) => {
 };
 
 export const CopyData = (props: CopyClipboardInfoCardProps) => {
-  const mergedProps = useMergedProps(CopyClipboardInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(CopyClipboardInfoCard.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}

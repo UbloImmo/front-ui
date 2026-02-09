@@ -232,6 +232,6 @@ const MonthYearInput = (
   );
 };
 
-MonthYearInput.defaultProps = defaultMonthYearInputProps;
+MonthYearInput.__DEFAULT_PROPS = defaultMonthYearInputProps;
 
 export { MonthYearInput };

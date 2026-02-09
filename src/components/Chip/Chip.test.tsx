@@ -12,12 +12,12 @@ const testChip = testComponentFactory<ChipProps>("Chip", Chip);
 
 const onDelete = mock(() => {});
 
-testChip({ ...Chip.defaultProps })("should render", ({ queryByTestId }) => {
+testChip({ ...Chip.__DEFAULT_PROPS })("should render", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
 });
 
 testChip({
-  ...Chip.defaultProps,
+  ...Chip.__DEFAULT_PROPS,
   onDelete,
 })("should trigger onClick", async ({ queryByTestId }, { click }) => {
   expect(queryByTestId(testId)).not.toBeNull();
@@ -29,7 +29,7 @@ testChip({
 
 global.console.warn = mock(() => {});
 
-testChip({ ...Chip.defaultProps, label: "" })(
+testChip({ ...Chip.__DEFAULT_PROPS, label: "" })(
   "should warn if missing label in props",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();

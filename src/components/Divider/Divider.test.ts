@@ -10,7 +10,7 @@ const labelTestId = "divider-label";
 
 const testDivider = testComponentFactory("Divider", Divider);
 
-testDivider(Divider.defaultProps)("should render", async ({ findByTestId }) => {
+testDivider(Divider.__DEFAULT_PROPS)("should render", async ({ findByTestId }) => {
   expect(await findByTestId(testId)).not.toBeNull();
   expect(await findByTestId(lineTestId)).not.toBeNull();
 });

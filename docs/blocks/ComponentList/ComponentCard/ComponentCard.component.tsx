@@ -62,7 +62,7 @@ export const ComponentCard = <
 
   const componentProps = useMemo(() => {
     const defaultProps = hasDefaultProps(Component)
-      ? Component.defaultProps
+      ? Component.__DEFAULT_PROPS
       : {};
 
     const additionalProps =

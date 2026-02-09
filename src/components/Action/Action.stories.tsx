@@ -17,7 +17,7 @@ const meta = {
   component: Action,
   title: "Components/Actions/Action/Stories",
   args: {
-    ...Action.defaultProps,
+    ...Action.__DEFAULT_PROPS,
     onClick: fn(),
   },
   argTypes: {
@@ -52,7 +52,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { ...Action.defaultProps, onClick: fn() },
+  args: { ...Action.__DEFAULT_PROPS, onClick: fn() },
 };
 
 const labels: string[] = [
@@ -62,7 +62,7 @@ const labels: string[] = [
   "Needlessly long and tedious action label (could be multiline)",
 ];
 export const Labels = (props: ActionProps) => {
-  const defaults = useMergedProps(Action.defaultProps, props);
+  const defaults = useMergedProps(Action.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       variants={labels}
@@ -78,7 +78,7 @@ export const Labels = (props: ActionProps) => {
 
 const sizes: ActionSize[] = ["default", "centered", "large", "card"];
 export const Sizes = (props: ActionProps) => {
-  const defaults = useMergedProps(Action.defaultProps, {
+  const defaults = useMergedProps(Action.__DEFAULT_PROPS, {
     ...props,
     badgeLabel: "New",
     description: "[Description]",
@@ -98,7 +98,7 @@ export const Sizes = (props: ActionProps) => {
 
 const bools = [false, true];
 export const Disabled = (props: ActionProps) => {
-  const defaults = useMergedProps(Action.defaultProps, {
+  const defaults = useMergedProps(Action.__DEFAULT_PROPS, {
     ...props,
     badgeLabel: props.badgeLabel ?? "New",
   });
@@ -117,7 +117,7 @@ export const Disabled = (props: ActionProps) => {
 
 const badges: Nullable<string>[] = [null, "Badge", "New", "Really long badge"];
 export const BadgeLabels = (props: ActionProps) => {
-  const defaults = useMergedProps(Action.defaultProps, props);
+  const defaults = useMergedProps(Action.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       variants={badges}
@@ -133,7 +133,7 @@ export const BadgeLabels = (props: ActionProps) => {
 
 const icons: IconName[] = ["Cursor", "Circle", "BuildingBlocks", "Apps"];
 export const Icons = (props: ActionProps) => {
-  const defaults = useMergedProps(Action.defaultProps, props);
+  const defaults = useMergedProps(Action.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       variants={icons}
@@ -160,7 +160,7 @@ const tooltips: Omit<TooltipProps, "children">[] = [
 ];
 
 export const Tooltip = (props: ActionProps) => {
-  const defaults = useMergedProps(Action.defaultProps, props);
+  const defaults = useMergedProps(Action.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       variants={tooltips}
@@ -179,7 +179,7 @@ const descriptions: Nullable<string>[] = [
   "A much longer description that could be multiline, to show how its displayed",
 ];
 export const Description = (props: ActionProps) => {
-  const defaults = useMergedProps(Action.defaultProps, {
+  const defaults = useMergedProps(Action.__DEFAULT_PROPS, {
     ...props,
     badgeLabel: "New",
     size: "large",
@@ -212,7 +212,7 @@ const indicators: Nullable<StaticIconIndicator>[] = [
   },
 ];
 export const Indicator = (props: ActionProps) => {
-  const defaults = useMergedProps(Action.defaultProps, props);
+  const defaults = useMergedProps(Action.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       variants={indicators}
@@ -228,7 +228,7 @@ export const Indicator = (props: ActionProps) => {
 
 const colors: ActionColor[] = ["primary", "error"];
 export const Colors = (props: ActionProps) => {
-  const defaults = useMergedProps(Action.defaultProps, props);
+  const defaults = useMergedProps(Action.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       variants={colors}

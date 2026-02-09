@@ -70,6 +70,6 @@ const TextInput = (props: InputProps<"text"> & TestIdProps): JSX.Element => {
   );
 };
 
-TextInput.defaultProps = defaultTextInputProps;
+TextInput.__DEFAULT_PROPS = defaultTextInputProps;
 
 export { TextInput };

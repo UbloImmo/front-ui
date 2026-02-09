@@ -12,7 +12,7 @@ describe("InputAssistiveText", () => {
     "InputAssistiveText",
     InputAssistiveText,
     {
-      props: InputAssistiveText.defaultProps,
+      props: InputAssistiveText.__DEFAULT_PROPS,
       tests: [
         {
           name: "should render",

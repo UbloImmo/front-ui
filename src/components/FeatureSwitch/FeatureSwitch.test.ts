@@ -20,14 +20,14 @@ const options = [
   },
 ];
 
-testFeatureSwitch(FeatureSwitch.defaultProps)(
+testFeatureSwitch(FeatureSwitch.__DEFAULT_PROPS)(
   "should render",
   ({ queryByTestId }) => {
     expect(queryByTestId("feature-switch")).not.toBeNull();
   }
 );
 
-testFeatureSwitch({ ...FeatureSwitch.defaultProps, variant: "checkbox" })(
+testFeatureSwitch({ ...FeatureSwitch.__DEFAULT_PROPS, variant: "checkbox" })(
   "should render with checkbox variant",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
@@ -35,7 +35,7 @@ testFeatureSwitch({ ...FeatureSwitch.defaultProps, variant: "checkbox" })(
 );
 
 testFeatureSwitch({
-  ...FeatureSwitch.defaultProps,
+  ...FeatureSwitch.__DEFAULT_PROPS,
   variant: "select",
   options,
 })("should render with select variant", ({ queryByTestId }) => {
@@ -45,7 +45,7 @@ testFeatureSwitch({
 global.console.warn = mock(() => {});
 
 testFeatureSwitch({
-  ...FeatureSwitch.defaultProps,
+  ...FeatureSwitch.__DEFAULT_PROPS,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore need this to check for unhandled props
   label: null,
@@ -56,7 +56,7 @@ testFeatureSwitch({
 });
 
 testFeatureSwitch({
-  ...FeatureSwitch.defaultProps,
+  ...FeatureSwitch.__DEFAULT_PROPS,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore need this to check for unhandled props
   variant: null,

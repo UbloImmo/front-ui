@@ -22,7 +22,7 @@ import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   SelectInputProps<NullishPrimitives>
->("SelectInput", SelectInput.defaultProps);
+>("SelectInput", SelectInput.__DEFAULT_PROPS);
 
 const meta = {
   component: SelectInput,

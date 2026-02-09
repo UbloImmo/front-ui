@@ -12,7 +12,7 @@ import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   SearchInputProps<NullishPrimitives>
->("SearchInput", SearchInput.defaultProps);
+>("SearchInput", SearchInput.__DEFAULT_PROPS);
 
 const getResults = () => {
   return [

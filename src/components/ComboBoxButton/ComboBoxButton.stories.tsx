@@ -10,7 +10,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<ComboBoxButtonProps>(
   "ComboBoxButton",
-  ComboBoxButton.defaultProps
+  ComboBoxButton.__DEFAULT_PROPS
 );
 
 const meta = {

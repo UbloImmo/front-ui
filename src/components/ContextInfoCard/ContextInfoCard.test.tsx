@@ -5,7 +5,7 @@ import { ContextInfoCard } from "./ContextInfoCard.component";
 import { testComponentFactory } from "@/tests";
 
 const testCard = testComponentFactory("ContextInfoCard", ContextInfoCard);
-const defaultProps = ContextInfoCard.defaultProps;
+const defaultProps = ContextInfoCard.__DEFAULT_PROPS;
 const testId = "context-info-card";
 
 testCard(defaultProps)(

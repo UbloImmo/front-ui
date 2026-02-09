@@ -143,7 +143,7 @@ const componentSource = componentSourceFactory<FormProps<object>>(
   {
     title: "Form",
   },
-  Form.defaultProps
+  Form.__DEFAULT_PROPS
 );
 
 const meta = {

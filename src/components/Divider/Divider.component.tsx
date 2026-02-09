@@ -88,6 +88,6 @@ const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
     </FlexRowLayout>
   );
 };
-Divider.defaultProps = defaultDividerProps;
+Divider.__DEFAULT_PROPS = defaultDividerProps;
 
 export { Divider };

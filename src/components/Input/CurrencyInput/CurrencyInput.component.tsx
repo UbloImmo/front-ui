@@ -125,6 +125,6 @@ const CurrencyInput = (
     </StyledInputContainer>
   );
 };
-CurrencyInput.defaultProps = defaultCurrencyInputProps;
+CurrencyInput.__DEFAULT_PROPS = defaultCurrencyInputProps;
 
 export { CurrencyInput };

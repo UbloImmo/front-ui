@@ -10,7 +10,7 @@ import type { ReactNode } from "react";
 const testId = "portal-child";
 
 const props: PortalProps = {
-  ...Portal.defaultProps,
+  ...Portal.__DEFAULT_PROPS,
   children: <div data-testid={testId}>test portal child</div>,
 };
 

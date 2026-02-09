@@ -87,7 +87,7 @@ export const IconSearch = () => {
       <section className={classNames.wrapper}>
         <div className={classNames.list}>
           <ComponentVariants
-            defaults={{ ...Icon.defaultProps, size: "s-8" }}
+            defaults={{ ...Icon.__DEFAULT_PROPS, size: "s-8" }}
             variants={results}
             for="name"
             justify="space-around"

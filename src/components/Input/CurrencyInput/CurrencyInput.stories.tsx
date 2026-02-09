@@ -14,7 +14,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 const componentSource = componentSourceFactory<CurrencyInputProps>(
   "CurrencyInput",
   {},
-  CurrencyInput.defaultProps
+  CurrencyInput.__DEFAULT_PROPS
 );
 
 const decorators: Meta<typeof CurrencyInput>["decorators"] = (
@@ -40,7 +40,7 @@ const meta = {
   component: CurrencyInput,
   title: "Components/Forms/Input/CurrencyInput/Stories",
   args: {
-    ...CurrencyInput.defaultProps,
+    ...CurrencyInput.__DEFAULT_PROPS,
     onChange: fn(),
     placeholder: "Currency input",
     uncontrolled: true,
@@ -82,7 +82,7 @@ export const Default: Story = {};
 const currencies: Currency[] = ["euro", "dollar", "pound", "yen"];
 
 export const Currencies = (props: Partial<CurrencyInputProps>) => {
-  const defaultProps = useMergedProps(CurrencyInput.defaultProps, props);
+  const defaultProps = useMergedProps(CurrencyInput.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -110,7 +110,7 @@ export const SignControl: Story = {
 };
 
 export const MinMaxValue = (props: Partial<FieldProps<"currency">>) => {
-  const defaultProps = useMergedProps(CurrencyInput.defaultProps, props);
+  const defaultProps = useMergedProps(CurrencyInput.__DEFAULT_PROPS, props);
 
   return (
     <Field

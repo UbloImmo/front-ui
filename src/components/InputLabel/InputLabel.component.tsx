@@ -84,5 +84,5 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
   );
 };
 
-InputLabel.defaultProps = defaultInputLabelProps;
+InputLabel.__DEFAULT_PROPS = defaultInputLabelProps;
 export { InputLabel };

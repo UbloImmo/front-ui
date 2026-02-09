@@ -25,7 +25,7 @@ const testFormatAmount = (
 };
 
 testAccountBalance({
-  ...AccountBalance.defaultProps,
+  ...AccountBalance.__DEFAULT_PROPS,
 })("should render with default props", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId("account-balance-title")?.textContent).toBe("Title :");
@@ -49,7 +49,7 @@ testAccountBalance({
 );
 
 testAccountBalance({
-  ...AccountBalance.defaultProps,
+  ...AccountBalance.__DEFAULT_PROPS,
   value: 100000050,
 })("should render value in millions", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
@@ -57,7 +57,7 @@ testAccountBalance({
 });
 
 testAccountBalance({
-  ...AccountBalance.defaultProps,
+  ...AccountBalance.__DEFAULT_PROPS,
   value: -5000075,
 })("should render negative value", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
@@ -67,7 +67,7 @@ testAccountBalance({
 });
 
 testAccountBalance({
-  ...AccountBalance.defaultProps,
+  ...AccountBalance.__DEFAULT_PROPS,
   value: null,
 })("should render with null value", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
@@ -75,7 +75,7 @@ testAccountBalance({
 });
 
 testAccountBalance({
-  ...AccountBalance.defaultProps,
+  ...AccountBalance.__DEFAULT_PROPS,
   value: 100000000099,
 })("should render value in billions", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();

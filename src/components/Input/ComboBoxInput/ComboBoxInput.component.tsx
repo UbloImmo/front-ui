@@ -16,7 +16,7 @@ import type { NullishPrimitives } from "@ubloimmo/front-util";
 const defaultComboBoxInputProps: ComboBoxInputDefaultProps<NullishPrimitives> =
   {
     ...defaultCommonInputProps,
-    ...ComboBox.defaultProps,
+    ...ComboBox.__DEFAULT_PROPS,
     options: null,
     value: null,
     onChange: null,
@@ -69,6 +69,6 @@ const ComboBoxInput = <
     />
   );
 };
-ComboBoxInput.defaultProps = defaultComboBoxInputProps;
+ComboBoxInput.__DEFAULT_PROPS = defaultComboBoxInputProps;
 
 export { ComboBoxInput };

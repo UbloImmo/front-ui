@@ -92,6 +92,6 @@ const EntityInfoCard = (
     </FlexColumnLayout>
   );
 };
-EntityInfoCard.defaultProps = defaultEntityInfoCardProps;
+EntityInfoCard.__DEFAULT_PROPS = defaultEntityInfoCardProps;
 
 export { EntityInfoCard };

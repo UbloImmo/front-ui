@@ -102,6 +102,6 @@ const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
     </FlexColumnLayout>
   );
 };
-InfoBox.defaultProps = defaultInfoBoxProps;
+InfoBox.__DEFAULT_PROPS = defaultInfoBoxProps;
 
 export { InfoBox };

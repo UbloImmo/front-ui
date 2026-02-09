@@ -24,7 +24,7 @@ import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   FeatureSwitchProps<NullishPrimitives>
->("FeatureSwitch", FeatureSwitch.defaultProps);
+>("FeatureSwitch", FeatureSwitch.__DEFAULT_PROPS);
 
 const booleans = [false, true];
 
@@ -32,7 +32,7 @@ const meta = {
   component: FeatureSwitch,
   title: "Components/Forms/FeatureSwitch/Stories",
   args: {
-    ...FeatureSwitch.defaultProps,
+    ...FeatureSwitch.__DEFAULT_PROPS,
     icon: "Square",
   },
   parameters: {

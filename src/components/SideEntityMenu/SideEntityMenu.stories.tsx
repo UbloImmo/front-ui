@@ -13,10 +13,10 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 const componentSource = componentSourceFactory<SideEntityMenuProps>(
   "SideEntityMenu",
   {
-    menuLinks: SideEntityMenu.defaultProps.menuLinks,
-    backLinks: SideEntityMenu.defaultProps.backLinks,
+    menuLinks: SideEntityMenu.__DEFAULT_PROPS.menuLinks,
+    backLinks: SideEntityMenu.__DEFAULT_PROPS.backLinks,
   },
-  SideEntityMenu.defaultProps
+  SideEntityMenu.__DEFAULT_PROPS
 );
 
 // Mock data for the menu links

@@ -39,7 +39,7 @@ export type ComponentDefaultProps<TProps extends ComponentPropsMask> = Required<
  * Used to filter a potential component by checking whether it holds a `defaultProps` property derived from {@link ComponentPropsMask}
  */
 export type ComponentDefaultPropsMask<TProps extends ComponentPropsMask> = {
-  defaultProps: ComponentDefaultProps<TProps>;
+  __DEFAULT_PROPS: ComponentDefaultProps<TProps>;
 };
 
 /**

@@ -20,7 +20,7 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
   color: "primary",
   size: "s",
   stroke: false,
-  name: Icon.defaultProps.name,
+  name: Icon.__DEFAULT_PROPS.name,
   className: null,
   indicator: null,
   styleOverride: null,
@@ -77,6 +77,6 @@ const StaticIcon = (props: StaticIconProps & TestIdProps) => {
   );
 };
 
-StaticIcon.defaultProps = defaultStaticIconProps;
+StaticIcon.__DEFAULT_PROPS = defaultStaticIconProps;
 
 export { StaticIcon };

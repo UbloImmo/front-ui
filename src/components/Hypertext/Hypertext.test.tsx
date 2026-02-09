@@ -6,7 +6,7 @@ import { HypertextProps } from "./Hypertext.types";
 import { testComponentFactory } from "@/tests";
 
 testComponentFactory<HypertextProps>("Hypertext", Hypertext, {
-  props: Hypertext.defaultProps,
+  props: Hypertext.__DEFAULT_PROPS,
   tests: [
     {
       name: "should render",

@@ -12,7 +12,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<ToasterProps>(
   "Toaster",
-  Toaster.defaultProps
+  Toaster.__DEFAULT_PROPS
 );
 
 const meta = {

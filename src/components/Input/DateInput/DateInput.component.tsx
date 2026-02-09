@@ -312,6 +312,6 @@ const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
   );
 };
 
-DateInput.defaultProps = defaultDateInputProps;
+DateInput.__DEFAULT_PROPS = defaultDateInputProps;
 
 export { DateInput };

@@ -25,7 +25,7 @@ import type {
 import type { FixedCssLength, TestIdProps } from "@types";
 
 const defaultContextMenuProps: ContextMenuDefaultProps = {
-  ...Popover.defaultProps,
+  ...Popover.__DEFAULT_PROPS,
   items: [],
   open: false,
   onOpenChange: () => {},
@@ -168,6 +168,6 @@ const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
     </Popover>
   );
 };
-ContextMenu.defaultProps = defaultContextMenuProps;
+ContextMenu.__DEFAULT_PROPS = defaultContextMenuProps;
 
 export { ContextMenu };

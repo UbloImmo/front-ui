@@ -127,5 +127,5 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
   );
 };
 
-Tooltip.defaultProps = defaultTooltipProps;
+Tooltip.__DEFAULT_PROPS = defaultTooltipProps;
 export { Tooltip };

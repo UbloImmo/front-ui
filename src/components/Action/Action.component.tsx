@@ -155,6 +155,6 @@ const Action = (props: ActionProps & TestIdProps): JSX.Element => {
   );
 };
 
-Action.defaultProps = defaultActionProps;
+Action.__DEFAULT_PROPS = defaultActionProps;
 
 export { Action };

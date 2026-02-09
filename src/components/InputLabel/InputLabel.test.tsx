@@ -12,7 +12,7 @@ describe("InputLabel", () => {
     "InputLabel",
     InputLabel,
     {
-      props: InputLabel.defaultProps,
+      props: InputLabel.__DEFAULT_PROPS,
       tests: [
         {
           name: "should render",

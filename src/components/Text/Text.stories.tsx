@@ -24,7 +24,7 @@ const lorem = "The quick brown fox jumps over the lazy dog.";
 const componentSource = componentSourceFactory<TextProps>(
   "Text",
   { children: lorem },
-  Text.defaultProps
+  Text.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -46,7 +46,7 @@ export const Default: Story = {};
 const sizes: TextSize[] = ["m", "s", "xs"];
 
 export const Sizes = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
+  const mergedProps = useMergedProps(Text.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -84,7 +84,7 @@ const TextSizeRenderer = (props: TextProps) => {
 
 const weights: TypographyWeight[] = ["regular", "medium", "bold"] as const;
 export const Weights = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
+  const mergedProps = useMergedProps(Text.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -107,7 +107,7 @@ Weights.parameters = {
 const booleans = [false, true];
 
 export const Italic = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
+  const mergedProps = useMergedProps(Text.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -128,7 +128,7 @@ Italic.parameters = {
 };
 
 export const Decorations = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
+  const mergedProps = useMergedProps(Text.__DEFAULT_PROPS, props);
   return (
     <GridLayout columns={["1fr", "1fr", "1fr"]}>
       <ComponentVariants
@@ -213,7 +213,7 @@ const colors: ColorKey[] = [
   "gray",
 ];
 export const Colors = (props: TextProps) => {
-  const mergedProps = useMergedProps(Text.defaultProps, props);
+  const mergedProps = useMergedProps(Text.__DEFAULT_PROPS, props);
 
   const renderers = useMemo(() => {
     return colors.map(

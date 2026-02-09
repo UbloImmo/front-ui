@@ -10,7 +10,7 @@ import type { FC } from "react";
 
 const componentSource = componentSourceFactory<AvatarProps>(
   "Avatar",
-  Avatar.defaultProps
+  Avatar.__DEFAULT_PROPS
 );
 
 const sizes: AvatarSize[] = ["m", "l", "xl"];
@@ -82,7 +82,7 @@ const variants: DetailConfigVariants<AvatarProps> = [
 export const Variants = () => {
   return (
     <ComponentVariants
-      defaults={Avatar.defaultProps}
+      defaults={Avatar.__DEFAULT_PROPS}
       variants={variants}
       of={Avatar}
       propLabels
@@ -93,7 +93,7 @@ export const Variants = () => {
 const withImageUrl = ["https://t.ly/lJMVh", null];
 
 export const ImageVariants = (props: Partial<AvatarProps>) => {
-  const mergedProps = useMergedProps(Avatar.defaultProps, props);
+  const mergedProps = useMergedProps(Avatar.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -117,7 +117,7 @@ const fullNames: DetailConfigVariants<AvatarProps> = [
 ];
 
 export const NameVariants = (props: Partial<AvatarProps>) => {
-  const mergedProps = useMergedProps(Avatar.defaultProps, props);
+  const mergedProps = useMergedProps(Avatar.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -135,7 +135,7 @@ NameVariants.args = {
 };
 
 export const NumberVariants = (props: Partial<AvatarProps>) => {
-  const mergedProps = useMergedProps(Avatar.defaultProps, props);
+  const mergedProps = useMergedProps(Avatar.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants<AvatarPropsCount, "count">
       defaults={mergedProps as unknown as AvatarPropsCount}
@@ -148,7 +148,7 @@ export const NumberVariants = (props: Partial<AvatarProps>) => {
 };
 
 export const Sizes = (props: Partial<AvatarProps>) => {
-  const mergedProps = useMergedProps(Avatar.defaultProps, props);
+  const mergedProps = useMergedProps(Avatar.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -164,7 +164,7 @@ export const Sizes = (props: Partial<AvatarProps>) => {
 const bools = [false, true];
 
 export const Organization = (props: Partial<AvatarProps>) => {
-  const mergedProps = useMergedProps(Avatar.defaultProps, props);
+  const mergedProps = useMergedProps(Avatar.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -180,7 +180,7 @@ export const Organization = (props: Partial<AvatarProps>) => {
 const tooltips = [...bools, "Custom tooltip"];
 
 export const Tooltip = (props: Partial<AvatarProps>) => {
-  const mergedProps = useMergedProps(Avatar.defaultProps, {
+  const mergedProps = useMergedProps(Avatar.__DEFAULT_PROPS, {
     ...props,
     firstName: "John",
     lastName: "Doe",

@@ -20,7 +20,7 @@ import type { NonOptional } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 const args = {
-  ...ContextLine.defaultProps,
+  ...ContextLine.__DEFAULT_PROPS,
 };
 
 const componentSource = componentSourceFactory<ContextLineProps>(
@@ -29,7 +29,7 @@ const componentSource = componentSourceFactory<ContextLineProps>(
     label: "[label]",
     children: '<Badge label="Children" color="primary" />',
   },
-  ContextLine.defaultProps
+  ContextLine.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -122,7 +122,7 @@ const contextLineVariants: DetailConfigVariants<{ rows: ContextLineProps[] }> =
   ];
 
 export const Example = (props: ContextLineProps) => {
-  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+  const mergedProps = useMergedProps(ContextLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -147,7 +147,7 @@ export const Example = (props: ContextLineProps) => {
 };
 
 export const Label = (props: ContextLineProps) => {
-  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+  const mergedProps = useMergedProps(ContextLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -194,7 +194,7 @@ const childrenVariants: DetailConfigVariants<ContextLineProps> = [
 ];
 
 export const Children = (props: ContextLineProps) => {
-  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+  const mergedProps = useMergedProps(ContextLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -230,7 +230,7 @@ const badgeVariants: DetailConfigVariants<ContextLineProps> = [
 ];
 
 export const Badges = (props: ContextLineProps) => {
-  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+  const mergedProps = useMergedProps(ContextLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -267,7 +267,7 @@ const icons: ContextLineStaticIconProps[] = [
 export const Icons = (props: ContextLineProps) => {
   const mergedProps = useMergedProps<ContextLineDefaultProps, ContextLineProps>(
     {
-      ...ContextLine.defaultProps,
+      ...ContextLine.__DEFAULT_PROPS,
       badge: {
         label: "Badge",
         color: "primary",
@@ -309,7 +309,7 @@ const descriptions: (string | NonOptional<ReactNode>)[] = [
 export const Descriptions = (props: ContextLineProps) => {
   const mergedProps = useMergedProps<ContextLineDefaultProps, ContextLineProps>(
     {
-      ...ContextLine.defaultProps,
+      ...ContextLine.__DEFAULT_PROPS,
       badge: {
         label: "Badge",
         color: "primary",
@@ -343,7 +343,7 @@ const MultiContextLines = (props: ContextLineProps) => (
 );
 
 export const Compact = (props: ContextLineProps) => {
-  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+  const mergedProps = useMergedProps(ContextLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -358,7 +358,7 @@ export const Compact = (props: ContextLineProps) => {
 };
 
 export const PaddingHorizontal = (props: ContextLineProps) => {
-  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+  const mergedProps = useMergedProps(ContextLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -373,7 +373,7 @@ export const PaddingHorizontal = (props: ContextLineProps) => {
 };
 
 export const BorderBottom = (props: ContextLineProps) => {
-  const mergedProps = useMergedProps(ContextLine.defaultProps, props);
+  const mergedProps = useMergedProps(ContextLine.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants

@@ -16,7 +16,7 @@ describe("Input", () => {
     "EmailInput",
     EmailInput,
     {
-      props: EmailInput.defaultProps,
+      props: EmailInput.__DEFAULT_PROPS,
       tests: [
         {
           name: "should render",

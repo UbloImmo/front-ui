@@ -96,4 +96,4 @@ export const FlexColumnLayout = forwardRef<
   return <FlexLayout {...props} ref={ref} direction="column" testId={testId} />;
 });
 
-FlexLayout.defaultProps = defaultFlexLayoutProps;
+FlexLayout.__DEFAULT_PROPS = defaultFlexLayoutProps;

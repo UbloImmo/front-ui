@@ -113,6 +113,6 @@ const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
     </>
   );
 };
-Collapsible.defaultProps = defaultCollapsibleProps;
+Collapsible.__DEFAULT_PROPS = defaultCollapsibleProps;
 
 export { Collapsible };

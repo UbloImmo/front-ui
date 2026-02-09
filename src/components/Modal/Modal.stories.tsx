@@ -19,7 +19,7 @@ const componentSource = componentSourceFactory<ModalProps>(
     reference: ref,
     title: "Modal title",
   },
-  Modal.defaultProps
+  Modal.__DEFAULT_PROPS
 );
 
 const meta = {

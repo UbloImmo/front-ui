@@ -80,7 +80,7 @@ const Form = <TData extends object>(
   );
 };
 
-Form.defaultProps = defaultFormProps;
+Form.__DEFAULT_PROPS = defaultFormProps;
 
 export { Form };
 

@@ -43,7 +43,7 @@ const directions: FlexDirection[] = ["row", "column"];
 export const Direction = (props: Partial<FlexLayoutProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...FlexLayout.defaultProps,
+      ...FlexLayout.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -72,7 +72,7 @@ const gaps: FlexGap[] = ["s-1", "24px", "3rem", 5];
 export const Gap = (props: Partial<FlexLayoutProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...FlexLayout.defaultProps,
+      ...FlexLayout.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -113,7 +113,7 @@ const showcaseStyles: CSSProperties = {
 export const Justify = (props: Partial<FlexLayoutProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...FlexLayout.defaultProps,
+      ...FlexLayout.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -142,7 +142,7 @@ Justify.args = {
 export const Align = (props: Partial<FlexLayoutProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...FlexLayout.defaultProps,
+      ...FlexLayout.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);

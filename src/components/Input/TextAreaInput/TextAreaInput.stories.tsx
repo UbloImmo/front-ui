@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<TextAreaInputProps>(
   "TextAreaInput",
-  TextAreaInput.defaultProps
+  TextAreaInput.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -33,7 +33,7 @@ export const Default: Story = {
 };
 
 export const Resize = (props: Partial<TextAreaInputProps>) => {
-  const mergedProps = useMergedProps(props, TextAreaInput.defaultProps);
+  const mergedProps = useMergedProps(props, TextAreaInput.__DEFAULT_PROPS);
   return (
     <ComponentVariants
       defaults={mergedProps}

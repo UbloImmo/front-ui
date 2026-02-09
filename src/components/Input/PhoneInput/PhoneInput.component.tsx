@@ -140,5 +140,5 @@ const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
   );
 };
 
-PhoneInput.defaultProps = defaultPhoneInputProps;
+PhoneInput.__DEFAULT_PROPS = defaultPhoneInputProps;
 export { PhoneInput };

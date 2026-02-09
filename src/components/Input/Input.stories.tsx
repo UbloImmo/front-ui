@@ -62,7 +62,7 @@ Types.args = {
 
 const booleans: boolean[] = [true, false];
 export const Disabled = (props: Partial<InputProps<"text">>) => {
-  const defaultProps = useMergedProps(TextInput.defaultProps, props);
+  const defaultProps = useMergedProps(TextInput.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -81,7 +81,7 @@ Disabled.args = {
 };
 
 export const Error = (props: Partial<InputProps<"text">>) => {
-  const defaultProps = useMergedProps(TextInput.defaultProps, props);
+  const defaultProps = useMergedProps(TextInput.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -100,7 +100,7 @@ Error.args = {
 
 const placeholders = ["Enter your value", ""];
 export const Placeholder = (props: Partial<InputProps<"text">>) => {
-  const defaultProps = useMergedProps(TextInput.defaultProps, props);
+  const defaultProps = useMergedProps(TextInput.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants

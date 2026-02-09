@@ -149,6 +149,6 @@ const PasswordInput = (
   );
 };
 
-PasswordInput.defaultProps = defaultPasswordInputProps;
+PasswordInput.__DEFAULT_PROPS = defaultPasswordInputProps;
 
 export { PasswordInput };

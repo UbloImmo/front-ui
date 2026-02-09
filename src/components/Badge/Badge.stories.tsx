@@ -13,7 +13,7 @@ import { ColorPalette } from "@types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const args = {
-  ...Badge.defaultProps,
+  ...Badge.__DEFAULT_PROPS,
   label: "[label]",
 };
 
@@ -61,7 +61,7 @@ const colors: (keyof ColorPalette)[] = [
 ];
 
 export const Colors = (props: Partial<BadgeProps>) => {
-  const defaultProps = useMergedProps(Badge.defaultProps, props);
+  const defaultProps = useMergedProps(Badge.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -83,7 +83,7 @@ const shades: BadgeShade[] = ["light", "dark"];
 export const Shades = (props: Partial<BadgeProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...Badge.defaultProps,
+      ...Badge.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -108,7 +108,7 @@ export const Icon = (props: Partial<BadgeProps>) => {
   const icons: Nullable<IconName>[] = [props.icon ?? "Square", null];
   const defaultProps = useMemo(() => {
     return {
-      ...Badge.defaultProps,
+      ...Badge.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);

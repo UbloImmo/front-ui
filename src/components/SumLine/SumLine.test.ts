@@ -12,7 +12,7 @@ const valueTestId = `${testId}-value`;
 const periodTestId = `${testId}-period`;
 
 testSumLine({
-  ...SumLine.defaultProps,
+  ...SumLine.__DEFAULT_PROPS,
   label: "Label",
   value: 1000,
   period: "2024",
@@ -21,7 +21,7 @@ testSumLine({
 });
 
 testSumLine({
-  ...SumLine.defaultProps,
+  ...SumLine.__DEFAULT_PROPS,
   label: "Label",
   value: 1000,
   period: "2024",
@@ -31,7 +31,7 @@ testSumLine({
 });
 
 testSumLine({
-  ...SumLine.defaultProps,
+  ...SumLine.__DEFAULT_PROPS,
   label: "Label",
   value: 1000,
   period: "2024",
@@ -40,7 +40,7 @@ testSumLine({
 });
 
 testSumLine({
-  ...SumLine.defaultProps,
+  ...SumLine.__DEFAULT_PROPS,
   compact: true,
 })("should render a compact value", ({ queryByTestId }) => {
   expect(queryByTestId(valueTestId)).not.toBeNull();

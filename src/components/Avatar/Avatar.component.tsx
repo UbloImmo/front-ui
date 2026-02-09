@@ -170,6 +170,6 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
 
   return AvatarContent;
 };
-Avatar.defaultProps = defaultAvatarProps;
+Avatar.__DEFAULT_PROPS = defaultAvatarProps;
 
 export { Avatar };

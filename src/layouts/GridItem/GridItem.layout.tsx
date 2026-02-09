@@ -70,6 +70,6 @@ const GridItem = forwardRef<HTMLDivElement, GridItemProps & TestIdProps>(
     );
   }
 );
-GridItem.defaultProps = defaultGridItemProps;
+GridItem.__DEFAULT_PROPS = defaultGridItemProps;
 
 export { GridItem };

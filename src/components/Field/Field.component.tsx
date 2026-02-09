@@ -22,8 +22,8 @@ import type { Nullable } from "@ubloimmo/front-util";
 const defaultFieldProps: FieldDefaultProps<InputType> = {
   type: "text",
   ...defaultCommonInputProps,
-  ...InputLabel.defaultProps,
-  ...InputAssistiveText.defaultProps,
+  ...InputLabel.__DEFAULT_PROPS,
+  ...InputAssistiveText.__DEFAULT_PROPS,
   label: "[Field label]",
   placeholder: "[Field placeholder]",
   assistiveText: null,
@@ -146,6 +146,6 @@ const Field = <TType extends InputType>(
     </FlexColumnLayout>
   );
 };
-Field.defaultProps = defaultFieldProps;
+Field.__DEFAULT_PROPS = defaultFieldProps;
 
 export { Field };

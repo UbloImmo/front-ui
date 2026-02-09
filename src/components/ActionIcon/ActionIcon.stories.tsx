@@ -16,7 +16,7 @@ import type {
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const defaultMockProps = {
-  ...ActionIcon.defaultProps,
+  ...ActionIcon.__DEFAULT_PROPS,
   icon: "Window",
   onClick: fn(),
 };
@@ -31,29 +31,29 @@ const meta = {
   title: "Components/Actions/ActionIcon/Stories",
   component: ActionIcon,
   args: {
-    ...ActionIcon.defaultProps,
+    ...ActionIcon.__DEFAULT_PROPS,
     onClick: fn(),
   },
   argTypes: {
     icon: {
       options: allIconNames,
-      defaultValue: ActionIcon.defaultProps.icon,
+      defaultValue: ActionIcon.__DEFAULT_PROPS.icon,
     },
     size: {
       options: ["s", "m", "l"],
-      defaultValue: ActionIcon.defaultProps.size,
+      defaultValue: ActionIcon.__DEFAULT_PROPS.size,
     },
     color: {
       options: ["primary", "error", "white"],
-      defaultValue: ActionIcon.defaultProps.color,
+      defaultValue: ActionIcon.__DEFAULT_PROPS.color,
     },
     title: {
       type: "string",
-      defaultValue: ActionIcon.defaultProps.title,
+      defaultValue: ActionIcon.__DEFAULT_PROPS.title,
     },
     disabled: {
       type: "boolean",
-      defaultValue: ActionIcon.defaultProps.disabled,
+      defaultValue: ActionIcon.__DEFAULT_PROPS.disabled,
     },
   },
   parameters: {
@@ -73,7 +73,7 @@ export const Default: Story = {
 
 const sizes: ActionIconSize[] = ["l", "m", "s"];
 export const Sizes = (props: ActionIconProps) => {
-  const defaults = useMergedProps(ActionIcon.defaultProps, props);
+  const defaults = useMergedProps(ActionIcon.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -99,7 +99,7 @@ const SizeRenderer = (props: ActionIconProps) => {
 
 const colors: ActionIconColor[] = ["white", "primary", "error"];
 export const Colors = (props: ActionIconProps) => {
-  const defaults = useMergedProps(ActionIcon.defaultProps, props);
+  const defaults = useMergedProps(ActionIcon.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       variants={colors}
@@ -114,7 +114,7 @@ export const Colors = (props: ActionIconProps) => {
 
 const bools = [false, true];
 export const Disabled = (props: ActionIconProps) => {
-  const defaults = useMergedProps(ActionIcon.defaultProps, props);
+  const defaults = useMergedProps(ActionIcon.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -130,7 +130,7 @@ export const Disabled = (props: ActionIconProps) => {
 
 const icons: IconName[] = ["Square", "Archive", "XLg", "Copy"];
 export const Icons = (props: ActionIconProps) => {
-  const defaults = useMergedProps(ActionIcon.defaultProps, props);
+  const defaults = useMergedProps(ActionIcon.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       variants={icons}
@@ -144,13 +144,13 @@ export const Icons = (props: ActionIconProps) => {
 };
 
 const titles = [
-  ActionIcon.defaultProps.title,
+  ActionIcon.__DEFAULT_PROPS.title,
   "Confirm entry",
   "Delete entity",
   "Duplicate unit",
 ];
 export const Titles = (props: ActionIconProps) => {
-  const defaults = useMergedProps(ActionIcon.defaultProps, props);
+  const defaults = useMergedProps(ActionIcon.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       variants={titles}

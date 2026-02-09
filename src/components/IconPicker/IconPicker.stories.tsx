@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<IconPickerProps>(
   "IconPicker",
-  IconPicker.defaultProps
+  IconPicker.__DEFAULT_PROPS
 );
 
 const meta = {

@@ -176,6 +176,6 @@ const EnergyScoreInput = (
   );
 };
 
-EnergyScoreInput.defaultProps = defaultEnergyScoreInputProps;
+EnergyScoreInput.__DEFAULT_PROPS = defaultEnergyScoreInputProps;
 
 export { EnergyScoreInput };

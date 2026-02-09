@@ -15,7 +15,7 @@ import type { DirectionHorizontal } from "@/types/global/direction.types";
 import type { ColorKey } from "@types";
 
 const defaultMockProps = {
-  ...Chip.defaultProps,
+  ...Chip.__DEFAULT_PROPS,
   onClick: fn(),
 };
 
@@ -25,7 +25,7 @@ const componentSource = componentSourceFactory<ChipProps>(
     label: "[Chip]",
     icon: "Square",
   },
-  Chip.defaultProps
+  Chip.__DEFAULT_PROPS
 );
 
 const colors: ColorKey[] = [
@@ -77,7 +77,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Colors = (props: Partial<ChipProps>) => {
-  const mergedProps = useMergedProps(Chip.defaultProps, props);
+  const mergedProps = useMergedProps(Chip.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -102,7 +102,7 @@ Colors.parameters = {
 };
 
 export const Placement = (props: Partial<ChipProps>) => {
-  const mergedProps = useMergedProps(Chip.defaultProps, {
+  const mergedProps = useMergedProps(Chip.__DEFAULT_PROPS, {
     ...props,
     icon: "Square",
   });
@@ -130,7 +130,7 @@ Placement.parameters = {
 };
 
 export const Disabled = (props: Partial<ChipProps>) => {
-  const mergedProps = useMergedProps(Chip.defaultProps, props);
+  const mergedProps = useMergedProps(Chip.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       defaults={mergedProps}
@@ -153,7 +153,7 @@ export const WithDelete = (props: Partial<ChipProps>) => {
     setLabels(updatedLabel);
   };
 
-  const mergedProps = useMergedProps(Chip.defaultProps, props);
+  const mergedProps = useMergedProps(Chip.__DEFAULT_PROPS, props);
   return (
     <FlexRowLayout gap="s-2" align="center">
       {labels.map((label) => (

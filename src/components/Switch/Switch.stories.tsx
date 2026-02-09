@@ -10,7 +10,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<SwitchProps>(
   "Switch",
-  Switch.defaultProps
+  Switch.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -86,7 +86,7 @@ export const Disabled = () => {
   return (
     <ComponentVariants
       of={Switch}
-      defaults={Switch.defaultProps}
+      defaults={Switch.__DEFAULT_PROPS}
       variants={disabledExamples}
       propLabels
       scaling={1}

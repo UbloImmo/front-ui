@@ -69,6 +69,6 @@ const Icon = (props: IconProps): JSX.Element => {
   );
 };
 
-Icon.defaultProps = defaultIconProps;
+Icon.__DEFAULT_PROPS = defaultIconProps;
 
 export { Icon };

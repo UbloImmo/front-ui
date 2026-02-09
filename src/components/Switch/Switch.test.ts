@@ -6,11 +6,11 @@ import { testComponentFactory } from "@/tests";
 
 const testSwitch = testComponentFactory("Switch", Switch);
 
-testSwitch(Switch.defaultProps)("should render", ({ queryByTestId }) => {
+testSwitch(Switch.__DEFAULT_PROPS)("should render", ({ queryByTestId }) => {
   expect(queryByTestId("switch")).not.toBeNull();
 });
 
-testSwitch({ ...Switch.defaultProps, active: false })(
+testSwitch({ ...Switch.__DEFAULT_PROPS, active: false })(
   "should toggle active state to true on click",
   async ({ queryByTestId }, { click }) => {
     const switchContainer = (await queryByTestId(
@@ -22,7 +22,7 @@ testSwitch({ ...Switch.defaultProps, active: false })(
   }
 );
 
-testSwitch({ ...Switch.defaultProps, active: true })(
+testSwitch({ ...Switch.__DEFAULT_PROPS, active: true })(
   "should toggle active state to false on click",
   async ({ queryByTestId }, { click }) => {
     const switchContainer = (await queryByTestId(
@@ -34,7 +34,7 @@ testSwitch({ ...Switch.defaultProps, active: true })(
   }
 );
 
-testSwitch({ ...Switch.defaultProps, disabled: true, active: false })(
+testSwitch({ ...Switch.__DEFAULT_PROPS, disabled: true, active: false })(
   "should not toggle active state on click when disabled",
   async ({ queryByTestId }, { click }) => {
     const switchContainer = (await queryByTestId(
@@ -47,7 +47,7 @@ testSwitch({ ...Switch.defaultProps, disabled: true, active: false })(
   }
 );
 
-testSwitch({ ...Switch.defaultProps, disabled: true, active: true })(
+testSwitch({ ...Switch.__DEFAULT_PROPS, disabled: true, active: true })(
   "should not toggle active state on click when both disabled and active",
   async ({ queryByTestId }, { click }) => {
     const switchContainer = (await queryByTestId(
@@ -62,7 +62,7 @@ testSwitch({ ...Switch.defaultProps, disabled: true, active: true })(
 
 const onChange = mock(() => {});
 
-testSwitch({ ...Switch.defaultProps, onChange })(
+testSwitch({ ...Switch.__DEFAULT_PROPS, onChange })(
   "should trigger onChange and pass the active state as argument",
   async ({ queryByTestId }, { click }) => {
     const switchContainer = (await queryByTestId(
@@ -76,7 +76,7 @@ testSwitch({ ...Switch.defaultProps, onChange })(
   }
 );
 
-testSwitch({ ...Switch.defaultProps, active: true, onChange })(
+testSwitch({ ...Switch.__DEFAULT_PROPS, active: true, onChange })(
   "should trigger onChange and pass the inactive state as argument",
   async ({ queryByTestId }, { click }) => {
     const switchContainer = (await queryByTestId(

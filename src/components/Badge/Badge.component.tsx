@@ -82,5 +82,5 @@ const Badge = (props: BadgeProps & TestIdProps): Nullable<JSX.Element> => {
   );
 };
 
-Badge.defaultProps = defaultBadgeProps;
+Badge.__DEFAULT_PROPS = defaultBadgeProps;
 export { Badge };

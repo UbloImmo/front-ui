@@ -287,6 +287,6 @@ const ComboBox = <TOptionValue extends NullishPrimitives>(
     </FlexLayout>
   );
 };
-ComboBox.defaultProps = defaultComboBoxProps;
+ComboBox.__DEFAULT_PROPS = defaultComboBoxProps;
 
 export { ComboBox };

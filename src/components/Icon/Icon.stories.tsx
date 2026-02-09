@@ -31,28 +31,28 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: Icon.defaultProps,
+  args: Icon.__DEFAULT_PROPS,
 };
 
+const colors: Exclude<keyof ColorPalette, "gray">[] = [
+  "primary",
+  "success",
+  "pending",
+  "warning",
+  "error",
+];
+const colorShades: PaletteColor[] = colors.flatMap(
+  (color): `${typeof color}-${"base" | "light" | "dark" | "medium"}`[] => [
+    `${color}-light`,
+    `${color}-medium`,
+    `${color}-base`,
+    `${color}-dark`,
+  ]
+);
 export const Colors = (props: Partial<IconProps>) => {
-  const colors: Exclude<keyof ColorPalette, "gray">[] = [
-    "primary",
-    "success",
-    "pending",
-    "warning",
-    "error",
-  ];
-  const colorShades: PaletteColor[] = colors.flatMap(
-    (color): `${typeof color}-${"base" | "light" | "dark" | "medium"}`[] => [
-      `${color}-base`,
-      `${color}-light`,
-      `${color}-dark`,
-      `${color}-medium`,
-    ]
-  );
   const defaultProps = useMemo(() => {
     return {
-      ...Icon.defaultProps,
+      ...Icon.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -63,6 +63,8 @@ export const Colors = (props: Partial<IconProps>) => {
       variants={colorShades}
       for="color"
       of={Icon}
+      columns={4}
+      justify="center"
       align="center"
     />
   );
@@ -72,16 +74,14 @@ Colors.args = {
   size: "s-8",
 };
 
-export const Sizes = (props: Partial<IconProps>) => {
-  const sizes = useMemo(() => {
-    return Array(10)
-      .fill(0)
-      .map((_, index): SpacingLabel => `s-${!index ? 1 : index * 2}`);
-  }, []);
+const sizes = Array(10)
+  .fill(0)
+  .map((_, index): SpacingLabel => `s-${!index ? 1 : index * 2}`);
 
+export const Sizes = (props: Partial<IconProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...Icon.defaultProps,
+      ...Icon.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -104,7 +104,7 @@ Sizes.args = {
 export const Bootstrap = (props: Partial<IconProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...Icon.defaultProps,
+      ...Icon.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -126,7 +126,7 @@ Bootstrap.args = {
 export const Custom = (props: Partial<IconProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...Icon.defaultProps,
+      ...Icon.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);

@@ -23,7 +23,7 @@ const assetNames = objectKeys(assetsIndex);
 const componentSource = componentSourceFactory<EmptyStateCardProps>(
   "EmptyStateCard",
   {},
-  EmptyStateCard.defaultProps
+  EmptyStateCard.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -95,7 +95,7 @@ const descriptions = [
 ];
 
 export const Descriptions = (props: Partial<EmptyStateCardProps>) => {
-  const defaults = useMergedProps(EmptyStateCard.defaultProps, props);
+  const defaults = useMergedProps(EmptyStateCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -125,7 +125,7 @@ export const Colors = (props: Partial<EmptyStateCardProps>) => {
   const defaults = useMergedProps<
     EmptyStateCardDefaultProps,
     EmptyStateCardProps
-  >({ ...EmptyStateCard.defaultProps, asset: "EmptyBox" }, props);
+  >({ ...EmptyStateCard.__DEFAULT_PROPS, asset: "EmptyBox" }, props);
 
   return (
     <ComponentVariants
@@ -148,7 +148,7 @@ const titles: string[] = [
 ];
 
 export const Titles = (props: Partial<EmptyStateCardProps>) => {
-  const defaults = useMergedProps(EmptyStateCard.defaultProps, props);
+  const defaults = useMergedProps(EmptyStateCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -166,7 +166,7 @@ Titles.parameters = {
 };
 
 export const Assets = (props: Partial<EmptyStateCardProps>) => {
-  const defaults = useMergedProps(EmptyStateCard.defaultProps, props);
+  const defaults = useMergedProps(EmptyStateCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -194,7 +194,7 @@ export const Icons = (props: Partial<EmptyStateCardProps>) => {
   const defaults = useMergedProps<
     EmptyStateCardDefaultProps,
     EmptyStateCardProps
-  >({ ...EmptyStateCard.defaultProps, asset: "EmptyBox" }, props);
+  >({ ...EmptyStateCard.__DEFAULT_PROPS, asset: "EmptyBox" }, props);
 
   return (
     <ComponentVariants
@@ -215,7 +215,7 @@ export const Transparent = (props: Partial<EmptyStateCardProps>) => {
   const defaults = useMergedProps<
     EmptyStateCardDefaultProps,
     EmptyStateCardProps
-  >({ ...EmptyStateCard.defaultProps, asset: "EmptyBox" }, props);
+  >({ ...EmptyStateCard.__DEFAULT_PROPS, asset: "EmptyBox" }, props);
 
   return (
     <ComponentVariants

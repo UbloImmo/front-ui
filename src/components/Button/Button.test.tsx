@@ -8,7 +8,7 @@ import { ButtonProps } from ".";
 
 describe("Button", () => {
   const testButton = testComponentFactory<ButtonProps>("Button", Button, {
-    props: Button.defaultProps,
+    props: Button.__DEFAULT_PROPS,
     tests: [
       {
         name: "should render",

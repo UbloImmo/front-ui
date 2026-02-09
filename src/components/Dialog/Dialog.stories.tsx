@@ -207,7 +207,7 @@ export const Default = TestDialog(
 );
 
 export const Content = (props: DialogProps) => {
-  const defaults = useMergedProps(Dialog.defaultProps, props);
+  const defaults = useMergedProps(Dialog.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants

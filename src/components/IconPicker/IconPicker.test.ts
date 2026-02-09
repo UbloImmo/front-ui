@@ -20,7 +20,7 @@ const sampleIconsSubSets: IconName[][] = [
 
 const testIconPicker = testComponentFactory("IconPicker", IconPicker);
 
-testIconPicker(IconPicker.defaultProps)(
+testIconPicker(IconPicker.__DEFAULT_PROPS)(
   "should render with default props",
   ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
@@ -28,7 +28,7 @@ testIconPicker(IconPicker.defaultProps)(
 );
 
 testIconPicker({
-  ...IconPicker.defaultProps,
+  ...IconPicker.__DEFAULT_PROPS,
   icons: sampleIcons,
 })(
   "should render with a set of icons",
@@ -40,7 +40,7 @@ testIconPicker({
 );
 
 testIconPicker({
-  ...IconPicker.defaultProps,
+  ...IconPicker.__DEFAULT_PROPS,
   icons: sampleIconsSubSets,
 })(
   "should render with a sub-set of icons",
@@ -53,7 +53,7 @@ testIconPicker({
 const onChange = mock((_value: Nullable<IconName>) => {});
 
 testIconPicker({
-  ...IconPicker.defaultProps,
+  ...IconPicker.__DEFAULT_PROPS,
   icons: sampleIcons,
   value: "EmojiNeutral",
   onChange,

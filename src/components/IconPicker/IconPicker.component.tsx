@@ -111,6 +111,6 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
     </FlexLayout>
   );
 };
-IconPicker.defaultProps = defaultIconPickerProps;
+IconPicker.__DEFAULT_PROPS = defaultIconPickerProps;
 
 export { IconPicker };
