@@ -14,32 +14,32 @@
       "default": "./dist/index.js"
     },
     "./themes": {
-      "types": "./dist/types/themes/index.d.ts",
+      "types": "./dist/types/themes.d.ts",
       "import": "./dist/themes.js",
       "default": "./dist/themes.js"
     },
     "./utils": {
-      "types": "./dist/types/utils/index.d.ts",
+      "types": "./dist/types/utils.d.ts",
       "import": "./dist/utils.js",
       "default": "./dist/utils.js"
     },
     "./components": {
-      "types": "./dist/types/components/index.d.ts",
+      "types": "./dist/types/components.d.ts",
       "import": "./dist/components.js",
       "default": "./dist/components.js"
     },
     "./layouts": {
-      "types": "./dist/types/layouts/index.d.ts",
+      "types": "./dist/types/layouts.d.ts",
       "import": "./dist/layouts.js",
       "default": "./dist/layouts.js"
     },
     "./fonts": {
-      "types": "./dist/types/typography/fonts/index.d.ts",
+      "types": "./dist/types/fonts.d.ts",
       "import": "./dist/fonts.js",
       "default": "./dist/fonts.js"
     },
     "./sizes": {
-      "types": "./dist/types/sizes/index.d.ts",
+      "types": "./dist/types/sizes.d.ts",
       "import": "./dist/sizes.js",
       "default": "./dist/sizes.js"
     },
@@ -58,6 +58,7 @@
     "@eslint/js": "^9.19.0",
     "@faker-js/faker": "^9.6.0",
     "@happy-dom/global-registrator": "^13.10.1",
+    "@microsoft/api-extractor": "^7.56.3",
     "@storybook/addon-a11y": "^10.2.0",
     "@storybook/addon-docs": "^10.2.0",
     "@storybook/addon-links": "^10.2.0",
@@ -78,6 +79,7 @@
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.54.0",
     "@typescript-eslint/typescript-estree": "^8.54.0",
+    "ajv": "^8.17.1",
     "bun-module-name-mapper": "^1.0.11",
     "bun-types": "latest",
     "eslint": "^9.19.0",
@@ -100,13 +102,13 @@
     "sass-embedded": "^1.97.3",
     "storybook": "^10.2.0",
     "svg-parser": "^2.0.4",
-    "typedoc": "^0.27.6",
+    "typedoc": "^0.28.16",
     "typedoc-plugin-markdown": "^4.4.1",
     "typescript": "^5.9.3",
     "typescript-plugin-css-modules": "^5.2.0",
+    "unplugin-dts": "^1.0.0-beta.6",
     "vite": "^7.3.1",
     "vite-plugin-banner": "^0.8.1",
-    "vite-plugin-dts": "^3.9.1",
     "vite-plugin-dynamic-import": "^1.6.0",
     "vite-tsconfig-paths": "^6.0.4"
   },
@@ -158,7 +160,7 @@
     "storybook:open": "storybook dev -p 6007 --debug",
     "storybook:reinstall": "bun run reinstall && bun storybook",
     "storybook:build": "storybook build",
-    "lib:build": "vite build --config vite.config.build.ts",
+    "lib:build": "bun ./scripts/build/build.script.ts",
     "init:component": "./scripts/init/component.sh",
     "docs:generate": "bunx typedoc --options ./typedoc.config.js",
     "changelog:added": "./scripts/ci/add-to-changelog.sh \"Added\" ",
