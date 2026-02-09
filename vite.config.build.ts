@@ -1,6 +1,5 @@
 import { resolve } from "node:path";
 
-import dedent from "ts-dedent";
 import dts from "unplugin-dts/vite";
 import { mergeConfig } from "vite";
 import banner from "vite-plugin-banner";
