@@ -2,7 +2,7 @@ import { GenericFn } from "@ubloimmo/front-util";
 
 import { CommonIconProps } from "./__generated__/common.types";
 import {
-  type GeneratedIconName,
+  type IconName as GeneratedIconName,
   GENERATED_ICON_NAMES,
 } from "./__generated__/iconName.types";
 

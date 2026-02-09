@@ -14,4 +14,4 @@ export const BOOTSTRAP_ICON_NAMES = BOOTSTRAP_ICON_NAMES_READONLY as unknown as 
 
 export const GENERATED_ICON_NAMES = [...CUSTOM_ICON_NAMES, ...BOOTSTRAP_ICON_NAMES];
 
-export type GeneratedIconName = CustomIconName | BootstrapIconName;
+export type IconName = CustomIconName | BootstrapIconName;

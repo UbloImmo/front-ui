@@ -157,7 +157,7 @@ const generateIconNameTypeDefs = (
   );
 
   const allArrayStr = `export const GENERATED_ICON_NAMES = [...CUSTOM_ICON_NAMES, ...BOOTSTRAP_ICON_NAMES];`;
-  const allTypeStr = `export type GeneratedIconName = CustomIconName | BootstrapIconName;`;
+  const allTypeStr = `export type IconName = CustomIconName | BootstrapIconName;`;
   const allStr = [allArrayStr, "", allTypeStr].join("\n");
 
   const contents = [imports, "", customStr, "", bootstrapStr, "", allStr].join(
