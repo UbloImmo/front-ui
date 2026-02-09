@@ -15,7 +15,7 @@
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@types": ["src/types"],
       "@utils": ["src/utils"],
@@ -39,10 +39,5 @@
   "typeAcquisition": {
     "enable": true,
   },
-  "exclude": [
-    "node_modules",
-    "storybook-static",
-    "dist",
-    "src/components/Icon/__generated__/**/*",
-  ],
+  "exclude": ["node_modules", "storybook-static", "dist"],
 }
