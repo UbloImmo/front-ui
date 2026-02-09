@@ -157,13 +157,17 @@ export const StyledInputControl = forwardRef<
 export const StyledInputControlGroup = forwardRef<
   HTMLDivElement,
   InputControlAnchorProps & DivElementProps
->(({ $anchor, $noFocus, onClick, className: cn }, ref) => {
+>(({ $anchor, $noFocus, onClick, className: cn, children }, ref) => {
   const className = useInputControlGroupClassName({
     $anchor,
     $noFocus,
     className: cn,
   });
-  return <div className={className} onClick={onClick} ref={ref} />;
+  return (
+    <div className={className} onClick={onClick} ref={ref}>
+      {children}
+    </div>
+  );
 });
 
 /**
@@ -186,10 +190,12 @@ export const StyledInputGroupedControl = forwardRef<
       $anchor,
       $noFocus,
       onClick,
+      children,
       ...props
     },
     ref
   ) => {
+    console.log(props, children);
     const className = useInputGroupedControlClassName({
       className: cn,
       $error,
@@ -201,6 +207,10 @@ export const StyledInputGroupedControl = forwardRef<
       $noFocus,
       onClick,
     });
-    return <div className={className} ref={ref} onClick={onClick} {...props} />;
+    return (
+      <div className={className} ref={ref} onClick={onClick} {...props}>
+        {children}
+      </div>
+    );
   }
 );
