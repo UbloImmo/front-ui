@@ -10,15 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **BREAKING CHANGES**
-
-  - CSS styling solution: Removed `styled-components` in favor of `CSS Modules`.
+  - CSS styling solution: Removed `styled-components` in favor of `CSS Modules`:
     - The uikit now exports a seperate `core.css` file that needs to be imported at the app's root.
     - All components have been bumped to their next minor version following this change. Each have had their styling converted to separate SCSS modules.
     - Typography & other design tokens -related styled that relied on `@ubloimmo/front-tokens` and were being injected by `styled-components` have been converted to static SCSS modules that get generated using the `tokens:generate` package script.
     - Updated & refactored Storybook-specific blocks & styling.
-  - Replaced `useTheme` & `ThemeProvider` implementation with React's `createContext` utility
-
+  
+  - Replaced `useTheme` & `ThemeProvider` implementation with React's `createContext` utility.
     - Type definitions are unchanged, but `styled-components` users will need to write a simple adapter to link it with.
+
+  - Re-implemented `GlobalStyle` component, utilizing manual DOM-Native style-tag injection.
 
   - Renamed `defaultProps` deprecated property on all components & layouts to `__DEFAULT_PROPS`, in order to prepare for a future React version bump.
 
@@ -28,9 +29,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `toStyleProps<T>()`
   - `useStyleProps<T>()`
 
+- Updated depencencies:
+  - Updated `storybook` to `v10`.
+  - Updated `vite` to `v10`.
+  - Updated `typedoc` to `v0.28.16`.
+  - Updated `typedoc-plugin-markdown` to `v4.10.0`.
+
+- Reworked icon generation & dynamic import handling to decrease bundle size.
+
 ### Removed
 
-- `styled-components` package.
+- `styled-components` dependency.
+- `vite-plugin-dynamic-import` dev dependency.
+- `vite-plugin-dts` dev dependency.
+
+### Added
+
+- Dev dependencies
+  - `unplugin-dts` dev dependency. Supercedes `vite-plugin-dts`.
+  - `@microsoft/api-extractor` dev dependency. Needed to squash built `.d.ts` files during build process a decrease bundle size.
+
+- CSS class / style composition utilities:
+  - `cssClasses()` / `useCssClasses()` merges one or more CSS classes based on boolean flags.
+  - `cssVariables()` / `useCssVariables()` converts an object into css variables by prefixing its properties and omitting nullish key/values pairs.
+  - `cssStyles` / `useCssStyles` merges one or more CSS style objects.
+
+### Fixed
+
+- API documentation generation using typedoc:
+  - Handled an edge case where `@returns` jsdoc comments containing special characters were not escaped, causing errors in MDX generation, parsing & consumption by storybook.
+  - Included missing `src/themes` directory in included files to be documented
 
 ## 1.12.8-beta.0 - 2026-01-16
 
