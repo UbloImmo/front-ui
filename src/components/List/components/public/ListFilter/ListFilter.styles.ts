@@ -9,18 +9,18 @@ import type { ListFilterStyleProps } from "./ListFilter.types";
 function useListFilterContainerClassName(props: ListFilterStyleProps) {
   return useCssClasses(
     styles["list-filter-container"],
-    [styles.open, props.$open],
-    [styles.loading, props.$loading],
-    [styles.disabled, props.$disabled],
-    [styles.active, props.$active],
-    [styles.multi, props.$multi]
+    [styles.open, props.open],
+    [styles.loading, props.loading],
+    [styles.disabled, props.disabled],
+    [styles.active, props.active],
+    [styles.multi, props.multi]
   );
 }
 
 function useListFilterHeaderClassName(props: ListFilterStyleProps) {
   return useCssClasses(styles["list-filter-header"], [
     styles.multi,
-    props.$multi,
+    props.multi,
   ]);
 }
 
@@ -31,7 +31,7 @@ function useListFilterOptionChipsClassName() {
 function useListFilterOptionsListClassName(props: ListFilterStyleProps) {
   return useCssClasses(styles["list-filter-options-list"], [
     styles.open,
-    props.$open,
+    props.open,
   ]);
 }
 

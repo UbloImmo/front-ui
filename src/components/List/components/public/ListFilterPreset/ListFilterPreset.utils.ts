@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import { useListContext } from "@/components/List/context";
 import { filterPresetData, type FilterPreset } from "@/components/List/modules";
-import { toStyleProps, useLogger } from "@utils";
+import { useLogger } from "@utils";
 
 import type {
   ListFilterPresetProps,
@@ -104,11 +104,11 @@ export const useListFilterPreset = <TItem extends object = object>(
 
   const styleProps = useMemo<ListFilterPresetStyleProps>(() => {
     const { disabled, active, colorKey } = filterPreset;
-    return toStyleProps({
+    return {
       disabled,
       active,
       colorKey,
-    });
+    };
   }, [filterPreset]);
 
   return {

@@ -29,7 +29,6 @@ import {
   isEmptyString,
   isNegative,
   isPositive,
-  toStyleProps,
   useLogger,
 } from "@utils";
 
@@ -94,16 +93,16 @@ const useFilterStyleProps = (
   filter: Filter<Record<string, unknown>>,
   open?: boolean,
   renderMulti?: boolean
-) => {
+): ListFilterStyleProps => {
   return useMemo<ListFilterStyleProps>(() => {
     const { disabled, loading, active } = filter;
-    return toStyleProps({
+    return {
       disabled,
       loading,
       active,
       multi: renderMulti ?? false,
       open,
-    });
+    };
   }, [filter, open, renderMulti]);
 };
 

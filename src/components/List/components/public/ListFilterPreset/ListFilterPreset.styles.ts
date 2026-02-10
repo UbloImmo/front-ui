@@ -13,21 +13,21 @@ import type { ListFilterPresetStyleProps } from "./ListFilterPreset.types";
 import type { PaletteColorOrWhite } from "@types";
 
 export function useListFilterPresetStyles({
-  $active,
-  $colorKey,
+  active,
+  colorKey,
 }: ListFilterPresetStyleProps) {
   const className = useCssClasses(styles["list-filter-preset"], [
     styles.active,
-    $active,
+    active,
   ]);
 
   const style = useMemo(() => {
     const lightColor: PaletteColorOrWhite = normalizeToPaletteColor(
-      $colorKey,
+      colorKey,
       "light"
     );
     const mediumColor: PaletteColorOrWhite = normalizeToPaletteColor(
-      $colorKey,
+      colorKey,
       "medium"
     );
 
@@ -35,7 +35,7 @@ export function useListFilterPresetStyles({
       "border-default": cssVarUsage(lightColor),
       "border-active": cssVarUsage(mediumColor),
     });
-  }, [$colorKey]);
+  }, [colorKey]);
 
   return {
     className,

@@ -46,6 +46,8 @@ export type StyleOverrideProps = {
  *
  * const styleProps = toStyleProps(props);
  * // styleProps === { $width: "100px", $height: "100px" }
+ *
+ * @deprecated styled-components
  */
 export type StyleProps<TProps extends Record<string, unknown>> = {
   [TPropName in Exclude<

@@ -97,6 +97,9 @@ export const useMergedProps = <
  *
  * @param {TProps} props - The input props object.
  * @return {StyleProps<TProps>} The generated style props.
+ *
+ * @deprecated styled-components
+ *
  */
 export const toStyleProps = <TProps extends Record<string, unknown>>(
   props: TProps
@@ -130,6 +133,9 @@ export const toStyleProps = <TProps extends Record<string, unknown>>(
  *
  * @param {StyleProps<TProps>} props - The input object with style properties.
  * @return {TProps} The transformed object with updated keys.
+ *
+ * @deprecated styled-components
+ *
  */
 export const fromStyleProps = <TProps extends Record<string, unknown>>(
   props: StyleProps<TProps>
@@ -148,6 +154,8 @@ export const fromStyleProps = <TProps extends Record<string, unknown>>(
  * @template {Record<string, unknown>} TProps - The type of the props object.
  * @param {TProps} props - The props object used to generate the style props.
  * @returns {StyleProps<TProps>} - The memoized object of style props.
+ *
+ * @deprecated styled-components
  */
 export const useStyleProps = <TProps extends Record<string, unknown>>(
   props: TProps

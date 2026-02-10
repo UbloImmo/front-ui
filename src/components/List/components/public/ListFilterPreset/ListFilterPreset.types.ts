@@ -39,6 +39,7 @@ export type ListFilterPresetProps<TItem extends object = object> =
     onToggled?: Nullable<VoidFn>;
   };
 
-export type ListFilterPresetStyleProps = StyleProps<
-  Pick<FilterPreset<object>, "disabled" | "active" | "colorKey">
+export type ListFilterPresetStyleProps = Pick<
+  FilterPreset<object>,
+  "disabled" | "active" | "colorKey"
 >;
