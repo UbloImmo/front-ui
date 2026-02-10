@@ -13,14 +13,15 @@
   // styles since virtualized lists make these unreliable
   &.list,
   &.list > td {
-    background: var(--white);
+    background: var(--white) !important;
   }
 
   // apply background based on injected css class
-
+  // !important needed since base list style uses nth-child selector and therefore
+  // is more precise, taking precedence over this rule
   &.even,
   &.even > td {
-    background: var(--gray-50);
+    background: var(--gray-50) !important;
   }
 
   // re-apply hover styles

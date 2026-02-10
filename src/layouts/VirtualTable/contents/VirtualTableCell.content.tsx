@@ -31,7 +31,7 @@ export const VirtualTableCellContent = <TItem extends object>({
 }: VirtualTableCellContentProps<TItem>): ReactNode => {
   const { error } = useLogger("VirtualTableCellContent");
 
-  const className = useCssClasses([
+  const className = useCssClasses(styles["virtual-table-cell"], [
     styles["fixed-width"],
     isNonNullish(fixedWidth),
   ]);
