@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - The uikit now exports a seperate `core.css` file that needs to be imported at the app's root.
     - All components have been bumped to their next minor version following this change. Each have had their styling converted to separate SCSS modules.
     - Typography & other design tokens -related styled that relied on `@ubloimmo/front-tokens` and were being injected by `styled-components` have been converted to static SCSS modules that get generated using the `tokens:generate` package script.
-    - Updated & refactored Storybook-specific blocks & styling.
   
   - Replaced `useTheme` & `ThemeProvider` implementation with React's `createContext` utility.
     - Type definitions are unchanged, but `styled-components` users will need to write a simple adapter to link it with.
@@ -36,6 +35,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated `typedoc-plugin-markdown` to `v4.10.0`.
 
 - Reworked icon generation & dynamic import handling to decrease bundle size.
+
+- Updated documentation:
+  - GETTING_STARTED
+  - README
+  - Component-specific documentation that referenced styled-components
+  - Updated & refactored Storybook-specific blocks & styling.
 
 ### Removed
 
