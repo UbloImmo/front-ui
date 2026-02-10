@@ -128,7 +128,7 @@ export const compare = Object.assign(comparison, {
    *
    * @template TValue - The type of the value
    * @param {TValue} value - The value to normalize
-   * @returns {ComparisonValue<TValue>} The normalied value
+   * @returns {ComparisonValue<TValue>} The normalized value
    */
   normalize: <TValue>(value: TValue): ComparisonValue<TValue> =>
     normalizeComparisonValue(value),

@@ -499,7 +499,7 @@ export type VirtualTableSharedContext<TItem extends object> = Replace<
  *
  * @see {@link TableVirtuosoProps}, {@link VirtualTableSharedContext}
  */
-export type VirutalTableContentProps<TItem extends object> = Pick<
+export type VirtualTableContentProps<TItem extends object> = Pick<
   TableVirtuosoProps<TItem, VirtualTableSharedContext<TItem>>,
   "fixedFooterContent" | "fixedHeaderContent"
 >;
