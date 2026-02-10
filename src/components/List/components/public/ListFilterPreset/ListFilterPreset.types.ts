@@ -1,5 +1,4 @@
 import type { FilterPreset, FilterSignature } from "@/components/List/modules";
-import type { StyleProps } from "@types";
 import type { Nullable, RequireAtLeastOne, VoidFn } from "@ubloimmo/front-util";
 
 export type ListFilterPresetProps<TItem extends object = object> =

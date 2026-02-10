@@ -9,20 +9,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **BREAKING CHANGE**: CSS styling solution: Removed `styled-components` in favor of `CSS Modules`.
-  - The uikit now exports a seperate `core.css` file that needs to be imported at the app's root.
-  - All components have been bumped to their next minor version following this change. Each have had their styling converted to separate SCSS modules.
-  - Typography & other design tokens -related styled that relied on `@ubloimmo/front-tokens` and were being injected by `styled-components` have been converted to static SCSS modules that get generated using the `tokens:generate` package script.
-  - Updated & refactored Storybook-specific blocks & styling.
-  -
+- **BREAKING CHANGES**
+
+  - CSS styling solution: Removed `styled-components` in favor of `CSS Modules`.
+    - The uikit now exports a seperate `core.css` file that needs to be imported at the app's root.
+    - All components have been bumped to their next minor version following this change. Each have had their styling converted to separate SCSS modules.
+    - Typography & other design tokens -related styled that relied on `@ubloimmo/front-tokens` and were being injected by `styled-components` have been converted to static SCSS modules that get generated using the `tokens:generate` package script.
+    - Updated & refactored Storybook-specific blocks & styling.
+  - Replaced `useTheme` & `ThemeProvider` implementation with React's `createContext` utility
+
+    - Type definitions are unchanged, but `styled-components` users will need to write a simple adapter to link it with.
+
+  - Renamed `defaultProps` deprecated property on all components & layouts to `__DEFAULT_PROPS`, in order to prepare for a future React version bump.
+
+- Deprecated `styled-components`-related types & utility functions
+  - `StyleProps<T>`
+  - `fromStyleProps<T>()`
+  - `toStyleProps<T>()`
+  - `useStyleProps<T>()`
+
+### Removed
+
+- `styled-components` package.
 
 ## 1.12.8-beta.0 - 2026-01-16
 
+### Changed
+
+Internal: Iterate on Github actions publishing workflow
+
 ## 1.12.7-beta.0 - 2026-01-16
+
+### Changed
+
+Internal: Iterate on Github actions publishing workflow
 
 ## 1.12.6-beta.0 - 2026-01-16
 
+### Changed
+
+Internal: Iterate on Github actions publishing workflow
+
 ## 1.12.5-beta.0 - 2026-01-16
+
+### Changed
+
+Internal: Iterate on Github actions publishing workflow
 
 ## 1.12.4-beta.0 - 2026-01-16
 
