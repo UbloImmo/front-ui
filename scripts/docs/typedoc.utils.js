@@ -134,7 +134,7 @@ export const metaTag = (page) => {
  */
 export const heading = (level, text) => {
   level = level > 6 ? 6 : level;
-  return `${[...Array(level)].map(() => "#").join("")} ${text}`;
+  return `${"#".repeat(level)} ${text}`;
 };
 
 /**

@@ -17,6 +17,14 @@
     {
       "tagName": "@todo",
       "syntaxKind": "block"
+    },
+    {
+      "tagName": "@type",
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@default",
+      "syntaxKind": "block"
     }
   ]
 }

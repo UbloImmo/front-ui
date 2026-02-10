@@ -103,7 +103,7 @@
     "storybook": "^10.2.0",
     "svg-parser": "^2.0.4",
     "typedoc": "^0.28.16",
-    "typedoc-plugin-markdown": "^4.4.1",
+    "typedoc-plugin-markdown": "^4.10.0",
     "typescript": "^5.9.3",
     "typescript-plugin-css-modules": "^5.2.0",
     "unplugin-dts": "^1.0.0-beta.6",

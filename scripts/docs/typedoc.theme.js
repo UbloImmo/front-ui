@@ -1,8 +1,8 @@
-// @ts-check
+import { i18n, UnionType } from "typedoc";
 import { MarkdownTheme, MarkdownThemeContext } from "typedoc-plugin-markdown";
 
 import { partials } from "./partials/index.js";
-import { lines, storybookUrl } from "./typedoc.utils.js";
+import { heading, lines, storybookUrl } from "./typedoc.utils.js";
 
 /**
  * @param {import('typedoc-plugin-markdown').MarkdownPageEvent} _page
@@ -12,6 +12,7 @@ const pageFooter = (_page) => {
   return lines(
     `<hr style={{marginTop: "var(--s-12) !important", marginBottom: "var(--s-4) !important"}} />`,
     `<Text size="s" color="gray-400" italic>This documentation page was generated with typedoc.</Text>`,
+    `*This documentation page was generated with typedoc.*`,
     `</Content>`
   );
 };
@@ -42,9 +43,11 @@ function sanitizeComments(str) {
       "$<label>$<urlStart>=$<urlEnd>"
     )
     // escape < that has not been escaped already
-    .replace(/(?<!\\)</g, "\\<")
+    .replaceAll(/(?<!\\)</g, "\\<")
     // escape > that has not been escaped and is not the first character (blockquote)
-    .replace(/(?<!^)(?<!\\)>/g, "\\>");
+    .replaceAll(/(?<!^)(?<!\\)>/g, "\\>")
+    // escape <= that has not been escaped already
+    .replaceAll(/(?<!\\)</g, "\\<");
 
   // Replace placeholders with original code blocks
   str = str.replace(
@@ -59,12 +62,61 @@ function sanitizeComments(str) {
  */
 class MDXThemeContext extends MarkdownThemeContext {
   __commentBackup__ = this.partials.comment;
+  __signatureReturnsBackup = this.partials.signatureReturns;
 
   /**
    * @type {MarkdownThemeContext["partials"]}
    */
   partials = {
     ...this.partials,
+    signatureReturns: (model, options) => {
+      const md = [];
+
+      const typeDeclaration = model.type?.declaration;
+
+      md.push(heading(options.headingLevel, i18n.theme_returns()));
+
+      if (!typeDeclaration?.signatures) {
+        if (model.type && this.helpers.hasUsefulTypeDetails(model.type)) {
+          if (model.type instanceof UnionType) {
+            md.push(
+              this.partials.typeDeclarationUnionContainer(model, options)
+            );
+          }
+        } else {
+          md.push(this.helpers.getReturnType(model.type));
+        }
+      }
+
+      const returnsTag = model.comment?.getTag("@returns");
+
+      if (returnsTag) {
+        // PATCH: escape special characters for MDX compat
+        const returnsContent = this.helpers.getCommentParts(returnsTag.content);
+        md.push(sanitizeComments(returnsContent));
+      }
+
+      if (typeDeclaration?.signatures) {
+        typeDeclaration.signatures.forEach((signature) => {
+          md.push(
+            this.partials.signature(signature, {
+              headingLevel: options.headingLevel + 1,
+              nested: true,
+            })
+          );
+        });
+      }
+
+      if (typeDeclaration?.children) {
+        md.push(
+          this.partials.typeDeclaration(typeDeclaration, {
+            headingLevel: options.headingLevel,
+          })
+        );
+      }
+
+      return md.join("\n\n");
+    },
     header: partials.header.bind(this),
     pageTitle: () => "",
     footer: () => {
@@ -113,5 +165,15 @@ export class MDXTheme extends MarkdownTheme {
    */
   getRenderContext(page) {
     return new MDXThemeContext(this, page, this.application.options);
+  }
+
+  /**
+   *
+   * @param {import('typedoc-plugin-markdown').MarkdownPageEvent} page
+   * @returns {string}
+   */
+  render(page) {
+    const rendered = super.render(page);
+    return rendered;
   }
 }
