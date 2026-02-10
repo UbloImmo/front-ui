@@ -9,6 +9,7 @@ const config = {
     "./src/typography",
     "./src/components",
     "./src/layouts",
+    "./src/themes",
   ],
   exclude: [
     "**/*.component.tsx",
