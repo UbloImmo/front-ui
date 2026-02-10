@@ -12,7 +12,6 @@ const pageFooter = (_page) => {
   return lines(
     `<hr style={{marginTop: "var(--s-12) !important", marginBottom: "var(--s-4) !important"}} />`,
     `<Text size="s" color="gray-400" italic>This documentation page was generated with typedoc.</Text>`,
-    `*This documentation page was generated with typedoc.*`,
     `</Content>`
   );
 };
