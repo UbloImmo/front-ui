@@ -229,7 +229,11 @@ export const BlockQuote = ({
   BlockquoteHTMLAttributes<HTMLQuoteElement>,
   HTMLQuoteElement
 >) => {
-  return <Callout icon={null}>{children ?? ""}</Callout>;
+  return (
+    <Callout color="gray" icon={null}>
+      {children ?? ""}
+    </Callout>
+  );
 };
 
 export const Ul = ({
