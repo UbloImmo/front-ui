@@ -42,9 +42,19 @@ Breaking changes will be reflected by major version increments.
 
 ## Setup
 
-The library relies on a couple global providers in order to offer some of features. Depending of what components you plan to use, some of these may be omitted.
+The library relies on a couple global providers in order to offer most of its features. Depending of what components you plan to use, some of these may be omitted.
+
+It also exports a single CSS file that must be imported into you app for the component's styles to be applied.
 
 > We recommend creating an intermidiary `AppProviders` Wrapper in order not to clutter your `App.tsx` file.
+
+### CSS styles
+
+To benefit from styled components, all that is needed is to link the `@ubloimmo/uikit/core.css` file into your app.
+
+```ts
+import "@ubloimmo/uikit/core.css";
+```
 
 ### Available providers
 
@@ -135,6 +145,9 @@ export const AppProviders = ({ children }: AppProviderProps) => (
 #### `App.tsx`
 
 ```tsx
+// link the uikit's CSS file
+import "@ubloimmo/uikit/core.css";
+// import the providers
 import { AppProviders } from "./AppProviders.tsx";
 
 export const App = () => <AppProviders>{/* Your app */}</AppProviders>;
@@ -195,6 +208,67 @@ Style variables can be used in any CSS file or CSS-in-JS library.
   font-weight: var(--text-weight-bold);
   color: var(--gray-50);
 }
+```
+
+#### The `useTheme` hook.
+
+The uikit exports the `useTheme` react hook that grants access to the theme that is currently loaded in a parent `ThemeProvider`.
+
+The returned theme object implements the `Theme` interface, and mainly exposes palette colors in different formats (rgba, hex) & a function to change their opacity.
+
+It may be used to set style overrides on jsx objects or pass them to third-party libraries.
+
+```tsx
+import { useTheme } from "@ubloimmo/uikit";
+
+const MyButton = ({ label }: {label}: string) => {
+  const theme = useTheme();
+  // primary base at 35% percent opacity
+  const background = theme.primary.base.opacity(35);
+  // primary dark in rgba() format
+  const color = theme.primary.dark.rgba;
+  // primary medium in hex format
+  const borderColor = theme.primary.medium.hex;
+
+  const style = { background, color, borderColor };
+
+  return (
+    <button style={style}>{label}</button>
+  )
+}
+```
+
+#### Usage with `styled-components`
+
+The uikit exports the `useTheme` react hook that grants access to the theme that is currently loaded in a parent `ThemeProvider`. This returned theme may be passed directly to `styled-components`'s ThemeProvider.
+
+```tsx
+import {
+  useTheme,
+  ThemeProvider as UikitThemeProvider,
+  type ThemeProviderProps,
+} from "@ubloimmo/uikit";
+import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
+
+const StyledComponentsAdapter = ({
+  children,
+}: Pick<ThemeProviderProps, "children">) => {
+  const theme = useTheme();
+
+  return (
+    <StyledComponentsThemeProvider theme={theme}>
+      {children}
+    </StyledComponentsThemeProvider>
+  );
+};
+
+export const ThemeProvider = ({ children, ...props }: ThemeProviderProps) => {
+  return (
+    <UikitThemeProvider {...props}>
+      <StyledComponentsAdapter>{children}</StyledComponentsAdapter>
+    </UikitThemeProvider>
+  );
+};
 ```
 
 ### Spacing labels
