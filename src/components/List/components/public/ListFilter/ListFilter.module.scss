@@ -1,5 +1,5 @@
-@use "../../../../../sizes/breakpoints.scss";
-@use "../../../../../styles/mixins.scss";
+@use "../../../../../sizes/_breakpoints.scss";
+@use "../../../../../styles/_mixins.scss";
 
 $option-height: var(--input-height);
 $max-visible-elements: 7;

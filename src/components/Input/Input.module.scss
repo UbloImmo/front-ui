@@ -1,5 +1,5 @@
 @use "../../typography/__generated__/typography-tokens.module.scss" as typo;
-@use "../../sizes/breakpoints.scss";
+@use "../../sizes/_breakpoints.scss";
 
 .input-container {
   position: relative;

@@ -1,5 +1,5 @@
-@use "../../styles/mixins.scss";
-@use "../../sizes/breakpoints.scss";
+@use "../../styles/_mixins.scss";
+@use "../../sizes/_breakpoints.scss";
 
 .energy-label {
   --label-background: var(--gray-50);

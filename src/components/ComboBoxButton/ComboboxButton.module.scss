@@ -1,5 +1,5 @@
-@use "../../sizes/breakpoints.scss";
-@use "../../styles/mixins.scss";
+@use "../../sizes/_breakpoints.scss";
+@use "../../styles/_mixins.scss";
 
 .combobox-button-wrapper {
   --combobox-button-background: var(--white);

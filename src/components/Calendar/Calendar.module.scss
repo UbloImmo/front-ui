@@ -1,6 +1,6 @@
 @use "../../typography/__generated__/typography-tokens.module.scss" as
   typography;
-@use "../../sizes/breakpoints.scss";
+@use "../../sizes/_breakpoints.scss";
 
 .calendar {
   background: var(--white);

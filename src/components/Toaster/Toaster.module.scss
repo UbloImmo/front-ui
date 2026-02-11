@@ -1,5 +1,5 @@
 @use "../../typography/__generated__/typography-tokens.module.scss" as typo;
-@use "../../styles/mixins.scss";
+@use "../../styles/_mixins.scss";
 
 .toast {
   --toast-bg: var(--white);
