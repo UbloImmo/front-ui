@@ -56,6 +56,7 @@ export const linesCompact = (...strs) => strs.join("\n");
  */
 export const storybookMeta = (baseUrl) => {
   const [outputEntry, ...pathEntries] = baseUrl.split("/");
+  // TODO: handle edge case for base pages (not nested)
   const fileName = pathEntries.pop() ?? "";
   const metaName = pascalCase(outputEntry);
 

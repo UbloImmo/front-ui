@@ -134,17 +134,38 @@ class MDXThemeContext extends MarkdownThemeContext {
     },
   };
 
+  // /**
+  //  * Returns the relative URL (from the current page context url).
+  //  *
+  //  * If public path is set, it will be used as the base URL.
+  //  *
+  //  * @param {string} url - The URL to make relative.
+  //  * @returns {string}
+  //  */
+  // relativeURL(url) {
+  // const URL_PREFIX = /^(http|ftp)s?:\/\//;
+  //   const matched = URL_PREFIX.test(url);
+  //   const relativeUrl = matched ? super.relativeURL(url) : storybookUrl(url);
+  //   console.log({ url, relativeUrl, matched });
+  //   return relativeUrl;
+  // }
+
   /**
-   * Returns the relative URL (from the current page context url).
    *
-   * If public path is set, it will be used as the base URL.
-   *
-   * @param {string} url - The URL to make relative.
+   * @param {import("typedoc").Reflection} reflection
    * @returns {string}
    */
-  getRelativeUrl(url) {
+  urlTo(reflection) {
     const URL_PREFIX = /^(http|ftp)s?:\/\//;
-    return URL_PREFIX.test(url) ? url : storybookUrl(url);
+    const fullURL = this.router.getFullUrl(reflection);
+
+    const matched = URL_PREFIX.test(fullURL);
+    const base = super.urlTo(reflection);
+    const sbURL = storybookUrl(fullURL);
+
+    if (matched) return base;
+
+    return sbURL;
   }
 
   /**
