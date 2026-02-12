@@ -22,7 +22,7 @@ $offset: 40%;
   }
 
   circle {
-    transform: translateY($offset);
+    transform: translateY(0%);
     animation-name: bounce;
     animation-duration: 600ms;
     animation-timing-function: ease-in-out;
