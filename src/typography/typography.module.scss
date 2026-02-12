@@ -7,7 +7,6 @@
   font-style: normal;
   text-underline-offset: var(--s-1);
   text-decoration-thickness: 1px;
-  color: inherit;
   text-align: left;
   @include typo.font-sans;
   transition: color 150ms var(--bezier);
@@ -15,127 +14,126 @@
   &.heading {
     display: block;
   }
-
-  &.font {
-    &.sans {
-      @include typo.font-sans;
-      &.important {
-        @include typo.font-sans(true);
-      }
-    }
-    &.code {
-      @include typo.font-code;
-      &.important {
-        @include typo.font-code(true);
-      }
+}
+.font {
+  &.sans {
+    @include typo.font-sans;
+    &.important {
+      @include typo.font-sans(true);
     }
   }
-
-  &.italic {
-    font-style: italic;
-    font-variation-settings: "ital" 1;
+  &.code {
+    @include typo.font-code;
     &.important {
-      font-style: italic !important;
-      font-variation-settings: "ital" 1 !important;
+      @include typo.font-code(true);
     }
   }
+}
 
-  &.underline {
-    text-decoration: underline;
-    &.important {
-      text-decoration: underline !important;
-    }
+.italic {
+  font-style: italic;
+  font-variation-settings: "ital" 1;
+  &.important {
+    font-style: italic !important;
+    font-variation-settings: "ital" 1 !important;
   }
+}
 
-  &.overline {
-    text-decoration: overline;
-    &.important {
-      text-decoration: overline !important;
-    }
+.underline {
+  text-decoration: underline;
+  &.important {
+    text-decoration: underline !important;
   }
+}
 
-  &.line-trough {
-    text-decoration: line-trough;
-    &.important {
-      text-decoration: line-trough !important;
-    }
+.overline {
+  text-decoration: overline;
+  &.important {
+    text-decoration: overline !important;
   }
+}
 
-  &.ellipsis {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 100%;
-    flex: 1;
-    white-space: nowrap;
-    &.important {
-      text-overflow: ellipsis !important;
-      overflow: hidden !important;
-      max-width: 100% !important;
-      flex: 1 !important;
-      white-space: nowrap !important;
-    }
+.line-trough {
+  text-decoration: line-trough;
+  &.important {
+    text-decoration: line-trough !important;
   }
+}
 
-  &.uppercase {
-    text-transform: uppercase;
-    &.important {
-      text-transform: uppercase !important;
-    }
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+  flex: 1;
+  white-space: nowrap;
+  &.important {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+    flex: 1 !important;
+    white-space: nowrap !important;
   }
+}
 
-  &.capitalized {
-    text-transform: capitalize;
-    &.important {
-      text-transform: capitalize !important;
-    }
+.uppercase {
+  text-transform: uppercase;
+  &.important {
+    text-transform: uppercase !important;
   }
+}
 
-  &.align[data-align="left"] {
-    text-align: left;
-    &.important {
-      text-align: left !important;
-    }
+.capitalized {
+  text-transform: capitalize;
+  &.important {
+    text-transform: capitalize !important;
   }
+}
 
-  &.align[data-align="right"] {
-    text-align: right;
-    &.important {
-      text-align: right !important;
-    }
+.align-left {
+  text-align: left;
+  &.important {
+    text-align: left !important;
   }
+}
 
-  &.align[data-align="center"] {
-    text-align: center;
-    &.important {
-      text-align: center !important;
-    }
+.align-right {
+  text-align: right;
+  &.important {
+    text-align: right !important;
   }
+}
 
-  &.fill {
-    width: 100%;
-    &.important {
-      width: 100% !important;
-    }
+.align-center {
+  text-align: center;
+  &.important {
+    text-align: center !important;
   }
+}
 
-  &.no-wrap {
-    white-space: nowrap;
-    &.important {
-      white-space: nowrap !important;
-    }
+.fill {
+  width: 100%;
+  &.important {
+    width: 100% !important;
   }
+}
 
-  &.line-clamp {
-    display: -webkit-box;
-    line-clamp: var(--text-line-clamp);
-    -webkit-box-orient: vertical;
-    white-space: normal;
+.no-wrap {
+  white-space: nowrap;
+  &.important {
+    white-space: nowrap !important;
+  }
+}
 
-    &.important {
-      display: -webkit-box !important;
-      line-clamp: var(--text-line-clamp) !important;
-      -webkit-box-orient: vertical !important;
-      white-space: normal !important;
-    }
+.line-clamp {
+  display: -webkit-box;
+  line-clamp: var(--text-line-clamp);
+  -webkit-box-orient: vertical;
+  white-space: normal;
+
+  &.important {
+    display: -webkit-box !important;
+    line-clamp: var(--text-line-clamp) !important;
+    -webkit-box-orient: vertical !important;
+    white-space: normal !important;
   }
 }

@@ -1,7 +1,7 @@
 import { texts } from "@ubloimmo/front-tokens";
 
 import type { StyleOverrideProps } from "@/types/global/styles.types";
-import type { PaletteColor } from "@/types/themes/palette";
+import type { PaletteColorOrWhite } from "@/types/themes/palette";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -39,10 +39,10 @@ export type TypographyProps = {
   /**
    * The color of the text contents
    *
-   * @type {PaletteColor | "inherit"}
+   * @type {PaletteColorOrWhite | "inherit"}
    * @default "gray-900"
    */
-  color?: PaletteColor | "inherit";
+  color?: PaletteColorOrWhite | "inherit";
   /**
    * Whether or not the text contents should be *italic*
    *

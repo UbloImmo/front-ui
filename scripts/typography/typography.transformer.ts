@@ -157,18 +157,24 @@ export function formatRules({ rules, mixins }: TypographyRuleMaps) {
 
 export function formatColorRules() {
   const { gray, primary, pending, warning, success, error } = colors;
-  const colorVars = { gray, primary, pending, warning, success, error };
+  const paletteColors = { gray, primary, pending, warning, success, error };
 
-  const rules: string[] = [".text-color {\n  color: inherit;\n}"];
+  const rules: string[] = [];
 
-  for (const [colorVar, shades] of objectEntries(colorVars)) {
-    for (const shade in shades) {
-      const color = `${colorVar}-${shade}`;
-      const ruleTarget = `.text-color[data-color="${color}"]`;
-      const ruleBody = `color: ${cssVarUsage(color)};`;
-      const rule = `${ruleTarget} {\n${indentLines([ruleBody, importantRuleset(ruleBody)].join("\n"))}\n}`;
-      rules.push(rule);
-    }
+  const colorVars = objectEntries(paletteColors).flatMap(([colorVar, shades]) =>
+    Object.keys(shades).map((shade) => {
+      return `${colorVar}-${shade}`;
+    })
+  );
+
+  colorVars.push("white", "inherit");
+
+  for (const color of colorVars) {
+    const ruleTarget = `.text-color-${color}`;
+    const ruleValue = color === "inherit" ? color : cssVarUsage(color);
+    const ruleBody = `color: ${ruleValue};`;
+    const rule = `${ruleTarget} {\n${indentLines([ruleBody, importantRuleset(ruleBody)].join("\n"))}\n}`;
+    rules.push(rule);
   }
 
   return rules.join("\n");

@@ -3,7 +3,7 @@ import { objectKeys, Optional } from "@ubloimmo/front-util";
 import { type CSSProperties, useMemo } from "react";
 
 import { typographyWeightMap } from "./typogaphy.weight";
-import { cssClasses, cssRem, extractRem } from "../utils";
+import { cssClasses, cssRem, extractRem, useCssVariables } from "../utils";
 import generatedStyles from "./__generated__/typography-tokens.module.scss";
 import styles from "./typography.module.scss";
 
@@ -144,10 +144,7 @@ export const defaultTypographyProps: Required<TypographyProps> = {
 export const useTypographyStyles = (
   props: AnyTypographyProps,
   isHeading: boolean = false
-): { style: CSSProperties; className: Optional<string> } & Record<
-  `data-${string}`,
-  Optional<string>
-> => {
+): { style: CSSProperties; className: Optional<string> } => {
   const {
     size,
     weight,
@@ -171,23 +168,12 @@ export const useTypographyStyles = (
     [props]
   );
 
-  const dataAttrs = useMemo(() => {
-    const colorAttr = color === "inherit" ? undefined : color;
-
-    return {
-      "data-color": colorAttr,
-      "data-align": align !== "left" ? align : undefined,
-    };
-  }, [align, color]);
-
-  const style = useMemo<CSSProperties>(() => {
-    const override: CSSProperties = props.styleOverride ?? {};
-    if (!lineClamp) return override;
-    return {
-      ...override,
-      "--text-line-clamp": String(lineClamp),
-    } as CSSProperties;
-  }, [lineClamp, props.styleOverride]);
+  const style = useCssVariables(
+    {
+      "text-line-clamp": lineClamp ? lineClamp : null,
+    },
+    props.styleOverride
+  );
 
   const className = useMemo(() => {
     const generated =
@@ -200,8 +186,8 @@ export const useTypographyStyles = (
       styles.font,
       fontClass,
       generatedClass,
-      generatedStyles["text-color"],
-      styles.align,
+      generatedStyles[`text-color-${color}`],
+      styles[`align-${align}`],
       [styles.heading, isHeading],
       [styles.italic, italic],
       [styles["line-trough"], lineThrough],
@@ -218,7 +204,9 @@ export const useTypographyStyles = (
       props.className
     );
   }, [
+    align,
     capitalized,
+    color,
     ellipsis,
     fill,
     font,
@@ -239,6 +227,5 @@ export const useTypographyStyles = (
   return {
     className,
     style,
-    ...dataAttrs,
   };
 };
