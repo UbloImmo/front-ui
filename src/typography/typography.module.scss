@@ -127,6 +127,7 @@
 .line-clamp {
   display: -webkit-box;
   line-clamp: var(--text-line-clamp);
+  -webkit-line-clamp: var(--text-line-clamp);
   -webkit-box-orient: vertical;
   white-space: normal;
 
