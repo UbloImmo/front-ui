@@ -27,7 +27,7 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   id: null,
   as: "div",
   styleOverride: null,
-  overflow: "unset",
+  overflow: "visible",
 } as const;
 
 /**

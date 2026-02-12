@@ -4,7 +4,7 @@
   --flex-gap: 0;
   --flex-dir: row;
   --flex-wrap: nowrap;
-  --flex-overflow: unset;
+  --flex-overflow: visible;
 
   display: flex;
   align-items: var(--flex-align);

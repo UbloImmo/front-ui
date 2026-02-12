@@ -25,7 +25,13 @@ export type FlexGap = Exclude<CssLength, CssFr>;
 
 export type FlexFill = boolean | FlexDirection;
 
-export type Overflow = "hidden" | "unset" | "auto";
+export type Overflow =
+  | "hidden"
+  | "unset"
+  | "auto"
+  | "visible"
+  | "clip"
+  | "scroll";
 
 export type FlexLayoutProps = {
   /**
@@ -87,7 +93,7 @@ export type FlexLayoutProps = {
   /**
    * Sets the container's overflow
    *
-   * @default "unset"
+   * @default "visible"
    * @type {Overflow}
    */
   overflow?: Overflow;
