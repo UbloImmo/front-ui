@@ -1,5 +1,7 @@
 import { Nullable } from "@ubloimmo/front-util";
 
+import { StyleOverrideProps } from "@types";
+
 export type AccountBalanceProps = {
   /**
    * The title of the account balance
@@ -24,6 +26,6 @@ export type AccountBalanceProps = {
    * @default true
    */
   compact?: boolean;
-};
+} & Omit<StyleOverrideProps, "as">;
 
 export type AccountBalanceDefaultProps = Required<AccountBalanceProps>;

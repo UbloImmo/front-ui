@@ -1,25 +1,12 @@
-import { Nullable } from "@ubloimmo/front-util";
-import { MutableRefObject } from "react";
-
-import { ControlledPopoverProps, Popover } from "@/layouts/Popover";
+import { Popover } from "@/layouts/Popover";
 import { useTestId } from "@utils";
 
-import type { TestIdProps } from "@types";
-
-/**
- * Props for the SelectInputPopover component
- */
-export type SelectInputPopoverProps = Pick<
-  ControlledPopoverProps,
-  "open" | "onOpenChange" | "children" | "content"
-> & {
-  wrapperRef?: MutableRefObject<Nullable<HTMLDivElement>>;
-} & TestIdProps;
+import type { SelectInputPopoverProps } from "../SelectInput.types";
 
 /**
  * A Popover wrapper for SelectInput options that handles positioning and collision detection
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @param {SelectInputPopoverProps} props - The popover props
  * @returns {JSX.Element}
@@ -56,7 +43,7 @@ const SelectInputPopover = ({
       open={open}
       onOpenChange={onChange}
       content={content}
-      side={"bottom"}
+      side="bottom"
       align="start"
       sideOffset="s-1"
       collisionPadding="s-2"

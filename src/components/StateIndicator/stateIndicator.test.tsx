@@ -13,20 +13,20 @@ const testStateIndicator = testComponentFactory<StateIndicatorProps>(
 );
 
 testStateIndicator({
-  ...StateIndicator.defaultProps,
+  ...StateIndicator.__DEFAULT_PROPS,
 })("should render with default props", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
 });
 
 testStateIndicator({
-  ...StateIndicator.defaultProps,
+  ...StateIndicator.__DEFAULT_PROPS,
   color: "white",
 })("should render with white color", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
 });
 
 testStateIndicator({
-  ...StateIndicator.defaultProps,
+  ...StateIndicator.__DEFAULT_PROPS,
   color: "gray",
 })("should render with gray color", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();

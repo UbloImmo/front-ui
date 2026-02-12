@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 
+import styles from "../Action.module.scss";
+
 import { Badge } from "@/components/Badge";
 import { StaticIcon } from "@/components/StaticIcon";
 import { Text } from "@/components/Text";
@@ -70,7 +72,12 @@ export const ActionCard = ({
           justify="start"
         >
           <FlexLayout direction="row" gap="s-1" align="center">
-            <Text testId={`${testId}-label`} overrideTestId {...textProps}>
+            <Text
+              className={styles["action-label"]}
+              testId={`${testId}-label`}
+              overrideTestId
+              {...textProps}
+            >
               {label}
             </Text>
             {iconTooltipProps && <Tooltip {...iconTooltipProps} />}

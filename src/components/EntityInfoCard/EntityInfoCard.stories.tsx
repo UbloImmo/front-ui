@@ -1,9 +1,9 @@
-import { fn } from "@storybook/test";
 import {
   objectEntries,
   objectFromEntries,
   type Nullable,
 } from "@ubloimmo/front-util";
+import { fn } from "storybook/test";
 
 import { EntityInfoCard } from "./EntityInfoCard.component";
 
@@ -34,15 +34,15 @@ import type {
   EntityInfoCardSectionProps,
   EntityStatusRow,
 } from "./EntityInfoCard.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<EntityInfoCardProps>(
   "EntityInfoCard",
   {
-    state: EntityInfoCard.defaultProps.state,
-    accountBalance: EntityInfoCard.defaultProps.accountBalance,
+    state: EntityInfoCard.__DEFAULT_PROPS.state,
+    accountBalance: EntityInfoCard.__DEFAULT_PROPS.accountBalance,
   },
-  EntityInfoCard.defaultProps
+  EntityInfoCard.__DEFAULT_PROPS
 );
 
 const infoCards: CopyClipboardInfoCardProps[] = [
@@ -369,7 +369,7 @@ const exampleVariants = [
 ];
 
 export const Examples = (props: EntityInfoCardProps) => {
-  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(EntityInfoCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -391,7 +391,7 @@ Examples.parameters = {
 };
 
 export const InfoCards = (props: EntityInfoCardProps) => {
-  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(EntityInfoCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -473,7 +473,7 @@ const infoStyleVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
 ];
 
 export const InfoStyles = (props: EntityInfoCardProps) => {
-  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(EntityInfoCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -489,7 +489,7 @@ InfoStyles.parameters = {
   docs: componentSource(
     infoStyleVariants.map(
       ({ __propVariantLabel, ...variant }): EntityInfoCardProps => ({
-        ...EntityInfoCard.defaultProps,
+        ...EntityInfoCard.__DEFAULT_PROPS,
         ...variant,
       })
     )
@@ -517,7 +517,7 @@ const sectionVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
 ];
 
 export const Sections = (props: EntityInfoCardProps) => {
-  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(EntityInfoCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -533,7 +533,7 @@ Sections.parameters = {
   docs: componentSource(
     sectionVariants.map(
       ({ __propVariantLabel, ...variant }): EntityInfoCardProps => ({
-        ...EntityInfoCard.defaultProps,
+        ...EntityInfoCard.__DEFAULT_PROPS,
         ...variant,
       })
     )
@@ -566,7 +566,7 @@ const contentVariants = [
 ];
 
 export const MainContent = (props: EntityInfoCardProps) => {
-  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(EntityInfoCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -582,7 +582,7 @@ MainContent.parameters = {
   docs: componentSource(
     contentVariants.map(
       ({ __propVariantLabel, ...variant }): EntityInfoCardProps => ({
-        ...EntityInfoCard.defaultProps,
+        ...EntityInfoCard.__DEFAULT_PROPS,
         ...variant,
       })
     )
@@ -591,7 +591,7 @@ MainContent.parameters = {
 
 const states = [agencEntityCardProps.state, rentalFolderEntityCardProps.state];
 export const State = (props: EntityInfoCardProps) => {
-  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(EntityInfoCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -606,7 +606,7 @@ export const State = (props: EntityInfoCardProps) => {
 State.parameters = {
   docs: componentSource(
     states.map((state) => ({
-      ...EntityInfoCard.defaultProps,
+      ...EntityInfoCard.__DEFAULT_PROPS,
       state,
     }))
   ),
@@ -621,7 +621,7 @@ const actionIcons: Nullable<ActionIconProps>[] = [
   },
 ];
 export const ActionIcon = (props: EntityInfoCardProps) => {
-  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(EntityInfoCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -636,7 +636,7 @@ export const ActionIcon = (props: EntityInfoCardProps) => {
 ActionIcon.parameters = {
   docs: componentSource(
     actionIcons.map((actionIcon) => ({
-      ...EntityInfoCard.defaultProps,
+      ...EntityInfoCard.__DEFAULT_PROPS,
       actionIcon,
     }))
   ),
@@ -663,7 +663,7 @@ const contextMenus: PropVariant<Partial<EntityInfoCardProps>>[] = [
   },
 ];
 export const ContextMenu = (props: EntityInfoCardProps) => {
-  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(EntityInfoCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -677,7 +677,7 @@ export const ContextMenu = (props: EntityInfoCardProps) => {
 ContextMenu.parameters = {
   docs: componentSource(
     contextMenus.map(({ __propVariantLabel, ...variant }) => ({
-      ...EntityInfoCard.defaultProps,
+      ...EntityInfoCard.__DEFAULT_PROPS,
       ...variant,
     }))
   ),
@@ -702,7 +702,7 @@ const accountBalanceVariants: PropVariant<Partial<EntityInfoCardProps>>[] = [
 ];
 
 export const AccountBalance = (props: EntityInfoCardProps) => {
-  const mergedProps = useMergedProps(EntityInfoCard.defaultProps, props);
+  const mergedProps = useMergedProps(EntityInfoCard.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -722,7 +722,7 @@ const orders: EntityInfoCardSectionItemName[][] = [
 export const Order = (props: EntityInfoCardProps) => {
   const mergedProps = useMergedProps(
     {
-      ...EntityInfoCard.defaultProps,
+      ...EntityInfoCard.__DEFAULT_PROPS,
       ...sectionVariants[0].sections?.[0],
     },
     props
@@ -742,7 +742,7 @@ export const Order = (props: EntityInfoCardProps) => {
 Order.parameters = {
   docs: componentSource(
     orders.map((order) => ({
-      ...EntityInfoCard.defaultProps,
+      ...EntityInfoCard.__DEFAULT_PROPS,
       order,
     }))
   ),

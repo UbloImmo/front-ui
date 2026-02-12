@@ -5,7 +5,7 @@ import { SpacingLabel, type PaletteColor } from "@types";
 import { useMergedProps } from "@utils";
 
 import type { LoadingAnimation, LoadingProps } from "./Loading.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const animations: LoadingAnimation[] = [
   "BouncingBalls",
@@ -16,7 +16,7 @@ const animations: LoadingAnimation[] = [
 const meta = {
   title: "Components/Feedbacks/Loading/Stories",
   component: Loading,
-  args: Loading.defaultProps,
+  args: Loading.__DEFAULT_PROPS,
   argTypes: {
     animation: {
       options: animations,
@@ -27,14 +27,14 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const args: LoadingProps = { ...Loading.defaultProps, size: "s-20" };
+const args: LoadingProps = { ...Loading.__DEFAULT_PROPS, size: "s-20" };
 
 export const Default: Story = {
-  args: Loading.defaultProps,
+  args: Loading.__DEFAULT_PROPS,
 };
 
 export const Animations = (props: LoadingProps) => {
-  const defaultProps = useMergedProps(Loading.defaultProps, props);
+  const defaultProps = useMergedProps(Loading.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -44,6 +44,7 @@ export const Animations = (props: LoadingProps) => {
       of={Loading}
       align="center"
       scaling={1.1}
+      propLabels
     />
   );
 };
@@ -53,7 +54,7 @@ const sizes = Array(6)
   .fill(0)
   .map((_, index): SpacingLabel => `s-${!index ? 1 : index * 4}`);
 export const Sizes = (props: LoadingProps) => {
-  const defaultProps = useMergedProps(Loading.defaultProps, props);
+  const defaultProps = useMergedProps(Loading.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -63,6 +64,7 @@ export const Sizes = (props: LoadingProps) => {
       of={Loading}
       align="center"
       scaling={1.2}
+      propLabels
     />
   );
 };
@@ -82,7 +84,7 @@ const colors: PaletteColor[] = [
   "gray-700",
 ];
 export const Colors = (props: LoadingProps) => {
-  const defaultProps = useMergedProps(Loading.defaultProps, props);
+  const defaultProps = useMergedProps(Loading.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -91,7 +93,10 @@ export const Colors = (props: LoadingProps) => {
       for="color"
       of={Loading}
       align="center"
+      justify="center"
       scaling={1.1}
+      columns={4}
+      propLabels
     />
   );
 };

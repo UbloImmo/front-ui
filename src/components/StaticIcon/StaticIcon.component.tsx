@@ -1,32 +1,26 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
 import {
-  staticIconIndicatorContainerStyle,
+  getStaticIconColors,
   staticIconSizeToIconSizeMap,
-  staticIconStyle,
+  useStaticIconStyles,
 } from "./StaticIcon.styles";
 import { Icon, type IconProps } from "../Icon";
 import { Tooltip } from "../Tooltip";
 
-import {
-  useHtmlAttribute,
-  useMergedProps,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
 import type {
   DefaultStaticIconProps,
   StaticIconProps,
 } from "./StaticIcon.types";
-import type { PaletteColor, StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 
 const defaultStaticIconProps: DefaultStaticIconProps = {
   color: "primary",
   size: "s",
   stroke: false,
-  name: Icon.defaultProps.name,
+  name: Icon.__DEFAULT_PROPS.name,
   className: null,
   indicator: null,
   styleOverride: null,
@@ -34,8 +28,9 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
 
 /**
  * Wraps an `Icon` in a container of the same color, a shade lighter.
+ * Optionally displays and additional indicator (icon + tooltip).
  *
- * @version 0.0.6
+ * @version 0.1.0
  *
  * @param {StaticIconProps & TestIdProps} props - The props for the static icon.
  * @return {JSX.Element} The static icon component.
@@ -44,36 +39,28 @@ const StaticIcon = (props: StaticIconProps & TestIdProps) => {
   const mergedProps = useMergedProps(defaultStaticIconProps, props);
 
   const { color, size, name, indicator } = mergedProps;
-  const styledProps = useStyleProps(mergedProps);
+
+  const colors = useMemo(() => getStaticIconColors(color), [color]);
+  const { classNames, style } = useStaticIconStyles(colors, mergedProps);
+
   const iconProps = useMemo<Pick<IconProps, "color" | "size">>(() => {
     const iconSize = staticIconSizeToIconSizeMap[size];
-    const iconColor: PaletteColor =
-      color === "gray"
-        ? "gray-600"
-        : color === "white"
-          ? "gray-500"
-          : `${color}-base`;
-
     return {
-      color: iconColor,
+      color: colors.icon,
       size: iconSize,
     };
-  }, [color, size]);
+  }, [colors.icon, size]);
 
   const testId = useTestId("static-icon", props);
 
-  const className = useHtmlAttribute(mergedProps.className);
-  const style = useHtmlAttribute(mergedProps.styleOverride);
   return (
-    <StaticIconContainer
-      data-testid={testId}
-      className={className}
-      style={style}
-      {...styledProps}
-    >
+    <div data-testid={testId} className={classNames.container} style={style}>
       <Icon name={name} {...iconProps} />
       {indicator && (
-        <StaticIconIndicatorContainer data-testid="static-icon-indicator">
+        <div
+          className={classNames.indicator}
+          data-testid="static-icon-indicator"
+        >
           {indicator.tooltip ? (
             <Tooltip
               {...indicator.tooltip}
@@ -84,20 +71,12 @@ const StaticIcon = (props: StaticIconProps & TestIdProps) => {
           ) : (
             <Icon name={indicator.name} color={indicator.color} size="10px" />
           )}
-        </StaticIconIndicatorContainer>
+        </div>
       )}
-    </StaticIconContainer>
+    </div>
   );
 };
 
-StaticIcon.defaultProps = defaultStaticIconProps;
+StaticIcon.__DEFAULT_PROPS = defaultStaticIconProps;
 
 export { StaticIcon };
-
-const StaticIconContainer = styled.div<StyleProps<DefaultStaticIconProps>>`
-  ${staticIconStyle}
-`;
-
-const StaticIconIndicatorContainer = styled.div`
-  ${staticIconIndicatorContainerStyle}
-`;

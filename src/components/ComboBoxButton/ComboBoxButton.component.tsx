@@ -1,33 +1,25 @@
 import { isNull } from "@ubloimmo/front-util";
-import { MouseEventHandler, useCallback, useMemo, useState } from "react";
-import styled from "styled-components";
+import { type MouseEventHandler, useCallback, useMemo, useState } from "react";
 
-import {
-  ComboBoxButtonStyles,
-  ComboBoxButtonWrapperStyles,
-  ComboBoxContextMenuTriggerStyles,
-  ComboBoxIconContainerStyle,
-} from "./ComboBoxButton.styles";
-import { ContextMenu, ContextMenuItemData } from "../ContextMenu";
-import { Icon, type IconProps } from "../Icon";
+import { useComboBoxButtonStyles } from "./ComboBoxButton.styles";
+import { ContextMenu, type ContextMenuItemData } from "../ContextMenu";
+import { Icon } from "../Icon";
 import { Text } from "../Text";
 
 import { FlexColumnLayout } from "@/layouts/Flex";
-import { StyleProps, type TestIdProps, type TextProps } from "@types";
 import {
   useLogger,
   useTestId,
   useMergedProps,
   isEmptyString,
-  useStyleProps,
   useUikitTranslation,
 } from "@utils";
 
 import type {
   ComboBoxButtonProps,
   ComboBoxButtonDefaultProps,
-  ComboButtonIconContainerStyleProps,
 } from "./ComboBoxButton.types";
+import type { TestIdProps, TextProps } from "@types";
 
 const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
   active: false,
@@ -50,7 +42,7 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
 /**
  * A single clickable option in a ComboBox
  *
- * @version 0.0.11
+ * @version 0.1.0
  *
  * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
  * @returns {JSX.Element}
@@ -61,13 +53,8 @@ const ComboBoxButton = (
   const { warn } = useLogger("ComboBoxButton");
   const mergedProps = useMergedProps(defaultComboBoxButtonProps, props);
   const testId = useTestId("combo-box-button", props);
-  const styleProps = useStyleProps<ComboBoxButtonDefaultProps & TestIdProps>({
-    ...mergedProps,
-    testId,
-  });
   const {
     label,
-    multi,
     active,
     showIcon,
     disabled,
@@ -98,16 +85,6 @@ const ComboBoxButton = (
     [mergedProps]
   );
 
-  const iconName = useMemo(() => {
-    return multi
-      ? active
-        ? "CheckSquareFill"
-        : "Square"
-      : active
-        ? "CheckCircleFill"
-        : "Circle";
-  }, [multi, active]);
-
   const textProps = useMemo<TextProps>(
     () => ({
       color: disabled
@@ -122,14 +99,6 @@ const ComboBoxButton = (
       ellipsis: true,
     }),
     [active, disabled]
-  );
-
-  const iconProps = useMemo<IconProps>(
-    () => ({
-      color: disabled ? "gray-400" : active ? "primary-base" : "primary-medium",
-      name: iconName,
-    }),
-    [active, disabled, iconName]
   );
 
   const tl = useUikitTranslation();
@@ -168,9 +137,12 @@ const ComboBoxButton = (
     ]
   );
 
+  const { classNames, icons } = useComboBoxButtonStyles(mergedProps);
+
   return (
-    <ComboBoxButtonWrapper {...styleProps} role="listitem">
-      <ComboBoxButtonContainer
+    <article className={classNames.wrapper} role="listitem">
+      <button
+        className={classNames.button}
         data-testid={testId}
         data-active={active}
         onClick={onSelect}
@@ -183,20 +155,26 @@ const ComboBoxButton = (
         aria-selected={active}
       >
         {showIcon && (
-          <ComboBoxIconContainer $active={active ?? false}>
-            <Icon {...iconProps} />
-            <Icon {...iconProps} />
-          </ComboBoxIconContainer>
+          <div className={classNames.icons}>
+            <Icon name={icons.inactive} color="primary-medium" size="s-4" />
+            <Icon name={icons.active} color="primary-base" size="s-4" />
+          </div>
         )}
 
         <FlexColumnLayout
+          className={classNames.content}
           gap="s-1"
           align="start"
           justify="start"
           testId="combo-box-button-content"
           overrideTestId
         >
-          <Text {...textProps} testId="combo-box-button-label" overrideTestId>
+          <Text
+            className={classNames.label}
+            {...textProps}
+            testId="combo-box-button-label"
+            overrideTestId
+          >
             {label}
           </Text>
           {description && (
@@ -209,43 +187,26 @@ const ComboBoxButton = (
             </Text>
           )}
         </FlexColumnLayout>
-      </ComboBoxButtonContainer>
+      </button>
       {shouldDisplayContextMenu && (
         <ContextMenu
           open={menuOpen}
           onOpenChange={setMenuOpen}
           items={contextMenuItems}
         >
-          <ComboBoxContextMenuTrigger
+          <button
+            className={classNames.trigger}
             type="button"
             data-testid={`${testId}-context-menu`}
           >
-            <Icon name="ThreeDotsVertical" color={iconProps.color} />
-          </ComboBoxContextMenuTrigger>
+            <Icon name="ThreeDotsVertical" />
+          </button>
         </ContextMenu>
       )}
-    </ComboBoxButtonWrapper>
+    </article>
   );
 };
 
-ComboBoxButton.defaultProps = defaultComboBoxButtonProps;
+ComboBoxButton.__DEFAULT_PROPS = defaultComboBoxButtonProps;
 
 export { ComboBoxButton };
-
-const ComboBoxButtonContainer = styled.button`
-  ${ComboBoxButtonStyles}
-`;
-
-const ComboBoxIconContainer = styled.div<ComboButtonIconContainerStyleProps>`
-  ${ComboBoxIconContainerStyle}
-`;
-
-const ComboBoxButtonWrapper = styled.article<
-  StyleProps<ComboBoxButtonDefaultProps & TestIdProps>
->`
-  ${ComboBoxButtonWrapperStyles}
-`;
-
-const ComboBoxContextMenuTrigger = styled.button`
-  ${ComboBoxContextMenuTriggerStyles}
-`;

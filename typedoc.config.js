@@ -1,11 +1,15 @@
+import { OptionDefaults } from "typedoc";
+
+/** @type {Partial<import("typedoc").TypeDocOptions>} */
 const config = {
   entryPoints: [
-    "src/utils",
-    "src/sizes",
-    "src/types",
-    "src/typography",
-    "src/components",
-    "src/layouts",
+    "./src/utils",
+    "./src/sizes",
+    "./src/types",
+    "./src/typography",
+    "./src/components",
+    "./src/layouts",
+    "./src/themes",
   ],
   exclude: [
     "**/*.component.tsx",
@@ -30,6 +34,15 @@ const config = {
     "Class",
     "Variable",
   ],
+  blockTags: [
+    ...OptionDefaults.blockTags,
+    "@version",
+    "@todo",
+    "@type",
+    "@default",
+  ],
+  modifierTags: [...OptionDefaults.modifierTags, "@required"],
+  // externalSymbolLinkMappings
   fileExtension: ".mdx",
   logLevel: "Verbose",
   hideBreadcrumbs: true,

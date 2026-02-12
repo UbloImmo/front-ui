@@ -1,14 +1,15 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
 import {
   FormTableCellControls,
   type FormTableCellControlsProps,
 } from "./FormTableCellControls.component";
 import { useFormContext } from "../../../Form.context";
+import styles from "../FormTable.module.scss";
 
 import { useInputId } from "@/components/Input";
 import { TableCell } from "@/layouts/Table";
+import { useCssClasses } from "@utils";
 
 import type { BuiltFormCustomFieldProps } from "../../../Form.types";
 
@@ -30,9 +31,11 @@ type FormTableCustomFieldCellProps = BuiltFormCustomFieldProps &
  * The `rowIndex` property is also automatically set to the index of the row in
  * which the cell is currently rendered.
  *
+ * @version 0.1.0
+ *
  * @param {() => JSX.Element} CustomInput - The custom form field component.
- * @param {number} rowIndex - The index of the row in which the cell is currently rendered.
  * @param {BuiltFormCustomFieldProps} props - The props to be passed to the custom form field component.
+ * @param {number} props.rowIndex - The index of the row in which the cell is currently rendered.
  * @returns {JSX.Element} The rendered component.
  */
 export const FormTableCustomFieldCell = ({
@@ -56,18 +59,16 @@ export const FormTableCustomFieldCell = ({
 
   const inputId = useInputId(props);
 
+  const className = useCssClasses(styles["form-table-cell"]);
+
   return (
-    <FormTableCell colSpan={colSpan}>
+    <TableCell colSpan={colSpan} className={className}>
       <FormTableCellControls
         controls={controls}
         isFirst={isFirst}
         isLast={isLast}
       />
       <CustomInput {...customFieldProps} id={inputId} rowIndex={rowIndex} />
-    </FormTableCell>
+    </TableCell>
   );
 };
-
-const FormTableCell = styled(TableCell)`
-  position: relative;
-`;

@@ -1,8 +1,5 @@
 import type { KeyOf, Nullish } from "@ubloimmo/front-util";
-import type {
-  CSSProperties,
-  SupportedHTMLElements,
-} from "styled-components/dist/types";
+import type { ElementType, CSSProperties } from "react";
 
 export type StylePropName<TPropName extends string> = `$${TPropName}`;
 
@@ -20,7 +17,7 @@ export type StyleOverrideProps = {
    *
    * @default undefined
    */
-  as?: Nullish<SupportedHTMLElements>;
+  as?: ElementType;
   /**
    * Any additional css properties to apply
    *
@@ -49,6 +46,8 @@ export type StyleOverrideProps = {
  *
  * const styleProps = toStyleProps(props);
  * // styleProps === { $width: "100px", $height: "100px" }
+ *
+ * @deprecated styled-components
  */
 export type StyleProps<TProps extends Record<string, unknown>> = {
   [TPropName in Exclude<
@@ -59,3 +58,10 @@ export type StyleProps<TProps extends Record<string, unknown>> = {
     ? never
     : TProps[TPropName];
 };
+
+/**
+ * A property object containing only a `className`.
+ *
+ * @see {@link StyleOverrideProps}
+ */
+export type ClassNameOverrideProps = Pick<StyleOverrideProps, "className">;

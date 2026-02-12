@@ -14,7 +14,7 @@ describe("Input", () => {
     "PasswordInput",
     PasswordInput,
     {
-      props: PasswordInput.defaultProps,
+      props: PasswordInput.__DEFAULT_PROPS,
       tests: [
         {
           name: "should render",

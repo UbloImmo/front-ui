@@ -1,24 +1,18 @@
 import { isBoolean } from "@ubloimmo/front-util";
 import { MouseEvent, useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
 
-import { SwitchContainerStyles, SwitchHandleStyles } from "./Switch.styles";
+import { useSwitchClassNames } from "./Switch.styles";
 import { Text } from "../Text";
 
 import { FlexLayout } from "@/layouts/Flex";
 import {
   useTestId,
   useMergedProps,
-  useStyleProps,
   useStatic,
   useUikitTranslation,
 } from "@utils";
 
-import type {
-  SwitchProps,
-  SwitchDefaultProps,
-  SwitchStyleProps,
-} from "./Switch.types";
+import type { SwitchProps, SwitchDefaultProps } from "./Switch.types";
 import type { TestIdProps } from "@types";
 
 const defaultSwitchProps: SwitchDefaultProps = {
@@ -34,7 +28,7 @@ const defaultSwitchProps: SwitchDefaultProps = {
 /**
  * A toggable component to use when we want the user to enable or disable an option or a feature
  *
- * @version 0.0.6
+ * @version 0.1.0
  *
  * @param {SwitchProps & TestIdProps} props - Switch component props
  * @returns {JSX.Element}
@@ -42,7 +36,7 @@ const defaultSwitchProps: SwitchDefaultProps = {
 const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultSwitchProps, props);
   const { disabled, active, withHelper, helperPosition } = mergedProps;
-  const styleProps = useStyleProps(mergedProps);
+  const classNames = useSwitchClassNames();
   const testId = useTestId("switch", props);
 
   const [isActive, setIsActive] = useState(active ?? false);
@@ -96,7 +90,8 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
   return (
     <FlexLayout testId={testId} gap="s-2" align="center" overrideTestId>
       {helperPosition === "start" && <Helper />}
-      <SwitchContainer
+      <button
+        className={classNames.container}
         onClick={propagateOnChange}
         disabled={disabled}
         role="checkbox"
@@ -107,27 +102,18 @@ const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
         data-active={isActive}
         tabIndex={disabled ? -1 : 0}
       >
-        <SwitchHandle
-          {...styleProps}
-          $active={isActive}
+        <div
+          className={classNames.handle}
           aria-checked={isActive}
           aria-disabled={disabled}
           data-testid={`${testId}-handle`}
           data-active={isActive}
         />
-      </SwitchContainer>
+      </button>
       {helperPosition === "end" && <Helper />}
     </FlexLayout>
   );
 };
-Switch.defaultProps = defaultSwitchProps;
+Switch.__DEFAULT_PROPS = defaultSwitchProps;
 
 export { Switch };
-
-const SwitchContainer = styled.button`
-  ${SwitchContainerStyles}
-`;
-
-const SwitchHandle = styled.div<SwitchStyleProps>`
-  ${SwitchHandleStyles}
-`;

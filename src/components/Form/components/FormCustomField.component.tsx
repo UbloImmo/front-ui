@@ -3,12 +3,13 @@ import { useMemo } from "react";
 import { FormFieldGridItem } from "./FormFieldGridItem.component";
 import { useFormContext } from "../Form.context";
 
-import { FieldContainer } from "@/components/Field";
+import fieldStyles from "@/components/Field/Field.module.scss";
 import { useFieldAssistiveText } from "@/components/Field/Field.utils";
 import { Icon } from "@/components/Icon";
 import { useInputId } from "@/components/Input";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { InputLabel, InputLabelProps } from "@/components/InputLabel";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { isEmptyString } from "@utils";
 
 import type { BuiltFormCustomFieldProps } from "../Form.types";
@@ -26,6 +27,8 @@ import type { Nullable } from "@ubloimmo/front-util";
  *
  * The component uses the {@link useFormContext} hook to get the current form
  * context and the {@link useInputId} hook to get a unique id for the input.
+ *
+ * @version 0.1.0
  *
  * @param {BuiltFormCustomFieldProps} props - The component props.
  * @returns {Nullable<JSX.Element>} The rendered component.
@@ -96,7 +99,8 @@ export const FormCustomField = (
       overrideTestId
       fill
     >
-      <FieldContainer
+      <FlexColumnLayout
+        className={fieldStyles.field}
         testId="form-custom-field"
         overrideTestId
         data-field-type="custom"
@@ -123,7 +127,7 @@ export const FormCustomField = (
             overrideTestId
           />
         )}
-      </FieldContainer>
+      </FlexColumnLayout>
     </FormFieldGridItem>
   );
 };

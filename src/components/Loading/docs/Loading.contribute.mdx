@@ -1,4 +1,4 @@
-import { Meta } from "@storybook/blocks";
+import { Meta } from "@storybook/addon-docs/blocks";
 import { ComponentInfo, Markdown, HeaderInfo } from "@docs/blocks";
 import { Content, Header } from "@docs/containers";
 import * as LoadingStories from "../Loading.stories.tsx";
@@ -23,10 +23,11 @@ Additional animations can be created by creating a new directory under `src/comp
 
 It must comply with the following structure.
 
-```
+```txt
 [Anim]
 ├── [Anim].animation.tsx
 ├── [Anim].styles.ts
+├── [Anim].module.scss
 └── index.ts
 ```
 
@@ -39,7 +40,7 @@ It must comply with the following structure.
 Defines a single React component, named `[Anim]`, that takes `LoadingAnimationProps` and renders your animation.
 
 The animation itself can be any HTML Element, though SVGs are recommended.
-Make sure to include the `data-testid="loading-indicator"` attribute in your markup.
+Make sure to include the `data-testid={props.testId}` attribute in your markup.
 
 > This file should **only** export your animation component.
 >
@@ -50,15 +51,10 @@ Make sure to include the `data-testid="loading-indicator"` attribute in your mar
 ```tsx
 // [Anim]/[Anim].animation.ts
 
+// animation styles
+import { useAnimStyles } from "./[Anim].styles";
 // type imports
 import type { LoadingAnimationProps } from "../../Loading.types";
-import type { StyleProps } from "@types";
-// general utils
-import { useStyleProps } from "@utils";
-// animation styles
-import { animStyle } from "./Anim.styles";
-// libraries
-import styled from "styled-components";
 
 /**
  * Renders an [Anim] loading animation
@@ -67,23 +63,19 @@ import styled from "styled-components";
  * @return {JSX.Element} the rendered spinner component
  */
 export const Anim = (props: LoadingAnimationProps): JSX.Element => {
-  // convert to styled component props
-  const styleProps = useStyleProps(props);
+  // compute styles
+  const { style, className } = useAnimStyles(props);
+  // Apply styles to your animation
   // The returned element & structure is up to you
-  return <Renderer {...styleProps} data-testid="loading-indicator" />;
+  return <svg style={style} className={className} data-testid={props.testId} />;
 };
-
-// Styled component svg element
-const Renderer = styled.svg<StyleProps<LoadingAnimationProps>>`
-  ${animStyle}
-`;
 ```
 
 #### `[Anim].styles.ts`
 
-Contains the CSS styles and keyframes needed for your animation to display properly.
+Links your animation's properties to its SCSS module.
 
-Usually exports a function of type `StyleFunction<StyleProps<LoadingAnimationProps>>`.
+Usually exports a function of returning both `className` and `style` properties.
 
 ##### Example
 
@@ -91,13 +83,31 @@ Usually exports a function of type `StyleFunction<StyleProps<LoadingAnimationPro
 // [Anim]/[Anim].styles.ts
 
 // type imports
-import type { StyleProps } from "@types";
 import type { LoadingAnimationProps } from "../../Loading.types";
-import type { StyleFunction } from "styled-components";
-// libraries
-import { css, keyframes } from "styled-components";
+// stylesheet import
+import styles from "./[Anim].module.scss";
+// utility imports
+import { useCssClasses, useCssVariables } from "@utils";
 
-const cssAnim = keyframes`
+export function useAnimStyles({size, color}: LoadingAnimationProps) {
+  const className = useCssClasses(styles);
+  const style = useCssVariables({size, color});
+  return { className, style };
+}
+```
+
+#### `[Anim].module.scss`
+
+SCSS module that contains both styles and keyframes needed for you animation.
+
+Dynamic style properties such as `size` and `color` may be passed to the animation via css variables.
+
+##### Example
+
+```scss
+// [Anim]/[Anim].module.scss
+
+@keyframes animate {
   from {
     transform: scale(0);
     opacity: 1;
@@ -106,17 +116,19 @@ const cssAnim = keyframes`
     transform: scale(1);
     opacity: 0;
   }
-`;
+}
 
-export const animStyle: StyleFunction<StyleProps<LoadingAnimationProps>> = ({
-  $size, // parsed size (CssRem) provided by the parent `Loading` component
-  $color, // shaded color (PaletteColor) provided by the parent `Loading` component
-}) => {
-  // Style rour renderer however you want
-  return css`
-    animation: ${cssAnim} 1800ms ease-in-out infinite running;
-  `;
-};
+.animation {
+  // define default size & color
+  --size: var(--s-4);
+  --color: var(--primary-base);
+
+  // apply variables & style your animation however you want
+  width: var(--size);
+  height: var(--size);
+  background: var(--color);
+  animation: animation 1800ms var(--bezier) infinite running
+}
 ```
 
 #### `index.ts`
@@ -145,7 +157,7 @@ and add a new export pointing to your freshly made animation's directory.
 export * from "./BouncingBalls";
 export * from "./Spinner";
 // a new export
-export * from "./Anim";
+export * from "./[Anim]";
 ```
 
 **That's it!**

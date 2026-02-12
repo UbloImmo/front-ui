@@ -6,12 +6,12 @@ import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const source = componentSourceFactory(
   "InputAssistiveText",
   {},
-  InputAssistiveText.defaultProps
+  InputAssistiveText.__DEFAULT_PROPS
 );
 const meta = {
   title: "Components/Forms/InputAssistiveText/Stories",
@@ -37,7 +37,10 @@ export const Default: Story = {
 
 const errors = [false, true];
 export const States: Story = (props: InputAssistiveTextProps) => {
-  const defaultProps = useMergedProps(InputAssistiveText.defaultProps, props);
+  const defaultProps = useMergedProps(
+    InputAssistiveText.__DEFAULT_PROPS,
+    props
+  );
 
   return (
     <ComponentVariants
@@ -67,7 +70,10 @@ const assistiveTexts = [
 ];
 
 export const TextLength = (props: InputAssistiveTextProps) => {
-  const defaultProps = useMergedProps(InputAssistiveText.defaultProps, props);
+  const defaultProps = useMergedProps(
+    InputAssistiveText.__DEFAULT_PROPS,
+    props
+  );
 
   return (
     <ComponentVariants
@@ -91,7 +97,10 @@ TextLength.parameters = {
 const booleans = [false, true];
 
 export const Icons = (props: InputAssistiveTextProps) => {
-  const defaultProps = useMergedProps(InputAssistiveText.defaultProps, props);
+  const defaultProps = useMergedProps(
+    InputAssistiveText.__DEFAULT_PROPS,
+    props
+  );
 
   return (
     <ComponentVariants

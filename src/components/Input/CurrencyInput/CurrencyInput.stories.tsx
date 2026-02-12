@@ -1,5 +1,5 @@
-import { fn } from "@storybook/test";
 import { useCallback, useEffect, useState } from "react";
+import { fn } from "storybook/test";
 
 import { CurrencyInput } from "./CurrencyInput.component";
 
@@ -9,12 +9,12 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { Currency, CurrencyInputProps } from "./CurrencyInput.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CurrencyInputProps>(
   "CurrencyInput",
   {},
-  CurrencyInput.defaultProps
+  CurrencyInput.__DEFAULT_PROPS
 );
 
 const decorators: Meta<typeof CurrencyInput>["decorators"] = (
@@ -33,21 +33,14 @@ const decorators: Meta<typeof CurrencyInput>["decorators"] = (
     },
     [setValue, context]
   );
-  return (
-    <CurrencyInput
-      {...context.args}
-      value={value}
-      onChange={onChange}
-      placeholder="test"
-    />
-  );
+  return <CurrencyInput {...context.args} value={value} onChange={onChange} />;
 };
 
 const meta = {
   component: CurrencyInput,
   title: "Components/Forms/Input/CurrencyInput/Stories",
   args: {
-    ...CurrencyInput.defaultProps,
+    ...CurrencyInput.__DEFAULT_PROPS,
     onChange: fn(),
     placeholder: "Currency input",
     uncontrolled: true,
@@ -89,7 +82,7 @@ export const Default: Story = {};
 const currencies: Currency[] = ["euro", "dollar", "pound", "yen"];
 
 export const Currencies = (props: Partial<CurrencyInputProps>) => {
-  const defaultProps = useMergedProps(CurrencyInput.defaultProps, props);
+  const defaultProps = useMergedProps(CurrencyInput.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -117,7 +110,7 @@ export const SignControl: Story = {
 };
 
 export const MinMaxValue = (props: Partial<FieldProps<"currency">>) => {
-  const defaultProps = useMergedProps(CurrencyInput.defaultProps, props);
+  const defaultProps = useMergedProps(CurrencyInput.__DEFAULT_PROPS, props);
 
   return (
     <Field
@@ -133,8 +126,8 @@ export const MinMaxValue = (props: Partial<FieldProps<"currency">>) => {
 };
 
 MinMaxValue.args = {
-  args: {
-    placeholder: "Currency input",
-    onChange: fn(),
-  },
+  placeholder: "Currency input",
+  onChange: fn(),
+  min: 1,
+  max: 5,
 };

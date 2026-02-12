@@ -1,12 +1,16 @@
 import { isArray } from "@ubloimmo/front-util";
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import { entityCardContentStyles } from "../EntityInfoCard.styles";
 import { entityInfoCardSectionItemRenderers } from "./EntityInfoCard.sectionItems";
+import styles from "../EntityInfoCard.module.scss";
 
 import { FlexColumnLayout } from "@/layouts/Flex";
-import { isNonEmptyString, useMergedProps, useTestId } from "@utils";
+import {
+  isNonEmptyString,
+  useCssClasses,
+  useMergedProps,
+  useTestId,
+} from "@utils";
 
 import type {
   EntityInfoCardCallbackProps,
@@ -59,6 +63,7 @@ export const EntityInfoCardSection = (
   } = mergedProps;
 
   const testId = useTestId("entity-info-card", props);
+  const className = useCssClasses(styles["entity-info-card-section"]);
 
   const hasContent = useMemo(() => {
     return (
@@ -85,7 +90,13 @@ export const EntityInfoCardSection = (
   if (!hasContent) return null;
 
   return (
-    <EntityCardContent fill gap="s-2">
+    <FlexColumnLayout
+      as="section"
+      className={className}
+      data-testid="entity-info-card-section"
+      fill
+      gap="s-2"
+    >
       {fullOrder.map((item, index) => {
         const key = `${testId}-section-item-${index}`;
         const Renderer = entityInfoCardSectionItemRenderers[item];
@@ -100,10 +111,6 @@ export const EntityInfoCardSection = (
           />
         );
       })}
-    </EntityCardContent>
+    </FlexColumnLayout>
   );
 };
-
-const EntityCardContent = styled(FlexColumnLayout)`
-  ${entityCardContentStyles}
-`;

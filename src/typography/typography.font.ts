@@ -1,8 +1,6 @@
-import { css } from "styled-components";
+import dedent from "ts-dedent";
 
 import { DMMono, Gilroy } from "./fonts";
-
-import type { RuleSet } from "styled-components";
 
 export const fontFamilySets = {
   sans: `"Gilroy", "Helvetica", "Inter", "Arial", "Calibri",
@@ -16,13 +14,12 @@ export const fontFamilySets = {
  *
  * @param {boolean} [important] - Whether to add !important
  *
- * @return {RuleSet} The defined font family for typography.
+ * @return {string} The defined font family for typography.
  */
-export const typographyFontFace = (important?: boolean): RuleSet => {
+export const typographyFontFace = (important?: boolean): string => {
   const $important = important ? " !important" : "";
-  const font = `${fontFamilySets.sans}${$important};`;
-  return css`
-    font-family: ${font};
+  return dedent`
+    font-family: ${fontFamilySets.sans}${$important};
   `;
 };
 
@@ -31,11 +28,11 @@ export const typographyFontFace = (important?: boolean): RuleSet => {
  *
  * @param {boolean} [important] - Whether to add !important
  *
- * @return {RuleSet} The defined font family for code typography.
+ * @return {string} The defined font family for code typography.
  */
-export const codeFontFace = (important?: boolean): RuleSet => {
+export const codeFontFace = (important?: boolean): string => {
   const $important = important ? " !important" : "";
-  return css`
+  return dedent`
     font-family: ${fontFamilySets.code}${$important};
   `;
 };
@@ -43,12 +40,12 @@ export const codeFontFace = (important?: boolean): RuleSet => {
 /**
  * Links the typography font face to top-level style declaration.
  *
- * @return {RuleSet} CSS with typography font face applied to all elements.
+ * @return {string} CSS with typography font face applied to all elements.
  */
-export const linkFontFace = (): RuleSet => {
-  return css`
-    ${Gilroy}
-    ${DMMono}
+export const linkFontFace = (): string => {
+  return dedent`
+    ${Gilroy()}
+    ${DMMono()}
 
     * {
       font-synthesis: style;
@@ -59,7 +56,7 @@ export const linkFontFace = (): RuleSet => {
     }
 
     *:not(pre, code) {
-      ${typographyFontFace()};
+      ${typographyFontFace()}
     }
 
     code,
@@ -67,7 +64,7 @@ export const linkFontFace = (): RuleSet => {
     pre *,
     pre div,
     pre span {
-      ${codeFontFace(true)};
+      ${codeFontFace(true)}
       font-size: inherit;
       letter-spacing: 0;
     }

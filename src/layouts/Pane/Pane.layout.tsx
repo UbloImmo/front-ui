@@ -1,4 +1,3 @@
-import { Nullable } from "@ubloimmo/front-util";
 import {
   forwardRef,
   useCallback,
@@ -7,29 +6,22 @@ import {
   useRef,
   useState,
 } from "react";
-import styled from "styled-components";
 
-import { paneContainerStyles, paneContentStyles } from "./Pane.styles";
-import {
-  type PaneProps,
-  type PaneDefaultProps,
-  PaneStyleProps,
-} from "./Pane.types";
+import { usePaneLayoutStyle } from "./Pane.styles";
 
 import { parseFixedLength } from "@/sizes/size.utils";
 import {
   useTestId,
   useMergedProps,
-  useStyleProps,
-  useClassName,
-  useHtmlAttribute,
   cssRemToCssPx,
   extractPx,
   clamp,
   cssPx,
 } from "@utils";
 
+import type { PaneProps, PaneDefaultProps } from "./Pane.types";
 import type { TestIdProps } from "@types";
+import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultPaneProps: PaneDefaultProps = {
   expandedWidth: "15rem",
@@ -62,31 +54,11 @@ const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
     const {
       expandedWidth,
       collapsedWidth,
-      expandedBreakpoint,
-      styleOverride,
-      anchor,
-      headLess,
-      forceExpanded,
-      top,
-      bottom,
       expandedRatio,
       dynamicContent: DynamicContent,
     } = mergedProps;
 
-    const styleProps: PaneStyleProps = useStyleProps({
-      expandedBreakpoint,
-      expandedWidth,
-      collapsedWidth,
-      anchor,
-      headLess,
-      forceExpanded,
-      top,
-      bottom,
-    });
-
     const testId = useTestId("pane", props);
-    const className = useClassName(mergedProps);
-    const style = useHtmlAttribute(styleOverride);
     const [isCollapsed, setIsCollapsed] = useState(true);
 
     const expandedWidthPx = useMemo(
@@ -148,34 +120,28 @@ const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
       [ref]
     );
 
+    const { pane, paneContent } = usePaneLayoutStyle(mergedProps);
+
     return (
-      <PaneContainer
+      <aside
         ref={assignContainerRef}
+        className={pane.className}
+        style={pane.style}
         data-testid={testId}
         data-expanded={!isCollapsed}
-        {...styleProps}
       >
-        <PaneContent
+        <section
           ref={contentRef}
-          className={className}
-          style={style}
+          className={paneContent.className}
+          style={paneContent.style}
           data-testid="pane-content"
-          {...styleProps}
         >
           {mergedProps.children}
           {DynamicContent && <DynamicContent isCollapsed={isCollapsed} />}
-        </PaneContent>
-      </PaneContainer>
+        </section>
+      </aside>
     );
   }
 );
 
 export { Pane };
-
-const PaneContainer = styled.aside<PaneStyleProps>`
-  ${paneContainerStyles}
-`;
-
-const PaneContent = styled.section<PaneStyleProps>`
-  ${paneContentStyles}
-`;

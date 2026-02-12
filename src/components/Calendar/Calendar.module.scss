@@ -1,0 +1,448 @@
+@use "../../typography/__generated__/typography-tokens.module.scss" as
+  typography;
+@use "../../sizes/_breakpoints.scss";
+
+.calendar {
+  background: var(--white);
+  padding: var(--s-2) var(--s-1);
+  box-shadow: var(--shadow-card-elevation-low);
+  width: fit-content;
+  border-radius: var(--s-2);
+
+  // GLOBAL VARIABLES FROM REACT-DAY-PICKER
+
+  --rdp-accent-color: var(
+    --primary-base
+  ); /* The accent color used for selected days and UI elements. */
+  --rdp-accent-background-color: var(
+    --primary-light
+  ); /* The accent background color used for selected days and UI elements. */
+  --rdp-font-family: "Gilroy"; /* The font family used by the calendar. Note that inherit does not work here. */
+
+  --rdp-day-font: inherit; /* The font used for the day cells. */
+  --rdp-day-height: var(--s-8); /* The height of the day cells. */
+  --rdp-day-width: var(--s-8); /* The width of the day cells. */
+
+  --rdp-day_button-border-radius: var(
+    --s-1
+  ); /* The border radius of the day cells. */
+  --rdp-day_button-border: 2px solid transparent; /* The border of the day cells. */
+  --rdp-day_button-height: var(
+    --rdp-day-width
+  ); /* The height of the day cells. */
+  --rdp-day_button-width: var(
+    --rdp-day-height
+  ); /* The width of the day cells. */
+
+  --rdp-selected-border: 0.5px solid var(--primary-medium); /* The border of the selected days. */
+  --rdp-selected-font: bold large var(--rdp-font-family); /* The font of the selected days. */
+  --rdp-disabled-opacity: 0.5; /* The opacity of the disabled days. */
+  --rdp-outside-opacity: 0.75; /* The opacity of the days outside the current month. */
+  --rdp-today-color: var(
+    --rdp-accent-color
+  ); /* The color of the today's date. */
+
+  --rdp-dropdown-gap: 0.5rem; /* The gap between the dropdowns used in the month captons. */
+
+  --rdp-month_caption-font: bold larger var(--rdp-font-family); /* The font of the month caption. */
+  --rdp-months-gap: 2rem; /* The gap between the months in the multi-month view. */
+
+  --rdp-nav_button-disabled-opacity: 0.5; /* The opacity of the disabled navigation buttons. */
+  --rdp-nav_button-height: 2.25rem; /* The height of the navigation buttons. */
+  --rdp-nav_button-width: 2.25rem; /* The width of the navigation buttons. */
+  --rdp-nav-height: 2.75rem; /* The height of the navigation bar. */
+
+  --rdp-range_middle-background-color: var(
+    --rdp-accent-background-color
+  ); /* The color of the background for days in the middle of a range. */
+  --rdp-range_middle-font: normal medium var(--rdp-font-family); /* The font for days in the middle of a range. */
+  --rdp-range_middle-foreground-color: var(
+    --white
+  ); /* The font for days in the middle of a range. */
+  --rdp-range_middle-color: inherit; /* The color of the range text. */
+
+  --rdp-range_start-color: var(--white); /* The color of the range text. */
+  --rdp-range_start-background: linear-gradient(
+    var(--rdp-gradient-direction),
+    transparent 50%,
+    var(--rdp-range_middle-background-color) 50%
+  ); /* Used for the background of the start of the selected range. */
+  --rdp-range_start-date-background-color: var(
+    --rdp-accent-color
+  ); /* The background color of the date when at the start of the selected range. */
+
+  --rdp-range_end-background: linear-gradient(
+    var(--rdp-gradient-direction),
+    var(--rdp-range_middle-background-color) 50%,
+    transparent 50%
+  ); /* Used for the background of the end of the selected range. */
+  --rdp-range_end-color: var(--white); /* The color of the range text. */
+  --rdp-range_end-date-background-color: var(
+    --rdp-accent-color
+  ); /* The background color of the date when at the end of the selected range. */
+
+  --rdp-week_number-border-radius: 100%; /* The border radius of the week number. */
+  --rdp-week_number-border: 2px solid transparent; /* The border of the week number. */
+  --rdp-week_number-font: 400 small var(--rdp-font-family); /* The font of the week number cells. */
+  --rdp-week_number-height: var(
+    --rdp-day-height
+  ); /* The height of the week number cells. */
+  --rdp-week_number-opacity: 0.75; /* The opacity of the week number. */
+  --rdp-week_number-width: var(
+    --rdp-day-width
+  ); /* The width of the week number cells. */
+  --rdp-weeknumber-text-align: center; /* The text alignment of the weekday cells. */
+
+  --rdp-weekday-font: 500 smaller var(--rdp-font-family); /* The font of the weekday. */
+  --rdp-weekday-opacity: 0.75; /* The opacity of the weekday. */
+  --rdp-weekday-padding: 0.5rem 0rem; /* The padding of the weekday. */
+  --rdp-weekday-text-align: center; /* The text alignment of the weekday cells. */
+
+  --rdp-gradient-direction: 90deg;
+
+  // header variables
+
+  --rdp-nav-height: var(--button-size, var(--s-8));
+  --rdv-nav_button-height: var(--rdv-nav-height);
+  --rdv-nav_button-width: var(--rdv-nav-height);
+
+  // day button variables
+
+  --rdp-day_button-width: var(--s-8);
+  --rdp-day_button-height: var(--s-8);
+  --rdp-day_button-border-radius: var(--s-1);
+
+  // day variables
+
+  --rdp-day-width: var(--s-9);
+  --rdp-day-height: var(--s-9);
+
+  // GLOBAL CLASSNAMES FROM REACT-DAY-PICKER
+
+  :global(.rdp-dropdowns) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--rdp-dropdown-gap);
+  }
+  :global(.rdp-dropdown) {
+    z-index: 2;
+
+    /* Reset */
+    opacity: 0;
+    appearance: none;
+    position: absolute;
+    inset-block-start: 0;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: inherit;
+    border: none;
+    line-height: inherit;
+  }
+
+  :global(.rdp-dropdown_root) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  :global(.rdp-dropdown_root)[data-disabled="true"] :global(.rdp-chevron) {
+    opacity: var(--rdp-disabled-opacity);
+  }
+
+  :global(.rdp-month_grid) {
+    border-collapse: collapse;
+  }
+
+  :global(.rdp-weekday) {
+    @include typography.m-text-s-medium;
+    opacity: 1;
+    padding: var(--rdp-weekday-padding);
+    color: var(--gray-600);
+    text-align: var(--rdp-weekday-text-align);
+    text-transform: var(--rdp-weekday-text-transform);
+  }
+
+  :global(.rdp-week_number) {
+    opacity: var(--rdp-week_number-opacity);
+    font: var(--rdp-week_number-font);
+    height: var(--rdp-week_number-height);
+    width: var(--rdp-week_number-width);
+    border: var(--rdp-week_number-border);
+    border-radius: var(--rdp-week_number-border-radius);
+    text-align: var(--rdp-weeknumber-text-align);
+  }
+
+  // root styles
+
+  :global(.rdp-root) {
+    position: relative; /* Required to position the navigation toolbar. */
+    box-sizing: border-box;
+    width: min-content;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.rdp-months) {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--s-2);
+    max-width: fit-content;
+
+    @media only screen and (max-width: breakpoints.$breakpoint-xs) {
+      flex-wrap: wrap;
+      max-width: min-content;
+    }
+  }
+
+  // header styles
+
+  :global(.rdp-month_caption) {
+    margin-bottom: var(--s-2);
+    padding-left: var(--s-1);
+    display: flex;
+    align-content: center;
+    height: var(--rdp-nav-height);
+  }
+  :global(.rdp-caption_label) {
+    @include typography.m-text-h3-medium;
+    text-transform: capitalize;
+    color: var(--gray-900);
+    display: flex;
+    display: inline-flex;
+    align-items: center;
+
+    white-space: nowrap;
+  }
+
+  :global(.rdp-nav) {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+
+    display: flex;
+    align-items: center;
+
+    height: var(--rdp-nav-height);
+  }
+
+  :global(.rdp-weekday) {
+    @include typography.m-text-s-regular;
+    color: var(--gray-400);
+    text-align: center;
+    text-transform: capitalize;
+    padding: var(--s-1);
+    height: var(--s-4);
+  }
+
+  // day button styles
+
+  :global(.rdp-day_button) {
+    @include typography.m-text-m-medium;
+    text-align: center;
+    vertical-align: center;
+    border: 1px solid var(--primary-light-00);
+    color: var(--gray-800);
+    width: var(--rdp-day_button-width);
+    height: var(--rdp-day_button-height);
+    border-radius: var(--rdp-day_button-border-radius);
+    background: var(--gray-50);
+    transition: all 150ms ease-out 0s;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--primary-light);
+    }
+  }
+
+  :global(.rdp-selected):not(:global(.rdp-range_middle))
+    :global(.rdp-day_button) {
+    background: var(--primary-base);
+    color: var(--primary-light);
+
+    &:hover {
+      background: var(--primary-dark);
+    }
+  }
+
+  :global(.rdp-range_middle) :global(.rdp-day_button),
+  :global(.rdp-range_start) :global(.rdp-day_button),
+  :global(.rdp-range_end) :global(.rdp-day_button) {
+    --rdp-day_button-border-radius: var(--s-05);
+  }
+
+  :global(.rdp-range_middle) :global(.rdp-day_button) {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+
+    &:hover {
+      background: var(--primary-medium);
+    }
+  }
+
+  :global(.rdp-today) :global(.rdp-day_button) {
+    border-color: var(--primary-light);
+    color: var(--primary-dark);
+  }
+
+  :global(.rdp-range_middle):global(.rdp-today) :global(.rdp-day_button) {
+    border-color: var(--primary-medium);
+    color: var(--primary-base);
+  }
+
+  :global(.rdp-range_start):global(.rdp-today) :global(.rdp-day_button),
+  :global(.rdp-range_end):global(.rdp-today) :global(.rdp-day_button),
+  :global(.rdp-selected):global(.rdp-today) :global(.rdp-day_button) {
+    border-color: var(--primary-medium);
+  }
+
+  :global(.rdp-outside) :global(.rdp-day_button) {
+    background: var(--gray-50-00);
+    color: var(--gray-400);
+  }
+
+  :global(.rdp-outside):global(.rdp-today) :global(.rdp-day_button) {
+    border-color: var(--gray-100);
+  }
+
+  :global(.rdp-disabled) :global(.rdp-day_button) {
+    background: var(--gray-100);
+    color: var(--gray-600);
+    cursor: not-allowed;
+  }
+
+  :global(.rdp-disabled):global(.rdp-outside) :global(.rdp-day_button) {
+    background: var(--gray-100-50);
+    color: var(--gray-300);
+  }
+
+  // day styles
+
+  :global(.rdp-day) {
+    padding: var(--s-05);
+    width: var(--rdp-day-width);
+    height: var(--rdp-day-height);
+    background: var(--primary-light-00);
+    transition:
+      background 150ms ease-out 0s,
+      border-radius 150ms ease-out 0s;
+  }
+
+  :global(.rdp-range_start),
+  :global(.rdp-range_middle),
+  :global(.rdp-range_end) {
+    background: var(--primary-light);
+  }
+
+  :global(.rdp-range_start) {
+    border-top-left-radius: var(--s-1);
+    border-bottom-left-radius: var(--s-1);
+  }
+
+  :global(.rdp-range_end) {
+    border-top-right-radius: var(--s-1);
+    border-bottom-right-radius: var(--s-1);
+  }
+
+  :global(.rdp-hidden) {
+    visibility: hidden;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  :global(.rdp-outside):global(.rdp-range_start),
+  :global(.rdp-outside):global(.rdp-range_middle),
+  :global(.rdp-outside):global(.rdp-range_end) {
+    background: var(--primary-light-50);
+  }
+
+  :global(.rdp-week):has(:global(.rdp-range_start))
+    :global(.rdp-range_middle):last-child {
+    border-top-right-radius: var(--s-1);
+  }
+
+  :global(.rdp-week):has(:global(.rdp-range_end))
+    :global(.rdp-range_middle):first-child {
+    border-bottom-left-radius: var(--s-1);
+  }
+
+  :global(.rdp-week):has(:global(.rdp-range_start):not(:first-child))
+    + :global(.rdp-week):has(:global(.rdp-range_middle))
+    :global(.rdp-range_middle):first-child {
+    border-top-left-radius: var(--s-1);
+  }
+
+  :global(.rdp-week):has(
+      + :global(.rdp-week)
+        > :global(.rdp-range_end):not(:global(.rdp-range_start)):not(
+          :last-child
+        )
+    )
+    :global(.rdp-range_middle):last-child {
+    border-bottom-right-radius: var(--s-1);
+  }
+
+  :global(.rdp-week):has(:global(.rdp-range_middle):last-child)
+    + :global(.rdp-week)
+    :global(.rdp-range_end):last-child {
+    border-top-right-radius: 0;
+  }
+
+  :global(.rdp-week):has(
+      + :global(.rdp-week) > :global(.rdp-range_middle):first-child
+    )
+    :global(.rdp-range_start):first-child {
+    border-bottom-left-radius: 0;
+  }
+
+  :global(.rdp-week):has(
+      + :global(.rdp-week) > :global(.rdp-range_end):first-child
+    )
+    :global(.rdp-range_start):first-child {
+    border-bottom-left-radius: 0;
+  }
+
+  :global(.rdp-week):has(
+      :global(.rdp-range_middle):first-child,
+      :global(.rdp-range_start):first-child
+    )
+    + :global(.rdp-week)
+    :global(.rdp-range_end):first-child {
+    border-bottom-left-radius: var(--s-1);
+    border-top-right-radius: 0;
+  }
+
+  :global(.rdp-week):first-child :global(.rdp-range_middle):first-child {
+    border-top-left-radius: var(--s-1);
+  }
+
+  :global(.rdp-week):last-child :global(.rdp-range_middle):last-child {
+    border-bottom-right-radius: var(--s-1);
+  }
+
+  // footer styles
+  :global(.rdp-footer) {
+    margin-top: var(--s-2);
+    max-width: 100%;
+    flex: 1;
+    span {
+      color: var(--gray-600);
+      text-align: center;
+      max-width: 100%;
+    }
+  }
+}
+
+.calendar-nav {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: var(--rdp-nav-height);
+}

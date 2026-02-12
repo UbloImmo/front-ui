@@ -1,21 +1,14 @@
-import styled from "styled-components";
+import styles from "../Form.module.scss";
 
 import { SmallLoader } from "@/components/SmallLoader";
 import { FlexRowLayout } from "@/layouts/Flex";
-import { breakpointsPx } from "@/sizes";
+import { useCssClasses } from "@utils";
 
 export const FieldSkeleton = () => {
+  const className = useCssClasses(styles["form-field-skeleton-loader"]);
   return (
-    <FlexRowLayout fill align="center">
-      <FieldSkeletonLoader color="gray-100" />
+    <FlexRowLayout fill align="center" testId="field-skeleton">
+      <SmallLoader className={className} color="gray-100" />
     </FlexRowLayout>
   );
 };
-
-const FieldSkeletonLoader = styled(SmallLoader)`
-  height: var(--s-4);
-
-  @media (min-width: ${breakpointsPx.XS}) {
-    height: var(--s-6);
-  }
-`;

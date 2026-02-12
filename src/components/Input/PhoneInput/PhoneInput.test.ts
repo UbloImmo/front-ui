@@ -14,7 +14,7 @@ describe("Input", () => {
     "PhoneInput",
     PhoneInput,
     {
-      props: PhoneInput.defaultProps,
+      props: PhoneInput.__DEFAULT_PROPS,
       tests: [
         {
           name: "should render",

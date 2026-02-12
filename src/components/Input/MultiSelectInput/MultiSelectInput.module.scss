@@ -1,0 +1,30 @@
+.multi-select-input-wrapper {
+  position: relative;
+  width: 100%;
+
+  // TODO: find out why we added this initially.
+  // Keeping it causes the control icon to be hidden when open
+  /* &:has([aria-expanded="true"]) {
+    &,
+    & [aria-expanded="true"] {
+      z-index: 2;
+    }
+  } */
+}
+
+.multi-select-input-element {
+  // vertical padding (6px) equal to input height minus chip height
+  padding: 0.375rem var(--s-2);
+  padding-right: var(--s-8);
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  height: fit-content !important;
+  max-height: fit-content !important;
+
+  &.table {
+    min-height: fit-content;
+    height: 100% !important;
+    max-height: inherit !important;
+  }
+}

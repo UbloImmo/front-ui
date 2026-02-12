@@ -30,7 +30,7 @@ describe("Input", () => {
     CurrencyInput
   );
 
-  const testDefaultProps = testInput(CurrencyInput.defaultProps);
+  const testDefaultProps = testInput(CurrencyInput.__DEFAULT_PROPS);
   testDefaultProps("should render", async ({ findByTestId }) => {
     expect(await findByTestId(testId)).not.toBeNull();
   });

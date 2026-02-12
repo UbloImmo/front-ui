@@ -2,7 +2,7 @@ import { markdownOverrides } from "../docs/blocks";
 import { DocsContainer } from "../docs/containers/DocsContainer";
 import { StoryDecorator } from "../docs/containers/StoryDecorator";
 
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/react-vite";
 
 const preview: Preview = {
   parameters: {

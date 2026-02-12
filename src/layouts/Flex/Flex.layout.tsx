@@ -1,21 +1,16 @@
 import { forwardRef } from "react";
-import styled from "styled-components";
 
-import { buildFlexLayoutStyle } from "./Flex.styles";
+import { useFlexLayoutStyle } from "./Flex.styles";
 
-import {
-  useClassName,
-  useHtmlAttribute,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { useAriaProps } from "@/utils/aria.utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type {
   FlexDirectionLayoutProps,
   FlexLayoutDefaultProps,
   FlexLayoutProps,
 } from "./Flex.types";
-import type { StyleProps, TestIdProps } from "@types";
+import type { AriaProps, TestIdProps } from "@types";
 
 const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   direction: "row",
@@ -32,50 +27,58 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
   id: null,
   as: "div",
   styleOverride: null,
+  overflow: "visible",
 } as const;
 
 /**
  * A flexbox wrapper layout, with default properties direction set to `row`, align and justify set to `start`
  *
- * @version 0.0.4
- * @param {FlexLayoutProps} [props = defaultFlexLayoutProps] - optional props
+ * @version 0.1.0
+ *
+ * @param {FlexLayoutProps & TestId & AriaProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */
 export const FlexLayout = forwardRef<
   HTMLDivElement,
-  FlexLayoutProps & TestIdProps
->((props: FlexLayoutProps & TestIdProps, ref): JSX.Element => {
-  const innerProps = useStyleProps(props);
+  FlexLayoutProps & TestIdProps & AriaProps,
+  FlexLayoutDefaultProps
+>((props, ref): JSX.Element => {
   const testId = useTestId("flex", props);
-  const className = useClassName(props);
-  const style = useHtmlAttribute(props.styleOverride);
   const id = useHtmlAttribute(props.id ?? null);
+
+  const mergedProps = useMergedProps(defaultFlexLayoutProps, props);
+  const { className, style } = useFlexLayoutStyle(mergedProps);
+
+  const ariaProps = useAriaProps(props);
+
+  const Element = mergedProps.as;
+
   return (
-    <FlexLayoutInner
-      {...innerProps}
+    <Element
       ref={ref}
       data-testid={testId}
       className={className}
       style={style}
       id={id}
       role={props.role ?? undefined}
-      as={props.as ?? "div"}
+      {...ariaProps}
     >
       {props.children}
-    </FlexLayoutInner>
+    </Element>
   );
 });
+FlexLayout.__DEFAULT_PROPS = defaultFlexLayoutProps;
 
 /**
- * A {@link FlexLayout} variant with fixed `row` directionS
+ * A {@link FlexLayout} variant with fixed `row` direction
  *
  * @param {FlexDirectionLayoutProps} [props = defaultFlexLayoutProps] - optional props
  * @return {JSX.Element} The styled flex wrapper
  */
 export const FlexRowLayout = forwardRef<
   HTMLDivElement,
-  FlexDirectionLayoutProps & TestIdProps
->((props: FlexDirectionLayoutProps & TestIdProps, ref): JSX.Element => {
+  FlexDirectionLayoutProps & TestIdProps & AriaProps
+>((props, ref): JSX.Element => {
   const testId = useTestId("flex-row", props);
 
   return <FlexLayout {...props} ref={ref} direction="row" testId={testId} />;
@@ -89,14 +92,8 @@ export const FlexRowLayout = forwardRef<
  */
 export const FlexColumnLayout = forwardRef<
   HTMLDivElement,
-  FlexDirectionLayoutProps & TestIdProps
->((props: FlexDirectionLayoutProps & TestIdProps, ref): JSX.Element => {
+  FlexDirectionLayoutProps & TestIdProps & AriaProps
+>((props, ref): JSX.Element => {
   const testId = useTestId("flex-column", props);
   return <FlexLayout {...props} ref={ref} direction="column" testId={testId} />;
 });
-
-FlexLayout.defaultProps = defaultFlexLayoutProps;
-
-const FlexLayoutInner = styled.div<StyleProps<FlexLayoutProps>>`
-  ${buildFlexLayoutStyle(defaultFlexLayoutProps)}
-`;

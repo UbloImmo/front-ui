@@ -56,6 +56,7 @@ export const linesCompact = (...strs) => strs.join("\n");
  */
 export const storybookMeta = (baseUrl) => {
   const [outputEntry, ...pathEntries] = baseUrl.split("/");
+  // TODO: handle edge case for base pages (not nested)
   const fileName = pathEntries.pop() ?? "";
   const metaName = pascalCase(outputEntry);
 
@@ -109,7 +110,7 @@ export const storybookUrl = (baseUrl) => {
  */
 export const imports = () => {
   return lines(
-    `import { Meta } from "@storybook/blocks";`,
+    `import { Meta } from "@storybook/addon-docs/blocks";`,
     `import { Content, Header } from "@docs/containers";`,
     `import { HeaderInfo, Text } from "@docs/blocks";`,
     `import { FlexLayout, GridLayout } from "@/layouts";`,
@@ -134,7 +135,7 @@ export const metaTag = (page) => {
  */
 export const heading = (level, text) => {
   level = level > 6 ? 6 : level;
-  return `${[...Array(level)].map(() => "#").join("")} ${text}`;
+  return `${"#".repeat(level)} ${text}`;
 };
 
 /**
@@ -183,6 +184,11 @@ export function unEscapeChars(str) {
  * @returns {string}
  */
 export function codeBlock(content) {
+  /**
+   *
+   * @param {string} content
+   * @returns {string}
+   */
   const trimLastLine = (content) => {
     const lines = content.split("\n");
     return lines

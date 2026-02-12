@@ -4,10 +4,10 @@ import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { EnergyLabelProps } from "./EnergyLabel.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const args = {
-  ...EnergyLabel.defaultProps,
+  ...EnergyLabel.__DEFAULT_PROPS,
 };
 
 const componentSource = componentSourceFactory<EnergyLabelProps>(
@@ -17,7 +17,7 @@ const componentSource = componentSourceFactory<EnergyLabelProps>(
     type: "DPE",
     state: "active",
   },
-  EnergyLabel.defaultProps
+  EnergyLabel.__DEFAULT_PROPS
 );
 
 const meta = {

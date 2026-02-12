@@ -49,6 +49,7 @@ export type CurrencyInputProps = InputProps<"currency"> & {
 
 export type CurrencyInputDefaultProps = Required<CurrencyInputProps>;
 
+/** @deprecated styled-components */
 export type CurrencyInputStyleProps = CommonInputStyleProps &
   StyleProps<Pick<CurrencyInputProps, "showSign">>;
 

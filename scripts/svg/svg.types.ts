@@ -22,6 +22,10 @@ export type NormalizedIconFileDeclaration = {
   type: IconFileType;
 };
 
+export type ExtendedIconFileDeclaration = NormalizedIconFileDeclaration & {
+  rootDir: string;
+};
+
 export type FileDescription = {
   /**
    * Path of the file

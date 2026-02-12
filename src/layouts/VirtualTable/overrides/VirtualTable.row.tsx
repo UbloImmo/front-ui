@@ -1,16 +1,15 @@
 import { isFunction, Optional, VoidFn } from "@ubloimmo/front-util";
 import { forwardRef, useMemo } from "react";
-import styled from "styled-components";
 
-import { virtualTableRowStyles } from "../VirtualTable.styles";
+import styles from "../VirtualTable.module.scss";
 
 import { TableRow } from "@/layouts/Table";
+import { isNonNullish, useCssClasses, useCssVariables } from "@utils";
 
 import type {
   VirtualTableComponentOverrides,
   VirtualTableOnItemClickFn,
   VirtualTableRowOverrideProps,
-  VirutalTableRowStyleProps,
 } from "../VirtualTable.types";
 
 /**
@@ -27,8 +26,6 @@ export const VirtualTableRow: VirtualTableComponentOverrides<object>["TableRow"]
       const index = useMemo(() => props["data-index"], [props]);
       const isEven = useMemo(() => index % 2 === 0, [index]);
 
-      const className = useMemo(() => (isEven ? "even" : null), [isEven]);
-
       const onClick = useMemo<Optional<VoidFn>>(() => {
         if (!isFunction<VirtualTableOnItemClickFn<object>>(context.onItemClick))
           return undefined;
@@ -37,28 +34,36 @@ export const VirtualTableRow: VirtualTableComponentOverrides<object>["TableRow"]
           context.onItemClick(item, index);
         };
       }, [context, item, index]);
-
       const clickable = useMemo(() => !!onClick, [onClick]);
 
+      const className = useCssClasses(
+        styles["virtual-table-row"],
+        [styles.even, isEven],
+        [styles.clickable, clickable],
+        [styles.list, context.style === "list"]
+      );
+
+      const rowStyle = useCssVariables(
+        {
+          "fixed-item-height": isNonNullish(context.fixedItemHeight)
+            ? context.fixedItemHeight
+            : "unset",
+        },
+        style
+      );
+
       return (
-        <StyledTableRow
+        <TableRow
           testId="virtual"
           style={context.style}
           className={className}
           onClick={onClick}
           ref={ref}
-          styleOverride={style}
-          $clickable={clickable}
-          $fixedItemHeight={context.fixedItemHeight}
-          $style={context.style}
+          styleOverride={rowStyle}
           {...props}
         >
           {children}
-        </StyledTableRow>
+        </TableRow>
       );
     }
   );
-
-const StyledTableRow = styled(TableRow)<VirutalTableRowStyleProps>`
-  ${virtualTableRowStyles}
-`;

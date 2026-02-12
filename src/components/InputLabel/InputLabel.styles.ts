@@ -1,30 +1,21 @@
-import { css, type RuleSet } from "styled-components";
+import { useMemo } from "react";
 
-import type { InputLabelTextStyleProps } from "./InputLabel.types";
+import styles from "./InputLabel.module.scss";
 
-export const inputLabelStyles = (): RuleSet => css`
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-2);
+import { cssClasses, useCssClasses } from "@utils";
 
-  & span[data-testid="text input-label-text"] {
-    transition: color 150ms ease-out 0s;
-  }
+import type { Nullish } from "@ubloimmo/front-util";
 
-  &:has(input:focus, textarea:focus, select:focus)
-    span[data-testid="text input-label-text"] {
-    color: var(--gray-800);
-  }
-`;
+export function getInputLabelTextClassName(required: Nullish<boolean>) {
+  return cssClasses(styles["input-label-text"], [styles.required, required]);
+}
 
-export const inputLabelTextStyles = ({
-  $required,
-}: InputLabelTextStyleProps): RuleSet => css`
-  ${$required &&
-  css`
-    &::after {
-      content: " *";
-      color: var(--warning-base);
-    }
-  `}
-`;
+export function useInputLabelClassNames(
+  required: Nullish<boolean>,
+  className: Nullish<string>
+) {
+  const label = useCssClasses(styles["input-label"], className);
+  const text = useMemo(() => getInputLabelTextClassName(required), [required]);
+
+  return { label, text };
+}

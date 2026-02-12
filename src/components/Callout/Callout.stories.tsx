@@ -14,11 +14,11 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CalloutProps>(
   "Callout",
-  Callout.defaultProps
+  Callout.__DEFAULT_PROPS
 );
 
 const calloutColors: CalloutColor[] = [
@@ -41,19 +41,19 @@ const meta = {
   argTypes: {
     color: {
       options: calloutColors,
-      defaultValue: Callout.defaultProps.color,
+      defaultValue: Callout.__DEFAULT_PROPS.color,
     },
     icon: {
       options: ["auto", ...allIconNames],
-      defaultValue: Callout.defaultProps.icon,
+      defaultValue: Callout.__DEFAULT_PROPS.icon,
     },
     title: {
       type: "string",
-      defaultValue: Callout.defaultProps.title,
+      defaultValue: Callout.__DEFAULT_PROPS.title,
     },
     size: {
       options: calloutSizes,
-      defaultValue: Callout.defaultProps.size,
+      defaultValue: Callout.__DEFAULT_PROPS.size,
     },
   },
   parameters: {
@@ -114,7 +114,7 @@ const withCustomIcons: DetailConfigVariants<CalloutProps> = [
 ];
 
 export const WithCustomIcon = (props: CalloutProps) => {
-  const defaultProps = useMergedProps(Callout.defaultProps, props);
+  const defaultProps = useMergedProps(Callout.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -132,7 +132,7 @@ WithCustomIcon.parameters = {
   docs: componentSource(
     withCustomIcons.map(
       ({ ...variant }): CalloutProps => ({
-        ...Callout.defaultProps,
+        ...Callout.__DEFAULT_PROPS,
         ...variant,
       })
     )
@@ -140,7 +140,7 @@ WithCustomIcon.parameters = {
 };
 
 export const WithoutIcon: Story = {
-  args: { ...Callout.defaultProps, icon: null },
+  args: { ...Callout.__DEFAULT_PROPS, icon: null },
 };
 
 const children = [
@@ -162,7 +162,7 @@ const children = [
 ];
 
 export const Labels = (props: CalloutProps) => {
-  const defaultProps = useMergedProps(Callout.defaultProps, props);
+  const defaultProps = useMergedProps(Callout.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -181,7 +181,7 @@ Labels.parameters = {
 };
 
 export const WithTitle: Story = {
-  args: { ...Callout.defaultProps, title: "This is the callout's title" },
+  args: { ...Callout.__DEFAULT_PROPS, title: "This is the callout's title" },
 };
 
 const customChildren = (
@@ -202,13 +202,13 @@ const customChildren = (
 
 export const WithCustomChildren: Story = {
   args: {
-    ...Callout.defaultProps,
+    ...Callout.__DEFAULT_PROPS,
     children: customChildren,
   },
 };
 
 export const Sizes = () => {
-  const defaultProps = useMergedProps(Callout.defaultProps, {
+  const defaultProps = useMergedProps(Callout.__DEFAULT_PROPS, {
     title: "This is the callout's title",
     children: "This is the callout's content",
   });

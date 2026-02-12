@@ -42,6 +42,9 @@ export type IconPickerItemProps = {
 
 export type IconPickerItemDefaultProps = Required<IconPickerItemProps>;
 
+/**
+ * @deprecated styled-components
+ */
 export type IconPickerItemStyleProps = StyleProps<
   Pick<IconPickerItemProps, "active" | "readonly">
 >;

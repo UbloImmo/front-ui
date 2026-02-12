@@ -1,0 +1,41 @@
+.avatar {
+  --avatar-size: var(--s-7);
+  --avatar-org-radius: var(--s-1);
+
+  &[data-size="l"] {
+    --avatar-size: var(--s-11);
+    --avatar-org-radius: var(--s-2);
+  }
+  &[data-size="xl"] {
+    --avatar-size: 7.5rem;
+    --avatar-org-radius: var(--s-6);
+  }
+
+  overflow: hidden;
+  border-radius: 50%;
+  height: var(--avatar-size);
+  min-height: var(--avatar-size);
+  max-height: var(--avatar-size);
+  width: var(--avatar-size);
+  min-width: var(--avatar-size);
+  max-width: var(--avatar-size);
+  background: var(--primary-light);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.organization {
+    border-radius: var(--avatar-org-radius);
+  }
+
+  &.count {
+    background: var(--gray-50);
+  }
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

@@ -6,7 +6,7 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { InfoBoxProps } from "./InfoBox.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<InfoBoxProps>(
   "InfoBox",
@@ -15,7 +15,7 @@ const componentSource = componentSourceFactory<InfoBoxProps>(
     label: "[Label]",
     info: "[Info]",
   },
-  InfoBox.defaultProps
+  InfoBox.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -44,7 +44,7 @@ export const Default: Story = {};
 const infos = ["UI Kit Maker", null];
 
 export const Info = (props: InfoBoxProps) => {
-  const mergedProps = useMergedProps(InfoBox.defaultProps, {
+  const mergedProps = useMergedProps(InfoBox.__DEFAULT_PROPS, {
     ...props,
     icon: "Briefcase",
     label: "Current position",
@@ -64,7 +64,7 @@ export const Info = (props: InfoBoxProps) => {
 Info.parameters = {
   docs: componentSource(
     infos.map((info) => ({
-      ...InfoBox.defaultProps,
+      ...InfoBox.__DEFAULT_PROPS,
       info,
     }))
   ),
@@ -94,7 +94,7 @@ const examples: DetailConfigVariants<InfoBoxProps> = [
 export const Examples = () => {
   return (
     <ComponentVariants
-      defaults={InfoBox.defaultProps}
+      defaults={InfoBox.__DEFAULT_PROPS}
       variants={examples}
       of={InfoBox}
       columns={examples.length}
@@ -105,7 +105,7 @@ export const Examples = () => {
 Examples.parameters = {
   docs: componentSource(
     examples.map((example) => ({
-      ...InfoBox.defaultProps,
+      ...InfoBox.__DEFAULT_PROPS,
       ...example,
     }))
   ),

@@ -1,15 +1,16 @@
-import styled from "styled-components";
-
-import { virtualTableCellStyles } from "../VirtualTable.styles";
+import styles from "../VirtualTable.module.scss";
 
 import { FlexLayout } from "@/layouts/Flex";
 import { TableCell } from "@/layouts/Table";
-import { useLogger } from "@utils";
+import {
+  cssLengthUsage,
+  isNonNullish,
+  useCssClasses,
+  useCssVariables,
+  useLogger,
+} from "@utils";
 
-import type {
-  VirtualTableCellContentProps,
-  VirtualTableCellStyleProps,
-} from "../VirtualTable.types";
+import type { VirtualTableCellContentProps } from "../VirtualTable.types";
 import type { ReactNode } from "react";
 
 /**
@@ -29,28 +30,33 @@ export const VirtualTableCellContent = <TItem extends object>({
   CellContent,
 }: VirtualTableCellContentProps<TItem>): ReactNode => {
   const { error } = useLogger("VirtualTableCellContent");
+
+  const className = useCssClasses(styles["virtual-table-cell"], [
+    styles["fixed-width"],
+    isNonNullish(fixedWidth),
+  ]);
+  const style = useCssVariables({
+    "fixed-width": isNonNullish(fixedWidth)
+      ? cssLengthUsage(fixedWidth)
+      : undefined,
+  });
+
   if (!CellContent) {
     error("No CellContent provided to VirtualTableCellContent");
     return null;
   }
+
   return (
-    <StyledTableCell
-      $fixedWidth={fixedWidth}
+    <TableCell
+      className={className}
+      styleOverride={style}
       colSpan={colSpan}
       padded={paddedCell}
       testId="virtual"
     >
-      <StyledFlexLayout fill="row" align="center" justify="start">
+      <FlexLayout overflow="hidden" fill="row" align="center" justify="start">
         <CellContent index={index} item={item} />
-      </StyledFlexLayout>
-    </StyledTableCell>
+      </FlexLayout>
+    </TableCell>
   );
 };
-
-const StyledTableCell = styled(TableCell)<VirtualTableCellStyleProps>`
-  ${virtualTableCellStyles}
-`;
-
-const StyledFlexLayout = styled(FlexLayout)`
-  overflow: hidden;
-`;

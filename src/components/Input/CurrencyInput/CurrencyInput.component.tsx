@@ -1,8 +1,6 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
 import { currencySymbolIconMap } from "./CurrencyInput.data";
-import { currencyInputStyles } from "./CurrencyInput.styles";
 import {
   useCurrencyInput,
   useCurrencyInputValidationPattern,
@@ -14,14 +12,19 @@ import {
   defaultCommonInputProps,
 } from "../Input.common";
 import { useInputId, useInputRef, useInputStyles } from "../Input.utils";
+import styles from "./CurrencyInfo.module.scss";
 
 import { Icon, type IconProps } from "@/components/Icon";
-import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
+import {
+  useCssClasses,
+  useHtmlAttribute,
+  useMergedProps,
+  useTestId,
+} from "@utils";
 
 import type {
   CurrencyInputDefaultProps,
   CurrencyInputProps,
-  CurrencyInputStyleProps,
 } from "./CurrencyInput.types";
 import type { TestIdProps } from "@types";
 
@@ -43,7 +46,7 @@ const defaultCurrencyInputProps: CurrencyInputDefaultProps = {
  *
  * Does some rudimentary simple input & output value formatting.
  *
- * @version 0.0.5
+ * @version 0.1.0
  *
  * @param {CurrencyInputProps & TestIdProps} props - CurrencyInput component props
  * @returns {JSX.Element}
@@ -74,13 +77,18 @@ const CurrencyInput = (
   );
 
   const id = useInputId(mergedProps);
+  const className = useCssClasses(styles["currency-input"], [
+    styles["show-sign"],
+    mergedProps.showSign,
+  ]);
 
   return (
     <StyledInputContainer
       data-testid="input-currency-container"
       {...inputStyles}
     >
-      <StyledCurrencyInput
+      <StyledInput
+        className={className}
         data-testid={testId}
         type="text"
         lang="fr-FR"
@@ -98,18 +106,18 @@ const CurrencyInput = (
         onBlur={onBlur}
         ref={forwardRef}
         id={id}
-        $showSign={mergedProps.showSign}
         {...inputStyles}
       />
       {mergedProps.showSign && (
-        <SignControl
+        <StyledInputControl
+          className={styles["currency-input-sign"]}
           data-testid={`${testId}-sign-control`}
           {...inputStyles}
           $anchor="left"
           onClick={toggleSign}
         >
           <Icon name={signIcon} />
-        </SignControl>
+        </StyledInputControl>
       )}
       <StyledInputControl {...inputStyles}>
         <Icon {...iconProps} />
@@ -117,16 +125,6 @@ const CurrencyInput = (
     </StyledInputContainer>
   );
 };
-CurrencyInput.defaultProps = defaultCurrencyInputProps;
+CurrencyInput.__DEFAULT_PROPS = defaultCurrencyInputProps;
 
 export { CurrencyInput };
-
-const SignControl = styled(StyledInputControl)`
-  background: white;
-  box-shadow: var(--shadow-card-default);
-  border-radius: 50%;
-`;
-
-const StyledCurrencyInput = styled(StyledInput)<CurrencyInputStyleProps>`
-  ${currencyInputStyles}
-`;

@@ -1,15 +1,10 @@
-import styled from "styled-components";
+import { useMemo } from "react";
 
-import { buildTypographyStyle, defaultTypographyProps } from "../../typography";
+import { defaultTypographyProps, useTypographyStyles } from "../../typography";
 
-import {
-  useClassName,
-  useHtmlAttribute,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { useHtmlAttribute, useLogger, useMergedProps, useTestId } from "@utils";
 
-import type { HeadingProps, StyleProps, TestIdProps } from "@types";
+import type { HeadingProps, TestIdProps } from "@types";
 
 const defaultHeadingProps: Required<HeadingProps> = {
   ...defaultTypographyProps,
@@ -19,39 +14,46 @@ const defaultHeadingProps: Required<HeadingProps> = {
 /**
  * Customizable, accessible heading.
  *
- * @version 0.0.9
+ * @version 0.1.0
  *
  * @param {WithTestId<HeadingProps>} props - Heading component props
  * @return {JSX.Element} - The styled heading component
  */
-const Heading = (props: HeadingProps & TestIdProps) => {
-  const innerProps = useStyleProps(props);
+const Heading = (props: HeadingProps & TestIdProps): JSX.Element => {
+  const mergedProps = useMergedProps(defaultHeadingProps, props);
   const testId = useTestId("heading", props);
-  const className = useClassName(props);
-  const id = useHtmlAttribute(props.id);
-  const style = useHtmlAttribute(props.styleOverride);
-  const title = useHtmlAttribute(props.title);
+  const { error } = useLogger("Heading");
+  const id = useHtmlAttribute(mergedProps.id);
+  const title = useHtmlAttribute(mergedProps.title);
+  const typographyStyles = useTypographyStyles(mergedProps, true);
 
-  return (
-    <HeadingInner
-      id={id}
-      {...innerProps}
-      as={props.size ?? defaultHeadingProps.size}
-      data-testid={testId}
-      className={className}
-      style={style}
-      title={title}
-    >
-      {props.children}
-    </HeadingInner>
-  );
+  const sharedProperties = useMemo(() => {
+    return {
+      ...typographyStyles,
+      id,
+      title,
+      "data-testid": testId,
+      children: mergedProps.children,
+    };
+  }, [id, mergedProps.children, testId, title, typographyStyles]);
+
+  switch (mergedProps.size) {
+    case "h2":
+      return <h2 {...sharedProperties} />;
+    case "h3":
+      return <h3 {...sharedProperties} />;
+    case "h4":
+      return <h4 {...sharedProperties} />;
+    default: {
+      if (mergedProps.size !== "h1")
+        error(
+          `Invalid size supplied. Expected one of h1, h2, h3, h4. Got ${mergedProps.size as unknown}.`
+        );
+      return <h1 {...sharedProperties} />;
+    }
+  }
 };
 
-Heading.defaultProps = defaultHeadingProps;
+Heading.__DEFAULT_PROPS = defaultHeadingProps;
 
 export { Heading };
-
-const HeadingInner = styled.span<StyleProps<HeadingProps>>`
-  display: block;
-  ${buildTypographyStyle(defaultHeadingProps)}
-`;

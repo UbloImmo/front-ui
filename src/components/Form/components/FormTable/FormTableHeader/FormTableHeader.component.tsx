@@ -1,14 +1,12 @@
 import { isString, type Optional } from "@ubloimmo/front-util";
 import { useMemo } from "react";
-import styled from "styled-components";
 
 import { useFormContext } from "../../../Form.context";
+import styles from "../FormTable.module.scss";
 
 import { Checkbox } from "@/components/Checkbox";
-import {
-  InputLabelText,
-  type InputLabelTextStyleProps,
-} from "@/components/InputLabel";
+import { getInputLabelTextClassName } from "@/components/InputLabel/InputLabel.styles";
+import { Text } from "@/components/Text";
 import { Tooltip, type TooltipProps } from "@/components/Tooltip";
 import { FlexRowLayout } from "@/layouts/Flex";
 import {
@@ -16,10 +14,9 @@ import {
   TableHeaderCell,
   type TableHeaderProps,
 } from "@/layouts/Table";
-import { isEmptyString } from "@utils";
+import { cssClasses, isEmptyString } from "@utils";
 
 import type { BuiltFormTableProps } from "../../../Form.types";
-import type { TextProps } from "@types";
 
 type FormTableHeaderProps = Pick<
   BuiltFormTableProps,
@@ -48,6 +45,7 @@ export const FormTableHeader = ({
     () => isEditing && modifiers.selectable,
     [isEditing, modifiers.selectable]
   );
+
   return (
     <TableHeader sticky={sticky}>
       {showSelectionHeader && (
@@ -76,18 +74,23 @@ export const FormTableHeader = ({
         const headerLabel =
           !isString(label) || isEmptyString(label) ? <>&nbsp;</> : label;
 
+        const className = cssClasses(
+          getInputLabelTextClassName(required && isEditing),
+          styles["form-table-header-label-text"]
+        );
+
         return (
           <TableHeaderCell key={key} colSpan={colSpans[index] ?? 1}>
             <FlexRowLayout align="center" gap="s-2" justify={justify} fill>
-              <TableHeaderLabelText
+              <Text
+                className={className}
                 color="primary-dark"
                 size="m"
                 weight="bold"
                 testId="input-label-text"
-                $required={required && isEditing}
               >
                 {headerLabel}
-              </TableHeaderLabelText>
+              </Text>
               {headerTooltip && <Tooltip {...headerTooltip} />}
             </FlexRowLayout>
           </TableHeaderCell>
@@ -96,10 +99,3 @@ export const FormTableHeader = ({
     </TableHeader>
   );
 };
-
-const TableHeaderLabelText = styled(InputLabelText)<
-  InputLabelTextStyleProps & TextProps
->`
-  white-space: nowrap;
-  min-width: max-content;
-`;

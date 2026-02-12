@@ -1,22 +1,13 @@
 import { isNumber, isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import {
-  headerContainerStyles,
-  headerTitleContainerStyles,
-} from "./ListSideHeader.styles";
+import { useListSideHeaderClassNames } from "./ListSideHeader.styles";
 
 import { Badge } from "@/components/Badge";
 import { Heading } from "@/components/Heading";
 import { useListContext } from "@/components/List/context";
 import { FlexLayout } from "@/layouts/Flex";
-import {
-  useClassName,
-  useHtmlAttribute,
-  useMergedProps,
-  useTestId,
-} from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type {
   ListSideHeaderDefaultProps,
@@ -36,14 +27,14 @@ const listSideHeaderDefaultProps: ListSideHeaderDefaultProps = {
  *
  * Renders a title and a count of items
  *
- * @version 0.0.5
+ * @version 0.1.0
  */
 export const ListSideHeader = (
   props: ListSideHeaderProps & TestIdProps & Omit<StyleOverrideProps, "as">
 ) => {
   const mergedProps = useMergedProps(listSideHeaderDefaultProps, props);
   const testId = useTestId("list-side-header", props);
-  const className = useClassName(props);
+  const classNames = useListSideHeaderClassNames(props.className);
   const style = useHtmlAttribute(props.styleOverride);
 
   const { itemCount } = useListContext();
@@ -59,8 +50,9 @@ export const ListSideHeader = (
   }, [itemCount, mergedProps.overrideCount, mergedProps.displayCount]);
 
   return (
-    <HeaderContainer className={className} data-testid={testId} style={style}>
-      <HeaderTitleContainer
+    <header className={classNames.container} data-testid={testId} style={style}>
+      <FlexLayout
+        className={classNames.titleContainer}
         align="center"
         gap="s-2"
         justify="space-between"
@@ -72,16 +64,8 @@ export const ListSideHeader = (
           {mergedProps.title}
         </Heading>
         {isString(count) && <Badge label={`${count}`} color="primary" />}
-      </HeaderTitleContainer>
+      </FlexLayout>
       {mergedProps.children}
-    </HeaderContainer>
+    </header>
   );
 };
-
-const HeaderContainer = styled.header`
-  ${headerContainerStyles}
-`;
-
-const HeaderTitleContainer = styled(FlexLayout)`
-  ${headerTitleContainerStyles}
-`;

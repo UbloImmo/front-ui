@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { SearchInput } from "./SearchInput.component";
 
@@ -7,12 +7,12 @@ import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { SearchInputProps } from "./SearchInput.types";
 import type { IconName } from "@/components/Icon";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   SearchInputProps<NullishPrimitives>
->("SearchInput", SearchInput.defaultProps);
+>("SearchInput", SearchInput.__DEFAULT_PROPS);
 
 const getResults = () => {
   return [

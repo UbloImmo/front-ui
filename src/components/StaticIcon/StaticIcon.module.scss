@@ -1,0 +1,56 @@
+@use "../../styles/_mixins.scss";
+
+.static-icon {
+  --radius: var(--s-1);
+  --size: var(--s-7);
+
+  --border-color: var(--primary-medium);
+  --bg: var(--primary-light);
+
+  --border: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg);
+
+  @include mixins.dimensions(var(--size), var(--size), true);
+
+  transition:
+    background 150ms var(--bezier),
+    border 150ms var(--bezier);
+
+  &.stroke {
+    --border: var(--border-color);
+  }
+
+  &.size-xs {
+    --radius: var(--s-1);
+    --size: var(--s-5);
+  }
+  &.size-s {
+    --radius: var(--s-1);
+    --size: var(--s-7);
+  }
+  &.size-m {
+    --radius: var(--s-2);
+    --size: var(--s-10);
+  }
+  &.size-l {
+    --radius: var(--s-4);
+    --size: var(--s-12);
+  }
+}
+
+.static-icon-indicator {
+  @include mixins.dimensions(0.625rem, 0.625rem, true); // 10px;
+  position: absolute;
+  top: calc(var(--s-3) * -0.5);
+  right: calc(var(--s-3) * -0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -17,16 +17,12 @@ const config: StorybookConfig = {
 
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/addon-measure",
-    "@storybook/addon-outline",
-    "@storybook/addon-viewport",
-    "@storybook/addon-themes",
     {
       name: "@storybook/addon-docs",
       options: { transcludeMarkdown: true },
     },
+    "@storybook/addon-a11y",
+    "@storybook/addon-themes",
   ],
 
   framework: {

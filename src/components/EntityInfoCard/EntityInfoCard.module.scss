@@ -1,0 +1,50 @@
+.entity-info-card {
+  border-radius: var(--s-2);
+  border: 1px solid var(--primary-light);
+}
+
+.entity-info-card-header {
+  background: var(--gray-50);
+  padding: var(--s-1);
+  border-top-left-radius: var(--s-2);
+  border-top-right-radius: var(--s-2);
+}
+
+.entity-info-card-section {
+  padding: var(--s-4);
+  background: var(--white);
+  border-top: 1px solid var(--primary-light);
+
+  &:last-child {
+    border-bottom-left-radius: var(--s-2);
+    border-bottom-right-radius: var(--s-2);
+  }
+}
+
+.entity-info-card-heading {
+  width: 100%;
+  flex: 1;
+  margin-bottom: var(--s-3);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.entity-info-card-status-rows {
+  &:not(:first-child) {
+    margin-top: var(--s-2);
+  }
+  &:not(:last-child) {
+    margin-bottom: var(--s-2);
+  }
+}
+
+.entity-info-card-actions {
+  background: var(--gray-50);
+  padding: var(--s-1);
+  border-top: 1px solid var(--primary-light);
+  border-bottom-left-radius: var(--s-2);
+  border-bottom-right-radius: var(--s-2);
+}

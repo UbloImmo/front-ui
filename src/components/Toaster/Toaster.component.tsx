@@ -8,7 +8,7 @@ import {
   ToasterIconOverrides,
 } from "./Toaster.types";
 import { Icon } from "../Icon";
-import { toasterIcons, ToasterStyles } from "./Toaster.styles";
+import { toasterIcons, useToasterClassNames } from "./Toaster.styles";
 import { Loading } from "../Loading";
 
 import { parseFixedLengthToPx } from "@/sizes/size.utils";
@@ -35,7 +35,7 @@ const defaultToasterProps: ToasterDefaultProps = {
  *
  * Built with [Sonner](https://sonner.emilkowal.ski/).
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @param {ToasterProps & TestIdProps} props - Toaster component props
  * @returns {JSX.Element}
@@ -65,30 +65,29 @@ const Toaster = (props: ToasterProps & TestIdProps): JSX.Element => {
   );
 
   const icons = useStatic<ToasterIconOverrides>({
-    ...transformObject(toasterIcons, (name) => <Icon name={name} />),
-    loading: <Loading animation="BouncingBalls" />,
+    ...transformObject(toasterIcons, (name) => <Icon name={name} size="s-4" />),
+    loading: <Loading animation="Ripple" size="s-4" color="pending-base" />,
     ...iconOverrides,
   });
+  const classNames = useToasterClassNames();
 
   return (
-    <>
-      <Sonner
-        theme={theme}
-        position={position}
-        visibleToasts={visibleToasts}
-        duration={duration}
-        richColors={richColors}
-        offset={offsets.offset}
-        mobileOffset={offsets.mobileOffset}
-        invert={invert}
-        expand={expand}
-        closeButton={closeButton}
-        icons={icons}
-      />
-      <ToasterStyles />
-    </>
+    <Sonner
+      theme={theme}
+      position={position}
+      visibleToasts={visibleToasts}
+      duration={duration}
+      richColors={richColors}
+      offset={offsets.offset}
+      mobileOffset={offsets.mobileOffset}
+      invert={invert}
+      expand={expand}
+      closeButton={closeButton}
+      icons={icons}
+      toastOptions={{ classNames }}
+    />
   );
 };
-Toaster.defaultProps = defaultToasterProps;
+Toaster.__DEFAULT_PROPS = defaultToasterProps;
 
 export { Toaster };

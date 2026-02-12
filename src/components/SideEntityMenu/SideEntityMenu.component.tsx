@@ -1,23 +1,17 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import { SideEntityMenuItem } from "./components/SideEntityMenuItem";
-import { sideEntityMenuContainerStyles } from "./SideEntityMenu.styles";
+import { SideEntityMenuItem } from "./components";
+import { useSideEntityMenuClassnames } from "./SideEntityMenu.styles";
 import { Divider } from "../Divider";
 
-import { Pane, type PaneProps } from "@layouts";
-import {
-  useTestId,
-  useMergedProps,
-  useHtmlAttribute,
-  useClassName,
-} from "@utils";
+import { Pane } from "@layouts";
+import { useTestId, useMergedProps, useHtmlAttribute } from "@utils";
 
 import type {
   SideEntityMenuProps,
   SideEntityMenuDefaultProps,
 } from "./SideEntityMenu.types";
-import type { StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 
 const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
   menuLinks: [],
@@ -37,7 +31,7 @@ const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
 /**
  * A side navigation menu component for entity-based navigation
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {SideEntityMenuProps & TestIdProps} props - SideEntityMenu component props
  * @returns {JSX.Element}
@@ -47,7 +41,7 @@ const SideEntityMenu = (
 ): JSX.Element => {
   const mergedProps = useMergedProps(defaultSideEntityMenuProps, props);
   const testId = useTestId("side-entity-menu", props);
-  const className = useClassName(props);
+  const classNames = useSideEntityMenuClassnames(mergedProps);
   const style = useHtmlAttribute(props.styleOverride);
 
   const {
@@ -82,16 +76,15 @@ const SideEntityMenu = (
   }, [menuLinks]);
 
   return (
-    <StyledSideEntityPane
+    <Pane
       expandedWidth={width}
       collapsedWidth={collapsedWidth}
       forceExpanded={forceExpanded}
       testId={testId}
-      className={className}
+      className={classNames.pane}
       styleOverride={style}
       overrideTestId
       expandedBreakpoint={expandedBreakpoint}
-      $expandedBreakpoint={expandedBreakpoint}
     >
       {backLinksWithIcons.length > 0 && (
         <>
@@ -142,7 +135,9 @@ const SideEntityMenu = (
       ))}
 
       {/* Add spacing after pinned items if there are regular items */}
-      {pinnedItems.length > 0 && regularItems.length > 0 && <StyledSeparator />}
+      {pinnedItems.length > 0 && regularItems.length > 0 && (
+        <div aria-hidden="true" className={classNames.separator} />
+      )}
 
       {/* Render regular items */}
       {regularItems.map((link, index) => (
@@ -155,20 +150,10 @@ const SideEntityMenu = (
           overrideTestId={true}
         />
       ))}
-    </StyledSideEntityPane>
+    </Pane>
   );
 };
 
-SideEntityMenu.defaultProps = defaultSideEntityMenuProps;
+SideEntityMenu.__DEFAULT_PROPS = defaultSideEntityMenuProps;
 
 export { SideEntityMenu };
-
-const StyledSideEntityPane = styled(Pane)<
-  StyleProps<Pick<PaneProps, "expandedBreakpoint">>
->`
-  ${sideEntityMenuContainerStyles}
-`;
-
-const StyledSeparator = styled.div`
-  height: 0.75rem;
-`;

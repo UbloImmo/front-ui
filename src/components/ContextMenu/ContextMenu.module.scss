@@ -1,0 +1,41 @@
+.context-menu {
+  --context-menu-padding: 0;
+  --context-menu-border-radius: var(--s-05);
+  --context-menu-shadow: var(--shadow-card-elevation-medium);
+  --context-menu-gap: 0;
+
+  &.s {
+    --context-menu-gap: 0;
+    --context-menu-padding: 0;
+    --context-menu-border-radius: var(--s-05);
+    --context-menu-shadow: var(--shadow-card-elevation-medium);
+  }
+
+  &.m {
+    --context-menu-gap: var(--s-1);
+    --context-menu-padding: var(--s-1);
+    --context-menu-border-radius: var(--s-2);
+    --context-menu-shadow: var(--shadow-card-elevation-high);
+  }
+
+  position: relative;
+  padding: var(--context-menu-padding);
+  border-radius: var(--context-menu-border-radius);
+  box-shadow: var(--context-menu-shadow);
+  background: var(--gray-50);
+  border: 1px solid var(--primary-medium);
+  gap: var(--context-menu-gap);
+
+  // Max width of an EntityInfoCard in admin
+  // TODO: make parametric
+  max-width: 25.625rem;
+}
+
+.context-menu-action.open {
+  background: var(--primary-light);
+  border-color: var(--primary-medium);
+
+  svg[data-testid="icon"] {
+    fill: var(--primary-base);
+  }
+}

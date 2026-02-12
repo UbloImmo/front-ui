@@ -1,65 +1,61 @@
-import { isObject, Optional } from "@ubloimmo/front-util";
-import { forwardRef, useMemo, type ForwardedRef } from "react";
-import styled, { CSSProperties } from "styled-components";
+import { forwardRef } from "react";
 
-import { tableRowStyles } from "./TableRow.styles";
+import { useTableRowStyle } from "./TableRow.styles";
 
-import { useClassName, useStyleProps, useTestId } from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
-import type { TableRowProps, TableRowStyleProps } from "./TableRow.types";
+import type { TableRowProps } from "./TableRow.types";
 import type { TestIdProps } from "@types";
+
+const defaultTableRowProps: Required<TableRowProps> = {
+  children: null,
+  onClick: null,
+  style: "form",
+  className: null,
+  styleOverride: null,
+  id: null,
+};
 
 /**
  * A table row component, to be used in `TableBody`.
  *
- * @version 0.0.6
+ * @version 0.1.0
  */
 export const TableRow = forwardRef<
   HTMLTableRowElement,
   TableRowProps & TestIdProps
->(
-  (
-    {
-      className,
-      children,
-      onClick,
-      testId,
-      overrideTestId,
-      style = "form",
-      styleOverride,
-      ...props
-    },
-    ref
-  ) => {
-    const cn = useClassName({ className });
-    const tid = useTestId("table-row", { testId, overrideTestId });
-    const styleProps = useStyleProps({ style, clickable: !!onClick });
-    const styleProperties = useMemo<Optional<CSSProperties>>(() => {
-      if (styleOverride) return styleOverride ?? undefined;
-      if (style && style !== "form" && style !== "list" && isObject(style))
-        return style as CSSProperties;
-      return undefined;
-    }, [styleOverride, style]);
-    return (
-      <StyledTableRow
-        ref={ref}
-        data-testid={tid}
-        className={cn}
-        style={styleProperties}
-        onClick={onClick}
-        {...props}
-        {...styleProps}
-      >
-        {children}
-      </StyledTableRow>
-    );
-  }
-);
+>((props, ref) => {
+  const mergedProps = useMergedProps(defaultTableRowProps, props);
+  const { style, className } = useTableRowStyle(mergedProps);
 
-const StyledTableRow = styled.tr<
-  TableRowStyleProps & {
-    ref: ForwardedRef<HTMLTableRowElement>;
-  }
->`
-  ${tableRowStyles}
-`;
+  const {
+    children,
+    onClick,
+    className: _,
+    style: __,
+    styleOverride: ___,
+    id: rowId,
+    ...restProps
+  } = mergedProps;
+  const testId = useTestId("table-row", props);
+
+  const onClickHandler = useHtmlAttribute(onClick);
+  const id = useHtmlAttribute(rowId);
+
+  if ("testId" in restProps) delete restProps.testId;
+  if ("overrideTestId" in restProps) delete restProps.overrideTestId;
+
+  return (
+    <tr
+      ref={ref}
+      data-testid={testId}
+      className={className}
+      style={style}
+      id={id}
+      onClick={onClickHandler}
+      {...restProps}
+    >
+      {children}
+    </tr>
+  );
+});

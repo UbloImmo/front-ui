@@ -3,6 +3,7 @@ import type {
   ColorKeyOrWhite,
   PaletteColor,
   PaletteColorOrWhite,
+  StyleOverrideProps,
   StyleProps,
 } from "@types";
 
@@ -33,7 +34,7 @@ export type StateIndicatorProps = {
    * @default "primary"
    */
   color?: ColorKeyOrWhite;
-};
+} & StyleOverrideProps;
 
 export type DefaultStateIndicatorProps = Required<StateIndicatorProps>;
 

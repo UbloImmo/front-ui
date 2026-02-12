@@ -1,5 +1,5 @@
-import { fn } from "@storybook/test";
 import { useState } from "react";
+import { fn } from "storybook/test";
 
 import { Field } from "./Field.component";
 import { inputTypes } from "../Input/Input.data";
@@ -11,7 +11,7 @@ import { useMergedProps } from "@utils";
 import type { FieldProps } from "./Field.types";
 import type { InputType, InputValue } from "../Input";
 import type { InputLabelTooltipProps } from "../InputLabel";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<FieldProps<InputType>>(
@@ -20,14 +20,14 @@ const componentSource = componentSourceFactory<FieldProps<InputType>>(
     type: "text",
     label: "[Field label]",
   },
-  Field.defaultProps
+  Field.__DEFAULT_PROPS
 );
 
 const meta = {
   component: Field,
   title: "Components/Forms/Field/Stories",
   args: {
-    ...Field.defaultProps,
+    ...Field.__DEFAULT_PROPS,
     onChange: fn() as FieldProps<"text">["onChange"],
     label: "Some field",
     placeholder: "Some field's placeholder",
@@ -87,7 +87,7 @@ export const Default = {} as Story;
 
 export const Types = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
-    Field.defaultProps as Required<FieldProps<InputType>>,
+    Field.__DEFAULT_PROPS as Required<FieldProps<InputType>>,
     props
   );
   return (
@@ -110,7 +110,7 @@ const labels = ["First name", "Last name"];
 
 export const Labels = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
-    Field.defaultProps as Required<FieldProps<InputType>>,
+    Field.__DEFAULT_PROPS as Required<FieldProps<InputType>>,
     props
   );
   return (
@@ -130,7 +130,7 @@ const bools = [false, true];
 
 export const Required = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
-    Field.defaultProps as Required<FieldProps<InputType>>,
+    Field.__DEFAULT_PROPS as Required<FieldProps<InputType>>,
     props
   );
   return (
@@ -148,7 +148,7 @@ export const Required = (props: FieldProps<InputType>) => {
 
 export const Disabled = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
-    Field.defaultProps as Required<FieldProps<InputType>>,
+    Field.__DEFAULT_PROPS as Required<FieldProps<InputType>>,
     props
   );
   return (
@@ -168,7 +168,7 @@ const assistiveTexts = ["The CVC can be found on the back of your card", null];
 
 export const AssistiveTexts = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
-    Field.defaultProps as Required<FieldProps<InputType>>,
+    Field.__DEFAULT_PROPS as Required<FieldProps<InputType>>,
     props
   );
   return (
@@ -188,7 +188,7 @@ const errorTexts = ["This field is required", null];
 
 export const ErrorTexts = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
-    Field.defaultProps as Required<FieldProps<InputType>>,
+    Field.__DEFAULT_PROPS as Required<FieldProps<InputType>>,
     { ...props, error: true, assistiveText: null }
   );
   return (
@@ -211,7 +211,7 @@ const tooltipProps: Nullable<InputLabelTooltipProps>[] = [
 
 export const Tooltips = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
-    Field.defaultProps as Required<FieldProps<InputType>>,
+    Field.__DEFAULT_PROPS as Required<FieldProps<InputType>>,
     props
   );
   return (
@@ -247,7 +247,7 @@ const suffixes = [null, "€", "m²", "[suffix]"];
 
 export const WithSuffix = (props: FieldProps<InputType>) => {
   const defaults = useMergedProps(
-    Field.defaultProps as Required<FieldProps<InputType>>,
+    Field.__DEFAULT_PROPS as Required<FieldProps<InputType>>,
     props
   );
   return (

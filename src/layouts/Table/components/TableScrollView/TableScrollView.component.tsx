@@ -1,19 +1,12 @@
 import { forwardRef } from "react";
-import styled from "styled-components";
 
-import { tableScrollViewStyles } from "./TableScrollView.styles";
+import { useTableScrollViewStyles } from "./TableScrollView.styles";
 
-import {
-  useTestId,
-  useClassName,
-  useHtmlAttribute,
-  useMergedProps,
-} from "@utils";
+import { useTestId, useMergedProps } from "@utils";
 
 import type {
   TableScrollViewDefaultProps,
   TableScrollViewProps,
-  TableScrollViewStyleProps,
 } from "./TableScrollView.types";
 import type { TestIdProps } from "@types";
 
@@ -29,7 +22,7 @@ const tableScrollViewDefaultProps: TableScrollViewDefaultProps = {
 /**
  * A wrapper component designed to enable horizontal scrolling in a `Table`.
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @example
  * <TableScrollView>
@@ -45,29 +38,16 @@ const TableScrollView = forwardRef<
   HTMLDivElement,
   TableScrollViewProps & TestIdProps
 >((props: TableScrollViewProps & TestIdProps, ref) => {
-  const { children, styleOverride, overflowDirection, maxHeight, style } =
-    useMergedProps(tableScrollViewDefaultProps, props);
+  const mergedProps = useMergedProps(tableScrollViewDefaultProps, props);
   const testId = useTestId("table-scroll-view", props);
-  const className = useClassName(props);
-  const styles = useHtmlAttribute(styleOverride);
+
+  const { className, style } = useTableScrollViewStyles(mergedProps);
 
   return (
-    <StyledTableScrollView
-      data-testid={testId}
-      className={className}
-      $style={style}
-      style={styles}
-      ref={ref}
-      $overflowDirection={overflowDirection}
-      $maxHeight={maxHeight}
-    >
-      {children}
-    </StyledTableScrollView>
+    <div data-testid={testId} className={className} style={style} ref={ref}>
+      {mergedProps.children}
+    </div>
   );
 });
 
 export { TableScrollView };
-
-const StyledTableScrollView = styled.div<TableScrollViewStyleProps>`
-  ${tableScrollViewStyles}
-`;

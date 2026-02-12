@@ -14,7 +14,7 @@ const defaultPortalProps: DefaultPortalProps = {
 /**
  * Renders its children in a portal, using the specified root element selector.
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @private - Used interally by Dialog
  *
@@ -36,6 +36,6 @@ const Portal = (props: PortalProps): Nullable<ReactPortal> => {
   return createPortal(children, root);
 };
 
-Portal.defaultProps = defaultPortalProps;
+Portal.__DEFAULT_PROPS = defaultPortalProps;
 
 export { Portal };

@@ -1,54 +1,23 @@
-import { css, type RuleSet } from "styled-components";
+import styles from "./Collapsible.module.scss";
 
-import type { CollapsibleContainerStyleProps } from "./Collapsible.types";
+import { useCssClasses } from "@utils";
 
-export const collapsibleContainerStyles = ({
-  $compact,
-  $disabled,
-}: CollapsibleContainerStyleProps) => css`
-  ${$compact
-    ? css`
-        padding: var(--s-1) 0;
-      `
-    : css`
-        border-bottom: 1px solid var(--primary-light);
-        padding: var(--s-2) 0;
-      `}
+import type { CollapsibleDefaultProps } from "./Collapsible.types";
 
-  ${$disabled &&
-  css`
-    & *[data-testid="text"] {
-      color: var(--gray-600);
-    }
-  `}
+export function useCollapsibleLayoutStyle(props: CollapsibleDefaultProps) {
+  const collapsible = useCssClasses(
+    styles.collapsible,
+    [styles.compact, props.compact],
+    [styles.disabled, props.disabled]
+  );
 
-  & *[data-testid="text"] {
-    margin-bottom: 0 !important;
-  }
-`;
+  const caret = useCssClasses(styles["collasible-caret"]);
 
-export const caretContainerStyles = (): RuleSet => {
-  return css`
-    // padding set to expand caret clickable area
-    display: flex;
-    max-height: var(--s-5);
-    align-items: center;
-    justify-content: center;
-    padding: var(--s-2) var(--s-2) var(--s-2) 0;
-    border: none;
-    background: none;
-    cursor: pointer;
+  const subContainer = useCssClasses(styles["collasible-sub-container"]);
 
-    &[aria-expanded] [data-testid="icon"] {
-      transition: transform 150ms var(--bezier);
-    }
-
-    &[aria-expanded="true"] [data-testid="icon"] {
-      transform: rotate(90deg);
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-    }
-  `;
-};
+  return {
+    collapsible,
+    caret,
+    subContainer,
+  };
+}

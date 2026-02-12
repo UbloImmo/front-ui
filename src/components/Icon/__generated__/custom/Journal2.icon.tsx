@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 
 import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "../../../../utils";
+
 /**
  * React component generated from custom icon: `journal-2`.
  * Auto-generated before NPM release
@@ -10,7 +11,7 @@ import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "../../../../util
  * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const Journal2 = (props: CommonIconProps): JSX.Element => {
+const Journal2 = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {
@@ -62,3 +63,5 @@ export const Journal2 = (props: CommonIconProps): JSX.Element => {
     </svg>
   );
 };
+
+export default Journal2;

@@ -8,18 +8,18 @@ import { useMergedProps } from "@utils";
 import { Badge, StateIndicator, Button, Field } from "@components";
 
 import type { PopoverProps } from "./Popover.types";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<PopoverProps>(
   "Popover",
-  Popover.defaultProps
+  Popover.__DEFAULT_PROPS
 );
 
 const meta = {
   component: Popover,
   title: "Layouts/Popover/Stories",
   args: {
-    ...Popover.defaultProps,
+    ...Popover.__DEFAULT_PROPS,
   },
   parameters: {
     docs: componentSource(),
@@ -32,7 +32,11 @@ const buildLabeledElementsList = (label: string) => {
   return [
     <Button key="button" label={"Button " + label} color="black" />,
     <Badge key="badge" label={"Badge " + label} />,
-    <StateIndicator key="state-indicator" label={"State Indicator " + label} />,
+    <StateIndicator
+      icon="Circle"
+      key="state-indicator"
+      label={"State Indicator " + label}
+    />,
     <Field key="field" type="text" label={"Field " + label} />,
   ];
 };
@@ -51,7 +55,7 @@ const triggers = buildLabeledElementsList("trigger");
 const bools = [false, true];
 
 export const Triggers = (props: Partial<PopoverProps>) => {
-  const defaults = useMergedProps(Popover.defaultProps, props);
+  const defaults = useMergedProps(Popover.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       columns={1}
@@ -84,7 +88,7 @@ export const Triggers = (props: Partial<PopoverProps>) => {
 const contents = buildLabeledElementsList("within popover");
 
 export const Content = (props: Partial<PopoverProps>) => {
-  const defaults = useMergedProps(Popover.defaultProps, props);
+  const defaults = useMergedProps(Popover.__DEFAULT_PROPS, props);
   return (
     <ComponentVariants
       columns={1}
@@ -119,7 +123,7 @@ export const Content = (props: Partial<PopoverProps>) => {
 };
 
 export const Fit = (props: Partial<PopoverProps>) => {
-  const defaults = useMergedProps(Popover.defaultProps, {
+  const defaults = useMergedProps(Popover.__DEFAULT_PROPS, {
     ...props,
     content: <div>Contents</div>,
     children: buildLabeledElementsList("trigger")[0],

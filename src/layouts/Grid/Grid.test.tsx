@@ -10,7 +10,7 @@ const testGridLayout = testComponentFactory<GridLayoutProps>(
 );
 
 testGridLayout({
-  ...GridLayout.defaultProps,
+  ...GridLayout.__DEFAULT_PROPS,
   columns: ["1fr", "auto", "s-1", "12px", "14.423rem"],
   rows: ["1fr", "auto", "s-1", "12px", "14.423rem"],
 })("sould render with specified columns and rows", ({ queryByTestId }) => {

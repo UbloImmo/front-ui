@@ -14,7 +14,7 @@ describe("Input", () => {
     "TextInput",
     TextInput,
     {
-      props: TextInput.defaultProps,
+      props: TextInput.__DEFAULT_PROPS,
       tests: [
         {
           name: "should render",

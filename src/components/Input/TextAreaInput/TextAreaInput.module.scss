@@ -1,0 +1,17 @@
+@use "../../../sizes/_breakpoints.scss";
+
+.textarea-input {
+  max-height: unset;
+  height: var(--s-16);
+  min-height: var(--s-16);
+
+  resize: none;
+
+  &.resize {
+    resize: vertical;
+  }
+
+  @media screen and (max-width: breakpoints.$breakpoint-xs) {
+    min-height: var(--s-20);
+  }
+}

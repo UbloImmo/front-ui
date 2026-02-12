@@ -1,15 +1,14 @@
-import { fn } from "@storybook/test";
-import styled from "styled-components";
+import { fn } from "storybook/test";
 
 import { Modal } from "./Modal.component";
 import { Button } from "../Button";
 import { DialogProvider, useDialog, type DialogReference } from "../Dialog";
 
 import { componentSourceFactory } from "@docs/docs.utils";
-import { mergeDefaultProps } from "@utils";
+import { mergeDefaultProps, useCssStyles } from "@utils";
 
 import type { ModalProps } from "./Modal.types";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 
 const ref = "modal-story";
@@ -20,7 +19,7 @@ const componentSource = componentSourceFactory<ModalProps>(
     reference: ref,
     title: "Modal title",
   },
-  Modal.defaultProps
+  Modal.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -64,18 +63,17 @@ const TestModal =
       reference: ref,
     });
     const { open } = useDialog(ref);
+    const style = useCssStyles({
+      padding: "var(--s-1) 0",
+      display: "flex",
+      alignItems: "center",
+    });
     return (
-      <StoryContainer>
+      <div style={style}>
         <Button label={buttonLabel} onClick={open} color="black" />
         <Modal {...mergedProps}>{fixedChildren}</Modal>
-      </StoryContainer>
+      </div>
     );
   };
 
 export const Default = TestModal("example-default", "Modal content");
-
-const StoryContainer = styled.div`
-  padding: var(--s-1) 0;
-  display: flex;
-  align-items: center;
-`;

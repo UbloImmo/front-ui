@@ -1,10 +1,8 @@
-import styled from "styled-components";
-
-import { entityCardActionsContainerStyles } from "../EntityInfoCard.styles";
+import styles from "../EntityInfoCard.module.scss";
 
 import { Action } from "@/components/Action";
 import { FlexColumnLayout } from "@/layouts/Flex";
-import { useMergedProps, useTestId } from "@utils";
+import { useCssClasses, useMergedProps, useTestId } from "@utils";
 
 import type {
   EntityInfoCardFooterDefaultProps,
@@ -34,11 +32,14 @@ export const EntityInfoCardFooter = (
     testId: testIdProp,
     overrideTestId,
   });
+  const className = useCssClasses(styles["entity-info-card-actions"]);
 
   return (
     <>
       {!!actions.length && (
-        <EntityCardActionsContainer
+        <FlexColumnLayout
+          as="footer"
+          className={className}
           testId={`${testId}-actions`}
           overrideTestId
           fill
@@ -55,12 +56,8 @@ export const EntityInfoCardFooter = (
               />
             );
           })}
-        </EntityCardActionsContainer>
+        </FlexColumnLayout>
       )}
     </>
   );
 };
-
-const EntityCardActionsContainer = styled(FlexColumnLayout)`
-  ${entityCardActionsContainerStyles}
-`;

@@ -1,6 +1,5 @@
 import { isFunction, isString, type Nullable } from "@ubloimmo/front-util";
 import { FC, useMemo } from "react";
-import styled from "styled-components";
 
 import { FormCustomContent } from "./FormCustomContent.component";
 import { FormCustomField } from "./FormCustomField.component";
@@ -9,7 +8,7 @@ import { FormFeatureSwitch } from "./FormFeatureSwitch.component";
 import { FormField } from "./FormField.component";
 import { FormText } from "./FormText.component";
 import { useFormContext } from "../Form.context";
-import { formFieldListContainerStyles } from "../Form.styles";
+import styles from "../Form.module.scss";
 import {
   isBuiltCustomFormField,
   isBuiltFormFeatureSwitch,
@@ -22,10 +21,16 @@ import {
 import { FormTable } from "./FormTable/FormTable.component";
 
 import { GridLayout } from "@/layouts/Grid";
+import { useCssClasses } from "@utils";
 
 import type { BuiltFormCustomContentProps } from "../Form.types";
 import type { DividerProps } from "@/components/Divider";
 
+/**
+ * Renders a form's visible (non hidden) fields in a grid
+ *
+ * @version 0.1.0
+ */
 export const FormFieldRenderer = <TData extends object>() => {
   const { content, columns, isLoading } = useFormContext<TData>();
 
@@ -78,19 +83,20 @@ export const FormFieldRenderer = <TData extends object>() => {
     });
   }, [content]);
 
+  const className = useCssClasses(styles["form-field-list"], [
+    styles.loading,
+    isLoading,
+  ]);
+
   return (
-    <FieldListContainer
+    <GridLayout
+      className={className}
       columns={columns}
       gap="s-6"
       testId="form-field-list"
       overrideTestId
-      $isLoading={isLoading}
     >
       {renderedContent}
-    </FieldListContainer>
+    </GridLayout>
   );
 };
-
-const FieldListContainer = styled(GridLayout)<{ $isLoading: boolean }>`
-  ${formFieldListContainerStyles}
-`;

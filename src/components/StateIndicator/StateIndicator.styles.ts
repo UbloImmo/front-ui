@@ -1,12 +1,9 @@
-import { css, type RuleSet } from "styled-components";
+import styles from "./StateIndicator.module.scss";
 
-import { cssVarUsage } from "@utils";
+import { cssVarUsage, useCssClasses, useCssVariables } from "@utils";
 
-import type {
-  StateIndicatorStyleColors,
-  StateIndicatorStyleProps,
-} from "./StateIndicator.types";
-import type { ColorKeyOrWhite } from "@types";
+import type { StateIndicatorStyleColors } from "./StateIndicator.types";
+import type { ColorKeyOrWhite, StyleOverrideProps } from "@types";
 
 export const computeStateIndicatorColors = (
   color: ColorKeyOrWhite
@@ -36,42 +33,27 @@ export const computeStateIndicatorColors = (
   };
 };
 
-export const stateIndicatorStyle = ({
-  $background,
-  $border,
-}: StateIndicatorStyleProps): RuleSet => {
-  const background = cssVarUsage($background);
-  const border = cssVarUsage($border);
+export function useStateIndicatorStyles(
+  colors: Pick<StateIndicatorStyleColors, "background" | "border">,
+  overrides: Pick<StyleOverrideProps, "className" | "styleOverride">
+) {
+  const labelClassName = useCssClasses(styles["state-indicator-label"]);
 
-  return css`
-    background: ${background};
-    border: 1px solid ${border};
-    padding: var(--s-2) var(--s-4);
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    min-height: var(--s-10);
-    max-height: var(--s-10);
-    border-radius: var(--s-1);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--s-3);
-    overflow: hidden;
+  const className = useCssClasses(
+    styles["state-indicator"],
+    overrides.className
+  );
+  const style = useCssVariables(
+    () => ({
+      "state-bg": cssVarUsage(colors.background),
+      "state-border": cssVarUsage(colors.border),
+    }),
+    overrides.styleOverride
+  );
 
-    svg {
-      min-width: var(--s-3);
-    }
-
-    span {
-      max-width: 100%;
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  `;
-};
+  return {
+    labelClassName,
+    className,
+    style,
+  };
+}

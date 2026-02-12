@@ -198,7 +198,7 @@ export const hasDefaultProps = <
   component: MaybeDocumentedComponent<TIndex, TName>
 ): component is MaybeDocumentedComponent<TIndex, TName> &
   ComponentDefaultPropsMask<ComponentProps<TIndex, TName>> => {
-  if (!("defaultProps" in component)) return false;
-  if (!isObject(component.defaultProps)) return false;
+  if (!("__DEFAULT_PROPS" in component)) return false;
+  if (!isObject(component.__DEFAULT_PROPS)) return false;
   return true;
 };

@@ -7,7 +7,7 @@ import { testComponentFactory } from "@/tests";
 
 const testCard = testComponentFactory("EntityInfoCard", EntityInfoCard);
 
-const state = EntityInfoCard.defaultProps.state;
+const state = EntityInfoCard.__DEFAULT_PROPS.state;
 
 const testId = "entity-info-card";
 

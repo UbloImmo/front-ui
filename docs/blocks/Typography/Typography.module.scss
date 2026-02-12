@@ -1,0 +1,167 @@
+@use "../../../src/typography/__generated__/typography-tokens.module.scss" as
+  typo;
+
+.text {
+  --margin-bottom: var(--s-2);
+  margin-bottom: var(--margin-bottom) !important;
+
+  &.size-m {
+    --margin-bottom: var(--s-2);
+  }
+  &.size-s {
+    --margin-bottom: var(--s-1);
+  }
+  &.size-xs {
+    --margin-bottom: var(--s-05);
+  }
+
+  display: inline-block;
+  &:has(em),
+  &:has(strong) {
+    display: inline !important;
+  }
+}
+
+.heading {
+  --margin-top: var(--s-16);
+  --margin-bottom: var(--s-8);
+
+  &.size-h1 {
+    --margin-top: var(--s-16);
+    --margin-bottom: var(--s-8);
+  }
+  &.size-h2 {
+    --margin-top: var(--s-10);
+    --margin-bottom: var(--s-6);
+  }
+  &.size-h3 {
+    --margin-top: var(--s-8);
+    --margin-bottom: var(--s-4);
+  }
+  &.size-h4 {
+    --margin-top: var(--s-4);
+    --margin-bottom: var(--s-2);
+  }
+  margin-top: var(--margin-top);
+  margin-bottom: var(--margin-bottom);
+
+  & > a[aria-hidden="true"],
+  &[aria-hidden="true"],
+  & a[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+.heading:has(+ hr) {
+  margin-bottom: var(--s-2);
+}
+
+code.heading,
+.heading code,
+.heading > code {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.pre {
+  --pre-bg: var(--gray-50);
+  --pre-fg: var(--gray-900);
+
+  padding: var(--s-1) !important;
+  background: var(--pre-bg) !important;
+  color: var(--pre-fg) !important;
+  font-size: var(--text-s) !important;
+  border-radius: var(--s-1) !important;
+
+  &.padded {
+    padding: var(--s-3) !important;
+  }
+}
+
+.em {
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  font-style: italic !important;
+  font-synthesis: style;
+  font-variation-settings: ital 1 !important;
+}
+
+.strong {
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: var(--text-weight-medium) !important;
+  font-style: inherit !important;
+  font-variation-settings: inherit !important;
+
+  &:has(code) {
+    font-weight: var(--text-weight-bold) !important;
+  }
+}
+
+.code {
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  @include typo.font-code(true);
+
+  :not(pre:has(&)) & {
+    border-radius: var(--s-1) !important;
+    color: var(--gray-800) !important;
+    border-color: var(--gray-100-50);
+    background: var(--gray-200-50);
+    padding: 0 var(--s-05) !important;
+  }
+
+  li:has(> &) &,
+  span:has(> &) & {
+    @include typo.m-text-s-medium(true);
+  }
+}
+
+.anchor {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  letter-spacing: inherit !important;
+  color: var(--primary-base) !important;
+  line-height: inherit !important;
+  font-weight: var(--text-weight-medium) !important;
+  transition: color 300ms var(--bezier) !important;
+  display: inline !important;
+
+  &:hover {
+    tansition-duration: 150ms !important;
+    color: var(--primary-dark) !important;
+  }
+}
+
+.ul {
+  padding-left: var(--s-4);
+  margin-bottom: var(--s-4);
+
+  .li:has(&) & {
+    margin-top: var(--s-2);
+  }
+}
+
+.li {
+  @include typo.m-text-m-regular;
+  color: var(--gray-700);
+  &::marker {
+    color: var(--gray-600);
+  }
+  margin-bottom: var(--s-2);
+
+  .li-text {
+    display: inline;
+  }
+}
+
+.hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid var(--primary-light);
+  padding: 0;
+}

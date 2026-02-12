@@ -69,7 +69,7 @@ const default${component_name}Props: ${component_name}DefaultProps = {
 
 /**
  * ${component_name} component
- * 
+ *
  * TODO description
  *
  * @version 0.0.1
@@ -84,12 +84,12 @@ const ${component_name} = (props: ${component_name}Props & TestIdProps): JSX.Ele
   // TODO
 
   log(mergedProps);
-  
+
   return (
     <div data-testid={testId}>${component_name} TODO</div>
   )
 }
-${component_name}.defaultProps = default${component_name}Props;
+${component_name}.__DEFAULT_PROPS = default${component_name}Props;
 
 export { ${component_name} };
 "
@@ -110,7 +110,7 @@ const componentSource = componentSourceFactory<${component_name}Props>(
   {
     // TODO
   },
-  ${component_name}.defaultProps
+  ${component_name}.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -147,7 +147,7 @@ touch_if_missing "$component_path/index.ts" "$component_index_content"
 
 
 component_docs_content="
-import { Meta } from \"@storybook/blocks\";
+import { Meta } from \"@storybook/addon-docs/blocks\";
 import { ComponentInfo, Canvas } from \"@docs/blocks\";
 import { Content } from \"@docs/containers\";
 import * as ${component_name}Stories from \"../${component_name}.stories.tsx\";
@@ -168,7 +168,7 @@ TODO
 touch_if_missing "$component_path/docs/$component_name.mdx" "$component_docs_content"
 
 component_docs_props_content="
-import { Meta } from \"@storybook/blocks\";
+import { Meta } from \"@storybook/addon-docs/blocks\";
 import { ComponentInfo, ComponentProps } from \"@docs/blocks\";
 import { Content } from \"@docs/containers\";
 import * as ${component_name}Stories from \"../${component_name}.stories.tsx\";

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import styled from "styled-components";
+
+import styles from "../Action.module.scss";
 
 import { Badge } from "@/components/Badge";
 import { StaticIcon } from "@/components/StaticIcon";
@@ -71,7 +72,12 @@ export const ActionLarge = ({
           justify="start"
         >
           <FlexLayout direction="row" gap="s-1" align="center">
-            <Text testId={`${testId}-label`} overrideTestId {...textProps}>
+            <Text
+              className={styles["action-label"]}
+              testId={`${testId}-label`}
+              overrideTestId
+              {...textProps}
+            >
               {label}
             </Text>
             {iconTooltipProps && <Tooltip {...iconTooltipProps} />}
@@ -81,7 +87,7 @@ export const ActionLarge = ({
           )}
         </FlexLayout>
         {description && (
-          <ActionDescription
+          <Text
             color="gray-600"
             fill
             size="s"
@@ -89,11 +95,9 @@ export const ActionLarge = ({
             overrideTestId
           >
             {description}
-          </ActionDescription>
+          </Text>
         )}
       </FlexLayout>
     </FlexLayout>
   );
 };
-
-const ActionDescription = styled(Text)``;

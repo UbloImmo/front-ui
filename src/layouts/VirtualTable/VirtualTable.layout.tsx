@@ -29,7 +29,7 @@ import type { StyleOverrideProps, TestIdProps } from "@types";
 /**
  * A virtualized table component that efficiently renders large datasets.
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @template {object} TItem - The type of items in the data array
  * @param {VirtualTableProps<TItem> & Omit<StyleOverrideProps, "as"> & TestIdProps} props - Component props
@@ -43,7 +43,9 @@ const VirtualTable = <TItem extends object>({
   testId: givenTestId,
   overrideTestId,
   ...props
-}: VirtualTableProps<TItem> & Omit<StyleOverrideProps, "as"> & TestIdProps) => {
+}: VirtualTableProps<TItem> &
+  Omit<StyleOverrideProps, "as"> &
+  TestIdProps): JSX.Element => {
   const { warn } = useLogger("VirtualTable");
   const mergedProps = useMergedProps<
     VirtualTableDefaultProps<TItem>,

@@ -1,0 +1,74 @@
+@use "../../styles/_mixins.scss";
+@use "../../sizes/_breakpoints.scss";
+
+.action-icon {
+  --action-icon-background: var(--white);
+  --action-icon-border-color-transparent: var(--primary-medium-00);
+  --action-icon-border-color: var(--primary-medium);
+  --action-icon-icon-hover-color: var(--primary-base);
+  --action-icon-padding: var(--s-2);
+  --action-icon-border-radius: var(--s-1);
+  --action-icon-size: var(--s-10);
+
+  background: var(--action-icon-background);
+  border: 1px solid var(--action-icon-border-color-transparent);
+  padding: var(--action-icon-padding);
+
+  @include mixins.dimensions(
+    var(--action-icon-size),
+    var(--action-icon-size),
+    true
+  );
+  border-radius: var(--action-icon-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-button);
+  transition:
+    background 300ms ease-out 0s,
+    border-color 300ms ease-out 0s,
+    box-shadow 300ms ease-out 0s;
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    box-shadow: none;
+    background: var(--gray-50);
+  }
+
+  &:hover:not(:disabled) {
+    transition-duration: 150ms;
+    border-color: var(--action-icon-border-color);
+
+    svg {
+      fill: var(--action-icon-icon-hover-color);
+    }
+  }
+
+  &.s {
+    --action-icon-size: var(--s-6);
+    --action-icon-padding: var(--s-05);
+    --action-icon-border-radius: var(--s-05);
+  }
+
+  &.m {
+    --action-icon-size: var(--s-8);
+    --action-icon-padding: var(--s-1);
+    --action-icon-border-radius: var(--s-1);
+  }
+  &.l {
+    --action-icon-size: var(--s-10);
+    --action-icon-padding: var(--s-2);
+    --action-icon-border-radius: var(--s-1);
+  }
+
+  @media only screen and (max-width: breakpoints.$breakpoint-xs) {
+    &.m {
+      @include mixins.dimensions(var(--s-10), var(--s-10), true);
+    }
+  }
+}

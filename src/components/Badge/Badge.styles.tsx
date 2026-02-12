@@ -1,16 +1,24 @@
-import { css } from "styled-components";
+import { useMemo } from "react";
 
-import { fromStyleProps, isGrayColor } from "@utils";
+import styles from "./Badge.module.scss";
+
+import {
+  cssStyles,
+  cssVariables,
+  cssVarUsage,
+  isGrayColor,
+  useCssClasses,
+} from "@utils";
 
 import type {
   BadgeShade,
   BadgeShadeStyle,
   DefaultBadgeProps,
 } from "./Badge.types";
-import type { PaletteColor, StyleProps } from "@types";
+import type { ColorKey, PaletteColor } from "@types";
 import type { ValueMap } from "@ubloimmo/front-util";
 
-export const badgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
+const badgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
   light: {
     textColor: "dark",
     backgroundColor: "light",
@@ -23,7 +31,7 @@ export const badgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
   },
 };
 
-export const grayBadgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
+const grayBadgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
   light: {
     textColor: "800",
     backgroundColor: "50",
@@ -36,47 +44,49 @@ export const grayBadgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
   },
 };
 
-export const badgeStyle = (props: StyleProps<DefaultBadgeProps>) => {
-  const { color, shade } = fromStyleProps(props);
+export function getBadgeStyleMap(
+  color: ColorKey,
+  shade: BadgeShade
+): BadgeShadeStyle {
+  const styleMap = isGrayColor(color)
+    ? grayBadgeShadeStyleMap
+    : badgeShadeStyleMap;
+  return styleMap[shade];
+}
 
-  const { backgroundColor } = isGrayColor(color)
-    ? grayBadgeShadeStyleMap[shade]
-    : badgeShadeStyleMap[shade];
+export function useBadgeStyle({
+  color,
+  shade,
+  styleOverride,
+  className: cn,
+}: Pick<DefaultBadgeProps, "shade" | "color" | "className" | "styleOverride">) {
+  const className = useCssClasses(styles.badge, cn);
 
-  const borderColorShade = isGrayColor(color) ? "300" : "medium";
-  const borderColor = `${color}-${borderColorShade}` as PaletteColor;
-  const background = `${color}-${backgroundColor}` as PaletteColor;
+  const style = useMemo(() => {
+    const {
+      backgroundColor,
+      iconColor: iconShade,
+      textColor: textShade,
+    } = getBadgeStyleMap(color, shade);
 
-  return css`
-    border: 1px solid var(--${borderColor});
-    background: var(--${background});
-    ${commonBadgeStyles}
-  `;
-};
+    const borderColorShade = isGrayColor(color) ? "300" : "medium";
 
-export const commonBadgeStyles = () => {
-  return css`
-    padding: 0 var(--s-2);
-    border-radius: var(--s-3);
-    gap: var(--s-1);
-    display: flex;
-    align-items: center;
-    height: var(--s-5);
-    max-height: var(--s-5);
-    min-height: var(--s-5);
-    max-width: max-content;
-    user-select: none;
-    overflow: hidden;
+    const borderColor = `${color}-${borderColorShade}` as PaletteColor;
+    const background = `${color}-${backgroundColor}` as PaletteColor;
+    const textColor = `${color}-${textShade}` as PaletteColor;
+    const iconColor = `${color}-${iconShade}` as PaletteColor;
 
-    transition-property: background, border;
-    transition-duration: 300ms;
-    transition-timing-function: var(--bezier);
+    const vars = cssVariables({
+      "badge-border-color": cssVarUsage(borderColor),
+      "badge-background-color": cssVarUsage(background),
+    });
+    const style = cssStyles(vars, styleOverride);
+    return {
+      style,
+      iconColor,
+      textColor,
+    };
+  }, [color, shade, styleOverride]);
 
-    span {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      max-width: 100%;
-      overflow-y: hidden;
-    }
-  `;
-};
+  return { className, ...style };
+}

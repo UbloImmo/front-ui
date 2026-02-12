@@ -11,10 +11,20 @@ import type {
   StaticIconSize,
 } from "./StaticIcon.types";
 import type { IconName } from "../Icon";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ColorKeyOrWhite } from "@types";
 
 const componentSource = componentSourceFactory("StaticIcon", undefined);
+
+const colors: ColorKeyOrWhite[] = [
+  "primary",
+  "success",
+  "pending",
+  "warning",
+  "error",
+  "gray",
+  "white",
+];
 
 const meta: Meta<typeof StaticIcon> = {
   title: "Components/Iconography/StaticIcon/Stories",
@@ -30,6 +40,9 @@ const meta: Meta<typeof StaticIcon> = {
     size: {
       options: ["xs", "s", "m", "l"],
     },
+    color: {
+      options: colors,
+    },
   },
 } satisfies Meta<typeof StaticIcon>;
 
@@ -37,20 +50,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: StaticIcon.defaultProps,
+  args: StaticIcon.__DEFAULT_PROPS,
 };
 
-const colors: ColorKeyOrWhite[] = [
-  "primary",
-  "success",
-  "pending",
-  "warning",
-  "error",
-  "gray",
-  "white",
-];
 export const Colors = (props: Partial<StaticIconProps>) => {
-  const defaultProps = useMergedProps(StaticIcon.defaultProps, props);
+  const defaultProps = useMergedProps(StaticIcon.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -72,7 +76,7 @@ Colors.parameters = {
 
 const sizes: StaticIconSize[] = ["xs", "s", "m", "l"];
 export const Sizes = (props: Partial<StaticIconProps>) => {
-  const defaultProps = useMergedProps(StaticIcon.defaultProps, props);
+  const defaultProps = useMergedProps(StaticIcon.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -94,7 +98,7 @@ Sizes.parameters = {
 
 const icons: IconName[] = ["Abacus", "BusinessUnit", "Building", "Alphabet"];
 export const Icons = (props: Partial<StaticIconProps>) => {
-  const defaultProps = useMergedProps(StaticIcon.defaultProps, props);
+  const defaultProps = useMergedProps(StaticIcon.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -111,7 +115,7 @@ Icons.parameters = {
 };
 
 export const Stroke = (props: Partial<StaticIconProps>) => {
-  const defaultProps = useMergedProps(StaticIcon.defaultProps, props);
+  const defaultProps = useMergedProps(StaticIcon.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -145,7 +149,7 @@ const indicators: StaticIconIndicator[] = [
   },
 ];
 export const Indicators = (props: Partial<StaticIconProps>) => {
-  const defaults = useMergedProps(StaticIcon.defaultProps, props);
+  const defaults = useMergedProps(StaticIcon.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants

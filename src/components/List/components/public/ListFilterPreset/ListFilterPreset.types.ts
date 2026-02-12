@@ -1,5 +1,4 @@
 import type { FilterPreset, FilterSignature } from "@/components/List/modules";
-import type { StyleProps } from "@types";
 import type { Nullable, RequireAtLeastOne, VoidFn } from "@ubloimmo/front-util";
 
 export type ListFilterPresetProps<TItem extends object = object> =
@@ -39,6 +38,7 @@ export type ListFilterPresetProps<TItem extends object = object> =
     onToggled?: Nullable<VoidFn>;
   };
 
-export type ListFilterPresetStyleProps = StyleProps<
-  Pick<FilterPreset<object>, "disabled" | "active" | "colorKey">
+export type ListFilterPresetStyleProps = Pick<
+  FilterPreset<object>,
+  "disabled" | "active" | "colorKey"
 >;

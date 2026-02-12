@@ -223,14 +223,15 @@ const componentDeclarationTemplate = (
   render: string,
   type: IconFileType
 ) => {
-  return `/**
+  return `
+/**
  * React component generated from ${type} icon: \`${name}\`.
  * Auto-generated before NPM release
  *
  * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-export const ${componentName} = (props: CommonIconProps): JSX.Element => {
+const ${componentName} = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {
@@ -242,7 +243,9 @@ export const ${componentName} = (props: CommonIconProps): JSX.Element => {
   return (
 ${render}
   );
-};`;
+};
+
+export default ${componentName};`;
 };
 
 /**
@@ -379,7 +382,13 @@ const getCustomIconFiles = (): CustomIconFile[] => {
  * @return {NormalizedIconFileDeclaration[]} an array of normalized custom icon file declarations
  */
 const generateCustomIconFiles = (): NormalizedIconFileDeclaration[] => {
+  logger.info("generate custom icons", LOGGER_NAME);
   const customIconFiles = getCustomIconFiles();
+  logger.info(
+    `retrieved ${customIconFiles.length} custom svg icons`,
+    LOGGER_NAME
+  );
+
   return customIconFiles.map((iconFile) => {
     return iconFileDeclaration(iconFile);
   });

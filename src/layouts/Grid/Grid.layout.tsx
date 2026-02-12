@@ -1,17 +1,11 @@
-import styled from "styled-components";
+import { forwardRef } from "react";
 
-import { buildGridLayoutStyle } from "./Grid.styles";
+import { useGridLayoutStyle } from "./Grid.styles";
 
-import {
-  useClassName,
-  useHtmlAttribute,
-  useMergedProps,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type { GridLayoutDefaultProps, GridLayoutProps } from "./Grid.types";
-import type { StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 
 const defaultGridLayoutProps: GridLayoutDefaultProps = {
   flow: "row",
@@ -33,36 +27,35 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
 /**
  * A grid wrapper layout with default `row` flow and 12 columns
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
- * @param {GridLayoutProps} [props = defaultGridLayoutProps] - optional props
+ * @param {GridLayoutProps & TestIdProps} [props = defaultGridLayoutProps] - optional props
  * @return {JSX.Element} The styled grid wrapper
  */
-const GridLayout = (props: GridLayoutProps & TestIdProps): JSX.Element => {
+const GridLayout = forwardRef<
+  HTMLDivElement,
+  GridLayoutProps & TestIdProps,
+  GridLayoutDefaultProps
+>((props, ref): JSX.Element => {
   const mergedProps = useMergedProps(defaultGridLayoutProps, props);
-  const innerProps = useStyleProps(mergedProps);
   const testId = useTestId("grid", props);
-  const className = useClassName(props);
   const role = useHtmlAttribute(mergedProps.role);
   const id = useHtmlAttribute(mergedProps.id);
-  const style = useHtmlAttribute(mergedProps.styleOverride);
+  const Element = mergedProps.as;
+  const { className, style } = useGridLayoutStyle(mergedProps);
   return (
-    <GridLayoutInner
-      {...innerProps}
+    <Element
       data-testid={testId}
       role={role}
       className={className}
       id={id}
       style={style}
+      ref={ref}
     >
       {props.children}
-    </GridLayoutInner>
+    </Element>
   );
-};
-GridLayout.defaultProps = defaultGridLayoutProps;
+});
+GridLayout.__DEFAULT_PROPS = defaultGridLayoutProps;
 
 export { GridLayout };
-
-const GridLayoutInner = styled.div<StyleProps<GridLayoutProps>>`
-  ${buildGridLayoutStyle(defaultGridLayoutProps)}
-`;

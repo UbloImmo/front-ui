@@ -5,8 +5,7 @@ import {
   type Nullable,
   type Optional,
 } from "@ubloimmo/front-util";
-import { useMemo } from "react";
-import { CSSProperties } from "styled-components";
+import { useMemo, type CSSProperties } from "react";
 
 import {
   VirtualTableFooterContent,
@@ -36,7 +35,7 @@ import type {
   VirtualTableDefaultProps,
   VirtualTableScrollSetupProps,
   VirtualTableSharedContext,
-  VirutalTableContentProps,
+  VirtualTableContentProps,
 } from "./VirtualTable.types";
 import type { FixedCssLength, StyleOverrideProps } from "@types";
 import type { TableComponents, TableVirtuosoProps } from "react-virtuoso";
@@ -197,7 +196,7 @@ export const useVirtualTableItemHeight = (
  *
  * @param {VirtualTableDefaultProps<TItem>} mergedProps - The merged props containing table configuration
  * @param {VirtualTableSharedContext<TItem>} context - The shared context containing table configuration
- * @returns {VirutalTableContentProps<TItem>} Object containing:
+ * @returns {VirtualTableContentProps<TItem>} Object containing:
  *   - itemContent: Memoized row content component
  *   - fixedHeaderContent: Memoized header content component
  *   - fixedFooterContent: Memoized footer content component
@@ -206,7 +205,7 @@ export const useVirtualTableItemHeight = (
 export const useVirtualTableContent = <TItem extends object>(
   mergedProps: VirtualTableDefaultProps<TItem>,
   context: VirtualTableSharedContext<TItem>
-): VirutalTableContentProps<TItem> => {
+): VirtualTableContentProps<TItem> => {
   const fixedHeaderContent = useMemo(
     () => VirtualTableHeaderContent(mergedProps.columns),
     [mergedProps.columns]

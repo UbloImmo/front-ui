@@ -1,0 +1,195 @@
+@use "../../../src/typography/__generated__/typography-tokens.module.scss" as
+  typo;
+
+.docs-container {
+  :global(.sbdocs-wrapper) {
+    padding: 0;
+    width: 100%;
+
+    table:not([data-testid="table"], [data-testid="table virtual"]) {
+      margin: var(--s-4) 0;
+    }
+  }
+}
+
+.docs-wrapper {
+  width: 100%;
+
+  :global {
+    .sbdocs-wrapper {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background: var(--white);
+    }
+
+    .sbdocs-content {
+      max-width: unset;
+    }
+
+    pre.prismjs {
+      padding: var(--s-8) !important;
+
+      span:not(.token) {
+        color: var(--primary-dark);
+      }
+
+      .token {
+        color: var(--gray-800);
+      }
+
+      .token.plain-text {
+        color: var(--gray-700);
+      }
+
+      .token.tag {
+        color: color-mix(
+          in oklab,
+          var(--primary-base) 75%,
+          var(--primary-medium)
+        );
+      }
+
+      .token.attr-name {
+        color: color-mix(
+          in oklab,
+          var(--pending-dark) 45%,
+          var(--pending-base)
+        );
+      }
+
+      .token.punctuation {
+        color: var(--gray-600);
+      }
+
+      .token.function {
+        color: var(--primary-base);
+      }
+
+      .token.comment {
+        color: var(--gray-400);
+        font-weight: var(--text-weight-regular);
+        font-style: italic;
+      }
+
+      .token.attr-value,
+      .token.string {
+        color: color-mix(
+          in oklab,
+          var(--success-base) 75%,
+          var(--success-dark)
+        );
+      }
+
+      .token.number,
+      .token.boolean {
+        color: var(--warning-base);
+      }
+
+      .token.class-name,
+      .token.maybe-class-name {
+        color: var(--warning-base);
+      }
+
+      .token.keyword,
+      .token.builtin {
+        color: var(--primary-base);
+      }
+
+      .token.maybe-class-name,
+      .token.class-name {
+        font-style: italic;
+      }
+
+      .token.keyword,
+      .token.builtin,
+      .token.operator {
+        font-style: normal;
+        font-weight: var(--text-weight-bold);
+      }
+
+      .token.property {
+        color: var(--primary-base);
+      }
+
+      .token.selector {
+        color: var(--pending-base);
+      }
+
+      .token.operator,
+      .token.attr-equals {
+        color: color-mix(
+          in oklab,
+          var(--primary-base) 65%,
+          var(--primary-medium)
+        );
+        font-style: normal;
+      }
+
+      .token.arrow {
+        color: color-mix(
+          in oklab,
+          var(--primary-base) 75%,
+          var(--primary-medium)
+        );
+      }
+    }
+
+    .docblock-source {
+      border-radius: var(--s-2);
+      background: var(--gray-50-80);
+      border: 1px solid var(--gray-100-50);
+      box-shadow: none;
+      margin: var(--s-4) 0 var(--s-8);
+
+      div:has(> button) {
+        bottom: var(--s-1);
+        right: var(--s-1);
+        background: none;
+
+        & > button {
+          @include typo.m-text-xs-bold;
+          @include typo.font-code;
+          padding: var(--s-05) var(--s-3);
+          color: var(--primary-dark);
+          background: var(--primary-light);
+          border-radius: var(--s-6);
+          box-shadow: var(--shadow-button) !important;
+          width: auto;
+          border: 1px solid transparent;
+          transition:
+            color 300ms var(--bezier) 0s,
+            border-color 300ms var(--bezier) 0s;
+
+          &:hover {
+            transition-duration: 150ms;
+            border-color: var(--primary-medium);
+            color: var(--primary-base);
+          }
+        }
+      }
+    }
+
+    table .docblock-source {
+      background: none;
+      border: none;
+      margin: 0;
+
+      pre.prismjs {
+        padding: 0 !important;
+      }
+
+      div:has(> button) {
+        display: none;
+      }
+    }
+
+    [data-testid="docs-header"] pre:has(> .docblock-source) {
+      width: 100%;
+    }
+    [data-testid="docs-header"] .docblock-source {
+      background: var(--white);
+      margin: 0;
+    }
+  }
+}

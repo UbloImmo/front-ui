@@ -25,6 +25,14 @@ export type FlexGap = Exclude<CssLength, CssFr>;
 
 export type FlexFill = boolean | FlexDirection;
 
+export type Overflow =
+  | "hidden"
+  | "unset"
+  | "auto"
+  | "visible"
+  | "clip"
+  | "scroll";
+
 export type FlexLayoutProps = {
   /**
    * the direction of items (default: `row`)
@@ -82,6 +90,13 @@ export type FlexLayoutProps = {
    * @type {FlexFill}
    */
   fill?: FlexFill;
+  /**
+   * Sets the container's overflow
+   *
+   * @default "visible"
+   * @type {Overflow}
+   */
+  overflow?: Overflow;
   /**
    * the child elements to render
    *

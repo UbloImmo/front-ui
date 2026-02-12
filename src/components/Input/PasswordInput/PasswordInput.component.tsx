@@ -41,7 +41,7 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
 /**
  * Renders a password input component that allows for password visibility toggle.
  *
- * @version 0.0.5
+ * @version 0.1.0
  *
  * @param {PasswordInputProps} props - The input props.
  * @return {JSX.Element} The rendered text input component.
@@ -149,6 +149,6 @@ const PasswordInput = (
   );
 };
 
-PasswordInput.defaultProps = defaultPasswordInputProps;
+PasswordInput.__DEFAULT_PROPS = defaultPasswordInputProps;
 
 export { PasswordInput };

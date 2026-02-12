@@ -1,7 +1,9 @@
 import { forwardRef } from "react";
-import styled from "styled-components";
+
+import styles from "../VirtualTable.module.scss";
 
 import { Table, TableScrollView } from "@/layouts/Table";
+import { useCssClasses } from "@utils";
 
 import type {
   VirtualTableComponentOverrides,
@@ -16,22 +18,21 @@ import type {
  */
 export const VirtualTableTable: VirtualTableComponentOverrides<object>["Table"] =
   forwardRef<HTMLTableElement, VirtualTableOverrideProps<object>>(
-    ({ children, style, context }, ref) => (
-      <TableScrollView>
-        <MinWidthTable
-          styleOverride={style}
-          ref={ref}
-          layout={context.layout}
-          testId="virtual"
-        >
-          {children}
-        </MinWidthTable>
-      </TableScrollView>
-    )
-  );
+    ({ children, style, context }, ref) => {
+      const className = useCssClasses(styles["virtal-table"]);
 
-const MinWidthTable = styled(Table)`
-  min-width: 100%;
-  max-width: max-content;
-  width: unset;
-`;
+      return (
+        <TableScrollView>
+          <Table
+            styleOverride={style}
+            className={className}
+            ref={ref}
+            layout={context.layout}
+            testId="virtual"
+          >
+            {children}
+          </Table>
+        </TableScrollView>
+      );
+    }
+  );

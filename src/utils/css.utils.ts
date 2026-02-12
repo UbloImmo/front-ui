@@ -1,13 +1,29 @@
-import { isArray, isNumber, isString, isUndefined } from "@ubloimmo/front-util";
+import {
+  GenericFn,
+  isArray,
+  isFunction,
+  isNullish,
+  isNumber,
+  isObject,
+  isString,
+  isUndefined,
+  Nullish,
+  objectFromEntries,
+  Optional,
+  Predicate,
+} from "@ubloimmo/front-util";
+import { CSSProperties, useMemo } from "react";
 
-import { isNonEmptyString } from "./string.utils";
+import { isEmptyString, isNonEmptyString } from "./string.utils";
 import { SPACING_PREFIX } from "../types";
 import { isPaletteColor } from "./color.utils";
+import { isMap } from "./comparison.utils";
 
 import type {
   CssCh,
   CssColorMix,
   CssColorSpace,
+  CssDeg,
   CssFr,
   CssLength,
   CssLengthUsage,
@@ -172,6 +188,16 @@ export const cssFr = (fr: number): CssFr => {
 };
 
 /**
+ * Returns a {@link CssDeg} string with the given number.
+ *
+ * @param {number} deg - The number to be concatenated with 'deg'.
+ * @return {CssDeg} The string with the concatenated number and 'deg' unit.
+ */
+export const cssDeg = (deg: number): CssDeg => {
+  return `${deg}deg`;
+};
+
+/**
  * Type guard to check if the input value is of type {@link CssFr}.
  *
  * @param {unknown} value - The value to be checked
@@ -300,7 +326,13 @@ export const cssLengthUsage = (length: CssLength): CssLengthUsage => {
   if (isNumber(length)) {
     return cssRem(length);
   }
-  if (isCssPx(length) || isCssRem(length) || isCssCh(length)) {
+  if (
+    isCssPx(length) ||
+    isCssRem(length) ||
+    isCssCh(length) ||
+    isCssPercent(length) ||
+    isCssFr(length)
+  ) {
     return length;
   }
   if (isSpacingLabel(length)) {
@@ -322,6 +354,8 @@ export const isCssLengthUsage = (value: unknown): value is CssLengthUsage => {
     isCssPx(value) ||
     isCssRem(value) ||
     isSpacingLabel(value) ||
+    isCssPercent(value) ||
+    isCssFr(value) ||
     isCssCh(value)
   );
 };
@@ -403,3 +437,203 @@ export const cssColorMix = (
   const b = normalizeColor(colorB);
   return `color-mix(in ${colorSpace}, ${a}, ${b})`;
 };
+
+type CssClassRecord =
+  | Record<string, Nullish<boolean>>
+  | Map<string, Nullish<boolean>>;
+type CssClassArray = (
+  | Nullish<string>
+  | [className: string, active: Nullish<boolean>]
+)[];
+type CssClassInput = CssClassArray | [CssClassRecord];
+
+/**
+ * Predicate typescript function that checks whether a provided {@link CssClassInput} contains a single {@link CssClassRecord}
+ *
+ * @param {CssClassInput} classes — css class input value to check
+ * @returns — true if the value corresponds to a {@link CssClassRecord}
+ */
+const isClassRecord = (classes: CssClassInput): classes is [CssClassRecord] => {
+  return (
+    isArray(classes) &&
+    classes.length === 1 &&
+    !isArray(classes[0]) &&
+    (isObject(classes[0]) || isMap(classes[0]))
+  );
+};
+
+const isClassArray = isArray as Predicate<CssClassArray>;
+
+// TODO: add unit tests for newly added utils (cssClasses, cssStyles, cssVariables)
+
+/**
+ * Combines multiple Css classes into a single string
+ *
+ * @param {CssClassInput} classes - List of classes to combine
+ * @returns {Optional<string>} A concatenated string containing all provided active classes or undefined if none active
+ *
+ * @example
+ * cssClasses("base", "secondary", ["not-included", false], ["included", true])
+ * // -> "base secondary included"
+ * cssClasses("base", "secondary", "included")
+ * // -> "base secondary included"
+ * cssClasses({ base: true, secondary: true, "not-included": false, included: true })
+ * // -> "base secondary included"
+ */
+export const cssClasses = (...classes: CssClassInput): Optional<string> => {
+  if (!classes.length) return undefined;
+
+  let classStr = "";
+
+  const appendClass = (classKey: string) => {
+    classStr += ` ${classKey}`;
+  };
+
+  if (classes.length === 1 && isNonEmptyString(classes[0])) return classes[0];
+
+  if (isClassRecord(classes)) {
+    const record: Record<string, Nullish<boolean>> = isMap(classes[0])
+      ? objectFromEntries(Array.from(classes[0].entries()))
+      : classes[0];
+    for (const classKey in record) {
+      const active = record[classKey];
+      if (active) appendClass(classKey);
+    }
+    if (isEmptyString(classStr)) return undefined;
+    return classStr.trim();
+  }
+
+  for (const item of classes) {
+    if (isNonEmptyString(item)) appendClass(item);
+    if (!isClassArray(item)) continue;
+    const [classKey, active] = item;
+    if (active) appendClass(classKey);
+  }
+
+  if (isEmptyString(classStr)) return undefined;
+  return classStr.trim();
+};
+
+/**
+ * Memoized {@link cssClasses} utility. Combines multiple Css classes into a single string.
+ * @param {CssClassInput} classes - List of classes to combine
+ * @returns {Optional<string>} A concatenated string containing all provided active classes or undefined if none active
+ *
+ * @example
+ * useCssClasses("base", "secondary", ["not-included", false], ["included", true])
+ * // -> "base secondary included"
+ * useCssClasses("base", "secondary", "included")
+ * // -> "base secondary included"
+ * uCssClasses({ base: true, secondary: true, "not-included": false, included: true })
+ * // -> "base secondary included"
+ */
+export const useCssClasses = (...classes: CssClassInput): Optional<string> => {
+  return useMemo<Optional<string>>(() => cssClasses(...classes), [classes]);
+};
+
+/**
+ * Builds a {@link CSSProperties} CSS styles object containing CSS variable assignements from an object.
+ * Keys are variable names and get prepended with `--`.
+ * Filters `null` & `undefined` values out before stringifying them.
+ *
+ * @param {Record<string, Nullish<string | number>>} variables - CSS variable declarations
+ * @returns {CSSProperties} Valid CSS style object holding CSS variable declarations.
+ *
+ * @example
+ * const vars = cssVariables({
+ *   size: "2rem",
+ *   "my-color": "red",
+ *   padding: null,
+ *   margin: undefined
+ * });
+ * console.log(vars);
+ * // { "--size": "2rem", "--my-color": "red" };
+ */
+export const cssVariables = (
+  variables: Record<string, Nullish<string | number>>
+): CSSProperties => {
+  const vars: Record<string, string> = {};
+
+  if (!variables) return vars;
+
+  for (const varName in variables) {
+    const value = variables[varName];
+    if (isNullish(value)) continue;
+    vars[cssVarName(varName)] = String(value);
+  }
+
+  return vars as CSSProperties;
+};
+
+/**
+ * Augmented version of {@link cssVariables} in hook form.
+ * Takes an additional `override` argument.
+ *
+ * @param {Record<string, Nullish<string | number>> | GenericFn<[], Record<string, Nullish<string | number>>>} variables - Either an object containing CSS varaibles to transform or a synchronous function returning one.
+ * @param {Nullish<CSSProperties>} [override] - Optional style object to spread into the returned styles.
+ * @returns {CSSProperties} - Valid CSS style object holding CSS variable declarations and overrides (if provided).
+ *
+ * @example
+ * const styles = useCssVariables({
+ *   size: "2rem",
+ *   "my-color": "red",
+ *   padding: null,
+ *   margin: undefined
+ * }, {
+ *  marginTop: "2px",
+ *  background: "blue",
+ * });
+ * console.log(styles);
+ * // { "--size": "2rem", "--my-color": "red", marginTop: "2px", background: "blue" };
+ */
+export const useCssVariables = (
+  variables:
+    | Record<string, Nullish<string | number>>
+    | GenericFn<[], Record<string, Nullish<string | number>>>,
+  override?: Nullish<CSSProperties>
+): CSSProperties => {
+  return useMemo(() => {
+    const baseVars = isFunction<
+      GenericFn<[], Record<string, Nullish<string | number>>>
+    >(variables)
+      ? variables()
+      : variables;
+    const vars = cssVariables(baseVars);
+    if (!override) return vars;
+    return {
+      ...vars,
+      ...override,
+    };
+  }, [variables, override]);
+};
+
+/**
+ * Merges multiple CSS style objects into one, overriding properties is needed.
+ * @param {Nullish<CSSProperties>[]} ...styles - List of css style objects to merge
+ * @returns {CSSProperties} Merged CSS style object
+ */
+export const cssStyles = (
+  ...styles: Nullish<CSSProperties>[]
+): CSSProperties => {
+  if (!styles || !styles.length) return {};
+  return Object.assign({}, ...styles.filter(isObject));
+};
+
+/**
+ * Memoized version of {@link cssStyles}
+ * @param {Nullish<CSSProperties>[]} ...styles - List of css style objects to merge
+ * @returns {CSSProperties} Merged CSS style object
+ */
+export const useCssStyles: typeof cssStyles = (
+  ...styles: Nullish<CSSProperties>[]
+): CSSProperties => {
+  return useMemo(() => cssStyles(...styles), [styles]);
+};
+
+/**
+ * Naive type predicate that tells typescript if a value is a {@link CSSProperties} object
+ * by checking if it is any JS object and not an array
+ */
+export const isCssProperties: Predicate<CSSProperties> = (
+  value: unknown
+): value is CSSProperties => isObject(value) && !isArray(value);

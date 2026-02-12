@@ -1,5 +1,4 @@
-import { fn } from "@storybook/test";
-import styled, { css } from "styled-components";
+import { fn } from "storybook/test";
 
 import { SelectInput } from "./SelectInput.component";
 import { flattenSelectOptions } from "./SelectInput.utils";
@@ -9,8 +8,8 @@ import { allIconNames, type IconName } from "@/components/Icon/Icon.types";
 import { Text } from "@/components/Text";
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
-import { FlexRowLayout } from "@layouts";
-import { delay } from "@utils";
+import { type FlexDirectionLayoutProps, FlexRowLayout } from "@layouts";
+import { delay, useCssStyles } from "@utils";
 
 import type {
   CustomOptionComponent,
@@ -18,12 +17,12 @@ import type {
   SelectInputProps,
   SelectOptionOrGroup,
 } from "./SelectInput.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
 const componentSource = componentSourceFactory<
   SelectInputProps<NullishPrimitives>
->("SelectInput", SelectInput.defaultProps);
+>("SelectInput", SelectInput.__DEFAULT_PROPS);
 
 const meta = {
   component: SelectInput,
@@ -193,7 +192,7 @@ const CustomOption: CustomOptionComponent<string, BadgeProps> = (option) => {
   return (
     <CustomOptionContainer justify="space-between" align="center" fill>
       <Text>{option.label}</Text>
-      <Badge {...option.extraData} />
+      {!!option.extraData && <Badge {...option.extraData} />}
     </CustomOptionContainer>
   );
 };
@@ -266,15 +265,16 @@ export const CustomComponents = (
   );
 };
 
-const CustomOptionContainer = styled(FlexRowLayout)<{ $active?: boolean }>`
-  padding: var(--s-2);
-
-  ${({ $active }) =>
-    $active &&
-    css`
-      background-color: var(--primary-light);
-    `}
-`;
+const CustomOptionContainer = ({
+  $active,
+  ...props
+}: FlexDirectionLayoutProps & { $active?: boolean }) => {
+  const style = useCssStyles(
+    { padding: "var(--s-2)" },
+    $active ? { background: "var(--primary-light)" } : undefined
+  );
+  return <FlexRowLayout {...props} styleOverride={style} />;
+};
 
 const delayedOptions = async (query: Nullable<string>) => {
   const optionsCopy = flattenSelectOptions(options);

@@ -8,7 +8,7 @@ import { useMergedProps } from "../../utils";
 
 import { ComponentVariants } from "@docs/blocks";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const meta = {
@@ -27,13 +27,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: InputLabel.defaultProps,
+  args: InputLabel.__DEFAULT_PROPS,
 };
 
 const required = [false, true];
 
 export const Required = (props: Partial<InputLabelProps>) => {
-  const defaultProps = useMergedProps(InputLabel.defaultProps, props);
+  const defaultProps = useMergedProps(InputLabel.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -51,7 +51,7 @@ const tooltipProps: Nullable<InputLabelTooltipProps>[] = [
   { content: "Label tooltip" },
 ];
 export const Tooltips = (props: Partial<InputLabelProps>) => {
-  const defaultProps = useMergedProps(InputLabel.defaultProps, props);
+  const defaultProps = useMergedProps(InputLabel.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants

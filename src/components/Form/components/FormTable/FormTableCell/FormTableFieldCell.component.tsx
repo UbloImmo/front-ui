@@ -1,18 +1,18 @@
 import { isFunction, isNull, isString } from "@ubloimmo/front-util";
 import { useMemo, type FC, type ReactNode } from "react";
-import styled, { css } from "styled-components";
 
 import {
   FormTableCellControls,
   type FormTableCellControlsProps,
 } from "./FormTableCellControls.component";
+import styles from "../../../Form.module.scss";
 
 import { useFormContext } from "@/components/Form/Form.context";
 import { computeFieldDisplayContent } from "@/components/Form/Form.format";
 import { Input, useInputId, type InputType } from "@/components/Input";
 import { Text } from "@/components/Text";
 import { TableCell } from "@/layouts/Table";
-import { breakpointsPx } from "@/sizes";
+import { useCssClasses, useCssVariables } from "@utils";
 
 import type {
   BuiltFieldProps,
@@ -67,11 +67,13 @@ export const FormTableFieldCell = ({
 
   const inputId = useInputId(props);
 
+  const inner = useCssClasses(styles["form-field-display-cell-inner"]);
+
   return (
     <FormTableCell
       padded={isDisplay}
       colSpan={colSpan}
-      $fixedWidth={layout.fixedWidth}
+      fixedWidth={layout.fixedWidth}
     >
       <FormTableCellControls
         controls={controls}
@@ -79,7 +81,7 @@ export const FormTableFieldCell = ({
         isLast={isLast}
       />
       {isDisplay ? (
-        <FormTableDisplayCellInner>{displayContent}</FormTableDisplayCellInner>
+        <div className={inner}>{displayContent}</div>
       ) : (
         <Input {...props} table id={inputId} />
       )}
@@ -87,31 +89,22 @@ export const FormTableFieldCell = ({
   );
 };
 
-const FormTableCell = styled(TableCell)<BuiltFormFieldLayoutFixedWidthProp>`
-  position: relative;
+const FormTableCell = ({
+  fixedWidth,
+  children,
+  ...props
+}: BuiltFormFieldLayoutFixedWidthProp & Parameters<typeof TableCell>[0]) => {
+  const className = useCssClasses(styles["form-field-grid-item"], [
+    styles["fixed-width"],
+    !isNull(fixedWidth),
+  ]);
+  const style = useCssVariables({
+    "fixed-width": fixedWidth ?? undefined,
+  });
 
-  ${({ $fixedWidth }) =>
-    !isNull($fixedWidth) &&
-    css`
-      min-width: ${$fixedWidth} !important;
-      max-width: ${$fixedWidth} !important;
-      width: ${$fixedWidth} !important;
-    `}
-`;
-
-const FormTableDisplayCellInner = styled.div`
-  min-height: var(--s-6);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-
-  > * {
-    min-width: 0;
-    width: 100%;
-  }
-
-  @media only screen and (max-width: ${breakpointsPx.XS}) {
-    min-height: var(--s-8);
-  }
-`;
+  return (
+    <TableCell className={className} styleOverride={style} {...props}>
+      {children}
+    </TableCell>
+  );
+};

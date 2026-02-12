@@ -1,10 +1,9 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import { bouncingBallsStyle } from "./BouncingBalls.styles";
+import { useBouncingBallsClassName } from "./BouncingBalls.styles";
 
 import { parseFixedLength } from "@/sizes/size.utils";
-import { cssVarUsage, useClassName, useHtmlAttribute } from "@utils";
+import { cssVarUsage, useHtmlAttribute } from "@utils";
 
 import type { LoadingAnimationProps } from "../Loading.animations.types";
 
@@ -14,7 +13,7 @@ import type { LoadingAnimationProps } from "../Loading.animations.types";
  * @param {LoadingAnimationProps} props - the loading animation props.
  * @return {JSX.Element} the rendered spinner component
  */
-export const BouncingBalls = (props: LoadingAnimationProps) => {
+export const BouncingBalls = (props: LoadingAnimationProps): JSX.Element => {
   const innerProps = useMemo(() => {
     return {
       color: cssVarUsage(props.color),
@@ -22,11 +21,11 @@ export const BouncingBalls = (props: LoadingAnimationProps) => {
     };
   }, [props]);
 
-  const className = useClassName(props);
+  const className = useBouncingBallsClassName(props.className);
   const style = useHtmlAttribute(props.styleOverride);
 
   return (
-    <Container
+    <svg
       xmlns="http://www.w3.org/2000/svg"
       height={innerProps.size}
       fill={innerProps.color}
@@ -40,10 +39,6 @@ export const BouncingBalls = (props: LoadingAnimationProps) => {
         <circle cx="20" cy="14" r="6" />
         <circle cx="40" cy="14" r="8" />
       </g>
-    </Container>
+    </svg>
   );
 };
-
-const Container = styled.svg`
-  ${bouncingBallsStyle}
-`;

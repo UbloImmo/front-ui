@@ -1,10 +1,27 @@
-import styled from "styled-components";
+import styles from "./Table.block.module.scss";
+import { Text } from "../Typography";
 
-export const TableHeaderCell = styled.th`
-  text-transform: capitalize;
-  padding: 0 var(--s-2) !important;
-  text-align: left;
-  background: none !important;
-  border: none !important;
-  display: table-cell;
-`;
+import { useCssClasses } from "@utils";
+
+import type { DetailedHTMLProps, ThHTMLAttributes } from "react";
+
+type TableHeaderCellElementProps = DetailedHTMLProps<
+  ThHTMLAttributes<HTMLTableCellElement>,
+  HTMLTableCellElement
+>;
+
+export const TableHeaderCell = ({
+  className: cn,
+  children,
+  ...props
+}: TableHeaderCellElementProps) => {
+  const className = useCssClasses(styles["table-header-cell"], cn);
+
+  return (
+    <th className={className} {...props}>
+      <Text size="s" weight="medium" color="gray-800">
+        {children}
+      </Text>
+    </th>
+  );
+};

@@ -1,0 +1,42 @@
+$size-s: 37.5rem; // 600px;
+$size-m: 46.25rem; // 740px;
+$size-l: 60rem; // 960px;
+$size-xl: 80rem; // 1280px;
+
+.modal-card {
+  --modal-width: #{$size-m};
+
+  max-width: var(--modal-width);
+  width: var(--modal-width);
+  max-width: 100%;
+
+  background: var(--white);
+  padding: var(--s-6);
+
+  border-radius: var(--s-2);
+  position: relative;
+  box-shadow: var(--shadow-card-elevation-high);
+
+  [data-testid="modal"]:has(&) {
+    overflow: unset;
+  }
+
+  &.size-s {
+    --modal-width: #{$size-s};
+  }
+  &.size-m {
+    --modal-width: #{$size-m};
+  }
+  &.size-l {
+    --modal-width: #{$size-l};
+  }
+  &.size-xl {
+    --modal-width: #{$size-xl};
+  }
+}
+
+.modal-button {
+  position: absolute;
+  top: var(--s-6);
+  right: var(--s-6);
+}

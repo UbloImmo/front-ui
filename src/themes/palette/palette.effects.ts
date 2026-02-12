@@ -129,9 +129,6 @@ export const parsedEffectToCssVar = (
     (_match, colorStr: RgbaColorStr) => {
       // check if effect color is included in color vars
       const matchingColorVar = colorVarsSplit.find(([_name, rgba]) => {
-        // console.debug(
-        //   `comparing ${name} (${colorStr}) with ${_name} (${rgba}), delta: ${EFFECT_COLOR_DELTA}`
-        // );
         const isFound = isSameShade(rgba, colorStr, EFFECT_COLOR_DELTA);
         return isFound;
       });

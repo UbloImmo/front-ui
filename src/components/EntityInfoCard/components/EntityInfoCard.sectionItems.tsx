@@ -1,9 +1,4 @@
-import styled from "styled-components";
-
-import {
-  entityCardHeadingStyles,
-  entityCardStatusRowListStyles,
-} from "../EntityInfoCard.styles";
+import styles from "../EntityInfoCard.module.scss";
 
 import { ContextInfoCard } from "@/components/ContextInfoCard";
 import { ContextLine } from "@/components/ContextLine";
@@ -13,6 +8,7 @@ import { InfoBox } from "@/components/InfoBox";
 import { FlexColumnLayout } from "@/layouts/Flex";
 import { GridLayout } from "@/layouts/Grid";
 import { GridItem, type GridEndPosition } from "@/layouts/GridItem";
+import { useCssClasses } from "@utils";
 
 import type {
   EntityInfoCardSectionItemRendererMap,
@@ -22,7 +18,7 @@ import type {
 /**
  * Renders children passed to the section
  * @param {EntityInfoCardSectionItemRendererProps} props - Component props
- * @returns {JSX.Element} Children wrapper
+ * @returns  Children wrapper
  */
 const EntityInfoCardSectionChildren = ({
   children,
@@ -38,15 +34,17 @@ const EntityInfoCardSectionChildren = ({
 const EntityInfoCardSectionName = ({
   name,
 }: EntityInfoCardSectionItemRendererProps) => {
+  const className = useCssClasses(styles["entity-info-card-heading"]);
   return (
-    <EntityCardHeading
+    <Heading
+      className={className}
       size="h3"
       weight="bold"
       color="primary-dark"
       align="center"
     >
       {name}
-    </EntityCardHeading>
+    </Heading>
   );
 };
 
@@ -146,14 +144,15 @@ const EntityInfoCardSectionInfoBoxes = ({
 /**
  * Renders a list of status rows with badges and content
  * @param {EntityInfoCardSectionItemRendererProps} props - Component props
- * @returns {JSX.Element} List of status rows
+ * @returns List of status rows
  */
 const EntityInfoCardSectionStatusRows = ({
   statusRows,
   testId,
 }: EntityInfoCardSectionItemRendererProps) => {
+  const className = useCssClasses(styles["entity-info-card-status-rows"]);
   return (
-    <EntityCardStatusRowList gap={0} fill>
+    <FlexColumnLayout className={className} gap={0} fill>
       {statusRows.map(({ badge, content, ...statusRow }, index) => {
         const rowTestId = `${testId}-status-row-${index}`;
 
@@ -169,7 +168,7 @@ const EntityInfoCardSectionStatusRows = ({
           </ContextLine>
         );
       })}
-    </EntityCardStatusRowList>
+    </FlexColumnLayout>
   );
 };
 
@@ -186,17 +185,3 @@ export const entityInfoCardSectionItemRenderers: EntityInfoCardSectionItemRender
     infoBoxes: EntityInfoCardSectionInfoBoxes,
     statusRows: EntityInfoCardSectionStatusRows,
   };
-
-/**
- * Styled heading component with entity card styles
- */
-const EntityCardHeading = styled(Heading)`
-  ${entityCardHeadingStyles}
-`;
-
-/**
- * Styled flex column layout with status row list styles
- */
-const EntityCardStatusRowList = styled(FlexColumnLayout)`
-  ${entityCardStatusRowListStyles}
-`;

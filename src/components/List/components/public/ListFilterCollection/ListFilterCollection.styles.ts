@@ -1,43 +1,27 @@
-import { type RuleSet, css } from "styled-components";
+import { useMemo } from "react";
 
-import { cssDimensions } from "@/utils/styles.utils";
+import styles from "./ListFilterCollection.module.scss";
 
-import type { StyleProps } from "@types";
+import { cssClasses } from "@utils";
 
-export const listFilterCollectionContainerStyles = (): RuleSet => css`
-  background: var(--white);
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--shadow-card-default);
-  border-radius: var(--s-2);
-  overflow: hidden;
-  width: 100%;
-`;
+import type { Nullish } from "@ubloimmo/front-util";
 
-export const listFilterCollectionTitleContainerStyles = (): RuleSet => css`
-  padding: var(--s-4) var(--s-4) var(--s-3);
-
-  &:last-child {
-    padding-bottom: var(--s-4);
-  }
-`;
-
-export const listFilterCollectionFiltersContainerStyles = (): RuleSet => css`
-  padding: 0 var(--s-1) var(--s-1);
-`;
-
-export const listFilterCollectionClearButtonStyles = ({
-  $hidden,
-}: StyleProps<{ hidden?: boolean }>): RuleSet => css`
-  padding: 0 !important;
-  ${cssDimensions("fit-content", "fit-content", true)};
-
-  transition: opacity 150ms var(--bezier) 0s;
-
-  ${$hidden &&
-  css`
-    opacity: 0;
-    pointer-events: none;
-    cursor: default;
-  `}
-`;
+export function useListFilterCollectionClassNames(
+  className: Nullish<string>,
+  clearBtnHidden: Nullish<boolean>
+) {
+  return useMemo(
+    () => ({
+      container: cssClasses(styles["list-filter-collection"], className),
+      titleContainer: cssClasses(
+        styles["list-filter-collection-title-container"]
+      ),
+      filters: cssClasses(styles["list-filter-collection-filters"]),
+      clearButton: cssClasses(styles["list-filter-collection-clear-button"], [
+        styles.hidden,
+        clearBtnHidden,
+      ]),
+    }),
+    [clearBtnHidden, className]
+  );
+}

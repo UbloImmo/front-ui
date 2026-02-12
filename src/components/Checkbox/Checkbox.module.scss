@@ -1,0 +1,47 @@
+@use "../../styles/_mixins.scss";
+
+.checkbox {
+  position: relative;
+  @include mixins.dimensions(var(--s-4), var(--s-4), true);
+  cursor: pointer;
+
+  & svg[data-testid="icon"] {
+    overflow: visible;
+    position: absolute;
+    inset: 0;
+  }
+
+  input[type="checkbox"] {
+    appearance: none;
+    height: 0;
+    width: 0;
+  }
+
+  &[aria-disabled="true"],
+  &:has(> input[disabled="true"]) {
+    cursor: not-allowed;
+  }
+
+  .checkbox-icon-container {
+    height: var(--s-4);
+    width: var(--s-4);
+    position: relative;
+
+    & svg[data-testid="icon"] {
+      opacity: 0;
+      transition: opacity 150ms var(--bezier);
+    }
+  }
+
+  &[data-active="true"]
+    > .checkbox-icon-container
+    > svg[data-testid="icon"]:first-child {
+    opacity: 1;
+  }
+
+  &[data-active="mixed"]
+    > .checkbox-icon-container
+    > svg[data-testid="icon"]:nth-child(2) {
+    opacity: 1;
+  }
+}

@@ -1,19 +1,19 @@
 import { Nullable } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import { IconName } from "..";
 import { Badge } from "./Badge.component";
 import { BadgeProps, BadgeShade } from "./Badge.types";
 import { FlexRowLayout } from "../../layouts";
 import { useMergedProps } from "../../utils";
+import { allIconNames, type IconName } from "../Icon/Icon.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { ColorPalette } from "@types";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const args = {
-  ...Badge.defaultProps,
+  ...Badge.__DEFAULT_PROPS,
   label: "[label]",
 };
 
@@ -21,6 +21,20 @@ const meta = {
   title: "Components/States/Badge/Stories",
   component: Badge,
   args,
+  argTypes: {
+    icon: {
+      options: allIconNames,
+    },
+    color: {
+      options: ["success", "error", "warning", "pending", "gray"],
+    },
+    shade: {
+      options: ["light", "dark"],
+    },
+    className: {
+      type: "string",
+    },
+  },
   decorators: [
     (Story) => (
       <FlexRowLayout gap="s-4" align="center" justify="start" wrap>
@@ -47,7 +61,7 @@ const colors: (keyof ColorPalette)[] = [
 ];
 
 export const Colors = (props: Partial<BadgeProps>) => {
-  const defaultProps = useMergedProps(Badge.defaultProps, props);
+  const defaultProps = useMergedProps(Badge.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -69,7 +83,7 @@ const shades: BadgeShade[] = ["light", "dark"];
 export const Shades = (props: Partial<BadgeProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...Badge.defaultProps,
+      ...Badge.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -94,7 +108,7 @@ export const Icon = (props: Partial<BadgeProps>) => {
   const icons: Nullable<IconName>[] = [props.icon ?? "Square", null];
   const defaultProps = useMemo(() => {
     return {
-      ...Badge.defaultProps,
+      ...Badge.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);

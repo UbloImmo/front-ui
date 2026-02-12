@@ -9,6 +9,8 @@ import type { BuiltFormCustomContentProps } from "../Form.types";
  * A component that renders a custom content inside a form, which can be a React component
  * or a React node.
  *
+ * @version 0.1.0
+ *
  * @param {BuiltFormCustomContentProps} props - The props of the component.
  * @returns {JSX.Element} The rendered component.
  */

@@ -1,19 +1,18 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import { contextLineStyles } from "./ContextLine.styles";
+import { useContextLineStyles } from "./ContextLine.styles";
 import { Badge } from "../Badge";
 import { StaticIcon, StaticIconProps } from "../StaticIcon";
 import { Text } from "../Text";
 
 import { FlexLayout } from "@/layouts/Flex";
-import { useLogger, useTestId, useMergedProps, useStyleProps } from "@utils";
+import { useLogger, useTestId, useMergedProps } from "@utils";
 
 import type {
   ContextLineProps,
   ContextLineDefaultProps,
 } from "./ContextLine.types";
-import type { StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultContextLineProps: ContextLineDefaultProps = {
@@ -25,13 +24,15 @@ const defaultContextLineProps: ContextLineDefaultProps = {
   borderBottom: true,
   paddingHorizontal: false,
   compact: false,
+  className: null,
+  styleOverride: null,
 };
 
 /**
  *
  * Use ContextLine inside contextual areas to display current state of something.
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @param {ContextLineProps & TestIdProps} props - ContextLine component props
  * @returns {JSX.Element}
@@ -39,8 +40,8 @@ const defaultContextLineProps: ContextLineDefaultProps = {
 const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
   const { warn } = useLogger("ContextLine", { hideLogs: true });
   const mergedProps = useMergedProps(defaultContextLineProps, props);
-  const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("context-line", props);
+  const { style, className } = useContextLineStyles(mergedProps);
 
   if (!mergedProps.label) warn("Missing label prop");
 
@@ -55,7 +56,7 @@ const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
   }, [mergedProps.icon]);
 
   return (
-    <ContextLineContainer
+    <FlexLayout
       direction="row"
       align="center"
       justify="space-between"
@@ -63,7 +64,8 @@ const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
       fill
       testId={testId}
       overrideTestId
-      {...styledProps}
+      className={className}
+      styleOverride={style}
     >
       <FlexLayout
         direction="row"
@@ -93,14 +95,10 @@ const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
         {mergedProps.children}
         {mergedProps.badge && <Badge {...mergedProps.badge} />}
       </FlexLayout>
-    </ContextLineContainer>
+    </FlexLayout>
   );
 };
 
-ContextLine.defaultProps = defaultContextLineProps;
+ContextLine.__DEFAULT_PROPS = defaultContextLineProps;
 
 export { ContextLine };
-
-const ContextLineContainer = styled(FlexLayout)<StyleProps<ContextLineProps>>`
-  ${contextLineStyles}
-`;

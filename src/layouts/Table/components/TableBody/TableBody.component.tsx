@@ -1,18 +1,30 @@
 import { forwardRef } from "react";
-import styled from "styled-components";
 
-import { tableBodyStyles } from "./TableBody.styles";
+import styles from "../../Table.module.scss";
 
-import { useClassName, useHtmlAttribute, useTestId } from "@utils";
+import {
+  useCssClasses,
+  useHtmlAttribute,
+  useMergedProps,
+  useTestId,
+} from "@utils";
 
-import type { TableBodyProps, TableBodyStyleProps } from "./TableBody.types";
+import type { TableBodyProps } from "./TableBody.types";
 import type { TestIdProps } from "@types";
+
+const defaultTableBodyProps: Required<TableBodyProps> = {
+  children: null,
+  style: "form",
+  className: null,
+  styleOverride: null,
+  id: null,
+};
 
 /**
  * The body of the `Table` layout.
  * To be used with `TableRow`, `TableCell`
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {TableBodyProps & TestIdProps} props - The component props.
  * @returns The table body component.
@@ -20,24 +32,26 @@ import type { TestIdProps } from "@types";
 export const TableBody = forwardRef<
   HTMLTableSectionElement,
   TableBodyProps & TestIdProps
->(({ style = "form", ...props }: TableBodyProps & TestIdProps, ref) => {
+>((props, ref) => {
+  const mergedProps = useMergedProps(defaultTableBodyProps, props);
   const testId = useTestId("table-body", props);
-  const className = useClassName(props);
-  const styleProperties = useHtmlAttribute(props.styleOverride);
 
+  const className = useCssClasses(
+    styles["table-body"],
+    [styles.form, mergedProps.style !== "list"],
+    mergedProps.className
+  );
+  const styleProperties = useHtmlAttribute(mergedProps.styleOverride);
+  const id = useHtmlAttribute(mergedProps.id);
   return (
-    <StyledTableBody
-      $style={style}
+    <tbody
       style={styleProperties}
       data-testid={testId}
       className={className}
       ref={ref}
+      id={id}
     >
       {props.children}
-    </StyledTableBody>
+    </tbody>
   );
 });
-
-const StyledTableBody = styled.tbody<TableBodyStyleProps>`
-  ${tableBodyStyles}
-`;

@@ -44,6 +44,7 @@ export type InputLabelProps = {
 
 export type DefaultInputLabelProps = Required<InputLabelProps>;
 
+/** @deprecated styled-components */
 export type InputLabelTextStyleProps = StyleProps<
   Pick<InputLabelProps, "required">
 >;

@@ -1,0 +1,177 @@
+@use "../../typography/__generated__/typography-tokens.module.scss" as typo;
+@use "../../styles/_mixins.scss";
+
+.toast {
+  --toast-bg: var(--white);
+  --toast-border: var(--primary-light);
+  --toast-icon: var(--gray-800);
+  --toast-text-color: var(--gray-800);
+  --toast-content-color: var(--gray-700);
+
+  &[data-rich-colors="true"] {
+    --toast-border: var(--primary-light);
+  }
+
+  [data-sonner-theme="dark"] &,
+  [data-sonner-theme="light"] &[data-invert="true"] {
+    --toast-bg: var(--gray-900);
+    --toast-border: var(--primary-dark);
+    --toast-icon: var(--gray-50);
+    --toast-text-color: var(--white);
+    --toast-content-color: var(--gray-100);
+  }
+
+  padding: var(--s-4) !important;
+  border-radius: var(--s-2) !important;
+  background: var(--toast-bg) !important;
+  border: 1px solid var(--toast-border) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  postition: relative !important;
+  gap: var(--s-2) !important;
+
+  transition:
+    transform 300ms var(--bezier),
+    opacity 300ms var(--bezier),
+    height 300ms var(--bezier),
+    box-shadow 300ms var(--bezier),
+    background 300ms var(--bezier),
+    border 300ms var(--bezier) !important;
+
+  &:has(.toast-description) {
+    align-items: start !important;
+  }
+}
+
+.toast-title {
+  @include typo.m-text-m-medium(true);
+  transition: color 300ms var(--bezier) !important;
+  color: var(--toast-text-color) !important;
+}
+
+.toast-description {
+  @include typo.m-text-s-medium(true);
+  transition: color 300ms var(--bezier) !important;
+  color: var(--toast-text-color) !important;
+  opacity: 0.75 !important;
+}
+
+.toast-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--s-05) !important;
+}
+
+.toast-icon {
+  @include mixins.dimensions(var(--s-4), var(--s-4), true, true);
+  svg[data-testid="icon"] {
+    fill: var(--toast-icon);
+    margin: 0 !important;
+  }
+  margin: 0 !important;
+}
+
+.toast-loader {
+  @include mixins.dimensions(var(--s-4), var(--s-4), true, true);
+}
+
+.toast-action-button {
+  @include typo.m-text-m-bold(true);
+
+  height: var(--s-8) !important;
+  padding: var(--s-3) var(--s-4) !important;
+  border-radius: var(--s-4) !important;
+
+  background: rgb(from var(--toast-text-color) r g b / 0) !important;
+  color: rgb(from var(--toast-text-color) r g b / 0.75) !important;
+
+  transition:
+    opacity 300ms var(--bezier),
+    box-shadow 150ms var(--bezier),
+    background 300ms var(--bezier),
+    color 300ms var(--bezier) !important;
+
+  &:hover {
+    transition-duration: 150ms !important;
+    background: rgb(from var(--toast-text-color) r g b / 0.15) !important;
+    color: var(--toast-text-color) !important;
+  }
+}
+
+.toast-close-button {
+  opacity: 0;
+  transition: opacity 300ms var(--bezier);
+
+  svg[data-testid="icon"] {
+    transition: fill 300ms var(--bezier);
+    fill: var(--toast-content-color);
+  }
+  position: absolute;
+  top: var(--s-1) !important;
+  right: var(--s-1) !important;
+  transform: unset !important;
+  left: unset !important;
+  bottom: unset !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+
+  &:hover svg[data-testid="icon"] {
+    transition-duration: 150ms;
+    fill: var(--error-base);
+  }
+}
+
+.toast:hover .toast-close-button {
+  opacity: 1;
+}
+
+.toast-cancel-button {
+  svg[data-testid="icon"] {
+    fill: var(--toast-content-color);
+  }
+}
+
+@mixin toast-color($color) {
+  --toast-icon: var(--#{$color}-base);
+
+  [data-sonner-theme="dark"] &,
+  [data-sonner-theme="light"] &[data-invert="true"] {
+    --toast-icon: var(--#{$color}-medium);
+    --toast-border: var(--#{$color}-dark);
+  }
+
+  &[data-rich-colors="true"] {
+    --toast-bg: var(--#{$color}-light);
+    --toast-text-color: var(--#{$color}-dark);
+    --toast-border: var(--#{$color}-medium);
+
+    [data-sonner-theme="dark"] &,
+    [data-sonner-theme="light"] &[data-invert="true"] {
+      --toast-bg: var(--#{$color}-dark);
+      --toast-text-color: var(--#{$color}-light);
+      --toast-border: var(--#{$color}-medium);
+    }
+  }
+}
+
+.toast-loading {
+  @include toast-color(pending);
+}
+
+.toast-success {
+  @include toast-color(success);
+}
+
+.toast-error {
+  @include toast-color(error);
+}
+
+.toast-info {
+  @include toast-color(primary);
+}
+
+.toast-warning {
+  @include toast-color(warning);
+}

@@ -1,8 +1,6 @@
 import { isBoolean, isString, type Nullable } from "@ubloimmo/front-util";
 import { isValidElement, useMemo, type ReactNode } from "react";
-import styled from "styled-components";
 
-import { avatarStyles } from "./Avatar.styles";
 import {
   isAvatarPropsCount,
   isAvatarPropsFirstLastName,
@@ -10,13 +8,14 @@ import {
   isAvatarPropsWithUrl,
 } from "./Avatar.utils";
 import { Tooltip } from "../Tooltip";
+import styles from "./Avatar.module.scss";
 
 import { Heading } from "@/components/Heading";
 import { Text } from "@/components/Text";
-import { useTestId, useMergedProps, useStyleProps, useLogger } from "@utils";
+import { useTestId, useMergedProps, useLogger, useCssClasses } from "@utils";
 
 import type { AvatarProps, AvatarDefaultProps } from "./Avatar.types";
-import type { PaletteColor, StyleProps, TestIdProps } from "@types";
+import type { PaletteColor, TestIdProps } from "@types";
 
 const defaultAvatarProps: AvatarDefaultProps = {
   size: "m",
@@ -32,7 +31,7 @@ const defaultAvatarProps: AvatarDefaultProps = {
  *
  * A visual reference for the user's profile, using its image or its initials.
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {AvatarProps & TestIdProps} props - Avatar component props
  * @returns {Nullable<JSX.Element>}
@@ -44,7 +43,6 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
     props
   );
 
-  const styledProps = useStyleProps(mergedProps);
   const testId = useTestId("avatar", props as TestIdProps);
 
   /**
@@ -82,14 +80,27 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
     return isAvatarPropsCount(mergedProps) ? "gray-600" : "primary-base";
   }, [mergedProps]);
 
+  const isCount = useMemo(() => isAvatarPropsCount(mergedProps), [mergedProps]);
+
+  const className = useCssClasses(
+    styles.avatar,
+    [styles.organization, mergedProps.organization],
+    [styles.count, isCount]
+  );
+
   /**
    * The avatar's rendered content
    */
   const AvatarContent = useMemo(
     () => (
-      <AvatarContainer data-testid={testId} {...styledProps}>
+      <div
+        className={className}
+        data-size={mergedProps.size}
+        data-testid={testId}
+      >
         {isAvatarPropsWithUrl(mergedProps) && textContent ? (
           <img
+            className={styles["avatar-image"]}
             data-testid="avatar-image"
             src={mergedProps.avatarUrl}
             alt={textContent}
@@ -100,6 +111,7 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
             weight="bold"
             testId="avatar-text"
             overrideTestId
+            align="center"
             color={textColor}
           >
             {textContent}
@@ -109,15 +121,16 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
             size={mergedProps.size === "l" ? "h3" : "h1"}
             weight="bold"
             testId="avatar-text"
+            align="center"
             overrideTestId
             color={textColor}
           >
             {textContent}
           </Heading>
         )}
-      </AvatarContainer>
+      </div>
     ),
-    [mergedProps, styledProps, textContent, textColor, testId]
+    [className, mergedProps, testId, textContent, textColor]
   );
 
   const tooltipContent = useMemo<Nullable<ReactNode>>(() => {
@@ -157,10 +170,6 @@ const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
 
   return AvatarContent;
 };
-Avatar.defaultProps = defaultAvatarProps;
+Avatar.__DEFAULT_PROPS = defaultAvatarProps;
 
 export { Avatar };
-
-const AvatarContainer = styled.div<StyleProps<AvatarDefaultProps>>`
-  ${avatarStyles}
-`;

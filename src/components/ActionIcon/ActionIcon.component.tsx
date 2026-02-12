@@ -1,25 +1,16 @@
 import { isFunction } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
-import styled from "styled-components";
 
 import {
-  actionIconContainerStyles,
   actionIconIconColorMap,
+  useActionIconStyle,
 } from "./ActionIcon.styles";
 import { Icon } from "../Icon";
 
-import {
-  useClassName,
-  useHtmlAttribute,
-  useLogger,
-  useMergedProps,
-  useStyleProps,
-  useTestId,
-} from "@utils";
+import { useLogger, useMergedProps, useTestId } from "@utils";
 
 import type {
   ActionIconProps,
-  ActionIconStyleProps,
   DefaultActionIconProps,
 } from "./ActionIcon.types";
 import type { IconProps } from "../Icon";
@@ -42,7 +33,7 @@ const defaultActionIconProps: DefaultActionIconProps = {
  *
  * No label, no tags, just an icon.
  *
- * @version 0.0.5
+ * @version 0.1.0
  *
  * @param {ActionIconProps & TestIdProps} props - The properties for the action icon
  * @return {JSX.Element} The rendered action icon component
@@ -53,7 +44,6 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
     defaultActionIconProps,
     props
   );
-  const styleProps = useStyleProps(mergedProps);
   const testId = useTestId("action-icon", props);
 
   if (!props.icon) {
@@ -86,12 +76,10 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
     if (isFunction<VoidFn>(mergedProps.onClick)) mergedProps.onClick();
   }, [mergedProps]);
 
-  const className = useClassName(mergedProps);
-  const style = useHtmlAttribute(props.styleOverride);
+  const { style, className } = useActionIconStyle(mergedProps);
 
   return (
-    <ActionIconContainer
-      {...styleProps}
+    <button
       className={className}
       data-testid={testId}
       disabled={mergedProps.disabled}
@@ -104,12 +92,8 @@ const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
       style={style}
     >
       <Icon {...iconProps} />
-    </ActionIconContainer>
+    </button>
   );
 };
-ActionIcon.defaultProps = defaultActionIconProps;
+ActionIcon.__DEFAULT_PROPS = defaultActionIconProps;
 export { ActionIcon };
-
-const ActionIconContainer = styled.button<ActionIconStyleProps>`
-  ${actionIconContainerStyles}
-`;

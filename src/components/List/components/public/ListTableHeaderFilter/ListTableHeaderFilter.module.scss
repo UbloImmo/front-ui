@@ -1,0 +1,70 @@
+@use "../../../../../styles/_mixins.scss";
+
+.list-table-header-filter {
+  cursor: pointer;
+
+  div > button > svg[data-testid="icon"] {
+    &,
+    & path {
+      transition:
+        fill 300ms var(--bezier),
+        opacity 150ms var(--bezier);
+      fill: var(--primary-medium);
+    }
+  }
+
+  &:hover div > button > svg[data-testid="icon"] {
+    &,
+    & path {
+      transition-duration: 150ms;
+      fill: var(--primary-base);
+    }
+  }
+
+  & [data-list-filter] {
+    width: var(--radix-popover-trigger-width);
+  }
+
+  &.hide-label {
+    width: var(--s-10);
+  }
+}
+
+.list-table-header-filter-label {
+  min-width: max-content;
+}
+
+.list-table-header-filter-button {
+  all: unset;
+  cursor: pointer;
+  cursor: pointer;
+  position: relative;
+
+  @include mixins.dimensions(var(--s-4), var(--s-4), true);
+
+  & > svg[data-testid="icon"] {
+    position: absolute;
+    inset: 0;
+    transition: fill 300ms var(--bezier);
+  }
+
+  & > svg[data-testid="icon"]:first-child {
+    opacity: 1;
+  }
+  & > svg[data-testid="icon"]:last-child {
+    opacity: 0;
+  }
+
+  &.active {
+    & > svg[data-testid="icon"]:first-child {
+      opacity: 0;
+    }
+    & > svg[data-testid="icon"]:last-child {
+      opacity: 1;
+      &,
+      & path {
+        fill: var(--primary-base);
+      }
+    }
+  }
+}

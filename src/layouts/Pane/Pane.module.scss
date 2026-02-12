@@ -1,0 +1,111 @@
+@use "../../sizes/_breakpoints.scss";
+
+.pane {
+  /* public css variables */
+  --p-top: 0;
+  --p-bottom: unset;
+  --p-expanded-width: 15rem;
+  --p-collapsed-width: var(--s-11);
+
+  /* internal css variables */
+  --pane-expanded-width: var(--p-expanded-width);
+  --pane-collapsed-width: var(--p-collapsed-width);
+  --pane-container-width: var(--pane-collapsed-width);
+  --pane-content-padding: var(--s-1);
+  --pane-content-width: var(--pane-collapsed-width);
+  --pane-content-collapsed-box-shadow: var(--shadow-card-default);
+  --pane-content-expanded-box-shadow: var(--shadow-card-elevation-high);
+  --pane-content-box-shadow: var(--pane-content-collapsed-box-shadow);
+
+  &.headless {
+    --pane-content-padding: 0;
+  }
+
+  &.force-expanded,
+  &:hover {
+    --pane-content-width: var(--pane-expanded-width);
+    --pane-content-box-shadow: var(--pane-content-expanded-box-shadow);
+  }
+
+  position: sticky;
+  top: var(--p-top);
+  bottom: var(--p-bottom);
+
+  width: var(--pane-container-width);
+  height: var(--pane-container-height);
+  min-height: var(--pane-container-height);
+  max-height: var(--pane-container-height);
+  max-height: 100%;
+  max-width: var(--pane-container-width);
+  min-width: var(--pane-container-width);
+  transition-property: width, min-width, max-width;
+  transition-duration: 300ms;
+  transition-timing-function: var(--bezier);
+
+  &.breakpoint-XXS {
+    @media only screen and (min-width: breakpoints.$breakpoint-xxs) {
+      --pane-container-width: var(--pane-expanded-width);
+      --pane-content-width: var(--pane-expanded-width);
+    }
+  }
+  &.breakpoint-XS {
+    @media only screen and (min-width: breakpoints.$breakpoint-xs) {
+      --pane-container-width: var(--pane-expanded-width);
+      --pane-content-width: var(--pane-expanded-width);
+    }
+  }
+  &.breakpoint-SM {
+    @media only screen and (min-width: breakpoints.$breakpoint-sm) {
+      --pane-container-width: var(--pane-expanded-width);
+      --pane-content-width: var(--pane-expanded-width);
+    }
+  }
+  &.breakpoint-MD {
+    @media only screen and (min-width: breakpoints.$breakpoint-md) {
+      --pane-container-width: var(--pane-expanded-width);
+      --pane-content-width: var(--pane-expanded-width);
+    }
+  }
+  &.breakpoint-LG {
+    @media only screen and (min-width: breakpoints.$breakpoint-lg) {
+      --pane-container-width: var(--pane-expanded-width);
+      --pane-content-width: var(--pane-expanded-width);
+    }
+  }
+  &.breakpoint-XL {
+    @media only screen and (min-width: breakpoints.$breakpoint-xl) {
+      --pane-container-width: var(--pane-expanded-width);
+      --pane-content-width: var(--pane-expanded-width);
+    }
+  }
+}
+
+.pane-content {
+  position: absolute;
+  top: 0;
+
+  &.anchor-left {
+    left: 0;
+  }
+
+  &.anchor-right {
+    right: 0;
+  }
+
+  min-height: fit-content;
+  width: var(--pane-content-width);
+  max-width: var(--pane-expanded-width);
+  min-width: var(--pane-collapsed-width);
+  transition:
+    width 300ms var(--bezier),
+    box-shadow 150ms var(--bezier),
+    padding 150ms var(--bezier);
+  overflow: hidden;
+
+  &:not(.headless) {
+    background: var(--white);
+    border-radius: var(--s-2);
+    box-shadow: var(--pane-content-box-shadow);
+    padding: var(--pane-content-padding);
+  }
+}

@@ -21,7 +21,7 @@ const defaultAnimationName = defaultLoadingProps.animation;
 /**
  * An extensible component for displaying loadings animation.
  *
- * @version 0.0.3
+ * @version 0.1.0
  *
  * @param {LoadingProps & TestIdProps} props - props for configuring the loading animation
  * @return {Nullable<JSX.Element>} the rendered loading animation component, or null if no animation found
@@ -54,6 +54,6 @@ const Loading = (props: LoadingProps & TestIdProps): Nullable<JSX.Element> => {
   );
 };
 
-Loading.defaultProps = defaultLoadingProps;
+Loading.__DEFAULT_PROPS = defaultLoadingProps;
 
 export { Loading };

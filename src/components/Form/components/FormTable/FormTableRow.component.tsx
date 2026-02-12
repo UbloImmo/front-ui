@@ -1,20 +1,13 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { transformObject, type Nullish } from "@ubloimmo/front-util";
-import {
-  useMemo,
-  useCallback,
-  type RefCallback,
-  type CSSProperties,
-} from "react";
-import styled, { css } from "styled-components";
+import { useMemo, useCallback } from "react";
 
+import styles from "./FormTable.module.scss";
 import { FormTableFieldCell } from "./FormTableCell/FormTableFieldCell.component";
 import { useFormContext } from "../../Form.context";
 import { isBuiltCustomFormField } from "../../Form.utils";
 import {
-  RowDeleteButton,
-  RowDragHandle,
   type FormTableCellControlsData,
   FormTableCellControls,
   type FormTableCellControlsProps,
@@ -26,19 +19,17 @@ import { FlexRowLayout } from "@/layouts/Flex";
 import { TableCell, TableRow } from "@/layouts/Table";
 import { BEZIER } from "@/themes";
 import {
-  useStyleProps,
   useUikitTranslation,
   useStatic,
   cssVarUsage,
+  useCssClasses,
 } from "@utils";
 
 import type {
   BuiltFormTableRow,
-  FormTableModifiers,
   BuiltFormTableModifiers,
   BuiltFormTableCallbacks,
 } from "../../Form.types";
-import type { StyleProps } from "@types";
 
 type FormTableRowProps = BuiltFormTableRow &
   Pick<BuiltFormTableCallbacks, "deleteRow" | "setRowSelection"> & {
@@ -92,8 +83,6 @@ export const FormTableRow = ({
     },
   });
 
-  const styledProps = useStyleProps({ ...mods, dragging: isDragging });
-
   const tl = useUikitTranslation();
   const deleteTitle = useStatic(tl.action.delete);
 
@@ -134,13 +123,22 @@ export const FormTableRow = ({
     setActivatorNodeRef,
   ]);
 
+  const className = useCssClasses(
+    styles["form-table-row"],
+    [styles.deletable, mods.deletable],
+    [styles.dragging, isDragging],
+    [styles.swappable, mods.swappable]
+  );
+
+  const selectionCell = useCssClasses(styles["form-table-row-selection-cell"]);
+
   return (
-    <StyledTableRow
-      {...styledProps}
+    <TableRow
+      className={className}
       {...attributes}
       ref={setNodeRef}
       id={id}
-      style={style}
+      styleOverride={style}
       data-testid="form-table-row"
       data-row-index={index}
     >
@@ -149,13 +147,18 @@ export const FormTableRow = ({
           styleOverride={{ position: "relative", width: cssVarUsage("s-9") }}
         >
           <FormTableCellControls controls={controls} isFirst />
-          <SelectionCellInner align="center" justify="center" fill>
+          <FlexRowLayout
+            className={selectionCell}
+            align="center"
+            justify="center"
+            fill
+          >
             <Checkbox
               onChange={(selected) => setRowSelection(index, !!selected)}
               active={selected}
               disabled={disabled}
             />
-          </SelectionCellInner>
+          </FlexRowLayout>
         </TableCell>
       )}
       {cells.map((cell, cellIndex) => {
@@ -188,82 +191,6 @@ export const FormTableRow = ({
           />
         );
       })}
-    </StyledTableRow>
+    </TableRow>
   );
 };
-
-type StyledTableRowProps = StyleProps<
-  Omit<FormTableModifiers<object>, "selectable"> & {
-    dragging?: boolean;
-  }
-> & {
-  ref: RefCallback<HTMLElement>;
-  style?: CSSProperties;
-  id?: string;
-};
-
-const StyledTableRow = styled(TableRow)<StyledTableRowProps>`
-  position: relative;
-
-  & > td {
-    max-width: 0; /* allow cells to shrink */
-  }
-
-  ${({ $deletable, $dragging }) =>
-    $deletable &&
-    !$dragging &&
-    css`
-      &:hover ${RowDeleteButton} {
-        transition-duration: 300ms;
-        opacity: 1;
-        pointer-events: all;
-      }
-    `}
-
-  ${({ $swappable }) =>
-    $swappable &&
-    css`
-      &:hover ${RowDragHandle} {
-        transition-duration: 300ms;
-        opacity: 1;
-        pointer-events: all;
-      }
-    `}
-
-  ${({ $dragging }) =>
-    $dragging &&
-    css`
-      background: var(--white);
-      border: 2px solid var(--primary-medium);
-      box-shadow: var(--shadow-card-elevation-medium);
-      transition:
-        box-shadow 150ms var(--bezier),
-        border 150ms var(--bezier);
-      z-index: 1;
-
-      & > td {
-        border-color: var(--primary-medium);
-        border-top: 1px solid var(--primary-medium) !important;
-        border-bottom: 1px solid var(--primary-medium) !important;
-
-        &:first-child {
-          border-left: none;
-          border-top-left-radius: var(--s-1) !important;
-          border-bottom-left-radius: var(--s-1) !important;
-        }
-
-        &:last-of-type {
-          border-right: none;
-          border-top-right-radius: var(--s-1) !important;
-          border-bottom-right-radius: var(--s-1) !important;
-        }
-      }
-    `}
-`;
-
-const SelectionCellInner = styled(FlexRowLayout)`
-  background: var(--white);
-  min-height: var(--input-height);
-  border-top-left-radius: calc(var(--s-1) * 0.75);
-  border-bottom-left-radius: calc(var(--s-1) * 0.75);
-`;

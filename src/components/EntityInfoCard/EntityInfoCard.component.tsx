@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import styled from "styled-components";
 
 import {
   defaultEntityInfoCardFooterProps,
@@ -9,10 +8,10 @@ import {
   EntityInfoCardHeader,
   EntityInfoCardSection,
 } from "./components";
-import { entityCardContainerStyles } from "./EntityInfoCard.styles";
+import styles from "./EntityInfoCard.module.scss";
 
 import { FlexColumnLayout } from "@/layouts/Flex";
-import { useTestId, useMergedProps } from "@utils";
+import { useTestId, useMergedProps, useCssClasses } from "@utils";
 
 import type {
   EntityInfoCardProps,
@@ -45,6 +44,7 @@ const EntityInfoCard = (
     testId: testIdProp,
     overrideTestId,
   });
+  const className = useCssClasses(styles["entity-info-card"]);
 
   const sections = useMemo<EntityInfoCardSectionProps[]>(() => {
     const {
@@ -71,7 +71,13 @@ const EntityInfoCard = (
   }, [mergedProps]);
 
   return (
-    <EntityCardContainer testId={testId} overrideTestId fill>
+    <FlexColumnLayout
+      as="section"
+      className={className}
+      testId={testId}
+      overrideTestId
+      fill
+    >
       <EntityInfoCardHeader {...mergedProps} testId={testId} overrideTestId />
       {sections.map((section, index) => (
         <EntityInfoCardSection
@@ -83,13 +89,9 @@ const EntityInfoCard = (
         />
       ))}
       <EntityInfoCardFooter {...mergedProps} testId={testId} overrideTestId />
-    </EntityCardContainer>
+    </FlexColumnLayout>
   );
 };
-EntityInfoCard.defaultProps = defaultEntityInfoCardProps;
+EntityInfoCard.__DEFAULT_PROPS = defaultEntityInfoCardProps;
 
 export { EntityInfoCard };
-
-const EntityCardContainer = styled(FlexColumnLayout)`
-  ${entityCardContainerStyles}
-`;

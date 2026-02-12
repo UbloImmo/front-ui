@@ -16,7 +16,7 @@ import { testComponentFactory } from "@/tests";
 const testTable = testComponentFactory("Table", Table);
 const testId = "table";
 
-testTable(Table.defaultProps ?? {})("should render", ({ queryByTestId }) => {
+testTable(Table.__DEFAULT_PROPS ?? {})("should render", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
 });
 

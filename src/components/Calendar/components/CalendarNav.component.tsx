@@ -1,10 +1,12 @@
 import { useCallback } from "react";
 import { useDayPicker, type NavProps } from "react-day-picker";
-import styled from "styled-components";
+
+import styles from "../Calendar.module.scss";
 
 import { Button } from "@/components/Button";
+import { useCssClasses } from "@utils";
 
-export const CalendarNav = (props: NavProps) => {
+export const CalendarNav = ({ className: cn }: NavProps) => {
   const { goToMonth, nextMonth, previousMonth } = useDayPicker();
   const goToNextMonth = useCallback(() => {
     if (nextMonth) goToMonth(nextMonth);
@@ -13,8 +15,9 @@ export const CalendarNav = (props: NavProps) => {
   const goToPreviousMonth = useCallback(() => {
     if (previousMonth) goToMonth(previousMonth);
   }, [goToMonth, previousMonth]);
+  const className = useCssClasses(styles["calendar-nav"], cn);
   return (
-    <Nav {...props}>
+    <nav className={className}>
       <Button
         icon="ChevronLeft"
         color="clear"
@@ -27,16 +30,6 @@ export const CalendarNav = (props: NavProps) => {
         onClickNative={goToNextMonth}
         testId="calendar-next-month"
       />
-    </Nav>
+    </nav>
   );
 };
-
-const Nav = styled.nav`
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-end: 0;
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
-  height: var(--rdp-nav-height);
-`;

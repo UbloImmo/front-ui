@@ -1,9 +1,7 @@
-import { InputProps, InputValue } from "../Input.types";
-
-import { IconName } from "@/components/Icon";
-import { StyleProps } from "@types";
-
-import type { PaletteColor, TestIdProps } from "@types";
+import type { InputProps, InputValue } from "../Input.types";
+import type { IconName } from "@/components/Icon";
+import type { ControlledPopoverProps } from "@/layouts/Popover/Popover.types";
+import type { StyleProps, PaletteColor, TestIdProps } from "@types";
 import type {
   NullishPrimitives,
   MaybeAsyncFn,
@@ -13,7 +11,7 @@ import type {
   GenericFn,
   AsyncFn,
 } from "@ubloimmo/front-util";
-import type { FC } from "react";
+import type { FC, MutableRefObject } from "react";
 
 export type SelectOption<
   TValue extends NullishPrimitives,
@@ -440,3 +438,50 @@ export type SelectInputOptionGroupProps<
 };
 
 export type RefetchSelectOptionsFn = AsyncFn<[Nullable<string>], void>;
+
+/**
+ * Props for the SelectInputOptionsList component
+ */
+export interface SelectInputOptionsListProps<
+  TValue extends NullishPrimitives,
+  TExtraData extends NullishPrimitives = NullishPrimitives,
+> extends TestIdProps {
+  /**
+   * Whether the options list is open
+   */
+  open: boolean;
+  /**
+   * Array of options or option groups to display
+   */
+  displayOptions: SelectOptionOrGroup<TValue, TExtraData>[];
+  /**
+   * Function to handle option selection
+   */
+  onSelectOption: (option: SelectOption<TValue>) => () => void;
+  /**
+   * Custom option component
+   */
+  Option?: React.FunctionComponent<SelectOption<TValue, TExtraData>>;
+  /**
+   * Props for creating a new option
+   */
+  createOptionProps?: SelectOption<TValue> | null;
+  /**
+   * Whether there are no results to display
+   */
+  isEmptyResult: boolean;
+  /**
+   * Assistive text to show when there are no results
+   */
+  assistiveText: string;
+}
+
+/**
+ * Props for the SelectInputPopover component
+ */
+export type SelectInputPopoverProps = Pick<
+  ControlledPopoverProps,
+  "open" | "onOpenChange" | "children" | "content"
+> & {
+  wrapperRef?: MutableRefObject<Nullable<HTMLDivElement>>;
+} & TestIdProps;

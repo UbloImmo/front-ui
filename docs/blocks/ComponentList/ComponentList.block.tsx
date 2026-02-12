@@ -1,7 +1,5 @@
-import styled from "styled-components";
-
 import { ComponentCard } from "./ComponentCard/ComponentCard.component";
-import { componentListStyle } from "./ComponentList.styles";
+import { useComponentListClassName } from "./ComponentList.styles";
 import {
   componentIndexToEntries,
   extractComponentsFromIndex,
@@ -29,10 +27,12 @@ export const ComponentList = <TIndex extends AnyIndex>(
     componentIndexToEntries(index, props.exclude, props.include)
   );
 
+  const className = useComponentListClassName();
+
   if (!componentEntries) return null;
 
   return (
-    <ComponentListContainer>
+    <section className={className}>
       <GridLayout columns={props.columns ?? 4} gap="s-3" flow="dense">
         {componentEntries.map(({ name, Component }, index) => (
           <ComponentCard
@@ -44,10 +44,6 @@ export const ComponentList = <TIndex extends AnyIndex>(
           />
         ))}
       </GridLayout>
-    </ComponentListContainer>
+    </section>
   );
 };
-
-const ComponentListContainer = styled.section`
-  ${componentListStyle}
-`;

@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { Input } from "./Input.component";
 import { inputTypes } from "./Input.data";
@@ -10,7 +10,7 @@ import { useMergedProps } from "@utils";
 
 import type { GenericInputProps } from "./Input.generic.types";
 import type { InputProps, InputType } from "./Input.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
   title: "Components/Forms/Input/Stories",
@@ -62,7 +62,7 @@ Types.args = {
 
 const booleans: boolean[] = [true, false];
 export const Disabled = (props: Partial<InputProps<"text">>) => {
-  const defaultProps = useMergedProps(TextInput.defaultProps, props);
+  const defaultProps = useMergedProps(TextInput.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -81,7 +81,7 @@ Disabled.args = {
 };
 
 export const Error = (props: Partial<InputProps<"text">>) => {
-  const defaultProps = useMergedProps(TextInput.defaultProps, props);
+  const defaultProps = useMergedProps(TextInput.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -100,7 +100,7 @@ Error.args = {
 
 const placeholders = ["Enter your value", ""];
 export const Placeholder = (props: Partial<InputProps<"text">>) => {
-  const defaultProps = useMergedProps(TextInput.defaultProps, props);
+  const defaultProps = useMergedProps(TextInput.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants

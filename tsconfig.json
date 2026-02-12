@@ -15,7 +15,7 @@
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@types": ["src/types"],
       "@utils": ["src/utils"],
@@ -24,12 +24,20 @@
       "@docs/*": ["docs/*"],
       "@/*": ["src/*"],
     },
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+      },
+    ],
     "allowJs": false,
     "strict": true,
     "types": [
       "bun-types", // add Bun global
-      "./matchers.d.ts"
-    ]
+      "./matchers.d.ts",
+    ],
   },
-  "exclude": ["node_modules", "storybook-static", "dist", "src/components/Icon/__generated__/**/*"]
+  "typeAcquisition": {
+    "enable": true,
+  },
+  "exclude": ["node_modules", "storybook-static", "dist"],
 }

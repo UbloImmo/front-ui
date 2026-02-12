@@ -31,7 +31,7 @@ const defaultEmailInputProps: DefaultInputProps<"email"> = {
 /**
  * Renders an email input component. Does some rudimentary format validation on the input value.
  *
- * @version 0.0.5
+ * @version 0.1.0
  * @param {InputProps<"email">} props - The input props.
  * @return {JSX.Element} The rendered text input component.
  */
@@ -81,6 +81,6 @@ const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
   );
 };
 
-EmailInput.defaultProps = defaultEmailInputProps;
+EmailInput.__DEFAULT_PROPS = defaultEmailInputProps;
 
 export { EmailInput };

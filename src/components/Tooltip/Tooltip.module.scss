@@ -1,0 +1,22 @@
+.tooltip {
+  background: var(--gray-700);
+  color: var(--gray-50);
+  width: max-content;
+  height: max-content;
+  max-width: 12rem;
+  padding: var(--s-05) var(--s-1);
+  border-radius: var(--s-1);
+}
+
+.tooltip-trigger {
+  --cursor: help;
+  position: relative;
+  line-height: 0px;
+  height: fit-content;
+  width: fit-content;
+  cursor: var(--cursor);
+}
+
+.tooltip-arrow {
+  fill: var(--gray-700);
+}

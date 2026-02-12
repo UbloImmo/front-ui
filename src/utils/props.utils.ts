@@ -54,7 +54,7 @@ export const mergeDefaultProps = <
  * Hook that merges the provided default props with the given props,
  * using {@link mergeDefaultProps}.
  *
- * @param {TDefaultProps} defaultProps - the default properties to be merged
+ * @param {TDefaultProps | (() => TDefaultProps)} defaultProps - the default properties to be merged
  * @param {TProps} [props = {}] - the properties to merge with the default props
  * @param {boolean} [pruneExtraProps = false] - whether to only keep the props that are present in the default props
  * @return {TDefaultProps} the merged default props with the given props
@@ -65,7 +65,7 @@ export const useMergedProps = <
 >(
   defaultProps: TDefaultProps | (() => TDefaultProps),
   props: TProps = {} as TProps,
-  pruneExtraProps = false
+  pruneExtraProps: boolean = false
 ): TDefaultProps => {
   return useMemo<TDefaultProps>(
     () =>
@@ -97,6 +97,9 @@ export const useMergedProps = <
  *
  * @param {TProps} props - The input props object.
  * @return {StyleProps<TProps>} The generated style props.
+ *
+ * @deprecated styled-components
+ *
  */
 export const toStyleProps = <TProps extends Record<string, unknown>>(
   props: TProps
@@ -130,6 +133,9 @@ export const toStyleProps = <TProps extends Record<string, unknown>>(
  *
  * @param {StyleProps<TProps>} props - The input object with style properties.
  * @return {TProps} The transformed object with updated keys.
+ *
+ * @deprecated styled-components
+ *
  */
 export const fromStyleProps = <TProps extends Record<string, unknown>>(
   props: StyleProps<TProps>
@@ -148,6 +154,8 @@ export const fromStyleProps = <TProps extends Record<string, unknown>>(
  * @template {Record<string, unknown>} TProps - The type of the props object.
  * @param {TProps} props - The props object used to generate the style props.
  * @returns {StyleProps<TProps>} - The memoized object of style props.
+ *
+ * @deprecated styled-components
  */
 export const useStyleProps = <TProps extends Record<string, unknown>>(
   props: TProps

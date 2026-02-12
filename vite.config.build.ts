@@ -1,9 +1,8 @@
 import { resolve } from "node:path";
 
+import dts from "unplugin-dts/vite";
 import { mergeConfig } from "vite";
 import banner from "vite-plugin-banner";
-import dts from "vite-plugin-dts";
-import dynamicImportVars from "vite-plugin-dynamic-import";
 
 import { version, name } from "./package.json";
 import sbViteConfig from "./vite.config";
@@ -75,15 +74,22 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
       exclude: [
         "node_modules/**",
         "src/tests/**",
+        "storybook-static",
+        "dist",
         "docs",
         "scripts",
         ".storybook",
         "**/*.stories.tsx",
         "**/*.test.ts",
         "**/*.test.tsx",
+        "tsdoc.json",
+        "test.types.ts",
       ],
+      tsconfigPath: "./tsconfig.json",
+      bundleTypes: true,
       insertTypesEntry: true,
       copyDtsFiles: true,
+      outDirs: "dist/types",
     }),
     banner({
       content: chunkBanner,
@@ -91,6 +97,7 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
   ],
   build: {
     outDir: "dist",
+    emptyOutDir: true,
     lib: {
       entry: {
         themes: resolve(__dirname, "src", "themes/index.ts"),
@@ -103,35 +110,52 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
         index: resolve(__dirname, "src", "index.ts"),
       },
       formats: ["es"],
+      cssFileName: "style",
       fileName: name,
     },
     rollupOptions: {
-      plugins: [dynamicImportVars()],
+      // plugins: [dynamicImportVars()],
       external: [
         "react",
-        "styled-components",
         "react-dom",
-        "react-bootstrap-icons",
         "@ubloimmo/front-tokens",
         "@ubloimmo/front-util",
+        "@radix-ui/react-popover",
         "react-international-phone",
         "zod",
+        "framer-motion",
+        "react-day-picker",
+        "react-virtuoso",
+        "sonner",
+        "ts-dedent",
+        "uuid",
+        "@dnd-kit/core",
+        "@dnd-kit/modifiers",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "big.js",
+        "date-fns",
+        "lodash",
       ],
+      jsx: {
+        mode: "automatic",
+      },
       output: {
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
-          "bootstrap-icons": "BootstrapIcons",
-          "styled-components": "styled",
+          // "bootstrap-icons": "BootstrapIcons",
         },
         dir: "dist",
         compact: true,
         entryFileNames: "[name].js",
-        chunkFileNames: "[name].js",
-        assetFileNames: "[name].[ext]",
-        preserveModules: true,
-        preserveModulesRoot: "src",
+        chunkFileNames: "chunks/[hash].js",
+        assetFileNames: "assets/[name].[ext]",
+        // preserveModules: true,
+        // preserveModulesRoot: "src",
+        validate: true,
       },
     },
   },
+  assetsInclude: ["**/*.woff2"],
 });

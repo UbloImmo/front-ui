@@ -1,6 +1,6 @@
 import type { TableStyle } from "../../Table.types";
 import type { StyleOverrideProps, StyleProps } from "@types";
-import type { VoidFn } from "@ubloimmo/front-util";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
 export type TableRowProps = {
@@ -15,7 +15,7 @@ export type TableRowProps = {
    *
    * @type {VoidFn}
    */
-  onClick?: VoidFn;
+  onClick?: Nullable<VoidFn>;
   /**
    * The style of the row.
    *
@@ -23,6 +23,10 @@ export type TableRowProps = {
    * @default "form"
    */
   style?: TableStyle;
+  /**
+   * The id of the row
+   */
+  id?: Nullable<string>;
 } & Omit<StyleOverrideProps, "as">;
 
 export type TableRowStyleProps = StyleProps<

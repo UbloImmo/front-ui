@@ -1,4 +1,3 @@
-import { fn } from "@storybook/test";
 import {
   isArray,
   isNull,
@@ -6,6 +5,7 @@ import {
   objectFromEntries,
 } from "@ubloimmo/front-util";
 import { useCallback, useMemo, useRef, useState } from "react";
+import { fn } from "storybook/test";
 import { z } from "zod";
 
 import { Form } from "./Form.component";
@@ -40,7 +40,7 @@ import type {
   FormTableTryDeletingRowFn,
   FormTableTryDeletingRowParams,
 } from "./Form.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const addressSchema = z.object({
   number: z.number().nullish(),
@@ -143,7 +143,7 @@ const componentSource = componentSourceFactory<FormProps<object>>(
   {
     title: "Form",
   },
-  Form.defaultProps
+  Form.__DEFAULT_PROPS
 );
 
 const meta = {
@@ -456,6 +456,7 @@ const customInputFeatureSwitch = ({
   disabled,
 }: CustomFormInputProps<boolean>) => (
   <FeatureSwitch
+    label="Feature"
     onChange={onChange}
     value={value}
     disabled={disabled}
@@ -565,6 +566,8 @@ const formTableProps: FormTableProps<IdentityTable> = {
     property: "selected",
     behavior: "default",
   },
+  error: true,
+  errorText: "heya",
   EmptyCard: () => {
     return <span>Empty card</span>;
   },
@@ -733,6 +736,9 @@ export const TableTryDeletingRow = (props: FormStoryProps) => {
     return [
       {
         ...formTableProps,
+        selectable: false,
+        deletable: true,
+        swappable: true,
         tryDeletingRow,
       },
     ];
@@ -961,9 +967,11 @@ const infoBannerFormProps: FormProps<object> = {
   bannerInfo: (
     <>
       This information can contain any element, even&nbsp;
-      <Hypertext href="#">hypertexts</Hypertext>. It can be a lengthy
-      explanation of the form&apos;s purpose, instructions on how to fill it
-      out, or any other relevant details.
+      <Hypertext title="a hypertext" href="#">
+        hypertexts
+      </Hypertext>
+      . It can be a lengthy explanation of the form&apos;s purpose, instructions
+      on how to fill it out, or any other relevant details.
     </>
   ),
   defaultEditing: true,

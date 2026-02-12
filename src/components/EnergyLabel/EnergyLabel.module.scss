@@ -1,0 +1,79 @@
+@use "../../styles/_mixins.scss";
+@use "../../sizes/_breakpoints.scss";
+
+.energy-label {
+  --label-background: var(--gray-50);
+  --label-foreground: var(--gray-600);
+  --label-border: var(--gray-200);
+
+  @include mixins.dimensions(var(--s-6), var(--s-8), true);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 300ms var(--bezier);
+  background: var(--label-background);
+  border-radius: var(--s-1);
+  user-select: none;
+  border: 1px solid var(--label-border);
+
+  .energy-label-value {
+    transition: color 300ms var(--bezier);
+    color: var(--label-foreground);
+  }
+
+  &.active {
+    --label-border: var(--gray-200-00);
+    --label-foreground: var(--white);
+    &.GES {
+      &.A {
+        --label-background: #a4dbf8;
+      }
+      &.B {
+        --label-background: #8cb4d3;
+      }
+      &.C {
+        --label-background: #7792b1;
+      }
+      &.D {
+        --label-background: #606f8f;
+      }
+      &.E {
+        --label-background: #4d5271;
+      }
+      &.F {
+        --label-background: #393551;
+      }
+      &.G {
+        --label-background: #281b35;
+      }
+    }
+
+    &.DPE {
+      &.A {
+        --label-background: #009c6d;
+      }
+      &.B {
+        --label-background: #52b153;
+      }
+      &.C {
+        --label-background: #78bd76;
+      }
+      &.D {
+        --label-background: #e3d600;
+      }
+      &.E {
+        --label-background: #f0b50f;
+      }
+      &.F {
+        --label-background: #eb8235;
+      }
+      &.G {
+        --label-background: #d7221f;
+      }
+    }
+  }
+
+  @media only screen and (max-width: breakpoints.$breakpoint-xs) {
+    @include mixins.dimensions(var(--s-8), var(--s-10), true);
+  }
+}

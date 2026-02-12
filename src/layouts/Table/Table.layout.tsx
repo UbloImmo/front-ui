@@ -1,21 +1,10 @@
 import { forwardRef } from "react";
-import styled from "styled-components";
 
-import { tableLayoutStyles } from "./Table.styles";
-import {
-  type TableProps,
-  type TableDefaultProps,
-  TableStyleProps,
-} from "./Table.types";
+import { useTableLayoutStyle } from "./Table.styles";
 
-import {
-  useTestId,
-  useMergedProps,
-  useClassName,
-  useStyleProps,
-  useHtmlAttribute,
-} from "@utils";
+import { useTestId, useMergedProps, useHtmlAttribute } from "@utils";
 
+import type { TableDefaultProps, TableProps } from "./Table.types";
 import type { TestIdProps } from "@types";
 
 const defaultTableProps: TableDefaultProps = {
@@ -29,42 +18,36 @@ const defaultTableProps: TableDefaultProps = {
 /**
  * A structured layout element used to display data in rows and columns.
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {TableProps & TestIdProps} props - Table component props
  * @returns {JSX.Element}
  */
-const Table = forwardRef<HTMLTableElement, TableProps & TestIdProps>(
-  (props: TableProps & TestIdProps, ref): JSX.Element => {
-    const mergedProps = useMergedProps(defaultTableProps, props);
-    const testId = useTestId("table", props);
+const Table = forwardRef<
+  HTMLTableElement,
+  TableProps & TestIdProps,
+  TableDefaultProps
+>((props: TableProps & TestIdProps, ref): JSX.Element => {
+  const mergedProps = useMergedProps(defaultTableProps, props);
+  const testId = useTestId("table", props);
 
-    const className = useClassName(mergedProps);
+  const { className, style } = useTableLayoutStyle(mergedProps);
 
-    const styleProps = useStyleProps(mergedProps);
-    const style = useHtmlAttribute(mergedProps.styleOverride);
+  const id = useHtmlAttribute(mergedProps.id);
 
-    const id = useHtmlAttribute(mergedProps.id);
-
-    return (
-      <TableLayout
-        id={id}
-        data-testid={testId}
-        className={className}
-        style={style}
-        ref={ref}
-        {...styleProps}
-      >
-        {mergedProps.children}
-      </TableLayout>
-    );
-  }
-);
-Table.defaultProps = defaultTableProps;
+  return (
+    <table
+      id={id}
+      data-testid={testId}
+      className={className}
+      style={style}
+      ref={ref}
+    >
+      {mergedProps.children}
+    </table>
+  );
+});
+Table.__DEFAULT_PROPS = defaultTableProps;
 Table.displayName = "Table";
 
 export { Table };
-
-const TableLayout = styled.table<TableStyleProps>`
-  ${tableLayoutStyles}
-`;

@@ -1,12 +1,13 @@
 import { EnergyScoreInput } from "./EnergyScoreInput.component";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
   title: "Components/Forms/Input/EnergyScoreInput/Stories",
   component: EnergyScoreInput,
   args: {
     uncontrolled: true,
+    placeholder: "Energy score input",
   },
   argTypes: {
     scoreType: {
@@ -26,20 +27,20 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     scoreType: "DPE",
-    placeholder: "Number input",
+    placeholder: "Energy score input (DPE)",
   },
 };
 
 export const Climate: Story = {
   args: {
     scoreType: "GES",
-    placeholder: "Number input",
+    placeholder: "Energy score input (GES)",
   },
 };
 
 export const Disabled: Story = {
   args: {
-    placeholder: "Number input",
+    placeholder: "Energy score (disabled)",
     disabled: true,
     value: 100,
   },

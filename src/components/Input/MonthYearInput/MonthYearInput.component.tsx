@@ -8,7 +8,11 @@ import {
   isValidMonthYearStr,
   yearMonthToMonthYear,
 } from "./MonthYearInput.utils";
-import { defaultCommonInputProps, StyledInput } from "../Input.common";
+import {
+  defaultCommonInputProps,
+  StyledInput,
+  StyledInputContainer,
+} from "../Input.common";
 import {
   useInputId,
   useInputOnChange,
@@ -42,7 +46,7 @@ const defaultMonthYearInputProps: MonthYearInputDefaultProps = {
  * A simple month/year input with automatic formatting and validation.
  * User sees MM/YYYY format but outputs YYYY-MM format to backend.
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @param {MonthYearInputProps & TestIdProps} props - The input props.
  * @return {JSX.Element} The rendered month/year input component.
@@ -198,31 +202,36 @@ const MonthYearInput = (
   }, [innerValue]);
 
   return (
-    <StyledInput
-      data-testid={testId}
-      value={displayValue}
-      type="text"
-      onChange={onChange}
-      onBlur={onBlur}
-      onFocus={updateCursorPosition}
-      onSelect={updateCursorPosition}
-      onClick={updateCursorPosition}
-      onKeyDown={onKeyDown}
-      placeholder={mergedProps.placeholder || "MM/YYYY"}
-      disabled={mergedProps.disabled}
-      required={mergedProps.required}
-      ref={handleRef}
-      autoComplete={autoComplete}
-      id={id}
-      maxLength={7}
-      aria-label="Month and year input. Format: MM/YYYY. Valid years: 1000 to 2999. You can use arrow keys to increment or decrement values."
-      aria-invalid={mergedProps.error ? "true" : undefined}
-      inputMode="numeric"
+    <StyledInputContainer
       {...inputStyles}
-    />
+      data-testid="input-month-year-container"
+    >
+      <StyledInput
+        data-testid={testId}
+        value={displayValue}
+        type="text"
+        onChange={onChange}
+        onBlur={onBlur}
+        onFocus={updateCursorPosition}
+        onSelect={updateCursorPosition}
+        onClick={updateCursorPosition}
+        onKeyDown={onKeyDown}
+        placeholder={mergedProps.placeholder || "MM/YYYY"}
+        disabled={mergedProps.disabled}
+        required={mergedProps.required}
+        ref={handleRef}
+        autoComplete={autoComplete}
+        id={id}
+        maxLength={7}
+        aria-label="Month and year input. Format: MM/YYYY. Valid years: 1000 to 2999. You can use arrow keys to increment or decrement values."
+        aria-invalid={mergedProps.error ? "true" : undefined}
+        inputMode="numeric"
+        {...inputStyles}
+      />
+    </StyledInputContainer>
   );
 };
 
-MonthYearInput.defaultProps = defaultMonthYearInputProps;
+MonthYearInput.__DEFAULT_PROPS = defaultMonthYearInputProps;
 
 export { MonthYearInput };

@@ -1,17 +1,21 @@
-import { fn } from "@storybook/test";
-import styled, { css } from "styled-components";
+import { fn } from "storybook/test";
 
 import { Dialog } from "./Dialog.component";
 import { DialogProvider, useDialog } from "./Dialog.context";
 
 import { FlexColumnLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
-import { mergeDefaultProps, useMergedProps } from "@utils";
+import {
+  cssVarUsage,
+  mergeDefaultProps,
+  useCssStyles,
+  useMergedProps,
+} from "@utils";
 
 import { Heading, Text, Button, TextInput } from "@components";
 
 import type { DialogProps, DialogReference } from "./Dialog.types";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 
 const meta = {
@@ -47,6 +51,11 @@ const TestCard = ({
   reference: DialogReference;
 }) => {
   const { close } = useDialog(reference);
+  const closeButtonWrapperStyle = useCssStyles({
+    position: "absolute",
+    right: "var(--s-2)",
+    top: "var(--s-2)",
+  });
   return (
     <CardContainer $large={large}>
       <FlexColumnLayout gap="s-4">
@@ -56,14 +65,14 @@ const TestCard = ({
         <Text color="gray-700">{children}</Text>
       </FlexColumnLayout>
       {closeButton && (
-        <CloseButtonWrapper>
+        <div style={closeButtonWrapperStyle}>
           <Button
             onClick={close}
             icon="XLg"
             color="black"
             title="close dialog"
           />
-        </CloseButtonWrapper>
+        </div>
       )}
     </CardContainer>
   );
@@ -81,11 +90,16 @@ const TestDialog =
       reference,
     });
     const { open } = useDialog(mergedProps.reference);
+    const style = useCssStyles({
+      padding: "var(--s-1) 0",
+      display: "flex",
+      alignItems: "center",
+    });
     return (
-      <StoryContainer>
+      <div style={style}>
         <Button label={buttonLabel} onClick={open} color="black" />
         <Dialog {...mergedProps}>{fixedChildren}</Dialog>
-      </StoryContainer>
+      </div>
     );
   };
 
@@ -96,21 +110,32 @@ const ExampleCard = ({ reference }: { reference: DialogReference }) => (
   </TestCard>
 );
 
-const CardContainer = styled.div<{ $large?: boolean }>`
-  background: var(--white);
-  padding: var(--s-12) var(--s-4);
-  border: 1px solid var(--gray-50);
-  border-radius: var(--s-2);
-  position: relative;
-  ${({ $large }) =>
-    $large &&
-    css`
-      height: 200vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    `}
-`;
+const CardContainer = ({
+  children,
+  $large,
+}: {
+  children?: ReactNode;
+  $large?: boolean;
+}) => {
+  const styles = useCssStyles({
+    background: cssVarUsage("white"),
+    padding: `var(--s-12) var(--s-4)`,
+    border: `1px solid var(--gray-50)`,
+    boxShadow: cssVarUsage(`shadow-card-elevation-high`),
+    borderRadius: cssVarUsage("s-2"),
+    position: "relative",
+    ...($large
+      ? {
+          height: "200vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }
+      : {}),
+  });
+
+  return <div style={styles}>{children}</div>;
+};
 
 const references: DialogReference[] = [
   "image",
@@ -142,12 +167,15 @@ const NestedDialog = () => {
   );
 };
 
-const LongDiv = styled.div`
-  height: 200vh;
-  width: 300px;
-  background: var(--primary-medium);
-  border-radius: var(--s-2);
-`;
+const LongDiv = ({ children }: { children?: ReactNode }) => {
+  const styles = useCssStyles({
+    height: "200vh",
+    width: "300px",
+    background: cssVarUsage("primary-medium"),
+    borderRadius: cssVarUsage("s-2"),
+  });
+  return <div style={styles}>{children}</div>;
+};
 
 const children: Record<DialogReference, JSX.Element> = {
   card: <ExampleCard reference="example-card" />,
@@ -179,7 +207,7 @@ export const Default = TestDialog(
 );
 
 export const Content = (props: DialogProps) => {
-  const defaults = useMergedProps(Dialog.defaultProps, props);
+  const defaults = useMergedProps(Dialog.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -220,15 +248,3 @@ export const Overflow = TestDialog(
   </TestCard>,
   "Open overflowing dialog"
 );
-
-const StoryContainer = styled.div`
-  padding: var(--s-1) 0;
-  display: flex;
-  align-items: center;
-`;
-
-const CloseButtonWrapper = styled.div`
-  position: absolute;
-  right: var(--s-2);
-  top: var(--s-2);
-`;

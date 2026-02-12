@@ -1,6 +1,5 @@
 import { isFunction } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
-import styled from "styled-components";
 
 import { useFieldAssistiveText, useFieldValidity } from "./Field.utils";
 import { NativeInputOnChangeFn, useInputId } from "../Input";
@@ -10,9 +9,10 @@ import { inputTypes } from "../Input/Input.data";
 import { InputAssistiveText } from "../InputAssistiveText";
 import { InputLabel } from "../InputLabel";
 import { Text } from "../Text";
+import styles from "./Field.module.scss";
 
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
-import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
+import { useLogger, useTestId, useMergedProps, useCssClasses } from "@utils";
 
 import type { FieldProps, FieldDefaultProps } from "./Field.types";
 import type { InputType } from "../Input/Input.types";
@@ -22,8 +22,8 @@ import type { Nullable } from "@ubloimmo/front-util";
 const defaultFieldProps: FieldDefaultProps<InputType> = {
   type: "text",
   ...defaultCommonInputProps,
-  ...InputLabel.defaultProps,
-  ...InputAssistiveText.defaultProps,
+  ...InputLabel.__DEFAULT_PROPS,
+  ...InputAssistiveText.__DEFAULT_PROPS,
   label: "[Field label]",
   placeholder: "[Field placeholder]",
   assistiveText: null,
@@ -38,7 +38,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.0.11
+ * @version 0.1.0
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
@@ -55,7 +55,7 @@ const Field = <TType extends InputType>(
     >(defaultFieldProps, props as Partial<FieldDefaultProps<InputType>>);
 
   const testId = useTestId("field", props);
-  const className = useClassName(mergedProps);
+  const className = useCssClasses(styles.field, mergedProps.className);
 
   const inputId = useInputId(props);
   const labelHtmlFor = useMemo(() => {
@@ -91,7 +91,7 @@ const Field = <TType extends InputType>(
   }
 
   return (
-    <FieldContainer
+    <FlexColumnLayout
       testId={testId}
       overrideTestId
       data-field-type={mergedProps.type}
@@ -143,18 +143,9 @@ const Field = <TType extends InputType>(
           overrideTestId
         />
       )}
-    </FieldContainer>
+    </FlexColumnLayout>
   );
 };
-Field.defaultProps = defaultFieldProps;
+Field.__DEFAULT_PROPS = defaultFieldProps;
 
 export { Field };
-
-export const FieldContainer = styled(FlexColumnLayout)`
-  input,
-  textarea,
-  select,
-  label {
-    width: 100%;
-  }
-`;

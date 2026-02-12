@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { DateInput } from "./DateInput.component";
 import { DateInputProps } from "./DateInput.types";
@@ -11,7 +11,7 @@ import {
 import { ComponentVariants } from "@docs/blocks";
 import { useStatic } from "@utils";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
   title: "Components/Forms/Input/DateInput/Stories",

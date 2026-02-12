@@ -1,0 +1,90 @@
+.action {
+  --action-height: 2.5rem;
+  --action-padding: var(--s-1) var(--s-2);
+  --action-border-color: var(--primary-medium);
+  --action-color-light: var(--primary-light);
+  --action-border-color-transparent: var(--primary-medium-00);
+  --action-shadow-disabled: none;
+  --action-shadow-hover: var(--shadow-card-elevation-medium);
+  --action-border-radius: var(--s-1);
+
+  cursor: pointer;
+  min-height: var(--action-height);
+  width: 100%;
+  padding: var(--action-padding);
+
+  background: var(--white);
+  border: 1px solid var(--action-border-color-transparent);
+  box-shadow: var(--shadow-button);
+  border-radius: var(--action-border-radius);
+
+  transition:
+    background 300ms var(--bezier) 0s,
+    border-color 300ms var(--bezier) 0s,
+    box-shadow 300ms var(--bezier) 0s;
+
+  &:hover:not(:disabled) {
+    transition-duration: 150ms;
+    border-color: var(--action-border-color);
+    box-shadow: var(--action-shadow-hover);
+
+    &.centered {
+      background: var(--action-color-light);
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    box-shadow: var(--action-shadow-disabled);
+    background: var(--gray-50);
+  }
+
+  &.error {
+    --action-border-color: var(--error-medium);
+    --action-color-light: var(--error-light);
+    --action-border-color-transparent: var(--error-medium-00);
+    --action-shadow-hover: var(--shadow-input-error-focus);
+  }
+
+  &.default {
+    --action-height: 2.5rem;
+    --action-border-radius: var(--s-1);
+    --action-padding: var(--s-1) var(--s-2);
+  }
+
+  &.centered {
+    --action-height: 2.5rem;
+    --action-border-radius: var(--s-1);
+    --action-padding: var(--s-1) var(--s-2);
+  }
+
+  &.large {
+    --action-height: 5.25rem;
+    --action-border-radius: var(--s-3);
+    --action-padding: var(--s-4) var(--s-6);
+    --action-shadow-disabled: var(--shadow-card-default);
+  }
+
+  &.card {
+    --action-height: unset;
+    --action-border-radius: var(--s-3);
+    --action-padding: var(--s-4) var(--s-6);
+    --action-shadow-disabled: var(--shadow-card-default);
+  }
+}
+
+.action-label {
+  text-overflow: ellipsis;
+  max-height: 100%;
+  max-width: fit-content;
+  transition: color 150ms var(--bezier) 0s;
+  overflow-y: hidden;
+  overflow-wrap: break-word;
+  display: block;
+  display: -moz-box;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  -moz-line-clamp: 2;
+}

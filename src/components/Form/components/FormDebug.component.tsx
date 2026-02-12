@@ -1,24 +1,21 @@
 import { isString, type Nullable } from "@ubloimmo/front-util";
-import { useMemo } from "react";
-import styled, { css } from "styled-components";
+import { ReactNode, useMemo } from "react";
 
 import { useFormContext } from "../Form.context";
-import { formDebugPreStyles, formDebugContainerStyles } from "../Form.styles";
+import styles from "../Form.module.scss";
 
 import { Heading } from "@/components/Heading";
 import { Text } from "@/components/Text";
 import { GridLayout } from "@/layouts/Grid";
 import { GridItem, type GridItemProps } from "@/layouts/GridItem";
-import { breakpointsPx } from "@/sizes";
-import { arrayOf } from "@utils";
+import { arrayOf, cssVarUsage, useCssClasses, useCssVariables } from "@utils";
 
-import type { FormDebugPreStyleProps } from "../Form.types";
 import type { PaletteColor, ColorKey } from "@types";
 
 /**
  * Memoizes and transforms form debug information for rendering in a debug panel.
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @return {Nullable<JSX.Element>} The debug information stringified with specific transformations.
  */
@@ -65,10 +62,13 @@ export const FormDebug = (): Nullable<JSX.Element> => {
     validationDisabled,
   ]);
 
+  const className = useCssClasses(styles["form-debug"]);
+
   if (!debug) return null;
 
   return (
-    <DebugContainer
+    <GridLayout
+      className={className}
       columns={4}
       rows={arrayOf(6, (): "auto" => "auto")}
       gap="s-3"
@@ -125,7 +125,7 @@ export const FormDebug = (): Nullable<JSX.Element> => {
         justify="start"
         color="primary"
       />
-    </DebugContainer>
+    </GridLayout>
   );
 };
 
@@ -133,6 +133,11 @@ const DebugErrorsBlock = (layout: GridItemProps) => {
   const { errors } = useFormContext();
 
   const label = useMemo(() => `Errors (${errors.length})`, [errors]);
+
+  const className = useCssClasses(
+    styles["form-debug-grid-item"],
+    styles["form-debug-scroller"]
+  );
 
   if (!errors.length)
     return (
@@ -145,8 +150,8 @@ const DebugErrorsBlock = (layout: GridItemProps) => {
     );
 
   return (
-    <DebugBlockParentContainer fill {...layout}>
-      <DebugPre $color="error">
+    <GridItem className={className} fill {...layout}>
+      <DebugPre color="error">
         <details>
           <summary>
             <Heading size="h4" weight="medium" color="error-base">
@@ -163,7 +168,7 @@ const DebugErrorsBlock = (layout: GridItemProps) => {
           ))}
         </details>
       </DebugPre>
-    </DebugBlockParentContainer>
+    </GridItem>
   );
 };
 
@@ -196,9 +201,14 @@ const DebugBlock = ({
     [color]
   );
 
+  const className = useCssClasses(styles["form-debug-grid-item"], [
+    styles["responsive-small"],
+    responsiveSmall,
+  ]);
+
   return (
-    <DebugGridItem fill {...layout} $responsiveSmall={responsiveSmall}>
-      <DebugPre $color={color}>
+    <GridItem className={className} fill {...layout}>
+      <DebugPre color={color}>
         <details open={open}>
           <summary>
             <Heading size="h4" weight="medium" color={headingColor}>
@@ -211,36 +221,27 @@ const DebugBlock = ({
           </Text>
         </details>
       </DebugPre>
-    </DebugGridItem>
+    </GridItem>
   );
 };
 
-const DebugGridItem = styled(GridItem)<{ $responsiveSmall?: boolean }>`
-  @container (max-width: ${breakpointsPx.SM}) {
-    grid-column: ${({ $responsiveSmall }) =>
-      $responsiveSmall ? "auto / span 1" : "1 / -1 "};
-    grid-row: auto / span 1;
-  }
+const DebugPre = ({
+  color,
+  children,
+}: {
+  color: ColorKey;
+  children: ReactNode;
+}) => {
+  const className = useCssClasses(styles["form-debug-pre"]);
+  const style = useCssVariables({
+    "color-background": cssVarUsage(`${color}-light-50`),
+    "color-text": cssVarUsage(`${color}-dark`),
+    "color-marker": cssVarUsage(`${color}-medium`),
+  });
 
-  ${({ $responsiveSmall }) =>
-    $responsiveSmall &&
-    css`
-      @container (max-width: ${breakpointsPx.XS}) {
-        grid-column: auto / span 2;
-      }
-    `}
-`;
-
-const DebugContainer = styled(GridLayout)`
-  ${formDebugContainerStyles}
-  container-type: inline-size;
-`;
-
-const DebugPre = styled.pre<FormDebugPreStyleProps>`
-  ${formDebugPreStyles}
-`;
-
-const DebugBlockParentContainer = styled(DebugGridItem)`
-  max-height: 100%;
-  overflow: auto;
-`;
+  return (
+    <pre className={className} style={style}>
+      {children}
+    </pre>
+  );
+};

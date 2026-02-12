@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 
+import styles from "../Action.module.scss";
+
 import { Badge } from "@/components/Badge";
 import { StaticIcon } from "@/components/StaticIcon";
 import { Text } from "@/components/Text";
@@ -61,7 +63,12 @@ export const ActionDefault = ({
         align="center"
         justify="space-between"
       >
-        <Text testId={`${testId}-label`} overrideTestId {...textProps}>
+        <Text
+          className={styles["action-label"]}
+          testId={`${testId}-label`}
+          overrideTestId
+          {...textProps}
+        >
           {label}
         </Text>
         <FlexLayout direction="row" gap="s-2" align="center">

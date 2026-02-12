@@ -1,7 +1,8 @@
+import { UserConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
 /** @type {import('vite').UserConfig} */
-export default {
+const config: UserConfig = {
   build: {
     rollupOptions: {
       external: ["bun:test", "*.test.ts", "*.test.tsx"],
@@ -19,3 +20,4 @@ export default {
     },
   },
 };
+export default config;

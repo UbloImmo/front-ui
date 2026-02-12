@@ -18,7 +18,7 @@ const testFormAsModal = testComponentFactory(
   Form,
   {
     props: {
-      ...Form.defaultProps,
+      ...Form.__DEFAULT_PROPS,
       asModal: { size: "s", reference: FORM_MODAL_TEST_REF },
     },
     tests: [],
@@ -71,11 +71,11 @@ const testData: FormData<TestSchema> = {
   isTested: true,
 };
 
-testForm({ ...Form.defaultProps })("should render", ({ queryByTestId }) => {
+testForm({ ...Form.__DEFAULT_PROPS })("should render", ({ queryByTestId }) => {
   expect(queryByTestId("form")).not.toBeNull();
 });
 
-testForm({ ...Form.defaultProps, embedded: true })(
+testForm({ ...Form.__DEFAULT_PROPS, embedded: true })(
   "should render as embedded",
   ({ queryByTestId }) => {
     expect(queryByTestId("form")).not.toBeNull();
@@ -83,7 +83,7 @@ testForm({ ...Form.defaultProps, embedded: true })(
 );
 
 testForm({
-  ...Form.defaultProps,
+  ...Form.__DEFAULT_PROPS,
   query: () => testData,
   schema: testSchema,
   content: testFormContent,
@@ -110,7 +110,7 @@ testForm({
 const mockQueryFn = mock(() => testData);
 
 testForm({
-  ...Form.defaultProps,
+  ...Form.__DEFAULT_PROPS,
   query: mockQueryFn,
   schema: testSchema,
   content: testFormContent,
@@ -120,7 +120,7 @@ testForm({
   await delay(0);
   expect(mockQueryFn).toHaveBeenCalledTimes(1);
   rerenderWithProps({
-    ...Form.defaultProps,
+    ...Form.__DEFAULT_PROPS,
     query: mockQueryFn,
     schema: testSchema,
     content: testFormContent,
@@ -130,7 +130,7 @@ testForm({
   await delay(0);
   expect(mockQueryFn).toHaveBeenCalledTimes(1);
   rerenderWithProps({
-    ...Form.defaultProps,
+    ...Form.__DEFAULT_PROPS,
     query: mockQueryFn,
     schema: testSchema,
     content: testFormContent,
@@ -141,7 +141,7 @@ testForm({
   expect(mockQueryFn).toHaveBeenCalledTimes(2);
 });
 
-testFormAsModal({ ...Form.defaultProps })(
+testFormAsModal({ ...Form.__DEFAULT_PROPS })(
   "should render as modal when triggered",
   async ({ queryByTestId }) => {
     const openModalButton = queryByTestId("button");

@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { ComboBoxButton } from "./ComboBoxButton.component";
 
@@ -6,11 +6,11 @@ import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { ComboBoxButtonProps } from "./ComboBoxButton.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<ComboBoxButtonProps>(
   "ComboBoxButton",
-  ComboBoxButton.defaultProps
+  ComboBoxButton.__DEFAULT_PROPS
 );
 
 const meta = {

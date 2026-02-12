@@ -1,5 +1,3 @@
-import { css } from "styled-components";
-
 import light from "./DMMono-Light.woff2";
 import lightItalic from "./DMMono-LightItalic.woff2";
 import medium from "./DMMono-Medium.woff2";
@@ -14,10 +12,10 @@ const DMMonoFamily = fontFamily({
   format: "woff2",
 });
 
-export const DMMono = () => {
+export const DMMono = (): string => {
   const weights = buildTypographyWeightMap();
 
-  const fontFaces = DMMonoFamily([
+  return DMMonoFamily([
     {
       src: light,
       weight: weights.regular,
@@ -46,7 +44,4 @@ export const DMMono = () => {
       italic: true,
     },
   ]);
-  return css`
-    ${fontFaces}
-  `;
 };

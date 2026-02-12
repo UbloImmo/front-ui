@@ -13,14 +13,14 @@ const testEnergyLabel = testComponentFactory<EnergyLabelProps>(
 );
 
 testEnergyLabel({
-  ...EnergyLabel.defaultProps,
+  ...EnergyLabel.__DEFAULT_PROPS,
 })("should render with default props", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
   expect(queryByTestId("energy-label-value")?.textContent).toBe("-");
 });
 
 testEnergyLabel({
-  ...EnergyLabel.defaultProps,
+  ...EnergyLabel.__DEFAULT_PROPS,
   type: "DPE",
   value: "A",
   state: "active",
@@ -33,7 +33,7 @@ testEnergyLabel({
 );
 
 testEnergyLabel({
-  ...EnergyLabel.defaultProps,
+  ...EnergyLabel.__DEFAULT_PROPS,
   type: "GES",
   value: "C",
   state: "inactive",
@@ -46,7 +46,7 @@ testEnergyLabel({
 );
 
 testEnergyLabel({
-  ...EnergyLabel.defaultProps,
+  ...EnergyLabel.__DEFAULT_PROPS,
   type: "DPE",
   value: null,
 })("should render with DPE type and no value", ({ queryByTestId }) => {

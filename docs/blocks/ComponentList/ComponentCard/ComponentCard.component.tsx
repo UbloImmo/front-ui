@@ -1,18 +1,7 @@
 import { linkTo } from "@storybook/addon-links";
 import { useMemo } from "react";
-import styled from "styled-components";
 
-import {
-  componentCardStyle,
-  componentCardContainerStyle,
-  componentCardInfoContainerStyle,
-  componentCardScaleContainerStyle,
-} from "./ComponentCard.styles";
-import {
-  ComponentCardContainerProps,
-  type ComponentCardCellSize,
-  type ComponentCardProps,
-} from "./ComponentCard.types";
+import { useComponentCardStyles } from "./ComponentCard.styles";
 import { randomCellSize } from "./ComponentCard.utils";
 import { hasDefaultProps, isDocumentedComponent } from "../ComponentList.utils";
 
@@ -24,6 +13,10 @@ import { capitalize, useStatic } from "@utils";
 
 import { Badge, Button, Heading, Text } from "@components";
 
+import type {
+  ComponentCardCellSize,
+  ComponentCardProps,
+} from "./ComponentCard.types";
 import type { AnyIndex, ComponentName } from "../ComponentList.types";
 import type { ParsedJsDoc } from "@docs/docs.types";
 
@@ -50,10 +43,12 @@ export const ComponentCard = <
   Component,
   randomSize,
   parent,
-}: ComponentCardProps<TIndex, TName>) => {
+}: ComponentCardProps<TIndex, TName>): JSX.Element | null => {
   const size = useStatic<ComponentCardCellSize>(() =>
     randomSize ? randomCellSize() : "small"
   );
+
+  const { classNames, style } = useComponentCardStyles(size);
 
   const { description, internal, todo, version } = useStatic<
     Partial<ParsedJsDoc>
@@ -67,7 +62,7 @@ export const ComponentCard = <
 
   const componentProps = useMemo(() => {
     const defaultProps = hasDefaultProps(Component)
-      ? Component.defaultProps
+      ? Component.__DEFAULT_PROPS
       : {};
 
     const additionalProps =
@@ -152,19 +147,26 @@ export const ComponentCard = <
   }
 
   return (
-    <CardContainer
-      $size={size}
+    <article
+      className={classNames.card}
+      style={style}
       data-testid="component-card"
       title={componentName}
       onClick={redirectToDocs}
     >
-      <ComponentContainer data-testid="component-card-component-container">
-        <ComponentScaleContainer data-testid="component-card-scale-container">
+      <div
+        className={classNames.componentContainer}
+        data-testid="component-card-component-container"
+      >
+        <div
+          className={classNames.scaleContainer}
+          data-testid="component-card-scale-container"
+        >
           {renderedComponent}
-        </ComponentScaleContainer>
+        </div>
         {version && <Badge label={version} color="gray" />}
-      </ComponentContainer>
-      <InfoContainer>
+      </div>
+      <div className={classNames.infoContainer}>
         <FlexRowLayout gap="s-2" align="center" justify="start">
           <Heading size="h3" weight="medium" color="gray-800" important>
             {componentName}
@@ -177,23 +179,7 @@ export const ComponentCard = <
             <Markdown>{description}</Markdown>
           </Text>
         )}
-      </InfoContainer>
-    </CardContainer>
+      </div>
+    </article>
   );
 };
-
-const CardContainer = styled.article<ComponentCardContainerProps>`
-  ${componentCardStyle}
-`;
-
-const ComponentContainer = styled.div`
-  ${componentCardContainerStyle}
-`;
-
-const ComponentScaleContainer = styled.div`
-  ${componentCardScaleContainerStyle}
-`;
-
-const InfoContainer = styled.div`
-  ${componentCardInfoContainerStyle}
-`;

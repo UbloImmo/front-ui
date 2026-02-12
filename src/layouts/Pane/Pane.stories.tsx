@@ -1,15 +1,13 @@
-import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
-import styled from "styled-components";
-
 import { Pane } from "./Pane.layout";
-import { FlexLayout } from "../Flex";
+import { FlexLayout, FlexLayoutProps } from "../Flex";
 import { GridLayout } from "../Grid";
 import { GridItem } from "../GridItem";
+import styles from "./Pane.stories.module.scss";
 
 import { ComponentVariants, type PropVariant } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { breakpointLabels, type FixedCssLength } from "@types";
-import { cssVarUsage, useMergedProps, useStatic } from "@utils";
+import { cssVarUsage, useCssClasses, useMergedProps, useStatic } from "@utils";
 
 import { Badge, Text } from "@components";
 
@@ -19,7 +17,7 @@ import type {
   PaneDynamicContentProps,
   PaneProps,
 } from "./Pane.types";
-import type { Meta, StoryFn, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 
 const defaultProps: PaneDefaultProps = {
   expandedWidth: "15rem",
@@ -49,7 +47,9 @@ const PaneRenderer = (props: PaneProps) => {
   const PageContent = useStatic(() => (
     <GridItem align="center" justify="center" fill>
       <Zone fill align="center" justify="center">
-        <ZoneText align="center">Page content</ZoneText>
+        <Text noWrap size="xs" weight="medium" align="center">
+          Page content
+        </Text>
       </Zone>
     </GridItem>
   ));
@@ -75,29 +75,17 @@ const PaneRenderer = (props: PaneProps) => {
   );
 };
 
-const Zone = styled(FlexLayout)`
-  background: var(--gray-50);
-  min-height: 100px;
-  padding: var(--s-3);
-  border-radius: var(--s-1);
-  border: 1px dashed var(--gray-200);
-  overflow: hidden;
-  transition: background 150ms var(--bezier);
-
-  [data-expanded="true"] & {
-    background: var(--primary-light);
-  }
-`;
-
-const ZoneText = styled(Text)`
-  ${texts.desktop.xs.medium.css.style};
-  white-space: nowrap;
-`;
+const Zone = ({ className, ...props }: FlexLayoutProps) => {
+  const klass = useCssClasses(styles.zone, className);
+  return <FlexLayout className={klass} {...props} />;
+};
 
 const defaultArgs = {
   children: (
     <Zone align="center" justify="center" fill>
-      <ZoneText>Pane content</ZoneText>
+      <Text noWrap size="xs" weight="medium">
+        Pane content
+      </Text>
     </Zone>
   ),
 };

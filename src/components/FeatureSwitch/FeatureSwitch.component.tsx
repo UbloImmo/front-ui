@@ -139,6 +139,6 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
     </FlexRowLayout>
   );
 };
-FeatureSwitch.defaultProps = defaultFeatureSwitchProps;
+FeatureSwitch.__DEFAULT_PROPS = defaultFeatureSwitchProps;
 
 export { FeatureSwitch };

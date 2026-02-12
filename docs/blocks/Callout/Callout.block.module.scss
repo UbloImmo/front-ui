@@ -1,0 +1,8 @@
+.callout {
+  margin: var(--s-2) 0 var(--s-4) !important;
+
+  & span[data-testid="text"] {
+    margin: 0 !important;
+    font-size: var(--text-m) !important;
+  }
+}

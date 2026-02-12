@@ -1,0 +1,40 @@
+.callout {
+  --callout-background: var(--primary-light);
+  --callout-border: var(--primary-base);
+
+  display: flex;
+  gap: var(--s-3);
+  min-height: var(--s-10);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  background: var(--callout-background);
+  position: relative;
+  overflow: hidden;
+
+  &.m {
+    flex-direction: row;
+    align-items: center;
+    padding: var(--s-3) var(--s-4);
+    border-radius: var(--s-1);
+  }
+
+  &.l {
+    flex-direction: column;
+    align-items: start;
+    padding: var(--s-8);
+    border-radius: var(--s-2);
+    outline: 1px solid var(--callout-border);
+    outline-offset: -1px;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    right: unset;
+    height: 100%;
+    width: var(--s-1);
+    background: var(--callout-border);
+  }
+}

@@ -1,5 +1,5 @@
-import { fn } from "@storybook/test";
 import { useMemo, useState } from "react";
+import { fn } from "storybook/test";
 
 import { Checkbox } from "./Checkbox.component";
 import { Text } from "../Text";
@@ -10,11 +10,11 @@ import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { arrayOf } from "@utils";
 
 import type { CheckboxProps, CheckboxStatus } from "./Checkbox.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<CheckboxProps>(
   "Checkbox",
-  Checkbox.defaultProps
+  Checkbox.__DEFAULT_PROPS
 );
 
 const checkboxStatus: CheckboxStatus[] = [true, "mixed", false];
@@ -53,7 +53,7 @@ export const States = () => {
     <ComponentVariants
       of={Checkbox}
       for="active"
-      defaults={Checkbox.defaultProps}
+      defaults={Checkbox.__DEFAULT_PROPS}
       variants={checkboxStatus}
       propLabels
     />
@@ -82,7 +82,7 @@ export const Disabled = () => {
   return (
     <ComponentVariants
       of={Checkbox}
-      defaults={Checkbox.defaultProps}
+      defaults={Checkbox.__DEFAULT_PROPS}
       variants={disabledStates}
       propLabels
     />
@@ -123,10 +123,11 @@ export const Mixed = () => {
   };
 
   const allChecked = useMemo<CheckboxStatus>(() => {
-    return items.every(({ checked }) => checked) ||
-      items.some(({ checked }) => checked)
-      ? "mixed"
-      : false;
+    return items.every(({ checked }) => checked)
+      ? true
+      : items.some(({ checked }) => checked)
+        ? "mixed"
+        : false;
   }, [items]);
 
   return (

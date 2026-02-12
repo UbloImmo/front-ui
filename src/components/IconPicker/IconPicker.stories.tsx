@@ -1,15 +1,15 @@
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 import { IconPicker } from "./IconPicker.component";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 
 import type { IconPickerProps } from "./IconPicker.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<IconPickerProps>(
   "IconPicker",
-  IconPicker.defaultProps
+  IconPicker.__DEFAULT_PROPS
 );
 
 const meta = {

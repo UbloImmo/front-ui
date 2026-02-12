@@ -122,7 +122,7 @@ const FontTokenRow = ({ size, weight }: FontTokenRowProps): JSX.Element => {
 
   return (
     <TableRow $required>
-      <TableCell $center>
+      <TableCell $center $raw>
         <FlexRowLayout gap="s-1">
           <Badge
             label={size.toUpperCase()}
@@ -131,7 +131,7 @@ const FontTokenRow = ({ size, weight }: FontTokenRowProps): JSX.Element => {
           <Badge label={capitalize(weight)} color="gray" />
         </FlexRowLayout>
       </TableCell>
-      <TableCell $center>
+      <TableCell $center $raw>
         {isHeadingSize(size) ? (
           <Heading size={size} weight={weight} important>
             {LOREM}
@@ -142,7 +142,7 @@ const FontTokenRow = ({ size, weight }: FontTokenRowProps): JSX.Element => {
           </Text>
         )}
       </TableCell>
-      <TableCell $center>
+      <TableCell $center $raw>
         <GridLayout
           columns={["auto", "auto", "auto"]}
           gap={{

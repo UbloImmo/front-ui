@@ -14,7 +14,7 @@ describe("Input", async () => {
     "NumberInput",
     NumberInput,
     {
-      props: NumberInput.defaultProps,
+      props: NumberInput.__DEFAULT_PROPS,
       tests: [
         {
           name: "should render",

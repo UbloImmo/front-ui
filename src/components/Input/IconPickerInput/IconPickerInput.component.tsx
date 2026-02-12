@@ -14,7 +14,7 @@ import type {
 } from "./IconPickerInput.types";
 
 const defaultIconPickerInputProps: IconPickerInputDefaultProps = {
-  ...IconPicker.defaultProps,
+  ...IconPicker.__DEFAULT_PROPS,
   ...defaultCommonInputProps,
   name: null,
   value: null,
@@ -28,7 +28,7 @@ const defaultIconPickerInputProps: IconPickerInputDefaultProps = {
  *
  * @remarks Use {@link IconPicker} if you need an icon picker, instead of this component.
  *
- * @version 0.0.1
+ * @version 0.1.0
  *
  * @param {IconPickerInputProps & TestIdProps} props - IconPickerInput component props
  * @returns {JSX.Element}
@@ -61,6 +61,6 @@ const IconPickerInput = (
   );
 };
 
-IconPickerInput.defaultProps = defaultIconPickerInputProps;
+IconPickerInput.__DEFAULT_PROPS = defaultIconPickerInputProps;
 
 export { IconPickerInput };

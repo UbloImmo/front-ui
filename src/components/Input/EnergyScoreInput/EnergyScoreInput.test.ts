@@ -14,7 +14,7 @@ describe("EnergyScoreInput", async () => {
     "EnergyScoreInput",
     EnergyScoreInput,
     {
-      props: EnergyScoreInput.defaultProps,
+      props: EnergyScoreInput.__DEFAULT_PROPS,
       tests: [
         {
           name: "should render",

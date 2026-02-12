@@ -52,7 +52,7 @@ const useDialogKeys: (keyof DialogContext)[] = [
 ];
 
 const props: DialogProps = {
-  ...Dialog.defaultProps,
+  ...Dialog.__DEFAULT_PROPS,
   children: <div data-testid={testIds.child}>test portal child</div>,
 };
 

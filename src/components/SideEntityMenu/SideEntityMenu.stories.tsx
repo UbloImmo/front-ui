@@ -8,15 +8,15 @@ import type {
   SideEntityMenuProps,
   SideEntityMenuLink,
 } from "./SideEntityMenu.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const componentSource = componentSourceFactory<SideEntityMenuProps>(
   "SideEntityMenu",
   {
-    menuLinks: SideEntityMenu.defaultProps.menuLinks,
-    backLinks: SideEntityMenu.defaultProps.backLinks,
+    menuLinks: SideEntityMenu.__DEFAULT_PROPS.menuLinks,
+    backLinks: SideEntityMenu.__DEFAULT_PROPS.backLinks,
   },
-  SideEntityMenu.defaultProps
+  SideEntityMenu.__DEFAULT_PROPS
 );
 
 // Mock data for the menu links
@@ -142,13 +142,11 @@ const onlyBackLinksProps: SideEntityMenuProps = {
       title: "Super Groupe",
       icon: "BackArrow",
       to: "/real-estate/units?list-options=group1",
-      borderBottom: true,
     },
     {
       title: "Sous-groupe A",
       icon: "BackArrow",
       to: "/real-estate/units?list-options=subgroup-a",
-      borderBottom: true,
     },
   ],
 };

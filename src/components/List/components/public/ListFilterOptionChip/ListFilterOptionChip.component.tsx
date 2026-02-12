@@ -8,7 +8,7 @@ import type { ListFilterOptionChipProps } from "./ListFilterOptionChip.types";
 /**
  * Renders a filter option as a chip.
  *
- * @version 0.0.1
+ * @version 0.1.0
  */
 export const ListFilterOptionChip = <TItem extends object>({
   filterOption,

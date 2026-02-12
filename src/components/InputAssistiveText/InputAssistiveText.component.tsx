@@ -24,7 +24,7 @@ const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
 /**
  * Renders an assistive text for the Input component based on the provided props.
  *
- * @version 0.0.7
+ * @version 0.1.0
  *
  * @param {InputAssistiveTextProps & TestIdProps} props - The properties for the assistive text.
  * @return {Nullable<JSX.Element>} The JSX element representing the assistive text.
@@ -95,5 +95,5 @@ const InputAssistiveText = (
   );
 };
 
-InputAssistiveText.defaultProps = defaultInputAssistiveTextProps;
+InputAssistiveText.__DEFAULT_PROPS = defaultInputAssistiveTextProps;
 export { InputAssistiveText };

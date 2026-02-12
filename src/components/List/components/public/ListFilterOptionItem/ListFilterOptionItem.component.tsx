@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from "react";
-import styled from "styled-components";
 
-import { listFilterOptionItemStyles } from "./ListFilterOptionItem.styles";
+import { useListFilterOptionItemClassName } from "./ListFilterOptionItem.styles";
 
 import { Checkbox } from "@/components/Checkbox";
 import { Icon, IconProps, type IconName } from "@/components/Icon";
@@ -9,18 +8,15 @@ import { CLEAR_FILTER_OPTION_SIGNATURE } from "@/components/List/modules/FilterO
 import { Text } from "@/components/Text";
 import { FlexLayout } from "@/layouts/Flex";
 import { TextProps } from "@types";
-import { useMergedProps, useStyleProps } from "@utils";
+import { useMergedProps } from "@utils";
 
-import type {
-  ListFilterOptionItemProps,
-  ListFilterOptionItemStyleProps,
-} from "./ListFilterOptionItem.types";
+import type { ListFilterOptionItemProps } from "./ListFilterOptionItem.types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 /**
  * Renders a filter option's list item in a filter.
  *
- * @version 0.0.2
+ * @version 0.1.0
  *
  * @template {object} TItem - The type of the list's items
  * @param {ListFilterOptionItemProps<TItem>} props - The component's props
@@ -36,7 +32,10 @@ export const ListFilterOptionItem = <TItem extends object = object>({
     { highlighted: false },
     { highlighted }
   );
-  const styleProps = useStyleProps(highlightProps);
+  const className = useListFilterOptionItemClassName(
+    highlightProps.highlighted
+  );
+
   const matchAttr = useMemo(
     () =>
       option?.matches
@@ -61,7 +60,7 @@ export const ListFilterOptionItem = <TItem extends object = object>({
     };
   }, [highlighted, option.disabled, option.selected]);
 
-  const iconProps = useMemo<Nullable<IconProps>>(() => {
+  const iconProps = useMemo<IconProps>(() => {
     const name: IconName = option.icon
       ? option.icon
       : option.selected
@@ -88,8 +87,8 @@ export const ListFilterOptionItem = <TItem extends object = object>({
   if (option.hidden) return null;
 
   return (
-    <ListFilterOptionItemContainer
-      {...styleProps}
+    <li
+      className={className}
       data-testid="list-filter-option"
       aria-selected={option.selected}
       aria-disabled={option.disabled}
@@ -117,10 +116,6 @@ export const ListFilterOptionItem = <TItem extends object = object>({
           )
         )}
       </FlexLayout>
-    </ListFilterOptionItemContainer>
+    </li>
   );
 };
-
-const ListFilterOptionItemContainer = styled.li<ListFilterOptionItemStyleProps>`
-  ${listFilterOptionItemStyles}
-`;

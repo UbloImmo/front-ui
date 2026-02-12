@@ -8,7 +8,7 @@ import { testComponentFactory } from "@/tests";
 const testId = "loading-indicator";
 
 const testLoading = testComponentFactory<LoadingProps>("Loading", Loading, {
-  props: Loading.defaultProps,
+  props: Loading.__DEFAULT_PROPS,
   tests: [
     {
       name: "should render",

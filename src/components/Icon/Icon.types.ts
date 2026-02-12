@@ -1,7 +1,10 @@
-import { GenericFn, objectKeys } from "@ubloimmo/front-util";
+import { GenericFn } from "@ubloimmo/front-util";
 
-import * as GeneratedIcons from "./__generated__";
 import { CommonIconProps } from "./__generated__/common.types";
+import {
+  type IconName as GeneratedIconName,
+  GENERATED_ICON_NAMES,
+} from "./__generated__/iconName.types";
 
 import {
   CssPx,
@@ -11,11 +14,9 @@ import {
   StyleProps,
 } from "@types";
 
-const IconName = GeneratedIcons;
+export type IconName = GeneratedIconName;
 
-export type IconName = keyof typeof IconName;
-
-export const allIconNames = objectKeys(IconName) as IconName[];
+export const allIconNames = GENERATED_ICON_NAMES;
 
 export type GeneratedIcon = GenericFn<[CommonIconProps], JSX.Element>;
 

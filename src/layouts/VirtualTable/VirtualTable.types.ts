@@ -499,7 +499,7 @@ export type VirtualTableSharedContext<TItem extends object> = Replace<
  *
  * @see {@link TableVirtuosoProps}, {@link VirtualTableSharedContext}
  */
-export type VirutalTableContentProps<TItem extends object> = Pick<
+export type VirtualTableContentProps<TItem extends object> = Pick<
   TableVirtuosoProps<TItem, VirtualTableSharedContext<TItem>>,
   "fixedFooterContent" | "fixedHeaderContent"
 >;
@@ -538,6 +538,8 @@ export type VirtualTableRowOverrideProps<TItem extends object> =
  *
  * @template {object} TItem - The type of items in the data array
  * @see {@link StyleProps}
+ *
+ * @deprecated styled-components
  */
 export type VirutalTableRowStyleProps = StyleProps<{
   /**
@@ -568,6 +570,8 @@ export type VirutalTableRowStyleProps = StyleProps<{
  *
  * @template {object} TItem - The type of items in the data array
  * @see {@link StyleProps}
+ *
+ * @deprecated styled-components
  */
 export type VirtualTableCellStyleProps = StyleProps<
   Pick<VirtualTableCellContentProps<object>, "fixedWidth">

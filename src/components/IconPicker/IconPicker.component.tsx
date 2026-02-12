@@ -1,18 +1,17 @@
 import { isArray } from "@ubloimmo/front-util";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
 
-import { IconName } from "../Icon/Icon.types";
 import { IconPickerItem } from "./components/IconPickerItem/IconPickerItem.component";
-import { iconPickerContainerStyles } from "./IconPicker.styles";
+import styles from "./IconPicker.module.scss";
 
 import { FlexLayout } from "@/layouts/Flex";
-import { useLogger, useTestId, useMergedProps, useClassName } from "@utils";
+import { useLogger, useTestId, useMergedProps, useCssClasses } from "@utils";
 
 import type {
   IconPickerProps,
   IconPickerDefaultProps,
 } from "./IconPicker.types";
+import type { IconName } from "../Icon/Icon.types";
 import type { TestIdProps } from "@types";
 
 const defaultIconPickerProps: IconPickerDefaultProps = {
@@ -29,7 +28,7 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
 /**
  * Allows users to pick an icon from a subset, like a radio input for icons.
  *
- * @version 0.0.4
+ * @version 0.1.0
  *
  * @param {IconPickerProps & TestIdProps} props - IconPicker component props
  * @returns {JSX.Element}
@@ -40,7 +39,7 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
   });
   const mergedProps = useMergedProps(defaultIconPickerProps, props);
   const testId = useTestId("icon-picker", props);
-  const className = useClassName(mergedProps);
+  const className = useCssClasses(styles["icon-picker"], props.className);
 
   const [selection, setSelection] = useState(mergedProps.value);
 
@@ -76,7 +75,7 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
   );
 
   return (
-    <IconPickerContainer
+    <FlexLayout
       direction={hasRows ? "column" : "row"}
       testId={testId}
       gap="s-2"
@@ -109,13 +108,9 @@ const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
           />
         )
       )}
-    </IconPickerContainer>
+    </FlexLayout>
   );
 };
-IconPicker.defaultProps = defaultIconPickerProps;
-
-const IconPickerContainer = styled(FlexLayout)`
-  ${iconPickerContainerStyles}
-`;
+IconPicker.__DEFAULT_PROPS = defaultIconPickerProps;
 
 export { IconPicker };

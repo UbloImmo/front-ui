@@ -1,8 +1,8 @@
-// @ts-check
+import { i18n, UnionType } from "typedoc";
 import { MarkdownTheme, MarkdownThemeContext } from "typedoc-plugin-markdown";
 
 import { partials } from "./partials/index.js";
-import { lines, storybookUrl } from "./typedoc.utils.js";
+import { heading, lines, storybookUrl } from "./typedoc.utils.js";
 
 /**
  * @param {import('typedoc-plugin-markdown').MarkdownPageEvent} _page
@@ -21,6 +21,9 @@ const pageFooter = (_page) => {
  * @returns {string}
  */
 function sanitizeComments(str) {
+  /**
+   * @type {string[]}
+   */
   const codeBlocks = [];
   const placeholder = "___CODEBLOCKPLACEHOLDER___";
   // Replace code blocks with placeholders
@@ -29,7 +32,7 @@ function sanitizeComments(str) {
     return placeholder;
   });
   // If line starts with a > treat it as a blockquote
-  // Otherwise escape all <, > and =
+  // Otherwise escape all <, > and
   str = str
     // escape =
     .replace(/=/g, "\\=")
@@ -39,9 +42,11 @@ function sanitizeComments(str) {
       "$<label>$<urlStart>=$<urlEnd>"
     )
     // escape < that has not been escaped already
-    .replace(/(?<!\\)</g, "\\<")
+    .replaceAll(/(?<!\\)</g, "\\<")
     // escape > that has not been escaped and is not the first character (blockquote)
-    .replace(/(?<!^)(?<!\\)>/g, "\\>");
+    .replaceAll(/(?<!^)(?<!\\)>/g, "\\>")
+    // escape <= that has not been escaped already
+    .replaceAll(/(?<!\\)</g, "\\<");
 
   // Replace placeholders with original code blocks
   str = str.replace(
@@ -56,12 +61,61 @@ function sanitizeComments(str) {
  */
 class MDXThemeContext extends MarkdownThemeContext {
   __commentBackup__ = this.partials.comment;
+  __signatureReturnsBackup = this.partials.signatureReturns;
 
   /**
    * @type {MarkdownThemeContext["partials"]}
    */
   partials = {
     ...this.partials,
+    signatureReturns: (model, options) => {
+      const md = [];
+
+      const typeDeclaration = model.type?.declaration;
+
+      md.push(heading(options.headingLevel, i18n.theme_returns()));
+
+      if (!typeDeclaration?.signatures) {
+        if (model.type && this.helpers.hasUsefulTypeDetails(model.type)) {
+          if (model.type instanceof UnionType) {
+            md.push(
+              this.partials.typeDeclarationUnionContainer(model, options)
+            );
+          }
+        } else {
+          md.push(this.helpers.getReturnType(model.type));
+        }
+      }
+
+      const returnsTag = model.comment?.getTag("@returns");
+
+      if (returnsTag) {
+        // PATCH: escape special characters for MDX compat
+        const returnsContent = this.helpers.getCommentParts(returnsTag.content);
+        md.push(sanitizeComments(returnsContent));
+      }
+
+      if (typeDeclaration?.signatures) {
+        typeDeclaration.signatures.forEach((signature) => {
+          md.push(
+            this.partials.signature(signature, {
+              headingLevel: options.headingLevel + 1,
+              nested: true,
+            })
+          );
+        });
+      }
+
+      if (typeDeclaration?.children) {
+        md.push(
+          this.partials.typeDeclaration(typeDeclaration, {
+            headingLevel: options.headingLevel,
+          })
+        );
+      }
+
+      return md.join("\n\n");
+    },
     header: partials.header.bind(this),
     pageTitle: () => "",
     footer: () => {
@@ -80,19 +134,44 @@ class MDXThemeContext extends MarkdownThemeContext {
     },
   };
 
+  // /**
+  //  * Returns the relative URL (from the current page context url).
+  //  *
+  //  * If public path is set, it will be used as the base URL.
+  //  *
+  //  * @param {string} url - The URL to make relative.
+  //  * @returns {string}
+  //  */
+  // relativeURL(url) {
+  // const URL_PREFIX = /^(http|ftp)s?:\/\//;
+  //   const matched = URL_PREFIX.test(url);
+  //   const relativeUrl = matched ? super.relativeURL(url) : storybookUrl(url);
+  //   console.log({ url, relativeUrl, matched });
+  //   return relativeUrl;
+  // }
+
   /**
-   * Returns the relative URL (from the current page context url).
    *
-   * If public path is set, it will be used as the base URL.
-   *
-   * @param {string} url - The URL to make relative.
+   * @param {import("typedoc").Reflection} reflection
    * @returns {string}
    */
-  getRelativeUrl(url) {
+  urlTo(reflection) {
     const URL_PREFIX = /^(http|ftp)s?:\/\//;
-    return URL_PREFIX.test(url) ? url : storybookUrl(url);
+    const fullURL = this.router.getFullUrl(reflection);
+
+    const matched = URL_PREFIX.test(fullURL);
+    const base = super.urlTo(reflection);
+    const sbURL = storybookUrl(fullURL);
+
+    if (matched) return base;
+
+    return sbURL;
   }
 
+  /**
+   *
+   * @param {MarkdownTheme} theme
+   */
   constructor(theme, page, options) {
     super(theme, page, options);
     this.options.setValue("disableSources", true);
@@ -106,5 +185,15 @@ export class MDXTheme extends MarkdownTheme {
    */
   getRenderContext(page) {
     return new MDXThemeContext(this, page, this.application.options);
+  }
+
+  /**
+   *
+   * @param {import('typedoc-plugin-markdown').MarkdownPageEvent} page
+   * @returns {string}
+   */
+  render(page) {
+    const rendered = super.render(page);
+    return rendered;
   }
 }

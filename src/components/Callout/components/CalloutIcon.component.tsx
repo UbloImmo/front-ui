@@ -1,7 +1,7 @@
 import { isNull } from "lodash";
 import { useMemo } from "react";
 
-import { computeCalloutIconNames } from "../Callout.styles";
+import { calloutIconNames } from "../Callout.styles";
 
 import { Icon } from "@/components/Icon";
 import { isGrayColor } from "@utils";
@@ -21,7 +21,7 @@ export const CalloutIcon = ({ size, color, icon }: CalloutDefaultProps) => {
 
   const iconName = useMemo(() => {
     if (isNull(icon)) return null;
-    return icon === "auto" ? computeCalloutIconNames[color] : icon;
+    return icon === "auto" ? calloutIconNames[color] : icon;
   }, [icon, color]);
 
   if (!iconName) return null;

@@ -1,22 +1,26 @@
-import { css, type RuleSet } from "styled-components";
+import styles from "../../Table.module.scss";
 
 import { parseFixedLength } from "@/sizes/size.utils";
+import { useCssClasses, useCssVariables } from "@utils";
 
-import type { TableHeaderStyleProps } from "./TableHeader.types";
+import type { TableHeaderProps } from "./TableHeader.types";
 
-export const tableHeaderStyles = ({
-  $sticky,
-  $top,
-}: TableHeaderStyleProps): RuleSet => {
-  if (!$sticky) return css``;
-  const top = parseFixedLength($top);
-  return css`
-    position: sticky;
-    top: ${top};
-    z-index: 1;
+export function useTableHeaderStyle(props: Required<TableHeaderProps>) {
+  const className = useCssClasses(
+    styles["table-header"],
+    [styles.sticky, props.sticky],
+    props.className
+  );
 
-    & > tr > th > div {
-      box-shadow: var(--shadow-card-elevation-low);
-    }
-  `;
-};
+  const style = useCssVariables(
+    {
+      "table-header-top": parseFixedLength(props.top),
+    },
+    props.styleOverride
+  );
+
+  return {
+    className,
+    style,
+  };
+}

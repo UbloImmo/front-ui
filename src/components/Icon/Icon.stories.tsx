@@ -1,15 +1,16 @@
-import { objectKeys } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
-import * as BootstrapIcons from "./__generated__/bootstrap";
-import * as CustomIcons from "./__generated__/custom";
 import { Icon } from "./Icon.component";
 import { FlexRowLayout } from "../../layouts";
+import {
+  BOOTSTRAP_ICON_NAMES,
+  CUSTOM_ICON_NAMES,
+} from "./__generated__/iconName.types";
 
 import { ComponentVariants } from "@docs/blocks";
 
 import type { IconProps } from "./Icon.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ColorPalette, PaletteColor, SpacingLabel } from "@types";
 
 const meta = {
@@ -30,28 +31,28 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: Icon.defaultProps,
+  args: Icon.__DEFAULT_PROPS,
 };
 
+const colors: Exclude<keyof ColorPalette, "gray">[] = [
+  "primary",
+  "success",
+  "pending",
+  "warning",
+  "error",
+];
+const colorShades: PaletteColor[] = colors.flatMap(
+  (color): `${typeof color}-${"base" | "light" | "dark" | "medium"}`[] => [
+    `${color}-light`,
+    `${color}-medium`,
+    `${color}-base`,
+    `${color}-dark`,
+  ]
+);
 export const Colors = (props: Partial<IconProps>) => {
-  const colors: Exclude<keyof ColorPalette, "gray">[] = [
-    "primary",
-    "success",
-    "pending",
-    "warning",
-    "error",
-  ];
-  const colorShades: PaletteColor[] = colors.flatMap(
-    (color): `${typeof color}-${"base" | "light" | "dark" | "medium"}`[] => [
-      `${color}-base`,
-      `${color}-light`,
-      `${color}-dark`,
-      `${color}-medium`,
-    ]
-  );
   const defaultProps = useMemo(() => {
     return {
-      ...Icon.defaultProps,
+      ...Icon.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -62,6 +63,8 @@ export const Colors = (props: Partial<IconProps>) => {
       variants={colorShades}
       for="color"
       of={Icon}
+      columns={4}
+      justify="center"
       align="center"
     />
   );
@@ -71,16 +74,14 @@ Colors.args = {
   size: "s-8",
 };
 
-export const Sizes = (props: Partial<IconProps>) => {
-  const sizes = useMemo(() => {
-    return Array(10)
-      .fill(0)
-      .map((_, index): SpacingLabel => `s-${!index ? 1 : index * 2}`);
-  }, []);
+const sizes = Array(10)
+  .fill(0)
+  .map((_, index): SpacingLabel => `s-${!index ? 1 : index * 2}`);
 
+export const Sizes = (props: Partial<IconProps>) => {
   const defaultProps = useMemo(() => {
     return {
-      ...Icon.defaultProps,
+      ...Icon.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -101,13 +102,9 @@ Sizes.args = {
 };
 
 export const Bootstrap = (props: Partial<IconProps>) => {
-  const names = useMemo(() => {
-    return objectKeys(BootstrapIcons);
-  }, []);
-
   const defaultProps = useMemo(() => {
     return {
-      ...Icon.defaultProps,
+      ...Icon.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -115,7 +112,7 @@ export const Bootstrap = (props: Partial<IconProps>) => {
   return (
     <ComponentVariants
       defaults={defaultProps}
-      variants={names}
+      variants={BOOTSTRAP_ICON_NAMES}
       for="name"
       of={Icon}
     />
@@ -127,13 +124,9 @@ Bootstrap.args = {
 };
 
 export const Custom = (props: Partial<IconProps>) => {
-  const names = useMemo(() => {
-    return objectKeys(CustomIcons);
-  }, []);
-
   const defaultProps = useMemo(() => {
     return {
-      ...Icon.defaultProps,
+      ...Icon.__DEFAULT_PROPS,
       ...props,
     };
   }, [props]);
@@ -141,7 +134,7 @@ export const Custom = (props: Partial<IconProps>) => {
   return (
     <ComponentVariants
       defaults={defaultProps}
-      variants={names}
+      variants={CUSTOM_ICON_NAMES}
       for="name"
       of={Icon}
     />

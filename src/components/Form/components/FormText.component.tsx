@@ -9,6 +9,8 @@ import type { BuiltFormTextProps } from "../Form.types";
  *
  * This component is used by the Form component to render text fields.
  *
+ * @version 0.1.0
+ *
  * @param {BuiltFormTextProps} props - The component props.
  * @returns {JSX.Element} The rendered component.
  */

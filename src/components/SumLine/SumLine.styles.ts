@@ -1,22 +1,22 @@
-import { css, type RuleSet } from "styled-components";
+import { Nullish } from "@ubloimmo/front-util";
 
-import type { SumlineStyleProps } from "./SumLine.types";
+import styles from "./SumLine.module.scss";
 
-export const sumLineContainerStyles = ({
-  $size,
-}: SumlineStyleProps): RuleSet => css`
-  padding: var(--s-${$size === "l" ? 1 : 3}) 0;
-  &:first-child {
-    border-top: 1px solid var(--primary-base);
-  }
+import { useCssClasses } from "@utils";
 
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--primary-light);
-  }
-`;
+import type { SumLineSize } from "./SumLine.types";
 
-export const sumLineHeadingStyles = (): RuleSet => css`
-  font-size: var(--s-9); // 36 pixels
-  letter-spacing: 0.03125rem; // 0.5 pixels
-  line-height: 3.25rem; // 52 pixels
-`;
+export function useSumLineClassNames(
+  size: SumLineSize,
+  className: Nullish<string>
+) {
+  const container = useCssClasses(
+    styles["sum-line"],
+    styles[`size-${size}`],
+    className
+  );
+
+  const heading = useCssClasses(styles["sum-line-heading"]);
+
+  return { container, heading };
+}

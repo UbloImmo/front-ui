@@ -1,0 +1,305 @@
+@use "../../sizes/_breakpoints.scss";
+@use "../../styles/_mixins.scss";
+
+.form {
+  --modal-size: 46.25rem;
+  background: var(--white);
+  box-shadow: var(--shadow-card-default);
+  border-radius: var(--s-2);
+  position: relative;
+  height: fit-content;
+  transition: height 150ms ease-out 0s;
+
+  &.as-modal {
+    max-width: 100%;
+    width: var(--modal-size);
+
+    &.modal-s {
+      --modal-size: 37.5rem;
+    }
+
+    &.modal-m {
+      --modal-size: 46.25rem;
+    }
+
+    &.modal-l {
+      --modal-size: 60rem;
+    }
+    &.modal-xl {
+      --modal-size: 80rem;
+    }
+  }
+
+  &.editing {
+    box-shadow: var(--shadow-card-elevation-low);
+  }
+}
+
+.form-header {
+  padding: var(--s-8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 5.5rem;
+
+  .form-heading {
+    margin: 0 !important;
+  }
+
+  @media only screen and (max-width: breakpoints.$breakpoint-xs) {
+    padding-right: var(--s-5);
+  }
+}
+
+.form-edit-button {
+  scale: 1;
+  transform-origin: center;
+  opacity: 1;
+  transition:
+    color 300ms var(--bezier) 0s,
+    background-color 300ms var(--bezier) 0s,
+    border-color 300ms var(--bezier) 0s,
+    opacity 150ms var(--bezier) 0s,
+    scale 150ms var(--bezier) 0s;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+    cursor: none;
+    user-select: none;
+    scale: 0;
+  }
+}
+
+.form-close-button-container {
+  position: relative;
+}
+
+.form-close-button-ghost {
+  @extend .form-edit-button;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-close-button {
+  @extend .form-edit-button;
+  position: absolute;
+  inset: 0;
+  left: unset;
+}
+
+.form-edit-banner {
+  background: var(--primary-light-30);
+  padding: var(--s-4) var(--s-6);
+  box-shadow: var(--shadow-card-default);
+  border-bottom-right-radius: var(--s-2);
+  border-bottom-left-radius: var(--s-2);
+  height: auto;
+  opacity: 1;
+  overflow: hidden;
+  transition:
+    opacity 150ms var(--bezier) 0s,
+    height 150ms var(--bezier) 0s,
+    padding 300ms var(--bezier) 0s;
+
+  &:not(.editing) {
+    height: 0;
+    max-height: 0;
+    opacity: 0;
+    padding: 0 var(--s-6);
+
+    &,
+    & * {
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+
+  svg[data-testid="icon"] {
+    @include mixins.dimensions(var(--s-4), var(--s-4), true);
+  }
+}
+
+.form-field-list {
+  padding: 0 var(--s-8) var(--s-8);
+  transition: opacity 300ms var(--bezier) 0s;
+  opacity: 1;
+
+  &.loading {
+    opacity: 0;
+
+    &,
+    & * {
+      cursor: wait;
+    }
+  }
+}
+
+.form-field-display {
+  input,
+  textarea,
+  select,
+  label {
+    width: 100%;
+  }
+}
+
+.form-field-display-value {
+  --container-height: var(--s-8);
+  --container-height-mobile: calc(var(--container-height) + var(--s-2));
+
+  align-self: start;
+
+  td:has(&) & {
+    --container-height: var(--s-6);
+  }
+  max-height: var(--container-height);
+  height: var(--container-height);
+  min-height: var(--container-height);
+  width: 100%;
+
+  &.textarea {
+    display: block;
+    height: auto;
+    max-height: 8rem;
+    overflow-y: auto;
+  }
+
+  @media screen and (max-width: breakpoints.$breakpoint-xs) {
+    min-height: var(--container-height-mobile);
+
+    &:not(.textarea) {
+      max-height: var(--container-height-mobile);
+      height: var(--container-height-mobile);
+    }
+  }
+}
+
+.form-field-grid-item {
+  --fixed-width: unset;
+
+  @media screen and (max-width: breakpoints.$breakpoint-xs) {
+    grid-column: 1 / -1;
+  }
+
+  &.fixed-width {
+    min-width: var(--fixed-width);
+    max-width: var(--fixed-width);
+    width: var(--fixed-width);
+  }
+}
+
+.form-field-display-cell-inner {
+  min-height: var(--s-6);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+
+  > * {
+    min-width: 0;
+    width: 100%;
+  }
+
+  @media only screen and (max-width: breakpoints.$breakpoint-xs) {
+    min-height: var(--s-8);
+  }
+}
+
+// DEBUG INTERFACE STYLES
+
+.form-debug {
+  padding: 0 var(--s-8);
+  container-type: inline-size;
+}
+
+.form-debug-pre {
+  --color-background: var(--primary-light-50);
+  --color-text: var(--primary-dark);
+  --color-marker: var(--primary-medium);
+
+  flex: 1;
+  padding: var(--s-4);
+  background: var(--color-background);
+  color: var(--color-text);
+  border-radius: var(--s-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+
+  div,
+  pre {
+    height: auto;
+  }
+
+  details {
+    &[open] > summary {
+      margin-bottom: var(--s-2);
+    }
+    summary {
+      list-style-position: inside;
+      user-select: none;
+      cursor: pointer;
+
+      [data-testid="heading"] {
+        user-select: none;
+        display: inline-block;
+        padding-left: var(--s-1);
+      }
+
+      &::marker {
+        color: var(--color-marker);
+        font-size: var(--text-s);
+        list-style-position: inside;
+        margin-top: calc(var(--s-1) * -1);
+      }
+    }
+
+    & > div:not(:last-child) {
+      margin-bottom: var(--s-2);
+    }
+  }
+
+  span {
+    color: inherit;
+
+    code {
+      background: none !important;
+      border: none !important;
+      padding: 0 !important;
+      line-height: inherit;
+    }
+  }
+}
+
+.form-debug-grid-item {
+  @container (max-width: #{breakpoints.$breakpoint-sm}) {
+    grid-column: 1 / -1;
+    &.responsive-small {
+      grid-column: auto / span 1;
+    }
+    grid-row: auto / span 1;
+  }
+
+  @container (max-width: breakpoints.$breakpoint-xs) {
+    &.responsive-small {
+      grid-column: auto / span 2;
+    }
+  }
+}
+
+.form-debug-scroller {
+  max-height: 100%;
+  overflow: auto;
+}
+
+.form-field-skeleton-loader {
+  height: var(--s-4);
+  @media only screen and (max-width: breakpoints.$breakpoint-xs) {
+    height: var(--s-6);
+  }
+}

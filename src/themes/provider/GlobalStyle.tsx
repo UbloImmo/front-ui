@@ -1,7 +1,7 @@
 import { texts } from "@ubloimmo/front-tokens";
 import { objectEntries } from "@ubloimmo/front-util";
-import { useMemo, useRef } from "react";
-import { createGlobalStyle, css, type RuleSet } from "styled-components";
+import { useLayoutEffect, useMemo, useRef } from "react";
+import dedent from "ts-dedent";
 
 import { breakpointsPx, buildSpacingMap } from "../../sizes";
 import {
@@ -30,10 +30,12 @@ import type {
 
 type GlobaStyleInnerProps = {
   defaultCssVarsStr: string;
-  mediaQueries?: RuleSet[];
+  mediaQueries?: string[];
 } & Pick<GlobalStyleProps, "lightDarkSupport">;
 
 const GLOBAL_STYLE_RENDER_WARN_THRESHOLD = 3;
+const GLOBAL_STYLE_TAG_ID = "__@ubloimmo/uikit__global_style__";
+export const BEZIER = "cubic-bezier(0.38, 0, 0.21, 0.98)";
 
 /**
  * Converts each shade of a palette color to CSS variables
@@ -58,6 +60,26 @@ export const paletteColorToCssVarsSimple = <
       cssVar(`${colorName.toLowerCase()}-${shadeName.toLowerCase()}`, rgba)
   );
 };
+
+/**
+ * Creates 20 derived CSS variable declarations from a color, ranging from 0 to 95% opacity.
+ * @param {string} varName - The variable name to base derivations off of
+ * @returns {CssVar<CssRgbFrom<CssVarUsage>>[]} Array of 20 derived CSS variable declarations.
+ */
+function deriveOpacityCssVars(
+  varName: string
+): CssVar<CssRgbFrom<CssVarUsage>>[] {
+  return Array(20)
+    .fill(0)
+    .map((_, index): CssVar<CssRgbFrom<CssVarUsage>> => {
+      const opacityCoeff = (index * 5) / 100;
+      const opacityName = `${varName}-${String(
+        opacityCoeff.toFixed(2)
+      ).replaceAll("0.", "")}`;
+      const referencedColor: CssRgbFrom<CssVarUsage> = `rgb(from ${cssVarUsage(varName)} r g b / ${opacityCoeff})`;
+      return cssVar(opacityName, referencedColor);
+    });
+}
 
 /**
  * Generates CSS variables for the given palette color and its shades.
@@ -101,16 +123,7 @@ export const paletteColorToCssVars = <
       if (!generateAlpha) return [baseVar];
 
       // create variables for major opacities (0 - 0.95)
-      const opacityVars = Array(20)
-        .fill(0)
-        .map((_, index) => {
-          const opacityCoeff = (index * 5) / 100;
-          const opacityName = `${varName}-${String(
-            opacityCoeff.toFixed(2)
-          ).replaceAll("0.", "")}`;
-          const referencedColor: CssRgbFrom<CssVarUsage> = `rgb(from ${cssVarUsage(varName)} r g b / ${opacityCoeff})`;
-          return cssVar(opacityName, referencedColor);
-        });
+      const opacityVars = deriveOpacityCssVars(varName);
       return [baseVar, ...opacityVars];
     }
   );
@@ -175,14 +188,14 @@ export const joinCssVarCollection = (
  * Formats media queries based on the provided breakpoints and CSS variables.
  *
  * @param {Array<[BreakpointLabel, CssVar<string>[][]]>} mediaQueries - An optional array of breakpoint labels and CSS variables for media queries.
- * @return {RuleSet[]} An array of CSS rulesets representing the formatted media queries.
+ * @return {string[]} An array of CSS strings representing the formatted media queries.
  */
 export const formatMediaQueries = (
   mediaQueries?: [BreakpointLabel, CssVar<string>[][]][]
-): RuleSet[] => {
+): string[] => {
   return (mediaQueries ?? []).map(([breakpointLabel, vars]) => {
     const mediaQueryCssVarStr = joinCssVarCollection(vars);
-    return css`
+    return dedent`
       @media only screen and (max-width: ${breakpointsPx[breakpointLabel]}) {
         :root {
           ${mediaQueryCssVarStr}
@@ -195,18 +208,18 @@ export const formatMediaQueries = (
 /**
  * Generates a CSS reset style.
  *
- * @return {RuleSet} The generated CSS reset style.
+ * @return {string} The generated CSS reset style.
  */
-export const cssReset = (): RuleSet => css`
+export const cssReset = (): string => dedent`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 
-    &::selection {
-      background: var(--primary-light);
-      color: var(--primary-dark);
-    }
+  }
+  *::selection {
+    background: var(--primary-light);
+    color: var(--primary-dark);
   }
 `;
 
@@ -214,9 +227,9 @@ export const cssReset = (): RuleSet => css`
  * Generates a CSS rule to make icons overflow their containers.
  * This is useful for icons that have visual elements extending beyond their bounding box.
  *
- * @return {RuleSet} A CSS rule set that sets overflow to visible for SVG icons.
+ * @return {string} A CSS rule set that sets overflow to visible for SVG icons.
  */
-export const iconOverflow = (): RuleSet => css`
+export const iconOverflow = (): string => dedent`
   svg[data-testid="icon"] {
     overflow: visible;
   }
@@ -232,11 +245,11 @@ const componentCssVars = () => {
 /**
  * Generates CSS variables and media queries for unthemed global style aspects (spacings & text sizes).
  *
- * @return {{vars: CssVar<CssRem | `${number}`>[][], mediaQueries: RuleSet[]}} An object containing CSS variables and media queries.
+ * @return {{vars: CssVar<CssRem | `${number}`>[][], mediaQueries: string[]}} An object containing CSS variables and media queries.
  */
 const useUnthemedGlobaStyle = (): {
   vars: CssVar<CssRem | `${number}` | CssVarUsage>[][];
-  mediaQueries: RuleSet[];
+  mediaQueries: string[];
 } => {
   // generate css vars from spacings
   const spacingsCssVars = useStatic(spacingsToCssVars(buildSpacingMap()));
@@ -287,14 +300,16 @@ const useThemedGlobalStyle = (
     if (!themePalette) return [];
 
     // transform palette to css vars
-    return objectEntries(themePalette).flatMap(([colorName, shadedColor]) =>
-      paletteColorToCssVars(
-        colorName,
-        shadedColor as PaletteColorShaded<AnyPaletteColorShadeKeys>,
-        true,
-        lightDarkSupport
-      )
-    );
+    return objectEntries(themePalette)
+      .filter(([colorName]) => colorName !== "primary-default")
+      .flatMap(([colorName, shadedColor]) =>
+        paletteColorToCssVars(
+          colorName,
+          shadedColor as PaletteColorShaded<AnyPaletteColorShadeKeys>,
+          true,
+          lightDarkSupport
+        )
+      );
   }, [themePalette, lightDarkSupport]);
 
   const effectCssVars = useMemo(() => {
@@ -345,60 +360,79 @@ const useGlobalStyle = (
   };
 };
 
-export const BEZIER = "cubic-bezier(0.38, 0, 0.21, 0.98)";
-
 /**
- * Generates a CSS rule set by appending global styles to the root element.
+ * Transforms the given theme into a valid CSS string to be injected as a global style.
  *
- * @param {GlobaStyleInnerProps} props - An object containing the default CSS variables string and media queries.
- * @param {string} props.defaultCssVarsStr - The default CSS variables string.
- * @param {RuleSet[]} props.mediaQueries - An array of CSS rulesets representing media queries.
- * @return {RuleSet} The generated CSS rule set.
+ * @param {GlobalStyleProps} props - The props for the GlobalStyle component.
+ * @return {string} The generated CSS rule set string.
  */
-const appendGlobalStyle = ({
-  defaultCssVarsStr,
-  mediaQueries,
+function useFormattedGlobalStyle({
+  theme,
   lightDarkSupport,
-}: GlobaStyleInnerProps): RuleSet => {
-  return css`
-    ${linkFontFace}
-    ${cssReset}
-    ${iconOverflow}
+}: GlobalStyleProps): string {
+  const { defaultCssVarsStr, mediaQueries } = useGlobalStyle(
+    theme,
+    lightDarkSupport
+  );
+
+  const whites = useMemo(() => {
+    const white = cssVar(
+      "white",
+      lightDarkSupport ? "light-dark(white, black)" : "white"
+    );
+    return [white, ...deriveOpacityCssVars("white")].join("\n");
+  }, [lightDarkSupport]);
+
+  return useMemo(() => {
+    const fontFace = linkFontFace();
+    const reset = cssReset();
+    const icons = iconOverflow();
+    const lightDark = lightDarkSupport ? "color-scheme: light dark;" : "";
+    const queries = mediaQueries?.length ? mediaQueries.join("\n") : "";
+    return dedent`
+    ${fontFace}
+    ${reset}
+    ${icons}
+
     :root {
-      ${lightDarkSupport &&
-      css`
-        color-scheme: light dark;
-      `}
-      --white: ${lightDarkSupport ? "light-dark(white, black)" : "white"};
-      --white-05: rgb(from var(--white) r g b / 0.05);
-      --white-10: rgb(from var(--white) r g b / 0.1);
-      --white-15: rgb(from var(--white) r g b / 0.15);
-      --white-20: rgb(from var(--white) r g b / 0.2);
-      --white-25: rgb(from var(--white) r g b / 0.25);
-      --white-30: rgb(from var(--white) r g b / 0.3);
-      --white-35: rgb(from var(--white) r g b / 0.35);
-      --white-40: rgb(from var(--white) r g b / 0.4);
-      --white-45: rgb(from var(--white) r g b / 0.45);
-      --white-50: rgb(from var(--white) r g b / 0.5);
-      --white-55: rgb(from var(--white) r g b / 0.55);
-      --white-60: rgb(from var(--white) r g b / 0.6);
-      --white-65: rgb(from var(--white) r g b / 0.65);
-      --white-70: rgb(from var(--white) r g b / 0.7);
-      --white-75: rgb(from var(--white) r g b / 0.75);
-      --white-80: rgb(from var(--white) r g b / 0.8);
-      --white-85: rgb(from var(--white) r g b / 0.85);
-      --white-90: rgb(from var(--white) r g b / 0.9);
-      --white-95: rgb(from var(--white) r g b / 0.95);
+      ${lightDark}
       --bezier: ${BEZIER};
+      ${whites}
       ${defaultCssVarsStr}
     }
-    ${mediaQueries}
-  `;
-};
+    ${queries}
+    `.trim();
+  }, [defaultCssVarsStr, lightDarkSupport, mediaQueries, whites]);
+}
+
+function injectGlobalStyle(styleStr: string) {
+  // abort if dom not loaded yet
+  if (!window || !window.document || !window.document.head) return;
+
+  // if tag exists, replace its content;
+  const existingTag = window.document.getElementById(GLOBAL_STYLE_TAG_ID);
+  if (existingTag) {
+    existingTag.textContent = styleStr;
+    return;
+  }
+  // otherwise, create & append tag to head
+  const newTag = window.document.createElement("style");
+  newTag.setAttribute("type", "text/css");
+  newTag.setAttribute("id", GLOBAL_STYLE_TAG_ID);
+  newTag.textContent = styleStr;
+  // add it as first style tag in head
+  const firstStyleTag = window.document.head.querySelector("style");
+  if (firstStyleTag) {
+    window.document.head.insertBefore(newTag, firstStyleTag);
+    return;
+  }
+  window.document.head.append(newTag);
+}
 
 /**
- * Global style component that parses the `styled-components` {@link Theme},
- * transforms it into global CSS variables using {@link useGlobalStyle} and injects them into the document.
+ * Global style component that parses the uikit-'s global {@link Theme},
+ * transforms it into global CSS variables using {@link useFormattedGlobalStyle},
+ * and injects them into the documen with {@link injectGlobalStyle}.
  *
  * @see useGlobalStyle
  *
@@ -406,10 +440,10 @@ const appendGlobalStyle = ({
  * @param {Theme} props.theme - The theme object
  */
 export const GlobalStyle = ({ theme, lightDarkSupport }: GlobalStyleProps) => {
-  const innerProps = useGlobalStyle(theme, lightDarkSupport);
-  return <GlobalStyleInner {...innerProps} />;
-};
+  const formatted = useFormattedGlobalStyle({ theme, lightDarkSupport });
 
-const GlobalStyleInner = createGlobalStyle<GlobaStyleInnerProps>`
-  ${appendGlobalStyle}
-`;
+  useLayoutEffect(() => {
+    injectGlobalStyle(formatted);
+  }, [formatted]);
+  return null;
+};

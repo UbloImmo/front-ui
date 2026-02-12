@@ -1,2 +1,2 @@
-export * from "./EmptyBox.asset";
-export * from "./TaskSleepingCat.asset";
+export * from "./EmptyBox";
+export * from "./TaskSleepingCat";

@@ -1,0 +1,30 @@
+@use "../../../../styles/_mixins.scss";
+
+.asset-container {
+  --asset-width: 132px;
+  --asset-height: 121px;
+
+  position: relative;
+  @include mixins.dimensions(var(--asset-width), var(--asset-height), true);
+}
+
+.asset-svg,
+.asset-div {
+  position: absolute;
+  inset: 0;
+}
+
+.asset-icon-modifier {
+  --x: 0px;
+  --y: 0px;
+  --angle: 0deg;
+  --opacity: 1;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  translate: var(--x) var(--y);
+  rotate: var(--angle);
+  transform-origin: center center;
+  opacity: var(--opacity);
+}

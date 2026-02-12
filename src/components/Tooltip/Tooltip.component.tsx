@@ -1,9 +1,8 @@
 import { PopoverArrow } from "@radix-ui/react-popover";
 import { isFunction, isNumber, isObject, isString } from "@ubloimmo/front-util";
 import { useMemo, useState } from "react";
-import styled from "styled-components";
 
-import { tooltipStyles, tooltipWrapperStyles } from "./Tooltip.styles";
+import { useTooltipStyles } from "./Tooltip.styles";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
@@ -15,7 +14,6 @@ import type {
   DefaultTooltipProps,
   TooltipContentFn,
   TooltipProps,
-  TooltipWrapperStyleProps,
 } from "./Tooltip.types";
 import type { TestIdProps } from "@types";
 
@@ -32,7 +30,7 @@ const defaultTooltipProps: DefaultTooltipProps = {
 /**
  * Text popup box that appears when the user hovers over an element
  *
- * @version 0.0.8
+ * @version 0.1.0
  *
  * @param {TooltipProps & TestIdProps} props - The tooltip's props
  * @returns {JSX.Element} The rendered tooltip
@@ -51,6 +49,7 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
     iconColor,
     cursor,
   } = mergedProps;
+  const styles = useTooltipStyles(cursor);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -95,21 +94,22 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
   }, [children, icon, iconColor]);
 
   return (
-    <TooltipTrigger
+    <div
+      className={styles.trigger.className}
+      style={styles.trigger.style}
       data-testid={`${testId}-wrapper`}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
-      $cursor={cursor}
     >
       <Popover
         open={isOpen}
         onOpenChange={setIsOpen}
         content={
           <>
-            <TooltipContent data-testid={testId} role="tooltip">
+            <div className={styles.tooltip} data-testid={testId} role="tooltip">
               {tooltipContent}
-            </TooltipContent>
-            <TooltipArrow />
+            </div>
+            <PopoverArrow className={styles.arrow} />
           </>
         }
         side={direction}
@@ -123,21 +123,9 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
       >
         {RenderedChildren}
       </Popover>
-    </TooltipTrigger>
+    </div>
   );
 };
 
-Tooltip.defaultProps = defaultTooltipProps;
+Tooltip.__DEFAULT_PROPS = defaultTooltipProps;
 export { Tooltip };
-
-const TooltipTrigger = styled.div<TooltipWrapperStyleProps>`
-  ${tooltipWrapperStyles}
-`;
-
-const TooltipContent = styled.div`
-  ${tooltipStyles}
-`;
-
-const TooltipArrow = styled(PopoverArrow)`
-  fill: var(--gray-700);
-`;

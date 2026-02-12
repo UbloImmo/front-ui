@@ -4,17 +4,17 @@ import {
   isObject,
   transformObject,
 } from "@ubloimmo/front-util";
-import { StyleFunction, css } from "styled-components";
 
-import {
+import styles from "./Grid.module.css";
+
+import { cssLengthUsage, useCssClasses, useCssVariables } from "@utils";
+
+import type {
   GridGap,
   GridLayoutDefaultProps,
-  GridLayoutProps,
   GridTemplate,
 } from "./Grid.types";
-
-import { CssLengthUsage, type StyleProps } from "@types";
-import { cssLengthUsage, fromStyleProps, mergeDefaultProps } from "@utils";
+import type { CssLengthUsage } from "@types";
 
 /**
  * Splits the common gap into row and columm with same values
@@ -38,7 +38,7 @@ const gridGap = (
  * @param {GridTemplate} template - the input template for the grid
  * @return {string} the generated grid template
  */
-const gridTemplate = (template: GridTemplate) => {
+const gridTemplate = (template: GridTemplate): string => {
   if (isNumber(template)) {
     return `repeat(${template}, 1fr)`;
   }
@@ -53,31 +53,31 @@ const gridTemplate = (template: GridTemplate) => {
 /**
  * Builds the `GridLayout` style based on the provided default props and props.
  *
- * @param {GridLayoutDefaultProps} defaultProps - the default props for the grid layout
- * @return {StyleFunction<GridLayoutProps>} a function that returns the grid layout style
+ * @param {GridLayoutDefaultProps} props - the default props for the grid layout
+ * @returns The grid layout's CSS style & className
  */
-export const buildGridLayoutStyle =
-  (
-    defaultProps: GridLayoutDefaultProps
-  ): StyleFunction<StyleProps<GridLayoutProps>> =>
-  (props: StyleProps<GridLayoutProps>) => {
-    const { flow, gap, justify, align, columns, rows, inline, fill } =
-      mergeDefaultProps(defaultProps, fromStyleProps(props));
-    const { row, column } = gridGap(gap);
-    const display = inline ? "inline-grid" : "grid";
+export function useGridLayoutStyle(props: GridLayoutDefaultProps) {
+  const className = useCssClasses(
+    styles.grid,
+    [styles.inline, props.inline],
+    [styles.fill, props.fill],
+    [styles.row, props.flow.includes("row")],
+    [styles.column, props.flow.includes("column")],
+    [styles.dense, props.flow.includes("dense")],
+    props.className
+  );
+  const gaps = gridGap(props.gap);
+  const style = useCssVariables(
+    {
+      "row-gap": gaps.row,
+      "column-gap": gaps.column,
+      "template-columns": gridTemplate(props.columns),
+      "template-rows": gridTemplate(props.rows),
+      "grid-align": props.align,
+      "grid-justify": props.justify,
+    },
+    props.styleOverride
+  );
 
-    return css`
-      display: ${display};
-      grid-template-rows: ${gridTemplate(rows)};
-      grid-template-columns: ${gridTemplate(columns)};
-      grid-auto-flow: ${flow};
-      grid-column-gap: ${column};
-      grid-row-gap: ${row};
-      align-items: ${align};
-      justify-content: ${justify};
-      ${fill &&
-      css`
-        width: 100%;
-      `}
-    `;
-  };
+  return { className, style };
+}

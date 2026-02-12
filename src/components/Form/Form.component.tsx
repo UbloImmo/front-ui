@@ -1,5 +1,4 @@
 import { useMemo, type ReactNode } from "react";
-import styled from "styled-components";
 
 import {
   FormHeader,
@@ -8,13 +7,12 @@ import {
   FormFieldRenderer,
 } from "./components";
 import { FormProvider, useFormContext } from "./Form.context";
-import { formContainerStyles } from "./Form.styles";
 import { Dialog } from "../Dialog";
+import styles from "./Form.module.scss";
 
-import { useTestId, useMergedProps, useStyleProps } from "@utils";
+import { useTestId, useMergedProps, useCssClasses } from "@utils";
 
 import type {
-  FormContainerStyleProps,
   FormDefaultProps,
   FormLayoutProps,
   FormProps,
@@ -56,7 +54,7 @@ const defaultFormProps: FormDefaultProps<object> = {
 /**
  * A flexible yet expressive form renderer.
  *
- * @version 0.0.40
+ * @version 0.1.0
  *
  * @template {object} TData - The type of the form data
  *
@@ -82,7 +80,7 @@ const Form = <TData extends object>(
   );
 };
 
-Form.defaultProps = defaultFormProps;
+Form.__DEFAULT_PROPS = defaultFormProps;
 
 export { Form };
 
@@ -146,36 +144,27 @@ const InnerFormContainer = ({
   embedded,
   ...props
 }: FormLayoutProps & TestIdProps & { children: ReactNode }): JSX.Element => {
-  const { isEditing, readonly, disabled, submitForm, asModal } =
-    useFormContext();
+  const { isEditing, submitForm, asModal } = useFormContext();
   const testId = useTestId("form", props);
 
-  const styleProps = useStyleProps({
-    isEditing,
-    readonly,
-    disabled,
-    asModal: !!asModal,
-    size: asModal?.size ?? "m",
-  });
+  const className = useCssClasses(
+    styles.form,
+    [styles["as-modal"], !!asModal],
+    styles[`modal-${asModal?.size ?? "m"}`],
+    [styles.editing, isEditing]
+  );
+
   if (embedded) {
     return (
-      <EmbeddedFormContainer data-testid={testId} {...styleProps}>
+      <div className={className} data-testid={testId}>
         {children}
-      </EmbeddedFormContainer>
+      </div>
     );
   }
 
   return (
-    <FormContainer data-testid={testId} onSubmit={submitForm} {...styleProps}>
+    <form className={className} data-testid={testId} onSubmit={submitForm}>
       {children}
-    </FormContainer>
+    </form>
   );
 };
-
-const FormContainer = styled.form<FormContainerStyleProps>`
-  ${formContainerStyles}
-`;
-
-const EmbeddedFormContainer = styled.div<FormContainerStyleProps>`
-  ${formContainerStyles}
-`;

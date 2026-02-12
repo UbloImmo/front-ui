@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react-vite";
 import { isString } from "@ubloimmo/front-util";
-import styled from "styled-components";
+import { ReactNode } from "react";
 
 import { Tooltip } from "./Tooltip.component";
 import { Badge } from "../Badge";
@@ -9,18 +9,10 @@ import { Text } from "../Text";
 
 import { ComponentVariants } from "@docs/blocks";
 import { FlexRowLayout } from "@layouts";
-import { useMergedProps } from "@utils";
+import { useCssStyles, useMergedProps } from "@utils";
 
 import type { TooltipProps } from "./Tooltip.types";
 import type { Direction } from "@types";
-
-const Container = styled.div`
-  height: 6rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-`;
 
 const meta: Meta<typeof Tooltip> = {
   title: "Components/Feedbacks/Tooltip/Stories",
@@ -39,8 +31,19 @@ export const Default: Story = {};
 
 const directions: Direction[] = ["top", "bottom", "left", "right"];
 
+const Container = ({ children }: { children?: ReactNode }) => {
+  const containerStyles = useCssStyles({
+    height: "6rem",
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  });
+  return <div style={containerStyles}>{children}</div>;
+};
+
 export const Directions = (props: Partial<TooltipProps>) => {
-  const defaultProps = useMergedProps(Tooltip.defaultProps, props);
+  const defaultProps = useMergedProps(Tooltip.__DEFAULT_PROPS, props);
   return (
     <Container>
       <ComponentVariants
@@ -74,7 +77,7 @@ const contents = [
   },
 ];
 export const Content = (props: Partial<TooltipProps>) => {
-  const defaultProps = useMergedProps(Tooltip.defaultProps, props);
+  const defaultProps = useMergedProps(Tooltip.__DEFAULT_PROPS, props);
 
   return (
     <Container>
@@ -94,12 +97,12 @@ export const Content = (props: Partial<TooltipProps>) => {
 
 const children = [
   { value: null, label: "null" },
-  { value: <Badge />, label: "Badge" },
+  { value: <Badge label="badge" />, label: "Badge" },
   { value: <Text>Text</Text>, label: "Text" },
 ];
 
 export const Children = (props: Partial<TooltipProps>) => {
-  const defaultProps = useMergedProps(Tooltip.defaultProps, props);
+  const defaultProps = useMergedProps(Tooltip.__DEFAULT_PROPS, props);
   return (
     <Container>
       <ComponentVariants
@@ -120,32 +123,30 @@ const TooltipIntersectionRenderer = (props: TooltipProps) => {
   const rootId = isString(props.intersectionRoot)
     ? props.intersectionRoot.replace("#", "")
     : undefined;
+  const intersection = useCssStyles({
+    maxHeight: "12rem",
+    height: "12rem",
+    overflow: "auto",
+    borderRadius: "var(--s-05)",
+    background: "var(--white)",
+    position: "relative",
+  });
+  const padded = useCssStyles({
+    padding: "100% 100%",
+    position: "static",
+  });
   return (
-    <TooltipIntersectionContainer id={rootId}>
-      <TooltipPaddedContainer>
+    <div style={intersection} id={rootId}>
+      <div style={padded}>
         <Tooltip {...props} />
-      </TooltipPaddedContainer>
-    </TooltipIntersectionContainer>
+      </div>
+    </div>
   );
 };
 
-const TooltipIntersectionContainer = styled.div`
-  max-height: 12rem;
-  height: 12rem;
-  overflow: auto;
-  border-radius: var(--s-05);
-  background: var(--white);
-  position: relative;
-`;
-
-const TooltipPaddedContainer = styled.div`
-  padding: 100% 100%;
-  position: static;
-`;
-
 const intersectionRoots = [null, "#intersection-root"];
 export const IntersectionRoots = (props: Partial<TooltipProps>) => {
-  const defaultProps = useMergedProps(Tooltip.defaultProps, {
+  const defaultProps = useMergedProps(Tooltip.__DEFAULT_PROPS, {
     ...props,
     direction: props.direction ?? "top",
   });

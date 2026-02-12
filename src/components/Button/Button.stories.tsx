@@ -1,6 +1,6 @@
-import { fn } from "@storybook/test";
 import { isString } from "@ubloimmo/front-util";
 import { useMemo } from "react";
+import { fn } from "storybook/test";
 
 import { Button } from "./Button.component";
 import {
@@ -15,11 +15,11 @@ import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { DirectionHorizontal } from "@types";
 
 const defaultMockProps = {
-  ...Button.defaultProps,
+  ...Button.__DEFAULT_PROPS,
   onClick: fn(),
 };
 
@@ -281,7 +281,7 @@ const iconPlacements: DirectionHorizontal[] = ["left", "right"];
 
 export const IconPlacement = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
-    Button.defaultProps,
+    Button.__DEFAULT_PROPS,
     { ...props, ...reverseProps }
   );
 
@@ -307,7 +307,7 @@ const bools = [false, true];
 
 export const FullWidth = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
-    Button.defaultProps,
+    Button.__DEFAULT_PROPS,
     { ...props, ...reverseProps }
   );
 
@@ -331,7 +331,7 @@ FullWidth.parameters = {
 
 export const Expandable = (props: ButtonProps) => {
   const defaultProps = useMergedProps<DefaultButtonProps, ButtonProps>(
-    Button.defaultProps,
+    Button.__DEFAULT_PROPS,
     { ...reverseProps, ...props, icon: props.icon ?? "ArrowRight" }
   );
 

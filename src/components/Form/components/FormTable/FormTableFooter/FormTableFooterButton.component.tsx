@@ -1,9 +1,10 @@
 import { isFunction, type GenericFn } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
-import styled from "styled-components";
+
+import styles from "../FormTable.module.scss";
 
 import { Button } from "@/components/Button";
-import { useUikitTranslation } from "@utils";
+import { useCssClasses, useUikitTranslation } from "@utils";
 
 import type {
   BuiltFormTableCallbacks,
@@ -44,8 +45,11 @@ export const FormTableFooterButton = ({
     [buttonProps.icon]
   );
 
+  const className = useCssClasses(styles["form-table-footer-button"]);
+
   return (
-    <FooterButton
+    <Button
+      className={className}
       disabled={disabled}
       label={label}
       icon={icon}
@@ -57,7 +61,3 @@ export const FormTableFooterButton = ({
     />
   );
 };
-
-const FooterButton = styled(Button)`
-  border-radius: var(--s-05);
-`;

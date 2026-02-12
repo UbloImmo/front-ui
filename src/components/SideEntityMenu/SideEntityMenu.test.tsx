@@ -11,8 +11,8 @@ const testSideEntityMenu = testComponentFactory(
   SideEntityMenu
 );
 
-const menuLinks = SideEntityMenu.defaultProps.menuLinks;
-const backLinks = SideEntityMenu.defaultProps.backLinks;
+const menuLinks = SideEntityMenu.__DEFAULT_PROPS.menuLinks;
+const backLinks = SideEntityMenu.__DEFAULT_PROPS.backLinks;
 
 const testId = "side-entity-menu";
 

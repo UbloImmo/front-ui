@@ -8,14 +8,14 @@ const testStaticIcon = testComponentFactory("StaticIcon", StaticIcon);
 const testId = "static-icon";
 
 testStaticIcon({
-  ...StaticIcon.defaultProps,
+  ...StaticIcon.__DEFAULT_PROPS,
   name: "Square",
 })("should render", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
 });
 
 testStaticIcon({
-  ...StaticIcon.defaultProps,
+  ...StaticIcon.__DEFAULT_PROPS,
   indicator: {
     name: "Circle2NdHalf",
     color: "pending-base",
@@ -26,7 +26,7 @@ testStaticIcon({
 });
 
 testStaticIcon({
-  ...StaticIcon.defaultProps,
+  ...StaticIcon.__DEFAULT_PROPS,
   indicator: {
     name: "Circle2NdHalf",
     color: "pending-base",

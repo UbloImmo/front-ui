@@ -2,6 +2,8 @@ import {
   isObject,
   type NullishPrimitives,
   type GenericFn,
+  isUndefined,
+  isNull,
 } from "@ubloimmo/front-util";
 
 export type ComparisonValue<T> = T extends object ? string : T;
@@ -126,7 +128,7 @@ export const compare = Object.assign(comparison, {
    *
    * @template TValue - The type of the value
    * @param {TValue} value - The value to normalize
-   * @returns {ComparisonValue<TValue>} The normalied value
+   * @returns {ComparisonValue<TValue>} The normalized value
    */
   normalize: <TValue>(value: TValue): ComparisonValue<TValue> =>
     normalizeComparisonValue(value),
@@ -162,4 +164,48 @@ export const includes = <TArr extends any[], TValue extends TArr[number] | any>(
         arr.map(compare.normalize).includes(compare.normalize(value))
       );
   }
+};
+
+/**
+ * Predicate typescript function that checks whether the value corresponds to a Map
+ *
+ * @param value — unknown value to check
+ * @returns — true if the value corresponds to a Map
+ */
+export const isMap = <TKey, TValue>(
+  value: unknown
+): value is Map<TKey, TValue> => {
+  return value instanceof Map;
+};
+
+/**
+ * Predicate typescript function that checks whether the value is **NOT** `undefined`
+ *
+ * @param value — unknown value to check
+ * @returns — true if the value is defined
+ */
+export const isDefined = <T>(value: T): value is Exclude<T, undefined> => {
+  return !isUndefined(value);
+};
+
+/**
+ * Predicate typescript function that checks whether the value is **NOT** `null`
+ *
+ * @param value — unknown value to check
+ * @returns — true if the value is not null
+ */
+export const isNonNullable = <T>(value: T): value is Exclude<T, null> => {
+  return !isNull(value);
+};
+
+/**
+ * Predicate typescript function that checks whether the value is **NOT** `undefined` nor `null`
+ *
+ * @param value — unknown value to check
+ * @returns — true if the value is neither null nor undefined
+ */
+export const isNonNullish = <T>(
+  value: T
+): value is Exclude<T, null | undefined> => {
+  return isDefined(value) && isNonNullable(value);
 };

@@ -11,14 +11,14 @@ const testComboBoxButton = testComponentFactory(
   ComboBoxButton
 );
 
-testComboBoxButton({ ...ComboBoxButton.defaultProps })(
+testComboBoxButton({ ...ComboBoxButton.__DEFAULT_PROPS })(
   "should render",
   ({ queryByTestId }) => {
     expect(queryByTestId("combo-box-button")).not.toBeNull();
   }
 );
 
-testComboBoxButton({ ...ComboBoxButton.defaultProps, multi: true })(
+testComboBoxButton({ ...ComboBoxButton.__DEFAULT_PROPS, multi: true })(
   "should render as multi",
   ({ queryByTestId }) => {
     expect(queryByTestId("combo-box-button")).not.toBeNull();
@@ -28,7 +28,7 @@ testComboBoxButton({ ...ComboBoxButton.defaultProps, multi: true })(
 const onSelect = mock<VoidFn>(() => {});
 
 testComboBoxButton({
-  ...ComboBoxButton.defaultProps,
+  ...ComboBoxButton.__DEFAULT_PROPS,
   disabled: true,
   onSelect,
 })("should render and behave as disabled", ({ queryByTestId }) => {
@@ -39,7 +39,7 @@ testComboBoxButton({
 global.console.warn = mock(() => {});
 
 testComboBoxButton({
-  ...ComboBoxButton.defaultProps,
+  ...ComboBoxButton.__DEFAULT_PROPS,
   // @ts-expect-error needed for testing missing label
   label: null,
 })("should warn if label is missing", () => {
@@ -47,7 +47,7 @@ testComboBoxButton({
 });
 
 testComboBoxButton({
-  ...ComboBoxButton.defaultProps,
+  ...ComboBoxButton.__DEFAULT_PROPS,
   onSelect,
 })("should trigger onSelect on click", async ({ queryByTestId }, { click }) => {
   const comboBoxButton = queryByTestId("combo-box-button") as HTMLButtonElement;
@@ -58,7 +58,7 @@ testComboBoxButton({
 const onEdit = mock<VoidFn>(() => {});
 
 testComboBoxButton({
-  ...ComboBoxButton.defaultProps,
+  ...ComboBoxButton.__DEFAULT_PROPS,
   editable: true,
   deletable: true,
   onEdit,

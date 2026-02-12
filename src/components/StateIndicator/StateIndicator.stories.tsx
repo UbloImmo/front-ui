@@ -6,13 +6,13 @@ import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { StateIndicatorProps } from "./StateIndicator.types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ColorKeyOrWhite } from "@types";
 
 const componentTemplate = componentSourceFactory(
   "StateIndicator",
   {},
-  StateIndicator.defaultProps
+  StateIndicator.__DEFAULT_PROPS
 );
 
 const colors: ColorKeyOrWhite[] = [
@@ -48,14 +48,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: StateIndicator.defaultProps,
+  args: StateIndicator.__DEFAULT_PROPS,
   parameters: {
     docs: componentTemplate(),
   },
 };
 
 export const Colors = (props: StateIndicatorProps) => {
-  const mergedProps = useMergedProps(StateIndicator.defaultProps, props);
+  const mergedProps = useMergedProps(StateIndicator.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -80,7 +80,7 @@ const icons: IconName[] = [
   "ArchiveFill",
 ];
 export const Icons = (props: StateIndicatorProps) => {
-  const mergedProps = useMergedProps(StateIndicator.defaultProps, props);
+  const mergedProps = useMergedProps(StateIndicator.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
@@ -105,7 +105,7 @@ const labels = [
   "Yet another really, really, really needlessly long and exhaustive label",
 ];
 export const Labels = (props: StateIndicatorProps) => {
-  const mergedProps = useMergedProps(StateIndicator.defaultProps, props);
+  const mergedProps = useMergedProps(StateIndicator.__DEFAULT_PROPS, props);
 
   return (
     <ComponentVariants
