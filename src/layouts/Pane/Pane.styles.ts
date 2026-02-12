@@ -47,6 +47,7 @@ export function usePaneLayoutStyle(props: PaneDefaultProps) {
 
     const className = cssClasses(
       styles["pane-content"],
+      [styles.headless, props.headLess],
       anchor,
       props.className
     );
@@ -57,7 +58,7 @@ export function usePaneLayoutStyle(props: PaneDefaultProps) {
       className,
       style,
     };
-  }, [props.anchor, props.className, props.styleOverride]);
+  }, [props.anchor, props.className, props.headLess, props.styleOverride]);
 
   return {
     pane,
