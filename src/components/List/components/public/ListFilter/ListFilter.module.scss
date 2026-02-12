@@ -9,15 +9,15 @@ $options-list-padding: var(--s-1);
 $header-height: var(--s-10);
 $header-height-mobile: var(--s-12);
 $max-options-height: calc(
-  $option-height * $max-visible-elements + $option-gap *
-    ($max-visible-elements - 1) + $options-list-padding * 2
+  #{$option-height} * #{$max-visible-elements} + #{$option-gap} *
+    (#{$max-visible-elements} - 1) + #{$options-list-padding} * 2
 );
 
 .list-filter-container {
   --filter-background: var(--gray-50);
   --filter-radius: var(--s-1);
-  --filter-max-height: $header-height;
-  --filter-header-height: $header-height;
+  --filter-max-height: #{$header-height};
+  --filter-header-height: #{$header-height};
 
   background: var(--filter-background);
   border-radius: var(--filter-radius);
@@ -47,7 +47,7 @@ $max-options-height: calc(
 
   &.open {
     --filter-max-height: calc(
-      var(--filter-header-height) + $max-options-height
+      var(--filter-header-height) + #{$max-options-height}
     );
     --filter-radius: var(--s-2);
     --filter-background: var(--white);
@@ -72,7 +72,7 @@ $max-options-height: calc(
   }
 
   @media only screen and (max-width: breakpoints.$breakpoint-xs) {
-    --filter-header-height: $header-height-mobile;
+    --filter-header-height: #{$header-height-mobile};
   }
 }
 
@@ -150,9 +150,9 @@ $max-options-height: calc(
     &:hover,
     &:focus,
     &:focus-visible {
-      box-shadow: none;
-      border: none;
-      outline: none;
+      box-shadow: none !important;
+      border: none !important;
+      outline: none !important;
     }
   }
 
