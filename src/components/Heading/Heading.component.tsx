@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import { defaultTypographyProps, useTypographyStyles } from "../../typography";
 
-import { useHtmlAttribute, useLogger, useTestId } from "@utils";
+import { useHtmlAttribute, useLogger, useMergedProps, useTestId } from "@utils";
 
 import type { HeadingProps, TestIdProps } from "@types";
 
@@ -20,11 +20,12 @@ const defaultHeadingProps: Required<HeadingProps> = {
  * @return {JSX.Element} - The styled heading component
  */
 const Heading = (props: HeadingProps & TestIdProps): JSX.Element => {
+  const mergedProps = useMergedProps(defaultHeadingProps, props);
   const testId = useTestId("heading", props);
   const { error } = useLogger("Heading");
-  const id = useHtmlAttribute(props.id);
-  const title = useHtmlAttribute(props.title);
-  const typographyStyles = useTypographyStyles(props, true);
+  const id = useHtmlAttribute(mergedProps.id);
+  const title = useHtmlAttribute(mergedProps.title);
+  const typographyStyles = useTypographyStyles(mergedProps, true);
 
   const sharedProperties = useMemo(() => {
     return {
@@ -32,11 +33,11 @@ const Heading = (props: HeadingProps & TestIdProps): JSX.Element => {
       id,
       title,
       "data-testid": testId,
-      children: props.children,
+      children: mergedProps.children,
     };
-  }, [id, props.children, testId, title, typographyStyles]);
+  }, [id, mergedProps.children, testId, title, typographyStyles]);
 
-  switch (props.size) {
+  switch (mergedProps.size) {
     case "h2":
       return <h2 {...sharedProperties} />;
     case "h3":
@@ -44,9 +45,9 @@ const Heading = (props: HeadingProps & TestIdProps): JSX.Element => {
     case "h4":
       return <h4 {...sharedProperties} />;
     default: {
-      if (props.size !== "h1")
+      if (mergedProps.size !== "h1")
         error(
-          `Invalid size supplied. Expected one of h1, h2, h3, h4. Got ${props.size as unknown}.`
+          `Invalid size supplied. Expected one of h1, h2, h3, h4. Got ${mergedProps.size as unknown}.`
         );
       return <h1 {...sharedProperties} />;
     }
