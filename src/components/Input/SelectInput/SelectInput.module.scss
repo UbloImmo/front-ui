@@ -196,7 +196,7 @@
 
 .select-input-clear-button {
   padding: 0 !important;
-  @include mixins.dimensions(min-content, min-content true, true);
+  @include mixins.dimensions(min-content, min-content, true, true);
 
   & svg[data-testid="icon"] {
     transition: fill 300ms var(--bezier);
