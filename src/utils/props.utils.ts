@@ -54,7 +54,7 @@ export const mergeDefaultProps = <
  * Hook that merges the provided default props with the given props,
  * using {@link mergeDefaultProps}.
  *
- * @param {TDefaultProps} defaultProps - the default properties to be merged
+ * @param {TDefaultProps | (() => TDefaultProps)} defaultProps - the default properties to be merged
  * @param {TProps} [props = {}] - the properties to merge with the default props
  * @param {boolean} [pruneExtraProps = false] - whether to only keep the props that are present in the default props
  * @return {TDefaultProps} the merged default props with the given props
@@ -65,7 +65,7 @@ export const useMergedProps = <
 >(
   defaultProps: TDefaultProps | (() => TDefaultProps),
   props: TProps = {} as TProps,
-  pruneExtraProps = false
+  pruneExtraProps: boolean = false
 ): TDefaultProps => {
   return useMemo<TDefaultProps>(
     () =>

@@ -26,7 +26,6 @@ export const TableRow = forwardRef<
   TableRowProps & TestIdProps
 >((props, ref) => {
   const mergedProps = useMergedProps(defaultTableRowProps, props);
-  const testId = useTestId("table-row", props);
   const { style, className } = useTableRowStyle(mergedProps);
 
   const {
@@ -38,9 +37,13 @@ export const TableRow = forwardRef<
     id: rowId,
     ...restProps
   } = mergedProps;
+  const testId = useTestId("table-row", props);
 
   const onClickHandler = useHtmlAttribute(onClick);
   const id = useHtmlAttribute(rowId);
+
+  if ("testId" in restProps) delete restProps.testId;
+  if ("overrideTestId" in restProps) delete restProps.overrideTestId;
 
   return (
     <tr
