@@ -27,7 +27,7 @@
   // re-apply hover styles
   &.clickable:hover,
   &.clickable:hover > td {
-    background: var(--primary-light);
+    background: var(--primary-light) !important;
   }
 }
 
