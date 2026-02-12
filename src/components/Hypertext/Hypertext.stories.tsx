@@ -66,7 +66,7 @@ TextLengths.parameters = {
 
 const HypertextInTextRenderer = (props: HypertextProps) => {
   return (
-    <Text size="s">
+    <Text size="m" weight="medium">
       lorem ipsum <Hypertext {...props}>{props.children}</Hypertext> sit amet.
       Cras consectetur fermentum ante, sed venenatis sem semper vel. Vestibulum
       convallis nulla fermentum tincidunt fermentum. Etiam hendrerit bibendum
