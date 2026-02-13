@@ -1,7 +1,7 @@
 import { fn } from "storybook/test";
 
 import { ActionIcon } from "./ActionIcon.component";
-import { allIconNames, type IconName } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
 import { FlexRowLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
@@ -13,6 +13,7 @@ import type {
   ActionIconProps,
   ActionIconSize,
 } from "./ActionIcon.types";
+import type { IconName } from "../Icon/Icon.types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const defaultMockProps = {
@@ -36,7 +37,7 @@ const meta = {
   },
   argTypes: {
     icon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
       defaultValue: ActionIcon.__DEFAULT_PROPS.icon,
     },
     size: {

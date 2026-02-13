@@ -1,7 +1,7 @@
 import { fn } from "storybook/test";
 
 import { Action } from "./Action.component";
-import { allIconNames } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { useMergedProps } from "@utils";
@@ -25,7 +25,7 @@ const meta = {
       control: "text",
     },
     icon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
     },
     size: {
       options: ["default", "centered", "large", "card"],

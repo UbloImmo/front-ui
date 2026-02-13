@@ -7,10 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Storybook online documentation configuration.
+- Do not bundle unneeded data when building the library.
+
+### Changed
+
+- Moved `bootstrap-icons` to dev dependencies so as not to require package users to install it.
+
 ## 2.0.0 - 2026-02-12
 ### Added
 - Dev dependencies
-  
   - `unplugin-dts` dev dependency. Supercedes `vite-plugin-dts`.
   - `@microsoft/api-extractor` dev dependency. Needed to squash built `.d.ts` files during build process a decrease bundle size.
 - CSS class / style composition utilities:
@@ -20,26 +28,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - **BREAKING CHANGES**
-  
   - CSS styling solution: Removed `styled-components` in favor of `CSS Modules`:
     - The uikit now exports a seperate `core.css` file that needs to be imported at the app's root.
     - All components have been bumped to their next minor version following this change. Each have had their styling converted to separate SCSS modules.
     - Typography & other design tokens -related styled that relied on `@ubloimmo/front-tokens` and were being injected by `styled-components` have been converted to static SCSS modules that get generated using the `tokens:generate` package script.
   - Replaced `useTheme` & `ThemeProvider` implementation with React's `createContext` utility.
-  
     - Type definitions are unchanged, but `styled-components` users will need to write a simple adapter to link it with.
-  
   - Re-implemented `GlobalStyle` component, utilizing manual DOM-Native style-tag injection.
-  
   - Renamed `defaultProps` deprecated property on all components & layouts to `__DEFAULT_PROPS`, in order to prepare for a future React version bump.
 - Deprecated `styled-components`-related types & utility functions
-  
   - `StyleProps<T>`
   - `fromStyleProps<T>()`
   - `toStyleProps<T>()`
   - `useStyleProps<T>()`
 - Updated depencencies:
-  
   - Updated `storybook` to `v10`.
   - Updated `vite` to `v10`.
   - Updated `typedoc` to `v0.28.16`.

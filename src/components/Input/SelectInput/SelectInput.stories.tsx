@@ -4,7 +4,7 @@ import { SelectInput } from "./SelectInput.component";
 import { flattenSelectOptions } from "./SelectInput.utils";
 
 import { Badge, type BadgeProps } from "@/components/Badge";
-import { allIconNames, type IconName } from "@/components/Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "@/components/Icon/__generated__/iconName.types";
 import { Text } from "@/components/Text";
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
@@ -17,6 +17,7 @@ import type {
   SelectInputProps,
   SelectOptionOrGroup,
 } from "./SelectInput.types";
+import type { IconName } from "@/components/Icon/Icon.types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 
@@ -66,7 +67,7 @@ const meta = {
       type: "boolean",
     },
     controlIcon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
     },
   },
 } satisfies Meta<typeof SelectInput>;

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { fn } from "storybook/test";
 
 import { Chip } from "./Chip.component";
-import { allIconNames } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
@@ -56,7 +56,7 @@ const meta = {
       options: colors,
     },
     icon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
     },
   },
   decorators: [

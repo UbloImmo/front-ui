@@ -37,7 +37,7 @@ const config: StorybookConfig = {
   async viteFinal(config, { configType }) {
     const isProd = configType === "PRODUCTION";
     if (isProd) {
-      config.base = "/design-system";
+      config.base = "/design-system/";
       config.publicDir = "/design-system";
     }
     const baseConfig = mergeConfig(config, {

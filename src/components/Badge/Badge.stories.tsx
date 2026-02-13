@@ -5,11 +5,12 @@ import { Badge } from "./Badge.component";
 import { BadgeProps, BadgeShade } from "./Badge.types";
 import { FlexRowLayout } from "../../layouts";
 import { useMergedProps } from "../../utils";
-import { allIconNames, type IconName } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { ColorPalette } from "@types";
 
+import type { IconName } from "../Icon/Icon.types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const args = {
@@ -23,7 +24,7 @@ const meta = {
   args,
   argTypes: {
     icon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
     },
     color: {
       options: ["success", "error", "warning", "pending", "gray"],

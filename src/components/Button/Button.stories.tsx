@@ -8,7 +8,7 @@ import {
   type ButtonProps,
   type DefaultButtonProps,
 } from "./Button.types";
-import { allIconNames } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
@@ -44,7 +44,7 @@ const meta = {
   },
   argTypes: {
     icon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
     },
   },
   args: { ...defaultMockProps, label: "Button" },

@@ -6,10 +6,10 @@ import {
   type CalloutProps,
 } from "./Callout.types";
 import { Icon } from "../Icon";
-import { allIconNames } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 import { Text } from "../Text";
 
-import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
+import { ComponentVariants, type DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexColumnLayout, FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
@@ -44,7 +44,7 @@ const meta = {
       defaultValue: Callout.__DEFAULT_PROPS.color,
     },
     icon: {
-      options: ["auto", ...allIconNames],
+      options: ["auto", ...GENERATED_ICON_NAMES],
       defaultValue: Callout.__DEFAULT_PROPS.icon,
     },
     title: {
