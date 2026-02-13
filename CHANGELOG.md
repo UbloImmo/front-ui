@@ -7,14 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Fixed
+## 2.0.1 - 2026-02-13
+### Changed
+- Moved `bootstrap-icons` to dev dependencies so as not to require package users to install it.
 
+### Fixed
 - Storybook online documentation configuration.
 - Do not bundle unneeded data when building the library.
-
-### Changed
-
-- Moved `bootstrap-icons` to dev dependencies so as not to require package users to install it.
 
 ## 2.0.0 - 2026-02-12
 ### Added
