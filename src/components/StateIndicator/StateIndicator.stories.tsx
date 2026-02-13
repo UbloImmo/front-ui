@@ -1,11 +1,12 @@
 import { StateIndicator } from "./StateIndicator.component";
-import { allIconNames, type IconName } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
 import type { StateIndicatorProps } from "./StateIndicator.types";
+import type { IconName } from "../Icon/Icon.types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ColorKeyOrWhite } from "@types";
 
@@ -33,7 +34,7 @@ const meta = {
       control: "text",
     },
     icon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
     },
     color: {
       options: colors,

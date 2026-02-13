@@ -4,17 +4,18 @@ import * as assetsIndex from "./assets";
 import { EmptyStateCard } from "./EmptyStateCard.component";
 import { Button } from "../Button";
 import { Icon } from "../Icon";
-import {
-  EmptyStateCardDefaultProps,
-  type EmptyStateCardProps,
-} from "./EmptyStateCard.types";
-import { allIconNames, type IconName } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout } from "@layouts";
 import { useMergedProps } from "@utils";
 
+import type {
+  EmptyStateCardDefaultProps,
+  EmptyStateCardProps,
+} from "./EmptyStateCard.types";
+import type { IconName } from "../Icon/Icon.types";
 import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import type { ColorKey } from "@types";
 
@@ -45,7 +46,7 @@ const meta = {
       },
     },
     icon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
       table: {
         defaultValue: {
           summary: "Square",

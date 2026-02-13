@@ -1,7 +1,7 @@
 import { fn } from "storybook/test";
 
 import { CopyClipboardInfoCard } from "./CopyClipboardInfoCard.component";
-import { allIconNames } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
 import { ComponentVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
@@ -30,7 +30,7 @@ const meta = {
       type: "string",
     },
     icon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
     },
   },
   parameters: {

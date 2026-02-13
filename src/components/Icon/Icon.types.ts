@@ -1,22 +1,15 @@
-import { GenericFn } from "@ubloimmo/front-util";
-
-import { CommonIconProps } from "./__generated__/common.types";
-import {
-  type IconName,
-  GENERATED_ICON_NAMES,
-} from "./__generated__/iconName.types";
-
-import {
+import type { CommonIconProps } from "./__generated__/common.types";
+import type { IconName } from "./__generated__/iconName.types";
+import type {
   CssPx,
   CssRem,
   FixedCssLength,
   PaletteColor,
   StyleProps,
 } from "@types";
+import type { GenericFn } from "@ubloimmo/front-util";
 
 export type { IconName } from "./__generated__/iconName.types";
-
-export const allIconNames = GENERATED_ICON_NAMES;
 
 export type GeneratedIcon = GenericFn<[CommonIconProps], JSX.Element>;
 
@@ -55,6 +48,9 @@ export type MissingIcon = {
   __missing: true;
 };
 
+/**
+ * @deprecated styled-components
+ */
 export type IconFallbackStyleProps = StyleProps<{
   size: CssPx | CssRem;
 }>;

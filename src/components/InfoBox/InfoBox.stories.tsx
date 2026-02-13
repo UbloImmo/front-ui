@@ -1,7 +1,7 @@
 import { InfoBox } from "./InfoBox.component";
-import { allIconNames } from "../Icon/Icon.types";
+import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
-import { ComponentVariants, DetailConfigVariants } from "@docs/blocks";
+import { ComponentVariants, type DetailConfigVariants } from "@docs/blocks";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { useMergedProps } from "@utils";
 
@@ -31,7 +31,7 @@ const meta = {
   },
   argTypes: {
     icon: {
-      options: allIconNames,
+      options: GENERATED_ICON_NAMES,
     },
   },
 } satisfies Meta<typeof InfoBox>;
