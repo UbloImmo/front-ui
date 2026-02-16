@@ -22,7 +22,7 @@ const defaultHypertextProps: DefaultHypertextProps = {
 /**
  * Renders a hyperlink component with a text and an icon.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {HypertextProps} props - The hypertext's props
  * @return {JSX.Element} The rendered hypertext
@@ -32,7 +32,7 @@ const Hypertext = (props: HypertextProps): JSX.Element => {
   const mergedProps = useMergedProps(defaultHypertextProps, props);
   const testId = useTestId("hypertext");
   const { children, href, title, color, onClick } = mergedProps;
-  const { className, style } = useHypertextStyle(mergedProps);
+  const { className, style, textClassName } = useHypertextStyle(mergedProps);
 
   // Only warn about missing href if onClick is not provided
   if (isEmptyString(href || "") && !onClick) {
@@ -81,7 +81,13 @@ const Hypertext = (props: HypertextProps): JSX.Element => {
 
   const content = (
     <>
-      <Text size="m" weight="medium" color={textColor} underline>
+      <Text
+        size="m"
+        weight="medium"
+        color={textColor}
+        underline
+        className={textClassName}
+      >
         {children}
       </Text>
       <Icon name="BoxArrowUpRight" size="s-3" color={iconColor} />
