@@ -31,8 +31,10 @@ export function useHypertextStyle(
     return cssStyles(vars, props.styleOverride);
   }, [props.color, props.styleOverride]);
 
+  const textClassName = useCssClasses(styles["hypertext-text"]);
   return {
     className,
+    textClassName,
     style,
   };
 }
