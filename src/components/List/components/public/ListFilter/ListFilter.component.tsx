@@ -19,7 +19,7 @@ import type { Nullable } from "@ubloimmo/front-util";
  * A component that displays a single filters
  * and allows interacting with it and its options.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {ListFilterProps} props
  * @returns {Nullable<JSX.Element>}
@@ -41,7 +41,7 @@ export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
     isQuerying,
   } = useListFilter(props);
 
-  const classNames = useListFilterClassNames(styleProps);
+  const classNames = useListFilterClassNames(styleProps, renderMulti);
 
   const openOptionsOnClick = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
