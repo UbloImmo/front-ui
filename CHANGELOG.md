@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 2.0.5 - 2026-02-18
 ### Fixed
-
 - `v0.1.1` ListFilter component
-  - Properly render full-size header height if more than one option is selected, or if a single selected option's name is too long   
+  - Properly render full-size header height if more than one option is selected, or if a single selected option's name is too long
 
 ## 2.0.4 - 2026-02-18
 ### Fixed
