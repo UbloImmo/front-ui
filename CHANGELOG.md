@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- `v0.1.2` Hypertext component
+  - Ensure inner text's display property is properly applied.
+
 ## 2.0.3 - 2026-02-16
 ### Fixed
 - Storybook online documentation configuration by downgrading storybook to `v10.1.11`.

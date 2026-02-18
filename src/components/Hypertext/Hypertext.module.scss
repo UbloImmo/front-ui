@@ -13,16 +13,16 @@
   margin: 0;
 
   span[data-testid="text"] > &,
-  span[data-testid="text"] > & > span[data-testid="text"] {
+  span[data-testid="text"] > & > .hypertext-text {
     font-size: inherit;
     font-weight: inherit;
     line-height: inherit;
     letter-spacing: inherit;
   }
 
-  & > span[data-testid="text"] {
+  & > .hypertext-text {
     text-decoration-color: var(--text-decoration-color);
-    display: inherit;
+    display: inline;
     transition:
       color 300ms var(--bezier),
       text-decoration-color 300ms var(--bezier);
@@ -42,13 +42,13 @@
   }
 
   &:hover {
-    & > span[data-testid="text"],
+    & > .hypertext-text,
     & > svg[data-testid="icon"]:last-child,
     & > svg[data-testid="icon"]:last-child > path {
       transition-duration: 150ms;
     }
 
-    & > span[data-testid="text"] {
+    & > .hypertext-text {
       color: var(--text-hover-color);
       text-decoration-color: var(--text-hover-color);
     }
@@ -58,8 +58,4 @@
       fill: var(--text-hover-color);
     }
   }
-}
-
-.hypertext > .hypertext-text {
-  display: inline;
 }
