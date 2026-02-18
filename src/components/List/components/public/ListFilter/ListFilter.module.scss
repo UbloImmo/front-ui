@@ -32,7 +32,7 @@ $max-options-height: calc(
   margin: 0;
 
   &.active.multi {
-    --filter-max-heigth: calc-size(fit-content, size);
+    --filter-max-height: calc-size(fit-content, size);
   }
 
   &:not(.disabled):not(.open) {

@@ -19,10 +19,21 @@ import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 type MockData = { value: number };
 
 const mockOptionData = filterOptionData(
-  "My option",
+  "My option with a really, really, extremely long label that is suuuuper long",
   filterOptionMatch<MockData>("value", "=", 0)
 );
-const mockFilterData = filterData("My filter", [mockOptionData]);
+
+const mockOptionData2 = filterOptionData(
+  "A shorter option",
+  filterOptionMatch<MockData>("value", "=", 1),
+  {
+    default: true,
+  }
+);
+const mockFilterData = filterData("My filter", [
+  mockOptionData,
+  mockOptionData2,
+]);
 
 const filterOption: FilterOption<MockData> = {
   ...mockOptionData,
@@ -30,13 +41,19 @@ const filterOption: FilterOption<MockData> = {
   unselect: fn(),
 };
 
+const filterOption2: FilterOption<MockData> = {
+  ...mockOptionData2,
+  select: fn(),
+  unselect: fn(),
+};
+
 const filter: Filter<MockData> = {
   ...mockFilterData,
-  active: false,
-  options: [filterOption],
+  active: true,
+  options: [filterOption, filterOption2],
   clear: fn(),
   selectAll: fn(),
-  selectedOptions: [],
+  selectedOptions: [filterOption],
 };
 
 const defaultProps: Required<ListFilterProps<MockData>> = {

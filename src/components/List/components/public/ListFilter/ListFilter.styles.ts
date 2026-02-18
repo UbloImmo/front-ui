@@ -6,21 +6,27 @@ import { useCssClasses } from "@utils";
 
 import type { ListFilterStyleProps } from "./ListFilter.types";
 
-function useListFilterContainerClassName(props: ListFilterStyleProps) {
+function useListFilterContainerClassName(
+  props: ListFilterStyleProps,
+  renderMulti: boolean
+) {
   return useCssClasses(
     styles["list-filter-container"],
     [styles.open, props.open],
     [styles.loading, props.loading],
     [styles.disabled, props.disabled],
     [styles.active, props.active],
-    [styles.multi, props.multi]
+    [styles.multi, renderMulti]
   );
 }
 
-function useListFilterHeaderClassName(props: ListFilterStyleProps) {
+function useListFilterHeaderClassName(
+  props: ListFilterStyleProps,
+  renderMulti: boolean
+) {
   return useCssClasses(styles["list-filter-header"], [
     styles.multi,
-    props.multi,
+    renderMulti,
   ]);
 }
 
@@ -39,9 +45,12 @@ function useListFilterQueryInputContainerClassName() {
   return useCssClasses(styles["list-filter-query-input-container"]);
 }
 
-export function useListFilterClassNames(props: ListFilterStyleProps) {
-  const container = useListFilterContainerClassName(props);
-  const header = useListFilterHeaderClassName(props);
+export function useListFilterClassNames(
+  props: ListFilterStyleProps,
+  renderMulti: boolean
+) {
+  const container = useListFilterContainerClassName(props, renderMulti);
+  const header = useListFilterHeaderClassName(props, renderMulti);
   const chips = useListFilterOptionChipsClassName();
   const options = useListFilterOptionsListClassName(props);
   const query = useListFilterQueryInputContainerClassName();
