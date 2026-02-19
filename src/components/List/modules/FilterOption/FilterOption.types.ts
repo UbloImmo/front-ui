@@ -33,7 +33,7 @@ export type FilterOptionMatch<TItem extends object> = {
    */
   comparison: FilterComparisonOperator;
   /**
-   * The property to filter on if different than the containing filter's property
+   * The property to filter on
    *
    * @type {FilterProperty}
    */
