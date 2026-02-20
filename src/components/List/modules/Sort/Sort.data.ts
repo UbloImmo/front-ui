@@ -13,7 +13,7 @@ import type {
 } from "./Sort.types";
 
 /**
- * Creates a {@link SortData sort data} object with configuration & state properies
+ * Creates a {@link SortData sort data} object with given configuration & default state propertie.
  *
  * @template {object} TItem - The list item to create a sort data object for.
  * @template {FilterProperty<TItem>} TProperty - The item's property the sort data object is targeting
@@ -60,5 +60,6 @@ export function sortData<
     ...config,
     ...state,
     defaultState: Object.freeze({ ...state }),
+    defaultPriority: config.priority,
   };
 }
