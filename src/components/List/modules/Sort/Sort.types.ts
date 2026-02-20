@@ -2,9 +2,11 @@ import type { FilterProperty } from "../shared.types";
 import type { NonEmptyArr } from "@types";
 import type {
   DeepValueOf,
+  KeyOf,
   NonNullish,
   Nullable,
   Nullish,
+  Optional,
   VoidFn,
 } from "@ubloimmo/front-util";
 
@@ -126,7 +128,11 @@ export type SortData<
     /**
      * Default state of a list {@link Sort}
      */
-    defaultState: Readonly<Required<SortState>>;
+    readonly defaultState: Readonly<Required<SortState>>;
+    /**
+     * Default priority of a list {@link Sort}
+     */
+    readonly defaultPriority: number;
   };
 
 /**
@@ -136,6 +142,67 @@ export type Sort<
   TItem extends object,
   TProperty extends FilterProperty<TItem>,
 > = SortData<TItem, TProperty> & SortModuleCallbacks;
+
+/**
+ * A single value in a {@link SortDataEntriesInput} map.
+ */
+export type SortDataEntryInput<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem>,
+> = Omit<SortConfig<TItem, TProperty>, "property"> & {
+  defaultState?: SortState;
+};
+
+/**
+ * Input object used for creating & registering multiple Sort data entries at once
+ */
+export type SortDataEntriesInput<TItem extends object> = {
+  [TProperty in FilterProperty<TItem>]?: SortDataEntryInput<TItem, TProperty>;
+};
+
+/**
+ * Object that holds multiple unique sort data entries
+ */
+export type SortDataEntries<TItem extends object> = {
+  [TProperty in FilterProperty<TItem>]?: SortData<TItem, TProperty>;
+};
+
+export type SortDataEntriesFromInput<
+  TItem extends object,
+  TEntriesInput extends SortDataEntriesInput<TItem>,
+> = Required<
+  Pick<
+    SortDataEntries<TItem>,
+    keyof SortDataEntries<TItem> & KeyOf<TEntriesInput, string | number>
+  >
+>;
+
+/**
+ * Map() extension that uses a {@link SortData sort}'s property as key and its {@link SortData data} as value while properly respecting its generic typing
+ */
+export interface ISortMap<TItem extends object>
+  extends Map<FilterProperty<TItem>, SortData<TItem, FilterProperty<TItem>>> {
+  set<TProperty extends FilterProperty<TItem>>(
+    key: TProperty,
+    value: SortData<TItem, TProperty>
+  ): this;
+  get<TProperty extends FilterProperty<TItem>>(
+    key: TProperty
+  ): Optional<SortData<TItem, TProperty>>;
+  forEach(
+    callbackfn: <TProperty extends FilterProperty<TItem>>(
+      value: SortData<TItem, TProperty>,
+      key: TProperty,
+      map: ISortMap<TItem>
+    ) => void,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    thisArg?: any
+  ): void;
+  /**
+   * Sets multiple unique sort data entries at once
+   */
+  setMultiple(entries: SortDataEntries<TItem>): this;
+}
 
 /**
  * Parameters shape of the sort function
@@ -171,3 +238,31 @@ export type ListConfigSortFnParams<
 > =
   | ListConfigSortFnFlatParams<TItem, TProperty>
   | ListConfigSortFnCompoundParams<TItem, TProperty>;
+
+/**
+ * Creates a {@link SortData sort data} object with given configuration & default state propertie.
+ *
+ * @template {object} TItem - The list item to create a sort data object for.
+ * @template {FilterProperty<TItem>} TProperty - The item's property the sort data object is targeting
+ * @param {ListConfigSortFnParams<TItem, TProperty>} params - Either compound or flattened sort data creation parameter spread.
+ * @returns {SortData<TItem, TProperty>} The sort data object
+ */
+export interface ListConfigSortFn<TItem extends object> {
+  <TProperty extends FilterProperty<TItem>>(
+    ...params: ListConfigSortFnParams<TItem, TProperty>
+  ): SortData<TItem, TProperty>;
+}
+
+/**
+ * Iterates over a {@link SortDataEntriesInput unique sort data input map}, creates {@link SortData sort data} objects for each of them, registers them all at once, then returns them.
+ *
+ * @template {object} TItem - The list item to create multiple sort data objects for.
+ * @template {SortDataEntriesInput<TItem>} TEntriesInput - Provided {@link SortDataEntriesInput entries input object}
+ * @param {SortDataEntriesInput<TItem>} entries - Unique map of sort data entry inputs to register.
+ * @returns {SortDataEntriesFromInput<TItem>} An object with the same properties but registered {@link SortData sort data objects} as values.
+ */
+export interface ListConfigSortsFn<TItem extends object> {
+  <TEntriesInput extends SortDataEntriesInput<TItem>>(
+    entries: TEntriesInput
+  ): SortDataEntriesFromInput<TItem, TEntriesInput>;
+}
