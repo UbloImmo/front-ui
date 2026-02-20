@@ -339,7 +339,7 @@ export const useListConfig: UseListConfig = <
    */
   const sorts = useCallback<ListConfigSortsFn<TItem>>(
     <TEntriesInput extends SortDataEntriesInput<TItem>>(
-      entriesInput: TEntriesInput & SortDataEntriesInput<TItem>
+      entriesInput: TEntriesInput
     ): SortDataEntriesFromInput<TItem, TEntriesInput> => {
       const inputs = (entriesInput ?? {}) as SortDataEntries<TItem>;
       // build sort data objects from entries input
