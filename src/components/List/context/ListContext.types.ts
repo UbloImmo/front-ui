@@ -28,6 +28,11 @@ import type {
   DataProviderType,
   DataProviderFilterFnConfig,
   DataProviderFilterFnSearchConfig,
+  ListConfigSortFn,
+  SortData,
+  SortDataEntries,
+  ListConfigSortsFn,
+  SortMap,
 } from "../modules";
 import type { UseDataArrayReturn } from "@types";
 import type {
@@ -321,6 +326,11 @@ export type ListContextConfig<
    * @default { sync: false }
    */
   searchParams?: ListConfigSearchParams;
+  /**
+   * The list's sorting configuration
+   * A map that holds at most one sort per filter property
+   */
+  sorts?: SortMap<TItem>;
 } & ListSearchConfig<TItem>;
 
 type ListConfigSetOperatorFn = VoidFn<[operator: FilterBooleanOperator]>;
@@ -369,6 +379,8 @@ export type UseListConfigReturn<
   filterPreset: ListConfigFilterPresetFn<TItem>;
   setOperator: ListConfigSetOperatorFn;
   configureSearchParams: ListConfigConfigureSearchParamsFn;
+  sort: ListConfigSortFn<TItem>;
+  sorts: ListConfigSortsFn<TItem>;
 };
 
 export type UseListConfig = <TItem extends object>(
@@ -382,6 +394,13 @@ export type UseListConfigFilterReducerAction =
 export type UseListConfigFilterPresetReducerAction =
   | ["register", FilterPresetData]
   | ["update", FilterPresetData];
+
+export type UseListConfigSortReducerAction<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem> = FilterProperty<TItem>,
+> =
+  | ["register", SortData<TItem, TProperty>]
+  | ["register-multiple", SortDataEntries<TItem>];
 
 // LIST FILTERS ---------------------------------------------------------------------------------
 
