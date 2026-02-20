@@ -31,6 +31,7 @@ const defaults: SortData<MockData, "enumNullish"> = {
     active: false,
     inverted: false,
   },
+  defaultPriority: 0,
 };
 
 describe("Sort module", () => {
@@ -219,7 +220,12 @@ describe("Sort module", () => {
       it("should accept a custom priority", () => {
         const order: SortOrderBasic = "desc";
         const priority = 45;
-        const overridden = { ...defaults, order, priority };
+        const overridden = {
+          ...defaults,
+          order,
+          priority,
+          defaultPriority: priority,
+        };
         expect(
           sortData<MockData, "enumNullish">({
             property: "enumNullish",
@@ -234,7 +240,12 @@ describe("Sort module", () => {
       it("should accept a clamp priority between 0 and Infinity", () => {
         const order: SortOrderBasic = "desc";
         const priority = -450;
-        const overridden = { ...defaults, order, priority: 0 };
+        const overridden = {
+          ...defaults,
+          order,
+          priority: 0,
+          defaultPriority: 0,
+        };
         expect(
           sortData<MockData, "enumNullish">({
             property: "enumNullish",
@@ -256,6 +267,7 @@ describe("Sort module", () => {
           priority,
           ...state,
           defaultState: { ...defaults.defaultState, ...state },
+          defaultPriority: priority,
         };
         expect(
           sortData<MockData, "enumNullish">(
@@ -286,6 +298,7 @@ describe("Sort module", () => {
           priority,
           ...state,
           defaultState: { ...defaults.defaultState, ...state },
+          defaultPriority: priority,
         };
         expect(
           sortData<MockData, "enumNullish">(
