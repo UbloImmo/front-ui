@@ -1,4 +1,4 @@
-import { isArray, isObject, Optional } from "@ubloimmo/front-util";
+import { isArray, isObject, Optional, ValueMap } from "@ubloimmo/front-util";
 
 import { FilterProperty } from "../shared.types";
 import {
@@ -116,3 +116,13 @@ export class SortMap<TItem extends object>
     return this;
   }
 }
+
+export const SORT_ORDER_BASIC_INVERT_MAP: ValueMap<
+  SortOrderBasic,
+  SortOrderBasic
+> = {
+  asc: "desc",
+  desc: "asc",
+};
+
+export const SORT_HIGHLIGHTED_PRIORITY = -1;

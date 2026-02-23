@@ -122,7 +122,12 @@ test("should not reset pagination when calling filter() with the same config", a
   rerender();
   await delay(0);
   expect(result.filter).toBeFunction();
-  getResult().filter({ filters: [], selectedOptions: [], search: null });
+  getResult().filter({
+    filters: [],
+    selectedOptions: [],
+    search: null,
+    activeSorts: null,
+  });
   await delay(0);
   rerender();
   expect(getResult().hasNextPage).toBeBoolean();
@@ -143,6 +148,7 @@ test("should reset pagination when filters change", async (result, _, {
       ({ selected }) => selected
     ),
     search: null,
+    activeSorts: null,
   });
   rerender();
   expect(getResult().hasNextPage).toBeBoolean();

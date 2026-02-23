@@ -5,6 +5,7 @@ import { useListFilters } from "./ListContext.filters";
 import { useListOptions } from "./ListContext.options";
 import { useListContextSearch } from "./ListContext.search";
 import { useListContextSearchParams } from "./ListContext.searchParams";
+import { useListSorts } from "./ListContext.sorts";
 
 import type {
   TriggerDataProviderFilterFn,
@@ -29,6 +30,8 @@ export const useListContextStore = <
 
   const search = useListContextSearch(config);
 
+  const sorts = useListSorts(config);
+
   const triggerDataProviderFilter = useCallback<
     TriggerDataProviderFilterFn<TItem>
   >(
@@ -37,10 +40,11 @@ export const useListContextStore = <
         ...baseConfig,
         search: search.hydratedSearchConfig,
         selectedOptions: [],
+        activeSorts: sorts.activeSorts,
       } as DataProviderFilterFnConfig<TItem>;
       dataProvider.filter(config);
     },
-    [dataProvider, search.hydratedSearchConfig]
+    [dataProvider, search.hydratedSearchConfig, sorts.activeSorts]
   );
 
   const options = useListOptions(config, triggerDataProviderFilter);
@@ -56,12 +60,16 @@ export const useListContextStore = <
     ...optionMethods
   } = options;
 
+  /**
+   * Stringifies the current filtering configuration
+   */
   const stringifyFiltersRef = useCallback(() => {
     return JSON.stringify({
       options: optionsArray,
       search: search.queryFilters,
+      activeSorts: sorts.activeSorts,
     });
-  }, [optionsArray, search.queryFilters]);
+  }, [optionsArray, search.queryFilters, sorts.activeSorts]);
 
   const previousFiltersRef = useRef<string>("");
 
@@ -80,8 +88,13 @@ export const useListContextStore = <
     return dataProvider.loading || configLoading || !initialSynced;
   }, [dataProvider.loading, configLoading, initialSynced]);
 
+  /**
+   * Dispatches filtering config updates to the provided data provider hook upon dynamic filtering / sorting / querying changes
+   * Only fires if the config changes, the list's config or its provider is not loading and an actual update was needed
+   */
   useEffect(() => {
     if (loading) return;
+    // abort if config did not change
     const nextFilters = stringifyFiltersRef();
     if (previousFiltersRef.current === nextFilters) return;
     previousFiltersRef.current = nextFilters;
@@ -89,6 +102,7 @@ export const useListContextStore = <
     const shouldClear = filters.filters.some(
       ({ active, noResultsIfInactive }) => !active && noResultsIfInactive
     );
+    console.log("queries data provider");
     if (shouldClear) {
       // call the data provider's clear method instead of setting data to []
       // to reset any internal states if needed (e.g. pagination cursor)
@@ -101,7 +115,13 @@ export const useListContextStore = <
       config.searchAsOptions ? search.queryFilters : undefined
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [optionsArray, loading, search.queryFilters, config.searchAsOptions]);
+  }, [
+    optionsArray,
+    loading,
+    search.queryFilters,
+    config.searchAsOptions,
+    sorts.activeSorts,
+  ]);
 
   return {
     ...filterPresets,
@@ -109,6 +129,7 @@ export const useListContextStore = <
     ...optionMethods,
     ...filters,
     ...search,
+    ...sorts,
     data,
     itemCount,
     dataProvider,

@@ -4,9 +4,13 @@ import {
   isNumber,
   isObject,
   isString,
+  isUndefined,
   type Optional,
 } from "@ubloimmo/front-util";
 import { isDate } from "date-fns";
+
+import { Sort, SortOrder, SortOrderBasic } from "../../Sort";
+import { isSortOrderBasic } from "../../Sort/Sort.utils";
 
 import {
   BooleanOperators,
@@ -18,7 +22,7 @@ import type {
   FilterOptionMatch,
 } from "../../FilterOption/FilterOption.types";
 import type { FilterPreset } from "../../FilterPreset";
-import type { FilterBooleanOperator } from "../../shared.types";
+import type { FilterBooleanOperator, FilterProperty } from "../../shared.types";
 import type {
   DataProviderFilterFnConfig,
   DataProviderFilterParam,
@@ -272,3 +276,28 @@ export const filterItems = <TItem extends object>(
 
   return items.filter(filterFn);
 };
+
+function sortByOrder<TItem extends object>(
+  a: TItem,
+  b: TItem,
+  sort: Sort<TItem, FilterProperty<TItem>>
+) {
+  // TODO: try to avoid having to run deepValueOf inside the sort fn, maybe before calling items.sort()
+  // get both item values
+  const aValue = deepValueOf(a, sort.property, true);
+  const bValue = deepValueOf(b, sort.property, true);
+  // handle undefined cases
+  if (isUndefined(aValue) && !isUndefined(bValue)) return 1;
+  if (!isUndefined(aValue) && isUndefined(bValue)) return -1;
+  if (isUndefined(aValue) && isUndefined(bValue)) return 0;
+
+  // TODO: finish implementation
+}
+
+export function sortItems<TItem extends object>(
+  items: TItem[],
+  activeSorts: DataProviderFilterFnConfig<TItem>["activeSorts"]
+) {
+  console.log(activeSorts);
+  return items;
+}

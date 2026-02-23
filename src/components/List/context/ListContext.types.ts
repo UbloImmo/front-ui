@@ -33,6 +33,7 @@ import type {
   SortDataEntries,
   ListConfigSortsFn,
   SortMap,
+  Sort,
 } from "../modules";
 import type { UseDataArrayReturn } from "@types";
 import type {
@@ -519,10 +520,10 @@ export type UseListOptionsReturn<TItem extends object> = {
 };
 
 /**
- * Internal callback to trigger the data provider's filter method after hydration with search query
+ * Internal callback to trigger the data provider's filter method after hydration with search query and sorting config
  */
 export type TriggerDataProviderFilterFn<TItem extends object> = MaybeAsyncFn<
-  [config: Omit<DataProviderFilterFnConfig<TItem>, "search">]
+  [config: Omit<DataProviderFilterFnConfig<TItem>, "search" | "activeSorts">]
 >;
 
 export type UseListOptions = <TItem extends object>(
@@ -617,6 +618,24 @@ export type UseListSearch = <TItem extends object>(
   config: ListSearchConfig<TItem>
 ) => UseListSearchReturn<TItem>;
 
+// LIST SORTS -----------------------------------------------------------------------------------
+
+export interface MutateListSortFn<TItem extends object> {
+  <TProperty extends FilterProperty<TItem>>(property: TProperty): void;
+}
+
+export type UseListSortsReturn<TItem extends object> = {
+  sortMap: SortMap<TItem>;
+  sorts: Sort<TItem, FilterProperty<TItem>>[];
+  activeSorts: Sort<TItem, FilterProperty<TItem>>[];
+  highlightedSortProperty: Nullable<FilterProperty<TItem>>;
+  activateSort: MutateListSortFn<TItem>;
+  deactivateSort: MutateListSortFn<TItem>;
+  toggleSort: MutateListSortFn<TItem>;
+  invertSort: MutateListSortFn<TItem>;
+  resetSort: MutateListSortFn<TItem>;
+};
+
 // LIST CONTEXT ---------------------------------------------------------------------------------
 
 export type ListContextDataProviderRef<TItem extends object> = {
@@ -689,6 +708,7 @@ export type ListContextValue<
 } & UseListFilterPresetsReturn<TItem> &
   UseListFiltersReturn<TItem> &
   UseListSearchReturn<TItem> &
+  UseListSortsReturn<TItem> &
   Replace<
     UseListOptionsReturn<TItem>,
     "options",

@@ -107,6 +107,7 @@ export const useListFilterPresets: UseListFilterPresets = <
               selectedOptions: filterPresetOptions,
               search: null,
               operator,
+              activeSorts: null,
             });
             return [signature, count];
           } catch (error) {

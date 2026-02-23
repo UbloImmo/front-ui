@@ -22,7 +22,10 @@ import {
   type PaginatedDataProviderFetchPageFnParams,
   type UseDataProviderFn,
 } from "../modules";
-import { filterItems } from "../modules/DataProvider/StaticDataProvider/StaticDataProvider.utils";
+import {
+  filterItems,
+  sortItems,
+} from "../modules/DataProvider/StaticDataProvider/StaticDataProvider.utils";
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
@@ -119,7 +122,8 @@ const dynamicFetchPokemonData = async (
   config: DataProviderFilterFnConfig<Pokemon>
 ) => {
   const data = await fetchPokemonData();
-  return filterItems(data, config);
+  const filtered = filterItems(data, config);
+  return sortItems(filtered, config.activeSorts);
 };
 
 const useDynamicPokemonData: UseDataProviderFn<Pokemon, "dynamic"> = (
@@ -215,10 +219,18 @@ const usePokemonListConfig = (
     async,
     configureSearchParams,
     search,
+    sort,
+    // sorts,
   } = useListConfig(pokemonDataProviders[dataProvider]);
 
   // make the list's options read the search params
   useStatic(() => configureSearchParams({ sync: "read" }));
+
+  // declare sorting order
+  useStatic(() => {
+    sort("id", "asc", 1, { active: true });
+    sort("weight", "asc", 0, { active: true });
+  });
 
   // declare name options once
   const names = useStatic(() => {

@@ -9,6 +9,7 @@ import {
   type UsePaginatedDataProviderFn,
 } from "./PaginatedDataProvider.types";
 
+import { BooleanOperators } from "@/components/List/List.enums";
 import { delay, nextTick, useLogger } from "@utils";
 
 import type {
@@ -22,7 +23,10 @@ const DATA_PROVIDER_TYPE = "paginated" as const;
 const NO_FILTERS_CONFIG: DataProviderFilterFnConfig<object> = {
   filters: [],
   selectedOptions: [],
+  options: [],
   search: null,
+  operator: BooleanOperators.AND,
+  activeSorts: null,
 };
 const NO_FILTERS_CONFIG_SIGNATURE = JSON.stringify(NO_FILTERS_CONFIG);
 
@@ -150,7 +154,8 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
   const resetPagination = useCallback(() => {
     afterRef.current = null;
     accumulatedDataRef.current = [];
-    lastFilterConfig.current = NO_FILTERS_CONFIG;
+    lastFilterConfig.current =
+      NO_FILTERS_CONFIG as DataProviderFilterFnConfig<TItem>;
     lastFilterConfigSignature.current = NO_FILTERS_CONFIG_SIGNATURE;
     setHasNextPage(false);
   }, []);

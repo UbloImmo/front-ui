@@ -1,3 +1,5 @@
+import { SortMap } from "../modules/Sort";
+
 import type { ListContextValue } from "./ListContext.types";
 
 export const defaultListContextValue = <
@@ -36,4 +38,13 @@ export const defaultListContextValue = <
   changeQuery: () => {},
   applyOptions: () => {},
   hydratedSearchConfig: null,
+  sorts: [],
+  activeSorts: [],
+  sortMap: new SortMap<TItem>(),
+  activateSort: () => {},
+  deactivateSort: () => {},
+  toggleSort: () => {},
+  invertSort: () => {},
+  resetSort: () => {},
+  highlightedSortProperty: null,
 });

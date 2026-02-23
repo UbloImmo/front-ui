@@ -62,7 +62,7 @@ export type SortConfig<
    *
    * @required
    */
-  property: TProperty;
+  readonly property: TProperty;
   /**
    * The sorting order for the property
    *
@@ -112,9 +112,25 @@ export type SortModuleCallbacks = {
    */
   deactivate: VoidFn;
   /**
-   * Inverts the Sort's order
+   * Toggles the Sort's `active` state
+   */
+  toggle: VoidFn;
+  /**
+   * Toggles the Sort's `inversed` state
+   *
+   * @remarks A Sort may only be mutate its inverted state when active
    */
   invert: VoidFn;
+  /**
+   * Resets the Sort's active & inverted state to their default values
+   */
+  reset: VoidFn;
+  /**
+   * Prioritizes the Sort, making it the most influencial in ordering elements.
+   *
+   * @remarks A Sort may only be prioritized when active
+   */
+  prioritize: VoidFn;
 };
 
 /**
@@ -141,7 +157,17 @@ export type SortData<
 export type Sort<
   TItem extends object,
   TProperty extends FilterProperty<TItem>,
-> = SortData<TItem, TProperty> & SortModuleCallbacks;
+> = SortData<TItem, TProperty> &
+  SortModuleCallbacks & {
+    /**
+     * Root sort order that may or may not be inverted based on the `inverted` property
+     */
+    readonly computedOrder: SortOrder<TItem, TProperty>;
+    /**
+     * Whether the sort was the last to be both active & manipulated
+     */
+    readonly prioritized: boolean;
+  };
 
 /**
  * A single value in a {@link SortDataEntriesInput} map.
