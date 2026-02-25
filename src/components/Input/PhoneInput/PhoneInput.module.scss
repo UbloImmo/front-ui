@@ -6,9 +6,10 @@
   width: 100%;
   // needed not to break layout when used inside a flex container
   display: flex;
+
+  &:has(input[data-testid="input-phone"]:focus),
   &:has(
-      input[data-testid="input-phone"]:focus,
-      button.react-international-phone-country-selector-button--active
+      button:global(.react-international-phone-country-selector-button--active)
     ) {
     z-index: 1; // used to make sure whole input & country selector dropdown is visible when active
   }
