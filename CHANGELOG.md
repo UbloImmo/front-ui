@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 2.0.6 - 2026-02-25
 ### Fixed
-
 - `v0.1.1` PhoneInput component
   - Make sure the input is drawn above other elements in a page when it or its country selector are focused.
 
