@@ -43,6 +43,9 @@ const action: CompleteTranslationMap<"action"> = {
   giveUp: "Give up",
   filterBy: "Filter by",
   typeToSearch: "Type to search...",
+  sort: "Sort",
+  sortBy: "Sort by",
+  invertSortingOrder: "Invert sorting order",
 } as const;
 
 const validation: CompleteTranslationMap<"validation"> = {

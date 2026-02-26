@@ -46,5 +46,6 @@ export const defaultListContextValue = <
   toggleSort: () => {},
   invertSort: () => {},
   resetSort: () => {},
+  getSort: () => null,
   highlightedSortProperty: null,
 });

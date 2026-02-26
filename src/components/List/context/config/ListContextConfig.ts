@@ -341,15 +341,24 @@ export const useListConfig: UseListConfig = <
     <TEntriesInput extends SortDataEntriesInput<TItem>>(
       entriesInput: TEntriesInput
     ): SortDataEntriesFromInput<TItem, TEntriesInput> => {
-      const inputs = (entriesInput ?? {}) as SortDataEntries<TItem>;
+      const inputs = (entriesInput ?? {}) as SortDataEntriesInput<TItem>;
       // build sort data objects from entries input
       const entries: SortDataEntries<TItem> = {};
       for (const key in inputs) {
         const property = key as unknown as FilterProperty<TItem>;
         const entryInput = inputs[property];
         if (!entryInput) continue;
-        const { order, priority, defaultState } = entryInput;
-        entries[property] = sortData(property, order, priority, defaultState);
+        const { order, priority, active, inverted, icon, label } = entryInput;
+        entries[property] = sortData(
+          property,
+          order,
+          priority,
+          { active, inverted },
+          {
+            icon,
+            label,
+          }
+        );
       }
       // register entries & return
       registerMultipleSorts(entries);

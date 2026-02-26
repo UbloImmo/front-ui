@@ -6,11 +6,14 @@ import {
   canCompare,
   compareItemValue,
   filterItems,
+  sortItems,
 } from "./StaticDataProvider.utils";
 import { mockListData, type MockListItem } from "../DataProvider.test.mock";
 
 import { testHookFactory } from "@/tests";
 import { arrayOf } from "@utils";
+import { SortPayload } from "../../Sort";
+import { Nullable, Nullish } from "@ubloimmo/front-util";
 
 const {
   item,
@@ -333,6 +336,110 @@ describe("StaticDataProvider", () => {
           })
         ).toHaveLength(3);
       });
+    });
+
+    describe("sortItems", () => {
+      it("should be a function", () => {
+        expect(sortItems).toBeFunction();
+      });
+      it("should never throw", () => {
+        expect(sortItems).not.toThrow();
+      });
+      it("should always return an array", () => {
+        // @ts-expect-error testing undefined behavior
+        expect(sortItems()).toBeArray();
+        // @ts-expect-error testing undefined behavior
+        expect(sortItems([])).toBeArray();
+        expect(sortItems([], [])).toBeArray();
+        expect(sortItems([], null)).toBeArray();
+      });
+      it("should returns items as is if no active sorts are provided", () => {
+        // @ts-expect-error testing undefined behavior
+        expect(sortItems(mockListData.items)).toEqual(mockListData.items);
+        expect(sortItems(mockListData.items, [])).toEqual(mockListData.items);
+        expect(sortItems(mockListData.items, null)).toEqual(mockListData.items);
+      });
+
+      const makeItem = (v: number): { v: Nullish<number> } => ({ v });
+      const negative = makeItem(-120),
+        small = makeItem(1.2),
+        medium = makeItem(12),
+        large = makeItem(120),
+        nullItem = { v: null },
+        undefItem = { v: undefined };
+      const ascSort: SortPayload<{ v: Nullish<number> }, "v"> = {
+          property: "v",
+          computedOrder: "asc",
+          priority: 0,
+          prioritized: false,
+        },
+        descSort: SortPayload<{ v: Nullish<number> }, "v"> = {
+          property: "v",
+          computedOrder: "desc",
+          priority: 0,
+          prioritized: false,
+        };
+
+      it("should put sort numbers in ascending order", () => {
+        const items = [small, large, medium, negative];
+        expect(sortItems(items, [ascSort])).toEqual([
+          negative,
+          small,
+          medium,
+          large,
+        ]);
+      });
+
+      it("should put sort numbers in descending order", () => {
+        const items = [small, large, medium, negative];
+        expect(sortItems(items, [descSort])).toEqual([
+          large,
+          medium,
+          small,
+          negative,
+        ]);
+      });
+      it("should put sort put null items at the end in ascending order", () => {
+        const items = [small, large, medium, nullItem, negative];
+        expect(sortItems(items, [ascSort])).toEqual([
+          negative,
+          small,
+          medium,
+          large,
+          nullItem,
+        ]);
+      });
+      it("should put sort put null items at the end in descending order", () => {
+        const items = [small, large, medium, nullItem, negative];
+        expect(sortItems(items, [descSort])).toEqual([
+          large,
+          medium,
+          small,
+          negative,
+          nullItem,
+        ]);
+      });
+      it("should put sort put undefined items at the end in ascending order", () => {
+        const items = [small, large, medium, undefItem, negative];
+        expect(sortItems(items, [ascSort])).toEqual([
+          negative,
+          small,
+          medium,
+          large,
+          undefItem,
+        ]);
+      });
+      it("should put sort put undefined items at the end in descending order", () => {
+        const items = [small, large, medium, undefItem, negative];
+        expect(sortItems(items, [descSort])).toEqual([
+          large,
+          medium,
+          small,
+          negative,
+          undefItem,
+        ]);
+      });
+      // it("should put null items before undefined items", () => {});
     });
   });
 

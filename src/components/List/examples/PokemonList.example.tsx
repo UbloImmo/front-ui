@@ -6,6 +6,7 @@ import {
   ListFilterOptionBadge,
   ListFilterPresetCollection,
   ListSideHeader,
+  ListTableHeaderSort,
 } from "../components";
 import { ListContextProvider, useListConfig, useListContext } from "../context";
 import { List } from "../List.component";
@@ -37,7 +38,6 @@ import {
   TableBody,
   TableCell,
   TableHeader,
-  TableHeaderCell,
   TableRow,
 } from "@/layouts/Table";
 import {
@@ -219,8 +219,8 @@ const usePokemonListConfig = (
     async,
     configureSearchParams,
     search,
-    sort,
-    // sorts,
+    // sort,
+    sorts,
   } = useListConfig(pokemonDataProviders[dataProvider]);
 
   // make the list's options read the search params
@@ -228,8 +228,57 @@ const usePokemonListConfig = (
 
   // declare sorting order
   useStatic(() => {
-    sort("id", "asc", 1, { active: true });
-    sort("weight", "asc", 0, { active: true });
+    // sort("name", "desc", 2, { active: true });
+    // sort("weight", "asc", 1, { active: true });
+    // sort("types.0.type.name", ["water", "fire", "grass"], 0, {
+    //   active: true,
+    //   inverted: true,
+    // });
+    // sort("types.1.type.name", ["water", "fire", "grass"], 1, {
+    //   active: true,
+    //   inverted: true,
+    // });
+    // sort("weight", "asc", 2, {
+    //   active: true,
+    // });
+    sorts({
+      "types.0.type.name": {
+        order: ["water", "fire", "grass"],
+        label: "Type",
+        active: true,
+        inverted: true,
+        priority: 1,
+      },
+      "types.1.type.name": {
+        order: ["water", "fire", "grass"],
+        label: "Type",
+        active: true,
+        inverted: true,
+        priority: 1,
+      },
+      id: {
+        priority: 0,
+        active: true,
+        order: "asc",
+        icon: "number",
+      },
+      weight: {
+        order: "asc",
+        priority: 2,
+        icon: "number",
+        label: "Weight",
+        active: true,
+      },
+      name: {
+        priority: 3,
+        icon: "string",
+        label: "Pokemon name",
+        active: true,
+      },
+    });
+    // sort("id", "asc", 2, {
+    //   active: true,
+    // });
   });
 
   // declare name options once
@@ -270,7 +319,13 @@ const usePokemonListConfig = (
       return arrayOf(10, (index): ListConfigOptionLabeledValue => {
         const exp = index * 50;
         const label = `${exp} XP`;
-        return { label, value: exp, config: {} };
+        return {
+          label,
+          value: exp,
+          config: {
+            initial: false,
+          },
+        };
       });
     })
   );
@@ -303,6 +358,11 @@ const usePokemonListConfig = (
         label: "Psychic",
         value: "psychic",
         config: { color: "primary" },
+      },
+      {
+        label: "Ground",
+        value: "ground",
+        config: { color: "warning-dark" },
       },
       {
         label: "Ice",
@@ -366,7 +426,7 @@ const usePokemonListConfig = (
     const light = option("Light", match("weight", "<", 100), {
       color: "gray-200",
       icon: "Feather",
-      initial: true,
+      // initial: true,
     });
     const medium = option(
       "Medium",
@@ -374,7 +434,7 @@ const usePokemonListConfig = (
       {
         operator: "AND",
         color: "gray-400",
-        default: true,
+        // default: true,
       }
     );
     const all = [light, medium, heavy];
@@ -391,7 +451,7 @@ const usePokemonListConfig = (
   useStatic(() => {
     filter("Name", names.all, { multi: true });
     async.filter("Base Experience", baseExperiences, {
-      emptyFallback: "all",
+      // emptyFallback: "all",
     });
     filter("Type", types.all, {
       operator: BooleanOperators.OR,
@@ -458,18 +518,20 @@ const Renderer = () => {
       <audio ref={audioRef} src={audioUrl} />
       <Table layout="fixed">
         <TableHeader sticky top="s-2">
-          <TableHeaderCell>
-            <Text>Name</Text>
-          </TableHeaderCell>
-          <TableHeaderCell>
-            <Text>Id</Text>
-          </TableHeaderCell>
-          <TableHeaderCell>
-            <Text>Type</Text>
-          </TableHeaderCell>
-          <TableHeaderCell>
-            <Text>Weight</Text>
-          </TableHeaderCell>
+          <ListTableHeaderSort<Pokemon> property="name" fallbackLabel="Name" />
+          <ListTableHeaderSort<Pokemon>
+            property="id"
+            fallbackLabel="ID"
+            tooltip={{ content: "The pokemon's id" }}
+          />
+          <ListTableHeaderSort<Pokemon>
+            property="types.0.type.name"
+            fallbackLabel="Type"
+          />
+          <ListTableHeaderSort<Pokemon>
+            property="weight"
+            fallbackLabel="Weight"
+          />
         </TableHeader>
         <TableBody style="list">
           {data.map((pokemon) => (
@@ -588,10 +650,10 @@ export const PokemonListExample = ({
             <ListSideHeader title="Pokedex" />
             <SearchBox />
             <ListFilterCollection title="Attributes" />
+            <LoadingBar />
           </FlexLayout>
           <FlexLayout fill direction="column" gap="s-2">
             <ListFilterPresetCollection />
-            <LoadingBar />
             <Renderer />
             <NextPageButton />
           </FlexLayout>

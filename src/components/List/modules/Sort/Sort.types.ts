@@ -1,4 +1,5 @@
 import type { FilterProperty } from "../shared.types";
+import type { IconName } from "@/components/Icon";
 import type { NonEmptyArr } from "@types";
 import type {
   DeepValueOf,
@@ -81,6 +82,40 @@ export type SortConfig<
   priority?: number;
 };
 
+export type SortIconSet = "number" | "unknown" | "string";
+
+/**
+ * Icons used to represent a list {@link Sort}'s current state
+ */
+export type SortIcons = {
+  /**
+   * Icon shown when the Sort **is not** inverted
+   */
+  base: IconName;
+  /**
+   * Icon shown when the Sort **is**  inverted
+   */
+  inverted: IconName;
+};
+
+/**
+ * Visual data of a single list {@link Sort}
+ */
+export type SortVisualData = {
+  /**
+   * Defines which icon is is to be rendered when interacting with the Sort
+   *
+   * @default "unknown"
+   */
+  iconSet?: SortIconSet;
+  /**
+   * Used to display a tooltip when toggling filter activation
+   *
+   * @default null
+   */
+  label?: Nullable<string>;
+};
+
 /**
  * State of a single list {@link Sort}
  */
@@ -140,7 +175,8 @@ export type SortData<
   TItem extends object,
   TProperty extends FilterProperty<TItem>,
 > = Required<SortConfig<TItem, TProperty>> &
-  Required<SortState> & {
+  Required<SortState> &
+  Required<SortVisualData> & {
     /**
      * Default state of a list {@link Sort}
      */
@@ -170,14 +206,23 @@ export type Sort<
   };
 
 /**
+ * Subset of {@link Sort} containing only properties needed to actually perform the sorting operation
+ */
+export type SortPayload<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem>,
+> = Pick<
+  Sort<TItem, TProperty>,
+  "computedOrder" | "property" | "priority" | "prioritized"
+>;
+
+/**
  * A single value in a {@link SortDataEntriesInput} map.
  */
 export type SortDataEntryInput<
   TItem extends object,
   TProperty extends FilterProperty<TItem>,
-> = Omit<SortConfig<TItem, TProperty>, "property"> & {
-  defaultState?: SortState;
-};
+> = Omit<SortConfig<TItem, TProperty>, "property"> & SortState & SortVisualData;
 
 /**
  * Input object used for creating & registering multiple Sort data entries at once
@@ -193,6 +238,9 @@ export type SortDataEntries<TItem extends object> = {
   [TProperty in FilterProperty<TItem>]?: SortData<TItem, TProperty>;
 };
 
+/**
+ * Maps a sort data entries inputs subset object to its corresponding entries object
+ */
 export type SortDataEntriesFromInput<
   TItem extends object,
   TEntriesInput extends SortDataEntriesInput<TItem>,
@@ -237,7 +285,11 @@ export interface ISortMap<TItem extends object>
 export type ListConfigSortFnCompoundParams<
   TItem extends object,
   TProperty extends FilterProperty<TItem>,
-> = [sortConfig: SortConfig<TItem, TProperty>, defaultState?: SortState];
+> = [
+  sortConfig: SortConfig<TItem, TProperty>,
+  defaultState?: SortState,
+  visualData?: SortVisualData,
+];
 
 /**
  * Parameters shape of the sort function
@@ -251,6 +303,7 @@ export type ListConfigSortFnFlatParams<
   order?: SortOrder<TItem, TProperty>,
   priority?: number,
   defaultState?: SortState,
+  visualData?: SortVisualData,
 ];
 
 /**

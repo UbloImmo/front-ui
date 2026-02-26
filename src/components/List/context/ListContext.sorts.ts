@@ -1,5 +1,18 @@
-import { useEffect, useCallback, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useReducer,
+} from "react";
 
+import {
+  type MutateListSortFn,
+  type ListContextConfig,
+  type UseListSortsReturn,
+  GetListSortFn,
+} from "./ListContext.types";
 import { SortMap } from "../modules/Sort";
 import {
   isSortOrderBasic,
@@ -16,25 +29,32 @@ import type {
   SortOrder,
   SortOrderComplex,
 } from "../modules";
-import type {
-  MutateListSortFn,
-  ListContextConfig,
-  UseListSortsReturn,
-} from "./ListContext.types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
+/**
+ * A hook that manages the list context's sorting configuration and state.
+ * It stores and manipulates {@link Sort list sorts} and returns them along with manipulation functions.
+ *
+ * @template {object} TItem - The type of items in the list
+ * @param {Pick<ListContextConfig<TItem>, "sorts">} config - The list context configuration
+ * @returns {UseListSortsReturn<TItem>} List sorting context
+ */
 export function useListSorts<TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "sorts">
 ): UseListSortsReturn<TItem> {
   const logger = useLogger("ListContext.sorts");
 
-  const sortMap = useRef<SortMap<TItem>>(new SortMap<TItem>(config.sorts));
+  const sortMapRef = useRef<SortMap<TItem>>(new SortMap<TItem>(config.sorts));
+
+  const [sortMap, updateSortMap] = useReducer((_old: SortMap<TItem>) => {
+    return new SortMap<TItem>(sortMapRef.current);
+  }, sortMapRef.current);
 
   const initializeSortsFlagSet = useCallback(
     (flag: "active" | "inverted"): Set<FilterProperty<TItem>> => {
       const set = new Set<FilterProperty<TItem>>();
-      if (!sortMap.current.size) return set;
-      for (const [property, sort] of sortMap.current) {
+      if (!sortMapRef.current.size) return set;
+      for (const [property, sort] of sortMapRef.current) {
         if (sort[flag]) set.add(property);
       }
       return set;
@@ -52,109 +72,150 @@ export function useListSorts<TItem extends object>(
     useState<Nullable<FilterProperty<TItem>>>(null);
 
   /**
-   * Effect that synchronizes the internal {@link sortMap} ref with the provided {@link config} whenever the latter changes.
+   * Effect that synchronizes the internal {@link sortMapRef} ref with the provided {@link config} whenever the latter changes.
    * Discards removed and appends added sorts. Does not
    */
   useEffect(() => {
     if (!config.sorts) return;
-    if (config.sorts.size === sortMap.current.size) return;
+    if (config.sorts.size === sortMapRef.current.size) return;
     // merge properties
     const sortProperties = new Set<FilterProperty<TItem>>([
-      ...sortMap.current.keys(),
+      ...sortMapRef.current.keys(),
       ...config.sorts.keys(),
     ]);
+    let stateUpdateNeeded = false;
     for (const property of sortProperties) {
       // delete removed sorts
-      if (sortMap.current.has(property) && !config.sorts.has(property)) {
+      if (sortMapRef.current.has(property) && !config.sorts.has(property)) {
         invertedSortsSetRef.current.delete(property);
         activeSortsSetRef.current.delete(property);
         if (highlightedSortProperty === property)
           setHighlightedSortProperty(null);
-        sortMap.current.delete(property);
+        sortMapRef.current.delete(property);
+        stateUpdateNeeded = true;
         continue;
       }
       // add missing sorts
       const newOrUpdated = config.sorts.get(property);
-      if (!sortMap.current.has(property) && newOrUpdated) {
-        sortMap.current.set(property, newOrUpdated);
+      if (!sortMapRef.current.has(property) && newOrUpdated) {
+        sortMapRef.current.set(property, newOrUpdated);
         if (newOrUpdated.inverted) invertedSortsSetRef.current.add(property);
         if (newOrUpdated.active) activeSortsSetRef.current.add(property);
+        stateUpdateNeeded = true;
         continue;
       }
       // update while keeping current active & inverted states
-      const previous = sortMap.current.get(property);
+      const previous = sortMapRef.current.get(property);
       if (previous && newOrUpdated) {
         const merged: typeof previous = {
           ...newOrUpdated,
           active: previous.active,
           inverted: previous.inverted,
         };
-        sortMap.current.set(property, merged);
+        sortMapRef.current.set(property, merged);
+        stateUpdateNeeded = true;
       }
+    }
+    if (stateUpdateNeeded) {
+      updateSortMap();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.sorts]);
 
+  /**
+   * Finds a Sort by its property and sets its `active` property to `true` if it isn't already.
+   *
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {TProperty} property - The property to reference the {@link Sort} by
+   */
   const activateSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMap.current.get(property);
+      const sort = sortMapRef.current.get(property);
       if (!sort) return;
       activeSortsSetRef.current.add(property);
       // only mutate sort if needed
       if (sort.active) return;
-      sortMap.current.set(property, { ...sort, active: true });
+      sortMapRef.current.set(property, { ...sort, active: true });
+      updateSortMap();
       // update highlight
       setHighlightedSortProperty(property);
     },
     []
   );
 
+  /**
+   * Finds a Sort by its property and sets its `active` property to `false` if it isn't already.
+   *
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {TProperty} property - The property to reference the {@link Sort} by
+   */
   const deactivateSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMap.current.get(property);
+      const sort = sortMapRef.current.get(property);
       if (!sort) return;
       activeSortsSetRef.current.delete(property);
       // only mutate sort if needed
       if (!sort.active) return;
-      sortMap.current.set(property, { ...sort, active: false });
+      sortMapRef.current.set(property, { ...sort, active: false });
+      updateSortMap();
       // update highlight
       setHighlightedSortProperty(null);
     },
     []
   );
 
+  /**
+   * Finds a Sort by its property and toggles its `active` property.
+   *
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {TProperty} property - The property to reference the {@link Sort} by
+   */
   const toggleSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMap.current.get(property);
+      const sort = sortMapRef.current.get(property);
       if (!sort) return;
       // toggle state & update set
       const wasActive = !sort.active;
       activeSortsSetRef.current[sort.active ? "delete" : "add"](property);
       // always mutate sort in map
-      sortMap.current.set(property, { ...sort, active: !wasActive });
+      sortMapRef.current.set(property, { ...sort, active: !wasActive });
+      updateSortMap();
       // update highlight
       setHighlightedSortProperty(wasActive ? null : property);
     },
     []
   );
 
+  /**
+   * Finds a Sort by its property and toggles its `inverted` property.
+   *
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {TProperty} property - The property to reference the {@link Sort} by
+   */
   const invertSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMap.current.get(property);
+      const sort = sortMapRef.current.get(property);
       if (!sort) return;
       // toggle state & update set
       invertedSortsSetRef.current[sort.inverted ? "delete" : "add"](property);
       // always mutate sort in map
-      sortMap.current.set(property, { ...sort, inverted: !sort.inverted });
+      sortMapRef.current.set(property, { ...sort, inverted: !sort.inverted });
+      updateSortMap();
       // update highlight
       if (sort.active) setHighlightedSortProperty(property);
     },
     []
   );
 
+  /**
+   * Finds a Sort by its property and resets its `active` & `inverted` properties to their initially defined state.
+   *
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {TProperty} property - The property to reference the {@link Sort} by
+   */
   const resetSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMap.current.get(property);
+      const sort = sortMapRef.current.get(property);
       if (!sort) return;
 
       // abort if state matches default state
@@ -172,29 +233,44 @@ export function useListSorts<TItem extends object>(
         property
       );
       // mutate sort in map
-      sortMap.current.set(property, {
+      sortMapRef.current.set(property, {
         ...sort,
         ...sort.defaultState,
       });
+      updateSortMap();
 
       if (sort.defaultState.active) setHighlightedSortProperty(property);
     },
     []
   );
 
+  /**
+   * Finds a Sort by its property and marks it as prioritized, to be used a the primary Sort among other active Sorts
+   *
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {TProperty} property - The property to reference the {@link Sort} by
+   */
   const prioritizeSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      if (!sortMap.current.has(property)) return;
+      if (!sortMapRef.current.has(property)) return;
       setHighlightedSortProperty(property);
     },
     []
   );
 
+  /**
+   * Internal guard higher order function that only executes its callback with the provided property if the Sort it points to is currently active
+   *
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {VoidFn<[TProperty]>} callbackFn - The callback function to execute only the Sort is active
+   * @param {TProperty} property - The property to reference the {@link Sort} by
+   * @returns {VoidFn} Guarded callback function
+   */
   const sortActiveGuard = useCallback(
     <TProperty extends FilterProperty<TItem>>(
       callbackFn: VoidFn<[TProperty]>,
       property: TProperty
-    ) =>
+    ): VoidFn =>
       () => {
         if (!activeSortsSetRef.current.has(property)) {
           logger.warn(
@@ -204,23 +280,42 @@ export function useListSorts<TItem extends object>(
         }
         callbackFn(property);
       },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
+  /**
+   * Derives a {@link Sort}'s `computedOrder` property from its underlying {@link SortData}'s `order` and `inverted` properties and returns it.
+   *
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {SortData<TItem, TProperty>} sortData - The underlying sort data
+   * @returns {SortOrder<TItem, TProperty>} The {@link Sort}'s computed order
+   */
   const computeSortOrder = useCallback(
     <TProperty extends FilterProperty<TItem>>(
-      sort: SortData<TItem, TProperty>
+      sortData: SortData<TItem, TProperty>
     ): SortOrder<TItem, TProperty> => {
-      if (!sort.inverted) return sort.order;
+      if (!sortData.inverted) return sortData.order;
       // invert basic sort order
-      if (isSortOrderBasic(sort.order))
-        return SORT_ORDER_BASIC_INVERT_MAP[sort.order];
+      if (isSortOrderBasic(sortData.order))
+        return SORT_ORDER_BASIC_INVERT_MAP[sortData.order];
       // invert complex sort order;
-      return [...sort.order].reverse() as SortOrderComplex<TItem, TProperty>;
+      return [...sortData.order].reverse() as SortOrderComplex<
+        TItem,
+        TProperty
+      >;
     },
     []
   );
 
+  /**
+   * Transforms a {@link SortData} object into a {@link Sort} object,
+   * computing and appending its `computedOrder`, `prioritized` and `priority` along with mutation callbacks.
+   *
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {SortData<TItem, TProperty>} sortData - The source {@link SortData}
+   * @returns {Sort<TItem, TProperty>} The hydrated {@link Sort}
+   */
   const hydrateSort = useCallback(
     <TProperty extends FilterProperty<TItem>>(
       sortData: SortData<TItem, TProperty>
@@ -257,15 +352,32 @@ export function useListSorts<TItem extends object>(
   );
 
   /**
+   * Finds a sort by its property, hydrates and returns it if found
+   * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
+   * @param {TProperty} property - The property to reference the {@link Sort} by
+   * @returns {Nullable<Sort<TItem, TProperty>>} The found, hydrated {@link Sort}, or null if not found
+   */
+  const getSort = useCallback<GetListSortFn<TItem>>(
+    <TProperty extends FilterProperty<TItem>>(
+      property: TProperty
+    ): Nullable<Sort<TItem, TProperty>> => {
+      const data = sortMap.get(property);
+      if (!data) return null;
+      return hydrateSort(data);
+    },
+    [hydrateSort, sortMap]
+  );
+
+  /**
    * Hydrated list Sort objects sorted in priority order
    */
   const sorts = useMemo<Sort<TItem, FilterProperty<TItem>>[]>(() => {
     const hydrated: Sort<TItem, FilterProperty<TItem>>[] = [];
-    for (const [, sortData] of sortMap.current) {
+    for (const [, sortData] of sortMap) {
       hydrated.push(hydrateSort(sortData));
     }
     return hydrated.sort((a, b) => a.priority - b.priority);
-  }, [hydrateSort]);
+  }, [hydrateSort, sortMap]);
 
   /**
    * Subset of {@link sorts} containing only active sorts
@@ -276,7 +388,7 @@ export function useListSorts<TItem extends object>(
   }, [sorts]);
 
   return {
-    sortMap: sortMap.current,
+    sortMap,
     sorts,
     activeSorts,
     activateSort,
@@ -285,5 +397,6 @@ export function useListSorts<TItem extends object>(
     invertSort,
     resetSort,
     toggleSort,
+    getSort,
   };
 }

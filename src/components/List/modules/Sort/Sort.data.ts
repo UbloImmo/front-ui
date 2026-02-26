@@ -10,6 +10,7 @@ import type {
   SortConfig,
   SortData,
   SortState,
+  SortVisualData,
 } from "./Sort.types";
 
 /**
@@ -28,6 +29,7 @@ export function sortData<
 ): SortData<TItem, TProperty> {
   let config: Required<SortConfig<TItem, TProperty>>;
   let state: Required<SortState>;
+  let visualData: Required<SortVisualData>;
 
   if (!params.length) throw new Error("Missing first required parameter");
 
@@ -39,14 +41,24 @@ export function sortData<
     config = { property, order, priority };
     const { active = false, inverted = false } = params[1] ?? {};
     state = { active, inverted };
+    const { iconSet = "unknown", label = null } = params[2] ?? {};
+    visualData = { iconSet, label };
   } else {
-    const [property, order = "asc", priority = 0, defaultState = {}] = params;
+    const [
+      property,
+      order = "asc",
+      priority = 0,
+      defaultState = {},
+      visual = {},
+    ] = params;
     if (!isString(property) && !isNumber(property))
       throw new Error("Malformed property");
 
     config = { property, order, priority };
     const { active = false, inverted = false } = defaultState;
     state = { active, inverted };
+    const { iconSet = "unknown", label = null } = visual;
+    visualData = { iconSet, label };
   }
   // clamp priority if needed
   if (isNegative(config.priority)) {
@@ -59,6 +71,7 @@ export function sortData<
   return {
     ...config,
     ...state,
+    ...visualData,
     defaultState: Object.freeze({ ...state }),
     defaultPriority: config.priority,
   };

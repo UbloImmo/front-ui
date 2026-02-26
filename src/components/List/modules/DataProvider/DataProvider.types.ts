@@ -1,4 +1,4 @@
-import { Sort } from "../Sort";
+import { Sort, SortPayload } from "../Sort";
 
 import type { Filter } from "../Filter/Filter.types";
 import type { FilterOptionData } from "../FilterOption/FilterOption.types";
@@ -119,12 +119,13 @@ export type DataProviderFilterFnConfig<TItem extends object> =
      *
      * @remarks
      * Always gets sent to the data provider, regardless of the sorting configuration shape.
-     * The order of the {@link Sort} objects in the array matters. Sorts are ordered based on priority, and should be applied as such by the Data provider
+     * The order of the {@link SortPayload} objects in the array matters.
+     * Sorts are ordered based on priority, and should be applied as such by the Data provider
      *
-     * @type {Nullable<Sort<TItem, FilterProperty<TItem>>[]>};
+     * @type {Nullable<SortPayload<TItem, FilterProperty<TItem>>[]>};
      * @default null
      */
-    activeSorts: Nullable<Sort<TItem, FilterProperty<TItem>>[]>;
+    activeSorts: Nullable<SortPayload<TItem, FilterProperty<TItem>>[]>;
     /**
      * The search configuration to apply to the items
      *

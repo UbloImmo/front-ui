@@ -38,6 +38,10 @@ const actionTranslationKeys = [
   "giveUp",
   "filterBy",
   "typeToSearch",
+  "sort",
+  "sortBy",
+  "invertSortingOrder",
+  "invertSortingOrder",
 ] as const;
 
 const validationTranslationKeys = [

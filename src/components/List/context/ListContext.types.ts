@@ -624,6 +624,12 @@ export interface MutateListSortFn<TItem extends object> {
   <TProperty extends FilterProperty<TItem>>(property: TProperty): void;
 }
 
+export interface GetListSortFn<TItem extends object> {
+  <TProperty extends FilterProperty<TItem>>(
+    property: TProperty
+  ): Nullable<Sort<TItem, TProperty>>;
+}
+
 export type UseListSortsReturn<TItem extends object> = {
   sortMap: SortMap<TItem>;
   sorts: Sort<TItem, FilterProperty<TItem>>[];
@@ -634,6 +640,7 @@ export type UseListSortsReturn<TItem extends object> = {
   toggleSort: MutateListSortFn<TItem>;
   invertSort: MutateListSortFn<TItem>;
   resetSort: MutateListSortFn<TItem>;
+  getSort: GetListSortFn<TItem>;
 };
 
 // LIST CONTEXT ---------------------------------------------------------------------------------

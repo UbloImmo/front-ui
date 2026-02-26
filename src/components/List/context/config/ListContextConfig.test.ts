@@ -622,7 +622,7 @@ const testListConfig = () => {
         state: {
           order: ["pending", "active", "inactive", "archived"],
           priority: 2,
-          defaultState: { active: true },
+          active: true,
         },
         value2: { order: "asc2" },
       });
@@ -648,7 +648,7 @@ const testListConfig = () => {
         state: {
           order: ["pending", "active", "inactive", "archived"],
           priority: 2,
-          defaultState: { active: true },
+          active: true,
         },
       });
       expect(sorts).toBeObject();

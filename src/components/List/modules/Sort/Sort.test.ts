@@ -7,6 +7,7 @@ import {
   SortOrderBasic,
   SortOrderComplex,
   SortState,
+  SortVisualData,
 } from "./Sort.types";
 import { isListConfigSortFnCompoundParams } from "./Sort.utils";
 
@@ -32,6 +33,8 @@ const defaults: SortData<MockData, "enumNullish"> = {
     inverted: false,
   },
   defaultPriority: 0,
+  iconSet: "unknown",
+  label: null,
 };
 
 describe("Sort module", () => {
@@ -316,6 +319,44 @@ describe("Sort module", () => {
             order,
             priority,
             state
+          )
+        ).toEqual(overridden);
+      });
+      it("should accept visual data", () => {
+        const order: SortOrderBasic = "desc";
+        const priority = 45;
+        const state: SortState = { active: true, inverted: true };
+        const visualData: SortVisualData = {
+          label: "Sorting label",
+          iconSet: "number",
+        };
+        const overridden = {
+          ...defaults,
+          order,
+          priority,
+          ...state,
+          ...visualData,
+          defaultState: { ...defaults.defaultState, ...state },
+          defaultPriority: priority,
+        };
+        expect(
+          sortData<MockData, "enumNullish">(
+            {
+              property: "enumNullish",
+              order,
+              priority,
+            },
+            state,
+            visualData
+          )
+        ).toEqual(overridden);
+        expect(
+          sortData<MockData, "enumNullish">(
+            "enumNullish",
+            order,
+            priority,
+            state,
+            visualData
           )
         ).toEqual(overridden);
       });
