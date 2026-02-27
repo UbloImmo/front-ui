@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-  useReducer,
-} from "react";
+import { useEffect, useCallback, useMemo, useRef, useState } from "react";
 
 import {
   type MutateListSortFn,
@@ -20,7 +13,7 @@ import {
   SORT_HIGHLIGHTED_PRIORITY,
 } from "../modules/Sort/Sort.utils";
 
-import { useLogger } from "@utils";
+import { useLogger, useMap } from "@utils";
 
 import type {
   FilterProperty,
@@ -44,22 +37,18 @@ export function useListSorts<TItem extends object>(
 ): UseListSortsReturn<TItem> {
   const logger = useLogger("ListContext.sorts");
 
-  const sortMapRef = useRef<SortMap<TItem>>(new SortMap<TItem>(config.sorts));
-
-  const [sortMap, updateSortMap] = useReducer((_old: SortMap<TItem>) => {
-    return new SortMap<TItem>(sortMapRef.current);
-  }, sortMapRef.current);
+  const sortMap = useMap(SortMap<TItem>, { autoCommitMutations: false });
 
   const initializeSortsFlagSet = useCallback(
     (flag: "active" | "inverted"): Set<FilterProperty<TItem>> => {
       const set = new Set<FilterProperty<TItem>>();
-      if (!sortMapRef.current.size) return set;
-      for (const [property, sort] of sortMapRef.current) {
+      if (!sortMap.size) return set;
+      for (const [property, sort] of sortMap) {
         if (sort[flag]) set.add(property);
       }
       return set;
     },
-    []
+    [sortMap]
   );
 
   const activeSortsSetRef = useRef<Set<FilterProperty<TItem>>>(
@@ -77,47 +66,47 @@ export function useListSorts<TItem extends object>(
    */
   useEffect(() => {
     if (!config.sorts) return;
-    if (config.sorts.size === sortMapRef.current.size) return;
+    if (config.sorts.size === sortMap.size) return;
     // merge properties
     const sortProperties = new Set<FilterProperty<TItem>>([
-      ...sortMapRef.current.keys(),
+      ...sortMap.keys(),
       ...config.sorts.keys(),
     ]);
     let stateUpdateNeeded = false;
     for (const property of sortProperties) {
       // delete removed sorts
-      if (sortMapRef.current.has(property) && !config.sorts.has(property)) {
+      if (sortMap.has(property) && !config.sorts.has(property)) {
         invertedSortsSetRef.current.delete(property);
         activeSortsSetRef.current.delete(property);
         if (highlightedSortProperty === property)
           setHighlightedSortProperty(null);
-        sortMapRef.current.delete(property);
+        sortMap.delete(property);
         stateUpdateNeeded = true;
         continue;
       }
       // add missing sorts
       const newOrUpdated = config.sorts.get(property);
-      if (!sortMapRef.current.has(property) && newOrUpdated) {
-        sortMapRef.current.set(property, newOrUpdated);
+      if (!sortMap.has(property) && newOrUpdated) {
+        sortMap.set(property, newOrUpdated);
         if (newOrUpdated.inverted) invertedSortsSetRef.current.add(property);
         if (newOrUpdated.active) activeSortsSetRef.current.add(property);
         stateUpdateNeeded = true;
         continue;
       }
       // update while keeping current active & inverted states
-      const previous = sortMapRef.current.get(property);
+      const previous = sortMap.get(property);
       if (previous && newOrUpdated) {
         const merged: typeof previous = {
           ...newOrUpdated,
           active: previous.active,
           inverted: previous.inverted,
         };
-        sortMapRef.current.set(property, merged);
+        sortMap.set(property, merged);
         stateUpdateNeeded = true;
       }
     }
     if (stateUpdateNeeded) {
-      updateSortMap();
+      sortMap.commit();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.sorts]);
@@ -130,16 +119,17 @@ export function useListSorts<TItem extends object>(
    */
   const activateSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMapRef.current.get(property);
+      const sort = sortMap.get(property);
       if (!sort) return;
       activeSortsSetRef.current.add(property);
       // only mutate sort if needed
       if (sort.active) return;
-      sortMapRef.current.set(property, { ...sort, active: true });
-      updateSortMap();
+      sortMap.set(property, { ...sort, active: true });
+      sortMap.commit();
       // update highlight
       setHighlightedSortProperty(property);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -151,16 +141,17 @@ export function useListSorts<TItem extends object>(
    */
   const deactivateSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMapRef.current.get(property);
+      const sort = sortMap.get(property);
       if (!sort) return;
       activeSortsSetRef.current.delete(property);
       // only mutate sort if needed
       if (!sort.active) return;
-      sortMapRef.current.set(property, { ...sort, active: false });
-      updateSortMap();
+      sortMap.set(property, { ...sort, active: false });
+      sortMap.commit();
       // update highlight
       setHighlightedSortProperty(null);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -172,17 +163,18 @@ export function useListSorts<TItem extends object>(
    */
   const toggleSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMapRef.current.get(property);
+      const sort = sortMap.get(property);
       if (!sort) return;
       // toggle state & update set
       const wasActive = !sort.active;
       activeSortsSetRef.current[sort.active ? "delete" : "add"](property);
       // always mutate sort in map
-      sortMapRef.current.set(property, { ...sort, active: !wasActive });
-      updateSortMap();
+      sortMap.set(property, { ...sort, active: !wasActive });
+      sortMap.commit();
       // update highlight
       setHighlightedSortProperty(wasActive ? null : property);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -194,16 +186,17 @@ export function useListSorts<TItem extends object>(
    */
   const invertSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMapRef.current.get(property);
+      const sort = sortMap.get(property);
       if (!sort) return;
       // toggle state & update set
       invertedSortsSetRef.current[sort.inverted ? "delete" : "add"](property);
       // always mutate sort in map
-      sortMapRef.current.set(property, { ...sort, inverted: !sort.inverted });
-      updateSortMap();
+      sortMap.set(property, { ...sort, inverted: !sort.inverted });
+      sortMap.commit();
       // update highlight
       if (sort.active) setHighlightedSortProperty(property);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -215,7 +208,7 @@ export function useListSorts<TItem extends object>(
    */
   const resetSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      const sort = sortMapRef.current.get(property);
+      const sort = sortMap.get(property);
       if (!sort) return;
 
       // abort if state matches default state
@@ -233,14 +226,15 @@ export function useListSorts<TItem extends object>(
         property
       );
       // mutate sort in map
-      sortMapRef.current.set(property, {
+      sortMap.set(property, {
         ...sort,
         ...sort.defaultState,
       });
-      updateSortMap();
+      sortMap.commit();
 
       if (sort.defaultState.active) setHighlightedSortProperty(property);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -252,9 +246,10 @@ export function useListSorts<TItem extends object>(
    */
   const prioritizeSort = useCallback<MutateListSortFn<TItem>>(
     <TProperty extends FilterProperty<TItem>>(property: TProperty) => {
-      if (!sortMapRef.current.has(property)) return;
+      if (!sortMap.has(property)) return;
       setHighlightedSortProperty(property);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -388,7 +383,7 @@ export function useListSorts<TItem extends object>(
   }, [sorts]);
 
   return {
-    sortMap,
+    sortMap: sortMap,
     sorts,
     activeSorts,
     activateSort,

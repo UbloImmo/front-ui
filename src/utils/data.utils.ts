@@ -8,7 +8,14 @@ import {
   isBoolean,
 } from "@ubloimmo/front-util";
 import { debounce } from "lodash";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 
 import { useMounted } from "./component.utils";
 
@@ -396,4 +403,96 @@ export function useDebounceValue<TValue>(
   }
 
   return [debouncedValue, updateDebouncedValue];
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface MapConstructorLike<TKey, TValue, TMap extends Map<TKey, TValue>> {
+  new (): TMap;
+  new (entries?: readonly (readonly [TKey, TValue])[] | null): TMap;
+  new (iterable?: Iterable<readonly [TKey, TValue]> | null): TMap;
+}
+
+interface UseMapOptions {
+  /**
+   * Whether to cause a re-render upon map clear, set, delete
+   */
+  autoCommitMutations?: boolean;
+}
+
+export function useMap<TKey, TValue, TMap extends Map<TKey, TValue>>(
+  MapConstructor: MapConstructorLike<TKey, TValue, TMap>,
+  { autoCommitMutations = true }: UseMapOptions = {}
+) {
+  const mapRef = useRef<TMap>(new MapConstructor());
+  const [map, commit] = useReducer(
+    (_: TMap): TMap => new MapConstructor(mapRef.current),
+    mapRef.current
+  );
+
+  const set = useCallback<TMap["set"]>(
+    (...args) => {
+      const result = mapRef.current.set(...args);
+      if (autoCommitMutations) commit();
+      return result;
+    },
+    [autoCommitMutations]
+  );
+
+  const get = useCallback<TMap["get"]>((...args) => map.get(...args), [map]);
+
+  const clear = useCallback<TMap["clear"]>(
+    (...args) => {
+      mapRef.current.clear(...args);
+      if (autoCommitMutations) commit();
+    },
+    [autoCommitMutations]
+  );
+
+  const del = useCallback<TMap["delete"]>(
+    (...args) => {
+      const deleted = mapRef.current.delete(...args);
+      if (deleted && autoCommitMutations) commit();
+      return deleted;
+    },
+    [autoCommitMutations]
+  );
+
+  const forEach = useCallback<TMap["forEach"]>(
+    (...args) => map.forEach(...args),
+    [map]
+  );
+
+  const has = useCallback<TMap["has"]>((...args) => map.has(...args), [map]);
+
+  const entries = useCallback<TMap["entries"]>(
+    (...args) => map.entries(...args),
+    [map]
+  );
+
+  const keys = useCallback<TMap["keys"]>((...args) => map.keys(...args), [map]);
+
+  const values = useCallback<TMap["values"]>(
+    (...args) => map.values(...args),
+    [map]
+  );
+
+  return {
+    ...map,
+    [Symbol.iterator]() {
+      return map[Symbol.iterator]();
+    },
+    set,
+    get,
+    clear,
+    delete: del,
+    forEach,
+    has,
+    get size(): TMap["size"] {
+      return mapRef.current.size;
+    },
+    entries,
+    keys,
+    values,
+    commit,
+  };
 }
