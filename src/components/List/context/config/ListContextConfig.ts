@@ -348,7 +348,8 @@ export const useListConfig: UseListConfig = <
         const property = key as unknown as FilterProperty<TItem>;
         const entryInput = inputs[property];
         if (!entryInput) continue;
-        const { order, priority, active, inverted, icon, label } = entryInput;
+        const { order, priority, active, inverted, iconSet, label } =
+          entryInput;
         entries[property] = sortData(
           property,
           order,
