@@ -6,6 +6,7 @@ import {
   type Nullable,
   type NullishPrimitives,
   isBoolean,
+  type Nullish,
 } from "@ubloimmo/front-util";
 import { debounce } from "lodash";
 import {
@@ -412,18 +413,22 @@ interface MapConstructorLike<TKey, TValue, TMap extends Map<TKey, TValue>> {
   new (iterable?: Iterable<readonly [TKey, TValue]> | null): TMap;
 }
 
-interface UseMapOptions {
+interface UseMapOptions<TKey, TValue, TMap extends Map<TKey, TValue>> {
   /**
    * Whether to cause a re-render upon map clear, set, delete
    */
   autoCommitMutations?: boolean;
+  initialValue?: Nullish<TMap>;
 }
 
 export function useMap<TKey, TValue, TMap extends Map<TKey, TValue>>(
   MapConstructor: MapConstructorLike<TKey, TValue, TMap>,
-  { autoCommitMutations = true }: UseMapOptions = {}
+  {
+    autoCommitMutations = true,
+    initialValue,
+  }: UseMapOptions<TKey, TValue, TMap> = {}
 ) {
-  const mapRef = useRef<TMap>(new MapConstructor());
+  const mapRef = useRef<TMap>(initialValue ?? new MapConstructor());
   const [map, commit] = useReducer(
     (_: TMap): TMap => new MapConstructor(mapRef.current),
     mapRef.current
