@@ -52,7 +52,6 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
 
   /**
    * A ref that holds the last filter config
-   * @type {React.MutableRefObject<DataProviderFilterFnConfig<TItem>>}
    * @remarks Used to keep the same filters when fetching the next page
    */
   const lastFilterConfig = useRef<DataProviderFilterFnConfig<TItem>>(
@@ -61,7 +60,6 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
 
   /**
    * A ref that holds the last filter config, stringified
-   * @type {React.MutableRefObject<Nullable<string>>}
    * @remarks Used to check if the filters have changed and reset the page accordingly
    */
   const lastFilterConfigSignature = useRef<Nullable<string>>(
@@ -70,33 +68,31 @@ export const usePaginatedDataProvider: UsePaginatedDataProviderFn = <
 
   /**
    * Ref holding accumulated data across pagination
-   * @type {React.MutableRefObject<TItem[]>}
    */
   const accumulatedDataRef = useRef<TItem[]>([]);
 
   /**
    * Ref holding pagination cursor
-   * @type {React.MutableRefObject<PaginationAfter>}
    */
   const afterRef = useRef<PaginationAfter>(null);
 
   /**
    * State indicating if there are more pages to load
-   * @type {boolean}
    */
   const [hasNextPage, setHasNextPage] = useState(false);
 
   /**
    * Internal state holding current page data
-   * @type {TItem[]}
    */
   const [internalData, setInternalData] = useState<TItem[]>([]);
 
   /**
    * Memoized page size clamped between 1 and Infinity
-   * @type {number}
    */
-  const safePageSize = useMemo(() => clamp(pageSize, 1, Infinity), [pageSize]);
+  const safePageSize = useMemo<number>(
+    () => clamp(pageSize, 1, Infinity),
+    [pageSize]
+  );
 
   /**
    * Fetches a page of data with the given filter config
