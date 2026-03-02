@@ -355,7 +355,7 @@ export const useListConfig: UseListConfig = <
           priority,
           { active, inverted },
           {
-            icon,
+            iconSet,
             label,
           }
         );
