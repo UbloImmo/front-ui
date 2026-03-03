@@ -42,6 +42,9 @@ export function useListSorts<TItem extends object>(
 ): UseListSortsReturn<TItem> {
   const logger = useLogger("ListContext.sorts");
 
+  /**
+   * Initializes a set holding properties pointing to sorts that have the provided flag set to true
+   */
   const initializeSortsFlagSet = useCallback(
     (flag: "active" | "inverted"): Set<FilterProperty<TItem>> => {
       const set = new Set<FilterProperty<TItem>>();
@@ -63,7 +66,9 @@ export function useListSorts<TItem extends object>(
   const [highlightedSortProperty, setHighlightedSortProperty] =
     useState<Nullable<FilterProperty<TItem>>>(null);
 
-  // update while keeping current active & inverted states
+  /**
+   * Updates internal sorts while keeping their current active & inverted state
+   */
   const sortMapReactiveUpdate = useCallback<
     UseMapReactiveUpdateFn<
       FilterProperty<TItem>,
@@ -78,6 +83,9 @@ export function useListSorts<TItem extends object>(
     []
   );
 
+  /**
+   * Automatically adds active & inverted sorts to sets if reactively added
+   */
   const sortMapOnReactiveAdd = useCallback<
     UseMapOnReactiveAddFn<
       FilterProperty<TItem>,
@@ -88,6 +96,9 @@ export function useListSorts<TItem extends object>(
     if (addedSort.inverted) invertedSortsSetRef.current.add(addedProperty);
   }, []);
 
+  /**
+   * Makes sure inverted & active sets are cleaned
+   */
   const sortMapOnReactiveDelete = useCallback<
     UseMapOnReactiveDeleteFn<FilterProperty<TItem>>
   >(
@@ -100,6 +111,9 @@ export function useListSorts<TItem extends object>(
     [highlightedSortProperty]
   );
 
+  /**
+   * Reactive maps holding each sort data and their state
+   */
   const sortMap = useMap(SortMap<TItem>, {
     autoCommitMutations: false,
     initialValue: config.sorts,
