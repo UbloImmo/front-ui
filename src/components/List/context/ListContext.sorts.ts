@@ -251,7 +251,7 @@ export function useListSorts<TItem extends object>(
   );
 
   /**
-   * Finds a Sort by its property and marks it as prioritized, to be used a the primary Sort among other active Sorts
+   * Finds a Sort by its property and marks it as prioritized, to be used as the primary Sort among other active Sorts
    *
    * @template {FilterProperty<TItem>} TProperty - Type of the sort's property
    * @param {TProperty} property - The property to reference the {@link Sort} by
