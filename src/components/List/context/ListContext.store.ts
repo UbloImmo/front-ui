@@ -102,7 +102,6 @@ export const useListContextStore = <
     const shouldClear = filters.filters.some(
       ({ active, noResultsIfInactive }) => !active && noResultsIfInactive
     );
-    console.log("queries data provider");
     if (shouldClear) {
       // call the data provider's clear method instead of setting data to []
       // to reset any internal states if needed (e.g. pagination cursor)
