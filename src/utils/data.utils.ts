@@ -433,9 +433,7 @@ export const useMap: UseMap = <
       }
     }
     // trigger a single re-render if needed
-    console.log(mapCommitNeeded);
     if (!mapCommitNeeded) return;
-    console.log(`useMap (${MapConstructor}): reactive commit`);
     commit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reactiveValue]);
