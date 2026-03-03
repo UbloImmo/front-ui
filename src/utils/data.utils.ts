@@ -6,7 +6,6 @@ import {
   type Nullable,
   type NullishPrimitives,
   isBoolean,
-  type Nullish,
 } from "@ubloimmo/front-util";
 import { debounce } from "lodash";
 import {
@@ -18,55 +17,23 @@ import {
   useState,
 } from "react";
 
+import { compare, isDefined } from "./comparison.utils";
 import { useMounted } from "./component.utils";
 
 import type {
   DebouncedState,
   UseDebounceValueOptions,
   UseDebounceOptions,
+  UseAsyncData,
+  UseAsyncDataOptions,
+  UseAsyncDataReturn,
+  UseAsyncDataState,
+  UseAsyncDataLoadFn,
+  MapConstructorLike,
+  UseMapOptions,
+  UseMap,
+  UseMapReturn,
 } from "@/types";
-
-type UseAsyncDataOnSuccessFn<TData extends NullishPrimitives> = MaybeAsyncFn<
-  [TData]
->;
-
-type UseAsyncDataOnErrorFn = MaybeAsyncFn<[Error]>;
-
-type UseAsyncDataOptions<
-  TData extends NullishPrimitives,
-  TDataParams extends unknown[] = [],
-> = {
-  defaultValue?: TData;
-  onSuccess?: UseAsyncDataOnSuccessFn<TData>;
-  onError?: UseAsyncDataOnErrorFn;
-  params?: TDataParams;
-  /**
-   * Whether to trigger a fetch on mount
-   *
-   * @default true
-   */
-  initialFetch?: boolean;
-};
-
-type UseAsyncDataState<TData extends NullishPrimitives> = {
-  data: Optional<TData>;
-  isLoading: boolean;
-  error: Nullable<Error>;
-};
-
-type UseAsyncDataLoadFn<
-  TData extends NullishPrimitives,
-  TDataParams extends unknown[] = [],
-> = (
-  options?: Optional<UseAsyncDataOptions<TData, TDataParams>>
-) => Promise<UseAsyncDataState<TData>>;
-
-type UseAsyncDataReturn<
-  TData extends NullishPrimitives,
-  TDataParams extends unknown[] = [],
-> = UseAsyncDataState<TData> & {
-  refetch: UseAsyncDataLoadFn<TData, TDataParams>;
-};
 
 /**
  * A custom React hook for handling asynchronous data loading.
@@ -82,7 +49,7 @@ type UseAsyncDataReturn<
  *   @property {Nullable<Error>} error - Any error that occurred during data loading, or null if no error.
  *   @property {AsyncFn<[], UseAsyncDataState<TData>>} refetch - A function to manually trigger a reload of the data.
  */
-export const useAsyncData = <
+export const useAsyncData: UseAsyncData = <
   TData extends NullishPrimitives,
   TDataParams extends unknown[] = [],
 >(
@@ -406,33 +373,72 @@ export function useDebounceValue<TValue>(
   return [debouncedValue, updateDebouncedValue];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface MapConstructorLike<TKey, TValue, TMap extends Map<TKey, TValue>> {
-  new (): TMap;
-  new (entries?: readonly (readonly [TKey, TValue])[] | null): TMap;
-  new (iterable?: Iterable<readonly [TKey, TValue]> | null): TMap;
-}
-
-interface UseMapOptions<TKey, TValue, TMap extends Map<TKey, TValue>> {
-  /**
-   * Whether to cause a re-render upon map clear, set, delete
-   */
-  autoCommitMutations?: boolean;
-  initialValue?: Nullish<TMap>;
-}
-
-export function useMap<TKey, TValue, TMap extends Map<TKey, TValue>>(
+/**
+ * Custom hook that returns a single Map object and hijacks its mutation methods to cause re-renders
+ */
+export const useMap: UseMap = <
+  TKey,
+  TValue,
+  TMap extends Map<TKey, TValue> = Map<TKey, TValue>,
+>(
   MapConstructor: MapConstructorLike<TKey, TValue, TMap>,
   {
     autoCommitMutations = true,
     initialValue,
-  }: UseMapOptions<TKey, TValue, TMap> = {}
-) {
-  const mapRef = useRef<TMap>(initialValue ?? new MapConstructor());
+    reactiveValue,
+    reactiveUpdate = (newValue) => newValue,
+    onReactiveDelete,
+    onReactiveAdd,
+  }: NoInfer<UseMapOptions<TKey, TValue, TMap>> = {}
+): UseMapReturn<TMap> => {
+  const mapRef = useRef<TMap>(
+    initialValue ?? reactiveValue ?? new MapConstructor()
+  );
   const [map, commit] = useReducer(
     (_: TMap): TMap => new MapConstructor(mapRef.current),
     mapRef.current
   );
+
+  useEffect(() => {
+    if (!reactiveValue) return;
+    const combinedKeys = new Set<TKey>([
+      ...map.keys(),
+      ...reactiveValue.keys(),
+    ]);
+    let mapCommitNeeded = false;
+    for (const key of combinedKeys) {
+      // remove deleted key/value pair
+      if (map.has(key) && !reactiveValue.has(key)) {
+        mapRef.current.delete(key);
+        onReactiveDelete?.(key);
+        mapCommitNeeded = true;
+        continue;
+      }
+      // add missing or overwhite missing
+      const newOrUpdated = reactiveValue.get(key);
+      const previousValue = map.get(key);
+      if (!newOrUpdated) continue;
+      // - add missing value
+      if (!isDefined(previousValue)) {
+        mapRef.current.set(key, newOrUpdated);
+        onReactiveAdd?.(newOrUpdated, key);
+        mapCommitNeeded = true;
+        continue;
+      }
+      // - update changed value if different
+      if (compare(previousValue, newOrUpdated, compare.neq)) {
+        const updated = reactiveUpdate(newOrUpdated, previousValue, key);
+        mapRef.current.set(key, updated);
+        mapCommitNeeded = true;
+      }
+    }
+    // trigger a single re-render if needed
+    console.log(mapCommitNeeded);
+    if (!mapCommitNeeded) return;
+    console.log(`useMap (${MapConstructor}): reactive commit`);
+    commit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reactiveValue]);
 
   const set = useCallback<TMap["set"]>(
     (...args) => {
@@ -500,4 +506,4 @@ export function useMap<TKey, TValue, TMap extends Map<TKey, TValue>>(
     values,
     commit,
   };
-}
+};
