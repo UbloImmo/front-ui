@@ -16,9 +16,19 @@ import type { ListTableHeaderSortProps } from "./ListTableHeaderSort.types";
 import type { TestIdProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 
+/**
+ * Allows controlling a list sort from a table header cell.
+ *
+ * @version 0.1.0
+ *
+ * @template {object} TItem - Type of a single list item
+ *
+ * @param {ListTableHeaderSortProps<TItem> & TestIdProps} props - ListTableHeaderSort component props
+ * @returns {JSX.Element}
+ */
 export const ListTableHeaderSort = <TItem extends object>(
   props: ListTableHeaderSortProps<TItem> & TestIdProps
-) => {
+): JSX.Element => {
   const { getSort } = useListContext<TItem>();
 
   const testId = useTestId("list-table-header-sort", props as TestIdProps);
@@ -58,10 +68,10 @@ export const ListTableHeaderSort = <TItem extends object>(
     props.className
   );
 
-  const onInvertClick = useCallback(() => {
+  const onSortClick = useCallback(() => {
     if (!sort) return;
-    if (sort.prioritized) return sort.invert();
-    sort.prioritize();
+    if (!sort.prioritized) return sort.prioritize();
+    sort.invert();
   }, [sort]);
 
   if (!sort?.active)
@@ -108,7 +118,7 @@ export const ListTableHeaderSort = <TItem extends object>(
                 data-testid={`${testId}-trigger`}
                 type="button"
                 disabled={!sort.active}
-                onClick={onInvertClick}
+                onClick={onSortClick}
               >
                 <Icon size="s-4" name={icons.base} color="primary-medium" />
                 <Icon size="s-4" name={icons.inverted} color="primary-medium" />
