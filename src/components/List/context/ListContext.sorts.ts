@@ -18,7 +18,7 @@ import {
   UseMapOnReactiveDeleteFn,
   UseMapReactiveUpdateFn,
 } from "@types";
-import { useLogger, useMap } from "@utils";
+import { isZero, useLogger, useMap } from "@utils";
 
 import type {
   FilterProperty,
@@ -327,8 +327,13 @@ export function useListSorts<TItem extends object>(
     <TProperty extends FilterProperty<TItem>>(
       sortData: SortData<TItem, TProperty>
     ): Sort<TItem, TProperty> => {
+      // automatically set prioritized to true if no manual user selection was made
+      // and the item's priority is set to true
       const prioritized =
-        sortData.property === highlightedSortProperty && sortData.active;
+        sortData.active &&
+        (highlightedSortProperty
+          ? sortData.property === highlightedSortProperty
+          : isZero(sortData.defaultPriority));
       const priority = prioritized
         ? SORT_HIGHLIGHTED_PRIORITY
         : sortData.priority;
