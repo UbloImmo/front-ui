@@ -1,5 +1,3 @@
-import { Sort, SortPayload } from "../Sort";
-
 import type { Filter } from "../Filter/Filter.types";
 import type { FilterOptionData } from "../FilterOption/FilterOption.types";
 import type { FilterPreset } from "../FilterPreset/FilterPreset.types";
@@ -8,6 +6,7 @@ import type {
   FilterProperty,
   FilterSearchOperator,
 } from "../shared.types";
+import type { SortPayload } from "../Sort";
 import type {
   AsyncFn,
   Enum,
