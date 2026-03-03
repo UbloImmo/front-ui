@@ -50,9 +50,11 @@ export const ListTableHeaderSort = <TItem extends object>(
   >(() => {
     if (!sort) return null;
     const label = sort.label ?? props.fallbackLabel;
-    const content = isNonEmptyString(label)
-      ? tl.action.sortBy(label.toLowerCase())
-      : tl.action.sort();
+    const content = sort.prioritized
+      ? tl.action.invertSortingOrder()
+      : isNonEmptyString(label)
+        ? tl.action.sortBy(label.toLowerCase())
+        : tl.action.sort();
     return {
       content,
       direction: "top",
