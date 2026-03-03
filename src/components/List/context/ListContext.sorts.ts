@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import {
   type MutateListSortFn,
@@ -13,6 +13,11 @@ import {
   SORT_HIGHLIGHTED_PRIORITY,
 } from "../modules/Sort/Sort.utils";
 
+import {
+  UseMapOnReactiveAddFn,
+  UseMapOnReactiveDeleteFn,
+  UseMapReactiveUpdateFn,
+} from "@types";
 import { useLogger, useMap } from "@utils";
 
 import type {
@@ -37,18 +42,16 @@ export function useListSorts<TItem extends object>(
 ): UseListSortsReturn<TItem> {
   const logger = useLogger("ListContext.sorts");
 
-  const sortMap = useMap(SortMap<TItem>, { autoCommitMutations: false });
-
   const initializeSortsFlagSet = useCallback(
     (flag: "active" | "inverted"): Set<FilterProperty<TItem>> => {
       const set = new Set<FilterProperty<TItem>>();
-      if (!sortMap.size) return set;
-      for (const [property, sort] of sortMap) {
+      if (!config.sorts?.size) return set;
+      for (const [property, sort] of config.sorts) {
         if (sort[flag]) set.add(property);
       }
       return set;
     },
-    [sortMap]
+    [config.sorts]
   );
 
   const activeSortsSetRef = useRef<Set<FilterProperty<TItem>>>(
@@ -60,56 +63,51 @@ export function useListSorts<TItem extends object>(
   const [highlightedSortProperty, setHighlightedSortProperty] =
     useState<Nullable<FilterProperty<TItem>>>(null);
 
-  /**
-   * Effect that synchronizes the internal {@link sortMapRef} ref with the provided {@link config} whenever the latter changes.
-   * Discards removed and appends added sorts. Does not
-   */
-  useEffect(() => {
-    if (!config.sorts) return;
-    if (config.sorts.size === sortMap.size) return;
-    // merge properties
-    const sortProperties = new Set<FilterProperty<TItem>>([
-      ...sortMap.keys(),
-      ...config.sorts.keys(),
-    ]);
-    let stateUpdateNeeded = false;
-    for (const property of sortProperties) {
-      // delete removed sorts
-      if (sortMap.has(property) && !config.sorts.has(property)) {
-        invertedSortsSetRef.current.delete(property);
-        activeSortsSetRef.current.delete(property);
-        if (highlightedSortProperty === property)
-          setHighlightedSortProperty(null);
-        sortMap.delete(property);
-        stateUpdateNeeded = true;
-        continue;
-      }
-      // add missing sorts
-      const newOrUpdated = config.sorts.get(property);
-      if (!sortMap.has(property) && newOrUpdated) {
-        sortMap.set(property, newOrUpdated);
-        if (newOrUpdated.inverted) invertedSortsSetRef.current.add(property);
-        if (newOrUpdated.active) activeSortsSetRef.current.add(property);
-        stateUpdateNeeded = true;
-        continue;
-      }
-      // update while keeping current active & inverted states
-      const previous = sortMap.get(property);
-      if (previous && newOrUpdated) {
-        const merged: typeof previous = {
-          ...newOrUpdated,
-          active: previous.active,
-          inverted: previous.inverted,
-        };
-        sortMap.set(property, merged);
-        stateUpdateNeeded = true;
-      }
-    }
-    if (stateUpdateNeeded) {
-      sortMap.commit();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config.sorts]);
+  // update while keeping current active & inverted states
+  const sortMapReactiveUpdate = useCallback<
+    UseMapReactiveUpdateFn<
+      FilterProperty<TItem>,
+      SortData<TItem, FilterProperty<TItem>>
+    >
+  >(
+    (newValue, { active, inverted }) => ({
+      ...newValue,
+      active,
+      inverted,
+    }),
+    []
+  );
+
+  const sortMapOnReactiveAdd = useCallback<
+    UseMapOnReactiveAddFn<
+      FilterProperty<TItem>,
+      SortData<TItem, FilterProperty<TItem>>
+    >
+  >((addedSort, addedProperty) => {
+    if (addedSort.active) activeSortsSetRef.current.add(addedProperty);
+    if (addedSort.inverted) invertedSortsSetRef.current.add(addedProperty);
+  }, []);
+
+  const sortMapOnReactiveDelete = useCallback<
+    UseMapOnReactiveDeleteFn<FilterProperty<TItem>>
+  >(
+    (deletedProperty) => {
+      invertedSortsSetRef.current.delete(deletedProperty);
+      activeSortsSetRef.current.delete(deletedProperty);
+      if (highlightedSortProperty === deletedProperty)
+        setHighlightedSortProperty(null);
+    },
+    [highlightedSortProperty]
+  );
+
+  const sortMap = useMap(SortMap<TItem>, {
+    autoCommitMutations: false,
+    initialValue: config.sorts,
+    reactiveValue: config.sorts,
+    reactiveUpdate: sortMapReactiveUpdate,
+    onReactiveAdd: sortMapOnReactiveAdd,
+    onReactiveDelete: sortMapOnReactiveDelete,
+  });
 
   /**
    * Finds a Sort by its property and sets its `active` property to `true` if it isn't already.
