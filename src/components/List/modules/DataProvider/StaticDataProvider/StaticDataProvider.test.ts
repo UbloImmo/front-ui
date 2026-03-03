@@ -1,3 +1,4 @@
+import { Nullish } from "@ubloimmo/front-util";
 import { describe, expect, it, mock } from "bun:test";
 
 import { useStaticDataProvider } from "./StaticDataProvider.hook";
@@ -8,12 +9,11 @@ import {
   filterItems,
   sortItems,
 } from "./StaticDataProvider.utils";
+import { SortPayload } from "../../Sort";
 import { mockListData, type MockListItem } from "../DataProvider.test.mock";
 
 import { testHookFactory } from "@/tests";
 import { arrayOf } from "@utils";
-import { SortPayload } from "../../Sort";
-import { Nullable, Nullish } from "@ubloimmo/front-util";
 
 const {
   item,
@@ -360,25 +360,41 @@ describe("StaticDataProvider", () => {
         expect(sortItems(mockListData.items, null)).toEqual(mockListData.items);
       });
 
-      const makeItem = (v: number): { v: Nullish<number> } => ({ v });
+      type SortedItem = { v: Nullish<number>; v2: Nullish<string> };
+      const makeItem = (
+        v: Nullish<number>,
+        v2: Nullish<string> = null
+      ): SortedItem => ({ v, v2 });
       const negative = makeItem(-120),
         small = makeItem(1.2),
         medium = makeItem(12),
         large = makeItem(120),
-        nullItem = { v: null },
-        undefItem = { v: undefined };
-      const ascSort: SortPayload<{ v: Nullish<number> }, "v"> = {
+        nullItem = makeItem(null),
+        undefItem = makeItem(undefined);
+      const ascSort: SortPayload<SortedItem, "v"> = {
           property: "v",
           computedOrder: "asc",
           priority: 0,
           prioritized: false,
         },
-        descSort: SortPayload<{ v: Nullish<number> }, "v"> = {
+        descSort: SortPayload<SortedItem, "v"> = {
           property: "v",
           computedOrder: "desc",
           priority: 0,
           prioritized: false,
         };
+      const ascStrSort: SortPayload<SortedItem, "v2"> = {
+        property: "v2",
+        computedOrder: "asc",
+        priority: 1,
+        prioritized: false,
+      };
+      const descStrSort: SortPayload<SortedItem, "v2"> = {
+        property: "v2",
+        computedOrder: "desc",
+        priority: 1,
+        prioritized: false,
+      };
 
       it("should put sort numbers in ascending order", () => {
         const items = [small, large, medium, negative];
@@ -439,7 +455,108 @@ describe("StaticDataProvider", () => {
           undefItem,
         ]);
       });
-      // it("should put null items before undefined items", () => {});
+      it("should put null items before undefined items", () => {
+        const items = [small, large, nullItem, undefItem, nullItem, undefItem];
+        expect(sortItems(items, [descSort])).toEqual([
+          large,
+          small,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+        expect(sortItems(items, [ascSort])).toEqual([
+          small,
+          large,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+      });
+      const first = makeItem(1, "a");
+      const second = makeItem(1, "b");
+      const third = makeItem(2, "a");
+      const fourth = makeItem(2, "b");
+      it("should combine multiple sorting orders", () => {
+        const items = [second, fourth, first, third];
+        expect(sortItems(items, [ascSort, ascStrSort])).toEqual([
+          first,
+          second,
+          third,
+          fourth,
+        ]);
+        expect(sortItems(items, [descSort, ascStrSort])).toEqual([
+          third,
+          fourth,
+          first,
+          second,
+        ]);
+        expect(sortItems(items, [ascSort, descStrSort])).toEqual([
+          second,
+          first,
+          fourth,
+          third,
+        ]);
+        expect(sortItems(items, [descSort, descStrSort])).toEqual([
+          fourth,
+          third,
+          second,
+          first,
+        ]);
+      });
+      it("should sort nullish items to the end while combining sorts", () => {
+        const items = [
+          nullItem,
+          second,
+          undefItem,
+          nullItem,
+          fourth,
+          undefItem,
+          first,
+          third,
+        ];
+        expect(sortItems(items, [ascSort, ascStrSort])).toEqual([
+          first,
+          second,
+          third,
+          fourth,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+        expect(sortItems(items, [descSort, ascStrSort])).toEqual([
+          third,
+          fourth,
+          first,
+          second,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+        expect(sortItems(items, [ascSort, descStrSort])).toEqual([
+          second,
+          first,
+          fourth,
+          third,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+        expect(sortItems(items, [descSort, descStrSort])).toEqual([
+          fourth,
+          third,
+          second,
+          first,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+      });
     });
   });
 
