@@ -474,83 +474,83 @@ describe("StaticDataProvider", () => {
           undefItem,
         ]);
       });
-      const first = makeItem(1, "a");
-      const second = makeItem(1, "b");
-      const third = makeItem(2, "a");
-      const fourth = makeItem(2, "b");
+      const _1a = makeItem(1, "a");
+      const _1b = makeItem(1, "b");
+      const _2a = makeItem(2, "a");
+      const _2b = makeItem(2, "b");
       it("should combine multiple sorting orders", () => {
-        const items = [second, fourth, first, third];
+        const items = [_1b, _2b, _1a, _2a];
         expect(sortItems(items, [ascSort, ascStrSort])).toEqual([
-          first,
-          second,
-          third,
-          fourth,
+          _1a,
+          _1b,
+          _2a,
+          _2b,
         ]);
         expect(sortItems(items, [descSort, ascStrSort])).toEqual([
-          third,
-          fourth,
-          first,
-          second,
+          _2a,
+          _2b,
+          _1a,
+          _1b,
         ]);
         expect(sortItems(items, [ascSort, descStrSort])).toEqual([
-          second,
-          first,
-          fourth,
-          third,
+          _1b,
+          _1a,
+          _2b,
+          _2a,
         ]);
         expect(sortItems(items, [descSort, descStrSort])).toEqual([
-          fourth,
-          third,
-          second,
-          first,
+          _2b,
+          _2a,
+          _1b,
+          _1a,
         ]);
       });
       it("should sort nullish items to the end while combining sorts", () => {
         const items = [
           nullItem,
-          second,
+          _1b,
           undefItem,
           nullItem,
-          fourth,
+          _2b,
           undefItem,
-          first,
-          third,
+          _1a,
+          _2a,
         ];
         expect(sortItems(items, [ascSort, ascStrSort])).toEqual([
-          first,
-          second,
-          third,
-          fourth,
+          _1a,
+          _1b,
+          _2a,
+          _2b,
           nullItem,
           nullItem,
           undefItem,
           undefItem,
         ]);
         expect(sortItems(items, [descSort, ascStrSort])).toEqual([
-          third,
-          fourth,
-          first,
-          second,
+          _2a,
+          _2b,
+          _1a,
+          _1b,
           nullItem,
           nullItem,
           undefItem,
           undefItem,
         ]);
         expect(sortItems(items, [ascSort, descStrSort])).toEqual([
-          second,
-          first,
-          fourth,
-          third,
+          _1b,
+          _1a,
+          _2b,
+          _2a,
           nullItem,
           nullItem,
           undefItem,
           undefItem,
         ]);
         expect(sortItems(items, [descSort, descStrSort])).toEqual([
-          fourth,
-          third,
-          second,
-          first,
+          _2b,
+          _2a,
+          _1b,
+          _1a,
           nullItem,
           nullItem,
           undefItem,
