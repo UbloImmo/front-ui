@@ -26,10 +26,10 @@ const defaults: SortData<MockData, "enumNullish"> = {
   property: "enumNullish",
   order: "asc",
   priority: 0,
-  active: false,
+  active: true,
   inverted: false,
   defaultState: {
-    active: false,
+    active: true,
     inverted: false,
   },
   defaultPriority: 0,

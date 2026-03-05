@@ -123,7 +123,7 @@ export type SortState = {
   /**
    * Whether the sort is currently active
    *
-   * @default false
+   * @default true
    */
   active?: boolean;
   /**

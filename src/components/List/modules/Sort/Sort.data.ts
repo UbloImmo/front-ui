@@ -39,7 +39,7 @@ export function sortData<
       throw new Error("Malformed property");
 
     config = { property, order, priority };
-    const { active = false, inverted = false } = params[1] ?? {};
+    const { active = true, inverted = false } = params[1] ?? {};
     state = { active, inverted };
     const { iconSet = "unknown", label = null } = params[2] ?? {};
     visualData = { iconSet, label };
@@ -55,7 +55,7 @@ export function sortData<
       throw new Error("Malformed property");
 
     config = { property, order, priority };
-    const { active = false, inverted = false } = defaultState;
+    const { active = true, inverted = false } = defaultState;
     state = { active, inverted };
     const { iconSet = "unknown", label = null } = visual;
     visualData = { iconSet, label };
