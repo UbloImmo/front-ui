@@ -127,22 +127,24 @@ describe("StaticDataProvider", () => {
         // @ts-expect-error - we are testing the default case
         expect(filterItems(items, {})).toHaveLength(3);
       });
-      // it("should filter by a single option", () => {
-      //   expect(
-      //     filterItems(items, {
-      //       options: [selectOption(options.numberMoreThan5)],
-      //       selectedOptions: [selectOption(options.numberMoreThan5)],
-      //       search: null,
-      //     })
-      //   ).toHaveLength(3);
-      //   expect(
-      //     filterItems(items, {
-      //       option: selectOption(options.alwaysInvalidOption),
-      //       selectedOptions: [selectOption(options.alwaysInvalidOption)],
-      //       search: null,
-      //     })
-      //   ).toHaveLength(0);
-      // });
+      it("should filter by a single option", () => {
+        expect(
+          filterItems(items, {
+            options: [selectOption(options.numberMoreThan5)],
+            selectedOptions: [selectOption(options.numberMoreThan5)],
+            search: null,
+            activeSorts: null,
+          })
+        ).toHaveLength(3);
+        expect(
+          filterItems(items, {
+            option: selectOption(options.alwaysInvalidOption),
+            selectedOptions: [selectOption(options.alwaysInvalidOption)],
+            search: null,
+            activeSorts: null,
+          })
+        ).toHaveLength(0);
+      });
       it("should filter by multiple options", () => {
         expect(
           filterItems(items, {
@@ -187,30 +189,33 @@ describe("StaticDataProvider", () => {
           })
         ).toHaveLength(3);
       });
-      // it("should filter by a single filter", () => {
-      //   expect(
-      //     filterItems(items, {
-      //       filter: selectFilter(filters.filter1),
-      //       selectedOptions: selectFilter(filters.filter1).selectedOptions,
-      //       search: null,
-      //     })
-      //   ).toHaveLength(3);
-      //   expect(
-      //     filterItems(items, {
-      //       filter: filters.invalidFilter,
-      //       selectedOptions: [],
-      //       search: null,
-      //     })
-      //   ).toHaveLength(3);
-      //   expect(
-      //     filterItems(items, {
-      //       filter: selectFilter(filters.invalidFilter),
-      //       selectedOptions: selectFilter(filters.invalidFilter)
-      //         .selectedOptions,
-      //       search: null,
-      //     })
-      //   ).toHaveLength(0);
-      // });
+      it("should filter by a single filter", () => {
+        expect(
+          filterItems(items, {
+            filter: selectFilter(filters.filter1),
+            selectedOptions: selectFilter(filters.filter1).selectedOptions,
+            search: null,
+            activeSorts: null,
+          })
+        ).toHaveLength(3);
+        expect(
+          filterItems(items, {
+            filter: filters.invalidFilter,
+            selectedOptions: [],
+            search: null,
+            activeSorts: null,
+          })
+        ).toHaveLength(3);
+        expect(
+          filterItems(items, {
+            filter: selectFilter(filters.invalidFilter),
+            selectedOptions: selectFilter(filters.invalidFilter)
+              .selectedOptions,
+            search: null,
+            activeSorts: null,
+          })
+        ).toHaveLength(0);
+      });
       it("should filter by multiple filters", () => {
         expect(
           filterItems(items, {
