@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `0.1.0` List component
+  - Implemented generic sorting functionnality and integrated it into the existing data management context
+
 ## 2.0.5 - 2026-02-18
 ### Fixed
 - `v0.1.1` ListFilter component
