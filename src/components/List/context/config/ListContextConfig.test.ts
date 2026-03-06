@@ -344,9 +344,9 @@ const testListConfig = () => {
       ]);
       expect(filter).toBeObject();
       expect(filter.label).toBe(label);
-      expect(filter.optionSignatures).toBeArray();
+      expect(filter.optionSignatures).toBeInstanceOf(Set);
       expect(filter.optionSignatures).toEqual(
-        options.map(({ signature }) => signature)
+        new Set(options.map(({ signature }) => signature))
       );
       expect(filter.optionDividers).toBeArray();
       expect(filter.optionDividers).toHaveLength(1);
@@ -377,9 +377,9 @@ const testListConfig = () => {
       const filterPreset = result.filterPreset(label, options);
       expect(filterPreset).toBeObject();
       expect(filterPreset.label).toBe(label);
-      expect(filterPreset.optionSignatures).toBeArray();
+      expect(filterPreset.optionSignatures).toBeInstanceOf(Set);
       expect(filterPreset.optionSignatures).toEqual(
-        options.map(({ signature }) => signature)
+        new Set(options.map(({ signature }) => signature))
       );
       rerender();
       expect(getResult().config.filterPresets).toBeArray();
@@ -485,7 +485,7 @@ const testListConfig = () => {
       expect(filter).not.toBeNull();
       expect((filter as FilterData).label).toBe(label);
       expect((filter as FilterData).optionSignatures).toEqual(
-        (await optionsPromise).map(({ signature }) => signature)
+        new Set((await optionsPromise).map(({ signature }) => signature))
       );
     }
   );
@@ -527,7 +527,7 @@ const testListConfig = () => {
       }
       expect(filterPreset.label).toBe(label);
       expect(filterPreset.optionSignatures).toEqual(
-        (await optionsPromise).map(({ signature }) => signature)
+        new Set((await optionsPromise).map(({ signature }) => signature))
       );
     }
   );
