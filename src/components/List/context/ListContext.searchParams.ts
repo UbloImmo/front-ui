@@ -4,6 +4,7 @@ import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import type {
   ListContextConfig,
   UseListContextSearchParams,
+  UseListContextSearchParamsReturn,
   UseListOptionsReturn,
 } from "./ListContext.types";
 import type { FilterSignature } from "../modules/shared.types";
@@ -42,9 +43,13 @@ export const useListContextSearchParams: UseListContextSearchParams = <
   TItem extends object,
 >(
   { searchParams }: Pick<ListContextConfig<TItem>, "searchParams">,
-  { options, updateOptionSelection }: UseListOptionsReturn<TItem>,
+  {
+    optionsMap,
+    updateOptionSelection,
+    selectedOptionSignatures,
+  }: UseListOptionsReturn<TItem>,
   configLoading: boolean
-) => {
+): UseListContextSearchParamsReturn => {
   const readSearchParams = useMemo(
     () => searchParams?.readParams ?? readWindowSearchParams,
     [searchParams?.readParams]
@@ -97,19 +102,18 @@ export const useListContextSearchParams: UseListContextSearchParams = <
   const writeOptions = useCallback(() => {
     updateSeachParams((searchParams) => {
       // remove search param if all options are unselected
-      if (options.data.every((option) => !option.selected)) {
+      if (!selectedOptionSignatures.size) {
         searchParams.delete(LIST_OPTIONS_SEARCH_PARAM_NAME);
         // update search params
       } else {
         // only write selected options
-        const paramValue = options
-          .filter(({ selected }) => selected)
-          .map(({ signature }) => signature)
-          .join(SEARCH_PARAM_DELIMITER);
+        const paramValue = Array.from(selectedOptionSignatures).join(
+          SEARCH_PARAM_DELIMITER
+        );
         searchParams.set(LIST_OPTIONS_SEARCH_PARAM_NAME, paramValue);
       }
     });
-  }, [options, updateSeachParams]);
+  }, [selectedOptionSignatures, updateSeachParams]);
 
   /**
    * A callback that reads the current list options from the URL search parameters.
@@ -122,12 +126,8 @@ export const useListContextSearchParams: UseListContextSearchParams = <
     if (!value) return [];
     return value
       .split(SEARCH_PARAM_DELIMITER)
-      .filter(
-        (paramSignature) =>
-          options.findIndex(({ signature }) => signature === paramSignature) >=
-          0
-      );
-  }, [options, readSearchParams]);
+      .filter((paramSignature) => optionsMap.has(paramSignature));
+  }, [optionsMap, readSearchParams]);
 
   /**
    * A callback that initializes the list options from the URL search parameters.
@@ -144,7 +144,7 @@ export const useListContextSearchParams: UseListContextSearchParams = <
     if (configLoading || !write || !initialSynced) return;
     writeOptions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options.data, write, configLoading, initialSynced]);
+  }, [optionsMap, write, configLoading, initialSynced]);
 
   /**
    * Initializes the list options from the URL search parameters when the component mounts.

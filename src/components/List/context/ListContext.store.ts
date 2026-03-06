@@ -55,21 +55,18 @@ export const useListContextStore = <
 
   const itemCount = useMemo(() => data.length, [data]);
 
-  const {
-    options: { data: optionsArray },
-    ...optionMethods
-  } = options;
+  const { optionsMap, selectedOptionSignatures, ...optionMethods } = options;
 
   /**
    * Stringifies the current filtering configuration
    */
   const stringifyFiltersRef = useCallback(() => {
     return JSON.stringify({
-      options: optionsArray,
+      options: Array.from(selectedOptionSignatures),
       search: search.queryFilters,
       activeSorts: sorts.activeSorts,
     });
-  }, [optionsArray, search.queryFilters, sorts.activeSorts]);
+  }, [search.queryFilters, selectedOptionSignatures, sorts.activeSorts]);
 
   const previousFiltersRef = useRef<string>("");
 
@@ -110,12 +107,11 @@ export const useListContextStore = <
     }
 
     options.applyOptions(
-      optionsArray,
       config.searchAsOptions ? search.queryFilters : undefined
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    optionsArray,
+    options.optionsMap,
     loading,
     search.queryFilters,
     config.searchAsOptions,
@@ -124,7 +120,8 @@ export const useListContextStore = <
 
   return {
     ...filterPresets,
-    options: optionsArray,
+    optionsMap,
+    selectedOptionSignatures,
     ...optionMethods,
     ...filters,
     ...search,
