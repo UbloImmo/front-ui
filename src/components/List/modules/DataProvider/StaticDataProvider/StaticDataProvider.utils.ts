@@ -116,13 +116,15 @@ export const arrayComparison = (
  * @template TItem - The type of the item being filtered
  * @param {TItem} item - The item to check
  * @param {FilterOptionData<TItem>} option - The filter option
+ * @param {boolean} [forceSelected] - If set to `true`, the option's `selected` property won't be checked
  * @returns {boolean} True if the item matches the option
  */
 export const itemMatchesOption = <TItem extends object>(
   item: TItem,
-  option: FilterOptionData<TItem>
+  option: FilterOptionData<TItem>,
+  forceSelected?: boolean
 ): boolean => {
-  if (!option.selected) return true;
+  if (!option.selected && !forceSelected) return true;
   return option.matches[arrayComparison(option.operator)]((match) =>
     compareItemValue(item, match)
   );
