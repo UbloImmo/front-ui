@@ -19,7 +19,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 /**
  * Allows controlling a list sort from a table header cell.
  *
- * @version 0.1.0
+ * @version 0.0.1
  *
  * @template {object} TItem - Type of a single list item
  *
@@ -76,6 +76,11 @@ export const ListTableHeaderSort = <TItem extends object>(
     sort.invert();
   }, [sort]);
 
+  const label = useMemo(
+    () => sort?.label ?? props.fallbackLabel,
+    [sort?.label, props.fallbackLabel]
+  );
+
   if (!sort?.active)
     return (
       <TableHeaderCell
@@ -99,14 +104,15 @@ export const ListTableHeaderSort = <TItem extends object>(
       <FlexRowLayout justify={justify} align="center" gap="s-1" fill>
         {!props.hideLabel && (
           <Text
-            className={classNames.label}
             color="gray-800"
             size="m"
             weight="bold"
             testId="input-label-text"
             noWrap
+            ellipsis
+            title={label}
           >
-            {sort?.label ?? props.fallbackLabel}
+            {label}
           </Text>
         )}
         <FlexRowLayout align="center" justify="end" gap="s-2">

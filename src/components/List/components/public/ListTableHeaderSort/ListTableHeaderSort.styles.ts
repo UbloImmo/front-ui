@@ -23,8 +23,7 @@ export function useListTableHeaderSortClassnames(
     [styles.highlighted, highlighted],
     [styles.inverted, inverted]
   );
-  const label = useCssClasses(styles["list-table-header-sort-label"]);
-  return { cell, button, label };
+  return { cell, button };
 }
 
 const SORT_ICON_SET_MAP: ValueMap<SortIconSet, SortIcons> = {
