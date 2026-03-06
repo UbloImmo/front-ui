@@ -1,8 +1,9 @@
 
 import { Meta, Unstyled, Source } from "@storybook/addon-docs/blocks";
-import { Canvas, Callout, Markdown, HeaderInfo, Text } from "@docs/blocks";
+import { Canvas, Callout, Markdown, HeaderInfo, Text, Table, TableBody, TableHeader, TableHeaderCell, TableRow, TableCell } from "@docs/blocks";
 import { Content, Header } from "@docs/containers";
 import { Hypertext } from "@/components/Hypertext";
+import { Icon } from "@/components/Icon";
 import { Collapsible } from "@/layouts/Collapsible";
 
 
@@ -20,7 +21,7 @@ import { Collapsible } from "@/layouts/Collapsible";
 
 In order to make the List component type safe while still being flexible, we needed it to be _generic_.
 
-That means you need to define a type for the items you want to display. 
+That means you need to define a type for the items you want to display.
 
 > _We'll be using this `Pokemon` type in the examples below._
 
@@ -74,7 +75,7 @@ const fetchPokemon = async (): Promise<Pokemon[]> => {
 // and forwards the setData callback to the static data provider
 const usePokemonData: UseDataProviderFn<Pokemon> = (setData) => {
   return useStaticDataProvider(fetchPokemon, setData);
-} 
+}
 ```
 
 ### Dynamic data provider
@@ -115,7 +116,7 @@ import { useListConfig } from "@ubloimmo/uikit";
 const usePokemonListConfig = () => {
   // we pass our data provider hook to the useListConfig hook, without calling it
   const { config } = useListConfig<Pokemon>(usePokemonData);
-  
+
   // and return the config object
   return config;
 }
@@ -210,6 +211,220 @@ Matches, options filters and filter presets are, _you guessed it_, built using t
   Declaration order matters. Filters presets are displayed based on the order they were declared using the `filterPreset()` or `async.filterPreset()` methods.
 </Callout>
 
+## Sorting architecture
+
+The higher the volume of data displayed in a list, the easier it is for users to lose where they are.
+Sorting, along with filtering, naturally becomes a necessity for such users.
+
+### Anatomy of a Sort
+
+A Sort mainly consists of a property, an order and a priority.
+Multiple Sorts may be declared and active at the same time, provided they target different `properties`.
+
+```ts
+/**
+ * The configuration of a single list Sort
+ */
+type SortConfig<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem>,
+> = {
+  /**
+   * @required
+   */
+  readonly property: TProperty;
+  /**
+   * @default "asc"
+   */
+  order?: SortOrder<TItem, NoInfer<TProperty>>;
+  /**
+   * @default 0
+   */
+  priority?: number;
+};
+```
+
+#### Property
+
+A Sort can target any `property` of the list item by refering to its path.
+
+Our architecture allows for up to 1 (one) dynamic sorting order per item `property`. We believe multiple sorting configurations per property only serve as a means of losing the user.
+
+```ts
+type Item = {
+  id: string;
+  label: string;
+  active?: boolean;
+}
+```
+
+<Callout color="warning" icon="ExclamationSquareFill">
+  If multiple Sorts are targeting the same `property`, the latter will overwrite the former.
+</Callout>
+
+#### Order
+
+A Sort's order may be basic or complex.
+
+```ts
+/**
+ * Sorting order applicable to a list Sort.
+ *
+ * Either a basic sorting order or a complex one.
+ */
+export type SortOrder<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem>,
+> = SortOrderBasic | SortOrderComplex<TItem, TProperty>;
+```
+
+> Regarless of wether the order is basic or complex, it may be inverted at any time through a user action
+
+##### Basic sorting order
+
+A basic sorting defines whether items should be sorted in ascending or descending order.
+
+```ts
+/**
+ * Basic sorting order for a single list Sort.
+ * Either `asc`: ascending or `desc`: descending
+ */
+export type SortOrderBasic = "asc" | "desc";
+```
+
+Depending on the type of the property the Sort points to, its basic sorting order operates differently:
+ - Strings get sorted in alphabetical (A -> Z) order when using `asc`, and in reverse (Z -> A) when using `desc`.
+ - Numbers get sorted in ascending (-∞ -> +∞) when using `asc`, and in descending order (+∞ -> -∞) with `desc`.
+ - Objects (arrays included) always get sorted after Strings or Numbers, regarless of sorting order.
+ - Null values always appear after any non-nullish value, regardless of sorting order.
+ - Undefined values get relegated to the end, after even Null values, regardless of sorting order.
+
+<Callout>
+In short, when using basic sorting orders, only Strings & Numbers may be sorted in ascending or descending order, while order values follow after.
+</Callout>
+
+##### Complex sorting order
+
+Items may be sorted according to a specific, bespoke order.
+
+Let's take for instance an item holding a state. We want items in an `active` state to appear first, followed by pending items, then sort archived items at the end.
+This should be represented by the following Sort configuration:
+
+```ts
+type State = "archived" | "pending" | "active";
+type Item = { id: string; state: State };
+
+const stateSortConfig = {
+  property: "state",
+  // items where state:active show up first, pending and finally archived
+  order: ["active", "pending", "archived"],
+} satisfies SortConfig<TItem, "state">;
+```
+
+If a property holds a `nullable` value, `null` may also be included in the complex sorting order, grouping null items at the specified position.
+
+Suppose a `null` state means the item is invalid, one could want to show it first to their users.
+
+```ts
+type State = "archived" | "pending" | "active";
+type Item = { id: string; state: State | null };
+
+const stateSortConfig = {
+  property: "state",
+  // items where state:null show up first, then active, pending and finally archived
+  order: [null, "active", "pending", "archived"],
+} satisfies SortConfig<TItem, "state">;
+```
+
+> Property values not included in a complex sorting order will always be placed after included ones.
+
+#### Priority
+
+A Sort's `priority` is a number that determines the order in which multiple sorts are applied. Think of it as defining the list's primary, secondary, tertiary sorting order, and so on...
+
+> Only numbers between 0 and positive infinity are valid. Negative properties will get clamped to this range.
+
+<Callout>
+ The lower a Sort's `priority` number, the earliest it will be applied.
+</Callout>
+
+### Sorting behavior
+
+#### (De)Activation
+
+Sorts may be activated and deactivated at will. **A deactivated sort won't be forwarded to the list's DataProvider** and therefore not influence the order of list items.
+
+A sort's `active` property holds whether it is active or not. Its value may be set during initialization or in runtime.
+
+#### Inversion
+
+A Sort's order (be it basic or complex) may be `inverted` at any point during its lifetime.
+When triggered following an interaction, it allows users to easily explore the list's content.
+
+When inverted, basic sorting orders transition from `asc` to `desc` and vice-versa.
+Complex sorting orders get reversed.
+
+> Upon inversion, a Sort's `inverted` property gets set to `true`.
+> It's `computedOrder` property is also updated accordingly, computed from its initial sorting order and inversion.
+
+#### Prioritization
+
+A Sort's priority may be elevated by calling its `prioritize()` method. Doing so sets its `priority` property to `-1`, thus making it the list's primary sorting order.
+
+> Only one Sort may be prioritized at a time. A Sort remains prioritized as long as no other Sort has been prioritized.
+
+### Sorting methods
+
+- [sort()](?path=/docs/components-list-configuration-methods-sort--docs): Builds and returns a single _sort_ for the list's data.
+- [sorts()](?path=/docs/components-list-configuration-methods-sorts--docs): Builds and returns a **map** of _sorts_ for the list's data.
+
+### Visual styling
+
+For users to confidently interact with a list's sorting, they need to be able to identify which Sort they are interacting with.
+
+Each sort holds optional `label` and `iconSet` properties.
+
+#### Label
+
+Either null or a short, human-readable name that identifies which item property the Sort holds.
+
+> It defaults to `null`.
+
+#### Icon Set
+
+A Sort's `iconSet` property influences which icons get displayed while rendered. This is useful for differenciating sorts that handle string number, or any other values from each other.
+
+<Table>
+<TableHeader>
+  <TableRow>
+    <TableHeaderCell><Markdown>{"`iconSet`"}</Markdown></TableHeaderCell>
+    <TableHeaderCell><Markdown>{"Is default"}</Markdown></TableHeaderCell>
+    <TableHeaderCell><Markdown>{"Base icon"}</Markdown></TableHeaderCell>
+    <TableHeaderCell><Markdown>{"Inverted icon"}</Markdown></TableHeaderCell>
+  </TableRow>
+</TableHeader>
+<TableBody>
+  <TableRow>
+    <TableCell>`unknown`</TableCell>
+    <TableCell styleOverride={{verticalAlign: "middle" }}><Markdown>{"[x]"}</Markdown></TableCell>
+    <TableCell><Icon name="SortDown" /></TableCell>
+    <TableCell><Icon name="SortUpAlt" /></TableCell>
+  </TableRow>
+  <TableRow>
+    <TableCell>`number`</TableCell>
+    <TableCell styleOverride={{verticalAlign: "middle" }}><Markdown>{"[ ]"}</Markdown></TableCell>
+    <TableCell><Icon name="SortNumericDown" /></TableCell>
+    <TableCell><Icon name="SortNumericUpAlt" /></TableCell>
+  </TableRow>
+  <TableRow>
+    <TableCell>`string`</TableCell>
+    <TableCell styleOverride={{verticalAlign: "middle" }}><Markdown>{"[ ]"}</Markdown></TableCell>
+    <TableCell><Icon name="SortAlphaDown" /></TableCell>
+    <TableCell><Icon name="SortAlphaUpAlt" /></TableCell>
+  </TableRow>
+</TableBody>
+</Table>
+
 ## Searching via a text query
 
 Text queries are of course also supported by the List component, and may be configured through methods found in the `search` property returned by the `useListConfig()` hook.
@@ -280,7 +495,7 @@ search.properties("name", "types.0.type.name");
 search.set({ properties: ["name", "types.0.type.name"] });
 ```
 
-<Callout color="warning">
+<Callout color="warning" icon="ExclamationSquareFill">
 At least one property must be set for any text search to be sent to the data provider.
 </Callout>
 
@@ -380,6 +595,7 @@ import { useListConfig } from "@ubloimmo/uikit";
 
 const { search } = useListConfig(usePokemonData);
 
+// both are equivalent and set the search debounce delay to 1 second (1000 milliseconds)
 search.debounceDelay(1000);
 search.set({ debounceDelay: 1000 });
 ```
@@ -729,7 +945,7 @@ const usePokemonListConfig = () => {
       "types.1.type.name",
     ];
 
-    const typeOptions = types.map((type) => 
+    const typeOptions = types.map((type) =>
       option(
         type.label,
         typeProperties.map((property) => match(property, "=", type.value)),
@@ -801,4 +1017,3 @@ const usePokemonListConfig = () => {
 </Collapsible>
 
 </Content>
-

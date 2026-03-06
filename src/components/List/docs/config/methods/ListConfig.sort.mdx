@@ -1,0 +1,219 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Sort" />
+
+<Header>
+  <HeaderInfo title="sort()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Builds and returns a single _sort_ for the list's data.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Sorts define the order in which list items are displayed.
+
+```typescript
+const { sort } = useListConfig<Pokemon>(usePokemonData);
+const sortByName = sort("name", "asc", 0);
+// { property: "name", order: "asc", priority: 0, active: true, inverted: false, label: null, iconSet: "unknown" }
+```
+
+## Type definition
+
+```typescript
+export interface ListConfigSortFn<TItem extends object> {
+  // flattened signature
+  <TProperty extends FilterProperty<TItem>>(
+    property: TProperty,
+    order?: SortOrder<TItem, TProperty>,
+    priority?: number,
+    defaultState?: SortState,
+    visualData?: SortVisualData
+  ): SortData<TItem, TProperty>;
+  // compound signature
+  <TProperty extends FilterProperty<TItem>>(
+    sortConfig: SortConfig<TItem, TProperty>,
+    defaultState?: SortState,
+    visualData?: SortVisualData
+  ): SortData<TItem, TProperty>;
+}
+```
+
+## Arguments
+
+`sort` has two signatures. Both return a `SortData` object.
+
+> Calling it with invalid arguments will throw an error.
+
+### Signature 1
+
+> `sort(property, order, priority, defaultState, visualData)`
+
+This signature requires 1 argument.
+
+#### **`property`**: `TProperty extends FilterProperty<TItem>`
+
+A single (possibly nested) string or number property of the item to match against. **Required**.
+
+```typescript
+type FilterProperty<TItem extends object> = DeepKeyOf<TItem>;
+```
+
+#### **`order?`**: `SortOrder<TItem, TProperty>`
+
+Either a `SortOrderBasic` or `SortOrderComplex` sorting order.
+
+Defaults to `asc`.
+
+```typescript
+type SortOrderBasic = "asc" | "desc";
+
+type SortOrderComplex<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem>,
+> =
+  DeepValueOf<TItem, TProperty> extends string | boolean | number
+    ? NonEmptyArr<DeepValueOf<TItem, TProperty>>
+    : DeepValueOf<TItem, TProperty> extends Nullish<string | boolean | number>
+      ? NonEmptyArr<Nullable<NonNullish<DeepValueOf<TItem, TProperty>>>>
+      : never;
+
+type SortOrder<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem>,
+> = SortOrderBasic | SortOrderComplex<TItem, TProperty>;
+```
+
+> In simple terms, either `asc`, `desc`, or a ***non-empty*** array of possible values held by the item's property.
+
+#### **`priority?`**: `number`
+
+The priority of the sorting order. The lower the number, the higher the priority.
+
+Defaults to `0`.
+
+> Only priorities in the range 0 -> Infinity are valid. Negative priorities will get clamped.
+
+```typescript
+type FilterOptionValue = string | number | boolean | Date | null;
+```
+
+#### **`defaultState?`**: `SortState`
+
+The initial state of the to-be-created Sort. Holds its `active` and `inverted` properties.
+
+Defaults to `{ active: true, inverted: false }`.
+
+```typescript
+export type SortState = {
+  active?: boolean;
+  inverted?: boolean;
+};
+```
+
+#### **`visualData?`**: `SortVisualData`
+
+Optional visual data of the to-be-created Sort. Holds its `label` and `iconSet` properties.
+
+Defaults to `{ label: null, iconSet: "unknown" }`.
+
+```typescript
+type SortVisualData = {
+  iconSet?: SortIconSet;
+  label?: Nullable<string>;
+};
+```
+
+### Signature 2
+
+ > `sort(sortConfig, defaultState, visualData)`
+
+This signature is a shorthand for the first signature. It takes three `SortConfig`, `SortState` & `SortVisualData` objects and returns a valid `SortData`.
+
+#### **`sortConfig`**: `SortConfig<TItem, TProperty>`
+
+A valid configuration object that holds a Sort's `property`, `order` and `priority`. **Required**.
+
+```typescript
+type SortConfig<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem>,
+> = {
+  readonly property: TProperty;
+  order?: SortOrder<TItem, NoInfer<TProperty>>;
+  priority?: number;
+};
+```
+
+> Refer to Signature 1 for more information about each of `SortConfig`'s properties.
+
+#### **`defaultState?`**: `SortState`
+
+The initial state of the to-be-created Sort. Holds its `active` and `inverted` properties.
+
+Defaults to `{ active: true, inverted: false }`.
+
+```typescript
+export type SortState = {
+  active?: boolean;
+  inverted?: boolean;
+};
+```
+
+#### **`visualData?`**: `SortVisualData`
+
+Optional visual data of the to-be-created Sort. Holds its `label` and `iconSet` properties.
+
+Defaults to `{ label: null, iconSet: "unknown" }`.
+
+```typescript
+type SortVisualData = {
+  iconSet?: SortIconSet;
+  label?: Nullable<string>;
+};
+```
+
+## Returns
+
+A `SortData` object typed to the list's data and the provided property.
+
+```typescript
+type SortData<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem>,
+> = Readonly<Required<SortConfig<TItem, TProperty>>> &
+  Readonly<Required<SortState>> &
+  Readonly<Required<SortVisualData>> & {
+    readonly defaultState: Readonly<Required<SortState>>;
+    readonly defaultPriority: number;
+  };
+```
+
+## Example
+
+```typescript
+// Retrieve the method from the useListConfig hook
+const { sort } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+// Both of these calls are equivalent.
+  const sortByName = sort("name", "asc", 0, { active: true, inverted: true }, { label: "Name", iconSet: "string" });
+  const sortByName2 = sort({
+    property: "name",
+    order: "asc",
+    priority: 0,
+  }, {
+    active: true,
+    inverted: true,
+  }, {
+    label: "Name",
+    iconSet: "string",
+  })
+})
+```
+
+</Content>
