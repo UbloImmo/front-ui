@@ -402,6 +402,7 @@ export const useListConfig: UseListConfig = <
     return {
       filters: filtersList,
       options: optionsList,
+      optionsMap,
       filterPresets: filterPresetsList,
       searchParams,
       useDataProvider: dataProvider,
