@@ -1,5 +1,6 @@
 import { SortMap } from "../modules/Sort";
 
+import type { FilterOptionData, FilterSignature } from "../modules";
 import type { ListContextValue } from "./ListContext.types";
 
 export const defaultListContextValue = <
@@ -30,7 +31,12 @@ export const defaultListContextValue = <
   filterPresetsLoading: true,
   updateFilterPresetSelection: () => {},
   getFilterPresetBySignature: () => null,
-  options: [],
+  optionsMap: {
+    ...new Map<FilterSignature, FilterOptionData<TItem>>(),
+    commit: () => {},
+    update: () => false,
+  } as unknown as ListContextValue<TItem>["optionsMap"],
+  selectedOptionSignatures: new Set(),
   getOptionBySignature: () => null,
   updateOptionSelection: () => {},
   query: "",
