@@ -20,19 +20,21 @@ import {
 import { compare, isDefined } from "./comparison.utils";
 import { useMounted } from "./component.utils";
 
-import type {
-  DebouncedState,
-  UseDebounceValueOptions,
-  UseDebounceOptions,
-  UseAsyncData,
-  UseAsyncDataOptions,
-  UseAsyncDataReturn,
-  UseAsyncDataState,
-  UseAsyncDataLoadFn,
-  MapConstructorLike,
-  UseMapOptions,
-  UseMap,
-  UseMapReturn,
+import {
+  type DebouncedState,
+  type UseDebounceValueOptions,
+  type UseDebounceOptions,
+  type UseAsyncData,
+  type UseAsyncDataOptions,
+  type UseAsyncDataReturn,
+  type UseAsyncDataState,
+  type UseAsyncDataLoadFn,
+  type MapConstructorLike,
+  type UseMapOptions,
+  type UseMap,
+  type UseMapReturn,
+  UseMapUpdateFn,
+  UseMapCombinedOptions,
 } from "@/types";
 
 /**
@@ -382,23 +384,47 @@ export const useMap: UseMap = <
   TMap extends Map<TKey, TValue> = Map<TKey, TValue>,
 >(
   MapConstructor: MapConstructorLike<TKey, TValue, TMap>,
-  {
+  options: NoInfer<UseMapOptions<TKey, TValue, TMap>> = {}
+): UseMapReturn<TKey, TValue, TMap> => {
+  /**
+   * TS type assignement for easy consumption of either option payload
+   */
+  const {
     autoCommitMutations = true,
+    initiallyCleared = false,
     initialValue,
     reactiveValue,
     reactiveUpdate = (newValue) => newValue,
     onReactiveDelete,
     onReactiveAdd,
-  }: NoInfer<UseMapOptions<TKey, TValue, TMap>> = {}
-): UseMapReturn<TMap> => {
-  const mapRef = useRef<TMap>(
-    initialValue ?? reactiveValue ?? new MapConstructor()
+  } = useMemo<UseMapCombinedOptions<TKey, TValue, TMap>>(
+    () => options,
+    [options]
   );
+
+  /**
+   * Internal value of the hook. Is the target of all mutation methods
+   */
+  const mapRef = useRef<TMap>(
+    new MapConstructor(
+      initialValue ??
+        (initiallyCleared || !reactiveValue ? undefined : reactiveValue)
+    )
+  );
+
+  /**
+   * Reactive clone of the internal value. Tracks the internal {@link mapRef value} and causes rerenders when updated
+   */
   const [map, commit] = useReducer(
     (_: TMap): TMap => new MapConstructor(mapRef.current),
     mapRef.current
   );
 
+  /**
+   * Effect that ensures the internal value reacts to the reactive value if provided.
+   * Adds missing values, removes deleted values and updates conflicting values whenever `reactiveValue` changes.
+   * Performs update in a single O(n) pass, causing one single render if needed
+   */
   useEffect(() => {
     if (!reactiveValue) return;
     const combinedKeys = new Set<TKey>([
@@ -414,7 +440,7 @@ export const useMap: UseMap = <
         mapCommitNeeded = true;
         continue;
       }
-      // add missing or overwhite missing
+      // add or overwrite missing
       const newOrUpdated = reactiveValue.get(key);
       const previousValue = map.get(key);
       if (!newOrUpdated) continue;
@@ -448,6 +474,32 @@ export const useMap: UseMap = <
   );
 
   const get = useCallback<TMap["get"]>((...args) => map.get(...args), [map]);
+
+  /**
+   * Updates a value at a given key using a callback that takes the currently stored value as argument
+   *
+   * @param key - Key for which to update value
+   * @param updateFn - Function that takes the previous value as only parameter, updates and returns it
+   *
+   * @returns Whether the map was ultimately updated
+   *
+   * @remarks
+   * Only keys pointing to existing values in the map will result in an update.
+   * Updates that are identical to the current value will be discarded
+   */
+  const update = useCallback<UseMapUpdateFn<TKey, TValue>>(
+    (key, updateFn) => {
+      if (!updateFn) return false;
+      const currentValue = get(key);
+      if (!isDefined(currentValue)) return false;
+      const updated = updateFn(currentValue);
+      // do not trigger update if the updated value is the same as the current value
+      if (compare(currentValue, update, compare.eq)) return false;
+      set(key, updated);
+      return true;
+    },
+    [get, set]
+  );
 
   const clear = useCallback<TMap["clear"]>(
     (...args) => {
@@ -503,5 +555,6 @@ export const useMap: UseMap = <
     keys,
     values,
     commit,
+    update,
   };
 };

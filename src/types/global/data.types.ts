@@ -345,13 +345,42 @@ export type UseMapOnReactiveAddFn<TKey, TValue> = VoidFn<
 >;
 
 /**
- * Options that may be provided to the {@link UseMap} hook
+ * Updates a value at a given key using a callback that takes the currently stored value as argument
+ *
+ * @param key - Key for which to update value
+ * @param updateFn - Function that takes the previous value as only parameter, updates and returns it
+ *
+ * @returns Whether the map was ultimately updated
+ *
+ * @remarks
+ * Only keys pointing to existing values in the map will result in an update.
+ * Updates that are identical to the current value will be discarded
  */
-export interface UseMapOptions<TKey, TValue, TMap extends Map<TKey, TValue>> {
+export interface UseMapUpdateFn<TKey, TValue> {
+  (key: TKey, updateFn: (currentValue: TValue) => TValue): boolean;
+}
+
+/**
+ * Options always accepted by the {@link UseMap} hook
+ */
+interface UseMapCommonOptions {
   /**
    * Whether to cause a re-render upon map clear, set, delete
+   *
+   * @default true
    */
   autoCommitMutations?: boolean;
+}
+
+/**
+ * Options of the {@link UseMap} hook with a single static initial value
+ */
+export interface UseMapInitialValueOptions<
+  TKey,
+  TValue,
+  TMap extends Map<TKey, TValue>,
+> extends UseMapCommonOptions {
+  reactiveValue?: never;
   /**
    * Initial, non-reactive value to initialized {@link UseMap}'s internal state with
    *
@@ -359,10 +388,31 @@ export interface UseMapOptions<TKey, TValue, TMap extends Map<TKey, TValue>> {
    * If both `initialValue` and `reactiveValue` are provided, `initialValue` take precedence as the hook's initial state
    */
   initialValue?: Nullish<TMap>;
+}
+
+/**
+ * Options of the {@link UseMap} hook with a single reactive value and lifecycle callbacks
+ */
+export interface UseMapReactiveValueOptions<
+  TKey,
+  TValue,
+  TMap extends Map<TKey, TValue>,
+> extends UseMapCommonOptions {
+  initialValue?: never;
+  /**
+   * If set to `true`, the hook's initial value will be a new, empty map.
+   * Otherwhise, the internal value will be a copy of the `reactiveValue` if provided.
+   *
+   * @default false
+   */
+  initiallyCleared?: boolean;
   /**
    * When provided, the underlying map will track & reflect changes made to this value.
+   *
    * @remarks
-   * Is treated like an initial value
+   * Is treated like an initial value only if the `initiallyCleared` property is falsy.
+   *
+   * @default false
    */
   reactiveValue?: Nullish<TMap>;
   /**
@@ -373,20 +423,47 @@ export interface UseMapOptions<TKey, TValue, TMap extends Map<TKey, TValue>> {
   reactiveUpdate?: UseMapReactiveUpdateFn<TKey, TValue>;
   /**
    * Optional callback that runs when keys are reactively deleted from the hook's internal state following `reactiveValue` updates
+   *
+   * @default undefined
    */
   onReactiveDelete?: UseMapOnReactiveDeleteFn<TKey>;
   /**
    * Optional callback that runs when keys are reactively added to the hook's internal state following `reactiveValue` updates
+   *
+   * @default undefined
    */
   onReactiveAdd?: UseMapOnReactiveAddFn<TKey, TValue>;
 }
 
-export type UseMapReturn<TMap> = TMap & {
+/**
+ * Options that may be provided to the {@link UseMap} hook
+ *
+ * Either {@link UseMapInitialValueOptions} or {@link UseMapReactiveValueOptions}
+ */
+export type UseMapOptions<TKey, TValue, TMap extends Map<TKey, TValue>> =
+  | UseMapInitialValueOptions<TKey, TValue, TMap>
+  | UseMapReactiveValueOptions<TKey, TValue, TMap>;
+
+/**
+ * Options object for the {@link UseMap} hook that combines both {@link UseMapInitialValueOptions initial value} & {@link UseMapReactiveValueOptions reactive value} options.
+ */
+export interface UseMapCombinedOptions<
+  TKey,
+  TValue,
+  TMap extends Map<TKey, TValue>,
+> extends Omit<UseMapInitialValueOptions<TKey, TValue, TMap>, "reactiveValue">,
+    Omit<UseMapReactiveValueOptions<TKey, TValue, TMap>, "initialValue"> {}
+
+export type UseMapReturn<TKey, TValue, TMap> = TMap & {
   /**
    * Manually triggers re-renders.
    * Should be called after each batch of map mutations if `options.autoCommitMutations` is `false`
    */
   commit: VoidFn;
+  /**
+   * Updates a value at a given key using a callback that takes the currently stored value as argument
+   */
+  update: UseMapUpdateFn<TKey, TValue>;
 };
 
 /**
@@ -396,5 +473,5 @@ export interface UseMap {
   <TKey, TValue, TMap extends Map<TKey, TValue> = Map<TKey, TValue>>(
     MapConstructor: MapConstructorLike<TKey, TValue, TMap>,
     options?: NoInfer<UseMapOptions<TKey, TValue, TMap>>
-  ): UseMapReturn<TMap>;
+  ): UseMapReturn<TKey, TValue, TMap>;
 }
