@@ -1,3 +1,4 @@
+import { Optional } from "@ubloimmo/front-util";
 import { useMemo } from "react";
 
 import { Badge, type BadgeProps } from "@/components/Badge";
@@ -14,7 +15,7 @@ import type { FilterOptionData } from "@/components/List/modules";
 /**
  * Displays a badge based on a list item's property and the list's options.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @template {object} TItem - The type of the list item
  * @param {ListFilterOptionBadgeProps<TItem>} props - The component props
@@ -26,7 +27,7 @@ export const ListFilterOptionBadge = <TItem extends object>({
   item,
   emptyLabel,
 }: ListFilterOptionBadgeProps<TItem>): JSX.Element => {
-  const { options } = useListContext<TItem>();
+  const { optionsMap } = useListContext<TItem>();
   const tl = useUikitTranslation();
 
   const badgeProps = useMemo<BadgeProps>(() => {
@@ -35,32 +36,33 @@ export const ListFilterOptionBadge = <TItem extends object>({
       color: "gray",
     };
     if (!property) return emptyBadge;
-    const propertyOptions = options.filter((option) =>
-      option.matches[arrayComparison(option.operator)](
-        (match) => match.property === property
-      )
-    );
 
-    if (!propertyOptions.length) return emptyBadge;
-
-    const refinedOptions = propertyOptions.map(
-      (option): FilterOptionData<TItem> => {
-        const matches = option.matches.filter(
+    let matchingOption: Optional<FilterOptionData<TItem>> = undefined;
+    for (const [_, option] of optionsMap) {
+      if (
+        !option.matches[arrayComparison(option.operator)](
           (match) => match.property === property
-        );
-        return {
-          ...option,
-          selected: true,
-          matches,
-        };
+        )
+      )
+        continue;
+      if (
+        itemMatchesOption(
+          item,
+          option.matches.length > 1
+            ? {
+                ...option,
+                matches: option.matches.filter(
+                  (match) => match.property === property
+                ),
+              }
+            : option,
+          true
+        )
+      ) {
+        matchingOption = option;
+        break;
       }
-    );
-
-    if (!refinedOptions.length) return emptyBadge;
-
-    const matchingOption = refinedOptions.find((option) =>
-      itemMatchesOption(item, option)
-    );
+    }
 
     if (!matchingOption) return emptyBadge;
 
@@ -69,7 +71,7 @@ export const ListFilterOptionBadge = <TItem extends object>({
       color: matchingOption.colorKey,
       icon: matchingOption.icon,
     };
-  }, [options, emptyLabel, tl.status, item, property]);
+  }, [emptyLabel, tl.status, property, optionsMap, item]);
 
   return (
     <Badge {...badgeProps} testId="list-filter-option-badge" overrideTestId />
