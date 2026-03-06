@@ -219,7 +219,6 @@ const usePokemonListConfig = (
     async,
     configureSearchParams,
     search,
-    // sort,
     sorts,
   } = useListConfig(pokemonDataProviders[dataProvider]);
 
@@ -228,19 +227,6 @@ const usePokemonListConfig = (
 
   // declare sorting order
   useStatic(() => {
-    // sort("name", "desc", 2, { active: true });
-    // sort("weight", "asc", 1, { active: true });
-    // sort("types.0.type.name", ["water", "fire", "grass"], 0, {
-    //   active: true,
-    //   inverted: true,
-    // });
-    // sort("types.1.type.name", ["water", "fire", "grass"], 1, {
-    //   active: true,
-    //   inverted: true,
-    // });
-    // sort("weight", "asc", 2, {
-    //   active: true,
-    // });
     sorts({
       "types.0.type.name": {
         order: ["water", "fire", "grass"],
@@ -276,9 +262,6 @@ const usePokemonListConfig = (
         active: true,
       },
     });
-    // sort("id", "asc", 2, {
-    //   active: true,
-    // });
   });
 
   // declare name options once
@@ -470,7 +453,7 @@ const usePokemonListConfig = (
       [types.fire, types.electric, weights.light],
       {
         color: "error",
-        operator: BooleanOperators.AND,
+        operator: BooleanOperators.OR,
       }
     );
     filterPreset(
