@@ -55,10 +55,16 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
     [setData]
   );
 
-  const fetchCount = useCallback<DataProviderFetchCountFn<TItem>>((config) => {
-    const filteredData = filterItems(staticDataRef.current, config);
-    return filteredData.length;
-  }, []);
+  const fetchCount = useCallback<DataProviderFetchCountFn<TItem>>(
+    (config) => {
+      const filteredData = filterItems(
+        reactiveData.data ?? staticDataRef.current,
+        config
+      );
+      return filteredData.length;
+    },
+    [reactiveData.data]
+  );
 
   const clear = useCallback(() => {
     setData([]);
