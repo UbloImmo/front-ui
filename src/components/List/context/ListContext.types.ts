@@ -9,7 +9,6 @@ import type {
   FilterSignature,
   IDataProvider,
   Filter,
-  IsFilterOptionFn,
   ListConfigAsyncFilterFn,
   ListConfigAsyncFilterPresetFn,
   ListConfigAsyncOptionFn,
@@ -34,13 +33,13 @@ import type {
   ListConfigSortsFn,
   SortMap,
   Sort,
+  FilterOptionMap,
 } from "../modules";
-import type { UseDataArrayReturn } from "@types";
+import type { UseMapReturn } from "@types";
 import type {
   GenericFn,
   MaybeAsyncFn,
   Nullable,
-  Replace,
   VoidFn,
 } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
@@ -295,8 +294,14 @@ export type ListContextConfig<
    *
    * @type {Nullable<FilterOptionData<TItem>[]>}
    * @default null
+   *
+   * @deprecated use `optionsMap` instead
    */
   options?: Nullable<FilterOptionData<TItem>[]>;
+  /**
+   * Map of all loaded and / or loading options
+   */
+  optionsMap?: Nullable<FilterOptionMap<TItem>>;
   /**
    * The list's filters
    *
@@ -475,25 +480,32 @@ export type UpdateOptionSelectionFn = VoidFn<
   [
     optionSignature: FilterSignature,
     selected: boolean,
-    multi?: boolean,
-    isFilterOption?: IsFilterOptionFn,
+    filter?: Pick<FilterData, "multi" | "optionSignatures">,
+    autoCommitMutation?: boolean,
   ]
 >;
 
 export type ApplyOptionsFn<TItem extends object> = VoidFn<
-  [
-    options: FilterOptionData<TItem>[],
-    extraFilters?: DataProviderFilterParam<TItem>[],
-  ]
+  [extraFilters?: DataProviderFilterParam<TItem>[]]
 >;
 
 export type UseListOptionsReturn<TItem extends object> = {
   /**
-   * The list's options, wrapped in a useDataArray hook
+   * The list's reactive options map
    *
-   * @type {UseDataArrayReturn<FilterOptionData<TItem>>}
+   * @type {FilterOptionMap<TItem>}
    */
-  options: UseDataArrayReturn<FilterOptionData<TItem>>;
+  readonly optionsMap: UseMapReturn<
+    FilterSignature,
+    FilterOptionData<TItem>,
+    FilterOptionMap<TItem>
+  >;
+  /**
+   * Reference to the set of all currently selected options' signatures
+   *
+   * @type {Set<FilterSignature>}
+   */
+  readonly selectedOptionSignatures: Set<FilterSignature>;
   /**
    * Updates a list option's selection
    *
@@ -501,6 +513,7 @@ export type UseListOptionsReturn<TItem extends object> = {
    * @param {boolean} selected - Whether the option should be selected
    * @param {boolean} multi - Whether other options assigned to the same filter stay selected
    * @param {IsFilterOptionFn} isFilterOption - Whether the option is a filter option
+   * @param {boolean} [autoCommitMutation=true] - Whether to cause a renderer.
    */
   updateOptionSelection: UpdateOptionSelectionFn;
   /**
@@ -513,7 +526,6 @@ export type UseListOptionsReturn<TItem extends object> = {
   /**
    * Applies the current options to the data provider, filtering the data
    *
-   * @param {FilterOptionData<TItem>[]} options - The options to apply
    * @param {DataProviderFilterParam<TItem>[]} extraFilters - Additional filters to apply
    */
   applyOptions: ApplyOptionsFn<TItem>;
@@ -716,13 +728,7 @@ export type ListContextValue<
   UseListFiltersReturn<TItem> &
   UseListSearchReturn<TItem> &
   UseListSortsReturn<TItem> &
-  Replace<
-    UseListOptionsReturn<TItem>,
-    "options",
-    {
-      options: FilterOptionData<TItem>[];
-    }
-  >;
+  UseListOptionsReturn<TItem>;
 
 // LIST PROVIDER --------------------------------------------------------------------------------
 
