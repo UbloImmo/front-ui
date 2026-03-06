@@ -116,7 +116,6 @@ export function useListSorts<TItem extends object>(
    */
   const sortMap = useMap(SortMap<TItem>, {
     autoCommitMutations: false,
-    initialValue: config.sorts,
     reactiveValue: config.sorts,
     reactiveUpdate: sortMapReactiveUpdate,
     onReactiveAdd: sortMapOnReactiveAdd,
