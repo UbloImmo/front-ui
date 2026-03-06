@@ -59,13 +59,13 @@ export type SortConfig<
   TProperty extends FilterProperty<TItem>,
 > = {
   /**
-   * The item property to sort items over
+   * The item property to sort items over.
    *
    * @required
    */
   readonly property: TProperty;
   /**
-   * The sorting order for the property
+   * The sorting order for the property.
    *
    * @default "asc"
    */
@@ -103,13 +103,13 @@ export type SortIcons = {
  */
 export type SortVisualData = {
   /**
-   * Defines which icon is is to be rendered when interacting with the Sort
+   * Defines which icon is is to be rendered when interacting with the {@link Sort}
    *
    * @default "unknown"
    */
   iconSet?: SortIconSet;
   /**
-   * Used to display a tooltip when toggling filter activation
+   * Used to display a tooltip when interacting with the {@link Sort}.
    *
    * @default null
    */
@@ -141,31 +141,31 @@ export type SortModuleCallbacks = {
   /**
    * Sets the Sort to active if not already
    */
-  activate: VoidFn;
+  readonly activate: VoidFn;
   /**
    * Deactivates the Sort if previously inactive
    */
-  deactivate: VoidFn;
+  readonly deactivate: VoidFn;
   /**
    * Toggles the Sort's `active` state
    */
-  toggle: VoidFn;
+  readonly toggle: VoidFn;
   /**
    * Toggles the Sort's `inversed` state
    *
    * @remarks A Sort may only be mutate its inverted state when active
    */
-  invert: VoidFn;
+  readonly invert: VoidFn;
   /**
    * Resets the Sort's active & inverted state to their default values
    */
-  reset: VoidFn;
+  readonly reset: VoidFn;
   /**
    * Prioritizes the Sort, making it the most influencial in ordering elements.
    *
    * @remarks A Sort may only be prioritized when active
    */
-  prioritize: VoidFn;
+  readonly prioritize: VoidFn;
 };
 
 /**
@@ -174,9 +174,9 @@ export type SortModuleCallbacks = {
 export type SortData<
   TItem extends object,
   TProperty extends FilterProperty<TItem>,
-> = Required<SortConfig<TItem, TProperty>> &
-  Required<SortState> &
-  Required<SortVisualData> & {
+> = Readonly<Required<SortConfig<TItem, TProperty>>> &
+  Readonly<Required<SortState>> &
+  Readonly<Required<SortVisualData>> & {
     /**
      * Default state of a list {@link Sort}
      */
