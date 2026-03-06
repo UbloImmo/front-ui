@@ -148,9 +148,9 @@ export type FilterData = Required<FilterConfig & FilterVisualData> & {
   /**
    * The options of the filter
    *
-   * @type {FilterSignature[]}
+   * @type {Set<FilterSignature>}
    */
-  optionSignatures: FilterSignature[];
+  optionSignatures: Set<FilterSignature>;
   /**
    * The dividers of the filter options
    *
