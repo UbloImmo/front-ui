@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added utility `sort()` & `sorts()` methods to `useListConfig` hook.
   - Documented sorting logic & usage.
 - `v0.0.1` ListTableHeaderSort component
-  - Customized table header that allows for interaction with a single list sort..
+  - Customized table header that allows for interaction with a single list sort.
 
 ### Fixed
 
