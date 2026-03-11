@@ -18,6 +18,7 @@ export * from "./Dialog";
 export * from "./Divider";
 export * from "./EmptyStateCard";
 export * from "./EnergyLabel";
+export * from "./EnergyScoreComboBox";
 export * from "./EntityInfoCard";
 export * from "./FeatureSwitch";
 export * from "./Field";

@@ -1,0 +1,93 @@
+@use "../../styles/_mixins.scss";
+@use "../../sizes/_breakpoints.scss";
+
+.energy-score-combo-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+  align-items: center;
+
+  .energy-score-option {
+    --option-background: var(--white);
+    --option-border-color: var(--primary-medium);
+    --option-foreground: var(--gray-800);
+
+    @include mixins.dimensions(var(--s-6), var(--s-8), true);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--s-1);
+    border: 1px solid var(--option-border-color);
+    background: var(--option-background);
+    color: var(--option-foreground);
+    box-shadow: var(--shadow-button);
+    cursor: pointer;
+    padding: 0;
+
+    .energy-score-option-label {
+      color: inherit;
+    }
+
+    transition:
+      background 300ms var(--bezier),
+      border-color 300ms var(--bezier),
+      box-shadow 150ms var(--bezier);
+    user-select: none;
+
+    &:focus-visible {
+      outline: none;
+      --option-border-color: var(--primary-base);
+      box-shadow: var(--shadow-input-default-focus);
+    }
+
+    &.active {
+      --option-border-color: transparent;
+      --option-foreground: var(--white);
+
+      &.DPE {
+        &.A { --option-background: #009c6d; }
+        &.B { --option-background: #52b153; }
+        &.C { --option-background: #78bd76; }
+        &.D { --option-background: #e3d600; }
+        &.E { --option-background: #f0b50f; }
+        &.F { --option-background: #eb8235; }
+        &.G { --option-background: #d7221f; }
+      }
+
+      &.GES {
+        &.A { --option-background: #a4dbf8; }
+        &.B { --option-background: #8cb4d3; }
+        &.C { --option-background: #7792b1; }
+        &.D { --option-background: #606f8f; }
+        &.E { --option-background: #4d5271; }
+        &.F { --option-background: #393551; }
+        &.G { --option-background: #281b35; }
+      }
+    }
+  }
+
+&.error {
+    .energy-score-option {
+      box-shadow: var(--shadow-input-error-default);
+    }
+  }
+
+  .energy-score-empty {
+    @include mixins.dimensions(var(--s-6), var(--s-8), true);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--s-1);
+    border: 1px solid var(--gray-100);
+    background: var(--gray-50);
+    user-select: none;
+  }
+
+  @media only screen and (max-width: breakpoints.$breakpoint-xs) {
+    .energy-score-option,
+    .energy-score-empty {
+      @include mixins.dimensions(var(--s-8), var(--s-10), true);
+    }
+  }
+}
