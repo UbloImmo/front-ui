@@ -78,6 +78,7 @@ export const useListContextStore = <
   const { initialSynced } = useListContextSearchParams(
     config,
     options,
+    sorts,
     configLoading
   );
 

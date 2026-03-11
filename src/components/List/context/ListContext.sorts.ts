@@ -1,11 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import {
-  type MutateListSortFn,
-  type ListContextConfig,
-  type UseListSortsReturn,
-  GetListSortFn,
-} from "./ListContext.types";
 import { SortMap } from "../modules/Sort";
 import {
   isSortOrderBasic,
@@ -13,13 +7,15 @@ import {
   SORT_HIGHLIGHTED_PRIORITY,
 } from "../modules/Sort/Sort.utils";
 
-import {
-  UseMapOnReactiveAddFn,
-  UseMapOnReactiveDeleteFn,
-  UseMapReactiveUpdateFn,
-} from "@types";
 import { isZero, useLogger, useMap } from "@utils";
 
+import type {
+  MutateListSortFn,
+  ListContextConfig,
+  UseListSortsReturn,
+  GetListSortFn,
+  SetInternalListSortFlagRefsFn,
+} from "./ListContext.types";
 import type {
   FilterProperty,
   Sort,
@@ -27,6 +23,11 @@ import type {
   SortOrder,
   SortOrderComplex,
 } from "../modules";
+import type {
+  UseMapOnReactiveAddFn,
+  UseMapOnReactiveDeleteFn,
+  UseMapReactiveUpdateFn,
+} from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 /**
@@ -121,6 +122,19 @@ export function useListSorts<TItem extends object>(
     onReactiveAdd: sortMapOnReactiveAdd,
     onReactiveDelete: sortMapOnReactiveDelete,
   });
+
+  const setInternalSortFlagRefs = useCallback<
+    SetInternalListSortFlagRefsFn<TItem>
+  >(
+    <TProperty extends FilterProperty<TItem>>(
+      property: TProperty,
+      state: Pick<SortData<TItem, TProperty>, "active" | "inverted">
+    ) => {
+      activeSortsSetRef.current[state.active ? "add" : "delete"](property);
+      invertedSortsSetRef.current[state.inverted ? "add" : "delete"](property);
+    },
+    []
+  );
 
   /**
    * Finds a Sort by its property and sets its `active` property to `true` if it isn't already.
@@ -400,11 +414,14 @@ export function useListSorts<TItem extends object>(
 
   return {
     sortMap: sortMap,
-    sorts,
     activeSorts,
     activateSort,
     deactivateSort,
+    prioritizeSort,
     highlightedSortProperty,
+    setInternalSortFlagRefs,
+    activeSortProperties: activeSortsSetRef.current,
+    invertedSortProperties: invertedSortsSetRef.current,
     invertSort,
     resetSort,
     toggleSort,

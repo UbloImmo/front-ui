@@ -53,6 +53,7 @@ export type UseListContextSearchParamsReturn = {
 export type UseListContextSearchParams = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "searchParams">,
   options: UseListOptionsReturn<TItem>,
+  sorts: UseListSortsReturn<TItem>,
   configLoading: boolean
 ) => UseListContextSearchParamsReturn;
 
@@ -632,27 +633,96 @@ export type UseListSearch = <TItem extends object>(
 
 // LIST SORTS -----------------------------------------------------------------------------------
 
+/**
+ * Mutates a single list {@link Sort} by referencing it using its property
+ */
 export interface MutateListSortFn<TItem extends object> {
   <TProperty extends FilterProperty<TItem>>(property: TProperty): void;
 }
 
+/**
+ * Finds a single list {@link Sort} by its property, or null if not found
+ */
 export interface GetListSortFn<TItem extends object> {
   <TProperty extends FilterProperty<TItem>>(
     property: TProperty
   ): Nullable<Sort<TItem, TProperty>>;
 }
 
+/**
+ * Internal callback used to update the list's sort configuration's flags.
+ * Used during batch updates in order to avoid excessive rerenders
+ *
+ * @private
+ */
+export interface SetInternalListSortFlagRefsFn<TItem extends object> {
+  <TProperty extends FilterProperty<TItem>>(
+    property: TProperty,
+    state: Pick<SortData<TItem, TProperty>, "active" | "inverted">
+  ): void;
+}
+
 export type UseListSortsReturn<TItem extends object> = {
-  sortMap: SortMap<TItem>;
-  sorts: Sort<TItem, FilterProperty<TItem>>[];
-  activeSorts: Sort<TItem, FilterProperty<TItem>>[];
-  highlightedSortProperty: Nullable<FilterProperty<TItem>>;
+  /**
+   * Reactive Map holding currently loaded list {@link SortData}
+   */
+  sortMap: UseMapReturn<
+    FilterProperty<TItem>,
+    SortData<TItem, FilterProperty<TItem>>,
+    SortMap<TItem>
+  >;
+  /**
+   * Array holding active list {@link Sort Sorts}, in application order
+   */
+  readonly activeSorts: Sort<TItem, FilterProperty<TItem>>[];
+  /**
+   * Set holding the currently active list sorts
+   */
+  readonly activeSortProperties: Set<FilterProperty<TItem>>;
+  /**
+   * Set holding the currently inverted list sorts
+   */
+  readonly invertedSortProperties: Set<FilterProperty<TItem>>;
+  /**
+   * Reactive state holding the currenly prioritized list {@link Sort}'s property, or null if none are.
+   */
+  readonly highlightedSortProperty: Nullable<FilterProperty<TItem>>;
+  /**
+   * Prioritizes a single list {@link Sort} by referencing its property.
+   *
+   * @remarks
+   * Only one sort may be prioritized at a time.
+   * Unknown properties not associated with a loaded sort will be ignored.
+   */
+  prioritizeSort: MutateListSortFn<TItem>;
+  /**
+   * Activates a single list {@link Sort} by referencing its property
+   */
   activateSort: MutateListSortFn<TItem>;
+  /**
+   * Deactivates a single list {@link Sort} by referencing its property
+   */
   deactivateSort: MutateListSortFn<TItem>;
+  /**
+   * Toggles a single list {@link Sort}'s activation by referencing its property
+   */
   toggleSort: MutateListSortFn<TItem>;
+  /**
+   * Inverts a single list {@link Sort}'s order by referencing its property
+   */
   invertSort: MutateListSortFn<TItem>;
+  /**
+   * Resets a single list {@link Sort}'s activation & inversion referencing its property
+   */
   resetSort: MutateListSortFn<TItem>;
+  /**
+   * Finds & returns a single list {@link Sort} using its property, or null if not found
+   */
   getSort: GetListSortFn<TItem>;
+  /**
+   * @private Internal API, do not use
+   */
+  setInternalSortFlagRefs: SetInternalListSortFlagRefsFn<TItem>;
 };
 
 // LIST CONTEXT ---------------------------------------------------------------------------------

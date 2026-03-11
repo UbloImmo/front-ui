@@ -1,7 +1,13 @@
 import { SortMap } from "../modules/Sort";
 
-import type { FilterOptionData, FilterSignature } from "../modules";
+import type {
+  FilterOptionData,
+  FilterProperty,
+  FilterSignature,
+  SortData,
+} from "../modules";
 import type { ListContextValue } from "./ListContext.types";
+import type { UseMapReturn } from "@types";
 
 export const defaultListContextValue = <
   TItem extends object,
@@ -44,14 +50,25 @@ export const defaultListContextValue = <
   changeQuery: () => {},
   applyOptions: () => {},
   hydratedSearchConfig: null,
-  sorts: [],
   activeSorts: [],
-  sortMap: new SortMap<TItem>(),
+  activeSortProperties: new Set(),
+  invertedSortProperties: new Set(),
+  sortMap: {
+    ...new SortMap<TItem>(),
+    update: () => false,
+    commit: () => {},
+  } as unknown as UseMapReturn<
+    FilterProperty<TItem>,
+    SortData<TItem, FilterProperty<TItem>>,
+    SortMap<TItem>
+  >,
+  setInternalSortFlagRefs: () => {},
   activateSort: () => {},
   deactivateSort: () => {},
   toggleSort: () => {},
   invertSort: () => {},
   resetSort: () => {},
   getSort: () => null,
+  prioritizeSort: () => {},
   highlightedSortProperty: null,
 });
