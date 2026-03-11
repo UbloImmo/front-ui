@@ -48,7 +48,7 @@ const EnergyScoreComboBox = (
   useLogger("EnergyScoreComboBox");
   const mergedProps = useMergedProps(defaultEnergyScoreComboBoxProps, props);
   const testId = useTestId("energy-score-combo-box", props);
-  const { type, value, onChange, readOnly, error } = mergedProps;
+  const { type, value, onChange, readOnly } = mergedProps;
 
   const { container, getOptionClass, getOptionStyle } =
     useEnergyScoreComboBoxStyles(mergedProps);
@@ -61,7 +61,7 @@ const EnergyScoreComboBox = (
     [onChange]
   );
 
-  const isEmpty = readOnly && isNull(value) && !error;
+  const isEmpty = readOnly && isNull(value);
   const isViewOnly = readOnly && !isNull(value);
 
   return (

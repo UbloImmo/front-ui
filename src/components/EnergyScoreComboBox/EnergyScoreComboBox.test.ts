@@ -71,6 +71,21 @@ testEnergyScoreComboBox({
 testEnergyScoreComboBox({
   ...EnergyScoreComboBox.__DEFAULT_PROPS,
   type: "DPE",
+  value: null,
+  readOnly: true,
+  error: true,
+})(
+  "should keep the empty read-only state when error is true",
+  ({ queryAllByRole, getByText, getByTestId }) => {
+    expect(queryAllByRole("button")).toHaveLength(0);
+    expect(getByText("-")).not.toBeNull();
+    expect(getByTestId(testId)).toHaveClass(styles.error);
+  }
+);
+
+testEnergyScoreComboBox({
+  ...EnergyScoreComboBox.__DEFAULT_PROPS,
+  type: "DPE",
   error: true,
 })("should apply the error class to the container", ({ getByTestId }) => {
   expect(getByTestId(testId)).toHaveClass(styles.error);

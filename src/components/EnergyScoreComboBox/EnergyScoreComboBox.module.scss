@@ -38,7 +38,8 @@
   }
 
   &.error {
-    .energy-score-option {
+    .energy-score-option,
+    .energy-score-empty {
       box-shadow: var(--shadow-input-error-default);
     }
   }
