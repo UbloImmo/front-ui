@@ -2,6 +2,7 @@ import { isNull } from "@ubloimmo/front-util";
 import { useCallback } from "react";
 
 import { EnergyLabel } from "../EnergyLabel";
+import { ENERGY_LABEL_VALUES } from "../EnergyLabel/EnergyLabel.utils";
 import { Text } from "../Text";
 import styles from "./EnergyScoreComboBox.module.scss";
 import { useEnergyScoreComboBoxStyles } from "./EnergyScoreComboBox.styles";
@@ -14,16 +15,6 @@ import type {
 } from "./EnergyScoreComboBox.types";
 import type { EnergyLabelValue } from "../EnergyLabel/EnergyLabel.types";
 import type { TestIdProps } from "@types";
-
-const ENERGY_LABEL_VALUES: EnergyLabelValue[] = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-];
 
 const defaultEnergyScoreComboBoxProps: EnergyScoreComboBoxDefaultProps = {
   type: "DPE",
