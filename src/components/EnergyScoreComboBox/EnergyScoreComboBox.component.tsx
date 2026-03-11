@@ -45,12 +45,10 @@ const defaultEnergyScoreComboBoxProps: EnergyScoreComboBoxDefaultProps = {
 const EnergyScoreComboBox = (
   props: EnergyScoreComboBoxProps & TestIdProps
 ): JSX.Element => {
-  const { warn } = useLogger("EnergyScoreComboBox");
+  useLogger("EnergyScoreComboBox");
   const mergedProps = useMergedProps(defaultEnergyScoreComboBoxProps, props);
   const testId = useTestId("energy-score-combo-box", props);
   const { type, value, onChange, readOnly, error } = mergedProps;
-
-  if (!props.type) warn("Missing required type prop");
 
   const { container, getOptionClass, getOptionStyle } =
     useEnergyScoreComboBoxStyles(mergedProps);
