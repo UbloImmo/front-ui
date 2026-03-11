@@ -7,7 +7,7 @@ import { useEnergyScoreComboBoxStyles } from "./EnergyScoreComboBox.styles";
 import { ENERGY_LABEL_VALUES } from "../EnergyLabel/EnergyLabel.utils";
 import { Text } from "../Text";
 
-import { useLogger, useMergedProps, useTestId } from "@utils";
+import { useMergedProps, useTestId } from "@utils";
 
 import type {
   EnergyScoreComboBoxDefaultProps,
@@ -36,7 +36,6 @@ const defaultEnergyScoreComboBoxProps: EnergyScoreComboBoxDefaultProps = {
 const EnergyScoreComboBox = (
   props: EnergyScoreComboBoxProps & TestIdProps
 ): JSX.Element => {
-  useLogger("EnergyScoreComboBox");
   const mergedProps = useMergedProps(defaultEnergyScoreComboBoxProps, props);
   const testId = useTestId("energy-score-combo-box", props);
   const { type, value, onChange, readOnly } = mergedProps;
