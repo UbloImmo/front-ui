@@ -31,13 +31,23 @@ export function useEnergyScoreComboBoxStyles(
 
   const getOptionStyle = useCallback(
     (optionValue: EnergyLabelValue): CSSProperties | undefined => {
-      if (value !== optionValue) return undefined;
+      const isActive = value === optionValue;
+
+      if (!isActive) {
+        return {
+          "--energy-label-background": "var(--white)",
+          "--energy-label-border": "var(--primary-medium)",
+          "--energy-label-foreground": "var(--gray-800)",
+        } as CSSProperties;
+      }
 
       const backgroundColor = getEnergyLabelBackgroundColor(type, optionValue);
 
       if (!backgroundColor) return undefined;
 
-      return { "--option-background": backgroundColor } as CSSProperties;
+      return {
+        "--energy-label-background": backgroundColor,
+      } as CSSProperties;
     },
     [type, value]
   );

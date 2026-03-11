@@ -2,9 +2,9 @@
 @use "../../sizes/_breakpoints.scss";
 
 .energy-label {
-  --label-background: var(--gray-50);
-  --label-foreground: var(--gray-600);
-  --label-border: var(--gray-200);
+  --label-background: var(--energy-label-background, var(--gray-50));
+  --label-foreground: var(--energy-label-foreground, var(--gray-600));
+  --label-border: var(--energy-label-border, var(--gray-200));
 
   @include mixins.dimensions(var(--s-6), var(--s-8), true);
   display: flex;
