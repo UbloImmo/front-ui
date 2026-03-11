@@ -111,7 +111,7 @@ export const useListContextStore = <
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    options.optionsMap,
+    options.selectedOptionSignatures,
     loading,
     search.queryFilters,
     config.searchAsOptions,
