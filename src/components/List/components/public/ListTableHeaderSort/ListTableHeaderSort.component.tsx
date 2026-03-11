@@ -57,10 +57,10 @@ export const ListTableHeaderSort = <TItem extends object>(
         : tl.action.sort();
     return {
       content,
-      direction: "top",
+      direction: props.tooltipDirection ?? "top",
       cursor: "pointer",
     };
-  }, [props.fallbackLabel, sort, tl.action]);
+  }, [props.fallbackLabel, props.tooltipDirection, sort, tl.action]);
 
   const icons = useSortIcons(sort?.iconSet);
   const classNames = useListTableHeaderSortClassnames(
@@ -117,7 +117,13 @@ export const ListTableHeaderSort = <TItem extends object>(
         )}
         <FlexRowLayout align="center" justify="end" gap="s-2">
           {!props.hideLabel && props.tooltip && (
-            <Tooltip {...props.tooltip} iconColor="primary-medium" />
+            <Tooltip
+              {...props.tooltip}
+              direction={
+                props.tooltipDirection ?? props.tooltip?.direction ?? "top"
+              }
+              iconColor="primary-medium"
+            />
           )}
           {!!sortTooltipProps && sort && (
             <Tooltip {...sortTooltipProps}>

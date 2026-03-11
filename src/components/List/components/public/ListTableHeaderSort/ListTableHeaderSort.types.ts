@@ -1,3 +1,5 @@
+import { Direction } from "@types";
+
 import type { FilterProperty } from "@/components/List/modules";
 import type { TooltipProps } from "@/components/Tooltip";
 import type { TableCellProps } from "@layouts";
@@ -15,6 +17,12 @@ export type ListTableHeaderSortProps<TItem extends object> = {
    * @default null
    */
   tooltip?: Nullable<Omit<TooltipProps, "iconColor" | "children">>;
+  /**
+   * Direction of the component's tooltips
+   *
+   * @default "top"
+   */
+  tooltipDirection?: Direction;
 } & RequireAtLeastOne<{
   /**
    * Whether to hide the label
