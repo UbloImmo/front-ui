@@ -110,7 +110,7 @@ export const useListOptions: UseListOptions = <TItem extends object>(
 
   const updateOptionSelection = useCallback<UpdateOptionSelectionFn>(
     (
-      optionSignature: string,
+      optionSignature: FilterSignature,
       selected: boolean,
       filter?: Pick<FilterData, "multi" | "optionSignatures">,
       autoCommitMutation = true
