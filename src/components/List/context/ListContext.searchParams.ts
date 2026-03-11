@@ -43,11 +43,7 @@ export const useListContextSearchParams: UseListContextSearchParams = <
   TItem extends object,
 >(
   { searchParams }: Pick<ListContextConfig<TItem>, "searchParams">,
-  {
-    optionsMap,
-    updateOptionSelection,
-    selectedOptionSignatures,
-  }: UseListOptionsReturn<TItem>,
+  { optionsMap, selectedOptionSignatures }: UseListOptionsReturn<TItem>,
   configLoading: boolean
 ): UseListContextSearchParamsReturn => {
   const readSearchParams = useMemo(
@@ -134,8 +130,18 @@ export const useListContextSearchParams: UseListContextSearchParams = <
    */
   const initOptionsFromSearchParams = useCallback(() => {
     const signatures = readOptionsSignatures();
-    signatures.forEach((signature) => updateOptionSelection(signature, true));
-  }, [readOptionsSignatures, updateOptionSelection]);
+    if (!signatures.length) return;
+    let needsCommit = false;
+    for (const signature of signatures) {
+      const option = optionsMap.get(signature);
+      if (!option || option.disabled) continue;
+      optionsMap.set(signature, { ...option, selected: true });
+      needsCommit = true;
+    }
+    if (needsCommit) {
+      optionsMap.commit();
+    }
+  }, [optionsMap, readOptionsSignatures]);
 
   /**
    * Writes the current list options to the URL search parameters when the options change.
@@ -144,7 +150,7 @@ export const useListContextSearchParams: UseListContextSearchParams = <
     if (configLoading || !write || !initialSynced) return;
     writeOptions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [optionsMap, write, configLoading, initialSynced]);
+  }, [selectedOptionSignatures.size, configLoading, initialSynced]);
 
   /**
    * Initializes the list options from the URL search parameters when the component mounts.
