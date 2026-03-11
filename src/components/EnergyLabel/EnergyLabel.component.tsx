@@ -30,12 +30,17 @@ const EnergyLabel = (props: EnergyLabelProps & TestIdProps): JSX.Element => {
 
   log(mergedProps);
 
-  const { classNames } = useEnergyLabelStyles(mergedProps);
+  const { classNames, style } = useEnergyLabelStyles(mergedProps);
 
   if (!props.type) warn("Missing type prop");
 
   return (
-    <div className={classNames.box} data-testid={testId} role="status">
+    <div
+      className={classNames.box}
+      data-testid={testId}
+      role="status"
+      style={style}
+    >
       <Text
         className={classNames.label}
         weight="bold"

@@ -44,30 +44,10 @@
     &.active {
       --option-border-color: transparent;
       --option-foreground: var(--white);
-
-      &.DPE {
-        &.A { --option-background: #009c6d; }
-        &.B { --option-background: #52b153; }
-        &.C { --option-background: #78bd76; }
-        &.D { --option-background: #e3d600; }
-        &.E { --option-background: #f0b50f; }
-        &.F { --option-background: #eb8235; }
-        &.G { --option-background: #d7221f; }
-      }
-
-      &.GES {
-        &.A { --option-background: #a4dbf8; }
-        &.B { --option-background: #8cb4d3; }
-        &.C { --option-background: #7792b1; }
-        &.D { --option-background: #606f8f; }
-        &.E { --option-background: #4d5271; }
-        &.F { --option-background: #393551; }
-        &.G { --option-background: #281b35; }
-      }
     }
   }
 
-&.error {
+  &.error {
     .energy-score-option {
       box-shadow: var(--shadow-input-error-default);
     }

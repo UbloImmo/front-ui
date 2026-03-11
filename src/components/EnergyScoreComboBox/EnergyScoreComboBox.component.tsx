@@ -51,7 +51,7 @@ const EnergyScoreComboBox = (
 
   if (!props.type) warn("Missing required type prop");
 
-  const { container, getOptionClass } =
+  const { container, getOptionClass, getOptionStyle } =
     useEnergyScoreComboBoxStyles(mergedProps);
 
   const handleSelect = useCallback(
@@ -79,7 +79,11 @@ const EnergyScoreComboBox = (
           </Text>
         </div>
       ) : isViewOnly ? (
-        <div className={getOptionClass(value)} aria-label={`${type} ${value}`}>
+        <div
+          className={getOptionClass(value)}
+          aria-label={`${type} ${value}`}
+          style={getOptionStyle(value)}
+        >
           <Text
             weight="bold"
             align="center"
@@ -94,6 +98,7 @@ const EnergyScoreComboBox = (
             key={optionValue}
             type="button"
             className={getOptionClass(optionValue)}
+            style={getOptionStyle(optionValue)}
             onClick={() => handleSelect(optionValue)}
             aria-pressed={value === optionValue}
             aria-label={`${type} ${optionValue}`}

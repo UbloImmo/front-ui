@@ -1,11 +1,13 @@
 import { useCallback } from "react";
 
 import styles from "./EnergyScoreComboBox.module.scss";
+import { getEnergyLabelBackgroundColor } from "../EnergyLabel/EnergyLabel.colors";
 
 import { useCssClasses } from "@utils";
 
 import type { EnergyScoreComboBoxDefaultProps } from "./EnergyScoreComboBox.types";
 import type { EnergyLabelValue } from "../EnergyLabel/EnergyLabel.types";
+import type { CSSProperties } from "react";
 
 export function useEnergyScoreComboBoxStyles(
   props: EnergyScoreComboBoxDefaultProps
@@ -20,17 +22,25 @@ export function useEnergyScoreComboBoxStyles(
   const getOptionClass = useCallback(
     (optionValue: EnergyLabelValue): string => {
       const isActive = value === optionValue;
-      return [
-        styles["energy-score-option"],
-        styles[type],
-        styles[optionValue],
-        isActive ? styles.active : null,
-      ]
+      return [styles["energy-score-option"], isActive ? styles.active : null]
         .filter(Boolean)
         .join(" ");
+    },
+    [value]
+  );
+
+  const getOptionStyle = useCallback(
+    (optionValue: EnergyLabelValue): CSSProperties | undefined => {
+      if (value !== optionValue) return undefined;
+
+      const backgroundColor = getEnergyLabelBackgroundColor(type, optionValue);
+
+      if (!backgroundColor) return undefined;
+
+      return { "--option-background": backgroundColor } as CSSProperties;
     },
     [type, value]
   );
 
-  return { container, getOptionClass };
+  return { container, getOptionClass, getOptionStyle };
 }
