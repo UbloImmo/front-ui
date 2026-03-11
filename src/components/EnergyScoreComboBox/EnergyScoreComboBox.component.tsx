@@ -2,10 +2,10 @@ import { isNull } from "@ubloimmo/front-util";
 import { useCallback } from "react";
 
 import { EnergyLabel } from "../EnergyLabel";
-import { ENERGY_LABEL_VALUES } from "../EnergyLabel/EnergyLabel.utils";
-import { Text } from "../Text";
 import styles from "./EnergyScoreComboBox.module.scss";
 import { useEnergyScoreComboBoxStyles } from "./EnergyScoreComboBox.styles";
+import { ENERGY_LABEL_VALUES } from "../EnergyLabel/EnergyLabel.utils";
+import { Text } from "../Text";
 
 import { useLogger, useMergedProps, useTestId } from "@utils";
 
@@ -74,9 +74,7 @@ const EnergyScoreComboBox = (
           aria-label={`${type} ${value}`}
           style={getOptionStyle(value)}
         >
-          <span aria-hidden="true">
-            <EnergyLabel type={type} value={value} state="active" />
-          </span>
+          <EnergyLabel type={type} value={value} state="active" />
         </div>
       ) : (
         ENERGY_LABEL_VALUES.map((optionValue) => (
@@ -89,13 +87,11 @@ const EnergyScoreComboBox = (
             aria-pressed={value === optionValue}
             aria-label={`${type} ${optionValue}`}
           >
-            <span aria-hidden="true">
-              <EnergyLabel
-                type={type}
-                value={optionValue}
-                state={value === optionValue ? "active" : "inactive"}
-              />
-            </span>
+            <EnergyLabel
+              type={type}
+              value={optionValue}
+              state={value === optionValue ? "active" : "inactive"}
+            />
           </button>
         ))
       )}
