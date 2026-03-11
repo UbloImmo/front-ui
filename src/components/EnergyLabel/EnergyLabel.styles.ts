@@ -5,7 +5,7 @@ import { getEnergyLabelBackgroundColor } from "./EnergyLabel.colors";
 import styles from "./EnergyLabel.module.scss";
 import { EnergyLabelDefaultProps } from "./EnergyLabel.types";
 
-import { useCssClasses } from "@utils";
+import { cssVariables, useCssClasses } from "@utils";
 
 import type { CSSProperties } from "react";
 
@@ -25,7 +25,9 @@ export function useEnergyLabelStyles(props: EnergyLabelDefaultProps) {
 
     if (!backgroundColor) return undefined;
 
-    return { "--label-background": backgroundColor } as CSSProperties;
+    return cssVariables({
+      "label-background": backgroundColor,
+    });
   }, [props.state, props.type, props.value]);
 
   return useMemo(
