@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import styles from "./EnergyScoreComboBox.module.scss";
 import { getEnergyLabelBackgroundColor } from "../EnergyLabel/EnergyLabel.colors";
 
-import { useCssClasses } from "@utils";
+import { cssClasses, cssVariables, useCssClasses } from "@utils";
 
 import type { EnergyScoreComboBoxDefaultProps } from "./EnergyScoreComboBox.types";
 import type { EnergyLabelValue } from "../EnergyLabel/EnergyLabel.types";
@@ -22,9 +22,10 @@ export function useEnergyScoreComboBoxStyles(
   const getOptionClass = useCallback(
     (optionValue: EnergyLabelValue): string => {
       const isActive = value === optionValue;
-      return [styles["energy-score-option"], isActive ? styles.active : null]
-        .filter(Boolean)
-        .join(" ");
+      return (
+        cssClasses(styles["energy-score-option"], [styles.active, isActive]) ??
+        ""
+      );
     },
     [value]
   );
@@ -34,20 +35,20 @@ export function useEnergyScoreComboBoxStyles(
       const isActive = value === optionValue;
 
       if (!isActive) {
-        return {
-          "--energy-label-background": "var(--white)",
-          "--energy-label-border": "var(--primary-medium)",
-          "--energy-label-foreground": "var(--gray-800)",
-        } as CSSProperties;
+        return cssVariables({
+          "energy-label-background": "var(--white)",
+          "energy-label-border": "var(--primary-medium)",
+          "energy-label-foreground": "var(--gray-800)",
+        });
       }
 
       const backgroundColor = getEnergyLabelBackgroundColor(type, optionValue);
 
       if (!backgroundColor) return undefined;
 
-      return {
-        "--energy-label-background": backgroundColor,
-      } as CSSProperties;
+      return cssVariables({
+        "energy-label-background": backgroundColor,
+      });
     },
     [type, value]
   );
