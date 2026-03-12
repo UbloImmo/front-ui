@@ -30,7 +30,7 @@ const defaultEnergyScoreComboBoxProps: EnergyScoreComboBoxDefaultProps = {
  * An interactive selector for energy scores (DPE or GES).
  * Renders a row of clickable A–G options; the selected one is highlighted.
  *
- * @version 0.1.0
+ * @version 0.0.1
  *
  * @param {EnergyScoreComboBoxProps & TestIdProps} props
  * @returns {JSX.Element}
