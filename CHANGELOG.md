@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- `v0.0.1` EnergyScoreComboBox component
+  - Add an interactive energy score selector for DPE and GES labels, with selectable, read-only, empty, and error states.
+
+### Changed
+- `v0.1.1` EnergyLabel component
+  - Share energy score values and background color mappings with `EnergyScoreComboBox` so both components use the same visual source of truth.
 
 ## 2.0.6 - 2026-02-25
 ### Fixed
