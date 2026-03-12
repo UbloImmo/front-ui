@@ -4,7 +4,10 @@ import { useCallback } from "react";
 import { EnergyLabel } from "../EnergyLabel";
 import styles from "./EnergyScoreComboBox.module.scss";
 import { useEnergyScoreComboBoxStyles } from "./EnergyScoreComboBox.styles";
-import { ENERGY_LABEL_VALUES } from "../EnergyLabel/EnergyLabel.utils";
+import {
+  ENERGY_LABEL_VALUES,
+  type EnergyLabelValue,
+} from "../EnergyLabel/EnergyLabel.types";
 import { Text } from "../Text";
 
 import { useMergedProps, useTestId } from "@utils";
@@ -13,7 +16,6 @@ import type {
   EnergyScoreComboBoxDefaultProps,
   EnergyScoreComboBoxProps,
 } from "./EnergyScoreComboBox.types";
-import type { EnergyLabelValue } from "../EnergyLabel/EnergyLabel.types";
 import type { TestIdProps } from "@types";
 
 const defaultEnergyScoreComboBoxProps: EnergyScoreComboBoxDefaultProps = {
