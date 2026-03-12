@@ -2,8 +2,8 @@ import type { Enum, Nullable } from "@ubloimmo/front-util";
 
 export type EnergyLabelType = "DPE" | "GES";
 
-const _energyLabelValues = ["A", "B", "C", "D", "E", "F", "G"] as const;
-export type EnergyLabelValue = Enum<typeof _energyLabelValues>;
+export const ENERGY_LABEL_VALUES = ["A", "B", "C", "D", "E", "F", "G"] as const;
+export type EnergyLabelValue = Enum<typeof ENERGY_LABEL_VALUES>;
 
 export type EnergyLabelState = "active" | "inactive";
 

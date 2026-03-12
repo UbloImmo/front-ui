@@ -18,24 +18,27 @@ const defaultEnergyLabelProps: EnergyLabelDefaultProps = {
 /**
  * Renders a EnergyLabel component, with required Type, and optional Value and State.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {EnergyLabelProps & TestIdProps} props - EnergyLabel component props
  * @returns {JSX.Element}
  */
 const EnergyLabel = (props: EnergyLabelProps & TestIdProps): JSX.Element => {
-  const { log, warn } = useLogger("EnergyLabel", { hideLogs: true });
+  const { log } = useLogger("EnergyLabel", { hideLogs: true });
   const mergedProps = useMergedProps(defaultEnergyLabelProps, props);
   const testId = useTestId("energy-label", props);
 
   log(mergedProps);
 
-  const { classNames } = useEnergyLabelStyles(mergedProps);
-
-  if (!props.type) warn("Missing type prop");
+  const { classNames, style } = useEnergyLabelStyles(mergedProps);
 
   return (
-    <div className={classNames.box} data-testid={testId} role="status">
+    <div
+      className={classNames.box}
+      data-testid={testId}
+      role="status"
+      style={style}
+    >
       <Text
         className={classNames.label}
         weight="bold"

@@ -1,0 +1,46 @@
+import { Canvas, ComponentInfo } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import { Meta } from "@storybook/addon-docs/blocks";
+import * as EnergyScoreComboBoxStories from "../EnergyScoreComboBox.stories.tsx";
+
+<Meta title="Components/States/EnergyScoreComboBox/Usage" />
+
+<ComponentInfo of={EnergyScoreComboBoxStories} figmaId="2366-9199" />
+
+<Content>
+
+## Usage
+
+`EnergyScoreComboBox` is an interactive selector that lets the user pick an energy score (A–G) for a given type (DPE or GES). It is a controlled component — the selected value is managed by the parent via `value` and `onChange`.
+
+### Interactive
+
+Click a badge to select it. The selected badge displays the energy color for the chosen type, while unselected badges remain neutral.
+
+<Canvas of={EnergyScoreComboBoxStories.Default} />
+
+### Color categories
+
+The active color palette differs between **DPE** (green → red) and **GES** (light blue → dark navy). Click any score to compare the two palettes side by side.
+
+<Canvas of={EnergyScoreComboBoxStories.ColorCategories} />
+
+### View only
+
+When `readOnly` is `true` and a value is set, only the selected badge is displayed — no interaction is possible.
+
+<Canvas of={EnergyScoreComboBoxStories.ViewOnly} />
+
+### Empty
+
+When `readOnly` is `true` and no value is set, the `-` badge indicates the empty state.
+
+<Canvas of={EnergyScoreComboBoxStories.Empty} />
+
+### Error
+
+When `error` is `true`, unselected options display an error shadow to indicate a validation issue (e.g. a required score has not been selected).
+
+<Canvas of={EnergyScoreComboBoxStories.Error} />
+
+</Content>
