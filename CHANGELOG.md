@@ -32,11 +32,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `0.1.1` ListFilterOptionBadge component
   - Updated option maching logic following list context changes, optimizing for performance.
 
+## 2.1.0 - 2026-03-12
+### Added
+- `v0.0.1` EnergyScoreComboBox component
+  - Add an interactive energy score selector for DPE and GES labels, with selectable, read-only, empty, and error states.
+
+### Changed
+- `v0.1.1` EnergyLabel component
+  - Share energy score values and background color mappings with `EnergyScoreComboBox` so both components use the same visual source of truth.
+
 ## 2.0.6 - 2026-02-25
 ### Fixed
 - `v0.1.1` PhoneInput component
   - Make sure the input is drawn above other elements in a page when it or its country selector are focused.
-
 
 ## 2.0.5 - 2026-02-18
 ### Fixed
