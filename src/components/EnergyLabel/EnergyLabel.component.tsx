@@ -18,7 +18,7 @@ const defaultEnergyLabelProps: EnergyLabelDefaultProps = {
 /**
  * Renders a EnergyLabel component, with required Type, and optional Value and State.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {EnergyLabelProps & TestIdProps} props - EnergyLabel component props
  * @returns {JSX.Element}
