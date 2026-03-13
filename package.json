@@ -101,7 +101,7 @@
     "prettier": "^3.4.2",
     "react-docgen-typescript": "^2.2.2",
     "sass-embedded": "^1.97.3",
-    "storybook": "10.1.11",
+    "storybook": "10.2.10",
     "svg-parser": "^2.0.4",
     "typedoc": "^0.28.16",
     "typedoc-plugin-markdown": "^4.10.0",
