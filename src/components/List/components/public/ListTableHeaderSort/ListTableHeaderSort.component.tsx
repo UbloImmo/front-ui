@@ -100,6 +100,7 @@ export const ListTableHeaderSort = <TItem extends object>(
       overrideTestId
       styleOverride={props.styleOverride}
       className={classNames.cell}
+      colSpan={props.colSpan}
     >
       <FlexRowLayout justify={justify} align="center" gap="s-1" fill>
         {!props.hideLabel && (
