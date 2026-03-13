@@ -41,14 +41,16 @@ interface ListConfigMatchFn<TItem extends object> {
 
 > Calling it with invalid arguments will throw an error.
 
-### Signature 1: `match(property, comparison, value)`
+### Signature 1
+
+> `match(property, comparison, value)`
 
 This signature requires 3 arguments.
 
 
 #### **`property`**: `FilterProperty<TItem>`
 
-A single (possibly nested) string or number property of the item to match against
+A single (possibly nested) string or number property of the item to match against. **Required**.
 
 ```typescript
 type FilterProperty<TItem extends object> = DeepKeyOf<TItem>;
@@ -70,7 +72,9 @@ A single property value to match against
 type FilterOptionValue = string | number | boolean | Date | null;
 ```
 
-### Signature 2: `match(optionMatch)`
+### Signature 2
+
+>`match(optionMatch)`
 
 This signature is a shorthand for the first signature. It takes a complete `FilterOptionMatch` object and returns it unchanged, while ensuring it is correctly typed.
 

@@ -9,7 +9,6 @@ import type {
   FilterSignature,
   IDataProvider,
   Filter,
-  IsFilterOptionFn,
   ListConfigAsyncFilterFn,
   ListConfigAsyncFilterPresetFn,
   ListConfigAsyncOptionFn,
@@ -28,13 +27,19 @@ import type {
   DataProviderType,
   DataProviderFilterFnConfig,
   DataProviderFilterFnSearchConfig,
+  ListConfigSortFn,
+  SortData,
+  SortDataEntries,
+  ListConfigSortsFn,
+  SortMap,
+  Sort,
+  FilterOptionMap,
 } from "../modules";
-import type { UseDataArrayReturn } from "@types";
+import type { UseMapReturn } from "@types";
 import type {
   GenericFn,
   MaybeAsyncFn,
   Nullable,
-  Replace,
   VoidFn,
 } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
@@ -48,6 +53,7 @@ export type UseListContextSearchParamsReturn = {
 export type UseListContextSearchParams = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "searchParams">,
   options: UseListOptionsReturn<TItem>,
+  sorts: UseListSortsReturn<TItem>,
   configLoading: boolean
 ) => UseListContextSearchParamsReturn;
 
@@ -289,8 +295,14 @@ export type ListContextConfig<
    *
    * @type {Nullable<FilterOptionData<TItem>[]>}
    * @default null
+   *
+   * @deprecated use `optionsMap` instead
    */
   options?: Nullable<FilterOptionData<TItem>[]>;
+  /**
+   * Map of all loaded and / or loading options
+   */
+  optionsMap?: Nullable<FilterOptionMap<TItem>>;
   /**
    * The list's filters
    *
@@ -321,6 +333,11 @@ export type ListContextConfig<
    * @default { sync: false }
    */
   searchParams?: ListConfigSearchParams;
+  /**
+   * The list's sorting configuration
+   * A map that holds at most one sort per filter property
+   */
+  sorts?: SortMap<TItem>;
 } & ListSearchConfig<TItem>;
 
 type ListConfigSetOperatorFn = VoidFn<[operator: FilterBooleanOperator]>;
@@ -369,6 +386,8 @@ export type UseListConfigReturn<
   filterPreset: ListConfigFilterPresetFn<TItem>;
   setOperator: ListConfigSetOperatorFn;
   configureSearchParams: ListConfigConfigureSearchParamsFn;
+  sort: ListConfigSortFn<TItem>;
+  sorts: ListConfigSortsFn<TItem>;
 };
 
 export type UseListConfig = <TItem extends object>(
@@ -382,6 +401,13 @@ export type UseListConfigFilterReducerAction =
 export type UseListConfigFilterPresetReducerAction =
   | ["register", FilterPresetData]
   | ["update", FilterPresetData];
+
+export type UseListConfigSortReducerAction<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem> = FilterProperty<TItem>,
+> =
+  | ["register", SortData<TItem, TProperty>]
+  | ["register-multiple", SortDataEntries<TItem>];
 
 // LIST FILTERS ---------------------------------------------------------------------------------
 
@@ -455,25 +481,32 @@ export type UpdateOptionSelectionFn = VoidFn<
   [
     optionSignature: FilterSignature,
     selected: boolean,
-    multi?: boolean,
-    isFilterOption?: IsFilterOptionFn,
+    filter?: Pick<FilterData, "multi" | "optionSignatures">,
+    autoCommitMutation?: boolean,
   ]
 >;
 
 export type ApplyOptionsFn<TItem extends object> = VoidFn<
-  [
-    options: FilterOptionData<TItem>[],
-    extraFilters?: DataProviderFilterParam<TItem>[],
-  ]
+  [extraFilters?: DataProviderFilterParam<TItem>[]]
 >;
 
 export type UseListOptionsReturn<TItem extends object> = {
   /**
-   * The list's options, wrapped in a useDataArray hook
+   * The list's reactive options map
    *
-   * @type {UseDataArrayReturn<FilterOptionData<TItem>>}
+   * @type {FilterOptionMap<TItem>}
    */
-  options: UseDataArrayReturn<FilterOptionData<TItem>>;
+  readonly optionsMap: UseMapReturn<
+    FilterSignature,
+    FilterOptionData<TItem>,
+    FilterOptionMap<TItem>
+  >;
+  /**
+   * Reference to the set of all currently selected options' signatures
+   *
+   * @type {Set<FilterSignature>}
+   */
+  readonly selectedOptionSignatures: Set<FilterSignature>;
   /**
    * Updates a list option's selection
    *
@@ -481,6 +514,7 @@ export type UseListOptionsReturn<TItem extends object> = {
    * @param {boolean} selected - Whether the option should be selected
    * @param {boolean} multi - Whether other options assigned to the same filter stay selected
    * @param {IsFilterOptionFn} isFilterOption - Whether the option is a filter option
+   * @param {boolean} [autoCommitMutation=true] - Whether to cause a renderer.
    */
   updateOptionSelection: UpdateOptionSelectionFn;
   /**
@@ -493,17 +527,16 @@ export type UseListOptionsReturn<TItem extends object> = {
   /**
    * Applies the current options to the data provider, filtering the data
    *
-   * @param {FilterOptionData<TItem>[]} options - The options to apply
    * @param {DataProviderFilterParam<TItem>[]} extraFilters - Additional filters to apply
    */
   applyOptions: ApplyOptionsFn<TItem>;
 };
 
 /**
- * Internal callback to trigger the data provider's filter method after hydration with search query
+ * Internal callback to trigger the data provider's filter method after hydration with search query and sorting config
  */
 export type TriggerDataProviderFilterFn<TItem extends object> = MaybeAsyncFn<
-  [config: Omit<DataProviderFilterFnConfig<TItem>, "search">]
+  [config: Omit<DataProviderFilterFnConfig<TItem>, "search" | "activeSorts">]
 >;
 
 export type UseListOptions = <TItem extends object>(
@@ -598,6 +631,100 @@ export type UseListSearch = <TItem extends object>(
   config: ListSearchConfig<TItem>
 ) => UseListSearchReturn<TItem>;
 
+// LIST SORTS -----------------------------------------------------------------------------------
+
+/**
+ * Mutates a single list {@link Sort} by referencing it using its property
+ */
+export interface MutateListSortFn<TItem extends object> {
+  <TProperty extends FilterProperty<TItem>>(property: TProperty): void;
+}
+
+/**
+ * Finds a single list {@link Sort} by its property, or null if not found
+ */
+export interface GetListSortFn<TItem extends object> {
+  <TProperty extends FilterProperty<TItem>>(
+    property: TProperty
+  ): Nullable<Sort<TItem, TProperty>>;
+}
+
+/**
+ * Internal callback used to update the list's sort configuration's flags.
+ * Used during batch updates in order to avoid excessive rerenders
+ *
+ * @private
+ */
+export interface SetInternalListSortFlagRefsFn<TItem extends object> {
+  <TProperty extends FilterProperty<TItem>>(
+    property: TProperty,
+    state: Pick<SortData<TItem, TProperty>, "active" | "inverted">
+  ): void;
+}
+
+export type UseListSortsReturn<TItem extends object> = {
+  /**
+   * Reactive Map holding currently loaded list {@link SortData}
+   */
+  sortMap: UseMapReturn<
+    FilterProperty<TItem>,
+    SortData<TItem, FilterProperty<TItem>>,
+    SortMap<TItem>
+  >;
+  /**
+   * Array holding active list {@link Sort Sorts}, in application order
+   */
+  readonly activeSorts: Sort<TItem, FilterProperty<TItem>>[];
+  /**
+   * Set holding the currently active list sorts
+   */
+  readonly activeSortProperties: Set<FilterProperty<TItem>>;
+  /**
+   * Set holding the currently inverted list sorts
+   */
+  readonly invertedSortProperties: Set<FilterProperty<TItem>>;
+  /**
+   * Reactive state holding the currenly prioritized list {@link Sort}'s property, or null if none are.
+   */
+  readonly highlightedSortProperty: Nullable<FilterProperty<TItem>>;
+  /**
+   * Prioritizes a single list {@link Sort} by referencing its property.
+   *
+   * @remarks
+   * Only one sort may be prioritized at a time.
+   * Unknown properties not associated with a loaded sort will be ignored.
+   */
+  prioritizeSort: MutateListSortFn<TItem>;
+  /**
+   * Activates a single list {@link Sort} by referencing its property
+   */
+  activateSort: MutateListSortFn<TItem>;
+  /**
+   * Deactivates a single list {@link Sort} by referencing its property
+   */
+  deactivateSort: MutateListSortFn<TItem>;
+  /**
+   * Toggles a single list {@link Sort}'s activation by referencing its property
+   */
+  toggleSort: MutateListSortFn<TItem>;
+  /**
+   * Inverts a single list {@link Sort}'s order by referencing its property
+   */
+  invertSort: MutateListSortFn<TItem>;
+  /**
+   * Resets a single list {@link Sort}'s activation & inversion referencing its property
+   */
+  resetSort: MutateListSortFn<TItem>;
+  /**
+   * Finds & returns a single list {@link Sort} using its property, or null if not found
+   */
+  getSort: GetListSortFn<TItem>;
+  /**
+   * @private Internal API, do not use
+   */
+  setInternalSortFlagRefs: SetInternalListSortFlagRefsFn<TItem>;
+};
+
 // LIST CONTEXT ---------------------------------------------------------------------------------
 
 export type ListContextDataProviderRef<TItem extends object> = {
@@ -670,13 +797,8 @@ export type ListContextValue<
 } & UseListFilterPresetsReturn<TItem> &
   UseListFiltersReturn<TItem> &
   UseListSearchReturn<TItem> &
-  Replace<
-    UseListOptionsReturn<TItem>,
-    "options",
-    {
-      options: FilterOptionData<TItem>[];
-    }
-  >;
+  UseListSortsReturn<TItem> &
+  UseListOptionsReturn<TItem>;
 
 // LIST PROVIDER --------------------------------------------------------------------------------
 

@@ -8,57 +8,34 @@ import {
   isBoolean,
 } from "@ubloimmo/front-util";
 import { debounce } from "lodash";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 
+import { compare, isDefined } from "./comparison.utils";
 import { useMounted } from "./component.utils";
 
-import type {
-  DebouncedState,
-  UseDebounceValueOptions,
-  UseDebounceOptions,
+import {
+  type DebouncedState,
+  type UseDebounceValueOptions,
+  type UseDebounceOptions,
+  type UseAsyncData,
+  type UseAsyncDataOptions,
+  type UseAsyncDataReturn,
+  type UseAsyncDataState,
+  type UseAsyncDataLoadFn,
+  type MapConstructorLike,
+  type UseMapOptions,
+  type UseMap,
+  type UseMapReturn,
+  UseMapUpdateFn,
+  UseMapCombinedOptions,
 } from "@/types";
-
-type UseAsyncDataOnSuccessFn<TData extends NullishPrimitives> = MaybeAsyncFn<
-  [TData]
->;
-
-type UseAsyncDataOnErrorFn = MaybeAsyncFn<[Error]>;
-
-type UseAsyncDataOptions<
-  TData extends NullishPrimitives,
-  TDataParams extends unknown[] = [],
-> = {
-  defaultValue?: TData;
-  onSuccess?: UseAsyncDataOnSuccessFn<TData>;
-  onError?: UseAsyncDataOnErrorFn;
-  params?: TDataParams;
-  /**
-   * Whether to trigger a fetch on mount
-   *
-   * @default true
-   */
-  initialFetch?: boolean;
-};
-
-type UseAsyncDataState<TData extends NullishPrimitives> = {
-  data: Optional<TData>;
-  isLoading: boolean;
-  error: Nullable<Error>;
-};
-
-type UseAsyncDataLoadFn<
-  TData extends NullishPrimitives,
-  TDataParams extends unknown[] = [],
-> = (
-  options?: Optional<UseAsyncDataOptions<TData, TDataParams>>
-) => Promise<UseAsyncDataState<TData>>;
-
-type UseAsyncDataReturn<
-  TData extends NullishPrimitives,
-  TDataParams extends unknown[] = [],
-> = UseAsyncDataState<TData> & {
-  refetch: UseAsyncDataLoadFn<TData, TDataParams>;
-};
 
 /**
  * A custom React hook for handling asynchronous data loading.
@@ -74,7 +51,7 @@ type UseAsyncDataReturn<
  *   @property {Nullable<Error>} error - Any error that occurred during data loading, or null if no error.
  *   @property {AsyncFn<[], UseAsyncDataState<TData>>} refetch - A function to manually trigger a reload of the data.
  */
-export const useAsyncData = <
+export const useAsyncData: UseAsyncData = <
   TData extends NullishPrimitives,
   TDataParams extends unknown[] = [],
 >(
@@ -397,3 +374,187 @@ export function useDebounceValue<TValue>(
 
   return [debouncedValue, updateDebouncedValue];
 }
+
+/**
+ * Custom hook that returns a single Map object and hijacks its mutation methods to cause re-renders
+ */
+export const useMap: UseMap = <
+  TKey,
+  TValue,
+  TMap extends Map<TKey, TValue> = Map<TKey, TValue>,
+>(
+  MapConstructor: MapConstructorLike<TKey, TValue, TMap>,
+  options: NoInfer<UseMapOptions<TKey, TValue, TMap>> = {}
+): UseMapReturn<TKey, TValue, TMap> => {
+  /**
+   * TS type assignement for easy consumption of either option payload
+   */
+  const {
+    autoCommitMutations = true,
+    initiallyCleared = false,
+    initialValue,
+    reactiveValue,
+    reactiveUpdate = (newValue) => newValue,
+    onReactiveDelete,
+    onReactiveAdd,
+  } = useMemo<UseMapCombinedOptions<TKey, TValue, TMap>>(
+    () => options,
+    [options]
+  );
+
+  /**
+   * Internal value of the hook. Is the target of all mutation methods
+   */
+  const mapRef = useRef<TMap>(
+    new MapConstructor(
+      initialValue ??
+        (initiallyCleared || !reactiveValue ? undefined : reactiveValue)
+    )
+  );
+
+  /**
+   * Reactive clone of the internal value. Tracks the internal {@link mapRef value} and causes rerenders when updated
+   */
+  const [map, commit] = useReducer(
+    (_: TMap): TMap => new MapConstructor(mapRef.current),
+    mapRef.current
+  );
+
+  /**
+   * Effect that ensures the internal value reacts to the reactive value if provided.
+   * Adds missing values, removes deleted values and updates conflicting values whenever `reactiveValue` changes.
+   * Performs update in a single O(n) pass, causing one single render if needed
+   */
+  useEffect(() => {
+    if (!reactiveValue) return;
+    const combinedKeys = new Set<TKey>([
+      ...map.keys(),
+      ...reactiveValue.keys(),
+    ]);
+    let mapCommitNeeded = false;
+    for (const key of combinedKeys) {
+      // remove deleted key/value pair
+      if (map.has(key) && !reactiveValue.has(key)) {
+        mapRef.current.delete(key);
+        onReactiveDelete?.(key);
+        mapCommitNeeded = true;
+        continue;
+      }
+      // add or overwrite missing
+      const newOrUpdated = reactiveValue.get(key);
+      const previousValue = map.get(key);
+      if (!newOrUpdated) continue;
+      // - add missing value
+      if (!isDefined(previousValue)) {
+        mapRef.current.set(key, newOrUpdated);
+        onReactiveAdd?.(newOrUpdated, key);
+        mapCommitNeeded = true;
+        continue;
+      }
+      // - update changed value if different
+      if (compare(previousValue, newOrUpdated, compare.neq)) {
+        const updated = reactiveUpdate(newOrUpdated, previousValue, key);
+        mapRef.current.set(key, updated);
+        mapCommitNeeded = true;
+      }
+    }
+    // trigger a single re-render if needed
+    if (!mapCommitNeeded) return;
+    commit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reactiveValue]);
+
+  const set = useCallback<TMap["set"]>(
+    (...args) => {
+      const result = mapRef.current.set(...args);
+      if (autoCommitMutations) commit();
+      return result;
+    },
+    [autoCommitMutations]
+  );
+
+  const get = useCallback<TMap["get"]>((...args) => map.get(...args), [map]);
+
+  /**
+   * Updates a value at a given key using a callback that takes the currently stored value as argument
+   *
+   * @param key - Key for which to update value
+   * @param updateFn - Function that takes the previous value as only parameter, updates and returns it
+   *
+   * @returns Whether the map was ultimately updated
+   *
+   * @remarks
+   * Only keys pointing to existing values in the map will result in an update.
+   * Updates that are identical to the current value will be discarded
+   */
+  const update = useCallback<UseMapUpdateFn<TKey, TValue>>(
+    (key, updateFn) => {
+      if (!updateFn) return false;
+      const currentValue = get(key);
+      if (!isDefined(currentValue)) return false;
+      const updated = updateFn(currentValue);
+      // do not trigger update if the updated value is the same as the current value
+      if (compare(currentValue, update, compare.eq)) return false;
+      set(key, updated);
+      return true;
+    },
+    [get, set]
+  );
+
+  const clear = useCallback<TMap["clear"]>(
+    (...args) => {
+      mapRef.current.clear(...args);
+      if (autoCommitMutations) commit();
+    },
+    [autoCommitMutations]
+  );
+
+  const del = useCallback<TMap["delete"]>(
+    (...args) => {
+      const deleted = mapRef.current.delete(...args);
+      if (deleted && autoCommitMutations) commit();
+      return deleted;
+    },
+    [autoCommitMutations]
+  );
+
+  const forEach = useCallback<TMap["forEach"]>(
+    (...args) => map.forEach(...args),
+    [map]
+  );
+
+  const has = useCallback<TMap["has"]>((...args) => map.has(...args), [map]);
+
+  const entries = useCallback<TMap["entries"]>(
+    (...args) => map.entries(...args),
+    [map]
+  );
+
+  const keys = useCallback<TMap["keys"]>((...args) => map.keys(...args), [map]);
+
+  const values = useCallback<TMap["values"]>(
+    (...args) => map.values(...args),
+    [map]
+  );
+
+  return {
+    ...map,
+    [Symbol.iterator]() {
+      return map[Symbol.iterator]();
+    },
+    set,
+    get,
+    clear,
+    delete: del,
+    forEach,
+    has,
+    get size(): TMap["size"] {
+      return mapRef.current.size;
+    },
+    entries,
+    keys,
+    values,
+    commit,
+    update,
+  };
+};

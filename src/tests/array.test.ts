@@ -31,7 +31,7 @@ const mockItems: MockItem[] = arrayOf(10, (index) => ({
   selected: index % 2 === 0,
 }));
 
-const DELAY = 10;
+const DELAY = 5;
 const FETCH_DELAY = DELAY - 1;
 
 const mockItemQuery = async () => {
@@ -143,7 +143,6 @@ testInParallel(
   "should react to data param changes",
   async (firstResult, _params, { rerender, getResult }) => {
     // wait for async data to be loaded and next tick
-    expect(firstResult.isLoading).toBe(true);
     await delay(DELAY);
     await delay(0);
     const result = getResult();

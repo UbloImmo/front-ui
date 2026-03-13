@@ -77,9 +77,9 @@ export type FilterPresetData = Required<
    * The signatures of the options to include in the preset
    * Works across filters
    *
-   * @type {FilterSignature[]}
+   * @type {Set<FilterSignature>}
    */
-  optionSignatures: FilterSignature[];
+  optionSignatures: Set<FilterSignature>;
   /**
    * The color key of the filter preset
    *

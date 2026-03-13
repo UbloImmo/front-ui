@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v0.1.0` List component
+  - Implemented generic sorting functionnality and integrated it into the existing data management context.
+  - Added utility `sort()` & `sorts()` methods to `useListConfig` hook.
+  - Documented sorting logic & usage.
+- `v0.0.1` ListTableHeaderSort component
+  - Customized table header that allows for interaction with a single list sort.
+
+### Fixed
+
+- `v0.1.0` List component
+  - Filter preset count fetching when using a `StaticDataProvider`.
+
+### Changed
+
+- `0.1.0` List component
+  - Refactored list filter options internal logic & data structure:
+    - New implementation is based on a Map instead of an array.
+    - Improved large-volume management by reducing execution complexity.
+  - Updated `FilterData`'s `optionSignatures` to be a Set instead of an array
+  - Updated `FilterPresetData`'s `optionSignatures` to be a Set instead of an array
+- `0.1.1` ListFilterOptionBadge component
+  - Updated option maching logic following list context changes, optimizing for performance.
+
 ## 2.1.0 - 2026-03-12
 ### Added
 - `v0.0.1` EnergyScoreComboBox component

@@ -2,7 +2,7 @@ import { cleanup, render, renderHook } from "@testing-library/react";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { isFunction, isObject, transformObject } from "@ubloimmo/front-util";
 import { describe, expect, it } from "bun:test";
-import { useRef, type FC, type ReactNode } from "react";
+import { act, useRef, type FC, type ReactNode } from "react";
 
 import type { TestHookOptions, TestHookUtils } from "@types";
 import type { GenericFn, MaybeAsyncFn, VoidFn } from "@ubloimmo/front-util";
@@ -76,14 +76,17 @@ export const testHookFactory = <
         const testlabel = `${testName} with params ${paramsStr}"`;
         const testFn = options?.skip ? it.skip : options?.todo ? it.todo : it;
         testFn(testlabel, async () => {
-          const { result, unmount, rerender } = renderHook(
-            (initialProps?: THookParams | []) =>
-              hook(...(initialProps ?? params ?? []))
+          const hookWrapper = (hookParams?: THookParams | []) =>
+            hook(...(hookParams ?? []));
+          const { result, unmount, rerender } = await act(async () =>
+            renderHook<THookReturn, THookParams | []>(hookWrapper, {
+              initialProps: params,
+            })
           );
           const utils: TestHookUtils<THookReturn, THookParams> = {
             rerender: (...newParams: THookParams | []) => {
               const rerenderParams = newParams.length ? newParams : params;
-              rerender(rerenderParams);
+              act(() => rerender(rerenderParams));
             },
             unmount,
             getResult: () => result.current,

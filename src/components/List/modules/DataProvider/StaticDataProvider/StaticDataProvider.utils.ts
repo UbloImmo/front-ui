@@ -1,24 +1,32 @@
 import {
+  type DeepValueOf,
   deepValueOf,
   isArray,
+  isBoolean,
+  isNull,
   isNumber,
   isObject,
   isString,
+  isUndefined,
   type Optional,
 } from "@ubloimmo/front-util";
 import { isDate } from "date-fns";
+
+import { isSortOrderBasic } from "../../Sort/Sort.utils";
 
 import {
   BooleanOperators,
   ComparisonOperators,
 } from "@/components/List/List.enums";
+import { isZero } from "@utils";
 
 import type {
   FilterOptionData,
   FilterOptionMatch,
 } from "../../FilterOption/FilterOption.types";
 import type { FilterPreset } from "../../FilterPreset";
-import type { FilterBooleanOperator } from "../../shared.types";
+import type { FilterBooleanOperator, FilterProperty } from "../../shared.types";
+import type { SortPayload } from "../../Sort";
 import type {
   DataProviderFilterFnConfig,
   DataProviderFilterParam,
@@ -108,13 +116,15 @@ export const arrayComparison = (
  * @template TItem - The type of the item being filtered
  * @param {TItem} item - The item to check
  * @param {FilterOptionData<TItem>} option - The filter option
+ * @param {boolean} [forceSelected] - If set to `true`, the option's `selected` property won't be checked
  * @returns {boolean} True if the item matches the option
  */
 export const itemMatchesOption = <TItem extends object>(
   item: TItem,
-  option: FilterOptionData<TItem>
+  option: FilterOptionData<TItem>,
+  forceSelected?: boolean
 ): boolean => {
-  if (!option.selected) return true;
+  if (!option.selected && !forceSelected) return true;
   return option.matches[arrayComparison(option.operator)]((match) =>
     compareItemValue(item, match)
   );
@@ -272,3 +282,113 @@ export const filterItems = <TItem extends object>(
 
   return items.filter(filterFn);
 };
+
+/**
+ * Compares two list items and assigns them a relative sorting order based on a single list {@link Sort}
+ *
+ * @template {object} TItem - Type of items in a list
+ * @param {Optional<DeepValueOf<TItem, FilterProperty<TItem>>>} aValue - The first item's value to sort or undefined if not present in the base item
+ * @param {Optional<DeepValueOf<TItem, FilterProperty<TItem>>>} bValue - The second item's value to sort or undefined if not present in the base item
+ * @param {Sort<TItem, FilterProperty<TItem>>} sort - List Sort to rank both values by
+ * @returns {number} Relative sorting order of the two provided items. See {@link https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#comparefn Array.sort()}
+ */
+function computeItemScore<TItem extends object>(
+  aValue: Optional<DeepValueOf<TItem, FilterProperty<TItem>>>,
+  bValue: Optional<DeepValueOf<TItem, FilterProperty<TItem>>>,
+  sort: SortPayload<TItem, FilterProperty<TItem>>
+): number {
+  // shortcut:
+  // equal values should stay in the current order
+  if (aValue === bValue) return 0;
+
+  // undefined cases:
+  // regarless of sorting order, undefined values should be at the very end
+  if (isUndefined(aValue) && !isUndefined(bValue)) return 1;
+  if (!isUndefined(aValue) && isUndefined(bValue)) return -1;
+  if (isUndefined(aValue) && isUndefined(bValue)) return 0;
+
+  // basic sorting order:
+  if (isSortOrderBasic(sort.computedOrder)) {
+    if (isNumber(aValue) && isNumber(bValue)) {
+      if (sort.computedOrder === "desc") return bValue - aValue;
+      return aValue - bValue;
+    }
+    if (isString(aValue) && isString(bValue)) {
+      if (sort.computedOrder === "desc")
+        return (bValue as string).localeCompare(aValue);
+      return (aValue as string).localeCompare(bValue);
+    }
+
+    // null cases:
+    // regarless of asc/desc, null values should be at the end
+    if (isNull(aValue) && !isNull(bValue)) return 1;
+    if (!isNull(aValue) && isNull(bValue)) return -1;
+    if (isNull(aValue) && isNull(bValue)) return 0;
+
+    // boolean cases:
+    // true before false, or vice-versa if descending order
+    if (isBoolean(aValue) && isBoolean(bValue)) {
+      if (sort.computedOrder === "desc") {
+        if (aValue && !bValue) return 1;
+        if (!aValue && bValue) return -1;
+      }
+      if (aValue && !bValue) return -1;
+      if (!aValue && bValue) return 1;
+      return 0;
+    }
+
+    // object cases:
+    // should go to the end, regardless of sorting order, since they should not be compared.
+    // however, should be before null & undefined values
+    if (isObject(aValue) && !isObject(bValue)) return 1;
+    if (!isObject(aValue) && isObject(bValue)) return -1;
+
+    // base case: do not change order
+    return 0;
+  }
+
+  // complex sorting order:
+  // - items not included should go to the end. We don't care about their ordering in this pass
+  // - sorts included items according to their position in the provided complex sort order.
+  const aIndex = sort.computedOrder.indexOf(aValue!);
+  const bIndex = sort.computedOrder.indexOf(bValue!);
+  const aIncluded = aIndex >= 0;
+  const bIncluded = bIndex >= 0;
+  if (aIncluded && !bIncluded) return -1;
+  if (!aIncluded && bIncluded) return 1;
+  if (!aIncluded && !bIncluded) return 0;
+  return aIndex - bIndex;
+}
+
+/**
+ * Applies active sorts to the list's items.
+ *
+ * @template {object} TItem - Type of the list's items
+ * @param {TItem[]} items - List items to sort
+ * @param {DataProviderFilterFnConfig<TItem>["activeSorts"]} activeSorts - Nullable ordered array of list {@link Sort} objects to apply to the provided items array.
+ * @returns {TItem[]} Sorted list items
+ */
+export function sortItems<TItem extends object>(
+  items: TItem[],
+  activeSorts: DataProviderFilterFnConfig<TItem>["activeSorts"]
+): TItem[] {
+  // guard against missing items param.
+  if (!items?.length) return [];
+  // do not bother sorting if no active sorts provided
+  if (!activeSorts?.length) return items;
+
+  // sort items by iterating over each active sort until a non-zero score is assigned.
+  // this gives more weight to the first active sort, while subsequent sorts only evaluate as tie breakers when needed
+  return items.sort((a, b) => {
+    let score = 0;
+    for (const sort of activeSorts) {
+      const aValue = deepValueOf(a, sort.property, true);
+      const bValue = deepValueOf(b, sort.property, true);
+
+      score = computeItemScore(aValue, bValue, sort);
+
+      if (!isZero(score)) return score;
+    }
+    return score;
+  });
+}

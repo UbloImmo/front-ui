@@ -14,23 +14,23 @@ import type { FilterBooleanOperator, FilterSignature } from "../shared.types";
  * Computes a unique signature for a filter based on its label, options and operator
  *
  * @param {string} label - The label of the filter
- * @param {FilterSignature[]} optionSignatures - The signatures of the filter's options
+ * @param {Set<FilterSignature> | FilterSignature[]} optionSignatures - The signatures of the filter's options
  * @param {FilterBooleanOperator} operator - The operator of the filter
  * @returns {FilterSignature} The computed signature
  */
 export const computeFilterDataSignature = (
   label: string,
-  optionSignatures: FilterSignature[],
+  optionSignatures: Set<FilterSignature> | FilterSignature[],
   operator: FilterBooleanOperator
 ): FilterSignature => {
   if (!label) throw new Error("Label is required");
-  if (!isArray(optionSignatures))
-    throw new Error("Option signatures must be an array");
+  if (!(optionSignatures instanceof Set || isArray(optionSignatures)))
+    throw new Error("Option signatures must be a Set or Array");
   if (!operator) throw new Error("Operator is required");
+  const optionSignaturesArr = Array.from(optionSignatures);
+  if (!optionSignaturesArr.length) return label;
 
-  if (!optionSignatures.length) return label;
-
-  return [label, optionSignatures.join(operator)].join("-");
+  return [label, optionSignaturesArr.join(operator)].join("-");
 };
 
 /**
@@ -51,10 +51,10 @@ export const separateOptionsAndDividers = <TItem extends object>(
     | FilterOptionDividerData
   )[]
 ): {
-  optionSignatures: FilterSignature[];
+  optionSignatures: Set<FilterSignature>;
   optionDividers: FilterOptionDivider[];
 } => {
-  const optionSignatures: FilterSignature[] = [];
+  const optionSignatures: Set<FilterSignature> = new Set<FilterSignature>();
   const optionDividers: FilterOptionDivider[] = [];
 
   // abort if optionsOrDividers is not an array or is empty
@@ -80,7 +80,7 @@ export const separateOptionsAndDividers = <TItem extends object>(
       continue;
     }
 
-    optionSignatures.push(extractFilterOptionSignature(optionOrDivider));
+    optionSignatures.add(extractFilterOptionSignature(optionOrDivider));
   }
 
   return {

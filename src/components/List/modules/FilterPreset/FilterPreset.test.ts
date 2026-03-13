@@ -89,7 +89,9 @@ describe("FilterPreset module", () => {
       );
       expect(filterPreset).toBeObject();
       expect(filterPreset.label).toBe(label);
-      expect(filterPreset.optionSignatures).toEqual(optionsOrSignatures);
+      expect(filterPreset.optionSignatures).toEqual(
+        new Set(optionsOrSignatures)
+      );
       expect(filterPreset.loading).toBe(loading);
       expect(filterPreset.color).toBe(config.color);
       expect(filterPreset.paletteColor).toBe("error-base");

@@ -1,3 +1,4 @@
+import { Nullish } from "@ubloimmo/front-util";
 import { describe, expect, it, mock } from "bun:test";
 
 import { useStaticDataProvider } from "./StaticDataProvider.hook";
@@ -6,7 +7,9 @@ import {
   canCompare,
   compareItemValue,
   filterItems,
+  sortItems,
 } from "./StaticDataProvider.utils";
+import { SortPayload } from "../../Sort";
 import { mockListData, type MockListItem } from "../DataProvider.test.mock";
 
 import { testHookFactory } from "@/tests";
@@ -105,16 +108,18 @@ describe("StaticDataProvider", () => {
       it("should only take into account selected options", () => {
         expect(
           filterItems(items, {
-            option: options.alwaysInvalidOption,
+            options: [options.alwaysInvalidOption],
             selectedOptions: [],
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
-            option: selectOption(options.alwaysInvalidOption),
+            options: [selectOption(options.alwaysInvalidOption)],
             selectedOptions: [selectOption(options.alwaysInvalidOption)],
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(0);
       });
@@ -125,9 +130,10 @@ describe("StaticDataProvider", () => {
       it("should filter by a single option", () => {
         expect(
           filterItems(items, {
-            option: selectOption(options.numberMoreThan5),
+            options: [selectOption(options.numberMoreThan5)],
             selectedOptions: [selectOption(options.numberMoreThan5)],
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(3);
         expect(
@@ -135,6 +141,7 @@ describe("StaticDataProvider", () => {
             option: selectOption(options.alwaysInvalidOption),
             selectedOptions: [selectOption(options.alwaysInvalidOption)],
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(0);
       });
@@ -148,6 +155,7 @@ describe("StaticDataProvider", () => {
             selectedOptions: [selectOption(options.numberMoreThan5)],
             search: null,
             operator: "AND",
+            activeSorts: null,
           })
         ).toHaveLength(3);
         expect(
@@ -162,6 +170,7 @@ describe("StaticDataProvider", () => {
             ],
             search: null,
             operator: "AND",
+            activeSorts: null,
           })
         ).toHaveLength(0);
         expect(
@@ -176,6 +185,7 @@ describe("StaticDataProvider", () => {
             ],
             search: null,
             operator: "OR",
+            activeSorts: null,
           })
         ).toHaveLength(3);
       });
@@ -185,6 +195,7 @@ describe("StaticDataProvider", () => {
             filter: selectFilter(filters.filter1),
             selectedOptions: selectFilter(filters.filter1).selectedOptions,
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(3);
         expect(
@@ -192,6 +203,7 @@ describe("StaticDataProvider", () => {
             filter: filters.invalidFilter,
             selectedOptions: [],
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(3);
         expect(
@@ -200,6 +212,7 @@ describe("StaticDataProvider", () => {
             selectedOptions: selectFilter(filters.invalidFilter)
               .selectedOptions,
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(0);
       });
@@ -216,6 +229,7 @@ describe("StaticDataProvider", () => {
             ],
             search: null,
             operator: "AND",
+            activeSorts: null,
           })
         ).toHaveLength(3);
         expect(
@@ -230,6 +244,7 @@ describe("StaticDataProvider", () => {
             ],
             search: null,
             operator: "AND",
+            activeSorts: null,
           })
         ).toHaveLength(0);
         expect(
@@ -244,32 +259,38 @@ describe("StaticDataProvider", () => {
             ],
             search: null,
             operator: "OR",
+            activeSorts: null,
           })
         ).toHaveLength(3);
       });
       it("should filter by a single filter preset", () => {
         expect(
           filterItems(items, {
-            filterPreset: selectFilterPreset(filterPresets.filterPreset1),
+            filterPresets: [selectFilterPreset(filterPresets.filterPreset1)],
             selectedOptions: selectFilterPreset(filterPresets.filterPreset1)
               .options,
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
-            filterPreset: filterPresets.invalidFilterPreset,
+            filterPresets: [filterPresets.invalidFilterPreset],
             selectedOptions: [],
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(3);
         expect(
           filterItems(items, {
-            filterPreset: selectFilterPreset(filterPresets.invalidFilterPreset),
+            filterPresets: [
+              selectFilterPreset(filterPresets.invalidFilterPreset),
+            ],
             selectedOptions: selectFilterPreset(
               filterPresets.invalidFilterPreset
             ).options,
             search: null,
+            activeSorts: null,
           })
         ).toHaveLength(0);
       });
@@ -286,6 +307,7 @@ describe("StaticDataProvider", () => {
             ],
             search: null,
             operator: "AND",
+            activeSorts: null,
           })
         ).toHaveLength(3);
         expect(
@@ -300,6 +322,7 @@ describe("StaticDataProvider", () => {
             ],
             search: null,
             operator: "AND",
+            activeSorts: null,
           })
         ).toHaveLength(0);
         expect(
@@ -314,8 +337,230 @@ describe("StaticDataProvider", () => {
             ],
             search: null,
             operator: "OR",
+            activeSorts: null,
           })
         ).toHaveLength(3);
+      });
+    });
+
+    describe("sortItems", () => {
+      it("should be a function", () => {
+        expect(sortItems).toBeFunction();
+      });
+      it("should never throw", () => {
+        expect(sortItems).not.toThrow();
+      });
+      it("should always return an array", () => {
+        // @ts-expect-error testing undefined behavior
+        expect(sortItems()).toBeArray();
+        // @ts-expect-error testing undefined behavior
+        expect(sortItems([])).toBeArray();
+        expect(sortItems([], [])).toBeArray();
+        expect(sortItems([], null)).toBeArray();
+      });
+      it("should returns items as is if no active sorts are provided", () => {
+        // @ts-expect-error testing undefined behavior
+        expect(sortItems(mockListData.items)).toEqual(mockListData.items);
+        expect(sortItems(mockListData.items, [])).toEqual(mockListData.items);
+        expect(sortItems(mockListData.items, null)).toEqual(mockListData.items);
+      });
+
+      type SortedItem = { v: Nullish<number>; v2: Nullish<string> };
+      const makeItem = (
+        v: Nullish<number>,
+        v2: Nullish<string> = null
+      ): SortedItem => ({ v, v2 });
+      const negative = makeItem(-120),
+        small = makeItem(1.2),
+        medium = makeItem(12),
+        large = makeItem(120),
+        nullItem = makeItem(null),
+        undefItem = makeItem(undefined);
+      const ascSort: SortPayload<SortedItem, "v"> = {
+          property: "v",
+          computedOrder: "asc",
+          priority: 0,
+          prioritized: false,
+        },
+        descSort: SortPayload<SortedItem, "v"> = {
+          property: "v",
+          computedOrder: "desc",
+          priority: 0,
+          prioritized: false,
+        };
+      const ascStrSort: SortPayload<SortedItem, "v2"> = {
+        property: "v2",
+        computedOrder: "asc",
+        priority: 1,
+        prioritized: false,
+      };
+      const descStrSort: SortPayload<SortedItem, "v2"> = {
+        property: "v2",
+        computedOrder: "desc",
+        priority: 1,
+        prioritized: false,
+      };
+
+      it("should put sort numbers in ascending order", () => {
+        const items = [small, large, medium, negative];
+        expect(sortItems(items, [ascSort])).toEqual([
+          negative,
+          small,
+          medium,
+          large,
+        ]);
+      });
+
+      it("should put sort numbers in descending order", () => {
+        const items = [small, large, medium, negative];
+        expect(sortItems(items, [descSort])).toEqual([
+          large,
+          medium,
+          small,
+          negative,
+        ]);
+      });
+      it("should put sort put null items at the end in ascending order", () => {
+        const items = [small, large, medium, nullItem, negative];
+        expect(sortItems(items, [ascSort])).toEqual([
+          negative,
+          small,
+          medium,
+          large,
+          nullItem,
+        ]);
+      });
+      it("should put sort put null items at the end in descending order", () => {
+        const items = [small, large, medium, nullItem, negative];
+        expect(sortItems(items, [descSort])).toEqual([
+          large,
+          medium,
+          small,
+          negative,
+          nullItem,
+        ]);
+      });
+      it("should put sort put undefined items at the end in ascending order", () => {
+        const items = [small, large, medium, undefItem, negative];
+        expect(sortItems(items, [ascSort])).toEqual([
+          negative,
+          small,
+          medium,
+          large,
+          undefItem,
+        ]);
+      });
+      it("should put sort put undefined items at the end in descending order", () => {
+        const items = [small, large, medium, undefItem, negative];
+        expect(sortItems(items, [descSort])).toEqual([
+          large,
+          medium,
+          small,
+          negative,
+          undefItem,
+        ]);
+      });
+      it("should put null items before undefined items", () => {
+        const items = [small, large, nullItem, undefItem, nullItem, undefItem];
+        expect(sortItems(items, [descSort])).toEqual([
+          large,
+          small,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+        expect(sortItems(items, [ascSort])).toEqual([
+          small,
+          large,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+      });
+      const _1a = makeItem(1, "a");
+      const _1b = makeItem(1, "b");
+      const _2a = makeItem(2, "a");
+      const _2b = makeItem(2, "b");
+      it("should combine multiple sorting orders", () => {
+        const items = [_1b, _2b, _1a, _2a];
+        expect(sortItems(items, [ascSort, ascStrSort])).toEqual([
+          _1a,
+          _1b,
+          _2a,
+          _2b,
+        ]);
+        expect(sortItems(items, [descSort, ascStrSort])).toEqual([
+          _2a,
+          _2b,
+          _1a,
+          _1b,
+        ]);
+        expect(sortItems(items, [ascSort, descStrSort])).toEqual([
+          _1b,
+          _1a,
+          _2b,
+          _2a,
+        ]);
+        expect(sortItems(items, [descSort, descStrSort])).toEqual([
+          _2b,
+          _2a,
+          _1b,
+          _1a,
+        ]);
+      });
+      it("should sort nullish items to the end while combining sorts", () => {
+        const items = [
+          nullItem,
+          _1b,
+          undefItem,
+          nullItem,
+          _2b,
+          undefItem,
+          _1a,
+          _2a,
+        ];
+        expect(sortItems(items, [ascSort, ascStrSort])).toEqual([
+          _1a,
+          _1b,
+          _2a,
+          _2b,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+        expect(sortItems(items, [descSort, ascStrSort])).toEqual([
+          _2a,
+          _2b,
+          _1a,
+          _1b,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+        expect(sortItems(items, [ascSort, descStrSort])).toEqual([
+          _1b,
+          _1a,
+          _2b,
+          _2a,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
+        expect(sortItems(items, [descSort, descStrSort])).toEqual([
+          _2b,
+          _2a,
+          _1b,
+          _1a,
+          nullItem,
+          nullItem,
+          undefItem,
+          undefItem,
+        ]);
       });
     });
   });
@@ -353,9 +598,10 @@ describe("StaticDataProvider", () => {
     expect(result.filter).toBeFunction();
     setData.mockClear();
     result.filter({
-      option: selectOption(mockListData.options.alwaysInvalidOption),
+      options: [selectOption(mockListData.options.alwaysInvalidOption)],
       selectedOptions: [selectOption(mockListData.options.alwaysInvalidOption)],
       search: null,
+      activeSorts: null,
     });
     // rerender();
     expect(setData).toHaveBeenCalled();
@@ -367,11 +613,12 @@ describe("StaticDataProvider", () => {
       expect(result.fetchCount).toBeFunction();
       setData.mockClear();
       const count = await result.fetchCount({
-        option: selectOption(mockListData.options.alwaysInvalidOption),
+        options: [selectOption(mockListData.options.alwaysInvalidOption)],
         selectedOptions: [
           selectOption(mockListData.options.alwaysInvalidOption),
         ],
         search: null,
+        activeSorts: null,
       });
       expect(setData).not.toHaveBeenCalled();
       expect(count).toEqual(0);

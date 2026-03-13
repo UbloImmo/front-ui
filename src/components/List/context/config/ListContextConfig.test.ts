@@ -6,6 +6,7 @@ import {
   filterOptionData,
   filterOptionMatch,
   filterPresetData,
+  SortMap,
   useStaticDataProvider,
   type FilterConfig,
   type FilterData,
@@ -29,12 +30,17 @@ import type {
   UseListConfigFilterPresetReducerAction,
   UseListConfigFilterReducerAction,
 } from "../ListContext.types";
-import type { VoidFn } from "@ubloimmo/front-util";
+import type { Enum, VoidFn } from "@ubloimmo/front-util";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const MOCK_ITEM_STATES = ["active", "inactive", "archived", "pending"] as const;
+type MockItemState = Enum<typeof MOCK_ITEM_STATES>;
 
 type MockItem = {
   value: number;
   index: number;
   selected: boolean;
+  state?: MockItemState;
 };
 
 const mockItems: MockItem[] = arrayOf(
@@ -207,6 +213,8 @@ const testListConfig = () => {
     expect(result.options).toBeFunction();
     expect(result.filter).toBeFunction();
     expect(result.filterPreset).toBeFunction();
+    expect(result.sort).toBeFunction();
+    expect(result.sorts).toBeFunction();
   });
 
   testHook("should return an object containing async methods", (result) => {
@@ -336,9 +344,9 @@ const testListConfig = () => {
       ]);
       expect(filter).toBeObject();
       expect(filter.label).toBe(label);
-      expect(filter.optionSignatures).toBeArray();
+      expect(filter.optionSignatures).toBeInstanceOf(Set);
       expect(filter.optionSignatures).toEqual(
-        options.map(({ signature }) => signature)
+        new Set(options.map(({ signature }) => signature))
       );
       expect(filter.optionDividers).toBeArray();
       expect(filter.optionDividers).toHaveLength(1);
@@ -369,9 +377,9 @@ const testListConfig = () => {
       const filterPreset = result.filterPreset(label, options);
       expect(filterPreset).toBeObject();
       expect(filterPreset.label).toBe(label);
-      expect(filterPreset.optionSignatures).toBeArray();
+      expect(filterPreset.optionSignatures).toBeInstanceOf(Set);
       expect(filterPreset.optionSignatures).toEqual(
-        options.map(({ signature }) => signature)
+        new Set(options.map(({ signature }) => signature))
       );
       rerender();
       expect(getResult().config.filterPresets).toBeArray();
@@ -477,7 +485,7 @@ const testListConfig = () => {
       expect(filter).not.toBeNull();
       expect((filter as FilterData).label).toBe(label);
       expect((filter as FilterData).optionSignatures).toEqual(
-        (await optionsPromise).map(({ signature }) => signature)
+        new Set((await optionsPromise).map(({ signature }) => signature))
       );
     }
   );
@@ -519,7 +527,7 @@ const testListConfig = () => {
       }
       expect(filterPreset.label).toBe(label);
       expect(filterPreset.optionSignatures).toEqual(
-        (await optionsPromise).map(({ signature }) => signature)
+        new Set((await optionsPromise).map(({ signature }) => signature))
       );
     }
   );
@@ -561,6 +569,100 @@ const testListConfig = () => {
       result.setOperator(operator);
       rerender();
       expect(getResult().config.operator).toBe(operator);
+    }
+  );
+
+  testHook(
+    "should return a valid sort data object from the sort() method",
+    (result) => {
+      expect(result.sort).toBeFunction();
+      const sort = result.sort("index", "asc", 1, { active: true });
+      expect(sort).toBeObject();
+      expect(sort).toHaveProperty("property");
+      expect(sort).toHaveProperty("order");
+      expect(sort).toHaveProperty("priority");
+      // check parity
+      expect(sort.defaultPriority).toEqual(sort.priority);
+      expect(sort.active).toEqual(sort.defaultState.active);
+      expect(sort.inverted).toEqual(sort.defaultState.inverted);
+      // check balues
+      expect(sort.property).toBe("index");
+      expect(sort.order).toBe("asc");
+      expect(sort.priority).toBe(1);
+      expect(sort.active).toBeTrue();
+    }
+  );
+
+  testHook(
+    "should create & register a sort from the sort() method",
+    (result, _, { getResult, rerender }) => {
+      expect(result.sort).toBeFunction();
+      const sort = result.sort("index", "asc", 1, { active: true });
+      expect(sort).toBeObject();
+      // has sort in config
+      rerender();
+      const config = getResult().config;
+      expect(config).toBeObject();
+      expect(config).toHaveProperty("sorts");
+      expect(config.sorts).toBeInstanceOf(SortMap);
+      expect(config.sorts.size).toBe(1);
+      const storedSort = config.sorts.get("index");
+      expect(storedSort).toBeObject();
+      expect(storedSort).toEqual(sort);
+    }
+  );
+
+  testHook(
+    "should create multiple sorts and return them as entries from the sorts() method",
+    (result) => {
+      expect(result.sorts).toBeFunction();
+      const sorts = result.sorts({
+        index: { order: "asc" },
+        value: { order: "desc", priority: 1 },
+        state: {
+          order: ["pending", "active", "inactive", "archived"],
+          priority: 2,
+          active: true,
+        },
+        value2: { order: "asc2" },
+      });
+      expect(sorts).toBeObject();
+      expect(sorts).toHaveProperty("index");
+      expect(sorts).toHaveProperty("value");
+      expect(sorts).toHaveProperty("state");
+
+      // test complex state;
+      expect(sorts.state).toBeObject();
+      expect(sorts.state.order).toBeArrayOfSize(4);
+      expect(sorts.state.active).toBeTrue();
+    }
+  );
+
+  testHook(
+    "should create & register multiple sorts at once from the sorts() method",
+    (result, _, { getResult, rerender }) => {
+      expect(result.sorts).toBeFunction();
+      const sorts = result.sorts({
+        index: { order: "asc" },
+        value: { order: "desc", priority: 1 },
+        state: {
+          order: ["pending", "active", "inactive", "archived"],
+          priority: 2,
+          active: true,
+        },
+      });
+      expect(sorts).toBeObject();
+      // has sorts in config
+      rerender();
+      const config = getResult().config;
+      expect(config).toBeObject();
+      expect(config.sorts).toBeInstanceOf(SortMap);
+      expect(config.sorts.size).toBe(3);
+      config.sorts.forEach((value, property) => {
+        expect(value).toEqual(
+          sorts[property as keyof typeof sorts] as typeof value
+        );
+      });
     }
   );
 };

@@ -19,4 +19,13 @@ export type RequiredNonNever<TObject extends Record<string, unknown>> = {
   >]-?: NonOptional<TObject[TKey]>;
 };
 
+/**
+ * 2-dimensional vector holding x & y coordinates.
+ */
 export type Vec2 = { x: number; y: number };
+
+/**
+ * A non empty array containing a least one item,
+ * where all array items are of type T.
+ */
+export type NonEmptyArr<T> = T[] & { 0: T };

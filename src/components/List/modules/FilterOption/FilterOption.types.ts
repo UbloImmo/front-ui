@@ -33,7 +33,7 @@ export type FilterOptionMatch<TItem extends object> = {
    */
   comparison: FilterComparisonOperator;
   /**
-   * The property to filter on if different than the containing filter's property
+   * The property to filter on
    *
    * @type {FilterProperty}
    */
@@ -417,11 +417,17 @@ export type ListConfigNotFn<TItem extends object> = GenericFn<
   FilterOptionMatch<TItem>
 >;
 
+/**
+ * Maps {@link FilterSignature filter option signatures} to their respecive {@link FilterOptionData filter option's data}.
+ */
 export type FilterOptionMap<TItem extends object> = Map<
   FilterSignature,
   FilterOptionData<TItem>
 >;
 
+/**
+ * Either a filter option's {@link FilterOptionData data} or its {@link FilterSignature signature}.
+ */
 export type FilterOptionDataOrSignature<TItem extends object> =
   | FilterOptionData<TItem>
   | FilterSignature;

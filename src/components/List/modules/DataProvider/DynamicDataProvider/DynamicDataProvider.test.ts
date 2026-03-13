@@ -76,9 +76,10 @@ test("should call fetchData and return count when calling fetchCount", async (_,
   await delay(0);
   fetchData.mockClear();
   const count = await getResult().fetchCount({
-    filterPreset: mockListData.filterPresets.filterPreset1,
+    filterPresets: [mockListData.filterPresets.filterPreset1],
     selectedOptions: mockListData.filterPresets.filterPreset1.options,
     search: null,
+    activeSorts: null,
   });
   expect(count).toBeNumber();
   expect(count).toBeGreaterThan(0);

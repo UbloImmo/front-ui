@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
-import { filterItems } from "./StaticDataProvider.utils";
+import { filterItems, sortItems } from "./StaticDataProvider.utils";
 
 import { useAsyncData } from "@utils";
 
 import type {
   DataProviderFetchCountFn,
   DataProviderFilterFn,
-  DataProviderFilterFnConfig,
   IDataProvider,
 } from "../DataProvider.types";
 import type {
@@ -48,19 +47,23 @@ export const useStaticDataProvider: UseStaticDataProviderFn = <
   }, [reactiveData]);
 
   const filter = useCallback<DataProviderFilterFn<TItem>>(
-    (config: DataProviderFilterFnConfig<TItem>) => {
+    (config) => {
       const filteredData = filterItems(staticDataRef.current, config);
-      setData(filteredData);
+      const sortedData = sortItems(filteredData, config.activeSorts);
+      setData(sortedData);
     },
     [setData]
   );
 
   const fetchCount = useCallback<DataProviderFetchCountFn<TItem>>(
-    (config: DataProviderFilterFnConfig<TItem>) => {
-      const filteredData = filterItems(staticDataRef.current, config);
+    (config) => {
+      const filteredData = filterItems(
+        reactiveData.data ?? staticDataRef.current,
+        config
+      );
       return filteredData.length;
     },
-    []
+    [reactiveData.data]
   );
 
   const clear = useCallback(() => {

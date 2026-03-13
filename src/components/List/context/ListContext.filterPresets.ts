@@ -1,5 +1,5 @@
 import { objectFromEntries } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { BooleanOperators } from "../List.enums";
 
@@ -24,11 +24,19 @@ export const useListFilterPresets: UseListFilterPresets = <
   TItem extends object,
 >(
   config: Pick<ListContextConfig<TItem>, "filterPresets">,
-  { options }: UseListOptionsReturn<TItem>,
+  { optionsMap, updateOptionSelection }: UseListOptionsReturn<TItem>,
   dataProvider: IDataProvider<TItem>
 ): UseListFilterPresetsReturn<TItem> => {
   const logger = useLogger("ListContext.filterPresets");
+  // TODO: convert to map
   const filterPresetDatas = useDataArray(config.filterPresets ?? [], true);
+
+  const allFilterPresetOptionSignatures = useMemo(() => {
+    return filterPresetDatas.data.reduce(
+      (acc, item) => acc.union(item.optionSignatures),
+      new Set<FilterSignature>()
+    );
+  }, [filterPresetDatas.data]);
 
   const filterPresetConfigLoading = useMemo(
     () => filterPresetDatas.data.some(({ loading }) => loading),
@@ -41,50 +49,58 @@ export const useListFilterPresets: UseListFilterPresets = <
         ({ signature }) => signature === filterPresetSignature
       );
       if (!filterPreset || filterPreset.disabled) return;
-      const isFilterPresetOption = ({ signature }: FilterOptionData<TItem>) =>
-        filterPreset.optionSignatures.includes(signature);
+
+      let needsCommit = false;
+
+      // when exclusive, always disables all options related to other filter presets
       if (filterPreset.exclusive) {
-        options.updateItemWhere(
-          (option) => !isFilterPresetOption(option),
-          (option) => ({
-            ...option,
-            selected: option.fixed,
-          })
-        );
+        for (const signature of allFilterPresetOptionSignatures) {
+          const optionSelected = filterPreset.optionSignatures.has(signature)
+            ? selected
+            : false;
+          updateOptionSelection(signature, optionSelected, undefined, false);
+          needsCommit = true;
+        }
+        // otherwise, just sets this filter preset's option's selection
+      } else {
+        for (const signature of filterPreset.optionSignatures) {
+          updateOptionSelection(signature, selected, undefined, false);
+          needsCommit = true;
+        }
       }
-      options.updateItemWhere(isFilterPresetOption, (option) => {
-        return {
-          ...option,
-          selected: selected || option.fixed,
-        };
-      });
+
+      if (needsCommit) optionsMap.commit();
     },
-    [filterPresetDatas, options]
+    [
+      allFilterPresetOptionSignatures,
+      filterPresetDatas,
+      optionsMap,
+      updateOptionSelection,
+    ]
   );
 
   const getFilterPresetOptions = useCallback(
     (
       filterPresetData: Pick<FilterPresetData, "optionSignatures">
     ): FilterOptionData<TItem>[] => {
-      return options.filter(({ signature }) =>
-        filterPresetData.optionSignatures.includes(signature)
-      );
+      const filterPresetOptions: FilterOptionData<TItem>[] = [];
+      for (const signature of filterPresetData.optionSignatures) {
+        const option = optionsMap.get(signature);
+        if (!option) continue;
+        filterPresetOptions.push(option);
+      }
+      return filterPresetOptions;
     },
-    [options]
+    [optionsMap]
   );
 
   const filterPresetsOptionsMap = useMemo(() => {
-    return objectFromEntries(
-      (config.filterPresets ?? []).map(
-        ({
-          signature,
-          optionSignatures,
-        }): [FilterSignature, FilterOptionData<TItem>[]] => [
-          signature,
-          getFilterPresetOptions({ optionSignatures }),
-        ]
-      )
-    );
+    const optionsMap: { [k: FilterSignature]: FilterOptionData<TItem>[] } = {};
+    if (!config.filterPresets?.length) return optionsMap;
+    for (const filterPreset of config.filterPresets) {
+      optionsMap[filterPreset.signature] = getFilterPresetOptions(filterPreset);
+    }
+    return optionsMap;
   }, [config.filterPresets, getFilterPresetOptions]);
 
   const fetchFilterPresetCounts = useCallback(async (): Promise<
@@ -107,6 +123,7 @@ export const useListFilterPresets: UseListFilterPresets = <
               selectedOptions: filterPresetOptions,
               search: null,
               operator,
+              activeSorts: null,
             });
             return [signature, count];
           } catch (error) {
@@ -121,12 +138,20 @@ export const useListFilterPresets: UseListFilterPresets = <
   }, [config.filterPresets, filterPresetsOptionsMap, logger]);
 
   const filterPresetCounts = useAsyncData(fetchFilterPresetCounts);
+  const filterPresetCountsFetched = useRef(false);
 
   useEffect(() => {
+    if (filterPresetCountsFetched.current) return;
     if (filterPresetConfigLoading) return;
+    if (!dataProvider.data?.length) return;
     filterPresetCounts.refetch();
+    filterPresetCountsFetched.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config.filterPresets, filterPresetConfigLoading]);
+  }, [
+    config.filterPresets,
+    filterPresetConfigLoading,
+    dataProvider.data?.length,
+  ]);
 
   const buildFilterPreset = useCallback(
     (filterPresetData: FilterPresetData): FilterPreset<TItem> => {

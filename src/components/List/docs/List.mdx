@@ -24,7 +24,7 @@ Using it requires a bit of setup, but it is very well worth it.
 
 In order to make the List component type safe while still being flexible, we needed it to be _generic_.
 
-That means you need to define a type for the items you want to display. 
+That means you need to define a type for the items you want to display.
 
 > _We'll be using this `Pokemon` type in the examples below._
 
@@ -73,7 +73,7 @@ const fetchPokemon = async (): Promise<Pokemon[]> => {
 // and forwards the setData callback to the static data provider
 const usePokemonData: UseDataProviderFn<Pokemon> = (setData) => {
   return useStaticDataProvider(fetchPokemon, setData);
-} 
+}
 ```
 
 
@@ -87,7 +87,7 @@ const usePokemonData: UseDataProviderFn<Pokemon> = (setData) => {
 
 Now that we know what our data looks like and have a way to manage it, we can start configuring how the user can interact with it.
 
-Import the `useListConfig` hook to configure a list&apos;s options and behavior.
+Import the `useListConfig` hook to configure a list's options and behavior.
 It yieds a `config` object and various typed methods that mutate it.
 
 > This `config` object is the one and only property supplied to either the List component or its related `ListProvider` provider.
@@ -108,42 +108,23 @@ const usePokemonListConfig = () => {
   const {
     config
   } = useListConfig<Pokemon>(usePokemonData);
-  
+
   // and return the config object
   return config;
 }
 ```
 
-#### Filtering & options
+#### Detailed configuration
 
-When there is a lot of data, it is often useful to allow the user to filter it.
-These filters and options 
+The List component offers many advanced generic capabilities:
+ - Filters
+ - Filter presets
+ - Text query
+ - Sorting
+ - URL synchronization
 
-```tsx
-import { useListConfig, useStatic } from "@ubloimmo/uikit";
-
-/**
- * Custom hook that configures the list
- */
-const usePokemonListConfig = () => {
-  // we pass our data provider hook to the useListConfig hook, without calling it
-  const {
-    match,
-    option,
-    options,
-    filter,
-  } = useListConfig<Pokemon>(usePokemonData);
-  
-  // we use the useStatic hook to fetch configure the list only once
-  // this could also be done in a useEffect hook
-  useStatic(() => {
-    
-  })
-  // we return the mutated config object, which will be used by the List component
-  return config;
-}
-```
-
+<Callout color="primary">
+Documentation regarding advanced configuration principles can be found [here](?path=/docs/components-list-configuration-configuration--docs).
+</Callout>
 
 </Content>
-

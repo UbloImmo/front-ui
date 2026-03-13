@@ -22,7 +22,7 @@ describe("Filter module", () => {
         // @ts-expect-error - label is required
         expect(() => computeFilterDataSignature()).toThrow();
       });
-      it("should throw if option signatures is not an array", () => {
+      it("should throw if option signatures is not a set", () => {
         // @ts-expect-error - option signatures is required
         expect(() => computeFilterDataSignature("label", null)).toThrow();
         // @ts-expect-error - option signatures is required
@@ -30,23 +30,25 @@ describe("Filter module", () => {
       });
       it("should throw if operator is not provided", () => {
         // @ts-expect-error - operator is required
-        expect(() => computeFilterDataSignature("label", [])).toThrow();
+        expect(() => computeFilterDataSignature("label", new Set())).toThrow();
       });
       it("should return the label if option signatures is an empty array", () => {
-        expect(computeFilterDataSignature("label", [], "AND")).toBe("label");
+        expect(computeFilterDataSignature("label", new Set(), "AND")).toBe(
+          "label"
+        );
       });
       it("should return a signature if provided with valid arguments", () => {
         expect(
           computeFilterDataSignature(
             "label",
-            ["test-option-signature-1", "test-option-signature-2"],
+            new Set(["test-option-signature-1", "test-option-signature-2"]),
             "AND"
           )
         ).toBe("label-test-option-signature-1ANDtest-option-signature-2");
         expect(
           computeFilterDataSignature(
             "label",
-            ["test-option-signature-1"],
+            new Set(["test-option-signature-1"]),
             "AND"
           )
         ).toBe("label-test-option-signature-1");
@@ -67,7 +69,7 @@ describe("Filter module", () => {
       it("should return a valid object", () => {
         const result = separateOptionsAndDividers([]);
         expect(result).toEqual({
-          optionSignatures: [],
+          optionSignatures: new Set(),
           optionDividers: [],
         });
       });
@@ -83,10 +85,9 @@ describe("Filter module", () => {
         const { optionDividers, optionSignatures } = separateOptionsAndDividers(
           [option1, option2]
         );
-        expect(optionSignatures).toEqual([
-          option1.signature,
-          option2.signature,
-        ]);
+        expect(optionSignatures).toEqual(
+          new Set([option1.signature, option2.signature])
+        );
         expect(optionDividers).toEqual([]);
       });
       it("should keep signatures as is", () => {
@@ -94,10 +95,9 @@ describe("Filter module", () => {
           option1.signature,
           option2.signature,
         ]);
-        expect(optionSignatures).toEqual([
-          option1.signature,
-          option2.signature,
-        ]);
+        expect(optionSignatures).toEqual(
+          new Set([option1.signature, option2.signature])
+        );
       });
       const divider = filterOptionDividerData("divider");
       it("should extract only valid dividers ", () => {
@@ -147,10 +147,9 @@ describe("Filter module", () => {
       const filter = filterData("filter", optionOrSignatures);
       expect(filter).toBeObject();
       expect(filter.label).toBe(label);
-      expect(filter.optionSignatures).toEqual([
-        option1.signature,
-        option2.signature,
-      ]);
+      expect(filter.optionSignatures).toEqual(
+        new Set([option1.signature, option2.signature])
+      );
       expect(filter.optionDividers).toBeArray();
       expect(filter.optionDividers).toHaveLength(1);
       expect(filter.optionDividers[0]).toEqual({

@@ -1,0 +1,127 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ComponentInfo, Callout, HeaderInfo, Text } from "@docs/blocks";
+import { Content, Header } from "@docs/containers";
+
+<Meta title="Components/List/Configuration/Methods/Sorts" />
+
+<Header>
+  <HeaderInfo title="sorts()" parent="Components/List/Configuration/Methods">
+    <Text size="m" color="primary-dark">Builds and returns a **map** of _sorts_ for the list's data.</Text>
+  </HeaderInfo>
+</Header>
+
+<Content>
+
+## Usage
+
+Sorts define the order in which list items are displayed.
+
+```typescript
+const { sorts } = useListConfig<Pokemon>(usePokemonData);
+const sortByNameAndId = sorts({
+  name: {
+    order: "asc",
+    priority: 0,
+    iconSet: "string",
+  },
+  id: {
+    order: "asc",
+    priority: 1,
+    iconSet: "number",
+    inverted: true,
+    label: "Pokedex ID",
+  }
+});
+// {
+//   name: { property: "name", order: "asc", priority: 0, active: true, inverted: false, label: null, iconSet: "string" },
+//   id: { property: "id", order: "asc", priority: 1, active: true, inverted: true, label: "Pokedex ID", iconSet: "number" }
+// }
+```
+
+## Type definition
+
+```typescript
+interface ListConfigSortsFn<TItem extends object> {
+  <TEntriesInput extends SortDataEntriesInput<TItem>>(
+    entries: TEntriesInput
+  ): SortDataEntriesFromInput<TItem, TEntriesInput>;
+```
+
+## Arguments
+
+#### **`entries`**: `TEntriesInput extends SortDataEntriesInput<TItem>`
+
+Map of sort data entry inputs to register. Each key in the object map should point to a valid property path. **Required**.
+
+```typescript
+// Map holding at most one entry input per valid list item property
+type SortDataEntriesInput<TItem extends object> = {
+  [TProperty in FilterProperty<TItem>]?: SortDataEntryInput<TItem, TProperty>;
+};
+
+// A single sort entry input
+type SortDataEntryInput<
+  TItem extends object,
+  TProperty extends FilterProperty<TItem>,
+> = Omit<SortConfig<TItem, TProperty>, "property"> & SortState & SortVisualData;
+```
+
+## Returns
+
+A list containing one `FilterOptionMatch` object for each value passed in the `values` parameter.
+An object with the same shape and properties as the `entries` argument, but with resulting `SortData` objects as values.
+
+> Each property points to its corresponding `SortData`.
+
+```typescript
+// Map holding all possible sort data objects based on their property.
+export type SortDataEntries<TItem extends object> = {
+  [TProperty in FilterProperty<TItem>]?: SortData<TItem, TProperty>;
+};
+
+// Subset of all available sort data entries restricted based on the properties present in the input
+type SortDataEntriesFromInput<
+  TItem extends object,
+  TEntriesInput extends SortDataEntriesInput<TItem>,
+> = Required<
+  Pick<
+    SortDataEntries<TItem>,
+    keyof SortDataEntries<TItem> & KeyOf<TEntriesInput, string | number>
+  >
+>;
+```
+
+## Example
+
+```typescript
+// Retrieve the method from the useListConfig hook
+const { sorts } = useListConfig<Pokemon>(usePokemonData);
+
+useStatic(() => {
+  const {
+    "types.0.type.name": sortByFirstType,
+    name: sortByName,
+    id: sortById
+  } = sorts({
+    name: {
+    "types.0.type.name": {
+      order: ["water", "fire", "grass"],
+      priority: 0,
+      label: "First type"
+    },
+      order: "asc",
+      priority: 1,
+      iconSet: "string",
+    },
+    id: {
+      order: "asc",
+      priority: 1,
+      iconSet: "number",
+      inverted: true,
+      label: "Pokedex ID",
+    },
+  });
+})
+```
+
+</Content>

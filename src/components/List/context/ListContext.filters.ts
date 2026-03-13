@@ -1,10 +1,5 @@
-import {
-  isArray,
-  isObject,
-  objectFromEntries,
-  type VoidFn,
-} from "@ubloimmo/front-util";
-import { useCallback, useEffect, useMemo } from "react";
+import { isArray, type VoidFn } from "@ubloimmo/front-util";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useDataArray } from "@utils";
 
@@ -23,39 +18,26 @@ import type {
   FilterSignature,
   Filter,
   FilterOption,
-  IsFilterOptionFn,
 } from "../modules";
 
 export const useListFilters: UseListFilters = <TItem extends object>(
   config: Pick<ListContextConfig<TItem>, "filters">,
-  { options, updateOptionSelection }: UseListOptionsReturn<TItem>
+  { optionsMap, updateOptionSelection }: UseListOptionsReturn<TItem>
 ): UseListFiltersReturn<TItem> => {
   const filterDatas = useDataArray(config.filters ?? [], true);
 
   const buildFilterOption = useCallback(
     (
       optionData: FilterOptionData<TItem>,
-      multi = false,
-      isFilterOption: IsFilterOptionFn = () => false,
-      isFilterDisabled = false
+      filterData: FilterData
     ): FilterOption<TItem> => {
       const select = () =>
-        updateOptionSelection(
-          optionData.signature,
-          true,
-          multi,
-          isFilterOption
-        );
+        updateOptionSelection(optionData.signature, true, filterData);
       const unselect = () =>
-        updateOptionSelection(
-          optionData.signature,
-          false,
-          multi,
-          isFilterOption
-        );
+        updateOptionSelection(optionData.signature, false, filterData);
       return {
         ...optionData,
-        disabled: optionData.disabled || isFilterDisabled,
+        disabled: optionData.disabled || filterData.disabled,
         select,
         unselect,
       };
@@ -64,49 +46,44 @@ export const useListFilters: UseListFilters = <TItem extends object>(
   );
 
   const buildFilterOptions = useCallback(
-    (filterData: FilterData): FilterOption<TItem>[] => {
-      const isFilterOption = (optionSignature: FilterSignature) =>
-        filterData.optionSignatures.includes(optionSignature);
-
-      // not really efficient since a single `options.filter` could suffice
-      // but needed to ensure order
-      return filterData.optionSignatures
-        .map((optionSignature) => {
-          const optionData = options.find(
-            ({ signature }) => signature === optionSignature
-          );
-          if (!optionData) return null;
-          return buildFilterOption(
-            optionData,
-            filterData.multi,
-            isFilterOption,
-            filterData.disabled
-          );
-        })
-        .filter((maybeOption): maybeOption is FilterOption<TItem> =>
-          isObject(maybeOption)
-        );
+    (
+      filterData: FilterData
+    ): Record<"filterOptions" | "selectedOptions", FilterOption<TItem>[]> => {
+      const filterOptions: FilterOption<TItem>[] = [];
+      const selectedOptions: FilterOption<TItem>[] = [];
+      for (const optionSignature of filterData.optionSignatures) {
+        const optionData = optionsMap.get(optionSignature);
+        if (!optionData) continue;
+        const filterOption = buildFilterOption(optionData, filterData);
+        filterOptions.push(filterOption);
+        if (filterOption.selected) selectedOptions.push(filterOption);
+      }
+      return { filterOptions, selectedOptions };
     },
-    [options, buildFilterOption]
+    [optionsMap, buildFilterOption]
   );
 
   const clearFilter = useCallback(
     (filterData: FilterData) => {
-      options.updateItemWhere(
-        ({ signature }) => filterData.optionSignatures.includes(signature),
-        (option) => ({
-          ...option,
-          selected: option.fixed || option.default,
-        })
-      );
+      if (!filterData.optionSignatures.size) return;
+
+      let needsCommit = false;
+      for (const signature of filterData.optionSignatures) {
+        const option = optionsMap.get(signature);
+        if (!option) continue;
+        const selected = option.fixed || option.default;
+        if (selected === option.selected) continue;
+        updateOptionSelection(signature, selected, undefined, false);
+        needsCommit = true;
+      }
+      if (needsCommit) optionsMap.commit();
     },
-    [options]
+    [optionsMap, updateOptionSelection]
   );
 
   const buildFilter = useCallback(
     (filterData: FilterData): Filter<TItem> => {
-      const filterOptions = buildFilterOptions(filterData);
-      const selectedOptions = filterOptions.filter((option) => option.selected);
+      const { filterOptions, selectedOptions } = buildFilterOptions(filterData);
       const active = !!selectedOptions.length;
 
       const clear = () => clearFilter(filterData);
@@ -165,70 +142,63 @@ export const useListFilters: UseListFilters = <TItem extends object>(
     [filters]
   );
 
+  /**
+   * Scratch reusable filter signature set
+   */
+  const scratchFilterSignatureSet = useRef<Set<FilterSignature>>(new Set());
+
   const applyFallbackToInactiveFilters = useCallback(
     (inactiveFilters: Filter<TItem>[]) => {
-      // only keep filters that are allowed to run side effects
-      const sideEffectFilters = inactiveFilters.filter(
-        ({ optionSignatures, emptyFallback, disabled, active }) => {
-          return (
-            !active &&
-            emptyFallback !== "fixed" &&
-            !disabled &&
-            !!optionSignatures.length
-          );
+      // clear scratch set to use it to keep track of already affected options
+      scratchFilterSignatureSet.current.clear();
+
+      let needsCommit = false;
+
+      for (const filter of inactiveFilters) {
+        // only keep filters that are allowed to run side effects
+        if (
+          filter.active ||
+          filter.disabled ||
+          filter.emptyFallback === "fixed" ||
+          !filter.optionSignatures.size
+        )
+          continue;
+
+        for (const optionSignature of filter.optionSignatures) {
+          // skip option if it has already been affected
+          if (scratchFilterSignatureSet.current.has(optionSignature)) continue;
+          // abort if option is missing or disabled
+          const option = optionsMap.get(optionSignature);
+          if (!option) continue;
+          if (option.disabled) continue;
+
+          // find out whether option needs to be selected based on its parent filter's fallback behavior
+          const selected =
+            filter.emptyFallback === "all"
+              ? true
+              : isArray(filter.emptyFallback)
+                ? filter.emptyFallback.some((behavior) => option[behavior])
+                : option[filter.emptyFallback];
+          // skip if option does not need to be selected based on behavior
+          if (!selected) continue;
+
+          // actually select option without causing a renderer, while staging a commit
+          updateOptionSelection(optionSignature, selected, undefined, false);
+          needsCommit = true;
+
+          // mark option as already affected so as not to overwrite its selection
+          // if it is shared by multiple filters
+          scratchFilterSignatureSet.current.add(optionSignature);
+
+          // non-multi filters only need to keep one option selected
+          // so we skip iterating over its remaining options by breaking the inner loop
+          if (!filter.multi) break;
         }
-      );
-      // abort if no filters to run side effects on
-      if (!sideEffectFilters.length) return;
-      // construct map of flags for each filter
-      const singleSelectFlagMap = objectFromEntries(
-        inactiveFilters.map(({ signature }): [string, boolean] => [
-          signature,
-          false,
-        ])
-      );
-      // predicate to select one or more options in the all filters based on its multi property
-      const shouldSelectOption = (
-        option: FilterOptionData<TItem>,
-        index: number
-      ) => {
-        // reset every flag in map on the first option to account for multiple predicate runs
-        if (index === 0) {
-          for (const filterSignature in singleSelectFlagMap) {
-            singleSelectFlagMap[filterSignature] = false;
-          }
-        }
-        // abort if the option is disabled
-        if (option.disabled) return false;
-        // find the first filter the option belongs to, and abort if it does not belong to any filter
-        const optionFilter = sideEffectFilters.find(({ optionSignatures }) =>
-          optionSignatures.includes(option.signature)
-        );
-        if (!optionFilter) return false;
-        const { emptyFallback, multi, signature } = optionFilter;
-        // do not select multiple in a single filter options if a single option has already been selected
-        if (singleSelectFlagMap[signature]) return false;
-        // match options based on the emptyFallback property and the option's behavior
-        const targetBehavior =
-          emptyFallback === "all"
-            ? true
-            : isArray(emptyFallback)
-              ? emptyFallback.some((behavior) => option[behavior])
-              : option[emptyFallback];
-        // skip further checks if the option does not match the target behavior
-        if (!targetBehavior) return false;
-        // the option will be selected right after. we set the flag to true if its filter is multi
-        // to prevent selecting multiple options on a single filter
-        if (!multi) singleSelectFlagMap[signature] = true;
-        return true;
-      };
-      // apply the side effect once for all filters
-      options.updateItemWhere(shouldSelectOption, (option) => ({
-        ...option,
-        selected: true,
-      }));
+      }
+      // trigger a rerender with updated options map
+      if (needsCommit) optionsMap.commit();
     },
-    [options]
+    [optionsMap, updateOptionSelection]
   );
 
   // run side effects on inactive filters
@@ -236,7 +206,8 @@ export const useListFilters: UseListFilters = <TItem extends object>(
     const inactiveFilters = filters.filter(({ active }) => !active);
     if (!inactiveFilters.length) return;
     applyFallbackToInactiveFilters(inactiveFilters);
-  }, [filters, applyFallbackToInactiveFilters]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters]);
 
   return {
     filters,

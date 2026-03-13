@@ -6,6 +6,7 @@ import type {
   FilterProperty,
   FilterSearchOperator,
 } from "../shared.types";
+import type { SortPayload } from "../Sort";
 import type {
   AsyncFn,
   Enum,
@@ -59,6 +60,7 @@ export type DataProviderFilterFnConfig<TItem extends object> =
      * A single filter to apply to the items
      *
      * @type {DataProviderFilterParam<TItem>}
+     * @deprecated use `filters` instead
      */
     filter?: DataProviderFilterParam<TItem>;
     /**
@@ -71,6 +73,7 @@ export type DataProviderFilterFnConfig<TItem extends object> =
      * A single filter preset to apply to the items
      *
      * @type {Pick<FilterPreset<TItem>, "options" | "operator">}
+     * @deprecated use `filterPresets` instead
      */
     filterPreset?: Pick<FilterPreset<TItem>, "options" | "operator">;
     /**
@@ -83,6 +86,7 @@ export type DataProviderFilterFnConfig<TItem extends object> =
      * A single option to apply to the items
      *
      * @type {FilterOptionData<TItem>}
+     * @deprecated use `options` instead
      */
     option?: FilterOptionData<TItem>;
     /**
@@ -109,7 +113,18 @@ export type DataProviderFilterFnConfig<TItem extends object> =
      * @default []
      */
     selectedOptions: FilterOptionData<TItem>[];
-
+    /**
+     * Active sorting configurations to apply to the items.
+     *
+     * @remarks
+     * Always gets sent to the data provider, regardless of the sorting configuration shape.
+     * The order of the {@link SortPayload} objects in the array matters.
+     * Sorts are ordered based on priority, and should be applied as such by the Data provider
+     *
+     * @type {Nullable<SortPayload<TItem, FilterProperty<TItem>>[]>};
+     * @default null
+     */
+    activeSorts: Nullable<SortPayload<TItem, FilterProperty<TItem>>[]>;
     /**
      * The search configuration to apply to the items
      *

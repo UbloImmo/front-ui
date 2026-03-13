@@ -56,8 +56,8 @@ export const filterPresetData = <TItem extends object>(
     config,
     true
   );
-  const optionSignatures: FilterSignature[] = optionsOrSignatures.map(
-    extractFilterOptionSignature
+  const optionSignatures: Set<FilterSignature> = new Set(
+    optionsOrSignatures.map(extractFilterOptionSignature)
   );
   const signature = computeFilterPresetSignature(
     label,

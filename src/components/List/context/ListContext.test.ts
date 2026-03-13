@@ -65,50 +65,23 @@ const testListOptions = () => {
     mockFilterFn
   );
 
-  testHookWithFilters("should return a valid object", (result) => {
-    expect(result).toBeObject();
-    expect(result).toHaveProperty("options");
-    expect(result.options).toBeObject();
-    expect(result.options).toHaveProperty("data");
-    expect(result.options.data).toBeArray();
-    expect(result.options.data).toHaveLength(2);
-    expect(result).toHaveProperty("updateOptionSelection");
-    expect(result.updateOptionSelection).toBeFunction();
-    expect(result).toHaveProperty("getOptionBySignature");
-    expect(result.getOptionBySignature).toBeFunction();
-  });
+  testHookWithFilters(
+    "should return a valid object",
+    (result, _, { getResult, rerender }) => {
+      rerender();
+      result = getResult();
+      expect(result).toBeObject();
+      expect(result).toHaveProperty("optionsMap");
+      expect(result.optionsMap).toBeObject();
+      expect(result.optionsMap.size).toEqual(2);
+      expect(result).toHaveProperty("updateOptionSelection");
+      expect(result.updateOptionSelection).toBeFunction();
+      expect(result).toHaveProperty("getOptionBySignature");
+      expect(result.getOptionBySignature).toBeFunction();
+    }
+  );
 
-  // mockFilterFn.mockReset();
-  // mockRefetchFn.mockReset();
-  // mockFetchCountFn.mockReset();
-
-  // testHookWithFilters(
-  //   "should call the dataProvider.filter() method with filters",
-  //   () => {
-  //     expect(mockFilterFn).toHaveBeenCalledWith({
-  //       operator: mockConfig.operator,
-  //       filters: [
-  //         {
-  //           selectedOptions: [],
-  //           operator: filterA.operator,
-  //         },
-  //       ],
-  //     });
-  //   }
-  // );
-
-  // mockFilterFn.mockReset();
-  // mockRefetchFn.mockReset();
-  // mockFetchCountFn.mockReset();
-
-  // testHookWithoutFilters(
-  //   "should call the dataProvider.filter() method without filters",
-  //   () => {
-  //     expect(mockFilterFn).toHaveBeenCalled();
-  //   }
-  // );
-
-  testHookWithFilters("should return a function by its signature", (result) => {
+  testHookWithFilters("should return an option by its signature", (result) => {
     expect(result.getOptionBySignature).toBeFunction();
     expect(result.getOptionBySignature(optionA.signature)).toEqual(optionA);
     expect(result.getOptionBySignature(optionB.signature)).toEqual(optionB);
@@ -144,10 +117,9 @@ const testListOptions = () => {
       expect(result.updateOptionSelection).toBeFunction();
       result.updateOptionSelection(optionA.signature, true);
       rerender();
-      expect(getResult().options.data).toEqual([
-        { ...optionA, selected: true },
-        optionB,
-      ]);
+      expect(getResult().selectedOptionSignatures).toEqual(
+        new Set([optionA.signature])
+      );
     }
   );
 
@@ -157,7 +129,7 @@ const testListOptions = () => {
       expect(result.updateOptionSelection).toBeFunction();
       result.updateOptionSelection(optionA.signature, false);
       rerender();
-      expect(getResult().options.data).toEqual([optionA, optionB]);
+      expect(getResult().selectedOptionSignatures).toEqual(new Set());
     }
   );
 
@@ -165,12 +137,14 @@ const testListOptions = () => {
     "should keep other options selected upon unselection",
     (result, _params, { rerender, getResult }) => {
       expect(result.updateOptionSelection).toBeFunction();
-      result.updateOptionSelection(optionA.signature, false, true);
+      result.updateOptionSelection(optionA.signature, false, {
+        multi: true,
+        optionSignatures: new Set([optionA.signature, optionB.signature]),
+      });
       rerender();
-      expect(getResult().options.data).toEqual([
-        { ...optionA, selected: false },
-        { ...optionB, selected: true },
-      ]);
+      expect(getResult().selectedOptionSignatures).toEqual(
+        new Set([optionB.signature])
+      );
     }
   );
 
@@ -178,12 +152,12 @@ const testListOptions = () => {
     "should unselect other options if not multi",
     (result, _params, { rerender, getResult }) => {
       expect(result.updateOptionSelection).toBeFunction();
-      result.updateOptionSelection(optionA.signature, false, false, () => true);
+      result.updateOptionSelection(optionA.signature, false, {
+        multi: false,
+        optionSignatures: new Set([optionA.signature, optionB.signature]),
+      });
       rerender();
-      expect(getResult().options.data).toEqual([
-        { ...optionA, selected: false },
-        { ...optionB, selected: false },
-      ]);
+      expect(getResult().selectedOptionSignatures).toEqual(new Set());
     }
   );
 
@@ -193,10 +167,13 @@ const testListOptions = () => {
     "should call dataProvider.filter() when applying options",
     (result, _, { rerender, getResult }) => {
       expect(result.updateOptionSelection).toBeFunction();
-      result.updateOptionSelection(optionA.signature, false, false, () => true);
+      result.updateOptionSelection(optionA.signature, false, {
+        multi: false,
+        optionSignatures: new Set([optionA.signature, optionB.signature]),
+      });
       rerender();
       expect(result.applyOptions).toBeFunction();
-      getResult().applyOptions([]);
+      getResult().applyOptions();
       expect(mockFilterFn).toHaveBeenCalled();
     }
   );
@@ -205,7 +182,7 @@ const testListOptions = () => {
     "should still call dataProvider.filter() when applying options without filters",
     (result, _, { rerender, getResult }) => {
       expect(result.updateOptionSelection).toBeFunction();
-      result.updateOptionSelection(optionA.signature, false, false, () => true);
+      result.updateOptionSelection(optionA.signature, false);
       rerender();
       expect(result.applyOptions).toBeFunction();
       getResult().applyOptions([]);
