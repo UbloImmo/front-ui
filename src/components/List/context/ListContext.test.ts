@@ -81,36 +81,6 @@ const testListOptions = () => {
     }
   );
 
-  // mockFilterFn.mockReset();
-  // mockRefetchFn.mockReset();
-  // mockFetchCountFn.mockReset();
-
-  // testHookWithFilters(
-  //   "should call the dataProvider.filter() method with filters",
-  //   () => {
-  //     expect(mockFilterFn).toHaveBeenCalledWith({
-  //       operator: mockConfig.operator,
-  //       filters: [
-  //         {
-  //           selectedOptions: [],
-  //           operator: filterA.operator,
-  //         },
-  //       ],
-  //     });
-  //   }
-  // );
-
-  // mockFilterFn.mockReset();
-  // mockRefetchFn.mockReset();
-  // mockFetchCountFn.mockReset();
-
-  // testHookWithoutFilters(
-  //   "should call the dataProvider.filter() method without filters",
-  //   () => {
-  //     expect(mockFilterFn).toHaveBeenCalled();
-  //   }
-  // );
-
   testHookWithFilters("should return an option by its signature", (result) => {
     expect(result.getOptionBySignature).toBeFunction();
     expect(result.getOptionBySignature(optionA.signature)).toEqual(optionA);
