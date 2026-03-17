@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { MouseEventHandler, useMemo, useCallback } from "react";
 
 import {
   isNonEmptyString,
@@ -28,12 +28,13 @@ const defaultInputLabelProps: DefaultInputLabelProps = {
   compact: false,
   htmlFor: null,
   styleOverride: null,
+  preventNestedFocusOnClick: false,
 };
 
 /**
  * Renders an input label component, to be used in association with the Input component.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
  * @return {JSX.Element} The InputLabel component.
@@ -60,6 +61,13 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
 
   const htmlFor = useHtmlAttribute(mergedProps.htmlFor);
 
+  const onClick = useCallback<MouseEventHandler<HTMLLabelElement>>(
+    (event) => {
+      if (mergedProps.preventNestedFocusOnClick) event.preventDefault();
+    },
+    [mergedProps.preventNestedFocusOnClick]
+  );
+
   return (
     <label
       htmlFor={htmlFor}
@@ -67,6 +75,7 @@ const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
       data-testid={testId}
       data-required={String(required)}
       style={style}
+      onClick={onClick}
     >
       <FlexRowLayout align="center" gap="s-2" justify={justify}>
         <Text
