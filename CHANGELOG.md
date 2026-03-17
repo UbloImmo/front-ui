@@ -7,12 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 2.2.1 - 2026-03-17
 ### Fixed
-
 - `v0.0.2` ListTableHeaderSort component
   - Adjusted cell label style in case of no sort found
   - Updated cell label test id to match component
-
 - `v0.1.1` ListTableHeaderFilter component
   - Updated cell label test id to match component
 
