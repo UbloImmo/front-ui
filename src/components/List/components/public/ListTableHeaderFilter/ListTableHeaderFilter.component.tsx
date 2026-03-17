@@ -29,7 +29,7 @@ import type { TestIdProps } from "@types";
 /**
  * Allows controlling a list filter from a table header cell.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {ListTableHeaderFilterProps} props - ListTableHeaderFilter component props
  * @returns {JSX.Element}
