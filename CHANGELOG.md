@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v0.1.1` ListTableHeaderFilter component
   - bump version in jsdoc.
 
-### Changed
+### Added
 
 - `v0.1.1` InputLabel component
   - Added `preventNestedFocusOnClick` property.
