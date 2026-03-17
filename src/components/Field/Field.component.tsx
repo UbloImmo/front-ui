@@ -36,9 +36,17 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
 };
 
 /**
+ * Input types for which clicking the Field's label should not trigger/focus its input
+ */
+const NO_NESTED_FOCUS_INPUT_TYPES = new Set<InputType>([
+  "combobox",
+  "icon-picker",
+]);
+
+/**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
@@ -85,6 +93,13 @@ const Field = <TType extends InputType>(
     mergedProps.value
   );
 
+  const preventLabelNestedFocus = useMemo(() => {
+    return (
+      mergedProps.preventNestedFocusOnClick ||
+      NO_NESTED_FOCUS_INPUT_TYPES.has(mergedProps.type)
+    );
+  }, [mergedProps.preventNestedFocusOnClick, mergedProps.type]);
+
   if (!mergedProps.type || !inputTypes?.includes(mergedProps.type)) {
     logger.error(`Invalid type (${mergedProps.type}) provided.`);
     return null;
@@ -105,6 +120,7 @@ const Field = <TType extends InputType>(
         testId="field-label"
         overrideTestId
         htmlFor={labelHtmlFor}
+        preventNestedFocusOnClick={preventLabelNestedFocus}
       >
         {mergedProps.suffix ? (
           <FlexRowLayout align="center" gap={"s-2"} fill>
