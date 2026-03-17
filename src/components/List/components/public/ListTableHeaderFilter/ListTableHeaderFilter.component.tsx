@@ -166,7 +166,8 @@ export const ListTableHeaderFilter = (
               color="gray-800"
               size="m"
               weight="bold"
-              testId="input-label-text"
+              testId="list-table-header-filter-label"
+              title={filter?.label ?? props.fallbackLabel}
               noWrap
             >
               {filter?.label ?? props.fallbackLabel}
