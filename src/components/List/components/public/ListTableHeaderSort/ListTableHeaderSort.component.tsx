@@ -19,7 +19,7 @@ import type { Nullable } from "@ubloimmo/front-util";
 /**
  * Allows controlling a list sort from a table header cell.
  *
- * @version 0.0.1
+ * @version 0.0.2
  *
  * @template {object} TItem - Type of a single list item
  *
@@ -90,7 +90,17 @@ export const ListTableHeaderSort = <TItem extends object>(
         colSpan={props.colSpan}
         className={props.className}
       >
-        {props.fallbackLabel}
+        <Text
+          color="gray-800"
+          size="m"
+          weight="bold"
+          testId="list-table-header-sort-label"
+          noWrap
+          ellipsis
+          title={props.fallbackLabel}
+        >
+          {props.fallbackLabel}
+        </Text>
       </TableHeaderCell>
     );
 
@@ -108,7 +118,7 @@ export const ListTableHeaderSort = <TItem extends object>(
             color="gray-800"
             size="m"
             weight="bold"
-            testId="input-label-text"
+            testId="list-table-header-sort-label"
             noWrap
             ellipsis
             title={label}
