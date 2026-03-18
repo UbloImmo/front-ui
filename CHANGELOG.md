@@ -7,18 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Changed
-
-- `v0.1.1` ListTableHeaderFilter component
-  - bump version in jsdoc.
-
+## 2.2.2 - 2026-03-18
 ### Added
-
 - `v0.1.1` InputLabel component
   - Added `preventNestedFocusOnClick` property.
 
-### Fixed
+### Changed
+- `v0.1.1` ListTableHeaderFilter component
+  - bump version in jsdoc.
 
+### Fixed
 - `v0.1.1` Field component
   - Always prevent `combobox` & `icon-picker` input types from being focused when clicking on label.
 
