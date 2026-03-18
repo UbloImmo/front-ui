@@ -36,10 +36,22 @@ export type InputLabelProps = {
   /**
    * Flag to make the input label as compact as possible.
    * If `tooltip` is also provided, it will be rendererd next to the label
+   *
+   * @default false
    */
   compact?: boolean;
-
+  /**
+   * An id pointing to an input the label is used for
+   *
+   * @default null
+   */
   htmlFor?: Nullable<string>;
+  /**
+   * Whether to prevent the label's default behavior of triggering/focusing its nested input on click
+   *
+   * @default false
+   */
+  preventNestedFocusOnClick?: boolean;
 } & Omit<StyleOverrideProps, "as">;
 
 export type DefaultInputLabelProps = Required<InputLabelProps>;
