@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- Renamed `line-trough` class to `line-through` to match CSS standard.
+
 ## 2.2.2 - 2026-03-18
 ### Added
 - `v0.1.1` InputLabel component
