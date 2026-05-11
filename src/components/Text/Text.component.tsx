@@ -15,7 +15,7 @@ const defaultTextProps: Required<TextProps> = {
 /**
  * Customizable, accessible global text.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {WithTestId<TextProps>} props - Text component props
  * @returns {JSX.Element}

@@ -190,7 +190,7 @@ export const useTypographyStyles = (
       styles[`align-${align}`],
       [styles.heading, isHeading],
       [styles.italic, italic],
-      [styles["line-trough"], lineThrough],
+      [styles["line-through"], lineThrough],
       [styles.underline, underline],
       [styles.overline, overline],
       [styles.ellipsis, ellipsis],
