@@ -8,18 +8,18 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { fn } from "storybook/test";
 import { z } from "zod";
 
-import { Form } from "./Form.component";
 import { Button } from "../Button";
 import { Callout } from "../Callout";
 import { DialogProvider, useDialog } from "../Dialog";
 import { FeatureSwitch } from "../FeatureSwitch";
 import { Heading } from "../Heading";
+import { Hypertext } from "../Hypertext";
 import { Icon, type IconName } from "../Icon";
 import { Input, NumberInput } from "../Input";
-import { isFormField } from "./Form.utils";
-import { Hypertext } from "../Hypertext";
 import { Modal } from "../Modal";
+import { Form } from "./Form.component";
 import { useFormContext } from "./Form.context";
+import { isFormField } from "./Form.utils";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
@@ -32,10 +32,10 @@ import {
 } from "@utils";
 
 import type {
-  FormProps,
-  FormData,
-  FormContent,
   CustomFormInputProps,
+  FormContent,
+  FormData,
+  FormProps,
   FormTableProps,
   FormTableTryDeletingRowFn,
   FormTableTryDeletingRowParams,
@@ -369,6 +369,46 @@ EditStates.parameters = {
       defaultEditing: true,
     } as FormProps<object>,
   ]),
+};
+
+const viewHrefSchema = z.object({
+  profile: z.string(),
+});
+
+type ViewHrefData = z.infer<typeof viewHrefSchema>;
+
+const profileOptions = [
+  { label: "Profile 1", value: "profile-1" },
+  { label: "Profile 2", value: "profile-2" },
+  { label: "Profile 3", value: "profile-3" },
+];
+
+const profileUrlMap: Record<string, string> = {
+  "profile-1": "https://ublo.immo/profiles/profile-1",
+  "profile-2": "https://ublo.immo/profiles/profile-2",
+  "profile-3": "https://ublo.immo/profiles/profile-3",
+};
+
+const viewHrefFormProps: FormProps<ViewHrefData> = {
+  title: "Profil cautionnaire",
+  schema: viewHrefSchema,
+  query: { profile: "profile-1" },
+  onSubmit: fn(),
+  content: [
+    {
+      type: "select",
+      source: "profile",
+      label: "Profil cautionnaire",
+      options: profileOptions,
+      viewHref: (value) => profileUrlMap[String(value)] ?? null,
+      layout: { size: 2 },
+    },
+  ],
+};
+
+export const ViewHref = () => <Form {...viewHrefFormProps} />;
+ViewHref.parameters = {
+  docs: componentSource([viewHrefFormProps as FormProps<object>]),
 };
 
 export const Validation = (props: FormStoryProps) => {
@@ -1150,6 +1190,7 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
 export const AllFields = () => {
   return <Form {...allFieldsFormProps} />;
 };
+
 AllFields.parameters = {
   docs: componentSource([allFieldsFormProps as FormStoryProps]),
 };

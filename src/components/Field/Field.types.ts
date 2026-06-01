@@ -42,6 +42,15 @@ export type FieldProps<
      * @default null
      */
     suffix?: Nullable<string>;
+    /**
+     * URL to render the display value as a clickable hypertext link in view mode.
+     * Accepts a static URL string, or a function receiving the field's current value
+     * and returning a URL. Has no effect in edit mode.
+     *
+     * @type {Nullable<string | GenericFn<[unknown], Nullable<string>>>}
+     * @default null
+     */
+    viewHref?: Nullable<string | GenericFn<[unknown], Nullable<string>>>;
   };
 
 export type FieldDefaultProps<TType extends InputType = InputType> = Required<

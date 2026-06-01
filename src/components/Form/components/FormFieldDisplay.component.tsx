@@ -28,7 +28,14 @@ import type { TooltipProps } from "@/components/Tooltip";
 export const FormFieldDisplay = <TType extends InputType>(
   props: BuiltFieldProps<TType>
 ): JSX.Element => {
-  const { label, type, error, errorText, suffix } = props;
+  const { label, type, error, errorText, suffix, viewHref } = props;
+
+  const resolvedViewHref = useMemo<Nullable<string>>(() => {
+    if (!viewHref) return null;
+    if (typeof viewHref === "function") return viewHref(props.value) ?? null;
+    return viewHref;
+  }, [viewHref, props.value]);
+
   const displayContent = useMemo(() => {
     const content = computeFieldDisplayContent(type, props);
     if (isString(content)) return <FormFieldDisplayValue value={content} />;
@@ -76,7 +83,19 @@ export const FormFieldDisplay = <TType extends InputType>(
         gap="s-2"
         testId="form-field-display-value"
       >
-        {displayContent}
+        {resolvedViewHref ? (
+          <a
+            href={resolvedViewHref}
+            target="_blank"
+            rel="noreferrer"
+            className={styles["form-field-display-link"]}
+          >
+            {displayContent}
+            <Icon name="BoxArrowUpRight" size="s-3" color="primary-base" />
+          </a>
+        ) : (
+          displayContent
+        )}
         {suffix && (
           <Text
             testId="field-display-suffix"
