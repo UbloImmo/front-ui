@@ -1,7 +1,6 @@
 import { isFunction } from "@ubloimmo/front-util";
 import { useCallback, useMemo } from "react";
 
-import { useFieldAssistiveText, useFieldValidity } from "./Field.utils";
 import { NativeInputOnChangeFn, useInputId } from "../Input";
 import { defaultCommonInputProps } from "../Input/Input.common";
 import { Input } from "../Input/Input.component";
@@ -10,11 +9,12 @@ import { InputAssistiveText } from "../InputAssistiveText";
 import { InputLabel } from "../InputLabel";
 import { Text } from "../Text";
 import styles from "./Field.module.scss";
+import { useFieldAssistiveText, useFieldValidity } from "./Field.utils";
 
 import { FlexColumnLayout, FlexRowLayout } from "@/layouts/Flex";
-import { useLogger, useTestId, useMergedProps, useCssClasses } from "@utils";
+import { useCssClasses, useLogger, useMergedProps, useTestId } from "@utils";
 
-import type { FieldProps, FieldDefaultProps } from "./Field.types";
+import type { FieldDefaultProps, FieldProps } from "./Field.types";
 import type { InputType } from "../Input/Input.types";
 import type { TestIdProps } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
@@ -47,7 +47,7 @@ const NO_NESTED_FOCUS_INPUT_TYPES = new Set<InputType>([
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.1.1
+ * @version 0.1.2
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {Nullable<JSX.Element>}
