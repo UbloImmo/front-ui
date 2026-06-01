@@ -33,6 +33,7 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
   name: null,
   styleOverride: null,
   suffix: null,
+  viewHref: null,
 };
 
 /**

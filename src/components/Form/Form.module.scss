@@ -145,6 +145,21 @@
   }
 }
 
+.form-field-display-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  max-width: 100%;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover * {
+    color: var(--primary-base);
+  }
+}
+
 .form-field-display-value {
   --container-height: var(--s-8);
   --container-height-mobile: calc(var(--container-height) + var(--s-2));
