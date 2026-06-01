@@ -8,18 +8,18 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { fn } from "storybook/test";
 import { z } from "zod";
 
-import { Form } from "./Form.component";
 import { Button } from "../Button";
 import { Callout } from "../Callout";
 import { DialogProvider, useDialog } from "../Dialog";
 import { FeatureSwitch } from "../FeatureSwitch";
 import { Heading } from "../Heading";
+import { Hypertext } from "../Hypertext";
 import { Icon, type IconName } from "../Icon";
 import { Input, NumberInput } from "../Input";
-import { isFormField } from "./Form.utils";
-import { Hypertext } from "../Hypertext";
 import { Modal } from "../Modal";
+import { Form } from "./Form.component";
 import { useFormContext } from "./Form.context";
+import { isFormField } from "./Form.utils";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
@@ -32,10 +32,10 @@ import {
 } from "@utils";
 
 import type {
-  FormProps,
-  FormData,
-  FormContent,
   CustomFormInputProps,
+  FormContent,
+  FormData,
+  FormProps,
   FormTableProps,
   FormTableTryDeletingRowFn,
   FormTableTryDeletingRowParams,
@@ -400,7 +400,7 @@ const viewHrefFormProps: FormProps<ViewHrefData> = {
       source: "profile",
       label: "Profil cautionnaire",
       options: profileOptions,
-      viewHref: (value) => profileUrlMap[value as string] ?? null,
+      viewHref: (value) => profileUrlMap[String(value)] ?? null,
       layout: { size: 2 },
     },
   ],
