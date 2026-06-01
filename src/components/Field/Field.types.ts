@@ -49,6 +49,7 @@ export type FieldProps<
      *
      * @type {Nullable<string | GenericFn<[unknown], Nullable<string>>>}
      * @default null
+     * @deprecated Not yet scoped for general use. Pending proper API design before enabling across field types.
      */
     viewHref?: Nullable<string | GenericFn<[unknown], Nullable<string>>>;
   };
