@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Added
-  - `v0.1.2` Field component
-    - Added `viewHref` prop (static URL or value-based function) for use in display mode.
-  - `v0.1.1` FormField component
-    - `FormFieldDisplay` renders the display value as a clickable link when `viewHref` is provided.
+- `v0.1.2` Field component
+  - Added `viewHref` prop (static URL or value-based function) for use in display mode.
+- `v0.1.1` FormField component
+  - `FormFieldDisplay` renders the display value as a clickable link when `viewHref` is provided.
 
 ## 2.2.3 - 2026-05-11
 ### Fixed
