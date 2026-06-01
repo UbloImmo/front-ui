@@ -371,6 +371,46 @@ EditStates.parameters = {
   ]),
 };
 
+const viewHrefSchema = z.object({
+  profile: z.string(),
+});
+
+type ViewHrefData = z.infer<typeof viewHrefSchema>;
+
+const profileOptions = [
+  { label: "Profile 1", value: "profile-1" },
+  { label: "Profile 2", value: "profile-2" },
+  { label: "Profile 3", value: "profile-3" },
+];
+
+const profileUrlMap: Record<string, string> = {
+  "profile-1": "https://ublo.immo/profiles/profile-1",
+  "profile-2": "https://ublo.immo/profiles/profile-2",
+  "profile-3": "https://ublo.immo/profiles/profile-3",
+};
+
+const viewHrefFormProps: FormProps<ViewHrefData> = {
+  title: "Profil cautionnaire",
+  schema: viewHrefSchema,
+  query: { profile: "profile-1" },
+  onSubmit: fn(),
+  content: [
+    {
+      type: "select",
+      source: "profile",
+      label: "Profil cautionnaire",
+      options: profileOptions,
+      viewHref: (value) => profileUrlMap[value as string] ?? null,
+      layout: { size: 2 },
+    },
+  ],
+};
+
+export const ViewHref = () => <Form {...viewHrefFormProps} />;
+ViewHref.parameters = {
+  docs: componentSource([viewHrefFormProps as FormProps<object>]),
+};
+
 export const Validation = (props: FormStoryProps) => {
   const mergedProps = useMergedProps(addressFormProps, props);
 
@@ -1150,6 +1190,7 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
 export const AllFields = () => {
   return <Form {...allFieldsFormProps} />;
 };
+
 AllFields.parameters = {
   docs: componentSource([allFieldsFormProps as FormStoryProps]),
 };
