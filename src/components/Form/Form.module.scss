@@ -300,7 +300,7 @@
     grid-row: auto / span 1;
   }
 
-  @container (max-width: breakpoints.$breakpoint-xs) {
+  @container (max-width: #{breakpoints.$breakpoint-xs}) {
     &.responsive-small {
       grid-column: auto / span 2;
     }
