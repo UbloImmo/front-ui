@@ -103,7 +103,7 @@
     border-top: 1px solid var(--primary-light);
   }
 
-  & > *:not(:before) {
+  & > * {
     position: relative;
   }
 
@@ -173,7 +173,7 @@
   }
 
   @media only screen and (max-width: breakpoints.$breakpoint-xs) {
-    @include mixins.dimensions(100%, var("--s-10"), true);
+    @include mixins.dimensions(100%, var(--s-10), true);
   }
 }
 

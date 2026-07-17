@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Build: Switched from `esbuild` to `lightningcss` for css minification
+
+### Fixed
+
+- `v0.2.1` SelectInput component & `v0.1.1` SelectInputOption component
+  - Fix css errors preventing switch to `lightningcss` for minification
+
 ## 2.2.6 - 2026-07-17
 
 ## 2.2.5 - 2026-07-17

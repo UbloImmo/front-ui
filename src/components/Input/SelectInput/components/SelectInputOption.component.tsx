@@ -18,7 +18,7 @@ import type { PaletteColor, TextProps } from "@types";
 /**
  * Renders a single select option
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @template {NullishPrimitives} TValue - The option's value
  * @param {SelectInputOptionProps<TValue>} props - The option to render and its `onSelect` callback
