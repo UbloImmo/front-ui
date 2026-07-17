@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Build: add `lightningcss` as a dev dependency
+
 ## 2.2.7 - 2026-07-17
 ### Changed
 - Build: Switched from `esbuild` to `lightningcss` for css minification
