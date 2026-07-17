@@ -96,6 +96,7 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
     }),
   ],
   build: {
+    cssMinify: "lightningcss",
     outDir: "dist",
     emptyOutDir: true,
     lib: {
