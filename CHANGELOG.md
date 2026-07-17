@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 2.2.5 - 2026-07-17
 ### Fixed
 - `v0.1.1` Form component
   - Fixed debug zone container styling syntax.
