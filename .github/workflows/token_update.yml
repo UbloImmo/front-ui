@@ -1,7 +1,6 @@
-
 name: Token update
 run-name: Updating tokens
-on: 
+on:
   - workflow_dispatch
   - workflow_call
 
@@ -22,12 +21,12 @@ jobs:
         with:
           ref: main
           token: ${{ steps.bumper_token.outputs.token }}
-      
+
       - name: Setup node
         id: node_setup
         uses: actions/setup-node@v3
         with:
-          node-version: "20.x"
+          node-version: "24.x"
           registry-url: "https://registry.npmjs.org"
 
       - name: Check node
@@ -53,7 +52,7 @@ jobs:
       - name: Setup jq
         id: jq_setup
         uses: dcarbone/install-jq-action@v2.1.0
-  
+
       - name: Check jq
         id: jq_check
         run: |
@@ -107,7 +106,6 @@ jobs:
         env:
           NEW_TOKENS_VERSION: ${{ steps.post_update_version.outputs.post_bump_version }}
 
-        
       - name: Generate & commit icons
         id: icons_generation
         if: steps.pre_update_version.outputs.pre_bump_version != steps.post_update_version.outputs.post_bump_version
@@ -116,7 +114,7 @@ jobs:
           git add "src/components/Icon"
           echo "generated_icons_count=$(echo $(./scripts/utils/staged-file-count.sh))" >> $GITHUB_OUTPUT
           git commit -m "ci: generate icons"
-        
+
       - name: Update changelog
         id: changelog_update
         if: steps.icons_generation.outputs.generated_icons_count > 0
@@ -137,8 +135,3 @@ jobs:
         run: git push
         env:
           GITHUB_TOKEN: ${{ steps.bumper_token.outputs.token }}
-
-          
-          
-
-
