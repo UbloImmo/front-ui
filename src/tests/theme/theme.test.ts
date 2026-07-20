@@ -1,4 +1,4 @@
-import { fakeFetchFactory } from "@ubloimmo/front-util/";
+import { fakeFetchFactory } from "@ubloimmo/front-util";
 import { describe, it, expect, mock } from "bun:test";
 
 import { testLegacyPalette, testColorPalette } from "./palette.test";
