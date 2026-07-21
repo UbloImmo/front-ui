@@ -5,13 +5,13 @@ import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "../../../../utils";
 
 /**
- * React component generated from bootstrap icon: `unlock`.
+ * React component generated from bootstrap icon: `battery-low`.
  * Auto-generated before NPM release
  *
  * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
  * @returns {JSX.Element} - the icon
  */
-const Unlock = (props: CommonIconProps): JSX.Element => {
+const BatteryLow = (props: CommonIconProps): JSX.Element => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {
@@ -29,12 +29,10 @@ const Unlock = (props: CommonIconProps): JSX.Element => {
       viewBox="0 0 16 16"
       data-testid="icon"
     >
-      <path
-        fillRule="evenodd"
-        d="M12 0a4 4 0 0 1 4 4v2.5h-1V4a3 3 0 1 0-6 0v2h.5A2.5 2.5 0 0 1 12 8.5v5A2.5 2.5 0 0 1 9.5 16h-7A2.5 2.5 0 0 1 0 13.5v-5A2.5 2.5 0 0 1 2.5 6H8V4a4 4 0 0 1 4-4M2.5 7A1.5 1.5 0 0 0 1 8.5v5A1.5 1.5 0 0 0 2.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 9.5 7z"
-      />
+      <path d="M2 6h2v4H2z" />
+      <path d="M2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm10 1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm4 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8" />
     </svg>
   );
 };
 
-export default Unlock;
+export default BatteryLow;
