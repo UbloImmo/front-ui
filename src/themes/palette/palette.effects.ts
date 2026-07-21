@@ -1,4 +1,4 @@
-import { effects } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { effects } from "@ubloimmo/front-tokens/tokens.values";
 import { isObject, objectEntries } from "@ubloimmo/front-util";
 
 import {

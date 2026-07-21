@@ -1,4 +1,4 @@
-import { texts, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { texts, colors } from "@ubloimmo/front-tokens/tokens.values";
 import { objectEntries, objectKeys } from "@ubloimmo/front-util";
 
 import { breakpointsPx } from "@/sizes";
