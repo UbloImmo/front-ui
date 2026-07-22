@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Bump `@ubloimmo/front-tokens` to `v0.2.5` vite-based version
+- Bump `bootstrap-icons` to `v1.13.1`
+
 ## 2.2.9 - 2026-07-20
 ### Changed
 - Bump `@ubloimmo/front-util` to `v0.1.1`

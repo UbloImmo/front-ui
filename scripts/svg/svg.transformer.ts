@@ -1,6 +1,6 @@
 import { readdir } from "node:fs/promises";
 
-import { icons } from "@ubloimmo/front-tokens/lib/icons";
+import { icons } from "@ubloimmo/front-tokens/icons";
 import {
   Logger,
   Primitives,

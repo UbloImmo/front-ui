@@ -1,4 +1,4 @@
-import { colors, effects } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { colors, effects } from "@ubloimmo/front-tokens/tokens.values";
 import { objectKeys, transformObject } from "@ubloimmo/front-util";
 
 import {

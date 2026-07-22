@@ -1,4 +1,4 @@
-import { effects, colors } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { effects, colors } from "@ubloimmo/front-tokens/tokens.values";
 import { describe, expect, it } from "bun:test";
 
 import {

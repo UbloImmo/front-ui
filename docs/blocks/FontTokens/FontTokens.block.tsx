@@ -1,4 +1,4 @@
-import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { texts } from "@ubloimmo/front-tokens/tokens.values";
 import { useMemo } from "react";
 
 import { formatCssLength, isHeadingSize } from "./FontTokens.utils";

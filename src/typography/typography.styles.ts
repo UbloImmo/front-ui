@@ -1,4 +1,4 @@
-import { texts } from "@ubloimmo/front-tokens/lib/tokens.values";
+import { texts } from "@ubloimmo/front-tokens/tokens.values";
 import { objectKeys, Optional } from "@ubloimmo/front-util";
 import { type CSSProperties, useMemo } from "react";
 
