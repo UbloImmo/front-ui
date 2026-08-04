@@ -1,4 +1,3 @@
-import type { StyleProps } from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -63,8 +62,3 @@ export type CollapsibleProps = {
 };
 
 export type CollapsibleDefaultProps = Required<CollapsibleProps>;
-
-export type CollapsibleContainerStyleProps = Pick<
-  StyleProps<CollapsibleDefaultProps>,
-  "$compact" | "$disabled"
->;

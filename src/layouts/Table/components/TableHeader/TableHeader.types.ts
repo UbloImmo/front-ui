@@ -1,5 +1,5 @@
 import type { TableProps } from "../../Table.types";
-import type { FixedCssLength, StyleProps } from "@types";
+import type { FixedCssLength } from "@types";
 
 export type TableHeaderProps = Omit<TableProps, "layout"> & {
   /**
@@ -17,8 +17,3 @@ export type TableHeaderProps = Omit<TableProps, "layout"> & {
    */
   top?: FixedCssLength;
 };
-
-/** @deprecated styled-components */
-export type TableHeaderStyleProps = StyleProps<
-  Required<Pick<TableHeaderProps, "sticky" | "top">>
->;

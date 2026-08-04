@@ -40,7 +40,7 @@ const defaultPopoverProps: PopoverDefaultProps = {
  *
  * Powered by [Radix-UI](https://www.radix-ui.com/docs/primitives/components/popover)
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {PopoverProps & TestIdProps} props - Popover component props
  * @returns {JSX.Element}
@@ -95,32 +95,34 @@ const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
           {mergedProps.children}
         </div>
       </PopoverPrimitive.Trigger>
-      <PopoverPrimitive.Content
-        data-testid="popover-content"
-        className={styles.popoverContent.className}
-        style={styles.popoverContent.style}
-        side={mergedProps.side}
-        sideOffset={sideOffset}
-        align={mergedProps.align}
-        alignOffset={alignOffset}
-        collisionBoundary={mergedProps.collisionBoundary}
-        collisionPadding={collisionPadding}
-        sticky={mergedProps.sticky}
-        onOpenAutoFocus={onFocus}
-        onCloseAutoFocus={onFocus}
-        onFocusOutside={onFocus}
-      >
-        {mergedProps.wrapContent && content ? (
-          <div
-            className={styles.popoverContentWrapper}
-            data-testid="popover-content-wrapper"
-          >
-            {content}
-          </div>
-        ) : (
-          content
-        )}
-      </PopoverPrimitive.Content>
+      <PopoverPrimitive.Portal>
+        <PopoverPrimitive.Content
+          data-testid="popover-content"
+          className={styles.popoverContent.className}
+          style={styles.popoverContent.style}
+          side={mergedProps.side}
+          sideOffset={sideOffset}
+          align={mergedProps.align}
+          alignOffset={alignOffset}
+          collisionBoundary={mergedProps.collisionBoundary}
+          collisionPadding={collisionPadding}
+          sticky={mergedProps.sticky}
+          onOpenAutoFocus={onFocus}
+          onCloseAutoFocus={onFocus}
+          onFocusOutside={onFocus}
+        >
+          {mergedProps.wrapContent && content ? (
+            <div
+              className={styles.popoverContentWrapper}
+              data-testid="popover-content-wrapper"
+            >
+              {content}
+            </div>
+          ) : (
+            content
+          )}
+        </PopoverPrimitive.Content>
+      </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>
   );
 };

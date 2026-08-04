@@ -1,5 +1,5 @@
 import type { GridAlignment } from "../Grid/Grid.types";
-import type { StyleOverrideProps, StyleProps } from "@types";
+import type { StyleOverrideProps } from "@types";
 import type { Optional } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -106,5 +106,3 @@ export type GridItemDefaultProps = Required<GridItemProps>;
 export type GridItemInnerProps = Required<
   GridDetailedPosition & Omit<GridItemCommonProps, "children">
 >;
-
-export type GridItemStyleProps = StyleProps<GridItemInnerProps>;

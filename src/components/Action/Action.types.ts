@@ -1,9 +1,4 @@
-import {
-  StyleOverrideProps,
-  type ColorKey,
-  type StyleProps,
-  type TestIdProps,
-} from "@types";
+import { StyleOverrideProps, type ColorKey, type TestIdProps } from "@types";
 
 import type { BadgeProps } from "../Badge";
 import type { IconName } from "../Icon";
@@ -116,10 +111,6 @@ export type ActionProps = Omit<StyleOverrideProps, "as"> & {
 };
 
 export type DefaultActionProps = Required<ActionProps>;
-
-export type ActionStyledProps = StyleProps<
-  Omit<DefaultActionProps, "onClick"> & Required<Pick<TestIdProps, "testId">>
->;
 
 export type SizedActionProps = Replace<
   DefaultActionProps,

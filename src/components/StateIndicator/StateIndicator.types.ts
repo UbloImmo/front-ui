@@ -4,7 +4,6 @@ import type {
   PaletteColor,
   PaletteColorOrWhite,
   StyleOverrideProps,
-  StyleProps,
 } from "@types";
 
 export type StateIndicatorProps = {
@@ -44,7 +43,3 @@ export type StateIndicatorStyleColors = {
   icon: PaletteColor;
   border: PaletteColor;
 };
-
-export type StateIndicatorStyleProps = StyleProps<
-  Omit<StateIndicatorStyleColors, "label" | "icon">
->;

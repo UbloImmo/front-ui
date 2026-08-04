@@ -4,7 +4,7 @@ import type {
   ContextMenuItemSize,
 } from "./components/ContextMenuItem/ContextMenuItem.types";
 import type { ControlledPopoverProps } from "@/layouts/Popover";
-import type { StyleProps, TestIdProps } from "@types";
+import type { TestIdProps } from "@types";
 import type { ReactNode } from "react";
 
 export type ContextMenuItemData = Omit<ContextMenuItemProps, "size" | "index"> &
@@ -64,9 +64,3 @@ export type ContextMenuProps = {
 >;
 
 export type ContextMenuDefaultProps = Required<ContextMenuProps>;
-
-/** @deprecated styled-components */
-export type ContextMenuStyleProps = StyleProps<Pick<ContextMenuProps, "size">>;
-
-/** @deprecated styled-components */
-export type ContextMenuActionIconStyleProps = StyleProps<{ open?: boolean }>;

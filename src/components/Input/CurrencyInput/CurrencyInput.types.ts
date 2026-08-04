@@ -1,11 +1,10 @@
 import type {
-  CommonInputStyleProps,
   InputProps,
   NativeInputOnChangeFn,
   NativeInputValue,
 } from "../Input.types";
 import type { IconName } from "@/components/Icon";
-import type { NumberSign, StyleProps } from "@types";
+import type { NumberSign } from "@types";
 import type { Enum, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 const _currencies = ["euro", "dollar", "pound", "yen"] as const;
@@ -48,10 +47,6 @@ export type CurrencyInputProps = InputProps<"currency"> & {
 };
 
 export type CurrencyInputDefaultProps = Required<CurrencyInputProps>;
-
-/** @deprecated styled-components */
-export type CurrencyInputStyleProps = CommonInputStyleProps &
-  StyleProps<Pick<CurrencyInputProps, "showSign">>;
 
 export type UseCurrencyInputReturn = {
   onChange: NativeInputOnChangeFn;

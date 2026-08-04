@@ -1,7 +1,5 @@
 import { Nullable, VoidFn } from "@ubloimmo/front-util";
 
-import { StyleProps } from "@types";
-
 export type SwitchProps = {
   /**
    * The Switch's state, active or inactive
@@ -47,5 +45,3 @@ export type SwitchProps = {
 };
 
 export type SwitchDefaultProps = Required<SwitchProps>;
-
-export type SwitchStyleProps = StyleProps<SwitchDefaultProps>;

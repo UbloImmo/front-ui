@@ -3,7 +3,6 @@ import type {
   ComponentEntryItem,
   ComponentName,
 } from "../ComponentList.types";
-import type { StyleProps } from "@types";
 import type { Enum } from "@ubloimmo/front-util";
 
 const _componentCardCellSizes = ["large", "small"] as const;
@@ -17,7 +16,3 @@ export type ComponentCardProps<
   randomSize?: boolean;
   parent?: string;
 };
-
-export type ComponentCardContainerProps = StyleProps<{
-  size: ComponentCardCellSize;
-}>;

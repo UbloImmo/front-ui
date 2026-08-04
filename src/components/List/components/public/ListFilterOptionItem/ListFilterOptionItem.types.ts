@@ -1,5 +1,4 @@
 import type { FilterOption } from "@/components/List/modules";
-import type { StyleProps } from "@types";
 import type { VoidFn } from "@ubloimmo/front-util";
 
 type ListFilterOptionItemHighlightProps = {
@@ -41,7 +40,3 @@ export type ListFilterOptionItemProps<TItem extends object = object> = {
    */
   closeFilter?: VoidFn;
 } & ListFilterOptionItemHighlightProps;
-
-/** @deprecated styled-components */
-export type ListFilterOptionItemStyleProps =
-  StyleProps<ListFilterOptionItemHighlightProps>;

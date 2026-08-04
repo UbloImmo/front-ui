@@ -1,7 +1,5 @@
 import { Nullable, VoidFn } from "@ubloimmo/front-util";
 
-import { StyleProps } from "@types";
-
 export type ComboBoxButtonProps = {
   /**
    * The label to be displayed in the ComboBoxOption
@@ -122,11 +120,3 @@ export type ComboBoxButtonProps = {
 };
 
 export type ComboBoxButtonDefaultProps = Required<ComboBoxButtonProps>;
-
-export type ComboBoxButtonContainerStyleProps =
-  StyleProps<ComboBoxButtonDefaultProps>;
-
-export type ComboButtonIconContainerStyleProps = Pick<
-  ComboBoxButtonContainerStyleProps,
-  "$active"
->;

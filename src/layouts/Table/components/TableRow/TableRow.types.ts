@@ -1,5 +1,5 @@
 import type { TableStyle } from "../../Table.types";
-import type { StyleOverrideProps, StyleProps } from "@types";
+import type { StyleOverrideProps } from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -28,9 +28,3 @@ export type TableRowProps = {
    */
   id?: Nullable<string>;
 } & Omit<StyleOverrideProps, "as">;
-
-export type TableRowStyleProps = StyleProps<
-  Required<Pick<TableRowProps, "style">> & {
-    clickable?: boolean;
-  }
->;

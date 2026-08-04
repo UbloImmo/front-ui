@@ -4,7 +4,6 @@ import type {
   DirectionHorizontal,
   FixedCssLength,
   StyleOverrideProps,
-  StyleProps,
 } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
 import type { FC, ReactNode } from "react";
@@ -101,17 +100,3 @@ export type PaneProps = {
 } & Omit<StyleOverrideProps, "as">;
 
 export type PaneDefaultProps = Required<PaneProps>;
-
-export type PaneStyleProps = StyleProps<
-  Pick<
-    PaneDefaultProps,
-    | "expandedWidth"
-    | "collapsedWidth"
-    | "expandedBreakpoint"
-    | "anchor"
-    | "headLess"
-    | "forceExpanded"
-    | "top"
-    | "bottom"
-  >
->;

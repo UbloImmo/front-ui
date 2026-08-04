@@ -17,12 +17,15 @@ const tableScrollViewDefaultProps: TableScrollViewDefaultProps = {
   className: null,
   maxHeight: null,
   style: "list",
+  showOverflowIndicator: false,
+  overflowIndicatorColor: "primary-base",
+  overflowIndicatorSize: "s-4",
 };
 
 /**
  * A wrapper component designed to enable horizontal scrolling in a `Table`.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @example
  * <TableScrollView>
@@ -41,11 +44,25 @@ const TableScrollView = forwardRef<
   const mergedProps = useMergedProps(tableScrollViewDefaultProps, props);
   const testId = useTestId("table-scroll-view", props);
 
-  const { className, style } = useTableScrollViewStyles(mergedProps);
+  const {
+    className,
+    anchorClassName,
+    overflowEndClassName,
+    overflowStartClassName,
+    style,
+  } = useTableScrollViewStyles(mergedProps);
 
   return (
-    <div data-testid={testId} className={className} style={style} ref={ref}>
-      {mergedProps.children}
+    <div data-testid={`${testId}-anchor`} className={anchorClassName}>
+      <div data-testid={testId} className={className} style={style} ref={ref}>
+        {mergedProps.showOverflowIndicator && (
+          <span className={overflowStartClassName} />
+        )}
+        {mergedProps.children}
+        {mergedProps.showOverflowIndicator && (
+          <span className={overflowEndClassName} />
+        )}
+      </div>
     </div>
   );
 });

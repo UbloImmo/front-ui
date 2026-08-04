@@ -1,4 +1,4 @@
-import type { StyleOverrideProps, StyleProps } from "@types";
+import type { StyleOverrideProps } from "@types";
 import type { Enum, Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -33,6 +33,3 @@ export type TableProps = {
 } & Omit<StyleOverrideProps, "as">;
 
 export type TableDefaultProps = Required<TableProps>;
-
-/** @deprecated styled-components */
-export type TableStyleProps = StyleProps<TableDefaultProps>;

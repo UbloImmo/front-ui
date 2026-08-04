@@ -1,7 +1,5 @@
-import type { StyleProps } from "@types";
 import type { GenericFn, Nullable, VoidFn } from "@ubloimmo/front-util";
 import type {
-  DayProps,
   Locale,
   Matcher,
   PropsBase,
@@ -176,7 +174,3 @@ export type CalendarProps = Partial<CalendarValue> & {
 };
 
 export type CalendarDefaultProps = Required<CalendarProps>;
-
-export type CalendarDayStyleProps = StyleProps<
-  Record<string, unknown> & DayProps
->;
