@@ -1,5 +1,10 @@
 import type { TableStyle } from "../../Table.types";
-import type { CssLength, StyleOverrideProps, StyleProps } from "@types";
+import type {
+  CssLength,
+  PaletteColor,
+  StyleOverrideProps,
+  StyleProps,
+} from "@types";
 import type { Enum, Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -21,6 +26,28 @@ export type TableScrollViewProps = {
    * @default "x"
    */
   overflowDirection?: TableScrollViewOverflowDirection;
+  /**
+   * Whether to show a colored gradient in the direction the content is overflowing
+   *
+   * @type {boolean}
+   * @default false
+   */
+  showOverflowIndicator?: boolean;
+  /**
+   * The color of the overflow indicator,
+   * A single color for both start & end overflows
+   *
+   * @type { PaletteColor}
+   * @default "primary-base"
+   */
+  overflowIndicatorColor?: PaletteColor;
+  /**
+   * The visual size of overflow indicators (height if overflow-x, width otherwise)
+   *
+   * @type {CssLength}
+   * @default "s-4"
+   */
+  overflowIndicatorSize?: CssLength;
   /**
    * The maximum height of the scroll view.
    *

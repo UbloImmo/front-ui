@@ -24,10 +24,22 @@
 }
 
 .table-cell {
+  --table-cell-min-width: unset;
+  --table-cell-fixed-width: unset;
   white-space: nowrap;
 
   &.padded {
     padding: var(--s-1) var(--s-2);
+  }
+
+  &.min-width {
+    min-width: var(--table-cell-min-width) !important;
+  }
+
+  &.fixed-width {
+    min-width: var(--table-cell-fixed-width) !important;
+    max-width: var(--table-cell-fixed-width) !important;
+    width: var(--table-cell-fixed-width) !important;
   }
 }
 
@@ -150,8 +162,16 @@
   }
 }
 
+.table-scroll-view-anchor {
+  width: 100%;
+  position: relative;
+}
+
 .table-scroll-view {
   --table-scroll-view-max-height: unset;
+  --table-scroll-view-overflow-indicator-size: var(--s-4);
+  --table-scroll-view-overflow-indicator-color: var(--primary-base);
+  --table-scroll-view-overflow-origin: 0;
   --controls-visible-width: var(--s-6);
 
   display: block;
@@ -162,6 +182,7 @@
 
   overflow-x: visible;
   overflow-y: visible;
+  scroll-timeline-name: --table-scroll;
 
   &.overflow-x,
   &.overflow-both {
@@ -173,9 +194,131 @@
     overflow-y: auto;
   }
 
+  .table-scroll-view-overflow-indicator {
+    position: absolute;
+    inset: 0;
+    width: var(--table-scroll-view-overflow-indicator-size);
+    z-index: 12;
+    opacity: 0;
+    display: block;
+    transition: background 300ms var(--bezier);
+    background: var(--table-scroll-view-overflow-indicator-color);
+
+    &.table-scroll-view-overflow-start {
+      animation: show-overflow-start linear both;
+      animation-timeline: --table-scroll;
+    }
+
+    &.table-scroll-view-overflow-end {
+      animation: show-overflow-end linear both;
+      animation-timeline: --table-scroll;
+    }
+  }
+
+  &.overflow-x,
+  &.overflow-both {
+    scroll-timeline-axis: x;
+
+    .table-scroll-view-overflow-indicator {
+      width: var(--table-scroll-view-overflow-indicator-size);
+
+      &.table-scroll-view-overflow-start {
+        left: var(--table-scroll-view-overflow-origin);
+        right: unset;
+        mask: linear-gradient(to right, black, transparent);
+        border-top-left-radius: var(--s-1);
+        border-bottom-left-radius: var(--s-1);
+      }
+
+      &.table-scroll-view-overflow-end {
+        left: unset;
+        right: var(--table-scroll-view-overflow-origin);
+        mask: linear-gradient(to right, transparent, black);
+        border-top-right-radius: var(--s-1);
+        border-bottom-right-radius: var(--s-1);
+      }
+    }
+  }
+
+  &.overflow-y {
+    scroll-timeline-axis: y;
+
+    .table-scroll-view-overflow-indicator {
+      height: var(--table-scroll-view-overflow-indicator-size);
+
+      &.table-scroll-view-overflow-start {
+        top: var(--table-scroll-view-overflow-origin);
+        bottom: unset;
+        mask: linear-gradient(to bottom, black, transparent);
+        border-top-left-radius: var(--s-1);
+        border-top-right-radius: var(--s-1);
+      }
+
+      &.table-scroll-view-overflow-end {
+        top: unset;
+        bottom: var(--table-scroll-view-overflow-origin);
+        mask: linear-gradient(to bottom, transparent, black);
+        border-bottom-left-radius: var(--s-1);
+        border-bottom-right-radius: var(--s-1);
+      }
+    }
+  }
+
   &.form {
     margin: 0 calc(-1 * var(--controls-visible-width));
     padding: 0 var(--controls-visible-width);
     width: calc(100% + var(--controls-visible-width) * 2);
+
+    &.overflow-y {
+      // hide overflowing scrolling rows in the 4 corners (behind header & footer)
+      // while keeping controls visible
+      --rounding: var(--s-1);
+      --x-start: var(--controls-visible-width);
+      --x-end: calc(100% - var(--x-start));
+      --y-start: var(--s-1);
+      --y-end: calc(100% - var(--s-1));
+      clip-path: shape(
+        evenodd from 0 var(--y-start),
+        line to var(--x-start) var(--y-start),
+        arc to calc(var(--x-start) + var(--s-1)) 0 of var(--rounding) cw,
+        line to calc(var(--x-end) - var(--s-1)) 0,
+        arc to var(--x-end) var(--y-start) of var(--rounding) cw,
+        line to 100% var(--y-start),
+        line to 100% var(--y-end),
+        line to var(--x-end) var(--y-end),
+        arc to calc(var(--x-end) - var(--s-1)) 100% of var(--rounding) cw,
+        line to calc(var(--x-start) + var(--s-1)) 100%,
+        arc to var(--x-start) var(--y-end) of var(--rounding) cw,
+        line to 0 var(--y-end),
+        close
+      );
+    }
+
+    &.overflow-x,
+    &.overflow-both {
+      // offset overflow indicators by negative margin
+      --table-scroll-view-overflow-origin: calc(
+        var(--controls-visible-width) * -1
+      );
+
+      // clip overflowing corners with same radius as table
+      clip-path: rect(0 100% 100% 0 round var(--s-1));
+    }
+  }
+}
+
+@keyframes show-overflow-start {
+  from {
+  }
+  to {
+    opacity: 0.75;
+  }
+}
+
+@keyframes show-overflow-end {
+  from {
+    opacity: 0.75;
+  }
+  to {
   }
 }
