@@ -221,7 +221,8 @@
     td:has(&) {
       min-height: var(--input-height);
       height: var(--input-height);
-      min-width: 6rem;
+      // We add 1 px to account for the right border
+      min-width: calc(6rem + 1px);
     }
 
     --cell-border-radius: calc(var(--s-1) - 1px);
