@@ -19,10 +19,9 @@ import { useCallback, useId, useMemo, type ReactNode } from "react";
 import { useFormContext } from "../../Form.context";
 import { FormFieldGridItem } from "../FormFieldGridItem.component";
 import { FormTableEmptyState } from "./FormTableEmptyState.component";
+import { FormTableFooter } from "./FormTableFooter/FormTableFooter.component";
 import { FormTableHeader } from "./FormTableHeader/FormTableHeader.component";
 import { FormTableRow } from "./FormTableRow.component";
-import { type BuiltFormTableProps } from "../../Form.types";
-import { FormTableFooter } from "./FormTableFooter/FormTableFooter.component";
 
 import fieldStyles from "@/components/Field/Field.module.scss";
 import { useFieldAssistiveText } from "@/components/Field/Field.utils";
@@ -33,13 +32,15 @@ import { FlexColumnLayout } from "@/layouts/Flex";
 import { Table, TableBody, TableScrollView } from "@/layouts/Table";
 import { isEmptyString } from "@utils";
 
+import type { BuiltFormTableProps } from "../../Form.types";
 import type { TooltipProps } from "@/components/Tooltip";
+import type { PaletteColor } from "@types";
 
 /**
  * A form table component that displays data in a tabular format with optional editing capabilities.
  * Supports row deletion, reordering via drag and drop, and dynamic row addition.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {BuiltFormTableProps} props - The props for the form table component
  * @returns {JSX.Element} The rendered form table component
@@ -144,6 +145,10 @@ export const FormTable = ({
     return !!rows.length;
   }, [isEditing, modifiers.selectable, rows]);
 
+  const hasTableError = useMemo(() => {
+    return rows.some((row) => row.cells.some((cell) => cell.error));
+  }, [rows]);
+
   if (layout.hidden) return null;
 
   return (
@@ -173,7 +178,7 @@ export const FormTable = ({
             htmlFor={tableId}
           />
         )}
-        <FormTableWrapper maxBodyHeight={maxBodyHeight}>
+        <FormTableWrapper maxBodyHeight={maxBodyHeight} error={hasTableError}>
           <Table layout={tableLayout} id={tableId}>
             <FormTableHeader
               headers={headers}
@@ -266,13 +271,33 @@ export const FormTable = ({
 const FormTableWrapper = ({
   maxBodyHeight,
   children,
-}: Pick<BuiltFormTableProps, "maxBodyHeight"> & { children: ReactNode }) => {
-  if (isNull(maxBodyHeight)) return children;
+  error,
+}: Pick<BuiltFormTableProps, "maxBodyHeight"> & {
+  children: ReactNode;
+  error: boolean;
+}) => {
+  const indicatorColor = useMemo<PaletteColor>(
+    () => (error ? "error-base" : "primary-medium"),
+    [error]
+  );
+  if (isNull(maxBodyHeight))
+    return (
+      <TableScrollView
+        overflowDirection="x"
+        style="form"
+        showOverflowIndicator
+        overflowIndicatorColor={indicatorColor}
+      >
+        {children}
+      </TableScrollView>
+    );
   return (
     <TableScrollView
-      overflowDirection="y"
+      overflowDirection="both"
       maxHeight={maxBodyHeight}
       style="form"
+      showOverflowIndicator
+      overflowIndicatorColor={indicatorColor}
     >
       {children}
     </TableScrollView>

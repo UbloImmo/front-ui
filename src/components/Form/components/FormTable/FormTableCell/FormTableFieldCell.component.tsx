@@ -1,4 +1,4 @@
-import { isFunction, isNull, isString } from "@ubloimmo/front-util";
+import { isFunction, isString } from "@ubloimmo/front-util";
 import { useMemo, type FC, type ReactNode } from "react";
 
 import {
@@ -12,12 +12,9 @@ import { computeFieldDisplayContent } from "@/components/Form/Form.format";
 import { Input, useInputId, type InputType } from "@/components/Input";
 import { Text } from "@/components/Text";
 import { TableCell } from "@/layouts/Table";
-import { useCssClasses, useCssVariables } from "@utils";
+import { useCssClasses } from "@utils";
 
-import type {
-  BuiltFieldProps,
-  BuiltFormFieldLayoutFixedWidthProp,
-} from "@/components/Form/Form.types";
+import type { BuiltFieldProps } from "@/components/Form/Form.types";
 
 type FormTableFieldCellProps = BuiltFieldProps<InputType> &
   FormTableCellControlsProps & {
@@ -70,7 +67,7 @@ export const FormTableFieldCell = ({
   const inner = useCssClasses(styles["form-field-display-cell-inner"]);
 
   return (
-    <FormTableCell
+    <TableCell
       padded={isDisplay}
       colSpan={colSpan}
       fixedWidth={layout.fixedWidth}
@@ -85,26 +82,6 @@ export const FormTableFieldCell = ({
       ) : (
         <Input {...props} table id={inputId} />
       )}
-    </FormTableCell>
-  );
-};
-
-const FormTableCell = ({
-  fixedWidth,
-  children,
-  ...props
-}: BuiltFormFieldLayoutFixedWidthProp & Parameters<typeof TableCell>[0]) => {
-  const className = useCssClasses(styles["form-field-grid-item"], [
-    styles["fixed-width"],
-    !isNull(fixedWidth),
-  ]);
-  const style = useCssVariables({
-    "fixed-width": fixedWidth ?? undefined,
-  });
-
-  return (
-    <TableCell className={className} styleOverride={style} {...props}>
-      {children}
     </TableCell>
   );
 };

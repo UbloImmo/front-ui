@@ -15,7 +15,7 @@
   opacity: 0;
   pointer-events: none;
 
-  transition: opacity 300ms var(--bezier);
+  transition: opacity 300ms var(--bezier) 150ms;
   z-index: 1;
 
   svg[data-testid="icon"] {
@@ -52,14 +52,20 @@
     max-width: 0; // allow cells to shrink
   }
 
-  &.deletable:not(.dragging):hover .form-table-row-delete-button {
+  &.deletable:not(.dragging):hover .form-table-row-delete-button,
+  &.deletable:not(.dragging) .form-table-row-delete-button:hover {
     opacity: 1;
+    transition-delay: 0s;
+    transition-duration: 150ms;
     pointer-events: all;
   }
 
   &.swappable:hover .form-table-row-drag-handle,
+  &.swappable .form-table-row-drag-handle:hover,
   &.swappable.dragging .form-table-row-drag-handle {
     opacity: 1;
+    transition-delay: 0s;
+    transition-duration: 150ms;
     pointer-events: all;
   }
 
@@ -95,8 +101,13 @@
 .form-table-row-selection-cell {
   background: var(--white);
   min-height: var(--input-height);
-  border-top-left-radius: calc(var(--s-1) * 0.75);
-  border-bottom-left-radius: calc(var(--s-1) * 0.75);
+  height: 100%;
+  tr:first-child & {
+    border-top-left-radius: calc(var(--s-1) * 0.75);
+  }
+  // tr:last-child & {
+  //   border-bottom-left-radius: calc(var(--s-1) * 0.75);
+  // }
 }
 
 .form-table-cell {

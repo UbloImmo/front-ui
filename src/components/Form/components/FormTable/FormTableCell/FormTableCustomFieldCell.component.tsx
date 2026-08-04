@@ -62,7 +62,11 @@ export const FormTableCustomFieldCell = ({
   const className = useCssClasses(styles["form-table-cell"]);
 
   return (
-    <TableCell colSpan={colSpan} className={className}>
+    <TableCell
+      colSpan={colSpan}
+      className={className}
+      fixedWidth={props.layout.fixedWidth}
+    >
       <FormTableCellControls
         controls={controls}
         isFirst={isFirst}
