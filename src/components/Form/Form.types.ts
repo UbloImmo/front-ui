@@ -22,15 +22,13 @@ import type {
   CommonInputProps,
   SelectInputProps,
 } from "@/components/Input";
-import type { ModalProps, ModalSize } from "@/components/Modal";
+import type { ModalProps } from "@/components/Modal";
 import type { GridEndPosition } from "@/layouts/GridItem";
 import type { TableLayout } from "@/layouts/Table";
 import type {
-  ColorKey,
   CssLength,
   CssLengthUsage,
   StyleOverrideProps,
-  StyleProps,
   TestIdProps,
   TextProps,
 } from "@types";
@@ -1783,37 +1781,3 @@ export type FormContext<TData extends object> = UseFormDataReturn<TData> &
      */
     content: BuiltFormContent<InputType>[];
   };
-
-// ------------------------------- STYLE -----------------------------------
-
-/**
- * @deprecated styled-components
- */
-export type FormContainerStyleProps = StyleProps<
-  Pick<FormModifers, "readonly" | "disabled"> &
-    Pick<UseFormEditStateReturn, "isEditing"> & {
-      size?: ModalSize;
-      asModal?: boolean;
-    }
->;
-
-/**
- * @deprecated styled-components
- */
-export type FormEditButtonStyleProps = Partial<
-  StyleProps<{ hidden?: boolean }>
->;
-
-/**
- * @deprecated styled-components
- */
-export type FormEditBannerStyleProps = StyleProps<
-  Pick<UseFormEditStateReturn, "isEditing"> &
-    Pick<UseFormSubmissionReturn, "isSubmitting"> &
-    Pick<UseFormDataReturn<object>, "isLoading">
->;
-
-/**
- * @deprecated styled-components
- */
-export type FormDebugPreStyleProps = StyleProps<{ color: ColorKey }>;

@@ -1,7 +1,6 @@
 import type { FilterData, FilterSignature } from "@/components/List/modules";
 import type { TooltipProps } from "@/components/Tooltip";
 import type { TableCellProps } from "@/layouts/Table";
-import type { StyleProps } from "@types";
 import type { Nullable, RequireAtLeastOne } from "@ubloimmo/front-util";
 
 export type ListTableHeaderFilterProps = {
@@ -38,7 +37,3 @@ export type ListTableHeaderFilterProps = {
   fallbackLabel?: string;
 }> &
   TableCellProps;
-
-export type ListTableHeaderFilterStyleProps = StyleProps<{
-  hideLabel?: boolean;
-}>;

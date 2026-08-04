@@ -1,12 +1,6 @@
 import type { CommonIconProps } from "./__generated__/common.types";
 import type { IconName } from "./__generated__/iconName.types";
-import type {
-  CssPx,
-  CssRem,
-  FixedCssLength,
-  PaletteColor,
-  StyleProps,
-} from "@types";
+import type { FixedCssLength, PaletteColor } from "@types";
 import type { GenericFn } from "@ubloimmo/front-util";
 
 export type { IconName } from "./__generated__/iconName.types";
@@ -47,10 +41,3 @@ export type MissingIcon = {
   (): JSX.Element;
   __missing: true;
 };
-
-/**
- * @deprecated styled-components
- */
-export type IconFallbackStyleProps = StyleProps<{
-  size: CssPx | CssRem;
-}>;

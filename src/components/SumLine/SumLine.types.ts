@@ -1,4 +1,3 @@
-import type { StyleProps } from "@types";
 import type { Enum, Nullable } from "@ubloimmo/front-util";
 
 export type SumLineSize = "m" | "l";
@@ -58,6 +57,3 @@ export type SumLineProps = {
 };
 
 export type SumLineDefaultProps = Required<SumLineProps>;
-
-/** @deprecated styled-components */
-export type SumlineStyleProps = StyleProps<Pick<SumLineDefaultProps, "size">>;

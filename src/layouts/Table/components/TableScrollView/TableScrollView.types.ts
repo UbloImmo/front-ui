@@ -1,10 +1,5 @@
 import type { TableStyle } from "../../Table.types";
-import type {
-  CssLength,
-  PaletteColor,
-  StyleOverrideProps,
-  StyleProps,
-} from "@types";
+import type { CssLength, PaletteColor, StyleOverrideProps } from "@types";
 import type { Enum, Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -65,7 +60,3 @@ export type TableScrollViewProps = {
 } & Omit<StyleOverrideProps, "as">;
 
 export type TableScrollViewDefaultProps = Required<TableScrollViewProps>;
-
-export type TableScrollViewStyleProps = StyleProps<
-  Pick<TableScrollViewProps, "overflowDirection" | "maxHeight" | "style">
->;

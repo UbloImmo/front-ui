@@ -1,5 +1,4 @@
 import type { TableProps, TableStyle } from "../../Table.types";
-import type { StyleProps } from "@types";
 
 export type TableBodyProps = Omit<TableProps, "layout"> & {
   /**
@@ -9,7 +8,3 @@ export type TableBodyProps = Omit<TableProps, "layout"> & {
    */
   style?: TableStyle;
 };
-
-export type TableBodyStyleProps = StyleProps<
-  Required<Pick<TableBodyProps, "style">>
->;

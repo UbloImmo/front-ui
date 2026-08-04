@@ -1,6 +1,6 @@
 import type { IconName } from "../Icon";
 import type { ComponentSize } from "@/types/themes/sizes/sizes.types";
-import type { ColorKey, StyleOverrideProps, StyleProps } from "@types";
+import type { ColorKey, StyleOverrideProps } from "@types";
 import type { Extract, Nullable, VoidFn } from "@ubloimmo/front-util";
 
 /**
@@ -67,5 +67,3 @@ export type ActionIconProps = Omit<StyleOverrideProps, "as"> & {
 };
 
 export type DefaultActionIconProps = Required<ActionIconProps>;
-
-export type ActionIconStyleProps = StyleProps<DefaultActionIconProps>;

@@ -1,5 +1,5 @@
 import type { IconName } from "../Icon/Icon.types";
-import type { Direction, PaletteColor, StyleProps } from "@types";
+import type { Direction, PaletteColor } from "@types";
 import type {
   Enum,
   GenericFn,
@@ -71,10 +71,5 @@ export type TooltipProps = {
 };
 
 export type DefaultTooltipProps = Required<TooltipProps>;
-
-/** @deprecated styled-components */
-export type TooltipWrapperStyleProps = StyleProps<
-  Pick<DefaultTooltipProps, "cursor">
->;
 
 export type ToolipIntersection = Pick<DOMRectReadOnly, Direction>;

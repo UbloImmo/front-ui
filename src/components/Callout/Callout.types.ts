@@ -1,5 +1,5 @@
 import type { IconName } from "../Icon";
-import type { ColorKey, StyleOverrideProps, StyleProps } from "@types";
+import type { ColorKey, StyleOverrideProps } from "@types";
 import type { Enum, Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -56,5 +56,3 @@ export type CalloutProps = StyleOverrideProps & {
 };
 
 export type CalloutDefaultProps = Required<CalloutProps>;
-
-export type CalloutStyleProps = StyleProps<CalloutDefaultProps>;

@@ -1,6 +1,6 @@
 import type * as Assets from "./assets";
 import type { EmptyStateCardAssetProps } from "./assets/assets.types";
-import type { StyleOverrideProps, StyleProps } from "@types";
+import type { StyleOverrideProps } from "@types";
 import type { KeyOf, Nullable } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -61,7 +61,3 @@ export type EmptyStateCardProps = EmptyStateCardAssetProps & {
 } & Omit<StyleOverrideProps, "as">;
 
 export type EmptyStateCardDefaultProps = Required<EmptyStateCardProps>;
-
-export type EmptyStateCardStyleProps = StyleProps<
-  Pick<EmptyStateCardDefaultProps, "transparent">
->;

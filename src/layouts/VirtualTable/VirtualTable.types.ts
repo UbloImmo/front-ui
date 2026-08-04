@@ -1,13 +1,7 @@
 import type { TableCellProps, TableLayout, TableStyle } from "../Table";
 import type { EmptyStateCardProps } from "@/components/EmptyStateCard/EmptyStateCard.types";
 import type { TooltipProps } from "@/components/Tooltip/Tooltip.types";
-import type {
-  CssLength,
-  CssLengthUsage,
-  CssRem,
-  FixedCssLength,
-  StyleProps,
-} from "@types";
+import type { CssLength, CssRem, FixedCssLength } from "@types";
 import type {
   NonNullish,
   Nullable,
@@ -532,47 +526,3 @@ export type VirtualTableOverrideProps<TItem extends object> = TableProps &
  */
 export type VirtualTableRowOverrideProps<TItem extends object> =
   ItemProps<TItem> & ContextProp<VirtualTableSharedContext<TItem>>;
-
-/**
- * Style props for a virtual table row component.
- *
- * @template {object} TItem - The type of items in the data array
- * @see {@link StyleProps}
- *
- * @deprecated styled-components
- */
-export type VirutalTableRowStyleProps = StyleProps<{
-  /**
-   * An optional fixed height to apply to the row.
-   *
-   * @type {Nullable<CssLengthUsage>}
-   * @default undefined
-   */
-  fixedItemHeight?: Nullable<CssLengthUsage>;
-  /**
-   * Whether the row is clickable.
-   *
-   * @type {boolean}
-   * @default false
-   */
-  clickable?: boolean;
-  /**
-   * The style of the table.
-   *
-   * @type {TableStyle}
-   * @default "list"
-   */
-  style?: TableStyle;
-}>;
-
-/**
- * Style props for a virtual table cell component.
- *
- * @template {object} TItem - The type of items in the data array
- * @see {@link StyleProps}
- *
- * @deprecated styled-components
- */
-export type VirtualTableCellStyleProps = StyleProps<
-  Pick<VirtualTableCellContentProps<object>, "fixedWidth">
->;

@@ -1,5 +1,4 @@
 import type { InfoBoxProps } from "../InfoBox";
-import type { StyleProps } from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 /**
@@ -51,5 +50,3 @@ export type CopyClipboardInfoCardProps = Omit<InfoBoxProps, "label"> & {
 
 export type CopyClipboardInfoCardDefaultProps =
   Required<CopyClipboardInfoCardProps>;
-
-export type CopyClipboardInfoCardStyleProps = StyleProps<{ isEmpty?: boolean }>;

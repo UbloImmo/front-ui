@@ -1,5 +1,4 @@
 import type { IconName } from "@/components/Icon/Icon.types";
-import type { StyleProps } from "@types";
 import type { VoidFn } from "@ubloimmo/front-util";
 
 export type IconPickerItemProps = {
@@ -41,10 +40,3 @@ export type IconPickerItemProps = {
 };
 
 export type IconPickerItemDefaultProps = Required<IconPickerItemProps>;
-
-/**
- * @deprecated styled-components
- */
-export type IconPickerItemStyleProps = StyleProps<
-  Pick<IconPickerItemProps, "active" | "readonly">
->;
