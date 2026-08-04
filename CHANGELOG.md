@@ -7,23 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Removed
-
-- Exported but unused internal `styled-components` formatted component properties
-
+## 2.3.0 - 2026-08-04
 ### Added
-
 - `v0.1.1` TableScrollView component
   - Add indicators showing scrolling overflow dynamically & props to configure them
-
 - `v0.1.1` TableCell component
   - Add new `fixedWidth` & `minWidth` props
 
-### Fixed
+### Removed
+- Exported but unused internal `styled-components` formatted component properties
 
+### Fixed
 - `v0.1.2` Form component & `v0.1.1` FormTable component
   - Allow form tables to scroll & overflow horizontally
-
 - `v0.1.1` Popover layout
   - Render popover content in a portal so as to avoid parent overflow related clipping
 
