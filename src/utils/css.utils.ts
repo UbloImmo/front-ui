@@ -343,7 +343,7 @@ export const cssLengthUsage = (length: CssLength): CssLengthUsage => {
 
 /**
  * Checks if the value is a valid {@link CssLengthUsage}
- * by checking if it is a number, a CSS pixel value, a CSS rem value, or a SpacingLabel
+ * by checking if it is a number, CSS pixel value, rem value, percent, fr, ch or a SpacingLabel
  *
  * @param {unknown} value - the value to check
  * @return {boolean} true if the value is a CssLengthUsage, false otherwise
