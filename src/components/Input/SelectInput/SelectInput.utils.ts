@@ -292,7 +292,7 @@ export const useSelectOptions = <
 >(
   props: Pick<
     SelectInputProps<TValue, TExtraData>,
-    "options" | "filterOption" | "creatable"
+    "options" | "filterOption" | "creatable" | "loading"
   >,
   autoCompleteQuery: Nullable<string>
 ) => {
@@ -317,9 +317,13 @@ export const useSelectOptions = <
   });
 
   /**
-   * Flag used for tracking initial data load
+   * Flag used to track whether options are being fetched
    */
-  const [isLoading, setIsLoading] = useState(isFunction(mergedProps.options));
+  const [isOptionsLoading, setIsOptionsLoading] = useState(
+    isFunction(mergedProps.options)
+  );
+
+  const isLoading = mergedProps.loading || isOptionsLoading;
 
   /**
    * Internal select options
@@ -343,7 +347,7 @@ export const useSelectOptions = <
         }
         return;
       }
-      setIsLoading(true);
+      setIsOptionsLoading(true);
       try {
         const data = await mergedProps.options(query ?? null);
         setOptions(data);
@@ -352,7 +356,7 @@ export const useSelectOptions = <
         logger.error(e);
         logger.warn("Failed to load form data");
       }
-      setIsLoading(false);
+      setIsOptionsLoading(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [mergedProps.options, logger]
