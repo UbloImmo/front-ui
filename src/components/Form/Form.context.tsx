@@ -4,6 +4,7 @@ import {
   type DeepKeyOfType,
   type DeepValueOf,
   deepValueOf,
+  isArray,
   isBoolean,
   isFunction,
   isNull,
@@ -81,7 +82,9 @@ import type {
   CustomFormInputProps,
   DefaultFormLayoutProps,
   DeleteTableRowFn,
+  FormComputedContentFn,
   FormContent,
+  FormContentFnContext,
   FormContext,
   FormCustomFieldProps,
   FormData,
@@ -469,19 +472,19 @@ const useFormLayout = (
  *
  * @template {object} TData - The type of the form data.
  * @template {InputType} TType - The type of the input.
+ * @param {FormContent<TData, TType>[]} content - The form content.
  * @param {UseFormDataReturn<TData>} formData - The form data.
  * @param {UseFormValidationReturn<TData>} validation - The form validation.
  * @param {FormModifers} modifiers - The form modifiers.
- * @param {FormContent<TData, TType>[]} content - The form content.
  * @return {BuiltFormContent<TData, InputType>[]} - The built field props for each form field.
  */
 const useFormContent = <TData extends object>(
+  content: FormContent<TData>[],
   formData: UseFormDataReturn<TData>,
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
   formLayout: UseFormLayoutReturn,
-  logger: Logger,
-  content?: FormContent<TData>[]
+  logger: Logger
 ): BuiltFormContent<InputType>[] => {
   const tl = useUikitTranslation();
 
@@ -1041,7 +1044,7 @@ const useFormContent = <TData extends object>(
    * - {@link buildFormFeatureSwitch}
    */
   return useMemo<BuiltFormContent<InputType>[]>(() => {
-    if (!content || !content.length) return [];
+    if (!content.length) return [];
     return content.map((content, contentIndex) => {
       if (isFormDivider(content) || isFormCustomContent(content))
         return content;
@@ -1052,11 +1055,11 @@ const useFormContent = <TData extends object>(
       return buildFieldProps(content);
     });
   }, [
+    content,
     buildCustomFieldProps,
-    buildFieldProps,
     buildFormTable,
     buildFormFeatureSwitch,
-    content,
+    buildFieldProps,
   ]);
 };
 
@@ -1286,6 +1289,86 @@ const useFormEditState = (
 };
 
 /**
+ * Custom form hook
+ * Aggregates the form's internal state into a context object ready to be consumed by the consumers & computed content function
+ *
+ * @template {object} TData - The type of the form data.
+ * @param {FormContent<TData>[] | FormComputedContentFn<TData>} content - Supplied form content
+ * @param {UseFormDataReturn<TData>} data - Return payload from the {@link useFormData} hook
+ * @param {UseFormValidationReturn<TData>} validation - Return payload from the {@link useFormValidation} hook
+ * @param {UseFormEditStateReturn} editState - Return payload from the {@link useFormEditState} hook
+ * @param {FormModifers} modifiers - Return payload from the {@link useFormModifiers} hook
+ * @param {UseFormSubmissionReturn} submission - Return payload from the {@link useFormSubmission} hook
+ * @param {UseFormLayoutReturn} layout - Return payload from the {@link useFormLayout} hook
+ * @returns {FormContent<TData>[]} - Computed array of form contents to render
+ */
+function useFormContentContext<TData extends object>(
+  data: UseFormDataReturn<TData>,
+  validation: UseFormValidationReturn<TData>,
+  editState: UseFormEditStateReturn,
+  modifiers: FormModifers,
+  submission: UseFormSubmissionReturn,
+  layout: UseFormLayoutReturn
+): FormContentFnContext<TData> {
+  return useMemo<FormContentFnContext<TData>>(
+    () => ({
+      ...data,
+      ...validation,
+      ...editState,
+      ...modifiers,
+      ...submission,
+      ...layout,
+    }),
+    [data, editState, modifiers, submission, validation, layout]
+  );
+}
+
+/**
+ * Custom form hook
+ * Takes the provided content prop and returns an array of {@link FormContent} items ready to be parsed by the form
+ *
+ * @template {object} TData - The type of the form data.
+ * @param {FormContent<TData>[] | FormComputedContentFn<TData>} content - Supplied form content
+ * @param {FormContentFnContext<TData>} contentContext - Return payload from the {@link useFormContentContext} hook
+ * @param {Logger} logger - Logger instance to use if errors arise
+ * @returns {FormContent<TData>[]} - Computed array of form contents to render
+ */
+function useFormComputedContent<TData extends object>(
+  content: FormContent<TData>[] | FormComputedContentFn<TData>,
+  contentContext: FormContentFnContext<TData>,
+  logger: Logger
+): FormContent<TData>[] {
+  return useMemo<FormContent<TData>[]>(() => {
+    if (!content) return [];
+    if (isFunction<FormComputedContentFn<TData>>(content)) {
+      try {
+        const computedContent = content(contentContext);
+        if (isArray(computedContent)) return computedContent;
+        logger.error(
+          `Invalid form content returned from content function. Expected array but for ${computedContent}`
+        );
+        return [];
+      } catch (e) {
+        logger.error(
+          new Error(`An error occured when computing the form's content.`, {
+            cause: e as Error,
+          })
+        );
+        return [];
+      }
+    }
+    if (isArray(content)) return content;
+
+    logger.error(
+      `Invalid content prop supplied to Form. Expected array or function but got ${content}`
+    );
+    return [];
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contentContext, content]);
+}
+
+/**
  * Custom form hook that runs and links all sub-hooks to handle code form logic.
  * Returns a form context object that includes the form data, validation,
  * submission, edit state, and modifiers.
@@ -1323,14 +1406,6 @@ export const useForm = <TData extends object>(
     { columns, asModal, embedded },
     formEditState
   );
-  const content = useFormContent(
-    formData,
-    formValidation,
-    formModifiers,
-    formLayout,
-    logger,
-    props.content
-  );
   const formSubmission = useFormSubmission(
     formData,
     formValidation,
@@ -1339,6 +1414,27 @@ export const useForm = <TData extends object>(
     props.onSubmit,
     props.onSubmitError,
     props.onCancelled,
+    logger
+  );
+  const contentContext = useFormContentContext(
+    formData,
+    formValidation,
+    formEditState,
+    formModifiers,
+    formSubmission,
+    formLayout
+  );
+  const computedContent = useFormComputedContent(
+    props.content,
+    contentContext,
+    logger
+  );
+  const content = useFormContent(
+    computedContent,
+    formData,
+    formValidation,
+    formModifiers,
+    formLayout,
     logger
   );
 
