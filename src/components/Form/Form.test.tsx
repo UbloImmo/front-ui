@@ -107,6 +107,31 @@ testForm({
   }
 );
 
+testForm({
+  ...Form.__DEFAULT_PROPS,
+  query: () => testData,
+  schema: testSchema,
+  content: () => testFormContent,
+  defaultValues: testData,
+})(
+  "should render with computed content",
+  ({ queryByTestId, queryAllByTestId }) => {
+    expect(queryByTestId("form")).not.toBeNull();
+
+    const labels = queryAllByTestId("text input-label-text");
+    expect(labels).toHaveLength(3);
+    expect(labels[0].textContent).toBe("Name");
+    expect(labels[1].textContent).toBe("Age");
+    expect(labels[2].textContent).toBe("Phone");
+
+    const data = queryAllByTestId("flex flex-row form-field-display-value");
+    expect(data).toHaveLength(3);
+    expect(data[0].textContent).toBe("The Tester");
+    expect(data[1].textContent).toBe("25");
+    expect(data[2].textContent).toBe("—");
+  }
+);
+
 const mockQueryFn = mock(() => testData);
 
 testForm({
