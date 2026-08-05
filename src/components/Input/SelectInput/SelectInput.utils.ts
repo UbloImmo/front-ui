@@ -60,6 +60,7 @@ export const defaultSelectInputProps: DefaultSelectInputProps<NullishPrimitives>
     value: null,
     onChange: null,
     name: null,
+    loading: false,
     options: [],
     filterOption: null,
     placeholder: "",
