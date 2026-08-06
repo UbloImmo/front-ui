@@ -42,6 +42,89 @@ Various forms can be modeled, displayed, filled-in, validated and submitted usin
 
 <Canvas of={FormStories.Contents} />
 
+#### Dynamic content
+
+Some forms may need to update their contents based on either external or external state changes.
+
+##### External state
+
+The Form component's `content` property is reactive. Any changes to it will trigger a complete re-render.
+
+It can therefore easily respond to external changes:
+
+```tsx
+import { Form, Callout, Button } from "@ubloimmo/uikit";
+import { useState, useMemo } from "react";
+
+
+const MyForm = () => {
+  const [showCallout, setShowCallout] = useState(false);
+
+  // content is re-computed when showCallout is updated
+  const content = useMemo(() => [
+    {
+      kind: "content",
+      content: showCallout ? <Callout>this is a callout</Callout> : null,
+    }
+  ], [showCallout]);
+
+  return (
+    <>
+      <Form title="My Form" content={content} />
+      <Button onClick={() => setShowCallout(true)} label="Show callout inside form" />
+    </>
+  );
+}
+```
+
+##### Internal state
+
+Reacting to internal state changes (e.g. whether the form is in editing or reading mode, its current data, etc...) can get trickier without having access to its internal context during content declaration.
+
+To react to internal state changes, declare `content` as a callback function:
+
+```tsx
+import { Form, Callout, type FormComputedContentFn } from "@ubloimmo/uikit";
+import { useCallback } from "react";
+
+type MyFormData = {
+  showCallout: boolean;
+}
+
+const MyForm = ({ bottomText }: { bottomText: string }) => {
+  // content is a function that returns a content array
+  // and gets re-ran each time the form's internal state changes
+  const content = useCallback<FormComputedContentFn<MyFormData>>(
+    (context) => [
+      {
+        kind: "feature-switch",
+        source: "showCallout",
+        variant: "switch",
+        label: "Show callout ?"
+      },
+      {
+        kind: "content",
+        content: context.data.showCallout ? <Callout>this is a callout</Callout> : null,
+      },
+      {
+        kind: "text",
+        content: bottomText,
+      }
+    ],
+    // external state changes also trigger the content to be re-computed
+    [bottomText]
+  );
+
+  return (
+      <Form<MyFormData> title="My Form" content={content} />
+  );
+}
+```
+
+> Please refer to [this example](?path=/story/components-forms-form-stories--computed-content) for a more complete demo.
+
+
+
 #### Data Validation
 
 User data can be error-prone. Form supports data validation through `zod` schemas.

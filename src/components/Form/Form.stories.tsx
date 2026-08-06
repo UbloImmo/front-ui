@@ -1,7 +1,7 @@
 import {
   isArray,
   isNull,
-  Nullable,
+  type Nullable,
   objectFromEntries,
 } from "@ubloimmo/front-util";
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -32,6 +32,7 @@ import {
 } from "@utils";
 
 import type {
+  FormComputedContentFn,
   CustomFormInputProps,
   FormContent,
   FormData,
@@ -525,7 +526,9 @@ const customAddressContents: FormContent<Address>[] = [
     label: "Feature switch",
     variant: "switch",
   },
-  ...(addressFormProps.content ?? []).slice(1),
+  ...(isArray(addressFormProps.content) ? addressFormProps.content : []).slice(
+    1
+  ),
 ];
 
 export const CustomFields = (props: FormStoryProps) => {
@@ -545,7 +548,7 @@ export const AsModal = (props: FormStoryProps) => {
   const { open, close } = useDialog(formModalRef);
   return (
     <>
-      <Form
+      <Form<Address>
         {...mergedProps}
         title="Form in a modal with a longer title"
         asModal={{ reference: formModalRef, size: "s" }}
@@ -559,7 +562,7 @@ export const AsModal = (props: FormStoryProps) => {
 AsModal.parameters = {
   docs: componentSource([
     {
-      ...addressFormProps,
+      ...(addressFormProps as FormProps<object>),
       title: "Form in a modal",
       asModal: { reference: formModalRef },
       onCancelled: () => {},
@@ -1285,4 +1288,65 @@ const content: FormContent<BatchUpdateData>[] = [
 
 export const BatchUpdate = () => {
   return <Form<BatchUpdateData> title="Batch update demo" content={content} />;
+};
+
+type ComputedContentDemoInput = {
+  checked: boolean;
+  value: string;
+  number: number;
+};
+
+export const ComputedContent = () => {
+  const computedContent = useCallback<
+    FormComputedContentFn<ComputedContentDemoInput>
+  >(
+    (context) => [
+      {
+        kind: "feature-switch",
+        label: "Show callout & field ?",
+        variant: "switch",
+        source: "checked",
+      },
+      {
+        kind: "content",
+        content: context.data.checked ? (
+          <Callout>
+            This callout and the field below only get showed when the switch
+            above is toggled on
+          </Callout>
+        ) : null,
+      },
+      {
+        source: "value",
+        label: "Value",
+        type: "text",
+        layout: {
+          size: 2,
+          hidden: !context.data.checked,
+        },
+      },
+      "divider",
+      {
+        kind: "text",
+        content: "The field below only appears if the form is in edit mode",
+      },
+      {
+        source: "number",
+        type: "number",
+        label: "Number",
+        layout: {
+          hidden: !context.isEditing,
+        },
+      },
+    ],
+    []
+  );
+
+  return (
+    <Form<ComputedContentDemoInput>
+      title="Computed content demo"
+      content={computedContent}
+      onSubmit={() => {}}
+    />
+  );
 };

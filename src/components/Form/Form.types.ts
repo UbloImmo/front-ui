@@ -741,6 +741,9 @@ export type FormTextProps = Omit<
   TextProps,
   "children" | keyof StyleOverrideProps
 > & {
+  /**
+   * Content to pass to the Text component
+   */
   content: ReactNode;
   kind: "text";
 };
@@ -1068,6 +1071,26 @@ export type DefaultFormGridProps = Required<FormGridProps>;
 export type DefaultFormLayoutProps = Required<FormLayoutProps>;
 
 /**
+ * Form context available when computing a Form's content using a callback function
+ */
+export type FormContentFnContext<TData extends object> = Omit<
+  FormContext<TData>,
+  "content"
+>;
+
+/**
+ * Synchronous that takes the form's context & returns valid form content to be rendered
+ *
+ * @template {object} TData - The type of the form data
+ * @param {FormContentFnContext<TData>} context - Form context
+ * @return {FormContent<TData>[]} - Array of valid {@link FormContent} items
+ */
+export type FormComputedContentFn<TData extends object> = GenericFn<
+  [context: FormContentFnContext<TData>],
+  FormContent<TData>[]
+>;
+
+/**
  * Form props related to its content
  *
  * @template {object} TData - The type of the form data
@@ -1076,12 +1099,12 @@ export type DefaultFormLayoutProps = Required<FormLayoutProps>;
  */
 export type FormContentProps<TData extends object> = {
   /**
-   * Array of form fields or dividers to display with the fetched / initial data
+   * Array of form fields or dividers to display with the fetched / initial data or a function that returns it based on the provided {@link FormContentFnContext} object.
    *
-   * @type {FormContent<TData>[]}
+   * @type {FormContent<TData>[] | FormComputedContentFn<TData>}
    * @default []
    */
-  content?: FormContent<TData>[];
+  content?: FormContent<TData>[] | FormComputedContentFn<TData>;
 };
 
 /**
