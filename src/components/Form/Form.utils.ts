@@ -258,7 +258,6 @@ export const isFormDivider = <TData extends object>(
 export const isFormCustomContent = <TData extends object>(
   content: FormContent<TData> | BuiltFormContent<InputType>
 ): content is FormCustomContentProps => {
-  if (isFunction<FC>(content)) return true;
   return (
     isObject(content) &&
     "kind" in content &&
