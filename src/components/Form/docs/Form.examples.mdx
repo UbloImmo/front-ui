@@ -37,11 +37,23 @@ We got tables <Icon name="EmojiSmile" />
 
 <Canvas of={FormStories.CustomContent} />
 
+
 ### Computed content
 
-The content in the form below is dynamic and gets re-rendered based on the form's internal state
+The content in both forms below is dynamic and gets re-rendered based on the form's internal state
+
+#### Complete computed content
+
+The whole content array gets re-computed on each internal state update
 
 <Canvas of={FormStories.ComputedContent} />
+
+#### Partial computed content
+
+Only some content items are reactive to the form's internal state, the rest remain static
+
+<Canvas of={FormStories.PartialComputedContent} />
+
 
 ### A form as a modal
 
