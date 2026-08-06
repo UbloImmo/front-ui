@@ -1439,12 +1439,7 @@ export const useForm = <TData extends object>(
   );
 
   return {
-    ...formData,
-    ...formValidation,
-    ...formSubmission,
-    ...formEditState,
-    ...formModifiers,
-    ...formLayout,
+    ...contentContext,
     content,
   };
 };
