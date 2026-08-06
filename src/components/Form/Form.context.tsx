@@ -84,6 +84,8 @@ import type {
   DeleteTableRowFn,
   FormComputedContentFn,
   FormContent,
+  FormContentArray,
+  FormContentFn,
   FormContentFnContext,
   FormContext,
   FormCustomFieldProps,
@@ -1328,18 +1330,19 @@ function useFormContentContext<TData extends object>(
  * Takes the provided content prop and returns an array of {@link FormContent} items ready to be parsed by the form
  *
  * @template {object} TData - The type of the form data.
- * @param {FormContent<TData>[] | FormComputedContentFn<TData>} content - Supplied form content
+ * @param {FormContentArray<TData> | FormComputedContentFn<TData>} content - Supplied form content
  * @param {FormContentFnContext<TData>} contentContext - Return payload from the {@link useFormContentContext} hook
  * @param {Logger} logger - Logger instance to use if errors arise
  * @returns {FormContent<TData>[]} - Computed array of form contents to render
  */
 function useFormComputedContent<TData extends object>(
-  content: FormContent<TData>[] | FormComputedContentFn<TData>,
+  content: FormContentArray<TData> | FormComputedContentFn<TData>,
   contentContext: FormContentFnContext<TData>,
   logger: Logger
 ): FormContent<TData>[] {
   return useMemo<FormContent<TData>[]>(() => {
     if (!content) return [];
+    // execute function and get a whole content array back
     if (isFunction<FormComputedContentFn<TData>>(content)) {
       try {
         const computedContent = content(contentContext);
@@ -1357,7 +1360,30 @@ function useFormComputedContent<TData extends object>(
         return [];
       }
     }
-    if (isArray(content)) return content;
+
+    // iterate over provided array & execute items if they are functions
+    if (isArray(content))
+      return content.flatMap((item, index): FormContent<TData>[] => {
+        if (isFunction<FormContentFn<TData>>(item)) {
+          try {
+            const itemContent = item(contentContext);
+            // check against null & undefined as well to handle sparse arrays
+            if (isNullish(itemContent)) return [];
+            return [itemContent];
+          } catch (e) {
+            logger.error(
+              new Error(
+                `An error occured when computing the form's content at position ${index}.`,
+                {
+                  cause: e as Error,
+                }
+              )
+            );
+            return [];
+          }
+        }
+        return [item];
+      });
 
     logger.error(
       `Invalid content prop supplied to Form. Expected array or function but got ${content}`

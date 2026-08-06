@@ -40,6 +40,7 @@ import type {
   FormTableProps,
   FormTableTryDeletingRowFn,
   FormTableTryDeletingRowParams,
+  FormContentArray,
 } from "./Form.types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
@@ -451,11 +452,14 @@ const customContentProps: FormProps<object> = {
       kind: "content",
       content: <Callout>I am a callout</Callout>,
     },
-    () => (
-      <Heading color="success-base" size="h4">
-        And I am a heading
-      </Heading>
-    ),
+    {
+      kind: "content",
+      content: () => (
+        <Heading color="success-base" size="h4">
+          And I am a heading
+        </Heading>
+      ),
+    },
   ],
 };
 
@@ -506,7 +510,7 @@ const customInputFeatureSwitch = ({
   />
 );
 
-const customAddressContents: FormContent<Address>[] = [
+const customAddressContents: FormContentArray<Address> = [
   {
     kind: "custom-field",
     source: "street",
@@ -1346,6 +1350,68 @@ export const ComputedContent = () => {
     <Form<ComputedContentDemoInput>
       title="Computed content demo"
       content={computedContent}
+      onSubmit={() => {}}
+    />
+  );
+};
+
+export const PartialComputedContent = () => {
+  const partialComputedContent = useMemo<
+    FormContentArray<ComputedContentDemoInput>
+  >(
+    (): FormContentArray<ComputedContentDemoInput> => [
+      {
+        kind: "feature-switch",
+        label: "Show callout & field ?",
+        variant: "switch",
+        source: "checked",
+      },
+      (context) =>
+        context.data.checked
+          ? {
+              kind: "content",
+              content: (
+                <Callout>
+                  This callout and the field below only get showed when the
+                  switch above is toggled on
+                </Callout>
+              ),
+            }
+          : null,
+      (context) => ({
+        source: "value",
+        label: "Value",
+        type: "text",
+        layout: {
+          size: 2,
+          hidden: !context.data.checked,
+        },
+      }),
+      (context) => (context.isEditing ? "divider" : null),
+      (context) =>
+        context.isEditing
+          ? {
+              kind: "text",
+              content:
+                "This text & the field below only appear if the form is in edit mode",
+            }
+          : null,
+      (context) => ({
+        source: "number",
+        type: "number",
+        label: "Number",
+        layout: {
+          hidden: !context.isEditing,
+        },
+      }),
+    ],
+    []
+  );
+
+  return (
+    <Form<ComputedContentDemoInput>
+      title="Partial computed content demo"
+      content={partialComputedContent}
       onSubmit={() => {}}
     />
   );

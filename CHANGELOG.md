@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `v1.0.0` Form component
+  - Added support for individual form content items to be declared as callback functions
+
+### Removed
+- `v1.0.0` Form component
+  - Dropped support for declaring Form custom content items as non-wrapped React functional components
+
 ## 2.3.2 - 2026-08-06
 ### Changed
 - `v0.1.3` Form component
