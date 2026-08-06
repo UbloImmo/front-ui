@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 2.4.0 - 2026-08-06
 ### Added
-
 - `v1.0.0` Form component
   - Added support for individual form content items to be declared as callback functions
 
