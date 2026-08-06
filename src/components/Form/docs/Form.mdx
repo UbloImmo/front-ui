@@ -81,6 +81,8 @@ const MyForm = () => {
 
 Reacting to internal state changes (e.g. whether the form is in editing or reading mode, its current data, etc...) can get trickier without having access to its internal context during content declaration.
 
+###### Complete reactivity
+
 To react to internal state changes, declare `content` as a callback function:
 
 ```tsx
@@ -123,9 +125,11 @@ const MyForm = ({ bottomText }: { bottomText: string }) => {
 
 > Please refer to [this example](?path=/story/components-forms-form-stories--computed-content) for a more complete demo.
 
+###### Partial reactivity
+
 Performance may take a hit when re-computing a large content array in this manner when the Form's internal state changes.
 
-Fained-grained reactivity may be achieved by declaring indiviual array items as callback functions:
+Fined-grained reactivity can be achieved by declaring indiviual array items as callback functions:
 
 ```tsx
 import { Form, Callout, type FormContentArray } from "@ubloimmo/uikit";
@@ -163,6 +167,9 @@ const MyForm = ({ bottomText }: { bottomText: string }) => {
       <Form<MyFormData> title="My Form" content={content} />
   );
 }
+
+> Please refer to [this example](?path=/story/components-forms-form-stories--partial-computed-content) for a more complete demo.
+
 
 
 #### Data Validation
