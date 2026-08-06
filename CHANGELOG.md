@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 2.3.2 - 2026-08-06
 ### Changed
-
 - `v0.1.3` Form component
   - Add the ability for `content` property to be a callback function that takes in the form's context and returns a valid content array.
 
