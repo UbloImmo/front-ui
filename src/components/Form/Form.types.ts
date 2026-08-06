@@ -755,24 +755,34 @@ export type BuiltFormTextProps = Omit<TextProps, keyof StyleOverrideProps> & {
 // --------------------------- CUSTOM CONTENT -------------------------------
 
 /**
- * Abritraty content, either an object marked as `kind: "content"` or a React functional component
+ * Abritraty content, an object marked as `kind: "content"` and a `content` property holding either a React node or functional component
+ *
+ * @example
+ * // React node
+ * {
+ *   kind: "content",
+ *   content: <div>Custom content</div>
+ * }
+ * // React functional component
+ * {
+ *   kind: "content",
+ *   content: () => <MyCustomComponent />
+ * }
  */
-export type FormCustomContentProps =
-  | {
-      /**
-       * The content item's identifier
-       */
-      kind: "content";
-      /**
-       * The custom content
-       *
-       * @type {ReactNode | FC}
-       */
-      content: ReactNode | FC;
-    }
-  | FC;
+export type FormCustomContentProps = {
+  /**
+   * The content item's identifier
+   */
+  kind: "content";
+  /**
+   * The custom content
+   *
+   * @type {ReactNode | FC}
+   */
+  content: ReactNode | FC;
+};
 
-export type BuiltFormCustomContentProps = Exclude<FormCustomContentProps, FC>;
+export type BuiltFormCustomContentProps = FormCustomContentProps;
 
 // ----------------------------- CUSTOM FIELDS ------------------------------
 
@@ -1091,6 +1101,27 @@ export type FormComputedContentFn<TData extends object> = GenericFn<
 >;
 
 /**
+ * Synchronous function that takes the form's context & returns a single valid form content
+ *
+ * @param {FormContentFnContext<TData>} context - Form context
+ * @return {Nullable<FormContent<TData>[]>} - Single {@link FormContent} object or null
+ *
+ * @remarks Returning `null` will not render anything
+ */
+export type FormContentFn<TData extends object> = GenericFn<
+  [context: FormContentFnContext<TData>],
+  Nullable<FormContent<TData>>
+>;
+
+/**
+ * Array of {@link FormContent} objects or {FormComputedContent} callback functions that return one
+ */
+export type FormContentArray<TData extends object> = (
+  | FormContent<TData>
+  | FormContentFn<TData>
+)[];
+
+/**
  * Form props related to its content
  *
  * @template {object} TData - The type of the form data
@@ -1099,12 +1130,14 @@ export type FormComputedContentFn<TData extends object> = GenericFn<
  */
 export type FormContentProps<TData extends object> = {
   /**
-   * Array of form fields or dividers to display with the fetched / initial data or a function that returns it based on the provided {@link FormContentFnContext} object.
+   * Array of form contents of functions that return them to display with the fetched / initial data or a function that returns it based on the provided {@link FormContentFnContext} object.
    *
-   * @type {FormContent<TData>[] | FormComputedContentFn<TData>}
+   * @type {FormContentArray<TData>[] | FormComputedContentFn<TData>}
    * @default []
+   *
+   * @see {@link FormContentArray}, {@link FormContent}, {@link FormContentFn}, {@link FormComputedContentFn}
    */
-  content?: FormContent<TData>[] | FormComputedContentFn<TData>;
+  content?: FormContentArray<TData> | FormComputedContentFn<TData>;
 };
 
 /**
