@@ -20,12 +20,14 @@ import { Modal } from "../Modal";
 import { Form } from "./Form.component";
 import { useFormContext } from "./Form.context";
 import { isFormField } from "./Form.utils";
+import { Text } from "../Text";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
 import {
   clamp,
   createDelayedResponse,
+  cssVarUsage,
   delay,
   useMergedProps,
   useStatic,
@@ -1415,4 +1417,98 @@ export const PartialComputedContent = () => {
       onSubmit={() => {}}
     />
   );
+};
+
+export const ComputedTableContent = () => {
+  const props = useStatic<FormProps<IdentityTable>>({
+    title: "Table with computed table",
+    defaultValues: {
+      profiles: [
+        {
+          firstName: "John",
+          lastName: "Doe",
+          numberOfChildren: 2,
+        },
+      ],
+    },
+    onSubmit: () => {},
+    content: [
+      {
+        kind: "table",
+        label: "Profiles",
+        source: "profiles",
+        footer: {
+          kind: "button",
+          label: "Add profile",
+        },
+        columns: [
+          (context) =>
+            context.isEditing
+              ? null
+              : {
+                  kind: "custom-field",
+                  source: "firstName",
+                  label: "Identity",
+                  // eslint-disable-next-line react/prop-types
+                  CustomInput: ({ rowIndex }) => {
+                    const row = context.data?.profiles?.[rowIndex ?? 0];
+                    const name = [row?.firstName ?? "", row?.lastName ?? ""]
+                      .join(" ")
+                      .trim();
+
+                    const noIdentity = !name.length;
+
+                    return (
+                      <Text
+                        weight="bold"
+                        color={noIdentity ? "error-base" : undefined}
+                        styleOverride={{ padding: cssVarUsage("s-2") }}
+                      >
+                        {noIdentity ? "Missing identity" : name}
+                      </Text>
+                    );
+                  },
+                },
+          (context) =>
+            context.isEditing
+              ? {
+                  source: "firstName",
+                  label: "First name",
+                  type: "text",
+                }
+              : null,
+          (context) =>
+            context.isEditing
+              ? {
+                  source: "lastName",
+                  label: "Last Name",
+                  type: "text",
+                }
+              : null,
+          {
+            source: "tags",
+            type: "multi-select",
+            label: "Tags",
+            options: ["Parent", "Employed", "Unemployed"].map((label) => ({
+              label,
+              value: label,
+            })),
+          },
+        ],
+      },
+      (context) =>
+        context.isEditing
+          ? null
+          : {
+              kind: "content",
+              content: (
+                <Callout>
+                  {context.data.profiles.length} profiles in the table
+                </Callout>
+              ),
+            },
+    ],
+  });
+
+  return <Form {...props} />;
 };
