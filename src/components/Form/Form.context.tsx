@@ -4,7 +4,6 @@ import {
   type DeepKeyOfType,
   type DeepValueOf,
   deepValueOf,
-  isArray,
   isBoolean,
   isFunction,
   isNull,
@@ -38,6 +37,7 @@ import { useDialogManager } from "../Dialog";
 import {
   buildFormText,
   builtFormTableId,
+  computeFormContent,
   formErrorTranslation,
   isFormCustomContent,
   isFormCustomField,
@@ -83,9 +83,7 @@ import type {
   DefaultFormLayoutProps,
   DeleteTableRowFn,
   FormComputedContentFn,
-  FormContent,
   FormContentArray,
-  FormContentFn,
   FormContentFnContext,
   FormContext,
   FormCustomFieldProps,
@@ -474,15 +472,17 @@ const useFormLayout = (
  *
  * @template {object} TData - The type of the form data.
  * @template {InputType} TType - The type of the input.
- * @param {FormContent<TData, TType>[]} content - The form content.
+ * @param {FormContentArray<TData> | FormComputedContentFn<TData>} content - The form content.
+ * @param {FormContentFnContext<TData>} contentContext - Return payload from the {@link useFormContentContext} hook
  * @param {UseFormDataReturn<TData>} formData - The form data.
  * @param {UseFormValidationReturn<TData>} validation - The form validation.
  * @param {FormModifers} modifiers - The form modifiers.
  * @return {BuiltFormContent<TData, InputType>[]} - The built field props for each form field.
  */
 const useFormContent = <TData extends object>(
-  content: FormContent<TData>[],
-  formData: UseFormDataReturn<TData>,
+  content: FormContentArray<TData> | FormComputedContentFn<TData>,
+  contentContext: FormContentFnContext<TData>,
+  { mutateFormData, data }: UseFormDataReturn<TData>,
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
   formLayout: UseFormLayoutReturn,
@@ -495,10 +495,10 @@ const useFormContent = <TData extends object>(
    */
   const getFieldValue = useCallback<GetFieldValueFn<TData>>(
     (source) => {
-      const value = deepValueOf(formData.data, source, true);
+      const value = deepValueOf(data, source, true);
       return value ?? null;
     },
-    [formData]
+    [data]
   );
 
   /**
@@ -507,12 +507,12 @@ const useFormContent = <TData extends object>(
   const propagateChange = useCallback<PropagateChangeFn<TData>>(
     (source, onChange) => {
       return (value) => {
-        formData.mutateFormData(source, value);
+        mutateFormData(source, value);
         if (isNullish(onChange)) return;
         onChange(value);
       };
     },
-    [formData]
+    [mutateFormData]
   );
 
   /**
@@ -722,7 +722,7 @@ const useFormContent = <TData extends object>(
           }
 
           postCheckArr.splice(index, 1);
-          formData.mutateFormData(
+          mutateFormData(
             tableFormSource,
             postCheckArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
           );
@@ -755,7 +755,7 @@ const useFormContent = <TData extends object>(
        */
       const appendRow: AppendTableRowFn<Record<string, unknown>> = (newRow) => {
         const updatedArr = [...arrayValue, newRow];
-        formData.mutateFormData(
+        mutateFormData(
           tableFormSource,
           updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
         );
@@ -768,7 +768,7 @@ const useFormContent = <TData extends object>(
        */
       const swapRows: SwapTableRowsFn = (oldIndex, newIndex) => {
         const swapped = arrayMove([...arrayValue], oldIndex, newIndex);
-        formData.mutateFormData(
+        mutateFormData(
           tableFormSource,
           swapped as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
         );
@@ -794,12 +794,16 @@ const useFormContent = <TData extends object>(
         }
         // get the row source & commit selection change
         const rowSource = `${tableFormSource}.${rowIndex}.${tableModifiers.selectable.property}`;
-        formData.mutateFormData(
+        mutateFormData(
           rowSource as FormSource<TData>,
           selected as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
         );
       };
 
+      /**
+       * Sets the selection state of the whole table
+       * @param {boolean} selected - The new selection state of the table
+       */
       const setTableSelection: SetTableSelectionFn = (selected) => {
         // abort if modifiers do not allow selection
         if (!tableModifiers.selectable) return;
@@ -811,13 +815,22 @@ const useFormContent = <TData extends object>(
           ...rowValue,
           [property]: selected,
         }));
-        formData.mutateFormData(
+        mutateFormData(
           tableFormSource,
           selectedArray as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
         );
       };
 
-      const headers = t.columns.map(
+      const columns = computeFormContent(
+        t.columns,
+        // cast to remove `never` type
+        contentContext as unknown as FormContentFnContext<{
+          arr: { data: string }[];
+        }>,
+        logger
+      );
+
+      const headers = columns.map(
         ({ label, tooltip, compact, required, source }): FieldLabelProps => ({
           label,
           tooltip,
@@ -829,7 +842,7 @@ const useFormContent = <TData extends object>(
         })
       );
 
-      const colSpans = t.columns?.map(({ layout }) => layout?.size ?? 1) ?? [];
+      const colSpans = columns?.map(({ layout }) => layout?.size ?? 1) ?? [];
 
       // generate rows and cell fields from columns and array items
       const rows = arrayValue.map((rowData, index): BuiltFormTableRow => {
@@ -851,7 +864,7 @@ const useFormContent = <TData extends object>(
                 {}),
             }
           : tableModifiers;
-        const cells = (t.columns ?? [])
+        const cells = columns
           .map(({ source, ...cell }) => {
             const cellSource = `${rowSource}.${source}`;
             const cellField = {
@@ -967,7 +980,8 @@ const useFormContent = <TData extends object>(
       getFieldErrorProps,
       formLayout,
       isFieldRequired,
-      formData,
+      mutateFormData,
+      contentContext,
       logger,
       buildCustomFieldProps,
       buildFieldProps,
@@ -1046,8 +1060,9 @@ const useFormContent = <TData extends object>(
    * - {@link buildFormFeatureSwitch}
    */
   return useMemo<BuiltFormContent<InputType>[]>(() => {
-    if (!content.length) return [];
-    return content.map((content, contentIndex) => {
+    const contentArray = computeFormContent(content, contentContext, logger);
+    if (!contentArray.length) return [];
+    return contentArray.map((content, contentIndex) => {
       if (isFormDivider(content) || isFormCustomContent(content))
         return content;
       if (isFormText(content)) return buildFormText(content);
@@ -1056,8 +1071,10 @@ const useFormContent = <TData extends object>(
       if (isFormFeatureSwitch(content)) return buildFormFeatureSwitch(content);
       return buildFieldProps(content);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     content,
+    contentContext,
     buildCustomFieldProps,
     buildFormTable,
     buildFormFeatureSwitch,
@@ -1326,75 +1343,6 @@ function useFormContentContext<TData extends object>(
 }
 
 /**
- * Custom form hook
- * Takes the provided content prop and returns an array of {@link FormContent} items ready to be parsed by the form
- *
- * @template {object} TData - The type of the form data.
- * @param {FormContentArray<TData> | FormComputedContentFn<TData>} content - Supplied form content
- * @param {FormContentFnContext<TData>} contentContext - Return payload from the {@link useFormContentContext} hook
- * @param {Logger} logger - Logger instance to use if errors arise
- * @returns {FormContent<TData>[]} - Computed array of form contents to render
- */
-function useFormComputedContent<TData extends object>(
-  content: FormContentArray<TData> | FormComputedContentFn<TData>,
-  contentContext: FormContentFnContext<TData>,
-  logger: Logger
-): FormContent<TData>[] {
-  return useMemo<FormContent<TData>[]>(() => {
-    if (!content) return [];
-    // execute function and get a whole content array back
-    if (isFunction<FormComputedContentFn<TData>>(content)) {
-      try {
-        const computedContent = content(contentContext);
-        if (isArray(computedContent)) return computedContent;
-        logger.error(
-          `Invalid form content returned from content function. Expected array but for ${computedContent}`
-        );
-        return [];
-      } catch (e) {
-        logger.error(
-          new Error(`An error occured when computing the form's content.`, {
-            cause: e as Error,
-          })
-        );
-        return [];
-      }
-    }
-
-    // iterate over provided array & execute items if they are functions
-    if (isArray(content))
-      return content.flatMap((item, index): FormContent<TData>[] => {
-        if (isFunction<FormContentFn<TData>>(item)) {
-          try {
-            const itemContent = item(contentContext);
-            // check against null & undefined as well to handle sparse arrays
-            if (isNullish(itemContent)) return [];
-            return [itemContent];
-          } catch (e) {
-            logger.error(
-              new Error(
-                `An error occured when computing the form's content at position ${index}.`,
-                {
-                  cause: e as Error,
-                }
-              )
-            );
-            return [];
-          }
-        }
-        return [item];
-      });
-
-    logger.error(
-      `Invalid content prop supplied to Form. Expected array or function but got ${content}`
-    );
-    return [];
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contentContext, content]);
-}
-
-/**
  * Custom form hook that runs and links all sub-hooks to handle code form logic.
  * Returns a form context object that includes the form data, validation,
  * submission, edit state, and modifiers.
@@ -1450,13 +1398,9 @@ export const useForm = <TData extends object>(
     formSubmission,
     formLayout
   );
-  const computedContent = useFormComputedContent(
+  const content = useFormContent(
     props.content,
     contentContext,
-    logger
-  );
-  const content = useFormContent(
-    computedContent,
     formData,
     formValidation,
     formModifiers,

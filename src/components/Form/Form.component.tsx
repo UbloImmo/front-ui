@@ -54,7 +54,7 @@ const defaultFormProps: FormDefaultProps<object> = {
 /**
  * A flexible yet expressive form renderer.
  *
- * @version 1.0.0
+ * @version 1.1.0
  *
  * @template {object} TData - The type of the form data
  *

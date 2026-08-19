@@ -5,6 +5,8 @@ import {
   isNumber,
   isObject,
   isString,
+  type Logger,
+  type Nullable,
   objectKeys,
   type DeepKeyOf,
   type DeepValueOf,
@@ -13,6 +15,7 @@ import {
   type Optional,
   type ValueMap,
   type VoidFn,
+  isNullish,
 } from "@ubloimmo/front-util";
 import { type FC } from "react";
 import {
@@ -533,3 +536,69 @@ export const formErrorTranslation = (
 export const formTableRowId = (rowData: object) => {
   return JSON.stringify(rowData);
 };
+
+/**
+ * Computes form content or form table columns by executing their callback functions
+ *
+ * @param arrayOrCallback - Array of items / callbacks or function that returns an array of items
+ * @param fnParam - Parameter to pass to array / item callback functions
+ * @param logger - Logger to report errors with
+ * @returns Computed items array (all callbacks have been executed)
+ */
+export function computeFormContent<TItem, TFnParam>(
+  arrayOrCallback: Optional<
+    | (TItem | ((param: TFnParam) => Nullable<TItem>))[]
+    | ((param: TFnParam) => TItem[])
+  >,
+  fnParam: TFnParam,
+  logger: Logger
+): TItem[] {
+  if (!arrayOrCallback) return [];
+  // execute function and get a whole content array back
+  if (isFunction<(param: TFnParam) => TItem[]>(arrayOrCallback)) {
+    try {
+      const computedArray = arrayOrCallback(fnParam);
+      if (isArray(computedArray)) return computedArray;
+      logger.error(
+        `Invalid form content returned from content function. Expected array but got ${computedArray}`
+      );
+      return [];
+    } catch (e) {
+      logger.error(
+        new Error(`An error occured when computing the form's content.`, {
+          cause: e as Error,
+        })
+      );
+      return [];
+    }
+  }
+
+  // iterate over provided array & execute items if they are functions
+  if (isArray(arrayOrCallback))
+    return arrayOrCallback.flatMap((item, index): TItem[] => {
+      if (isFunction<(param: TFnParam) => Nullable<TItem>>(item)) {
+        try {
+          const itemContent = item(fnParam);
+          // check against null & undefined as well to handle sparse arrays
+          if (isNullish(itemContent)) return [];
+          return [itemContent];
+        } catch (e) {
+          logger.error(
+            new Error(
+              `An error occured when computing the form's content at position ${index}.`,
+              {
+                cause: e as Error,
+              }
+            )
+          );
+          return [];
+        }
+      }
+      return [item];
+    });
+
+  logger.error(
+    `Invalid content prop supplied to Form. Expected array or function but got ${arrayOrCallback}`
+  );
+  return [];
+}

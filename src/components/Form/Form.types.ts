@@ -417,6 +417,48 @@ export type FormTableColumn<TRowValue extends Record<string, unknown>> =
   | FormCustomFieldProps<TRowValue>;
 
 /**
+ * Synchronous function that takes the form's context & returns a single valid form table column object
+ *
+ * @template {Record<string, unknown>} TData - The type every row in the table
+ * @template {object} TData - The type of the form data
+ * @param {FormContentFnContext<TData>} context - Form context
+ * @return {Nullable<FormTableColumn<TRowValue>>} - Single {@link FormTableColumn} object or null
+ *
+ * @remarks Returning `null` will not render anything
+ */
+export type FormTableColumnFn<
+  TRowValue extends Record<string, unknown>,
+  TData extends object,
+> = GenericFn<
+  [context: FormContentFnContext<TData>],
+  Nullable<FormTableColumn<TRowValue>>
+>;
+
+/**
+ * Synchronous function that takes the form's context & returns valid form table columns to be rendered
+ *
+ * @template {Record<string, unknown>} TData - The type every row in the table
+ * @template {object} TData - The type of the form data
+ * @param {FormContentFnContext<TData>} context - Form context
+ * @return {FormTableColumn<TRowValue>[]} - Array of valid {@link FormTableColumn} items
+ */
+export type FormTableComputedColumnsFn<
+  TRowValue extends Record<string, unknown>,
+  TData extends object,
+> = GenericFn<
+  [context: FormContentFnContext<TData>],
+  FormTableColumn<TRowValue>[]
+>;
+
+/**
+ * Array of {@link FormTableColumn} objects or {@link FormTableColumnFn} callback functions that return one
+ */
+export type FormTableColumnArray<
+  TRowValue extends Record<string, unknown>,
+  TData extends object,
+> = (FormTableColumn<TRowValue> | FormTableColumnFn<TRowValue, TData>)[];
+
+/**
  * Params passed to the {@link FormTableTryDeletingRowFn} callback
  *
  * @template {object} TRowData - The type of a single row in the table's data
@@ -540,13 +582,18 @@ export type FormTableProps<TData extends object> = {
                */
               overrideRowModifiers?: FormTableRowModifiersOverrideFn<TRowValue>;
               /**
-               * The columns of the table. A list of fields that get translated to table columns.
+               * The columns of the table.
+               *
+               * Either an array of column fields or functions that return them
+               * or a function that returns one based on the form's context
                *
                * @remarks Field labels will be used as the column headers while their inputs will be used as the cells
                *
-               * @type {Omit<FormFieldProps<TRowValue>, "table">[]}
+               * @type {FormTableColumnArray<NoInfer<TRowValue>, TData> | FormTableComputedColumnsFn<TRowData, TData>}
                */
-              columns: FormTableColumn<NoInfer<TRowValue>>[];
+              columns:
+                | FormTableColumnArray<NoInfer<TRowValue>, TData>
+                | FormTableComputedColumnsFn<TRowValue, TData>;
               /**
                * The table's footer. Provides multiple variants to add new rows to the table
                *
@@ -1089,7 +1136,7 @@ export type FormContentFnContext<TData extends object> = Omit<
 >;
 
 /**
- * Synchronous that takes the form's context & returns valid form content to be rendered
+ * Synchronous function that takes the form's context & returns valid form content to be rendered
  *
  * @template {object} TData - The type of the form data
  * @param {FormContentFnContext<TData>} context - Form context
@@ -1103,8 +1150,9 @@ export type FormComputedContentFn<TData extends object> = GenericFn<
 /**
  * Synchronous function that takes the form's context & returns a single valid form content
  *
+ * @template {object} TData - The type of the form data
  * @param {FormContentFnContext<TData>} context - Form context
- * @return {Nullable<FormContent<TData>[]>} - Single {@link FormContent} object or null
+ * @return {Nullable<FormContent<TData>>} - Single {@link FormContent} object or null
  *
  * @remarks Returning `null` will not render anything
  */
@@ -1114,7 +1162,7 @@ export type FormContentFn<TData extends object> = GenericFn<
 >;
 
 /**
- * Array of {@link FormContent} objects or {FormComputedContent} callback functions that return one
+ * Array of {@link FormContent} objects or {@link FormContentFn} callback functions that return one
  */
 export type FormContentArray<TData extends object> = (
   | FormContent<TData>
