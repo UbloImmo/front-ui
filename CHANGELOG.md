@@ -7,10 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 2.4.1 - 2026-08-27
 ### Changed
-
 - Updated or added 4 new icon(s)
-
 - Updated `@ubloimmo/front-tokens` to `^0.2.6`
 
 ## 2.4.0 - 2026-08-06
