@@ -18,7 +18,7 @@ const defaultTableProps: TableDefaultProps = {
 /**
  * A structured layout element used to display data in rows and columns.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {TableProps & TestIdProps} props - Table component props
  * @returns {JSX.Element}
