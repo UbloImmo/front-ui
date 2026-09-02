@@ -11,6 +11,7 @@ import { z } from "zod";
 import { Button } from "../Button";
 import { Callout } from "../Callout";
 import { DialogProvider, useDialog } from "../Dialog";
+import { EmptyStateCard } from "../EmptyStateCard";
 import { FeatureSwitch } from "../FeatureSwitch";
 import { Heading } from "../Heading";
 import { Hypertext } from "../Hypertext";
@@ -25,6 +26,7 @@ import { Text } from "../Text";
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
 import {
+  arrayOf,
   clamp,
   createDelayedResponse,
   cssVarUsage,
@@ -611,6 +613,7 @@ const formTableProps: FormTableProps<IdentityTable> = {
   label: "Renseignez le(s) propriétaire(s) du lot dans le tableau ci-dessous",
   deletable: true,
   swappable: true,
+  maxBodyHeight: "200px",
   selectable: {
     property: "selected",
     behavior: "default",
@@ -623,14 +626,14 @@ const formTableProps: FormTableProps<IdentityTable> = {
   layout: {
     size: 2,
   },
-  disableRow: (row, index) => {
-    return index > 0;
+  disableRow: (row, index, displayIndex) => {
+    return displayIndex > 1;
   },
-  overrideRowModifiers: (row, index) => {
-    if (index > 0)
+  overrideRowModifiers: (row, _index, displayIndex) => {
+    if (displayIndex > 1)
       return {
         deletable: false,
-        swappable: false,
+        swappable: true,
       };
   },
   footer: {
@@ -1423,13 +1426,11 @@ export const ComputedTableContent = () => {
   const props = useStatic<FormProps<IdentityTable>>({
     title: "Table with computed table",
     defaultValues: {
-      profiles: [
-        {
-          firstName: "John",
-          lastName: "Doe",
-          numberOfChildren: 2,
-        },
-      ],
+      profiles: arrayOf(4, (index) => ({
+        firstName: "John",
+        lastName: "Doe" + index,
+        numberOfChildren: 2,
+      })),
     },
     onSubmit: () => {},
     content: [
@@ -1441,6 +1442,18 @@ export const ComputedTableContent = () => {
           kind: "button",
           label: "Add profile",
         },
+        maxBodyHeight: "150px",
+        swappable: true,
+        deletable: true,
+        EmptyCard: () => (
+          <EmptyStateCard
+            transparent
+            asset="EmptyBox"
+            icon="Person"
+            title="No profiles"
+            description="add a profile"
+          />
+        ),
         columns: [
           (context) =>
             context.isEditing
@@ -1449,6 +1462,10 @@ export const ComputedTableContent = () => {
                   kind: "custom-field",
                   source: "firstName",
                   label: "Identity",
+                  layout: {
+                    size: 2,
+                    fixedWidth: "300px",
+                  },
                   // eslint-disable-next-line react/prop-types
                   CustomInput: ({ rowIndex }) => {
                     const row = context.data?.profiles?.[rowIndex ?? 0];
@@ -1475,6 +1492,10 @@ export const ComputedTableContent = () => {
                   source: "firstName",
                   label: "First name",
                   type: "text",
+                  layout: {
+                    size: 2,
+                    fixedWidth: "200px",
+                  },
                 }
               : null,
           (context) =>
@@ -1483,6 +1504,9 @@ export const ComputedTableContent = () => {
                   source: "lastName",
                   label: "Last Name",
                   type: "text",
+                  layout: {
+                    size: 2,
+                  },
                 }
               : null,
           {
@@ -1503,12 +1527,12 @@ export const ComputedTableContent = () => {
               kind: "content",
               content: (
                 <Callout>
-                  {context.data.profiles.length} profiles in the table
+                  {context.data?.profiles?.length ?? 0} profiles in the table
                 </Callout>
               ),
             },
     ],
   });
 
-  return <Form {...props} />;
+  return <Form {...props} debug />;
 };
