@@ -1,5 +1,5 @@
 import {
-  GenericFn,
+  type GenericFn,
   isArray,
   isFunction,
   isNullish,
@@ -7,10 +7,10 @@ import {
   isObject,
   isString,
   isUndefined,
-  Nullish,
+  type Nullish,
   objectFromEntries,
-  Optional,
-  Predicate,
+  type Optional,
+  type Predicate,
 } from "@ubloimmo/front-util";
 import { CSSProperties, useMemo } from "react";
 
@@ -20,6 +20,8 @@ import { isPaletteColor } from "./color.utils";
 import { isMap } from "./comparison.utils";
 
 import type {
+  AnyColorStr,
+  CssCalc,
   CssCh,
   CssColorMix,
   CssColorSpace,
@@ -27,6 +29,7 @@ import type {
   CssFr,
   CssLength,
   CssLengthUsage,
+  CssLightDark,
   CssPercent,
   CssPx,
   CssRem,
@@ -195,6 +198,41 @@ export const cssFr = (fr: number): CssFr => {
  */
 export const cssDeg = (deg: number): CssDeg => {
   return `${deg}deg`;
+};
+
+/**
+ * Returns a {@link CssLightDark} declaration with both provided light & dark colors
+ *
+ * @template {AnyColorStr} TLightColor - The type of the light color
+ * @template {AnyColorStr} TDarkColor - The type of the dark color
+ *
+ *
+ * @param {TLightColor} lightColor - The color to use when the colorscheme is light
+ * @param {TDarkColor} darkColor - The color to use when the colorscheme is dark
+ * @return {CssLightDark<TLightColor, TDarkColor>} A CSS `light-dark()` declaration using both provided light & dark colors
+ */
+export const cssLightDark = <
+  TLightColor extends AnyColorStr,
+  TDarkColor extends AnyColorStr,
+>(
+  lightColor: TLightColor,
+  darkColor: TDarkColor
+): CssLightDark<TLightColor, TDarkColor> => {
+  return `light-dark(${lightColor}, ${darkColor})`;
+};
+
+/**
+ * Returns a {@link CssCalc} declaration holding the provided expression
+ *
+ * @template {string} TExpression - The type of the provided pression
+ *
+ * @param {TExpression} expression - The provided mathematical expression
+ * @returns {CssCalc<TExpression>} A CSS `calc()` declaration holding the provided mathematical expression
+ */
+export const cssCalc = <TExpression extends string = string>(
+  expression: TExpression
+): CssCalc<TExpression> => {
+  return `calc(${expression})`;
 };
 
 /**

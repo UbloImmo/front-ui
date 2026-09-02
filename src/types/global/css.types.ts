@@ -132,6 +132,12 @@ export type CssVar<TValue extends string> = `${CssVarName}: ${TValue};`;
 export type CssVarUsage = `var(${CssVarName})`;
 
 /**
+ * A CSS `calc()` declaration
+ */
+export type CssCalc<TExpression extends string = string> =
+  `calc(${TExpression})`;
+
+/**
  * A CSS relative RGBA color
  *
  * @example
