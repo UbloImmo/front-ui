@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- `v1.2.0` Form component
+  - Rewrote table swapping & rendering implementations.
+
+- `v0.1.0` Input component
+  - Rounded borders while the `table` prop is set to true react to their parent cell's `position` attribute.
+
+- `v0.2.2` SelectInput component & `v0.1.1` MultiSelectInput component
+  - When focused, these inputs no longer raise their own `z-index`.
+
+- `v0.1.1` Table layout
+  - Updated styling following form table rewrite. Should remaing visually identical for the most part.
+
+- Updated `@dnd-kit` packages to `^0.5.0`.
+
+### Added
+
+- `v0.1.2` TableCell layout
+  - Added `role`, `position`, `title`, `onClick` properties.
+
+- `v0.1.1` TableRow layout
+  - Added `role` property.
+
+- `v0.1.1` Tooltip component
+  - Added `disabled` property. When true, renders its children directly
+
+- `v1.2.0` Form component
+  - Added the ability to declare a table's columns through context callbacks.
+
+- Various utility functions & hooks:
+  - Ref management utility hooks:
+    - `useReplicateRef`
+    - `useInterceptRef`
+  - `useResizeObserver` utility hook
+  - `updateMap` utility function
+  - CSS utility functions:
+    - `cssCalc`
+    - `cssLightDark` 
+
+### Fixed
+
+- `v0.1.2` TableHeaderCell layout
+  - Typo in jsdoc
+
+- `v0.1.1` Checkbox component
+  - Prevent this component from causing overflow errors stemming from its invisible internal input's position.
+
 ## 2.4.1 - 2026-08-27
 ### Changed
 - Updated or added 4 new icon(s)
@@ -14,11 +62,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 2.4.0 - 2026-08-06
 ### Added
-- `v1.0.0` Form component
+- `v1.1.0` Form component
   - Added support for individual form content items to be declared as callback functions
 
 ### Removed
-- `v1.0.0` Form component
+- `v1.1.0` Form component
   - Dropped support for declaring Form custom content items as non-wrapped React functional components
 
 ## 2.3.2 - 2026-08-06
