@@ -70,7 +70,7 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
 /**
  * Allows the user to select multiple values from a list of options.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {MultiSelectInputProps & TestIdProps} props - The props for the MultiSelectInput component
  *

@@ -64,7 +64,7 @@ import type { PaletteColor, TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.2.1
+ * @version 0.2.2
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {JSX.Element}
