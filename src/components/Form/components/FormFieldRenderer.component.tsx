@@ -18,7 +18,7 @@ import {
   isFormCustomContent,
   isFormDivider,
 } from "../Form.utils";
-import { FormTable } from "./FormTable/FormTable.component";
+import { FormTableField } from "./FormTableField/FormTableField.component";
 
 import { GridLayout } from "@/layouts/Grid";
 import { useCssClasses } from "@utils";
@@ -29,7 +29,7 @@ import type { DividerProps } from "@/components/Divider";
 /**
  * Renders a form's visible (non hidden) fields in a grid
  *
- * @version 0.1.0
+ * @version 0.1.1
  */
 export const FormFieldRenderer = <TData extends object>() => {
   const { content, columns, isLoading } = useFormContext<TData>();
@@ -73,7 +73,7 @@ export const FormFieldRenderer = <TData extends object>() => {
         );
       }
       if (isBuiltFormTable(contentItem)) {
-        return <FormTable {...contentItem} key={`form-table-${index}`} />;
+        return <FormTableField {...contentItem} key={`form-table-${index}`} />;
       }
       if (!isFormDivider(contentItem)) return null;
       const dividerProps: DividerProps = isString(contentItem)
