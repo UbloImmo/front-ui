@@ -23,7 +23,9 @@ export type GridGap =
       column: CssLength;
     };
 
-export type GridTemplate = (CssLength | "auto")[] | number | "unset";
+export type GridTemplateArray = (CssLength | "auto")[];
+
+export type GridTemplate = GridTemplateArray | number | "unset";
 
 export type GridLayoutProps = {
   /**
