@@ -35,10 +35,10 @@ const TableCell = forwardRef<
 >((props: TableCellProps & TestIdProps, ref): JSX.Element => {
   const mergedProps = useMergedProps(defaultTableCellProps, props);
 
-  const onClick = useHtmlAttribute(mergedProps.onClick);
   const { className, style } = useTableCellStyles(mergedProps);
   const testId = useTestId("table-cell", props);
 
+  const onClick = useHtmlAttribute(mergedProps.onClick);
   const position = useHtmlAttribute(mergedProps.position);
   const title = useHtmlAttribute(mergedProps.title);
 
