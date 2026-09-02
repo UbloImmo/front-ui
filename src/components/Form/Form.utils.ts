@@ -495,7 +495,7 @@ export const buildFormText = (formText: FormTextProps): BuiltFormTextProps => {
 export const builtFormTableId = (
   tableSource: string,
   contentIndex: number
-): StableFormTableId => `${tableSource}-${contentIndex}`;
+): StableFormTableId => `${tableSource}|${contentIndex}`;
 
 const zodIssueTranslationMap: ValueMap<
   Exclude<ZodIssueCode, "custom">,

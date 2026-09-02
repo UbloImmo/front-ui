@@ -365,6 +365,12 @@ export type FormTableCustomFooterProps<
 
 export type FormTableButtonFooter<TRowValue extends Record<string, unknown>> = {
   kind: "button";
+  /**
+   * Either data to insert as a new row when the user clicks the button,
+   * or a function that returns it
+   *
+   * @default {}
+   */
   newRow?: Partial<TRowValue> | GenericFn<[], Partial<TRowValue>>;
 } & Pick<ButtonProps, "label" | "icon">;
 
@@ -511,12 +517,13 @@ export type FormTableTryDeletingRowFn<TRowData extends object> = VoidFn<
  * @template {object} TRowValue - The type of a single row in the table's data
  *
  * @param {TRowValue} row - The row to check
- * @param {number} rowIndex - The index of the row
+ * @param {number} rowIndex - The index of the row in the table's array
+ * @param {number} rowDispayIndex - The index of the row as displayed (takes swaps into account)
  *
  * @returns {boolean | void} - Whether to disable the row or not
  */
 export type FormTableDisableRowFn<TRowValue extends object> = GenericFn<
-  [row: TRowValue, rowIndex: number],
+  [row: TRowValue, rowIndex: number, rowDisplayIndex: number],
   boolean | void
 >;
 
@@ -527,13 +534,14 @@ export type FormTableDisableRowFn<TRowValue extends object> = GenericFn<
  * @template {object} TRowValue - The type of a single row in the table's data
  *
  * @param {TRowValue} row - The row to modify
- * @param {number} rowIndex - The index of the row
+ * @param {number} rowIndex - The index of the row in the table's array
+ * @param {number} rowDispayIndex - The index of the row as displayed (takes swaps into account)
  *
  * @returns {FormTableModifiers} - The modifiers of the row - gets merged with the table modifiers
  */
 export type FormTableRowModifiersOverrideFn<TRowValue extends object> =
   GenericFn<
-    [row: TRowValue, rowIndex: number],
+    [row: TRowValue, rowIndex: number, rowDisplayIndex: number],
     Nullish<FormTableModifiers<TRowValue>> | void
   >;
 
@@ -671,13 +679,21 @@ export type BuiltFormTableRow = {
    * Whether the row is selected, only set if the table is selectable
    */
   selected: boolean;
+  /**
+   * Index of the row in its table's data array
+   */
+  index: number;
+  /**
+   * Possibly swapped index of the row in its table's data array
+   */
+  displayIndex: number;
 };
 
 /**
  * A stable table id
  * Created from a table's source and its index in the form content array
  */
-export type StableFormTableId = `${string}-${number}`;
+export type StableFormTableId = `${string}|${number}`;
 
 export type BuiltFormTableCallbacks = {
   deleteRow: DeleteTableRowFn;
@@ -711,9 +727,13 @@ export type BuiltFormTableProps = {
    */
   headers: FieldLabelProps[];
   /**
-   * The table's built rows
+   * The table's built rows in data order
    */
   rows: BuiltFormTableRow[];
+  /**
+   * The table's built rows in display order
+   */
+  displayRows: BuiltFormTableRow[];
   /**
    * The table's data
    */
@@ -738,6 +758,10 @@ export type BuiltFormTableProps = {
    * A list of column widths, extracted from each column's `layout.size` property
    */
   colSpans: number[];
+  /**
+   * A list of column widths expressed in css lengths
+   */
+  colWidths: CssLength[];
   /**
    * The table's native layout
    *
@@ -852,7 +876,6 @@ export type CustomFormInputProps<TValue extends NullishPrimitives> =
      * @type {InputOnChangeFn | null}
      */
     onChange?: Nullable<VoidFn<[Nullable<TValue>]>>;
-
     /**
      * The custom field's name
      *
@@ -860,11 +883,27 @@ export type CustomFormInputProps<TValue extends NullishPrimitives> =
      */
     name?: Nullable<string>;
     /**
-     * The custom field's row index
+     * The custom field's row index.
      *
-     * @remarks only provided when rendered as part of a table
+     * Does not take into account table row swaps nor reflect the row's visual postion. Use the {@link CustomFormInputProps.rowDisplayIndex rowDisplayIndex} property instead to get the row's visual position.
+     *
+     * **Only provided when rendered as part of a table**
+     *
+     * @example
+     * const rowData = tableArray[props.rowIndex]
      */
     rowIndex?: Nullable<number>;
+    /**
+     * The custom field's row display index. May differ from the rowIndex if the row has been swapped.
+     *
+     * Reflects active table row swaps. Use the {@link CustomFormInputProps.rowIndex rowIndex} property instead to index the row's underlying data.
+     *
+     * **Only provided when rendered as part of a table**
+     *
+     * @example
+     * const isFirstVisibleRow = props.rowDisplayIndex === 0;
+     */
+    rowDisplayIndex?: Nullable<number>;
   };
 
 type PreservedFieldProps = Omit<
@@ -1857,6 +1896,64 @@ export type UseFormLayoutReturn = {
    * @type {FormLayoutProps["asModal"];}
    */
   asModal: FormLayoutProps["asModal"];
+};
+
+/**
+ * Return type of the `useFormTableRowSwap` custom hook that handles table swaps
+ * Contains methods for swapping table rows, getting swap orders, and a reactive dependency that changes when swaps occur.
+ */
+export type UseFormTableRowSwapReturn<TData extends object> = {
+  /**
+   * Resets all table row swaps
+   */
+  reset: VoidFn;
+  /**
+   * Applies active table row swaps to the supplied form's data,
+   * stepping trough each table and moving array items based on the swap order
+   *
+   * Used in the form's submission process
+   *
+   * @remarks Does not mutate its provided data
+   *
+   * @param {TData} data - Form data to apply row swaps to
+   * @return {TData} A copy of the form data with table arrays swapped
+   */
+  apply: GenericFn<[data: TData], TData>;
+  /**
+   * Rebuilds a table's swap array when a row has been deleted
+   *
+   * @param {StableFormTableId} tableId - ID of the table containing the deleted row
+   * @param {number} deletedRowIndex - Index (not displayIndex) of the row that was deleted
+   */
+  onRowDelete: VoidFn<[tableId: StableFormTableId, deletedRowIndex: number]>;
+  /**
+   * Moves one row from one index to another, shifting the others
+   *
+   * @param {StableFormTableId} tableId - ID of the table containing the swapped row
+   * @param {number} oldIndex - Index (not displayIndex) the row was previously at
+   * @param {number} newIndex - Index (not displayIndex) the row was should be moved to
+   */
+  swapRows: VoidFn<
+    [tableId: StableFormTableId, oldIndex: number, newIndex: number]
+  >;
+  /**
+   * Creates a swap array for a table if missing, then gets & returns it
+   *
+   * @param {StableFormTableId} tableId - ID of the table containing the swapped row
+   * @return {number[]} - The array holding the table's row swaps
+   */
+  registerTable: GenericFn<[tableId: StableFormTableId], number[]>;
+  /**
+   * Adds a row's index to its table swap array if missing
+   *
+   * @param {StableFormTableId} tableId - ID of the table containing the swapped row
+   * @param {number} rowIndex - Index (not displayIndex) of the row to register
+   */
+  registerRow: VoidFn<[tableId: StableFormTableId, rowIndex: number]>;
+  /**
+   * Reactive dependency holding the form's table row swaps
+   */
+  dependency: Map<StableFormTableId, number[]>;
 };
 
 // ------------------------------- CONTEXT ---------------------------------
