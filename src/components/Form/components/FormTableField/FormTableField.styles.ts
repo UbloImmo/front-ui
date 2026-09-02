@@ -2,7 +2,7 @@ import styles from "./FormTableField.module.scss";
 
 import { useCssClasses } from "@utils";
 
-import type { TableCellPosition } from "@layouts";
+import type { TableCellPosition } from "@/layouts/Table";
 import type { Optional } from "@ubloimmo/front-util";
 
 /**

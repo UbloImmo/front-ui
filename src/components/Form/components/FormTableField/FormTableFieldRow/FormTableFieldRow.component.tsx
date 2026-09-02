@@ -14,8 +14,8 @@ import { useFormContext } from "@/components/Form/Form.context";
 import { isBuiltCustomFormField } from "@/components/Form/Form.utils";
 import { Icon } from "@/components/Icon";
 import { formatGridTemplate } from "@/layouts/Grid/Grid.styles";
+import { TableCell, type TableCellPosition, TableRow } from "@/layouts/Table";
 import { BEZIER } from "@/themes";
-import { TableCell, type TableCellPosition, TableRow } from "@layouts";
 import { useCssClasses, useCssVariables, useUikitTranslation } from "@utils";
 
 import type { FormTableFieldRowProps } from "./FormTableFieldRow.types";

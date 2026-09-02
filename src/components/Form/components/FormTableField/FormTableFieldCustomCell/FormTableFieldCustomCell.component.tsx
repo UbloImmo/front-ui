@@ -4,7 +4,7 @@ import { useFormTableFieldCellClassName } from "../FormTableField.styles";
 
 import { useFormContext } from "@/components/Form/Form.context";
 import { useInputId } from "@/components/Input/Input.utils";
-import { TableCell } from "@layouts";
+import { TableCell } from "@/layouts/Table";
 
 import type { FormTableFieldCustomCellProps } from "./FormTableFieldCustomCell.types";
 

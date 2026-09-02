@@ -7,12 +7,8 @@ import { useFormContext } from "@/components/Form/Form.context";
 import { getInputLabelTextClassName } from "@/components/InputLabel/InputLabel.styles";
 import { Text } from "@/components/Text";
 import { Tooltip, type TooltipProps } from "@/components/Tooltip";
-import {
-  FlexRowLayout,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-} from "@layouts";
+import { FlexRowLayout } from "@/layouts/Flex";
+import { TableCell, TableHeader, TableHeaderCell } from "@/layouts/Table";
 import { cssClasses, isNonEmptyString, useCssClasses } from "@utils";
 
 import type { FormTableFieldHeaderProps } from "./FormTableFieldHeader.types";

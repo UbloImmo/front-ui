@@ -3,7 +3,7 @@ import type {
   BuiltFormTableProps,
   BuiltFormTableRow,
 } from "@/components/Form/Form.types";
-import type { GridTemplate } from "@layouts";
+import type { GridTemplate } from "@/layouts/Grid";
 import type { RefObject } from "react";
 
 export type FormTableFieldRowProps = {

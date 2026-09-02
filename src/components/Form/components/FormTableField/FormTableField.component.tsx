@@ -16,11 +16,11 @@ import { useFieldAssistiveText } from "@/components/Field/Field.utils";
 import { Icon } from "@/components/Icon";
 import { InputAssistiveText } from "@/components/InputAssistiveText";
 import { InputLabel } from "@/components/InputLabel";
-import { type TooltipProps } from "@/components/Tooltip";
-import { FlexColumnLayout } from "@/layouts";
+import { FlexColumnLayout } from "@/layouts/Flex";
 import { isNonEmptyString } from "@utils";
 
 import type { BuiltFormTableProps } from "../../Form.types";
+import type { TooltipProps } from "@/components/Tooltip";
 import type { Nullable } from "@ubloimmo/front-util";
 
 /**

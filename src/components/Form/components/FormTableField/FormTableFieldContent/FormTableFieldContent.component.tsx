@@ -15,7 +15,8 @@ import { FormTableFieldHeader } from "../FormTableFieldHeader";
 import { FormTableFieldRow } from "../FormTableFieldRow";
 
 import { useFormContext } from "@/components/Form/Form.context";
-import { GridLayout, type GridTemplateArray, Table, TableBody } from "@layouts";
+import { GridLayout, type GridTemplateArray } from "@/layouts/Grid";
+import { Table, TableBody } from "@/layouts/Table";
 import {
   cssCalc,
   cssLengthUsage,
