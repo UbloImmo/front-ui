@@ -20,7 +20,7 @@ const defaultTableHeaderProps: Required<TableHeaderProps> = {
  * The header part, a row on top in the `Table` layout to label the columns.
  * To be used with `TableHeaderCell`
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @example
  * <TableHeader>
