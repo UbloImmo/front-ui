@@ -9,6 +9,12 @@ import {
 
 type RefWriter<T> = RefCallback<T> | MutableRefObject<T | null> | RefObject<T>;
 
+/**
+ * Assigns a single value to multiple refs
+ *
+ * @param refWriters - List of refs to write to
+ * @returns A ref callback function to pass to the element
+ */
 export function useReplicateRef<T>(
   ...refWriters: RefWriter<T>[]
 ): RefCallback<T> {
@@ -26,12 +32,17 @@ export function useReplicateRef<T>(
   );
 }
 
+/**
+ * Intercepts & stores a single ref
+ *
+ * @param refWriters - List of refs to write to
+ * @returns A ref callback function to pass to the element
+ */
 export function useInterceptRef<T>(...refWriters: RefWriter<T>[]): {
   ref: RefObject<T>;
   interceptRef: RefCallback<T>;
 } {
   const ref = useRef<T>(null);
-
   const interceptRef = useReplicateRef(ref, ...refWriters);
 
   return {
