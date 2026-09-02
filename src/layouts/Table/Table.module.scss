@@ -76,23 +76,25 @@
     }
   }
 
-  &:not(:first-child) > div,
-  :not(:last-child) > div {
+  &:not(:first-of-type) > div,
+  :not(:last-of-type) > div {
     border-left: 0;
   }
 
-  &:first-child > div {
+  &:first-of-type > div {
     border-top-left-radius: var(--s-1);
     border-bottom-left-radius: var(--s-1);
   }
 
-  &:last-child > div {
+  &:last-of-type > div {
     border-top-right-radius: var(--s-1);
     border-bottom-right-radius: var(--s-1);
   }
 }
 
 .table-row {
+  display: table-row;
+
   tbody > &:first-child > td:first-child {
     border-top-left-radius: var(--s-1);
   }
@@ -178,8 +180,6 @@
   max-height: var(--table-scroll-view-max-height);
   width: 100%;
 
-  @include mixins.no-scrollbar;
-
   overflow-x: visible;
   overflow-y: visible;
   scroll-timeline-name: --table-scroll;
@@ -264,11 +264,11 @@
     }
   }
 
-  &.form {
-    margin: 0 calc(-1 * var(--controls-visible-width));
-    padding: 0 var(--controls-visible-width);
-    width: calc(100% + var(--controls-visible-width) * 2);
+  &:not(.form) {
+    @include mixins.no-scrollbar;
+  }
 
+  &.form {
     &.overflow-y {
       // hide overflowing scrolling rows in the 4 corners (behind header & footer)
       // while keeping controls visible
@@ -296,13 +296,17 @@
 
     &.overflow-x,
     &.overflow-both {
-      // offset overflow indicators by negative margin
-      --table-scroll-view-overflow-origin: calc(
-        var(--controls-visible-width) * -1
+      // clip overflowing top-corners with same radius as table
+      clip-path: shape(
+        evenodd from 0 var(--s-1),
+        arc to var(--s-1) 0 of var(--s-1) cw,
+        line to calc(100% - var(--s-1)) 0,
+        arc to 100% var(--s-1) of var(--s-1) cw,
+        line to 100% 100%,
+        line to 0 100%,
+        line to 0 0,
+        close
       );
-
-      // clip overflowing corners with same radius as table
-      clip-path: rect(0 100% 100% 0 round var(--s-1));
     }
   }
 }
