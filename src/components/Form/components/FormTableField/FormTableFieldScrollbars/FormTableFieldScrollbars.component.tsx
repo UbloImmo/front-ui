@@ -146,6 +146,7 @@ export function FormTableFieldScrollbars({
     SCROLL_READ_DEBOUNCE_MS,
     measureScroller
   );
+  // grab reactive header dimensions
   const headerDimensions = useResizeObserver(
     { current: contentRefs.current?.tableHeaderRef ?? null },
     SCROLL_READ_DEBOUNCE_MS
@@ -178,6 +179,9 @@ export function FormTableFieldScrollbars({
     };
   }, [onPointerMove, onPointerUp]);
 
+  /**
+   * Ratio between scroller width & its scrollable content width in both overflow axis
+   */
   const ratio = useMemo<Vec2>(
     () => ({
       x: computeScrollRatio(measurements.scrollWidth, measurements.width),
@@ -186,6 +190,9 @@ export function FormTableFieldScrollbars({
     [measurements]
   );
 
+  /**
+   * Scroll progress ration in both overflow axis
+   */
   const progress = useMemo<Vec2>(
     () => ({
       x: computeScrollProgress(
@@ -202,6 +209,7 @@ export function FormTableFieldScrollbars({
     [measurements]
   );
 
+  // scroll track & thumb CSS styling
   const trackHorizontalClassName = useCssClasses(
     styles.scrollbar,
     styles.horizontal,
@@ -214,7 +222,6 @@ export function FormTableFieldScrollbars({
     [styles.hidden, ratio.y === 1],
     [styles.dragging, draggingY]
   );
-
   const thumbClassName = useCssClasses(styles.thumb);
   const thumbHorizontalStyle = useCssVariables({
     ratio: String(ratio.x),
