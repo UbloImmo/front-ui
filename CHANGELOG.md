@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `v0.1.2` TableCell layout
+- `v0.1.2` TableCell layout & `v0.1.1` TableHeaderCell layout
   - Added `role`, `position`, `title`, `onClick` properties.
 
 - `v0.1.1` TableRow layout
@@ -49,7 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- `v0.1.2` TableHeaderCell layout
+- `v0.1.1` TableHeaderCell layout
   - Typo in jsdoc
 
 - `v0.1.1` Checkbox component
