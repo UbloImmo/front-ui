@@ -54,7 +54,6 @@
 
     td:has(&) {
       min-height: var(--input-height);
-      height: var(--input-height);
       min-width: 6rem;
     }
   }
@@ -220,26 +219,53 @@
 
     td:has(&) {
       min-height: var(--input-height);
-      height: var(--input-height);
       // We add 1 px to account for the right border
       min-width: calc(6rem + 1px);
     }
 
     --cell-border-radius: calc(var(--s-1) - 1px);
 
-    tr:first-child > td:has(&):first-child & {
+    tr:first-child > td:has(&):first-child &,
+    tr:first-child > td:has(&)[data-position="start"] &,
+    tr:first-child > td:has(&)[data-position="both"] & {
       border-top-left-radius: var(--cell-border-radius);
     }
 
-    tr:first-child > td:has(&):last-of-type & {
+    tr:first-child > td:has(&):last-of-type &,
+    tr:first-child > td:has(&)[data-position="end"] &,
+    tr:first-child > td:has(&)[data-position="both"] & {
       border-top-right-radius: var(--cell-border-radius);
     }
 
-    tbody:last-child > tr:last-of-type > td:has(&):first-child & {
+    tbody:last-child > tr:last-of-type > td:has(&):first-child &,
+    *:has(> *[data-testid="grid"] > table):not(:has(footer))
+      table
+      tbody
+      > tr:last-of-type
+      > td:has(&)[data-position="start"]
+      &,
+    *:has(> *[data-testid="grid"] > table):not(:has(footer))
+      table
+      tbody
+      > tr:last-of-type
+      > td:has(&)[data-position="both"]
+      & {
       border-bottom-left-radius: var(--cell-border-radius);
     }
 
-    tbody:last-child > tr:last-of-type > td:has(&):last-of-type & {
+    tbody:last-child > tr:last-of-type > td:has(&):last-of-type &,
+    *:has(> *[data-testid="grid"] > table):not(:has(footer))
+      table
+      tbody
+      > tr:last-of-type
+      > td:has(&)[data-position="end"]
+      &,
+    *:has(> *[data-testid="grid"] > table):not(:has(footer))
+      table
+      tbody
+      > tr:last-of-type
+      > td:has(&)[data-position="both"]
+      & {
       border-bottom-right-radius: var(--cell-border-radius);
     }
   }
