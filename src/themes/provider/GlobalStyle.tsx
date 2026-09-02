@@ -9,7 +9,13 @@ import {
   typographyWeightMap,
   linkFontFace,
 } from "../../typography";
-import { cssVar, cssVarUsage, useLogger, useStatic } from "../../utils";
+import {
+  cssLightDark,
+  cssVar,
+  cssVarUsage,
+  useLogger,
+  useStatic,
+} from "../../utils";
 import { effectsToCssVars } from "../palette";
 import { invertShadeKey } from "../palette/palette.colorscheme";
 
@@ -117,7 +123,7 @@ export const paletteColorToCssVars = <
       if (enableLightDark) {
         const invertedShade = invertShadeKey(shadeName);
         const invertedColor = shadedColors[invertedShade].rgba ?? rgba;
-        varValue = `light-dark(${rgba}, ${invertedColor})`;
+        varValue = cssLightDark(rgba, invertedColor);
       }
       const baseVar = cssVar(varName, varValue);
       if (!generateAlpha) return [baseVar];
