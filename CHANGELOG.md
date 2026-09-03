@@ -7,36 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Changed
-
-- `v1.2.0` Form component
-  - Rewrote table swapping & rendering implementations.
-
-- `v0.1.0` Input component
-  - Rounded borders while the `table` prop is set to true react to their parent cell's `position` attribute.
-
-- `v0.2.2` SelectInput component & `v0.1.1` MultiSelectInput component
-  - When focused, these inputs no longer raise their own `z-index`.
-
-- `v0.1.1` Table layout
-  - Updated styling following form table rewrite. Should remaing visually identical for the most part.
-
-- Updated `@dnd-kit` packages to `^0.5.0`.
-
+## 2.5.0 - 2026-09-03
 ### Added
-
 - `v0.1.2` TableCell layout & `v0.1.1` TableHeaderCell layout
   - Added `role`, `position`, `title`, `onClick` properties.
-
 - `v0.1.1` TableRow layout
   - Added `role` property.
-
 - `v0.1.1` Tooltip component
   - Added `disabled` property. When true, renders its children directly
-
 - `v1.2.0` Form component
   - Added the ability to declare a table's columns through context callbacks.
-
 - Various utility functions & hooks:
   - Ref management utility hooks:
     - `useReplicateRef`
@@ -45,13 +25,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `updateMap` utility function
   - CSS utility functions:
     - `cssCalc`
-    - `cssLightDark` 
+    - `cssLightDark`
+
+### Changed
+- `v1.2.0` Form component
+  - Rewrote table swapping & rendering implementations.
+- `v0.1.0` Input component
+  - Rounded borders while the `table` prop is set to true react to their parent cell's `position` attribute.
+- `v0.2.2` SelectInput component & `v0.1.1` MultiSelectInput component
+  - When focused, these inputs no longer raise their own `z-index`.
+- `v0.1.1` Table layout
+  - Updated styling following form table rewrite. Should remaing visually identical for the most part.
+- Updated `@dnd-kit` packages to `^0.5.0`.
 
 ### Fixed
-
 - `v0.1.1` TableHeaderCell layout
   - Typo in jsdoc
-
 - `v0.1.1` Checkbox component
   - Prevent this component from causing overflow errors stemming from its invisible internal input's position.
 
