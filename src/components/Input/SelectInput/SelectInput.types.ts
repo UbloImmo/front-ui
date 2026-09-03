@@ -342,6 +342,13 @@ export type SelectInputProps<
   }
 > & {
   /**
+   * Display a loader indicator when `true`
+   *
+   * @type boolean
+   * @default false
+   */
+  loading?: boolean;
+  /**
    * The options data to be displayed in the dropdown
    *
    * @type {SelectOptionsQuery<TValue, TExtraData>}
