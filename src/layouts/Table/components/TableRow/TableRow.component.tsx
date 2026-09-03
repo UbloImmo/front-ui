@@ -13,13 +13,14 @@ const defaultTableRowProps: Required<TableRowProps> = {
   style: "form",
   className: null,
   styleOverride: null,
+  role: "row",
   id: null,
 };
 
 /**
  * A table row component, to be used in `TableBody`.
  *
- * @version 0.1.0
+ * @version 0.1.1
  */
 export const TableRow = forwardRef<
   HTMLTableRowElement,

@@ -1,25 +1,16 @@
 import { isFunction, isString } from "@ubloimmo/front-util";
 import { useMemo, type FC, type ReactNode } from "react";
 
-import {
-  FormTableCellControls,
-  type FormTableCellControlsProps,
-} from "./FormTableCellControls.component";
+import { FormTableFieldCellProps } from "./FormTableFieldCell.types";
 import styles from "../../../Form.module.scss";
+import { useFormTableFieldCellClassName } from "../../FormTableField/FormTableField.styles";
 
 import { useFormContext } from "@/components/Form/Form.context";
 import { computeFieldDisplayContent } from "@/components/Form/Form.format";
-import { Input, useInputId, type InputType } from "@/components/Input";
+import { Input, useInputId } from "@/components/Input";
 import { Text } from "@/components/Text";
 import { TableCell } from "@/layouts/Table";
 import { useCssClasses } from "@utils";
-
-import type { BuiltFieldProps } from "@/components/Form/Form.types";
-
-type FormTableFieldCellProps = BuiltFieldProps<InputType> &
-  FormTableCellControlsProps & {
-    colSpan: number;
-  };
 
 /**
  * Renders a form field inside a table cell, depending on the form mode.
@@ -28,17 +19,17 @@ type FormTableFieldCellProps = BuiltFieldProps<InputType> &
  * with the provided props.
  *
  * If the form is in read mode, the component renders a `Text` component with
- * the content of the field computed by the `computeFieldDisplayContent` function.
+ * the content of the field computed by the {@link computeFieldDisplayContent} function.
  *
- * @param {BuiltFieldProps<InputType>} props - The props of the form field.
+ * @version 0.1.2
+ *
+ * @param {FormTableFieldCellProps} props - The props of the cell field.
  * @returns {JSX.Element} The rendered component.
  */
 export const FormTableFieldCell = ({
   layout,
   colSpan,
-  controls,
-  isFirst,
-  isLast,
+  position,
   ...props
 }: FormTableFieldCellProps): JSX.Element => {
   const { isEditing } = useFormContext();
@@ -65,18 +56,18 @@ export const FormTableFieldCell = ({
   const inputId = useInputId(props);
 
   const inner = useCssClasses(styles["form-field-display-cell-inner"]);
+  const className = useFormTableFieldCellClassName(position ?? "middle");
 
   return (
     <TableCell
+      className={className}
       padded={isDisplay}
       colSpan={colSpan}
       fixedWidth={layout.fixedWidth}
+      position={position}
+      testId="form-table-field-cell"
+      overrideTestId
     >
-      <FormTableCellControls
-        controls={controls}
-        isFirst={isFirst}
-        isLast={isLast}
-      />
       {isDisplay ? (
         <div className={inner}>{displayContent}</div>
       ) : (

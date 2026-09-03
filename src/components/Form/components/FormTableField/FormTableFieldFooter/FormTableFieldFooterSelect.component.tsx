@@ -1,32 +1,32 @@
 import { isArray, isNull, isObject } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 
 import {
-  FilterSelectOptionFn,
+  type FilterSelectOptionFn,
   SelectInput,
   type SelectInputProps,
 } from "@/components/Input";
 import { useTestId, useUikitTranslation } from "@utils";
 
 import type {
-  BuiltFormTableCallbacks,
-  FormTableSelectFooter,
-} from "@/components/Form/Form.types";
+  AnyTableRow,
+  FormTableFieldFooterSelectProps,
+} from "./FormTableFieldFooter.types";
 
-type RowValue = Record<string, unknown>;
-
-type FormTableFooterSelectProps = {
-  footer: FormTableSelectFooter<RowValue>;
-  tableData: RowValue[];
-  disabled?: boolean;
-} & Pick<BuiltFormTableCallbacks, "appendRow">;
-
-export const FormTableFooterSelect = ({
+/**
+ * Renders a select input inside a Form table field's footer
+ *
+ * @version 0.1.2
+ *
+ * @param {FormTableFieldFooterSelectProps} props - Component props
+ * @returns {ReactNode} - Footer select input
+ */
+export function FormTableFieldFooterSelect({
   footer: { kind: _k, unique, filterOption, ...footerSelectProps },
   tableData,
   appendRow,
   disabled,
-}: FormTableFooterSelectProps) => {
+}: FormTableFieldFooterSelectProps): ReactNode {
   const { action } = useUikitTranslation();
 
   /**
@@ -35,7 +35,7 @@ export const FormTableFooterSelect = ({
    * @see {FilterSelectOptionFn}
    */
   const filterOptionBasedOnValue = useCallback<
-    FilterSelectOptionFn<Partial<RowValue>>
+    FilterSelectOptionFn<Partial<AnyTableRow>>
   >(
     (option) => {
       if (!isArray(unique) || !unique.length) return true;
@@ -56,7 +56,7 @@ export const FormTableFooterSelect = ({
    * @see {@link FilterSelectOptionFn}, {@link filterOptionBasedOnValue}
    */
   const filterSelectOption = useCallback<
-    FilterSelectOptionFn<Partial<RowValue>>
+    FilterSelectOptionFn<Partial<AnyTableRow>>
   >(
     (option) => {
       const externalFilter = filterOption ? filterOption(option) : true;
@@ -65,7 +65,7 @@ export const FormTableFooterSelect = ({
     [filterOption, filterOptionBasedOnValue]
   );
 
-  const selectProps = useMemo<SelectInputProps<Partial<RowValue>>>(
+  const selectProps = useMemo<SelectInputProps<Partial<AnyTableRow>>>(
     () => ({
       ...footerSelectProps,
       placeholder: footerSelectProps.placeholder ?? action.selectItem(),
@@ -90,4 +90,4 @@ export const FormTableFooterSelect = ({
       overrideTestId
     />
   );
-};
+}

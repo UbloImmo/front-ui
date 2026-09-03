@@ -27,7 +27,7 @@ const defaultCheckboxProps: CheckboxDefaultProps = {
 /**
  * A simple checkbox that let users select multiple options from a set of items, or mark one individual item as selected
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {CheckboxProps & TestIdProps} props - Checkbox component props
  * @returns {JSX.Element}

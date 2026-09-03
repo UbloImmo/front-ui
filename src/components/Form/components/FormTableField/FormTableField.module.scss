@@ -1,0 +1,710 @@
+@use "../../../../styles/_mixins.scss";
+
+.grid {
+  --grid-max-height: unset;
+  --gutter-width: var(--s-6);
+  --grid-width: calc(100% + var(--gutter-width) * 2);
+
+  width: var(--grid-width);
+  max-width: var(--grid-width);
+  min-width: 0;
+  max-height: var(--grid-max-height, unset);
+  margin-inline: calc(var(--gutter-width) * -1);
+  overflow: auto;
+  overscroll-behavior: none;
+  grid-template-rows: repeat(auto-fit, auto);
+  scrollbar-gutter: stable;
+  position: relative;
+
+  @include mixins.no-scrollbar;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: visible;
+
+  grid-row: 1 / span 1;
+  grid-column: 1 / -1;
+
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: subgrid;
+}
+
+.table-body {
+  width: 100%;
+  min-width: 100%;
+
+  grid-row: 2 / span 1;
+  grid-column: 1 / -1;
+
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: repeat(auto-fit, auto);
+}
+
+.row,
+.header {
+  display: grid;
+  grid-row-end: span 1;
+  grid-template-columns: subgrid;
+  grid-template-rows: 1fr;
+  grid-column: 1 / -1;
+}
+
+.row {
+  --row-columns: unset;
+  &.swappable.dragging,
+  &.swappable[data-dnd-dragging] {
+    grid-template-columns: var(--row-columns, subgrid);
+
+    overflow: clip;
+
+    & .cell {
+      box-shadow: var(--shadow-card-elevation-high);
+      border-bottom: 1px solid var(--primary-medium);
+      border-top: 1px solid var(--primary-medium);
+
+      &.first {
+        border-left: 1px solid var(--primary-medium) !important;
+      }
+
+      &.last {
+        border-right: 1px solid var(--primary-medium) !important;
+      }
+    }
+
+    & .row-blocker.row-control-left::after {
+      border-color: var(--primary-medium);
+    }
+    & .row-blocker.row-control-right::after {
+      border-color: var(--primary-medium);
+    }
+  }
+}
+
+.row-control {
+  position: sticky;
+  border: none;
+  width: var(--s-6);
+  grid-row: 1 / span 1;
+  height: 100%;
+  max-height: 100%;
+  grid-column-end: span 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1;
+  opacity: 0;
+}
+
+.row-control-left {
+  left: 0;
+  grid-column-start: 1;
+}
+
+.row-control-left,
+.row-control-right {
+  border: none !important;
+}
+
+.row-blocker {
+  background: var(--white);
+  opacity: 1;
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+.row-control-select {
+  left: var(--s-6);
+  width: var(--s-9);
+  background: var(--white);
+  display: none;
+  border-left: 1px solid var(--gray-200);
+}
+
+.row .cell {
+  min-width: calc(var(--s-6) + 1px);
+}
+
+.row:not(.selectable):first-child > .cell.first,
+.row.selectable:first-child .row-control-select {
+  border-top-left-radius: var(--s-1);
+}
+
+.row:not(.selectable) > .cell.first {
+  border-left: 1px solid var(--gray-200);
+}
+
+.row > .cell.last {
+  border-right: 1px solid var(--gray-200);
+}
+
+.row:first-child > .cell.last {
+  border-top-right-radius: var(--s-1);
+}
+.row:not(.selectable):last-child > .cell.first,
+.row.selectable:last-child .row-control-select {
+  border-bottom-left-radius: var(--s-1);
+}
+.row:last-child > .cell.last {
+  border-bottom-right-radius: var(--s-1);
+}
+
+.row-control-right {
+  right: 0;
+  grid-column-start: -2;
+}
+
+.row-control.shown {
+  opacity: 1;
+  display: flex;
+}
+
+.row-control-swap.shown,
+.row-control-delete.shown {
+  opacity: 0;
+}
+
+.row-control-swap.shown,
+.row-control-delete.shown {
+  transition: opacity 300ms var(--bezier);
+}
+
+.row-control-swap.shown {
+  cursor: grab;
+}
+
+.row-control-delete.shown {
+  cursor: pointer;
+}
+
+.row:hover .row-control-swap.shown,
+.row:hover .row-control-delete.shown {
+  opacity: 1;
+  transition-duration: 150ms;
+}
+
+.row.swappable.dragging .row-control-swap.shown {
+  opacity: 1;
+}
+
+.row.swappable.dragging.deletable .row-control-delete.shown {
+  opacity: 0;
+  transition-duration: 0s;
+}
+
+.row-control-delete.shown svg[data-testid="icon"],
+.row-control-swap.shown svg[data-testid="icon"] {
+  &,
+  & path {
+    transition: fill 150ms var(--bezier);
+  }
+}
+
+.row.deletable:not(.dragging) .row-control-delete.shown:hover {
+  & svg[data-testid="icon"],
+  svg[data-testid="icon"] path {
+    fill: var(--error-base);
+  }
+}
+
+.row.swappable:not(.dragging) .row-control-swap.shown:hover {
+  & svg[data-testid="icon"],
+  svg[data-testid="icon"] path {
+    fill: var(--primary-base);
+  }
+}
+
+.header,
+.header tr {
+  width: 100%;
+  min-width: 100%;
+  grid-row: 1 / span 1;
+  grid-column: 1 / -1;
+  z-index: 2 !important;
+
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: auto;
+}
+
+.header-control {
+  z-index: 2;
+}
+
+.header-control-left {
+  padding-bottom: var(--s-2);
+  grid-column: 2 / span 1;
+  width: 100%;
+  left: var(--s-6);
+  display: none;
+}
+
+.header-blocker {
+  z-index: 3;
+  margin-bottom: var(--s-2);
+  height: calc(100% - var(--s-2));
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+.header-cell > div {
+  box-shadow: none !important;
+}
+
+.header-text {
+  white-space: nowrap;
+  min-width: max-content;
+}
+
+.wrapper:has(.footer, .scrollbar.horizontal)
+  .row:not(.dragging):last-child
+  .cell {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.wrapper:has(.footer, .scroll.horizontal)
+  .row:not(.dragging):last-child
+  .row-control-select {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+}
+
+.footer {
+  width: 100%;
+  border: 1px solid var(--gray-200);
+  border-bottom-left-radius: var(--s-1);
+  border-bottom-right-radius: var(--s-1);
+  padding: var(--s-1);
+}
+
+.footer-button {
+  border-radius: var(--s-1);
+}
+
+// -- Left & Right border overlays (when overflowing)
+
+// |> Row Left
+
+.row .row-blocker.row-control-left {
+  background: var(--white);
+}
+
+.row .row-blocker.row-control-left::before {
+  position: absolute;
+  content: "";
+  inset: 0;
+  left: calc(var(--s-1) * -1);
+  background: var(--white);
+}
+
+.row:first-child .row-blocker.row-control-left::before {
+  right: calc(var(--s-1) * -1);
+  top: calc(var(--s-1) * -1);
+  clip-path: shape(
+    evenodd from 0 0,
+    line to 100% 0,
+    line to 100% var(--s-1),
+    arc to calc(100% - var(--s-1)) var(--s-2) of var(--s-1) ccw,
+    line to calc(100% - var(--s-1)) 100%,
+    line to 0 100%,
+    close
+  );
+}
+
+.wrapper:not(:has(.footer)):not(:has(.scrollbar.horizontal))
+  .row:last-child
+  .row-blocker.row-control-left::before {
+  right: calc(var(--s-1) * -1);
+  clip-path: shape(
+    evenodd from 0 0,
+    line to calc(100% - var(--s-1)) 0,
+    line to calc(100% - var(--s-1)) calc(100% - var(--s-1)),
+    arc to 100% 100% of var(--s-1) ccw,
+    line to 0 100%,
+    close
+  );
+}
+
+.row .row-blocker.row-control-left::after {
+  position: absolute;
+  content: "";
+  right: calc(var(--s-2) * -1 - 1px);
+  top: 0;
+  bottom: 1px;
+  z-index: 1;
+  width: var(--s-2);
+  border-left: 1px solid var(--gray-200);
+  pointer-events: none;
+}
+
+.row:first-child .row-blocker.row-control-left::after {
+  border-top-left-radius: var(--s-1);
+  border-top: 1px solid var(--gray-200);
+}
+
+.row:last-child .row-blocker.row-control-left::after {
+  bottom: 0;
+}
+
+.wrapper:not(:has(.footer)):not(:has(.scrollbar.horizontal))
+  .row:last-child
+  .row-blocker.row-control-left::after {
+  border-bottom-left-radius: var(--s-1);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+// |> Row Right
+
+.row .row-blocker.row-control-right {
+  background: var(--white);
+}
+
+.row .row-blocker.row-control-right::before {
+  position: absolute;
+  content: "";
+  inset: 0;
+  background: var(--white);
+}
+
+.row:first-child .row-blocker.row-control-right::before {
+  left: calc(var(--s-1) * -1);
+  top: calc(var(--s-1) * -1);
+  clip-path: shape(
+    evenodd from 0 0,
+    line to 100% 0,
+    line to 100% 100%,
+    line to var(--s-1) 100%,
+    line to var(--s-1) var(--s-2),
+    arc to 0 var(--s-1) of var(--s-1) ccw,
+    close
+  );
+}
+
+.wrapper:not(:has(.footer)):not(:has(.scrollbar.horizontal))
+  .row:last-child
+  .row-blocker.row-control-right::before {
+  left: calc(var(--s-1) * -1);
+  clip-path: shape(
+    evenodd from var(--s-1) 0,
+    line to 100% 0,
+    line to 100% 100%,
+    line to 0 100%,
+    arc to var(--s-1) calc(100% - var(--s-1)) of var(--s-1) ccw,
+    close
+  );
+}
+
+.row .row-blocker.row-control-right::after {
+  position: absolute;
+  content: "";
+  left: calc(var(--s-2) * -1 - 1px);
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: var(--s-2);
+  border-right: 1px solid var(--gray-200);
+  pointer-events: none;
+}
+
+.row:first-child .row-blocker.row-control-right::after {
+  border-top-right-radius: var(--s-1);
+  border-top: 1px solid var(--gray-200);
+}
+
+.row:last-child .row-blocker.row-control-right::after {
+  bottom: 0;
+}
+
+.wrapper:not(:has(.footer)):not(:has(.scrollbar.horizontal))
+  .row:last-child
+  .row-blocker.row-control-right::after {
+  border-bottom-right-radius: var(--s-1);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+// |> Header Left
+
+.header-blocker.row-control-left {
+  background: var(--white);
+}
+
+.header-blocker.row-control-left::before {
+  position: absolute;
+  content: "";
+  right: calc(var(--s-1) * -1);
+  top: calc(var(--s-1) * -1);
+  bottom: 0;
+  left: calc(var(--s-1) * -1);
+  background: var(--white);
+  clip-path: shape(
+    evenodd from 0 0,
+    line to 100% 0,
+    line to 100% var(--s-1),
+    arc to calc(100% - var(--s-1)) var(--s-2) of var(--s-1) ccw,
+    line to calc(100% - var(--s-1)) calc(100% - var(--s-1)),
+    arc to 100% 100% of var(--s-1) ccw,
+    line to 0 100%,
+    close
+  );
+}
+
+.header-blocker.row-control-left::after {
+  position: absolute;
+  content: "";
+  right: calc(var(--s-2) * -1 - 1px);
+  top: 0;
+  bottom: 0;
+  width: var(--s-2);
+  background: linear-gradient(
+    to left,
+    var(--primary-light-00),
+    var(--primary-light)
+  );
+  border-top-left-radius: var(--s-1);
+  border-bottom-left-radius: var(--s-1);
+  border: 1px solid var(--primary-medium);
+  border-right: none;
+}
+
+// |> Header right
+
+.header-blocker.row-control-right {
+  background: var(--white);
+}
+
+.header-blocker.row-control-right::before {
+  position: absolute;
+  content: "";
+  right: 0;
+  top: calc(var(--s-1) * -1);
+  bottom: 0;
+  left: calc(var(--s-1) * -1);
+  background: var(--white);
+  clip-path: shape(
+    evenodd from 0 0,
+    line to 100% 0,
+    line to 100% 100%,
+    line to 0 100%,
+    arc to var(--s-1) calc(100% - var(--s-1)) of var(--s-1) ccw,
+    line to var(--s-1) var(--s-2),
+    arc to 0 var(--s-1) of var(--s-1) ccw small,
+    close
+  );
+}
+
+.header-blocker.row-control-right::after {
+  position: absolute;
+  content: "";
+  left: calc(var(--s-2) * -1 - 1px);
+  top: 0;
+  bottom: 0;
+  width: var(--s-2);
+  background: linear-gradient(
+    to right,
+    var(--primary-light-00),
+    var(--primary-light)
+  );
+  border-top-right-radius: var(--s-1);
+  border-bottom-right-radius: var(--s-1);
+  border: 1px solid var(--primary-medium);
+  border-left: none;
+}
+
+// bottom border overlay
+
+.grid-bottom-border {
+  position: relative;
+  display: block;
+  height: 0;
+  width: 100%;
+}
+
+.grid-bottom-border::after {
+  content: "";
+  position: absolute;
+  height: var(--s-1);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid var(--gray-200);
+  border-left: 1px solid var(--gray-200);
+  border-right: 1px solid var(--gray-200);
+  border-bottom-left-radius: var(--s-1);
+  border-bottom-right-radius: var(--s-1);
+  z-index: 2;
+}
+
+// scroll bars
+
+.wrapper {
+  position: relative;
+}
+
+.scrollbar {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--gray-200);
+  border-bottom-width: 0;
+  background: var(--white-75);
+  padding: var(--s-05);
+  cursor: grab;
+  z-index: 1;
+  transition: opacity 150ms var(--bezier);
+}
+
+.scrollbar.horizontal {
+  height: calc(var(--s-2) - 1px);
+}
+
+.scrollbar.vertical {
+  --scroller-height: 100%;
+  --header-height: 0px;
+  --top-offset: 0;
+  --ratio: 1;
+  --progress: 0;
+
+  --table-header-spacing: var(--s-2);
+  --header-offset: calc(var(--top-offset) * var(--table-header-spacing));
+
+  width: var(--s-2);
+  height: calc(
+    var(--scroller-height) - var(--header-height) + var(--header-offset)
+  );
+  position: absolute;
+  top: calc(var(--header-height) - var(--header-offset));
+  right: 0;
+  border-top-right-radius: calc((1 - var(--top-offset)) * var(--s-1));
+}
+
+.scrollbar.hidden .thumb {
+  display: none;
+}
+
+.scrollbar.horizontal.hidden {
+  border-top-width: 0;
+  height: 0px;
+  padding: 0;
+}
+
+.scrollbar.vertical.hidden {
+  display: none;
+}
+
+.wrapper:not(:has(.footer)) .scrollbar.horizontal.hidden {
+  // shift by 8 px
+  translate: 0 calc(var(--s-2) * -1);
+  margin-bottom: calc(var(--s-2) * -1);
+  background: none;
+  z-index: 1;
+
+  // hide content under both rounded corners only
+  &::before {
+    z-index: 1;
+    position: absolute;
+    content: "";
+    // take parent's border into account
+    inset: -1px;
+    top: 1px;
+    background: var(--white);
+    clip-path: shape(
+      evenodd from 0 100%,
+      line to var(--s-1) 100%,
+      arc to 0 calc(100% - var(--s-1)) of var(--s-1) cw,
+      line to 0 100%,
+      move to calc(100% - var(--s-1)) 100%,
+      line to 100% 100%,
+      line to 100% calc(100% - var(--s-1)),
+      arc to calc(100% - var(--s-1)) 100% of var(--s-1) cw,
+      close
+    );
+  }
+}
+
+.wrapper:not(:has(.footer)) .scrollbar.horizontal {
+  border-bottom-left-radius: var(--s-1);
+  border-bottom-right-radius: var(--s-1);
+  border-bottom-width: 1px;
+  height: var(--s-2);
+}
+
+.wrapper:not(:has(.footer, .scrollbar.horizontal:not(.hidden)))
+  .scrollbar.vertical {
+  border-bottom: 1px solid var(--gray-200);
+  border-bottom-right-radius: var(--s-1);
+}
+
+.scrollbar .thumb {
+  background: var(--gray-200);
+  border-radius: var(--s-05);
+}
+
+.scrollbar:not(.hidden):hover .thumb,
+.scrollbar.dragging .thumb {
+  background: var(--gray-600);
+}
+
+.scrollbar.horizontal .thumb {
+  --ratio: 1;
+  --progress: 0;
+
+  height: var(--s-1);
+  width: calc(var(--ratio) * 100% - 2px);
+  transition:
+    width 150ms var(--bezier),
+    background 150ms var(--bezier);
+  position: absolute;
+  top: 1px;
+  left: calc((1 - var(--ratio)) * var(--progress) * 100% + 1px);
+}
+
+.scrollbar.vertical .thumb {
+  width: var(--s-1);
+  height: calc(var(--ratio) * 100% - 2px);
+  transition:
+    height 150ms var(--bezier),
+    background 150ms var(--bezier);
+  position: absolute;
+  left: 1px;
+  top: calc((1 - var(--ratio)) * var(--progress) * 100% + 1px);
+}
+
+// prevent text from being selected while dragging scrollbar, change cursor to grab
+:global(html):has(.scrollbar.dragging) * {
+  user-select: none;
+  cursor: grabbing !important;
+}
+
+// hide vertical scrollbar when table input is focused
+// or a row is being swapped by drag & drop
+.wrapper:has(
+    .row .cell:focus-within,
+    .row .cell *[data-testid^="input"]:focus-within,
+    .row .cell *[data-testid^="input"][aria-expanded="true"],
+    .row.row.swappable.dragging
+  )
+  .scrollbar.vertical:not(.hidden) {
+  opacity: 0;
+}
+
+.empty {
+  background: var(--white);
+  padding: var(--s-1) var(--s-2);
+  border: 1px solid var(--gray-200);
+  border-bottom-width: 0;
+  width: 100%;
+  border-top-left-radius: var(--s-1);
+  border-top-right-radius: var(--s-1);
+}
+
+.wrapper:not(:has(.footer)) .empty {
+  border-radius: var(--s-1);
+  border-bottom-width: 1px;
+}

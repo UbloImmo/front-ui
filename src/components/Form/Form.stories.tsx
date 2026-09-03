@@ -11,6 +11,7 @@ import { z } from "zod";
 import { Button } from "../Button";
 import { Callout } from "../Callout";
 import { DialogProvider, useDialog } from "../Dialog";
+import { EmptyStateCard } from "../EmptyStateCard";
 import { FeatureSwitch } from "../FeatureSwitch";
 import { Heading } from "../Heading";
 import { Hypertext } from "../Hypertext";
@@ -20,12 +21,15 @@ import { Modal } from "../Modal";
 import { Form } from "./Form.component";
 import { useFormContext } from "./Form.context";
 import { isFormField } from "./Form.utils";
+import { Text } from "../Text";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
 import {
+  arrayOf,
   clamp,
   createDelayedResponse,
+  cssVarUsage,
   delay,
   useMergedProps,
   useStatic,
@@ -609,6 +613,7 @@ const formTableProps: FormTableProps<IdentityTable> = {
   label: "Renseignez le(s) propriétaire(s) du lot dans le tableau ci-dessous",
   deletable: true,
   swappable: true,
+  maxBodyHeight: "200px",
   selectable: {
     property: "selected",
     behavior: "default",
@@ -621,14 +626,14 @@ const formTableProps: FormTableProps<IdentityTable> = {
   layout: {
     size: 2,
   },
-  disableRow: (row, index) => {
-    return index > 0;
+  disableRow: (row, index, displayIndex) => {
+    return displayIndex > 1;
   },
-  overrideRowModifiers: (row, index) => {
-    if (index > 0)
+  overrideRowModifiers: (row, _index, displayIndex) => {
+    if (displayIndex > 1)
       return {
         deletable: false,
-        swappable: false,
+        swappable: true,
       };
   },
   footer: {
@@ -1415,4 +1420,119 @@ export const PartialComputedContent = () => {
       onSubmit={() => {}}
     />
   );
+};
+
+export const ComputedTableContent = () => {
+  const props = useStatic<FormProps<IdentityTable>>({
+    title: "Table with computed table",
+    defaultValues: {
+      profiles: arrayOf(4, (index) => ({
+        firstName: "John",
+        lastName: "Doe" + index,
+        numberOfChildren: 2,
+      })),
+    },
+    onSubmit: () => {},
+    content: [
+      {
+        kind: "table",
+        label: "Profiles",
+        source: "profiles",
+        footer: {
+          kind: "button",
+          label: "Add profile",
+        },
+        maxBodyHeight: "150px",
+        swappable: true,
+        deletable: true,
+        EmptyCard: () => (
+          <EmptyStateCard
+            transparent
+            asset="EmptyBox"
+            icon="Person"
+            title="No profiles"
+            description="add a profile"
+          />
+        ),
+        columns: [
+          (context) =>
+            context.isEditing
+              ? null
+              : {
+                  kind: "custom-field",
+                  source: "firstName",
+                  label: "Identity",
+                  layout: {
+                    size: 2,
+                    fixedWidth: "300px",
+                  },
+                  // eslint-disable-next-line react/prop-types
+                  CustomInput: ({ rowIndex }) => {
+                    const row = context.data?.profiles?.[rowIndex ?? 0];
+                    const name = [row?.firstName ?? "", row?.lastName ?? ""]
+                      .join(" ")
+                      .trim();
+
+                    const noIdentity = !name.length;
+
+                    return (
+                      <Text
+                        weight="bold"
+                        color={noIdentity ? "error-base" : undefined}
+                        styleOverride={{ padding: cssVarUsage("s-2") }}
+                      >
+                        {noIdentity ? "Missing identity" : name}
+                      </Text>
+                    );
+                  },
+                },
+          (context) =>
+            context.isEditing
+              ? {
+                  source: "firstName",
+                  label: "First name",
+                  type: "text",
+                  layout: {
+                    size: 2,
+                    fixedWidth: "200px",
+                  },
+                }
+              : null,
+          (context) =>
+            context.isEditing
+              ? {
+                  source: "lastName",
+                  label: "Last Name",
+                  type: "text",
+                  layout: {
+                    size: 2,
+                  },
+                }
+              : null,
+          {
+            source: "tags",
+            type: "multi-select",
+            label: "Tags",
+            options: ["Parent", "Employed", "Unemployed"].map((label) => ({
+              label,
+              value: label,
+            })),
+          },
+        ],
+      },
+      (context) =>
+        context.isEditing
+          ? null
+          : {
+              kind: "content",
+              content: (
+                <Callout>
+                  {context.data?.profiles?.length ?? 0} profiles in the table
+                </Callout>
+              ),
+            },
+    ],
+  });
+
+  return <Form {...props} debug />;
 };

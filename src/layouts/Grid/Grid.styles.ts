@@ -38,7 +38,7 @@ const gridGap = (
  * @param {GridTemplate} template - the input template for the grid
  * @return {string} the generated grid template
  */
-const gridTemplate = (template: GridTemplate): string => {
+export const formatGridTemplate = (template: GridTemplate): string => {
   if (isNumber(template)) {
     return `repeat(${template}, 1fr)`;
   }
@@ -71,8 +71,8 @@ export function useGridLayoutStyle(props: GridLayoutDefaultProps) {
     {
       "row-gap": gaps.row,
       "column-gap": gaps.column,
-      "template-columns": gridTemplate(props.columns),
-      "template-rows": gridTemplate(props.rows),
+      "template-columns": formatGridTemplate(props.columns),
+      "template-rows": formatGridTemplate(props.rows),
       "grid-align": props.align,
       "grid-justify": props.justify,
     },

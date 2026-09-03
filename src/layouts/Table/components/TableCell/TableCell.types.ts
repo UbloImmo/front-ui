@@ -1,7 +1,8 @@
-import { Nullable } from "@ubloimmo/front-util";
-
 import type { CssLength, CssLengthUsage, StyleOverrideProps } from "@types";
-import type { ReactNode } from "react";
+import type { Nullable, VoidFn } from "@ubloimmo/front-util";
+import type { AriaRole, ReactNode } from "react";
+
+export type TableCellPosition = "start" | "end" | "middle" | "both";
 
 export type TableCellProps = {
   /**
@@ -35,6 +36,36 @@ export type TableCellProps = {
    * @default null
    */
   fixedWidth?: Nullable<CssLength | CssLengthUsage>;
+  /**
+   * ARIA role of the cell
+   *
+   * @default "cell"
+   */
+  role?: AriaRole;
+  /**
+   * An optional click handler for the cell.
+   *
+   * @type {Nullable<Void>}
+   */
+  onClick?: Nullable<VoidFn>;
+  /**
+   * Position the cell should be assumed to be in its row:
+   * - start: assumed to be the first visible cell in the row
+   * - end: assumed to be the last visible cell in the row
+   * - both: assumed to be the first & last visible cell in the row
+   * - middle: assumed not to be the first nor the last visible cell in the row
+   *
+   * Affects styling
+   *
+   * @default null
+   */
+  position?: Nullable<TableCellPosition>;
+  /**
+   * ARIA title of the cell
+   *
+   * @default null
+   */
+  title?: Nullable<string>;
 } & Omit<StyleOverrideProps, "as">;
 
 export type TableCellDefaultProps = Required<TableCellProps>;

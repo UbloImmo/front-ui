@@ -1,33 +1,34 @@
-import { isFunction, type GenericFn } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { type GenericFn, isFunction } from "@ubloimmo/front-util";
+import { type ReactNode, useCallback, useMemo } from "react";
 
-import styles from "../FormTable.module.scss";
+import styles from "../FormTableField.module.scss";
 
 import { Button } from "@/components/Button";
 import { useCssClasses, useUikitTranslation } from "@utils";
 
 import type {
-  BuiltFormTableCallbacks,
-  FormTableButtonFooter,
-} from "@/components/Form/Form.types";
+  AnyTableRow,
+  FormTableFieldFooterButtonProps,
+} from "./FormTableFieldFooter.types";
 import type { IconName } from "@/components/Icon";
 
-type RowValue = Record<string, unknown>;
-
-type FormTableFooterButtonProps = {
-  footer: FormTableButtonFooter<RowValue>;
-  disabled?: boolean;
-} & Pick<BuiltFormTableCallbacks, "appendRow">;
-
-export const FormTableFooterButton = ({
+/**
+ * Renders a button inside a Form table field's footer
+ *
+ * @version 0.1.2
+ *
+ * @param {FormTableFieldFooterButtonProps} props - Component props
+ * @returns {ReactNode} - Footer button
+ */
+export function FormTableFieldFooterButton({
   footer: { kind: _k, newRow, ...buttonProps },
   appendRow,
   disabled,
-}: FormTableFooterButtonProps) => {
+}: FormTableFieldFooterButtonProps): ReactNode {
   const tl = useUikitTranslation();
   const onButtonClick = useCallback(() => {
-    const rowToAppend: Partial<RowValue> = isFunction<
-      GenericFn<[], Partial<RowValue>>
+    const rowToAppend: Partial<AnyTableRow> = isFunction<
+      GenericFn<[], Partial<AnyTableRow>>
     >(newRow)
       ? newRow()
       : (newRow ?? {});
@@ -45,7 +46,7 @@ export const FormTableFooterButton = ({
     [buttonProps.icon]
   );
 
-  const className = useCssClasses(styles["form-table-footer-button"]);
+  const className = useCssClasses(styles["footer-button"]);
 
   return (
     <Button
@@ -60,4 +61,4 @@ export const FormTableFooterButton = ({
       color="white"
     />
   );
-};
+}

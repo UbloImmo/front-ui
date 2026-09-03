@@ -1,7 +1,7 @@
 import type { TableStyle } from "../../Table.types";
 import type { StyleOverrideProps } from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
-import type { ReactNode } from "react";
+import type { AriaRole, ReactNode } from "react";
 
 export type TableRowProps = {
   /**
@@ -25,6 +25,14 @@ export type TableRowProps = {
   style?: TableStyle;
   /**
    * The id of the row
+   *
+   * @default null
    */
   id?: Nullable<string>;
+  /**
+   * ARIA role of the row
+   *
+   * @default "row"
+   */
+  role?: AriaRole;
 } & Omit<StyleOverrideProps, "as">;

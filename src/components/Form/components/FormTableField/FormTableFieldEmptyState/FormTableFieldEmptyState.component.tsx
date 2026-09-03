@@ -1,10 +1,11 @@
-import { useCallback } from "react";
+import { type ReactNode, useMemo } from "react";
+
+import styles from "../FormTableField.module.scss";
 
 import { Text } from "@/components/Text";
-import { TableCell, TableRow } from "@/layouts/Table";
-import { useStatic, useUikitTranslation } from "@utils";
+import { useCssClasses, useStatic, useUikitTranslation } from "@utils";
 
-import type { BuiltFormTableProps } from "../../Form.types";
+import type { FormTableFieldEmptyStateProps } from "./FormTableFieldEmptyState.types";
 
 /**
  * Renders an empty state for a FormTable component.
@@ -19,21 +20,19 @@ import type { BuiltFormTableProps } from "../../Form.types";
  * The empty state is wrapped in a single table row, which spans the whole table
  * width.
  *
- * @version 0.1.0
+ * @version 0.1.2
  *
- * @param {Object} props The component props.
- * @param {JSX.Element | null} [props.EmptyCard] The EmptyCard component to render.
- * @param {number} props.columnsCount The number of columns in the table.
+ * @param {FormTableFieldEmptyStateProps} props The component props
+ * @return {ReactNode} The table's empty state
  */
-export const FormTableEmptyState = ({
+export function FormTableFieldEmptyState({
   EmptyCard,
-  columnsCount,
-}: Pick<BuiltFormTableProps, "EmptyCard" | "columnsCount">) => {
+}: FormTableFieldEmptyStateProps): ReactNode {
   const tl = useUikitTranslation();
 
   const emptyLabel = useStatic(tl.status.empty("table", "[REPLACE ME]"));
 
-  const EmptyState = useCallback(() => {
+  const EmptyState = useMemo<ReactNode>(() => {
     if (EmptyCard) return <EmptyCard />;
 
     return (
@@ -43,11 +42,11 @@ export const FormTableEmptyState = ({
     );
   }, [EmptyCard, emptyLabel]);
 
+  const className = useCssClasses(styles.empty);
+
   return (
-    <TableRow>
-      <TableCell colSpan={columnsCount} padded>
-        <EmptyState />
-      </TableCell>
-    </TableRow>
+    <section className={className} data-testid="form-table-field-empty">
+      {EmptyState}
+    </section>
   );
-};
+}

@@ -1,6 +1,6 @@
 import { PopoverArrow } from "@radix-ui/react-popover";
 import { isFunction, isNumber, isObject, isString } from "@ubloimmo/front-util";
-import { useMemo, useState } from "react";
+import { ReactNode, useCallback, useMemo, useState } from "react";
 
 import { useTooltipStyles } from "./Tooltip.styles";
 import { Icon } from "../Icon";
@@ -25,17 +25,18 @@ const defaultTooltipProps: DefaultTooltipProps = {
   iconColor: "gray-700",
   intersectionRoot: null,
   cursor: "help",
+  disabled: false,
 };
 
 /**
  * Text popup box that appears when the user hovers over an element
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {TooltipProps & TestIdProps} props - The tooltip's props
- * @returns {JSX.Element} The rendered tooltip
+ * @returns {ReactNode} The rendered tooltip
  */
-const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
+const Tooltip = (props: TooltipProps & TestIdProps): ReactNode => {
   const { error, warn } = useLogger("Tooltip");
   const mergedProps = useMergedProps(defaultTooltipProps, props);
   const testId = useTestId("tooltip", props);
@@ -48,6 +49,7 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
     intersectionRoot,
     iconColor,
     cursor,
+    disabled,
   } = mergedProps;
   const styles = useTooltipStyles(cursor);
 
@@ -86,20 +88,31 @@ const Tooltip = (props: TooltipProps & TestIdProps): JSX.Element => {
   /**
    * Checks children props and if it is empty, renders a default questionmark icon in the children property
    */
-  const RenderedChildren = useMemo(() => {
+  const RenderedChildren = useMemo<ReactNode>(() => {
     if (!children || (isString(children) && isEmptyString(children))) {
       return <Icon name={icon} size="s-4" color={iconColor} />;
     }
     return children;
   }, [children, icon, iconColor]);
 
+  const onPointerEnter = useCallback(() => {
+    if (disabled) return;
+    setIsOpen(true);
+  }, [disabled]);
+
+  const onPointerLeave = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  if (disabled) return RenderedChildren;
+
   return (
     <div
       className={styles.trigger.className}
       style={styles.trigger.style}
       data-testid={`${testId}-wrapper`}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onPointerEnter={onPointerEnter}
+      onMouseLeave={onPointerLeave}
     >
       <Popover
         open={isOpen}

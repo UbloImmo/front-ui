@@ -1,4 +1,4 @@
-import { arrayMove } from "@dnd-kit/sortable";
+import { arrayMove } from "@dnd-kit/helpers";
 import {
   type DeepKeyOf,
   type DeepKeyOfType,
@@ -9,6 +9,7 @@ import {
   isFunction,
   isNull,
   isNullish,
+  isNumber,
   isObject,
   isString,
   isUndefined,
@@ -17,6 +18,7 @@ import {
   type Nullish,
   type NullishPrimitives,
   objectEntries,
+  Optional,
   type VoidFn,
 } from "@ubloimmo/front-util";
 import { isEqual, merge } from "lodash";
@@ -38,6 +40,7 @@ import { useDialogManager } from "../Dialog";
 import {
   buildFormText,
   builtFormTableId,
+  computeFormContent,
   formErrorTranslation,
   isFormCustomContent,
   isFormCustomField,
@@ -50,9 +53,12 @@ import {
   setObjectValue,
 } from "./Form.utils";
 
+import { CssLength } from "@types";
 import {
+  cssFr,
   cssLengthUsage,
   isEmptyString,
+  updateMap,
   useLogger,
   useMergedProps,
   useUikitTranslation,
@@ -83,9 +89,7 @@ import type {
   DefaultFormLayoutProps,
   DeleteTableRowFn,
   FormComputedContentFn,
-  FormContent,
   FormContentArray,
-  FormContentFn,
   FormContentFnContext,
   FormContext,
   FormCustomFieldProps,
@@ -115,11 +119,13 @@ import type {
   PropagateChangeFn,
   SetRowSelectionFn,
   SetTableSelectionFn,
+  StableFormTableId,
   SwapTableRowsFn,
   UseFormDataReturn,
   UseFormEditStateReturn,
   UseFormLayoutReturn,
   UseFormSubmissionReturn,
+  UseFormTableRowSwapReturn,
   UseFormValidationReturn,
 } from "./Form.types";
 import type { GridEndPosition } from "@/layouts/GridItem";
@@ -134,12 +140,14 @@ const FORM_DEBUG_FLAG = "FORM_DEBUG_ENABLED" as const;
  * @param {FormProps<TData>} props - The props object containing the form data query, default values, and other form properties.
  * @param {Logger} logger - The logger used for logging warnings.
  * @param {FormModifers} modifiers - The form modifiers.
+ * @param {UseFormTableRowSwapReturn<TData>} tableRowSwapMap - The form table row swap map object.
  * @returns {UseFormDataReturn<TData>} - An object containing the form data, initial data, and methods for mutating and setting form data.
  */
 const useFormData = <TData extends object>(
   props: FormDataProps<TData>,
   logger: Logger,
-  modifiers: FormModifers
+  modifiers: FormModifers,
+  tableRowSwapMap: UseFormTableRowSwapReturn<TData>
 ): UseFormDataReturn<TData> => {
   /**
    * Initial form data derived from the query or default values
@@ -177,6 +185,7 @@ const useFormData = <TData extends object>(
             : { ...props.query };
           setData(newData);
           setInitialData(newData);
+          tableRowSwapMap.reset();
         }
         return;
       }
@@ -188,6 +197,7 @@ const useFormData = <TData extends object>(
           : data;
         setData(newData);
         setInitialData(newData);
+        tableRowSwapMap.reset();
       } catch (e) {
         logger.error(e);
         logger.warn("Failed to load form data");
@@ -474,15 +484,21 @@ const useFormLayout = (
  *
  * @template {object} TData - The type of the form data.
  * @template {InputType} TType - The type of the input.
- * @param {FormContent<TData, TType>[]} content - The form content.
+ * @param {FormContentArray<TData> | FormComputedContentFn<TData>} content - The form content.
+ * @param {FormContentFnContext<TData>} contentContext - Return payload from the {@link useFormContentContext} hook
  * @param {UseFormDataReturn<TData>} formData - The form data.
+ * @param {UseFormTableRowSwapReturn<TData>} tableRowSwapMap - The form table row swap map object.
  * @param {UseFormValidationReturn<TData>} validation - The form validation.
  * @param {FormModifers} modifiers - The form modifiers.
+ * @param {UseFormLayoutReturn} formLayout - The form layout.
+ * @param {Logger} logger - The form's logger.
  * @return {BuiltFormContent<TData, InputType>[]} - The built field props for each form field.
  */
 const useFormContent = <TData extends object>(
-  content: FormContent<TData>[],
-  formData: UseFormDataReturn<TData>,
+  content: FormContentArray<TData> | FormComputedContentFn<TData>,
+  contentContext: FormContentFnContext<TData>,
+  { mutateFormData, data }: UseFormDataReturn<TData>,
+  tableRowSwapMap: UseFormTableRowSwapReturn<TData>,
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
   formLayout: UseFormLayoutReturn,
@@ -495,10 +511,10 @@ const useFormContent = <TData extends object>(
    */
   const getFieldValue = useCallback<GetFieldValueFn<TData>>(
     (source) => {
-      const value = deepValueOf(formData.data, source, true);
+      const value = deepValueOf(data, source, true);
       return value ?? null;
     },
-    [formData]
+    [data]
   );
 
   /**
@@ -507,12 +523,12 @@ const useFormContent = <TData extends object>(
   const propagateChange = useCallback<PropagateChangeFn<TData>>(
     (source, onChange) => {
       return (value) => {
-        formData.mutateFormData(source, value);
+        mutateFormData(source, value);
         if (isNullish(onChange)) return;
         onChange(value);
       };
     },
-    [formData]
+    [mutateFormData]
   );
 
   /**
@@ -660,6 +676,10 @@ const useFormContent = <TData extends object>(
     ): BuiltFormTableProps => {
       // cast to remove `never` case and proceed as usual
       const t = table as FormTableProps<{ arr: { data: string }[] }>;
+      const tableId = builtFormTableId(String(t.source), contentIndex);
+
+      // register table to swap map if needed
+      const rowSwapArray = tableRowSwapMap.registerTable(tableId);
 
       const tableSource = t.source as DeepKeyOfType<
         FormData<TData>,
@@ -685,7 +705,7 @@ const useFormContent = <TData extends object>(
          * Cancels the deletion of a table row
          *
          * @remarks
-         * Does nothing but loggingfor now, may change in the future
+         * Does nothing but logging for now, may change in the future
          */
         const cancelDelete = () => {
           logger.debug(
@@ -721,8 +741,11 @@ const useFormContent = <TData extends object>(
             return cancelDelete();
           }
 
+          // delete from row swap map;
+          tableRowSwapMap.onRowDelete(tableId, index);
+          // delete row from table data array
           postCheckArr.splice(index, 1);
-          formData.mutateFormData(
+          mutateFormData(
             tableFormSource,
             postCheckArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
           );
@@ -753,9 +776,11 @@ const useFormContent = <TData extends object>(
        * Appends a row to the table
        * @param {Partial<Record<string, unknown>>} newRow The new row to append
        */
-      const appendRow: AppendTableRowFn<Record<string, unknown>> = (newRow) => {
+      const appendRow: AppendTableRowFn<Record<string, unknown>> = (
+        newRow: Partial<Record<string, unknown>>
+      ) => {
         const updatedArr = [...arrayValue, newRow];
-        formData.mutateFormData(
+        mutateFormData(
           tableFormSource,
           updatedArr as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
         );
@@ -766,12 +791,11 @@ const useFormContent = <TData extends object>(
        * @param {number} oldIndex The index of the row to swap from
        * @param {number} newIndex The index of the row to swap to
        */
-      const swapRows: SwapTableRowsFn = (oldIndex, newIndex) => {
-        const swapped = arrayMove([...arrayValue], oldIndex, newIndex);
-        formData.mutateFormData(
-          tableFormSource,
-          swapped as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
-        );
+      const swapRows: SwapTableRowsFn = (
+        oldIndex: number,
+        newIndex: number
+      ) => {
+        tableRowSwapMap.swapRows(tableId, oldIndex, newIndex);
       };
 
       /**
@@ -794,12 +818,16 @@ const useFormContent = <TData extends object>(
         }
         // get the row source & commit selection change
         const rowSource = `${tableFormSource}.${rowIndex}.${tableModifiers.selectable.property}`;
-        formData.mutateFormData(
+        mutateFormData(
           rowSource as FormSource<TData>,
           selected as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
         );
       };
 
+      /**
+       * Sets the selection state of the whole table
+       * @param {boolean} selected - The new selection state of the table
+       */
       const setTableSelection: SetTableSelectionFn = (selected) => {
         // abort if modifiers do not allow selection
         if (!tableModifiers.selectable) return;
@@ -811,13 +839,22 @@ const useFormContent = <TData extends object>(
           ...rowValue,
           [property]: selected,
         }));
-        formData.mutateFormData(
+        mutateFormData(
           tableFormSource,
           selectedArray as Nullable<DeepValueOf<TData, DeepKeyOf<TData>>>
         );
       };
 
-      const headers = t.columns.map(
+      const columns = computeFormContent(
+        t.columns,
+        // cast to remove `never` type
+        contentContext as unknown as FormContentFnContext<{
+          arr: { data: string }[];
+        }>,
+        logger
+      );
+
+      const headers = columns.map(
         ({ label, tooltip, compact, required, source }): FieldLabelProps => ({
           label,
           tooltip,
@@ -829,16 +866,41 @@ const useFormContent = <TData extends object>(
         })
       );
 
-      const colSpans = t.columns?.map(({ layout }) => layout?.size ?? 1) ?? [];
+      const colSpans = columns?.map(({ layout }) => layout?.size ?? 1) ?? [];
+      const colWidths: CssLength[] =
+        columns?.map(
+          ({ layout }) => layout?.fixedWidth ?? cssFr(layout?.size ?? 1)
+        ) ?? [];
 
       // generate rows and cell fields from columns and array items
-      const rows = arrayValue.map((rowData, index): BuiltFormTableRow => {
+      // build 2 row arrays in 1 loop:
+      // - displayRows: in display order (could be swapped)
+      // - rows: in data order (not influenced by swap)
+      // while keeping track of selected row counts
+      const displayRows: BuiltFormTableRow[] = [];
+      const rows: BuiltFormTableRow[] = [];
+      let selectedRowCount = 0;
+
+      for (let index = 0; index < arrayValue.length; index++) {
+        // register row to its table's swap map if missing (newly added row or fist initialization run)
+        tableRowSwapMap.registerRow(tableId, index);
+
+        // get current display index (could have been swapped)
+        let displayIndex = rowSwapArray.findIndex((i) => i === index);
+        if (displayIndex < 0) {
+          displayIndex = index;
+        }
+
+        // build row
+        const rowData = arrayValue[index];
         const rowSource = `${t.source}.${index}`;
+
         let baseDisabled = false;
         if (t.disableRow) {
           const disableResult = t.disableRow(
             rowData as { data: string },
-            index
+            index,
+            displayIndex
           );
           if (isBoolean(disableResult) && disableResult) {
             baseDisabled = true;
@@ -847,11 +909,14 @@ const useFormContent = <TData extends object>(
         const modifiers = t.overrideRowModifiers
           ? {
               ...tableModifiers,
-              ...(t.overrideRowModifiers(rowData as { data: string }, index) ??
-                {}),
+              ...(t.overrideRowModifiers(
+                rowData as { data: string },
+                index,
+                displayIndex
+              ) ?? {}),
             }
           : tableModifiers;
-        const cells = (t.columns ?? [])
+        const cells = columns
           .map(({ source, ...cell }) => {
             const cellSource = `${rowSource}.${source}`;
             const cellField = {
@@ -885,24 +950,32 @@ const useFormContent = <TData extends object>(
             ) ?? false)
           : false;
 
-        return {
+        if (selected) {
+          selectedRowCount++;
+        }
+
+        const builtRow: BuiltFormTableRow = {
           cells,
           id: rowSource,
           stableId: rowSource,
           modifiers,
           selected,
+          index,
+          displayIndex,
         };
-      });
 
-      const selectedRowCount = rows.filter(({ selected }) => selected).length;
-      const selected: CheckboxStatus =
-        selectedRowCount === rows.length
+        // add built row to both arrays
+        rows[index] = builtRow;
+        displayRows[displayIndex] = builtRow;
+      }
+
+      const selected: CheckboxStatus = !rows.length
+        ? false
+        : selectedRowCount === rows.length
           ? true
           : selectedRowCount > 0
             ? "mixed"
             : false;
-
-      const tableId = builtFormTableId(String(t.source), contentIndex);
 
       const errorProps = getFieldErrorProps(
         tableFormSource,
@@ -935,8 +1008,10 @@ const useFormContent = <TData extends object>(
         kind: "table",
         stableId: tableId,
         rows,
+        displayRows,
         headers,
         colSpans,
+        colWidths,
         layout: formLayout.buildFormFieldLayout({
           ...(t.layout ?? {}),
           size: formLayout.columns,
@@ -962,13 +1037,17 @@ const useFormContent = <TData extends object>(
       };
     },
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
+      tableRowSwapMap,
+      tableRowSwapMap.dependency,
       getFieldValue,
+      contentContext,
+      logger,
       getFieldErrorProps,
       formLayout,
       isFieldRequired,
-      formData,
-      logger,
+      mutateFormData,
       buildCustomFieldProps,
       buildFieldProps,
       tl.validation,
@@ -1046,8 +1125,9 @@ const useFormContent = <TData extends object>(
    * - {@link buildFormFeatureSwitch}
    */
   return useMemo<BuiltFormContent<InputType>[]>(() => {
-    if (!content.length) return [];
-    return content.map((content, contentIndex) => {
+    const contentArray = computeFormContent(content, contentContext, logger);
+    if (!contentArray.length) return [];
+    return contentArray.map((content, contentIndex) => {
       if (isFormDivider(content) || isFormCustomContent(content))
         return content;
       if (isFormText(content)) return buildFormText(content);
@@ -1056,8 +1136,10 @@ const useFormContent = <TData extends object>(
       if (isFormFeatureSwitch(content)) return buildFormFeatureSwitch(content);
       return buildFieldProps(content);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     content,
+    contentContext,
     buildCustomFieldProps,
     buildFormTable,
     buildFormFeatureSwitch,
@@ -1066,10 +1148,190 @@ const useFormContent = <TData extends object>(
 };
 
 /**
+ * Custom hook that handles table row swaps.
+ *
+ * @template {object} TData - The type of the form data.
+ * @param {Logger} logger - The logger object.
+ * @returns {UseFormTableRowSwapReturn<TData>} - An object containing methods to manipulate table row swaps
+ */
+const useFormTableRowSwap = <TData extends object>(
+  logger: Logger
+): UseFormTableRowSwapReturn<TData> => {
+  const map = useRef(new Map<StableFormTableId, number[]>());
+  const [dependency, commit] = useReducer(
+    () => new Map(map.current),
+    map.current
+  );
+
+  /**
+   * Resets the all form table row swaps
+   * Does nothing if no swaps have been performed,
+   * Keeps table ids and empties their swap array otherwise
+   */
+  const reset = useCallback(() => {
+    for (const tableId of map.current.keys()) {
+      map.current.set(tableId, []);
+    }
+    commit();
+  }, []);
+
+  /**
+   * Rebuilds a table's swap array when a row has been deleted
+   *
+   * @param {StableFormTableId} tableId - ID of the table containing the deleted row
+   * @param {number} deletedRowIndex - Index (not displayIndex) of the row that was deleted
+   */
+  const onRowDelete = useCallback<
+    UseFormTableRowSwapReturn<TData>["onRowDelete"]
+  >((tableId, deletedRowIndex) => {
+    // delete from row swap map;
+    updateMap(map.current, tableId, (rowSwapArr) => {
+      const position = rowSwapArr.findIndex((i) => i === deletedRowIndex);
+      if (position < 0) return rowSwapArr;
+      const rebuilt: number[] = [];
+      for (const movedIndex of rowSwapArr) {
+        // skip deleted index
+        if (movedIndex === deletedRowIndex) continue;
+        // decrement items after deleted by 1
+        if (movedIndex > deletedRowIndex) {
+          rebuilt.push(movedIndex - 1);
+          continue;
+        }
+        // keep items before deleted as-is
+        rebuilt.push(movedIndex);
+      }
+      return rebuilt;
+    });
+  }, []);
+
+  /**
+   * Moves one row from one index to another, shifting the others
+   *
+   * @param {StableFormTableId} tableId - ID of the table containing the swapped row
+   * @param {number} oldIndex - Index (not displayIndex) the row was previously at
+   * @param {number} newIndex - Index (not displayIndex) the row was should be moved to
+   */
+  const swapRows = useCallback<UseFormTableRowSwapReturn<TData>["swapRows"]>(
+    (tableId, oldIndex, newIndex) => {
+      if (oldIndex === newIndex) return;
+      updateMap(map.current, tableId, (rowSwapArray) => {
+        const swapped = arrayMove([...rowSwapArray], oldIndex, newIndex);
+        return swapped;
+      });
+      commit();
+    },
+    []
+  );
+
+  /**
+   * Creates a swap array for a table if missing, then gets & returns it
+   *
+   * @param {StableFormTableId} tableId - ID of the table containing the swapped row
+   * @return {number[]} - The array holding the table's row swaps
+   */
+  const registerTable = useCallback<
+    UseFormTableRowSwapReturn<TData>["registerTable"]
+  >((tableId) => {
+    if (!map.current.has(tableId)) {
+      map.current.set(tableId, []);
+    }
+    const arr = map.current.get(tableId)!;
+    return arr;
+  }, []);
+
+  /**
+   * Adds a row's index to its table swap array if missing
+   *
+   * @param {StableFormTableId} tableId - ID of the table containing the swapped row
+   * @param {number} rowIndex - Index (not displayIndex) of the row to register
+   */
+  const registerRow = useCallback<
+    UseFormTableRowSwapReturn<TData>["registerRow"]
+  >(
+    (tableId, rowIndex) => {
+      const rowSwapArray = registerTable(tableId);
+      if (rowSwapArray && !isNumber(rowSwapArray[rowIndex])) {
+        rowSwapArray[rowIndex] = rowIndex;
+      }
+    },
+    [registerTable]
+  );
+
+  /**
+   * Applies active table row swaps to the supplied form's data,
+   * stepping trough each table and moving array items based on the swap order
+   *
+   * Used in the form's submission process
+   *
+   * @remarks Does not mutate its provided data
+   *
+   * @param {TData} data - Form data to apply row swaps to
+   * @return {TData} A copy of the form data with table arrays swapped
+   */
+  const apply = useCallback<UseFormTableRowSwapReturn<TData>["apply"]>(
+    (data: TData): TData => {
+      let applied: TData = { ...data };
+      // do not swap anything if swap map is empty (no tables)
+      if (!map.current.size) return applied;
+      // iterate trough each registered table & swap its underlying data
+      for (const [tableId, rowSwapArray] of map.current.entries()) {
+        // get table source & validate its data before proceeding with data swap
+        const tableSource = tableId.split("|")[0] as DeepKeyOfType<
+          TData,
+          unknown[]
+        >;
+        const tableData = deepValueOf(data, tableSource, true) as Optional<
+          unknown[]
+        >;
+        if (!isArray(tableData)) continue;
+        if (tableData.length !== rowSwapArray.length) {
+          logger.error(
+            "Failed to apply table row swaps, mismatched array lengths",
+            tableId
+          );
+          continue;
+        }
+        // skip empty table arrays
+        if (!tableData.length) continue;
+        // skip table if no swaps have been made to its rows
+        if (rowSwapArray.every((index, position) => index === position))
+          continue;
+
+        // order rows based on swap position
+        const swappedRows: unknown[] = [];
+        for (const displayIndex of rowSwapArray) {
+          swappedRows.push(tableData[displayIndex]);
+        }
+        // mutate
+        applied = setObjectValue(
+          applied,
+          tableSource as DeepKeyOf<TData>,
+          swappedRows as DeepValueOf<TData, DeepKeyOf<TData>>
+        );
+      }
+      return applied;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  return {
+    reset,
+    registerTable,
+    registerRow,
+    onRowDelete,
+    swapRows,
+    apply,
+    dependency,
+  };
+};
+
+/**
  * Custom form hook that handles submission logic.
  *
  * @template {object} TData - The type of the form data.
  * @param {UseFormDataReturn<TData>} formData - The form data object.
+ * @param {UseFormTableRowSwapReturn<TData>} tableRowSwapMap - The form table row swap map object.
  * @param {UseFormValidationReturn<TData>} validation - The form validation object.
  * @param {FormModifers} modifiers - The form modifiers object.
  * @param {UseFormEditStateReturn} editState - The form edit state object.
@@ -1079,6 +1341,7 @@ const useFormContent = <TData extends object>(
  */
 const useFormSubmission = <TData extends object>(
   formData: UseFormDataReturn<TData>,
+  tableRowSwapMap: UseFormTableRowSwapReturn<TData>,
   validation: UseFormValidationReturn<TData>,
   modifiers: FormModifers,
   editState: UseFormEditStateReturn,
@@ -1124,12 +1387,12 @@ const useFormSubmission = <TData extends object>(
         }
       }
 
-      let dataToSubmit: TData;
+      // apply table row swaps before attempting validation
+      let dataToSubmit: TData = tableRowSwapMap.apply(formData.data as TData);
       if (isNullish(validation.schema)) {
         logger.warn("No schema provided, submitting without validation");
-        dataToSubmit = formData.data as TData;
       } else {
-        const parsed = await validation.schema.safeParseAsync(formData.data);
+        const parsed = await validation.schema.safeParseAsync(dataToSubmit);
         if (!parsed.success || !parsed.data) {
           logger.warn("Unable to sanitize form data, aborted submission");
           return;
@@ -1155,6 +1418,7 @@ const useFormSubmission = <TData extends object>(
         editState.stopEditing();
         formData.setData(updatedInitialData);
         formData.setInitialData(updatedInitialData);
+        tableRowSwapMap.reset();
 
         setIsSubmitting(false);
       } catch (e: unknown) {
@@ -1174,6 +1438,7 @@ const useFormSubmission = <TData extends object>(
       isSubmitting,
       onSubmit,
       validation,
+      tableRowSwapMap,
       logger,
       formData,
       onSubmitError,
@@ -1192,6 +1457,7 @@ const useFormSubmission = <TData extends object>(
   const cancelEdition = useCallback<VoidFn>(() => {
     if (isSubmitting) return;
     if (editState.isEditing) {
+      tableRowSwapMap.reset();
       formData.setData(formData.initialData);
     }
     editState.stopEditing();
@@ -1326,75 +1592,6 @@ function useFormContentContext<TData extends object>(
 }
 
 /**
- * Custom form hook
- * Takes the provided content prop and returns an array of {@link FormContent} items ready to be parsed by the form
- *
- * @template {object} TData - The type of the form data.
- * @param {FormContentArray<TData> | FormComputedContentFn<TData>} content - Supplied form content
- * @param {FormContentFnContext<TData>} contentContext - Return payload from the {@link useFormContentContext} hook
- * @param {Logger} logger - Logger instance to use if errors arise
- * @returns {FormContent<TData>[]} - Computed array of form contents to render
- */
-function useFormComputedContent<TData extends object>(
-  content: FormContentArray<TData> | FormComputedContentFn<TData>,
-  contentContext: FormContentFnContext<TData>,
-  logger: Logger
-): FormContent<TData>[] {
-  return useMemo<FormContent<TData>[]>(() => {
-    if (!content) return [];
-    // execute function and get a whole content array back
-    if (isFunction<FormComputedContentFn<TData>>(content)) {
-      try {
-        const computedContent = content(contentContext);
-        if (isArray(computedContent)) return computedContent;
-        logger.error(
-          `Invalid form content returned from content function. Expected array but for ${computedContent}`
-        );
-        return [];
-      } catch (e) {
-        logger.error(
-          new Error(`An error occured when computing the form's content.`, {
-            cause: e as Error,
-          })
-        );
-        return [];
-      }
-    }
-
-    // iterate over provided array & execute items if they are functions
-    if (isArray(content))
-      return content.flatMap((item, index): FormContent<TData>[] => {
-        if (isFunction<FormContentFn<TData>>(item)) {
-          try {
-            const itemContent = item(contentContext);
-            // check against null & undefined as well to handle sparse arrays
-            if (isNullish(itemContent)) return [];
-            return [itemContent];
-          } catch (e) {
-            logger.error(
-              new Error(
-                `An error occured when computing the form's content at position ${index}.`,
-                {
-                  cause: e as Error,
-                }
-              )
-            );
-            return [];
-          }
-        }
-        return [item];
-      });
-
-    logger.error(
-      `Invalid content prop supplied to Form. Expected array or function but got ${content}`
-    );
-    return [];
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contentContext, content]);
-}
-
-/**
  * Custom form hook that runs and links all sub-hooks to handle code form logic.
  * Returns a form context object that includes the form data, validation,
  * submission, edit state, and modifiers.
@@ -1417,7 +1614,13 @@ export const useForm = <TData extends object>(
   logger: Logger
 ): FormContext<TData> => {
   const formModifiers = useFormModifiers(props);
-  const formData = useFormData<TData>(props, logger, formModifiers);
+  const formTableRowSwapMap = useFormTableRowSwap<TData>(logger);
+  const formData = useFormData<TData>(
+    props,
+    logger,
+    formModifiers,
+    formTableRowSwapMap
+  );
   const formValidation = useFormValidation<TData>(
     props.schema,
     formData,
@@ -1434,6 +1637,7 @@ export const useForm = <TData extends object>(
   );
   const formSubmission = useFormSubmission(
     formData,
+    formTableRowSwapMap,
     formValidation,
     formModifiers,
     formEditState,
@@ -1450,14 +1654,11 @@ export const useForm = <TData extends object>(
     formSubmission,
     formLayout
   );
-  const computedContent = useFormComputedContent(
+  const content = useFormContent(
     props.content,
     contentContext,
-    logger
-  );
-  const content = useFormContent(
-    computedContent,
     formData,
+    formTableRowSwapMap,
     formValidation,
     formModifiers,
     formLayout,

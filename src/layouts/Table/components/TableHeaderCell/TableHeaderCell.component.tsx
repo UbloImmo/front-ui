@@ -17,12 +17,16 @@ const defaultTableHeaderCellProps: Required<TableHeaderCellProps> = {
   colSpan: 1,
   className: null,
   styleOverride: null,
+  title: null,
+  role: "cell",
+  onClick: null,
+  position: null,
 };
 
 /**
  * A table header cell component to label the corresponding column, used in `TableHeader`.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {CellProps} props - The props for the component.
  * @return {JSX.Element} The rendered table header cell.
@@ -39,6 +43,10 @@ export const TableHeaderCell = forwardRef<
   );
   const style = useHtmlAttribute(props.styleOverride);
 
+  const onClick = useHtmlAttribute(mergedProps.onClick);
+  const position = useHtmlAttribute(mergedProps.position);
+  const title = useHtmlAttribute(mergedProps.title);
+
   return (
     <th
       colSpan={mergedProps.colSpan}
@@ -46,6 +54,10 @@ export const TableHeaderCell = forwardRef<
       className={className}
       style={style}
       ref={ref}
+      role={mergedProps.role}
+      title={title}
+      onClick={onClick}
+      data-position={position}
     >
       <div data-testid="table-header-cell-inner">{props.children}</div>
     </th>

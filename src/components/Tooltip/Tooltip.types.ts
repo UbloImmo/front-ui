@@ -68,6 +68,12 @@ export type TooltipProps = {
    * @default "help"
    */
   cursor?: TooltipCursor;
+  /**
+   * Whether the tooltip is disabled and does not show its content on hover
+   *
+   * @default false
+   */
+  disabled?: boolean;
 };
 
 export type DefaultTooltipProps = Required<TooltipProps>;

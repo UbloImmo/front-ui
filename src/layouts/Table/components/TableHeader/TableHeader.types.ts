@@ -3,7 +3,7 @@ import type { FixedCssLength } from "@types";
 
 export type TableHeaderProps = Omit<TableProps, "layout"> & {
   /**
-   * Whether the header should be stickyÅ
+   * Whether the header should be sticky
    *
    * @type {boolean}
    * @default false

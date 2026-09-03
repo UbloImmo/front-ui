@@ -376,6 +376,31 @@ export function useDebounceValue<TValue>(
 }
 
 /**
+ * Updates a map's value in place
+ *
+ * @template TKey - The type of the map's keys
+ * @template TValues - The type of the map's values
+ * @param {Map<TKey, TValue>} map - The map to update
+ * @param {TKey} key - The key for which to update the value
+ * @param {(currentValue: TValue) => TValue} updateFn - A callback function that returns an updated value based on the previous one
+ * @returns {boolean} - `true` if an update took place (i.e. the updated value is different from the previous value), `false` otherwise
+ */
+export const updateMap = <TKey, TValue>(
+  map: Map<TKey, TValue>,
+  key: TKey,
+  updateFn: (currentValue: TValue) => TValue
+): boolean => {
+  if (!updateFn) return false;
+  const currentValue = map.get(key);
+  if (!isDefined(currentValue)) return false;
+  const updated = updateFn(currentValue);
+  // do not trigger update if the updated value is the same as the current value
+  if (compare(currentValue, updated, compare.eq)) return false;
+  map.set(key, updated);
+  return true;
+};
+
+/**
  * Custom hook that returns a single Map object and hijacks its mutation methods to cause re-renders
  */
 export const useMap: UseMap = <
@@ -494,7 +519,7 @@ export const useMap: UseMap = <
       if (!isDefined(currentValue)) return false;
       const updated = updateFn(currentValue);
       // do not trigger update if the updated value is the same as the current value
-      if (compare(currentValue, update, compare.eq)) return false;
+      if (compare(currentValue, updated, compare.eq)) return false;
       set(key, updated);
       return true;
     },
