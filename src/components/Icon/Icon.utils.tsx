@@ -1,4 +1,5 @@
 import {
+  isNumber,
   type Nullable,
   type Nullish,
   type Optional,
@@ -7,7 +8,7 @@ import {
 import { useMemo, type LazyExoticComponent } from "react";
 
 import { parseFixedLength } from "@/sizes/size.utils";
-import { cssRem, isCssLengthUsage } from "@utils";
+import { cssRem, isFixedCssLength } from "@utils";
 
 import type { GeneratedIcon, MissingIcon } from "./Icon.types";
 import type { CssPx, CssRem, FixedCssLength } from "@types";
@@ -23,7 +24,8 @@ const parseIconSize = (
   size: Optional<FixedCssLength>,
   warn: VoidFn<[unknown]>
 ): CssRem => {
-  if (!isCssLengthUsage(size)) {
+  if (isNumber(size)) return cssRem(size);
+  if (!isFixedCssLength(size)) {
     warn(`unsupported size (${size}) provided`);
     return cssRem(1);
   }
