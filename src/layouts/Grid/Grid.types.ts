@@ -23,7 +23,9 @@ export type GridGap =
       column: CssLength;
     };
 
-export type GridTemplateArray = (CssLength | CssMinmax)[];
+export type GridTemplateArrayItem = CssLength | CssMinmax;
+
+export type GridTemplateArray = GridTemplateArrayItem[];
 
 export type GridTemplate = GridTemplateArray | number | "unset";
 
