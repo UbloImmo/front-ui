@@ -28,8 +28,15 @@ import type {
   CssDeg,
   CssFr,
   CssLength,
+  CssLengthKeyword,
+  CssLengthToCssLengthUsage,
   CssLengthUsage,
   CssLightDark,
+  CssMinmax,
+  CssMinmaxData,
+  CssMinmaxMaxLength,
+  CssMinmaxMinLength,
+  CssMinmaxWithData,
   CssPercent,
   CssPx,
   CssRem,
@@ -41,6 +48,15 @@ import type {
   RgbaColorStr,
   SpacingLabel,
 } from "@types";
+
+const CSS_LENGTH_KEYWORD_SET = new Set<CssLengthKeyword>([
+  "auto",
+  "min-content",
+  "max-content",
+  "fit-content",
+]);
+const CSS_MINMAX_REGEX = /^minmax\((\S+),\s(\S+)\)$/;
+const CSS_VAR_USAGE_REGEX = /^var\((--\S+)\)$/;
 
 export const REM_FACTOR = 16 as const;
 
@@ -153,32 +169,43 @@ export const isCssRem = (value: unknown): value is CssRem => {
 /**
  * Generates a CSS variable name by prefixing the input name with '--'.
  *
- * @param {string} name - The input name for the CSS variable
- * @return {CssVarName} The generated CSS variable name
+ * @template {string} [TName=string] - Type of the variable's name
+ *
+ * @param {TName} name - The input name for the CSS variable
+ * @return {CssVarName<TName>} The generated CSS variable name
  */
-export const cssVarName = (name: string): CssVarName => `--${name}`;
+export const cssVarName = <TName extends string = string>(
+  name: TName
+): CssVarName<TName> => `--${name}`;
 
 /**
  * Returns a CSS variable declaration with the provided name and value.
  *
- * @template {string} TValue - the type of the Css variable's value
- * @param {string} name - the name of the CSS variable
+ * @template {string} [TValue=string] - the type of the Css variable's value
+ * @template {string} [TName=string] - Type of the variable's name
+ * @param {TName} name - the name of the CSS variable
  * @param {TValue} value - the value of the CSS variable
- * @return {CssVar<TValue>} the CSS variable declaration
+ * @return {CssVar<TValue, TName>} the CSS variable declaration
  */
-export const cssVar = <TValue extends string = string>(
-  name: string,
+export const cssVar = <
+  TValue extends string = string,
+  TName extends string = string,
+>(
+  name: TName,
   value: TValue
-): CssVar<TValue> => `${cssVarName(name)}: ${value};`;
+): CssVar<TValue, TName> => `${cssVarName(name)}: ${value};`;
 
 /**
  * Returns a CSS variable usage with the provided name.
  *
- * @param {string} name - the name of the CSS variable
- * @return {CssVarUsage} the usage of the CSS variable
+ * @template {string} [TName=string] - Type of the variable's name
+ *
+ * @param {TName} name - the name of the CSS variable
+ * @return {CssVarUsage<TName>} the usage of the CSS variable
  */
-export const cssVarUsage = (name: string): CssVarUsage =>
-  `var(${cssVarName(name)})`;
+export const cssVarUsage = <TName extends string = string>(
+  name: TName
+): CssVarUsage<TName> => `var(${cssVarName(name)})`;
 
 /**
  * Returns a {@link CssFr} string with the given number.
@@ -198,6 +225,16 @@ export const cssFr = (fr: number): CssFr => {
  */
 export const cssDeg = (deg: number): CssDeg => {
   return `${deg}deg`;
+};
+
+/**
+ * Returns a {@link CssCh} string with the given number.
+ *
+ * @param {number} ch - The number to be concatenated with 'ch'.
+ * @return {CssCh} The string with the concatenated number and 'ch' unit.
+ */
+export const cssCh = (ch: number): CssCh => {
+  return `${ch}ch`;
 };
 
 /**
@@ -298,6 +335,17 @@ export const isCssVarName = (value: unknown): value is CssVarName => {
 };
 
 /**
+ * Type guard to check if the input value is of type {@link CssVarUsage}.
+ *
+ * @param {unknown} value - The value to be checked
+ * @return {boolean} Whether the input value is of type CssVarUsage
+ */
+export const isCssVarUsage = (value: unknown): value is CssVarUsage => {
+  if (!isNonEmptyString(value)) return false;
+  return CSS_VAR_USAGE_REGEX.test(value);
+};
+
+/**
  * Checks if the given value is a {@link SpacingLabel} by validating its format and scale.
  *
  * @param {unknown} value - the value to be checked
@@ -316,6 +364,18 @@ export const isSpacingLabel = (value: unknown): value is SpacingLabel => {
 };
 
 /**
+ * Checks if the given value is a {@link CssLengthKeyword}.
+ *
+ * @param {unknown} value - the value to be checked
+ * @return {boolean} true if the value is a {@link CssLengthKeyword}, false otherwise
+ */
+export const isCssLengthKeyword = (
+  value: unknown
+): value is CssLengthKeyword => {
+  return CSS_LENGTH_KEYWORD_SET.has(value as CssLengthKeyword);
+};
+
+/**
  * Type guard to check if the input value is of type {@link CssLength}.
  *
  * @param {unknown} value - The value to be checked
@@ -329,7 +389,8 @@ export const isCssLength = (value: unknown): value is CssLength => {
     isCssPx(value) ||
     isCssFr(value) ||
     isCssPercent(value) ||
-    isCssCh(value)
+    isCssCh(value) ||
+    isCssLengthKeyword(value)
   );
 };
 
@@ -360,7 +421,10 @@ export const isFixedCssLength = (value: unknown): value is FixedCssLength => {
  * @param {CssLength} length - the flex gap value to be processed
  * @return {CssLengthUsage} the processed CSS value
  */
-export const cssLengthUsage = (length: CssLength): CssLengthUsage => {
+export function cssLengthUsage<TLength extends CssLength>(
+  length: TLength
+): CssLengthToCssLengthUsage<TLength>;
+export function cssLengthUsage(length: CssLength): CssLengthUsage {
   if (isNumber(length)) {
     return cssRem(length);
   }
@@ -369,7 +433,8 @@ export const cssLengthUsage = (length: CssLength): CssLengthUsage => {
     isCssRem(length) ||
     isCssCh(length) ||
     isCssPercent(length) ||
-    isCssFr(length)
+    isCssFr(length) ||
+    isCssLengthKeyword(length)
   ) {
     return length;
   }
@@ -377,25 +442,135 @@ export const cssLengthUsage = (length: CssLength): CssLengthUsage => {
     return cssVarUsage(length);
   }
   return length;
-};
+}
 
 /**
  * Checks if the value is a valid {@link CssLengthUsage}
- * by checking if it is a number, CSS pixel value, rem value, percent, fr, ch or a SpacingLabel
+ * by checking if it is a CSS pixel value, rem value, percent, fr, ch, length keyword or a SpacingLabel
  *
  * @param {unknown} value - the value to check
  * @return {boolean} true if the value is a CssLengthUsage, false otherwise
  */
 export const isCssLengthUsage = (value: unknown): value is CssLengthUsage => {
   return (
-    isNumber(value) ||
     isCssPx(value) ||
     isCssRem(value) ||
-    isSpacingLabel(value) ||
+    isCssVarUsage(value) ||
     isCssPercent(value) ||
     isCssFr(value) ||
-    isCssCh(value)
+    isCssCh(value) ||
+    isCssLengthKeyword(value)
   );
+};
+
+/**
+ * Converts min & max bounds for use in a CSS `minmax()` declaration
+ *
+ * @template TMin - Type of the min argument
+ * @template TMax - Type of the max argument
+ *
+ * @param {TMin} min - Minimum bound of the `minmax()` declaration
+ * @param {TMin} max - Maximum bound of the `minmax()` declaration
+ *
+ * @returns {CssMinmaxData<TMin, TMax>} An object containing the converted `min` / `max` values
+ */
+const cssMinmaxData = <
+  TMin extends CssMinmaxMinLength,
+  TMax extends CssMinmaxMaxLength,
+>(
+  min: TMin,
+  max: TMax
+): CssMinmaxData<TMin, TMax> => {
+  return {
+    min: cssLengthUsage(min),
+    max: cssLengthUsage(max),
+  };
+};
+
+/**
+ * Creates a CSS `minmax()` declaration from min & max values while converting them to CSS-usable representations.
+ *
+ * @param {CssMinmaxMinLength} min - Minimum bound of the `minmax()` declaration
+ * @param {CssMinmaxMaxLength} max - Maximum bound of the `minmax()` declaration
+ * @returns {CssMinmax} CSS `minmax()` declaration
+ */
+export const cssMinmax = (
+  min: CssMinmaxMinLength,
+  max: CssMinmaxMaxLength
+): CssMinmax => {
+  const data = cssMinmaxData(min, max);
+  return `minmax(${data.min}, ${data.max})`;
+};
+
+/**
+ * Creates an object containing a CSS `minmax()` declaration and its converted min & max values.
+ *
+ * @template TMin - Type of the min argument
+ * @template TMax - Type of the max argument
+ *
+ * @param {TMin} min - Minimum bound of the `minmax()` declaration
+ * @param {TMin} max - Maximum bound of the `minmax()` declaration
+ * @returns {CssMinmaxWithData<TMin, TMax>} An object containing the converted `min` / `max` values & the resulting CSS `minmax()` declaration
+ */
+export const cssMinmaxWithData = <
+  TMin extends CssMinmaxMinLength,
+  TMax extends CssMinmaxMaxLength,
+>(
+  min: TMin,
+  max: TMax
+): CssMinmaxWithData<TMin, TMax> => {
+  const data = cssMinmaxData(min, max);
+  const minmax: CssMinmax = `minmax(${data.min}, ${data.max})`;
+  return {
+    ...data,
+    minmax,
+  };
+};
+
+/**
+ * Type guard to check if the input value is of type {@link CssMinmax}.
+ *
+ * @param {unknown} value - The value to be checked
+ * @return {boolean} Whether the input value is of type CssMinmax
+ */
+export const isCssMinmax = (value: unknown): value is CssMinmax => {
+  return isNonEmptyString(value) && CSS_MINMAX_REGEX.test(value);
+};
+
+/**
+ * Parses a CSS minmax() declaration into its min & max values.
+ *
+ * @template TMin - Type of the min argument
+ * @template TMax - Type of the max argument
+ *
+ * @param {CssMinmaxWithData<TMin, TMax> | CssMinmax} minmax - the CSS minmax() declaration to parse
+ * @return {{ min: CssLengthToCssLengthUsage<TMin>, max: CssLengthToCssLengthUsage<TMax>;  }} the css-ready min & max values extracted from the provided minmax() declaration
+ */
+export const parseCssMinmax = <
+  TMin extends CssMinmaxMinLength = CssMinmaxMinLength,
+  TMax extends CssMinmaxMaxLength = CssMinmaxMaxLength,
+>(
+  minmax: CssMinmaxWithData<TMin, TMax> | CssMinmax
+): CssMinmaxData<TMin, TMax> => {
+  // extract min & max from data if provided
+  if (isObject(minmax)) {
+    const { min, max } = minmax;
+    if (isUndefined(min) || isUndefined(max))
+      throw new Error(
+        "Invalid object supplied. Expected 'min' & 'max' properties"
+      );
+    return { min, max };
+  }
+  if (!isCssMinmax(minmax))
+    throw new Error('Invalid string supplied. "Expected minmax([min], [max])"');
+  // otherwise parse provided minmax string & a assign types
+  const [_, min, max] = [...(minmax.match(CSS_MINMAX_REGEX) ?? [])];
+  if (!isNonEmptyString(min) || !isNonEmptyString(max))
+    throw new Error("Malformed CSS minmax() declaration.");
+  return {
+    min: min as CssLengthToCssLengthUsage<TMin>,
+    max: max as CssLengthToCssLengthUsage<TMax>,
+  };
 };
 
 /**
@@ -404,12 +579,18 @@ export const isCssLengthUsage = (value: unknown): value is CssLengthUsage => {
  * @param {CssVar<string>} variable - the CSS variable to parse
  * @return {{ name: CssVarName; value: string }} the name and value of the CSS variable
  */
-export const parseCssVar = <TValue extends string>(
-  variable: CssVar<TValue>
-): { name: CssVarName; value: TValue } => {
+export const parseCssVar = <
+  TValue extends string,
+  TName extends string = string,
+>(
+  variable: CssVar<TValue, TName>
+): { name: CssVarName<TName>; value: TValue } => {
   const [name, value] = variable
     .split(":")
-    .map((part) => part.trim().replaceAll(";", "")) as [CssVarName, TValue];
+    .map((part) => part.trim().replaceAll(";", "")) as [
+    CssVarName<TName>,
+    TValue,
+  ];
   return { name, value };
 };
 

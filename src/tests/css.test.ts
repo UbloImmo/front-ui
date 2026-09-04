@@ -1,4 +1,4 @@
-import { isNullish, objectKeys } from "@ubloimmo/front-util";
+import { isNullish, objectKeys, objectValues } from "@ubloimmo/front-util";
 import { describe, it, expect } from "bun:test";
 
 import {
@@ -24,9 +24,27 @@ import {
   cssVariables,
   cssClasses,
   cssStyles,
+  cssCh,
+  isCssMinmax,
+  cssMinmax,
+  cssCalc,
+  parseCssVar,
+  parseCssMinmax,
+  cssMinmaxWithData,
+  isCssVarUsage,
+  isCssLengthKeyword,
 } from "@utils";
 
-import type { CssFr, CssLength, CssPercent, CssPx, CssRem } from "@types";
+import type {
+  CssCh,
+  CssFr,
+  CssLength,
+  CssLengthKeyword,
+  CssMinmax,
+  CssPercent,
+  CssPx,
+  CssRem,
+} from "@types";
 import type {
   GenericFn,
   NullishPrimitives,
@@ -47,6 +65,10 @@ type LengthCollection = {
   fr: LengthUnitCollection<number>;
   cssFr: LengthUnitCollection<CssFr>;
   cssPercent: LengthUnitCollection<CssPercent>;
+  ch: LengthUnitCollection<number>;
+  cssCh: LengthUnitCollection<CssCh>;
+  cssLengthKeyword: LengthUnitCollection<CssLengthKeyword>;
+  cssMinmax: LengthUnitCollection<CssMinmax>;
 };
 
 type LengthUnitKey = keyof LengthCollection;
@@ -59,6 +81,18 @@ export const testLenghts: LengthCollection = {
   fr: { int: 12, float: 128.4, negative: -24 },
   cssFr: { int: "12fr", float: "128.4fr", negative: "-24fr" },
   cssPercent: { int: "12%", float: "128.4%", negative: "-24%" },
+  ch: { int: 12, float: 128.4, negative: -24 },
+  cssCh: { int: "12ch", float: "128.4ch", negative: "-24ch" },
+  cssLengthKeyword: {
+    int: "auto",
+    float: "fit-content",
+    negative: "max-content",
+  },
+  cssMinmax: {
+    int: "minmax(45px, 78rem)",
+    float: "minmax(min-content, 2.5fr)",
+    negative: "minmax(-456%, auto)",
+  },
 } as const;
 
 const testLengthConversion = <
@@ -119,10 +153,79 @@ describe("css", () => {
     testLengthConversion("px", "cssPx", cssPx);
     testLengthConversion("rem", "cssRem", cssRem);
     testLengthConversion("fr", "cssFr", cssFr);
+    testLengthConversion("ch", "cssCh", cssCh);
     testLengthConversion("px", "rem", pxToRem);
     testLengthConversion("rem", "px", remToPx);
     testLengthConversion("cssPx", "cssRem", cssPxToCssRem);
     testLengthConversion("cssRem", "cssPx", cssRemToCssPx);
+  });
+
+  describe("declarations", () => {
+    describe("minmax()", () => {
+      it("should declare a cssMinmax", () => {
+        expect(cssMinmax("auto", "1fr")).toBe("minmax(auto, 1fr)");
+        expect(cssMinmax("min-content", "max-content")).toBe(
+          "minmax(min-content, max-content)"
+        );
+        expect(cssMinmax(4, "auto")).toBe("minmax(4rem, auto)");
+        expect(cssMinmax("max-content", "450px")).toBe(
+          "minmax(max-content, 450px)"
+        );
+        expect(cssMinmax("2px", "s-8")).toBe("minmax(2px, var(--s-8))");
+      });
+
+      it("should convert a cssMinmax's bounds", () => {
+        const { min, max, minmax } = cssMinmaxWithData(12, "s-2");
+        expect(isCssRem(min)).toBeTrue();
+        expect(min).toBe("12rem");
+        expect(isCssVarUsage(max)).toBeTrue();
+        expect(max).toBe("var(--s-2)");
+        expect(isCssMinmax(minmax)).toBeTrue();
+        expect(minmax).toBe("minmax(12rem, var(--s-2))");
+      });
+
+      it("should parse a cssMinmaxWithData object", () => {
+        const result = cssMinmaxWithData(12, "s-2");
+        expect(() => parseCssMinmax(result)).not.toThrow();
+        const parsed = parseCssMinmax(result);
+        expect(parsed).toBeObject();
+        expect(parsed.min).toBe(result.min);
+        expect(parsed.max).toBe(result.max);
+      });
+
+      it("should parsed a cssMinMax string", () => {
+        const result = cssMinmaxWithData(12, "s-2");
+        expect(() => parseCssMinmax(result.minmax)).not.toThrow();
+        const parsed = parseCssMinmax(result.minmax);
+        expect(parsed).toBeObject();
+        expect(parsed.min).toBe(result.min);
+        expect(parsed.max).toBe(result.max);
+
+        objectValues(testLenghts.cssMinmax).forEach((minmax) => {
+          expect(() => parseCssMinmax(minmax)).not.toThrow();
+          const parsed = parseCssMinmax(minmax);
+          expect(parsed).toBeObject();
+          expect(parsed).not.toBeEmpty();
+          expect(parsed).toHaveProperty("min");
+          expect(parsed).toHaveProperty("max");
+          expect(parsed.min).toBeString();
+          expect(parsed.min).not.toBeEmpty();
+          expect(parsed.max).toBeString();
+          expect(parsed.max).not.toBeEmpty();
+        });
+      });
+    });
+
+    describe("calc()", () => {
+      it("should declare a cssCalc", () => {
+        expect(cssCalc("12px + 78%")).toBe("calc(12px + 78%)");
+        expect(cssCalc("1rem - 50ch")).toBe("calc(1rem - 50ch)");
+        expect(cssCalc(`12px + 78% * (1 - ${cssVarUsage("ratio")})`)).toBe(
+          "calc(12px + 78% * (1 - var(--ratio)))"
+        );
+        expect(cssCalc("12px + 78%")).toBe("calc(12px + 78%)");
+      });
+    });
   });
 
   describe("variables", () => {
@@ -145,13 +248,33 @@ describe("css", () => {
       expect(cssVarUsage).not.toThrow();
       expect(cssVarUsage("foo")).toEqual("var(--foo)");
     });
+
+    it("should parse a css variable string", () => {
+      expect(parseCssVar(cssVar("foo", testLenghts.cssRem.float))).toEqual({
+        name: "--foo",
+        value: testLenghts.cssRem.float,
+      });
+    });
   });
 
   describe("predicates", () => {
-    testLengthPredicate<CssPx, "cssPx">("cssPx", isCssPx);
-    testLengthPredicate<CssRem, "cssRem">("cssRem", isCssRem);
-    testLengthPredicate<CssFr, "cssFr">("cssFr", isCssFr);
-    testLengthPredicate<CssPercent, "cssPercent">("cssPercent", isCssPercent);
+    testLengthPredicate("cssPx", isCssPx);
+    testLengthPredicate("cssRem", isCssRem);
+    testLengthPredicate("cssFr", isCssFr);
+    testLengthPredicate("cssPercent", isCssPercent);
+    testLengthPredicate("cssLengthKeyword", isCssLengthKeyword);
+    testLengthPredicate("cssMinmax", isCssMinmax);
+
+    it("should identify a cssMinmax", () => {
+      expect(isCssMinmax("minmax(auto, 1fr)")).toBeTrue();
+      expect(isCssMinmax("minmax(1fr, false)")).toBeTrue();
+      expect(isCssMinmax("minmax(min-content, 2.5fr)")).toBeTrue();
+      expect(isCssMinmax("minmax(78612.75756%, 20rem)")).toBeTrue();
+      expect(isCssMinmax("minmax(78612.75756%,20rem)")).toBeFalse();
+      expect(isCssMinmax("minmax(78612.75756%)")).toBeFalse();
+      expect(isCssMinmax("minmax(78612.75756%,)")).toBeFalse();
+      expect(isCssMinmax("minmax(78612.75756%, )")).toBeFalse();
+    });
 
     it("should identify a CSSProperties object", () => {
       expect(isCssProperties).toBeFunction();
@@ -172,18 +295,20 @@ describe("css", () => {
       expect(isCssLength("4ch")).toBeTrue();
       expect(isCssLength("5%")).toBeTrue();
       expect(isCssLength("6fr")).toBeTrue();
+      expect(isCssLengthUsage("auto")).toBeTrue();
     });
 
     it("should identify a css length usage", () => {
       expect(isCssLengthUsage).toBeFunction();
       expect(isCssLengthUsage).not.toThrow();
-      expect(isCssLengthUsage(0)).toBeTrue();
+      expect(isCssLengthUsage(0)).toBeFalse();
       expect(isCssLengthUsage("1px")).toBeTrue();
       expect(isCssLengthUsage("2rem")).toBeTrue();
-      expect(isCssLengthUsage("s-3")).toBeTrue();
+      expect(isCssLengthUsage("s-3")).toBeFalse();
       expect(isCssLengthUsage("4ch")).toBeTrue();
       expect(isCssLengthUsage("5%")).toBeTrue();
       expect(isCssLengthUsage("6fr")).toBeTrue();
+      expect(isCssLengthUsage("auto")).toBeTrue();
     });
   });
 
@@ -197,7 +322,11 @@ describe("css", () => {
       expect(cssLengthUsage(testLenghts.cssRem.float)).toEqual(
         testLenghts.cssRem.float
       );
+      expect(cssLengthUsage(testLenghts.cssPx.float)).toEqual(
+        testLenghts.cssPx.float
+      );
       expect(cssLengthUsage("s-1")).toEqual(cssVarUsage("s-1"));
+      expect(cssLengthUsage("auto")).toEqual("auto");
     });
   });
 
