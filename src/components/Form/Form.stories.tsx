@@ -616,10 +616,8 @@ const formTableProps: FormTableProps<IdentityTable> = {
   maxBodyHeight: "200px",
   selectable: {
     property: "selected",
-    behavior: "default",
+    behavior: "filter",
   },
-  error: true,
-  errorText: "heya",
   EmptyCard: () => {
     return <span>Empty card</span>;
   },
@@ -667,7 +665,7 @@ const formTableProps: FormTableProps<IdentityTable> = {
       label: "Last name",
       errorText: "Ceci est une erreur",
       layout: {
-        fixedWidth: "120px",
+        hidden: true,
       },
     },
     {
@@ -748,7 +746,7 @@ const tableFormProps: FormProps<IdentityTable> = {
 
 export const Table = (props: FormStoryProps) => {
   const mergedProps = useMergedProps(tableFormProps, props);
-  return <Form {...mergedProps} />;
+  return <Form {...mergedProps} debug />;
 };
 Table.parameters = {
   docs: componentSource([tableFormProps as FormStoryProps]),
@@ -1462,10 +1460,10 @@ export const ComputedTableContent = () => {
                   kind: "custom-field",
                   source: "firstName",
                   label: "Identity",
-                  layout: {
-                    size: 2,
-                    fixedWidth: "300px",
-                  },
+                  // layout: {
+                  //   size: 2,
+                  //   // fixedWidth: "300px",
+                  // },
                   // eslint-disable-next-line react/prop-types
                   CustomInput: ({ rowIndex }) => {
                     const row = context.data?.profiles?.[rowIndex ?? 0];
@@ -1492,24 +1490,31 @@ export const ComputedTableContent = () => {
                   source: "firstName",
                   label: "First name",
                   type: "text",
+                  required: true,
                   layout: {
                     size: 2,
-                    fixedWidth: "200px",
+                    // fixedWidth: "200px",
                   },
                 }
               : null,
+          (context) => {
+            if (!context.data?.profiles?.at(0)?.firstName?.length) {
+              context.mutateFormData("profiles.0.firstName", "coucou");
+            }
+            return null;
+          },
           (context) =>
             context.isEditing
               ? {
                   source: "lastName",
                   label: "Last Name",
                   type: "text",
-                  layout: {
-                    size: 2,
-                  },
+                  // layout: {
+                  //   size: 2,
+                  // },
                 }
               : null,
-          {
+          (context) => ({
             source: "tags",
             type: "multi-select",
             label: "Tags",
@@ -1517,7 +1522,11 @@ export const ComputedTableContent = () => {
               label,
               value: label,
             })),
-          },
+            layout: {
+              size: 2,
+            },
+            disabled: !!context.errors.length,
+          }),
         ],
       },
       (context) =>
@@ -1534,5 +1543,5 @@ export const ComputedTableContent = () => {
     ],
   });
 
-  return <Form {...props} debug />;
+  return <Form {...props} />;
 };

@@ -7,7 +7,12 @@ import {
 
 import styles from "./Grid.module.css";
 
-import { cssLengthUsage, useCssClasses, useCssVariables } from "@utils";
+import {
+  cssLengthUsage,
+  isCssMinmax,
+  useCssClasses,
+  useCssVariables,
+} from "@utils";
 
 import type {
   GridGap,
@@ -44,7 +49,7 @@ export const formatGridTemplate = (template: GridTemplate): string => {
   }
   if (isArray(template)) {
     return template
-      .map((item) => (item === "auto" ? item : cssLengthUsage(item)))
+      .map((item) => (isCssMinmax(item) ? item : cssLengthUsage(item)))
       .join(" ");
   }
   return template;

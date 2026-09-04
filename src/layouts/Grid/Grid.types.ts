@@ -1,4 +1,4 @@
-import type { CssLength, StyleOverrideProps } from "@types";
+import type { CssLength, CssMinmax, StyleOverrideProps } from "@types";
 import type { Enum, Nullable } from "@ubloimmo/front-util";
 import type { AriaRole, ReactNode } from "react";
 
@@ -23,7 +23,9 @@ export type GridGap =
       column: CssLength;
     };
 
-export type GridTemplateArray = (CssLength | "auto")[];
+export type GridTemplateArrayItem = CssLength | CssMinmax;
+
+export type GridTemplateArray = GridTemplateArrayItem[];
 
 export type GridTemplate = GridTemplateArray | number | "unset";
 
