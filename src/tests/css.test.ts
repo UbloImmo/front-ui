@@ -51,7 +51,7 @@ import type {
   Predicate,
 } from "@ubloimmo/front-util";
 
-type LengthUnitCollection<TUnit extends CssLength> = {
+type LengthUnitCollection<TUnit extends CssLength | CssMinmax> = {
   int: TUnit;
   float: TUnit;
   negative: TUnit;
