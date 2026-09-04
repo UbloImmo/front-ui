@@ -44,6 +44,8 @@ export const FormField = ({
   return (
     <FormFieldGridItem
       fixedWidth={layout.fixedWidth}
+      minWidth={layout.minWidth}
+      maxWidth={layout.maxWidth}
       columnEnd={layout.columnEnd}
       align="start"
       testId="form-field-container"

@@ -94,6 +94,9 @@ export const FormCustomField = (
   return (
     <FormFieldGridItem
       columnEnd={layout.columnEnd}
+      fixedWidth={layout.fixedWidth}
+      minWidth={layout.minWidth}
+      maxWidth={layout.maxWidth}
       align="start"
       testId="form-field-container"
       overrideTestId

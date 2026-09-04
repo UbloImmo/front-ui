@@ -53,10 +53,10 @@ import {
   setObjectValue,
 } from "./Form.utils";
 
-import { CssLength } from "@types";
 import {
   cssFr,
   cssLengthUsage,
+  cssMinmax,
   isEmptyString,
   updateMap,
   useLogger,
@@ -74,12 +74,14 @@ import type {
   BuildFieldPropsFn,
   BuildFormFeatureSwitchFn,
   BuildFormFieldLayoutFn,
+  BuildFormTableFieldColumnLayoutFn,
   BuildFormTablePropsFn,
   BuiltFieldProps,
   BuiltFormContent,
   BuiltFormCustomFieldProps,
   BuiltFormFeatureSwitchProps,
-  BuiltFormFieldLayoutProps,
+  BuiltFormFieldLayout,
+  BuiltFormTableFieldColumnLayout,
   BuiltFormTableModifiers,
   BuiltFormTableProps,
   BuiltFormTableRow,
@@ -109,6 +111,7 @@ import type {
   FormQueryFn,
   FormSchema,
   FormSource,
+  FormTableColumn,
   FormTableProps,
   FormTableTryDeletingRowParams,
   FormValidation,
@@ -128,6 +131,7 @@ import type {
   UseFormTableRowSwapReturn,
   UseFormValidationReturn,
 } from "./Form.types";
+import type { GridTemplateArray, GridTemplateArrayItem } from "@/layouts/Grid";
 import type { GridEndPosition } from "@/layouts/GridItem";
 
 const FORM_DEBUG_FLAG = "FORM_DEBUG_ENABLED" as const;
@@ -440,12 +444,11 @@ const useFormLayout = (
    * based its containing form's {@link FormLayoutProps} as well as its own {@link FormFieldLayout}
    *
    * @param {Optional<FormFieldLayout>} [layout] - The optional {@link FormFieldLayout}
-   * @return {BuiltFormFieldLayoutProps["layout"]} - The built {@link BuiltFormFieldLayout}
+   * @return {BuiltFormFieldLayout} - The built {@link BuiltFormFieldLayout}
    */
   const buildFormFieldLayout = useCallback<BuildFormFieldLayoutFn>(
-    (fieldLayout?: FormFieldLayout): BuiltFormFieldLayoutProps["layout"] => {
+    (fieldLayout?: FormFieldLayout): BuiltFormFieldLayout => {
       const defaultSize = Math.max(1, Math.round(columns / 2));
-
       const hidden = isFunction<FormFieldLayoutHiddenFn>(fieldLayout?.hidden)
         ? fieldLayout.hidden(formEditState.isEditing)
         : isBoolean(fieldLayout?.hidden)
@@ -456,12 +459,20 @@ const useFormLayout = (
       const fixedWidth = fieldLayout?.fixedWidth
         ? cssLengthUsage(fieldLayout.fixedWidth)
         : null;
+      const minWidth = fieldLayout?.minWidth
+        ? cssLengthUsage(fieldLayout.minWidth)
+        : null;
+      const maxWidth = fieldLayout?.maxWidth
+        ? cssLengthUsage(fieldLayout.maxWidth)
+        : null;
 
       const columnEnd: GridEndPosition = `span ${size}`;
 
       return {
         ...fieldLayout,
         fixedWidth,
+        minWidth,
+        maxWidth,
         hidden,
         size,
         columnEnd,
@@ -471,9 +482,46 @@ const useFormLayout = (
     [columns, formEditState]
   );
 
+  /**
+   * Builts a {@link BuiltFormTableFieldColumnLayout} object
+   * based its containing form's {@link FormLayoutProps} as well as its own {@link FormFieldLayout}
+   *
+   * @param {Optional<FormFieldLayout>} [layout] - The optional {@link FormFieldLayout}
+   * @return {BuiltFormTableFieldColumnLayout} - The built {@link BuiltFormTableFieldColumnLayout}
+   */
+  const buildFormTableFieldColumnLayout =
+    useCallback<BuildFormTableFieldColumnLayoutFn>(
+      (columnLayout?: FormFieldLayout): BuiltFormTableFieldColumnLayout => {
+        const hidden = isFunction<FormFieldLayoutHiddenFn>(columnLayout?.hidden)
+          ? columnLayout.hidden(formEditState.isEditing)
+          : isBoolean(columnLayout?.hidden)
+            ? columnLayout.hidden
+            : false;
+        const size = columnLayout?.size ?? 1;
+        const fixedWidth = columnLayout?.fixedWidth ?? null;
+        const minWidth = columnLayout?.minWidth ?? null;
+        const maxWidth = columnLayout?.maxWidth ?? null;
+        const readonly = columnLayout?.readonly ?? false;
+        const columnWidth: GridTemplateArrayItem =
+          fixedWidth ?? cssMinmax(minWidth ?? "auto", maxWidth ?? cssFr(size));
+
+        return {
+          hidden,
+          size,
+          fixedWidth,
+          minWidth,
+          maxWidth,
+          columnWidth,
+          readonly,
+        };
+      },
+      [formEditState]
+    );
+
   return {
     columns,
     buildFormFieldLayout,
+    buildFormTableFieldColumnLayout,
     asModal: formLayout.asModal,
   };
 };
@@ -692,11 +740,20 @@ const useFormContent = <TData extends object>(
         unknown
       >[];
 
+      const tableModifiers: BuiltFormTableModifiers = {
+        deletable: t?.deletable ?? false,
+        swappable: t?.swappable ?? false,
+        selectable: t?.selectable ?? false,
+      };
+
       /**
        * Deletes a row from the table
        * @param {number} index The index of the row to delete
        */
       const deleteRow: DeleteTableRowFn = (index: number) => {
+        // abort if table does not allow deletion
+        if (!tableModifiers.deletable) return;
+
         const arrayCopy = [...arrayValue];
         const preConfirmLength = arrayCopy.length;
         const preConfirmRowData = { ...arrayCopy[index] };
@@ -764,12 +821,6 @@ const useFormContent = <TData extends object>(
         }
         // else, proceed with deletion
         confirmDelete();
-      };
-
-      const tableModifiers: BuiltFormTableModifiers = {
-        deletable: t?.deletable ?? false,
-        swappable: t?.swappable ?? false,
-        selectable: t?.selectable ?? false,
       };
 
       /**
@@ -854,7 +905,28 @@ const useFormContent = <TData extends object>(
         logger
       );
 
-      const headers = columns.map(
+      // compute visible columns, their layout & their count
+      // non-visible columns do not get processed at all
+      const visibleColumns: FormTableColumn<{ data: string }>[] = [];
+      const colSpans: number[] = [];
+      const colWidths: GridTemplateArray = [];
+      let columnsCount = 0;
+      for (const column of columns) {
+        const layout = formLayout.buildFormTableFieldColumnLayout(
+          column.layout
+        );
+        // omit hidden columns
+        if (layout.hidden) continue;
+        // hydrate arrays
+        visibleColumns.push(column);
+        colSpans.push(layout.size);
+        colWidths.push(layout.columnWidth);
+        // increment count
+        columnsCount++;
+      }
+
+      // generate headers for visible columns only
+      const headers = visibleColumns.map(
         ({ label, tooltip, compact, required, source }): FieldLabelProps => ({
           label,
           tooltip,
@@ -865,12 +937,6 @@ const useFormContent = <TData extends object>(
           ),
         })
       );
-
-      const colSpans = columns?.map(({ layout }) => layout?.size ?? 1) ?? [];
-      const colWidths: CssLength[] =
-        columns?.map(
-          ({ layout }) => layout?.fixedWidth ?? cssFr(layout?.size ?? 1)
-        ) ?? [];
 
       // generate rows and cell fields from columns and array items
       // build 2 row arrays in 1 loop:
@@ -916,7 +982,7 @@ const useFormContent = <TData extends object>(
               ) ?? {}),
             }
           : tableModifiers;
-        const cells = columns
+        const cells = visibleColumns
           .map(({ source, ...cell }) => {
             const cellSource = `${rowSource}.${source}`;
             const cellField = {
@@ -991,8 +1057,6 @@ const useFormContent = <TData extends object>(
         errorProps.error = errorProps.error || containsNestedErrors;
         errorProps.errorText = errorProps.errorText ?? tl.validation.invalid();
       }
-
-      const columnsCount = colSpans.reduce((acc, curr) => acc + curr, 0);
 
       // Extract test ID props from the footer if it's a select variant
       const footerWithTestId =
@@ -1699,6 +1763,17 @@ const defaultFormContext: FormContext<object> = {
     size: 1,
     columnEnd: "span 1",
     fixedWidth: null,
+    maxWidth: null,
+    minWidth: null,
+  }),
+  buildFormTableFieldColumnLayout: () => ({
+    readonly: false,
+    hidden: false,
+    size: 1,
+    columnWidth: "1fr",
+    fixedWidth: null,
+    maxWidth: null,
+    minWidth: null,
   }),
   asModal: null,
 };

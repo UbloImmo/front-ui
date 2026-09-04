@@ -93,14 +93,17 @@ export const FormTableFieldContent = forwardRef<
     /**
      * Grid columns computed based on modifiers & provided table columns
      * We add `s-6` to both sides to act as sticky blockers for the table's content
+     * Array content is:
+     * - 1 fixed column (s-6) for left controls & blockers
+     * - 1 optional column if selectable controls are shown
+     * - ...1 column per declared & shown table column
+     * - 1 fixed column (s-6) for right controls & blockers
      */
     const columns = useMemo<GridTemplateArray>(() => {
-      return [
-        "s-6",
-        ...(modifiers.selectable && isEditing ? ["s-9" as const] : []),
-        ...colWidths,
-        "s-6",
-      ];
+      const arr: GridTemplateArray = ["s-6"];
+      if (modifiers.selectable && isEditing) arr.push("s-9");
+      arr.push(...colWidths, "s-6");
+      return arr;
     }, [modifiers.selectable, isEditing, colWidths]);
 
     const onDragEnd = useCallback(

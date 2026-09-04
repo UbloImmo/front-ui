@@ -23,11 +23,14 @@ import type {
   SelectInputProps,
 } from "@/components/Input";
 import type { ModalProps } from "@/components/Modal";
+import type { GridTemplateArray, GridTemplateArrayItem } from "@/layouts/Grid";
 import type { GridEndPosition } from "@/layouts/GridItem";
 import type { TableLayout } from "@/layouts/Table";
 import type {
   CssLength,
   CssLengthUsage,
+  CssMinmaxMinLength,
+  CssMinmaxMaxLength,
   StyleOverrideProps,
   TestIdProps,
   TextProps,
@@ -143,6 +146,22 @@ export type FormFieldLayout = {
    * @default null
    */
   fixedWidth?: Nullable<CssLength>;
+  /**
+   * The min-width of the field, or the table cell that contains it
+   *
+   * @remarks,
+   * When a table cell field,
+   * this minimum width is passed as the `min` argument of a `minmax()` declaration
+   */
+  minWidth?: Nullable<CssMinmaxMinLength>;
+  /**
+   * The min-width of the field, or the table cell that contains it
+   *
+   * @remarks,
+   * When a table cell field,
+   * this minimum width is passed as the `min` argument of a `minmax()` declaration
+   */
+  maxWidth?: Nullable<CssMinmaxMaxLength>;
 };
 
 /**
@@ -164,12 +183,24 @@ export type FormFieldLayoutProps = {
  * @see {@link FormFieldLayout}
  */
 export type BuiltFormFieldLayout = Required<
-  Omit<FormFieldLayout, "hidden" | "fixedWidth">
+  Omit<FormFieldLayout, "hidden" | "fixedWidth" | "minWidth" | "maxWidth">
 > & {
   hidden: boolean;
   fixedWidth: Nullable<CssLengthUsage>;
+  minWidth: Nullable<CssLengthUsage>;
+  maxWidth: Nullable<CssLengthUsage>;
   columnEnd: GridEndPosition;
 };
+
+/**
+ * A built form table field's column's layout with all properties required and the hidden property
+ * converted from a boolean | function to just a boolean
+ *
+ * @see {@link FormFieldLayout}
+ */
+export type BuiltFormTableFieldColumnLayout = Required<
+  Omit<FormFieldLayout, "hidden">
+> & { hidden: boolean; columnWidth: GridTemplateArrayItem };
 
 /**
  * Props for components that use a built form field layout
@@ -190,8 +221,8 @@ export type BuiltFormFieldLayoutProps = {
  *
  * @type {Partial<Pick<BuiltFormFieldLayout, "fixedWidth">>}
  */
-export type BuiltFormFieldLayoutFixedWidthProp = Partial<
-  Pick<BuiltFormFieldLayout, "fixedWidth">
+export type BuiltFormFieldLayoutWidthProps = Partial<
+  Pick<BuiltFormFieldLayout, "fixedWidth" | "minWidth" | "maxWidth">
 >;
 
 /**
@@ -761,7 +792,7 @@ export type BuiltFormTableProps = {
   /**
    * A list of column widths expressed in css lengths
    */
-  colWidths: CssLength[];
+  colWidths: GridTemplateArray;
   /**
    * The table's native layout
    *
@@ -1646,7 +1677,7 @@ export type IsFieldRequiredFn<TData extends object> = (
 export type ComputeFormValidationFn = GenericFn<[], FormValidation>;
 
 /**
- * Builts a {@link BuiltFormFieldLayout} object
+ * Builds a {@link BuiltFormFieldLayout} object
  * based its containing form's {@link FormLayoutProps} as well as its own {@link FormFieldLayout}
  *
  * @param {Optional<FormFieldLayout>} [layout] - The optional {@link FormFieldLayout}
@@ -1655,6 +1686,18 @@ export type ComputeFormValidationFn = GenericFn<[], FormValidation>;
 export type BuildFormFieldLayoutFn = GenericFn<
   [Optional<FormFieldLayout>],
   BuiltFormFieldLayoutProps["layout"]
+>;
+
+/**
+ * Builds a {@link BuiltFormTableFieldColumnLayout} object
+ * based its containing form's {@link FormLayoutProps} as well as its own {@link FormFieldLayout}
+ *
+ * @param {Optional<FormFieldLayout>} [layout] - The optional {@link FormFieldLayout}
+ * @return {BuiltFormTableFieldColumnLayout} - The built {@link BuiltFormTableFieldColumnLayout}
+ */
+export type BuildFormTableFieldColumnLayoutFn = GenericFn<
+  [Optional<FormFieldLayout>],
+  BuiltFormTableFieldColumnLayout
 >;
 
 /**
@@ -1877,6 +1920,11 @@ export type UseFormEditStateReturn = {
   stopEditing: VoidFn;
 };
 
+/**
+ * Return type of the `useFormLayout` custom hook that handles form layout
+ * Contains methods for building form field & table column layouts,
+ * & other layout-related form information
+ */
 export type UseFormLayoutReturn = {
   /**
    * The number of columns in the form
@@ -1885,11 +1933,17 @@ export type UseFormLayoutReturn = {
    */
   columns: number;
   /**
-   * Builds a {@link BuiltFormFieldLayout} object
+   * Builds a {@link BuiltFormFieldLayout} object tailored to a form field
    *
    * @type {BuildFormFieldLayoutFn}
    */
   buildFormFieldLayout: BuildFormFieldLayoutFn;
+  /**
+   * Builds a {@link BuiltFormFieldLayout} object tailored to a form table field's column
+   *
+   * @type {BuildFormTableFieldColumnLayoutFn}
+   */
+  buildFormTableFieldColumnLayout: BuildFormTableFieldColumnLayoutFn;
   /**
    * Data used to determine if / how the form should be displayed as a modal
    *

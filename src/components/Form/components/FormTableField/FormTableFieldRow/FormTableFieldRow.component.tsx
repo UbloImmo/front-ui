@@ -132,6 +132,7 @@ export function FormTableFieldRow({
 
   // do not render row when selectable behavior is set to filter
   if (
+    !isEditing &&
     row.modifiers.selectable &&
     row.modifiers.selectable.behavior === "filter" &&
     !row.selected
