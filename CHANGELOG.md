@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Updated the package's peer dependencies
+
 ## 2.5.1 - 2026-09-04
 ### Added
 - `v1.2.1` Form component
