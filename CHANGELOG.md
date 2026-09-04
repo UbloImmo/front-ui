@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `v1.2.1` Form component
 
   - Added `minWidth` & `maxWidth` properties to form field & table column `layout` property
-    - Form fields & custom fields can now have customized fixes, min & max widths
+    - Form fields & custom fields can now have customized fixed, min & max widths
   - Added support for table columns to get sized with css `minmax()` declarations
   - Added ability for table columns to be hidden via their `layout.hidden` property. Hidden table columns do not get taken into account nor rendered at all.
 
