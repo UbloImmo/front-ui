@@ -44,7 +44,7 @@ export const listConfigFilterReducer = (
   // simply add the filter if it's the first time we see it
   if (type === "register") copy.set(filter.signature, filter);
   // update the filter if it's already in the map
-  if (type === "update") {
+  else if (type === "update") {
     // find the old filter based on its index & label
     const signature = findFilterByIndexAndLabel(copy, filter)?.signature;
     // delete it if found
@@ -87,7 +87,7 @@ export const listConfigFilterPresetReducer = (
   // simply add the filter if it's the first time we see it
   if (type === "register") copy.set(preset.signature, preset);
   // update the filter if it's already in the map
-  if (type === "update") {
+  else if (type === "update") {
     // find the old filter based on its label
     const signature = findFilterPresetByLabel(copy, preset)?.signature;
     // delete it if found
