@@ -1,5 +1,5 @@
 import { isArray, isNull, isObject } from "@ubloimmo/front-util";
-import { useCallback, useMemo, type ReactNode } from "react";
+import { useCallback, useMemo, useState, type ReactNode } from "react";
 
 import {
   type FilterSelectOptionFn,
@@ -13,10 +13,12 @@ import type {
   FormTableFieldFooterSelectProps,
 } from "./FormTableFieldFooter.types";
 
+const SELECT_KEY_ROLLBACK_LIMIT = 100;
+
 /**
  * Renders a select input inside a Form table field's footer
  *
- * @version 0.1.2
+ * @version 0.1.3
  *
  * @param {FormTableFieldFooterSelectProps} props - Component props
  * @returns {ReactNode} - Footer select input
@@ -28,6 +30,20 @@ export function FormTableFieldFooterSelect({
   disabled,
 }: FormTableFieldFooterSelectProps): ReactNode {
   const { action } = useUikitTranslation();
+
+  const [selectId, setSelectId] = useState(0);
+
+  const selectKey = useMemo(
+    () => `form-table-field-footer-select-${selectId}`,
+    [selectId]
+  );
+
+  const rerenderSelect = useCallback(() => {
+    setSelectId((prev) => {
+      if (prev >= SELECT_KEY_ROLLBACK_LIMIT) return 0;
+      return prev + 1;
+    });
+  }, []);
 
   /**
    * Filters out options which values are already contained in a table row.
@@ -71,13 +87,20 @@ export function FormTableFieldFooterSelect({
       placeholder: footerSelectProps.placeholder ?? action.selectItem(),
       onChange: (value) => {
         if (!value) return;
-
         appendRow(value);
+        rerenderSelect();
       },
       filterOption: filterSelectOption,
       disabled,
     }),
-    [footerSelectProps, action, filterSelectOption, disabled, appendRow]
+    [
+      footerSelectProps,
+      action,
+      filterSelectOption,
+      disabled,
+      appendRow,
+      rerenderSelect,
+    ]
   );
 
   const testId = useTestId("form-table-footer-select", footerSelectProps);
@@ -88,6 +111,7 @@ export function FormTableFieldFooterSelect({
       name="form-table-footer-select"
       testId={testId}
       overrideTestId
+      key={selectKey}
     />
   );
 }
