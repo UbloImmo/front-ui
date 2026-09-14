@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 2.5.3 - 2026-09-14
 ### Fixed
-
 - `v1.2.2` Form component
   - Updated table cell styles to decrease FOUC when swapping table rows
   - Centered custom field cells' content by default
