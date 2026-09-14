@@ -78,7 +78,6 @@ export const FormTableFieldHeader = forwardRef<
         )}
         {headers.map(({ label, compact, tooltip, required }, index) => {
           const key = `table-header-${index}-${label}`;
-          const justify = compact ? "start" : "space-between";
 
           const headerTooltip: Optional<TooltipProps> = tooltip
             ? {
@@ -88,7 +87,12 @@ export const FormTableFieldHeader = forwardRef<
               }
             : undefined;
 
-          const headerLabel = isNonEmptyString(label) ? label : <>&nbsp;</>;
+          const showLabel = isNonEmptyString(label);
+          const justify = !showLabel
+            ? "center"
+            : compact
+              ? "start"
+              : "space-between";
 
           const cellClassName = cssClasses(styles["header-cell"]);
           const textClassName = cssClasses(
@@ -103,15 +107,17 @@ export const FormTableFieldHeader = forwardRef<
               className={cellClassName}
             >
               <FlexRowLayout align="center" gap="s-2" justify={justify} fill>
-                <Text
-                  className={textClassName}
-                  color="primary-dark"
-                  size="m"
-                  weight="bold"
-                  testId="input-label-text"
-                >
-                  {headerLabel}
-                </Text>
+                {showLabel && (
+                  <Text
+                    className={textClassName}
+                    color="primary-dark"
+                    size="m"
+                    weight="bold"
+                    testId="input-label-text"
+                  >
+                    {label}
+                  </Text>
+                )}
                 {headerTooltip && <Tooltip {...headerTooltip} />}
               </FlexRowLayout>
             </TableHeaderCell>

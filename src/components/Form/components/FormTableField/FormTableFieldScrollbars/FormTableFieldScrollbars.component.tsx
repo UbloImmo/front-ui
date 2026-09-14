@@ -13,10 +13,6 @@ import {
   computeScrollRatio,
 } from "./FormTableFieldScrollbars.utils";
 import styles from "../FormTableField.module.scss";
-import {
-  FormTableFieldScrollbarsMeasurements,
-  type FormTableFieldScrollbarsProps,
-} from "./FormTableFieldScrollbars.types";
 
 import {
   clamp,
@@ -26,6 +22,10 @@ import {
   useResizeObserver,
 } from "@utils";
 
+import type {
+  FormTableFieldScrollbarsMeasurements,
+  FormTableFieldScrollbarsProps,
+} from "./FormTableFieldScrollbars.types";
 import type { Vec2, Axis } from "@types";
 
 const SCROLL_READ_DEBOUNCE_MS = 100;

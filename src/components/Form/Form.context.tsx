@@ -1068,6 +1068,15 @@ const useFormContent = <TData extends object>(
             }
           : t?.footer;
 
+      // treat tables with no visible columns as hidden
+      const layout = formLayout.buildFormFieldLayout({
+        ...(t.layout ?? {}),
+        size: formLayout.columns,
+      });
+      if (!visibleColumns.length) {
+        layout.hidden = true;
+      }
+
       return {
         kind: "table",
         stableId: tableId,
@@ -1076,10 +1085,7 @@ const useFormContent = <TData extends object>(
         headers,
         colSpans,
         colWidths,
-        layout: formLayout.buildFormFieldLayout({
-          ...(t.layout ?? {}),
-          size: formLayout.columns,
-        }),
+        layout,
         id: t.id ?? null,
         maxBodyHeight: t.maxBodyHeight ?? null,
         label: t.label,

@@ -8,14 +8,17 @@ import type { Optional } from "@ubloimmo/front-util";
 /**
  * Computes a form table field cell's CSS className based on its position
  * @param {TableCellPosition} position - The cell's position
+ * @param {Optional<boolean>} disabled - Whether to display the cell's disabled styles
  * @returns {Optional<string>} The cell's CSS className
  */
 export function useFormTableFieldCellClassName(
-  position: TableCellPosition
+  position: TableCellPosition,
+  disabled: Optional<boolean>
 ): Optional<string> {
   return useCssClasses(
     styles.cell,
     [styles.first, position === "start" || position === "both"],
-    [styles.last, position === "end" || position === "both"]
+    [styles.last, position === "end" || position === "both"],
+    [styles.disabled, disabled]
   );
 }

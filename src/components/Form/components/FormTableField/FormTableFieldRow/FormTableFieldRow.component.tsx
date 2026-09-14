@@ -1,5 +1,6 @@
 import { RestrictToVerticalAxis } from "@dnd-kit/abstract/modifiers";
 import { closestCenter } from "@dnd-kit/collision";
+import { Feedback } from "@dnd-kit/dom";
 import { RestrictToElement } from "@dnd-kit/dom/modifiers";
 import { useSortable } from "@dnd-kit/react/sortable";
 import { transformObject } from "@ubloimmo/front-util";
@@ -61,6 +62,10 @@ export function FormTableFieldRow({
       duration: 150,
       easing: BEZIER,
     },
+    plugins: (defaults) => [
+      ...defaults,
+      Feedback.configure({ feedback: "clone" }),
+    ],
     collisionDetector: closestCenter,
     modifiers: [
       RestrictToVerticalAxis,

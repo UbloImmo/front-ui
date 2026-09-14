@@ -56,7 +56,10 @@ export const FormTableFieldCell = ({
   const inputId = useInputId(props);
 
   const inner = useCssClasses(styles["form-field-display-cell-inner"]);
-  const className = useFormTableFieldCellClassName(position ?? "middle");
+  const className = useFormTableFieldCellClassName(
+    position ?? "middle",
+    props.disabled && !isDisplay
+  );
 
   return (
     <TableCell
