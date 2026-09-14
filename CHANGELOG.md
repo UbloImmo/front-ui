@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+### Fixed
+
+- `v1.2.3` Form component
+  - Selecting an option from a form table's select footer now resets its state (autocomplete query & selected option), allowing for subsequent selection sessions without having to manually clear the select input.
+
+
 ## 2.5.3 - 2026-09-14
 ### Fixed
 - `v1.2.2` Form component
