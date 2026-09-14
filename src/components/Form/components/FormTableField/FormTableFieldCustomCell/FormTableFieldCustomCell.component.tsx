@@ -45,7 +45,10 @@ export const FormTableFieldCustomCell = ({
 
   const inputId = useInputId(props);
 
-  const className = useFormTableFieldCellClassName(position);
+  const className = useFormTableFieldCellClassName(
+    position,
+    props.disabled && !(!isEditing || props.layout.readonly)
+  );
 
   return (
     <TableCell

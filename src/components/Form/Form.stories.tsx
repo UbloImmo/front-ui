@@ -1545,3 +1545,82 @@ export const ComputedTableContent = () => {
 
   return <Form {...props} />;
 };
+
+export const TableCustomCells = (props: FormProps<object>) => {
+  type Data = { table: { name: string; value: number; selected: boolean }[] };
+
+  const content: FormContentArray<Data> = [
+    {
+      kind: "table",
+      swappable: true,
+      deletable: true,
+      label: "Table",
+      source: "table",
+      selectable: {
+        property: "selected",
+      },
+      columns: [
+        {
+          source: "name",
+          label: "Name",
+          type: "text",
+          disabled: true,
+          layout: {
+            fixedWidth: "200px",
+          },
+        },
+        {
+          kind: "custom-field",
+          label: "Value",
+          source: "value",
+          CustomInput: ({ value }: CustomFormInputProps<number>) => (
+            <Text>{value?.toString()}</Text>
+          ),
+        },
+        {
+          kind: "custom-field",
+          label: "Rating",
+          source: "value",
+          tooltip: {
+            content: "This indicates the first item in the table",
+          },
+          CustomInput: ({ rowDisplayIndex }: CustomFormInputProps<number>) => (
+            <FlexRowLayout
+              justify="start"
+              fill="row"
+              styleOverride={{
+                padding: cssVarUsage("s-2"),
+                // opacity: !rowDisplayIndex ? 1 : 0,
+              }}
+            >
+              {arrayOf(rowDisplayIndex ?? 0, (i) => (
+                <Icon
+                  name="StarFill"
+                  color="primary-medium"
+                  key={`icon-${i}`}
+                />
+              ))}
+            </FlexRowLayout>
+          ),
+          layout: {
+            maxWidth: "max-content",
+          },
+        },
+      ],
+    },
+  ];
+
+  const query: Data = {
+    table: arrayOf(5, (i) => ({ name: "row " + i, value: i, selected: false })),
+  };
+
+  return (
+    <Form<Data>
+      title="Table with custom cells"
+      query={query}
+      content={content}
+      debug={props.debug}
+      disabled={props.disabled}
+    />
+  );
+};

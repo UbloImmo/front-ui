@@ -27,7 +27,7 @@ import type { Nullable } from "@ubloimmo/front-util";
  * A form table component that displays data in a tabular format with optional editing capabilities.
  * Supports row deletion, reordering via drag and drop, and dynamic row addition.
  *
- * @version 0.1.2
+ * @version 0.1.3
  *
  * @param {BuiltFormTableProps} props - The props for the form table component
  * @returns {ReactNode} The rendered form table component
@@ -91,6 +91,8 @@ export function FormTableField(props: BuiltFormTableProps): ReactNode {
     // otherwhise, we just evaluate the number of rows
     return !displayRows.length;
   }, [displayRows, isEditing, modifiers.selectable]);
+
+  if (layout.hidden) return null;
 
   return (
     <FormFieldGridItem
