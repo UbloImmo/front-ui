@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from "react";
+import { forwardRef, type ReactNode, useMemo } from "react";
 
 import { useTableHeaderStyle } from "./TableHeader.styles";
 
@@ -29,12 +29,12 @@ const defaultTableHeaderProps: Required<TableHeaderProps> = {
  * </TableHeader>
  *
  * @param {TableHeaderProps} props - The component props.
- * @returns The table header component.
+ * @returns {ReactNode} The table header component.
  */
 export const TableHeader = forwardRef<
   HTMLTableSectionElement,
   TableHeaderProps & TestIdProps
->((props, ref): JSX.Element => {
+>((props, ref): ReactNode => {
   const mergedProps = useMergedProps(defaultTableHeaderProps, props);
   const testId = useTestId("table-header", props);
   const rowTestId = useMemo(() => `${testId}-row`, [testId]);

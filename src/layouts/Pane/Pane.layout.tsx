@@ -5,6 +5,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type ReactNode,
 } from "react";
 
 import { usePaneLayoutStyle } from "./Pane.styles";
@@ -45,10 +46,10 @@ const defaultPaneProps: PaneDefaultProps = {
  * @version 0.0.3
  *
  * @param {PaneProps & TestIdProps} props - Pane component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const Pane = forwardRef<HTMLElement, PaneProps & TestIdProps>(
-  (props: PaneProps & TestIdProps, ref): JSX.Element => {
+  (props: PaneProps & TestIdProps, ref): ReactNode => {
     const mergedProps = useMergedProps(defaultPaneProps, props);
     const contentRef = useRef<HTMLElement>(null);
     const {

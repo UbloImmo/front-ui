@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 import { useGridItemStyle } from "./GridItem.styles";
 import { useGridItemPosition } from "./GridItem.utils";
@@ -37,7 +37,7 @@ const defaultGridItemProps: GridItemDefaultProps = {
  * @param {GridStartPosition | GridDetailedPosition | string} props.row - The row position.
  * @param {GridStartPosition | GridDetailedPosition | string} props.column - The column position.
  * @param {ReactNode} props.children - The children to render inside the grid item.
- * @return {JSX.Element} The rendered grid item.
+ * @return {ReactNode} The rendered grid item.
  */
 const GridItem = forwardRef<
   HTMLDivElement,
@@ -47,7 +47,7 @@ const GridItem = forwardRef<
   (
     props: GridItemProps & TestIdProps = defaultGridItemProps,
     ref
-  ): JSX.Element => {
+  ): ReactNode => {
     const testId = useTestId("grid-item", props as TestIdProps);
     const position = useGridItemPosition(defaultGridItemProps, props);
     const { className, style } = useGridItemStyle({

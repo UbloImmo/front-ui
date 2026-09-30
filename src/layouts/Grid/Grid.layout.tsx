@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 import { useGridLayoutStyle } from "./Grid.styles";
 
@@ -30,13 +30,13 @@ const defaultGridLayoutProps: GridLayoutDefaultProps = {
  * @version 0.1.1
  *
  * @param {GridLayoutProps & TestIdProps} [props = defaultGridLayoutProps] - optional props
- * @return {JSX.Element} The styled grid wrapper
+ * @return {ReactNode} The styled grid wrapper
  */
 const GridLayout = forwardRef<
   HTMLDivElement,
   GridLayoutProps & TestIdProps,
   GridLayoutDefaultProps
->((props, ref): JSX.Element => {
+>((props, ref): ReactNode => {
   const mergedProps = useMergedProps(defaultGridLayoutProps, props);
   const testId = useTestId("grid", props);
   const role = useHtmlAttribute(mergedProps.role);

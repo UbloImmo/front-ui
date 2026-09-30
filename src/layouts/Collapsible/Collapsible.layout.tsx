@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 import { useCollapsibleLayoutStyle } from "./Collapsible.styles";
 import { Icon } from "../../components/Icon";
@@ -29,9 +35,9 @@ const defaultCollapsibleProps: CollapsibleDefaultProps = {
  * @version 0.0.4
  *
  * @param {CollapsibleProps & TestIdProps} props - Collapsible component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Collapsible = (props: CollapsibleProps & TestIdProps): JSX.Element => {
+const Collapsible = (props: CollapsibleProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultCollapsibleProps, props);
   const {
     disabled,

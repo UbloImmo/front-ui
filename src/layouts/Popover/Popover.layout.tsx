@@ -1,6 +1,5 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { Nullable } from "@ubloimmo/front-util";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, type ReactNode } from "react";
 
 import { usePopoverLayoutStyles } from "./Popover.styles";
 import {
@@ -15,6 +14,7 @@ import { useTestId, useMergedProps } from "@utils";
 
 import type { PopoverProps, PopoverDefaultProps } from "./Popover.types";
 import type { TestIdProps, Vec2 } from "@types";
+import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultPopoverProps: PopoverDefaultProps = {
   align: "center",
@@ -43,9 +43,9 @@ const defaultPopoverProps: PopoverDefaultProps = {
  * @version 0.1.1
  *
  * @param {PopoverProps & TestIdProps} props - Popover component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Popover = (props: PopoverProps & TestIdProps): JSX.Element => {
+const Popover = (props: PopoverProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps<
     PopoverDefaultProps,
     Partial<PopoverDefaultProps>

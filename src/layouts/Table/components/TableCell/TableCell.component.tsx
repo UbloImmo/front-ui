@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 import { useTableCellStyles } from "./TableCell.styles";
 
@@ -27,12 +27,12 @@ const defaultTableCellProps: Required<TableCellProps> = {
  * @version 0.1.2
  *
  * @param {CellProps} props - The props for the component.
- * @return {JSX.Element} The rendered table cell.
+ * @return {ReactNode} The rendered table cell.
  */
 const TableCell = forwardRef<
   HTMLTableCellElement,
   TableCellProps & TestIdProps
->((props: TableCellProps & TestIdProps, ref): JSX.Element => {
+>((props: TableCellProps & TestIdProps, ref): ReactNode => {
   const mergedProps = useMergedProps(defaultTableCellProps, props);
 
   const { className, style } = useTableCellStyles(mergedProps);

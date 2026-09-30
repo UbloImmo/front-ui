@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 import styles from "../../Table.module.scss";
 
@@ -29,12 +29,12 @@ const defaultTableHeaderCellProps: Required<TableHeaderCellProps> = {
  * @version 0.1.1
  *
  * @param {CellProps} props - The props for the component.
- * @return {JSX.Element} The rendered table header cell.
+ * @return {ReactNode} The rendered table header cell.
  */
 export const TableHeaderCell = forwardRef<
   HTMLTableCellElement,
   TableHeaderCellProps & TestIdProps
->((props, ref): JSX.Element => {
+>((props, ref): ReactNode => {
   const mergedProps = useMergedProps(defaultTableHeaderCellProps, props);
   const testId = useTestId("table-header-cell", props);
   const className = useCssClasses(

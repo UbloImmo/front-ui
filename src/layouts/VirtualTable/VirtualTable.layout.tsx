@@ -25,6 +25,7 @@ import type {
   VirtualTableSharedContext,
 } from "./VirtualTable.types";
 import type { StyleOverrideProps, TestIdProps } from "@types";
+import type { ReactNode } from "react";
 
 /**
  * A virtualized table component that efficiently renders large datasets.
@@ -33,7 +34,7 @@ import type { StyleOverrideProps, TestIdProps } from "@types";
  *
  * @template {object} TItem - The type of items in the data array
  * @param {VirtualTableProps<TItem> & Omit<StyleOverrideProps, "as"> & TestIdProps} props - Component props
- * @returns {JSX.Element} The rendered virtual table
+ * @returns {ReactNode} The rendered virtual table
  *
  * @remarks
  * Uses react-virtuoso under the hood to handle virtualization.
@@ -45,7 +46,7 @@ const VirtualTable = <TItem extends object>({
   ...props
 }: VirtualTableProps<TItem> &
   Omit<StyleOverrideProps, "as"> &
-  TestIdProps): JSX.Element => {
+  TestIdProps): ReactNode => {
   const { warn } = useLogger("VirtualTable");
   const mergedProps = useMergedProps<
     VirtualTableDefaultProps<TItem>,
