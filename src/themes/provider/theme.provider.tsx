@@ -6,6 +6,7 @@ import {
   useRef,
   createContext,
   useContext,
+  type ReactNode,
 } from "react";
 
 import { GlobalStyle } from "./GlobalStyle";
@@ -84,13 +85,13 @@ const THEME_CONTEXT = createContext<Theme>(buildTheme(null, "primary"));
  * ThemeProvider component to provide theme context to the children components.
  *
  * @param {ThemeProviderProps} props - The provider's props
- * @return {JSX.Element} The styled theme provider component with the provided theme.
+ * @return {ReactNode} The styled theme provider component with the provided theme.
  */
 export const ThemeProvider = ({
   children,
   lightDarkSupport,
   ...themeProps
-}: ThemeProviderProps): JSX.Element => {
+}: ThemeProviderProps): ReactNode => {
   const theme = useThemeStore(themeProps);
 
   return (
