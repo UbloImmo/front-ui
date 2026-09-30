@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Upgraded project to `react@^19.3.0` while keeping compatibility with React 18.x.
+  - This library may now be used in either React 18 or 19 projects.
+- Replaced all usages of `JSX.Element` type to `ReactNode`.
+
 ## 2.5.4 - 2026-09-14
 ### Fixed
 - `v1.2.3` Form component
