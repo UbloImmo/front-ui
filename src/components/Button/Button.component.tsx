@@ -1,6 +1,7 @@
 import { isNull, isString } from "@ubloimmo/front-util";
 import {
-  MouseEvent,
+  type MouseEvent,
+  type ReactNode,
   useCallback,
   useMemo,
   type MouseEventHandler,
@@ -49,9 +50,9 @@ const defaultButtonProps: DefaultButtonProps = {
  * @version 0.1.0
  *
  * @param {ButtonProps} props - the button's props
- * @returns {JSX.Element} the rendered button
+ * @returns {ReactNode} the rendered button
  */
-const Button = (props: ButtonProps & TestIdProps): JSX.Element => {
+const Button = (props: ButtonProps & TestIdProps): ReactNode => {
   const { warn } = useLogger("Button");
   const mergedProps = useMergedProps<DefaultButtonProps, ButtonProps>(
     defaultButtonProps,

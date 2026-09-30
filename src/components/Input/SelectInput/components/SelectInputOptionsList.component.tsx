@@ -7,6 +7,7 @@ import { InputAssistiveText } from "@/components/InputAssistiveText";
 
 import type { SelectInputOptionsListProps } from "../SelectInput.types";
 import type { NullishPrimitives } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 /**
  * A Popover wrapper for SelectInput options that handles positioning and collision detection
@@ -16,7 +17,7 @@ import type { NullishPrimitives } from "@ubloimmo/front-util";
  * @template TValue - The option value type
  * @template TExtraData - The extra data type for option groups
  * @param {SelectInputOptionsListProps<TValue, TExtraData>} props - The popover props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const SelectInputOptionsList = <
   TValue extends NullishPrimitives,
@@ -30,7 +31,7 @@ const SelectInputOptionsList = <
   isEmptyResult,
   assistiveText,
   testId,
-}: SelectInputOptionsListProps<TValue, TExtraData>): JSX.Element => {
+}: SelectInputOptionsListProps<TValue, TExtraData>): ReactNode => {
   const classNames = useSelectInputOptionListClassNames();
   return (
     <div

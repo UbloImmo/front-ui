@@ -1,5 +1,5 @@
-import { isFunction, isString, type Nullable } from "@ubloimmo/front-util";
-import { FC, useMemo } from "react";
+import { isFunction, isString } from "@ubloimmo/front-util";
+import { FC, useMemo, type ReactNode } from "react";
 
 import { FormCustomContent } from "./FormCustomContent.component";
 import { FormCustomField } from "./FormCustomField.component";
@@ -34,7 +34,7 @@ import type { DividerProps } from "@/components/Divider";
 export const FormFieldRenderer = <TData extends object>() => {
   const { content, columns, isLoading } = useFormContext<TData>();
 
-  const renderedContent = useMemo<Nullable<JSX.Element>[]>(() => {
+  const renderedContent = useMemo<ReactNode[]>(() => {
     return content.map((contentItem, index) => {
       if (isBuiltFormField(contentItem)) {
         return <FormField {...contentItem} key={`form-field-${index}`} />;

@@ -14,26 +14,27 @@ import type {
   EntityInfoCardSectionItemRendererMap,
   EntityInfoCardSectionItemRendererProps,
 } from "../EntityInfoCard.types";
+import type { ReactNode } from "react";
 
 /**
  * Renders children passed to the section
  * @param {EntityInfoCardSectionItemRendererProps} props - Component props
- * @returns  Children wrapper
+ * @returns {ReactNode} Children wrapper
  */
 const EntityInfoCardSectionChildren = ({
   children,
-}: EntityInfoCardSectionItemRendererProps) => {
+}: EntityInfoCardSectionItemRendererProps): ReactNode => {
   return <>{children}</>;
 };
 
 /**
  * Renders the section name as a styled heading
  * @param {EntityInfoCardSectionItemRendererProps} props - Component props
- * @returns {JSX.Element} Styled heading
+ * @returns {ReactNode} Styled heading
  */
 const EntityInfoCardSectionName = ({
   name,
-}: EntityInfoCardSectionItemRendererProps) => {
+}: EntityInfoCardSectionItemRendererProps): ReactNode => {
   const className = useCssClasses(styles["entity-info-card-heading"]);
   return (
     <Heading
@@ -51,12 +52,12 @@ const EntityInfoCardSectionName = ({
 /**
  * Renders a list of context info cards in a column layout
  * @param {EntityInfoCardSectionItemRendererProps} props - Component props
- * @returns {JSX.Element} Column of context info cards
+ * @returns {ReactNode} Column of context info cards
  */
 const EntityInfoCardSectionContextInfoCards = ({
   contextInfoCards,
   testId,
-}: EntityInfoCardSectionItemRendererProps) => {
+}: EntityInfoCardSectionItemRendererProps): ReactNode => {
   return (
     <FlexColumnLayout gap="s-3" fill>
       {contextInfoCards.map((contextInfoCard, index) => {
@@ -77,13 +78,13 @@ const EntityInfoCardSectionContextInfoCards = ({
 /**
  * Renders a list of copyable info cards in a column layout
  * @param {EntityInfoCardSectionItemRendererProps} props - Component props
- * @returns {JSX.Element} Column of copyable info cards
+ * @returns {ReactNode} Column of copyable info cards
  */
 const EntityInfoCardSectionInfoCards = ({
   infoCards,
   testId,
   onInfoCopied,
-}: EntityInfoCardSectionItemRendererProps) => {
+}: EntityInfoCardSectionItemRendererProps): ReactNode => {
   return (
     <FlexColumnLayout gap="s-3" fill>
       {infoCards.map((infoCard, index) => {
@@ -113,12 +114,12 @@ const EntityInfoCardSectionInfoCards = ({
 /**
  * Renders a grid of info boxes with responsive layout
  * @param {EntityInfoCardSectionItemRendererProps} props - Component props
- * @returns {JSX.Element} Grid of info boxes
+ * @returns {ReactNode} Grid of info boxes
  */
 const EntityInfoCardSectionInfoBoxes = ({
   infoBoxes,
   testId,
-}: EntityInfoCardSectionItemRendererProps) => {
+}: EntityInfoCardSectionItemRendererProps): ReactNode => {
   return (
     <GridLayout columns={2} gap="s-2" fill>
       {infoBoxes.map((infoBox, index) => {
@@ -144,12 +145,12 @@ const EntityInfoCardSectionInfoBoxes = ({
 /**
  * Renders a list of status rows with badges and content
  * @param {EntityInfoCardSectionItemRendererProps} props - Component props
- * @returns List of status rows
+ * @returns {ReactNode} List of status rows
  */
 const EntityInfoCardSectionStatusRows = ({
   statusRows,
   testId,
-}: EntityInfoCardSectionItemRendererProps) => {
+}: EntityInfoCardSectionItemRendererProps): ReactNode => {
   const className = useCssClasses(styles["entity-info-card-status-rows"]);
   return (
     <FlexColumnLayout className={className} gap={0} fill>

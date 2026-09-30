@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import {
   defaultEntityInfoCardFooterProps,
@@ -33,11 +33,11 @@ const defaultEntityInfoCardProps: EntityInfoCardDefaultProps = {
  * @version 0.0.13
  *
  * @param {EntityInfoCardProps & TestIdProps} props - EntityInfoCard component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const EntityInfoCard = (
   props: EntityInfoCardProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const mergedProps = useMergedProps(defaultEntityInfoCardProps, props);
   const { testId: testIdProp, overrideTestId } = props;
   const testId = useTestId("entity-info-card", {

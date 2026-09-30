@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 
 import {
   useListTableHeaderSortClassnames,
@@ -24,11 +24,11 @@ import type { Nullable } from "@ubloimmo/front-util";
  * @template {object} TItem - Type of a single list item
  *
  * @param {ListTableHeaderSortProps<TItem> & TestIdProps} props - ListTableHeaderSort component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 export const ListTableHeaderSort = <TItem extends object>(
   props: ListTableHeaderSortProps<TItem> & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { getSort } = useListContext<TItem>();
 
   const testId = useTestId("list-table-header-sort", props as TestIdProps);

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { SideEntityMenuItem } from "./components";
 import { useSideEntityMenuClassnames } from "./SideEntityMenu.styles";
@@ -34,11 +34,11 @@ const defaultSideEntityMenuProps: SideEntityMenuDefaultProps = {
  * @version 0.1.0
  *
  * @param {SideEntityMenuProps & TestIdProps} props - SideEntityMenu component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const SideEntityMenu = (
   props: SideEntityMenuProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const mergedProps = useMergedProps(defaultSideEntityMenuProps, props);
   const testId = useTestId("side-entity-menu", props);
   const classNames = useSideEntityMenuClassnames(mergedProps);

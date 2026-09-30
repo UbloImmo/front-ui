@@ -1,5 +1,10 @@
 import { isNumber, isString, Nullable } from "@ubloimmo/front-util";
-import { useCallback, useMemo, type KeyboardEventHandler } from "react";
+import {
+  useCallback,
+  useMemo,
+  type KeyboardEventHandler,
+  type ReactNode,
+} from "react";
 
 import {
   StyledInputContainer,
@@ -16,9 +21,8 @@ import {
   useInputRef,
   useInputId,
 } from "../Input.utils";
-import { scaleNumber, transformNumber } from "./NumberInput.utils";
-import { NativeInputValue } from "../Input.types";
 import styles from "./NumberInput.module.scss";
+import { scaleNumber, transformNumber } from "./NumberInput.utils";
 
 import { Icon } from "@/components/Icon";
 import {
@@ -30,6 +34,7 @@ import {
   useTestId,
 } from "@utils";
 
+import type { NativeInputValue } from "../Input.types";
 import type {
   DefaultNumberInputProps,
   NumberInputProps,
@@ -56,9 +61,9 @@ const defaultNumberInputProps: DefaultNumberInputProps = {
  * @version 0.1.0
  *
  * @param {NumberInputProps} props - The props for the NumberInput component.
- * @return {JSX.Element} The rendered NumberInput component.
+ * @return {ReactNode} The rendered NumberInput component.
  */
-const NumberInput = (props: NumberInputProps & TestIdProps): JSX.Element => {
+const NumberInput = (props: NumberInputProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultNumberInputProps, props);
 
   const { inputRef, forwardRef } = useInputRef(mergedProps);

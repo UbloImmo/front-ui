@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { FormFieldGridItem } from "./FormFieldGridItem.component";
 import { useFormContext } from "../Form.context";
@@ -31,11 +31,11 @@ import type { Nullable } from "@ubloimmo/front-util";
  * @version 0.1.0
  *
  * @param {BuiltFormCustomFieldProps} props - The component props.
- * @returns {Nullable<JSX.Element>} The rendered component.
+ * @returns {ReactNode} The rendered component.
  */
 export const FormCustomField = (
   props: BuiltFormCustomFieldProps
-): Nullable<JSX.Element> => {
+): ReactNode => {
   const {
     CustomInput,
     layout,

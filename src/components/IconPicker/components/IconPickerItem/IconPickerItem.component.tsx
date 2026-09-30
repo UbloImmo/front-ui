@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { useIconPickerItemStyles } from "./IconPickerItem.styles";
 import {
@@ -26,11 +26,11 @@ const defaultIconPickerItemProps: IconPickerItemDefaultProps = {
  * @version 0.1.0
  *
  * @param {IconPickerItemProps & TestIdProps} props - Component property
- * @returns Rendered property
+ * @returns {ReactNode} Rendered property
  */
 export const IconPickerItem = (
   props: IconPickerItemProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const mergedProps = useMergedProps(defaultIconPickerItemProps, props);
 
   const { disabled, active } = mergedProps;

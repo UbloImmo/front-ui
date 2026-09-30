@@ -1,5 +1,5 @@
 import { isNullish, isString } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { type ReactNode, useCallback, useMemo } from "react";
 
 import { useCopyClipboardInfoCardStyles } from "./CopyClipboardInfoCard.styles";
 import { copyToClipboard } from "./CopyClipboardInfoCard.utils";
@@ -37,11 +37,11 @@ const defaultCopyClipboardInfoCardProps: CopyClipboardInfoCardDefaultProps = {
  * @version 0.1.0
  *
  * @param {CopyClipboardInfoCardProps & TestIdProps} props - CopyClipboardInfoCard component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const CopyClipboardInfoCard = (
   props: CopyClipboardInfoCardProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const logger = useLogger("CopyClipboardInfoCard");
   const mergedProps = useMergedProps(defaultCopyClipboardInfoCardProps, props);
   const testId = useTestId("copy-clipboard-info-card", props);

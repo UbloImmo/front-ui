@@ -1,5 +1,11 @@
 import { isNull } from "@ubloimmo/front-util";
-import { type MouseEventHandler, useCallback, useMemo, useState } from "react";
+import {
+  type MouseEventHandler,
+  useCallback,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 import { useComboBoxButtonStyles } from "./ComboBoxButton.styles";
 import { ContextMenu, type ContextMenuItemData } from "../ContextMenu";
@@ -45,11 +51,11 @@ const defaultComboBoxButtonProps: ComboBoxButtonDefaultProps = {
  * @version 0.1.0
  *
  * @param {ComboBoxButtonProps & TestIdProps} props - ComboBoxButton component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const ComboBoxButton = (
   props: ComboBoxButtonProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { warn } = useLogger("ComboBoxButton");
   const mergedProps = useMergedProps(defaultComboBoxButtonProps, props);
   const testId = useTestId("combo-box-button", props);

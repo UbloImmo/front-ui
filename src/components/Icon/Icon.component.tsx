@@ -1,17 +1,22 @@
-import { useMemo, Suspense, type LazyExoticComponent } from "react";
+import {
+  useMemo,
+  Suspense,
+  type LazyExoticComponent,
+  type ReactNode,
+} from "react";
 
 import { iconIndex } from "./__generated__/index.lazy.ts";
 import styles from "./Icon.module.scss";
-import {
-  DefaultIconProps,
-  GeneratedIcon,
-  IconProps,
-  type MissingIcon,
-} from "./Icon.types";
 import { isGeneratedIcon, useIconSize } from "./Icon.utils.tsx";
 
 import { cssClasses, cssVariables, mergeDefaultProps, useLogger } from "@utils";
 
+import type {
+  DefaultIconProps,
+  GeneratedIcon,
+  IconProps,
+  MissingIcon,
+} from "./Icon.types";
 import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultIconProps: DefaultIconProps = {
@@ -28,9 +33,9 @@ const defaultIconProps: DefaultIconProps = {
  * @version 0.1.0
  *
  * @param {IconProps} props - The props for the icon component.
- * @return {JSX.Element} The rendered icon component or an empty fallback div if the icon component is not found.
+ * @return {ReactNode} The rendered icon component or an empty fallback div if the icon component is not found.
  */
-const Icon = (props: IconProps): JSX.Element => {
+const Icon = (props: IconProps): ReactNode => {
   const { warn } = useLogger("Icon");
 
   if (!props.name) warn("Missing name prop");

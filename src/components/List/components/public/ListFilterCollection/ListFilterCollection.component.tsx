@@ -9,6 +9,7 @@ import { useHtmlAttribute, useUikitTranslation } from "@utils";
 
 import type { ListFilterCollectionProps } from "./ListFilterCollection.types";
 import type { StyleOverrideProps, TestIdProps } from "@types";
+import type { ReactNode } from "react";
 
 /**
  * Displays a collection of registered filters
@@ -17,13 +18,13 @@ import type { StyleOverrideProps, TestIdProps } from "@types";
  * @version 0.1.0
  *
  * @param {ListFilterCollectionProps & TestIdProps & Omit<StyleOverrideProps, "as">} props - The props
- * @returns {JSX.Element} List of rendered filters
+ * @returns {ReactNode} List of rendered filters
  */
 export const ListFilterCollection = (
   props: ListFilterCollectionProps &
     TestIdProps &
     Omit<StyleOverrideProps, "as">
-): JSX.Element => {
+): ReactNode => {
   const {
     title,
     testId,

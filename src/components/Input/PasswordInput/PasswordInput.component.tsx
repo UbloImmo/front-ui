@@ -1,5 +1,5 @@
 import { isNull, isString } from "@ubloimmo/front-util";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { Icon } from "../../Icon";
 import {
@@ -44,11 +44,9 @@ const defaultPasswordInputProps: DefaultPasswordInputProps = {
  * @version 0.1.0
  *
  * @param {PasswordInputProps} props - The input props.
- * @return {JSX.Element} The rendered text input component.
+ * @return {ReactNode} The rendered text input component.
  */
-const PasswordInput = (
-  props: PasswordInputProps & TestIdProps
-): JSX.Element => {
+const PasswordInput = (props: PasswordInputProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultPasswordInputProps, props);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(

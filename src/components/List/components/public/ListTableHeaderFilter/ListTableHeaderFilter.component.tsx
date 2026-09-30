@@ -1,5 +1,12 @@
 import { isObject, isString, type Nullable } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { ListFilter } from "../ListFilter";
 import { useListTableHeaderFilterClassNames } from "./ListTableHeaderFilter.styles";
@@ -32,11 +39,11 @@ import type { TestIdProps } from "@types";
  * @version 0.1.1
  *
  * @param {ListTableHeaderFilterProps} props - ListTableHeaderFilter component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 export const ListTableHeaderFilter = (
   props: ListTableHeaderFilterProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { getFilterBySignature, loading } = useListContext();
 
   const [open, setOpen] = useState(false);

@@ -22,6 +22,7 @@ import type {
   SearchTextInputProps,
 } from "./SearchTextInput.types";
 import type { TestIdProps } from "@types";
+import type { ReactNode } from "react";
 
 const defaultSearchTextInputProps: DefaultSearchTextInputProps = {
   ...defaultCommonInputProps,
@@ -37,11 +38,11 @@ const defaultSearchTextInputProps: DefaultSearchTextInputProps = {
  * @version 0.1.0
  *
  * @param {SearchTextInputProps} props - SearchTextInput component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const SearchTextInput = (
   props: SearchTextInputProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const mergedProps = useMergedProps(defaultSearchTextInputProps, props);
 
   const onChange = useInputOnChange<"search-text">(

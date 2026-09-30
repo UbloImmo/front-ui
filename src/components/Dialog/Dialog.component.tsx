@@ -1,10 +1,5 @@
-import {
-  isBoolean,
-  isFunction,
-  type Nullable,
-  type VoidFn,
-} from "@ubloimmo/front-util";
-import { useEffect, useRef } from "react";
+import { isBoolean, isFunction, type VoidFn } from "@ubloimmo/front-util";
+import { useEffect, useRef, type ReactNode } from "react";
 
 import { useDialog } from "./Dialog.context";
 import { useDialogStyles } from "./Dialog.styles";
@@ -32,9 +27,9 @@ const defaultDialogProps: DefaultDialogProps = {
  * @version 0.1.0
  *
  * @param {DialogProps & TestIdProps} props - the properties for the Dialog component
- * @returns {Nullable<JSX.Element>} the rendered dialog or null if closed
+ * @returns {ReactNode} the rendered dialog or null if closed
  */
-const Dialog = (props: DialogProps & TestIdProps): Nullable<JSX.Element> => {
+const Dialog = (props: DialogProps & TestIdProps): ReactNode => {
   const { error } = useLogger("Dialog");
   const { children, open, reference, onClosed, onOpened } = mergeDefaultProps(
     defaultDialogProps,

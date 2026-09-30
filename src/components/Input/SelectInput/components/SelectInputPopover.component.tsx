@@ -2,6 +2,7 @@ import { Popover } from "@/layouts/Popover";
 import { useTestId } from "@utils";
 
 import type { SelectInputPopoverProps } from "../SelectInput.types";
+import type { ReactNode } from "react";
 
 /**
  * A Popover wrapper for SelectInput options that handles positioning and collision detection
@@ -9,7 +10,7 @@ import type { SelectInputPopoverProps } from "../SelectInput.types";
  * @version 0.1.0
  *
  * @param {SelectInputPopoverProps} props - The popover props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const SelectInputPopover = ({
   open,
@@ -18,7 +19,7 @@ const SelectInputPopover = ({
   content,
   testId,
   wrapperRef,
-}: SelectInputPopoverProps): JSX.Element => {
+}: SelectInputPopoverProps): ReactNode => {
   const popoverTestId = useTestId("input-select-popover", { testId });
 
   const onChange = (nextOpen: boolean) => {

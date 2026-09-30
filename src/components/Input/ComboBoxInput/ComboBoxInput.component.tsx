@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, type ReactNode } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
 import { useInputId } from "../Input.utils";
@@ -34,13 +34,13 @@ const defaultComboBoxInputProps: ComboBoxInputDefaultProps<NullishPrimitives> =
  * @version 0.1.0
  *
  * @param {ComboBoxInputProps & TestIdProps} props - ComboBoxInput component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const ComboBoxInput = <
   TOptionValue extends NullishPrimitives = NullishPrimitives,
 >(
   props: ComboBoxInputProps<TOptionValue> & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { onChange, multi, ...mergedProps } = useMergedProps(
     () => defaultComboBoxInputProps as ComboBoxInputDefaultProps<TOptionValue>,
     props

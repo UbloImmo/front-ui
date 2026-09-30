@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { FormFieldDisplay } from "./FormFieldDisplay.component";
 import { FormFieldGridItem } from "./FormFieldGridItem.component";
@@ -10,7 +10,6 @@ import { useTestId } from "@utils";
 
 import type { BuiltFieldProps } from "../Form.types";
 import type { InputType } from "@/components/Input";
-import type { Nullable } from "@ubloimmo/front-util";
 
 /**
  * Renders a form field based on the provided layout and props.
@@ -20,12 +19,12 @@ import type { Nullable } from "@ubloimmo/front-util";
  * @remarks will render the corresponding field or display field based on the form context.
  *
  * @param {BuiltFieldProps<InputType>} layout - The layout of the form field.
- * @return {Nullable<JSX.Element>} The rendered form field component.
+ * @return {ReactNode} The rendered form field component.
  */
 export const FormField = ({
   layout,
   ...props
-}: BuiltFieldProps<InputType>): Nullable<JSX.Element> => {
+}: BuiltFieldProps<InputType>): ReactNode => {
   const { isEditing } = useFormContext();
 
   /**

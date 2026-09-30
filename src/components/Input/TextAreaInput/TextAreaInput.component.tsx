@@ -17,7 +17,7 @@ import type {
   TextAreaInputProps,
 } from "./TextAreaInput.types";
 import type { TestIdProps } from "@types";
-import type { ChangeEventHandler, FocusEventHandler } from "react";
+import type { ChangeEventHandler, FocusEventHandler, ReactNode } from "react";
 
 const defaultTextAreaInputProps: TextAreaInputDefaultProps = {
   ...defaultCommonInputProps,
@@ -34,11 +34,9 @@ const defaultTextAreaInputProps: TextAreaInputDefaultProps = {
  * @version 0.1.0
  *
  * @param {TextAreaInputProps & TestIdProps} props - TextAreaInput component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const TextAreaInput = (
-  props: TextAreaInputProps & TestIdProps
-): JSX.Element => {
+const TextAreaInput = (props: TextAreaInputProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultTextAreaInputProps, props);
   const testId = useTestId("input-textarea", props);
   const inputStyles = useInputStyles(mergedProps);

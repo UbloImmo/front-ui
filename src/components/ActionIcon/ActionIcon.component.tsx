@@ -1,5 +1,5 @@
 import { isFunction } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { type ReactNode, useCallback, useMemo } from "react";
 
 import {
   actionIconIconColorMap,
@@ -36,9 +36,9 @@ const defaultActionIconProps: DefaultActionIconProps = {
  * @version 0.1.0
  *
  * @param {ActionIconProps & TestIdProps} props - The properties for the action icon
- * @return {JSX.Element} The rendered action icon component
+ * @return {ReactNode} The rendered action icon component
  */
-const ActionIcon = (props: ActionIconProps & TestIdProps): JSX.Element => {
+const ActionIcon = (props: ActionIconProps & TestIdProps): ReactNode => {
   const { warn, error } = useLogger("ActionIcon");
   const mergedProps = useMergedProps<DefaultActionIconProps, ActionIconProps>(
     defaultActionIconProps,

@@ -1,4 +1,4 @@
-import { Fragment, useCallback, type MouseEvent } from "react";
+import { Fragment, useCallback, type MouseEvent, type ReactNode } from "react";
 
 import { useListFilterClassNames } from "./ListFilter.styles";
 import { ListFilterOptionChip } from "../ListFilterOptionChip/ListFilterOptionChip.component";
@@ -13,7 +13,6 @@ import { Text } from "@/components/Text";
 import { FlexLayout } from "@/layouts/Flex";
 
 import type { ListFilterProps } from "./ListFilter.types";
-import type { Nullable } from "@ubloimmo/front-util";
 
 /**
  * A component that displays a single filters
@@ -22,9 +21,9 @@ import type { Nullable } from "@ubloimmo/front-util";
  * @version 0.1.1
  *
  * @param {ListFilterProps} props
- * @returns {Nullable<JSX.Element>}
+ * @returns {ReactNode}
  */
-export const ListFilter = (props: ListFilterProps): Nullable<JSX.Element> => {
+export const ListFilter = (props: ListFilterProps): ReactNode => {
   const {
     filter,
     styleProps,

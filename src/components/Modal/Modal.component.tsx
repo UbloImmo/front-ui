@@ -1,5 +1,4 @@
-import { VoidFn, type Nullable } from "@ubloimmo/front-util";
-import { useCallback, useId, useMemo } from "react";
+import { useCallback, useId, useMemo, type ReactNode } from "react";
 
 import { useModalClassNames } from "./Modal.styles";
 
@@ -17,6 +16,7 @@ import {
 
 import type { ModalProps, ModalDefaultProps } from "./Modal.types";
 import type { TestIdProps } from "@types";
+import type { VoidFn } from "@ubloimmo/front-util";
 
 const defaultModalProps: ModalDefaultProps = {
   ...Dialog.__DEFAULT_PROPS,
@@ -31,9 +31,9 @@ const defaultModalProps: ModalDefaultProps = {
  * @version 0.1.0
  *
  * @param {ModalProps & TestIdProps} props - Modal component props
- * @returns {Nullable<JSX.Element>}
+ * @returns {ReactNode}
  */
-const Modal = (props: ModalProps & TestIdProps): Nullable<JSX.Element> => {
+const Modal = (props: ModalProps & TestIdProps): ReactNode => {
   const { error } = useLogger("Modal");
   const mergedProps = useMergedProps(defaultModalProps, props);
   const testId = useTestId("modal", props);

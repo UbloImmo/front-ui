@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { useBouncingBallsClassName } from "./BouncingBalls.styles";
 
@@ -11,9 +11,9 @@ import type { LoadingAnimationProps } from "../Loading.animations.types";
  * Renders a BouncingBalls loading animation
  *
  * @param {LoadingAnimationProps} props - the loading animation props.
- * @return {JSX.Element} the rendered spinner component
+ * @return {ReactNode} the rendered spinner component
  */
-export const BouncingBalls = (props: LoadingAnimationProps): JSX.Element => {
+export const BouncingBalls = (props: LoadingAnimationProps): ReactNode => {
   const innerProps = useMemo(() => {
     return {
       color: cssVarUsage(props.color),

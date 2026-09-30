@@ -19,6 +19,7 @@ import { useHtmlAttribute, useMergedProps, useTestId } from "@utils";
 
 import type { DefaultInputProps, InputProps } from "../Input.types";
 import type { TestIdProps } from "@types";
+import type { ReactNode } from "react";
 
 const defaultEmailInputProps: DefaultInputProps<"email"> = {
   ...defaultCommonInputProps,
@@ -33,9 +34,9 @@ const defaultEmailInputProps: DefaultInputProps<"email"> = {
  *
  * @version 0.1.0
  * @param {InputProps<"email">} props - The input props.
- * @return {JSX.Element} The rendered text input component.
+ * @return {ReactNode} The rendered text input component.
  */
-const EmailInput = (props: InputProps<"email"> & TestIdProps): JSX.Element => {
+const EmailInput = (props: InputProps<"email"> & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultEmailInputProps, props);
 
   const onChange = useInputOnChange<"email">(

@@ -1,6 +1,7 @@
 import { useListContext, ListContextProvider } from "../../context";
 
 import type { ListProviderWrapperProps } from "../../List.types";
+import type { ReactNode } from "react";
 
 /**
  * Wraps the List component in a ListContextProvider if:
@@ -11,11 +12,11 @@ import type { ListProviderWrapperProps } from "../../List.types";
  *
  * @template TItem - The type of items in the list
  * @param {ListProviderWrapperProps<TItem>} props - List provider wrapper props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 export const ListProviderWrapper = <TItem extends object>(
   props: ListProviderWrapperProps<TItem>
-): JSX.Element => {
+): ReactNode => {
   const parentContext = useListContext<TItem>();
   if (parentContext.contextMissing && props.config) {
     return (

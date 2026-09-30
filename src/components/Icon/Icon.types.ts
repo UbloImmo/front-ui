@@ -2,10 +2,11 @@ import type { CommonIconProps } from "./__generated__/common.types";
 import type { IconName } from "./__generated__/iconName.types";
 import type { FixedCssLength, PaletteColor } from "@types";
 import type { GenericFn } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 export type { IconName } from "./__generated__/iconName.types";
 
-export type GeneratedIcon = GenericFn<[CommonIconProps], JSX.Element>;
+export type GeneratedIcon = GenericFn<[CommonIconProps], ReactNode>;
 
 export type IconProps = {
   /**
@@ -38,6 +39,6 @@ export type IconProps = {
 export type DefaultIconProps = Required<IconProps>;
 
 export type MissingIcon = {
-  (): JSX.Element;
+  (): ReactNode;
   __missing: true;
 };

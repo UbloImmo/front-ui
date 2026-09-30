@@ -1,12 +1,17 @@
-import { MouseEventHandler, useCallback, useMemo } from "react";
+import {
+  type ReactNode,
+  type MouseEventHandler,
+  useCallback,
+  useMemo,
+} from "react";
 
 import { useHypertextStyle } from "./Hypertext.styles";
-import { DefaultHypertextProps, HypertextProps } from "./Hypertext.types";
 import { Icon } from "../Icon";
 import { Text } from "../Text";
 
 import { isEmptyString, useLogger, useMergedProps, useTestId } from "@utils";
 
+import type { DefaultHypertextProps, HypertextProps } from "./Hypertext.types";
 import type { PaletteColor } from "@types";
 
 const defaultHypertextProps: DefaultHypertextProps = {
@@ -25,9 +30,9 @@ const defaultHypertextProps: DefaultHypertextProps = {
  * @version 0.1.2
  *
  * @param {HypertextProps} props - The hypertext's props
- * @return {JSX.Element} The rendered hypertext
+ * @return {ReactNode} The rendered hypertext
  */
-const Hypertext = (props: HypertextProps): JSX.Element => {
+const Hypertext = (props: HypertextProps): ReactNode => {
   const { warn } = useLogger("Hypertext");
   const mergedProps = useMergedProps(defaultHypertextProps, props);
   const testId = useTestId("hypertext");

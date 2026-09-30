@@ -1,5 +1,6 @@
 import {
   type MouseEvent,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -30,9 +31,9 @@ const defaultCheckboxProps: CheckboxDefaultProps = {
  * @version 0.1.1
  *
  * @param {CheckboxProps & TestIdProps} props - Checkbox component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Checkbox = (props: CheckboxProps & TestIdProps): JSX.Element => {
+const Checkbox = (props: CheckboxProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultCheckboxProps, props);
   const { disabled, onChange } = mergedProps;
   const testId = useTestId("checkbox", props);

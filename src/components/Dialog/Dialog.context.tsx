@@ -13,6 +13,7 @@ import {
   useMemo,
   useReducer,
   useRef,
+  type ReactNode,
 } from "react";
 
 import { isEmptyString, isNonEmptyString, useLogger } from "@utils";
@@ -357,12 +358,12 @@ export const useDialog = (reference: DialogReference) => {
  * Context Provider needed to manager one or multiple dialogs in a page / app.
  *
  * @param {DialogContextProviderProps} props - Initial {@link DialogContext} config and children.
- * @return {JSX.Element} Its children wrapped in a {@link DialogContext.Provider}
+ * @return {ReactNode} Its children wrapped in a {@link DialogContext.Provider}
  */
 export const DialogProvider = ({
   children,
   portalRoot,
-}: DialogContextProviderProps): JSX.Element => {
+}: DialogContextProviderProps): ReactNode => {
   const context = useGlobalDialogContext({ portalRoot });
   return (
     <DialogReactContext.Provider value={context}>

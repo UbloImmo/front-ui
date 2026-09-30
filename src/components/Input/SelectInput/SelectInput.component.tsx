@@ -1,11 +1,18 @@
 import {
-  NullishPrimitives,
+  type NullishPrimitives,
   isBoolean,
   isFunction,
   isNullish,
   isString,
 } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 import { SelectInputPopover } from "./components/SelectInputPopover.component";
 import {
@@ -67,14 +74,14 @@ import type { PaletteColor, TestIdProps } from "@types";
  * @version 0.2.2
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const SelectInput = <
   TValue extends NullishPrimitives = NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 >(
   props: SelectInputProps<TValue, TExtraData> & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const logger = useLogger("SelectInput");
   const [isOpen, setIsOpen] = useState(false);
   const { autoCompleteQuery, setAutoCompleteQuery } =

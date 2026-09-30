@@ -7,8 +7,9 @@ import {
   type Nullable,
 } from "@ubloimmo/front-util";
 import {
-  KeyboardEventHandler,
-  MouseEventHandler,
+  type KeyboardEventHandler,
+  type MouseEventHandler,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -79,9 +80,9 @@ const defaultDateInputProps: DateInputDefaultProps = {
  * @version 0.1.0
  *
  * @param {DateInputProps & TestIdProps} props - The input props.
- * @return {JSX.Element} The rendered date input component.
+ * @return {ReactNode} The rendered date input component.
  */
-const DateInput = (props: DateInputProps & TestIdProps): JSX.Element => {
+const DateInput = (props: DateInputProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultDateInputProps, props);
   const { debug } = useLogger("InputDate", {
     hideDebug: true,

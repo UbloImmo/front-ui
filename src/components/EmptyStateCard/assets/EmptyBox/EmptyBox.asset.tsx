@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useId, useMemo } from "react";
+import { type CSSProperties, type ReactNode, useId, useMemo } from "react";
 
 import { emptyStateCardAssetDefaultProps } from "../assets.defaults";
 import styles from "./EmptyBox.module.scss";
@@ -173,7 +173,7 @@ type AssetGradientIds = ReturnType<typeof useEmptyBoxAssetGradientIds>;
  *
  * @param {object} props - Component props
  * @param {AssetColors} props.colors - Color values for the gradients
- * @returns {JSX.Element} SVG defs element containing gradient definitions
+ * @returns {ReactNode} SVG defs element containing gradient definitions
  */
 const Defs = ({
   colors: {
@@ -188,7 +188,7 @@ const Defs = ({
 }: {
   colors: AssetColors;
   gradientIds: AssetGradientIds;
-}): JSX.Element => {
+}): ReactNode => {
   return (
     <defs>
       <linearGradient
@@ -322,9 +322,9 @@ const EmptyBoxIcons = ({ name, color }: Pick<IconProps, "name" | "color">) => {
  * @param {EmptyStateCardAssetProps} props - The component props
  * @param {string} props.icon - The icon to display inside the box
  * @param {PaletteColor} props.color - The color theme for the illustration
- * @returns {JSX.Element} The rendered empty box illustration
+ * @returns {ReactNode} The rendered empty box illustration
  */
-export const EmptyBox = (props: EmptyStateCardAssetProps): JSX.Element => {
+export const EmptyBox = (props: EmptyStateCardAssetProps): ReactNode => {
   const { icon, color } = useMergedProps(
     emptyStateCardAssetDefaultProps,
     props

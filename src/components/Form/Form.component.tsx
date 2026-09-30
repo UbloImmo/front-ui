@@ -59,11 +59,11 @@ const defaultFormProps: FormDefaultProps<object> = {
  * @template {object} TData - The type of the form data
  *
  * @param {FormProps<TData> & TestIdProps} props - Form component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const Form = <TData extends object>(
   props: FormProps<TData> & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const mergedProps = useMergedProps<FormDefaultProps<TData>, FormProps<TData>>(
     defaultFormProps as unknown as FormDefaultProps<TData>,
     props
@@ -90,13 +90,13 @@ export { Form };
  * @template {object} TData - The type of the form data
  *
  * @param {FormDefaultProps<TData> & TestIdProps} props - The props for the inner form component.
- * @return {JSX.Element} The rendered inner form component.
+ * @return {ReactNode} The rendered inner form component.
  */
 const InnerForm = <TData extends object>(
   props: FormDefaultProps<TData> & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const InnerContent = useMemo(
-    (): JSX.Element => (
+    (): ReactNode => (
       <InnerFormContainer
         {...props}
         testId={props.testId}
@@ -137,13 +137,13 @@ const InnerForm = <TData extends object>(
  * @param {ReactNode} props.children - The child elements to render inside the container.
  * @param {boolean} props.embedded - Whether the form is embedded or not.
  * @param {FormLayoutProps & TestIdProps} props.props - Additional props for layout and testing.
- * @returns {JSX.Element} The rendered form container.
+ * @returns {ReactNode} The rendered form container.
  */
 const InnerFormContainer = ({
   children,
   embedded,
   ...props
-}: FormLayoutProps & TestIdProps & { children: ReactNode }): JSX.Element => {
+}: FormLayoutProps & TestIdProps & { children: ReactNode }): ReactNode => {
   const { isEditing, submitForm, asModal } = useFormContext();
   const testId = useTestId("form", props);
 

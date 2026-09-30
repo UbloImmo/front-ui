@@ -1,5 +1,5 @@
 import { isNull, isString } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 
 import { useDividerStyles } from "./Divider.styles";
 
@@ -27,9 +27,9 @@ const defaultDividerProps: DividerDefaultProps = {
  * @version 0.1.0
  *
  * @param {DividerProps & TestIdProps} props - Divider component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Divider = (props: DividerProps & TestIdProps): JSX.Element => {
+const Divider = (props: DividerProps & TestIdProps): ReactNode => {
   const { error } = useLogger("Divider");
   const mergedProps = useMergedProps(defaultDividerProps, props);
   const { justify } = mergedProps;

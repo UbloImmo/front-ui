@@ -24,14 +24,14 @@ import { useCssClasses } from "@utils";
  * @version 0.1.2
  *
  * @param {FormTableFieldCellProps} props - The props of the cell field.
- * @returns {JSX.Element} The rendered component.
+ * @returns {ReactNode} The rendered component.
  */
 export const FormTableFieldCell = ({
   layout,
   colSpan,
   position,
   ...props
-}: FormTableFieldCellProps): JSX.Element => {
+}: FormTableFieldCellProps): ReactNode => {
   const { isEditing } = useFormContext();
   const displayContent = useMemo<ReactNode>(() => {
     const content = computeFieldDisplayContent(props.type, props);

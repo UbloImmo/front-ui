@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { defaultTypographyProps, useTypographyStyles } from "../../typography";
 
@@ -17,9 +17,9 @@ const defaultHeadingProps: Required<HeadingProps> = {
  * @version 0.1.1
  *
  * @param {WithTestId<HeadingProps>} props - Heading component props
- * @return {JSX.Element} - The styled heading component
+ * @return {ReactNode} - The styled heading component
  */
-const Heading = (props: HeadingProps & TestIdProps): JSX.Element => {
+const Heading = (props: HeadingProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultHeadingProps, props);
   const testId = useTestId("heading", props);
   const { error } = useLogger("Heading");

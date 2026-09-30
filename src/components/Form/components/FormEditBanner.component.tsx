@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 
 import { useFormContext } from "../Form.context";
 import styles from "../Form.module.scss";
@@ -34,9 +34,9 @@ const defaultFormEditBannerProps: DefaultFormEditBannerProps = {
  *
  * @version 0.1.0
  *
- * @return {JSX.Element} The rendered FormEditBanner component.
+ * @return {ReactNode} The rendered FormEditBanner component.
  */
-export const FormEditBanner = (props: FormEditBannerProps): JSX.Element => {
+export const FormEditBanner = (props: FormEditBannerProps): ReactNode => {
   const {
     isEditing,
     isLoading,

@@ -53,7 +53,7 @@ import type {
   VoidFn,
 } from "@ubloimmo/front-util";
 import type { TranslationKey } from "@utils";
-import type { FC, FormEvent, ReactNode } from "react";
+import type { FC, SubmitEvent, ReactNode } from "react";
 import type { ZodIssue, ZodObject, ZodType, ZodTypeAny } from "zod";
 
 // -------------------------------- GLOBALS ----------------------------------
@@ -1873,9 +1873,9 @@ export type UseFormSubmissionReturn = {
   /**
    * The form's `onSubmit` callback
    *
-   * @type {FormEventHandler<HTMLFormElement>}
+   * @type {SubmitEventHandler<HTMLFormElement>}
    */
-  submitForm: (event?: FormEvent<HTMLFormElement>) => void;
+  submitForm: (event?: SubmitEvent<HTMLFormElement>) => void;
   /**
    * Flag indicating if the form is currently submitting
    *

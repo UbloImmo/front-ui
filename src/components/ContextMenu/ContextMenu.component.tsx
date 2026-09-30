@@ -1,5 +1,11 @@
 import { isBoolean, isFunction, type VoidFn } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 import {
   ContextMenuItem,
@@ -41,9 +47,9 @@ const defaultContextMenuProps: ContextMenuDefaultProps = {
  * @version 0.0.1
  *
  * @param {ContextMenuProps & TestIdProps} props - ContextMenu component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const ContextMenu = (props: ContextMenuProps & TestIdProps): JSX.Element => {
+const ContextMenu = (props: ContextMenuProps & TestIdProps): ReactNode => {
   const { debug } = useLogger("ContextMenu", { hideDebug: true });
   const { items, disabled, size, children, icon, ...mergedProps } =
     useMergedProps(defaultContextMenuProps, props);

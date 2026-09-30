@@ -63,7 +63,7 @@ export const BalanceJournalContextProvider = ({
   children,
 }: {
   children: ReactNode;
-}): JSX.Element => {
+}): ReactNode => {
   const journal = useBalanceJournal();
 
   return (

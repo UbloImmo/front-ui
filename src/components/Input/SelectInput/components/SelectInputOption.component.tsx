@@ -1,9 +1,14 @@
 import {
   type VoidFn,
-  isFunction,
   type NullishPrimitives,
+  isFunction,
 } from "@ubloimmo/front-util";
-import { type MouseEventHandler, useCallback, useMemo } from "react";
+import {
+  type MouseEventHandler,
+  type ReactNode,
+  useCallback,
+  useMemo,
+} from "react";
 
 import { useSelectInputOptionClassNames } from "../SelectInput.styles";
 
@@ -22,7 +27,7 @@ import type { PaletteColor, TextProps } from "@types";
  *
  * @template {NullishPrimitives} TValue - The option's value
  * @param {SelectInputOptionProps<TValue>} props - The option to render and its `onSelect` callback
- * @returns JSX.Element
+ * @returns ReactNode
  */
 const SelectInputOption = <
   TValue extends NullishPrimitives,
@@ -31,7 +36,7 @@ const SelectInputOption = <
   Option,
   onSelect,
   ...option
-}: SelectInputOptionProps<TValue, TExtraData>): JSX.Element => {
+}: SelectInputOptionProps<TValue, TExtraData>): ReactNode => {
   const contentColor = useMemo<PaletteColor>(() => {
     return option.disabled
       ? "gray-500"

@@ -3,6 +3,7 @@ import { FormFieldGridItem } from "./FormFieldGridItem.component";
 import { Text } from "@/components/Text";
 
 import type { BuiltFormTextProps } from "../Form.types";
+import type { ReactNode } from "react";
 
 /**
  * A form field that renders a {@link Text} component.
@@ -12,9 +13,9 @@ import type { BuiltFormTextProps } from "../Form.types";
  * @version 0.1.0
  *
  * @param {BuiltFormTextProps} props - The component props.
- * @returns {JSX.Element} The rendered component.
+ * @returns {ReactNode} The rendered component.
  */
-export const FormText = (props: BuiltFormTextProps) => {
+export const FormText = (props: BuiltFormTextProps): ReactNode => {
   const { kind: _, children, ...textProps } = props;
 
   return (
