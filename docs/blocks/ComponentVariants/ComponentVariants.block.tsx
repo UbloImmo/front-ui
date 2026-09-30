@@ -1,18 +1,18 @@
 import { isNumber, isObject, isString, type KeyOf } from "@ubloimmo/front-util";
-import { FC, useMemo } from "react";
+import { FC, type ReactNode, useMemo } from "react";
 
 import styles from "./ComponentVariants.module.scss";
-import {
-  ComponentVariantsConfig,
-  ComponentVariantsDetailedConfig,
-  PropVariantInternal,
-} from "./ComponentVariants.types";
 
 import { FlexLayout, GridLayout } from "@/layouts";
 import { cssClasses, cssVariables, useCssClasses } from "@utils";
 
 import { Text } from "@components";
 
+import type {
+  ComponentVariantsConfig,
+  ComponentVariantsDetailedConfig,
+  PropVariantInternal,
+} from "./ComponentVariants.types";
 import type {
   FlexLayoutProps,
   GridAlignment,
@@ -36,7 +36,7 @@ const isDetailedConfig = <
  * @template {Record<string, unknown>} TComponentProps - The component's props
  * @template {KeyOf<TComponentProps, string>} TPropKey - The key of the prop to vary upon
  * @param {ComponentVariantsConfig<TComponentProps, TPropKey>} props - The config of what component to render and how to vary the prop
- * @returns {JSX.Element} The rendered grid
+ * @returns {ReactNode} The rendered grid
  */
 export const ComponentVariants = <
   TComponentProps extends Record<string, unknown>,
@@ -48,7 +48,7 @@ export const ComponentVariants = <
   props:
     | ComponentVariantsConfig<TComponentProps, TPropKey>
     | ComponentVariantsDetailedConfig<TComponentProps>
-): JSX.Element => {
+): ReactNode => {
   const propVariants = useMemo<PropVariantInternal<TComponentProps>[]>(() => {
     if (isDetailedConfig(props)) {
       return props.variants.map(

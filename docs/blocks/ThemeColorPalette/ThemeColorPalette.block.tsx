@@ -28,7 +28,7 @@ import type {
  * @param {string} [props.title] - Optional title for the component.
  * @param {boolean} [props.initShowOpacity] - Optional flag to initially show opacity in the color shades.
  * @param {ReactNode} [props.children] - Optional React nodes to be displayed within the component.
- * @return {JSX.Element} The JSX element representing the theme color shades component.
+ * @return {ReactNode} The JSX element representing the theme color shades component.
  */
 export const ThemeColorShades = ({
   colorKey,
@@ -40,7 +40,7 @@ export const ThemeColorShades = ({
   title?: string;
   initShowOpacity?: boolean;
   children?: ReactNode;
-}): JSX.Element => {
+}): ReactNode => {
   const theme = useTheme();
   const [showCodePreview, toggleShowCodePreview] = useReducer(
     (state) => !state,
@@ -126,7 +126,7 @@ export const ThemeColorShades = ({
  * @param {string} props.colorKey - The key for the color in the code preview
  * @param {PaletteColor} [props.darkShade] - The dark shade for the code preview background
  * @param {PaletteColor} [props.lightShade] - The light shade for the code preview foreground
- * @return {JSX.Element} The code preview component
+ * @return {ReactNode} The code preview component
  */
 const ThemeColorCodePreview = ({
   color,
@@ -140,7 +140,7 @@ const ThemeColorCodePreview = ({
   colorKey: string;
   darkShade?: PaletteColor;
   lightShade?: PaletteColor;
-}) => {
+}): ReactNode => {
   const codePreview = useMemo(() => {
     const colorObj = transformObject(
       color as PaletteColorShaded<

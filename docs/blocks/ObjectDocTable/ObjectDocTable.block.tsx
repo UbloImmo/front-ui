@@ -1,6 +1,6 @@
 import { Source } from "@storybook/addon-docs/blocks";
 import { objectEntries } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { Markdown } from "../Markdown";
 import {
@@ -37,11 +37,11 @@ type DocTableProps<TObj extends Record<string, unknown>> = {
  * Extracts relevant information from jsdoc comments.
  *
  * @param {ComponentPropsBlockProps<TComponentProps>} props - the component props block props
- * @return {JSX.Element} the table of component props
+ * @return {ReactNode} the table of component props
  */
 const DocTable = <TObj extends Record<string, unknown>>(
   props: DocTableProps<TObj>
-): JSX.Element => {
+): ReactNode => {
   const propList = useMemo(() => {
     return objectEntries(props?.docgen ?? {})
       .map(
@@ -84,9 +84,9 @@ export { DocTable as ObjectDocTable };
 /**
  * Render the table header in {@link ComponentPropsBlock}
  *
- * @return {JSX.Element} Table header component
+ * @return {ReactNode} Table header component
  */
-const ComponentPropsTableHeader = (): JSX.Element => {
+const ComponentPropsTableHeader = (): ReactNode => {
   const columns = useStatic(["name", "type", "default", "description"]);
 
   return (
@@ -104,7 +104,7 @@ const ComponentPropsTableHeader = (): JSX.Element => {
  * Renders a table row from a component's prop's computed info.
  *
  * @param {ParsedPropInfo} props - The row's own props.
- * @return {JSX.Element} The rendered table row.
+ * @return {ReactNode} The rendered table row.
  */
 const ComponentPropRow = ({
   defaultValue,
@@ -113,7 +113,7 @@ const ComponentPropRow = ({
   type,
   required,
   name,
-}: ParsedPropInfo): JSX.Element => {
+}: ParsedPropInfo): ReactNode => {
   const textColor = useMemo(() => (todo ? "gray-400" : "gray-800"), [todo]);
   return (
     <TableRow $todo={todo} $required={required}>

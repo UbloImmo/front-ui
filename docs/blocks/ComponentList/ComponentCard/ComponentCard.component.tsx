@@ -1,5 +1,5 @@
 import { linkTo } from "@storybook/addon-links";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { useComponentCardStyles } from "./ComponentCard.styles";
 import { randomCellSize } from "./ComponentCard.utils";
@@ -33,7 +33,7 @@ import type { ParsedJsDoc } from "@docs/docs.types";
  * @param {React.ComponentType<TComponentProps>} props.Component - The component to render.
  * @param {boolean} props.randomSize - Whether to randomly generate the size of the card.
  * @param {string} props.parent - The parent of the component.
- * @return {JSX.Element | null} The rendered component card or null if componentProps or description is falsy.
+ * @return {ReactNode} The rendered component card or null if componentProps or description is falsy.
  */
 export const ComponentCard = <
   TIndex extends AnyIndex,
@@ -43,7 +43,7 @@ export const ComponentCard = <
   Component,
   randomSize,
   parent,
-}: ComponentCardProps<TIndex, TName>): JSX.Element | null => {
+}: ComponentCardProps<TIndex, TName>): ReactNode => {
   const size = useStatic<ComponentCardCellSize>(() =>
     randomSize ? randomCellSize() : "small"
   );

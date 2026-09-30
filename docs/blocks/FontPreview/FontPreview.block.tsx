@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 import { Heading } from "../Typography";
 import { useFontPreviewClassNames } from "./FontPreview.styles";
 
@@ -25,12 +27,12 @@ type FontPreviewProps = {
 /**
  * Renders a preview of the font with different weights and characters.
  *
- * @return {JSX.Element} The JSX element representing the font preview.
+ * @return {ReactNode} The JSX element representing the font preview.
  */
 export const FontPreview = ({
   font = "sans",
   fontName = "Gilroy",
-}: FontPreviewProps): JSX.Element => {
+}: FontPreviewProps): ReactNode => {
   const classNames = useFontPreviewClassNames();
   return (
     <div className={classNames.box}>

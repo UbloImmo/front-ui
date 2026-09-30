@@ -3,7 +3,7 @@ import type * as componentsIndexRaw from "@components";
 import type { DocgenInfo } from "@docs/docs.types";
 import type { GridTemplate } from "@layouts";
 import type { TestIdProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
+import type { FC } from "react";
 
 export type ComponentIndexModule = typeof componentsIndexRaw;
 
@@ -43,16 +43,9 @@ export type ComponentDefaultPropsMask<TProps extends ComponentPropsMask> = {
 };
 
 /**
- * Used to filter a potential component by only allowing its return type to be either JSX.Element or Nullable<JSX.Element>
+ * Used to match a component as a function that takes {@link ComponentPropsMask} and returns a ReactNode
  */
-type ComponentReturnMask = JSX.Element | Nullable<JSX.Element>;
-
-/**
- * Used to match a component as a function that takes {@link ComponentPropsMask} and returns {@link ComponentReturnMask}
- */
-type ComponentFnMask<TProps extends ComponentPropsMask> = {
-  (props: TProps): ComponentReturnMask;
-};
+type ComponentFnMask<TProps extends ComponentPropsMask> = FC<TProps>;
 
 /**
  * Used to match a component as a function that matches {@link ComponentFnMask} and could match {@link ComponentDefaultPropsMask}
