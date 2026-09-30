@@ -115,10 +115,11 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
       fileName: name,
     },
     rollupOptions: {
-      // plugins: [dynamicImportVars()],
       external: [
         "react",
         "react-dom",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
         "@ubloimmo/front-tokens",
         "@ubloimmo/front-util",
         "@radix-ui/react-popover",
@@ -145,6 +146,8 @@ export default mergeConfig<UserConfig, UserConfig>(sbViteConfig, {
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
+          "react/jsx-runtime": "ReactJsxRuntime",
+          "react/jsx-dev-runtime": "ReactJsxDevRuntime",
         },
         dir: "dist",
         compact: true,
