@@ -755,7 +755,8 @@ Table.parameters = {
 export const TableTryDeletingRow = (props: FormStoryProps) => {
   const mergedProps = useMergedProps(commonTableFormProps, props);
   const [modalOpen, setModalOpen] = useState(false);
-  const rowToDeleteRef = useRef<FormTableTryDeletingRowParams<object>>();
+  const rowToDeleteRef =
+    useRef<FormTableTryDeletingRowParams<object>>(undefined);
 
   const tryDeletingRow = useCallback<
     FormTableTryDeletingRowFn<IdentityTable["profiles"][number]>

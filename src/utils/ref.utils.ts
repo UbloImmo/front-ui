@@ -1,13 +1,7 @@
 import { isFunction, type Nullable } from "@ubloimmo/front-util";
-import {
-  type MutableRefObject,
-  type RefCallback,
-  type RefObject,
-  useCallback,
-  useRef,
-} from "react";
+import { type RefCallback, type RefObject, useCallback, useRef } from "react";
 
-type RefWriter<T> = RefCallback<T> | MutableRefObject<T | null> | RefObject<T>;
+type RefWriter<T> = RefCallback<T> | RefObject<Nullable<T>>;
 
 /**
  * Assigns a single value to multiple refs
@@ -24,7 +18,7 @@ export function useReplicateRef<T>(
         if (isFunction<RefCallback<T>>(writer)) {
           writer(instance);
         } else {
-          (writer as MutableRefObject<Nullable<T>>).current = instance;
+          writer.current = instance;
         }
       }
     },
@@ -39,7 +33,7 @@ export function useReplicateRef<T>(
  * @returns A ref callback function to pass to the element
  */
 export function useInterceptRef<T>(...refWriters: RefWriter<T>[]): {
-  ref: RefObject<T>;
+  ref: RefObject<Nullable<T>>;
   interceptRef: RefCallback<T>;
 } {
   const ref = useRef<T>(null);

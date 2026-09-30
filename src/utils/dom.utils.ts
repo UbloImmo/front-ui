@@ -1,4 +1,9 @@
-import { isFunction, type Optional, type VoidFn } from "@ubloimmo/front-util";
+import {
+  isFunction,
+  type Nullable,
+  type Optional,
+  type VoidFn,
+} from "@ubloimmo/front-util";
 import { debounce } from "lodash";
 import { type RefObject, useEffect, useRef, useState } from "react";
 
@@ -15,7 +20,7 @@ import type { DOMRectValues } from "@types";
  * @returns {Optional<DOMRectValues>} The observed element's DOM Rect values
  */
 export function useResizeObserver<TElement extends Element>(
-  elementRef: RefObject<TElement>,
+  elementRef: RefObject<Nullable<TElement>>,
   debounceTimeout: number = 100,
   onResize?: VoidFn<[rect: DOMRectValues]>
 ): Optional<DOMRectValues> {
