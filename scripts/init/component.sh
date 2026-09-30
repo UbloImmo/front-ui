@@ -61,6 +61,7 @@ import { useLogger, useTestId, useMergedProps } from \"@utils\";
 
 
 import type { TestIdProps } from \"@types\";
+import type { ReactNode } from \"react\";
 import type { ${component_name}Props, ${component_name}DefaultProps } from \"./${component_name}.types\";
 
 const default${component_name}Props: ${component_name}DefaultProps = {
@@ -75,9 +76,9 @@ const default${component_name}Props: ${component_name}DefaultProps = {
  * @version 0.0.1
  *
  * @param {${component_name}Props & TestIdProps} props - ${component_name} component props
- * @returns {JSX.Element}
+ * @returns {ReactNode} ${component_name} component
  */
-const ${component_name} = (props: ${component_name}Props & TestIdProps): JSX.Element => {
+const ${component_name} = (props: ${component_name}Props & TestIdProps): ReactNode => {
   const { log } = useLogger(\"${component_name}\");
   const mergedProps = useMergedProps(default${component_name}Props, props);
   const testId = useTestId(\"${component_test_id}\", props);
