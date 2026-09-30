@@ -7,7 +7,7 @@ import { ThemeProvider } from "../../themes";
 import { GENERATED_ICON_NAMES } from "./__generated__/iconName.types.ts";
 
 import { testHookFactory } from "@/tests";
-import { delay, isCssRem } from "@utils";
+import { isCssRem } from "@utils";
 
 const warnCopy = global.console.warn;
 
