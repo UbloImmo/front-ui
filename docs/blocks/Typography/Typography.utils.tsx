@@ -19,6 +19,7 @@ export function flattenTypographyChildren(
   if (
     isObject(children) &&
     "props" in children &&
+    isObject(children.props) &&
     "children" in children.props &&
     !isNullish(children.props.children)
   ) {

@@ -3,7 +3,8 @@ import type * as componentsIndexRaw from "@components";
 import type { DocgenInfo } from "@docs/docs.types";
 import type { GridTemplate } from "@layouts";
 import type { TestIdProps } from "@types";
-import type { FC } from "react";
+import type { GenericFn } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 export type ComponentIndexModule = typeof componentsIndexRaw;
 
@@ -45,7 +46,10 @@ export type ComponentDefaultPropsMask<TProps extends ComponentPropsMask> = {
 /**
  * Used to match a component as a function that takes {@link ComponentPropsMask} and returns a ReactNode
  */
-type ComponentFnMask<TProps extends ComponentPropsMask> = FC<TProps>;
+type ComponentFnMask<TProps extends ComponentPropsMask> = GenericFn<
+  [TProps],
+  ReactNode
+>;
 
 /**
  * Used to match a component as a function that matches {@link ComponentFnMask} and could match {@link ComponentDefaultPropsMask}
