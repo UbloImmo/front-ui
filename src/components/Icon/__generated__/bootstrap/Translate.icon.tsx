@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { CommonIconProps, commonIconDefaulProps } from "../common.types";
 
@@ -9,9 +9,9 @@ import { cssLengthUsage, cssVarUsage, mergeDefaultProps } from "../../../../util
  * Auto-generated before NPM release
  *
  * @params {CommonIconProps} [props = commonIconDefaulProps] - the icon's size and color
- * @returns {JSX.Element} - the icon
+ * @returns {ReactNode} - the icon
  */
-const Translate = (props: CommonIconProps): JSX.Element => {
+const Translate = (props: CommonIconProps): ReactNode => {
   const { color, size } = useMemo(() => {
     const mergedProps = mergeDefaultProps(commonIconDefaulProps, props);
     return {
