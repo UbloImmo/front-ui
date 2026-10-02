@@ -1,5 +1,5 @@
 import { isFunction } from "@ubloimmo/front-util";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 
 import { NativeInputOnChangeFn, useInputId } from "../Input";
 import { defaultCommonInputProps } from "../Input/Input.common";
@@ -17,7 +17,6 @@ import { useCssClasses, useLogger, useMergedProps, useTestId } from "@utils";
 import type { FieldDefaultProps, FieldProps } from "./Field.types";
 import type { InputType } from "../Input/Input.types";
 import type { TestIdProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultFieldProps: FieldDefaultProps<InputType> = {
   type: "text",
@@ -50,11 +49,11 @@ const NO_NESTED_FOCUS_INPUT_TYPES = new Set<InputType>([
  * @version 0.1.2
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
- * @returns {Nullable<JSX.Element>}
+ * @returns {ReactNode}
  */
 const Field = <TType extends InputType>(
   props: FieldProps<TType> & TestIdProps
-): Nullable<JSX.Element> => {
+): ReactNode => {
   const logger = useLogger("Field");
 
   const { styleOverride, ...mergedProps }: FieldDefaultProps<InputType> =

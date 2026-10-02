@@ -60,9 +60,9 @@ import type { LoadingAnimationProps } from "../../Loading.types";
  * Renders an [Anim] loading animation
  *
  * @param {LoadingAnimationProps} props - the loading animation props.
- * @return {JSX.Element} the rendered spinner component
+ * @return {ReactNode} the rendered spinner component
  */
-export const Anim = (props: LoadingAnimationProps): JSX.Element => {
+export const Anim = (props: LoadingAnimationProps): ReactNode => {
   // compute styles
   const { style, className } = useAnimStyles(props);
   // Apply styles to your animation

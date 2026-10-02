@@ -1,5 +1,5 @@
 import { isNull } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { Icon } from "../Icon";
 import { Text } from "../Text/Text.component";
@@ -12,7 +12,6 @@ import type {
   InputAssistiveTextProps,
 } from "./InputAssistiveText.types";
 import type { PaletteColor, TestIdProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
 
 const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
   assistiveText: null,
@@ -27,11 +26,11 @@ const defaultInputAssistiveTextProps: DefaultInputAssistiveTextProps = {
  * @version 0.1.0
  *
  * @param {InputAssistiveTextProps & TestIdProps} props - The properties for the assistive text.
- * @return {Nullable<JSX.Element>} The JSX element representing the assistive text.
+ * @return {ReactNode} The JSX element representing the assistive text.
  */
 const InputAssistiveText = (
   props: InputAssistiveTextProps & TestIdProps
-): Nullable<JSX.Element> => {
+): ReactNode => {
   const mergedProps = useMergedProps<
     DefaultInputAssistiveTextProps,
     InputAssistiveTextProps

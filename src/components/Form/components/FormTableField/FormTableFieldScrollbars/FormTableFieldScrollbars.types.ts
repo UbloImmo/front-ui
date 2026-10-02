@@ -1,8 +1,9 @@
 import type { FormTableFieldContentRefs } from "../FormTableFieldContent";
+import type { Nullable } from "@ubloimmo/front-util";
 import type { RefObject } from "react";
 
 export type FormTableFieldScrollbarsProps = {
-  contentRefs: RefObject<FormTableFieldContentRefs>;
+  contentRefs: RefObject<Nullable<FormTableFieldContentRefs>>;
   scrollerId: string;
 };
 

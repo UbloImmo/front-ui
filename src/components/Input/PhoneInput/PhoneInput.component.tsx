@@ -1,5 +1,11 @@
 import { isFunction, isNull } from "@ubloimmo/front-util";
-import { useRef, useMemo, useCallback, type ChangeEventHandler } from "react";
+import {
+  useRef,
+  useMemo,
+  useCallback,
+  type ChangeEventHandler,
+  type ReactNode,
+} from "react";
 import {
   CountrySelector,
   type ParsedCountry,
@@ -45,9 +51,9 @@ const defaultPhoneInputProps: DefaultInputProps<"phone"> = {
  *
  * @version 0.1.1
  * @param {InputProps<"phone">} props - The input props.
- * @return {JSX.Element} The rendered phone input component.
+ * @return {ReactNode} The rendered phone input component.
  */
-const PhoneInput = (props: InputProps<"phone"> & TestIdProps): JSX.Element => {
+const PhoneInput = (props: InputProps<"phone"> & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultPhoneInputProps, props);
   const testId = useTestId("input-phone", props);
 

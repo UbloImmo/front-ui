@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import {
   computeStateIndicatorColors,
@@ -31,11 +31,11 @@ const defaultStateIndicatorProps: DefaultStateIndicatorProps = {
  * @version 0.1.0
  *
  * @param {TestIdProps & StateIndicatorProps} props - the state indicator props
- * @returns {JSX.Element} - the state indicator markup
+ * @returns {ReactNode} - the state indicator markup
  */
 const StateIndicator = (
   props: TestIdProps & StateIndicatorProps
-): JSX.Element => {
+): ReactNode => {
   const testId = useTestId("state-indicator", props);
   const mergedProps = useMergedProps(defaultStateIndicatorProps, props);
   const colors = useMemo(

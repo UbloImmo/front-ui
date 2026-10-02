@@ -1,5 +1,4 @@
-import { NullishPrimitives, type Nullable } from "@ubloimmo/front-util";
-import { useCallback } from "react";
+import { useCallback, type ReactNode } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
 import { SelectInput } from "../SelectInput";
@@ -11,6 +10,7 @@ import type {
   SearchInputProps,
 } from "./SearchInput.types";
 import type { TestIdProps } from "@types";
+import type { NullishPrimitives, Nullable } from "@ubloimmo/front-util";
 
 const defaultSearchInputProps: SearchInputDefaultProps<NullishPrimitives> = {
   ...defaultCommonInputProps,
@@ -34,14 +34,14 @@ const defaultSearchInputProps: SearchInputDefaultProps<NullishPrimitives> = {
  * @version 0.1.0
  *
  * @param {SearchInputProps & TestIdProps} props - SearchInput component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const SearchInput = <
   TValue extends NullishPrimitives = NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 >(
   props: SearchInputProps<TValue, TExtraData> & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { results, ...mergedProps } = useMergedProps(
     defaultSearchInputProps as SearchInputDefaultProps<TValue, TExtraData>,
     props

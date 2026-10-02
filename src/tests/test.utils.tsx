@@ -126,7 +126,7 @@ export const testComponentFactory = <TProps extends Record<string, unknown>>(
     props: TProps;
     tests: { name: string; test: VoidFn<[RenderResultStatic]> }[];
   },
-  Wrapper?: ({ children }: { children?: ReactNode }) => JSX.Element
+  Wrapper?: ({ children }: { children?: ReactNode }) => ReactNode
 ) => {
   describe(componentName, () => {
     it.if(!isObject(Component))("should be a function", () => {

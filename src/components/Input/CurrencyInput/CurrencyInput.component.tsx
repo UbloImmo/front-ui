@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { currencySymbolIconMap } from "./CurrencyInput.data";
 import {
@@ -49,11 +49,9 @@ const defaultCurrencyInputProps: CurrencyInputDefaultProps = {
  * @version 0.1.0
  *
  * @param {CurrencyInputProps & TestIdProps} props - CurrencyInput component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const CurrencyInput = (
-  props: CurrencyInputProps & TestIdProps
-): JSX.Element => {
+const CurrencyInput = (props: CurrencyInputProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultCurrencyInputProps, props);
   const testId = useTestId("input-currency", props);
 

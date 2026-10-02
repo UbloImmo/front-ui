@@ -1,4 +1,9 @@
-import { MouseEventHandler, useMemo, useCallback } from "react";
+import {
+  type MouseEventHandler,
+  type ReactNode,
+  useMemo,
+  useCallback,
+} from "react";
 
 import {
   isNonEmptyString,
@@ -37,9 +42,9 @@ const defaultInputLabelProps: DefaultInputLabelProps = {
  * @version 0.1.1
  *
  * @param {InputLabelProps} props - The props for the InputLabel component.
- * @return {JSX.Element} The InputLabel component.
+ * @return {ReactNode} The InputLabel component.
  */
-const InputLabel = (props: InputLabelProps & TestIdProps): JSX.Element => {
+const InputLabel = (props: InputLabelProps & TestIdProps): ReactNode => {
   const { warn } = useLogger("InputLabel");
   const mergedProps = useMergedProps<DefaultInputLabelProps, InputLabelProps>(
     defaultInputLabelProps,

@@ -25,7 +25,7 @@ import { isEqual, merge } from "lodash";
 import {
   type Context,
   createContext,
-  type FormEvent,
+  type SubmitEvent,
   type ReactNode,
   useCallback,
   useContext,
@@ -1428,7 +1428,7 @@ const useFormSubmission = <TData extends object>(
    * @see {@link UseFormSubmissionReturn["submitForm"]}
    */
   const submitForm = useCallback(
-    async (event?: FormEvent<HTMLFormElement>) => {
+    async (event?: SubmitEvent<HTMLFormElement>) => {
       event?.preventDefault();
       event?.stopPropagation();
       if (
@@ -1808,11 +1808,11 @@ export const useFormContext = <TData extends object>(): FormContext<TData> => {
  * @param {FormDefaultProps<TData> & { children: ReactNode }} props - The props object.
  * @param {FormDefaultProps<TData>} props - The form default props.
  * @param {ReactNode} props.children - The children components to be wrapped by the provider.
- * @returns {JSX.Element} The provider component wrapping the children components.
+ * @returns {ReactNode} The provider component wrapping the children components.
  */
 export const FormProvider = <TData extends object>(
   props: FormDefaultProps<TData> & { children: ReactNode }
-): JSX.Element => {
+): ReactNode => {
   const logger = useLogger("Form Context");
   const context = useForm<TData>(props, logger);
   return (

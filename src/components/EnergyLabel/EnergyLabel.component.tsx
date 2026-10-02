@@ -8,6 +8,7 @@ import type {
   EnergyLabelProps,
   EnergyLabelDefaultProps,
 } from "./EnergyLabel.types";
+import type { ReactNode } from "react";
 
 const defaultEnergyLabelProps: EnergyLabelDefaultProps = {
   type: "DPE",
@@ -21,9 +22,9 @@ const defaultEnergyLabelProps: EnergyLabelDefaultProps = {
  * @version 0.1.1
  *
  * @param {EnergyLabelProps & TestIdProps} props - EnergyLabel component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const EnergyLabel = (props: EnergyLabelProps & TestIdProps): JSX.Element => {
+const EnergyLabel = (props: EnergyLabelProps & TestIdProps): ReactNode => {
   const { log } = useLogger("EnergyLabel", { hideLogs: true });
   const mergedProps = useMergedProps(defaultEnergyLabelProps, props);
   const testId = useTestId("energy-label", props);

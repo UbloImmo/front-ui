@@ -1,5 +1,5 @@
 import { isNull } from "@ubloimmo/front-util";
-import { MouseEventHandler, useCallback, useMemo } from "react";
+import { MouseEventHandler, useCallback, useMemo, type ReactNode } from "react";
 
 import { useChipStyle } from "./Chip.styles";
 import { Icon } from "../Icon";
@@ -34,9 +34,9 @@ const defaultChipProps: DefaultChipProps = {
  *
  * @version 0.1.0
  * @param {ChipProps} props - the props for the Chip component
- * @returns {JSX.Element} - the Chip component
+ * @returns {ReactNode} - the Chip component
  */
-const Chip = (props: ChipProps & TestIdProps): JSX.Element => {
+const Chip = (props: ChipProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultChipProps, props);
   const testId = useTestId("chip", props);
 

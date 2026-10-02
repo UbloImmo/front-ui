@@ -4,7 +4,6 @@ import {
   isNumber,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
-import { type FC, type ReactNode } from "react";
 
 import { Badge } from "../Badge";
 import { EnergyLabel } from "../EnergyLabel";
@@ -48,6 +47,7 @@ import type {
   MultiSelectInputProps,
   SearchInputProps,
 } from "@/components/Input";
+import type { FC, ReactNode } from "react";
 
 const noValue = "—";
 
@@ -407,7 +407,7 @@ export const computeFieldDisplayContent = <TType extends InputType>(
  * A component that displays a form field's value in a Text component.
  *
  * @param {{ value: string }} props - The props of the component.
- * @returns {JSX.Element} The rendered component.
+ * @returns {ReactNode} The rendered component.
  */
 export const FormFieldDisplayValue = ({
   value,

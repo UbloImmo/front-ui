@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { ObjectDocTable } from "../ObjectDocTable";
 
@@ -14,11 +14,11 @@ type ComponentPropsBlockProps<TComponentProps extends Record<string, unknown>> =
  * Extracts relevant information from jsdoc comments.
  *
  * @param {ComponentPropsBlockProps<TComponentProps>} props - the component props block props
- * @return {JSX.Element} the table of component props
+ * @return {ReactNode} the table of component props
  */
 const ComponentPropsBlock = <TComponentProps extends Record<string, unknown>>(
   props: ComponentPropsBlockProps<TComponentProps>
-): JSX.Element => {
+): ReactNode => {
   const propList = useMemo(() => {
     return props.of.default.component.__docgenInfo.props;
   }, [props.of.default.component]);

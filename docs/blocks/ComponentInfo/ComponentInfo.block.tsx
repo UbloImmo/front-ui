@@ -35,11 +35,11 @@ type ComponentInfoProps<TComponentProps extends Record<string, unknown>> = {
  * Renders the component info section (header) for a given component's documentation page.
  *
  * @param {ComponentInfoProps<TComponentProps>} props - The props for the component info section.
- * @return {JSX.Element} The rendered component info section.
+ * @return {ReactNode} The rendered component info section.
  */
 export const ComponentInfo = <TComponentProps extends Record<string, unknown>>(
   props: ComponentInfoProps<TComponentProps>
-) => {
+): ReactNode => {
   const [isPropsPage, setIsPropsPage] = useState(false);
 
   useLayoutEffect(() => {

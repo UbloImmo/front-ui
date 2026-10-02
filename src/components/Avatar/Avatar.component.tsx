@@ -34,9 +34,9 @@ const defaultAvatarProps: AvatarDefaultProps = {
  * @version 0.1.0
  *
  * @param {AvatarProps & TestIdProps} props - Avatar component props
- * @returns {Nullable<JSX.Element>}
+ * @returns {ReactNode}
  */
-const Avatar = (props: AvatarProps & TestIdProps): Nullable<JSX.Element> => {
+const Avatar = (props: AvatarProps & TestIdProps): ReactNode => {
   const { error, warn } = useLogger("Avatar");
   const mergedProps = useMergedProps<AvatarDefaultProps, AvatarProps>(
     { ...props, ...defaultAvatarProps },

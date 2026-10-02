@@ -177,7 +177,7 @@ const LongDiv = ({ children }: { children?: ReactNode }) => {
   return <div style={styles}>{children}</div>;
 };
 
-const children: Record<DialogReference, JSX.Element> = {
+const children: Record<DialogReference, ReactNode> = {
   card: <ExampleCard reference="example-card" />,
   image: (
     <img

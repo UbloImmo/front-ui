@@ -38,11 +38,11 @@ const defaultEmptyStateCardProps: EmptyStateCardDefaultProps = {
  * @version 0.1.0
  *
  * @param {EmptyStateCardProps & TestIdProps} props - EmptyStateCard component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const EmptyStateCard = (
   props: EmptyStateCardProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { isEditing } = useFormContext();
   const testId = useTestId("empty-state-card", props);
 

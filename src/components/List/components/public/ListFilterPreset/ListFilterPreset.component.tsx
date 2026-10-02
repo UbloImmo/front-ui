@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { useListFilterPresetStyles } from "./ListFilterPreset.styles";
 import { useListFilterPreset } from "./ListFilterPreset.utils";
@@ -10,7 +10,6 @@ import { normalizeToPaletteColor, useUikitTranslation } from "@utils";
 
 import type { ListFilterPresetProps } from "./ListFilterPreset.types";
 import type { PaletteColor } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
 
 /**
  * A component that displays a single filter preset button
@@ -19,11 +18,11 @@ import type { Nullable } from "@ubloimmo/front-util";
  * @version 0.1.0
  *
  * @param {ListFilterPresetProps} props
- * @returns {Nullable<JSX.Element>} - Either a Filter Preset button or null hidden
+ * @returns {ReactNode} - Either a Filter Preset button or null hidden
  */
 export const ListFilterPreset = <TItem extends object = object>(
   props: ListFilterPresetProps<TItem>
-): Nullable<JSX.Element> => {
+): ReactNode => {
   const { filterPreset, styleProps } = useListFilterPreset(props);
   const { className, style } = useListFilterPresetStyles(styleProps);
 

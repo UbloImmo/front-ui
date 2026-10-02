@@ -1,5 +1,5 @@
 import { texts } from "@ubloimmo/front-tokens/tokens.values";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { formatCssLength, isHeadingSize } from "./FontTokens.utils";
 import {
@@ -27,9 +27,9 @@ const LOREM = "The quick brown fox jumps over the lazy dog.";
 /**
  * Renders a table of font tokens, including headings and texts, with their respective sizes and weights.
  *
- * @return {JSX.Element} The table of font tokens.
+ * @return {ReactNode} The table of font tokens.
  */
-export const FontTokens = (): JSX.Element => {
+export const FontTokens = (): ReactNode => {
   return (
     <Table>
       <TableHeader>
@@ -95,9 +95,9 @@ export const FontTokens = (): JSX.Element => {
  * @param {FontTokenRowProps} props - The props for the FontTokenRow component.
  * @param {string} props.size - The size of the font token.
  * @param {string} props.weight - The weight of the font token.
- * @return {JSX.Element} The rendered FontTokenRow component.
+ * @return {ReactNode} The rendered FontTokenRow component.
  */
-const FontTokenRow = ({ size, weight }: FontTokenRowProps): JSX.Element => {
+const FontTokenRow = ({ size, weight }: FontTokenRowProps): ReactNode => {
   const specs = useMemo(
     () => texts.desktop[size][weight].css.style,
     [size, weight]

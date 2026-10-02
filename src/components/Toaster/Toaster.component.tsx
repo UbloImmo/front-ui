@@ -1,5 +1,5 @@
 import { transformObject } from "@ubloimmo/front-util";
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { Toaster as Sonner } from "sonner";
 
 import {
@@ -38,9 +38,9 @@ const defaultToasterProps: ToasterDefaultProps = {
  * @version 0.1.0
  *
  * @param {ToasterProps & TestIdProps} props - Toaster component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Toaster = (props: ToasterProps & TestIdProps): JSX.Element => {
+const Toaster = (props: ToasterProps & TestIdProps): ReactNode => {
   const { warn } = useLogger("Toaster");
   const {
     theme,

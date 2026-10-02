@@ -8,7 +8,13 @@ import {
 } from "@ubloimmo/front-util";
 import { compareAsc } from "date-fns";
 import { fr } from "date-fns/locale";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { DayPicker as ReactDayPicker } from "react-day-picker";
 
 import styles from "./Calendar.module.scss";
@@ -55,9 +61,9 @@ const defaultCalendarProps: CalendarDefaultProps = {
  * @version 0.1.0
  *
  * @param {CalendarProps & TestIdProps} props - Calendar component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Calendar = (props: CalendarProps & TestIdProps): JSX.Element => {
+const Calendar = (props: CalendarProps & TestIdProps): ReactNode => {
   const { debug } = useLogger("Calendar", { hideDebug: true });
   const mergedProps = useMergedProps(defaultCalendarProps, props);
   const assistiveTextTemplate = useMergedProps(

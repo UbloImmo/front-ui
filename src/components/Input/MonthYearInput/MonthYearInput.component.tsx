@@ -1,5 +1,11 @@
 import { isFunction, isString, type Nullable } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 import {
   autoFormatMonthYear,
@@ -49,11 +55,11 @@ const defaultMonthYearInputProps: MonthYearInputDefaultProps = {
  * @version 0.1.0
  *
  * @param {MonthYearInputProps & TestIdProps} props - The input props.
- * @return {JSX.Element} The rendered month/year input component.
+ * @return {ReactNode} The rendered month/year input component.
  */
 const MonthYearInput = (
   props: MonthYearInputProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const mergedProps = useMergedProps(defaultMonthYearInputProps, props);
 
   // Convert YYYY-MM to MM/YYYY for display

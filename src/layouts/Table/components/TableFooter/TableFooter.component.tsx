@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 import { useTestId, useClassName, useHtmlAttribute } from "@utils";
 
@@ -12,12 +12,12 @@ import type { TestIdProps } from "@types";
  * @version 0.0.3
  *
  * @param {TableProps} props - The component props.
- * @returns The table footer component.
+ * @returns {ReactNode} The table footer component.
  */
 const TableFooter = forwardRef<
   HTMLTableSectionElement,
   TableProps & TestIdProps
->((props: TableProps & TestIdProps, ref): JSX.Element => {
+>((props: TableProps & TestIdProps, ref): ReactNode => {
   const testId = useTestId("table-footer", props);
   const className = useClassName(props);
   const style = useHtmlAttribute(props.styleOverride);

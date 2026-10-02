@@ -1,5 +1,5 @@
 import { isFunction, isString, type Nullable } from "@ubloimmo/front-util";
-import { useMemo, type FC } from "react";
+import { useMemo, type FC, type ReactNode } from "react";
 
 import {
   computeFieldDisplayContent,
@@ -23,11 +23,11 @@ import type { TooltipProps } from "@/components/Tooltip";
  * @template {TType extends InputType} TType - The type of the {@link FormFieldProps}'s `type` property
  *
  * @param {BuiltFieldProps<TType>} props - The {@link BuiltFieldProps} object
- * @returns {JSX.Element} The {@link FieldDisplayContainer} containing the field's display value
+ * @returns {ReactNode} The {@link FieldDisplayContainer} containing the field's display value
  */
 export const FormFieldDisplay = <TType extends InputType>(
   props: BuiltFieldProps<TType>
-): JSX.Element => {
+): ReactNode => {
   const { label, type, error, errorText, suffix, viewHref } = props;
 
   const resolvedViewHref = useMemo<Nullable<string>>(() => {

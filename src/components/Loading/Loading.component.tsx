@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import * as LoadingAnimations from "./animations";
 
@@ -6,7 +6,6 @@ import { useLogger, useMergedProps, useTestId } from "@utils";
 
 import type { DefaultLoadingProps, LoadingProps } from "./Loading.types";
 import type { TestIdProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
 
 export const defaultLoadingProps: DefaultLoadingProps = {
   size: "s-4",
@@ -24,9 +23,9 @@ const defaultAnimationName = defaultLoadingProps.animation;
  * @version 0.1.0
  *
  * @param {LoadingProps & TestIdProps} props - props for configuring the loading animation
- * @return {Nullable<JSX.Element>} the rendered loading animation component, or null if no animation found
+ * @return {ReactNode} the rendered loading animation component, or null if no animation found
  */
-const Loading = (props: LoadingProps & TestIdProps): Nullable<JSX.Element> => {
+const Loading = (props: LoadingProps & TestIdProps): ReactNode => {
   const { warn } = useLogger("Loading");
   const { animation, ...mergedProps } = useMergedProps(
     defaultLoadingProps,

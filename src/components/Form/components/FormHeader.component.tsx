@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { FormEditButton } from "./FormEditButton.component";
 import { useFormContext } from "../Form.context";
@@ -25,9 +25,9 @@ const defaultFormHeaderProps: Required<FormHeaderProps> = {
  * @version 0.1.0
  *
  * @param {FormHeaderProp} props - The header's props
- * @returns {JSX.Element} - The rendered form header
+ * @returns {ReactNode} - The rendered form header
  */
-export const FormHeader = (props: FormHeaderProps): JSX.Element => {
+export const FormHeader = (props: FormHeaderProps): ReactNode => {
   const { asModal } = useFormContext();
   const mergedProps = useMergedProps(defaultFormHeaderProps, props);
   const className = useCssClasses(styles["form-header"]);

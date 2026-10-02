@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import {
   getStaticIconColors,
@@ -33,9 +33,9 @@ const defaultStaticIconProps: DefaultStaticIconProps = {
  * @version 0.1.0
  *
  * @param {StaticIconProps & TestIdProps} props - The props for the static icon.
- * @return {JSX.Element} The static icon component.
+ * @return {ReactNode} The static icon component.
  */
-const StaticIcon = (props: StaticIconProps & TestIdProps) => {
+const StaticIcon = (props: StaticIconProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultStaticIconProps, props);
 
   const { color, size, name, indicator } = mergedProps;

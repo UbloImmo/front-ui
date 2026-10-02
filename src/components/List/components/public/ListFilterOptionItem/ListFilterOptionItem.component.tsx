@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 
 import { useListFilterOptionItemClassName } from "./ListFilterOptionItem.styles";
 
@@ -11,7 +11,6 @@ import { TextProps } from "@types";
 import { useMergedProps } from "@utils";
 
 import type { ListFilterOptionItemProps } from "./ListFilterOptionItem.types";
-import type { Nullable } from "@ubloimmo/front-util";
 
 /**
  * Renders a filter option's list item in a filter.
@@ -20,14 +19,14 @@ import type { Nullable } from "@ubloimmo/front-util";
  *
  * @template {object} TItem - The type of the list's items
  * @param {ListFilterOptionItemProps<TItem>} props - The component's props
- * @returns {Nullable<JSX.Element>} The component's rendered element
+ * @returns {ReactNode} The component's rendered element
  */
 export const ListFilterOptionItem = <TItem extends object = object>({
   option,
   highlighted,
   multi,
   closeFilter,
-}: ListFilterOptionItemProps<TItem>): Nullable<JSX.Element> => {
+}: ListFilterOptionItemProps<TItem>): ReactNode => {
   const highlightProps = useMergedProps(
     { highlighted: false },
     { highlighted }

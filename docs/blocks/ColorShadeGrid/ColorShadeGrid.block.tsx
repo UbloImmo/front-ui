@@ -1,5 +1,5 @@
 import { objectEntries } from "@ubloimmo/front-util";
-import { useMemo, useReducer } from "react";
+import { type ReactNode, useMemo, useReducer } from "react";
 
 import styles from "./ColorShadeGrid.module.scss";
 
@@ -21,7 +21,7 @@ import type {
  * Intended for use within Storybook MDX documentation files.
  *
  * @param {{ color: PaletteColorShaded<DefaultPaletteColorShadeKey[]> | PaletteColorShaded<GrayscalePaletteColorShadeKey[]>, colorName: string, initShowOpacity?: boolean }} param - Object containing color, colorName, and optional initShowOpacity
- * @return {JSX.Element} The rendered color shade grid component
+ * @return {ReactNode} The rendered color shade grid component
  */
 export const ColorShadeGrid = ({
   color,
@@ -33,7 +33,7 @@ export const ColorShadeGrid = ({
     | PaletteColorShaded<GrayscalePaletteColorShadeKey[]>;
   colorName: string;
   initShowOpacity?: boolean;
-}): JSX.Element => {
+}): ReactNode => {
   const [showOpacity, toggleShowOpacity] = useReducer(
     (state) => !state,
     initShowOpacity ?? false
@@ -144,7 +144,7 @@ type ColorShadeSwatchProps = {
  * Intended for use within Storybook MDX documentation files.
  *
  * @param {ColorShadeSwatchProps} - Object containing color, colorName, opacity, x, and y
- * @return {JSX.Element} the rendered color shade swatch component
+ * @return {ReactNode} the rendered color shade swatch component
  */
 const ColorShadeSwatch = ({
   color,
@@ -153,7 +153,7 @@ const ColorShadeSwatch = ({
   y,
   colorName,
   textColor,
-}: ColorShadeSwatchProps) => {
+}: ColorShadeSwatchProps): ReactNode => {
   const hex = rgbaColorConverter.strToHex(color);
   const className = useCssClasses(styles["color-shade"]);
   const style = useCssVariables({

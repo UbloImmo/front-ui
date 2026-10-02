@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { useFormContext } from "../Form.context";
 import styles from "../Form.module.scss";
@@ -12,9 +12,9 @@ import { cssClasses, useStatic, useUikitTranslation } from "@utils";
  * @version 0.1.0
  * @private
  *
- * @return {JSX.Element} The rendered form edit button component.
+ * @return {ReactNode} The rendered form edit button component.
  */
-export const FormEditButton = (): JSX.Element => {
+export const FormEditButton = (): ReactNode => {
   const {
     isEditing,
     startEditing,

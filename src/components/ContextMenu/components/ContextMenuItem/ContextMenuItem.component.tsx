@@ -1,5 +1,10 @@
 import { isString } from "@ubloimmo/front-util";
-import { useCallback, useMemo, type MouseEventHandler } from "react";
+import {
+  useCallback,
+  useMemo,
+  type MouseEventHandler,
+  type ReactNode,
+} from "react";
 
 import { useContextMenuItemStyles } from "./ContextMenuItem.styles";
 
@@ -34,11 +39,11 @@ const defaultContextMenuItemProps: ContextMenuItemDefaultProps = {
  * @version 0.1.0
  *
  * @param {ContextMenuItemProps & TestIdProps} props - ContextMenu component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const ContextMenuItem = (
   props: ContextMenuItemProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { warn } = useLogger("ContextMenu");
   const { disabled, index, ...mergedProps } = useMergedProps(
     defaultContextMenuItemProps,

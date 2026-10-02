@@ -1,10 +1,11 @@
-import { NullishPrimitives } from "@ubloimmo/front-util";
-
 import { SelectInputOption } from "./SelectInputOption.component";
 import { useSelectInputOptionGroupLabelClassName } from "../SelectInput.styles";
-import { SelectInputOptionGroupProps } from "../SelectInput.types";
 
 import { Text } from "@/components/Text";
+
+import type { SelectInputOptionGroupProps } from "../SelectInput.types";
+import type { NullishPrimitives } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 /**
  * Renders a single select option group and its nested options
@@ -13,7 +14,7 @@ import { Text } from "@/components/Text";
  *
  * @template {NullishPrimitives} TValue - The option's value
  * @param {SelectInputOptionGroupProps<TValue>} props - The option group to render and its `onSelect` callback
- * @returns JSX.Element
+ * @returns {ReactNode}
  */
 export const SelectInputOptionGroup = <
   TValue extends NullishPrimitives,
@@ -23,7 +24,7 @@ export const SelectInputOptionGroup = <
   options,
   onSelectOption,
   Option,
-}: SelectInputOptionGroupProps<TValue, TExtraData>): JSX.Element => {
+}: SelectInputOptionGroupProps<TValue, TExtraData>): ReactNode => {
   const className = useSelectInputOptionGroupLabelClassName();
   return (
     <>

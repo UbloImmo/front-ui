@@ -1,5 +1,11 @@
 import { isArray } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 import { IconPickerItem } from "./components/IconPickerItem/IconPickerItem.component";
 import styles from "./IconPicker.module.scss";
@@ -31,9 +37,9 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
  * @version 0.1.0
  *
  * @param {IconPickerProps & TestIdProps} props - IconPicker component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const IconPicker = (props: IconPickerProps & TestIdProps): JSX.Element => {
+const IconPicker = (props: IconPickerProps & TestIdProps): ReactNode => {
   const { warn, debug } = useLogger("IconPicker", {
     hideDebug: true,
   });

@@ -1,5 +1,6 @@
 import { DocsContainer as SBDocsContainer } from "@storybook/addon-docs/blocks";
 import { isString, type Optional } from "@ubloimmo/front-util";
+import { ReactNode } from "react";
 
 import { StorybookThemeProvider } from "../StoryDecorator";
 import styles from "./DocsContainer.module.scss";
@@ -18,13 +19,13 @@ type DocsContainerProps = Parameters<typeof SBDocsContainer>[0];
  * @param {ReactNode} props.children - The child components.
  * @param {Object} props.context - The context object.
  * @param {Object} props.theme - The theme object.
- * @return {JSX.Element} The rendered component.
+ * @return {ReactNode} The rendered component.
  */
 export const DocsContainer = ({
   children,
   context,
   theme,
-}: DocsContainerProps): JSX.Element => {
+}: DocsContainerProps): ReactNode => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const storyContext = context as any;
   const themeClient: Optional<DynamicColorPaletteKey> =

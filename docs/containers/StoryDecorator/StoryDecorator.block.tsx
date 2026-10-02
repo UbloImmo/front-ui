@@ -23,12 +23,12 @@ type StorybookThemeProviderProps = {
  * @param {{client: DynamicColorPaletteKey}} props.theme - The partial theme object conaining the client slug.
  * @param {DynamicColorPaletteKey} props.theme.client - The client slug.
  * @param {ReactNode} props.children - The child components to apply the theme to.
- * @return {JSX.Element} The styled theme provider component with the provided theme.
+ * @return {ReactNode} The styled theme provider component with the provided theme.
  */
 export const StorybookThemeProvider = ({
   theme,
   children,
-}: StorybookThemeProviderProps) => {
+}: StorybookThemeProviderProps): ReactNode => {
   return (
     <ThemeProvider
       _forceTheme={theme.client}

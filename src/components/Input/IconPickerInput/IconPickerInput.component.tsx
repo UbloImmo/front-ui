@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, type ReactNode } from "react";
 
 import { defaultCommonInputProps } from "../Input.common";
 import { useInputId } from "../Input.utils";
@@ -31,12 +31,12 @@ const defaultIconPickerInputProps: IconPickerInputDefaultProps = {
  * @version 0.1.0
  *
  * @param {IconPickerInputProps & TestIdProps} props - IconPickerInput component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 
 const IconPickerInput = (
   props: IconPickerInputProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const mergedProps = useMergedProps(defaultIconPickerInputProps, props);
   const testId = useTestId("input-icon-picker", props);
 

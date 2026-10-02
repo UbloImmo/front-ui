@@ -1,5 +1,5 @@
 import { Markdown as SBMarkdown } from "@storybook/addon-docs/blocks";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { Input } from "../Input";
 import {
@@ -69,7 +69,7 @@ export const markdownOverrides = (color?: PaletteColor) => ({
  * @param {ReactNode} props.children - The content to be rendered as Markdown.
  * @param {boolean} props.inline - Whether to force contents to display inline.
  * @param {color} props.color - The color of the text. If none is provided, will use default colors for each parsed element.
- * @return {JSX.Element} The rendered Markdown component.
+ * @return {ReactNode} The rendered Markdown component.
  */
 export const Markdown = ({
   children,
@@ -77,7 +77,7 @@ export const Markdown = ({
   color,
   className,
   ...props
-}: MarkdownProps) => {
+}: MarkdownProps): ReactNode => {
   const options = useMemo(
     () => ({
       overrides: markdownOverrides(color),

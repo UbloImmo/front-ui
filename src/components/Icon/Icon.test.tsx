@@ -1,4 +1,4 @@
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, mock } from "bun:test";
 
 import { Icon } from "./Icon.component";
@@ -144,13 +144,20 @@ describe("Icon", () => {
     expect(await findByTestId("icon-fallback")).not.toBeNull();
   });
 
-  GENERATED_ICON_NAMES.forEach((iconName) => {
-    it(`sould render the generated icon: "${iconName}"`, async () => {
-      const { findByTestId } = render(<Icon name={iconName} />);
-      const icon = await findByTestId("icon");
-      expect(icon).toBeDefined();
-      cleanup();
-    });
+  it("should render all generated icons", async () => {
+    const { findAllByTestId } = render(
+      <>
+        {GENERATED_ICON_NAMES.map((name, index) => (
+          <Icon name={name} key={name + index} />
+        ))}
+      </>
+    );
+
+    await waitFor(async () =>
+      expect(await findAllByTestId("icon")).toHaveLength(
+        GENERATED_ICON_NAMES.length
+      )
+    );
   });
 
   testUseIconSize();

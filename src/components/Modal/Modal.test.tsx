@@ -44,7 +44,7 @@ testModal({ open: true })("should render if open", async ({ findByTestId }) => {
 
 testModal({ open: true, reference: TEST_MODAL_REF })(
   "should close on click",
-  async ({ debug, queryByTestId }) => {
+  async ({ queryByTestId }) => {
     expect(queryByTestId(testId)).not.toBeNull();
 
     const closeButton = queryByTestId(
@@ -54,7 +54,5 @@ testModal({ open: true, reference: TEST_MODAL_REF })(
 
     await closeButton.click();
     expect(queryByTestId(testId)).toBeNull();
-
-    debug();
   }
 );

@@ -253,7 +253,7 @@ const useFilterHighlight = (
 const useFilterKeyboardEvents = (
   walkHighlight: WalkHighlightFn,
   closeOptions: VoidFn,
-  queryInputRef: RefObject<HTMLInputElement>,
+  queryInputRef: RefObject<Nullable<HTMLInputElement>>,
   open?: boolean
 ): void => {
   useEffect(() => {

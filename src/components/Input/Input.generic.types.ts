@@ -13,6 +13,7 @@ import type { SearchInputProps } from "./SearchInput";
 import type { SelectInputProps } from "./SelectInput/SelectInput.types";
 import type { TextAreaInputProps } from "./TextAreaInput";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 type SpecificInputPropsMap<
   TGenericValue extends NullishPrimitives = NullishPrimitives,
@@ -44,7 +45,7 @@ export interface SpecificInputComponent<
   TType extends InputType,
   TGenericValue extends NullishPrimitives = NullishPrimitives,
 > {
-  (props: SpecificInputProps<TType, TGenericValue>): JSX.Element;
+  (props: SpecificInputProps<TType, TGenericValue>): ReactNode;
   defaultProps?: Required<
     SpecificInputProps<TType, TGenericValue | NullishPrimitives>
   >;

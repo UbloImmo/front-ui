@@ -1,5 +1,5 @@
 import { isString } from "@ubloimmo/front-util";
-import { Fragment, useMemo } from "react";
+import { Fragment, useMemo, type ReactNode } from "react";
 
 import { defaultTypographyProps, useTypographyStyles } from "../../typography";
 
@@ -18,9 +18,9 @@ const defaultTextProps: Required<TextProps> = {
  * @version 0.1.1
  *
  * @param {WithTestId<TextProps>} props - Text component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Text = (props: TextProps & TestIdProps): JSX.Element => {
+const Text = (props: TextProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultTextProps, props);
   const testId = useTestId("text", props);
   const id = useHtmlAttribute(mergedProps.id);

@@ -1,5 +1,11 @@
 import { type VoidFn, isFunction, type Nullable } from "@ubloimmo/front-util";
-import { type MouseEventHandler, useCallback, useMemo, useState } from "react";
+import {
+  type MouseEventHandler,
+  type ReactNode,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 
 import { useActionStyles } from "./Action.styles";
 import {
@@ -59,9 +65,9 @@ const sizedActionMap: SizedActionMap = {
  * @version 0.1.0
  *
  * @param {ActionProps} props - The component's props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Action = (props: ActionProps & TestIdProps): JSX.Element => {
+const Action = (props: ActionProps & TestIdProps): ReactNode => {
   const { warn } = useLogger("Action");
 
   const mergedProps = useMergedProps(defaultActionProps, props, true);

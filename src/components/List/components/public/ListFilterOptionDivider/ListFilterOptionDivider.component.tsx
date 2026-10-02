@@ -4,6 +4,7 @@ import { Text } from "@/components/Text";
 import { useLogger, useMergedProps } from "@utils";
 
 import type { ListFilterOptionDividerProps } from "./ListFilterOptionDivider.types";
+import type { ReactNode } from "react";
 
 const defaultListFilterOptionDivider: Required<ListFilterOptionDividerProps> = {
   label: "[Divider label]",
@@ -16,11 +17,11 @@ const defaultListFilterOptionDivider: Required<ListFilterOptionDividerProps> = {
  *
  * @param {ListFilterOptionDividerProps} props - The component props
  * @param {string} props.label - The text label to display in the divider
- * @returns {JSX.Element} The rendered divider component
+ * @returns {ReactNode} The rendered divider component
  */
 export const ListFilterOptionDivider = (
   props: ListFilterOptionDividerProps
-): JSX.Element => {
+): ReactNode => {
   const { warn } = useLogger("ListFilterOptionDivider");
 
   const mergedProps = useMergedProps(defaultListFilterOptionDivider, props);

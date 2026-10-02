@@ -1,5 +1,5 @@
 import { isNull } from "@ubloimmo/front-util";
-import { useCallback } from "react";
+import { useCallback, type ReactNode } from "react";
 
 import { EnergyLabel } from "../EnergyLabel";
 import styles from "./EnergyScoreComboBox.module.scss";
@@ -33,11 +33,11 @@ const defaultEnergyScoreComboBoxProps: EnergyScoreComboBoxDefaultProps = {
  * @version 0.0.1
  *
  * @param {EnergyScoreComboBoxProps & TestIdProps} props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const EnergyScoreComboBox = (
   props: EnergyScoreComboBoxProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const mergedProps = useMergedProps(defaultEnergyScoreComboBoxProps, props);
   const testId = useTestId("energy-score-combo-box", props);
   const { type, value, onChange, readOnly } = mergedProps;

@@ -1,5 +1,5 @@
-import { isString, type Nullable } from "@ubloimmo/front-util";
-import { ReactNode, useMemo } from "react";
+import { isString } from "@ubloimmo/front-util";
+import { type ReactNode, useMemo } from "react";
 
 import { useFormContext } from "../Form.context";
 import styles from "../Form.module.scss";
@@ -17,9 +17,9 @@ import type { PaletteColor, ColorKey } from "@types";
  *
  * @version 0.1.0
  *
- * @return {Nullable<JSX.Element>} The debug information stringified with specific transformations.
+ * @return {ReactNode} The debug information stringified with specific transformations.
  */
-export const FormDebug = (): Nullable<JSX.Element> => {
+export const FormDebug = (): ReactNode => {
   const {
     debug,
     schema,

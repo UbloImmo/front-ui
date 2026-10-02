@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { FlexColumnLayout, GridLayout } from "@/layouts";
 import { ComponentVariants } from "@docs/blocks";
@@ -217,7 +217,7 @@ export const Colors = (props: TextProps) => {
 
   const renderers = useMemo(() => {
     return colors.map(
-      (color): [ColorKey, GenericFn<[Required<TextProps>], JSX.Element>] => [
+      (color): [ColorKey, GenericFn<[Required<TextProps>], ReactNode>] => [
         color,
         TextColorRenderer(color),
       ]

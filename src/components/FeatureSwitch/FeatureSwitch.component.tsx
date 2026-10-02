@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { Checkbox } from "../Checkbox";
 import { SelectInput } from "../Input";
@@ -32,7 +32,7 @@ import {
 } from "@utils";
 
 import type { ColorKey, TestIdProps } from "@types";
-import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
+import type { NullishPrimitives } from "@ubloimmo/front-util";
 
 const defaultFeatureSwitchProps: FeatureSwitchDefaultProps = {
   icon: null,
@@ -51,11 +51,11 @@ const defaultFeatureSwitchProps: FeatureSwitchDefaultProps = {
  * @version 0.0.4
  *
  * @param {FeatureSwitchProps & TestIdProps} props - FeatureSwitch component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const FeatureSwitch = <TValue extends NullishPrimitives>(
   props: FeatureSwitchProps<TValue> & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const mergedProps = useMergedProps(defaultFeatureSwitchProps, props);
   const { icon, label, description, tooltip, compact, disabled, variant } =
     mergedProps;
@@ -78,7 +78,7 @@ const FeatureSwitch = <TValue extends NullishPrimitives>(
     return { ...props, variant } as AnyFeatureSwitchVariant<TValue>;
   }, [props, variant]);
 
-  const FeatureSwitchVariant = useMemo<Nullable<JSX.Element>>(() => {
+  const FeatureSwitchVariant = useMemo<ReactNode>(() => {
     if (isFeatureSwitchOptionVariant(propsWithVariant)) {
       return <SelectInput {...propsWithVariant} />;
     }

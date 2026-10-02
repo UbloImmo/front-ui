@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 import { useFlexLayoutStyle } from "./Flex.styles";
 
@@ -36,13 +36,13 @@ const defaultFlexLayoutProps: FlexLayoutDefaultProps = {
  * @version 0.1.0
  *
  * @param {FlexLayoutProps & TestId & AriaProps} [props = defaultFlexLayoutProps] - optional props
- * @return {JSX.Element} The styled flex wrapper
+ * @return {ReactNode} The styled flex wrapper
  */
 export const FlexLayout = forwardRef<
   HTMLDivElement,
   FlexLayoutProps & TestIdProps & AriaProps,
   FlexLayoutDefaultProps
->((props, ref): JSX.Element => {
+>((props, ref): ReactNode => {
   const testId = useTestId("flex", props);
   const id = useHtmlAttribute(props.id ?? null);
 
@@ -73,12 +73,12 @@ FlexLayout.__DEFAULT_PROPS = defaultFlexLayoutProps;
  * A {@link FlexLayout} variant with fixed `row` direction
  *
  * @param {FlexDirectionLayoutProps} [props = defaultFlexLayoutProps] - optional props
- * @return {JSX.Element} The styled flex wrapper
+ * @return {ReactNode} The styled flex wrapper
  */
 export const FlexRowLayout = forwardRef<
   HTMLDivElement,
   FlexDirectionLayoutProps & TestIdProps & AriaProps
->((props, ref): JSX.Element => {
+>((props, ref): ReactNode => {
   const testId = useTestId("flex-row", props);
 
   return <FlexLayout {...props} ref={ref} direction="row" testId={testId} />;
@@ -88,12 +88,12 @@ export const FlexRowLayout = forwardRef<
  * A {@link FlexLayout} variant with fixed `column` direction
  *
  * @param {FlexDirectionLayoutProps} [props = defaultFlexColumnLayoutProps] - optional props.
- * @return {JSX.Element} The styled flex wrapper
+ * @return {ReactNode} The styled flex wrapper
  */
 export const FlexColumnLayout = forwardRef<
   HTMLDivElement,
   FlexDirectionLayoutProps & TestIdProps & AriaProps
->((props, ref): JSX.Element => {
+>((props, ref): ReactNode => {
   const testId = useTestId("flex-column", props);
   return <FlexLayout {...props} ref={ref} direction="column" testId={testId} />;
 });

@@ -4,7 +4,7 @@ import {
   isString,
   type Nullable,
 } from "@ubloimmo/front-util";
-import { useCallback, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useMemo, useState } from "react";
 
 import {
   defaultCommonInputProps,
@@ -61,11 +61,11 @@ const defaultEnergyScoreInputProps: DefaultEnergyScoreInputProps = {
  * @version 0.1.0
  *
  * @param {EnergyScoreInputProps} props - The input props.
- * @return {JSX.Element} The rendered energy score input component.
+ * @return {ReactNode} The rendered energy score input component.
  */
 const EnergyScoreInput = (
   props: EnergyScoreInputProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { warn } = useLogger("EnergyScoreInput");
   const mergedProps = useMergedProps(defaultEnergyScoreInputProps, props);
   const { scoreType, disabled, onLabelChange } = mergedProps;

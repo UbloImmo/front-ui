@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 import { useTableLayoutStyle } from "./Table.styles";
 
@@ -21,13 +21,13 @@ const defaultTableProps: TableDefaultProps = {
  * @version 0.1.1
  *
  * @param {TableProps & TestIdProps} props - Table component props
- * @returns {JSX.Element}
+ * @returns {ReactNode} The Table layout
  */
 const Table = forwardRef<
   HTMLTableElement,
   TableProps & TestIdProps,
   TableDefaultProps
->((props: TableProps & TestIdProps, ref): JSX.Element => {
+>((props: TableProps & TestIdProps, ref): ReactNode => {
   const mergedProps = useMergedProps(defaultTableProps, props);
   const testId = useTestId("table", props);
 

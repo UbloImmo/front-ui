@@ -53,8 +53,8 @@ export function FormTableFieldScrollbars({
   const [draggingX, setDraggingX] = useState(false);
   const [draggingY, setDraggingY] = useState(false);
 
-  const dragStart = useRef<Vec2>();
-  const dragAxis = useRef<Axis>();
+  const dragStart = useRef<Vec2>(undefined);
+  const dragAxis = useRef<Axis>(undefined);
   const trackHorizonalRef = useRef<HTMLDivElement>(null);
   const trackVerticalRef = useRef<HTMLDivElement>(null);
 

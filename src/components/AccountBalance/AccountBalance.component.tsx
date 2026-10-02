@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import { Heading } from "../Heading";
 import { Text } from "../Text";
@@ -33,11 +33,11 @@ const defaultAccountBalanceProps: AccountBalanceDefaultProps = {
  * @version 0.1.0
  *
  * @param {AccountBalanceProps & TestIdProps} props - AccountBalance component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const AccountBalance = (
   props: AccountBalanceProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { warn } = useLogger("AccountBalance", { hideLogs: true });
   const mergedProps = useMergedProps(defaultAccountBalanceProps, props);
   const testId = useTestId("account-balance", props);

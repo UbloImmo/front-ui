@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { Icon } from "../Icon";
 import { Text } from "../Text";
@@ -29,9 +29,9 @@ const defaultInfoBoxProps: InfoBoxDefaultProps = {
  * @version 0.1.0
  *
  * @param {InfoBoxProps & TestIdProps} props - InfoBox component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const InfoBox = (props: InfoBoxProps & TestIdProps): JSX.Element => {
+const InfoBox = (props: InfoBoxProps & TestIdProps): ReactNode => {
   const { warn } = useLogger("InfoBox");
   const mergedProps = useMergedProps(defaultInfoBoxProps, props);
   const { icon, label, info } = mergedProps;

@@ -1,5 +1,12 @@
 import { isBoolean } from "@ubloimmo/front-util";
-import { MouseEvent, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  type MouseEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import { useSwitchClassNames } from "./Switch.styles";
 import { Text } from "../Text";
@@ -31,9 +38,9 @@ const defaultSwitchProps: SwitchDefaultProps = {
  * @version 0.1.0
  *
  * @param {SwitchProps & TestIdProps} props - Switch component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Switch = (props: SwitchProps & TestIdProps): JSX.Element => {
+const Switch = (props: SwitchProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultSwitchProps, props);
   const { disabled, active, withHelper, helperPosition } = mergedProps;
   const classNames = useSwitchClassNames();

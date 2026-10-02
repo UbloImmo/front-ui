@@ -13,7 +13,7 @@ import {
 
 import type { BadgeProps, DefaultBadgeProps } from "./Badge.types";
 import type { TestIdProps } from "@types";
-import type { Nullable } from "@ubloimmo/front-util";
+import type { ReactNode } from "react";
 
 const defaultBadgeProps: DefaultBadgeProps = {
   label: null,
@@ -32,10 +32,10 @@ const defaultBadgeProps: DefaultBadgeProps = {
  * @version 0.1.0
  *
  * @param {BadgeProps} props - the props for the Badge component
- * @return {Nullable<JSX.Element>} the Badge component
+ * @return {ReactNode} the Badge component
  */
 
-const Badge = (props: BadgeProps & TestIdProps): Nullable<JSX.Element> => {
+const Badge = (props: BadgeProps & TestIdProps): ReactNode => {
   const { warn } = useLogger("Badge");
   const mergedProps = useMergedProps(defaultBadgeProps, props);
   const testId = useTestId<TestIdProps>("badge", props);

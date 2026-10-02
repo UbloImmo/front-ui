@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { useContextLineStyles } from "./ContextLine.styles";
 import { Badge } from "../Badge";
@@ -35,9 +35,9 @@ const defaultContextLineProps: ContextLineDefaultProps = {
  * @version 0.1.0
  *
  * @param {ContextLineProps & TestIdProps} props - ContextLine component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const ContextLine = (props: ContextLineProps & TestIdProps): JSX.Element => {
+const ContextLine = (props: ContextLineProps & TestIdProps): ReactNode => {
   const { warn } = useLogger("ContextLine", { hideLogs: true });
   const mergedProps = useMergedProps(defaultContextLineProps, props);
   const testId = useTestId("context-line", props);

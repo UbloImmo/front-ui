@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { useCalloutStyle } from "./Callout.styles";
 import { Heading } from "../Heading";
@@ -29,9 +29,9 @@ const defaultCalloutProps: CalloutDefaultProps = {
  * @version 0.1.0
  *
  * @param {CalloutProps & TestIdProps} props - Callout component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-const Callout = (props: CalloutProps & TestIdProps): JSX.Element => {
+const Callout = (props: CalloutProps & TestIdProps): ReactNode => {
   const { warn } = useLogger("Callout");
   const mergedProps = useMergedProps(defaultCalloutProps, props);
   const { color, size, title, icon, children } = mergedProps;

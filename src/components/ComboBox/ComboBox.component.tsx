@@ -6,7 +6,13 @@ import {
   type Nullable,
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
-import { useCallback, useEffect, useMemo, useReducer } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  type ReactNode,
+} from "react";
 
 import {
   type ComboBoxProps,
@@ -57,11 +63,11 @@ const defaultComboBoxProps: ComboBoxDefaultProps<NullishPrimitives> = {
  * @version 0.0.14
  *
  * @param {ComboBoxProps & TestIdProps} props - ComboBox component props
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
 const ComboBox = <TOptionValue extends NullishPrimitives>(
   props: ComboBoxProps<TOptionValue> & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const { warn } = useLogger("ComboBox");
   const mergedProps = useMergedProps(
     defaultComboBoxProps as ComboBoxDefaultProps<TOptionValue>,

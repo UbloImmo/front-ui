@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import { ComboBoxInput } from "./ComboBoxInput";
 import { CurrencyInput } from "./CurrencyInput";
@@ -57,7 +57,7 @@ const inputComponentMap = <
  * @version 0.1.0
  *
  * @param {GenericInputProps<TType>} props - The generic input props.
- * @returns {Nullable<JSX.Element>}
+ * @returns {ReactNode}
  */
 const Input = <
   TType extends InputType = "text",
@@ -65,8 +65,7 @@ const Input = <
 >({
   type,
   ...props
-}: GenericInputProps<TType, TGenericValue> &
-  TestIdProps): Nullable<JSX.Element> => {
+}: GenericInputProps<TType, TGenericValue> & TestIdProps): ReactNode => {
   const { warn, error } = useLogger("Input");
 
   const inputMap = useStatic<SpecificInputComponentMap<TGenericValue>>(

@@ -65,11 +65,11 @@ const detailsTextProps: TextProps = {
  * @version 0.1.0
  *
  * @param {TestIdProps & ContextInfoCardProps} props - The component props
- * @returns {JSX.Element} - The context info card markup
+ * @returns {ReactNode} - The context info card markup
  */
 const ContextInfoCard = (
   props: ContextInfoCardProps & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const testId = useTestId("context-info-card", props);
   const mergedProps = useMergedProps(defaultContextInfoCardProps, props);
   const { classNames, style } = useContextInfoCardStyles(mergedProps);

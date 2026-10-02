@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 
 import { mergeTranslationMap } from "./translation.utils";
 import { useStatic } from "../props.utils";
@@ -56,12 +56,12 @@ export const useUikitTranslation = (): TranslationContext =>
  *   with the default translations.
  * @param {ReactNode} props.children The children components to be wrapped with
  *   the translation context.
- * @return {JSX.Element} The children wrapped with the translation context.
+ * @return {ReactNode} The children wrapped with the translation context.
  */
 export const UikitTranslationProvider = ({
   children,
   translations,
-}: TranslationContextProps): JSX.Element => {
+}: TranslationContextProps): ReactNode => {
   const context = useUikitTranslationContext(translations);
   return (
     <UikitTranslationContext.Provider value={context}>

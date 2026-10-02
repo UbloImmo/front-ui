@@ -6,7 +6,8 @@ import {
   type NullishPrimitives,
 } from "@ubloimmo/front-util";
 import {
-  MouseEventHandler,
+  type MouseEventHandler,
+  type ReactNode,
   useCallback,
   useMemo,
   useRef,
@@ -74,14 +75,14 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
  *
  * @param {MultiSelectInputProps & TestIdProps} props - The props for the MultiSelectInput component
  *
- * @returns {JSX.Element} The MultiSelectInput component
+ * @returns {ReactNode} The MultiSelectInput component
  */
 const MultiSelectInput = <
   TValue extends NullishPrimitives,
   TExtraData extends NullishPrimitives = NullishPrimitives,
 >(
   props: MultiSelectInputProps<TValue, TExtraData> & TestIdProps
-): JSX.Element => {
+): ReactNode => {
   const testId = useTestId("input-multi-select", props);
   const wrapperRef = useRef<Nullable<HTMLDivElement>>(null);
   const [isOpen, setIsOpen] = useState(false);
