@@ -1,3 +1,5 @@
+import { isNumber } from "@ubloimmo/front-util";
+
 /**
  * Linearly interpolates between two numbers.
  *
@@ -89,3 +91,47 @@ export const isBetween = (
   }
   return num >= min && num <= max;
 };
+
+/**
+ * Checks if a value is a finite, non-NaN number
+ *
+ * @param {unknown} value - Value to ensure is a finite number
+ * @returns {boolean} True is the value is a finite, non-NaN number, false otherwise
+ */
+export function isFiniteNumber(value: unknown): value is number {
+  return isNumber(value) && !isNaN(value) && Number.isFinite(value);
+}
+
+/**
+ * Ensures a number is finite, returns a fallback underwise
+ *
+ * @param {unknown} n - Number to ensure is finite
+ * @param {number} fallback - Fallback number to use
+ * @returns {number} The provided number or fallback based on whether the number is finite
+ */
+export function ensureFiniteNumber(number: unknown, fallback: number) {
+  if (!isFiniteNumber(number)) return fallback;
+  return number;
+}
+
+/**
+ * Checks if a value is an integer, non-NaN number
+ *
+ * @param {unknown} value - Value to ensure is an integer
+ * @returns {boolean} True is the value is an integer, false otherwise
+ */
+export function isInt(value: unknown): value is number {
+  return Number.isInteger(value);
+}
+
+/**
+ * Ensures a number is an integer, returns a fallback underwise
+ *
+ * @param {unknown} n - Number to ensure is an integer
+ * @param {number} fallback - Fallback number to use
+ * @returns {number} The provided number or fallback based on whether the number is an integer
+ */
+export function ensureInt(number: unknown, fallback: number) {
+  if (!isInt(number)) return fallback;
+  return number;
+}
