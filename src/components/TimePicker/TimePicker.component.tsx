@@ -1,7 +1,7 @@
 import {
-  GenericFn,
+  type GenericFn,
   isNumber,
-  Nullable,
+  type Nullable,
   transformObject,
 } from "@ubloimmo/front-util";
 import {
@@ -12,12 +12,13 @@ import {
   type ReactNode,
 } from "react";
 
+import { TimePickerColumn } from "./components/TimePickerColumn.component";
 import { TimePickerItem } from "./components/TimePickerItem.component";
 import { useTimePickerStyles } from "./TimePicker.styles";
 import { Text } from "../Text";
-import { TimePickerColumn } from "./components/TimePickerColumn.component";
 
-import { GridItem, GridLayout } from "@layouts";
+import { GridLayout } from "@/layouts/Grid";
+import { GridItem } from "@/layouts/GridItem";
 import {
   useTestId,
   useMergedProps,

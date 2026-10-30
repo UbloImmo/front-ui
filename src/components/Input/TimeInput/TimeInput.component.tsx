@@ -38,7 +38,7 @@ import styles from "./TimeInput.module.scss";
 
 import { Icon } from "@/components/Icon";
 import { TimePicker } from "@/components/TimePicker";
-import { Popover } from "@layouts";
+import { Popover } from "@/layouts/Popover";
 import { TestIdProps, TimeStr } from "@types";
 import {
   clamp,
