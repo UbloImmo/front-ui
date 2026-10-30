@@ -1,0 +1,108 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ComponentInfo, Canvas, Callout } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as TimeInputStories from "../TimeInput.stories.tsx";
+
+<Meta title="Components/Forms/Input/TimeInput/Usage" />
+
+<ComponentInfo of={TimeInputStories} />
+
+<Content>
+
+## Usage
+
+`TimeInput` component is an interactive single-line text-field combined with an expandable [TimePicker](?path=/docs/components-forms-timepicker-usage--docs), a specific type of [Input](?path=/docs/components-forms-input-usage--docs).
+It is commonly used in form layouts to prompt users for a specific time of day.
+
+### Value & Formatting
+
+`TimeInput` is initialized without a value. It accepts and reports its value as a 24-hour `HH:MM` string (e.g. `09:30`).
+
+> While the user is typing an incomplete time, `TimeInput` will report its value as being `null`.
+
+Each input below consumes a different value.
+
+<Canvas of={TimeInputStories.Values} />
+
+### User input
+
+This input uses a native `<input type="time" />` under the hood to handle user inputs.
+Each browser's specific time picker element has been disabled in favor of our own [TimePicker](?path=/docs/components-forms-timepicker-usage--docs) component.
+
+> Both input methods are synchronized automatically.
+
+#### Using the keyboard
+
+Focusing the input allows users to type a time using conventional means, one part (e.g. hour, minute) at a time, and cycle through available values using the arrow keys.
+
+Pressing `Enter` or `Space` while the input is focused opens the time picker, and pressing `Escape` closes it.
+
+> The displayed time's format follows the user's locale.
+
+<Canvas of={TimeInputStories.Default} />
+
+#### Picking a time from a time picker
+
+Clicking on the clock icon opens a time picker popover. Select an hour, then a minute, and they get reflected in the input's value.
+
+<Canvas of={TimeInputStories.Default} />
+
+### Minute steps
+
+Some use-cases only allow users to select minutes at a regular interval (e.g. meetings every 15 minutes).
+
+`TimeInput` accepts an optional `step` property, expressed in minutes, to define exactly this. It is forwarded to both the native input and the time picker, which only shows minutes falling within the provided interval.
+
+> `step` is clamped between `1` and `60` minutes and defaults to `1`.
+
+<Canvas of={TimeInputStories.Step} />
+
+### Limiting selectable times
+
+`TimeInput` accepts `min` and `max` properties that dictate what hours / minutes are available for selection in the time picker.
+
+<Callout>Both `min` and `max` properties are **inclusive**.</Callout>
+
+#### Minimum time
+
+Set the component's `min` property to a valid 24-hour time string (e.g. `12:48`) to disable selecting any earlier time.
+
+Defaults to `00:00` if unset.
+
+<Canvas of={TimeInputStories.Min} />
+
+#### Maximum time
+
+Set the component's `max` property to a valid 24-hour time string (e.g. `23:26`) to disable selecting any later time.
+
+Defaults to `23:59` if unset.
+
+<Canvas of={TimeInputStories.Max} />
+
+#### Within a time range
+
+Providing both `min` and `max` properties works as expected in most cases. Both limits are treated as **inclusive**.
+
+##### Notable exceptions
+
+###### Minimum hour later than maximum hour
+
+Example : From `21:00` to `05:30`
+
+> Maximum time gets treated as happening the next day.
+
+###### Minimum & maximum hour are the same, but minimum minutes are later than maximum minutes.
+
+Example : From `12:30` to `12:15`
+
+> Every hour is still selectable. In the shared hour, the minutes exclude the gap between `max` and `min`.
+
+<Canvas of={TimeInputStories.MinMax} />
+
+### Disabled
+
+Set the `disabled` property to `true` to prevent any interaction with the input and its time picker.
+
+<Canvas of={TimeInputStories.Disabled} />
+
+</Content>

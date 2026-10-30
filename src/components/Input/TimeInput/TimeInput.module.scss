@@ -1,0 +1,37 @@
+.time-input {
+  vertical-align: middle;
+  accent-color: var(--primary-light);
+
+  &::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  cursor: text;
+
+  &::-webkit-datetime-edit-text {
+    color: var(--gray-400);
+  }
+
+  &::-webkit-datetime-edit-hour-field,
+  &::-webkit-datetime-edit-minute-field {
+    padding: var(--s-05) 0 !important;
+    width: auto !important;
+    cursor: text !important;
+    color: inherit;
+    border-radius: var(--s-05) !important;
+
+    &:focus-visible {
+      color: var(--primary-dark);
+      background-color: var(--primary-light);
+      outline: none;
+    }
+  }
+}
