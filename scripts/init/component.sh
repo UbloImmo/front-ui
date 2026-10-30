@@ -102,7 +102,7 @@ import { componentSourceFactory } from \"@docs/docs.utils\";
 
 import { ${component_name} } from \"./${component_name}.component\";
 
-import type { Meta, StoryObj } from \"@storybook/react\";
+import type { Meta, StoryObj } from \"@storybook/react-vite\";
 import type { ${component_name}Props } from \"./${component_name}.types\";
 
 
