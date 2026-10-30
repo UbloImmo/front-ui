@@ -11,4 +11,5 @@ export * from "./number.utils";
 export * from "./props.utils";
 export * from "./ref.utils";
 export * from "./string.utils";
+export * from "./time.utils";
 export * from "./translation";
