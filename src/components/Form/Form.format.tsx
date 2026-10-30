@@ -355,6 +355,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   text: String,
   number: formatNumberValue,
   email: String,
+  time: String,
   currency: formatCurrencyInt,
   password: displayPasswordValue,
   phone: String,
