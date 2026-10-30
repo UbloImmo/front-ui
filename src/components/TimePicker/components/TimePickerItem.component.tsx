@@ -1,19 +1,30 @@
-import { type MouseEventHandler, useCallback, useMemo, useRef } from "react";
+import {
+  type MouseEventHandler,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 
 import { useTimePickerItemClassName } from "../TimePicker.styles";
-import { formatTimePart } from "../TimePicker.utils";
 
 import { Text } from "@/components/Text";
+import { formatTimePart } from "@/utils/time.utils";
 
 import type { TimePickerItemProps } from "../TimePicker.types";
 
+/**
+ * Displays and allows selection of either a single hour or minute
+ * @param {TimePickerItemProps} - Component props
+ * @returns {ReactNode} - Component
+ */
 export function TimePickerItem({
   timePart,
   onClick,
   disabled,
   selected,
   type,
-}: TimePickerItemProps) {
+}: TimePickerItemProps): ReactNode {
   const ref = useRef<HTMLButtonElement>(null);
 
   const onButtonClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
@@ -23,7 +34,7 @@ export function TimePickerItem({
       event.preventDefault();
       onClick(timePart);
     },
-    [disabled, onClick, timePart],
+    [disabled, onClick, timePart]
   );
 
   const label = useMemo(() => formatTimePart(timePart), [timePart]);
@@ -37,9 +48,12 @@ export function TimePickerItem({
       onClick={onButtonClick}
       disabled={disabled}
       className={className}
+      role="option"
+      aria-selected={disabled ? undefined : selected}
       data-testid="time-picker-item"
       data-type={type}
       data-value={timePart}
+      title={label}
     >
       <Text color="inherit" weight={selected ? "bold" : "medium"}>
         {label}
