@@ -1,17 +1,17 @@
-import { EnergyScoreInputProps } from "./EnergyScoreInput/EnergyScoreInput.types";
-
-import type { ComboBoxInputProps } from "./ComboBoxInput";
-import type { CurrencyInputProps } from "./CurrencyInput";
+import type { ComboBoxInputProps } from "./ComboBoxInput/ComboBoxInput.types";
+import type { CurrencyInputProps } from "./CurrencyInput/CurrencyInput.types";
 import type { DateInputProps } from "./DateInput/DateInput.types";
-import type { IconPickerInputProps } from "./IconPickerInput";
+import type { EnergyScoreInputProps } from "./EnergyScoreInput/EnergyScoreInput.types";
+import type { IconPickerInputProps } from "./IconPickerInput/IconPickerInput.types";
 import type { InputType, InputProps } from "./Input.types";
 import type { MonthYearInputProps } from "./MonthYearInput/MonthYearInput.types";
 import type { MultiSelectInputProps } from "./MultiSelectInput/MultiSelectInput.types";
 import type { NumberInputProps } from "./NumberInput/NumberInput.types";
 import type { PasswordInputProps } from "./PasswordInput/PasswordInput.types";
-import type { SearchInputProps } from "./SearchInput";
+import type { SearchInputProps } from "./SearchInput/SearchInput.types";
 import type { SelectInputProps } from "./SelectInput/SelectInput.types";
-import type { TextAreaInputProps } from "./TextAreaInput";
+import type { TextAreaInputProps } from "./TextAreaInput/TextAreaInput.types";
+import type { TimeInputProps } from "./TimeInput/TimeInput.types";
 import type { Nullable, NullishPrimitives } from "@ubloimmo/front-util";
 import type { ReactNode } from "react";
 
@@ -34,6 +34,7 @@ type SpecificInputPropsMap<
   "search-text": InputProps<"search-text">;
   "multi-select": MultiSelectInputProps<TGenericValue>;
   "energy-score": EnergyScoreInputProps;
+  time: TimeInputProps;
 };
 
 export type SpecificInputProps<

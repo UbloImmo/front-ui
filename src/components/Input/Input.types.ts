@@ -1,7 +1,7 @@
 import type { inputTypes } from "./Input.data";
 import type { IconName } from "../Icon";
 import type { DirectionHorizontal } from "@/types/global/direction.types";
-import type { CurrencyInt, Email, StyleProps } from "@types";
+import type { CurrencyInt, Email, StyleProps, TimeStr } from "@types";
 import type {
   Enum,
   GenericFn,
@@ -157,6 +157,7 @@ export type InputTypeMap<
   phone: string;
   textarea: string;
   date: string;
+  time: TimeStr;
   "month-year": string;
   number: number;
   "energy-score": number;
