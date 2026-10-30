@@ -17,6 +17,7 @@ import { SearchTextInput } from "./SearchTextInput";
 import { SelectInput } from "./SelectInput";
 import { TextAreaInput } from "./TextAreaInput";
 import { TextInput } from "./TextInput";
+import { TimeInput } from "./TimeInput";
 
 import { useLogger, useStatic } from "@utils";
 
@@ -49,6 +50,7 @@ const inputComponentMap = <
   "search-text": SearchTextInput,
   "multi-select": MultiSelectInput<TGenericValue>,
   "energy-score": EnergyScoreInput,
+  time: TimeInput,
 });
 
 /**
