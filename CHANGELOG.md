@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- `v0.0.1` TimePicker component
+  - Allows users to select a 24-hour time by choosing its hour and minute separately, in two infinitely scrolling columns.
+  - Supports `min` & `max` bounds (including ranges wrapping around midnight), minute `step`s and a `disabled` state.
+  - Documented usage & added tests.
+- `v0.0.1` TimeInput component
+  - Native time input combined with a `TimePicker` popover, a new `time` type of `Input`.
+  - Accepts & reports `HH:MM` values, and supports `min`, `max` & `step` properties.
+  - Integrated into the `Input` & `Form` components via the new `time` input type.
+  - Documented usage & added tests.
+- `TimeStr`, `TimeSplit` & related time typings
+- `parseTimeStr()`, `isTimeStr()`, `makeTimeSlots()`, `makeTimeSlotMap()`, `formatTimePart()`, `formatTimeSplit()` & `currentTime()` time utility functions
+- `isInt()`, `ensureInt()`, `isFiniteNumber()` & `ensureFiniteNumber()` number utility functions
+- Added `Element.animate` shim to the happy-dom test config
+- Exported `NumberInput`, `PasswordInput` & `SearchTextInput` types from their respective index files
+
+### Changed
+- `v0.1.1` DateInput component
+  - Removed extraneous debug logs
+  - Added `aria-haspopup` attribute to the calendar toggle control
+- Prepared generic `Input` typings for the new `time` input type, and imported each input's props type from its types file
+
+### Fixed
+- `v0.1.1` DateInput component
+  - Used a valid `vertical-align` CSS rule in its styles
+- Updated the storybook import in the component init script template
 
 ## 2.6.1 - 2026-11-03
 ### Fixed
