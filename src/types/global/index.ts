@@ -6,3 +6,4 @@ export type * from "./direction.types";
 export type * from "./dom.types";
 export type * from "./object.types";
 export type * from "./styles.types";
+export type * from "./time.types";
