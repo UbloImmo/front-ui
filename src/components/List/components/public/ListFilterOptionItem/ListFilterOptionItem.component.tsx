@@ -15,7 +15,7 @@ import type { ListFilterOptionItemProps } from "./ListFilterOptionItem.types";
 /**
  * Renders a filter option's list item in a filter.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @template {object} TItem - The type of the list's items
  * @param {ListFilterOptionItemProps<TItem>} props - The component's props

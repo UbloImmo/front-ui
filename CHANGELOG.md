@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Fixed
+- `v0.1.1` ListFilterOptionItem component
+  - Long option labels now wrap onto multiple lines without overlapping the next options in Firefox & Safari.
+  - The option's checkbox no longer gets pushed out of view by long, unbreakable labels in Firefox.
+
 
 ## 2.6.0 - 2026-10-02
 ### Changed
