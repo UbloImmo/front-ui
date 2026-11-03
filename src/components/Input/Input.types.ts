@@ -157,6 +157,7 @@ export type InputTypeMap<
   phone: string;
   textarea: string;
   date: string;
+  "date-time": string;
   time: TimeStr;
   "month-year": string;
   number: number;

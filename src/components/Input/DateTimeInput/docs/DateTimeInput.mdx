@@ -1,0 +1,117 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ComponentInfo, Canvas, Callout } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as DateTimeInputStories from "../DateTimeInput.stories.tsx";
+
+<Meta title="Components/Forms/Input/DateTimeInput/Usage" />
+
+<ComponentInfo of={DateTimeInputStories} />
+
+<Content>
+
+## Usage
+
+`DateTimeInput` component combines a [DateInput](?path=/docs/components-forms-input-dateinput-usage--docs) and a [TimeInput](?path=/docs/components-forms-input-timeinput-usage--docs) side by side, a specific type of [Input](?path=/docs/components-forms-input-usage--docs).
+It is commonly used in form layouts to prompt users for a precise moment in time, such as an appointment, a deadline or a check-in.
+
+Each field keeps the behavior of its standalone counterpart: users may type into it, or use its popover (a calendar for the date, a time picker for the time).
+
+<Canvas of={DateTimeInputStories.Default} />
+
+### Value & Formatting
+
+`DateTimeInput` is initialized without a value. It consumes and reports a single date-time **ISO string** (e.g. `2024-08-14T10:30:00+02:00`), which is split under the hood between its two fields.
+
+> While either field is cleared or incomplete, `DateTimeInput` will report its value as being `null`.
+
+<Callout>
+  Providing a value that is not a valid date-time ISO string logs a warning, and the input is treated
+  as empty.
+</Callout>
+
+<Canvas of={DateTimeInputStories.Values} />
+
+### Setting a date & a time
+
+The input is filled in two steps, as a time cannot exist without a date.
+
+#### Date first
+
+The time field is **disabled until a date is set**.
+
+When a date gets picked for the first time, the time defaults to the time of the `min` property if that date is the `min` date, or `00:00` otherwise. From then on, picking another date **keeps the time that was already set**.
+
+> Clearing the date clears the whole value, time included.
+
+#### Then time
+
+Once a date is set, the time field becomes available. Changing the time only updates the time of the current date, seconds and milliseconds are reset to `0`.
+
+> The time field reports an empty or incomplete time as `null`, which `DateTimeInput` ignores: the previous time is kept until a valid one gets entered.
+
+### Minute steps
+
+Some use-cases only allow users to select minutes at a regular interval (e.g. appointments every 15 minutes).
+
+`DateTimeInput` accepts an optional `step` property, expressed in minutes, that gets forwarded to its time field. Only minutes falling within the provided interval are available in the time picker.
+
+> `step` is clamped between `1` and `60` minutes and defaults to `1`.
+
+<Canvas of={DateTimeInputStories.Step} />
+
+### Limiting selectable values
+
+`DateTimeInput` accepts `min` and `max` properties, as date-time ISO strings, that dictate what dates and times are available for selection.
+
+<Callout>Both `min` and `max` properties are **inclusive**.</Callout>
+
+Each bound is split just like the value:
+
+- its **date** limits what days can be picked in the calendar,
+- its **time** limits what hours & minutes can be picked in the time picker.
+
+The time bounds depend on the currently selected day:
+
+- On the `min` date, times earlier than the `min` time are disabled.
+- On the `max` date, times later than the `max` time are disabled.
+- On any day strictly between the two, every time is available.
+- If `min` and `max` share the same date, both time bounds apply.
+
+> When picking another date, the current time is **clamped** to the bounds applying to that date. Picking the `min` date while the time is earlier than the `min` time moves it to the `min` time, and picking the `max` date while it is later than the `max` time moves it to the `max` time.
+
+#### Minimum
+
+Set the component's `min` property to disable selecting any earlier date or time.
+
+Its time is also used as the default time when the `min` date itself gets picked for the first time.
+
+<Canvas of={DateTimeInputStories.Min} />
+
+#### Maximum
+
+Set the component's `max` property to disable selecting any later date or time.
+
+<Canvas of={DateTimeInputStories.Max} />
+
+#### Within a range
+
+Providing both `min` and `max` properties works as expected in most cases. Both limits are treated as **inclusive**.
+
+Time bounds follow the same rules as [TimePicker](?path=/docs/components-forms-timepicker-usage--docs), including ranges wrapping around midnight (e.g. from `21:00` to `05:30`).
+
+<Canvas of={DateTimeInputStories.MinMax} />
+
+### Placeholders
+
+Both fields can display their own placeholder while empty:
+
+- `placeholder` applies to the date field, and to the time field when `timePlaceholder` is unset.
+- `timePlaceholder` overrides the time field's placeholder.
+
+### Disabled
+
+Set the `disabled` property to `true` to prevent any interaction with both fields and their popovers.
+
+<Canvas of={DateTimeInputStories.Disabled} />
+
+</Content>

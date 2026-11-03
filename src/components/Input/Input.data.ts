@@ -22,4 +22,5 @@ export const inputTypes = [
   "multi-select",
   "energy-score",
   "time",
+  "date-time",
 ] as const;
