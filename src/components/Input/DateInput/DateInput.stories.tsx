@@ -2,14 +2,14 @@ import { fn } from "storybook/test";
 
 import { DateInput } from "./DateInput.component";
 import { DateInputProps } from "./DateInput.types";
+
+import { ComponentVariants } from "@docs/blocks";
 import {
+  useStatic,
   normalizeToDateISO,
   normalizeToDateNativeStr,
   normalizeToDateStr,
-} from "./DateInput.utils";
-
-import { ComponentVariants } from "@docs/blocks";
-import { useStatic } from "@utils";
+} from "@utils";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
