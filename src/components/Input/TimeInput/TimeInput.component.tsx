@@ -2,8 +2,7 @@ import {
   isBoolean,
   isFunction,
   isNullish,
-  isString,
-  Nullable,
+  type Nullable,
 } from "@ubloimmo/front-util";
 import {
   KeyboardEventHandler,
@@ -47,6 +46,7 @@ import {
   useMergedProps,
   useTestId,
   isTimeStr,
+  useLogger,
 } from "@utils";
 
 import type { TimeInputDefaultProps, TimeInputProps } from "./TimeInput.types";
@@ -76,22 +76,38 @@ const defaultTimeInputProps: TimeInputDefaultProps = {
 const TimeInput = (props: TimeInputProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultTimeInputProps, props);
 
+  const { warn } = useLogger("TimeInput");
+
+  const ensureTimeStr = useCallback(
+    (value: Nullable<InputValue<"time">>): Nullable<TimeStr> => {
+      if (!value) return null;
+      if (!isTimeStr(value)) {
+        warn(
+          `Invalid value provided. Expected valid HH:mm time string, but got "${value}"`
+        );
+        return null;
+      }
+      return value;
+    },
+    [warn]
+  );
+
   const [time, setTime] = useState<Nullable<TimeStr>>(
-    mergedProps.value ?? null
+    ensureTimeStr(mergedProps.value)
   );
   const [pickerShown, setPickerShown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     if (mergedProps.value !== time) {
-      setTime(mergedProps.value);
+      setTime(ensureTimeStr(mergedProps.value));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mergedProps.value]);
 
   const setInnerValueAndPropagate = useCallback(
     (value: Nullable<InputValue<"time">>) => {
-      setTime(value);
+      setTime(value as Nullable<TimeStr>);
       if (isFunction<InputOnChangeFn<"time">>(mergedProps.onChange)) {
         mergedProps.onChange(value);
       }
@@ -100,7 +116,7 @@ const TimeInput = (props: TimeInputProps & TestIdProps): ReactNode => {
   );
 
   const onChange = useInputOnChange<"time">(
-    (nativeValue) => isString(nativeValue),
+    (nativeValue) => isTimeStr(nativeValue),
     (nativeValue) => (isTimeStr(nativeValue) ? nativeValue : null),
     setInnerValueAndPropagate,
     mergedProps.onChangeNative

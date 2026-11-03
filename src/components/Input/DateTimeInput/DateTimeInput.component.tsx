@@ -18,6 +18,7 @@ import {
   compare,
   dateToDateISO,
   getTimeOfDate,
+  isTimeStr,
   isValidDate,
   isValidDateISO,
   normalizeToDate,
@@ -259,6 +260,8 @@ export function DateTimeInput(
    */
   const onTimeChange = useCallback<InputOnChangeFn<"time">>(
     (time) => {
+      // only accept time strings
+      if (!isTimeStr(time)) return;
       const timeSplit = parseTimeStr(time);
       // only set the time if value is non-null
       if (!timeSplit) return;
