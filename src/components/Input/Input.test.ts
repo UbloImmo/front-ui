@@ -13,8 +13,7 @@ describe("Input", () => {
     "Generic",
     Input
   );
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore needed to check unintended behavior with no props
+  // @ts-expect-error needed to check unintended behavior with no props
   testGenericInput({})(
     "should render a text input when no props",
     async ({ findByTestId }) => {
@@ -35,8 +34,7 @@ describe("Input", () => {
   global.console.warn = mock(() => {});
   global.console.error = mock(() => {});
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore needed to check unintended behavior with wrong props
+  // @ts-expect-error needed to check unintended behavior with wrong props
   testGenericInput({ type: "UNSUPPORTED" })(
     "should warn and render a text input",
     async ({ findByTestId }) => {
