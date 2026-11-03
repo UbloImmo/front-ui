@@ -1,7 +1,7 @@
 import type { inputTypes } from "./Input.data";
 import type { IconName } from "../Icon";
 import type { DirectionHorizontal } from "@/types/global/direction.types";
-import type { CurrencyInt, Email, StyleProps } from "@types";
+import type { CurrencyInt, DecorativeColorKey, Email, StyleProps } from "@types";
 import type {
   Enum,
   GenericFn,
@@ -167,6 +167,7 @@ export type InputTypeMap<
   select: TGenericValue;
   combobox: TGenericValue | TGenericValue[];
   "icon-picker": IconName;
+  "color-picker": DecorativeColorKey;
   search: TGenericValue;
   "search-text": string;
   "multi-select": TGenericValue[];

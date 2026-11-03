@@ -1,5 +1,6 @@
-import type { ComboBoxInputProps } from "./ComboBoxInput/ComboBoxInput.types";
-import type { CurrencyInputProps } from "./CurrencyInput/CurrencyInput.types";
+import type { ColorPickerInputProps } from "./ColorPickerInput";
+import type { ComboBoxInputProps } from "./ComboBoxInput";
+import type { CurrencyInputProps } from "./CurrencyInput";
 import type { DateInputProps } from "./DateInput/DateInput.types";
 import type { DateTimeInputProps } from "./DateTimeInput/DateTimeInput.types";
 import type { EnergyScoreInputProps } from "./EnergyScoreInput/EnergyScoreInput.types";
@@ -31,6 +32,7 @@ type SpecificInputPropsMap<
   "month-year": MonthYearInputProps;
   combobox: ComboBoxInputProps<TGenericValue>;
   "icon-picker": IconPickerInputProps;
+  "color-picker": ColorPickerInputProps;
   search: SearchInputProps<TGenericValue>;
   "search-text": InputProps<"search-text">;
   "multi-select": MultiSelectInputProps<TGenericValue>;

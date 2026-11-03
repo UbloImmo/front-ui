@@ -4,11 +4,11 @@ import { useMemo } from "react";
 import { Badge } from "./Badge.component";
 import { BadgeProps, BadgeShade } from "./Badge.types";
 import { FlexRowLayout } from "../../layouts";
+import { decorativeColorKeys, ColorPalette } from "../../types";
 import { useMergedProps } from "../../utils";
 import { GENERATED_ICON_NAMES } from "../Icon/__generated__/iconName.types";
 
 import { ComponentVariants } from "@docs/blocks";
-import { ColorPalette } from "@types";
 
 import type { IconName } from "../Icon/Icon.types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
@@ -128,4 +128,24 @@ export const Icon = (props: Partial<BadgeProps>) => {
 Icon.args = {
   label: "label",
   color: "primary",
+};
+
+export const DecorativeColors = (props: Partial<BadgeProps>) => {
+  const defaultProps = useMergedProps(Badge.__DEFAULT_PROPS, props);
+
+  return (
+    <ComponentVariants
+      defaults={defaultProps}
+      variants={[...decorativeColorKeys]}
+      for="color"
+      of={Badge}
+      align="center"
+      propLabels
+    />
+  );
+};
+DecorativeColors.args = {
+  label: "label",
+  icon: "Tag",
+  shade: "light",
 };

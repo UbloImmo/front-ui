@@ -41,12 +41,13 @@ const defaultFieldProps: FieldDefaultProps<InputType> = {
 const NO_NESTED_FOCUS_INPUT_TYPES = new Set<InputType>([
   "combobox",
   "icon-picker",
+  "color-picker",
 ]);
 
 /**
  * A grouping of InputLabel, Input and InputAssistiveText elements.
  *
- * @version 0.1.2
+ * @version 0.1.3
  *
  * @param {FieldProps<TType> & TestIdProps} props - Field component props
  * @returns {ReactNode}
@@ -67,7 +68,7 @@ const Field = <TType extends InputType>(
 
   const inputId = useInputId(props);
   const labelHtmlFor = useMemo(() => {
-    if (["icon-picker", "combobox"].includes(mergedProps.type)) {
+    if (["icon-picker", "combobox", "color-picker"].includes(mergedProps.type)) {
       return null;
     }
     return inputId;

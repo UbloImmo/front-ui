@@ -8,6 +8,7 @@ export * from "./Calendar";
 export * from "./Callout";
 export * from "./Checkbox";
 export * from "./Chip";
+export * from "./ColorPicker";
 export * from "./ComboBox";
 export * from "./ComboBoxButton";
 export * from "./ContextInfoCard";

@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- `v0.1.0` ColorPicker component
+  - Lets users pick a single color from a closed palette of decorative colors, rendered as a radio group.
+  - Supports `colors`, `labels`, `value`, `onChange`, `required` & `disabled` properties.
+- `v0.1.0` ColorPickerInput component
+  - New `color-picker` input type, usable in `Input`, `Field` & `Form`.
+- `v0.1.1` Input component
+  - Added the `color-picker` input type.
+- `v0.1.3` Field component
+  - Clicking a `color-picker` field's label no longer focuses or triggers its input.
+- `v1.2.4` Form component
+  - `color-picker` fields display their value as a `Badge` when readonly.
+- `v0.1.1` Badge component
+  - The `color` property now also accepts decorative colors (`DecorativeColorKey`).
+- Decorative color palette
+  - Exported `decorativeColorKeys` & `DecorativeColorKey`: `gray`, `wisteria`, `maya`, `tiffany`, `mantis`, `yellow`, `orange`, `red`, `murrey` & `kobicha`.
+  - Generated css variables & `.text-color-*` typography classes for decorative colors.
+  - `yellow`, `orange` & `red` currently alias the `pending`, `warning` & `error` tokens until dedicated design tokens are available.
+
 
 ## 2.7.0 - 2026-11-03
 ### Added

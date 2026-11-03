@@ -6,6 +6,7 @@ import {
 } from "@ubloimmo/front-util";
 
 import { Badge } from "../Badge";
+import { decorativeColorLabels } from "../ColorPicker";
 import { EnergyLabel } from "../EnergyLabel";
 import { Icon } from "../Icon";
 import styles from "./Form.module.scss";
@@ -49,6 +50,7 @@ import type {
   SearchInputProps,
 } from "@/components/Input";
 import type { FC, ReactNode } from "react";
+
 
 const noValue = "—";
 
@@ -223,6 +225,24 @@ const displayIconPickerValue: FormDisplayValueFormatterFn<
 };
 
 /**
+ * A {@link FormDisplayValueFormatterFn} that displays a `color-picker` field's value.
+ *
+ * @param {InputValue} value - The value of the field to display.
+ * @returns {ReactNode} A badge of the selected color with its label,
+ *   or a no-value placeholder if the value is invalid.
+ */
+const displayColorPickerValue: FormDisplayValueFormatterFn<
+  "color-picker",
+  ReactNode
+> = (value) => {
+  if (!value) return noValue;
+
+  return (
+    <Badge color={value} label={decorativeColorLabels[value]} shade="light" />
+  );
+};
+
+/**
  * Displays the selected value for a search input field.
  *
  * @param {Object} props - The component props.
@@ -387,6 +407,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   "month-year": displayMonthYearValue,
   combobox: displayComboBoxValue,
   "icon-picker": displayIconPickerValue,
+  "color-picker": displayColorPickerValue,
   search: (fieldValue, props) => () => (
     <DisplaySearchValue fieldValue={fieldValue} props={props} />
   ),

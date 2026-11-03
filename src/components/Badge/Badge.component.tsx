@@ -29,7 +29,7 @@ const defaultBadgeProps: DefaultBadgeProps = {
  *
  * @remarks Badge shades are based on two sets of colors, light and dark, depending on the shade prop.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {BadgeProps} props - the props for the Badge component
  * @return {ReactNode} the Badge component

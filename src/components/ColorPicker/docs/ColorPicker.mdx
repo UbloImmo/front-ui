@@ -1,0 +1,54 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ComponentInfo, Canvas } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as ColorPickerStories from "../ColorPicker.stories.tsx";
+
+<Meta title="Components/Forms/ColorPicker/Usage" />
+
+<ComponentInfo of={ColorPickerStories} />
+
+<Content>
+
+## Usage
+
+### Selecting a color
+
+`ColorPicker` lets users pick a single color from a **closed palette** of decorative colors. It behaves like a radio group and is useful for assigning a visual reference (e.g. a category badge) within a form context.
+
+<Canvas of={ColorPickerStories.Default} />
+
+#### No selection
+
+When no `value` is provided, no color is selected.
+
+<Canvas of={ColorPickerStories.NoSelection} />
+
+#### Choosing colors
+
+By providing a list of `DecorativeColorKey`s to the `colors` property, one can restrict which colors are available to users.
+
+> Defaults to `decorativeColorKeys`, the full decorative palette.
+
+<Canvas of={ColorPickerStories.Colors} />
+
+#### Custom labels
+
+Each color displays a label under its swatch. Labels can be overridden through the `labels` property. Colors without a custom label fall back to `decorativeColorLabels`.
+
+<Canvas of={ColorPickerStories.Labels} />
+
+### Required
+
+By default, users can clear their selection by clicking on the selected color. To prevent this and make a selection mandatory, set the `required` property to `true`.
+
+> Give it a try below, the selection remains even after clicking on the selected color.
+
+<Canvas of={ColorPickerStories.Required} />
+
+### Disabled
+
+To disable user interaction with `ColorPicker`, set the optional `disabled` property to `true`. This will prevent users from selecting an option or modifying an existing selection.
+
+<Canvas of={ColorPickerStories.Disabled} />
+
+</Content>

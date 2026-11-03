@@ -1,5 +1,6 @@
 import type { IconName } from "../Icon/Icon.types";
 import type {
+  DecorativeColorKey,
   ColorKey,
   DefaultPaletteColorShadeKey,
   GrayscalePaletteColorShadeKey,
@@ -29,10 +30,10 @@ export type BadgeProps = RequireAtLeastOne<{
   /**
    * The dominant color of the Badge
    *
-   * @type {ColorKey}
+   * @type {ColorKey | DecorativeColorKey}
    * @default "primary"
    */
-  color?: ColorKey;
+  color?: ColorKey | DecorativeColorKey;
   /**
    * The badge's shade
    * Determines its background, text and icon colors according to the `color` prop
