@@ -1,8 +1,7 @@
 import type { InputProps, InputValue } from "../Input.types";
 import type { CalendarProps } from "@/components/Calendar";
+import type { DateInputFormat } from "@types";
 import type { Nullable } from "@ubloimmo/front-util";
-
-export type DateInputFormat = "iso" | "native" | "dd/mm/yyyy";
 
 export type DateInputProps = InputProps<"date"> &
   Pick<CalendarProps, "numberOfMonths" | "disabled"> & {

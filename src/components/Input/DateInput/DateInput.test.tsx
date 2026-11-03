@@ -1,22 +1,13 @@
-import { objectEntries, objectKeys } from "@ubloimmo/front-util";
-import { describe, expect, it, mock } from "bun:test";
+import { describe, expect, mock } from "bun:test";
 
 import { DateInput } from "./DateInput.component";
+
+import { testComponentFactory } from "@/tests";
 import {
   dateISOToDateNativeStr,
   dateISOToDateStr,
   dateToDateISO,
-  isValidDate,
-  isValidDateISO,
-  isValidDateNativeStr,
-  isValidDateStr,
-  normalizeToDate,
-  normalizeToDateISO,
-  normalizeToDateNativeStr,
-  normalizeToDateStr,
-} from "./DateInput.utils";
-
-import { testComponentFactory } from "@/tests";
+} from "@utils";
 
 const dateFormats = {
   nativeStr: "2024-08-14",
@@ -25,64 +16,7 @@ const dateFormats = {
   date: new Date("2024-08-14T00:00:00+00:00"),
 };
 
-const predicates = {
-  nativeStr: isValidDateNativeStr,
-  str: isValidDateStr,
-  ISO: isValidDateISO,
-  date: isValidDate,
-};
-
 describe("Input", () => {
-  describe("DateInput", () => {
-    describe("utils", () => {
-      describe("predicates", () => {
-        const formatKeys = objectKeys(dateFormats);
-        formatKeys.forEach((predicate) => {
-          formatKeys.forEach((dateLike) => {
-            const isValid = dateLike === predicate;
-            it(`should ${
-              isValid ? "" : "not "
-            }accept ${dateLike} as ${predicate}`, () => {
-              expect(predicates[predicate](dateFormats[dateLike])).toBe(
-                isValid
-              );
-            });
-          });
-        });
-      });
-      describe("normalizeToDate", () => {
-        objectEntries(dateFormats).forEach(([format, dateLike]) => {
-          it(`should normalize ${format} to date`, () => {
-            expect(normalizeToDate(dateLike)).toEqual(dateFormats.date);
-          });
-        });
-      });
-      describe("normalizeToDateStr", () => {
-        objectEntries(dateFormats).forEach(([format, dateLike]) => {
-          it(`should normalize ${format} to str`, () => {
-            expect(normalizeToDateStr(dateLike)).toBe(dateFormats.str);
-          });
-        });
-      });
-      describe("normalizeToDateNativeStr", () => {
-        objectEntries(dateFormats).forEach(([format, dateLike]) => {
-          it(`should normalize ${format} to nativeStr`, () => {
-            expect(normalizeToDateNativeStr(dateLike)).toBe(
-              dateFormats.nativeStr
-            );
-          });
-        });
-      });
-      describe("normalizeToDateISO", () => {
-        objectEntries(dateFormats).forEach(([format, dateLike]) => {
-          it(`should normalize ${format} to ISO`, () => {
-            expect(normalizeToDateISO(dateLike)).toBe(dateFormats.ISO);
-          });
-        });
-      });
-    });
-  });
-
   const testId = "input-date";
   const calendarTestId = "input-date-calendar";
   const controlTestId = "input-control";
