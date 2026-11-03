@@ -145,7 +145,7 @@ export function TimePickerColumn({
         selectedHeight = height;
       }
     }
-    scrollByDelta(selectedDiff + selectedHeight / 2, true);
+    scrollByDelta(selectedDiff + selectedHeight / 2, isNumber(selection));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selection, defaultSelection]);
 
