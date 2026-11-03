@@ -18,14 +18,6 @@ import {
 
 import styles from "./DateInput.module.scss";
 import {
-  dateFormatters,
-  isValidDateNativeStr,
-  normalizeToDate,
-  normalizeToDateISO,
-  normalizeToDateNativeStr,
-  normalizeToDateStr,
-} from "./DateInput.utils";
-import {
   defaultCommonInputProps,
   StyledInput,
   StyledInputContainer,
@@ -48,6 +40,12 @@ import {
   useHtmlAttribute,
   useMergedProps,
   useTestId,
+  dateFormatters,
+  isValidDateNativeStr,
+  normalizeToDate,
+  normalizeToDateISO,
+  normalizeToDateNativeStr,
+  normalizeToDateStr,
 } from "@utils";
 
 import type { DateInputDefaultProps, DateInputProps } from "./DateInput.types";
@@ -93,8 +91,8 @@ const DateInput = (props: DateInputProps & TestIdProps): ReactNode => {
 
   // update innerDateStr if form value changes
   useEffect(() => {
-    const outerDateStr = normalizeToDateNativeStr(mergedProps.value);
-    if (isString(outerDateStr) && outerDateStr !== innerDateStr) {
+    const outerDateStr = normalizeToDateNativeStr(mergedProps.value) ?? "";
+    if (outerDateStr !== innerDateStr) {
       setInnerDateStr(outerDateStr);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
