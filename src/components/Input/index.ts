@@ -7,6 +7,7 @@ export type * from "./Input.generic.types";
 export * from "./ComboBoxInput";
 export * from "./CurrencyInput";
 export * from "./DateInput";
+export * from "./DateTimeInput";
 export * from "./EmailInput";
 export * from "./EnergyScoreInput";
 export * from "./IconPickerInput";

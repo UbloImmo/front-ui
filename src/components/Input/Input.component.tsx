@@ -3,6 +3,7 @@ import { useMemo, type ReactNode } from "react";
 import { ComboBoxInput } from "./ComboBoxInput";
 import { CurrencyInput } from "./CurrencyInput";
 import { DateInput } from "./DateInput";
+import { DateTimeInput } from "./DateTimeInput";
 import { EmailInput } from "./EmailInput";
 import { EnergyScoreInput } from "./EnergyScoreInput";
 import { IconPickerInput } from "./IconPickerInput";
@@ -51,6 +52,7 @@ const inputComponentMap = <
   "multi-select": MultiSelectInput<TGenericValue>,
   "energy-score": EnergyScoreInput,
   time: TimeInput,
+  "date-time": DateTimeInput,
 });
 
 /**

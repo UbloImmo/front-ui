@@ -1,6 +1,7 @@
 import type { ComboBoxInputProps } from "./ComboBoxInput/ComboBoxInput.types";
 import type { CurrencyInputProps } from "./CurrencyInput/CurrencyInput.types";
 import type { DateInputProps } from "./DateInput/DateInput.types";
+import type { DateTimeInputProps } from "./DateTimeInput/DateTimeInput.types";
 import type { EnergyScoreInputProps } from "./EnergyScoreInput/EnergyScoreInput.types";
 import type { IconPickerInputProps } from "./IconPickerInput/IconPickerInput.types";
 import type { InputType, InputProps } from "./Input.types";
@@ -35,6 +36,7 @@ type SpecificInputPropsMap<
   "multi-select": MultiSelectInputProps<TGenericValue>;
   "energy-score": EnergyScoreInputProps;
   time: TimeInputProps;
+  "date-time": DateTimeInputProps;
 };
 
 export type SpecificInputProps<
