@@ -1,7 +1,9 @@
-import { describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it, setSystemTime } from "bun:test";
 
 import { TimeStr } from "@types";
 import {
+  currentTime,
+  getTimeOfDate,
   formatTimePart,
   formatTimeSplit,
   isTimeStr,
@@ -265,6 +267,58 @@ describe("TimePicker utils", () => {
     it("should round-trip with parseTimeStr", () => {
       const time: TimeStr = "07:45";
       expect(formatTimeSplit(parseTimeStr(time))).toBe(time);
+    });
+  });
+
+  describe("getTimeOfDate", () => {
+    it("should format a date's time as a time string", () => {
+      expect(getTimeOfDate(new Date(2024, 7, 14, 13, 45))).toBe("13:45");
+      expect(getTimeOfDate(new Date(2024, 0, 1, 23, 59))).toBe("23:59");
+    });
+    it("should zero-pad single digit hours and minutes", () => {
+      expect(getTimeOfDate(new Date(2024, 7, 14, 9, 5))).toBe("09:05");
+    });
+    it("should format midnight", () => {
+      expect(getTimeOfDate(new Date(2024, 7, 14, 0, 0))).toBe("00:00");
+    });
+    it("should ignore seconds, milliseconds and the date itself", () => {
+      const a = getTimeOfDate(new Date(2020, 1, 29, 8, 30, 59, 999));
+      const b = getTimeOfDate(new Date(2031, 11, 31, 8, 30, 0, 0));
+      expect(a).toBe("08:30");
+      expect(b).toBe("08:30");
+    });
+    it("should produce a valid time string", () => {
+      expect(isTimeStr(getTimeOfDate(new Date(2024, 7, 14, 18, 7)))).toBeTrue();
+    });
+    it("should use the date's local time", () => {
+      const date = new Date(2024, 7, 14, 6, 15);
+      expect(getTimeOfDate(date)).toBe(
+        `${formatTimePart(date.getHours())}:${formatTimePart(date.getMinutes())}`
+      );
+    });
+  });
+
+  describe("currentTime", () => {
+    afterEach(() => {
+      setSystemTime();
+    });
+
+    it("should return the current time as a time string", () => {
+      setSystemTime(new Date(2024, 7, 14, 13, 45, 30));
+      expect(currentTime()).toBe("13:45");
+    });
+    it("should zero-pad single digit hours and minutes", () => {
+      setSystemTime(new Date(2024, 7, 14, 7, 3));
+      expect(currentTime()).toBe("07:03");
+    });
+    it("should follow the system clock", () => {
+      setSystemTime(new Date(2024, 7, 14, 23, 59));
+      expect(currentTime()).toBe("23:59");
+      setSystemTime(new Date(2024, 7, 15, 0, 0));
+      expect(currentTime()).toBe("00:00");
+    });
+    it("should return a valid time string", () => {
+      expect(isTimeStr(currentTime())).toBeTrue();
     });
   });
 });

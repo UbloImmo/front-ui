@@ -164,12 +164,21 @@ export function formatTimeSplit(
 }
 
 /**
+ * Return's a given date's time as a string
+ * @param {Date} date - Date to grab time from
+ * @returns {TimeStr} Provided date's in a 24-hour time string format
+ */
+export function getTimeOfDate(date: Date): TimeStr {
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  return formatTimeSplit({ hour, minute });
+}
+
+/**
  * Gets the current time & returns it as a time string
  * @returns {TimeStr} Current time in a 24-hour time string format
  */
 export function currentTime(): TimeStr {
   const now = new Date(Date.now());
-  const hour = now.getHours();
-  const minute = now.getMinutes();
-  return formatTimeSplit({ hour, minute });
+  return getTimeOfDate(now);
 }
