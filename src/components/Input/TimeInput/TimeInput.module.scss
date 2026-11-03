@@ -2,6 +2,8 @@
   vertical-align: middle;
   accent-color: var(--primary-light);
 
+  padding-right: var(--s-7);
+
   &::-webkit-calendar-picker-indicator {
     display: none;
   }
