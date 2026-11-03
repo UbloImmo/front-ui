@@ -32,9 +32,9 @@ const writeFile = async (
   { path, contents }: FileDescription,
   dryRun = false
 ) => {
-  if (dryRun) return;
   logger.debug(`${path}`, "write file");
 
+  if (dryRun) return;
   await Bun.write(path, contents);
 };
 

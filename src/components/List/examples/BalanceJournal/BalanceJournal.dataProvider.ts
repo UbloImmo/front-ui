@@ -11,8 +11,12 @@ import {
 } from "./BalanceJournal.types";
 import { useStaticDataProvider, type UseDataProviderFn } from "../../modules";
 
-import { normalizeToDate, normalizeToDateNativeStr } from "@/components/Input";
-import { delay, useStatic } from "@utils";
+import {
+  delay,
+  useStatic,
+  normalizeToDate,
+  normalizeToDateNativeStr,
+} from "@utils";
 
 const MAX_AMOUNT = 1_000_000;
 const AUTO_SEND_DATE_CHANCE = 0.64;

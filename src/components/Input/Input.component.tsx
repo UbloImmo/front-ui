@@ -3,6 +3,7 @@ import { useMemo, type ReactNode } from "react";
 import { ComboBoxInput } from "./ComboBoxInput";
 import { CurrencyInput } from "./CurrencyInput";
 import { DateInput } from "./DateInput";
+import { DateTimeInput } from "./DateTimeInput";
 import { EmailInput } from "./EmailInput";
 import { EnergyScoreInput } from "./EnergyScoreInput";
 import { IconPickerInput } from "./IconPickerInput";
@@ -17,6 +18,7 @@ import { SearchTextInput } from "./SearchTextInput";
 import { SelectInput } from "./SelectInput";
 import { TextAreaInput } from "./TextAreaInput";
 import { TextInput } from "./TextInput";
+import { TimeInput } from "./TimeInput";
 
 import { useLogger, useStatic } from "@utils";
 
@@ -49,6 +51,8 @@ const inputComponentMap = <
   "search-text": SearchTextInput,
   "multi-select": MultiSelectInput<TGenericValue>,
   "energy-score": EnergyScoreInput,
+  time: TimeInput,
+  "date-time": DateTimeInput,
 });
 
 /**

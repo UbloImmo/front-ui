@@ -83,8 +83,7 @@ global.console.warn = mock(() => {});
 
 testAction({
   ...Action.__DEFAULT_PROPS,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore need this to check for unhandled props
+  // @ts-expect-error need this to check for unhandled props
   icon: null,
 })("should warn if missing required icon", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
@@ -94,8 +93,7 @@ testAction({
 
 testAction({
   ...Action.__DEFAULT_PROPS,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore need this to check for unhandled props
+  // @ts-expect-error need this to check for unhandled props
   label: null,
 })("should warn if missing required label", ({ queryByTestId }) => {
   expect(queryByTestId(testId)).not.toBeNull();
@@ -116,6 +114,16 @@ testAction({
     (global.console.warn as Mock<VoidFn>).mockReset();
   }
 );
+
+testAction({
+  ...Action.__DEFAULT_PROPS,
+  // @ts-expect-error need this to check for unhandled props
+  size: "THIS IS NOT A KNOWN ACTION SIZE",
+})("should warn if provided with unknown size", ({ queryByTestId }) => {
+  expect(queryByTestId(testId)).not.toBeNull();
+  expect(global.console.warn).toHaveBeenCalled();
+  (global.console.warn as Mock<VoidFn>).mockReset();
+});
 
 testAction({
   ...Action.__DEFAULT_PROPS,

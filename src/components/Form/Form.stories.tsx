@@ -33,6 +33,9 @@ import {
   delay,
   useMergedProps,
   useStatic,
+  currentTime,
+  dateToDateISO,
+  isTimeStr,
 } from "@utils";
 
 import type {
@@ -1052,6 +1055,8 @@ const allFieldsSchema = z.object({
   search: z.string(),
   searchText: z.string(),
   energyScore: z.number(),
+  time: z.string().refine(isTimeStr),
+  dateTime: z.string().datetime({ offset: true }),
 });
 
 type AllFieldsData = z.input<typeof allFieldsSchema>;
@@ -1093,6 +1098,8 @@ const queryData: FormData<AllFieldsData> = {
   searchText: "Search",
   energyScore: 12,
   monthYear: "2025-01",
+  time: currentTime(),
+  dateTime: dateToDateISO(new Date(Date.now())),
 };
 
 const allFieldsIcons: IconName[] = ["Square", "Triangle", "Circle"];
@@ -1190,6 +1197,16 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       type: "energy-score",
       scoreType: "GES",
       unit: "kgCO₂/m²/an",
+    },
+    {
+      label: "Time",
+      source: "time",
+      type: "time",
+    },
+    {
+      label: "Date Time",
+      source: "dateTime",
+      type: "date-time",
     },
   ],
   onSubmit: (...args) => {

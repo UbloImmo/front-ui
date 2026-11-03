@@ -1,0 +1,108 @@
+.picker {
+  background: var(--white);
+  padding: var(--s-1);
+  border-radius: var(--s-2);
+  box-shadow: var(--shadow-card-elevation-low);
+  width: fit-content;
+}
+
+.picker-scroller {
+  overflow: hidden;
+  --scroller-height: calc(var(--s-8) * 7 + var(--s-05) * 6);
+  --scroller-height: 300px;
+  height: var(--scroller-height);
+  min-height: var(--scroller-height);
+  max-height: var(--scroller-height);
+  background: var(--gray-50);
+  border-radius: var(--s-1);
+  position: relative;
+}
+
+.picker-scroller::before,
+.picker-scroller::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  height: var(--s-6);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.picker-scroller::before {
+  bottom: unset;
+  background: linear-gradient(to bottom, var(--gray-50), var(--gray-50-00));
+}
+
+.picker-scroller::after {
+  top: unset;
+  background: linear-gradient(to top, var(--gray-50), var(--gray-50-00));
+}
+
+.picker-column {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding-block: var(--s-05);
+}
+
+.picker-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: var(--s-2);
+}
+
+.picker-item {
+  --item-bg: var(--primary-light-00);
+  --item-fg: var(--gray-800);
+  --item-border: var(--primary-medium-00);
+
+  height: var(--s-8);
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--item-bg);
+  color: var(--item-fg);
+  border: 1px solid var(--item-border);
+
+  transition-property: color, backgrond, border-color;
+  transition-timing-function: var(--bezier);
+  transition-duration: 300ms;
+
+  padding: var(--s-2) var(--s-4);
+  border-radius: var(--s-1);
+
+  cursor: pointer;
+
+  &:disabled {
+    --item-fg: var(--gray-300);
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    --item-bg: var(--primary-light-50);
+    --item-border: var(--primary-medium-50);
+    --item-fg: var(--primary-base);
+    transition-duration: 150ms;
+  }
+
+  &.selected:not(:disabled) {
+    --item-bg: var(--primary-light);
+    --item-border: var(--primary-medium);
+    --item-fg: var(--primary-dark);
+  }
+
+  &.selected:disabled {
+    --item-bg: var(--gray-100);
+    --item-border: var(--gray-200-50);
+    --item-fg: var(--gray-600);
+  }
+
+  & > span[data-testid="text"] {
+    transition: color 150ms var(--bezier);
+  }
+}

@@ -18,14 +18,6 @@ import {
 
 import styles from "./DateInput.module.scss";
 import {
-  dateFormatters,
-  isValidDateNativeStr,
-  normalizeToDate,
-  normalizeToDateISO,
-  normalizeToDateNativeStr,
-  normalizeToDateStr,
-} from "./DateInput.utils";
-import {
   defaultCommonInputProps,
   StyledInput,
   StyledInputContainer,
@@ -46,9 +38,14 @@ import { Popover } from "@/layouts/Popover";
 import {
   useCssClasses,
   useHtmlAttribute,
-  useLogger,
   useMergedProps,
   useTestId,
+  dateFormatters,
+  isValidDateNativeStr,
+  normalizeToDate,
+  normalizeToDateISO,
+  normalizeToDateNativeStr,
+  normalizeToDateStr,
 } from "@utils";
 
 import type { DateInputDefaultProps, DateInputProps } from "./DateInput.types";
@@ -77,17 +74,13 @@ const defaultDateInputProps: DateInputDefaultProps = {
 /**
  * A simple date input combined with a Calendar.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {DateInputProps & TestIdProps} props - The input props.
  * @return {ReactNode} The rendered date input component.
  */
 const DateInput = (props: DateInputProps & TestIdProps): ReactNode => {
   const mergedProps = useMergedProps(defaultDateInputProps, props);
-  const { debug } = useLogger("InputDate", {
-    hideDebug: true,
-    spacing: 0,
-  });
   const [innerDateStr, setInnerDateStr] = useState<string>(
     normalizeToDateNativeStr(mergedProps.value) ?? ""
   );
@@ -98,8 +91,8 @@ const DateInput = (props: DateInputProps & TestIdProps): ReactNode => {
 
   // update innerDateStr if form value changes
   useEffect(() => {
-    const outerDateStr = normalizeToDateNativeStr(mergedProps.value);
-    if (isString(outerDateStr) && outerDateStr !== innerDateStr) {
+    const outerDateStr = normalizeToDateNativeStr(mergedProps.value) ?? "";
+    if (outerDateStr !== innerDateStr) {
       setInnerDateStr(outerDateStr);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -170,8 +163,6 @@ const DateInput = (props: DateInputProps & TestIdProps): ReactNode => {
     toggleCalendarShown();
   }, [toggleCalendarShown]);
 
-  debug({ innerDateStr, computedDateISO, outerValue: mergedProps.value });
-
   const onFocus = useCallback<NativeInputOnBlurFn>((e) => {
     e.preventDefault();
     setIsFocused(true);
@@ -237,15 +228,6 @@ const DateInput = (props: DateInputProps & TestIdProps): ReactNode => {
     return transformObject(minMax, normalizeToDate);
   }, [minMax]);
 
-  debug({
-    minMax,
-    calendarMinMax,
-    inputMinMax,
-    tests: {
-      native: normalizeToDateNativeStr(minMax.max),
-    },
-  });
-
   const inputDisabled = useMemo(() => {
     return isBoolean(mergedProps.disabled) && mergedProps.disabled;
   }, [mergedProps]);
@@ -303,6 +285,7 @@ const DateInput = (props: DateInputProps & TestIdProps): ReactNode => {
             title="Pick a date"
             aria-label="Pick a date"
             role="button"
+            aria-haspopup="menu"
             aria-roledescription="Button for show or closing a detailed calendar"
           >
             <Icon name="Calendar3" />

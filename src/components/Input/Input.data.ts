@@ -21,4 +21,6 @@ export const inputTypes = [
   "search-text",
   "multi-select",
   "energy-score",
+  "time",
+  "date-time",
 ] as const;

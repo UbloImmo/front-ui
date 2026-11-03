@@ -157,6 +157,8 @@ export type InputTypeMap<
   phone: string;
   textarea: string;
   date: string;
+  "date-time": string;
+  time: string;
   "month-year": string;
   number: number;
   "energy-score": number;

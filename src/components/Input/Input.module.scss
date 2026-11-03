@@ -23,7 +23,8 @@
 
   &:has(input:focus:not(:disabled)),
   &:has([aria-expanded="true"]),
-  &[aria-expanded="true"] {
+  &[aria-expanded="true"],
+  [aria-expanded="true"]:has(> &) & {
     --control-color: var(--primary-base);
     &.error {
       --control-color: var(--error-base);

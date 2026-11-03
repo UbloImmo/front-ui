@@ -21,7 +21,13 @@ import { isSymbol } from "lodash";
 import { isValidElement } from "react";
 
 import { SPACING_PREFIX } from "@types";
-import { capitalize, isColorKey, isEmptyString, isPaletteColor } from "@utils";
+import {
+  capitalize,
+  isColorKey,
+  isEmptyString,
+  isNonEmptyString,
+  isPaletteColor,
+} from "@utils";
 
 import type {
   DocgenPropDef,
@@ -198,7 +204,7 @@ const formatPropType = ({
     return elementTypes.join(" & ");
   }
 
-  // format exculdes
+  // format excludes
   formatExclude: {
     if (type.name === "Exclude" && isArray(type?.elements)) {
       const [base, intersection] = type.elements;
@@ -227,6 +233,19 @@ const formatPropType = ({
         },
       });
     }
+  }
+
+  // format generic uses
+  if (
+    isNonEmptyString(type.raw) &&
+    isArray(type?.elements) &&
+    type.elements.length
+  ) {
+    const root = type.name;
+    const genericArgs = type.elements.map((element) =>
+      formatPropType({ tsType: element })
+    );
+    return `${root}<${genericArgs.join(", ")}>`;
   }
 
   // handle unpopulated known types

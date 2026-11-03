@@ -1,0 +1,82 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ComponentInfo, Canvas, Callout } from "@docs/blocks";
+import { Content } from "@docs/containers";
+import * as TimePickerStories from "../TimePicker.stories.tsx";
+
+<Meta title="Components/Forms/TimePicker/Usage" />
+
+<ComponentInfo of={TimePickerStories} />
+
+<Content>
+
+## Usage
+
+`Timepicker` offers a simple way for users to select a specific 24-hour time, optionally within minium & maxium bounds.
+
+### Picking a time
+
+After selecting an hour, click on a minute to select it.
+
+<Canvas of={TimePickerStories.Default} />
+
+> If overflowing, hours and minutes scroll infinitely. Going from `59` to `00` is a simple as scrolling up.
+
+### Minute steps
+
+Some use-cases only allow users to select minutes at a regular interval (e.g. meetings every 15 minutes).
+
+`TimePicker` accepts an optional `step` property to define exactly this. Only minutes falling within the provided interval get shown.
+
+> Example: Setting `step` to `5` will only allow selecting the following minutes: `0`, `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `45`, `50`, `55`
+
+<Canvas of={TimePickerStories.Step} />
+
+### Limiting selectable times
+
+`TimePicker` accepts `min` and `max` properties that dictate what hours / minutes are available for selection.
+
+<Callout>Both `min` and `max` properties are **inclusive**.</Callout>
+
+#### Minimum time
+
+Set the component's `min` property to a valid 24-hour time string (e.g. `12:48`) to disable selecting any earlier time.
+
+Defaults to `00:00` if unset.
+
+<Canvas of={TimePickerStories.Min} />
+
+#### Maximum time
+
+Set the component's `max` property to a valid 24-hour time string (e.g. `23:26`) to disable selecting any later time.
+
+Defaults to `23:59` if unset.
+
+<Canvas of={TimePickerStories.Max} />
+
+#### Within a time range
+
+Providing both `min` and `max` properties works as expected in most cases. Both limits are treated as **inclusive**.
+
+##### Notable exceptions
+
+###### Minimum hour later than maximum hour
+
+Example : From `21:00` to `05:30`
+
+> Maximum time gets treated as happening the next day.
+
+###### Minimum & maximum hour are the same, but minimum minutes are later than maximum minutes.
+
+Example : From `12:30` to `12:15`
+
+> Every hour is still returned and selectable. In the shared hour, the minutes now exclude the gap between `max` and `min`.
+
+<Canvas of={TimePickerStories.MinMax} />
+
+### Disabled
+
+All time selection can be disabled by setting the `disabled` property to `true`.
+
+<Canvas of={TimePickerStories.Disabled} />
+
+</Content>

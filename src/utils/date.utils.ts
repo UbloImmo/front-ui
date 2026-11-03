@@ -15,8 +15,7 @@ import {
   parseISO,
 } from "date-fns";
 
-import type { InputValue } from "../Input.types";
-import type { DateInputFormat } from "./DateInput.types";
+import type { DateInputFormat } from "@types";
 
 const DATE_STR_FORMAT = "dd/MM/yyyy";
 const DATE_STR_FORMAT_NATIVE = "yyyy-MM-dd";
@@ -26,100 +25,121 @@ const DATE_STR_FORMAT_NATIVE = "yyyy-MM-dd";
  *
  * @param {Nullable<Date>} date - the date object to convert
  * @return {Nullable<string>} the ISO string representation of the date, or null if the input date is null
+ * @throws if the input is invalid
  */
-export const dateToDateISO = (date: Nullable<Date>): Nullable<string> => {
+export function dateToDateISO(date: Date): string;
+export function dateToDateISO(date: Nullable<Date>): Nullable<string>;
+export function dateToDateISO(date: Nullable<Date>): Nullable<string> {
   if (isNull(date)) return null;
   return formatISO(date);
-};
+}
 
 /**
  * Converts a date string in ISO format to a string representation in the format (dd/MM/yyyy).
  *
  * @param {Nullable<string>} dateISO - the date string in ISO format to convert
  * @return {Nullable<string>} the string representation of the date, or null if the input date is null
+ * @throws if the input is invalid
  */
-export const dateISOToDateStr = (
-  dateISO: Nullable<string>
-): Nullable<string> => {
+export function dateISOToDateStr(dateISO: string): string;
+export function dateISOToDateStr(dateISO: Nullable<string>): Nullable<string>;
+export function dateISOToDateStr(dateISO: Nullable<string>): Nullable<string> {
   if (isNull(dateISO)) return null;
   return format(parseISO(dateISO), DATE_STR_FORMAT);
-};
+}
 
 /**
  * Converts a date ISO string to its native string representation (yyyy-MM-dd).
  *
  * @param {Nullable<string>} dateISO - the date ISO string to convert
  * @return {Nullable<string>} the native string representation of the date, or null if the input date is null
+ * @throws if the input is invalid
  */
-export const dateISOToDateNativeStr = (
+export function dateISOToDateNativeStr(dateISO: string): string;
+export function dateISOToDateNativeStr(
   dateISO: Nullable<string>
-): Nullable<string> => {
+): Nullable<string>;
+export function dateISOToDateNativeStr(
+  dateISO: Nullable<string>
+): Nullable<string> {
   if (isNull(dateISO)) return null;
   return format(parseISO(dateISO), DATE_STR_FORMAT_NATIVE);
-};
+}
 
 /**
  * Converts a date string (dd/MM/yyyy) to its ISO string representation.
  *
  * @param {Nullable<string>} dateStr - the date string to convert
- * @return {Nullable<string>} the ISO string representation of the date, or null if the input date string is null or invalid
+ * @return {Nullable<string>} the ISO string representation of the date, or null if the input date string is null
+ * @throws if the input is invalid
  */
-export const dateStrToDateISO = (
-  dateStr: Nullable<string>
-): Nullable<string> => {
+export function dateStrToDateISO(dateStr: string): string;
+export function dateStrToDateISO(dateStr: Nullable<string>): Nullable<string>;
+export function dateStrToDateISO(dateStr: Nullable<string>): Nullable<string> {
   const date = dateStrToDate(dateStr);
   return dateToDateISO(date);
-};
+}
 
 /**
  * Converts a date native string (yyyy-MM-dd) to its string representation in the format (dd/MM/yyyy).
  *
  * @param {Nullable<string>} dateNativeStr - the date native string to convert
- * @return {Nullable<string>} the string representation of the date, or null if the input date native string is null or invalid
+ * @return {Nullable<string>} the string representation of the date, or null if the input date native string is null
+ * @throws if the input is invalid
  */
-export const dateNativeStrToDateStr = (
+export function dateNativeStrToDateStr(dateNativeStr: string): string;
+export function dateNativeStrToDateStr(
   dateNativeStr: Nullable<string>
-): Nullable<string> => {
+): Nullable<string>;
+export function dateNativeStrToDateStr(
+  dateNativeStr: Nullable<string>
+): Nullable<string> {
   const date = dateNativeStrToDate(dateNativeStr);
   return dateISOToDateStr(dateToDateISO(date));
-};
+}
 
 /**
  * Converts a date string in ISO format to a Date object.
  *
- * @param {Nullable<InputValue<"date">>} dateISO - the date string in ISO format to convert
+ * @param {Nullable<string>} dateISO - the date string in ISO format to convert
  * @return {Nullable<Date>} the Date object representation of the date, or null if the input date is null
  */
-export const dateISOToDate = (
-  dateISO: Nullable<InputValue<"date">>
-): Nullable<Date> => {
+export function dateISOToDate(dateISO: string): Date;
+export function dateISOToDate(dateISO: Nullable<string>): Nullable<Date>;
+export function dateISOToDate(dateISO: Nullable<string>): Nullable<Date> {
   if (isNull(dateISO)) return null;
   return parseISO(dateISO);
-};
+}
 
 /**
  * Converts a date string (dd/MM/yyyy) to a Date object.
  *
  * @param {Nullable<string>} dateStr - the date string to convert
- * @return {Nullable<Date>} the Date object representation of the date, or null if the input date string is null or invalid
+ * @return {Nullable<Date>} the Date object representation of the date, or null if the input date string is null
  */
-export const dateStrToDate = (dateStr: Nullable<string>): Nullable<Date> => {
+export function dateStrToDate(dateStr: string): Date;
+export function dateStrToDate(dateStr: Nullable<string>): Nullable<Date>;
+export function dateStrToDate(dateStr: Nullable<string>): Nullable<Date> {
   if (isNull(dateStr)) return null;
   return parse(dateStr, DATE_STR_FORMAT, new Date());
-};
+}
 
 /**
  * Converts a date string (yyyy-MM-dd) to a Date object.
  *
  * @param {Nullable<string>} dateNativeStr - the date string to convert
- * @return {Nullable<Date>} the Date object representation of the date, or null if the input date string is null or invalid
+ * @return {Nullable<Date>} the Date object representation of the date, or null if the input date string is null
  */
-export const dateNativeStrToDate = (
+export function dateNativeStrToDate(dateNativeStr: string): Date;
+export function dateNativeStrToDate(
   dateNativeStr: Nullable<string>
-): Nullable<Date> => {
+): Nullable<Date>;
+export function dateNativeStrToDate(
+  dateNativeStr: Nullable<string>
+): Nullable<Date> {
   if (isNull(dateNativeStr)) return null;
   return parse(dateNativeStr, DATE_STR_FORMAT_NATIVE, new Date());
-};
+}
 
 /**
  * Checks if a given argument is valid date.
@@ -137,7 +157,7 @@ export const isValidDate = (date: unknown): date is Date => {
  * @param {unknown} dateStr - the date string to check
  * @return {boolean} true if the date string is valid, false otherwise
  */
-export const isValidDateStr = (dateStr: unknown): dateStr is string => {
+export function isValidDateStr(dateStr: unknown): dateStr is string {
   if (!isString(dateStr)) return false;
   if (!isMatch(dateStr, DATE_STR_FORMAT)) return false;
   const hasTwoSlashes =
@@ -148,7 +168,7 @@ export const isValidDateStr = (dateStr: unknown): dateStr is string => {
   // check if all 4 year digits are included
   const year = dateStr.split("/")[2];
   return year?.length === 4;
-};
+}
 
 /**
  * Checks if a given argument is a valid native date string (yyyy-MM-dd).
@@ -156,9 +176,9 @@ export const isValidDateStr = (dateStr: unknown): dateStr is string => {
  * @param {unknown} dateStr - the date string to check
  * @return {boolean} true if the native date string is valid, false otherwise
  */
-export const isValidDateNativeStr = (
+export function isValidDateNativeStr(
   dateNativeStr: unknown
-): dateNativeStr is string => {
+): dateNativeStr is string {
   if (!isString(dateNativeStr)) return false;
   if (!isMatch(dateNativeStr, DATE_STR_FORMAT_NATIVE)) return false;
   const hasTwoDashes =
@@ -169,7 +189,7 @@ export const isValidDateNativeStr = (
   // check if all 4 year digits are included
   const year = dateNativeStr.split("-")[0];
   return year.length === 4;
-};
+}
 
 /**
  * Checks if a given argument is a valid date ISO string.
@@ -177,12 +197,12 @@ export const isValidDateNativeStr = (
  * @param {unknown} dateISO - the date ISO string to check
  * @return {boolean} true if the date ISO string is valid, false otherwise
  */
-export const isValidDateISO = (dateISO: unknown): dateISO is string => {
+export function isValidDateISO(dateISO: unknown): dateISO is string {
   if (!isString(dateISO)) return false;
   if (isValidDateNativeStr(dateISO)) return false;
   const date = dateISOToDate(dateISO);
   return isValidDate(date);
-};
+}
 
 /**
  * Converts a given date-like object to a date ISO string.
@@ -190,9 +210,9 @@ export const isValidDateISO = (dateISO: unknown): dateISO is string => {
  * @param {Nullable<string | Date>} dateLike - the date-like object to convert
  * @return {Nullable<string>} the date ISO string, or null if the conversion fails
  */
-export const normalizeToDateISO = (
+export function normalizeToDateISO(
   dateLike: Nullable<string | Date>
-): Nullable<string> => {
+): Nullable<string> {
   if (isValidDate(dateLike)) return dateToDateISO(dateLike);
   if (isValidDateNativeStr(dateLike)) {
     return dateToDateISO(dateNativeStrToDate(dateLike));
@@ -200,7 +220,7 @@ export const normalizeToDateISO = (
   if (isValidDateStr(dateLike)) return dateStrToDateISO(dateLike);
   if (isValidDateISO(dateLike)) return dateLike;
   return null;
-};
+}
 
 /**
  * Normalizes a date-like object to a date string (dd/MM/yyyy).
@@ -208,15 +228,15 @@ export const normalizeToDateISO = (
  * @param {Nullable<string | Date>} dateLike - the date-like object to normalize
  * @return {Nullable<string>} the normalized date string, or null if the input is invalid
  */
-export const normalizeToDateStr = (
+export function normalizeToDateStr(
   dateLike: Nullable<string | Date>
-): Nullable<string> => {
+): Nullable<string> {
   if (isValidDate(dateLike)) return dateISOToDateStr(dateToDateISO(dateLike));
   if (isValidDateStr(dateLike)) return dateLike;
   if (isValidDateISO(dateLike)) return dateISOToDateStr(dateLike);
   if (isValidDateNativeStr(dateLike)) return dateNativeStrToDateStr(dateLike);
   return null;
-};
+}
 
 /**
  * Normalizes a given date-like object to a Date object.
@@ -224,15 +244,15 @@ export const normalizeToDateStr = (
  * @param {Nullable<string | Date>} dateLike - the date-like object to normalize
  * @return {Nullable<Date>} the normalized Date object, or null if the input is invalid
  */
-export const normalizeToDate = (
+export function normalizeToDate(
   dateLike: Nullable<string | Date>
-): Nullable<Date> => {
+): Nullable<Date> {
   if (isValidDate(dateLike)) return dateLike;
   if (isValidDateNativeStr(dateLike)) return dateNativeStrToDate(dateLike);
   if (isValidDateISO(dateLike)) return dateISOToDate(dateLike);
   if (isValidDateStr(dateLike)) return dateStrToDate(dateLike);
   return null;
-};
+}
 
 /**
  * Normalizes a given date-like object to a native date string (yyyy-MM-dd).
@@ -240,9 +260,9 @@ export const normalizeToDate = (
  * @param {Nullable<string | Date>} dateLike - the date-like object to normalize
  * @return {Nullable<string>} the normalized native date string, or null if the input is invalid
  */
-export const normalizeToDateNativeStr = (
+export function normalizeToDateNativeStr(
   dateLike: Nullable<string | Date>
-): Nullable<string> => {
+): Nullable<string> {
   if (isValidDateNativeStr(dateLike)) return dateLike;
   if (isValidDate(dateLike))
     return dateISOToDateNativeStr(dateToDateISO(dateLike));
@@ -250,7 +270,7 @@ export const normalizeToDateNativeStr = (
     return dateISOToDateNativeStr(dateStrToDateISO(dateLike));
   if (isValidDateISO(dateLike)) return dateISOToDateNativeStr(dateLike);
   return null;
-};
+}
 
 export const dateFormatters: ValueMap<
   DateInputFormat,
