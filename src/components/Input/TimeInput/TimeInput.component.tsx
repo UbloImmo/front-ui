@@ -2,6 +2,7 @@ import {
   isBoolean,
   isFunction,
   isNullish,
+  isString,
   type Nullable,
 } from "@ubloimmo/front-util";
 import {
@@ -116,7 +117,7 @@ const TimeInput = (props: TimeInputProps & TestIdProps): ReactNode => {
   );
 
   const onChange = useInputOnChange<"time">(
-    (nativeValue) => isTimeStr(nativeValue),
+    (nativeValue) => isString(nativeValue),
     (nativeValue) => (isTimeStr(nativeValue) ? nativeValue : null),
     setInnerValueAndPropagate,
     mergedProps.onChangeNative

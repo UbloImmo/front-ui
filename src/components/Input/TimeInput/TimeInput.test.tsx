@@ -1,5 +1,5 @@
 import { fireEvent } from "@testing-library/react";
-import { describe, expect, mock } from "bun:test";
+import { afterAll, beforeEach, describe, expect, mock, spyOn } from "bun:test";
 
 import { TimeInput } from "./TimeInput.component";
 
@@ -122,6 +122,46 @@ describe("Input", () => {
     testControlled("should hold a value", ({ getByTestId }) => {
       expect((getByTestId(testId) as HTMLInputElement).value).toBe("09:30");
     });
+
+    // the warning is logged while rendering, so the spy is cleared before each test
+    const warn = spyOn(console, "warn").mockImplementation(() => {});
+    beforeEach(() => warn.mockClear());
+    afterAll(() => warn.mockRestore());
+
+    testControlled("should not warn for a valid value", ({ getByTestId }) => {
+      expect((getByTestId(testId) as HTMLInputElement).value).toBe("09:30");
+      expect(warn).not.toHaveBeenCalled();
+    });
+
+    testTimeInput({ value: "not a time" })(
+      "should warn and stay empty for a non-time string",
+      ({ getByTestId }) => {
+        expect(warn).toHaveBeenCalled();
+        expect(String(warn.mock.calls[0])).toContain("Invalid value provided");
+        expect(String(warn.mock.calls[0])).toContain("not a time");
+        expect((getByTestId(testId) as HTMLInputElement).value).toBe("");
+      }
+    );
+
+    ["9:30", "24:00", "09:60", "09:30:00", "0930"].forEach((invalid) => {
+      testTimeInput({ value: invalid })(
+        `should warn for the invalid time "${invalid}"`,
+        ({ getByTestId }) => {
+          expect(warn).toHaveBeenCalled();
+          expect((getByTestId(testId) as HTMLInputElement).value).toBe("");
+        }
+      );
+    });
+
+    testControlled(
+      "should warn and clear when its value becomes invalid",
+      ({ getByTestId, rerenderWithProps }) => {
+        expect(warn).not.toHaveBeenCalled();
+        rerenderWithProps({ value: "invalid" });
+        expect(warn).toHaveBeenCalled();
+        expect((getByTestId(testId) as HTMLInputElement).value).toBe("");
+      }
+    );
 
     testControlled(
       "should update its value",
