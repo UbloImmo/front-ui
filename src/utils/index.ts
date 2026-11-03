@@ -3,6 +3,7 @@ export * from "./color.utils";
 export * from "./comparison.utils";
 export * from "./component.utils";
 export * from "./css.utils";
+export * from "./date.utils";
 export * from "./data.utils";
 export * from "./dom.utils";
 export * from "./event.utils";
