@@ -18,7 +18,6 @@ import { scaleNumber } from "../Input/NumberInput/NumberInput.utils";
 import { ComboBox } from "@/components/ComboBox";
 import { IconPickerItem } from "@/components/IconPicker/components/IconPickerItem/IconPickerItem.component";
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
-import { normalizeToDate } from "@/components/Input/DateInput/DateInput.utils";
 import {
   useSelectOptions,
   useSelectUnknownValueIngestion,
@@ -32,6 +31,8 @@ import {
   isNonEmptyString,
   normalizeToColorKey,
   useCssClasses,
+  normalizeToDate,
+  getTimeOfDate,
 } from "@utils";
 
 import type {
@@ -154,7 +155,7 @@ const displayComboBoxValue: FormDisplayValueFormatterFn<
 /**
  * A {@link FormDisplayValueFormatterFn} that displays an `date` field's value.
  *
- * @param {InputValue} value - The value of the field to display.
+ * @param {InputValue<"date">} value - The value of the field to display.
  * @returns {string} A string representation of the date
  *   (e.g. "2022-01-01"), or "Invalid date" if the value is invalid.
  */
@@ -165,9 +166,25 @@ const displayDateValue: FormDisplayValueFormatterFn<"date"> = (value) => {
 };
 
 /**
+ * A {@link FormDisplayValueFormatterFn} that displays an `date-time` field's value.
+ *
+ * @param {InputValue<"date-time">} value - The value of the field to display.
+ * @returns {string} A string representation of the date
+ *   (e.g. "2022-01-01"), or "Invalid date" if the value is invalid.
+ */
+const displayDateTimeValue: FormDisplayValueFormatterFn<"date-time"> = (
+  value
+) => {
+  const date = normalizeToDate(value);
+  if (!date) return "Invalid date";
+  const time = getTimeOfDate(date);
+  return `${date.toLocaleDateString("fr-FR")} ${time}`;
+};
+
+/**
  * A {@link FormDisplayValueFormatterFn} that displays a `month-year` field's value.
  *
- * @param {InputValue} value - The value of the field to display (in YYYY-MM format).
+ * @param {InputValue<"month-year">} value - The value of the field to display (in YYYY-MM format).
  * @returns {string} A string representation of the month/year
  *   (e.g. "01/2025"), or "—" if the value is invalid.
  */
@@ -356,6 +373,7 @@ const valueFormatters: FormDisplayValueFormatterMap<ReactNode | FC> = {
   number: formatNumberValue,
   email: String,
   time: String,
+  "date-time": displayDateTimeValue,
   currency: formatCurrencyInt,
   password: displayPasswordValue,
   phone: String,
