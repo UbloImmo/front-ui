@@ -2,8 +2,8 @@
   width: 100%;
   min-width: 100%;
   max-width: 100%;
-  height: var(--input-height);
-  min-height: fit-content;
+  height: auto;
+  min-height: var(--input-height);
   padding: var(--s-2) var(--s-3);
   border-radius: var(--s-1);
   display: flex;
@@ -15,6 +15,7 @@
   cursor: pointer;
   outline: 1px solid var(--primary-medium-00);
   margin: 0;
+  flex-shrink: 0;
 
   transition:
     background 150ms var(--bezier),
@@ -35,5 +36,15 @@
   &.highlighted {
     background: var(--primary-light-25);
     outline: 1px solid var(--primary-medium);
+  }
+
+  [data-testid="text"] {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  [data-testid="checkbox"] {
+    flex-shrink: 0;
   }
 }
