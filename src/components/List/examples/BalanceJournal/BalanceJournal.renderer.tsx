@@ -18,7 +18,6 @@ import {
 import { ListTableHeaderFilter } from "../../components";
 import { useListContext } from "../../context";
 
-import { normalizeToDateStr } from "@/components/Input";
 import { formatCurrencyInt } from "@/components/Input/CurrencyInput/CurrencyInput.utils";
 import { Loading } from "@/components/Loading";
 import { StaticIcon, type StaticIconProps } from "@/components/StaticIcon";
@@ -34,7 +33,7 @@ import {
   TableRow,
 } from "@/layouts/Table";
 import { PaletteColor, type ColorKey, type CurrencyInt } from "@types";
-import { isPositive } from "@utils";
+import { normalizeToDateStr, isPositive } from "@utils";
 
 import type { IconName } from "@/components/Icon";
 
