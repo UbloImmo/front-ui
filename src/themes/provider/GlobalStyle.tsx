@@ -16,7 +16,7 @@ import {
   useLogger,
   useStatic,
 } from "../../utils";
-import { effectsToCssVars } from "../palette";
+import { buildDecorativeColorPalette, effectsToCssVars } from "../palette";
 import { invertShadeKey } from "../palette/palette.colorscheme";
 
 import type {
@@ -318,6 +318,16 @@ const useThemedGlobalStyle = (
       );
   }, [themePalette, lightDarkSupport]);
 
+  // generate css vars for decorative colors (not part of the theme palette)
+  const decorativePaletteCssVars = useMemo(
+    () =>
+      objectEntries(buildDecorativeColorPalette()).flatMap(
+        ([colorName, shadedColor]) =>
+          paletteColorToCssVars(colorName, shadedColor, true, lightDarkSupport)
+      ),
+    [lightDarkSupport]
+  );
+
   const effectCssVars = useMemo(() => {
     if (!themePalette) return [];
 
@@ -331,7 +341,7 @@ const useThemedGlobalStyle = (
     return effectsToCssVars(opaquePaletteVars);
   }, [themePalette]);
 
-  return [paletteCssVars, effectCssVars];
+  return [paletteCssVars, decorativePaletteCssVars, effectCssVars];
 };
 
 /**

@@ -156,8 +156,38 @@ export function formatRules({ rules, mixins }: TypographyRuleMaps) {
 }
 
 export function formatColorRules() {
-  const { gray, primary, pending, warning, success, error } = colors;
-  const paletteColors = { gray, primary, pending, warning, success, error };
+  const {
+    gray,
+    primary,
+    pending,
+    warning,
+    success,
+    error,
+    wisteria,
+    maya,
+    tiffany,
+    mantis,
+    murrey,
+    kobicha,
+  } = colors;
+  const paletteColors = {
+    gray,
+    primary,
+    pending,
+    warning,
+    success,
+    error,
+    wisteria,
+    maya,
+    tiffany,
+    mantis,
+    murrey,
+    kobicha,
+    // decorative aliases of status colors (see buildDecorativeColorPalette)
+    yellow: pending,
+    orange: warning,
+    red: error,
+  };
 
   const rules: string[] = [];
 

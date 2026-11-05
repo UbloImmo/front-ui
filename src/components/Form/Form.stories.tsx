@@ -25,6 +25,7 @@ import { Text } from "../Text";
 
 import { componentSourceFactory } from "@docs/docs.utils";
 import { FlexRowLayout, GridItem, GridLayout } from "@layouts";
+import { decorativeColorKeys } from "@types";
 import {
   arrayOf,
   clamp,
@@ -196,6 +197,7 @@ const identitySchema = z.object({
   isCitizen: z.boolean(),
   maritalStatus: z.enum(["single", "married", "widowed", "divorced"]),
   icon: z.enum(["Square", "Triangle", "Circle"]),
+  color: z.enum(decorativeColorKeys),
 });
 
 type Identity = z.output<typeof identitySchema>;
@@ -208,6 +210,7 @@ const formData: FormData<Identity> = {
     phone: "+33 6 00 00 00 00",
   },
   icon: "Square",
+  color: "maya",
 };
 
 const identityFormProps: FormProps<Identity> = {
@@ -319,6 +322,12 @@ const identityFormProps: FormProps<Identity> = {
       source: "icon",
       label: "Pick an icon",
       icons: ["Square", "Triangle", "Circle"],
+    },
+    {
+      type: "color-picker",
+      source: "color",
+      label: "Pick a color",
+      colors: ["gray", "maya", "red"],
     },
   ],
 };
@@ -1044,6 +1053,7 @@ const allFieldsSchema = z.object({
   date: z.string(),
   monthYear: z.string(),
   iconPicker: z.enum(["Square", "Triangle", "Circle"]),
+  colorPicker: z.enum(decorativeColorKeys),
   comboBox: z.string(),
   multiSelect: z.array(z.string()),
   phone: z.string(),
@@ -1085,6 +1095,7 @@ const queryData: FormData<AllFieldsData> = {
   select: sharedOptions[0].value,
   date: "2024-01-31",
   iconPicker: "Square",
+  colorPicker: "maya",
   comboBox: "option1",
   multiSelect: sharedOptions.slice(0, 2).map(({ value }) => value),
   phone: "06 06 06 06 06",
@@ -1135,6 +1146,11 @@ const allFieldsFormProps: FormProps<AllFieldsData> = {
       type: "icon-picker",
       source: "iconPicker",
       icons: allFieldsIcons,
+    },
+    {
+      label: "Color Picker",
+      type: "color-picker",
+      source: "colorPicker",
     },
     {
       label: "Combo Box",

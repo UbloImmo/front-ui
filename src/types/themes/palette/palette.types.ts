@@ -94,3 +94,18 @@ export type PaletteColor = {
 }[ColorKey];
 
 export type PaletteColorOrWhite = EnumExtension<PaletteColor, "white">;
+
+export const decorativeColorKeys = [
+  "gray",
+  "wisteria",
+  "maya",
+  "tiffany",
+  "mantis",
+  "yellow",
+  "orange",
+  "red",
+  "murrey",
+  "kobicha",
+] as const;
+
+export type DecorativeColorKey = (typeof decorativeColorKeys)[number];

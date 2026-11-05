@@ -17,6 +17,7 @@ export const inputTypes = [
   "month-year",
   "combobox",
   "icon-picker",
+  "color-picker",
   "search",
   "search-text",
   "multi-select",

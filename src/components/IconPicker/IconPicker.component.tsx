@@ -34,7 +34,7 @@ const defaultIconPickerProps: IconPickerDefaultProps = {
 /**
  * Allows users to pick an icon from a subset, like a radio input for icons.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {IconPickerProps & TestIdProps} props - IconPicker component props
  * @returns {ReactNode}
@@ -55,7 +55,7 @@ const IconPicker = (props: IconPickerProps & TestIdProps): ReactNode => {
 
       const newIcon = icon === selection && !mergedProps.required ? null : icon;
       setSelection(newIcon);
-      if (mergedProps.onChange && newIcon !== mergedProps.value) {
+      if (mergedProps.onChange && newIcon !== selection) {
         debug(["propagate change", newIcon]);
         mergedProps.onChange(newIcon);
       }

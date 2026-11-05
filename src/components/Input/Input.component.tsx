@@ -1,5 +1,6 @@
 import { useMemo, type ReactNode } from "react";
 
+import { ColorPickerInput } from "./ColorPickerInput";
 import { ComboBoxInput } from "./ComboBoxInput";
 import { CurrencyInput } from "./CurrencyInput";
 import { DateInput } from "./DateInput";
@@ -47,6 +48,7 @@ const inputComponentMap = <
   "month-year": MonthYearInput,
   combobox: ComboBoxInput<TGenericValue>,
   "icon-picker": IconPickerInput,
+  "color-picker": ColorPickerInput,
   search: SearchInput<TGenericValue>,
   "search-text": SearchTextInput,
   "multi-select": MultiSelectInput<TGenericValue>,
@@ -58,7 +60,7 @@ const inputComponentMap = <
 /**
  * Renders a specific input component based on the provided `type` prop.
  *
- * @version 0.1.0
+ * @version 0.1.1
  *
  * @param {GenericInputProps<TType>} props - The generic input props.
  * @returns {ReactNode}

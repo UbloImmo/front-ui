@@ -15,7 +15,7 @@ import type {
   BadgeShadeStyle,
   DefaultBadgeProps,
 } from "./Badge.types";
-import type { ColorKey, PaletteColor } from "@types";
+import type { DecorativeColorKey, ColorKey, PaletteColor } from "@types";
 import type { ValueMap } from "@ubloimmo/front-util";
 
 const badgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
@@ -45,7 +45,7 @@ const grayBadgeShadeStyleMap: ValueMap<BadgeShade, BadgeShadeStyle> = {
 };
 
 export function getBadgeStyleMap(
-  color: ColorKey,
+  color: ColorKey | DecorativeColorKey,
   shade: BadgeShade
 ): BadgeShadeStyle {
   const styleMap = isGrayColor(color)

@@ -26,6 +26,7 @@ import type {
   RgbaColorArr,
   ShadeOpacityFn,
   RgbaColorStr,
+  DecorativeColorKey,
 } from "@types";
 
 /**
@@ -204,3 +205,40 @@ export const buildColorPalette = (
 };
 
 export const colorPalette = buildColorPalette();
+
+export { decorativeColorKeys } from "../../types";
+
+/**
+ * Decorative colors that need their own css variables
+ * (gray already has its css variables through the static palette)
+ */
+export type DecorativeOnlyColorKey = Exclude<DecorativeColorKey, "gray">;
+
+export type DecorativeColorPalette = Record<
+  DecorativeOnlyColorKey,
+  PaletteColorShaded<DefaultPaletteColorShadeKey[]>
+>;
+
+/**
+ * Builds the shaded palette of the decorative colors from the design tokens.
+ *
+ * @return {DecorativeColorPalette} The decorative color palette object.
+ */
+export const buildDecorativeColorPalette = (): DecorativeColorPalette => {
+  const { wisteria, maya, tiffany, mantis, murrey, kobicha } = colors;
+  return transformObject(
+    {
+      wisteria,
+      maya,
+      tiffany,
+      mantis,
+      murrey,
+      kobicha,
+      // TODO(design): replace with dedicated red/orange/yellow tokens once available in @ubloimmo/front-tokens
+      yellow: colors.pending,
+      orange: colors.warning,
+      red: colors.error,
+    },
+    colorTokenGroupToPaletteColorShaded<DefaultPaletteColorShadeKey[]>
+  );
+};
