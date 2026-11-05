@@ -9,15 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `v0.1.0` ColorPicker component
   - Lets users pick a single color from a closed palette of decorative colors, rendered as a radio group.
-  - Supports `colors`, `labels`, `value`, `onChange`, `required` & `disabled` properties.
+  - Supports `colors`, `labels`, `value`, `onChange`, `required`, `disabled` & `error` properties.
+  - Forwards `aria-*` attributes to the radio group & exposes `aria-invalid` when in an error state.
 - `v0.1.0` ColorPickerInput component
   - New `color-picker` input type, usable in `Input`, `Field` & `Form`.
+  - Uses its field's label as the radio group's accessible name.
 - `v0.1.1` Input component
-  - Added the `color-picker` input type.
+  … (inchangé)
 - `v0.1.3` Field component
   - Clicking a `color-picker` field's label no longer focuses or triggers its input.
 - `v1.2.4` Form component
-  - `color-picker` fields display their value as a `Badge` when readonly.
+  - `color-picker` fields display their value as a `Badge` when readonly, using the field's custom `labels`.
+  - Values outside of the decorative palette display the empty placeholder.
 - `v0.1.1` Badge component
   - The `color` property now also accepts decorative colors (`DecorativeColorKey`).
 - Decorative color palette
@@ -25,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Generated css variables & `.text-color-*` typography classes for decorative colors.
   - `yellow`, `orange` & `red` currently alias the `pending`, `warning` & `error` tokens until dedicated design tokens are available.
 
+### Fixed
+- `v0.1.1` IconPicker component
+  - `onChange` now fires when going back to the initial value in uncontrolled usage (compares against the current selection instead of the `value` prop).
 
 ## 2.7.0 - 2026-11-03
 ### Added

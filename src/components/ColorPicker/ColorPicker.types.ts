@@ -44,6 +44,12 @@ export type ColorPickerProps = {
    * @default null
    */
   id?: Nullable<string>;
+  /**
+   * Whether the ColorPicker is in an error state
+   * @remarks Set by ColorPickerInput from Field's validation
+   * @default false
+   */
+  error?: boolean;
 } & Omit<StyleOverrideProps, "as">;
 
 export type ColorPickerDefaultProps = Required<ColorPickerProps>;

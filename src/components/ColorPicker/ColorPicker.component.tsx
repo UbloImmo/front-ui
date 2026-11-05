@@ -5,13 +5,14 @@ import { decorativeColorKeys } from "../../types";
 import { ColorPickerItem } from "./components/ColorPickerItem/ColorPickerItem.component";
 
 import { FlexLayout } from "@/layouts/Flex";
+import { useAriaProps } from "@/utils/aria.utils";
 import { useLogger, useTestId, useMergedProps, useCssClasses } from "@utils";
 
 import type {
   ColorPickerProps,
   ColorPickerDefaultProps,
 } from "./ColorPicker.types";
-import type { DecorativeColorKey, TestIdProps } from "@types";
+import type { AriaProps, DecorativeColorKey, TestIdProps } from "@types";
 
 export const decorativeColorLabels: Record<DecorativeColorKey, string> = {
   gray: "Gris",
@@ -36,6 +37,7 @@ const defaultColorPickerProps: ColorPickerDefaultProps = {
   className: null,
   id: null,
   styleOverride: null,
+  error: false,
 };
 
 /**
@@ -43,16 +45,19 @@ const defaultColorPickerProps: ColorPickerDefaultProps = {
  *
  * @version 0.1.0
  *
- * @param {ColorPickerProps & TestIdProps} props - ColorPicker component props
+ * @param {ColorPickerProps & TestIdProps & AriaProps} props - ColorPicker component props
  * @returns {ReactNode}
  */
-const ColorPicker = (props: ColorPickerProps & TestIdProps): ReactNode => {
+const ColorPicker = (
+  props: ColorPickerProps & TestIdProps & AriaProps
+): ReactNode => {
   const { warn, debug } = useLogger("ColorPicker", {
     hideDebug: true,
   });
   const mergedProps = useMergedProps(defaultColorPickerProps, props);
   const testId = useTestId("color-picker", props);
   const className = useCssClasses(styles["color-picker"], props.className);
+  const ariaProps = useAriaProps(props);
 
   const [selection, setSelection] = useState(mergedProps.value);
 
@@ -63,7 +68,7 @@ const ColorPicker = (props: ColorPickerProps & TestIdProps): ReactNode => {
       const newColor =
         color === selection && !mergedProps.required ? null : color;
       setSelection(newColor);
-      if (mergedProps.onChange && newColor !== mergedProps.value) {
+      if (mergedProps.onChange && newColor !== selection) {
         debug(["propagate change", newColor]);
         mergedProps.onChange(newColor);
       }
@@ -85,7 +90,9 @@ const ColorPicker = (props: ColorPickerProps & TestIdProps): ReactNode => {
 
   return (
     <FlexLayout
+      {...ariaProps}
       role="radiogroup"
+      aria-invalid={mergedProps.error || undefined}
       testId={testId}
       overrideTestId
       gap="s-2"

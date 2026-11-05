@@ -24,6 +24,7 @@ import {
   useSelectUnknownValueIngestion,
 } from "@/components/Input/SelectInput/SelectInput.utils";
 import { FlexLayout, FlexRowLayout } from "@/layouts/Flex";
+import { decorativeColorKeys } from "@types";
 import {
   arrayOf,
   compare,
@@ -50,7 +51,6 @@ import type {
   SearchInputProps,
 } from "@/components/Input";
 import type { FC, ReactNode } from "react";
-
 
 const noValue = "—";
 
@@ -234,11 +234,15 @@ const displayIconPickerValue: FormDisplayValueFormatterFn<
 const displayColorPickerValue: FormDisplayValueFormatterFn<
   "color-picker",
   ReactNode
-> = (value) => {
-  if (!value) return noValue;
+> = (value, props) => {
+  if (!value || !decorativeColorKeys.includes(value)) return noValue;
 
   return (
-    <Badge color={value} label={decorativeColorLabels[value]} shade="light" />
+    <Badge
+      color={value}
+      label={props?.labels?.[value] ?? decorativeColorLabels[value]}
+      shade="light"
+    />
   );
 };
 

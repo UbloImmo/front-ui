@@ -68,7 +68,9 @@ const Field = <TType extends InputType>(
 
   const inputId = useInputId(props);
   const labelHtmlFor = useMemo(() => {
-    if (["icon-picker", "combobox", "color-picker"].includes(mergedProps.type)) {
+    if (
+      ["icon-picker", "combobox", "color-picker"].includes(mergedProps.type)
+    ) {
       return null;
     }
     return inputId;

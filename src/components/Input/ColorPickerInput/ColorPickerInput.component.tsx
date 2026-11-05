@@ -19,6 +19,7 @@ const defaultColorPickerInputProps: ColorPickerInputDefaultProps = {
   name: null,
   value: null,
   onChange: null,
+  label: null,
 };
 
 /**
@@ -54,6 +55,7 @@ const ColorPickerInput = (
     <ColorPicker
       {...mergedProps}
       id={id}
+      aria-label={mergedProps.label}
       testId={testId}
       overrideTestId
       onChange={onColorPickerChange}
