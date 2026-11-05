@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - New `color-picker` input type, usable in `Input`, `Field` & `Form`.
   - Uses its field's label as the radio group's accessible name.
 - `v0.1.1` Input component
-  … (inchangé)
+  - Added the `color-picker` input type.
 - `v0.1.3` Field component
   - Clicking a `color-picker` field's label no longer focuses or triggers its input.
 - `v1.2.4` Form component

@@ -92,7 +92,7 @@ const ColorPicker = (
     <FlexLayout
       {...ariaProps}
       role="radiogroup"
-      aria-invalid={mergedProps.error || undefined}
+      aria-invalid={mergedProps.error ? "true" : undefined}
       testId={testId}
       overrideTestId
       gap="s-2"

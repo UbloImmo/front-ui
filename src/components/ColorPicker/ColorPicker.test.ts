@@ -119,3 +119,16 @@ testColorPicker({
     onChange.mockReset();
   }
 );
+
+testColorPicker({
+  ...ColorPicker.__DEFAULT_PROPS,
+  "aria-label": "Couleur",
+  error: true,
+})(
+  "should expose an accessible name and invalid state on the radio group",
+  ({ queryByTestId }) => {
+    const group = queryByTestId(testId);
+    expect(group?.getAttribute("aria-label")).toBe("Couleur");
+    expect(group?.getAttribute("aria-invalid")).toBe("true");
+  }
+);

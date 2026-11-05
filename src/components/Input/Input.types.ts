@@ -1,7 +1,12 @@
 import type { inputTypes } from "./Input.data";
 import type { IconName } from "../Icon";
 import type { DirectionHorizontal } from "@/types/global/direction.types";
-import type { CurrencyInt, DecorativeColorKey, Email, StyleProps } from "@types";
+import type {
+  CurrencyInt,
+  DecorativeColorKey,
+  Email,
+  StyleProps,
+} from "@types";
 import type {
   Enum,
   GenericFn,
