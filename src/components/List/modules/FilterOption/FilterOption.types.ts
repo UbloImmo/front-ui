@@ -5,7 +5,11 @@ import type {
   FilterProperty,
   FilterSignature,
 } from "../shared.types";
-import type { ColorKey, PaletteColor } from "@/types/themes";
+import type {
+  ColorKey,
+  DecorativeColorKey,
+  PaletteColor,
+} from "@/types/themes";
 import type { AsyncFn, GenericFn, VoidFn } from "@ubloimmo/front-util";
 
 /**
@@ -175,10 +179,10 @@ export type FilterOptionData<TItem extends object> = Required<
   /**
    * The color key of the filter option
    *
-   * @type {ColorKey}
+   * @type {ColorKey | DecorativeColorKey}
    * @default "gray"
    */
-  colorKey: ColorKey;
+  colorKey: ColorKey | DecorativeColorKey;
   /**
    * Whether the filter option is selected
    *

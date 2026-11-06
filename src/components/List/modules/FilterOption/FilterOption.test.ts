@@ -28,6 +28,8 @@ import type {
   FilterOptionMatch,
 } from "./FilterOption.types";
 import type { Filter } from "../Filter";
+import { normalizeToPaletteColor } from "@utils";
+import { ColorKey } from "@types";
 
 type MockData = {
   value: number;
@@ -305,6 +307,7 @@ describe("FilterOption module", () => {
           fixed: true,
           color: "primary",
           icon: "Alarm",
+          badge: true,
           hidden: true,
           default: true,
           initial: true,
@@ -327,6 +330,54 @@ describe("FilterOption module", () => {
         expect(data.disabled).toBe(true);
         expect(data.fixed).toBe(true);
         expect(data.selected).toBe(true);
+      });
+
+      describe("colors", () => {
+        it("should resolve the default color to gray", () => {
+          const data = filterOptionData(label, match);
+          expect(data.paletteColor).toBe("gray-600");
+          expect(data.colorKey).toBe("gray");
+        });
+
+        it("should normalize semantic color keys", () => {
+          const data = filterOptionData(label, match, { color: "success" });
+          expect(data.paletteColor).toBe("success-base");
+          expect(data.colorKey).toBe("success");
+        });
+
+        it("should keep palette colors & extract their color key", () => {
+          const data = filterOptionData(label, match, {
+            color: "primary-medium",
+          });
+          expect(data.paletteColor).toBe("primary-medium");
+          expect(data.colorKey).toBe("primary");
+        });
+
+        it("should handle gray as a semantic color", () => {
+          const data = filterOptionData(label, match, { color: "gray" });
+          expect(data.paletteColor).toBe(normalizeToPaletteColor("gray"));
+          expect(data.colorKey).toBe("gray");
+        });
+
+        it("should keep decorative colors", () => {
+          const data = filterOptionData(label, match, { color: "mantis" });
+          expect<string>(data.paletteColor).toBe("mantis-base");
+          expect(data.colorKey).toBe("mantis");
+        });
+
+        it("should fall back to gray for unknown colors", () => {
+          const data = filterOptionData(label, match, {
+            color: "unknown" as ColorKey,
+          });
+          expect(data.colorKey).toBe("gray");
+        });
+      });
+
+      describe("badge", () => {
+        it("should default to false", () => {
+          expect(filterOptionData(label, match).badge).toBeFalse();
+          expect(defaultFilterOptionVisualData.badge).toBeFalse();
+        });
       });
     });
   });

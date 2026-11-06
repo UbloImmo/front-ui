@@ -32,7 +32,7 @@ const defaultChipProps: DefaultChipProps = {
 /**
  * An interactive `Badge` with a remove button, can be used as a filter tag.
  *
- * @version 0.1.0
+ * @version 0.1.1
  * @param {ChipProps} props - the props for the Chip component
  * @returns {ReactNode} - the Chip component
  */

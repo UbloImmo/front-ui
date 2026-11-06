@@ -44,6 +44,11 @@
     overflow-wrap: anywhere;
   }
 
+  .option-badge {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
   [data-testid="checkbox"] {
     flex-shrink: 0;
   }

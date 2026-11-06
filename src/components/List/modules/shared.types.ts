@@ -1,5 +1,5 @@
 import type { IconName } from "@/components/Icon/Icon.types";
-import type { ColorKey } from "@/types/themes";
+import type { ColorKey, DecorativeColorKey } from "@/types/themes";
 import type { PaletteColor } from "@types";
 import type { DeepKeyOf, Nullable } from "@ubloimmo/front-util";
 
@@ -87,7 +87,15 @@ export type FilterPresetVisualData = FilterVisualData & {
 /**
  * Visual options of a filter option
  */
-export type FilterOptionVisualData = FilterPresetVisualData & {
+export type FilterOptionVisualData = Omit<FilterPresetVisualData, "color"> & {
+  /**
+   * The color of the filter option.
+   * Either a palette color, a color key or a decorative color key (e.g. a category's color)
+   *
+   * @type {PaletteColor | ColorKey | DecorativeColorKey}
+   * @default "gray-600"
+   */
+  color?: PaletteColor | ColorKey | DecorativeColorKey;
   /**
    * The icon of the filter or filter option
    *
@@ -95,6 +103,14 @@ export type FilterOptionVisualData = FilterPresetVisualData & {
    * @default null
    */
   icon?: Nullable<IconName>;
+  /**
+   * Whether to display the option as a badge (label, icon & color) in the options list,
+   * instead of an icon followed by a text.
+   *
+   * @type {boolean}
+   * @default false
+   */
+  badge?: boolean;
 };
 
 /**

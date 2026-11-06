@@ -1,7 +1,7 @@
 import { IconName } from "../Icon";
 
 import type { DirectionHorizontal } from "@/types/global/direction.types";
-import type { ColorKey, StyleOverrideProps } from "@types";
+import type { ColorKey, DecorativeColorKey, StyleOverrideProps } from "@types";
 import type { Nullable, VoidFn } from "@ubloimmo/front-util";
 
 export type ChipProps = {
@@ -23,7 +23,7 @@ export type ChipProps = {
    *
    * @default "primary"
    */
-  color?: ColorKey;
+  color?: ColorKey | DecorativeColorKey;
   /**
    * Whether to display the icon on the left or on the right of the label
    * @default "left"

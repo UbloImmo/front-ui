@@ -3,7 +3,11 @@ import { isArray, isObject, isString } from "@ubloimmo/front-util";
 import { computeFilterOptionSignature } from "./FilterOption.utils";
 import { BooleanOperators } from "../../List.enums";
 
+import { ColorKey, PaletteColor } from "@types";
 import {
+  isColorKey,
+  isDecorativeColorKey,
+  isPaletteColor,
   mergeDefaultProps,
   normalizeToColorKey,
   normalizeToPaletteColor,
@@ -30,6 +34,35 @@ export const defaultFilterOptionVisualData: Required<FilterOptionVisualData> = {
   label: "[MISSING OPTION LABEL]",
   icon: null,
   color: "gray-600",
+  badge: false,
+};
+
+/**
+ * Resolves the palette color (option icon) and color key (selected chip) of a filter option.
+ * Decorative colors are kept as-is so the chip matches the category badge.
+ */
+const resolveFilterOptionColors = (
+  color: Required<FilterOptionVisualData>["color"]
+): Pick<FilterOptionData<object>, "paletteColor" | "colorKey"> => {
+  // semantic colors, "gray" included: unchanged behavior
+  if (isColorKey(color) || isPaletteColor(color)) {
+    return {
+      paletteColor: normalizeToPaletteColor(color),
+      colorKey: normalizeToColorKey(color),
+    };
+  }
+  // here, color is narrowed to a decorative color other than gray
+  if (isDecorativeColorKey(color)) {
+    return {
+      paletteColor: `${color}-base` as PaletteColor,
+      colorKey: color,
+    };
+  }
+  // unknown value: same fallback as before
+  return {
+    paletteColor: normalizeToPaletteColor(color as ColorKey),
+    colorKey: "gray",
+  };
 };
 
 /**
@@ -69,8 +102,9 @@ export const filterOptionData = <TItem extends object>(
   const { default: isDefault, initial, fixed } = behavior;
   const selected = fixed || isDefault || initial;
 
-  const paletteColor = normalizeToPaletteColor(visualData.color);
-  const colorKey = normalizeToColorKey(visualData.color);
+  const { paletteColor, colorKey } = resolveFilterOptionColors(
+    visualData.color
+  );
 
   return {
     // visual data
