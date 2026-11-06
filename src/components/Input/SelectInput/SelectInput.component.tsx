@@ -71,7 +71,7 @@ import type { PaletteColor, TestIdProps } from "@types";
 /**
  * An input that displays a list of options, and allows the user to select one.
  *
- * @version 0.2.2
+ * @version 0.2.3
  *
  * @param {SelectInputProps & TestIdProps} props - SelectInput component props
  * @returns {ReactNode}

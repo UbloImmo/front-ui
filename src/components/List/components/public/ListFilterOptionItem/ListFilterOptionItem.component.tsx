@@ -1,7 +1,9 @@
 import { useCallback, useMemo, type ReactNode } from "react";
 
+import styles from "./ListFilterOptionItem.module.scss";
 import { useListFilterOptionItemClassName } from "./ListFilterOptionItem.styles";
 
+import { Badge } from "@/components/Badge";
 import { Checkbox } from "@/components/Checkbox";
 import { Icon, IconProps, type IconName } from "@/components/Icon";
 import { CLEAR_FILTER_OPTION_SIGNATURE } from "@/components/List/modules/FilterOption/FilterOption.hook";
@@ -15,7 +17,7 @@ import type { ListFilterOptionItemProps } from "./ListFilterOptionItem.types";
 /**
  * Renders a filter option's list item in a filter.
  *
- * @version 0.1.1
+ * @version 0.1.2
  *
  * @template {object} TItem - The type of the list's items
  * @param {ListFilterOptionItemProps<TItem>} props - The component's props
@@ -100,8 +102,26 @@ export const ListFilterOptionItem = <TItem extends object = object>({
       onClick={toggleOptionSelectionAndClose}
     >
       <FlexLayout fill direction="row" align="center" gap="s-2">
-        <Icon {...iconProps} key="option icon" />
-        <Text {...textProps}>{option.label}</Text>
+        {option.badge ? (
+          <FlexLayout
+            fill
+            direction="row"
+            align="center"
+            className={styles["option-badge"]}
+          >
+            <Badge
+              key="option badge"
+              label={option.label}
+              icon={option.icon}
+              color={option.disabled ? "gray" : option.colorKey}
+            />
+          </FlexLayout>
+        ) : (
+          <>
+            <Icon {...iconProps} key="option icon" />
+            <Text {...textProps}>{option.label}</Text>
+          </>
+        )}
         {option.signature === CLEAR_FILTER_OPTION_SIGNATURE ? null : multi ? (
           <Checkbox
             key="option checkbox"

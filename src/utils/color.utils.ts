@@ -7,20 +7,22 @@ import {
 
 import { lerp } from "./number.utils";
 
-import type {
-  AnyColor,
-  ColorKey,
-  DefaultPaletteColorShadeKey,
-  GrayscalePaletteColorShadeKey,
-  HexColor,
-  HexColorAlpha,
-  HexColorShorthand,
-  HexColorShorthandAlpha,
-  HexComponentDouble,
-  PaletteColor,
-  RgbaColorArr,
-  RgbaColorObj,
-  RgbaColorStr,
+import {
+  decorativeColorKeys,
+  type AnyColor,
+  type ColorKey,
+  type DecorativeColorKey,
+  type DefaultPaletteColorShadeKey,
+  type GrayscalePaletteColorShadeKey,
+  type HexColor,
+  type HexColorAlpha,
+  type HexColorShorthand,
+  type HexColorShorthandAlpha,
+  type HexComponentDouble,
+  type PaletteColor,
+  type RgbaColorArr,
+  type RgbaColorObj,
+  type RgbaColorStr,
 } from "@types";
 
 export const hexRegex =
@@ -478,6 +480,17 @@ export const isColorKey = (value: unknown): value is ColorKey => {
     value as ColorKey
   );
 };
+
+/**
+ * Checks if the given value is a valid {@link DecorativeColorKey}.
+ *
+ * @param {unknown} value - The value to check
+ * @returns {boolean} `true` if the value is a decorative color key
+ */
+export const isDecorativeColorKey = (
+  value: unknown
+): value is DecorativeColorKey =>
+  isString(value) && (decorativeColorKeys as readonly string[]).includes(value);
 
 /**
  * Checks if the given value is a valid {@link PaletteColor}.

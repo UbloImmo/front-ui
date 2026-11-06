@@ -302,14 +302,19 @@ const DisplayMultiSelectValue = ({
 
   return (
     <FlexRowLayout wrap fill gap="s-1" align="center">
-      {activeOptions.map(({ label, value, icon, iconColor }) => (
-        <Badge
-          key={`multi-select-badge-${value}`}
-          icon={icon}
-          label={label}
-          color={normalizeToColorKey(iconColor ?? "primary", "primary")}
-        />
-      ))}
+      {activeOptions.map(
+        ({ label, value, icon, iconColor, badgeIcon, badgeColor }) => (
+          <Badge
+            key={`multi-select-badge-${value}`}
+            icon={badgeIcon ?? icon}
+            label={label}
+            color={
+              badgeColor ??
+              normalizeToColorKey(iconColor ?? "primary", "primary")
+            }
+          />
+        )
+      )}
     </FlexRowLayout>
   );
 };

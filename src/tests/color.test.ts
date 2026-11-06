@@ -8,10 +8,22 @@ import { describe, expect, it } from "bun:test";
 import { testPrimitives } from "./test.data";
 
 import {
+  decorativeColorKeys,
+  type AnyColor,
+  type ColorCollection,
+  type HexColor,
+  type HexColorAlpha,
+  type HexColorOpaque,
+  type HexColorShorthand,
+  type HexColorShorthandAlpha,
+  type RgbaColorStr,
+} from "@types";
+import {
   blendColors,
   extractColorKey,
   hexColorConverter,
   isColorKey,
+  isDecorativeColorKey,
   isGrayColor,
   isPaletteColor,
   isSameColor,
@@ -22,17 +34,6 @@ import {
   normalizeToPaletteColor,
   rgbaColorConverter,
 } from "@utils";
-
-import type {
-  AnyColor,
-  ColorCollection,
-  HexColor,
-  HexColorAlpha,
-  HexColorOpaque,
-  HexColorShorthand,
-  HexColorShorthandAlpha,
-  RgbaColorStr,
-} from "@types";
 
 type PrimaryColor = "red" | "green" | "blue";
 
@@ -239,6 +240,28 @@ describe("color predicates", () => {
       expect(isGrayColor("gray")).toBeTrue();
       expect(isGrayColor("primary")).toBeFalse();
       expect(isGrayColor(40)).toBeFalse();
+    });
+  });
+
+  describe("isDecorativeColorKey", () => {
+    it("should return true for every decorative color key", () => {
+      decorativeColorKeys.forEach((colorKey) => {
+        expect(isDecorativeColorKey(colorKey)).toBeTrue();
+      });
+    });
+
+    it("should return false for semantic color keys & palette colors", () => {
+      ["primary", "success", "error", "wisteria-base", "gray-600"].forEach(
+        (color) => {
+          expect(isDecorativeColorKey(color)).toBeFalse();
+        }
+      );
+    });
+
+    it("should return false for invalid values", () => {
+      ["", "unknown", null, undefined, 1, {}].forEach((value) => {
+        expect(isDecorativeColorKey(value)).toBeFalse();
+      });
     });
   });
 
