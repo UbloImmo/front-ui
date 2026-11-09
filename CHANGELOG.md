@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 2.9.0 - 2026-11-09
 ### Added
 - `v0.1.1` Chip component
   - The `color` property now also accepts decorative colors (`DecorativeColorKey`).
