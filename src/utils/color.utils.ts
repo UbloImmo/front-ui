@@ -6,9 +6,9 @@ import {
 } from "@ubloimmo/front-util";
 
 import { lerp } from "./number.utils";
+import { decorativeColorKeys } from "../types/themes/palette/palette.types";
 
 import {
-  decorativeColorKeys,
   type AnyColor,
   type ColorKey,
   type DecorativeColorKey,
