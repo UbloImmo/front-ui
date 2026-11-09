@@ -1,7 +1,13 @@
 import type { InputProps, InputValue } from "../Input.types";
 import type { IconName } from "@/components/Icon";
 import type { ControlledPopoverProps } from "@/layouts/Popover/Popover.types";
-import type { StyleProps, PaletteColor, TestIdProps } from "@types";
+import type {
+  StyleProps,
+  PaletteColor,
+  TestIdProps,
+  ColorKey,
+  DecorativeColorKey,
+} from "@types";
 import type {
   NullishPrimitives,
   MaybeAsyncFn,
@@ -46,6 +52,20 @@ export type SelectOption<
    * The color of the option's icon
    */
   iconColor?: PaletteColor;
+  /**
+   * The icon of the option's badge, displayed in read-only mode only.
+   * Unlike `icon`, it is not displayed in the options list.
+   *
+   * @type {IconName}
+   */
+  badgeIcon?: IconName;
+  /**
+   * The color of the option's badge or chip (multi-select chips & read-only badges).
+   * Takes precedence over `iconColor` for these.
+   *
+   * @type {ColorKey | DecorativeColorKey}
+   */
+  badgeColor?: ColorKey | DecorativeColorKey;
   /**
    * Whether the option is active
    *

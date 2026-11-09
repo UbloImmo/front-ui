@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- `v0.1.1` Chip component
+  - The `color` property now also accepts decorative colors (`DecorativeColorKey`).
+- `v0.2.3` SelectInput component
+  - Added the optional `badgeColor` & `badgeIcon` properties to `SelectOption`, used when an option is displayed as a badge or chip. They are not displayed in the options list.
+- `v0.1.2` MultiSelectInput component
+  - Chips use the option's `badgeColor` when provided.
+- `v1.2.5` Form component
+  - Readonly `multi-select` fields display each option's `badgeColor` & `badgeIcon` when provided, falling back to `iconColor` & `icon`.
+- `v0.1.2` ListFilterOptionItem component
+  - Added the `badge` filter option property: displays the option as a `Badge` (label, icon & color) in the options list.
+- `v0.1.1` ListFilterOptionChip component
+  - Selected filter options with a decorative color display a chip of that color.
+- List filter options
+  - The `color` of a filter option now also accepts decorative colors (`DecorativeColorKey`). Filter presets are unchanged.
+- Utils
+  - Exported `isDecorativeColorKey` type guard.
+
+### Fixed
+- `v0.1.2` ListFilterOptionItem component
+  - Long badge labels are truncated with an ellipsis instead of pushing the checkbox out of the option.
+
 ## 2.8.0 - 2026-11-05
 ### Added
 - `v0.1.0` ColorPicker component

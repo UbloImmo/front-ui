@@ -71,7 +71,7 @@ const defaultMultiSelectInputProps: DefaultMultiSelectInputProps<NullishPrimitiv
 /**
  * Allows the user to select multiple values from a list of options.
  *
- * @version 0.1.1
+ * @version 0.1.2
  *
  * @param {MultiSelectInputProps & TestIdProps} props - The props for the MultiSelectInput component
  *
@@ -313,16 +313,17 @@ const MultiSelectInput = <
                   <Chip
                     key={`${option.value}-${index}`}
                     label={option.label}
-                    icon={option.icon}
+                    icon={option.badgeIcon ?? option.icon}
                     color={
                       error
                         ? "error"
                         : option.disabled || disabled
                           ? "gray"
-                          : normalizeToColorKey(
+                          : (option.badgeColor ??
+                            normalizeToColorKey(
                               option.iconColor ?? "primary",
                               "primary"
-                            )
+                            ))
                     }
                     disabled={
                       (required && activeOptions.length <= 1) ||
