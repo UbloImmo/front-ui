@@ -50,6 +50,7 @@ import type {
   HydrateFilterConfigFn,
   ListConfigOptionDividerFn,
   ListConfigSearchParams,
+  ListConfigSetFilterDisabledFn,
   ListContextConfig,
   UseListConfig,
   UseListConfigReturn,
@@ -154,6 +155,20 @@ export const useListConfig: UseListConfig = <
   const updateFilter = useCallback(
     (filter: FilterData) => {
       dispatchFilterAction(["update", filter]);
+    },
+    [dispatchFilterAction]
+  );
+
+  /**
+   * Disables or enables an already registered filter, found by its id
+   *
+   * @param {string} id - The id of the filter to update
+   * @param {boolean} disabled - Whether the filter should be disabled
+   * @param {FilterDisabledPatch} [overrides = {}] - Optional emptyLabel & disabledTooltip to apply
+   */
+  const setFilterDisabled = useCallback<ListConfigSetFilterDisabledFn>(
+    (id, disabled, overrides = {}) => {
+      dispatchFilterAction(["patch", { id, disabled, ...overrides }]);
     },
     [dispatchFilterAction]
   );
@@ -437,5 +452,6 @@ export const useListConfig: UseListConfig = <
     configureSearchParams,
     sort,
     sorts,
+    setFilterDisabled,
   };
 };

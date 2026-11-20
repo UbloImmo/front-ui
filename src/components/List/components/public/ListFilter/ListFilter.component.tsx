@@ -13,6 +13,7 @@ import { Text } from "@/components/Text";
 import { FlexLayout } from "@/layouts/Flex";
 
 import type { ListFilterProps } from "./ListFilter.types";
+import { Tooltip } from "@/components/Tooltip";
 
 /**
  * A component that displays a single filters
@@ -51,6 +52,60 @@ export const ListFilter = (props: ListFilterProps): ReactNode => {
     [openOptions]
   );
 
+  const header = (
+    <header
+      className={classNames.header}
+      data-testid="list-filter-label-container"
+      onClick={openOptionsOnClick}
+      tabIndex={filter.disabled && filter.disabledTooltip ? 0 : undefined}
+    >
+      <FlexLayout
+        direction={renderMulti ? "column" : "row"}
+        align={renderMulti ? "start" : "center"}
+        justify={renderMulti ? "start" : "space-between"}
+        gap="s-1"
+        fill
+      >
+        <Text color={filter.disabled ? "gray-600" : "gray-800"} weight="medium">
+          {filter.label}
+        </Text>
+        {filter.loading ? (
+          <Loading animation="ProgressBar" color="primary-medium" size="s-3" />
+        ) : filter.active ? (
+          <FlexLayout
+            className={classNames.chips}
+            direction="row"
+            gap="s-1"
+            wrap
+            align="start"
+            justify="start"
+          >
+            {filter.selectedOptions
+              .filter(({ hidden }) => !hidden)
+              .map((option) => (
+                <ListFilterOptionChip
+                  filterOption={option}
+                  filterDisabled={filter.disabled}
+                  key={option.signature}
+                />
+              ))}
+          </FlexLayout>
+        ) : (
+          <FlexLayout align="center" gap="s-2" justify="end">
+            <Text color="gray-600" testId="filter-empty-label">
+              {filter.emptyLabel}
+            </Text>
+            <Icon
+              name={filter.disabled ? "Lock" : "CircleDashed"}
+              color="gray-500"
+              size="s-3"
+            />
+          </FlexLayout>
+        )}
+      </FlexLayout>
+    </header>
+  );
+
   if (filter.hidden) return null;
 
   return (
@@ -73,57 +128,12 @@ export const ListFilter = (props: ListFilterProps): ReactNode => {
             overrideTestId
           />
         </form>
+      ) : filter.disabled && filter.disabledTooltip ? (
+        <Tooltip content={filter.disabledTooltip} cursor="not-allowed" fill>
+          {header}
+        </Tooltip>
       ) : (
-        <header
-          className={classNames.header}
-          data-testid="list-filter-label-container"
-          onClick={openOptionsOnClick}
-        >
-          <FlexLayout
-            direction={renderMulti ? "column" : "row"}
-            align={renderMulti ? "start" : "center"}
-            justify={renderMulti ? "start" : "space-between"}
-            gap="s-1"
-            fill
-          >
-            <Text color="gray-800" weight="medium">
-              {filter.label}
-            </Text>
-            {filter.loading ? (
-              <Loading
-                animation="ProgressBar"
-                color="primary-medium"
-                size="s-3"
-              />
-            ) : filter.active ? (
-              <FlexLayout
-                className={classNames.chips}
-                direction="row"
-                gap="s-1"
-                wrap
-                align="start"
-                justify="start"
-              >
-                {filter.selectedOptions
-                  .filter(({ hidden }) => !hidden)
-                  .map((option) => (
-                    <ListFilterOptionChip
-                      filterOption={option}
-                      filterDisabled={filter.disabled}
-                      key={option.signature}
-                    />
-                  ))}
-              </FlexLayout>
-            ) : (
-              <FlexLayout align="center" gap="s-2" justify="end">
-                <Text color="gray-600" testId="filter-empty-label">
-                  {filter.emptyLabel}
-                </Text>
-                <Icon name="CircleDashed" color="gray-500" size="s-3" />
-              </FlexLayout>
-            )}
-          </FlexLayout>
-        </header>
+        header
       )}
       <ul
         className={classNames.options}

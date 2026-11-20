@@ -366,13 +366,21 @@ export const useListFilter = (props: ListFilterProps) => {
    * @returns {void}
    */
   const openOptions = useCallback(() => {
-    if (open || filter.loading) return;
+    if (open || filter.loading || filter.disabled) return;
     setOpen(true);
     setQuery(null);
     resetHighlight();
     setTimeout(() => queryInputRef.current?.focus());
     if (props.onOpened) props.onOpened();
-  }, [open, filter.loading, setQuery, resetHighlight, props, queryInputRef]);
+  }, [
+    open,
+    filter.loading,
+    filter.disabled,
+    setQuery,
+    resetHighlight,
+    props,
+    queryInputRef,
+  ]);
 
   /**
    * Closes the options dropdown and resets state
