@@ -122,6 +122,7 @@ const Tooltip = (props: TooltipProps & TestIdProps): ReactNode => {
         open={isOpen}
         onOpenChange={setIsOpen}
         fill={fill}
+        noFocus
         content={
           <>
             <div className={styles.tooltip} data-testid={testId} role="tooltip">
