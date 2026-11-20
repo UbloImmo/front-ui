@@ -69,6 +69,10 @@ $max-options-height: calc(
 
   &.disabled {
     cursor: not-allowed;
+
+    .list-filter-header {
+      cursor: not-allowed;
+    }
   }
 
   @media only screen and (max-width: breakpoints.$breakpoint-xs) {
