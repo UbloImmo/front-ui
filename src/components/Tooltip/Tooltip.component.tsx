@@ -32,7 +32,7 @@ const defaultTooltipProps: DefaultTooltipProps = {
 /**
  * Text popup box that appears when the user hovers over an element
  *
- * @version 0.1.1
+ * @version 0.1.2
  *
  * @param {TooltipProps & TestIdProps} props - The tooltip's props
  * @returns {ReactNode} The rendered tooltip

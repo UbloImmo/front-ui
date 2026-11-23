@@ -13,6 +13,7 @@ import { useCssStyles, useMergedProps } from "@utils";
 
 import type { TooltipProps } from "./Tooltip.types";
 import type { Direction } from "@types";
+import { Button } from "../Button";
 
 const meta: Meta<typeof Tooltip> = {
   title: "Components/Feedbacks/Tooltip/Stories",
@@ -163,3 +164,22 @@ export const IntersectionRoots = (props: Partial<TooltipProps>) => {
     />
   );
 };
+
+export const FocusableChildren = () => (
+  <Container>
+    <Tooltip content="Opens on hover and keyboard focus">
+      <Button label="Focus me with Tab" />
+    </Tooltip>
+    <Tooltip content="Second tooltip, to check that Tab moves on">
+      <Button label="Then me" />
+    </Tooltip>
+  </Container>
+);
+
+export const Fill = () => (
+  <Container>
+    <Tooltip content="Full width trigger" fill>
+      <Button label="Full width" fullWidth />
+    </Tooltip>
+  </Container>
+);

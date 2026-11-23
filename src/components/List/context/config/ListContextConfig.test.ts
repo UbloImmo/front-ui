@@ -118,6 +118,45 @@ const testListConfigReducers = () => {
           expect(result.size).toBe(1);
           expect(result.get(loadedFilter.signature)).toEqual(loadedFilter);
         });
+
+        describe("patch", () => {
+          const patchableFilter = filterData(label, options, {
+            ...config,
+            id: "patchable",
+          });
+          const patchableMap: FilterDataMap = new Map([
+            [patchableFilter.signature, patchableFilter],
+          ]);
+
+          it("should disable a filter by id & keep its signature and index", () => {
+            const result = listConfigFilterReducer(patchableMap, [
+              "patch",
+              {
+                id: "patchable",
+                disabled: true,
+                emptyLabel: "Unavailable",
+                disabledTooltip: "Tooltip",
+              },
+            ]);
+            const patched = result.get(patchableFilter.signature);
+            expect(result.size).toBe(1);
+            expect(patched?.disabled).toBe(true);
+            expect(patched?.emptyLabel).toBe("Unavailable");
+            expect(patched?.disabledTooltip).toBe("Tooltip");
+            expect(patched?.index).toBe(patchableFilter.index);
+            expect(patched?.optionSignatures).toEqual(
+              patchableFilter.optionSignatures
+            );
+          });
+
+          it("should return the same map if the id is unknown", () => {
+            const result = listConfigFilterReducer(patchableMap, [
+              "patch",
+              { id: "unknown", disabled: true },
+            ]);
+            expect(result).toBe(patchableMap);
+          });
+        });
       });
 
       describe("listConfigFilterPresetReducer", () => {
@@ -215,6 +254,7 @@ const testListConfig = () => {
     expect(result.filterPreset).toBeFunction();
     expect(result.sort).toBeFunction();
     expect(result.sorts).toBeFunction();
+    expect(result.setFilterDisabled).toBeFunction();
   });
 
   testHook("should return an object containing async methods", (result) => {
@@ -569,6 +609,35 @@ const testListConfig = () => {
       result.setOperator(operator);
       rerender();
       expect(getResult().config.operator).toBe(operator);
+    }
+  );
+
+  testHook(
+    "should disable & enable a filter from the setFilterDisabled() method",
+    (result, _, { getResult, rerender }) => {
+      expect(result.setFilterDisabled).toBeFunction();
+      result.filter("Disableable", [], { id: "disableable" });
+      rerender();
+
+      getResult().setFilterDisabled("disableable", true, {
+        emptyLabel: "Unavailable",
+      });
+      rerender();
+      const disabled = getResult().config.filters?.find(
+        ({ id }) => id === "disableable"
+      );
+      expect(disabled?.disabled).toBe(true);
+      expect(disabled?.emptyLabel).toBe("Unavailable");
+
+      getResult().setFilterDisabled("disableable", false, {
+        emptyLabel: "All",
+      });
+      rerender();
+      const enabled = getResult().config.filters?.find(
+        ({ id }) => id === "disableable"
+      );
+      expect(enabled?.disabled).toBe(false);
+      expect(enabled?.emptyLabel).toBe("All");
     }
   );
 

@@ -202,6 +202,13 @@ Matches, options filters and filter presets are, _you guessed it_, built using t
   Declaration order matters. Filters are displayed based on the order they were declared using the `filter()` or `async.filter()` methods.
 </Callout>
 
+- `setFilterDisabled(id, disabled, overrides?)`: Disables or enables an already registered _filter_, found by its `id`, without changing its position, options or selection. `overrides` can update its `emptyLabel` and `disabledTooltip`.
+
+<Callout color="warning" icon={null}>
+  An `async.filter()` replaces its filter once its options are loaded, which drops a previous `setFilterDisabled()` call.
+  Compare the expected state with `config.filters` and call `setFilterDisabled()` again when they differ.
+</Callout>
+
 #### Filter presets
 
 - [filterPreset()](?path=/docs/components-list-configuration-methods-filter-preset--docs): Builds and registers a _filter preset_ for the list's data.

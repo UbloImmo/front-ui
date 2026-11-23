@@ -19,7 +19,7 @@ import { Tooltip } from "@/components/Tooltip";
  * A component that displays a single filters
  * and allows interacting with it and its options.
  *
- * @version 0.1.1
+ * @version 0.1.2
  *
  * @param {ListFilterProps} props
  * @returns {ReactNode}
