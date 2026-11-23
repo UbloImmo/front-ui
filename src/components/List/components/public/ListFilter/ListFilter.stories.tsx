@@ -133,3 +133,47 @@ export const Open = (props: ListFilterProps) => {
     />
   );
 };
+
+const inactiveFilter: Filter<MockData> = {
+  ...filter,
+  active: false,
+  selectedOptions: [],
+};
+
+const disabledFilters: PropVariant<ListFilterProps>[] = [
+  {
+    __propVariantLabel: "filter.disabled:false",
+    filter: inactiveFilter,
+  },
+  {
+    __propVariantLabel: "filter.disabled:true",
+    filter: { ...inactiveFilter, disabled: true, emptyLabel: "Indisponible" },
+  },
+  {
+    __propVariantLabel: "filter.disabledTooltip",
+    filter: {
+      ...inactiveFilter,
+      disabled: true,
+      emptyLabel: "Indisponible",
+      disabledTooltip:
+        "Filtre momentanément indisponible. Il sera réactivé automatiquement.",
+    },
+  },
+] as PropVariant<ListFilterProps>[];
+
+export const Disabled = (props: ListFilterProps) => {
+  const defaults = useMergedProps<Required<ListFilterProps>, ListFilterProps>(
+    defaultProps as Required<ListFilterProps>,
+    props
+  );
+
+  return (
+    <ComponentVariants
+      of={ListFilter}
+      variants={disabledFilters}
+      defaults={defaults}
+      columns={1}
+      propLabels
+    />
+  );
+};

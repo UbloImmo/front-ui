@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- `v0.1.2` ListFilter component
+  - A `disabled` filter can no longer be opened, its label is greyed out and a lock icon replaces the empty state icon.
+  - Added the `disabledTooltip` filter config property: tooltip displayed on hover and keyboard focus when the filter is disabled.
+- `v0.1.2` Tooltip component
+  - Added the `fill` property: the trigger takes the full width of its parent.
+  - The tooltip opens when a wrapped focusable element receives the keyboard focus.
+- List configuration
+  - Added the `setFilterDisabled(id, disabled, overrides?)` method to `useListConfig`.
+
+### Fixed
+- `v0.1.2` Tooltip component
+  - The tooltip no longer takes the focus when it opens.
+- `v0.1.2` ListFilter component
+  - A disabled filter now displays a `not-allowed` cursor on its whole header.
 
 ## 2.9.0 - 2026-11-09
 ### Added

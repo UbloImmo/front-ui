@@ -352,6 +352,20 @@ export type ListConfigOptionDividerFn = GenericFn<
   FilterOptionDividerData
 >;
 
+/**
+ * Filter properties that can be overridden when disabling or enabling a filter
+ */
+export type FilterDisabledPatch = Partial<
+  Pick<FilterData, "emptyLabel" | "disabledTooltip">
+>;
+
+/**
+ * Disables or enables an already registered filter, found by its id
+ */
+export type ListConfigSetFilterDisabledFn = VoidFn<
+  [id: string, disabled: boolean, overrides?: FilterDisabledPatch]
+>;
+
 export type UseListConfigAsyncReturn<TItem extends object> = {
   option: ListConfigAsyncOptionFn<TItem>;
   options: ListConfigAsyncOptionsFn<TItem>;
@@ -385,6 +399,7 @@ export type UseListConfigReturn<
   filter: ListConfigFilterFn<TItem>;
   filterPreset: ListConfigFilterPresetFn<TItem>;
   setOperator: ListConfigSetOperatorFn;
+  setFilterDisabled: ListConfigSetFilterDisabledFn;
   configureSearchParams: ListConfigConfigureSearchParamsFn;
   sort: ListConfigSortFn<TItem>;
   sorts: ListConfigSortsFn<TItem>;
@@ -396,7 +411,8 @@ export type UseListConfig = <TItem extends object>(
 
 export type UseListConfigFilterReducerAction =
   | ["register", FilterData]
-  | ["update", FilterData];
+  | ["update", FilterData]
+  | ["patch", { id: string; disabled: boolean } & FilterDisabledPatch];
 
 export type UseListConfigFilterPresetReducerAction =
   | ["register", FilterPresetData]

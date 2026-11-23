@@ -78,6 +78,13 @@ export type FilterBehavior = {
   emptyFallback?:
     | FilterBehaviorInactiveFallback
     | Exclude<FilterBehaviorInactiveFallback, "all">[];
+  /**
+   * Tooltip displayed on hover and focus when the filter is disabled
+   *
+   * @type {Nullable<string>}
+   * @default null
+   */
+  disabledTooltip?: Nullable<string>;
 };
 
 export type FilterOptionsSort = "asc" | "desc" | "none";

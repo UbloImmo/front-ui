@@ -74,6 +74,12 @@ export type TooltipProps = {
    * @default false
    */
   disabled?: boolean;
+  /**
+   * Whether the tooltip trigger takes the full width of its parent
+   *
+   * @default false
+   */
+  fill?: boolean;
 };
 
 export type DefaultTooltipProps = Required<TooltipProps>;

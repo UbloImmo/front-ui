@@ -38,8 +38,21 @@ export const findFilterByIndexAndLabel = (
  */
 export const listConfigFilterReducer = (
   map: FilterDataMap,
-  [type, filter]: UseListConfigFilterReducerAction
+  action: UseListConfigFilterReducerAction
 ) => {
+  // patch an already registered filter, found by its id
+  if (action[0] === "patch") {
+    const { id, ...patch } = action[1];
+    const target = Array.from(map.values()).find((filter) => filter.id === id);
+    // keep the same map reference if the filter is unknown, no re-render
+    if (!target) return map;
+    const copy = new Map(map);
+    // same signature: the filter keeps its position, options & selection
+    copy.set(target.signature, { ...target, ...patch });
+    return copy;
+  }
+
+  const [type, filter] = action;
   const copy = new Map(map);
   // simply add the filter if it's the first time we see it
   if (type === "register") copy.set(filter.signature, filter);

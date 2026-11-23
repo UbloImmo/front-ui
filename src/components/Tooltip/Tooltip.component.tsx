@@ -26,12 +26,13 @@ const defaultTooltipProps: DefaultTooltipProps = {
   intersectionRoot: null,
   cursor: "help",
   disabled: false,
+  fill: false,
 };
 
 /**
  * Text popup box that appears when the user hovers over an element
  *
- * @version 0.1.1
+ * @version 0.1.2
  *
  * @param {TooltipProps & TestIdProps} props - The tooltip's props
  * @returns {ReactNode} The rendered tooltip
@@ -50,8 +51,9 @@ const Tooltip = (props: TooltipProps & TestIdProps): ReactNode => {
     iconColor,
     cursor,
     disabled,
+    fill,
   } = mergedProps;
-  const styles = useTooltipStyles(cursor);
+  const styles = useTooltipStyles(cursor, fill);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -113,10 +115,14 @@ const Tooltip = (props: TooltipProps & TestIdProps): ReactNode => {
       data-testid={`${testId}-wrapper`}
       onPointerEnter={onPointerEnter}
       onMouseLeave={onPointerLeave}
+      onFocus={onPointerEnter}
+      onBlur={onPointerLeave}
     >
       <Popover
         open={isOpen}
         onOpenChange={setIsOpen}
+        fill={fill}
+        noFocus
         content={
           <>
             <div className={styles.tooltip} data-testid={testId} role="tooltip">

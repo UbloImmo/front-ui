@@ -104,6 +104,7 @@ type FilterConfig = {
   multi?: boolean;
   disabled?: boolean;
   hidden?: boolean;
+  disabledTooltip?: Nullable<string>;
   allowCompleteSelection?: boolean;
 };
 ```
@@ -165,7 +166,15 @@ Defaults to `true`.
 ##### `config.disabled?`: `boolean`
 
 Whether the filter is disabled.<br/>
+A disabled filter cannot be opened, its label is greyed out and a lock icon replaces the empty state icon.<br/>
 Defaults to `false`.
+
+> Use `setFilterDisabled()` to disable or enable a filter after its declaration.
+
+##### `config.disabledTooltip?`: `Nullable<string>`
+
+Tooltip displayed on hover and keyboard focus when the filter is disabled, e.g. to explain why it is unavailable.<br/>
+Defaults to `null` (no tooltip).
 
 ##### `config.hidden?`: `boolean`
 
